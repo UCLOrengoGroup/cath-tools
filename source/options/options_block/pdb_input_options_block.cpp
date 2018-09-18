@@ -54,15 +54,15 @@ string pdb_input_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void pdb_input_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void pdb_input_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	const string pdb_file_varname = "<pdbfile>";
 
 	const auto pdb_infile_notifier = [&] (const path_vec &x) { the_pdb_input_spec.set_input_files    ( x ); };
 	const auto stdin_read_notifier = [&] (const bool     &x) { the_pdb_input_spec.set_read_from_stdin( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_PDB_INFILE.c_str(),
 			value<path_vec>()
@@ -82,7 +82,7 @@ void pdb_input_options_block::do_add_visible_options_to_description(options_desc
 		"If pdb_input_spec::DEFAULT_READ_FROM_STDIN isn't false, it might mess up the bool switch in here" );
 }
 
-str_opt pdb_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt pdb_input_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 	for (const path &input_file : the_pdb_input_spec.get_input_files() ) {
 		if ( ! is_acceptable_input_file( input_file ) ) {
@@ -108,8 +108,8 @@ const pdb_input_spec & pdb_input_options_block::get_pdb_input_spec() const {
 /// \brief Get the number of pdb_acquirer objects implied by the pdb_input_spec in the specified pdb_input_options_block
 ///
 /// \relates pdb_input_options_block
-size_t cath::opts::get_num_acquirers(const pdb_input_options_block &arg_pdb_input_options_block ///< The pdb_input_options_block to query
+size_t cath::opts::get_num_acquirers(const pdb_input_options_block &prm_pdb_input_options_block ///< The pdb_input_options_block to query
                                      ) {
-	return get_num_acquirers( arg_pdb_input_options_block.get_pdb_input_spec() );
+	return get_num_acquirers( prm_pdb_input_options_block.get_pdb_input_spec() );
 }
 

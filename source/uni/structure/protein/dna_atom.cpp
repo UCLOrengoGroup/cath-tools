@@ -29,9 +29,9 @@ using namespace cath::common;
 using std::string;
 
 /// \brief Convert the specified dna_atom back to the three character string that represents it in PDBs
-char_3_arr cath::to_three_char_arr(const dna_atom &arg_dna_atom ///< The dna_atom to convert
+char_3_arr cath::to_three_char_arr(const dna_atom &prm_dna_atom ///< The dna_atom to convert
                                    ) {
-	switch ( arg_dna_atom ) {
+	switch ( prm_dna_atom ) {
 		case (dna_atom::A       ) : { return {{ ' ',' ','A' }}; }
 		case (dna_atom::C       ) : { return {{ ' ',' ','C' }}; }
 		case (dna_atom::G       ) : { return {{ ' ',' ','G' }}; }
@@ -58,7 +58,7 @@ char_3_arr cath::to_three_char_arr(const dna_atom &arg_dna_atom ///< The dna_ato
 }
 
 /// \brief Convert the specified dna_atom back to the three character string that represents it in PDBs
-string cath::to_three_char_str(const dna_atom &arg_dna_atom ///< The dna_atom to convert
+string cath::to_three_char_str(const dna_atom &prm_dna_atom ///< The dna_atom to convert
                                ) {
-	return char_arr_to_string( to_three_char_arr( arg_dna_atom ) );
+	return char_arr_to_string( to_three_char_arr( prm_dna_atom ) );
 }

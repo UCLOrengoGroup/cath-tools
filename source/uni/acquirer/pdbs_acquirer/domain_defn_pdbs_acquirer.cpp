@@ -46,7 +46,7 @@ unique_ptr<pdbs_acquirer> domain_defn_pdbs_acquirer::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-pdb_list_name_set_list_pair domain_defn_pdbs_acquirer::do_get_pdbs_and_names(istream &/*arg_istream*/ ///< TODOCUMENT
+pdb_list_name_set_list_pair domain_defn_pdbs_acquirer::do_get_pdbs_and_names(istream &/*prm_istream*/ ///< TODOCUMENT
                                                                              ) const {
 	const domain_definition_list the_dom_defns = parse_domain_definition_file( domain_defn_file );
 	BOOST_LOG_TRIVIAL( warning ) << "Currently using a hard-coded domain PDB directory : /cath/data/current/pdb";
@@ -54,7 +54,7 @@ pdb_list_name_set_list_pair domain_defn_pdbs_acquirer::do_get_pdbs_and_names(ist
 }
 
 /// \brief Ctor for domain_defn_pdbs_acquirer
-domain_defn_pdbs_acquirer::domain_defn_pdbs_acquirer(const path &arg_domain_defn_file ///< TODOCUMENT
-                                                     ) : domain_defn_file( arg_domain_defn_file ) {
+domain_defn_pdbs_acquirer::domain_defn_pdbs_acquirer(const path &prm_domain_defn_file ///< TODOCUMENT
+                                                     ) : domain_defn_file( prm_domain_defn_file ) {
 }
 

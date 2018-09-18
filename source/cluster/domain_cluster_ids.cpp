@@ -35,20 +35,20 @@ using std::string;
 /// \brief Generate a string describing the specified domain_cluster_id
 ///
 /// \relates domain_cluster_id
-string cath::clust::to_string(const domain_cluster_id &arg_dom_clust_id,   ///< The domain_cluster_id to describe
-                              const bool              &arg_include_cluster ///< Whether to include the cluster ID for each entry (default: true)
+string cath::clust::to_string(const domain_cluster_id &prm_dom_clust_id,   ///< The domain_cluster_id to describe
+                              const bool              &prm_include_cluster ///< Whether to include the cluster ID for each entry (default: true)
                               ) {
 	using std::to_string;
 
 	return
 		(
-			arg_dom_clust_id.segments
-			? ( "[" + get_segments_string( arg_dom_clust_id.segments.get() ) + "]" )
+			prm_dom_clust_id.segments
+			? ( "[" + get_segments_string( prm_dom_clust_id.segments.get() ) + "]" )
 			: "*"
 		)
 		+ (
-			arg_include_cluster
-			? ( "->" + to_string( arg_dom_clust_id.cluster_id ) )
+			prm_include_cluster
+			? ( "->" + to_string( prm_dom_clust_id.cluster_id ) )
 			: ""
 		);
 }
@@ -56,12 +56,12 @@ string cath::clust::to_string(const domain_cluster_id &arg_dom_clust_id,   ///< 
 /// \brief Generate a string describing the specified domain_cluster_ids
 ///
 /// \relates domain_cluster_ids
-string cath::clust::to_string(const domain_cluster_ids &arg_dom_clust_ids,  ///< The domain_cluster_ids to describe
-                              const bool               &arg_include_cluster ///< Whether to include the cluster ID for each entry (default: true)
+string cath::clust::to_string(const domain_cluster_ids &prm_dom_clust_ids,  ///< The domain_cluster_ids to describe
+                              const bool               &prm_include_cluster ///< Whether to include the cluster ID for each entry (default: true)
                               ) {
 	return join(
-		arg_dom_clust_ids
-			| transformed( [&] (const domain_cluster_id &x) { return to_string( x, arg_include_cluster ); } ),
+		prm_dom_clust_ids
+			| transformed( [&] (const domain_cluster_id &x) { return to_string( x, prm_include_cluster ); } ),
 		", "
 	);
 }

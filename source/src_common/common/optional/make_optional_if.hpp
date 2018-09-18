@@ -42,11 +42,11 @@ namespace cath {
 		///  * If combining both of the above, generate a sensible compile time error if 0
 		///    arguments are passed and no template parameter is specified
 		template <class T>
-		inline boost::optional<T> make_optional_if(const bool &arg_condition, ///< TODOCUMENT
-		                                           const T    &arg_value      ///< TODOCUMENT
+		inline boost::optional<T> make_optional_if(const bool &prm_condition, ///< TODOCUMENT
+		                                           const T    &prm_value      ///< TODOCUMENT
 		                                           ) {
-			return arg_condition
-				? boost::optional<T>{ arg_value }
+			return prm_condition
+				? boost::optional<T>{ prm_value }
 				: boost::optional<T>{           };
 		}
 
@@ -59,12 +59,12 @@ namespace cath {
 		///  * Allow the resulting optional's value_type to be specified but have it default to the type
 		///    of the std::decay_t< std::result_of_t<> > of the Fn
 		template <class Fn>
-		inline auto make_optional_if_fn(const bool  &arg_condition, ///< TODOCUMENT
-		                                Fn         &&arg_fn         ///< TODOCUMENT
+		inline auto make_optional_if_fn(const bool  &prm_condition, ///< TODOCUMENT
+		                                Fn         &&prm_fn         ///< TODOCUMENT
 		                                ) {
 			using return_type = boost::optional< std::decay_t< std::result_of_t< Fn && () > > >;
-			return arg_condition
-				? return_type{ invoke( std::forward<Fn>( arg_fn ) ) }
+			return prm_condition
+				? return_type{ invoke( std::forward<Fn>( prm_fn ) ) }
 				: return_type{                                      };
 		}
 

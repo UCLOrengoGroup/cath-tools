@@ -48,14 +48,14 @@ using boost::accumulate;
 /// These orient functions aim to put the primary PCA direction on the x-axis and the secondary on the y-axis;
 /// they then choose whether to apply further x, y or z flips by seeing which (if any) best pulls the later coords to
 /// the positive x/y quadrant (which makes the result independent of the structures' initial orientations and more stable).
-doub_doub_pair cath::geom::detail::x_and_y_of_later_weighted_cog(const coord_list &arg_coords ///< The coords being oriented
+doub_doub_pair cath::geom::detail::x_and_y_of_later_weighted_cog(const coord_list &prm_coords ///< The coords being oriented
                                                                  ) {
-	const double factor = 2.0 / ( static_cast<double>( arg_coords.size() ) * static_cast<double>( arg_coords.size() + 1 ) );
+	const double factor = 2.0 / ( static_cast<double>( prm_coords.size() ) * static_cast<double>( prm_coords.size() + 1 ) );
 	const coord the_coord = accumulate(
-		indices( arg_coords.size() ),
+		indices( prm_coords.size() ),
 		coord::ORIGIN_COORD,
 		[&] (const coord &x, const size_t &y) {
-			return x + ( static_cast<double>( y + 1_z ) * factor * arg_coords[ y ] );
+			return x + ( static_cast<double>( y + 1_z ) * factor * prm_coords[ y ] );
 		}
 	);
 	return { the_coord.get_x(), the_coord.get_y() };
@@ -68,11 +68,11 @@ doub_doub_pair cath::geom::detail::x_and_y_of_later_weighted_cog(const coord_lis
 /// the positive x/y quadrant (which makes the result independent of the structures' initial orientations and more stable).
 ///
 /// Note: the order of the coordinates matters
-coord_rot_pair cath::geom::get_orienting_transformation(const coord_list &arg_core_coords ///< The coords (that have already been superposed) to orient
-                                                        // const coord_list &arg_extra_coords ///< TODOCUMENT
+coord_rot_pair cath::geom::get_orienting_transformation(const coord_list &prm_core_coords ///< The coords (that have already been superposed) to orient
+                                                        // const coord_list &prm_extra_coords ///< TODOCUMENT
                                                         ) {
-	const auto all_coords = arg_core_coords;
-	// const auto all_coords = join( arg_core_coords, arg_extra_coords );
+	const auto all_coords = prm_core_coords;
+	// const auto all_coords = join( prm_core_coords, prm_extra_coords );
 
 	// Get the centre-of-gravity of the coords and calculate a centred bunch of coords
 	const coord cog = centre_of_gravity( all_coords );
@@ -112,7 +112,7 @@ coord_rot_pair cath::geom::get_orienting_transformation(const coord_list &arg_co
 	const auto x_y_of_wcog_of_init_orientn = x_and_y_of_later_weighted_cog(
 		rotate_copy(
 			initial_orientation,
-			arg_core_coords - cog
+			prm_core_coords - cog
 		)
 	);
 

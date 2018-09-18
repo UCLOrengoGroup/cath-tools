@@ -49,17 +49,17 @@ namespace cath {
 			///  * false         if the first object's dynamic type compares strictly greater than the second object's or
 			///  * indeterminate otherwise.
 			template <typename T>
-			boost::logic::tribool dynamic_type_spaceship::compare_lt(const T &arg_object1, ///< The first  object whose dynamic type should be compared
-			                                                         const T &arg_object2  ///< The second object whose dynamic type should be compared
+			boost::logic::tribool dynamic_type_spaceship::compare_lt(const T &prm_object1, ///< The first  object whose dynamic type should be compared
+			                                                         const T &prm_object2  ///< The second object whose dynamic type should be compared
 			                                                         ) {
-				if ( typeid( arg_object1 ).before( typeid( arg_object2 ) ) ) {
+				if ( typeid( prm_object1 ).before( typeid( prm_object2 ) ) ) {
 					return true;
 				}
-				if ( typeid( arg_object2 ).before( typeid( arg_object1 ) ) ) {
+				if ( typeid( prm_object2 ).before( typeid( prm_object1 ) ) ) {
 					return false;
 				}
 #ifndef NDEBUG
-				assert ( typeid( arg_object1 ) == typeid( arg_object2 ) ); // Neither dynamic type compares before the other but nor do they compare equal
+				assert ( typeid( prm_object1 ) == typeid( prm_object2 ) ); // Neither dynamic type compares before the other but nor do they compare equal
 #endif
 				return boost::logic::indeterminate;
 			}

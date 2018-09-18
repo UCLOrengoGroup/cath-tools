@@ -38,19 +38,19 @@ using namespace cath::sup;
 using std::istream;
 
 /// \brief Ctor for alignment_context
-alignment_context::alignment_context(alignment      arg_alignment, ///< TODOCUMENT
-                                     strucs_context arg_context    ///< TODOCUMENT
-                                     ) : the_alignment { std::move( arg_alignment ) },
-                                         context       { std::move( arg_context   ) } {
+alignment_context::alignment_context(alignment      prm_alignment, ///< TODOCUMENT
+                                     strucs_context prm_context    ///< TODOCUMENT
+                                     ) : the_alignment { std::move( prm_alignment ) },
+                                         context       { std::move( prm_context   ) } {
 }
 
 /// \brief Ctor for alignment_context
-alignment_context::alignment_context(alignment                 arg_alignment, ///< TODOCUMENT
-                                     const pdb_list           &arg_pdbs,      ///< TODOCUMENT
-                                     const name_set_list      &arg_name_sets, ///< TODOCUMENT
-                                     const region_vec_opt_vec &arg_regions    ///< The specification of the regions of the PDBs to which the alignment refers
-                                     ) : the_alignment { std::move( arg_alignment )       },
-                                         context       { arg_pdbs, arg_name_sets, arg_regions } {
+alignment_context::alignment_context(alignment                 prm_alignment, ///< TODOCUMENT
+                                     const pdb_list           &prm_pdbs,      ///< TODOCUMENT
+                                     const name_set_list      &prm_name_sets, ///< TODOCUMENT
+                                     const region_vec_opt_vec &prm_regions    ///< The specification of the regions of the PDBs to which the alignment refers
+                                     ) : the_alignment { std::move( prm_alignment )       },
+                                         context       { prm_pdbs, prm_name_sets, prm_regions } {
 }
 
 /// \brief TODOCUMENT
@@ -64,49 +64,49 @@ const strucs_context & alignment_context::get_strucs_context() const {
 }
 
 /// \brief TODOCUMENT
-const pdb_list & cath::align::get_pdbs(const alignment_context &arg_align_context ///< TODOCUMENT
+const pdb_list & cath::align::get_pdbs(const alignment_context &prm_align_context ///< TODOCUMENT
                                        ) {
-	return arg_align_context.get_strucs_context().get_pdbs();
+	return prm_align_context.get_strucs_context().get_pdbs();
 }
 
 /// \brief TODOCUMENT
-const name_set_list & cath::align::get_name_sets(const alignment_context &arg_align_context ///< TODOCUMENT
+const name_set_list & cath::align::get_name_sets(const alignment_context &prm_align_context ///< TODOCUMENT
                                                  ) {
-	return arg_align_context.get_strucs_context().get_name_sets();
+	return prm_align_context.get_strucs_context().get_name_sets();
 }
 
 /// \brief Getter for the specification of the regions of the PDBs to which the alignment refers
-const region_vec_opt_vec & cath::align::get_regions(const alignment_context &arg_align_context ///< TODOCUMENT
+const region_vec_opt_vec & cath::align::get_regions(const alignment_context &prm_align_context ///< TODOCUMENT
                                                     ) {
-	return arg_align_context.get_strucs_context().get_regions();
+	return prm_align_context.get_strucs_context().get_regions();
 }
 
 /// \brief Get the number of entries represented in the specified alignment_context
 ///
 /// \relates alignment_context
-size_t cath::align::get_num_entries(const alignment_context &arg_alignment_context ///< The alignment_context to query
+size_t cath::align::get_num_entries(const alignment_context &prm_alignment_context ///< The alignment_context to query
                                     ) {
-	return size( arg_alignment_context.get_strucs_context() );
+	return size( prm_alignment_context.get_strucs_context() );
 }
 
 /// \brief Get a copy of the PDBs in the specified alignment_context, restricted to its regions
 ///
 /// \relates alignment_context
-pdb_list cath::align::get_restricted_pdbs(const alignment_context &arg_alignment_context ///< The alignment_context to query
+pdb_list cath::align::get_restricted_pdbs(const alignment_context &prm_alignment_context ///< The alignment_context to query
                                           ) {
-  return get_restricted_pdbs( arg_alignment_context.get_strucs_context() );
+  return get_restricted_pdbs( prm_alignment_context.get_strucs_context() );
 }
 
 /// \brief Make an alignment context of the specified alignment and strucs_context, with the
 ///        PDBs restricted according to the regions in the strucs_context
 ///
 /// \relates alignment_context
-alignment_context cath::align::make_restricted_alignment_context(alignment      arg_alignment,     ///< The alignment from which to build the alignment_context
-                                                                 strucs_context arg_strucs_context ///< The strucs_context from which to build the alignment_context
+alignment_context cath::align::make_restricted_alignment_context(alignment      prm_alignment,     ///< The alignment from which to build the alignment_context
+                                                                 strucs_context prm_strucs_context ///< The strucs_context from which to build the alignment_context
                                                                  ) {
 	return {
-		std::move( arg_alignment ),
-		restrict_pdbs_copy( std::move( arg_strucs_context ) )
+		std::move( prm_alignment ),
+		restrict_pdbs_copy( std::move( prm_strucs_context ) )
 	};
 }
 
@@ -115,37 +115,37 @@ alignment_context cath::align::make_restricted_alignment_context(alignment      
 /// \relates alignment_context
 ///
 /// \relatesalso superposition_context
-superposition_context cath::align::make_superposition_context(const alignment_context &arg_alignment_context, ///< TODOCUMENT
-                                                              const superposition     &arg_superposition      ///< TODOCUMENT
+superposition_context cath::align::make_superposition_context(const alignment_context &prm_alignment_context, ///< TODOCUMENT
+                                                              const superposition     &prm_superposition      ///< TODOCUMENT
                                                               ) {
 	return superposition_context(
-		arg_superposition,
-		arg_alignment_context.get_strucs_context(),
-		arg_alignment_context.get_alignment()
+		prm_superposition,
+		prm_alignment_context.get_strucs_context(),
+		prm_alignment_context.get_alignment()
 	);
 }
 
 /// \brief Get an alignment context
 ///
 /// \relates alignment_acquirer
-alignment_context cath::align::get_alignment_context(const alignment_acquirer &arg_alignment_acquirer,      ///< The alignment_acquirer to use to get the alignment
-                                                     const pdbs_acquirer      &arg_pdbs_acquirer,           ///< The pdbs_acquirer to use to get the PDBs
-                                                     istream                  &arg_istream,                 ///< The istream, which may contain PDB data
-                                                     const bool               &arg_remove_partial_residues, ///< Whether to remove partial residues from the PDB data
-                                                     const str_vec            &arg_ids,                     ///< The IDs to set on the acquired strucs_context
-                                                     const domain_vec         &arg_domains,                 ///< The domains to set on the acquired strucs_context
-                                                     const align_refining     &arg_align_refining           ///< How much refining should be done to the alignment
+alignment_context cath::align::get_alignment_context(const alignment_acquirer &prm_alignment_acquirer,      ///< The alignment_acquirer to use to get the alignment
+                                                     const pdbs_acquirer      &prm_pdbs_acquirer,           ///< The pdbs_acquirer to use to get the PDBs
+                                                     istream                  &prm_istream,                 ///< The istream, which may contain PDB data
+                                                     const bool               &prm_remove_partial_residues, ///< Whether to remove partial residues from the PDB data
+                                                     const str_vec            &prm_ids,                     ///< The IDs to set on the acquired strucs_context
+                                                     const domain_vec         &prm_domains,                 ///< The domains to set on the acquired strucs_context
+                                                     const align_refining     &prm_align_refining           ///< How much refining should be done to the alignment
                                                      ) {
 	const auto the_strucs_context = get_strucs_context(
-		arg_pdbs_acquirer,
-		arg_istream,
-		arg_remove_partial_residues,
-		arg_ids,
-		arg_domains
+		prm_pdbs_acquirer,
+		prm_istream,
+		prm_remove_partial_residues,
+		prm_ids,
+		prm_domains
 	);
 	return {
-		arg_alignment_acquirer
-			.get_alignment_and_spanning_tree( restrict_pdbs_copy( the_strucs_context ), arg_align_refining )
+		prm_alignment_acquirer
+			.get_alignment_and_spanning_tree( restrict_pdbs_copy( the_strucs_context ), prm_align_refining )
 			.first,
 		the_strucs_context
 	};

@@ -57,10 +57,10 @@ using std::numeric_limits;
 ///        specified indices have differing stop points
 ///
 /// This is used to group hits that stop at the same boundary
-auto hit_resolver::get_hit_stops_differ_fn(const calc_hit_list &arg_calc_hit_list ///< The list of hits to which the indices will refer
+auto hit_resolver::get_hit_stops_differ_fn(const calc_hit_list &prm_calc_hit_list ///< The list of hits to which the indices will refer
                                            ) {
 	return [&] (const hitidx_t &x, const hitidx_t &y) {
-		return ( get_stop_arrow( arg_calc_hit_list[ x ] ) != get_stop_arrow( arg_calc_hit_list[ y ] ) );
+		return ( get_stop_arrow( prm_calc_hit_list[ x ] ) != get_stop_arrow( prm_calc_hit_list[ y ] ) );
 	};
 }
 
@@ -69,14 +69,14 @@ auto hit_resolver::get_hit_stops_differ_fn(const calc_hit_list &arg_calc_hit_lis
 ///
 /// \todo Consider dropping this check it doesn't fire when
 ///       run under debug mode over some large data set
-inline void sanity_check(const scored_arch_proxy &arg_scored_arch_proxy, ///< The architecture (scored_arch_proxy) to check
-                         const calc_hit_list     &arg_hits,              ///< The list of hits to which the scored_arch_proxy corresponds
-                         const calc_hit_vec      &arg_mask               ///< The mask with which to check for conflicts
+inline void sanity_check(const scored_arch_proxy &prm_scored_arch_proxy, ///< The architecture (scored_arch_proxy) to check
+                         const calc_hit_list     &prm_hits,              ///< The list of hits to which the scored_arch_proxy corresponds
+                         const calc_hit_vec      &prm_mask               ///< The mask with which to check for conflicts
                          ) {
-	ignore_unused( arg_scored_arch_proxy, arg_hits, arg_mask );
+	ignore_unused( prm_scored_arch_proxy, prm_hits, prm_mask );
 #ifndef NDEBUG
-	for (const auto &arch_hit_idx : arg_scored_arch_proxy) {
-		if ( hit_overlaps_with_any_of_hits( arg_hits[ arch_hit_idx ], arg_mask ) ) {
+	for (const auto &arch_hit_idx : prm_scored_arch_proxy) {
+		if ( hit_overlaps_with_any_of_hits( prm_hits[ arch_hit_idx ], prm_mask ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("ERROR: Cannot assume that best architecture so far does not clash with masks"));
 		}
 	}
@@ -92,38 +92,38 @@ inline void sanity_check(const scored_arch_proxy &arg_scored_arch_proxy, ///< Th
 /// and doesn't overlap with any segments in the specified discontiguous hits
 ///
 /// \todo Could be more efficient at rejecting hits that stop in forbidden regions
-scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(const calc_hit_vec      &arg_mask,           ///< The active mask defining any no-go areas.
-                                                                             const seq_arrow         &arg_start_arrow,    ///< The point at which to start the dynamic-programming scan. Guaranteed to be at the boundary of a segment in arg_masks, or at the very start if arg_masks is empty
-                                                                             const seq_arrow         &arg_stop_arrow,     ///< The point at which to stop the dynamic-programming scan. Guaranteed to be at the boundary of a segment in arg_masks, or at the very end   if arg_masks is empty
-                                                                             const scored_arch_proxy &arg_best_upto_start ///< The known-best architecture up to the start point
+scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(const calc_hit_vec      &prm_mask,           ///< The active mask defining any no-go areas.
+                                                                             const seq_arrow         &prm_start_arrow,    ///< The point at which to start the dynamic-programming scan. Guaranteed to be at the boundary of a segment in prm_masks, or at the very start if prm_masks is empty
+                                                                             const seq_arrow         &prm_stop_arrow,     ///< The point at which to stop the dynamic-programming scan. Guaranteed to be at the boundary of a segment in prm_masks, or at the very end   if prm_masks is empty
+                                                                             const scored_arch_proxy &prm_best_upto_start ///< The known-best architecture up to the start point
                                                                              ) {
 	// Create and initialise a new best_scan_arches for this particular scan
 	// (with size of one more than the stop (just to ensure enough space)
-	//  and pre-extended to start with arg_best_upto_start at arg_start_arrow)
-	best_scan_arches bests{ arg_stop_arrow.res_before() + 1 };
-	if ( arg_start_arrow > start_arrow() && arg_best_upto_start.get_score() > INIT_SCORE ) {
-		bests.extend_up_to_arrow( arg_start_arrow - 1 );
-		bests.add_best_up_to_arrow( arg_start_arrow, arg_best_upto_start );
+	//  and pre-extended to start with prm_best_upto_start at prm_start_arrow)
+	best_scan_arches bests{ prm_stop_arrow.res_before() + 1 };
+	if ( prm_start_arrow > start_arrow() && prm_best_upto_start.get_score() > INIT_SCORE ) {
+		bests.extend_up_to_arrow( prm_start_arrow - 1 );
+		bests.add_best_up_to_arrow( prm_start_arrow, prm_best_upto_start );
 	}
 
 	// Create a the_masked_bests_cache that's configured to store results in the_masked_bests_cache
 	// whenever it passes a point that may be needed later on
 	masked_bests_cacher the_masked_bests_cacher = make_masked_bests_cacher(
 		the_masked_bests_cache,
-		arg_mask,
+		prm_mask,
 		the_dhibs,
-		arg_start_arrow
+		prm_start_arrow
 	);
 
-	// Get a range of the indices of the sub-range of the hits that stop within ( arg_start_arrow, arg_stop_arrow ]
-	const auto indices_of_hits = indices_of_hits_that_stop_in_range( hits, arg_start_arrow, arg_stop_arrow );
+	// Get a range of the indices of the sub-range of the hits that stop within ( prm_start_arrow, prm_stop_arrow ]
+	const auto indices_of_hits = indices_of_hits_that_stop_in_range( hits, prm_start_arrow, prm_stop_arrow );
 
 	// Loop over the groups of hits' indices that correspond to hits with the same stop point
 	for (const auto &indices_of_hits_with_same_stop : indices_of_hits | equal_grouped( get_hit_stops_differ_fn( hits.get() ) ) ) {
 		// Grab the stop point of the hits in this group
 		const auto current_arrow = get_stop_arrow( hits.get()[ front( indices_of_hits_with_same_stop ) ] );
 
-		sanity_check( bests.get_best_scored_arch_so_far(), hits.get(), arg_mask );
+		sanity_check( bests.get_best_scored_arch_so_far(), hits.get(), prm_mask );
 
 		// Advance the_masked_bests_cacher to this point (so it stores any results that might be needed later on)
 		the_masked_bests_cacher.advance_to_pos_with_best_so_far(
@@ -131,7 +131,7 @@ scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(con
 			bests.get_best_scored_arch_so_far()
 		);
 
-		// In case there was a gap between the previous arrow we considered (or maybe `start_arrow()` / `arg_start_arrow - 1`)
+		// In case there was a gap between the previous arrow we considered (or maybe `start_arrow()` / `prm_start_arrow - 1`)
 		// and this current arrow, update bests to record that there were no improvements on the previous result
 		// up to and including one position before this current_arrow
 		// (which will do nothing if there's no gap). Also grab that best previous score.
@@ -143,8 +143,8 @@ scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(con
 		// using one of these hits that stop at current_arrow
 		const auto best_new_score_and_arch = get_best_scored_arch_with_one_of_hits(
 			indices_of_hits_with_same_stop,
-			arg_mask,
-			arg_start_arrow,
+			prm_mask,
+			prm_start_arrow,
 			bests,
 			best_prev_score
 		);
@@ -160,7 +160,7 @@ scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(con
 	}
 
 	// Sanity check
-	sanity_check( bests.get_best_scored_arch_so_far(), hits.get(), arg_mask );
+	sanity_check( bests.get_best_scored_arch_so_far(), hits.get(), prm_mask );
 
 	// Extend the_masked_bests_cacher to the end in case we still need to cache
 	// results for use later on
@@ -171,15 +171,15 @@ scored_arch_proxy hit_resolver::get_best_score_and_arch_of_specified_regions(con
 }
 
 /// \brief Ctor for hit_resolver
-hit_resolver::hit_resolver(const calc_hit_list &arg_hits ///< The hits to resolve
-                           ) : hits     ( arg_hits                               ),
-                               max_stop ( get_max_stop( arg_hits ).value_or( 0 ) ),
-                               the_dhibs( arg_hits                               ) {
+hit_resolver::hit_resolver(const calc_hit_list &prm_hits ///< The hits to resolve
+                           ) : hits     ( prm_hits                               ),
+                               max_stop ( get_max_stop( prm_hits ).value_or( 0 ) ),
+                               the_dhibs( prm_hits                               ) {
 	constexpr hitidx_t max = numeric_limits<hitidx_t>::max();
-	if ( arg_hits.size() + 2 > max ) {
+	if ( prm_hits.size() + 2 > max ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Number of hits is "
-			+ ::std::to_string( arg_hits.size() )
+			+ ::std::to_string( prm_hits.size() )
 			+ "which is too high, given that the type being used for indexing can only hold a maximum value of "
 			+ ::std::to_string( max )
 			+ ". You could consider changing the hitidx_t type alias and recompiling."
@@ -203,11 +203,11 @@ scored_hit_arch hit_resolver::resolve() {
 }
 
 /// \brief The front-end for resolving hits
-scored_hit_arch cath::rslv::resolve_hits(const calc_hit_list &arg_hits,        ///< The hits to resolve
-                                         const bool          &arg_naive_greedy ///< Whether to use a naive, greedy approach to resolving
+scored_hit_arch cath::rslv::resolve_hits(const calc_hit_list &prm_hits,        ///< The hits to resolve
+                                         const bool          &prm_naive_greedy ///< Whether to use a naive, greedy approach to resolving
                                          ) {
-	return arg_naive_greedy ? naive_greedy_resolve_hits( arg_hits )
-	                        : detail::hit_resolver{ arg_hits }.resolve();
+	return prm_naive_greedy ? naive_greedy_resolve_hits( prm_hits )
+	                        : detail::hit_resolver{ prm_hits }.resolve();
 }
 
 

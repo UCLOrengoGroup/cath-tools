@@ -67,15 +67,15 @@ namespace cath {
 			/// \brief Insert a new string and return its new ID
 			///
 			/// Can be used if the name already exists
-			inline const std::pair<const std::string, id_type> & emplace(std::string arg_string ///< The string to insert
+			inline const std::pair<const std::string, id_type> & emplace(std::string prm_string ///< The string to insert
 			                                                             ) {
-				return *( the_map.emplace( std::move( arg_string ), the_map.size() ).first );
+				return *( the_map.emplace( std::move( prm_string ), the_map.size() ).first );
 			}
 
 			/// \brief Get the ID corresponding to the specified string
-			inline id_type operator[](const std::string &arg_string ///< The string to lookup
+			inline id_type operator[](const std::string &prm_string ///< The string to lookup
 			                          ) const {
-				return the_map.find( arg_string )->second;
+				return the_map.find( prm_string )->second;
 			}
 
 			/// \brief Return whether this id_of_string is empty
@@ -89,9 +89,9 @@ namespace cath {
 			}
 
 			/// \brief Reserve space for the specified number of strings
-			inline void reserve(const size_t &arg_count ///< The number of strings for which space should be reserved
+			inline void reserve(const size_t &prm_count ///< The number of strings for which space should be reserved
 			                    ) {
-				the_map.reserve( arg_count );
+				the_map.reserve( prm_count );
 			}
 
 			/// \brief Clear the id_of_string of all strings
@@ -114,13 +114,13 @@ namespace cath {
 		/// \brief Find the string associated with the specified ID in the specified id_of_string
 		///
 		/// Note: This is inefficient! Don't use in performance-critical code
-		inline const std::string & string_of_id(const id_of_string          &arg_id_of_string, ///< The id_of_string to query
-		                                        const id_of_string::id_type &arg_id            ///< The ID of interest
+		inline const std::string & string_of_id(const id_of_string          &prm_id_of_string, ///< The id_of_string to query
+		                                        const id_of_string::id_type &prm_id            ///< The ID of interest
 		                                        ) {
 			return boost::find_if(
-				arg_id_of_string,
+				prm_id_of_string,
 				[&] (const std::pair<const std::string, id_of_string::id_type> &x) {
-					return ( x.second == arg_id );
+					return ( x.second == prm_id );
 				}
 			)->first;
 		}

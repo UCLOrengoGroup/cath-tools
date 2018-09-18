@@ -40,16 +40,16 @@ const residx_t & crh_segment_spec::get_min_seg_length() const {
 }
 
 /// \brief Setter for the specification for trimming hits' segments to allow some overlap
-crh_segment_spec & crh_segment_spec::set_overlap_trim_spec(const trim_spec &arg_overlap_trim_spec ///< The specification for trimming hits' segments to allow some overlap
+crh_segment_spec & crh_segment_spec::set_overlap_trim_spec(const trim_spec &prm_overlap_trim_spec ///< The specification for trimming hits' segments to allow some overlap
                                                            ) {
-	overlap_trim_spec = arg_overlap_trim_spec;
+	overlap_trim_spec = prm_overlap_trim_spec;
 	return *this;
 }
 
 /// \brief Setter for the minimum segment length
-crh_segment_spec & crh_segment_spec::set_min_seg_length(const residx_t &arg_min_seg_length ///< The minimum segment length
+crh_segment_spec & crh_segment_spec::set_min_seg_length(const residx_t &prm_min_seg_length ///< The minimum segment length
                                                         ) {
-	min_seg_length = arg_min_seg_length;
+	min_seg_length = prm_min_seg_length;
 	return *this;
 }
 
@@ -66,12 +66,12 @@ crh_segment_spec cath::rslv::make_no_action_crh_segment_spec() {
 ///        a trimmed version if the segment's length meets the min-seg-length, or none otherwise
 ///
 /// \relates crh_segment_spec
-seq_seg_opt cath::rslv::apply_spec_to_seg_copy(const seq_seg              &arg_seg,         ///< The seq_seg to copy
-                                               const crh_segment_spec_opt &arg_segment_spec ///< The crh_segment_spec to apply
+seq_seg_opt cath::rslv::apply_spec_to_seg_copy(const seq_seg              &prm_seg,         ///< The seq_seg to copy
+                                               const crh_segment_spec_opt &prm_segment_spec ///< The crh_segment_spec to apply
                                                ) {
 	return 
-		( arg_segment_spec && get_length( arg_seg ) >= arg_segment_spec->get_min_seg_length() )
-			? make_optional( trim_seq_seg_copy( arg_seg, arg_segment_spec->get_overlap_trim_spec() ) )
+		( prm_segment_spec && get_length( prm_seg ) >= prm_segment_spec->get_min_seg_length() )
+			? make_optional( trim_seq_seg_copy( prm_seg, prm_segment_spec->get_overlap_trim_spec() ) )
 			: none;
 }
 
@@ -79,9 +79,9 @@ seq_seg_opt cath::rslv::apply_spec_to_seg_copy(const seq_seg              &arg_s
 ///        (where the result is none iff the input is none)
 ///
 /// \relates crh_segment_spec
-trim_spec_opt cath::rslv::get_trim_spec_opt(const crh_segment_spec_opt &arg_crh_segment_spec ///< The optional crh_segment_spec from which to make an optional trim_spec
+trim_spec_opt cath::rslv::get_trim_spec_opt(const crh_segment_spec_opt &prm_crh_segment_spec ///< The optional crh_segment_spec from which to make an optional trim_spec
                                             ) {
-	return arg_crh_segment_spec
-		? make_optional( arg_crh_segment_spec->get_overlap_trim_spec() )
+	return prm_crh_segment_spec
+		? make_optional( prm_crh_segment_spec->get_overlap_trim_spec() )
 		: none;
 }

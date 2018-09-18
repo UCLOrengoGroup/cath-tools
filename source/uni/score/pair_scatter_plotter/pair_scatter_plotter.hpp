@@ -41,14 +41,14 @@ namespace cath {
 		public:
 
 			template <typename T>
-			void plot(const boost::filesystem::path &arg_output_file_stem, ///< TODOCUMENT
-			          const std::vector<T>          &arg_data,             ///< TODOCUMENT
-			          const std::string             &arg_x_axis_label,     ///< TODOCUMENT
-			          const std::string             &arg_y_axis_label      ///< TODOCUMENT
+			void plot(const boost::filesystem::path &prm_output_file_stem, ///< TODOCUMENT
+			          const std::vector<T>          &prm_data,             ///< TODOCUMENT
+			          const std::string             &prm_x_axis_label,     ///< TODOCUMENT
+			          const std::string             &prm_y_axis_label      ///< TODOCUMENT
 			          ) const {
-				const auto gnuplot_file  = common::replace_extension_copy( arg_output_file_stem, ".gnuplot"  );
-				const auto eps_file      = common::replace_extension_copy( arg_output_file_stem, ".eps"      );
-				const auto the_data_file = common::replace_extension_copy( arg_output_file_stem, ".data.txt" );
+				const auto gnuplot_file  = common::replace_extension_copy( prm_output_file_stem, ".gnuplot"  );
+				const auto eps_file      = common::replace_extension_copy( prm_output_file_stem, ".eps"      );
+				const auto the_data_file = common::replace_extension_copy( prm_output_file_stem, ".data.txt" );
 
 				const auto gnuplot_pipe = suppress_execution ? std::string( " > /dev/null " )
 				                                             : std::string( " | gnuplot "   );
@@ -64,8 +64,8 @@ namespace cath {
 				gp << "set   output " << eps_file << "\n";
 
 			//	gp << "set title  'Some ROC curves'\n";
-				gp << "set xlabel '" << arg_x_axis_label << R"(' font "Helvetica,20")" << "\n";
-				gp << "set ylabel '" << arg_y_axis_label << R"(' font "Helvetica,20")" << "\n";
+				gp << "set xlabel '" << prm_x_axis_label << R"(' font "Helvetica,20")" << "\n";
+				gp << "set ylabel '" << prm_y_axis_label << R"(' font "Helvetica,20")" << "\n";
 
 				gp << R"(
 set size square 2,2
@@ -88,7 +88,7 @@ set xtics font "Helvetica,18"
 set ytics font "Helvetica,18"
 			)";
 
-				gp << "plot " << gp.file1d( arg_data, the_data_file.string() ) + " with points \n";
+				gp << "plot " << gp.file1d( prm_data, the_data_file.string() ) + " with points \n";
 			}
 
 		};

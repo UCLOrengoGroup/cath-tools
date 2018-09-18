@@ -36,22 +36,22 @@ using boost::irange;
 using boost::lexical_cast;
 
 /// \brief TODOCUMENT
-size_t cath::common::batch_size(const size_t           &arg_num_items,       ///< TODOCUMENT
-                                const size_t           &arg_num_batches,     ///< TODOCUMENT
-                                const broken_batch_tol &arg_broken_batch_tol ///< TODOCUMENT
+size_t cath::common::batch_size(const size_t           &prm_num_items,       ///< TODOCUMENT
+                                const size_t           &prm_num_batches,     ///< TODOCUMENT
+                                const broken_batch_tol &prm_broken_batch_tol ///< TODOCUMENT
                                 ) {
-	if ( arg_num_batches == 0 ) {
+	if ( prm_num_batches == 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot form zero batches of size zero"));
 	}
 
-	const size_t batch_size_if_not_broken = arg_num_items / arg_num_batches;
-	if ( arg_num_items % arg_num_batches == 0 ) {
+	const size_t batch_size_if_not_broken = prm_num_items / prm_num_batches;
+	if ( prm_num_items % prm_num_batches == 0 ) {
 		return batch_size_if_not_broken;
 	}
-	if ( arg_broken_batch_tol == broken_batch_tol::FORBID ) {
+	if ( prm_broken_batch_tol == broken_batch_tol::FORBID ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
-			"Batching "      + lexical_cast<string>( arg_num_items   )
-			+ " items into " + lexical_cast<string>( arg_num_batches )
+			"Batching "      + lexical_cast<string>( prm_num_items   )
+			+ " items into " + lexical_cast<string>( prm_num_batches )
 			+ " batches leaves a broken batch, which has been forbidden"
 		));
 	}
@@ -59,22 +59,22 @@ size_t cath::common::batch_size(const size_t           &arg_num_items,       ///
 }
 
 /// \brief TODOCUMENT
-size_t cath::common::num_batches(const size_t           &arg_num_items,       ///< TODOCUMENT
-                                 const size_t           &arg_batch_size,      ///< TODOCUMENT
-                                 const broken_batch_tol &arg_broken_batch_tol ///< TODOCUMENT
+size_t cath::common::num_batches(const size_t           &prm_num_items,       ///< TODOCUMENT
+                                 const size_t           &prm_batch_size,      ///< TODOCUMENT
+                                 const broken_batch_tol &prm_broken_batch_tol ///< TODOCUMENT
                                  ) {
-	if ( arg_batch_size == 0 ) {
+	if ( prm_batch_size == 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot form batches of size zero"));
 	}
 
-	const size_t num_full_batches = arg_num_items / arg_batch_size;
-	if ( arg_num_items % arg_batch_size == 0 ) {
+	const size_t num_full_batches = prm_num_items / prm_batch_size;
+	if ( prm_num_items % prm_batch_size == 0 ) {
 		return num_full_batches;
 	}
-	if ( arg_broken_batch_tol == broken_batch_tol::FORBID ) {
+	if ( prm_broken_batch_tol == broken_batch_tol::FORBID ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
-			"Batching "                      + lexical_cast<string>( arg_num_items  )
-			+ " items into batches of size " + lexical_cast<string>( arg_batch_size )
+			"Batching "                      + lexical_cast<string>( prm_num_items  )
+			+ " items into batches of size " + lexical_cast<string>( prm_batch_size )
 			+ " leaves a broken batch, which has been forbidden"
 		));
 	}
@@ -83,16 +83,16 @@ size_t cath::common::num_batches(const size_t           &arg_num_items,       //
 
 
 /// \brief TODOCUMENT
-void cath::common::check_batch_index(const size_t           &arg_num_items,       ///< TODOCUMENT
-                                     const size_t           &arg_batch_size,      ///< TODOCUMENT
-                                     const size_t           &arg_batch_index,     ///< TODOCUMENT
-                                     const broken_batch_tol &arg_broken_batch_tol ///< TODOCUMENT
+void cath::common::check_batch_index(const size_t           &prm_num_items,       ///< TODOCUMENT
+                                     const size_t           &prm_batch_size,      ///< TODOCUMENT
+                                     const size_t           &prm_batch_index,     ///< TODOCUMENT
+                                     const broken_batch_tol &prm_broken_batch_tol ///< TODOCUMENT
                                      ) {
-	const size_t number_of_batches = num_batches( arg_num_items, arg_batch_size, arg_broken_batch_tol );
-	if ( arg_batch_index >= number_of_batches ) {
+	const size_t number_of_batches = num_batches( prm_num_items, prm_batch_size, prm_broken_batch_tol );
+	if ( prm_batch_index >= number_of_batches ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Batch index "
-			+ lexical_cast<string>( arg_batch_index   )
+			+ lexical_cast<string>( prm_batch_index   )
 			+ " should be less than the number of batches ("
 			+ lexical_cast<string>( number_of_batches )
 			+ ")"
@@ -101,62 +101,62 @@ void cath::common::check_batch_index(const size_t           &arg_num_items,     
 }
 
 /// \brief TODOCUMENT
-size_t cath::common::batch_begin(const size_t           &arg_num_items,       ///< TODOCUMENT
-                                 const size_t           &arg_batch_size,      ///< TODOCUMENT
-                                 const size_t           &arg_batch_index,     ///< TODOCUMENT
-                                 const broken_batch_tol &arg_broken_batch_tol ///< TODOCUMENT
+size_t cath::common::batch_begin(const size_t           &prm_num_items,       ///< TODOCUMENT
+                                 const size_t           &prm_batch_size,      ///< TODOCUMENT
+                                 const size_t           &prm_batch_index,     ///< TODOCUMENT
+                                 const broken_batch_tol &prm_broken_batch_tol ///< TODOCUMENT
                                  ) {
-	check_batch_index( arg_num_items, arg_batch_size, arg_batch_index, arg_broken_batch_tol );
-	return arg_batch_index * arg_batch_size;
+	check_batch_index( prm_num_items, prm_batch_size, prm_batch_index, prm_broken_batch_tol );
+	return prm_batch_index * prm_batch_size;
 }
 
 /// \brief TODOCUMENT
 ///
 /// Note: The end value is one-past-the-last-value (like C++ iterators)
-size_t cath::common::batch_end(const size_t           &arg_num_items,       ///< TODOCUMENT
-                               const size_t           &arg_batch_size,      ///< TODOCUMENT
-                               const size_t           &arg_batch_index,     ///< TODOCUMENT
-                               const broken_batch_tol &arg_broken_batch_tol ///< TODOCUMENT
+size_t cath::common::batch_end(const size_t           &prm_num_items,       ///< TODOCUMENT
+                               const size_t           &prm_batch_size,      ///< TODOCUMENT
+                               const size_t           &prm_batch_index,     ///< TODOCUMENT
+                               const broken_batch_tol &prm_broken_batch_tol ///< TODOCUMENT
                                ) {
-	const size_t begin = batch_begin( arg_num_items, arg_batch_size, arg_batch_index, arg_broken_batch_tol );
-	return min( arg_num_items, begin + arg_batch_size );
+	const size_t begin = batch_begin( prm_num_items, prm_batch_size, prm_batch_index, prm_broken_batch_tol );
+	return min( prm_num_items, begin + prm_batch_size );
 }
 
 /// \brief TODOCUMENT
 ///
 /// Note: The end value is one-past-the-last-value (like C++ iterators)
-size_size_pair cath::common::batch_begin_and_end(const size_t           &arg_num_items,       ///< TODOCUMENT
-                                                 const size_t           &arg_batch_size,      ///< TODOCUMENT
-                                                 const size_t           &arg_batch_index,     ///< TODOCUMENT
-                                                 const broken_batch_tol &arg_broken_batch_tol ///< TODOCUMENT
+size_size_pair cath::common::batch_begin_and_end(const size_t           &prm_num_items,       ///< TODOCUMENT
+                                                 const size_t           &prm_batch_size,      ///< TODOCUMENT
+                                                 const size_t           &prm_batch_index,     ///< TODOCUMENT
+                                                 const broken_batch_tol &prm_broken_batch_tol ///< TODOCUMENT
                                                  ) {
-	const size_t begin = batch_begin( arg_num_items, arg_batch_size, arg_batch_index, arg_broken_batch_tol );
-	const size_t end   = batch_end  ( arg_num_items, arg_batch_size, arg_batch_index, arg_broken_batch_tol );
+	const size_t begin = batch_begin( prm_num_items, prm_batch_size, prm_batch_index, prm_broken_batch_tol );
+	const size_t end   = batch_end  ( prm_num_items, prm_batch_size, prm_batch_index, prm_broken_batch_tol );
 	assert( begin < end );
 	return make_pair( begin, end );
 }
 
 /// \brief TODOCUMENT
-size_size_pair cath::common::batch_start_and_stop(const size_t           &arg_num_items,       ///< TODOCUMENT
-                                                  const size_t           &arg_batch_size,      ///< TODOCUMENT
-                                                  const size_t           &arg_batch_index,     ///< TODOCUMENT
-                                                  const broken_batch_tol &arg_broken_batch_tol ///< TODOCUMENT
+size_size_pair cath::common::batch_start_and_stop(const size_t           &prm_num_items,       ///< TODOCUMENT
+                                                  const size_t           &prm_batch_size,      ///< TODOCUMENT
+                                                  const size_t           &prm_batch_index,     ///< TODOCUMENT
+                                                  const broken_batch_tol &prm_broken_batch_tol ///< TODOCUMENT
                                                   ) {
-	const size_size_pair begin_and_end = batch_begin_and_end( arg_num_items, arg_batch_size, arg_batch_index, arg_broken_batch_tol );
+	const size_size_pair begin_and_end = batch_begin_and_end( prm_num_items, prm_batch_size, prm_batch_index, prm_broken_batch_tol );
 	return make_pair( begin_and_end.first, begin_and_end.second - 1 );
 }
 
 /// \brief Return an range of the integers in the batch of the specified settings
-integer_range<size_t> cath::common::batch_irange(const size_t           &arg_num_items,       ///< The total number of items
-                                                 const size_t           &arg_batch_size,      ///< The size of the batch
-                                                 const size_t           &arg_batch_index,     ///< The index of the batch whose indices should be returned
-                                                 const broken_batch_tol &arg_broken_batch_tol ///< Whether to tolerate a broken batch at the end
+integer_range<size_t> cath::common::batch_irange(const size_t           &prm_num_items,       ///< The total number of items
+                                                 const size_t           &prm_batch_size,      ///< The size of the batch
+                                                 const size_t           &prm_batch_index,     ///< The index of the batch whose indices should be returned
+                                                 const broken_batch_tol &prm_broken_batch_tol ///< Whether to tolerate a broken batch at the end
                                                  ) {
 	const auto begin_and_end = batch_begin_and_end(
-		arg_num_items,
-		arg_batch_size,
-		arg_batch_index,
-		arg_broken_batch_tol
+		prm_num_items,
+		prm_batch_size,
+		prm_batch_index,
+		prm_broken_batch_tol
 	);
 	return irange( begin_and_end.first, begin_and_end.second );
 }

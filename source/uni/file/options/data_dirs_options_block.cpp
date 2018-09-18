@@ -93,8 +93,8 @@ string data_dirs_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 ///
 /// This adds one entry for each of the file types for each of the option types
-void data_dirs_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void data_dirs_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	// Loop over each of the data option types (path, prefix, suffix) and grab the data_option and suffix string
 	for (const data_option_str_pair &data_option_suffix_pair : DATA_OPTION_SUFFIXES) {
@@ -121,7 +121,7 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
 			const string    &varname       = DATA_OPTION_VARNAME.at( the_data_option );
 
 			// Add a new option, using the accumulated data
-			arg_desc.add_options()
+			prm_desc.add_options()
 				(
 					option_name.c_str(),
 					value<string>()
@@ -135,12 +135,12 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
 }
 
 /// \brief Add any hidden options to the provided options_description
-void data_dirs_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void data_dirs_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	const string rootdir_valname = "<dir>";
 	const auto cath_root_dir_notifier = [&] (const path &x) { the_data_dirs_spec.set_cath_root_dir( x ); };
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_CATH_ROOT_DIR.c_str(),
 			value<path>()
@@ -155,7 +155,7 @@ void data_dirs_options_block::do_add_hidden_options_to_description(options_descr
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts
-str_opt data_dirs_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt data_dirs_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 	const auto &cath_root_dir = the_data_dirs_spec.get_cath_root_dir();
 	if ( ! cath_root_dir.empty() &&  ! is_acceptable_input_dir( cath_root_dir ) ) {

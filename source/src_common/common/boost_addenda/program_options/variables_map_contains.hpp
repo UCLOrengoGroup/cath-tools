@@ -27,10 +27,10 @@ namespace cath {
 	namespace common {
 
 		/// \brief Return whether the specified key is in the specified variables_map
-		inline bool contains(const boost::program_options::variables_map &arg_vm, ///< The variables_map to query
-		                     const std::string                           &arg_key ///< The key to search for
+		inline bool contains(const boost::program_options::variables_map &prm_vm, ///< The variables_map to query
+		                     const std::string                           &prm_key ///< The key to search for
 		                     ) {
-			return ( arg_vm.count( arg_key ) > 0 );
+			return ( prm_vm.count( prm_key ) > 0 );
 		}
 
 	} // namespace common

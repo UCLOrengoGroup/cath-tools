@@ -37,37 +37,37 @@ using std::ifstream;
 using std::string;
 
 /// \brief Ctor for string_matches_file
-string_matches_file::string_matches_file(const bootstrap_mode &arg_bootstrapping,  ///< TODOCUMENT
-                                         const str_size_type  &arg_diff_half_width ///< TODOCUMENT
-                                         ) : bootstrapping   { arg_bootstrapping   },
-                                             diff_half_width { arg_diff_half_width } {
+string_matches_file::string_matches_file(const bootstrap_mode &prm_bootstrapping,  ///< TODOCUMENT
+                                         const str_size_type  &prm_diff_half_width ///< TODOCUMENT
+                                         ) : bootstrapping   { prm_bootstrapping   },
+                                             diff_half_width { prm_diff_half_width } {
 }
 
 /// \brief Ctor for string_matches_file
-string_matches_file::string_matches_file(const str_size_type &arg_diff_half_width ///< TODOCUMENT
-                                         ) : diff_half_width { arg_diff_half_width } {
+string_matches_file::string_matches_file(const str_size_type &prm_diff_half_width ///< TODOCUMENT
+                                         ) : diff_half_width { prm_diff_half_width } {
 }
 
 /// \brief TODOCUMENT
-predicate_result string_matches_file::operator()(const string &arg_got_string, ///< TODOCUMENT
-                                                 const path   &arg_filename    ///< TODOCUMENT
+predicate_result string_matches_file::operator()(const string &prm_got_string, ///< TODOCUMENT
+                                                 const path   &prm_filename    ///< TODOCUMENT
                                                  ) const {
-	const string expected_file = slurp( arg_filename );
+	const string expected_file = slurp( prm_filename );
 
 	const string got_name{ "got string" };
 
 	const predicate_result the_result = test::detail::strings_equal(
-		arg_got_string,
+		prm_got_string,
 		got_name,
 		expected_file,
-		files_equal::FILENAME_NAME_PREFIX + arg_filename.string(),
+		files_equal::FILENAME_NAME_PREFIX + prm_filename.string(),
 		diff_half_width
 	);
 
 	// If `should_overwrite( bootstrapping )` and the result is negative,
-	// overwrite the expected (arg_filename) with the got (arg_got_string)
+	// overwrite the expected (prm_filename) with the got (prm_got_string)
 	if ( ! the_result && should_overwrite( bootstrapping ) ) {
-		spew( arg_filename, arg_got_string );
+		spew( prm_filename, prm_got_string );
 	}
 
 	return the_result;

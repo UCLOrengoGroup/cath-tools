@@ -51,19 +51,19 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename IDX>
-			pair_scan_action<IDX>::pair_scan_action(const IDX                 &arg_index,      ///< TODOCUMENT
-			                                        const vcie_match_criteria &arg_criteria,   ///< TODOCUMENT
-			                                        quad_find_action          &arg_quad_action ///< TODOCUMENT
-			                                        ) : index      ( arg_index       ),
-			                                            criteria   ( arg_criteria    ),
-			                                            quad_action( arg_quad_action ) {
+			pair_scan_action<IDX>::pair_scan_action(const IDX                 &prm_index,      ///< TODOCUMENT
+			                                        const vcie_match_criteria &prm_criteria,   ///< TODOCUMENT
+			                                        quad_find_action          &prm_quad_action ///< TODOCUMENT
+			                                        ) : index      ( prm_index       ),
+			                                            criteria   ( prm_criteria    ),
+			                                            quad_action( prm_quad_action ) {
 			}
 
 			/// \brief TODOCUMENT
 			template <typename IDX>
-			inline void pair_scan_action<IDX>::operator()(const view_cache_index_entry &arg_entry ///< TODOCUMENT
+			inline void pair_scan_action<IDX>::operator()(const view_cache_index_entry &prm_entry ///< TODOCUMENT
 			                                              ) const {
-				index.perform_action_on_matches( arg_entry, criteria, quad_action );
+				index.perform_action_on_matches( prm_entry, criteria, quad_action );
 			}
 
 		} // namespace detail

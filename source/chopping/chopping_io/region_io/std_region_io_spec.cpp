@@ -23,6 +23,6 @@
 using namespace cath::chop;
 
 /// \brief Ctor from a chopping_format
-std_region_io_spec::std_region_io_spec(const chopping_format &arg_chopping_format ///< TODOCUMENT
-                                       ) : chopping_format_ptr( arg_chopping_format.clone() ) {
+std_region_io_spec::std_region_io_spec(const chopping_format &prm_chopping_format ///< TODOCUMENT
+                                       ) : chopping_format_ptr( prm_chopping_format.clone() ) {
 }

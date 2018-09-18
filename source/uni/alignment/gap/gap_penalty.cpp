@@ -26,10 +26,10 @@ using namespace cath::align::gap;
 // using namespace std;
 
 /// \brief Ctor for gap_penalty
-gap_penalty::gap_penalty(const score_type &arg_open_gap_penalty,  ///< TODOCUMENT
-                         const score_type &arg_extend_gap_penalty ///< TODOCUMENT
-                         ) : open_gap_penalty  ( arg_open_gap_penalty   ),
-                             extend_gap_penalty( arg_extend_gap_penalty ) {
+gap_penalty::gap_penalty(const score_type &prm_open_gap_penalty,  ///< TODOCUMENT
+                         const score_type &prm_extend_gap_penalty ///< TODOCUMENT
+                         ) : open_gap_penalty  ( prm_open_gap_penalty   ),
+                             extend_gap_penalty( prm_extend_gap_penalty ) {
 }
 
 /// \brief TODOCUMENT

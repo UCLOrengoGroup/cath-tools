@@ -79,9 +79,9 @@ tribool lddt_score::do_higher_is_better() const {
 }
 
 /// \brief Concrete implementation for calculating the SAS of an alignment
-score_value lddt_score::do_calculate(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                     const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                     const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+score_value lddt_score::do_calculate(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                     const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                     const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                      ) const {
 	// As described in the paper, use a R_0 value of 15.0 angstroms
 	const score_value R_0 = 15.0;
@@ -91,9 +91,9 @@ score_value lddt_score::do_calculate(const alignment &arg_alignment, ///< The pa
 
 	// Extract the common coordinates to be chosen
 	const pair<coord_list_vec, coord_list_vec> common_coords_by_residue = the_coord_handler.get_common_coords_by_residue(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b
 	);
 
 	// Check that there are some coords
@@ -209,24 +209,24 @@ string lddt_score::do_reference() const {
 }
 
 ///// \brief Build an aligned_pair_score of this concrete type from a short_name_spec string
-//unique_ptr<aligned_pair_score> lddt_score::do_build_from_short_name_spec(const string &arg_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
+//unique_ptr<aligned_pair_score> lddt_score::do_build_from_short_name_spec(const string &prm_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
 //                                                                         ) const {
-//	cerr << "Should build a lddt_score from string \"" << arg_short_name_spec << "\"" << endl;
+//	cerr << "Should build a lddt_score from string \"" << prm_short_name_spec << "\"" << endl;
 //	return clone();
 //}
 
 /// \brief TODOCUMENT
-bool lddt_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool lddt_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                      ) const {
-	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 	return ( *this < casted_aligned_pair_score );
 }
 
 /// \brief Initialise the actual numeric thresholds over which the results should be averages
 ///        based on the specified policy
-void lddt_score::init_distance_threshold_values(const lddt_distance_threshold &arg_distance_threshold ///< TODOCUMENT
+void lddt_score::init_distance_threshold_values(const lddt_distance_threshold &prm_distance_threshold ///< TODOCUMENT
                                                 ) {
-	switch (arg_distance_threshold) {
+	switch (prm_distance_threshold) {
 		case ( lddt_distance_threshold::DEFAULT_AVG ) : {
 			threshold_values = { 0.5, 1.0, 2.0, 4.0 };
 			return;
@@ -259,17 +259,17 @@ lddt_score::lddt_score() {
 
 /// \brief Ctor for lddt_score that allows the caller to specify the distance threshold
 ///        but just use sensible defaults for the common_residue_selection_policy and common_atom_selection_policy
-lddt_score::lddt_score(const lddt_distance_threshold &arg_distance_threshold ///< The standard lDDT distance threshold that should be used
+lddt_score::lddt_score(const lddt_distance_threshold &prm_distance_threshold ///< The standard lDDT distance threshold that should be used
                        ) {
-	init_distance_threshold_values( arg_distance_threshold );
+	init_distance_threshold_values( prm_distance_threshold );
 }
 
 /// \brief Ctor for lddt_score that allows the caller to specify the common_residue_selection_policy and common_atom_selection_policy
-lddt_score::lddt_score(const lddt_distance_threshold         &arg_distance_threshold, ///< The standard lDDT distance threshold that should be used
-                       const common_residue_selection_policy &arg_comm_res_seln_pol,  ///< The policy to use for selecting common residues
-                       const common_atom_selection_policy    &arg_comm_atom_seln_pol  ///< The policy to use for selecting common atoms
-                       ) : the_coord_handler( arg_comm_res_seln_pol, arg_comm_atom_seln_pol ) {
-	init_distance_threshold_values( arg_distance_threshold );
+lddt_score::lddt_score(const lddt_distance_threshold         &prm_distance_threshold, ///< The standard lDDT distance threshold that should be used
+                       const common_residue_selection_policy &prm_comm_res_seln_pol,  ///< The policy to use for selecting common residues
+                       const common_atom_selection_policy    &prm_comm_atom_seln_pol  ///< The policy to use for selecting common atoms
+                       ) : the_coord_handler( prm_comm_res_seln_pol, prm_comm_atom_seln_pol ) {
+	init_distance_threshold_values( prm_distance_threshold );
 }
 
 /// \brief TODOCUMENT
@@ -285,10 +285,10 @@ const score_common_coord_handler & lddt_score::get_score_common_coord_handler() 
 /// \brief TODOCUMENT
 ///
 /// \relates lddt_score
-bool cath::score::operator<(const lddt_score &arg_lddt_score_a, ///< TODOCUMENT
-                            const lddt_score &arg_lddt_score_b  ///< TODOCUMENT
+bool cath::score::operator<(const lddt_score &prm_lddt_score_a, ///< TODOCUMENT
+                            const lddt_score &prm_lddt_score_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_lddt_score_a, arg_lddt_score_b );
+	auto the_helper = make_less_than_helper( prm_lddt_score_a, prm_lddt_score_b );
 	the_helper.register_comparison_field( &lddt_score::get_threshold_values           );
 	the_helper.register_comparison_field( &lddt_score::get_score_common_coord_handler );
 	return final_less_than_result( the_helper );
@@ -297,9 +297,9 @@ bool cath::score::operator<(const lddt_score &arg_lddt_score_a, ///< TODOCUMENT
 /// \brief Get a string that summarises the lDDT threshold policy being used by the specified lddt_score
 ///
 /// \relates lddt_score
-string cath::score::get_thresholds_summary_string(const lddt_score &arg_lddt_score ///< TODOCUMENT
+string cath::score::get_thresholds_summary_string(const lddt_score &prm_lddt_score ///< TODOCUMENT
                                                   ) {
-	const doub_vec &the_thresholds = arg_lddt_score.get_threshold_values();
+	const doub_vec &the_thresholds = prm_lddt_score.get_threshold_values();
 	if ( the_thresholds.size() == 1 ) {
 		return lexical_cast<string>( the_thresholds.front() );
 	}

@@ -60,7 +60,7 @@ namespace cath {
 			                                 const residue_name &);
 
 			std::ostream & operator<<(std::ostream &,
-			                          const residue_name_align_map &arg_residue_name_align_map);
+			                          const residue_name_align_map &prm_residue_name_align_map);
 		} // namespace detail
 	} // namespace align
 } // namespace cath

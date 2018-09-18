@@ -68,12 +68,12 @@ namespace cath {
 			template <spanning_tree_dirn Dirn,
 			          typename EdgeRng,
 			          typename WeightRng>
-			edge_wght_tpl_vec_t<EdgeRng, WeightRng> calc_spanning_tree_impl(const EdgeRng   &arg_edges,    ///< The range of edges
-			                                                                const WeightRng &arg_weights,  ///< The range of weights
-			                                                                const size_t    &arg_num_items ///< The number of items to be spanned
+			edge_wght_tpl_vec_t<EdgeRng, WeightRng> calc_spanning_tree_impl(const EdgeRng   &prm_edges,    ///< The range of edges
+			                                                                const WeightRng &prm_weights,  ///< The range of weights
+			                                                                const size_t    &prm_num_items ///< The number of items to be spanned
 			                                                                ) {
 				// If there are zero/one items, just return empty
-				if ( arg_num_items <= 1 ) {
+				if ( prm_num_items <= 1 ) {
 					return {};
 				}
 
@@ -87,26 +87,26 @@ namespace cath {
 				>;
 				using edge_desc = edge_descriptor_t<graph>;
 
-				const auto transformed_weights = arg_weights | boost::adaptors::transformed( [] (const range_value_t< WeightRng> &x) {
+				const auto transformed_weights = prm_weights | boost::adaptors::transformed( [] (const range_value_t< WeightRng> &x) {
 					return ( Dirn == spanning_tree_dirn::MAX ) ? -x : x;
 				} );
 
 				// Construct a graph from the edges and weights
 				const graph my_graph(
-					common::cbegin( arg_edges           ),
-					common::cend  ( arg_edges           ),
+					common::cbegin( prm_edges           ),
+					common::cend  ( prm_edges           ),
 					common::cbegin( transformed_weights ),
-					arg_num_items
+					prm_num_items
 				);
 
 				// Call kruskal_minimum_spanning_tree() to construct the spanning tree
 				std::vector<edge_desc> spanning_tree;
-				spanning_tree.reserve( arg_num_items );
+				spanning_tree.reserve( prm_num_items );
 				kruskal_minimum_spanning_tree( my_graph, back_inserter( spanning_tree ) );
 
 				// If the number of results edges isn't one less than the number of items, then it was not
 				// possible to find a single tree to span all items so throw an exception
-				if ( spanning_tree.size() + 1 != arg_num_items ) {
+				if ( spanning_tree.size() + 1 != prm_num_items ) {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to find tree to span all items"));
 				}
 
@@ -142,14 +142,14 @@ namespace cath {
 		///        for the specified number of items
 		template <typename EdgeRng,
 		          typename WeightRng>
-		detail::edge_wght_tpl_vec_t<EdgeRng, WeightRng> calc_min_spanning_tree(const EdgeRng   &arg_edges,    ///< The range of edges
-		                                                                       const WeightRng &arg_weights,  ///< The range of weights
-		                                                                       const size_t    &arg_num_items ///< The number of items to be spanned
+		detail::edge_wght_tpl_vec_t<EdgeRng, WeightRng> calc_min_spanning_tree(const EdgeRng   &prm_edges,    ///< The range of edges
+		                                                                       const WeightRng &prm_weights,  ///< The range of weights
+		                                                                       const size_t    &prm_num_items ///< The number of items to be spanned
 		                                                                       ) {
 			return detail::calc_spanning_tree_impl<detail::spanning_tree_dirn::MIN>(
-				arg_edges,
-				arg_weights,
-				arg_num_items
+				prm_edges,
+				prm_weights,
+				prm_num_items
 			);
 		}
 
@@ -157,14 +157,14 @@ namespace cath {
 		///        for the specified number of items
 		template <typename EdgeRng,
 		          typename WeightRng>
-		detail::edge_wght_tpl_vec_t<EdgeRng, WeightRng> calc_max_spanning_tree(const EdgeRng   &arg_edges,    ///< The range of edges
-		                                                                       const WeightRng &arg_weights,  ///< The range of weights
-		                                                                       const size_t    &arg_num_items ///< The number of items to be spanned
+		detail::edge_wght_tpl_vec_t<EdgeRng, WeightRng> calc_max_spanning_tree(const EdgeRng   &prm_edges,    ///< The range of edges
+		                                                                       const WeightRng &prm_weights,  ///< The range of weights
+		                                                                       const size_t    &prm_num_items ///< The number of items to be spanned
 		                                                                       ) {
 			return detail::calc_spanning_tree_impl<detail::spanning_tree_dirn::MAX>(
-				arg_edges,
-				arg_weights,
-				arg_num_items
+				prm_edges,
+				prm_weights,
+				prm_num_items
 			);
 		}
 

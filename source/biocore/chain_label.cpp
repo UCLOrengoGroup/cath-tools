@@ -36,9 +36,9 @@ string chain_label::to_string() const {
 /// \brief TODOCUMENT
 ///
 /// \relates chain_label
-ostream & cath::operator<<(ostream           &arg_os,         ///< TODOCUMENT
-                           const chain_label &arg_chain_label ///< TODOCUMENT
+ostream & cath::operator<<(ostream           &prm_os,         ///< TODOCUMENT
+                           const chain_label &prm_chain_label ///< TODOCUMENT
                            ) {
-	arg_os << arg_chain_label.to_string();
-	return arg_os;
+	prm_os << prm_chain_label.to_string();
+	return prm_os;
 }

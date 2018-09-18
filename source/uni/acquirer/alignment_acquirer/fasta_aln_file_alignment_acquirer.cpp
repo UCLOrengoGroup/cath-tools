@@ -56,17 +56,17 @@ bool fasta_aln_file_alignment_acquirer::do_requires_backbone_complete_input() co
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context ///< TODOCUMENT
                                                                                                           ) const {
 	// Construct an alignment from the FASTA alignment file
 	const alignment new_alignment = read_alignment_from_fasta_file(
 		get_fasta_alignment_file(),
-		arg_strucs_context.get_pdbs(),
-		get_domain_or_specified_or_from_acq_names( arg_strucs_context.get_name_sets() ),
+		prm_strucs_context.get_pdbs(),
+		get_domain_or_specified_or_from_acq_names( prm_strucs_context.get_name_sets() ),
 		cerr
 	);
 
-	const protein_list proteins_of_pdbs     = build_protein_list( arg_strucs_context );
+	const protein_list proteins_of_pdbs     = build_protein_list( prm_strucs_context );
 	const alignment    scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 	// Return the results
@@ -77,8 +77,8 @@ pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_al
 }
 
 /// \brief Ctor for fasta_aln_file_alignment_acquirer
-fasta_aln_file_alignment_acquirer::fasta_aln_file_alignment_acquirer(const path &arg_fasta_alignment_file ///< TODOCUMENT
-                                                                     ) : fasta_alignment_file(arg_fasta_alignment_file) {
+fasta_aln_file_alignment_acquirer::fasta_aln_file_alignment_acquirer(const path &prm_fasta_alignment_file ///< TODOCUMENT
+                                                                     ) : fasta_alignment_file(prm_fasta_alignment_file) {
 }
 
 /// \brief TODOCUMENT

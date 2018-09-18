@@ -43,10 +43,10 @@ namespace cath {
 				domain_cluster_ids dom_cluster_ids;
 
 				/// \brief Standard ctor so this can be used in emplace_back
-				seq_id_and_domain_cluster_ids_pair(const cluster_id_t &arg_seq_id,
-				                                   domain_cluster_ids  arg_dom_cluster_ids
-				                                   ) : seq_id         { arg_seq_id          },
-				                                       dom_cluster_ids{ arg_dom_cluster_ids } {
+				seq_id_and_domain_cluster_ids_pair(const cluster_id_t &prm_seq_id,
+				                                   domain_cluster_ids  prm_dom_cluster_ids
+				                                   ) : seq_id         { prm_seq_id          },
+				                                       dom_cluster_ids{ prm_dom_cluster_ids } {
 				}
 
 
@@ -89,19 +89,19 @@ namespace cath {
 
 		/// \brief Add a domain with the specified (optional) segments in the specified cluster
 		///        under the specified sequence ID
-		inline clust_entry_problem cluster_domains::add_domain(const cluster_id_t   &arg_seq_id,    ///< The ID of the sequence on which the domain to add appears
-		                                                       seq::seq_seg_run_opt  arg_segments,  ///< The (optional) segments of the domain to add
-		                                                       const cluster_id_t   &arg_cluster_id ///< The cluster ID of the domain to add
+		inline clust_entry_problem cluster_domains::add_domain(const cluster_id_t   &prm_seq_id,    ///< The ID of the sequence on which the domain to add appears
+		                                                       seq::seq_seg_run_opt  prm_segments,  ///< The (optional) segments of the domain to add
+		                                                       const cluster_id_t   &prm_cluster_id ///< The cluster ID of the domain to add
 		                                                       ) {
 			// Use the unordered map to find the correct seq_id_and_domain_cluster_ids_pair_vec for this seq_id
-			// std::cerr << "Looking for seq_id " << arg_seq_id << "\n";
-			const auto index_find_itr = index_of_seq_id.find( arg_seq_id );
+			// std::cerr << "Looking for seq_id " << prm_seq_id << "\n";
+			const auto index_find_itr = index_of_seq_id.find( prm_seq_id );
 			auto &the_pair = ( index_find_itr != common::cend( index_of_seq_id ) )
 				? seq_domains[ index_find_itr->second ]
 				: [&] () -> decltype( auto ) {
 					const size_t new_index = seq_domains.size();
-					seq_domains.emplace_back( arg_seq_id, domain_cluster_ids{} );
-					index_of_seq_id.emplace( arg_seq_id, new_index );
+					seq_domains.emplace_back( prm_seq_id, domain_cluster_ids{} );
+					index_of_seq_id.emplace( prm_seq_id, new_index );
 					return seq_domains.back();
 				} ();
 
@@ -109,12 +109,12 @@ namespace cath {
 			auto &the_domain_cluster_ids = the_pair.dom_cluster_ids;
 
 			for (const auto &the_domain_cluster_id : the_domain_cluster_ids) {
-				const auto intrcn = interaction( arg_segments, the_domain_cluster_id.segments );
+				const auto intrcn = interaction( prm_segments, the_domain_cluster_id.segments );
 				if ( intrcn != clust_entry_problem::NONE ) {
 					return intrcn;
 				}
 			}
-			the_domain_cluster_ids.emplace_back( arg_segments, arg_cluster_id );
+			the_domain_cluster_ids.emplace_back( prm_segments, prm_cluster_id );
 			return clust_entry_problem::NONE;
 		}
 
@@ -129,9 +129,9 @@ namespace cath {
 		}
 
 		/// \brief Get the domain_cluster_ids associated with the specified seq ID
-		inline const domain_cluster_ids & cluster_domains::domain_cluster_ids_of_seq_id(const cluster_id_t &arg_seq_id ///< The ID of the sequence to query
+		inline const domain_cluster_ids & cluster_domains::domain_cluster_ids_of_seq_id(const cluster_id_t &prm_seq_id ///< The ID of the sequence to query
 		                                                                                ) const {
-			return seq_domains[ index_of_seq_id.find( arg_seq_id )->second ].dom_cluster_ids;
+			return seq_domains[ index_of_seq_id.find( prm_seq_id )->second ].dom_cluster_ids;
 		}
 
 		/// \brief Return whether this is empty

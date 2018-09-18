@@ -82,23 +82,23 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline orientation_covering_with_radius<T>::orientation_covering_with_radius(const angle<T> &arg_search_radius ///< TODOCUMENT
-		                                                                             ) : search_radius   ( arg_search_radius ),
+		inline orientation_covering_with_radius<T>::orientation_covering_with_radius(const angle<T> &prm_search_radius ///< TODOCUMENT
+		                                                                             ) : search_radius   ( prm_search_radius ),
 		                                                                                 cell_neighbours ( calc_neighbours( the_covering, search_radius ) ) {
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline uint8_t orientation_covering_with_radius<T>::get_closest_neighbour(const quat_rot_impl<T> &arg_orientation ///< TODOCUMENT
+		inline uint8_t orientation_covering_with_radius<T>::get_closest_neighbour(const quat_rot_impl<T> &prm_orientation ///< TODOCUMENT
 		                                                                          ) const {
-			return get_closest_neighbour( the_covering, arg_orientation );
+			return get_closest_neighbour( the_covering, prm_orientation );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline uint8_vec orientation_covering_with_radius<T>::get_closest_neighbours(const quat_rot_impl<T> &arg_orientation ///< TODOCUMENT
+		inline uint8_vec orientation_covering_with_radius<T>::get_closest_neighbours(const quat_rot_impl<T> &prm_orientation ///< TODOCUMENT
 		                                                                             ) const {
-			return get_closest_neighbours( the_covering, arg_orientation, cell_neighbours, search_radius );
+			return get_closest_neighbours( the_covering, prm_orientation, cell_neighbours, search_radius );
 		}
 
 		/// \brief TODOCUMENT

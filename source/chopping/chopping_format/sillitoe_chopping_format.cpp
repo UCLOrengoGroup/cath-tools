@@ -63,21 +63,21 @@ bool sillitoe_chopping_format::do_represents_fragments() const {
 /// \returns A pair of:
 ///           * a (possibly empty) string_ref containing any name
 ///           * an iterator to the start of the regions part of the string
-pair<string_ref, str_citr> sillitoe_chopping_format::parse_to_start_of_regions(const string &arg_domain_chopping_string ///< The domain chopping string to parse
+pair<string_ref, str_citr> sillitoe_chopping_format::parse_to_start_of_regions(const string &prm_domain_chopping_string ///< The domain chopping string to parse
                                                                                ) {
-	const auto begin_itr = common::cbegin( arg_domain_chopping_string );
-	const auto end_itr   = common::cend  ( arg_domain_chopping_string );
+	const auto begin_itr = common::cbegin( prm_domain_chopping_string );
+	const auto end_itr   = common::cend  ( prm_domain_chopping_string );
 
 	// Check the first character and return if not 'D'
-	if ( arg_domain_chopping_string.empty() ) {
+	if ( prm_domain_chopping_string.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format domain from an empty"));
 	}
-	if ( arg_domain_chopping_string.front() != 'D' ) {
+	if ( prm_domain_chopping_string.front() != 'D' ) {
 		return make_pair( string_ref{}, begin_itr );
 	}
 
 	// Check the second character and return if not '['
-	if ( arg_domain_chopping_string.size() <= 1 ) {
+	if ( prm_domain_chopping_string.size() <= 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format domain from a 'D'-prefixed string with no other characters"));
 	}
 	const auto begin_plus_one_itr = next( begin_itr );
@@ -86,7 +86,7 @@ pair<string_ref, str_citr> sillitoe_chopping_format::parse_to_start_of_regions(c
 	}
 
 	// Check the name
-	if ( arg_domain_chopping_string.size() <= 2 ) {
+	if ( prm_domain_chopping_string.size() <= 2 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format domain from a 'D['-prefixed string with no other characters"));
 	}
 	const auto begin_plus_two_itr = next( begin_plus_one_itr );
@@ -104,13 +104,13 @@ pair<string_ref, str_citr> sillitoe_chopping_format::parse_to_start_of_regions(c
 }
 
 /// \brief TODOCUMENT
-domain sillitoe_chopping_format::do_parse_domain(const string &arg_domain_chopping_string ///< TODOCUMENT
+domain sillitoe_chopping_format::do_parse_domain(const string &prm_domain_chopping_string ///< TODOCUMENT
                                                  ) const {
 	// Parse up to the start of the regions
-	const auto  parsed_start      = parse_to_start_of_regions( arg_domain_chopping_string );
+	const auto  parsed_start      = parse_to_start_of_regions( prm_domain_chopping_string );
 	const auto &name_str_ref      = parsed_start.first;
 	const auto &regions_begin_itr = parsed_start.second;
-	const auto  end_itr           = common::cend    ( arg_domain_chopping_string );
+	const auto  end_itr           = common::cend    ( prm_domain_chopping_string );
 	
 
 	// Parse each of the regions
@@ -130,17 +130,17 @@ domain sillitoe_chopping_format::do_parse_domain(const string &arg_domain_choppi
 }
 
 /// \brief Concrete definition of this chopping_format writes a region to a string
-string sillitoe_chopping_format::do_write_region(const region &arg_region ///< The region to write to a string
+string sillitoe_chopping_format::do_write_region(const region &prm_region ///< The region to write to a string
                                                  ) const {
-	const chain_label_opt &opt_chain_label = arg_region.get_opt_chain_label();
+	const chain_label_opt &opt_chain_label = prm_region.get_opt_chain_label();
 
 	return
 		(
-			arg_region.has_starts_stops()
+			prm_region.has_starts_stops()
 			? (
-				  to_string( get_residue_name( arg_region.get_start_residue() ) )
+				  to_string( get_residue_name( prm_region.get_start_residue() ) )
 				+ "-"
-				+ to_string( get_residue_name( arg_region.get_stop_residue()  ) )
+				+ to_string( get_residue_name( prm_region.get_stop_residue()  ) )
 			)
 			: ""s
 		)
@@ -152,17 +152,17 @@ string sillitoe_chopping_format::do_write_region(const region &arg_region ///< T
 }
 
 /// \brief Concrete definition of this chopping_format writes a domain to a string
-string sillitoe_chopping_format::do_write_domain(const domain &arg_domain ///< The domain to write to a string
+string sillitoe_chopping_format::do_write_domain(const domain &prm_domain ///< The domain to write to a string
                                                  ) const {
 	return
 		"D"
 		+ (
-			arg_domain.get_opt_domain_id()
-			? ( "[" + *arg_domain.get_opt_domain_id() + "]" )
+			prm_domain.get_opt_domain_id()
+			? ( "[" + *prm_domain.get_opt_domain_id() + "]" )
 			: ""s
 		)
 		+ join(
-			arg_domain
+			prm_domain
 				| transformed( [&] (const region &x) { return write_region( x ); } ),
 			","
 		);
@@ -171,29 +171,29 @@ string sillitoe_chopping_format::do_write_domain(const domain &arg_domain ///< T
 /// \brief Parse a segment from the specified segment string
 ///
 /// Example valid inputs: "7-232:K", "1B-99C:S"
-region sillitoe_chopping_format::parse_segment(const string_ref &arg_segment_string ///< The string from which to parse the segment
+region sillitoe_chopping_format::parse_segment(const string_ref &prm_segment_string ///< The string from which to parse the segment
                                                ) const {
 	constexpr char   CHAIN_DELIM_COLON      = ':';
 	constexpr char   RESIDUE_NAME_DELIM     = '-';
 	constexpr size_t CHAIN_DELIM_NEG_OFFSET = 2;
 
-	const auto length = arg_segment_string.length();
+	const auto length = prm_segment_string.length();
 	if ( length < 2 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format segment from a string of fewer than two characters"));
 	}
-	if ( arg_segment_string[ length - CHAIN_DELIM_NEG_OFFSET ] != CHAIN_DELIM_COLON ) {
+	if ( prm_segment_string[ length - CHAIN_DELIM_NEG_OFFSET ] != CHAIN_DELIM_COLON ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format segment from a string that doesn't have a colon in the penultimate character"));
 	}
 
-	const chain_label the_chain_label{ arg_segment_string.back() };
+	const chain_label the_chain_label{ prm_segment_string.back() };
 
 	if ( length == 2 ) {
 		/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 		return region{ the_chain_label };
 	}
 
-	const auto begin_itr          = common::cbegin( arg_segment_string );
-	const auto end_itr            = common::cend  ( arg_segment_string );
+	const auto begin_itr          = common::cbegin( prm_segment_string );
+	const auto end_itr            = common::cend  ( prm_segment_string );
 	const auto begin_plus_one_itr = next( begin_itr );
 	const auto res_end_itr        = next( end_itr, 0 - static_cast<int>( CHAIN_DELIM_NEG_OFFSET ) );
 	const auto dash_itr           = find( begin_plus_one_itr, res_end_itr, RESIDUE_NAME_DELIM );
@@ -214,22 +214,22 @@ region sillitoe_chopping_format::parse_segment(const string_ref &arg_segment_str
 /// \brief Parse a residue from the specified residue string
 ///
 /// Example valid inputs: "232", "99C"
-residue_name sillitoe_chopping_format::parse_residue(const string_ref &arg_string_ref ///< The string from which to parse the residue
+residue_name sillitoe_chopping_format::parse_residue(const string_ref &prm_string_ref ///< The string from which to parse the residue
                                                      ) const {
-	if ( arg_string_ref.empty() ) {
+	if ( prm_string_ref.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format residue from an empty string"));
 	}
-	const auto begin_itr   = common::cbegin( arg_string_ref );
-	const auto end_itr     = common::cend  ( arg_string_ref );
-	if ( isdigit( arg_string_ref.back() ) != 0 ) {
+	const auto begin_itr   = common::cbegin( prm_string_ref );
+	const auto end_itr     = common::cend  ( prm_string_ref );
+	if ( isdigit( prm_string_ref.back() ) != 0 ) {
 		/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 		return residue_name{ stoi( string{ begin_itr, end_itr } ) };
 	}
-	if ( arg_string_ref.length() <= 1 ) {
+	if ( prm_string_ref.length() <= 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format residue from a string containing a single, non-numeric character"));
 	}
 	return {
 		stoi( string{ begin_itr, prev( end_itr ) } ),
-		arg_string_ref.back()
+		prm_string_ref.back()
 	};
 }

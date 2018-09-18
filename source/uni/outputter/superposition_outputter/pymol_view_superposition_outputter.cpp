@@ -45,9 +45,9 @@ unique_ptr<superposition_outputter> pymol_view_superposition_outputter::do_clone
 }
 
 /// \brief TODOCUMENT
-void pymol_view_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                                 ostream                     &arg_ostream,               ///< TODOCUMENT
-                                                                 const string_ref            &arg_name                   ///< A name for the superposition (so users of the superposition know what it represents)
+void pymol_view_superposition_outputter::do_output_superposition(const superposition_context &prm_superposition_context, ///< TODOCUMENT
+                                                                 ostream                     &prm_ostream,               ///< TODOCUMENT
+                                                                 const string_ref            &prm_name                   ///< A name for the superposition (so users of the superposition know what it represents)
                                                                  ) const {
 	const temp_file pymol_script_filename(".%%%%-%%%%-%%%%-%%%%.pml");
 	const pymol_file_superposition_outputter pymol_file_outputter(
@@ -55,7 +55,7 @@ void pymol_view_superposition_outputter::do_output_superposition(const superposi
 		the_display_spec,
 		content_spec
 	);
-	pymol_file_outputter.output_superposition( arg_superposition_context, arg_ostream, arg_name );
+	pymol_file_outputter.output_superposition( prm_superposition_context, prm_ostream, prm_name );
 
 	const bool pymol_success = command_executer::execute(
 		pymol_program,
@@ -77,10 +77,10 @@ string pymol_view_superposition_outputter::do_get_name() const {
 }
 
 /// \brief Ctor for pymol_view_superposition_outputter
-pymol_view_superposition_outputter::pymol_view_superposition_outputter(const path                 &arg_pymol_program, ///< TODOCUMENT
-                                                                       display_spec                arg_display_spec,  ///< TODOCUMENT
-                                                                       superposition_content_spec  arg_content_spec   ///< The specification of what should be included in the superposition
-                                                                       ) : pymol_program    { arg_pymol_program             },
-                                                                           the_display_spec { std::move( arg_display_spec ) },
-                                                                           content_spec     { std::move( arg_content_spec ) } {
+pymol_view_superposition_outputter::pymol_view_superposition_outputter(const path                 &prm_pymol_program, ///< TODOCUMENT
+                                                                       display_spec                prm_display_spec,  ///< TODOCUMENT
+                                                                       superposition_content_spec  prm_content_spec   ///< The specification of what should be included in the superposition
+                                                                       ) : pymol_program    { prm_pymol_program             },
+                                                                           the_display_spec { std::move( prm_display_spec ) },
+                                                                           content_spec     { std::move( prm_content_spec ) } {
 }

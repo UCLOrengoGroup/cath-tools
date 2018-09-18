@@ -39,15 +39,15 @@ namespace cath {
 
 		public:
 			/// \brief Ctor for exception_is_equivalent
-			explicit exception_is_equivalent(const T &arg_exception_to_compare_to
-			                                 ) : exception_to_compare_to(arg_exception_to_compare_to) {
+			explicit exception_is_equivalent(const T &prm_exception_to_compare_to
+			                                 ) : exception_to_compare_to(prm_exception_to_compare_to) {
 			}
 
 			/// Function call operator (operator()) to compare the two boost::exception objects
-			bool operator()(const boost::exception &arg_exception_to_compare ///< The boost::exception that is to be compared
+			bool operator()(const boost::exception &prm_exception_to_compare ///< The boost::exception that is to be compared
 			                ) const {
 				try {
-					const T &exception_to_compare = dynamic_cast<const T &>(arg_exception_to_compare);
+					const T &exception_to_compare = dynamic_cast<const T &>(prm_exception_to_compare);
 					const std::string exception_to_compare_to_what_string(exception_to_compare_to.what());
 					const std::string exception_to_compare_what_string(exception_to_compare.what());
 					return ( exception_to_compare_to_what_string == exception_to_compare_what_string );

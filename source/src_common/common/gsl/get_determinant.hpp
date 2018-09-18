@@ -33,17 +33,17 @@ namespace cath {
 		namespace detail {
 
 			/// \brief Get the determinant of the specified gsl_matrix_wrp
-			inline double get_determinant(const gsl_matrix_wrp &arg_matrix ///< The gsl_matrix_wrp for which the determinant should be calculated
+			inline double get_determinant(const gsl_matrix_wrp &prm_matrix ///< The gsl_matrix_wrp for which the determinant should be calculated
 				                          ) {
 				int          sign   = 1;
-				const auto   size   = arg_matrix.get_ref().size1;
-				if ( size != arg_matrix.get_ref().size2 ) {
+				const auto   size   = prm_matrix.get_ref().size1;
+				if ( size != prm_matrix.get_ref().size2 ) {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot calculate determinant of a matrix that isn't square"));
 				}
 				gsl_matrix_wrp      temp_matrix {  size, size };
 				gsl_permutation_wrp temp_permutn{ size        };
 
-				gsl_matrix_memcpy   ( temp_matrix.get_ptr(), arg_matrix.get_ptr()          );
+				gsl_matrix_memcpy   ( temp_matrix.get_ptr(), prm_matrix.get_ptr()          );
 				gsl_linalg_LU_decomp( temp_matrix.get_ptr(), temp_permutn.get_ptr(), &sign );
 
 				return gsl_linalg_LU_det( temp_matrix.get_ptr(), sign );

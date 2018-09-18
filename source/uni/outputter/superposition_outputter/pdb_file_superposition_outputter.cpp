@@ -44,15 +44,15 @@ unique_ptr<superposition_outputter> pdb_file_superposition_outputter::do_clone()
 }
 
 /// \brief TODOCUMENT
-void pdb_file_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                               ostream                     &/*arg_ostream*/,           ///< TODOCUMENT
-                                                               const string_ref            &arg_name                   ///< A name for the superposition (so users of the superposition know what it represents)
+void pdb_file_superposition_outputter::do_output_superposition(const superposition_context &prm_superposition_context, ///< TODOCUMENT
+                                                               ostream                     &/*prm_ostream*/,           ///< TODOCUMENT
+                                                               const string_ref            &prm_name                   ///< A name for the superposition (so users of the superposition know what it represents)
                                                                ) const {
 	ofstream pdb_ostream;
 	open_ofstream( pdb_ostream, output_file );
 
 	ostream_superposition_outputter stream_outputter{ content_spec };
-	stream_outputter.output_superposition( arg_superposition_context, pdb_ostream, arg_name );
+	stream_outputter.output_superposition( prm_superposition_context, pdb_ostream, prm_name );
 
 	pdb_ostream << flush;
 	pdb_ostream.close();
@@ -69,8 +69,8 @@ string pdb_file_superposition_outputter::do_get_name() const {
 }
 
 /// \brief Ctor for pdb_file_superposition_outputter
-pdb_file_superposition_outputter::pdb_file_superposition_outputter(const path                 &arg_output_file, ///< TODOCUMENT
-                                                                   superposition_content_spec  arg_content_spec ///< The specification of what should be included in the superposition
-                                                                   ) : output_file  { arg_output_file               },
-                                                                       content_spec { std::move( arg_content_spec ) } {
+pdb_file_superposition_outputter::pdb_file_superposition_outputter(const path                 &prm_output_file, ///< TODOCUMENT
+                                                                   superposition_content_spec  prm_content_spec ///< The specification of what should be included in the superposition
+                                                                   ) : output_file  { prm_output_file               },
+                                                                       content_spec { std::move( prm_content_spec ) } {
 }

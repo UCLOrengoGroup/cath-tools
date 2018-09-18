@@ -49,28 +49,28 @@ using boost::algorithm::any_of;
 using boost::lexical_cast;
 
 /// \brief Return the index of the group containing the specified entry
-size_t multi_align_builder::find_group_of_entry(const size_t &arg_index ///< The index of the entry to be located
+size_t multi_align_builder::find_group_of_entry(const size_t &prm_index ///< The index of the entry to be located
                                                 ) const {
-	return group_index_of_entry[ arg_index ];
+	return group_index_of_entry[ prm_index ];
 }
 
 /// \brief Update the group_index_of_entry to reflect the members of the group with the specified group
-void multi_align_builder::update_group_index_of_entry(const size_t &arg_index_of_enlarged_group ///< The index of the group for which group_index_of_entry should be updated
+void multi_align_builder::update_group_index_of_entry(const size_t &prm_index_of_enlarged_group ///< The index of the group for which group_index_of_entry should be updated
                                                       ) {
-	const multi_align_group &enlarged_group = groups[arg_index_of_enlarged_group];
+	const multi_align_group &enlarged_group = groups[prm_index_of_enlarged_group];
 	const size_vec          &groups_entries = enlarged_group.get_entries();
 	for (const size_t &groups_entry : groups_entries) {
-		group_index_of_entry[groups_entry] = arg_index_of_enlarged_group;
+		group_index_of_entry[groups_entry] = prm_index_of_enlarged_group;
 	}
 }
 
 /// \brief Ctor for multi_align_builder
-multi_align_builder::multi_align_builder(const size_t &arg_num_entries ///< The number of entries to be joined together by alignments
+multi_align_builder::multi_align_builder(const size_t &prm_num_entries ///< The number of entries to be joined together by alignments
                                          ) {
-	groups.reserve              ( arg_num_entries );
-	group_index_of_entry.reserve( arg_num_entries );
+	groups.reserve              ( prm_num_entries );
+	group_index_of_entry.reserve( prm_num_entries );
 	// Populate the entries of group_index_of_index with their own indices
-	for (const size_t &entry_ctr : indices( arg_num_entries ) ) {
+	for (const size_t &entry_ctr : indices( prm_num_entries ) ) {
 		groups.push_back              ( multi_align_group( entry_ctr) );
 		group_index_of_entry.push_back(                    entry_ctr  );
 	}
@@ -85,29 +85,29 @@ size_set multi_align_builder::get_active_groups() const {
 }
 
 /// \brief Return a const reference to the group with the specified index
-const multi_align_group & multi_align_builder::get_group_of_index(const size_t &arg_index ///< The index of the group to be returned
+const multi_align_group & multi_align_builder::get_group_of_index(const size_t &prm_index ///< The index of the group to be returned
                                                                   ) const {
-	return groups[arg_index];
+	return groups[prm_index];
 }
 
 /// \brief Add an alignment branch to join two entries that currently exist in separate groups
-void multi_align_builder::add_alignment_branch(const size_t         &arg_entry_a,   ///< The index of the first  entry to be joined
-                                               const size_t         &arg_entry_b,   ///< The index of the second entry to be joined
-                                               const alignment      &arg_alignment, ///< The alignment between the two entries (with entries in the same order)
-                                               const protein_list   &arg_proteins,  ///< The PDBs associated with the entries whose alignment is being built
-                                               const aln_glue_style &arg_strategy   ///< The approach that should be used for glueing alignments together
+void multi_align_builder::add_alignment_branch(const size_t         &prm_entry_a,   ///< The index of the first  entry to be joined
+                                               const size_t         &prm_entry_b,   ///< The index of the second entry to be joined
+                                               const alignment      &prm_alignment, ///< The alignment between the two entries (with entries in the same order)
+                                               const protein_list   &prm_proteins,  ///< The PDBs associated with the entries whose alignment is being built
+                                               const aln_glue_style &prm_strategy   ///< The approach that should be used for glueing alignments together
                                                ) {
 	// Find the groups currently containing the two specified entries
-	const size_t group_index_a = find_group_of_entry( arg_entry_a );
-	const size_t group_index_b = find_group_of_entry( arg_entry_b );
+	const size_t group_index_a = find_group_of_entry( prm_entry_a );
+	const size_t group_index_b = find_group_of_entry( prm_entry_b );
 
 	// If the two entries are already in the same group then throw an exception
 	if ( group_index_a == group_index_b ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Cannot add alignment between entry "
-			+ lexical_cast<string>( arg_entry_a )
+			+ lexical_cast<string>( prm_entry_a )
 			+ " and "
-			+ lexical_cast<string>( arg_entry_b )
+			+ lexical_cast<string>( prm_entry_b )
 			+ " because they are already aligned together"
 		));
 	}
@@ -118,31 +118,31 @@ void multi_align_builder::add_alignment_branch(const size_t         &arg_entry_a
 
 	// Add entry_b to group_a:
 	//  (ie glue the joining alignment into group_a (by identifying the left half with entry_a) )
-	glue_in_alignment( group_a, arg_alignment, arg_entry_a, arg_entry_b );
+	glue_in_alignment( group_a, prm_alignment, prm_entry_a, prm_entry_b );
 
 	// Add the rest of group_b to group_a:
 	//  (ie glue group_b into group_a by identifying entry_b from the two groups)
-	group_a.glue_in_copy_of_group( group_b, arg_entry_b );
+	group_a.glue_in_copy_of_group( group_b, prm_entry_b );
 
-	if ( arg_strategy != aln_glue_style::SIMPLY ) {
+	if ( prm_strategy != aln_glue_style::SIMPLY ) {
 		// Refine the join between the two groups
 		// std::cerr << "Doing the light refining\n" << std::flush;
 		// std::cerr << "group_a is " << group_a << "\n";
 		// std::cerr << "group_b is " << group_b << "\n";
 		group_a.refine_join(
 			the_refiner,
-			make_subset_protein_list( arg_proteins, group_a.get_entries() ),
+			make_subset_protein_list( prm_proteins, group_a.get_entries() ),
 			gap_penalty( 50, 0 ),
 			group_b.get_entries()
 		);
 		// std::cerr << "Completed the light refining\n" << std::flush;
 
-		if ( arg_strategy == aln_glue_style::WITH_HEAVY_REFINING ) {
+		if ( prm_strategy == aln_glue_style::WITH_HEAVY_REFINING ) {
 			// std::cerr << "Doing the heavy refining\n" << std::flush;
 			// Refine the whole alignment
 			group_a.refine_alignment(
 				the_refiner,
-				make_subset_protein_list( arg_proteins, group_a.get_entries() ),
+				make_subset_protein_list( prm_proteins, group_a.get_entries() ),
 				gap_penalty( 50, 0 )
 			);
 		}
@@ -155,7 +155,7 @@ void multi_align_builder::add_alignment_branch(const size_t         &arg_entry_a
 	update_group_index_of_entry( group_index_a );
 
 //	// ***** TEMPORARY *****
-//	cerr << "DEBUG: Added alignment branch between " << arg_entry_a << " and " << arg_entry_b;
+//	cerr << "DEBUG: Added alignment branch between " << prm_entry_a << " and " << prm_entry_b;
 //	cerr << endl;
 //	cerr << "...and the new status is..." << endl;
 //	cerr << *this;
@@ -206,35 +206,35 @@ alignment multi_align_builder::get_alignment() const {
 /// \brief Simple insertion operator for multi_align_builder
 ///
 /// \relates multi_align_builder
-ostream & cath::align::detail::operator<<(ostream                   &arg_os,                 ///< The ostream to which the multi_align_builder should be output
-                                          const multi_align_builder &arg_multi_align_builder ///< The multi_align_builder to output
+ostream & cath::align::detail::operator<<(ostream                   &prm_os,                 ///< The ostream to which the multi_align_builder should be output
+                                          const multi_align_builder &prm_multi_align_builder ///< The multi_align_builder to output
                                           ) {
-	const size_set active_groups = arg_multi_align_builder.get_active_groups();
-	arg_os << "multi_align_builder[";
-	arg_os << active_groups.size();
-	arg_os << " active groups : ";
+	const size_set active_groups = prm_multi_align_builder.get_active_groups();
+	prm_os << "multi_align_builder[";
+	prm_os << active_groups.size();
+	prm_os << " active groups : ";
 	for ( const size_t &group_index : active_groups ) {
-		arg_os << "\n\t";
-		arg_os << arg_multi_align_builder.get_group_of_index( group_index );
+		prm_os << "\n\t";
+		prm_os << prm_multi_align_builder.get_group_of_index( group_index );
 	}
-	arg_os << ( ( ! active_groups.empty() ) ? "\n" : "" );
-	arg_os << "]";
-	return arg_os;
+	prm_os << ( ( ! active_groups.empty() ) ? "\n" : "" );
+	prm_os << "]";
+	return prm_os;
 }
 
 /// \brief Convenience function for adding an alignment branch to a multi_align_builder with a size_size_alignment_tuple
 ///
 /// \relates multi_align_builder
-void cath::align::detail::add_alignment_branch(multi_align_builder             &arg_multi_align_builder, ///< The multi_align_builder to which the branch should be added
-                                               const size_size_alignment_tuple &arg_branch_alignment,    ///< The details of the branch to be added
-                                               const protein_list              &arg_proteins_list,       ///< The PDBs associated
-                                               const aln_glue_style            &arg_strategy             ///< The approach that should be used for glueing alignments together
+void cath::align::detail::add_alignment_branch(multi_align_builder             &prm_multi_align_builder, ///< The multi_align_builder to which the branch should be added
+                                               const size_size_alignment_tuple &prm_branch_alignment,    ///< The details of the branch to be added
+                                               const protein_list              &prm_proteins_list,       ///< The PDBs associated
+                                               const aln_glue_style            &prm_strategy             ///< The approach that should be used for glueing alignments together
                                                ) {
-	arg_multi_align_builder.add_alignment_branch(
-		get<0>( arg_branch_alignment ),
-		get<1>( arg_branch_alignment ),
-		get<2>( arg_branch_alignment ),
-		arg_proteins_list,
-		arg_strategy
+	prm_multi_align_builder.add_alignment_branch(
+		get<0>( prm_branch_alignment ),
+		get<1>( prm_branch_alignment ),
+		get<2>( prm_branch_alignment ),
+		prm_proteins_list,
+		prm_strategy
 	);
 }

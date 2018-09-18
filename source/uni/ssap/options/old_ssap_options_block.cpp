@@ -98,8 +98,8 @@ string old_ssap_options_block::do_get_block_name() const {
 /// \brief Add the block's non-hidden options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void old_ssap_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void old_ssap_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	const string dir_varname  { "<dir>"   };
 	const string file_varname { "<file>"  };
@@ -111,7 +111,7 @@ void old_ssap_options_block::do_add_visible_options_to_description(options_descr
 	const string PO_OUT_FILE_W_CHAR = PO_OUT_FILE + ',' + PO_CHAR_OUT_FILE;
 
 	const string protein_file_combns_str = join( get_ssap_ready_protein_file_combn_strings(), ", " );
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( PO_DEBUG.c_str(),                bool_switch              ( &debug                        )                           ->default_value(DEF_BOOL      ),   "Output debugging information"                                                                                          )
 		( PO_OUT_FILE_W_CHAR.c_str(),      value<path>              ( &output_filename              )->value_name(file_varname ),                                ( "[DEPRECATED] Output scores to " + file_varname + " rather than to stdout" ).c_str()                                    )
 
@@ -135,10 +135,10 @@ void old_ssap_options_block::do_add_visible_options_to_description(options_descr
 }
 
 /// \brief Add any hidden options to the provided options_description
-void old_ssap_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                  const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void old_ssap_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                  const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                   ) {
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( PO_NAME.c_str(), value<str_vec>( &names ), "Structure names" );
 }
 
@@ -161,7 +161,7 @@ void old_ssap_options_block::do_add_hidden_options_to_description(options_descri
 ///  * Otherwise accept
 ///
 /// \returns A string describing the conflict in the options or an empty string if there's none
-str_opt old_ssap_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt old_ssap_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                   ) const {
 	// Always accept if no names have been specified
 	if ( names.empty() ) {
@@ -332,44 +332,44 @@ bool old_ssap_options_block::get_write_xml_sup() const {
 }
 
 /// \brief Setter for write_script
-old_ssap_options_block & old_ssap_options_block::set_write_rasmol_script(const sup_pdbs_script_policy &arg_write_rasmol_script ///< The new policy for writing a script for superposition PDBs
+old_ssap_options_block & old_ssap_options_block::set_write_rasmol_script(const sup_pdbs_script_policy &prm_write_rasmol_script ///< The new policy for writing a script for superposition PDBs
                                                                          ) {
-	write_rasmol_script = arg_write_rasmol_script;
+	write_rasmol_script = prm_write_rasmol_script;
 	return *this;
 }
 
 /// \brief Getter for whether a clique_file has been specified
-bool cath::opts::has_clique_file(const old_ssap_options_block &arg_old_ssap_options_block ///< TODOCUMENT
+bool cath::opts::has_clique_file(const old_ssap_options_block &prm_old_ssap_options_block ///< TODOCUMENT
                                  ) {
-	return static_cast<bool>( arg_old_ssap_options_block.get_opt_clique_file() );
+	return static_cast<bool>( prm_old_ssap_options_block.get_opt_clique_file() );
 }
 
 /// \brief Getter for clique_file
-path cath::opts::get_clique_file(const old_ssap_options_block &arg_old_ssap_options_block ///< TODOCUMENT
+path cath::opts::get_clique_file(const old_ssap_options_block &prm_old_ssap_options_block ///< TODOCUMENT
                                  ) {
-	return *arg_old_ssap_options_block.get_opt_clique_file();
+	return *prm_old_ssap_options_block.get_opt_clique_file();
 }
 
 /// \brief Getter for whether a domin_file has been specified
-bool cath::opts::has_domin_file(const old_ssap_options_block &arg_old_ssap_options_block ///< TODOCUMENT
+bool cath::opts::has_domin_file(const old_ssap_options_block &prm_old_ssap_options_block ///< TODOCUMENT
                                 ) {
-	return static_cast<bool>( arg_old_ssap_options_block.get_opt_domin_file() );
+	return static_cast<bool>( prm_old_ssap_options_block.get_opt_domin_file() );
 }
 
 /// \brief Getter for domin_file
-path cath::opts::get_domin_file(const old_ssap_options_block &arg_old_ssap_options_block ///< TODOCUMENT
+path cath::opts::get_domin_file(const old_ssap_options_block &prm_old_ssap_options_block ///< TODOCUMENT
                                 ) {
-	return *arg_old_ssap_options_block.get_opt_domin_file();
+	return *prm_old_ssap_options_block.get_opt_domin_file();
 }
 
 /// \brief Getter for whether a superposition_dir has been specified
-bool cath::opts::has_superposition_dir(const old_ssap_options_block &arg_old_ssap_options_block ///< TODOCUMENT
+bool cath::opts::has_superposition_dir(const old_ssap_options_block &prm_old_ssap_options_block ///< TODOCUMENT
                                        ) {
-	return static_cast<bool>( arg_old_ssap_options_block.get_opt_superposition_dir() );
+	return static_cast<bool>( prm_old_ssap_options_block.get_opt_superposition_dir() );
 }
 
 /// \brief Getter for superposition_dir
-path cath::opts::get_superposition_dir(const old_ssap_options_block &arg_old_ssap_options_block ///< TODOCUMENT
+path cath::opts::get_superposition_dir(const old_ssap_options_block &prm_old_ssap_options_block ///< TODOCUMENT
                                        ) {
-	return *arg_old_ssap_options_block.get_opt_superposition_dir();
+	return *prm_old_ssap_options_block.get_opt_superposition_dir();
 }

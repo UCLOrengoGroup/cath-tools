@@ -74,13 +74,13 @@ namespace cath {
 
 			/// \brief Call perform_resolve_hits() with the specified arguments preceded by a pseudo-program-name
 			///        and the fixture's i/o streams.
-			void execute_perform_resolve_hits(const str_vec &arg_arguments ///< The arguments to pass to perform_resolve_hits(), preceded by a pseudo-program-name
+			void execute_perform_resolve_hits(const str_vec &prm_arguments ///< The arguments to pass to perform_resolve_hits(), preceded by a pseudo-program-name
 			                                  ) {
 				const auto progname_vec = { "pseudo_program_name"s };
 				perform_resolve_hits(
 					copy_build<str_vec>( join(
 						progname_vec,
-						arg_arguments
+						prm_arguments
 					) ),
 					input_ss, output_ss, parse_sources::CMND_LINE_ONLY
 				);

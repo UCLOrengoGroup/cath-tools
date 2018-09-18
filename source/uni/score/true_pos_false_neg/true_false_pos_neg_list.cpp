@@ -31,8 +31,8 @@ using namespace cath::score;
 using namespace std;
 
 /// \brief Ctor from a vector of true_false_pos_neg objects
-true_false_pos_neg_list::true_false_pos_neg_list(true_false_pos_neg_vec arg_tfpns ///< The vector of true_false_pos_neg objects with which this true_false_pos_neg_list should be constructed
-                                                 ) : tfpns { std::move( arg_tfpns ) } {
+true_false_pos_neg_list::true_false_pos_neg_list(true_false_pos_neg_vec prm_tfpns ///< The vector of true_false_pos_neg objects with which this true_false_pos_neg_list should be constructed
+                                                 ) : tfpns { std::move( prm_tfpns ) } {
 }
 
 /// \brief Return whether the vector is empty
@@ -46,15 +46,15 @@ size_t true_false_pos_neg_list::size() const {
 }
 
 /// \brief Push another true_false_pos_neg object to the back of the list
-void true_false_pos_neg_list::push_back(const true_false_pos_neg &arg_tfpn ///< The true_false_pos_neg object to push to the back of the true_false_pos_neg_list
+void true_false_pos_neg_list::push_back(const true_false_pos_neg &prm_tfpn ///< The true_false_pos_neg object to push to the back of the true_false_pos_neg_list
                                         ) {
-	tfpns.push_back( arg_tfpn );
+	tfpns.push_back( prm_tfpn );
 }
 
 /// \brief Subscript operator returning a const reference to the true_false_pos_neg object at the specified index
-const true_false_pos_neg & true_false_pos_neg_list::operator[](const size_t &arg_index ///< The index of the true_false_pos_neg to return
+const true_false_pos_neg & true_false_pos_neg_list::operator[](const size_t &prm_index ///< The index of the true_false_pos_neg to return
                                                                ) const {
-	return tfpns[ arg_index ];
+	return tfpns[ prm_index ];
 }
 
 /// \brief Return a begin() const_iterator
@@ -74,72 +74,72 @@ true_false_pos_neg_list::const_iterator true_false_pos_neg_list::end() const {
 /// \brief TODOCUMENT
 ///
 /// \relates true_false_pos_neg_list
-size_rational cath::score::get_classn_stat_val_of_index(const true_false_pos_neg_list &arg_true_false_pos_neg_list, ///< TODOCUMENT
-                                                        const classn_stat             &arg_classn_stat,              ///< TODOCUMENT
-                                                        const size_t                  &arg_index                    ///< TODOCUMENT
+size_rational cath::score::get_classn_stat_val_of_index(const true_false_pos_neg_list &prm_true_false_pos_neg_list, ///< TODOCUMENT
+                                                        const classn_stat             &prm_classn_stat,              ///< TODOCUMENT
+                                                        const size_t                  &prm_index                    ///< TODOCUMENT
                                                         ) {
-	return arg_classn_stat.calculate( arg_true_false_pos_neg_list[ arg_index ] );
+	return prm_classn_stat.calculate( prm_true_false_pos_neg_list[ prm_index ] );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates true_false_pos_neg_list
-size_rational_vec cath::score::get_classn_stat_vals(const true_false_pos_neg_list &arg_tfpns,      ///< TODOCUMENT
-                                                    const classn_stat             &arg_classn_stat ///< TODOCUMENT
+size_rational_vec cath::score::get_classn_stat_vals(const true_false_pos_neg_list &prm_tfpns,      ///< TODOCUMENT
+                                                    const classn_stat             &prm_classn_stat ///< TODOCUMENT
                                                     ) {
 	return transform_build<size_rational_vec>(
-		arg_tfpns,
-		[&] (const true_false_pos_neg &x) { return arg_classn_stat.calculate( x ); }
+		prm_tfpns,
+		[&] (const true_false_pos_neg &x) { return prm_classn_stat.calculate( x ); }
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates true_false_pos_neg_list
-classn_stat_pair_series cath::score::get_classn_stat_pair_series(const true_false_pos_neg_list &arg_tfpns,         ///< TODOCUMENT
-                                                                 const string                  &arg_name,          ///< TODOCUMENT
-                                                                 const classn_stat             &arg_classn_stat_a, ///< TODOCUMENT
-                                                                 const classn_stat             &arg_classn_stat_b  ///< TODOCUMENT
+classn_stat_pair_series cath::score::get_classn_stat_pair_series(const true_false_pos_neg_list &prm_tfpns,         ///< TODOCUMENT
+                                                                 const string                  &prm_name,          ///< TODOCUMENT
+                                                                 const classn_stat             &prm_classn_stat_a, ///< TODOCUMENT
+                                                                 const classn_stat             &prm_classn_stat_b  ///< TODOCUMENT
                                                                  ) {
 	return classn_stat_pair_series(
 		transform_build<doub_doub_pair_vec>(
-			arg_tfpns,
+			prm_tfpns,
 			[&] (const true_false_pos_neg &x) {
 				return make_pair(
-					calculate_and_convert( arg_classn_stat_a, x ),
-					calculate_and_convert( arg_classn_stat_b, x )
+					calculate_and_convert( prm_classn_stat_a, x ),
+					calculate_and_convert( prm_classn_stat_b, x )
 				);
 			}
 		),
-		arg_name
+		prm_name
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates true_false_pos_neg_list
-double cath::score::area_under_curve(const true_false_pos_neg_list &arg_tfpns,         ///< TODOCUMENT
-                                     const classn_stat             &arg_classn_stat_x, ///< TODOCUMENT
-                                     const classn_stat             &arg_classn_stat_y  ///< TODOCUMENT
+double cath::score::area_under_curve(const true_false_pos_neg_list &prm_tfpns,         ///< TODOCUMENT
+                                     const classn_stat             &prm_classn_stat_x, ///< TODOCUMENT
+                                     const classn_stat             &prm_classn_stat_y  ///< TODOCUMENT
                                      ) {
-	return area_under_curve( get_classn_stat_pair_series( arg_tfpns, "", arg_classn_stat_x, arg_classn_stat_y ) );
+	return area_under_curve( get_classn_stat_pair_series( prm_tfpns, "", prm_classn_stat_x, prm_classn_stat_y ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates true_false_pos_neg_list
-classn_stat_pair_series cath::score::get_roc_series(const true_false_pos_neg_list &arg_tfpns, ///< TODOCUMENT
-                                                    const string                  &arg_name   ///< TODOCUMENT
+classn_stat_pair_series cath::score::get_roc_series(const true_false_pos_neg_list &prm_tfpns, ///< TODOCUMENT
+                                                    const string                  &prm_name   ///< TODOCUMENT
                                                     ) {
 	return get_classn_stat_pair_series(
-		arg_tfpns, arg_name, roc_rates::first_type(), roc_rates::second_type()
+		prm_tfpns, prm_name, roc_rates::first_type(), roc_rates::second_type()
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates true_false_pos_neg_list
-double cath::score::area_under_roc_curve(const true_false_pos_neg_list &arg_tfpns ///< TODOCUMENT
+double cath::score::area_under_roc_curve(const true_false_pos_neg_list &prm_tfpns ///< TODOCUMENT
                                          ) {
-	return area_under_curve( get_roc_series( arg_tfpns, "" ) );
+	return area_under_curve( get_roc_series( prm_tfpns, "" ) );
 }

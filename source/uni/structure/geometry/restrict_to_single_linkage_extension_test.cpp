@@ -46,8 +46,8 @@ namespace cath {
 
 			/// \brief Check that the members of the specified restricted coord_coord_linkage_pair_vec match the
 			///        the expected list (though not necessarily in the same order; they both get sorted before comparison)
-			void compare_restricted(const coord_coord_linkage_pair_vec &arg_got_unsorted,     ///< The got restricted coord_coord_linkage_pair_vec (doesn't need to be pre-sorted)
-			                        coord_vec                           arg_expected_unsorted ///< The expected coord_vec (doesn't need to be pre-sorted)
+			void compare_restricted(const coord_coord_linkage_pair_vec &prm_got_unsorted,     ///< The got restricted coord_coord_linkage_pair_vec (doesn't need to be pre-sorted)
+			                        coord_vec                           prm_expected_unsorted ///< The expected coord_vec (doesn't need to be pre-sorted)
 			                        ) {
 				// A function object to sort coordinates to allow for easy equality testing of coord_vecs
 				const auto coord_less_fn = [] (const coord &lhs, const coord &rhs) {
@@ -60,12 +60,12 @@ namespace cath {
 
 				// Get a sorted version of the two lists of coords
 				const auto got_sorted = sort_build<coord_vec>(
-					arg_got_unsorted
+					prm_got_unsorted
 						| transformed( [] (const coord_coord_linkage_pair &x) { return x.first; } ),
 					coord_less_fn
 				);
 				const auto expected_sorted = sort_copy(
-					std::move( arg_expected_unsorted ),
+					std::move( prm_expected_unsorted ),
 					coord_less_fn
 				);
 

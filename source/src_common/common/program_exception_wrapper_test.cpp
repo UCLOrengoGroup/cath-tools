@@ -71,11 +71,11 @@ namespace cath {
 			~program_exception_wrapper_test_suite_fixture() noexcept = default;
 
 		public:
-			void test_arg(const string &arg_string,
-			              const string &arg_throw_regexp
+			void test_arg(const string &prm_string,
+			              const string &prm_throw_regexp
 			              ) {
 				output_test_stream output_stream;
-				const str_vec arguments(1, arg_string);
+				const str_vec arguments(1, prm_string);
 				argc_argv_faker my_argc_argv_faker(arguments);
 
 				test_program_exception_wrapper().run_program(
@@ -83,8 +83,8 @@ namespace cath {
 					my_argc_argv_faker.get_argv(),
 					output_stream
 				);
-				if ( ! arg_throw_regexp.empty() ) {
-					BOOST_CHECK( contains( output_stream.str(), arg_throw_regexp ) );
+				if ( ! prm_throw_regexp.empty() ) {
+					BOOST_CHECK( contains( output_stream.str(), prm_throw_regexp ) );
 				}
 				else {
 					BOOST_CHECK(output_stream.is_empty(true));

@@ -63,17 +63,17 @@ namespace cath {
 /// There are six tests:
 ///  * x2 for do check and don't check
 ///  * x3 for each of the three functions that get rod and/or notch from indices
-void cath::test::rod_cache_test_suite_fixture::check_throw_for_indices(const size_t &arg_index_a, ///< The first index to check
-                                                                       const size_t &arg_index_b, ///< The second index to check
-                                                                       const size_t &arg_size_a,  ///< The first size of the matrix
-                                                                       const size_t &arg_size_b   ///< The second size of the matrix
+void cath::test::rod_cache_test_suite_fixture::check_throw_for_indices(const size_t &prm_index_a, ///< The first index to check
+                                                                       const size_t &prm_index_b, ///< The second index to check
+                                                                       const size_t &prm_size_a,  ///< The first size of the matrix
+                                                                       const size_t &prm_size_b   ///< The second size of the matrix
                                                                        ) const {
-	BOOST_CHECK_THROW        ( get_rod_of_indices          ( arg_index_a, arg_index_b, arg_size_a, arg_size_b, true  ), invalid_argument_exception );
-	BOOST_CHECK_NO_THROW_DIAG( get_rod_of_indices          ( arg_index_a, arg_index_b, arg_size_a, arg_size_b, false )                             );
-	BOOST_CHECK_THROW        ( get_notch_of_indices        ( arg_index_a, arg_index_b, arg_size_a, arg_size_b, true  ), invalid_argument_exception );
-	BOOST_CHECK_NO_THROW_DIAG( get_notch_of_indices        ( arg_index_a, arg_index_b, arg_size_a, arg_size_b, false )                             );
-	BOOST_CHECK_THROW        ( get_rod_and_notch_of_indices( arg_index_a, arg_index_b, arg_size_a, arg_size_b, true  ), invalid_argument_exception );
-	BOOST_CHECK_NO_THROW_DIAG( get_rod_and_notch_of_indices( arg_index_a, arg_index_b, arg_size_a, arg_size_b, false )                             );
+	BOOST_CHECK_THROW        ( get_rod_of_indices          ( prm_index_a, prm_index_b, prm_size_a, prm_size_b, true  ), invalid_argument_exception );
+	BOOST_CHECK_NO_THROW_DIAG( get_rod_of_indices          ( prm_index_a, prm_index_b, prm_size_a, prm_size_b, false )                             );
+	BOOST_CHECK_THROW        ( get_notch_of_indices        ( prm_index_a, prm_index_b, prm_size_a, prm_size_b, true  ), invalid_argument_exception );
+	BOOST_CHECK_NO_THROW_DIAG( get_notch_of_indices        ( prm_index_a, prm_index_b, prm_size_a, prm_size_b, false )                             );
+	BOOST_CHECK_THROW        ( get_rod_and_notch_of_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b, true  ), invalid_argument_exception );
+	BOOST_CHECK_NO_THROW_DIAG( get_rod_and_notch_of_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b, false )                             );
 }
 
 /// \brief Check that the code which converts rod and notch to index_a and/or index_b throws as expected for the specified indices/sizes
@@ -81,17 +81,17 @@ void cath::test::rod_cache_test_suite_fixture::check_throw_for_indices(const siz
 /// There are six tests:
 ///  * x2 for do check and don't check
 ///  * x3 for each of the three functions that get index_a and/or index_b from rod and notch
-void cath::test::rod_cache_test_suite_fixture::check_throw_for_rod_and_notch(const size_t &arg_rod,    ///< The rod value to check
-                                                                             const size_t &arg_notch,  ///< The notch value to check
-                                                                             const size_t &arg_size_a, ///< The first size of the matrix
-                                                                             const size_t &arg_size_b  ///< The second size of the matrix
+void cath::test::rod_cache_test_suite_fixture::check_throw_for_rod_and_notch(const size_t &prm_rod,    ///< The rod value to check
+                                                                             const size_t &prm_notch,  ///< The notch value to check
+                                                                             const size_t &prm_size_a, ///< The first size of the matrix
+                                                                             const size_t &prm_size_b  ///< The second size of the matrix
                                                                              ) const {
-	BOOST_CHECK_THROW        ( get_index_a_of_rod_and_notch( arg_rod, arg_notch, arg_size_a, arg_size_b, true  ), invalid_argument_exception );
-	BOOST_CHECK_NO_THROW_DIAG( get_index_a_of_rod_and_notch( arg_rod, arg_notch, arg_size_a, arg_size_b, false )                             );
-	BOOST_CHECK_THROW        ( get_index_b_of_rod_and_notch( arg_rod, arg_notch, arg_size_a, arg_size_b, true  ), invalid_argument_exception );
-	BOOST_CHECK_NO_THROW_DIAG( get_index_b_of_rod_and_notch( arg_rod, arg_notch, arg_size_a, arg_size_b, false )                             );
-	BOOST_CHECK_THROW        ( get_indices_of_rod_and_notch( arg_rod, arg_notch, arg_size_a, arg_size_b, true  ), invalid_argument_exception );
-	BOOST_CHECK_NO_THROW_DIAG( get_indices_of_rod_and_notch( arg_rod, arg_notch, arg_size_a, arg_size_b, false )                             );
+	BOOST_CHECK_THROW        ( get_index_a_of_rod_and_notch( prm_rod, prm_notch, prm_size_a, prm_size_b, true  ), invalid_argument_exception );
+	BOOST_CHECK_NO_THROW_DIAG( get_index_a_of_rod_and_notch( prm_rod, prm_notch, prm_size_a, prm_size_b, false )                             );
+	BOOST_CHECK_THROW        ( get_index_b_of_rod_and_notch( prm_rod, prm_notch, prm_size_a, prm_size_b, true  ), invalid_argument_exception );
+	BOOST_CHECK_NO_THROW_DIAG( get_index_b_of_rod_and_notch( prm_rod, prm_notch, prm_size_a, prm_size_b, false )                             );
+	BOOST_CHECK_THROW        ( get_indices_of_rod_and_notch( prm_rod, prm_notch, prm_size_a, prm_size_b, true  ), invalid_argument_exception );
+	BOOST_CHECK_NO_THROW_DIAG( get_indices_of_rod_and_notch( prm_rod, prm_notch, prm_size_a, prm_size_b, false )                             );
 }
 
 /// \brief Test suite to check the rod/cache code

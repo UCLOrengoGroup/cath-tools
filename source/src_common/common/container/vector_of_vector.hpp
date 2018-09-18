@@ -93,14 +93,14 @@ namespace cath {
 		/// This may be quite inefficient and is currently just here for convenience
 		/// re test data
 		///
-		/// \pre arg_init_list must be rectangular (ie all inner intializer_list<T>s should have the same size)
+		/// \pre prm_init_list must be rectangular (ie all inner intializer_list<T>s should have the same size)
 		///      else an invalid_argument_exception will be thrown
 		template <typename T>
-		inline vector_of_vector<T>::vector_of_vector(const std::initializer_list<std::initializer_list<T>> &arg_init_list ///< The nested initializer_list containing the data with which this vector_of_vector should be initialised
-		                                             ) : length_a( arg_init_list.size()                                 ),
-		                                                 length_b( ( length_a > 0 ) ? arg_init_list.begin()->size() : 0 ),
+		inline vector_of_vector<T>::vector_of_vector(const std::initializer_list<std::initializer_list<T>> &prm_init_list ///< The nested initializer_list containing the data with which this vector_of_vector should be initialised
+		                                             ) : length_a( prm_init_list.size()                                 ),
+		                                                 length_b( ( length_a > 0 ) ? prm_init_list.begin()->size() : 0 ),
 		                                                 data    ( length_a * length_b                                  ) {
-			for (const auto &x_idx_and_rng : boost::combine( indices( arg_init_list.size() ), arg_init_list ) ) {
+			for (const auto &x_idx_and_rng : boost::combine( indices( prm_init_list.size() ), prm_init_list ) ) {
 				const size_t                   &x_idx = boost::get<0>( x_idx_and_rng );
 				const std::initializer_list<T> &rng   = boost::get<1>( x_idx_and_rng );
 
@@ -119,12 +119,12 @@ namespace cath {
 
 		/// \brief Construct from the two specified lengths and the (optional) value with which to populate
 		template <typename T>
-		inline vector_of_vector<T>::vector_of_vector(const size_t &arg_length_a, ///< The length of the first  dimension
-		                                             const size_t &arg_length_b, ///< The length of the second dimension
-		                                             const T      &arg_value     ///< The (optional) value with which to populate
-		                                             ) : length_a ( arg_length_a                           ),
-		                                                 length_b ( arg_length_b                           ),
-		                                                 data     ( arg_length_a * arg_length_b, arg_value ) {
+		inline vector_of_vector<T>::vector_of_vector(const size_t &prm_length_a, ///< The length of the first  dimension
+		                                             const size_t &prm_length_b, ///< The length of the second dimension
+		                                             const T      &prm_value     ///< The (optional) value with which to populate
+		                                             ) : length_a ( prm_length_a                           ),
+		                                                 length_b ( prm_length_b                           ),
+		                                                 data     ( prm_length_a * prm_length_b, prm_value ) {
 		}
 
 		/// \brief Getter for the length of the first dimension
@@ -143,13 +143,13 @@ namespace cath {
 		///
 		/// This is analogous to std::vector::assign
 		template <typename T>
-		vector_of_vector<T> & vector_of_vector<T>::assign(const size_t &arg_length_a, ///< The new length of the first  dimension
-		                                                  const size_t &arg_length_b, ///< The new length of the second dimension
-		                                                  const T      &arg_value     ///< The value with which to populate
+		vector_of_vector<T> & vector_of_vector<T>::assign(const size_t &prm_length_a, ///< The new length of the first  dimension
+		                                                  const size_t &prm_length_b, ///< The new length of the second dimension
+		                                                  const T      &prm_value     ///< The value with which to populate
 		                                                  ) {
-			data.assign( arg_length_a * arg_length_b, arg_value );
-			length_a = arg_length_a;
-			length_b = arg_length_b;
+			data.assign( prm_length_a * prm_length_b, prm_value );
+			length_a = prm_length_a;
+			length_b = prm_length_b;
 			return *this;
 		}
 
@@ -157,43 +157,43 @@ namespace cath {
 		///        if any extra values are to be added
 		///
 		/// NOTE: this is different to std::vector::resize; unlike that method, this will
-		///       overwrite with arg_value if either of the specified lengths differs from
+		///       overwrite with prm_value if either of the specified lengths differs from
 		///       the current values. If neither length is to be changed, this will have no
 		///       effect.
 		template <typename T>
-		vector_of_vector<T> & vector_of_vector<T>::resize(const size_t &arg_length_a, ///< The new length of the first  dimension
-		                                                  const size_t &arg_length_b, ///< The new length of the second dimension
-		                                                  const T      &arg_value     ///< The value with which to populate any new elements that are to be created
+		vector_of_vector<T> & vector_of_vector<T>::resize(const size_t &prm_length_a, ///< The new length of the first  dimension
+		                                                  const size_t &prm_length_b, ///< The new length of the second dimension
+		                                                  const T      &prm_value     ///< The value with which to populate any new elements that are to be created
 		                                                  ) {
-			if ( length_a != arg_length_a || length_b != arg_length_b ) {
-				assign( arg_length_a, arg_length_b, arg_value );
+			if ( length_a != prm_length_a || length_b != prm_length_b ) {
+				assign( prm_length_a, prm_length_b, prm_value );
 			}
 			return *this;
 		}
 
 		/// \brief Get the element at the specified indices (non-const overload)
 		template <typename T>
-		inline auto vector_of_vector<T>::get(const size_t &arg_index_a, ///< The index in the first  dimension
-		                                     const size_t &arg_index_b  ///< The index in the second dimension
+		inline auto vector_of_vector<T>::get(const size_t &prm_index_a, ///< The index in the first  dimension
+		                                     const size_t &prm_index_b  ///< The index in the second dimension
 		                                     ) -> reference {
-			return data[ ( arg_index_a * length_b ) + arg_index_b ];
+			return data[ ( prm_index_a * length_b ) + prm_index_b ];
 		}
 
 		/// \brief Get the element at the specified indices (const overload)
 		template <typename T>
-		inline auto vector_of_vector<T>::get(const size_t &arg_index_a, ///< The index in the first  dimension
-		                                     const size_t &arg_index_b  ///< The index in the second dimension
+		inline auto vector_of_vector<T>::get(const size_t &prm_index_a, ///< The index in the first  dimension
+		                                     const size_t &prm_index_b  ///< The index in the second dimension
 		                                     ) const -> const_reference {
-			return data[ ( arg_index_a * length_b ) + arg_index_b ];
+			return data[ ( prm_index_a * length_b ) + prm_index_b ];
 		}
 
 		/// \brief Set the element at the specified indices to the specified value
 		template <typename T>
-		inline vector_of_vector<T> & vector_of_vector<T>::set(const size_t &arg_index_a, ///< The index in the first  dimension
-		                                                      const size_t &arg_index_b, ///< The index in the second dimension
-		                                                      const T      &arg_value    ///< The value to set
+		inline vector_of_vector<T> & vector_of_vector<T>::set(const size_t &prm_index_a, ///< The index in the first  dimension
+		                                                      const size_t &prm_index_b, ///< The index in the second dimension
+		                                                      const T      &prm_value    ///< The value to set
 		                                                      ) {
-			data[ ( arg_index_a * length_b ) + arg_index_b ] = arg_value;
+			data[ ( prm_index_a * length_b ) + prm_index_b ] = prm_value;
 			return *this;
 		}
 

@@ -43,11 +43,11 @@ unique_ptr<hits_processor> write_json_hits_processor::do_clone() const {
 /// \brief Process the specified data
 ///
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-void write_json_hits_processor::do_process_hits_for_query(const string           &arg_query_id,        ///< The query_protein_id string
-                                                          const crh_filter_spec  &/*arg_filter_spec*/, ///< The filter_spec to apply to the hits
-                                                          const crh_score_spec   &arg_score_spec,      ///< The score spec to apply to the hits
-                                                          const crh_segment_spec &arg_segment_spec,    ///< The segment spec to apply to the hits
-                                                          const calc_hit_list    &arg_calc_hits        ///< The hits to process
+void write_json_hits_processor::do_process_hits_for_query(const string           &prm_query_id,        ///< The query_protein_id string
+                                                          const crh_filter_spec  &/*prm_filter_spec*/, ///< The filter_spec to apply to the hits
+                                                          const crh_score_spec   &prm_score_spec,      ///< The score spec to apply to the hits
+                                                          const crh_segment_spec &prm_segment_spec,    ///< The segment spec to apply to the hits
+                                                          const calc_hit_list    &prm_calc_hits        ///< The hits to process
                                                           ) {
 	if ( ! has_started ) {
 		json_writers.start_object();
@@ -55,15 +55,15 @@ void write_json_hits_processor::do_process_hits_for_query(const string          
 	}
 
 	// Resolve the hits
-	const auto result_hit_arch  = resolve_hits( arg_calc_hits, arg_score_spec.get_naive_greedy() );
+	const auto result_hit_arch  = resolve_hits( prm_calc_hits, prm_score_spec.get_naive_greedy() );
 	const auto result_full_hits = get_full_hits_of_hit_arch(
 		result_hit_arch,
-		arg_calc_hits.get_full_hits()
+		prm_calc_hits.get_full_hits()
 	);
 
-	// Output the results to arg_ostream
-	json_writers.write_key( arg_query_id );
-	json_writers.write_raw_string( to_json_string_with_compact_fullhits( result_full_hits, arg_segment_spec, 1 ) );
+	// Output the results to prm_ostream
+	json_writers.write_key( prm_query_id );
+	json_writers.write_raw_string( to_json_string_with_compact_fullhits( result_full_hits, prm_segment_spec, 1 ) );
 }
 
 /// \brief Do nothing to finish the batch of work
@@ -84,8 +84,8 @@ bool write_json_hits_processor::do_requires_strictly_worse_hits() const {
 }
 
 /// \brief Ctor for write_json_hits_processor
-write_json_hits_processor::write_json_hits_processor(ref_vec<ostream> arg_ostreams ///< The ostream to which the results should be written
-                                                     ) noexcept : super { move( arg_ostreams ) } {
+write_json_hits_processor::write_json_hits_processor(ref_vec<ostream> prm_ostreams ///< The ostream to which the results should be written
+                                                     ) noexcept : super { move( prm_ostreams ) } {
 	for (const ostream_ref &ostream_ref : get_ostreams() ) {
 		json_writers.emplace_back( ostream_ref.get() );
 	}
@@ -93,20 +93,20 @@ write_json_hits_processor::write_json_hits_processor(ref_vec<ostream> arg_ostrea
 
 
 /// \brief Copy ctor for write_json_hits_processor
-write_json_hits_processor::write_json_hits_processor(const write_json_hits_processor &arg_rhs ///< The other write_json_hits_processor from which to copy construct
-                                                     ) : super       { arg_rhs             },
+write_json_hits_processor::write_json_hits_processor(const write_json_hits_processor &prm_rhs ///< The other write_json_hits_processor from which to copy construct
+                                                     ) : super       { prm_rhs             },
                                                          json_writers{ get_ostreams()      },
-                                                         has_started { arg_rhs.has_started } {
+                                                         has_started { prm_rhs.has_started } {
 	if ( has_started && ! json_writers.is_complete() ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to copy construct from write_json_hits_processor that's in-process of writing"));
 	}
 }
 
 /// \brief Move ctor for write_json_hits_processor
-write_json_hits_processor::write_json_hits_processor(write_json_hits_processor &&arg_rhs ///< The other write_json_hits_processor from which to move construct
-                                                     ) : super       { move( arg_rhs )     },
+write_json_hits_processor::write_json_hits_processor(write_json_hits_processor &&prm_rhs ///< The other write_json_hits_processor from which to move construct
+                                                     ) : super       { move( prm_rhs )     },
                                                          json_writers{ get_ostreams()      },
-                                                         has_started { arg_rhs.has_started } {
+                                                         has_started { prm_rhs.has_started } {
 	if ( has_started && ! json_writers.is_complete() ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to copy construct from write_json_hits_processor that's in-process of writing"));
 	}

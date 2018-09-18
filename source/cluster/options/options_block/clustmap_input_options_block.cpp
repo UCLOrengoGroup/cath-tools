@@ -55,15 +55,15 @@ string clustmap_input_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void clustmap_input_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                         const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void clustmap_input_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                         const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                          ) {
 	const string file_varname { "<file>" };
 
 	const auto map_from_clustmemb_file_notifier = [&] (const path_opt &x) { the_spec.set_map_from_clustmemb_file( x ); };
 	const auto read_batches_from_input_notifier = [&] (const bool     &x) { the_spec.set_read_batches_from_input( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			( PO_MAP_FROM_CLUSTMEMB_FILE ).c_str(),
 			value<path>()
@@ -89,14 +89,14 @@ void clustmap_input_options_block::do_add_visible_options_to_description(options
 }
 
 /// \brief Add a hidden option to the options_description for the input file
-void clustmap_input_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                        const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void clustmap_input_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                        const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                         ) {
 	const string file_varname { "<file>" };
 
 	const auto working_clustmemb_file_notifier = [&] (const path &x) { the_spec.set_working_clustmemb_file( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			( PO_WORKING_CLUSTMEMB_FILE ).c_str(),
 			value<path>()
@@ -108,7 +108,7 @@ void clustmap_input_options_block::do_add_hidden_options_to_description(options_
 
 /// \brief Generate a description of any problem that makes the specified clustmap_input_options_block invalid
 ///        or none otherwise
-str_opt clustmap_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt clustmap_input_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                         ) const {
 	return get_invalid_description( get_clustmap_input_spec() );
 }

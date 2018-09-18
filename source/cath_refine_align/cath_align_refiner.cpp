@@ -58,36 +58,36 @@ using namespace std;
 ///
 /// The input and output stream parameters default to cin and cout respectively but are configurable,
 /// primarily for testing purposes
-void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine_align_options, ///< The details of the cath-refine-align job to perform
-                                istream                         &arg_istream,                   ///< The istream from which any stdin-like input should be read
-                                ostream                         &arg_stdout,                   ///< The ostream to which any stdout-like output should be written
-                                ostream                         &arg_stderr                     ///< The ostream to which any stderr-like output should be written
+void cath_align_refiner::refine(const cath_refine_align_options &prm_cath_refine_align_options, ///< The details of the cath-refine-align job to perform
+                                istream                         &prm_istream,                   ///< The istream from which any stdin-like input should be read
+                                ostream                         &prm_stdout,                   ///< The ostream to which any stdout-like output should be written
+                                ostream                         &prm_stderr                     ///< The ostream to which any stderr-like output should be written
                                 ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto &error_or_help_string = arg_cath_refine_align_options.get_error_or_help_string();
+	const auto &error_or_help_string = prm_cath_refine_align_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << *error_or_help_string;
+		prm_stdout << *error_or_help_string;
 		return;
 	}
 
 	// Grab the PDBs and their IDs
-	const strucs_context  context      = get_pdbs_and_names( arg_cath_refine_align_options, arg_istream, true );
+	const strucs_context  context      = get_pdbs_and_names( prm_cath_refine_align_options, prm_istream, true );
 
 	// TODO: Populate this name summarising the overall group so it can be used, eg in superposition scripts
 	const string          overall_name{};
 
 	const auto backbone_complete_strucs_context = strucs_context_of_backbone_complete_region_limited_subset_pdbs(
 		context,
-		ref( arg_stderr )
+		ref( prm_stderr )
 	);
 
 	// An alignment is required but this should have been checked elsewhere
 	const protein_list  proteins           = build_protein_list( backbone_complete_strucs_context );
-	const auto          aln_acq_ptr        = get_alignment_acquirer( arg_cath_refine_align_options );
+	const auto          aln_acq_ptr        = get_alignment_acquirer( prm_cath_refine_align_options );
 	const auto          alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree(
 		restrict_pdbs_copy( context ),
-		get_align_refining( arg_cath_refine_align_options )
-		// ref( arg_stderr )
+		get_align_refining( prm_cath_refine_align_options )
+		// ref( prm_stderr )
 	);
 	const alignment    &the_alignment      = alignment_and_tree.first;
 	const auto         &spanning_tree      = alignment_and_tree.second;
@@ -129,16 +129,16 @@ void cath_align_refiner::refine(const cath_refine_align_options &arg_cath_refine
 		scored_refined_alignment,
 		spanning_tree,
 		context,
-		get_selection_policy_acquirer( arg_cath_refine_align_options )
+		get_selection_policy_acquirer( prm_cath_refine_align_options )
 	);
 
 	// For each of the alignment_outputters specified by the cath_superpose_options, output the alignment
-	const alignment_outputter_list aln_outputters = arg_cath_refine_align_options.get_alignment_outputters();
-	use_all_alignment_outputters( aln_outputters, alignment_context{ scored_refined_alignment, context }, arg_stdout, arg_stderr );
+	const alignment_outputter_list aln_outputters = prm_cath_refine_align_options.get_alignment_outputters();
+	use_all_alignment_outputters( aln_outputters, alignment_context{ scored_refined_alignment, context }, prm_stdout, prm_stderr );
 
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
-	const superposition_outputter_list sup_outputters = arg_cath_refine_align_options.get_superposition_outputters(
+	const superposition_outputter_list sup_outputters = prm_cath_refine_align_options.get_superposition_outputters(
 		aln_outputters.empty() ? default_supn_outputter::PYMOL : default_supn_outputter::NONE
 	);
-	use_all_superposition_outputters( sup_outputters, aln_based_sup_acq.get_superposition( arg_stderr ), arg_stdout, arg_stderr, overall_name );
+	use_all_superposition_outputters( sup_outputters, aln_based_sup_acq.get_superposition( prm_stderr ), prm_stdout, prm_stderr, overall_name );
 }

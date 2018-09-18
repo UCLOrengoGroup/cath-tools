@@ -50,42 +50,42 @@ using std::string;
 ///        in the program options description
 ///
 /// \relates trim_spec
-string cath::rslv::to_options_string(const trim_spec &arg_trim_spec ///< The trim_spec to describe
+string cath::rslv::to_options_string(const trim_spec &prm_trim_spec ///< The trim_spec to describe
                                      ) {
 	return
-		  ::std::to_string( arg_trim_spec.get_full_length()    )
+		  ::std::to_string( prm_trim_spec.get_full_length()    )
 		+ "/"
-		+ ::std::to_string( arg_trim_spec.get_total_trimming() );
+		+ ::std::to_string( prm_trim_spec.get_total_trimming() );
 }
 
 /// \brief Generate a string describing the specified trim_spec
 ///
 /// \relates trim_spec
-string cath::rslv::to_string(const trim_spec &arg_trim_spec ///< The trim_spec to describe
+string cath::rslv::to_string(const trim_spec &prm_trim_spec ///< The trim_spec to describe
                              ) {
 	return "trim_spec[full_length: "
-		+ ::std::to_string( arg_trim_spec.get_full_length()    )
+		+ ::std::to_string( prm_trim_spec.get_full_length()    )
 		+ "; total_trimming: "
-		+ ::std::to_string( arg_trim_spec.get_total_trimming() )
+		+ ::std::to_string( prm_trim_spec.get_total_trimming() )
 		+ "]";
 }
 
 /// \brief Insert a description of the specified trim_spec into the specified ostream
 ///
 /// \relates trim_spec
-ostream & cath::rslv::operator<<(ostream         &arg_os,       ///< The ostream into which the description should be inserted
-                                 const trim_spec &arg_trim_spec ///< The trim_spec to describe
+ostream & cath::rslv::operator<<(ostream         &prm_os,       ///< The ostream into which the description should be inserted
+                                 const trim_spec &prm_trim_spec ///< The trim_spec to describe
                                  ) {
-	arg_os << to_string( arg_trim_spec );
-	return arg_os;
+	prm_os << to_string( prm_trim_spec );
+	return prm_os;
 }
 
 /// \brief Attempt to parse a trim_spec from the specified string (eg "30/10")
 ///
 /// \relates trim_spec
-trim_spec cath::rslv::parse_trim_spec(const string &arg_trim_spec_str ///< The string from which the trim_spec should be parsed
+trim_spec cath::rslv::parse_trim_spec(const string &prm_trim_spec_str ///< The string from which the trim_spec should be parsed
                                       ) {
-	const auto parts = split_build<str_vec>( arg_trim_spec_str, is_any_of( "/" ) );
+	const auto parts = split_build<str_vec>( prm_trim_spec_str, is_any_of( "/" ) );
 	if ( parts.size() != 2 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot find two parts separated by a '/'' in trim specification"));
 	}
@@ -104,13 +104,13 @@ trim_spec cath::rslv::parse_trim_spec(const string &arg_trim_spec_str ///< The s
 /// \brief Extract into the specified trim_spec from the specified stream
 ///
 /// \relates trim_spec
-istream & cath::rslv::operator>>(istream   &arg_is,       ///< The stream from which the value should be extracted
-                                 trim_spec &arg_trim_spec ///< The trim_spec to populate from the specified stream
+istream & cath::rslv::operator>>(istream   &prm_is,       ///< The stream from which the value should be extracted
+                                 trim_spec &prm_trim_spec ///< The trim_spec to populate from the specified stream
                                  ) {
 	string input_string;
-	arg_is >> input_string;
-	arg_trim_spec = parse_trim_spec( input_string );
-	return arg_is;
+	prm_is >> input_string;
+	prm_trim_spec = parse_trim_spec( input_string );
+	return prm_is;
 }
 
 /// \brief Extract into the specified trim_spec from the specified stream
@@ -118,10 +118,10 @@ istream & cath::rslv::operator>>(istream   &arg_is,       ///< The stream from w
 /// \relates seq_seg
 ///
 /// \alsorelates trim_spec
-string cath::rslv::to_possibly_trimmed_simple_string(const seq_seg       &arg_seq_seg,      ///< The seq_seg to describe
-                                                     const trim_spec_opt &arg_trim_spec_opt ///< The optional specification describing the possible trimming
+string cath::rslv::to_possibly_trimmed_simple_string(const seq_seg       &prm_seq_seg,      ///< The seq_seg to describe
+                                                     const trim_spec_opt &prm_trim_spec_opt ///< The optional specification describing the possible trimming
                                                      ) {
-	return to_simple_string( trim_seq_seg_copy( arg_seq_seg, arg_trim_spec_opt ) );
+	return to_simple_string( trim_seq_seg_copy( prm_seq_seg, prm_trim_spec_opt ) );
 }
 
 /// \brief Generate a string describing the segments of the specified segments
@@ -130,13 +130,13 @@ string cath::rslv::to_possibly_trimmed_simple_string(const seq_seg       &arg_se
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
-seq_seg_vec cath::rslv::get_segments(const seq_seg_vec   &arg_segs,         ///< The segments to be described
-                                     const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+seq_seg_vec cath::rslv::get_segments(const seq_seg_vec   &prm_segs,         ///< The segments to be described
+                                     const trim_spec_opt &prm_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                      ) {
 	return transform_build<seq_seg_vec>(
-		arg_segs,
+		prm_segs,
 		[&] (const seq_seg &x) {
-			return trim_seq_seg_copy( x, arg_trim_spec_opt );
+			return trim_seq_seg_copy( x, prm_trim_spec_opt );
 		}
 	);
 }
@@ -147,10 +147,10 @@ seq_seg_vec cath::rslv::get_segments(const seq_seg_vec   &arg_segs,         ///<
 /// and by a ',' between segments.
 ///
 /// \relates full_hit
-string cath::rslv::get_segments_string(const seq_seg_vec   &arg_segs,         ///< The segments to be described
-                                       const trim_spec_opt &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+string cath::rslv::get_segments_string(const seq_seg_vec   &prm_segs,         ///< The segments to be described
+                                       const trim_spec_opt &prm_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                        ) {
-	return get_segments_string( get_segments( arg_segs, arg_trim_spec_opt ) );
+	return get_segments_string( get_segments( prm_segs, prm_trim_spec_opt ) );
 }
 
 /// \brief Generate a string describing the segments of the specified optional segments
@@ -159,20 +159,20 @@ string cath::rslv::get_segments_string(const seq_seg_vec   &arg_segs,         //
 /// and by a ',' between segments. Values of none are excluded from the output.
 ///
 /// \relates full_hit
-string cath::rslv::get_segments_string(const seq_seg_opt_vec &arg_segs,         ///< The segments to be described
-                                       const trim_spec_opt   &arg_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
+string cath::rslv::get_segments_string(const seq_seg_opt_vec &prm_segs,         ///< The segments to be described
+                                       const trim_spec_opt   &prm_trim_spec_opt ///< An optional trim_spec which may be used to specify trimming for the segments in the string
                                        ) {
 	return get_segments_string(
-		get_present_segments( arg_segs),
-		arg_trim_spec_opt
+		get_present_segments( prm_segs),
+		prm_trim_spec_opt
 	);
 }
 
 /// \brief Provide Boost program_options validation for trim_spec
 ///
 /// \relates trim_spec
-void cath::rslv::validate(any           &arg_value,         ///< The value to populate
-                          const str_vec &arg_value_strings, ///< The string values to validate
+void cath::rslv::validate(any           &prm_value,         ///< The value to populate
+                          const str_vec &prm_value_strings, ///< The string values to validate
                           trim_spec *, int) {
-	arg_value = lex_castable_validator<trim_spec>::perform_validate( arg_value, arg_value_strings );
+	prm_value = lex_castable_validator<trim_spec>::perform_validate( prm_value, prm_value_strings );
 }

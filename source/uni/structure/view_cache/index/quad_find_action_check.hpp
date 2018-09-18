@@ -74,22 +74,22 @@ namespace cath {
 
 		/// \brief Add the score arising from the two from/to residue pairs (represented by the two specified view_cache_index_entry objects)
 		///         to the running total_score
-		inline void quad_find_action_check::operator()(const view_cache_index_entry &arg_cache_a, ///< A view_cache_index_entry representing the first  from/to residue pair
-		                                               const view_cache_index_entry &arg_cache_b  ///< A view_cache_index_entry representing the second from/to residue pair
+		inline void quad_find_action_check::operator()(const view_cache_index_entry &prm_cache_a, ///< A view_cache_index_entry representing the first  from/to residue pair
+		                                               const view_cache_index_entry &prm_cache_b  ///< A view_cache_index_entry representing the second from/to residue pair
 		                                               ) {
-			const auto &a_from_index = arg_cache_a.get_from_index();
-			const auto &a_to_index   = arg_cache_a.get_to_index();
-			const auto &b_from_index = arg_cache_b.get_from_index();
-			const auto &b_to_index   = arg_cache_b.get_to_index();
+			const auto &a_from_index = prm_cache_a.get_from_index();
+			const auto &a_to_index   = prm_cache_a.get_to_index();
+			const auto &b_from_index = prm_cache_b.get_from_index();
+			const auto &b_to_index   = prm_cache_b.get_to_index();
 
 			const auto  a_indices    = size_size_pair{ a_from_index, a_to_index };
 			const auto  b_indices    = size_size_pair{ b_from_index, b_to_index };
 			if ( ! the_criteria( a_indices, b_indices, protein_a, protein_b ) ) {
 				BOOST_THROW_EXCEPTION(common::out_of_range_exception(
 					"The match_at_nodes scan has accepted an entry pair that is then rejected by standard comparisons "
-					+ boost::lexical_cast<std::string>( arg_cache_a )
+					+ boost::lexical_cast<std::string>( prm_cache_a )
 					+ " and "
-					+ boost::lexical_cast<std::string>( arg_cache_b )
+					+ boost::lexical_cast<std::string>( prm_cache_b )
 				));
 			}
 
@@ -99,7 +99,7 @@ namespace cath {
 			}
 			previously_seen_indices.insert( the_indices );
 
-			const double sq_dist       = detail::squared_distance( arg_cache_a, arg_cache_b );
+			const double sq_dist       = detail::squared_distance( prm_cache_a, prm_cache_b );
 			const double sq_dist_check = detail::squared_distance( a_indices, b_indices, protein_a, protein_b );
 
 			// For reference, epsilon_difference() / relative_difference() on x86_64 Linux 4.8.0-59-generic #64-Ubuntu SMP is :
@@ -121,10 +121,10 @@ namespace cath {
 
 // 		/// \brief Add the score arising from the two from/to residue pairs (represented by the two specified from/to index pairs)
 // 		///         to the running total_score
-// 		inline void quad_find_action_check::operator()(const size_size_pair &arg_indices_a, ///< The indices of the first  from/to residue pair in their protein
-// 		                                               const size_size_pair &arg_indices_b  ///< The indices of the second from/to residue pair in their protein
+// 		inline void quad_find_action_check::operator()(const size_size_pair &prm_indices_a, ///< The indices of the first  from/to residue pair in their protein
+// 		                                               const size_size_pair &prm_indices_b  ///< The indices of the second from/to residue pair in their protein
 // 		                                               ) {
-// 			const double sq_dist = detail::squared_distance( arg_indices_a, arg_indices_b, protein_a, protein_b );
+// 			const double sq_dist = detail::squared_distance( prm_indices_a, prm_indices_b, protein_a, protein_b );
 // 			const float_score_type score = static_cast<float_score_type>( 1.0 ) - ( sqrt( sq_dist ) / static_cast<float_score_type>( 7.0 ) );
 // //			const double score   = ( 10.0 / ( sq_dist + 10.0 ) );
 // 			total_score += score;

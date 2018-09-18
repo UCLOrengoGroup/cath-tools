@@ -48,16 +48,16 @@ constexpr bool display_spec::DEFAULT_SCORES_TO_EQUIVS;
 constexpr bool display_spec::DEFAULT_NORMALISE_SCORES;
 
 /// \brief Ctor for display_spec
-display_spec::display_spec(string      arg_display_colours_string,    ///< TODOCUMENT
-                           const bool &arg_gradient_colour_alignment, ///< Whether to display a gradient of colours
-                           const bool &arg_show_scores_if_present,    ///< Whether to use colour to indicate scores (if they're present)
-                           const bool &arg_scores_to_equivs,          ///< Whether to colour based on scores to the *present* equivalent positions
-                           const bool &arg_normalise_scores           ///< Whether to colour based on scores normalised across the alignment, rather than absolute scores
-                           ) : display_colours_string    { std::move( arg_display_colours_string ) },
-                               gradient_colour_alignment { arg_gradient_colour_alignment           },
-                               show_scores_if_present    { arg_show_scores_if_present              },
-                               scores_to_equivs          { arg_scores_to_equivs                    },
-                               normalise_scores          { arg_normalise_scores                    } {
+display_spec::display_spec(string      prm_display_colours_string,    ///< TODOCUMENT
+                           const bool &prm_gradient_colour_alignment, ///< Whether to display a gradient of colours
+                           const bool &prm_show_scores_if_present,    ///< Whether to use colour to indicate scores (if they're present)
+                           const bool &prm_scores_to_equivs,          ///< Whether to colour based on scores to the *present* equivalent positions
+                           const bool &prm_normalise_scores           ///< Whether to colour based on scores normalised across the alignment, rather than absolute scores
+                           ) : display_colours_string    { std::move( prm_display_colours_string ) },
+                               gradient_colour_alignment { prm_gradient_colour_alignment           },
+                               show_scores_if_present    { prm_show_scores_if_present              },
+                               scores_to_equivs          { prm_scores_to_equivs                    },
+                               normalise_scores          { prm_normalise_scores                    } {
 }
 
 /// \brief TODOCUMENT
@@ -87,65 +87,65 @@ bool display_spec::get_normalise_scores() const {
 }
 
 /// \brief TODOCUMENT
-void display_spec::set_display_colours_string(const string &arg_display_colours_string ///< TODOCUMENT
+void display_spec::set_display_colours_string(const string &prm_display_colours_string ///< TODOCUMENT
                                               ) {
-	display_colours_string = arg_display_colours_string;
+	display_colours_string = prm_display_colours_string;
 }
 
 /// \brief Setter for whether to display a gradient of colours
-void display_spec::set_gradient_colour_alignment(const bool &arg_gradient_colour_alignment ///< Whether to display a gradient of colours
+void display_spec::set_gradient_colour_alignment(const bool &prm_gradient_colour_alignment ///< Whether to display a gradient of colours
                                                  ) {
-	gradient_colour_alignment = arg_gradient_colour_alignment;
+	gradient_colour_alignment = prm_gradient_colour_alignment;
 }
 
 /// \brief Setter for whether to use colour to indicate scores (if they're present)
-void display_spec::set_show_scores_if_present(const bool &arg_show_scores_if_present ///< Whether to use colour to indicate scores (if they're present)
+void display_spec::set_show_scores_if_present(const bool &prm_show_scores_if_present ///< Whether to use colour to indicate scores (if they're present)
                                               ) {
-	show_scores_if_present = arg_show_scores_if_present;
+	show_scores_if_present = prm_show_scores_if_present;
 }
 
 /// \brief Setter for whether to colour based on scores to the *present* equivalent positions
-void display_spec::set_scores_to_equivs(const bool &arg_scores_to_equivs ///< Whether to colour based on scores to the *present* equivalent positions
+void display_spec::set_scores_to_equivs(const bool &prm_scores_to_equivs ///< Whether to colour based on scores to the *present* equivalent positions
                                         ) {
-	scores_to_equivs = arg_scores_to_equivs;
+	scores_to_equivs = prm_scores_to_equivs;
 }
 
 /// \brief Setter for whether to colour based on scores normalised across the alignment, rather than absolute scores
-void display_spec::set_normalise_scores(const bool &arg_normalise_scores ///< Whether to colour based on scores normalised across the alignment, rather than absolute scores
+void display_spec::set_normalise_scores(const bool &prm_normalise_scores ///< Whether to colour based on scores normalised across the alignment, rather than absolute scores
                                         ) {
-	normalise_scores = arg_normalise_scores;
+	normalise_scores = prm_normalise_scores;
 }
 
 /// \brief Return whether the specified display_spec implies the need for an alignment
-bool cath::requires_alignment(const display_spec &arg_display_spec ///< The display_spec to query
+bool cath::requires_alignment(const display_spec &prm_display_spec ///< The display_spec to query
                               ) {
-	return arg_display_spec.get_gradient_colour_alignment();
+	return prm_display_spec.get_gradient_colour_alignment();
 }
 
 /// \brief Return whether the specified display_spec implies a display_colourer_consecutive
-bool cath::is_consecutive(const display_spec &arg_display_spec ///< The display_spec to query
+bool cath::is_consecutive(const display_spec &prm_display_spec ///< The display_spec to query
                           ) {
-	return ! arg_display_spec.get_gradient_colour_alignment();
+	return ! prm_display_spec.get_gradient_colour_alignment();
 }
 
 /// \brief Private getter of whether a display_colours_string has been set
-bool cath::has_display_colours_string(const display_spec &arg_display_spec ///< TODOCUMENT
+bool cath::has_display_colours_string(const display_spec &prm_display_spec ///< TODOCUMENT
                                       ) {
-	return static_cast<bool>( arg_display_spec.get_display_colours_string() );
+	return static_cast<bool>( prm_display_spec.get_display_colours_string() );
 }
 
 /// \brief String describing any problems, or "" if none (as part of the interface to friend display_options_block)
-str_opt cath::invalid_string(const display_spec &arg_display_spec ///< TODOCUMENT
+str_opt cath::invalid_string(const display_spec &prm_display_spec ///< TODOCUMENT
                              ) {
 	try {
-		get_colour_list( arg_display_spec );
+		get_colour_list( prm_display_spec );
 	}
 	catch (const boost::exception &e) {
-		return "Colour list could not be parsed from \"" + arg_display_spec.get_display_colours_string().value_or( "<no-colour-list-specified>" )
+		return "Colour list could not be parsed from \"" + prm_display_spec.get_display_colours_string().value_or( "<no-colour-list-specified>" )
 		     + "\". Specific error was: "                + diagnostic_information( e );
 	}
 	catch (...) {
-		return "Colour list could not be parsed from \"" + arg_display_spec.get_display_colours_string().value_or( "<no-colour-list-specified>" ) + "\"";
+		return "Colour list could not be parsed from \"" + prm_display_spec.get_display_colours_string().value_or( "<no-colour-list-specified>" ) + "\"";
 	}
 	return none;
 }
@@ -153,9 +153,9 @@ str_opt cath::invalid_string(const display_spec &arg_display_spec ///< TODOCUMEN
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour_list
-display_colour_list cath::get_colour_list(const display_spec &arg_display_spec ///< TODOCUMENT
+display_colour_list cath::get_colour_list(const display_spec &prm_display_spec ///< TODOCUMENT
                                           ) {
-	const auto cols_str_opt = arg_display_spec.get_display_colours_string();
+	const auto cols_str_opt = prm_display_spec.get_display_colours_string();
 	return make_display_colour_list_from_string(
 		cols_str_opt.value_or( display_colour_list::DEFAULT_COLOURS_STRING )
 	);

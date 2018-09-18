@@ -39,8 +39,8 @@ using std::array;
 constexpr bool alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN;
 
 /// \brief Ctor from how much refining should be done to the alignment
-alignment_input_spec::alignment_input_spec(const align_refining &arg_refining ///< How much refining should be done to the alignment
-                                           ) : refining{ arg_refining } {
+alignment_input_spec::alignment_input_spec(const align_refining &prm_refining ///< How much refining should be done to the alignment
+                                           ) : refining{ prm_refining } {
 }
 
 /// \brief Getter for whether to align based on matching residue names
@@ -80,52 +80,52 @@ const align_refining & alignment_input_spec::get_refining() const {
 }
 
 /// \brief Setter for whether to align based on matching residue names
-alignment_input_spec & alignment_input_spec::set_residue_name_align(const bool &arg_residue_name_align ///< Whether to align based on matching residue names
+alignment_input_spec & alignment_input_spec::set_residue_name_align(const bool &prm_residue_name_align ///< Whether to align based on matching residue names
                                                                     ) {
-	residue_name_align = arg_residue_name_align;
+	residue_name_align = prm_residue_name_align;
 	return *this;
 }
 
 /// \brief Setter for a file from which to read a FASTA alignment
-alignment_input_spec & alignment_input_spec::set_fasta_alignment_file(const path &arg_fasta_alignment_file ///< A file from which to read a FASTA alignment
+alignment_input_spec & alignment_input_spec::set_fasta_alignment_file(const path &prm_fasta_alignment_file ///< A file from which to read a FASTA alignment
                                                                       ) {
-	fasta_alignment_file = arg_fasta_alignment_file;
+	fasta_alignment_file = prm_fasta_alignment_file;
 	return *this;
 }
 
 /// \brief Setter for a file from which to read a legacy-SSAP-format alignment
-alignment_input_spec & alignment_input_spec::set_ssap_alignment_file(const path &arg_ssap_alignment_file ///< A file from which to read a legacy-SSAP-format alignment
+alignment_input_spec & alignment_input_spec::set_ssap_alignment_file(const path &prm_ssap_alignment_file ///< A file from which to read a legacy-SSAP-format alignment
                                                                      ) {
-	ssap_alignment_file = arg_ssap_alignment_file;
+	ssap_alignment_file = prm_ssap_alignment_file;
 	return *this;
 }
 
 /// \brief Setter for a file from which to read a CORA alignment
-alignment_input_spec & alignment_input_spec::set_cora_alignment_file(const path &arg_cora_alignment_file ///< A file from which to read a CORA alignment
+alignment_input_spec & alignment_input_spec::set_cora_alignment_file(const path &prm_cora_alignment_file ///< A file from which to read a CORA alignment
                                                                      ) {
-	cora_alignment_file = arg_cora_alignment_file;
+	cora_alignment_file = prm_cora_alignment_file;
 	return *this;
 }
 
 /// \brief Setter for a file from which to read SSAP-scores format data to use to attempt to glue pairwise alignments together
-alignment_input_spec & alignment_input_spec::set_ssap_scores_file(const path &arg_ssap_scores_file ///< A file from which to read SSAP-scores format data to use to attempt to glue pairwise alignments together
+alignment_input_spec & alignment_input_spec::set_ssap_scores_file(const path &prm_ssap_scores_file ///< A file from which to read SSAP-scores format data to use to attempt to glue pairwise alignments together
                                                                   ) {
-	ssap_scores_file = arg_ssap_scores_file;
+	ssap_scores_file = prm_ssap_scores_file;
 	return *this;
 }
 
 /// \brief Setter for a directory in which SSAPs should be performed and then their alignments glued together
 ///        or (inner) none for cath-tools to choose a directory to use
-alignment_input_spec & alignment_input_spec::set_do_the_ssaps_dir(const path_opt &arg_do_the_ssaps_dir ///< A directory in which SSAPs should be performed and then their alignments glued together or (inner) none for cath-tools to choose a directory to use
+alignment_input_spec & alignment_input_spec::set_do_the_ssaps_dir(const path_opt &prm_do_the_ssaps_dir ///< A directory in which SSAPs should be performed and then their alignments glued together or (inner) none for cath-tools to choose a directory to use
                                                                   ) {
-	do_the_ssaps_dir = arg_do_the_ssaps_dir;
+	do_the_ssaps_dir = prm_do_the_ssaps_dir;
 	return *this;
 }
 
 /// \brief Setter for how much refining should be done to the alignment
-alignment_input_spec & alignment_input_spec::set_refining(const align_refining &arg_refining
+alignment_input_spec & alignment_input_spec::set_refining(const align_refining &prm_refining
                                                           ) {
-	refining = arg_refining;
+	refining = prm_refining;
 	return *this;
 }
 
@@ -134,16 +134,16 @@ alignment_input_spec & alignment_input_spec::set_refining(const align_refining &
 /// \relates alignment_input_spec
 ///
 /// \alsorelates alignment_acquirer
-size_t cath::opts::get_num_acquirers(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
+size_t cath::opts::get_num_acquirers(const alignment_input_spec &prm_alignment_input_spec ///< The alignment_input_spec to query
                                      ) {
 	return static_cast<size_t>( count(
 		make_array(
-			! arg_alignment_input_spec.get_cora_alignment_file().empty(),
-			  arg_alignment_input_spec.get_residue_name_align(),
-			! arg_alignment_input_spec.get_fasta_alignment_file().empty(),
-			! arg_alignment_input_spec.get_ssap_alignment_file().empty(),
-			! arg_alignment_input_spec.get_ssap_scores_file().empty(),
-			  static_cast<bool>( arg_alignment_input_spec.get_do_the_ssaps_dir() )
+			! prm_alignment_input_spec.get_cora_alignment_file().empty(),
+			  prm_alignment_input_spec.get_residue_name_align(),
+			! prm_alignment_input_spec.get_fasta_alignment_file().empty(),
+			! prm_alignment_input_spec.get_ssap_alignment_file().empty(),
+			! prm_alignment_input_spec.get_ssap_scores_file().empty(),
+			  static_cast<bool>( prm_alignment_input_spec.get_do_the_ssaps_dir() )
 		),
 		true
 	) );

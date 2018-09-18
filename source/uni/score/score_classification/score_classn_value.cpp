@@ -27,12 +27,12 @@ using namespace cath::score;
 using namespace std;
 
 /// \brief Ctor for score_classn_value
-score_classn_value::score_classn_value(const double &arg_score_value,          ///< TODOCUMENT
-                                       const bool   &arg_instance_is_positive, ///< TODOCUMENT
-                                       string        arg_instance_label        ///< TODOCUMENT
-                                       ) : score_value          { arg_score_value                 },
-                                           instance_is_positive { arg_instance_is_positive        },
-                                           instance_label       { std::move( arg_instance_label ) } {
+score_classn_value::score_classn_value(const double &prm_score_value,          ///< TODOCUMENT
+                                       const bool   &prm_instance_is_positive, ///< TODOCUMENT
+                                       string        prm_instance_label        ///< TODOCUMENT
+                                       ) : score_value          { prm_score_value                 },
+                                           instance_is_positive { prm_instance_is_positive        },
+                                           instance_label       { std::move( prm_instance_label ) } {
 }
 
 /// \brief TODOCUMENT
@@ -53,18 +53,18 @@ const string & score_classn_value::get_instance_label() const {
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value
-ostream & cath::score::operator<<(ostream                  &arg_ostream,           ///< TODOCUMENT
-                                  const score_classn_value &arg_score_classn_value ///< TODOCUMENT
+ostream & cath::score::operator<<(ostream                  &prm_ostream,           ///< TODOCUMENT
+                                  const score_classn_value &prm_score_classn_value ///< TODOCUMENT
                                   ) {
 	ostringstream out_ss;
 	out_ss << "score_classn_value[score:";
-	out_ss << arg_score_classn_value.get_score_value();
+	out_ss << prm_score_classn_value.get_score_value();
 	out_ss << ", label:";
-	out_ss << arg_score_classn_value.get_instance_label();
+	out_ss << prm_score_classn_value.get_instance_label();
 	out_ss << ", is_positive:";
-	out_ss << boolalpha << arg_score_classn_value.get_instance_is_positive();
+	out_ss << boolalpha << prm_score_classn_value.get_instance_is_positive();
 	out_ss << "]";
 
-	arg_ostream << out_ss.str();
-	return arg_ostream;
+	prm_ostream << out_ss.str();
+	return prm_ostream;
 }

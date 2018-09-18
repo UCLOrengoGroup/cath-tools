@@ -111,9 +111,9 @@ namespace cath {
         ///
         /// \returns A raw pointer to a new copy of the common_atom_selection_policy argument, with the same dynamic type.
         ///          The caller is responsible for deleting this new object.
-        inline common_atom_selection_policy * new_clone(const common_atom_selection_policy &arg_common_atom_selection_policy ///< The common_atom_selection_policy to clone
+        inline common_atom_selection_policy * new_clone(const common_atom_selection_policy &prm_common_atom_selection_policy ///< The common_atom_selection_policy to clone
                                                         ) {
-        	return arg_common_atom_selection_policy.clone().release();
+        	return prm_common_atom_selection_policy.clone().release();
         }
 	} // namespace align
 } // namespace cath

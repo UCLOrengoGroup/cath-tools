@@ -37,38 +37,38 @@ using std::string;
 const string files_equal::FILENAME_NAME_PREFIX{ "file " };
 
 /// \brief Ctor for files_equal
-files_equal::files_equal(const bootstrap_mode &arg_bootstrapping,  ///< TODOCUMENT
-                         const str_size_type  &arg_diff_half_width ///< TODOCUMENT
-                         ) : bootstrapping   { arg_bootstrapping   },
-                             diff_half_width { arg_diff_half_width } {
+files_equal::files_equal(const bootstrap_mode &prm_bootstrapping,  ///< TODOCUMENT
+                         const str_size_type  &prm_diff_half_width ///< TODOCUMENT
+                         ) : bootstrapping   { prm_bootstrapping   },
+                             diff_half_width { prm_diff_half_width } {
 }
 
 /// \brief Ctor for files_equal
-files_equal::files_equal(const str_size_type &arg_diff_half_width ///< TODOCUMENT
-                         ) : diff_half_width { arg_diff_half_width } {
+files_equal::files_equal(const str_size_type &prm_diff_half_width ///< TODOCUMENT
+                         ) : diff_half_width { prm_diff_half_width } {
 }
 
 /// \brief TODOCUMENT
-predicate_result files_equal::operator()(const path &arg_filename1, ///< TODOCUMENT
-                                         const path &arg_filename2  ///< TODOCUMENT
+predicate_result files_equal::operator()(const path &prm_filename1, ///< TODOCUMENT
+                                         const path &prm_filename2  ///< TODOCUMENT
                                          ) const {
 	// Return false if the two files are literally the same
 	// because there is no good reason
-	if ( arg_filename1 == arg_filename2 ) {
+	if ( prm_filename1 == prm_filename2 ) {
 		predicate_result result( false );
-		result.message() << "Files are literally both the same file (" << arg_filename1 << ")";
+		result.message() << "Files are literally both the same file (" << prm_filename1 << ")";
 		return result;
 	}
 
 	// Otherwise, create an ifstream for the first file...
 	ifstream file_ifstream1;
-	open_ifstream( file_ifstream1, arg_filename1 );
+	open_ifstream( file_ifstream1, prm_filename1 );
 
 	// ...and then just use a istream_and_file_equal
 	const predicate_result the_result = istream_and_file_equal{ bootstrapping, diff_half_width }(
 		file_ifstream1,
-		FILENAME_NAME_PREFIX + arg_filename1.string(),
-		arg_filename2
+		FILENAME_NAME_PREFIX + prm_filename1.string(),
+		prm_filename2
 	);
 
 	return the_result;

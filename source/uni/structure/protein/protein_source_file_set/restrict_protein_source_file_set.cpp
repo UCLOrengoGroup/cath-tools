@@ -33,14 +33,14 @@ using std::ostream;
 using std::string;
 
 /// \brief For a restrict_protein_source_file_set, implement do_read_files in terms of do_read_and_restrict_files()
-protein restrict_protein_source_file_set::do_read_files(const data_file_path_map &arg_filename_of_data_file, ///< The pre-loaded map of file types to filenames
-                                                        const string             &arg_protein_name,          ///< The name of the protein that is to be read from files
-                                                        ostream                  &arg_stderr                 ///< The ostream to which any warnings/errors should be written
+protein restrict_protein_source_file_set::do_read_files(const data_file_path_map &prm_filename_of_data_file, ///< The pre-loaded map of file types to filenames
+                                                        const string             &prm_protein_name,          ///< The name of the protein that is to be read from files
+                                                        ostream                  &prm_stderr                 ///< The ostream to which any warnings/errors should be written
                                                         ) const {
 	return do_read_and_restrict_files(
-		arg_filename_of_data_file,
-		arg_protein_name,
+		prm_filename_of_data_file,
+		prm_protein_name,
 		none,
-		arg_stderr
+		prm_stderr
 	);
 }

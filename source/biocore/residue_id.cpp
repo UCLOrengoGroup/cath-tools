@@ -41,21 +41,21 @@ using std::string;
 /// \brief Generate a string describing the specified residue_id
 ///
 /// \relates residue_id
-string cath::to_string(const residue_id &arg_residue_id ///< The residue_id to describe
+string cath::to_string(const residue_id &prm_residue_id ///< The residue_id to describe
                        ) {
-	return arg_residue_id.get_chain_label().to_string()
+	return prm_residue_id.get_chain_label().to_string()
 		+ ":"
-		+ to_string( arg_residue_id.get_residue_name() );
+		+ to_string( prm_residue_id.get_residue_name() );
 }
 
 /// \brief Insert a description of the specified residue_id into the specified ostream
 ///
 /// \relates residue_id
-ostream & cath::operator<<(ostream          &arg_os,        ///< The ostream into which the description should be inserted
-                           const residue_id &arg_residue_id ///< The residue_id to describe
+ostream & cath::operator<<(ostream          &prm_os,        ///< The ostream into which the description should be inserted
+                           const residue_id &prm_residue_id ///< The residue_id to describe
                            ) {
-	arg_os << to_string( arg_residue_id );
-	return arg_os;
+	prm_os << to_string( prm_residue_id );
+	return prm_os;
 }
 
 /// \brief Extract into the specified residue_id from the specified stream
@@ -64,13 +64,13 @@ ostream & cath::operator<<(ostream          &arg_os,        ///< The ostream int
 /// eg ("A:324A")
 ///
 /// \relates residue_id
-istream & cath::operator>>(istream    &arg_istream,   ///< The stream from which the residue_id should be extracted
-                           residue_id &arg_residue_id ///< The residue_id to populate from the specified stream
+istream & cath::operator>>(istream    &prm_istream,   ///< The stream from which the residue_id should be extracted
+                           residue_id &prm_residue_id ///< The residue_id to populate from the specified stream
                            ) {
 	string input_string;
-	arg_istream >> input_string;
-	arg_residue_id = make_residue_id( input_string );
-	return arg_istream;
+	prm_istream >> input_string;
+	prm_residue_id = make_residue_id( input_string );
+	return prm_istream;
 }
 
 /// \brief Generate a residue_id from the specified string
@@ -79,35 +79,35 @@ istream & cath::operator>>(istream    &arg_istream,   ///< The stream from which
 /// eg ("A:324A")
 ///
 /// \relates residue_id
-residue_id cath::make_residue_id(const string &arg_input_string ///< The string from which the residue_id should be parsed
+residue_id cath::make_residue_id(const string &prm_input_string ///< The string from which the residue_id should be parsed
                                  ) {
-	if ( arg_input_string.empty() ) {
+	if ( prm_input_string.empty() ) {
 		return {};
 	}
-	if ( arg_input_string.length() < 3 || arg_input_string.at( 1 ) != ':' ) {
+	if ( prm_input_string.length() < 3 || prm_input_string.at( 1 ) != ':' ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to parse residue ID from string"));
 	}
 	return {
-		chain_label{ arg_input_string.front() },
-		make_residue_name( arg_input_string.substr( 2 ) )
+		chain_label{ prm_input_string.front() },
+		make_residue_name( prm_input_string.substr( 2 ) )
 	};
 }
 
 /// \brief Return whether the specified residue ID has a strictly negative residue number
 ///
 /// \relates residue_id
-bool cath::has_strictly_negative_residue_number(const residue_id &arg_residue_id ///< The residue_id to query
+bool cath::has_strictly_negative_residue_number(const residue_id &prm_residue_id ///< The residue_id to query
                                                 ) {
-	return has_strictly_negative_residue_number( arg_residue_id.get_residue_name() );
+	return has_strictly_negative_residue_number( prm_residue_id.get_residue_name() );
 }
 
 /// \brief Return the specified residue_ids, grouped by chain_label
 ///
 /// \relates residue_id
-chain_label_residue_id_vec_map cath::get_residue_id_by_chain_label(const residue_id_vec &arg_residue_ids ///< The vector of residue_ids to query
+chain_label_residue_id_vec_map cath::get_residue_id_by_chain_label(const residue_id_vec &prm_residue_ids ///< The vector of residue_ids to query
                                                                    ) {
 	chain_label_residue_id_vec_map results;
-	for (const residue_id &res_id : arg_residue_ids) {
+	for (const residue_id &res_id : prm_residue_ids) {
 		results[ res_id.get_chain_label() ].emplace_back( res_id );
 	}
 	return results;
@@ -116,19 +116,19 @@ chain_label_residue_id_vec_map cath::get_residue_id_by_chain_label(const residue
 /// \brief Return a chain label that is used consistently in all of the specified residue_ids
 ///        or none otherwise
 ///
-/// Returns none if `arg_residue_ids.empty()`
+/// Returns none if `prm_residue_ids.empty()`
 ///
 /// \relates residue_id
-chain_label_opt cath::consistent_chain_label(const residue_id_vec &arg_residue_ids ///< The vector of residue_ids to query
+chain_label_opt cath::consistent_chain_label(const residue_id_vec &prm_residue_ids ///< The vector of residue_ids to query
                                              ) {
-	if ( arg_residue_ids.empty() ) {
+	if ( prm_residue_ids.empty() ) {
 		return none;
 	}
-	const auto &front_chain_label = arg_residue_ids.front().get_chain_label();
+	const auto &front_chain_label = prm_residue_ids.front().get_chain_label();
 	return make_optional(
 		all_of(
-			next( common::cbegin( arg_residue_ids ) ),
-			common::cend( arg_residue_ids ),
+			next( common::cbegin( prm_residue_ids ) ),
+			common::cend( prm_residue_ids ),
 			[&] (const residue_id &x) { return x.get_chain_label() == front_chain_label; }
 		),
 		front_chain_label
@@ -137,21 +137,21 @@ chain_label_opt cath::consistent_chain_label(const residue_id_vec &arg_residue_i
 
 /// \brief Return whether the specified residue IDs have a consistent chain label
 ///
-/// Returns true if `arg_residue_ids.empty()`
+/// Returns true if `prm_residue_ids.empty()`
 ///
 /// \relates residue_id
-bool cath::have_consistent_chain_labels(const residue_id_vec &arg_residue_ids ///< The vector of residue_ids to query
+bool cath::have_consistent_chain_labels(const residue_id_vec &prm_residue_ids ///< The vector of residue_ids to query
                                         ) {
-	return arg_residue_ids.empty() || consistent_chain_label( arg_residue_ids );
+	return prm_residue_ids.empty() || consistent_chain_label( prm_residue_ids );
 }
 
 /// \brief Return whether any of the specified residue_ids has a strictly negative residue number
 ///
 /// \relates residue_id
-bool cath::has_any_strictly_negative_residue_numbers(const residue_id_vec &arg_residue_ids ///< The residue_ids to query
+bool cath::has_any_strictly_negative_residue_numbers(const residue_id_vec &prm_residue_ids ///< The residue_ids to query
                                                      ) {
 	return any_of(
-		arg_residue_ids,
+		prm_residue_ids,
 		[] (const residue_id &x) { return has_strictly_negative_residue_number( x ); }
 	);
 }

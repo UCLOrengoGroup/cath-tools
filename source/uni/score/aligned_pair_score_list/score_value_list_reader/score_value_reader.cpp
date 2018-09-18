@@ -40,10 +40,10 @@ using boost::property_tree::ptree;
 using boost::tribool;
 
 /// \brief TODOCUMENT
-aligned_pair_score_value_list score_value_reader::read_aligned_pair_score_list_from_property_tree(const ptree &arg_property_tree ///< TODOCUMENT
+aligned_pair_score_value_list score_value_reader::read_aligned_pair_score_list_from_property_tree(const ptree &prm_property_tree ///< TODOCUMENT
                                                                                                   ) {
 	aligned_pair_score_value_list results;
-	for (const auto &the_score : arg_property_tree.get_child( "scores" ) ) {
+	for (const auto &the_score : prm_property_tree.get_child( "scores" ) ) {
 		const auto score_type           = the_score.second.get<string>( "score_type"       );
 		const auto score_value          = the_score.second.get<double>( "score_value"      );
 		const auto higher_is_better_str = the_score.second.get<string>( "higher_is_better" );
@@ -62,19 +62,19 @@ aligned_pair_score_value_list score_value_reader::read_aligned_pair_score_list_f
 }
 
 /// \brief TODOCUMENT
-aligned_pair_score_value_list score_value_reader::read(istream &arg_istream ///< TODOCUMENT
+aligned_pair_score_value_list score_value_reader::read(istream &prm_istream ///< TODOCUMENT
                                                        ) {
 	ptree temp_ptree;
-	read_json( arg_istream, temp_ptree );
+	read_json( prm_istream, temp_ptree );
 	return read_aligned_pair_score_list_from_property_tree( temp_ptree );
 }
 
 /// \brief TODOCUMENT
-aligned_pair_score_value_list score_value_reader::read(const path &arg_input_file ///< TODOCUMENT
+aligned_pair_score_value_list score_value_reader::read(const path &prm_input_file ///< TODOCUMENT
                                                        ) {
-	BOOST_LOG_TRIVIAL( debug ) << "Reading aligned_pair_score_value_list from file " << arg_input_file;
+	BOOST_LOG_TRIVIAL( debug ) << "Reading aligned_pair_score_value_list from file " << prm_input_file;
 	ifstream score_value_ifstream;
-	open_ifstream( score_value_ifstream, arg_input_file );
+	open_ifstream( score_value_ifstream, prm_input_file );
 	const aligned_pair_score_value_list result = read( score_value_ifstream );
 	score_value_ifstream.close();
 	return result;

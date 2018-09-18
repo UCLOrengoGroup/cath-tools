@@ -58,11 +58,11 @@ using std::tie;
 /// \brief Make links from the specified raw links data
 ///
 /// \relates links
-links cath::clust::make_links(const item_item_strength_tpl_vec &arg_raw_links ///< The raw links data from which the links should be built
+links cath::clust::make_links(const item_item_strength_tpl_vec &prm_raw_links ///< The raw links data from which the links should be built
                               ) {
 	links result;
 	for_each(
-		arg_raw_links,
+		prm_raw_links,
 		[&] (const item_item_strength_tpl &x) { add_link_symmetrically( result, x ); }
 	);
 	return result;
@@ -70,17 +70,17 @@ links cath::clust::make_links(const item_item_strength_tpl_vec &arg_raw_links //
 
 /// \brief Get a spanning tree for the specified subset of items in the specified links
 ///
-/// \pre The items in arg_index_group must be spanned by arg_links
+/// \pre The items in prm_index_group must be spanned by prm_links
 ///
 /// \relates links
-size_size_pair_vec cath::clust::get_spanning_tree_of_subset(const links    &arg_links,      ///< The links from which the spanning tree should be formed
-                                                            const size_set &arg_index_group ///< The items over which the spanning tree should be formed
+size_size_pair_vec cath::clust::get_spanning_tree_of_subset(const links    &prm_links,      ///< The links from which the spanning tree should be formed
+                                                            const size_set &prm_index_group ///< The items over which the spanning tree should be formed
                                                             ) {
 	size_size_doub_tpl_vec relevant_links;
-	relevant_links.reserve( arg_index_group.size() );
-	for (const size_t &index : arg_index_group) {
-		for (const link &x : arg_links[ index ] ) {
-			if ( x.node < index && contains( arg_index_group, x.node ) ) {
+	relevant_links.reserve( prm_index_group.size() );
+	for (const size_t &index : prm_index_group) {
+		for (const link &x : prm_links[ index ] ) {
+			if ( x.node < index && contains( prm_index_group, x.node ) ) {
 				relevant_links.emplace_back(
 					x.node,
 					index,
@@ -90,19 +90,19 @@ size_size_pair_vec cath::clust::get_spanning_tree_of_subset(const links    &arg_
 		}
 	}
 
-	return get_edges_of_spanning_tree( calc_min_spanning_tree( relevant_links, arg_index_group.size() ) );
+	return get_edges_of_spanning_tree( calc_min_spanning_tree( relevant_links, prm_index_group.size() ) );
 }
 
 /// \brief Generate a string describing the specified links
 ///
 /// \relates links
-string cath::clust::to_string(const links &arg_links ///< The links to describe
+string cath::clust::to_string(const links &prm_links ///< The links to describe
                               ) {
 	return "links["
 		+ join(
-			indices( arg_links.size() )
+			indices( prm_links.size() )
 				| transformed( [&] (const size_t &x) {
-					return "\n\t" + link_list_string( arg_links[ x ], x );
+					return "\n\t" + link_list_string( prm_links[ x ], x );
 				} ),
 			""
 		)
@@ -117,25 +117,25 @@ string cath::clust::to_string(const links &arg_links ///< The links to describe
 /// gives slightly different results depending on the order in which it receives links)
 ///
 /// \relates links
-void cath::clust::write_ordered_links(ostream                 &arg_output,      ///< The ostream to which the ordered links should be written
-                                      const links             &arg_links,       ///< The links to be written
-                                      const id_of_str_bidirnl &arg_ider,        ///< The name_ider containing the names for the links
-                                      const size_vec          &arg_sort_indices ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
+void cath::clust::write_ordered_links(ostream                 &prm_output,      ///< The ostream to which the ordered links should be written
+                                      const links             &prm_links,       ///< The links to be written
+                                      const id_of_str_bidirnl &prm_ider,        ///< The name_ider containing the names for the links
+                                      const size_vec          &prm_sort_indices ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
                                       ) {
 	/// \TODO: Move this to common/type_aliases.hpp
 	using size_size_size_size_tpl_vec = std::vector<size_size_size_size_tpl>;
 
 	size_size_size_size_tpl_vec print_links;
-	for (const size_t &outer_index : indices( arg_links.size() ) ) {
-		const auto &inner_links      = arg_links       [ outer_index ];
-		const auto &outer_sort_index = arg_sort_indices[ outer_index ];
-		const auto &outer_name       = arg_ider.get_name_of_id( outer_index );
+	for (const size_t &outer_index : indices( prm_links.size() ) ) {
+		const auto &inner_links      = prm_links       [ outer_index ];
+		const auto &outer_sort_index = prm_sort_indices[ outer_index ];
+		const auto &outer_name       = prm_ider.get_name_of_id( outer_index );
 		for (const boost::tuple<const link &, size_t> &x : combine( inner_links, indices( inner_links.size() ) ) ) {
 			const auto &inner_link       = x.get<0>();
 			const auto &inner_list_index = x.get<1>();
 			const auto &inner_index      = inner_link.node;
-			if ( outer_name < arg_ider.get_name_of_id( inner_index ) ) {
-				const auto &inner_sort_index = arg_sort_indices[ inner_index ];
+			if ( outer_name < prm_ider.get_name_of_id( inner_index ) ) {
+				const auto &inner_sort_index = prm_sort_indices[ inner_index ];
 
 				print_links.emplace_back(
 					outer_index,
@@ -159,11 +159,11 @@ void cath::clust::write_ordered_links(ostream                 &arg_output,      
 	);
 
 	for (const auto &print_link : print_links) {
-		const auto &the_link = arg_links[ get<0>( print_link ) ][ get<1>( print_link ) ];
-		arg_output
-			<< arg_ider.get_name_of_id( get<0>( print_link ) )
+		const auto &the_link = prm_links[ get<0>( print_link ) ][ get<1>( print_link ) ];
+		prm_output
+			<< prm_ider.get_name_of_id( get<0>( print_link ) )
 			<< " "
-			<< arg_ider.get_name_of_id( the_link.node )
+			<< prm_ider.get_name_of_id( the_link.node )
 			<< "\t"
 			<< std::setprecision( 30 ) << ( -the_link.dissim )
 			<< "\t100\n";
@@ -174,13 +174,13 @@ void cath::clust::write_ordered_links(ostream                 &arg_output,      
 ///        name_ider and sort indices
 ///
 /// \relates links
-void cath::clust::write_ordered_links(const path              &arg_output,      ///< The file to which the ordered links should be written
-                                      const links             &arg_links,       ///< The links to be written
-                                      const id_of_str_bidirnl &arg_ider,        ///< The name_ider containing the names for the links
-                                      const size_vec          &arg_sort_indices ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
+void cath::clust::write_ordered_links(const path              &prm_output,      ///< The file to which the ordered links should be written
+                                      const links             &prm_links,       ///< The links to be written
+                                      const id_of_str_bidirnl &prm_ider,        ///< The name_ider containing the names for the links
+                                      const size_vec          &prm_sort_indices ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
                                       ) {
 	ofstream links_ostream;
-	open_ofstream( links_ostream, arg_output );
-	write_ordered_links( links_ostream, arg_links, arg_ider, arg_sort_indices );
+	open_ofstream( links_ostream, prm_output );
+	write_ordered_links( links_ostream, prm_links, prm_ider, prm_sort_indices );
 	links_ostream.close();
 }

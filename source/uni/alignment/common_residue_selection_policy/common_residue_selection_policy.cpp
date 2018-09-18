@@ -47,37 +47,37 @@ using boost::lexical_cast;
 using boost::ptr_vector;
 
 /// \brief TODOCUMENT
-vector<alignment::size_type> common_residue_selection_policy::select_common_residues(const alignment            &arg_alignment, ///< TODOCUMENT
-                                                                                     const alignment::size_type &arg_entry_a,   ///< TODOCUMENT
-                                                                                     const alignment::size_type &arg_entry_b    ///< TODOCUMENT
+vector<alignment::size_type> common_residue_selection_policy::select_common_residues(const alignment            &prm_alignment, ///< TODOCUMENT
+                                                                                     const alignment::size_type &prm_entry_a,   ///< TODOCUMENT
+                                                                                     const alignment::size_type &prm_entry_b    ///< TODOCUMENT
                                                                                      ) const {
 	using aln_size_type = alignment::size_type;
 	using aln_size_vec  = vector<aln_size_type>;
 
 	// Sanity check both entries are valid
-	const alignment::size_type num_entries = arg_alignment.num_entries();
-	if (arg_entry_a >= num_entries) {
+	const alignment::size_type num_entries = prm_alignment.num_entries();
+	if (prm_entry_a >= num_entries) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
-			"Argument entry_a of " + lexical_cast<string>(arg_entry_a) +
+			"Argument entry_a of " + lexical_cast<string>(prm_entry_a) +
 			" is invalid for an argument of " + lexical_cast<string>(num_entries) + " entries"
 		));
 	}
-	if (arg_entry_b >= num_entries) {
+	if (prm_entry_b >= num_entries) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
-			"Argument entry_b of " + lexical_cast<string>(arg_entry_b) +
+			"Argument entry_b of " + lexical_cast<string>(prm_entry_b) +
 			" is invalid for an argument of " + lexical_cast<string>(num_entries) + " entries"
 		));
 	}
 
-	// Grab the indices of the positions that are in common between the entries arg_entry_a and arg_entry_b
+	// Grab the indices of the positions that are in common between the entries prm_entry_a and prm_entry_b
 	const auto original_indices = copy_build<aln_size_vec>(
-		indices( arg_alignment.length() )
+		indices( prm_alignment.length() )
 			| filtered(
 				[&] (const size_t &x) {
 					return (
-						has_position_of_entry_of_index( arg_alignment, arg_entry_a, x )
+						has_position_of_entry_of_index( prm_alignment, prm_entry_a, x )
 						&&
-						has_position_of_entry_of_index( arg_alignment, arg_entry_b, x )
+						has_position_of_entry_of_index( prm_alignment, prm_entry_b, x )
 					);
 				}
 			)
@@ -85,20 +85,20 @@ vector<alignment::size_type> common_residue_selection_policy::select_common_resi
 
 	// Grab the results from the concrete class's implementation of the do_select_common_residues() method
 	const size_vec common_coords_raw = do_select_common_residues(
-		arg_alignment,
+		prm_alignment,
 		original_indices,
-		arg_entry_a,
-		arg_entry_b
+		prm_entry_a,
+		prm_entry_b
 	);
 
 	// Convert the indices back to indices that correspond to the original alignment
 	aln_size_vec common_coords;
 	common_coords.reserve(common_coords_raw.size());
-	for (const size_t &arg_common_coord_raw : common_coords_raw) {
-		if (arg_common_coord_raw >= original_indices.size()) {
+	for (const size_t &prm_common_coord_raw : common_coords_raw) {
+		if (prm_common_coord_raw >= original_indices.size()) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("do_select_common_residues produced raw common coord index out of range"));
 		}
-		common_coords.push_back(original_indices[arg_common_coord_raw]);
+		common_coords.push_back(original_indices[prm_common_coord_raw]);
 	}
 
 	// Sanity check that the common_coords values are strictly increasing
@@ -125,10 +125,10 @@ unique_ptr<common_residue_selection_policy> common_residue_selection_policy::clo
 
 /// \brief An NVI pass-through to the concrete class's do_less_than_with_same_dynamic_type(),
 ///        which defines the less-than operator when the argument's known to have the same dynamic type
-bool common_residue_selection_policy::less_than_with_same_dynamic_type(const common_residue_selection_policy &arg_common_residue_selection_policy ///< TODOCUMENT
+bool common_residue_selection_policy::less_than_with_same_dynamic_type(const common_residue_selection_policy &prm_common_residue_selection_policy ///< TODOCUMENT
                                                                        ) const {
-	assert( typeid( *this ) == typeid( arg_common_residue_selection_policy ) );
-	return do_less_than_with_same_dynamic_type( arg_common_residue_selection_policy );
+	assert( typeid( *this ) == typeid( prm_common_residue_selection_policy ) );
+	return do_less_than_with_same_dynamic_type( prm_common_residue_selection_policy );
 }
 
 /// \brief Factory function that generates a list of all possible different common_residue_selection_policy objects
@@ -145,11 +145,11 @@ ptr_vector<common_residue_selection_policy> cath::align::get_all_common_residue_
 /// \brief TODOCUMENT
 ///
 /// \relates common_residue_selection_policy
-vector<alignment::size_type> cath::align::select_common_residues_of_pair_alignment(const common_residue_selection_policy &arg_policy,   ///< TODOCUMENT
-                                                                                   const alignment                       &arg_alignment ///< TODOCUMENT
+vector<alignment::size_type> cath::align::select_common_residues_of_pair_alignment(const common_residue_selection_policy &prm_policy,   ///< TODOCUMENT
+                                                                                   const alignment                       &prm_alignment ///< TODOCUMENT
                                                                                    ) {
-	return arg_policy.select_common_residues(
-		arg_alignment,
+	return prm_policy.select_common_residues(
+		prm_alignment,
 		alignment::PAIR_A_IDX,
 		alignment::PAIR_B_IDX
 	);
@@ -169,17 +169,17 @@ unique_ptr<common_residue_selection_policy> cath::align::make_default_common_res
 /// common_residue_selection_policy hierarchy
 ///
 /// \relates common_residue_selection_policy
-bool cath::align::is_default_policy(const common_residue_selection_policy &arg_comm_res_seln_pol ///< TODOCUMENT
+bool cath::align::is_default_policy(const common_residue_selection_policy &prm_comm_res_seln_pol ///< TODOCUMENT
                                     ) {
-	return ( make_default_common_residue_selection_policy()->get_descriptive_name() == arg_comm_res_seln_pol.get_descriptive_name() );
+	return ( make_default_common_residue_selection_policy()->get_descriptive_name() == prm_comm_res_seln_pol.get_descriptive_name() );
 }
 
 /// \brief Simple insertion operator for common_residue_selection_policy
 ///
 //// \relates common_residue_selection_policy
-ostream & cath::align::operator<<(ostream                               &arg_os,                             ///< The ostream to which the common_residue_selection_policy should be output
-                                  const common_residue_selection_policy &arg_common_residue_selection_policy ///< The protein_file_combn to output
+ostream & cath::align::operator<<(ostream                               &prm_os,                             ///< The ostream to which the common_residue_selection_policy should be output
+                                  const common_residue_selection_policy &prm_common_residue_selection_policy ///< The protein_file_combn to output
                                   ) {
-	arg_os << ( "common_residue_selection_policy[" + arg_common_residue_selection_policy.get_descriptive_name() + "]" );
-	return arg_os;
+	prm_os << ( "common_residue_selection_policy[" + prm_common_residue_selection_policy.get_descriptive_name() + "]" );
+	return prm_os;
 }

@@ -53,17 +53,17 @@ namespace cath {
 		};
 
 		/// \brief Extract the angle-skipping aspect of the specified dssp_skip_policy
-		constexpr dssp_skip_angle_skipping angle_skipping_of_dssp_skip_policy(const dssp_skip_policy &arg_dssp_skip_policy ///< The dssp_skip_policy to query
+		constexpr dssp_skip_angle_skipping angle_skipping_of_dssp_skip_policy(const dssp_skip_policy &prm_dssp_skip_policy ///< The dssp_skip_policy to query
 		                                                                      ) {
-			return ( arg_dssp_skip_policy == dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES )
+			return ( prm_dssp_skip_policy == dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES )
 				? dssp_skip_angle_skipping::DONT_BREAK_ANGLES
 				: dssp_skip_angle_skipping::BREAK_ANGLES;
 		}
 
 		/// \brief Extract the residue-skipping aspect of the specified dssp_skip_policy
-		constexpr dssp_skip_res_skipping res_skipping_of_dssp_skip_policy(const dssp_skip_policy &arg_dssp_skip_policy ///< The dssp_skip_policy to query
+		constexpr dssp_skip_res_skipping res_skipping_of_dssp_skip_policy(const dssp_skip_policy &prm_dssp_skip_policy ///< The dssp_skip_policy to query
 		                                                                  ) {
-			return ( arg_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES )
+			return ( prm_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES )
 				? dssp_skip_res_skipping::SKIP
 				: dssp_skip_res_skipping::DONT_SKIP;
 		}

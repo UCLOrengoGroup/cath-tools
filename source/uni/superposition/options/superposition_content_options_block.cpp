@@ -58,8 +58,8 @@ string superposition_content_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void superposition_content_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                                const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void superposition_content_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                                const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                                 ) {
 	const auto &sep     = SUB_DESC_SEPARATOR;
 	const auto &sub_sep = SUB_DESC_PAIR_SEPARATOR;
@@ -78,7 +78,7 @@ void superposition_content_options_block::do_add_visible_options_to_description(
 		sub_sep
 	);
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			( PO_REGIONS_CONTEXT ).c_str(),
 			value<supn_regions_context>()
@@ -108,7 +108,7 @@ void superposition_content_options_block::do_add_visible_options_to_description(
 
 /// \brief Generate a description of any problem that makes the specified superposition_content_options_block invalid
 ///        or none otherwise
-str_opt superposition_content_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt superposition_content_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                                ) const {
 	return get_invalid_description( the_spec );
 }

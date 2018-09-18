@@ -59,43 +59,43 @@ using std::string;
 /// \brief Round a coord in the way they are in sec files to allow for tests to compare
 ///
 /// \relates coord
-coord cath::sec::round_like_sec_file_copy(const coord &arg_sec_coord ///< The coord to round
+coord cath::sec::round_like_sec_file_copy(const coord &prm_sec_coord ///< The coord to round
                                           ) {
 	return {
-		stod( ( format("%6.2f") % arg_sec_coord.get_x() ).str() ),
-		stod( ( format("%6.2f") % arg_sec_coord.get_y() ).str() ),
-		stod( ( format("%6.2f") % arg_sec_coord.get_z() ).str() )
+		stod( ( format("%6.2f") % prm_sec_coord.get_x() ).str() ),
+		stod( ( format("%6.2f") % prm_sec_coord.get_y() ).str() ),
+		stod( ( format("%6.2f") % prm_sec_coord.get_z() ).str() )
 	};
 }
 
 /// \brief Round a sec_file_record in the way they are in sec files to allow for tests to compare
 ///
 /// \relates sec_file_record
-sec_file_record cath::sec::round_like_sec_file_copy(const sec_file_record &arg_sec_file_record ///< The sec_file_record to round
+sec_file_record cath::sec::round_like_sec_file_copy(const sec_file_record &prm_sec_file_record ///< The sec_file_record to round
                                                     ) {
 	return {
-		arg_sec_file_record.get_start_residue_num(),
-		arg_sec_file_record.get_stop_residue_num(),
-		arg_sec_file_record.get_type(),
-		round_like_sec_file_copy( arg_sec_file_record.get_midpoint()  ),
-		round_like_sec_file_copy( arg_sec_file_record.get_unit_dirn() )
+		prm_sec_file_record.get_start_residue_num(),
+		prm_sec_file_record.get_stop_residue_num(),
+		prm_sec_file_record.get_type(),
+		round_like_sec_file_copy( prm_sec_file_record.get_midpoint()  ),
+		round_like_sec_file_copy( prm_sec_file_record.get_unit_dirn() )
 	};
 }
 
 /// \brief Calculate the sec information for the secondary structure between the specified start and stop
 ///        indices on the specified protein
-sec_file_record cath::sec::calculate_sec_record(const protein &arg_protein,         ///< The protein to query
-                                                const size_t  &arg_start_res_index, ///< The index of the first  residue of the secondary structure
-                                                const size_t  &arg_stop_res_index   ///< The index of the second residue of the secondary structure
+sec_file_record cath::sec::calculate_sec_record(const protein &prm_protein,         ///< The protein to query
+                                                const size_t  &prm_start_res_index, ///< The index of the first  residue of the secondary structure
+                                                const size_t  &prm_stop_res_index   ///< The index of the second residue of the secondary structure
                                                 ) {
-	// for (const size_t &res_ctr : irange( arg_start_res_index, arg_stop_res_index + 1_z ) ) {
-	// 	std::cerr << arg_protein.get_residue_ref_of_index( res_ctr ) << "\n";
+	// for (const size_t &res_ctr : irange( prm_start_res_index, prm_stop_res_index + 1_z ) ) {
+	// 	std::cerr << prm_protein.get_residue_ref_of_index( res_ctr ) << "\n";
 	// }
 
 	const coord_list core_coords{ transform_build<coord_vec>(
-		irange( arg_start_res_index + 1_z, arg_stop_res_index ),
-		[&] (const size_t &arg_triplet_mid_res_index) {
-			return prosec_axis_point_of_residue_triple( arg_protein, arg_triplet_mid_res_index );
+		irange( prm_start_res_index + 1_z, prm_stop_res_index ),
+		[&] (const size_t &prm_triplet_mid_res_index) {
+			return prosec_axis_point_of_residue_triple( prm_protein, prm_triplet_mid_res_index );
 		}
 	) };
 
@@ -113,9 +113,9 @@ sec_file_record cath::sec::calculate_sec_record(const protein &arg_protein,     
 	// std::cerr << "midpoint            : " << midpoint            << "\n";
 	// std::cerr << "Unit direction      : " << ( - normalise_copy( lobf.get_dirn() ) ) << "\n";
 	return {
-		arg_start_res_index + 1u,
-		arg_stop_res_index  + 1u,
-		arg_protein.get_residue_ref_of_index( arg_start_res_index + 1 ).get_sec_struc_type(),
+		prm_start_res_index + 1u,
+		prm_stop_res_index  + 1u,
+		prm_protein.get_residue_ref_of_index( prm_start_res_index + 1 ).get_sec_struc_type(),
 		midpoint,
 		( - normalise_copy( lobf.get_dirn() ) )
 	};
@@ -124,9 +124,9 @@ sec_file_record cath::sec::calculate_sec_record(const protein &arg_protein,     
 /// \brief Return the prosec_sec_type corresponding to the specified sec_struc_type
 ///
 /// \relates prosec_sec_type
-prosec_sec_type cath::sec::make_prosec_sec_type(const sec_struc_type &arg_sec_struc ///< The sec_struc_type to convert
+prosec_sec_type cath::sec::make_prosec_sec_type(const sec_struc_type &prm_sec_struc ///< The sec_struc_type to convert
                                                 ) {
-	switch( arg_sec_struc ) {
+	switch( prm_sec_struc ) {
 		case ( sec_struc_type::ALPHA_HELIX ) : { return prosec_sec_type::ALPHA_HELIX; }
 		case ( sec_struc_type::BETA_STRAND ) : { return prosec_sec_type::BETA_STRAND; }
 		case ( sec_struc_type::COIL        ) : {
@@ -142,15 +142,15 @@ prosec_sec_type cath::sec::make_prosec_sec_type(const sec_struc_type &arg_sec_st
 /// The result is somewhere between the central location and the midpoint of the two straddling locations.
 /// The fraction along hat line is determined by the ends_midpoint_weight_of_sec_type() for the secondary
 /// structure type
-coord cath::sec::prosec_axis_point_of_residue_triple(const residue &arg_residue_before, ///< The preceding residue
-                                                     const residue &arg_residue,        ///< The residue
-                                                     const residue &arg_residue_after   ///< The following residue
+coord cath::sec::prosec_axis_point_of_residue_triple(const residue &prm_residue_before, ///< The preceding residue
+                                                     const residue &prm_residue,        ///< The residue
+                                                     const residue &prm_residue_after   ///< The following residue
                                                      ) {
 	return prosec_axis_point_of_residue_triple(
-		arg_residue_before . get_carbon_alpha_coord(),
-		arg_residue        . get_carbon_alpha_coord(),
-		arg_residue_after  . get_carbon_alpha_coord(),
-		make_prosec_sec_type( arg_residue.get_sec_struc_type() )
+		prm_residue_before . get_carbon_alpha_coord(),
+		prm_residue        . get_carbon_alpha_coord(),
+		prm_residue_after  . get_carbon_alpha_coord(),
+		make_prosec_sec_type( prm_residue.get_sec_struc_type() )
 	);
 }
 
@@ -160,32 +160,32 @@ coord cath::sec::prosec_axis_point_of_residue_triple(const residue &arg_residue_
 /// The result is somewhere between the central location and the midpoint of the two straddling locations.
 /// The fraction along hat line is determined by the ends_midpoint_weight_of_sec_type() for the secondary
 /// structure type
-coord cath::sec::prosec_axis_point_of_residue_triple(const protein &arg_protein,          ///< The protein
-                                                     const size_t  &arg_mid_residue_index ///< The index of the middle residue
+coord cath::sec::prosec_axis_point_of_residue_triple(const protein &prm_protein,          ///< The protein
+                                                     const size_t  &prm_mid_residue_index ///< The index of the middle residue
                                                      ) {
-	if ( arg_mid_residue_index == 0 ) {
+	if ( prm_mid_residue_index == 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 	}
 	return prosec_axis_point_of_residue_triple(
-		arg_protein.get_residue_ref_of_index( arg_mid_residue_index - 1_z ),
-		arg_protein.get_residue_ref_of_index( arg_mid_residue_index       ),
-		arg_protein.get_residue_ref_of_index( arg_mid_residue_index + 1_z )
+		prm_protein.get_residue_ref_of_index( prm_mid_residue_index - 1_z ),
+		prm_protein.get_residue_ref_of_index( prm_mid_residue_index       ),
+		prm_protein.get_residue_ref_of_index( prm_mid_residue_index + 1_z )
 	);
 }
 
 /// \brief Get the start/stop residue indices of the secondary structures of length >= MIN_SEC_STRUC_LENGTH
-size_size_pair_vec cath::sec::get_sec_starts_and_stops(const protein &arg_protein ///< The protein to query
+size_size_pair_vec cath::sec::get_sec_starts_and_stops(const protein &prm_protein ///< The protein to query
                                                        ) {
 	constexpr size_t MIN_SEC_STRUC_LENGTH = 4_z;
 
 	return copy_build<size_size_pair_vec>(
-		indices( arg_protein.get_length() )
+		indices( prm_protein.get_length() )
 			// Group according to secondary structure corresponding to index in protein
 			| equal_grouped( [&] (const size_t &x, const size_t &y) {
 				return (
-					arg_protein.get_residue_ref_of_index( x ).get_sec_struc_type()
+					prm_protein.get_residue_ref_of_index( x ).get_sec_struc_type()
 					!=
-					arg_protein.get_residue_ref_of_index( y ).get_sec_struc_type()
+					prm_protein.get_residue_ref_of_index( y ).get_sec_struc_type()
 				);
 			} )
 			// Remove entries that are coil or less than MIN_SEC_STRUC_LENGTH residues long
@@ -193,7 +193,7 @@ size_size_pair_vec cath::sec::get_sec_starts_and_stops(const protein &arg_protei
 				return (
 					back( x ) + 1_z - front( x ) >= MIN_SEC_STRUC_LENGTH
 					&&
-					arg_protein.get_residue_ref_of_index( front( x ) ).get_sec_struc_type() != sec_struc_type::COIL
+					prm_protein.get_residue_ref_of_index( front( x ) ).get_sec_struc_type() != sec_struc_type::COIL
 				);
 			} )
 			// Convert to a pair of start/stop indices
@@ -204,36 +204,36 @@ size_size_pair_vec cath::sec::get_sec_starts_and_stops(const protein &arg_protei
 }
 
 /// \brief Generate a vector of sec_file_record objects for the specified protein
-sec_file_record_vec cath::sec::get_sec_records(const protein &arg_protein ///< The protein to analyse
+sec_file_record_vec cath::sec::get_sec_records(const protein &prm_protein ///< The protein to analyse
                                                ) {
 	return transform_build<sec_file_record_vec>(
-		get_sec_starts_and_stops( arg_protein ),
+		get_sec_starts_and_stops( prm_protein ),
 		[&] (const size_size_pair &x) {
-			return calculate_sec_record( arg_protein, x.first, x.second );
+			return calculate_sec_record( prm_protein, x.first, x.second );
 		}
 	);
 }
 
 /// \brief Generate a vector of sec_file_record objects for the specified protein
-sec_file cath::sec::get_sec_file(const protein &arg_protein ///< The protein to analyse
+sec_file cath::sec::get_sec_file(const protein &prm_protein ///< The protein to analyse
                                  ) {
-	return make_sec_file_with_calced_planar_angles( get_sec_records( arg_protein ) );
+	return make_sec_file_with_calced_planar_angles( get_sec_records( prm_protein ) );
 }
 
 /// \brief Get some simple PyMOL script text to draw the specified sec_file_record on the specified protein
 ///
 /// An index is required to differentiate pseudo-atoms
-string cath::sec::get_pymol_script_text(const protein         &arg_protein,         ///< The protein on which the secondary structure belongs
-                                        const sec_file_record &arg_sec_file_record, ///< The sec_file_record to represent in PyMOL script
-                                        const size_t          &arg_index            ///< The index of the sec_file_record (arbitrary but must be unique within a run of PyMOL)
+string cath::sec::get_pymol_script_text(const protein         &prm_protein,         ///< The protein on which the secondary structure belongs
+                                        const sec_file_record &prm_sec_file_record, ///< The sec_file_record to represent in PyMOL script
+                                        const size_t          &prm_index            ///< The index of the sec_file_record (arbitrary but must be unique within a run of PyMOL)
                                         ) {
-	const auto &midpoint         = arg_sec_file_record.get_midpoint();
-	const line  the_line         = { midpoint, arg_sec_file_record.get_unit_dirn() };
-	const auto &start_coord      = arg_protein.get_residue_ref_of_index( arg_sec_file_record.get_start_residue_num() ).get_carbon_alpha_coord();
-	const auto &stop_coord       = arg_protein.get_residue_ref_of_index( arg_sec_file_record.get_stop_residue_num () ).get_carbon_alpha_coord();
+	const auto &midpoint         = prm_sec_file_record.get_midpoint();
+	const line  the_line         = { midpoint, prm_sec_file_record.get_unit_dirn() };
+	const auto &start_coord      = prm_protein.get_residue_ref_of_index( prm_sec_file_record.get_start_residue_num() ).get_carbon_alpha_coord();
+	const auto &stop_coord       = prm_protein.get_residue_ref_of_index( prm_sec_file_record.get_stop_residue_num () ).get_carbon_alpha_coord();
 	const auto  closest_to_start = closest_point_on_line_to_point( the_line, start_coord );
 	const auto  closest_to_stop  = closest_point_on_line_to_point( the_line, stop_coord  );
-	const auto &the_ss           = arg_sec_file_record.get_type();
+	const auto &the_ss           = prm_sec_file_record.get_type();
 	const auto  ss_str           = to_string( the_ss );
 	const auto  colour_str       = ( the_ss == sec_struc_type::ALPHA_HELIX ) ? "orange"s    :
 	                               ( the_ss == sec_struc_type::BETA_STRAND ) ? "pink"s      :
@@ -242,23 +242,23 @@ string cath::sec::get_pymol_script_text(const protein         &arg_protein,     
 	const auto id_str            = std::to_string( midpoint.get_x() * midpoint.get_y() * midpoint.get_z() );
 
 	return
-	      "pseudoatom " + ss_str + "start, resi=" + std::to_string( arg_index ) + ", color=black, pos=["
+	      "pseudoatom " + ss_str + "start, resi=" + std::to_string( prm_index ) + ", color=black, pos=["
 		+ std::to_string( closest_to_start.get_x() ) + ", " + std::to_string( closest_to_start.get_y() ) + ", " + std::to_string( closest_to_start.get_z() ) + "]\n"
-		+ "pseudoatom " + ss_str + "end,   resi=" + std::to_string( arg_index ) + ", color=" + colour_str + ", pos=["
+		+ "pseudoatom " + ss_str + "end,   resi=" + std::to_string( prm_index ) + ", color=" + colour_str + ", pos=["
 		+ std::to_string( closest_to_stop .get_x() ) + ", " + std::to_string( closest_to_stop .get_y() ) + ", " + std::to_string( closest_to_stop .get_z() ) + "]\n"
-		+ "distance " + ss_str + "line, " + ss_str + "start///" + std::to_string( arg_index ) + "/, " + ss_str + "end///" + std::to_string( arg_index ) + "/";
+		+ "distance " + ss_str + "line, " + ss_str + "start///" + std::to_string( prm_index ) + "/, " + ss_str + "end///" + std::to_string( prm_index ) + "/";
 }
 
 /// \brief Get some simple PyMOL script text to draw the specified sec_file_records on the specified protein
 ///
 /// An index is required to differentiate pseudo-atoms
-string cath::sec::get_pymol_script_text(const protein             &arg_protein,         ///< The protein on which the secondary structures belong
-                                        const sec_file_record_vec &arg_sec_file_records ///< The sec_file_records to represent in PyMOL script
+string cath::sec::get_pymol_script_text(const protein             &prm_protein,         ///< The protein on which the secondary structures belong
+                                        const sec_file_record_vec &prm_sec_file_records ///< The sec_file_records to represent in PyMOL script
                                         ) {
 	return join(
-		indices( arg_sec_file_records.size() )
+		indices( prm_sec_file_records.size() )
 			| transformed( [&] (const size_t &x) {
-				return get_pymol_script_text( arg_protein, arg_sec_file_records[ x ], x );
+				return get_pymol_script_text( prm_protein, prm_sec_file_records[ x ], x );
 			} ),
 		"\n" ) + R"(
 hide

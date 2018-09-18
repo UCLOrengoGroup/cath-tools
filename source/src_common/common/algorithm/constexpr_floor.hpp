@@ -36,14 +36,14 @@ namespace cath {
 		/// \todo If/when the standard makes floor() constexpr or adds a new constexpr floor function,
 		///       replace this with that.
 		template <typename T>
-		constexpr T constexpr_floor(const T &arg_value ///< The value for which the floor should be calculated
+		constexpr T constexpr_floor(const T &prm_value ///< The value for which the floor should be calculated
 		                            ) {
 			//      If ( this is a non-negative number ) then ( return the result of casting to int and back )
 			// Else if ( is a whole, negative number   ) then ( return it as is )
 			// Else                                           ( return the result of: negating, adding 1.0, constexpr_floor()ing and negating again)
-			return ( arg_value >= 0.0 )                                              ? static_cast<T>( static_cast<int>(  arg_value ) ) :
-			       ( arg_value == static_cast<T>( static_cast<int>(  arg_value ) ) ) ? arg_value                                        :
-			                                                                           -constexpr_floor( static_cast<T>( 1.0 ) - arg_value );
+			return ( prm_value >= 0.0 )                                              ? static_cast<T>( static_cast<int>(  prm_value ) ) :
+			       ( prm_value == static_cast<T>( static_cast<int>(  prm_value ) ) ) ? prm_value                                        :
+			                                                                           -constexpr_floor( static_cast<T>( 1.0 ) - prm_value );
 		}
 
 	} // namespace common

@@ -34,18 +34,18 @@ namespace cath {
 		/// This is a non-member function for ranges that don't provide their own front method.
 		/// This is useful for non-member ranges
 		template <typename T>
-		inline range_reference_t<T> front(T &arg_range ///< The range to query
+		inline range_reference_t<T> front(T &prm_range ///< The range to query
 		                                  ) {
-			return * std::begin( arg_range );
+			return * std::begin( prm_range );
 		}
 
 		/// \brief Return a const reference to the first element of a range
 		///
 		/// \copydetails front()
 		template <typename T>
-		inline range_const_reference_t<T> front(const T &arg_range ///< The range to query
+		inline range_const_reference_t<T> front(const T &prm_range ///< The range to query
 		                                        ) {
-			return * common::cbegin( arg_range );
+			return * common::cbegin( prm_range );
 		}
 
 	} // namespace common

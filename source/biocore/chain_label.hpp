@@ -61,8 +61,8 @@ namespace cath {
 	}
 
 	/// \brief Ctor for chain_label
-	inline constexpr chain_label::chain_label(const char &arg_chain_char ///< TODOCUMENT
-	                                          ) : chain_char( arg_chain_char ) {
+	inline constexpr chain_label::chain_label(const char &prm_chain_char ///< TODOCUMENT
+	                                          ) : chain_char( prm_chain_char ) {
 	}
 
 	/// \brief TODOCUMENT
@@ -73,26 +73,26 @@ namespace cath {
 	/// \brief TODOCUMENT
 	///
 	/// \relates chain_label
-	inline constexpr bool operator==(const chain_label &arg_chain_label_a, ///< TODOCUMENT
-	                                 const chain_label &arg_chain_label_b  ///< TODOCUMENT
+	inline constexpr bool operator==(const chain_label &prm_chain_label_a, ///< TODOCUMENT
+	                                 const chain_label &prm_chain_label_b  ///< TODOCUMENT
 	                                 ) {
 		return (
-			arg_chain_label_a.get_char_with_zero_for_space()
+			prm_chain_label_a.get_char_with_zero_for_space()
 			==
-			arg_chain_label_b.get_char_with_zero_for_space()
+			prm_chain_label_b.get_char_with_zero_for_space()
 		);
 	}
 
 	/// \brief TODOCUMENT
 	///
 	/// \relates chain_label
-	inline constexpr bool operator<(const chain_label &arg_chain_label_a, ///< TODOCUMENT
-	                                const chain_label &arg_chain_label_b  ///< TODOCUMENT
+	inline constexpr bool operator<(const chain_label &prm_chain_label_a, ///< TODOCUMENT
+	                                const chain_label &prm_chain_label_b  ///< TODOCUMENT
 	                                ) {
 		return (
-			arg_chain_label_a.get_char_with_zero_for_space()
+			prm_chain_label_a.get_char_with_zero_for_space()
 			<
-			arg_chain_label_b.get_char_with_zero_for_space()
+			prm_chain_label_b.get_char_with_zero_for_space()
 		);
 	}
 

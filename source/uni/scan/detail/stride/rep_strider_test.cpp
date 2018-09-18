@@ -116,11 +116,11 @@ BOOST_AUTO_TEST_CASE(get_index_of_rep_index_works) {
 
 //add_static_tests_here()
 //
-//inline constexpr rep_strider get_query_from_strider(const scan_stride &arg_stride ///< The scan_stride object containing the relevant stride values
-//inline constexpr rep_strider get_query_to_strider(const scan_stride &arg_stride ///< The scan_stride object containing the relevant stride values
-//inline constexpr rep_strider get_index_from_strider(const scan_stride &arg_stride ///< The scan_stride object containing the relevant stride values
-//inline constexpr rep_strider get_index_to_strider(const scan_stride &arg_stride ///< The scan_stride object containing the relevant stride values
-//inline constexpr index_type get_from_co_stride(const scan_stride &arg_stride ///< The scan_stride object containing the relevant stride values
-//inline constexpr index_type get_to_co_stride(const scan_stride &arg_stride ///< The scan_stride object containing the relevant stride values
+//inline constexpr rep_strider get_query_from_strider(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
+//inline constexpr rep_strider get_query_to_strider(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
+//inline constexpr rep_strider get_index_from_strider(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
+//inline constexpr rep_strider get_index_to_strider(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
+//inline constexpr index_type get_from_co_stride(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
+//inline constexpr index_type get_to_co_stride(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
 
 BOOST_AUTO_TEST_SUITE_END()

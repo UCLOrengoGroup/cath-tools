@@ -68,10 +68,10 @@ namespace cath {
 				check_pdb_file(pdb_file, permit_no_atoms);
 			}
 			// Catch any problems in reading the file
-			catch (const invalid_argument_exception &arg_exception) {
+			catch (const invalid_argument_exception &prm_exception) {
 				logger::log_and_exit(
 					logger::return_code::MALFORMED_PDB_FILE,
-					"Unable to parse PDB file \"" + pdb_file.string() + "\". Error was:\n" + arg_exception.what()
+					"Unable to parse PDB file \"" + pdb_file.string() + "\". Error was:\n" + prm_exception.what()
 				);
 			}
 
@@ -83,17 +83,17 @@ namespace cath {
 		/// \brief Check that the PDB file is OK and throw an invalid_argument_exception if not
 		///
 		/// \returns Nothing
-		static void check_pdb_file(const path &arg_pdb_file,       ///< The PDB file to check
-		                           const bool &arg_permit_no_atoms ///< Whether to permit no ATOM records
+		static void check_pdb_file(const path &prm_pdb_file,       ///< The PDB file to check
+		                           const bool &prm_permit_no_atoms ///< Whether to permit no ATOM records
 		                           ) {
 			// Check the PDB file is a valid input file
-			if ( ! options_block::is_acceptable_input_file( arg_pdb_file ) ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("No such valid, non-empty PDB file \"" + arg_pdb_file.string() + "\"."));
+			if ( ! options_block::is_acceptable_input_file( prm_pdb_file ) ) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("No such valid, non-empty PDB file \"" + prm_pdb_file.string() + "\"."));
 			}
 
 			// Open an ifstream on the PDB files
 			ifstream pdb_istream;
-			open_ifstream(pdb_istream, arg_pdb_file);
+			open_ifstream(pdb_istream, prm_pdb_file);
 
 			// Attempt to read the PDB file (and let any exceptions propagate out)
 			const pdb newly_read_pdb = read_pdb_file( pdb_istream );
@@ -101,8 +101,8 @@ namespace cath {
 
 			// If there were no ATOM records and that isn't allowed, then throw an exception
 			// (which will be caught just below)
-			if (!arg_permit_no_atoms && newly_read_pdb.get_num_atoms() <= 0) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("PDB file \"" + arg_pdb_file.string() + "\" did not contain any valid ATOM records"));
+			if (!prm_permit_no_atoms && newly_read_pdb.get_num_atoms() <= 0) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("PDB file \"" + prm_pdb_file.string() + "\" did not contain any valid ATOM records"));
 			}
 		}
 	};

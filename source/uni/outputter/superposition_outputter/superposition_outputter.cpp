@@ -39,14 +39,14 @@ unique_ptr<superposition_outputter> superposition_outputter::clone() const {
 }
 
 /// \brief TODOCUMENT
-void superposition_outputter::output_superposition(const superposition_context &arg_superposition_context, ///< TODOCUMENT
-                                                   ostream                     &arg_ostream,               ///< TODOCUMENT
-                                                   const string_ref            &arg_name                   ///< A name for the superposition (so users of the superposition know what it represents)
+void superposition_outputter::output_superposition(const superposition_context &prm_superposition_context, ///< TODOCUMENT
+                                                   ostream                     &prm_ostream,               ///< TODOCUMENT
+                                                   const string_ref            &prm_name                   ///< A name for the superposition (so users of the superposition know what it represents)
                                                    ) const {
 	do_output_superposition(
-		arg_superposition_context,
-		arg_ostream,
-		arg_name
+		prm_superposition_context,
+		prm_ostream,
+		prm_name
 	);
 }
 

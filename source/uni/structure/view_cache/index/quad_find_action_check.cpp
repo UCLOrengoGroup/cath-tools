@@ -25,12 +25,12 @@ using namespace cath::index::detail;
 // using namespace std;
 
 /// \brief Ctor for quad_find_action_check
-quad_find_action_check::quad_find_action_check(const protein             &arg_protein_a, ///< The first  protein being compared
-                                               const protein             &arg_protein_b, ///< The second protein being compared
-                                               const vcie_match_criteria &arg_criteria   ///< The criteria for which entries should be compared
-                                               ) : protein_a    ( arg_protein_a ),
-                                                   protein_b    ( arg_protein_b ),
-                                                   the_criteria ( arg_criteria  ) {
+quad_find_action_check::quad_find_action_check(const protein             &prm_protein_a, ///< The first  protein being compared
+                                               const protein             &prm_protein_b, ///< The second protein being compared
+                                               const vcie_match_criteria &prm_criteria   ///< The criteria for which entries should be compared
+                                               ) : protein_a    ( prm_protein_a ),
+                                                   protein_b    ( prm_protein_b ),
+                                                   the_criteria ( prm_criteria  ) {
 }
 
 /// \brief Getter for the total score

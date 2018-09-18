@@ -162,14 +162,14 @@ namespace cath {
 
 		/// \brief Try a program options action and handle any exceptions that are thrown
 		template <typename Func>
-		void executable_options::prog_opts_try(str_opt        &arg_error_string, ///< The optional error string to update with a description of any errors that occur
-		                                       Func          &&arg_function,     ///< The function to perform
-		                                       const str_opt  &arg_parsing_phase ///< The phase in which this parsing is occurring (or none)
+		void executable_options::prog_opts_try(str_opt        &prm_error_string, ///< The optional error string to update with a description of any errors that occur
+		                                       Func          &&prm_function,     ///< The function to perform
+		                                       const str_opt  &prm_parsing_phase ///< The phase in which this parsing is occurring (or none)
 		                                       ) {
 			common::set_opt_str_from_prog_opts_try(
-				arg_error_string,
-				std::forward<Func>( arg_function ),
-				get_program_name() + ": " + ( arg_parsing_phase ? *arg_parsing_phase + " " : std::string{} ),
+				prm_error_string,
+				std::forward<Func>( prm_function ),
+				get_program_name() + ": " + ( prm_parsing_phase ? *prm_parsing_phase + " " : std::string{} ),
 				"\n" + get_standard_usage_error_string()
 			);
 		}
@@ -178,27 +178,27 @@ namespace cath {
 		template <typename T>
 		T make_and_parse_options(const int           &argc,                                                ///< The main()-style argc parameter
 		                         const char * const   argv[],                                              ///< The main()-style argv parameter
-		                         const parse_sources &arg_parse_sources = parse_sources::CMND_ENV_AND_FILE ///< The sources from which options should be parsed
+		                         const parse_sources &prm_parse_sources = parse_sources::CMND_ENV_AND_FILE ///< The sources from which options should be parsed
 		                         ) {
 			static_assert(
 				std::is_base_of<executable_options, T>::value,
 				"make_and_parse_options() can only be used to make types that inherit from executable_options."
 			);
 			T new_options;
-			new_options.parse_options( argc, argv, arg_parse_sources );
+			new_options.parse_options( argc, argv, prm_parse_sources );
 			return new_options;
 		}
 
 		/// \brief Return a new instance of the specified type of executable_options with the specified options parsed into it
 		template <typename T>
 		T make_and_parse_options(const str_vec       &args,                                                ///< The arguments
-		                         const parse_sources &arg_parse_sources = parse_sources::CMND_ENV_AND_FILE ///< The sources from which options should be parsed
+		                         const parse_sources &prm_parse_sources = parse_sources::CMND_ENV_AND_FILE ///< The sources from which options should be parsed
 		                         ) {
 			argc_argv_faker my_argc_argv_faker( args );
 			return make_and_parse_options<T>(
 				my_argc_argv_faker.get_argc(),
 				my_argc_argv_faker.get_argv(),
-				arg_parse_sources
+				prm_parse_sources
 			);
 		}
 	} // namespace opts

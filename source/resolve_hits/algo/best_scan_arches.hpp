@@ -74,9 +74,9 @@ namespace cath {
 		inline const hit_arch & get_best_arch_so_far(const best_scan_arches &);
 
 		/// \brief Ctor from the number of residues expected
-		inline best_scan_arches::best_scan_arches(const seq::residx_t &arg_num_residues ///< The number of residues expected
+		inline best_scan_arches::best_scan_arches(const seq::residx_t &prm_num_residues ///< The number of residues expected
 		                                          ) {
-			bests.reserve( arg_num_residues + 1 ); // 1 more arrow than there are residues they surround
+			bests.reserve( prm_num_residues + 1 ); // 1 more arrow than there are residues they surround
 
 			// Initialise that the best we have seen up to now, is an empty architecture with zero score up to the start
 
@@ -85,9 +85,9 @@ namespace cath {
 		}
 
 		/// \brief Get the best architecture (scored_arch_proxy) seen so far up to and including the specified arrow
-		inline const scored_arch_proxy & best_scan_arches::get_best_scored_arch_up_to_arrow(const seq::seq_arrow &arg_arrow ///< The point at which we want to know the optimum solution
+		inline const scored_arch_proxy & best_scan_arches::get_best_scored_arch_up_to_arrow(const seq::seq_arrow &prm_arrow ///< The point at which we want to know the optimum solution
 		                                                                                    ) const {
-			const auto &index = arg_arrow.get_index();
+			const auto &index = prm_arrow.get_index();
 #ifndef NDEBUG
 			if ( index >= bests.size() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Index cannot go further than what has been seen"));
@@ -103,9 +103,9 @@ namespace cath {
 		}
 
 		/// \brief Extend the previous best seen architecture as the best up to the specified arrow
-		inline resscr_t best_scan_arches::extend_up_to_arrow(const seq::seq_arrow &arg_arrow ///< The point up to which the previous best seen architecture is now known to still be the best
+		inline resscr_t best_scan_arches::extend_up_to_arrow(const seq::seq_arrow &prm_arrow ///< The point up to which the previous best seen architecture is now known to still be the best
 		                                                     ) {
-			const auto &index = arg_arrow.get_index();
+			const auto &index = prm_arrow.get_index();
 #ifndef NDEBUG
 			if ( index + 1 < bests.size() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
@@ -126,36 +126,36 @@ namespace cath {
 		///
 		/// Be sure to have previously extended the previous architecture up to the boundary before
 		///
-		/// \pre arg_arrow must be one greater than the most recent addition / extension
+		/// \pre prm_arrow must be one greater than the most recent addition / extension
 		///      (else, in a debug build, an exception will be thrown)
 		///
 		/// \relates best_scan_arches
-		inline void best_scan_arches::add_best_up_to_arrow(const seq::seq_arrow    &arg_arrow,      ///< The boundary associated with the new best
-		                                                   const scored_arch_proxy &arg_scored_arch ///< The new best architecture
+		inline void best_scan_arches::add_best_up_to_arrow(const seq::seq_arrow    &prm_arrow,      ///< The boundary associated with the new best
+		                                                   const scored_arch_proxy &prm_scored_arch ///< The new best architecture
 		                                                   ) {
 #ifndef NDEBUG
-			if ( arg_arrow.get_index() != bests.size() ) {
+			if ( prm_arrow.get_index() != bests.size() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 					"Arrow index "
-					+ ::std::to_string( arg_arrow.get_index() )
+					+ ::std::to_string( prm_arrow.get_index() )
 					+ " doesn't go exactly one further than the last seen ("
 					+ ::std::to_string( bests.size() - 1 )
 					+ ")"
 				));
 			}
 #else
-			boost::ignore_unused( arg_arrow );
+			boost::ignore_unused( prm_arrow );
 #endif
-			best_arches.push_back( arg_scored_arch );
+			best_arches.push_back( prm_scored_arch );
 			bests.emplace_back( best_arches.size() - 1 );
 		}
 
 		/// \brief Get the best score seen so far
 		///
 		/// \relates best_scan_arches
-		inline const resscr_t & get_best_score_so_far(const best_scan_arches &arg_best_scan_arches ///< The best_scan_arches to query
+		inline const resscr_t & get_best_score_so_far(const best_scan_arches &prm_best_scan_arches ///< The best_scan_arches to query
 		                                              ) {
-			return arg_best_scan_arches.get_best_scored_arch_so_far().get_score();
+			return prm_best_scan_arches.get_best_scored_arch_so_far().get_score();
 		}
 
 	} // namespace rslv

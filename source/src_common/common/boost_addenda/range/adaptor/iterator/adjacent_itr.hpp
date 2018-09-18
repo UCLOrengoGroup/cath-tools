@@ -152,9 +152,9 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <class RNG>
-		void adjacent_itr<RNG>::advance(const difference_type &arg_offset ///< TODOCUMENT
+		void adjacent_itr<RNG>::advance(const difference_type &prm_offset ///< TODOCUMENT
 		                                ) {
-			this->super::advance( arg_offset );
+			this->super::advance( prm_offset );
 			advance_to_end_if_one_off();
 		}
 
@@ -177,32 +177,32 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <class RNG>
 		template <class OTHER_RNG>
-		typename adjacent_itr<RNG>::difference_type adjacent_itr<RNG>::distance_to(const adjacent_itr<OTHER_RNG> &arg_other_itr ///< TODOCUMENT
+		typename adjacent_itr<RNG>::difference_type adjacent_itr<RNG>::distance_to(const adjacent_itr<OTHER_RNG> &prm_other_itr ///< TODOCUMENT
 		                                                                           ) const {
-			if (   is_at_end() && ! arg_other_itr.is_at_end() ) {
-				return ( arg_other_itr.base() - this->base() ) + 1;
+			if (   is_at_end() && ! prm_other_itr.is_at_end() ) {
+				return ( prm_other_itr.base() - this->base() ) + 1;
 			}
-			if ( ! is_at_end() &&   arg_other_itr.is_at_end() ) {
-				return ( arg_other_itr.base() - this->base() ) - 1;
+			if ( ! is_at_end() &&   prm_other_itr.is_at_end() ) {
+				return ( prm_other_itr.base() - this->base() ) - 1;
 			}
-			return ( arg_other_itr.base() - this->base() );
+			return ( prm_other_itr.base() - this->base() );
 		}
 
 		/// \brief Ctor from iterators
 		template <class RNG>
-		adjacent_itr<RNG>::adjacent_itr(const base_iterator_type &arg_begin, ///< Begin iterator for the original range
-		                                const base_iterator_type &arg_end    ///< End   iterator for the original range
-		                                ) : super  ( arg_begin ),
-		                                    end_itr( arg_end   ) {
+		adjacent_itr<RNG>::adjacent_itr(const base_iterator_type &prm_begin, ///< Begin iterator for the original range
+		                                const base_iterator_type &prm_end    ///< End   iterator for the original range
+		                                ) : super  ( prm_begin ),
+		                                    end_itr( prm_end   ) {
 			advance_to_end_if_one_off();
 		}
 
 		/// \brief Ctor from a range
 		template <class RNG>
-		adjacent_itr<RNG>::adjacent_itr(RNG &arg_range ///< The range over which this adjacent_itr should act
+		adjacent_itr<RNG>::adjacent_itr(RNG &prm_range ///< The range over which this adjacent_itr should act
 		                                ) : adjacent_itr(
-		                                    	std::begin( arg_range ),
-		                                    	std::end  ( arg_range )
+		                                    	std::begin( prm_range ),
+		                                    	std::end  ( prm_range )
 		                                    ) {
 			advance_to_end_if_one_off();
 		}

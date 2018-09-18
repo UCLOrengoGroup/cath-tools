@@ -33,8 +33,8 @@ using namespace cath::score;
 // using namespace std;
 
 /// \brief TODOCUMENT
-named_true_false_pos_neg_list_list::named_true_false_pos_neg_list_list(named_true_false_pos_neg_list_vec arg_named_true_false_pos_neg_list_vec ///< TODOCUMENT
-                                                                       ) : named_true_false_pos_neg_lists{ std::move( arg_named_true_false_pos_neg_list_vec ) } {
+named_true_false_pos_neg_list_list::named_true_false_pos_neg_list_list(named_true_false_pos_neg_list_vec prm_named_true_false_pos_neg_list_vec ///< TODOCUMENT
+                                                                       ) : named_true_false_pos_neg_lists{ std::move( prm_named_true_false_pos_neg_list_vec ) } {
 
 }
 
@@ -49,9 +49,9 @@ size_t named_true_false_pos_neg_list_list::size() const {
 }
 
 /// \brief TODOCUMENT
-const named_true_false_pos_neg_list & named_true_false_pos_neg_list_list::operator[](const size_t &arg_index ///< TODOCUMENT
+const named_true_false_pos_neg_list & named_true_false_pos_neg_list_list::operator[](const size_t &prm_index ///< TODOCUMENT
                                                                                      ) const {
-	return named_true_false_pos_neg_lists[ arg_index ];
+	return named_true_false_pos_neg_lists[ prm_index ];
 }
 
 /// \brief TODOCUMENT
@@ -65,26 +65,26 @@ named_true_false_pos_neg_list_list::const_iterator named_true_false_pos_neg_list
 }
 
 /// \brief TODOCUMENT
-classn_stat_pair_series_list cath::score::make_classn_stat_pair_series_list(const named_true_false_pos_neg_list_list &arg_named_true_false_pos_neg_list_list, ///< TODOCUMENT
-                                                                            const classn_stat                        &arg_classn_stat_a,                      ///< TODOCUMENT
-                                                                            const classn_stat                        &arg_classn_stat_b                       ///< TODOCUMENT
+classn_stat_pair_series_list cath::score::make_classn_stat_pair_series_list(const named_true_false_pos_neg_list_list &prm_named_true_false_pos_neg_list_list, ///< TODOCUMENT
+                                                                            const classn_stat                        &prm_classn_stat_a,                      ///< TODOCUMENT
+                                                                            const classn_stat                        &prm_classn_stat_b                       ///< TODOCUMENT
                                                                             ) {
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return classn_stat_pair_series_list{
 		transform_build<classn_stat_pair_series_vec>(
-			arg_named_true_false_pos_neg_list_list,
+			prm_named_true_false_pos_neg_list_list,
 			[&] (const named_true_false_pos_neg_list &x) {
-				return get_classn_stat_pair_series( x, arg_classn_stat_a, arg_classn_stat_b );
+				return get_classn_stat_pair_series( x, prm_classn_stat_a, prm_classn_stat_b );
 			}
 		)
 	};
 }
 
 /// \brief TODOCUMENT
-str_doub_pair_vec cath::score::areas_under_roc_curves(const named_true_false_pos_neg_list_list &arg_named_true_false_pos_neg_list_list
+str_doub_pair_vec cath::score::areas_under_roc_curves(const named_true_false_pos_neg_list_list &prm_named_true_false_pos_neg_list_list
                                                       ) {
 	return transform_build<str_doub_pair_vec>(
-		arg_named_true_false_pos_neg_list_list,
+		prm_named_true_false_pos_neg_list_list,
 		[] (const named_true_false_pos_neg_list &x) {
 			return make_pair( x.get_name(), area_under_roc_curve( x ) );
 		}

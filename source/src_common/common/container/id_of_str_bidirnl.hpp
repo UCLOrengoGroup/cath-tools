@@ -86,12 +86,12 @@ namespace cath {
 		/// \brief Add the specified name and return its ID
 		///
 		/// Can be used if the name already exists
-		inline size_t id_of_str_bidirnl::add_name(const boost::string_ref &arg_name ///< The name to add
+		inline size_t id_of_str_bidirnl::add_name(const boost::string_ref &prm_name ///< The name to add
 		                                          ) {
-			if ( ids_by_name.contains( arg_name ) ) {
-				return *ids_by_name[ arg_name ];
+			if ( ids_by_name.contains( prm_name ) ) {
+				return *ids_by_name[ prm_name ];
 			}
-			names_by_id.push_back( arg_name.to_string() );
+			names_by_id.push_back( prm_name.to_string() );
 			const size_t &id = ids_by_name.emplace( boost::string_ref{ names_by_id.back() } ).second;
 			if ( id + 1 != names_by_id.size() ) {
 				BOOST_THROW_EXCEPTION(out_of_range_exception(
@@ -108,20 +108,20 @@ namespace cath {
 		/// \brief Add the specified name and return its ID
 		///
 		/// Can be used if the name already exists
-		inline size_t id_of_str_bidirnl::add_name(const std::string &arg_name ///< The name to add
+		inline size_t id_of_str_bidirnl::add_name(const std::string &prm_name ///< The name to add
 		                                          ) {
-			return add_name( boost::string_ref{ arg_name } );
+			return add_name( boost::string_ref{ prm_name } );
 		}
 
 		/// \brief Add the specified name and return its ID
 		///
 		/// Can be used if the name already exists
-		inline size_t id_of_str_bidirnl::add_name(std::string &&arg_name ///< The name to add
+		inline size_t id_of_str_bidirnl::add_name(std::string &&prm_name ///< The name to add
 		                                          ) {
-			if ( ids_by_name.contains( arg_name ) ) {
-				return *ids_by_name[ arg_name ];
+			if ( ids_by_name.contains( prm_name ) ) {
+				return *ids_by_name[ prm_name ];
 			}
-			names_by_id.push_back( std::move( arg_name ) );
+			names_by_id.push_back( std::move( prm_name ) );
 			const size_t &id = ids_by_name.emplace( boost::string_ref{ names_by_id.back() } ).second;
 			if ( id + 1 != names_by_id.size() ) {
 				BOOST_THROW_EXCEPTION(out_of_range_exception(
@@ -139,21 +139,21 @@ namespace cath {
 		///
 		/// \pre The ID must be a valid ID else this triggers undefined behaviour
 		///      (or something less nasty on a range-checked debug build)
-		inline const std::string & id_of_str_bidirnl::get_name_of_id(const size_t &arg_id ///< The ID to query
+		inline const std::string & id_of_str_bidirnl::get_name_of_id(const size_t &prm_id ///< The ID to query
 		                                                             ) const {
-			return names_by_id[ arg_id ];
+			return names_by_id[ prm_id ];
 		}
 
 		/// \brief Get the ID associated with the specified name
-		inline auto id_of_str_bidirnl::get_id_of_name(const boost::string_ref &arg_name ///< The name to query
+		inline auto id_of_str_bidirnl::get_id_of_name(const boost::string_ref &prm_name ///< The name to query
 		                                              ) const -> size_t {
-			return *ids_by_name[ arg_name ];
+			return *ids_by_name[ prm_name ];
 		}
 
 		/// \brief Get the ID associated with the specified name
-		inline auto id_of_str_bidirnl::get_id_of_name(const std::string &arg_name ///< The name to query
+		inline auto id_of_str_bidirnl::get_id_of_name(const std::string &prm_name ///< The name to query
 		                                              ) const -> size_t {
-			return *ids_by_name[ arg_name ];
+			return *ids_by_name[ prm_name ];
 		}
 
 		/// \brief Return whether the id_of_str_bidirnl is empty
@@ -192,7 +192,7 @@ namespace cath {
 		///
 		/// \todo Consider just doing a regex instead
 		template <typename StrRng>
-		boost::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers(const StrRng &arg_strings ///< The range of strings to query
+		boost::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers(const StrRng &prm_strings ///< The range of strings to query
 		                                                                        ) {
 			using const_str_ref = range_const_reference_t<StrRng>;
 			const auto str_is_not_int_like_fn = [] (const_str_ref x) {
@@ -210,11 +210,11 @@ namespace cath {
 					)
 				);
 			};
-			if ( boost::empty( arg_strings ) || boost::algorithm::any_of( arg_strings, str_is_not_int_like_fn ) ) {
+			if ( boost::empty( prm_strings ) || boost::algorithm::any_of( prm_strings, str_is_not_int_like_fn ) ) {
 				return boost::none;
 			}
 			return max_proj(
-				arg_strings,
+				prm_strings,
 				std::less<>{},
 				[] (const_str_ref x) { return std::stol( x ); }
 			);

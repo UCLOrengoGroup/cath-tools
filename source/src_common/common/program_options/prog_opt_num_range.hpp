@@ -51,8 +51,8 @@ namespace cath {
 
 		public:
 			/// \brief Ctor from Num
-			constexpr prog_opt_num_range(const Num &arg_value ///< The value to set
-			                             ) : value( arg_value ) {
+			constexpr prog_opt_num_range(const Num &prm_value ///< The value to set
+			                             ) : value( prm_value ) {
 			}
 
 			/// \brief Num conversion operator
@@ -67,18 +67,18 @@ namespace cath {
 		          int64_t MaxVal,        ///< The maximum permissible value before aborting validation
 		          typename ConvNum = Num ///< The type to which the value string should first be cast
 		          >
-		void validate(boost::any    &arg_value,         ///< The value to populate
-		              const str_vec &arg_value_strings, ///< The string values to validate
+		void validate(boost::any    &prm_value,         ///< The value to populate
+		              const str_vec &prm_value_strings, ///< The string values to validate
 		              prog_opt_num_range<Num, MinVal, MaxVal, ConvNum> * dummy_var1, int /*dummy_var2*/
 		              ) {
 			using ponr_t = std::decay_t< std::remove_pointer_t< decltype( dummy_var1 ) > >;
 
 			// Standard validate boilerplate:
 			//  * Make sure no previous assignment to 'a' was made.
-			//  * Extract the first string from 'arg_value_strings'.
+			//  * Extract the first string from 'prm_value_strings'.
 			//    (If there is more than one string, it's an error, and exception will be thrown.)
-			boost::program_options::check_first_occurrence( arg_value );
-			const std::string &value_string = boost::program_options::get_single_string( arg_value_strings );
+			boost::program_options::check_first_occurrence( prm_value );
+			const std::string &value_string = boost::program_options::get_single_string( prm_value_strings );
 
 			// Attempt to lexical_cast value_string and if it fails, throw an invalid_option_value exception
 			try {
@@ -86,7 +86,7 @@ namespace cath {
 				if ( boost::numeric_cast<int64_t>( result ) < MinVal || boost::numeric_cast<int64_t>( result ) > MaxVal ) {
 					throw 0;
 				}
-				arg_value = ponr_t{ result };
+				prm_value = ponr_t{ result };
 			}
 			catch (...) {
 				BOOST_THROW_EXCEPTION( boost::program_options::invalid_option_value( value_string ) );

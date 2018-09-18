@@ -31,14 +31,14 @@ using boost::format;
 using std::string;
 
 /// \brief Generate a formatted string for the specified score of the specified type with the specified number of significant figures (roughly)
-std::string cath::rslv::get_score_string(const double         &arg_score,      ///< The score to represent in a string
-                                         const hit_score_type &arg_score_type, ///< The type of score to represent
-                                         const size_t         &arg_num_figures ///< The number of significant figures (roughly)
+std::string cath::rslv::get_score_string(const double         &prm_score,      ///< The score to represent in a string
+                                         const hit_score_type &prm_score_type, ///< The type of score to represent
+                                         const size_t         &prm_num_figures ///< The number of significant figures (roughly)
                                          ) {
-	switch ( arg_score_type ) {
-		case ( hit_score_type::FULL_EVALUE ) : { return ( format( "%." + ::std::to_string( arg_num_figures ) + "e" ) % arg_score ).str(); }
-		case ( hit_score_type::BITSCORE    ) : { return ( format( "%." + ::std::to_string( arg_num_figures ) + "g" ) % arg_score ).str(); }
-		case ( hit_score_type::CRH_SCORE   ) : { return ( format( "%." + ::std::to_string( arg_num_figures ) + "g" ) % arg_score ).str(); }
+	switch ( prm_score_type ) {
+		case ( hit_score_type::FULL_EVALUE ) : { return ( format( "%." + ::std::to_string( prm_num_figures ) + "e" ) % prm_score ).str(); }
+		case ( hit_score_type::BITSCORE    ) : { return ( format( "%." + ::std::to_string( prm_num_figures ) + "g" ) % prm_score ).str(); }
+		case ( hit_score_type::CRH_SCORE   ) : { return ( format( "%." + ::std::to_string( prm_num_figures ) + "g" ) % prm_score ).str(); }
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of hit_score_type not recognised whilst getting score string"));
 }
@@ -46,13 +46,13 @@ std::string cath::rslv::get_score_string(const double         &arg_score,      /
 /// \brief Generate a formatted string for the specified full_hit's native score with the specified number of significant figures (roughly)
 ///
 /// \relates full_hit
-string cath::rslv::get_score_string(const full_hit &arg_full_hit,   ///< The full_hit containing the score to represent in a string
-                                    const size_t   &arg_num_figures ///< The number of significant figures (roughly)
+string cath::rslv::get_score_string(const full_hit &prm_full_hit,   ///< The full_hit containing the score to represent in a string
+                                    const size_t   &prm_num_figures ///< The number of significant figures (roughly)
                                     ) {
 	return get_score_string(
-		arg_full_hit.get_score(),
-		arg_full_hit.get_score_type(),
-		arg_num_figures
+		prm_full_hit.get_score(),
+		prm_full_hit.get_score_type(),
+		prm_num_figures
 	);
 }
 

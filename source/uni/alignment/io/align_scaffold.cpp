@@ -50,11 +50,11 @@ using boost::none;
 ///  * space characters (according to boost::algorithm::is_space()
 ///  * '-'
 ///  * '.'
-aln_posn_opt_vec cath::align::detail::alignment_entry_of_scaffold_string(const string &arg_scaffold_string ///< The scaffold string defining the entry to be built
+aln_posn_opt_vec cath::align::detail::alignment_entry_of_scaffold_string(const string &prm_scaffold_string ///< The scaffold string defining the entry to be built
                                                                          ) {
 	aln_posn_type ctr = 0;
 	return transform_build<aln_posn_opt_vec>(
-		arg_scaffold_string,
+		prm_scaffold_string,
 		[&] (const char &x) {
 			return ( ! is_space()( x ) && x != '-' && x != '.' ) ? make_optional( ctr++ )
 			                                                     : none;
@@ -63,13 +63,13 @@ aln_posn_opt_vec cath::align::detail::alignment_entry_of_scaffold_string(const s
 }
 
 /// \brief Generate a scaffold line for the specified entry of the specified alignment
-string cath::align::detail::scaffold_line_of_alignment_entry(const alignment &arg_alignment, ///< The alignment containing the entry for which the scaffold line should be made
-                                                             const size_t    &arg_entry      ///< The index of the alignment entry for which the scaffold line should be made
+string cath::align::detail::scaffold_line_of_alignment_entry(const alignment &prm_alignment, ///< The alignment containing the entry for which the scaffold line should be made
+                                                             const size_t    &prm_entry      ///< The index of the alignment entry for which the scaffold line should be made
                                                              ) {
 	return transform_build<string>(
-		indices( arg_alignment.length() ),
+		indices( prm_alignment.length() ),
 		[&] (const size_t &x) {
-			return has_position_of_entry_of_index( arg_alignment, arg_entry, x ) ? 'X' : ' ';
+			return has_position_of_entry_of_index( prm_alignment, prm_entry, x ) ? 'X' : ' ';
 		}
 	);
 }
@@ -84,12 +84,12 @@ string cath::align::detail::scaffold_line_of_alignment_entry(const alignment &ar
 ///  * '.'
 ///
 /// \relates alignment
-alignment cath::align::alignment_of_scaffold_lines(const str_vec &arg_scaffold_lines ///< The scaffold lines from which to generate the alignment
+alignment cath::align::alignment_of_scaffold_lines(const str_vec &prm_scaffold_lines ///< The scaffold lines from which to generate the alignment
                                                    ) {
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return alignment{
 		transform_build<aln_posn_opt_vec_vec>(
-			arg_scaffold_lines,
+			prm_scaffold_lines,
 			[] (const string &x) {
 				return detail::alignment_entry_of_scaffold_string( x );
 			}
@@ -107,10 +107,10 @@ alignment cath::align::alignment_of_scaffold_lines(const str_vec &arg_scaffold_l
 ///  * '.'
 ///
 /// \relates alignment
-alignment cath::align::alignment_of_scaffold(const string &arg_scaffold ///< The string of newline-separated scaffold lines from which to generate the alignment
+alignment cath::align::alignment_of_scaffold(const string &prm_scaffold ///< The string of newline-separated scaffold lines from which to generate the alignment
                                              ) {
 	return alignment_of_scaffold_lines(
-		split_build<str_vec>( arg_scaffold, is_any_of( "\n" ) )
+		split_build<str_vec>( prm_scaffold, is_any_of( "\n" ) )
 	);
 }
 
@@ -121,12 +121,12 @@ alignment cath::align::alignment_of_scaffold(const string &arg_scaffold ///< The
 ///          of the corresponding position.
 ///
 /// \relates alignment
-str_vec cath::align::scaffold_lines_of_alignment(const alignment &arg_alignment ///< The alignment from which the scaffold lines should be generated
+str_vec cath::align::scaffold_lines_of_alignment(const alignment &prm_alignment ///< The alignment from which the scaffold lines should be generated
                                                  ) {
 	return transform_build<str_vec>(
-		indices( arg_alignment.num_entries() ),
+		indices( prm_alignment.num_entries() ),
 		[&] (const size_t &entry) {
-			return detail::scaffold_line_of_alignment_entry( arg_alignment, entry );
+			return detail::scaffold_line_of_alignment_entry( prm_alignment, entry );
 		}
 	);
 }
@@ -138,7 +138,7 @@ str_vec cath::align::scaffold_lines_of_alignment(const alignment &arg_alignment 
 ///          of the corresponding position.
 ///
 /// \relates alignment
-string cath::align::scaffold_of_alignment(const alignment &arg_alignment ///< The alignment from which the scaffold lines should be generated
+string cath::align::scaffold_of_alignment(const alignment &prm_alignment ///< The alignment from which the scaffold lines should be generated
                                           ) {
-	return join( scaffold_lines_of_alignment( arg_alignment ), "\n" );
+	return join( scaffold_lines_of_alignment( prm_alignment ), "\n" );
 }

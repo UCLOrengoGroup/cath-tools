@@ -48,14 +48,14 @@ tribool num_aligned_length_getter::do_higher_is_better() const {
 }
 
 /// \brief TODOCUMENT
-size_t num_aligned_length_getter::do_get_length(const alignment &arg_alignment, ///< TODOCUMENT
-                                                const protein   &arg_protein_a, ///< TODOCUMENT
-                                                const protein   &arg_protein_b  ///< TODOCUMENT
+size_t num_aligned_length_getter::do_get_length(const alignment &prm_alignment, ///< TODOCUMENT
+                                                const protein   &prm_protein_a, ///< TODOCUMENT
+                                                const protein   &prm_protein_b  ///< TODOCUMENT
                                                 ) const {
 	const pair<coord_list, coord_list> common_coords = common_coord_handler.get_common_coords(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b
 	);
 	return common_coords.first.size();
 }
@@ -104,9 +104,9 @@ const string num_aligned_length_getter::do_description_brackets_string() const {
 }
 
 /// \brief TODOCUMENT
-bool num_aligned_length_getter::do_less_than_with_same_dynamic_type(const length_getter &arg_length_getter ///< TODOCUMENT
+bool num_aligned_length_getter::do_less_than_with_same_dynamic_type(const length_getter &prm_length_getter ///< TODOCUMENT
                                                                     ) const {
-	const num_aligned_length_getter &casted_length_getter = dynamic_cast<const num_aligned_length_getter &>( arg_length_getter );
+	const num_aligned_length_getter &casted_length_getter = dynamic_cast<const num_aligned_length_getter &>( prm_length_getter );
 	return ( *this < casted_length_getter );
 }
 
@@ -116,9 +116,9 @@ const score_common_coord_handler & num_aligned_length_getter::get_common_coord_h
 }
 
 /// \brief Ctor for num_aligned_length_getter
-num_aligned_length_getter::num_aligned_length_getter(const common_residue_selection_policy &arg_comm_res_seln_pol ///< TODOCUMENT
+num_aligned_length_getter::num_aligned_length_getter(const common_residue_selection_policy &prm_comm_res_seln_pol ///< TODOCUMENT
                                                      ) : common_coord_handler(
-                                                         	arg_comm_res_seln_pol,
+                                                         	prm_comm_res_seln_pol,
                                                          	*make_default_common_atom_selection_policy()
                                                          ) {
 }
@@ -126,13 +126,13 @@ num_aligned_length_getter::num_aligned_length_getter(const common_residue_select
 /// \brief TODOCUMENT
 ///
 /// \relates num_aligned_length_getter
-bool cath::score::operator<(const num_aligned_length_getter &arg_num_aligned_length_getter_a, ///< TODOCUMENT
-                            const num_aligned_length_getter &arg_num_aligned_length_getter_b  ///< TODOCUMENT
+bool cath::score::operator<(const num_aligned_length_getter &prm_num_aligned_length_getter_a, ///< TODOCUMENT
+                            const num_aligned_length_getter &prm_num_aligned_length_getter_b  ///< TODOCUMENT
                             ) {
 	return (
-		arg_num_aligned_length_getter_a.get_common_coord_handler()
+		prm_num_aligned_length_getter_a.get_common_coord_handler()
 		<
-		arg_num_aligned_length_getter_b.get_common_coord_handler()
+		prm_num_aligned_length_getter_b.get_common_coord_handler()
 	);
 
 }

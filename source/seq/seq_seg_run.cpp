@@ -44,14 +44,14 @@ using std::string;
 /// and by a ',' between segments.
 ///
 /// \relates seq_seg_run
-string cath::seq::get_segments_string(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run whose segments should be described
+string cath::seq::get_segments_string(const seq_seg_run &prm_seq_seg_run ///< The seq_seg_run whose segments should be described
                                       ) {
 	return join(
-		indices( arg_seq_seg_run.get_num_segments() )
+		indices( prm_seq_seg_run.get_num_segments() )
 			| boost::adaptors::transformed( [&] (const size_t &x) {
-				return ::std::to_string( get_start_res_index_of_segment( arg_seq_seg_run, x ) )
+				return ::std::to_string( get_start_res_index_of_segment( prm_seq_seg_run, x ) )
 				     + "-"
-				     + ::std::to_string( get_stop_res_index_of_segment ( arg_seq_seg_run, x ) );
+				     + ::std::to_string( get_stop_res_index_of_segment ( prm_seq_seg_run, x ) );
 			} ),
 		","
 	);
@@ -62,28 +62,28 @@ string cath::seq::get_segments_string(const seq_seg_run &arg_seq_seg_run ///< Th
 /// If not none, the result is the same as returned from get_segments_string() prefixed by '/'
 ///
 /// \relates seq_seg_run
-string cath::seq::get_segments_suffix_string(const seq_seg_run_opt &arg_seq_seg_run ///< The seq_seg_run whose segments should be described
+string cath::seq::get_segments_suffix_string(const seq_seg_run_opt &prm_seq_seg_run ///< The seq_seg_run whose segments should be described
                                              ) {
-	return arg_seq_seg_run ? ( "/" + get_segments_string( *arg_seq_seg_run ) ) : "";
+	return prm_seq_seg_run ? ( "/" + get_segments_string( *prm_seq_seg_run ) ) : "";
 }
 
 /// \brief Generate a string describing the specified seq_seg_run
 ///
 /// \relates seq_seg_run
-string cath::seq::to_string(const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to describe
+string cath::seq::to_string(const seq_seg_run &prm_seq_seg_run ///< The seq_seg_run to describe
                             ) {
-	return "seq_seg_run[" + get_segments_string( arg_seq_seg_run ) + "]";
+	return "seq_seg_run[" + get_segments_string( prm_seq_seg_run ) + "]";
 }
 
 /// \brief Generate a string describing the specified seq_seg_run
 ///
 /// \relates seq_seg_run
-string cath::seq::to_string(const seq_seg_run_opt &arg_seq_seg_run_opt ///< The seq_seg_run_opt to describe
+string cath::seq::to_string(const seq_seg_run_opt &prm_seq_seg_run_opt ///< The seq_seg_run_opt to describe
                             ) {
 	return "seq_seg_run["
 		+ (
-			arg_seq_seg_run_opt
-				? get_segments_string( *arg_seq_seg_run_opt )
+			prm_seq_seg_run_opt
+				? get_segments_string( *prm_seq_seg_run_opt )
 				: "WCD"
 		)
 		+ "]";
@@ -92,29 +92,29 @@ string cath::seq::to_string(const seq_seg_run_opt &arg_seq_seg_run_opt ///< The 
 /// \brief Insert a description of the specified seq_seg_run into the specified ostream
 ///
 /// \relates seq_seg_run
-ostream & cath::seq::operator<<(ostream           &arg_os,         ///< The ostream into which the description should be inserted
-                                const seq_seg_run &arg_seq_seg_run ///< The seq_seg_run to describe
+ostream & cath::seq::operator<<(ostream           &prm_os,         ///< The ostream into which the description should be inserted
+                                const seq_seg_run &prm_seq_seg_run ///< The seq_seg_run to describe
                                 ) {
-	arg_os << to_string( arg_seq_seg_run );
-	return arg_os;
+	prm_os << to_string( prm_seq_seg_run );
+	return prm_os;
 }
 
 /// \brief Return whether the two specified seq_seg_runs are identical
 ///
 /// \relates seq_seg_run
-bool cath::seq::operator==(const seq_seg_run &arg_lhs, ///< The first  seq_seg_run to compare
-                           const seq_seg_run &arg_rhs  ///< The second seq_seg_run to compare
+bool cath::seq::operator==(const seq_seg_run &prm_lhs, ///< The first  seq_seg_run to compare
+                           const seq_seg_run &prm_rhs  ///< The second seq_seg_run to compare
                            ) {
 	return (
-		( arg_lhs.get_num_segments() == arg_rhs.get_num_segments() )
+		( prm_lhs.get_num_segments() == prm_rhs.get_num_segments() )
 		&&
 		all_of(
-			indices( arg_lhs.get_num_segments() ),
+			indices( prm_lhs.get_num_segments() ),
 			[&] (const size_t &seg_ctr) {
 				return (
-					arg_lhs.get_start_arrow_of_segment( seg_ctr ) == arg_rhs.get_start_arrow_of_segment( seg_ctr )
+					prm_lhs.get_start_arrow_of_segment( seg_ctr ) == prm_rhs.get_start_arrow_of_segment( seg_ctr )
 					&&
-					arg_lhs.get_stop_arrow_of_segment ( seg_ctr ) == arg_rhs.get_stop_arrow_of_segment ( seg_ctr )
+					prm_lhs.get_stop_arrow_of_segment ( seg_ctr ) == prm_rhs.get_stop_arrow_of_segment ( seg_ctr )
 				);
 			}
 		)

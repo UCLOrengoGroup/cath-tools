@@ -60,26 +60,26 @@ void regions_limiter::sanity_check() const {
 
 /// \brief Ctor from a vector of regions to which processing should be limited
 ///
-/// \pre arg_regions must be non-overlapping in the context of the residue_ids they will be used to limit
-regions_limiter::regions_limiter(const region_vec &arg_regions ///< The regions to which a series of residue_ids should be restricted
-                                 ) : regions     { arg_regions                                            },
-                                     regions_seen{ region_seen_vec( arg_regions.size(), region_seen::NO ) } {
+/// \pre prm_regions must be non-overlapping in the context of the residue_ids they will be used to limit
+regions_limiter::regions_limiter(const region_vec &prm_regions ///< The regions to which a series of residue_ids should be restricted
+                                 ) : regions     { prm_regions                                            },
+                                     regions_seen{ region_seen_vec( prm_regions.size(), region_seen::NO ) } {
 	sanity_check();
 }
 
 /// \brief Ctor from a vector of regions to which processing should be limited
 ///        or none to not limit
 ///
-/// \pre arg_regions must be non-overlapping in the context of the residue_ids they will be used to limit
-regions_limiter::regions_limiter(const region_vec_opt &arg_regions
+/// \pre prm_regions must be non-overlapping in the context of the residue_ids they will be used to limit
+regions_limiter::regions_limiter(const region_vec_opt &prm_regions
                                  ) : regions{
-                                     	arg_regions
-                                     	? make_optional( std::cref( *arg_regions ) )
+                                     	prm_regions
+                                     	? make_optional( std::cref( *prm_regions ) )
                                      	: none
                                      },
                                      regions_seen{
-                                     	arg_regions
-                                     	? make_optional( region_seen_vec( arg_regions->size(), region_seen::NO ) )
+                                     	prm_regions
+                                     	? make_optional( region_seen_vec( prm_regions->size(), region_seen::NO ) )
                                      	: none
                                      } {
 	sanity_check();
@@ -88,7 +88,7 @@ regions_limiter::regions_limiter(const region_vec_opt &arg_regions
 /// \brief Update state to reflect the specified residue_id as the current and return
 ///        whether that residue_id should be included in processing (ie if regions have
 ///        been specified, then this is within them)
-bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_id ///< The residue_id to query
+bool regions_limiter::update_residue_is_included(const residue_id &prm_residue_id ///< The residue_id to query
                                                  ) {
 	// If not restricting to any regions, then just return true
 	if ( ! regions ) {
@@ -102,8 +102,8 @@ bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_i
 		// If the active region specifies start and stop
 		if ( active_region.has_starts_stops() ) {
 
-			// If arg_residue_id matches the stop of the active region, then deactivate that active region
-			if ( arg_residue_id == residue_id{ get_chain_label( active_region ), get_stop_name( active_region ) } ) {
+			// If prm_residue_id matches the stop of the active region, then deactivate that active region
+			if ( prm_residue_id == residue_id{ get_chain_label( active_region ), get_stop_name( active_region ) } ) {
 				active_region_idx = none;
 			}
 
@@ -113,12 +113,12 @@ bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_i
 		
 		// Else the active region is a whole-chain region
 		// If still inside the active whole-chain region's chain, just return true
-		if ( arg_residue_id.get_chain_label() == get_chain_label( active_region ) ) {
+		if ( prm_residue_id.get_chain_label() == get_chain_label( active_region ) ) {
 			return true;
 		}
 
 		// Otherwise, deactivate that active region and then fall through to determine
-		// whether arg_residue_id is in the start of another region
+		// whether prm_residue_id is in the start of another region
 		active_region_idx = none;
 	}
 
@@ -129,10 +129,10 @@ bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_i
 
 		// If this region specifies start and stop
 		if ( the_region.has_starts_stops() ) {
-			// If arg_residue_id matches the start of this region...
-			if ( arg_residue_id == residue_id{ get_chain_label( the_region ), get_start_name( the_region ) } ) {
-				// If arg_residue_id doesn't also match the stop of this region, then make this the active region
-				if ( arg_residue_id != residue_id{ get_chain_label( the_region ), get_stop_name( the_region ) } ) {
+			// If prm_residue_id matches the start of this region...
+			if ( prm_residue_id == residue_id{ get_chain_label( the_region ), get_start_name( the_region ) } ) {
+				// If prm_residue_id doesn't also match the stop of this region, then make this the active region
+				if ( prm_residue_id != residue_id{ get_chain_label( the_region ), get_stop_name( the_region ) } ) {
 					active_region_idx = region_ctr;
 				}
 
@@ -145,7 +145,7 @@ bool regions_limiter::update_residue_is_included(const residue_id &arg_residue_i
 		else {
 			// If inside this whole-chain region's chain, then make this the active region,
 			// mark the region as seen and return true
-			if ( arg_residue_id.get_chain_label() == get_chain_label( the_region ) ) {
+			if ( prm_residue_id.get_chain_label() == get_chain_label( the_region ) ) {
 				active_region_idx = region_ctr;
 				regions_seen.get()[ region_ctr ] = region_seen::YES;
 				return true;
@@ -180,9 +180,9 @@ region_vec regions_limiter::unseen_regions() const {
 ///        or return none if no regions were specified or all have been seen
 ///
 /// \relates regions_limiter
-str_opt cath::chop::warn_str_if_specified_regions_remain_unseen(const regions_limiter &arg_regions ///< The regions_limiter to query
+str_opt cath::chop::warn_str_if_specified_regions_remain_unseen(const regions_limiter &prm_regions ///< The regions_limiter to query
                                                                 ) {
-	const auto unseen_regions = arg_regions.unseen_regions();
+	const auto unseen_regions = prm_regions.unseen_regions();
 	return make_optional_if_fn(
 		! unseen_regions.empty(),
 		[&] {
@@ -201,9 +201,9 @@ str_opt cath::chop::warn_str_if_specified_regions_remain_unseen(const regions_li
 ///        or do nothing if no regions were specified or all have been seen
 ///
 /// \relates regions_limiter
-void cath::chop::warn_if_specified_regions_remain_unseen(const regions_limiter &arg_regions ///< The regions_limiter to query
+void cath::chop::warn_if_specified_regions_remain_unseen(const regions_limiter &prm_regions ///< The regions_limiter to query
                                                          ) {
-	const auto warn_str = warn_str_if_specified_regions_remain_unseen( arg_regions );
+	const auto warn_str = warn_str_if_specified_regions_remain_unseen( prm_regions );
 	if ( warn_str ) {
 		BOOST_LOG_TRIVIAL( warning ) << *warn_str;
 	}

@@ -129,15 +129,15 @@ namespace cath {
 			}
 
 			/// \brief Getter for require_matching_directions
-			inline bool requires_matching_directions(const quad_criteria &arg_criteria ///< TODOCUMENT
+			inline bool requires_matching_directions(const quad_criteria &prm_criteria ///< TODOCUMENT
 			                                         ) {
-				return arg_criteria.get_index_direction_criterion() == res_pair_index_dirn_criterion::MUST_MATCH;
+				return prm_criteria.get_index_direction_criterion() == res_pair_index_dirn_criterion::MUST_MATCH;
 			}
 
 			/// \brief Get the maximum allowed distance implied by the specified quad_criteria
-			inline detail::view_base_type get_maximum_distance(const quad_criteria &arg_quad_criteria ///< The arg_quad_criteria to query
+			inline detail::view_base_type get_maximum_distance(const quad_criteria &prm_quad_criteria ///< The prm_quad_criteria to query
 			                                                   ) {
-				return std::sqrt( arg_quad_criteria.get_maximum_squared_distance() );
+				return std::sqrt( prm_quad_criteria.get_maximum_squared_distance() );
 			}
 
 			quad_criteria make_default_quad_criteria();

@@ -49,16 +49,16 @@ namespace cath {
 }  // namespace cath
 
 ///// \brief TODOCUMENT
-//void plate_scan_test_suite_fixture::test_plate_scan(const size_t &arg_from_index,     ///< TODOCUMENT
-//                                                    const size_t &arg_to_index,       ///< TODOCUMENT
-//                                                    const size_t &arg_from_size,      ///< TODOCUMENT
-//                                                    const size_t &arg_to_size,        ///< TODOCUMENT
-//                                                    const size_t &arg_from_step_size, ///< TODOCUMENT
-//                                                    const size_t &arg_to_step_size,   ///< TODOCUMENT
-//                                                    const size_t &arg_from_offset,    ///< TODOCUMENT
-//                                                    const size_t &arg_to_offset       ///< TODOCUMENT
+//void plate_scan_test_suite_fixture::test_plate_scan(const size_t &prm_from_index,     ///< TODOCUMENT
+//                                                    const size_t &prm_to_index,       ///< TODOCUMENT
+//                                                    const size_t &prm_from_size,      ///< TODOCUMENT
+//                                                    const size_t &prm_to_size,        ///< TODOCUMENT
+//                                                    const size_t &prm_from_step_size, ///< TODOCUMENT
+//                                                    const size_t &prm_to_step_size,   ///< TODOCUMENT
+//                                                    const size_t &prm_from_offset,    ///< TODOCUMENT
+//                                                    const size_t &prm_to_offset       ///< TODOCUMENT
 //                                                    ) const {
-//	arg_from_index;
+//	prm_from_index;
 //}
 
 /// \brief TODOCUMENT

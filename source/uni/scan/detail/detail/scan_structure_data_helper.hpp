@@ -33,57 +33,57 @@ namespace cath {
 			namespace detail {
 
 				/// \brief TODOCUMENT
-				inline angle_type_vec make_scan_phi_angles(const protein &arg_protein ///< TODOCUMENT
+				inline angle_type_vec make_scan_phi_angles(const protein &prm_protein ///< TODOCUMENT
 				                                           ) {
 					angle_type_vec results;
-					results.reserve( arg_protein.get_length() );
-					for (const auto &x : arg_protein) {
+					results.reserve( prm_protein.get_length() );
+					for (const auto &x : prm_protein) {
 						results.emplace_back( geom::convert_angle_type<angle_base_type>( x.get_phi_angle() ) );
 					}
 					return results;
 				}
 
 				/// \brief TODOCUMENT
-				inline angle_type_vec make_scan_psi_angles(const protein &arg_protein ///< TODOCUMENT
+				inline angle_type_vec make_scan_psi_angles(const protein &prm_protein ///< TODOCUMENT
 				                                           ) {
 					angle_type_vec results;
-					results.reserve( arg_protein.get_length() );
-					for (const auto &x : arg_protein) {
+					results.reserve( prm_protein.get_length() );
+					for (const auto &x : prm_protein) {
 						results.emplace_back( geom::convert_angle_type<angle_base_type>( x.get_psi_angle() ) );
 					}
 					return results;
 				}
 
 				/// \brief TODOCUMENT
-				inline view_type_vec make_scan_view_coords(const protein &arg_protein ///< TODOCUMENT
+				inline view_type_vec make_scan_view_coords(const protein &prm_protein ///< TODOCUMENT
 				                                           ) {
 					view_type_vec results;
-					results.reserve( arg_protein.get_length() );
-					for (const auto &x : arg_protein) {
+					results.reserve( prm_protein.get_length() );
+					for (const auto &x : prm_protein) {
 						results.emplace_back( x.get_carbon_beta_coord() );
 					}
 					return results;
 				}
 
 				/// \brief TODOCUMENT
-				inline frame_quat_rot_vec make_scan_frame_quat_rots(const protein &arg_protein ///< TODOCUMENT
+				inline frame_quat_rot_vec make_scan_frame_quat_rots(const protein &prm_protein ///< TODOCUMENT
 				                                                    ) {
 					frame_quat_rot_vec results;
-					results.reserve( arg_protein.get_length() );
-					for (const auto &x : arg_protein) {
+					results.reserve( prm_protein.get_length() );
+					for (const auto &x : prm_protein) {
 						results.emplace_back( geom::make_quat_rot_from_rotation<frame_quat_rot_type>( x.get_frame() ) );
 					}
 					return results;
 				}
 
 				/// \brief TODOCUMENT
-				inline single_struc_res_pair_vec build_single_rep_pairs(const protein &arg_protein ///< TODOCUMENT
+				inline single_struc_res_pair_vec build_single_rep_pairs(const protein &prm_protein ///< TODOCUMENT
 				                                                        ) {
-					const auto num_residues     = debug_unwarned_numeric_cast<index_type>( arg_protein.get_length() );
-					const auto scan_phi_angles  = make_scan_phi_angles     ( arg_protein );
-					const auto scan_psi_angles  = make_scan_psi_angles     ( arg_protein );
-					const auto scan_view_coords = make_scan_view_coords    ( arg_protein );
-					const auto scan_frames      = make_scan_frame_quat_rots( arg_protein );
+					const auto num_residues     = debug_unwarned_numeric_cast<index_type>( prm_protein.get_length() );
+					const auto scan_phi_angles  = make_scan_phi_angles     ( prm_protein );
+					const auto scan_psi_angles  = make_scan_psi_angles     ( prm_protein );
+					const auto scan_view_coords = make_scan_view_coords    ( prm_protein );
+					const auto scan_frames      = make_scan_frame_quat_rots( prm_protein );
 					single_struc_res_pair_vec results;
 					results.reserve( num_residues * num_residues );
 					const auto all_residues_range   = boost::irange<index_type>( 0, num_residues );
@@ -111,42 +111,42 @@ namespace cath {
 				}
 
 				/// \brief TODOCUMENT
-				inline void add_stride_neighbours(single_struc_res_pair_list      &arg_neighbours,       ///< TODOCUMENT
-				                                  const index_type                &arg_num_residues,     ///< TODOCUMENT
+				inline void add_stride_neighbours(single_struc_res_pair_list      &prm_neighbours,       ///< TODOCUMENT
+				                                  const index_type                &prm_num_residues,     ///< TODOCUMENT
 				                                  const single_struc_res_pair_vec &all_single_res_pairs, ///< TODOCUMENT
-				                                  const index_type                &arg_from_index,       ///< TODOCUMENT
-				                                  const index_type                &arg_to_index,         ///< TODOCUMENT
-				                                  const index_type                &arg_from_co_stride,   ///< TODOCUMENT
-				                                  const index_type                &arg_to_co_stride      ///< TODOCUMENT
+				                                  const index_type                &prm_from_index,       ///< TODOCUMENT
+				                                  const index_type                &prm_to_index,         ///< TODOCUMENT
+				                                  const index_type                &prm_from_co_stride,   ///< TODOCUMENT
+				                                  const index_type                &prm_to_co_stride      ///< TODOCUMENT
 				                                  ) {
-					const auto from_stride_size  = num_in_stride_neighbour_range( arg_from_co_stride );
-					const auto to_stride_size    = num_in_stride_neighbour_range( arg_to_co_stride   );
+					const auto from_stride_size  = num_in_stride_neighbour_range( prm_from_co_stride );
+					const auto to_stride_size    = num_in_stride_neighbour_range( prm_to_co_stride   );
 					const auto from_stride_range = boost::irange<index_type>( 0, from_stride_size );
 					const auto to_stride_range   = boost::irange<index_type>( 0, to_stride_size   );
 
-					arg_neighbours.reserve( from_stride_size * to_stride_size );
+					prm_neighbours.reserve( from_stride_size * to_stride_size );
 
 					for(const auto &x : common::cross( from_stride_range, to_stride_range )) {
-						const auto from = entry_index_of_stride_neighbour_index( std::get<0>( x ), arg_from_co_stride, arg_from_index, arg_num_residues );
-						const auto to   = entry_index_of_stride_neighbour_index( std::get<1>( x ), arg_to_co_stride,   arg_to_index,   arg_num_residues );
+						const auto from = entry_index_of_stride_neighbour_index( std::get<0>( x ), prm_from_co_stride, prm_from_index, prm_num_residues );
+						const auto to   = entry_index_of_stride_neighbour_index( std::get<1>( x ), prm_to_co_stride,   prm_to_index,   prm_num_residues );
 						if ( from && to && ( *from != *to ) ) {
-							arg_neighbours.push_back( all_single_res_pairs[ ( (*from) * arg_num_residues ) + (*to) ] );
+							prm_neighbours.push_back( all_single_res_pairs[ ( (*from) * prm_num_residues ) + (*to) ] );
 						}
 						else {
-							arg_neighbours.emplace_back();
+							prm_neighbours.emplace_back();
 						}
 					};
 				}
 
 				/// \brief TODOCUMENT
-				inline single_struc_res_pair_list_vec build_rep_sets(const protein           &arg_protein,          ///< TODOCUMENT
-				                                                     const roled_scan_stride &arg_roled_scan_stride ///< TODOCUMENT
+				inline single_struc_res_pair_list_vec build_rep_sets(const protein           &prm_protein,          ///< TODOCUMENT
+				                                                     const roled_scan_stride &prm_roled_scan_stride ///< TODOCUMENT
 				                                                     ) {
-					const auto  num_residues         = debug_unwarned_numeric_cast<index_type>( arg_protein.get_length() );
-					const auto &all_single_res_pairs = build_single_rep_pairs( arg_protein );
+					const auto  num_residues         = debug_unwarned_numeric_cast<index_type>( prm_protein.get_length() );
+					const auto &all_single_res_pairs = build_single_rep_pairs( prm_protein );
 
-					const auto from_range = get_indices_range( get_this_from_strider( arg_roled_scan_stride ), num_residues );
-					const auto to_range   = get_indices_range( get_this_to_strider  ( arg_roled_scan_stride ), num_residues );
+					const auto from_range = get_indices_range( get_this_from_strider( prm_roled_scan_stride ), num_residues );
+					const auto to_range   = get_indices_range( get_this_to_strider  ( prm_roled_scan_stride ), num_residues );
 
 					single_struc_res_pair_list_vec results;
 					results.reserve( from_range.size() * to_range.size() );
@@ -160,8 +160,8 @@ namespace cath {
 							all_single_res_pairs,
 							std::get<0>( x ),
 							std::get<1>( x ),
-							from_co_stride( arg_roled_scan_stride ),
-							to_co_stride  ( arg_roled_scan_stride )
+							from_co_stride( prm_roled_scan_stride ),
+							to_co_stride  ( prm_roled_scan_stride )
 						);
 					}
 					return results;

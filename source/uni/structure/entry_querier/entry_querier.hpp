@@ -106,9 +106,9 @@ namespace cath {
 
 
 	/// \brief TODOCUMENT
-	inline size_t entry_querier::get_length(const protein &arg_protein ///< TODOCUMENT
+	inline size_t entry_querier::get_length(const protein &prm_protein ///< TODOCUMENT
 	                                        ) const {
-		return do_get_length(arg_protein);
+		return do_get_length(prm_protein);
 	}
 
 	/// \brief Return the ratio of the gap penalty to the optimum single score
@@ -136,53 +136,53 @@ namespace cath {
 	}
 
 	/// \brief TODOCUMENT
-	inline score_type entry_querier::distance_score__offset_1(const protein &arg_protein_a,         ///< TODOCUMENT
-	                                                          const protein &arg_protein_b,         ///< TODOCUMENT
-	                                                          const size_t  &arg_a_view_from_index, ///< TODOCUMENT
-	                                                          const size_t  &arg_b_view_from_index, ///< TODOCUMENT
-	                                                          const size_t  &arg_a_dest_to_index,   ///< TODOCUMENT
-	                                                          const size_t  &arg_b_dest_to_index    ///< TODOCUMENT
+	inline score_type entry_querier::distance_score__offset_1(const protein &prm_protein_a,         ///< TODOCUMENT
+	                                                          const protein &prm_protein_b,         ///< TODOCUMENT
+	                                                          const size_t  &prm_a_view_from_index, ///< TODOCUMENT
+	                                                          const size_t  &prm_b_view_from_index, ///< TODOCUMENT
+	                                                          const size_t  &prm_a_dest_to_index,   ///< TODOCUMENT
+	                                                          const size_t  &prm_b_dest_to_index    ///< TODOCUMENT
 	                                                          ) const {
 		return do_distance_score__offset_1(
-			arg_protein_a,
-			arg_protein_b,
-			arg_a_view_from_index,
-			arg_b_view_from_index,
-			arg_a_dest_to_index,
-			arg_b_dest_to_index
+			prm_protein_a,
+			prm_protein_b,
+			prm_a_view_from_index,
+			prm_b_view_from_index,
+			prm_a_dest_to_index,
+			prm_b_dest_to_index
 		);
 	}
 
 	/// \brief TODOCUMENT
-	inline bool entry_querier::are_comparable__offset_1(const protein &arg_protein_a,         ///< TODOCUMENT
-	                                                    const protein &arg_protein_b,         ///< TODOCUMENT
-	                                                    const size_t  &arg_a_view_from_index, ///< TODOCUMENT
-	                                                    const size_t  &arg_b_view_from_index, ///< TODOCUMENT
-	                                                    const size_t  &arg_a_dest_to_index,   ///< TODOCUMENT
-	                                                    const size_t  &arg_b_dest_to_index    ///< TODOCUMENT
+	inline bool entry_querier::are_comparable__offset_1(const protein &prm_protein_a,         ///< TODOCUMENT
+	                                                    const protein &prm_protein_b,         ///< TODOCUMENT
+	                                                    const size_t  &prm_a_view_from_index, ///< TODOCUMENT
+	                                                    const size_t  &prm_b_view_from_index, ///< TODOCUMENT
+	                                                    const size_t  &prm_a_dest_to_index,   ///< TODOCUMENT
+	                                                    const size_t  &prm_b_dest_to_index    ///< TODOCUMENT
 	                                                    ) const {
-		const bool a_index_pair_not_excluded = pair_is_not_excluded(*this, arg_a_view_from_index, arg_a_dest_to_index);
-		const bool b_index_pair_not_excluded = pair_is_not_excluded(*this, arg_b_view_from_index, arg_b_dest_to_index);
+		const bool a_index_pair_not_excluded = pair_is_not_excluded(*this, prm_a_view_from_index, prm_a_dest_to_index);
+		const bool b_index_pair_not_excluded = pair_is_not_excluded(*this, prm_b_view_from_index, prm_b_dest_to_index);
 		if (!a_index_pair_not_excluded || !b_index_pair_not_excluded) {
 			return false;
 		}
 		return do_are_comparable__offset_1(
-			arg_protein_a,
-			arg_protein_b,
-			arg_a_view_from_index,
-			arg_b_view_from_index,
-			arg_a_dest_to_index,
-			arg_b_dest_to_index
+			prm_protein_a,
+			prm_protein_b,
+			prm_a_view_from_index,
+			prm_b_view_from_index,
+			prm_a_dest_to_index,
+			prm_b_dest_to_index
 		);
 	}
 
 	/// \brief TODOCUMENT
-	inline bool entry_querier::are_similar__offset_1(const protein &arg_protein_a,         ///< TODOCUMENT
-	                                                 const protein &arg_protein_b,         ///< TODOCUMENT
-	                                                 const size_t  &arg_index_a__offset_1, ///< TODOCUMENT
-	                                                 const size_t  &arg_index_b__offset_1  ///< TODOCUMENT
+	inline bool entry_querier::are_similar__offset_1(const protein &prm_protein_a,         ///< TODOCUMENT
+	                                                 const protein &prm_protein_b,         ///< TODOCUMENT
+	                                                 const size_t  &prm_index_a__offset_1, ///< TODOCUMENT
+	                                                 const size_t  &prm_index_b__offset_1  ///< TODOCUMENT
 	                                                 ) const {
-		return do_are_similar__offset_1(arg_protein_a, arg_protein_b, arg_index_a__offset_1, arg_index_b__offset_1);
+		return do_are_similar__offset_1(prm_protein_a, prm_protein_b, prm_index_a__offset_1, prm_index_b__offset_1);
 	}
 
 	/// \brief TODOCUMENT

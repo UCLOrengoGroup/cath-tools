@@ -55,7 +55,7 @@ namespace cath {
 		/// At the moment, there isn't any attempt to call the output container's reserve() method (if it has one) so this code will
 		/// potentially invoke multiple allocations in an output vector, even if the input's also as simple as a vector.
 		///
-		/// \todo Get this to call container.reserve( arg_size ) if:
+		/// \todo Get this to call container.reserve( prm_size ) if:
 		///  * Container has a reserve() method (create a new has_reserve_method concept) and
 		///
 		/// \pre Container        is a model of the Mutable_Container concept
@@ -63,8 +63,8 @@ namespace cath {
 		template <typename Container,
 		          typename Size,
 		          typename Gen>
-		inline Container generate_n_build(const Size &arg_size, ///< The number of elements to generate
-		                                  Gen         arg_fun   ///< A nullary function to create each of the elements
+		inline Container generate_n_build(const Size &prm_size, ///< The number of elements to generate
+		                                  Gen         prm_fun   ///< A nullary function to create each of the elements
 		                                  ) {
 			using value_type = typename Container::value_type;
 			// Static-check that Container is a Mutable_Container
@@ -79,8 +79,8 @@ namespace cath {
 			// Call std::generate_n()
 			std::generate_n(
 				inserter( container, std::end( container ) ),
-				arg_size,
-				arg_fun
+				prm_size,
+				prm_fun
 			);
 
 			// Return the populated container

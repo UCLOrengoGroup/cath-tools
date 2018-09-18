@@ -38,9 +38,9 @@ namespace cath {
 
 		/// \brief Calculate the numerator and denominator of the rate and return a rational
 		template <classn_outcome N>
-		size_rational classn_num_stat<N>::do_calculate(const true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg from which to calculate the rate
+		size_rational classn_num_stat<N>::do_calculate(const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg from which to calculate the rate
 		                                               ) const {
-			const size_t &numerator = arg_true_false_pos_neg.get_num<N>();
+			const size_t &numerator = prm_true_false_pos_neg.get_num<N>();
 			return size_rational( numerator, 1 );
 		}
 

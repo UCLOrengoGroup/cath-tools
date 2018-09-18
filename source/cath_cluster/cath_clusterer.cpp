@@ -54,32 +54,32 @@ using ::std::ostream;
 
 /// \brief Perform clustering according to the specified arguments strings with the specified i/o streams
 void cath::clust::perform_cluster(const str_vec       &args,             ///< The arguments strings specifying the clustering action to perform
-                                  istream             &arg_istream,      ///< The input stream
-                                  ostream             &arg_stdout,       ///< The output stream
-                                  const parse_sources &arg_parse_sources ///< The sources from which options should be parsed
+                                  istream             &prm_istream,      ///< The input stream
+                                  ostream             &prm_stdout,       ///< The output stream
+                                  const parse_sources &prm_parse_sources ///< The sources from which options should be parsed
                                   ) {
 	perform_cluster(
-		make_and_parse_options<cath_cluster_options>( args, arg_parse_sources ),
-		arg_istream,
-		arg_stdout
+		make_and_parse_options<cath_cluster_options>( args, prm_parse_sources ),
+		prm_istream,
+		prm_stdout
 	);
 }
 
 /// \brief Perform clustering according to the specified cath_cluster_options with the specified i/o streams
-void cath::clust::perform_cluster(const cath_cluster_options &arg_opts,    ///< The cath_cluster_options specifying the clustering action to perform
-                                  istream                    &arg_istream, ///< The input stream
-                                  ostream                    &arg_stdout   ///< The output stream
+void cath::clust::perform_cluster(const cath_cluster_options &prm_opts,    ///< The cath_cluster_options specifying the clustering action to perform
+                                  istream                    &prm_istream, ///< The input stream
+                                  ostream                    &prm_stdout   ///< The output stream
                                   ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto &error_or_help_string = arg_opts.get_error_or_help_string();
+	const auto &error_or_help_string = prm_opts.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << *error_or_help_string;
+		prm_stdout << *error_or_help_string;
 		return;
 	}
 
-	const auto         &in_spec        = arg_opts.get_cath_cluster_input_spec();
-	const auto         &clust_spec     = arg_opts.get_cath_cluster_clustering_spec();
-	const auto         &out_spec       = arg_opts.get_cath_cluster_output_spec();
+	const auto         &in_spec        = prm_opts.get_cath_cluster_input_spec();
+	const auto         &clust_spec     = prm_opts.get_cath_cluster_clustering_spec();
+	const auto         &out_spec       = prm_opts.get_cath_cluster_output_spec();
 	const link_dirn    &the_link_dirn  = in_spec.get_link_dirn();
 	const size_t       &column_idx     = in_spec.get_column_idx();
 	const path_opt     &links_infile   = in_spec.get_links_infile();
@@ -92,7 +92,7 @@ void cath::clust::perform_cluster(const cath_cluster_options &arg_opts,    ///< 
 	}
 
 	// Organise the input stream
-	path_or_istream istream_wrapper{ arg_istream };
+	path_or_istream istream_wrapper{ prm_istream };
 	if ( file_is_missing( istream_wrapper, *links_infile ) ) {
 		logger::log_and_exit(
 			logger::return_code::NO_SUCH_FILE,
@@ -133,7 +133,7 @@ void cath::clust::perform_cluster(const cath_cluster_options &arg_opts,    ///< 
 		the_max_dissim
 	);
 
-	ofstream_list ofstreams{ arg_stdout };
+	ofstream_list ofstreams{ prm_stdout };
 
 	// If merges output has been requested then write it
 	if ( out_spec.get_merges_to_file() ) {

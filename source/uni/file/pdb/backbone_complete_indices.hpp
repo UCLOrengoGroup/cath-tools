@@ -69,8 +69,8 @@ namespace cath {
 		                                              const size_t &);
 
 		/// \brief Ctor from a vector of indices
-		inline backbone_complete_indices::backbone_complete_indices(size_vec arg_indices ///< The vector of indices
-		                                                            ) : indices{ arg_indices } {
+		inline backbone_complete_indices::backbone_complete_indices(size_vec prm_indices ///< The vector of indices
+		                                                            ) : indices{ prm_indices } {
 			// Test that the indices are *strictly* increasing
 			assert( boost::algorithm::is_strictly_increasing( indices ) );
 		}
@@ -86,9 +86,9 @@ namespace cath {
 		}
 
 		/// \brief Access the absolute index of the i-th backbone-complete residue
-		inline const size_t & backbone_complete_indices::operator[](const size_t &arg_index ///< The backbone-complete index of the residue of interest
+		inline const size_t & backbone_complete_indices::operator[](const size_t &prm_index ///< The backbone-complete index of the residue of interest
 		                                                            ) const {
-			return indices[ arg_index ];
+			return indices[ prm_index ];
 		}
 
 		/// \brief Standard const begin() method, as part of making this a range over indices
@@ -104,26 +104,26 @@ namespace cath {
 		/// \brief Get the absolute index i-th backbone-complete residue
 		///
 		/// \relates backbone_complete_indices
-		inline size_t get_index_of_backbone_complete_index(const backbone_complete_indices &arg_bb_compl_indices, ///< The backbone_complete_indices
-		                                                   const size_t                    &arg_index             ///< The index of the required residue
+		inline size_t get_index_of_backbone_complete_index(const backbone_complete_indices &prm_bb_compl_indices, ///< The backbone_complete_indices
+		                                                   const size_t                    &prm_index             ///< The index of the required residue
 		                                                   ) {
-			return arg_bb_compl_indices[ arg_index ];
+			return prm_bb_compl_indices[ prm_index ];
 		}
 
 		/// \brief Get the backbone-complete index of the i-th residue
 		///
 		/// \relates backbone_complete_indices
-		inline size_opt get_backbone_complete_index_of_index(const backbone_complete_indices &arg_bb_compl_indices, ///< The backbone_complete_indices
-		                                                     const size_t                    &arg_index             ///< The index of the required residue
+		inline size_opt get_backbone_complete_index_of_index(const backbone_complete_indices &prm_bb_compl_indices, ///< The backbone_complete_indices
+		                                                     const size_t                    &prm_index             ///< The index of the required residue
 		                                                     ) {
 			const auto lower_bound_itr = boost::range::lower_bound(
-				arg_bb_compl_indices,
-				arg_index
+				prm_bb_compl_indices,
+				prm_index
 			);
 			return
-				( lower_bound_itr != common::cend( arg_bb_compl_indices ) && *lower_bound_itr == arg_index )
+				( lower_bound_itr != common::cend( prm_bb_compl_indices ) && *lower_bound_itr == prm_index )
 				? boost::optional<size_t>( std::distance(
-					common::cbegin( arg_bb_compl_indices ),
+					common::cbegin( prm_bb_compl_indices ),
 					lower_bound_itr
 				) )
 				: boost::none;

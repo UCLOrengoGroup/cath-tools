@@ -63,8 +63,8 @@ string cath_cluster_output_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void cath_cluster_output_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                              const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void cath_cluster_output_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                              const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                               ) {
 	const string file_varname   { "<file>" };
 
@@ -73,7 +73,7 @@ void cath_cluster_output_options_block::do_add_visible_options_to_description(op
 	const auto clust_spans_to_file_notifier  = [&] (const path &x) { the_spec.set_clust_spans_to_file ( x ); };
 	const auto reps_to_file_notifier         = [&] (const path &x) { the_spec.set_reps_to_file        ( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_CLUSTERS_TO_FILE.c_str(),
 			value<path>()
@@ -113,13 +113,13 @@ void cath_cluster_output_options_block::do_add_visible_options_to_description(op
 }
 
 /// \brief Add any hidden options to the provided options_description
-void cath_cluster_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                             const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void cath_cluster_output_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                             const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                              ) {
 	const string file_varname   { "<file>" };
 	const auto sorted_links_to_file_notifier = [&] (const path &x) { the_spec.set_sorted_links_to_file( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_SORTED_LINKS_TO_FILE.c_str(),
 			value<path>()
@@ -132,7 +132,7 @@ void cath_cluster_output_options_block::do_add_hidden_options_to_description(opt
 
 /// \brief Generate a description of any problem that makes the specified cath_cluster_output_options_block invalid
 ///        or none otherwise
-str_opt cath_cluster_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt cath_cluster_output_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                              ) const {
 	return none;
 }

@@ -143,9 +143,9 @@ namespace cath {
 
 
 			/// \brief Return the absolute difference between the from_index and to_index of the specified view_cache_index_entry
-			inline detail::index_type index_difference(const view_cache_index_entry &arg_cache ///< The view_cache_index_entry to query
+			inline detail::index_type index_difference(const view_cache_index_entry &prm_cache ///< The view_cache_index_entry to query
 			                                           ) {
-				return common::difference( arg_cache.get_from_index(), arg_cache.get_to_index() );
+				return common::difference( prm_cache.get_from_index(), prm_cache.get_to_index() );
 			}
 
 			/// \brief Calculate the distance between the quaternions for the two pairs' view_frames
@@ -154,11 +154,11 @@ namespace cath {
 			/// This distance can be calculated a bit quicker than the angle and can be used in an exactly equivalent criterion
 			///
 			/// \relates view_cache_index_entry
-			inline detail::frame_quat_rot_type distance_1_between_frames(const view_cache_index_entry &arg_cache_a, ///< The first  view_cache_index_entry
-			                                                             const view_cache_index_entry &arg_cache_b  ///< The second view_cache_index_entry
+			inline detail::frame_quat_rot_type distance_1_between_frames(const view_cache_index_entry &prm_cache_a, ///< The first  view_cache_index_entry
+			                                                             const view_cache_index_entry &prm_cache_b  ///< The second view_cache_index_entry
 			                                                             ) {
-				const detail::frame_quat_rot frame_a = arg_cache_a.get_frame();
-				const detail::frame_quat_rot frame_b = arg_cache_b.get_frame();
+				const detail::frame_quat_rot frame_a = prm_cache_a.get_frame();
+				const detail::frame_quat_rot frame_b = prm_cache_b.get_frame();
 				return distance_1_between_quat_rots( frame_a, frame_b );
 			}
 
@@ -168,16 +168,16 @@ namespace cath {
 			/// the coordinate frame of the from_residue
 			///
 			/// \relates view_cache_index_entry
-			inline double squared_distance(const view_cache_index_entry &arg_cache_a, ///< The first  view_cache_index_entry
-			                               const view_cache_index_entry &arg_cache_b  ///< The second view_cache_index_entry
+			inline double squared_distance(const view_cache_index_entry &prm_cache_a, ///< The first  view_cache_index_entry
+			                               const view_cache_index_entry &prm_cache_b  ///< The second view_cache_index_entry
 			                               ) {
 //				const auto the_distance = boost::geometry::distance(
-//					arg_cache_a.get_view(),
-//					arg_cache_b.get_view()
+//					prm_cache_a.get_view(),
+//					prm_cache_b.get_view()
 //				);
 //				const auto the_comp_distance = boost::geometry::comparable_distance(
-//					arg_cache_a.get_view(),
-//					arg_cache_b.get_view()
+//					prm_cache_a.get_view(),
+//					prm_cache_b.get_view()
 //				);
 //				if ( common::difference( the_comp_distance, the_distance * the_distance ) > 0.0001 ) {
 //					std::cerr << "the_distance is "                << the_distance                << std::endl;
@@ -186,12 +186,12 @@ namespace cath {
 //					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Distances do not match"));
 //				}
 				return boost::geometry::comparable_distance(
-					arg_cache_a.get_view(),
-					arg_cache_b.get_view()
+					prm_cache_a.get_view(),
+					prm_cache_b.get_view()
 				);
 //				return squared_distance_between_points(
-//					arg_cache_a.get_view(),
-//					arg_cache_b.get_view()
+//					prm_cache_a.get_view(),
+//					prm_cache_b.get_view()
 //				);
 			}
 
@@ -199,122 +199,122 @@ namespace cath {
 			///        (ie both have from_index < to_index or both have from_index > to_index)
 			///
 			/// \relates view_cache_index_entry
-			inline bool same_direction(const view_cache_index_entry &arg_cache_a, ///< The first  view_cache_index_entry
-			                           const view_cache_index_entry &arg_cache_b  ///< The second view_cache_index_entry
+			inline bool same_direction(const view_cache_index_entry &prm_cache_a, ///< The first  view_cache_index_entry
+			                           const view_cache_index_entry &prm_cache_b  ///< The second view_cache_index_entry
 			                           ) {
 				return (
-					( arg_cache_a.get_from_index() < arg_cache_a.get_to_index() )
+					( prm_cache_a.get_from_index() < prm_cache_a.get_to_index() )
 					==
-					( arg_cache_b.get_from_index() < arg_cache_b.get_to_index() )
+					( prm_cache_b.get_from_index() < prm_cache_b.get_to_index() )
 				);
 			}
 
 			/// \brief Calculate the minimum of the two pairs' absolute differences between their from_index and their to_index
 			///
 			/// \relates view_cache_index_entry
-			inline size_t min_index_difference(const view_cache_index_entry &arg_cache_a, ///< The first  view_cache_index_entry
-			                                   const view_cache_index_entry &arg_cache_b  ///< The second view_cache_index_entry
+			inline size_t min_index_difference(const view_cache_index_entry &prm_cache_a, ///< The first  view_cache_index_entry
+			                                   const view_cache_index_entry &prm_cache_b  ///< The second view_cache_index_entry
 			                                   ) {
 				return min_index_difference(
-					std::make_pair( arg_cache_a.get_from_index(), arg_cache_a.get_to_index() ),
-					std::make_pair( arg_cache_b.get_from_index(), arg_cache_b.get_to_index() )
+					std::make_pair( prm_cache_a.get_from_index(), prm_cache_a.get_to_index() ),
+					std::make_pair( prm_cache_b.get_from_index(), prm_cache_b.get_to_index() )
 				);
 			}
 
 			/// \brief Get the (wrapped) difference between the two pairs' from_residue phi angles
 			///
 			/// \relates view_cache_index_entry
-			inline detail::angle_type from_phi_angle_difference(const view_cache_index_entry &arg_cache_a, ///< The first  view_cache_index_entry
-			                                                    const view_cache_index_entry &arg_cache_b  ///< The second view_cache_index_entry
+			inline detail::angle_type from_phi_angle_difference(const view_cache_index_entry &prm_cache_a, ///< The first  view_cache_index_entry
+			                                                    const view_cache_index_entry &prm_cache_b  ///< The second view_cache_index_entry
 			                                                    ) {
 				return unshifted_wrapped_difference(
-					arg_cache_a.get_from_phi_angle(),
-					arg_cache_b.get_from_phi_angle()
+					prm_cache_a.get_from_phi_angle(),
+					prm_cache_b.get_from_phi_angle()
 				);
 			}
 
 			/// \brief Get the (wrapped) difference between the two pairs' from_residue psi angles
 			///
 			/// \relates view_cache_index_entry
-			inline detail::angle_type from_psi_angle_difference(const view_cache_index_entry &arg_cache_a, ///< The first  view_cache_index_entry
-			                                                    const view_cache_index_entry &arg_cache_b  ///< The second view_cache_index_entry
+			inline detail::angle_type from_psi_angle_difference(const view_cache_index_entry &prm_cache_a, ///< The first  view_cache_index_entry
+			                                                    const view_cache_index_entry &prm_cache_b  ///< The second view_cache_index_entry
 			                                                    ) {
 				return unshifted_wrapped_difference(
-					arg_cache_a.get_from_psi_angle(),
-					arg_cache_b.get_from_psi_angle()
+					prm_cache_a.get_from_psi_angle(),
+					prm_cache_b.get_from_psi_angle()
 				);
 			}
 
 			/// \brief Get the (wrapped) difference between the two pairs' to_residue phi angles
 			///
 			/// \relates view_cache_index_entry
-			inline detail::angle_type to_phi_angle_difference(const view_cache_index_entry &arg_cache_a,   ///< The first  view_cache_index_entry
-			                                                  const view_cache_index_entry &arg_cache_b    ///< The second view_cache_index_entry
+			inline detail::angle_type to_phi_angle_difference(const view_cache_index_entry &prm_cache_a,   ///< The first  view_cache_index_entry
+			                                                  const view_cache_index_entry &prm_cache_b    ///< The second view_cache_index_entry
 			                                                  ) {
 				return unshifted_wrapped_difference(
-					arg_cache_a.get_to_phi_angle(),
-					arg_cache_b.get_to_phi_angle()
+					prm_cache_a.get_to_phi_angle(),
+					prm_cache_b.get_to_phi_angle()
 				);
 			}
 
 			/// \brief Get the (wrapped) difference between the two pairs' to_residue psi angles
 			///
 			/// \relates view_cache_index_entry
-			inline detail::angle_type to_psi_angle_difference(const view_cache_index_entry &arg_cache_a,   ///< The first  view_cache_index_entry
-			                                                  const view_cache_index_entry &arg_cache_b    ///< The second view_cache_index_entry
+			inline detail::angle_type to_psi_angle_difference(const view_cache_index_entry &prm_cache_a,   ///< The first  view_cache_index_entry
+			                                                  const view_cache_index_entry &prm_cache_b    ///< The second view_cache_index_entry
 			                                                  ) {
 				return unshifted_wrapped_difference(
-					arg_cache_a.get_to_psi_angle(),
-					arg_cache_b.get_to_psi_angle()
+					prm_cache_a.get_to_psi_angle(),
+					prm_cache_b.get_to_psi_angle()
 				);
 			}
 
 			/// \brief Get the maximum (wrapped) difference between the two pairs' from/to residue phi angles
 			///
 			/// \relates view_cache_index_entry
-			inline detail::angle_type max_phi_angle_difference(const view_cache_index_entry &arg_cache_a,   ///< The first  view_cache_index_entry
-			                                                   const view_cache_index_entry &arg_cache_b    ///< The second view_cache_index_entry
+			inline detail::angle_type max_phi_angle_difference(const view_cache_index_entry &prm_cache_a,   ///< The first  view_cache_index_entry
+			                                                   const view_cache_index_entry &prm_cache_b    ///< The second view_cache_index_entry
 			                                                   ) {
 				return std::max(
-					from_phi_angle_difference( arg_cache_a, arg_cache_b ),
-					  to_phi_angle_difference( arg_cache_a, arg_cache_b )
+					from_phi_angle_difference( prm_cache_a, prm_cache_b ),
+					  to_phi_angle_difference( prm_cache_a, prm_cache_b )
 				);
 			}
 
 			/// \brief Get the maximum (wrapped) difference between the two pairs' from/to residue psi angles
 			///
 			/// \relates view_cache_index_entry
-			inline detail::angle_type max_psi_angle_difference(const view_cache_index_entry &arg_cache_a,   ///< The first  view_cache_index_entry
-			                                                   const view_cache_index_entry &arg_cache_b    ///< The second view_cache_index_entry
+			inline detail::angle_type max_psi_angle_difference(const view_cache_index_entry &prm_cache_a,   ///< The first  view_cache_index_entry
+			                                                   const view_cache_index_entry &prm_cache_b    ///< The second view_cache_index_entry
 			                                                   ) {
 				return std::max(
-					from_psi_angle_difference( arg_cache_a, arg_cache_b ),
-					  to_psi_angle_difference( arg_cache_a, arg_cache_b )
+					from_psi_angle_difference( prm_cache_a, prm_cache_b ),
+					  to_psi_angle_difference( prm_cache_a, prm_cache_b )
 				);
 			}
 
 			/// \brief Convenience function to get the x component of the view in the specified view_cache_index_entry
 			///
 			/// \relates view_cache_index_entry
-			inline const view_base_type & get_view_x(const view_cache_index_entry &arg_cache ///< The view_cache_index_entry to query
+			inline const view_base_type & get_view_x(const view_cache_index_entry &prm_cache ///< The view_cache_index_entry to query
 			                                          ) {
-				return arg_cache.get_view().get<0>();
+				return prm_cache.get_view().get<0>();
 			}
 
 			/// \brief Convenience function to get the y component of the view in the specified view_cache_index_entry
 			///
 			/// \relates view_cache_index_entry
-			inline const view_base_type & get_view_y(const view_cache_index_entry &arg_cache ///< The view_cache_index_entry to query
+			inline const view_base_type & get_view_y(const view_cache_index_entry &prm_cache ///< The view_cache_index_entry to query
 			                                          ) {
-				return arg_cache.get_view().get<1>();
+				return prm_cache.get_view().get<1>();
 			}
 
 			/// \brief Convenience function to get the z component of the view in the specified view_cache_index_entry
 			///
 			/// \relates view_cache_index_entry
-			inline const view_base_type & get_view_z(const view_cache_index_entry &arg_cache ///< The view_cache_index_entry to query
+			inline const view_base_type & get_view_z(const view_cache_index_entry &prm_cache ///< The view_cache_index_entry to query
 			                                          ) {
-				return arg_cache.get_view().get<2>();
+				return prm_cache.get_view().get<2>();
 			}
 
 		} // namespace detail

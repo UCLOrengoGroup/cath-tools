@@ -60,17 +60,17 @@ residue_name::residue_name() {
 }
 
 /// \brief Ctor for residue_name
-residue_name::residue_name(const int &arg_residue_number ///< TODOCUMENT
-                           ) : res_num             ( arg_residue_number ),
+residue_name::residue_name(const int &prm_residue_number ///< TODOCUMENT
+                           ) : res_num             ( prm_residue_number ),
                                is_null_residue_name( false              ) {
 	sanity_check();
 }
 
 /// \brief Ctor for residue_name
-residue_name::residue_name(const int  &arg_residue_number, ///< TODOCUMENT
-                           const char &arg_insert     ///< TODOCUMENT
-                           ) : res_num             ( arg_residue_number ),
-                               insert              ( arg_insert         ),
+residue_name::residue_name(const int  &prm_residue_number, ///< TODOCUMENT
+                           const char &prm_insert     ///< TODOCUMENT
+                           ) : res_num             ( prm_residue_number ),
+                               insert              ( prm_insert         ),
                                is_null_residue_name( false              ) {
 	sanity_check();
 }
@@ -95,19 +95,19 @@ const optional<char> & residue_name::opt_insert() const {
 /// \brief TODOCUMENT
 ///
 /// \relates residue_name
-bool cath::operator==(const residue_name &arg_residue_name_a, ///< TODOCUMENT
-                      const residue_name &arg_residue_name_b  ///< TODOCUMENT
+bool cath::operator==(const residue_name &prm_residue_name_a, ///< TODOCUMENT
+                      const residue_name &prm_residue_name_b  ///< TODOCUMENT
                       ) {
 	return (
-		( arg_residue_name_a.is_null() == arg_residue_name_b.is_null() )
+		( prm_residue_name_a.is_null() == prm_residue_name_b.is_null() )
 		&&
 		(
-			arg_residue_name_a.is_null()
+			prm_residue_name_a.is_null()
 			||
 			(
-				arg_residue_name_a.residue_number()  == arg_residue_name_b.residue_number()
+				prm_residue_name_a.residue_number()  == prm_residue_name_b.residue_number()
 				&&
-				arg_residue_name_a.opt_insert() == arg_residue_name_b.opt_insert()
+				prm_residue_name_a.opt_insert() == prm_residue_name_b.opt_insert()
 			)
 		)
 	);
@@ -117,162 +117,162 @@ bool cath::operator==(const residue_name &arg_residue_name_a, ///< TODOCUMENT
 /// \brief Simple to_string() overload for residue_name
 ///
 /// \relates residue_name
-string cath::to_string(const residue_name &arg_residue_name ///< The residue_name to be output as a string
+string cath::to_string(const residue_name &prm_residue_name ///< The residue_name to be output as a string
                        ) {
-	if ( arg_residue_name.is_null() ) {
+	if ( prm_residue_name.is_null() ) {
 		return "null_res";
 	}
-	const string insert_string = has_insert( arg_residue_name )
-	                             ? string{ insert( arg_residue_name ) }
+	const string insert_string = has_insert( prm_residue_name )
+	                             ? string{ insert( prm_residue_name ) }
 	                             : string{};
-	return ::std::to_string( arg_residue_name.residue_number() ) + insert_string;
+	return ::std::to_string( prm_residue_name.residue_number() ) + insert_string;
 }
 
 /// \brief Simple insertion operator for residue_name
 ///
 /// \relates residue_name
-ostream & cath::operator<<(ostream            &arg_os,          ///< The ostream to which the residue_name should be output
-                           const residue_name &arg_residue_name ///< The residue_name to output
+ostream & cath::operator<<(ostream            &prm_os,          ///< The ostream to which the residue_name should be output
+                           const residue_name &prm_residue_name ///< The residue_name to output
                            ) {
-	arg_os << to_string( arg_residue_name );
-	return arg_os;
+	prm_os << to_string( prm_residue_name );
+	return prm_os;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_name
-istream & cath::operator>>(istream      &arg_istream,     ///< TODOCUMENT
-                           residue_name &arg_residue_name ///< TODOCUMENT
+istream & cath::operator>>(istream      &prm_istream,     ///< TODOCUMENT
+                           residue_name &prm_residue_name ///< TODOCUMENT
                            ) {
 	string input_string;
-	arg_istream >> input_string;
-	arg_residue_name = make_residue_name( input_string );
-	return arg_istream;
+	prm_istream >> input_string;
+	prm_residue_name = make_residue_name( input_string );
+	return prm_istream;
 }
 
 /// \brief Get the specified residue_name's number or the specified value if the residue_name is null
 ///
 /// \relates residue_name
-int cath::residue_number_or_value_if_null(const residue_name &arg_residue_name, ///< The residue_name to query
-                                          const int          &arg_value         ///< The value to use if the residue_name is null
+int cath::residue_number_or_value_if_null(const residue_name &prm_residue_name, ///< The residue_name to query
+                                          const int          &prm_value         ///< The value to use if the residue_name is null
                                           ) {
-	return arg_residue_name.is_null() ? arg_value : arg_residue_name.residue_number();
+	return prm_residue_name.is_null() ? prm_value : prm_residue_name.residue_number();
 }
 
 /// \brief Get the specified residue_name's insert code or the specified value if the residue_name is null
 ///
 /// \relates residue_name
-optional<char> cath::opt_insert_or_value_if_null(const residue_name   &arg_residue_name, ///< The residue_name to query
-                                                 const optional<char> &arg_value         ///< The value to use if the residue_name is null
+optional<char> cath::opt_insert_or_value_if_null(const residue_name   &prm_residue_name, ///< The residue_name to query
+                                                 const optional<char> &prm_value         ///< The value to use if the residue_name is null
                                                  ) {
-	return arg_residue_name.is_null() ? arg_value : arg_residue_name.opt_insert();
+	return prm_residue_name.is_null() ? prm_value : prm_residue_name.opt_insert();
 }
 
 /// \brief Get whether the specified residue_name has an insert code
 ///
 /// \relates residue_name
-bool cath::has_insert(const residue_name &arg_residue_name ///< The residue_name to query
+bool cath::has_insert(const residue_name &prm_residue_name ///< The residue_name to query
                       ) {
-	return static_cast<bool>( arg_residue_name.opt_insert() );
+	return static_cast<bool>( prm_residue_name.opt_insert() );
 }
 
 /// \brief Get whether the specified residue_name has an insert code or the specified value if the residue_name is null
 ///
 /// \relates residue_name
-bool cath::has_insert_or_value_if_null(const residue_name &arg_residue_name, ///< The residue_name to query
-                                       const bool         &arg_value         ///< The value to use if the residue_name is null
+bool cath::has_insert_or_value_if_null(const residue_name &prm_residue_name, ///< The residue_name to query
+                                       const bool         &prm_value         ///< The value to use if the residue_name is null
                                        ) {
-	return arg_residue_name.is_null() ? arg_value : has_insert( arg_residue_name );
+	return prm_residue_name.is_null() ? prm_value : has_insert( prm_residue_name );
 }
 
 
 /// \brief Get the specified residue_name's insert code
 ///
 /// \relates residue_name
-const char & cath::insert(const residue_name &arg_residue_name ///< The residue_name to query
+const char & cath::insert(const residue_name &prm_residue_name ///< The residue_name to query
                           ) {
-	return *arg_residue_name.opt_insert();
+	return *prm_residue_name.opt_insert();
 }
 
 /// \brief Get the specified residue_name's insert code or the specified value if the residue_name is null
 ///
 /// \relates residue_name
-char cath::insert_or_value_if_null(const residue_name &arg_residue_name, ///< The residue_name to query
-                                   const char         &arg_value         ///< The value to use if the residue_name is null
+char cath::insert_or_value_if_null(const residue_name &prm_residue_name, ///< The residue_name to query
+                                   const char         &prm_value         ///< The value to use if the residue_name is null
                                    ) {
-	return arg_residue_name.is_null() ? arg_value : insert( arg_residue_name );
+	return prm_residue_name.is_null() ? prm_value : insert( prm_residue_name );
 }
 
 /// \brief Get the specified residue_name's insert code or the specified value if the residue_name is null or if it has no insert code
 ///
 /// \relates residue_name
-char cath::insert_or_value_if_null_or_absent(const residue_name &arg_residue_name, ///< The residue_name to query
-                                             const char         &arg_value         ///< The value to use if the residue_name is null or the insert is absent
+char cath::insert_or_value_if_null_or_absent(const residue_name &prm_residue_name, ///< The residue_name to query
+                                             const char         &prm_value         ///< The value to use if the residue_name is null or the insert is absent
                                              ) {
-	return ( arg_residue_name.is_null() || ! has_insert( arg_residue_name ) )
-		? arg_value
-		: insert( arg_residue_name );
+	return ( prm_residue_name.is_null() || ! has_insert( prm_residue_name ) )
+		? prm_value
+		: insert( prm_residue_name );
 }
 
 /// \brief Return whether the specified residue_name has a strictly negative residue number
 ///
 /// \relates residue_name
-bool cath::has_strictly_negative_residue_number(const residue_name &arg_residue_name ///< The residue_name to query
+bool cath::has_strictly_negative_residue_number(const residue_name &prm_residue_name ///< The residue_name to query
                                                 ) {
-	return ( ! arg_residue_name.is_null() && arg_residue_name.residue_number() < 0 );
+	return ( ! prm_residue_name.is_null() && prm_residue_name.residue_number() < 0 );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_name
-string cath::insert_string(const residue_name &arg_residue_name ///< The residue_name to query
+string cath::insert_string(const residue_name &prm_residue_name ///< The residue_name to query
                            ) {
-	return has_insert( arg_residue_name ) ? string{ insert( arg_residue_name ) } : "";
+	return has_insert( prm_residue_name ) ? string{ insert( prm_residue_name ) } : "";
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_name
-string cath::make_residue_name_string_with_insert_or_space(const residue_name &arg_residue_name ///< TODOCUMENT
+string cath::make_residue_name_string_with_insert_or_space(const residue_name &prm_residue_name ///< TODOCUMENT
                                                            ) {
-	const string insert_or_space = has_insert( arg_residue_name ) ? string{ insert( arg_residue_name ) } : " ";
-	return lexical_cast<string>( arg_residue_name.residue_number() ) + insert_or_space;
+	const string insert_or_space = has_insert( prm_residue_name ) ? string{ insert( prm_residue_name ) } : " ";
+	return lexical_cast<string>( prm_residue_name.residue_number() ) + insert_or_space;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_name
-residue_name cath::make_residue_name(const string &arg_residue_name ///< TODOCUMENT
+residue_name cath::make_residue_name(const string &prm_residue_name ///< TODOCUMENT
                                      ) {
 	// Sanity check the input
-	if ( arg_residue_name.empty() ) {
+	if ( prm_residue_name.empty() ) {
 		return residue_name();
 	}
-	if ( arg_residue_name.length() == 1 && ! is_digit()( arg_residue_name.at( 0 ) ) && arg_residue_name.at( 0 ) != '-' ) {
+	if ( prm_residue_name.length() == 1 && ! is_digit()( prm_residue_name.at( 0 ) ) && prm_residue_name.at( 0 ) != '-' ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot split residue name into number and insert if it only contains an insert code"));
 	}
 
 	// Grab the last character in the string and check whether it's a numeric digit or an insert code
-	const size_t residue_name_length = arg_residue_name.length();
-	const char   res_name_last_char  = arg_residue_name.at( residue_name_length - 1 );
+	const size_t residue_name_length = prm_residue_name.length();
+	const char   res_name_last_char  = prm_residue_name.at( residue_name_length - 1 );
 	const bool   res_name_has_insert = ! is_digit()( res_name_last_char );
 
 	// If the last character's an insert code then make a residue_namethere isn't any insert code then
 	if ( res_name_has_insert ) {
-		const int residue_number = lexical_cast<int>( arg_residue_name.substr(0, ( residue_name_length - 1 ) ) );
+		const int residue_number = lexical_cast<int>( prm_residue_name.substr(0, ( residue_name_length - 1 ) ) );
 		return residue_name( residue_number, res_name_last_char );
 	}
 	// Otherwise, no insert code so just return a residue_name of the string converted to an int
-	return residue_name( lexical_cast<int>( arg_residue_name ) );
+	return residue_name( lexical_cast<int>( prm_residue_name ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_name
-residue_name cath::make_residue_name_with_non_insert_char(const int  &arg_residue_number,  ///< TODOCUMENT
-                                                          const char &arg_possible_insert, ///< TODOCUMENT
-                                                          const char &arg_non_insert_char  ///< TODOCUMENT
+residue_name cath::make_residue_name_with_non_insert_char(const int  &prm_residue_number,  ///< TODOCUMENT
+                                                          const char &prm_possible_insert, ///< TODOCUMENT
+                                                          const char &prm_non_insert_char  ///< TODOCUMENT
                                                           ) {
-	return ( arg_possible_insert == arg_non_insert_char ) ? residue_name( arg_residue_number                      )
-	                                                      : residue_name( arg_residue_number, arg_possible_insert );
+	return ( prm_possible_insert == prm_non_insert_char ) ? residue_name( prm_residue_number                      )
+	                                                      : residue_name( prm_residue_number, prm_possible_insert );
 }

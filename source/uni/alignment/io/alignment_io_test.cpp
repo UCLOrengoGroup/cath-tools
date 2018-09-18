@@ -56,12 +56,12 @@ using boost::filesystem::path;
 
 //namespace std {
 //	/// \brief Naughty addition of an insertion operator into std:: to get Boost.Test to output str_str_pairs
-//	ostream & operator<<(ostream            &arg_os,          ///< ostream to which to output the str_str_pair
-//	                     const str_str_pair &arg_str_str_pair ///< str_str_pair to output
+//	ostream & operator<<(ostream            &prm_os,          ///< ostream to which to output the str_str_pair
+//	                     const str_str_pair &prm_str_str_pair ///< str_str_pair to output
 //	                     ) {
-//		arg_os << "pair[" << arg_str_str_pair.first  << ", ";
-//		arg_os            << arg_str_str_pair.second << "]";
-//		return arg_os;
+//		prm_os << "pair[" << prm_str_str_pair.first  << ", ";
+//		prm_os            << prm_str_str_pair.second << "]";
+//		return prm_os;
 //	}
 //}
 
@@ -76,19 +76,19 @@ namespace cath {
 		public:
 
 			/// \brief TODOCUMENT
-			void check_fasta_throws(const string &arg_fasta ///< The FASTA alignment string to parse
+			void check_fasta_throws(const string &prm_fasta ///< The FASTA alignment string to parse
 				                    ) {
-				istringstream aln_ss( arg_fasta );
+				istringstream aln_ss( prm_fasta );
 				BOOST_CHECK_THROW( read_ids_and_sequences_from_fasta( aln_ss ), runtime_error_exception );
 			}
 
 			/// \brief TODOCUMENT
-			void check_fasta_gives_ids_and_seqs(const string           &arg_fasta,                 ///< The FASTA alignment string to parse
-			                                    const str_str_pair_vec &arg_expcected_ids_and_seqs ///< The expected ids and sequences
+			void check_fasta_gives_ids_and_seqs(const string           &prm_fasta,                 ///< The FASTA alignment string to parse
+			                                    const str_str_pair_vec &prm_expcected_ids_and_seqs ///< The expected ids and sequences
 			                                    ) {
-				istringstream aln_ss( arg_fasta );
+				istringstream aln_ss( prm_fasta );
 				const str_str_pair_vec got_ids_and_seqs = read_ids_and_sequences_from_fasta( aln_ss );
-				BOOST_CHECK_EQUAL_RANGES( got_ids_and_seqs, arg_expcected_ids_and_seqs );
+				BOOST_CHECK_EQUAL_RANGES( got_ids_and_seqs, prm_expcected_ids_and_seqs );
 			}
 		};
 

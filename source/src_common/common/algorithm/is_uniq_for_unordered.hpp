@@ -31,11 +31,11 @@ namespace cath {
 	namespace common {
 		/// \brief TODOCUMENT
 		template <typename ForwardItr>
-		inline bool is_uniq_for_unordered(const ForwardItr &arg_begin, ///< TODOCUMENT
-		                                  const ForwardItr &arg_end    ///< TODOCUMENT
+		inline bool is_uniq_for_unordered(const ForwardItr &prm_begin, ///< TODOCUMENT
+		                                  const ForwardItr &prm_end    ///< TODOCUMENT
 		                                  ) {
-			for (ForwardItr itr( arg_begin ); itr != arg_end; ++itr ) {
-				if ( std::count( itr, arg_end, *itr ) > 1 ) {
+			for (ForwardItr itr( prm_begin ); itr != prm_end; ++itr ) {
+				if ( std::count( itr, prm_end, *itr ) > 1 ) {
 					return false;
 				}
 			}
@@ -44,12 +44,12 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename ForwardRange>
-		inline bool is_uniq_for_unordered(const ForwardRange &arg_rng ///< TODOCUMENT
+		inline bool is_uniq_for_unordered(const ForwardRange &prm_rng ///< TODOCUMENT
 		                                  ) {
 			BOOST_RANGE_CONCEPT_ASSERT((boost::ForwardRangeConcept<ForwardRange>));
 			return is_uniq_for_unordered(
-				common::cbegin( arg_rng ),
-				common::cend  ( arg_rng )
+				common::cbegin( prm_rng ),
+				common::cend  ( prm_rng )
 			);
 		}
 	} // namespace common

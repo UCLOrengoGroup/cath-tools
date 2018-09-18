@@ -31,11 +31,11 @@ namespace cath {
 
 		/// \brief Return a string of the characters in the specified char array
 		template <size_t N>
-		inline std::string char_arr_to_string(const std::array<char, N> &arg_char_arr ///< The char array from which to build the string
+		inline std::string char_arr_to_string(const std::array<char, N> &prm_char_arr ///< The char array from which to build the string
 		                                      ) {
 			return { 
-				common::cbegin( arg_char_arr ),
-				common::cend  ( arg_char_arr )
+				common::cbegin( prm_char_arr ),
+				common::cend  ( prm_char_arr )
 			};
 		}
 

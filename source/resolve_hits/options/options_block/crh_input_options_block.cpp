@@ -67,8 +67,8 @@ string crh_input_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_input_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_input_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	const auto &sep     = SUB_DESC_SEPARATOR;
 	const auto &sub_sep = SUB_DESC_PAIR_SEPARATOR;
@@ -87,7 +87,7 @@ void crh_input_options_block::do_add_visible_options_to_description(options_desc
 		sub_sep
 	);
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			( PO_INPUT_FORMAT ).c_str(),
 			value<hits_input_format_tag>()
@@ -120,8 +120,8 @@ void crh_input_options_block::do_add_visible_options_to_description(options_desc
 }
 
 /// \brief Add a hidden option to the options_description for the input file
-void crh_input_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_input_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	const string input_file_varname{ "<file>" };
 
@@ -134,7 +134,7 @@ void crh_input_options_block::do_add_hidden_options_to_description(options_descr
 		}
 	};
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_INPUT_FILE_OR_STDIN.c_str(),
 			value<string>()
@@ -147,10 +147,10 @@ void crh_input_options_block::do_add_hidden_options_to_description(options_descr
 
 /// \brief Generate a description of any problem that makes the specified crh_input_options_block invalid
 ///        or none otherwise
-str_opt crh_input_options_block::do_invalid_string(const variables_map &arg_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt crh_input_options_block::do_invalid_string(const variables_map &prm_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 
-	if ( specifies_option( arg_variables_map, PO_MIN_GAP_LENGTH ) ) {
+	if ( specifies_option( prm_variables_map, PO_MIN_GAP_LENGTH ) ) {
 		if ( the_spec.get_input_format() != hits_input_format_tag::HMMSCAN_OUT && the_spec.get_input_format() != hits_input_format_tag::HMMSEARCH_OUT ) {
 			return "Cannot specify the minimum gap length for input formats that don't involve parsing gaps out of an alignment"s;
 		}

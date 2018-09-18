@@ -27,12 +27,12 @@ using namespace cath::scan::detail;
 using namespace std;
 
 /// \brief TODOCUMENT
-ostream & cath::scan::detail::operator<<(ostream             &arg_os,           ///< TODOCUMENT
-                                         const res_pair_dirn &arg_res_pair_dirn ///< TODOCUMENT
+ostream & cath::scan::detail::operator<<(ostream             &prm_os,           ///< TODOCUMENT
+                                         const res_pair_dirn &prm_res_pair_dirn ///< TODOCUMENT
                                          ) {
-	switch ( arg_res_pair_dirn ) {
-		case ( res_pair_dirn::INCREASE ) : { arg_os << "res_pair_dirn::INCREASE" ; return arg_os ; }
-		case ( res_pair_dirn::DECREASE ) : { arg_os << "res_pair_dirn::DECREASE" ; return arg_os ; }
+	switch ( prm_res_pair_dirn ) {
+		case ( res_pair_dirn::INCREASE ) : { prm_os << "res_pair_dirn::INCREASE" ; return prm_os ; }
+		case ( res_pair_dirn::DECREASE ) : { prm_os << "res_pair_dirn::DECREASE" ; return prm_os ; }
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of res_pair_dirn not recognised whilst inserting into an ostream"));
 }

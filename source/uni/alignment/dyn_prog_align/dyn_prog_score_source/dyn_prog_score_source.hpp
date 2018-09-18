@@ -65,35 +65,35 @@ namespace cath {
 		                               const size_t &);
 
 		/// \brief An NVI pass-through method to get the score for the specified indices to be used for aligning with dynamic-programming
-		inline score_type dyn_prog_score_source::get_score(const size_t &arg_index_a, ///< The index of the element of interest in the first sequence
-		                                                   const size_t &arg_index_b  ///< The index of the element of interest in the second sequence
+		inline score_type dyn_prog_score_source::get_score(const size_t &prm_index_a, ///< The index of the element of interest in the first sequence
+		                                                   const size_t &prm_index_b  ///< The index of the element of interest in the second sequence
 		                                                   ) const {
 #ifndef NDEBUG
 			// Check that the two indices are valid
-			if ( arg_index_a >= get_length_a() ) {
+			if ( prm_index_a >= get_length_a() ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("First index is out of range when getting score for aligning with dynamic-programming"));
 			}
-			if ( arg_index_b >= get_length_b() ) {
+			if ( prm_index_b >= get_length_b() ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Second index is out of range when getting score for aligning with dynamic-programming"));
 			}
 #endif
 
 			// Pass-through to the concrete do_get_score() to do the real work
-			return do_get_score( arg_index_a, arg_index_b );
+			return do_get_score( prm_index_a, prm_index_b );
 		}
 
 		/// \brief A non-member, non-friend helper function that gets a score from dyn_prog_score_source objects with offset_1 indices
-		inline score_type get_score__offset_1(const dyn_prog_score_source &arg_dyn_prog_score_source, ///< The dyn_prog_score_source from which to get the score
-		                                      const size_t                &arg_index_a__offset_1,     ///< The index of the element of interest in the first  sequence (using offset 1)
-		                                      const size_t                &arg_index_b__offset_1      ///< The index of the element of interest in the second sequence (using offset 1)
+		inline score_type get_score__offset_1(const dyn_prog_score_source &prm_dyn_prog_score_source, ///< The dyn_prog_score_source from which to get the score
+		                                      const size_t                &prm_index_a__offset_1,     ///< The index of the element of interest in the first  sequence (using offset 1)
+		                                      const size_t                &prm_index_b__offset_1      ///< The index of the element of interest in the second sequence (using offset 1)
 		                                      ) {
 			// Check the offsets are valid
-			check_offset_1( arg_index_a__offset_1 );
-			check_offset_1( arg_index_b__offset_1 );
+			check_offset_1( prm_index_a__offset_1 );
+			check_offset_1( prm_index_b__offset_1 );
 
 			// Call the member get_score() function with adjusted indices
-			return arg_dyn_prog_score_source.get_score( arg_index_a__offset_1 - 1,
-			                                            arg_index_b__offset_1 - 1 );
+			return prm_dyn_prog_score_source.get_score( prm_index_a__offset_1 - 1,
+			                                            prm_index_b__offset_1 - 1 );
 		}
 	} // namespace align
 

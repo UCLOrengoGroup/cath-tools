@@ -26,39 +26,39 @@ using namespace cath;
 using namespace std;
 
 /// \brief Setter for percentage_aligned_pairs_over_larger
-void ssap_scores::set_percentage_aligned_pairs_over_larger(const double &arg_percentage_aligned_pairs_over_larger ///< The value to which percentage_aligned_pairs_over_larger should be set
+void ssap_scores::set_percentage_aligned_pairs_over_larger(const double &prm_percentage_aligned_pairs_over_larger ///< The value to which percentage_aligned_pairs_over_larger should be set
                                                            ) {
-	percentage_aligned_pairs_over_larger = arg_percentage_aligned_pairs_over_larger;
+	percentage_aligned_pairs_over_larger = prm_percentage_aligned_pairs_over_larger;
 }
 
 /// \brief Setter for seq_id
-void ssap_scores::set_seq_id(const double &arg_seq_id ///< The value to which seq_id should be set
+void ssap_scores::set_seq_id(const double &prm_seq_id ///< The value to which seq_id should be set
                              ) {
-	seq_id = arg_seq_id;
+	seq_id = prm_seq_id;
 }
 
 /// \brief Setter for num_aligned_pairs
-void ssap_scores::set_num_aligned_pairs(const size_t &arg_num_aligned_pairs ///< The value to which num_aligned_pairs should be set
+void ssap_scores::set_num_aligned_pairs(const size_t &prm_num_aligned_pairs ///< The value to which num_aligned_pairs should be set
                                         ) {
-	num_aligned_pairs = arg_num_aligned_pairs;
+	num_aligned_pairs = prm_num_aligned_pairs;
 }
 
 /// \brief Setter for ssap_score_over_compared
-void ssap_scores::set_ssap_score_over_compared(const double &arg_ssap_score_over_compared ///< The value to which ssap_score_over_compared should be set
+void ssap_scores::set_ssap_score_over_compared(const double &prm_ssap_score_over_compared ///< The value to which ssap_score_over_compared should be set
                                                ) {
-	ssap_score_over_compared = arg_ssap_score_over_compared;
+	ssap_score_over_compared = prm_ssap_score_over_compared;
 }
 
 /// \brief Setter for ssap_score_over_smaller
-void ssap_scores::set_ssap_score_over_smaller(const double &arg_ssap_score_over_smaller ///< The value to which ssap_score_over_smaller should be set
+void ssap_scores::set_ssap_score_over_smaller(const double &prm_ssap_score_over_smaller ///< The value to which ssap_score_over_smaller should be set
                                               ) {
-	ssap_score_over_smaller = arg_ssap_score_over_smaller;
+	ssap_score_over_smaller = prm_ssap_score_over_smaller;
 }
 
 /// \brief Setter for ssap_score_over_larger
-void ssap_scores::set_ssap_score_over_larger(const double &arg_ssap_score_over_larger ///< The value to which ssap_score_over_larger should be set
+void ssap_scores::set_ssap_score_over_larger(const double &prm_ssap_score_over_larger ///< The value to which ssap_score_over_larger should be set
                                              ) {
-	ssap_score_over_larger = arg_ssap_score_over_larger;
+	ssap_score_over_larger = prm_ssap_score_over_larger;
 }
 
 /// \brief Getter for percentage_aligned_pairs_over_larger
@@ -94,17 +94,17 @@ double ssap_scores::get_ssap_score_over_larger() const {
 /// \brief Basic insertion operator to output a rough summary of an ssap_scores object to an ostream
 ///
 /// \relates ssap_scores
-ostream & cath::operator<<(ostream           &arg_os,         ///< The ostream to which the ssap_scores should be output
-                           const ssap_scores &arg_ssap_scores ///< The ssap_scores to output
+ostream & cath::operator<<(ostream           &prm_os,         ///< The ostream to which the ssap_scores should be output
+                           const ssap_scores &prm_ssap_scores ///< The ssap_scores to output
                            ) {
-	arg_os << "ssap_scores[";
-	arg_os << "\tget_num_aligned_pairs                    : " << arg_ssap_scores.get_num_aligned_pairs()                    << "\n";
-	arg_os << "\tget_percentage_aligned_pairs_over_larger : " << arg_ssap_scores.get_percentage_aligned_pairs_over_larger() << "\n";
-	arg_os << "\tget_seq_id                               : " << arg_ssap_scores.get_seq_id()                               << "\n";
-	arg_os << "\tget_ssap_score_over_compared             : " << arg_ssap_scores.get_ssap_score_over_compared()             << "\n";
-	arg_os << "\tget_ssap_score_over_smaller              : " << arg_ssap_scores.get_ssap_score_over_smaller()              << "\n";
-	arg_os << "\tget_ssap_score_over_larger               : " << arg_ssap_scores.get_ssap_score_over_larger()               << "\n";
-	arg_os << "]";
-	return arg_os;
+	prm_os << "ssap_scores[";
+	prm_os << "\tget_num_aligned_pairs                    : " << prm_ssap_scores.get_num_aligned_pairs()                    << "\n";
+	prm_os << "\tget_percentage_aligned_pairs_over_larger : " << prm_ssap_scores.get_percentage_aligned_pairs_over_larger() << "\n";
+	prm_os << "\tget_seq_id                               : " << prm_ssap_scores.get_seq_id()                               << "\n";
+	prm_os << "\tget_ssap_score_over_compared             : " << prm_ssap_scores.get_ssap_score_over_compared()             << "\n";
+	prm_os << "\tget_ssap_score_over_smaller              : " << prm_ssap_scores.get_ssap_score_over_smaller()              << "\n";
+	prm_os << "\tget_ssap_score_over_larger               : " << prm_ssap_scores.get_ssap_score_over_larger()               << "\n";
+	prm_os << "]";
+	return prm_os;
 }
 

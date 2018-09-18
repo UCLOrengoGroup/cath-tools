@@ -77,15 +77,15 @@ string rasmol_viewer::do_get_colour_pdb_residues_str(const string &,
 }
 
 /// \brief TODOCUMENT
-void rasmol_viewer::do_write_alignment_extras(ostream                     &/*arg_os*/,                  ///< TODOCUMENT
-                                              const superposition_context &/*arg_superstition_context*/ ///< TODOCUMENT
+void rasmol_viewer::do_write_alignment_extras(ostream                     &/*prm_os*/,                  ///< TODOCUMENT
+                                              const superposition_context &/*prm_superstition_context*/ ///< TODOCUMENT
                                               ) const {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_write_alignment_extras"));
 }
 
 /// \brief TODOCUMENT
-void rasmol_viewer::do_write_end(ostream          &/*arg_os*/,  ///< TODOCUMENT
-                                 const string_ref &/*arg_name*/ ///< TODOCUMENT
+void rasmol_viewer::do_write_end(ostream          &/*prm_os*/,  ///< TODOCUMENT
+                                 const string_ref &/*prm_name*/ ///< TODOCUMENT
                                  ) const {
 
 	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_write_end"));

@@ -54,40 +54,40 @@ using std::to_string;
 /// \brief Generate a string describing the specified merge
 ///
 /// \relates merge
-string cath::clust::to_string(const merge &arg_merge ///< The merge to describe
+string cath::clust::to_string(const merge &prm_merge ///< The merge to describe
                               ) {
 	using std::to_string;
 	return
 		  "merge["
-		+ ( format( R"(%5d)" ) % arg_merge.node_a     ).str()
+		+ ( format( R"(%5d)" ) % prm_merge.node_a     ).str()
 		+ " + "
-		+ ( format( R"(%5d)" ) % arg_merge.node_b     ).str()
+		+ ( format( R"(%5d)" ) % prm_merge.node_b     ).str()
 		+ " -> "
-		+ ( format( R"(%5d)" ) % arg_merge.merge_node ).str()
+		+ ( format( R"(%5d)" ) % prm_merge.merge_node ).str()
 		+ " ("
-		+ to_string( arg_merge.dissim )
+		+ to_string( prm_merge.dissim )
 		+ ")]";
 }
 
 /// \brief Generate a string describing the specified merge_vec
 ///
 /// \relates merge
-string cath::clust::to_string(const merge_vec &arg_merges ///< The merge_vec to describe
+string cath::clust::to_string(const merge_vec &prm_merges ///< The merge_vec to describe
                               ) {
 	return join(
-		arg_merges
+		prm_merges
 			| transformed( [] (const merge &x) { return to_string( x ); } ),
 		"\n"
 	);
 }
 
 /// \brief Insert a description of the specified merge_list into the specified ostream
-void cath::clust::write_merge_list(ostream         &arg_os,    ///< The ostream into which the description should be inserted
-                                   const merge_vec &arg_merges ///< The merge_list to describe
+void cath::clust::write_merge_list(ostream         &prm_os,    ///< The ostream into which the description should be inserted
+                                   const merge_vec &prm_merges ///< The merge_list to describe
                                    ) {
 	using std::to_string;
-	arg_os << join(
-		arg_merges
+	prm_os << join(
+		prm_merges
 			| transformed( [] (const merge &x) {
 				return
 					  ( format( R"(%5d)" ) % x.node_a     ).str()
@@ -104,23 +104,23 @@ void cath::clust::write_merge_list(ostream         &arg_os,    ///< The ostream 
 }
 
 /// \brief Write a description of the specified merge_list into the specified file
-void cath::clust::write_merge_list(const path      &arg_out_file, ///< The file to which the description should be written
-                                   const merge_vec &arg_merges    ///< The merge_list to describe
+void cath::clust::write_merge_list(const path      &prm_out_file, ///< The file to which the description should be written
+                                   const merge_vec &prm_merges    ///< The merge_list to describe
                                    ) {
 	ofstream out_stream;
-	open_ofstream( out_stream, arg_out_file );
-	write_merge_list( out_stream, arg_merges );
+	open_ofstream( out_stream, prm_out_file );
+	write_merge_list( out_stream, prm_merges );
 	out_stream.close();
 }
 
 /// \brief Read a merge_list from the specified istream
 ///
 /// \relates merge
-merge_vec cath::clust::read_merge_list(istream &arg_merges_istream ///< The istream to read the merge_list from
+merge_vec cath::clust::read_merge_list(istream &prm_merges_istream ///< The istream to read the merge_list from
                                        ) {
 	string line_string;
 	merge_vec results;
-	while ( getline( arg_merges_istream, line_string ) ) {
+	while ( getline( prm_merges_istream, line_string ) ) {
 		const str_vec line_parts = split_build<str_vec>( trim_copy( line_string ), is_space(), token_compress_on );
 
 		if ( line_parts.size() != 4 ) {
@@ -144,10 +144,10 @@ merge_vec cath::clust::read_merge_list(istream &arg_merges_istream ///< The istr
 /// \brief Read a merge_list from the specified file
 ///
 /// \relates merge
-merge_vec cath::clust::read_merge_list(const path &arg_merges_file ///< The file to read the merge_list from
+merge_vec cath::clust::read_merge_list(const path &prm_merges_file ///< The file to read the merge_list from
                                        ) {
 	ifstream merges_istream;
-	open_ifstream( merges_istream, arg_merges_file );
+	open_ifstream( merges_istream, prm_merges_file );
 	const auto merges = read_merge_list( merges_istream );
 	merges_istream.close();
 	return merges;
@@ -157,9 +157,9 @@ merge_vec cath::clust::read_merge_list(const path &arg_merges_file ///< The file
 /// \brief Insert a description of the specified merge into the specified ostream
 ///
 /// \relates merge
-ostream & cath::clust::operator<<(ostream     &arg_os,   ///< The ostream into which the description should be inserted
-                                  const merge &arg_merge ///< The merge to describe
+ostream & cath::clust::operator<<(ostream     &prm_os,   ///< The ostream into which the description should be inserted
+                                  const merge &prm_merge ///< The merge to describe
                                   ) {
-	arg_os << to_string( arg_merge );
-	return arg_os;
+	prm_os << to_string( prm_merge );
+	return prm_os;
 }

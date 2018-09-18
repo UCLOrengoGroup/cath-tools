@@ -52,23 +52,23 @@ namespace cath {
 		///
 		/// The formula being used is: \f$ j + \frac{ i . \left( 2n -3 -i \right) }{2} \f$
 		template <typename Int>
-		constexpr Int get_zero_index_of_strict_upper_half_matrix(const Int &arg_row, ///< The row index, in \f$ [ 0,   	    arg\_n -1 ) \f$
-		                                                         const Int &arg_col, ///< The col_index, in \f$ ( arg\_row, arg\_n    ) \f$
-		                                                         const Int &arg_n    ///< The width/height of the square matrix
+		constexpr Int get_zero_index_of_strict_upper_half_matrix(const Int &prm_row, ///< The row index, in \f$ [ 0,   	    arg\_n -1 ) \f$
+		                                                         const Int &prm_col, ///< The col_index, in \f$ ( arg\_row, arg\_n    ) \f$
+		                                                         const Int &prm_n    ///< The width/height of the square matrix
 		                                                         ) {
 			static_assert( std::is_integral<Int>::value, "The type used for matrix calculations must be an integral type" );
 			return (
-				arg_col
+				prm_col
 				+
 				(
-					arg_row
+					prm_row
 					*
 					(
-						( static_cast<Int>( 2 ) * arg_n )
+						( static_cast<Int>( 2 ) * prm_n )
 						-
 						static_cast<Int>( 3 )
 						-
-						arg_row
+						prm_row
 					)
 					/ static_cast<Int>( 2 )
 				)

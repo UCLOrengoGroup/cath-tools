@@ -38,18 +38,18 @@ using namespace cath::geom;
 ///   of the current core. Modify the vector to contain only those coords.
 ///
 /// The coords may be in any order in the final vector.
-void cath::geom::restrict_to_single_linkage_extension(coord_coord_linkage_pair_vec           &arg_coords,            ///< The vector to modify
-                                                      const coord_coord_linkage_pair_vec_itr &arg_core_end_itr,      ///< The point in arg_coords at the end of the core coords and at the start of the non-core coords
-                                                      const double                           &arg_extension_distance ///< The maximum distance by which the core may be extended in each step
+void cath::geom::restrict_to_single_linkage_extension(coord_coord_linkage_pair_vec           &prm_coords,            ///< The vector to modify
+                                                      const coord_coord_linkage_pair_vec_itr &prm_core_end_itr,      ///< The point in prm_coords at the end of the core coords and at the start of the non-core coords
+                                                      const double                           &prm_extension_distance ///< The maximum distance by which the core may be extended in each step
                                                       ) {
-	const double distance_sq     = arg_extension_distance * arg_extension_distance;
-	const auto   end_itr         = std::end  ( arg_coords );
-	auto         added_begin_itr = std::begin( arg_coords );
-	auto         added_end_itr   = arg_core_end_itr;
+	const double distance_sq     = prm_extension_distance * prm_extension_distance;
+	const auto   end_itr         = std::end  ( prm_coords );
+	auto         added_begin_itr = std::begin( prm_coords );
+	auto         added_end_itr   = prm_core_end_itr;
 
 	// Keep looping while some were added in the previous iteration (or, on the first pass, if there is a non-empty core)
 	// and there are more to add
-	while ( added_begin_itr != added_end_itr && added_end_itr != common::cend( arg_coords ) ) {
+	while ( added_begin_itr != added_end_itr && added_end_itr != common::cend( prm_coords ) ) {
 
 		// Within the most recently added, partition the linkable entries to the end
 		// and record the dividing line
@@ -83,9 +83,9 @@ void cath::geom::restrict_to_single_linkage_extension(coord_coord_linkage_pair_v
 	}
 
 	// Remove any coords that never got added
-	arg_coords.erase(
+	prm_coords.erase(
 		added_end_itr,
-		common::cend( arg_coords )
+		common::cend( prm_coords )
 	);
 }
 
@@ -100,14 +100,14 @@ void cath::geom::restrict_to_single_linkage_extension(coord_coord_linkage_pair_v
 ///   of the current core. Modify the vector to contain only those coords.
 ///
 /// The coords may be in any order in the final vector.
-coord_coord_linkage_pair_vec cath::geom::restrict_to_single_linkage_extension_copy(coord_coord_linkage_pair_vec  arg_coords,            ///< The vector to copy and modify
-                                                                                   const size_t                 &arg_core_end_offset,   ///< The index of the point in arg_coords at the end of the core coords and at the start of the non-core coords
-                                                                                   const double                 &arg_extension_distance ///< The maximum distance by which the core may be extended in each step
+coord_coord_linkage_pair_vec cath::geom::restrict_to_single_linkage_extension_copy(coord_coord_linkage_pair_vec  prm_coords,            ///< The vector to copy and modify
+                                                                                   const size_t                 &prm_core_end_offset,   ///< The index of the point in prm_coords at the end of the core coords and at the start of the non-core coords
+                                                                                   const double                 &prm_extension_distance ///< The maximum distance by which the core may be extended in each step
                                                                                    ) {
 	restrict_to_single_linkage_extension(
-		arg_coords,
-		std::next( begin( arg_coords ), static_cast<ptrdiff_t>( arg_core_end_offset ) ),
-		arg_extension_distance
+		prm_coords,
+		std::next( begin( prm_coords ), static_cast<ptrdiff_t>( prm_core_end_offset ) ),
+		prm_extension_distance
 	);
-	return arg_coords;
+	return prm_coords;
 }

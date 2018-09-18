@@ -28,19 +28,19 @@
 
 /// \brief TODOCUMENT
 template <typename T>
-T lexical_cast_line(std::istream &arg_istream ///< TODOCUMENT
+T lexical_cast_line(std::istream &prm_istream ///< TODOCUMENT
                     ) {
 	std::string line;
-	getline(arg_istream, line);
+	getline(prm_istream, line);
 	return boost::lexical_cast<T>(line);
 }
 
 /// \brief TODOCUMENT
 template <typename T>
-T lexical_cast_trimmed_line(std::istream &arg_istream ///< TODOCUMENT
+T lexical_cast_trimmed_line(std::istream &prm_istream ///< TODOCUMENT
                             ) {
 	std::string line;
-	getline(arg_istream, line);
+	getline(prm_istream, line);
 	return boost::lexical_cast<T>(boost::algorithm::trim_copy(line));
 }
 

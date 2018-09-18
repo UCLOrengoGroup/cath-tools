@@ -37,11 +37,11 @@ namespace cath {
 
 			/// \brief Implementation function to generate a string with a comma-separated list of the tuple's values
 			template <typename Tpl, size_t... Index>
-			std::string tuple_values_to_string_impl(const Tpl &arg_tuple,         ///< The tuple to be described
+			std::string tuple_values_to_string_impl(const Tpl &prm_tuple,         ///< The tuple to be described
 			                                        std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 			                                        ) {
 				using std::to_string;
-				const auto a = { std::to_string( std::get<Index>( arg_tuple ) )... };
+				const auto a = { std::to_string( std::get<Index>( prm_tuple ) )... };
 				return boost::algorithm::join( a, ", " );
 			}
 
@@ -54,7 +54,7 @@ namespace cath {
 		///
 		/// \todo Come C++17, use fold expressions to simplify this
 		template <typename... Ts>
-		std::string tuple_to_string(const std::tuple<Ts...> &arg_tuple ///< The tuple to describe
+		std::string tuple_to_string(const std::tuple<Ts...> &prm_tuple ///< The tuple to describe
 		                            ) {
 			const auto type_names = { ::boost::core::demangle( typeid( Ts ).name() )... };
 
@@ -66,7 +66,7 @@ namespace cath {
 				)
 				+ ">("
 				+ detail::tuple_values_to_string_impl(
-					arg_tuple,
+					prm_tuple,
 					std::make_index_sequence< sizeof...( Ts ) >{}
 				)
 				+ ")";
@@ -88,11 +88,11 @@ namespace std {
 	///
 	/// \TODO Move this into a module for test code - this shouldn't be included with any non-test code
 	template <typename... Ts>
-	ostream & operator<<(ostream            &arg_os,
-	                     const tuple<Ts...> &arg_tuple
+	ostream & operator<<(ostream            &prm_os,
+	                     const tuple<Ts...> &prm_tuple
 	                     ) {
-		arg_os << cath::common::tuple_to_string( arg_tuple  );
-		return arg_os;
+		prm_os << cath::common::tuple_to_string( prm_tuple  );
+		return prm_os;
 	}
 
 } // namespace std

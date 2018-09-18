@@ -87,16 +87,16 @@ constexpr size_t chimera_viewer::RESIDUE_BATCH_SIZE;
 ///
 /// \todo Separate out the code that identifies the residue links in the alignment from the code that writes
 ///       this information in Chimera-ese (so that the first bit of code can be reused with other viewers)
-void cath::detail::write_chimera_pair_alignments(ostream                     &arg_os,                   ///< TODOCUMENT
-                                                 const superposition_context &arg_superposition_context ///< TODOCUMENT
+void cath::detail::write_chimera_pair_alignments(ostream                     &prm_os,                   ///< TODOCUMENT
+                                                 const superposition_context &prm_superposition_context ///< TODOCUMENT
                                                  ) {
-	if ( ! arg_superposition_context.has_alignment() ) {
+	if ( ! prm_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot write PyMOL pair alignments for superposition_context with no alignment"));
 	}
-	const alignment     &the_alignment     = arg_superposition_context.get_alignment();
-// 	const superposition &the_superposition = arg_superposition_context.get_superposition();
-	const pdb_list       pdbs              = get_restricted_pdbs( arg_superposition_context );
-	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
+	const alignment     &the_alignment     = prm_superposition_context.get_alignment();
+// 	const superposition &the_superposition = prm_superposition_context.get_superposition();
+	const pdb_list       pdbs              = get_restricted_pdbs( prm_superposition_context );
+	const str_vec        names             = clean_names_for_viewer( prm_superposition_context );
 	
 	// Grab some basic details
 	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
@@ -136,36 +136,36 @@ void cath::detail::write_chimera_pair_alignments(ostream                     &ar
 					const residue_id &residue_id_a = residue_ids_a[ *position_a ];
 					const residue_id &residue_id_b = residue_ids_b[ *position_b ];
 
-					arg_os << "distance ";
-					arg_os << name_a;
-					arg_os << "_";
-					arg_os << name_b;
-					arg_os << "_alignment, /";
-					arg_os << name_a;
-					arg_os << "///";
-					arg_os << chimera_viewer::parse_residue_id_for_chimera( residue_id_a );
-					arg_os << "/CA/, /";
-					arg_os << name_b;
-					arg_os << "///";
-//					arg_os << residue_id_b;
-					arg_os << chimera_viewer::parse_residue_id_for_chimera( residue_id_b );
-					arg_os << "/CA/\n";
+					prm_os << "distance ";
+					prm_os << name_a;
+					prm_os << "_";
+					prm_os << name_b;
+					prm_os << "_alignment, /";
+					prm_os << name_a;
+					prm_os << "///";
+					prm_os << chimera_viewer::parse_residue_id_for_chimera( residue_id_a );
+					prm_os << "/CA/, /";
+					prm_os << name_b;
+					prm_os << "///";
+//					prm_os << residue_id_b;
+					prm_os << chimera_viewer::parse_residue_id_for_chimera( residue_id_b );
+					prm_os << "/CA/\n";
 				}
 			}
 
 			if (added_pair_distances) {
-				arg_os << "disable ";
-				arg_os << name_a;
-				arg_os << "_";
-				arg_os << name_b;
-				arg_os << "_alignment\n";
+				prm_os << "disable ";
+				prm_os << name_a;
+				prm_os << "_";
+				prm_os << name_b;
+				prm_os << "_alignment\n";
 			}
 		}
 	}
-	arg_os << "hide labels\n";
-	arg_os << "set dash_gap,    0.0\n";
-	arg_os << "set dash_color,  black\n";
-	arg_os << "set dash_radius, 0.05\n";
+	prm_os << "hide labels\n";
+	prm_os << "set dash_gap,    0.0\n";
+	prm_os << "set dash_color,  black\n";
+	prm_os << "set dash_radius, 0.05\n";
 
 }
 
@@ -177,16 +177,16 @@ void cath::detail::write_chimera_pair_alignments(ostream                     &ar
 ///
 /// \todo Separate out the code that identifies the residue links in each alignment from the code that writes
 ///       this information in Chimera-ese (so that the first bit of code can be reused with other viewers)
-void cath::detail::write_chimera_global_alignment(ostream                     &arg_os,                   ///< TODOCUMENT
-                                                  const superposition_context &arg_superposition_context ///< TODOCUMENT
+void cath::detail::write_chimera_global_alignment(ostream                     &prm_os,                   ///< TODOCUMENT
+                                                  const superposition_context &prm_superposition_context ///< TODOCUMENT
                                                   ) {
-	if ( ! arg_superposition_context.has_alignment() ) {
+	if ( ! prm_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot write PyMOL global alignment for superposition_context with no alignment"));
 	}
-	const alignment     &the_alignment     = arg_superposition_context.get_alignment();
-	const superposition &the_superposition = arg_superposition_context.get_superposition();
-	const pdb_list       pdbs              = get_restricted_pdbs( arg_superposition_context );
-	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
+	const alignment     &the_alignment     = prm_superposition_context.get_alignment();
+	const superposition &the_superposition = prm_superposition_context.get_superposition();
+	const pdb_list       pdbs              = get_restricted_pdbs( prm_superposition_context );
+	const str_vec        names             = clean_names_for_viewer( prm_superposition_context );
 	
 	// Grab some basic details
 	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
@@ -250,20 +250,20 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 			const residue_id    &res_name_a  = residue_ids[ entry_a ][ res_index_a ];
 			const residue_id    &res_name_b  = residue_ids[ entry_b ][ res_index_b ];
 
-			arg_os << "distance ";
-			arg_os << "alignment, /";
-			arg_os << name_a;
-			arg_os << "///";
-			arg_os << chimera_viewer::parse_residue_id_for_chimera( res_name_a );
-			arg_os << "/CA/, /";
-			arg_os << name_b;
-			arg_os << "///";
-			arg_os << chimera_viewer::parse_residue_id_for_chimera( res_name_b );
-			arg_os << "/CA/\n";
+			prm_os << "distance ";
+			prm_os << "alignment, /";
+			prm_os << name_a;
+			prm_os << "///";
+			prm_os << chimera_viewer::parse_residue_id_for_chimera( res_name_a );
+			prm_os << "/CA/, /";
+			prm_os << name_b;
+			prm_os << "///";
+			prm_os << chimera_viewer::parse_residue_id_for_chimera( res_name_b );
+			prm_os << "/CA/\n";
 		}
 	}
 	if (added_distances) {
-		arg_os << "disable alignment\n";
+		prm_os << "disable alignment\n";
 	}
 
 	enum class coreness : bool {
@@ -290,7 +290,7 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 				}
 			}
 		}
-		arg_os << join(
+		prm_os << join(
 			core_res_ids_of_entry_name
 				// \TODO Come C++17 and structured bindings, use here
 				| transformed( [] (const pair<const coreness, str_res_id_vec_map> &core_data) {
@@ -330,13 +330,13 @@ void cath::detail::write_chimera_global_alignment(ostream                     &a
 				} ),
 			"\n"
 		) << "\n";
-		arg_os << "deselect\n";
+		prm_os << "deselect\n";
 	}
 
-	arg_os << "hide labels\n";
-	arg_os << "set dash_gap, 0.0\n";
-	arg_os << "set dash_color, black\n";
-	arg_os << "set dash_radius, 0.05\n";
+	prm_os << "hide labels\n";
+	prm_os << "set dash_gap, 0.0\n";
+	prm_os << "set dash_color, black\n";
+	prm_os << "set dash_radius, 0.05\n";
 }
 
 
@@ -351,32 +351,32 @@ string chimera_viewer::do_default_file_extension() const {
 }
 
 /// \brief TODOCUMENT
-void chimera_viewer::do_write_start(ostream &arg_os ///< TODOCUMENT
+void chimera_viewer::do_write_start(ostream &prm_os ///< TODOCUMENT
                                     ) const {
-	arg_os << "feedback disable,all,output\n";
+	prm_os << "feedback disable,all,output\n";
 }
 
 /// \brief TODOCUMENT
-void chimera_viewer::do_write_load_pdbs(ostream             &arg_os,            ///< TODOCUMENT
-                                        const superposition &arg_superposition, ///< TODOCUMENT
-                                        const pdb_list      &arg_pdbs,          ///< TODOCUMENT
-                                        const str_vec       &arg_names          ///< TODOCUMENT
+void chimera_viewer::do_write_load_pdbs(ostream             &prm_os,            ///< TODOCUMENT
+                                        const superposition &prm_superposition, ///< TODOCUMENT
+                                        const pdb_list      &prm_pdbs,          ///< TODOCUMENT
+                                        const str_vec       &prm_names          ///< TODOCUMENT
                                         ) const {
-	const size_t num_pdbs = arg_pdbs.size();
+	const size_t num_pdbs = prm_pdbs.size();
 	for (const size_t &pdb_ctr : indices( num_pdbs ) ) {
-		arg_os << "cmd.read_pdbstr(\"\"\"";
+		prm_os << "cmd.read_pdbstr(\"\"\"";
 		ostringstream superposed_pdb_ss;
-		write_superposed_pdb_to_ostream( superposed_pdb_ss, arg_superposition, arg_pdbs[pdb_ctr], pdb_ctr );
-		arg_os << replace_all_copy(superposed_pdb_ss.str(), "\n", "\\\n");
-		arg_os << "\"\"\",\"" << arg_names[pdb_ctr] << "\")\n";
+		write_superposed_pdb_to_ostream( superposed_pdb_ss, prm_superposition, prm_pdbs[pdb_ctr], pdb_ctr );
+		prm_os << replace_all_copy(superposed_pdb_ss.str(), "\n", "\\\n");
+		prm_os << "\"\"\",\"" << prm_names[pdb_ctr] << "\")\n";
 	}
-	arg_os << "hide all\n";
-	arg_os << "set cartoon_rect_length  = " << pymol_tools::pymol_size( 2, 1.50,  100, 0.090,  num_pdbs ) << "\n";
-	arg_os << "set cartoon_rect_width   = " << pymol_tools::pymol_size( 2, 0.40,  100, 0.024,  num_pdbs ) << "\n";
-	arg_os << "set cartoon_oval_length  = " << pymol_tools::pymol_size( 2, 1.35,  100, 0.081,  num_pdbs ) << "\n";
-	arg_os << "set cartoon_oval_width   = " << pymol_tools::pymol_size( 2, 0.25,  100, 0.015,  num_pdbs ) << "\n";
-	arg_os << "set cartoon_loop_radius  = " << pymol_tools::pymol_size( 2, 0.20,  100, 0.036,  num_pdbs ) << "\n";
-	arg_os << "set cartoon_helix_radius = " << pymol_tools::pymol_size( 2, 2.00,  100, 0.120,  num_pdbs ) << R"(
+	prm_os << "hide all\n";
+	prm_os << "set cartoon_rect_length  = " << pymol_tools::pymol_size( 2, 1.50,  100, 0.090,  num_pdbs ) << "\n";
+	prm_os << "set cartoon_rect_width   = " << pymol_tools::pymol_size( 2, 0.40,  100, 0.024,  num_pdbs ) << "\n";
+	prm_os << "set cartoon_oval_length  = " << pymol_tools::pymol_size( 2, 1.35,  100, 0.081,  num_pdbs ) << "\n";
+	prm_os << "set cartoon_oval_width   = " << pymol_tools::pymol_size( 2, 0.25,  100, 0.015,  num_pdbs ) << "\n";
+	prm_os << "set cartoon_loop_radius  = " << pymol_tools::pymol_size( 2, 0.20,  100, 0.036,  num_pdbs ) << "\n";
+	prm_os << "set cartoon_helix_radius = " << pymol_tools::pymol_size( 2, 2.00,  100, 0.120,  num_pdbs ) << R"(
 set cartoon_cylindrical_helices, 0
 set cartoon_fancy_helices, 0
 bg_color white
@@ -385,31 +385,31 @@ color    black
 }
 
 /// \brief TODOCUMENT
-void chimera_viewer::do_define_colour(ostream              &arg_os,         ///< TODOCUMENT
-                                      const display_colour &arg_colour,    ///< TODOCUMENT
-                                      const string         &arg_colour_name ///< TODOCUMENT
+void chimera_viewer::do_define_colour(ostream              &prm_os,         ///< TODOCUMENT
+                                      const display_colour &prm_colour,    ///< TODOCUMENT
+                                      const string         &prm_colour_name ///< TODOCUMENT
                                       ) const {
-	arg_os << "set_color "
-	       << arg_colour_name
+	prm_os << "set_color "
+	       << prm_colour_name
 	       << ", ["
-	       << comma_separated_string_of_display_colour(arg_colour)
+	       << comma_separated_string_of_display_colour(prm_colour)
 	       << "]\n";
 }
 
 /// \brief Get a string for colouring the base (ie everything) in the colour that has previously been defined with the specified name
-string chimera_viewer::do_get_colour_base_str(const string &arg_colour_name ///< The previously-defined colour with which to colour the base
+string chimera_viewer::do_get_colour_base_str(const string &prm_colour_name ///< The previously-defined colour with which to colour the base
                                               ) const {
-	return "colour " + arg_colour_name + "\n";
+	return "colour " + prm_colour_name + "\n";
 }
 
 /// \brief TODOCUMENT
-string chimera_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///< TODOCUMENT
-                                             const string &arg_pdb_name     ///< TODOCUMENT
+string chimera_viewer::do_get_colour_pdb_str(const string &prm_colour_name, ///< TODOCUMENT
+                                             const string &prm_pdb_name     ///< TODOCUMENT
                                              ) const {
 	return "colour "
-		+ arg_colour_name
+		+ prm_colour_name
 		+ ", "
-		+ arg_pdb_name
+		+ prm_pdb_name
 		+ "\n";
 }
 
@@ -417,21 +417,21 @@ string chimera_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///<
 ///
 /// This splits the list of residues into batches of RESIDUE_BATCH_SIZE
 /// because PyMOL just ignores a list of residues that's too long
-string chimera_viewer::do_get_colour_pdb_residues_str(const string         &arg_colour_name, ///< TODOCUMENT
-                                                      const string         &arg_pdb_name,    ///< TODOCUMENT
-                                                      const residue_id_vec &arg_residue_ids  ///< TODOCUMENT
+string chimera_viewer::do_get_colour_pdb_residues_str(const string         &prm_colour_name, ///< TODOCUMENT
+                                                      const string         &prm_pdb_name,    ///< TODOCUMENT
+                                                      const residue_id_vec &prm_residue_ids  ///< TODOCUMENT
                                                       ) const {
-	const size_t num_res_names   = arg_residue_ids.size();
+	const size_t num_res_names   = prm_residue_ids.size();
 	const size_t num_res_batches = num_batches( num_res_names, RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
-	return "colour " + arg_colour_name + ", "
+	return "colour " + prm_colour_name + ", "
 		+ join(
 			transform_build<str_vec>(
 				indices( num_res_batches ),
 				[&] (const size_t &batch_idx) {
 					return pymol_tools::pymol_res_seln_str(
-						arg_pdb_name,
+						prm_pdb_name,
 						copy_build<residue_id_vec>(
-							batch_subrange( arg_residue_ids, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
+							batch_subrange( prm_residue_ids, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
 						)
 					);
 				}
@@ -442,18 +442,18 @@ string chimera_viewer::do_get_colour_pdb_residues_str(const string         &arg_
 }
 
 /// \brief TODOCUMENT
-void chimera_viewer::do_write_alignment_extras(ostream                     &arg_os,                   ///< TODOCUMENT
-                                               const superposition_context &arg_superposition_context ///< TODOCUMENT
+void chimera_viewer::do_write_alignment_extras(ostream                     &prm_os,                   ///< TODOCUMENT
+                                               const superposition_context &prm_superposition_context ///< TODOCUMENT
                                                ) const {
-	write_chimera_global_alignment( arg_os, arg_superposition_context );
-//	write_chimera_pair_alignments ( arg_os, arg_superposition_context );
+	write_chimera_global_alignment( prm_os, prm_superposition_context );
+//	write_chimera_pair_alignments ( prm_os, prm_superposition_context );
 }
 
 /// \brief TODOCUMENT
-void chimera_viewer::do_write_end(ostream          &arg_os,  ///< TODOCUMENT
-                                  const string_ref &arg_name ///< TODOCUMENT
+void chimera_viewer::do_write_end(ostream          &prm_os,  ///< TODOCUMENT
+                                  const string_ref &prm_name ///< TODOCUMENT
                                   ) const {
-	arg_os << R"(show cartoon
+	prm_os << R"(show cartoon
 set cartoon_smooth_loops,1
 show_as sticks, organic
 colour black, organic
@@ -474,24 +474,24 @@ zoom protein
 feedback enable,all,output
 )"
 	<< (
-		arg_name.empty()
+		prm_name.empty()
 		? ""
-		: ( "print \"" + arg_name.to_string() + "\"\n" )
+		: ( "print \"" + prm_name.to_string() + "\"\n" )
 	);
 }
 
 /// \brief TODOCUMENT
-string chimera_viewer::parse_residue_id_for_chimera(const residue_id &arg_residue_id ///< TODOCUMENT
+string chimera_viewer::parse_residue_id_for_chimera(const residue_id &prm_residue_id ///< TODOCUMENT
                                                     ) {
-	return replace_all_copy( to_string( arg_residue_id ), "-", "\\-" );
+	return replace_all_copy( to_string( prm_residue_id ), "-", "\\-" );
 }
 
 /// \brief TODOCUMENT
-str_vec chimera_viewer::parse_residue_ids_for_chimera(const residue_id_vec &arg_residue_ids ///< TODOCUMENT
+str_vec chimera_viewer::parse_residue_ids_for_chimera(const residue_id_vec &prm_residue_ids ///< TODOCUMENT
                                                       ) {
 	str_vec new_residue_ids;
-	new_residue_ids.reserve( arg_residue_ids.size() );
-	for (const residue_id &the_residue_id : arg_residue_ids) {
+	new_residue_ids.reserve( prm_residue_ids.size() );
+	for (const residue_id &the_residue_id : prm_residue_ids) {
 		new_residue_ids.push_back( parse_residue_id_for_chimera( the_residue_id ) );
 	}
 	return new_residue_ids;

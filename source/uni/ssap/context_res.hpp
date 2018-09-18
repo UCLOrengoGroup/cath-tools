@@ -32,8 +32,8 @@
 namespace cath {
 
 	template <distance_score_formula F = distance_score_formula::USED_IN_PREVIOUS_CODE>
-	inline float_score_type score_of_squared_distance(const float_score_type &arg_scaled_squared_distance, ///< TODOCUMENT
-	                                                  const float_score_type &arg_int_scaling_float_score  ///< TODOCUMENT
+	inline float_score_type score_of_squared_distance(const float_score_type &prm_scaled_squared_distance, ///< TODOCUMENT
+	                                                  const float_score_type &prm_int_scaling_float_score  ///< TODOCUMENT
 	                                                  ) {
 		//
 		const float_score_type &residue_max_dist_sq_cutoff = residue_querier::RESIDUE_MAX_DIST_SQ_CUTOFF;
@@ -42,7 +42,7 @@ namespace cath {
 
 		switch ( F ) {
 			case( distance_score_formula::FROM_SSAP_PAPER       ) : {
-				const float_score_type distance = sqrt( arg_scaled_squared_distance ) / arg_int_scaling_float_score;
+				const float_score_type distance = sqrt( prm_scaled_squared_distance ) / prm_int_scaling_float_score;
 				if ( distance >= sqrt( residue_max_dist_sq_cutoff ) ) {
 					return 0.0;
 				}
@@ -54,7 +54,7 @@ namespace cath {
 				// The USED_IN_PREVIOUS_CODE cutoff is at a distance of x = 2 * sqrt( b )
 				// Plugging that back into the desired y = 1 -x/7, gives that the SIMPLIFIED crosses
 				// USED_IN_PREVIOUS_CODE AT y = 1 - (2 / 7) * sqrt( b ) = 0.096492097094
-				const float_score_type distance = sqrt( arg_scaled_squared_distance ) / arg_int_scaling_float_score;
+				const float_score_type distance = sqrt( prm_scaled_squared_distance ) / prm_int_scaling_float_score;
 				const float_score_type slope    = -1.0 / sqrt( 4.9 * residue_b_value );
 				const float_score_type final    = std::max( 0.0, (residue_a_value / residue_b_value) * ( 1.0 + slope * distance) );
 				if ( std::isnan( final ) || final < 0.0 ) {
@@ -69,12 +69,12 @@ namespace cath {
 				break;
 			}
 			case( distance_score_formula::USED_IN_PREVIOUS_CODE ) : {
-				const float_score_type scaled_a = residue_a_value * arg_int_scaling_float_score * arg_int_scaling_float_score;
-				const float_score_type scaled_b = residue_b_value * arg_int_scaling_float_score * arg_int_scaling_float_score;
-				if ( arg_scaled_squared_distance >= residue_max_dist_sq_cutoff * arg_int_scaling_float_score * arg_int_scaling_float_score ) {
+				const float_score_type scaled_a = residue_a_value * prm_int_scaling_float_score * prm_int_scaling_float_score;
+				const float_score_type scaled_b = residue_b_value * prm_int_scaling_float_score * prm_int_scaling_float_score;
+				if ( prm_scaled_squared_distance >= residue_max_dist_sq_cutoff * prm_int_scaling_float_score * prm_int_scaling_float_score ) {
 					return 0.0;
 				}
-				return scaled_a / ( arg_scaled_squared_distance + scaled_b );
+				return scaled_a / ( prm_scaled_squared_distance + scaled_b );
 				break;
 			}
 
@@ -85,22 +85,22 @@ namespace cath {
 	///
 	/// This code uses debug_numeric_casts rather than numeric_casts for the sake of speed
 	/// (this was indicated by profiling and its effect was confirmed with direct tests).
-	template <bool arg_int_rounding, distance_score_formula F = distance_score_formula::USED_IN_PREVIOUS_CODE>
-	inline float_score_type context_res_vec(const geom::coord &arg_i_beta_from_a_beta_view, ///< The view from one residue to another in one protein
-	                                        const geom::coord &arg_j_beta_from_b_beta_view  ///< The view from one residue to another in the other protein
+	template <bool prm_int_rounding, distance_score_formula F = distance_score_formula::USED_IN_PREVIOUS_CODE>
+	inline float_score_type context_res_vec(const geom::coord &prm_i_beta_from_a_beta_view, ///< The view from one residue to another in one protein
+	                                        const geom::coord &prm_j_beta_from_b_beta_view  ///< The view from one residue to another in the other protein
 	                                        ) {
 		//
 		const float_score_type int_scaling_float_score = debug_numeric_cast<float_score_type>( entry_querier::INTEGER_SCALING );
-		geom::coord int_scaled_i_beta_from_a_beta = arg_int_rounding ? int_cast_copy( int_scaling_float_score * arg_i_beta_from_a_beta_view )
-		                                                             :              ( int_scaling_float_score * arg_i_beta_from_a_beta_view );
-		geom::coord int_scaled_j_beta_from_b_beta = arg_int_rounding ? int_cast_copy( int_scaling_float_score * arg_j_beta_from_b_beta_view )
-		                                                             :              ( int_scaling_float_score * arg_j_beta_from_b_beta_view );
+		geom::coord int_scaled_i_beta_from_a_beta = prm_int_rounding ? int_cast_copy( int_scaling_float_score * prm_i_beta_from_a_beta_view )
+		                                                             :              ( int_scaling_float_score * prm_i_beta_from_a_beta_view );
+		geom::coord int_scaled_j_beta_from_b_beta = prm_int_rounding ? int_cast_copy( int_scaling_float_score * prm_j_beta_from_b_beta_view )
+		                                                             :              ( int_scaling_float_score * prm_j_beta_from_b_beta_view );
 		//
-		const float_score_type x_diff = arg_int_rounding ? debug_numeric_cast<int>(int_scaled_i_beta_from_a_beta.get_x()) - debug_numeric_cast<int>(int_scaled_j_beta_from_b_beta.get_x())
+		const float_score_type x_diff = prm_int_rounding ? debug_numeric_cast<int>(int_scaled_i_beta_from_a_beta.get_x()) - debug_numeric_cast<int>(int_scaled_j_beta_from_b_beta.get_x())
 		                                                 :                         int_scaled_i_beta_from_a_beta.get_x()  -                         int_scaled_j_beta_from_b_beta.get_x();
-		const float_score_type y_diff = arg_int_rounding ? debug_numeric_cast<int>(int_scaled_i_beta_from_a_beta.get_y()) - debug_numeric_cast<int>(int_scaled_j_beta_from_b_beta.get_y())
+		const float_score_type y_diff = prm_int_rounding ? debug_numeric_cast<int>(int_scaled_i_beta_from_a_beta.get_y()) - debug_numeric_cast<int>(int_scaled_j_beta_from_b_beta.get_y())
 		                                                 :                         int_scaled_i_beta_from_a_beta.get_y()  -                         int_scaled_j_beta_from_b_beta.get_y();
-		const float_score_type z_diff = arg_int_rounding ? debug_numeric_cast<int>(int_scaled_i_beta_from_a_beta.get_z()) - debug_numeric_cast<int>(int_scaled_j_beta_from_b_beta.get_z())
+		const float_score_type z_diff = prm_int_rounding ? debug_numeric_cast<int>(int_scaled_i_beta_from_a_beta.get_z()) - debug_numeric_cast<int>(int_scaled_j_beta_from_b_beta.get_z())
 		                                                 :                         int_scaled_i_beta_from_a_beta.get_z()  -                         int_scaled_j_beta_from_b_beta.get_z();
 
 		//
@@ -131,13 +131,13 @@ namespace cath {
 	/// (this was indicated by profiling and its effect was confirmed with direct tests).
 	///
 	/// \todo Consider removing this and replacing with context_res_vec<false, distance_score_formula::SIMPLIFIED>
-	inline float_score_type simplified_context_res_vec(const geom::coord &arg_i_beta_from_a_beta_view, ///< The view from one residue to another in one protein
-	                                                   const geom::coord &arg_j_beta_from_b_beta_view  ///< The view from one residue to another in the other protein
+	inline float_score_type simplified_context_res_vec(const geom::coord &prm_i_beta_from_a_beta_view, ///< The view from one residue to another in one protein
+	                                                   const geom::coord &prm_j_beta_from_b_beta_view  ///< The view from one residue to another in the other protein
 	                                                   ) {
 		//
-		const float_score_type x_diff = arg_i_beta_from_a_beta_view.get_x() - arg_j_beta_from_b_beta_view.get_x();
-		const float_score_type y_diff = arg_i_beta_from_a_beta_view.get_y() - arg_j_beta_from_b_beta_view.get_y();
-		const float_score_type z_diff = arg_i_beta_from_a_beta_view.get_z() - arg_j_beta_from_b_beta_view.get_z();
+		const float_score_type x_diff = prm_i_beta_from_a_beta_view.get_x() - prm_j_beta_from_b_beta_view.get_x();
+		const float_score_type y_diff = prm_i_beta_from_a_beta_view.get_y() - prm_j_beta_from_b_beta_view.get_y();
+		const float_score_type z_diff = prm_i_beta_from_a_beta_view.get_z() - prm_j_beta_from_b_beta_view.get_z();
 
 		//
 		const float_score_type x_diff_squared   = x_diff * x_diff;
@@ -155,62 +155,62 @@ namespace cath {
 	}
 
 	/// \brief TODOCUMENT
-	inline geom::coord view_vector_of_residue_pair(const residue &arg_from_res, ///< The "from" residue in the protein
-	                                               const residue &arg_to_res    ///< The "to"   residue in the protein
+	inline geom::coord view_vector_of_residue_pair(const residue &prm_from_res, ///< The "from" residue in the protein
+	                                               const residue &prm_to_res    ///< The "to"   residue in the protein
 	                                               ) {
 		return rotate_copy(
-			arg_from_res.get_frame(),
-			arg_to_res.get_carbon_beta_coord() - arg_from_res.get_carbon_beta_coord()
+			prm_from_res.get_frame(),
+			prm_to_res.get_carbon_beta_coord() - prm_from_res.get_carbon_beta_coord()
 		);
 	}
 
 	/// \brief Compares vectors/scalars/Hbonds/SSbonds between residues in the two proteins
-	template <bool arg_int_rounding, distance_score_formula F = distance_score_formula::USED_IN_PREVIOUS_CODE>
-	inline float_score_type context_res(const residue &arg_from_res_a, ///< The "from" residue in the first  protein
-	                                    const residue &arg_from_res_b, ///< The "from" residue in the second protein
-	                                    const residue &arg_to_res_a,   ///< The "to"   residue in the first  protein
-	                                    const residue &arg_to_res_b    ///< The "to"   residue in the second protein
+	template <bool prm_int_rounding, distance_score_formula F = distance_score_formula::USED_IN_PREVIOUS_CODE>
+	inline float_score_type context_res(const residue &prm_from_res_a, ///< The "from" residue in the first  protein
+	                                    const residue &prm_from_res_b, ///< The "from" residue in the second protein
+	                                    const residue &prm_to_res_a,   ///< The "to"   residue in the first  protein
+	                                    const residue &prm_to_res_b    ///< The "to"   residue in the second protein
 	                                    ) {
-		return context_res_vec<arg_int_rounding, F>(
-			view_vector_of_residue_pair( arg_from_res_a, arg_to_res_a ),
-			view_vector_of_residue_pair( arg_from_res_b, arg_to_res_b )
+		return context_res_vec<prm_int_rounding, F>(
+			view_vector_of_residue_pair( prm_from_res_a, prm_to_res_a ),
+			view_vector_of_residue_pair( prm_from_res_b, prm_to_res_b )
 		);
 	}
 
 	/// \brief TODOCUMENT
-	inline float_score_type context_res(const residue                &arg_from_res_a,                                               ///< The "from" residue in the first  protein
-	                                    const residue                &arg_from_res_b,                                               ///< The "from" residue in the second protein
-	                                    const residue                &arg_to_res_a,                                                 ///< The "to"   residue in the first  protein
-	                                    const residue                &arg_to_res_b,                                                 ///< The "to"   residue in the second protein
-	                                    const bool                   &arg_rounding  = false,                                        ///< TODOCUMENT
-	                                    const distance_score_formula &arg_dist_form = distance_score_formula::USED_IN_PREVIOUS_CODE ///< TODOCUMENT
+	inline float_score_type context_res(const residue                &prm_from_res_a,                                               ///< The "from" residue in the first  protein
+	                                    const residue                &prm_from_res_b,                                               ///< The "from" residue in the second protein
+	                                    const residue                &prm_to_res_a,                                                 ///< The "to"   residue in the first  protein
+	                                    const residue                &prm_to_res_b,                                                 ///< The "to"   residue in the second protein
+	                                    const bool                   &prm_rounding  = false,                                        ///< TODOCUMENT
+	                                    const distance_score_formula &prm_dist_form = distance_score_formula::USED_IN_PREVIOUS_CODE ///< TODOCUMENT
 	                                    ) {
-		return arg_rounding
-			? ( ( arg_dist_form == distance_score_formula::FROM_SSAP_PAPER ) ? context_res<true,  distance_score_formula::FROM_SSAP_PAPER      > ( arg_from_res_a, arg_from_res_b, arg_to_res_a, arg_to_res_b ) :
-			    ( arg_dist_form == distance_score_formula::SIMPLIFIED      ) ? context_res<true,  distance_score_formula::SIMPLIFIED           > ( arg_from_res_a, arg_from_res_b, arg_to_res_a, arg_to_res_b ) :
-			                                                                   context_res<true,  distance_score_formula::USED_IN_PREVIOUS_CODE> ( arg_from_res_a, arg_from_res_b, arg_to_res_a, arg_to_res_b ) )
-			: ( ( arg_dist_form == distance_score_formula::FROM_SSAP_PAPER ) ? context_res<false, distance_score_formula::FROM_SSAP_PAPER      > ( arg_from_res_a, arg_from_res_b, arg_to_res_a, arg_to_res_b ) :
-			    ( arg_dist_form == distance_score_formula::SIMPLIFIED      ) ? context_res<false, distance_score_formula::SIMPLIFIED           > ( arg_from_res_a, arg_from_res_b, arg_to_res_a, arg_to_res_b ) :
-			                                                                   context_res<false, distance_score_formula::USED_IN_PREVIOUS_CODE> ( arg_from_res_a, arg_from_res_b, arg_to_res_a, arg_to_res_b ) );
+		return prm_rounding
+			? ( ( prm_dist_form == distance_score_formula::FROM_SSAP_PAPER ) ? context_res<true,  distance_score_formula::FROM_SSAP_PAPER      > ( prm_from_res_a, prm_from_res_b, prm_to_res_a, prm_to_res_b ) :
+			    ( prm_dist_form == distance_score_formula::SIMPLIFIED      ) ? context_res<true,  distance_score_formula::SIMPLIFIED           > ( prm_from_res_a, prm_from_res_b, prm_to_res_a, prm_to_res_b ) :
+			                                                                   context_res<true,  distance_score_formula::USED_IN_PREVIOUS_CODE> ( prm_from_res_a, prm_from_res_b, prm_to_res_a, prm_to_res_b ) )
+			: ( ( prm_dist_form == distance_score_formula::FROM_SSAP_PAPER ) ? context_res<false, distance_score_formula::FROM_SSAP_PAPER      > ( prm_from_res_a, prm_from_res_b, prm_to_res_a, prm_to_res_b ) :
+			    ( prm_dist_form == distance_score_formula::SIMPLIFIED      ) ? context_res<false, distance_score_formula::SIMPLIFIED           > ( prm_from_res_a, prm_from_res_b, prm_to_res_a, prm_to_res_b ) :
+			                                                                   context_res<false, distance_score_formula::USED_IN_PREVIOUS_CODE> ( prm_from_res_a, prm_from_res_b, prm_to_res_a, prm_to_res_b ) );
 	}
 
 	/// \brief TODOCUMENT
-	inline float_score_type context_res(const protein                &arg_protein_a,                                                ///< TODOCUMENT
-	                                    const protein                &arg_protein_b,                                                ///< TODOCUMENT
-	                                    const size_t                 &arg_a_from_index,                                             ///< TODOCUMENT
-	                                    const size_t                 &arg_b_from_index,                                             ///< TODOCUMENT
-	                                    const size_t                 &arg_a_to_index,                                               ///< TODOCUMENT
-	                                    const size_t                 &arg_b_to_index,                                               ///< TODOCUMENT
-	                                    const bool                   &arg_rounding  = false,                                        ///< TODOCUMENT
-	                                    const distance_score_formula &arg_dist_form = distance_score_formula::USED_IN_PREVIOUS_CODE ///< TODOCUMENT
+	inline float_score_type context_res(const protein                &prm_protein_a,                                                ///< TODOCUMENT
+	                                    const protein                &prm_protein_b,                                                ///< TODOCUMENT
+	                                    const size_t                 &prm_a_from_index,                                             ///< TODOCUMENT
+	                                    const size_t                 &prm_b_from_index,                                             ///< TODOCUMENT
+	                                    const size_t                 &prm_a_to_index,                                               ///< TODOCUMENT
+	                                    const size_t                 &prm_b_to_index,                                               ///< TODOCUMENT
+	                                    const bool                   &prm_rounding  = false,                                        ///< TODOCUMENT
+	                                    const distance_score_formula &prm_dist_form = distance_score_formula::USED_IN_PREVIOUS_CODE ///< TODOCUMENT
 	                                    ) {
 		return context_res(
-			arg_protein_a.get_residue_ref_of_index( arg_a_from_index ),
-			arg_protein_b.get_residue_ref_of_index( arg_b_from_index ),
-			arg_protein_a.get_residue_ref_of_index( arg_a_to_index   ),
-			arg_protein_b.get_residue_ref_of_index( arg_b_to_index   ),
-			arg_rounding,
-			arg_dist_form
+			prm_protein_a.get_residue_ref_of_index( prm_a_from_index ),
+			prm_protein_b.get_residue_ref_of_index( prm_b_from_index ),
+			prm_protein_a.get_residue_ref_of_index( prm_a_to_index   ),
+			prm_protein_b.get_residue_ref_of_index( prm_b_to_index   ),
+			prm_rounding,
+			prm_dist_form
 		);
 	}
 } // namespace cath

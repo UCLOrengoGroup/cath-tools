@@ -31,10 +31,10 @@ namespace cath {
 	namespace common {
 
 		/// \brief Read the contents of the specified file into a string
-		inline std::string read_string_from_file(const boost::filesystem::path &arg_file ///< The file from which the string should be read
+		inline std::string read_string_from_file(const boost::filesystem::path &prm_file ///< The file from which the string should be read
 		                                         ) {
 			std::ifstream input_stream;
-			open_ifstream( input_stream, arg_file );
+			open_ifstream( input_stream, prm_file );
 
 			const std::string result{
 				std::istreambuf_iterator<char>( input_stream ),

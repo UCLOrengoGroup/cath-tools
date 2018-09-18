@@ -109,8 +109,8 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		scan_query_set<KPs...>::scan_query_set(const scan_policy<KPs...> &arg_scan_policy ///< TODOCUMENT
-		                                       ) : the_policy( arg_scan_policy ) {
+		scan_query_set<KPs...>::scan_query_set(const scan_policy<KPs...> &prm_scan_policy ///< TODOCUMENT
+		                                       ) : the_policy( prm_scan_policy ) {
 		}
 
 		/// \brief TODOCUMENT
@@ -121,14 +121,14 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		void scan_query_set<KPs...>::add_structure(const protein &arg_protein ///< TODOCUMENT
+		void scan_query_set<KPs...>::add_structure(const protein &prm_protein ///< TODOCUMENT
 		                                           ) {
 			// BOOST_LOG_TRIVIAL( warning ) << "About to add structure to structures_data...";
 
 			const auto add_structure_data_starttime = std::chrono::high_resolution_clock::now();
 			add_structure_data(
 				structures_data,
-				arg_protein,
+				prm_protein,
 				detail::roled_scan_stride{ detail::scan_role::QUERY, get_scan_policy().get_scan_stride() }
 			);
 
@@ -142,7 +142,7 @@ namespace cath {
 			detail::add_structure_to_store(
 				the_store,
 				debug_unwarned_numeric_cast<index_type>( structures_data.size() - 1 ),
-				arg_protein,
+				prm_protein,
 				get_scan_policy(),
 				detail::scan_role::QUERY
 			);
@@ -159,9 +159,9 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		index_type scan_query_set<KPs...>::get_num_residues_of_structure_of_index(const index_type &arg_structure_index ///< TODOCUMENT
+		index_type scan_query_set<KPs...>::get_num_residues_of_structure_of_index(const index_type &prm_structure_index ///< TODOCUMENT
 		                                                                          ) const {
-			return boost::numeric_cast<index_type>( structures_data[ arg_structure_index ].get_num_residues() );
+			return boost::numeric_cast<index_type>( structures_data[ prm_structure_index ].get_num_residues() );
 		}
 
 		/// \brief TODOCUMENT
@@ -179,10 +179,10 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		template <typename FN>
-		hrc_duration scan_query_set<KPs...>::do_magic(const scan_index<KPs...> &arg_scan_index, ///< TODOCUMENT
-		                                              FN                       &arg_fn          ///< TODOCUMENT
+		hrc_duration scan_query_set<KPs...>::do_magic(const scan_index<KPs...> &prm_scan_index, ///< TODOCUMENT
+		                                              FN                       &prm_fn          ///< TODOCUMENT
 		                                              ) const {
-			if ( &( arg_scan_index.get_scan_policy() ) != & ( get_scan_policy() ) ) {
+			if ( &( prm_scan_index.get_scan_policy() ) != & ( get_scan_policy() ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to scan query_set against index constructed with different policy"));
 			}
 
@@ -192,17 +192,17 @@ namespace cath {
 				const auto &res_pair_list = x.second;
 //				BOOST_LOG_TRIVIAL( warning ) << "Searching query key " << detail::output_key( key ) << " list of size " << res_pair_list.size();
 				assert( ! res_pair_list.empty() );
-				arg_scan_index.act_on_matches( key, structures_data, res_pair_list, arg_fn );
+				prm_scan_index.act_on_matches( key, structures_data, res_pair_list, prm_fn );
 			}
 			return std::chrono::high_resolution_clock::now() - scan_starttime;
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		scan_query_set<KPs...> make_scan_query_set(const scan_policy<KPs...> &arg_policy ///< TODOCUMENT
+		scan_query_set<KPs...> make_scan_query_set(const scan_policy<KPs...> &prm_policy ///< TODOCUMENT
 		                                           ) {
 			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-			return scan_query_set<KPs...>{ arg_policy };
+			return scan_query_set<KPs...>{ prm_policy };
 		}
 
 		/// \brief Prevent factory building from a temporary scan_policy
@@ -211,11 +211,11 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		scan_query_set<KPs...> make_scan_query_set(const scan_policy<KPs...> &arg_scan_policy, ///< TODOCUMENT
-		                                           const protein_list        &arg_protein_list ///< TODOCUMENT
+		scan_query_set<KPs...> make_scan_query_set(const scan_policy<KPs...> &prm_scan_policy, ///< TODOCUMENT
+		                                           const protein_list        &prm_protein_list ///< TODOCUMENT
 		                                           ) {
-			auto new_query_set = make_scan_query_set( arg_scan_policy );
-			for (const protein &the_protein : arg_protein_list) {
+			auto new_query_set = make_scan_query_set( prm_scan_policy );
+			for (const protein &the_protein : prm_protein_list) {
 				new_query_set.add_structure( the_protein );
 			}
 			return new_query_set;

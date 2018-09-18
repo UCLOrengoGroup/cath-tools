@@ -73,12 +73,12 @@ void score_classn_value_list::sort_values() {
 /// \brief Ctor for score_classn_value_list
 ///
 /// For now, this is kept private to ensure clients use the factory function make_score_classn_value_list()
-score_classn_value_list::score_classn_value_list(score_classn_value_vec  arg_score_classn_values, ///< TODOCUMENT
-                                                 const bool             &arg_higher_is_better,    ///< TODOCUMENT
-                                                 string                  arg_name                 ///< TODOCUMENT
-                                                 ) : score_classn_values{ std::move( arg_score_classn_values ) },
-                                                     better_than        { arg_higher_is_better                 },
-                                                     name               { std::move( arg_name                ) } {
+score_classn_value_list::score_classn_value_list(score_classn_value_vec  prm_score_classn_values, ///< TODOCUMENT
+                                                 const bool             &prm_higher_is_better,    ///< TODOCUMENT
+                                                 string                  prm_name                 ///< TODOCUMENT
+                                                 ) : score_classn_values{ std::move( prm_score_classn_values ) },
+                                                     better_than        { prm_higher_is_better                 },
+                                                     name               { std::move( prm_name                ) } {
 	sort_values();
 }
 
@@ -93,9 +93,9 @@ size_t score_classn_value_list::size() const {
 }
 
 /// \brief TODOCUMENT
-const score_classn_value & score_classn_value_list::operator[](const size_t &arg_index ///< TODOCUMENT
+const score_classn_value & score_classn_value_list::operator[](const size_t &prm_index ///< TODOCUMENT
                                                                ) const {
-	return score_classn_values[ arg_index ];
+	return score_classn_values[ prm_index ];
 }
 
 /// \brief TODOCUMENT
@@ -119,37 +119,37 @@ const score_classn_value_better_value & score_classn_value_list::get_better_than
 }
 
 /// \brief TODOCUMENT
-void score_classn_value_list::add_score_classn_value(const score_classn_value &arg_score_classn_value ///< TODOCUMENT
+void score_classn_value_list::add_score_classn_value(const score_classn_value &prm_score_classn_value ///< TODOCUMENT
                                                      ) {
-	sorted_insert( score_classn_values, arg_score_classn_value, better_than );
+	sorted_insert( score_classn_values, prm_score_classn_value, better_than );
 }
 
 /// \brief Get the best score for a score_classn_value_list
 ///
 /// \relates score_classn_value_list
-double cath::score::best_score(const score_classn_value_list &arg_score_classn_value_list ///< The score_classn_value_list to be queried
+double cath::score::best_score(const score_classn_value_list &prm_score_classn_value_list ///< The score_classn_value_list to be queried
                                ) {
-	if ( arg_score_classn_value_list.empty() ) {
+	if ( prm_score_classn_value_list.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to retrieve best score from empty score_classn_value_list"));
 	}
-	return front( arg_score_classn_value_list ).get_score_value();
+	return front( prm_score_classn_value_list ).get_score_value();
 }
 
 /// \brief Get the worst score for a score_classn_value_list
 ///
 /// \relates score_classn_value_list
-double cath::score::worst_score(const score_classn_value_list &arg_score_classn_value_list ///< The score_classn_value_list to be queried
+double cath::score::worst_score(const score_classn_value_list &prm_score_classn_value_list ///< The score_classn_value_list to be queried
                                 ) {
-	if ( arg_score_classn_value_list.empty() ) {
+	if ( prm_score_classn_value_list.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to retrieve worst score from empty score_classn_value_list"));
 	}
 	const auto find_itr = find_if(
-		arg_score_classn_value_list | reversed,
-		[&] (const score_classn_value &x) { return ( x.get_score_value() != worst_possible_score( arg_score_classn_value_list ) ); }
+		prm_score_classn_value_list | reversed,
+		[&] (const score_classn_value &x) { return ( x.get_score_value() != worst_possible_score( prm_score_classn_value_list ) ); }
 	);
-	if ( find_itr == common::cend( arg_score_classn_value_list | reversed ) ) {
+	if ( find_itr == common::cend( prm_score_classn_value_list | reversed ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find a worst_score that isn't the worst possible score"));
-		// Could consider returning worst_possible_score( arg_score_classn_value_list ) in this case
+		// Could consider returning worst_possible_score( prm_score_classn_value_list ) in this case
 	}
 	return find_itr->get_score_value();
 }
@@ -161,13 +161,13 @@ double cath::score::worst_score(const score_classn_value_list &arg_score_classn_
 /// Of course, this could be extended to allow other approaches if there's need for it.
 ///
 /// \relates score_classn_value_list
-value_list_scaling cath::score::get_scaling(const score_classn_value_list &arg_score_classn_value_list ///< The score_classn_value_list which the scaling should be designed to normalised
+value_list_scaling cath::score::get_scaling(const score_classn_value_list &prm_score_classn_value_list ///< The score_classn_value_list which the scaling should be designed to normalised
                                             ) {
-	if ( arg_score_classn_value_list.empty() ) {
+	if ( prm_score_classn_value_list.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to determine scaling for empty score_classn_value_list"));
 	}
-	const double the_best_score  = best_score ( arg_score_classn_value_list );
-	const double the_worst_score = worst_score( arg_score_classn_value_list );
+	const double the_best_score  = best_score ( prm_score_classn_value_list );
+	const double the_worst_score = worst_score( prm_score_classn_value_list );
 	const double worst_to_best   = the_best_score - the_worst_score;
 	const double multiplier      = ( worst_to_best != 0.0 ) ? ( 1.0 / worst_to_best ) : 1.0;
 	const double constant        = - ( multiplier * the_worst_score );
@@ -187,10 +187,10 @@ value_list_scaling cath::score::get_scaling(const score_classn_value_list &arg_s
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-const score_classn_value & cath::score::best_scoring_actual_positive(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+const score_classn_value & cath::score::best_scoring_actual_positive(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                                      ) {
-	const auto find_itr = find_if( arg_score_classn_value_list, [] (const score_classn_value &x) { return x.get_instance_is_positive(); } );
-	if ( find_itr == cath::common::cend( arg_score_classn_value_list ) ) {
+	const auto find_itr = find_if( prm_score_classn_value_list, [] (const score_classn_value &x) { return x.get_instance_is_positive(); } );
+	if ( find_itr == cath::common::cend( prm_score_classn_value_list ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 	}
 	return *find_itr;
@@ -199,10 +199,10 @@ const score_classn_value & cath::score::best_scoring_actual_positive(const score
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-const score_classn_value & cath::score::best_scoring_actual_negative(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+const score_classn_value & cath::score::best_scoring_actual_negative(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                                      ) {
-	const auto find_itr = find_if( arg_score_classn_value_list, [] (const score_classn_value &x) { return ! x.get_instance_is_positive(); } );
-	if ( find_itr == cath::common::cend( arg_score_classn_value_list ) ) {
+	const auto find_itr = find_if( prm_score_classn_value_list, [] (const score_classn_value &x) { return ! x.get_instance_is_positive(); } );
+	if ( find_itr == cath::common::cend( prm_score_classn_value_list ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 	}
 	return *find_itr;
@@ -211,10 +211,10 @@ const score_classn_value & cath::score::best_scoring_actual_negative(const score
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-const score_classn_value & cath::score::worst_scoring_actual_positive(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+const score_classn_value & cath::score::worst_scoring_actual_positive(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                                       ) {
-	const auto find_itr = find_if( arg_score_classn_value_list | reversed, [] (const score_classn_value &x) { return x.get_instance_is_positive(); } );
-	if ( find_itr == const_rend( arg_score_classn_value_list ) ) {
+	const auto find_itr = find_if( prm_score_classn_value_list | reversed, [] (const score_classn_value &x) { return x.get_instance_is_positive(); } );
+	if ( find_itr == const_rend( prm_score_classn_value_list ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 	}
 	return *find_itr;
@@ -223,10 +223,10 @@ const score_classn_value & cath::score::worst_scoring_actual_positive(const scor
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-const score_classn_value & cath::score::worst_scoring_actual_negative(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+const score_classn_value & cath::score::worst_scoring_actual_negative(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                                       ) {
-	const auto find_itr = find_if( arg_score_classn_value_list | reversed, [] (const score_classn_value &x) { return ! x.get_instance_is_positive(); } );
-	if ( find_itr == const_rend( arg_score_classn_value_list ) ) {
+	const auto find_itr = find_if( prm_score_classn_value_list | reversed, [] (const score_classn_value &x) { return ! x.get_instance_is_positive(); } );
+	if ( find_itr == const_rend( prm_score_classn_value_list ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 	}
 	return *find_itr;
@@ -235,36 +235,36 @@ const score_classn_value & cath::score::worst_scoring_actual_negative(const scor
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-ostream & cath::score::summarise_score_classn_value_list(ostream                       &arg_ostream,                ///< TODOCUMENT
-                                                         const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+ostream & cath::score::summarise_score_classn_value_list(ostream                       &prm_ostream,                ///< TODOCUMENT
+                                                         const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
 														 ) {
-	arg_ostream << "###############################################\n";
-	arg_ostream << "# Summary of score_classn_value_list\n";
-	arg_ostream << "###############################################\n";
-	arg_ostream << "# Name                          : " << arg_score_classn_value_list.get_name()              << "\n";
-	arg_ostream << "# Higher is better              : " << boolalpha << get_higher_is_better( arg_score_classn_value_list ) << "\n";
-	arg_ostream << "# Size                          : " << arg_score_classn_value_list.size()                  << "\n";
+	prm_ostream << "###############################################\n";
+	prm_ostream << "# Summary of score_classn_value_list\n";
+	prm_ostream << "###############################################\n";
+	prm_ostream << "# Name                          : " << prm_score_classn_value_list.get_name()              << "\n";
+	prm_ostream << "# Higher is better              : " << boolalpha << get_higher_is_better( prm_score_classn_value_list ) << "\n";
+	prm_ostream << "# Size                          : " << prm_score_classn_value_list.size()                  << "\n";
 
-	if ( ! arg_score_classn_value_list.empty() ) {
-		arg_ostream << "###############################################\n";
-		arg_ostream << "# Area under ROC curve          : " << area_under_roc_curve( arg_score_classn_value_list ) << "\n";
-		arg_ostream << "# Best score                    : " << front( arg_score_classn_value_list ).get_score_value() << "\n";
-		arg_ostream << "# Worst score                   : " << back ( arg_score_classn_value_list ).get_score_value() << "\n";
-		arg_ostream << "# Best scoring actual positive  : " << best_scoring_actual_positive ( arg_score_classn_value_list ) << "\n";
-		arg_ostream << "# Best scoring actual negative  : " << best_scoring_actual_negative ( arg_score_classn_value_list ) << "\n";
-		arg_ostream << "# Worst scoring actual positive : " << worst_scoring_actual_positive( arg_score_classn_value_list ) << "\n";
-		arg_ostream << "# Worst scoring actual negative : " << worst_scoring_actual_negative( arg_score_classn_value_list ) << "\n";
+	if ( ! prm_score_classn_value_list.empty() ) {
+		prm_ostream << "###############################################\n";
+		prm_ostream << "# Area under ROC curve          : " << area_under_roc_curve( prm_score_classn_value_list ) << "\n";
+		prm_ostream << "# Best score                    : " << front( prm_score_classn_value_list ).get_score_value() << "\n";
+		prm_ostream << "# Worst score                   : " << back ( prm_score_classn_value_list ).get_score_value() << "\n";
+		prm_ostream << "# Best scoring actual positive  : " << best_scoring_actual_positive ( prm_score_classn_value_list ) << "\n";
+		prm_ostream << "# Best scoring actual negative  : " << best_scoring_actual_negative ( prm_score_classn_value_list ) << "\n";
+		prm_ostream << "# Worst scoring actual positive : " << worst_scoring_actual_positive( prm_score_classn_value_list ) << "\n";
+		prm_ostream << "# Worst scoring actual negative : " << worst_scoring_actual_negative( prm_score_classn_value_list ) << "\n";
 	}
-	arg_ostream << "###############################################\n";
-	return arg_ostream;
+	prm_ostream << "###############################################\n";
+	return prm_ostream;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-str_set cath::score::get_sorted_instance_labels(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+str_set cath::score::get_sorted_instance_labels(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                 ) {
-	const auto instance_labels = get_instance_labels( arg_score_classn_value_list );
+	const auto instance_labels = get_instance_labels( prm_score_classn_value_list );
 	return {
 		cath::common::cbegin( instance_labels ),
 		cath::common::cend  ( instance_labels )
@@ -274,10 +274,10 @@ str_set cath::score::get_sorted_instance_labels(const score_classn_value_list &a
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-str_vec cath::score::get_instance_labels(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+str_vec cath::score::get_instance_labels(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                          ) {
 	return copy_build<str_vec>(
-		arg_score_classn_value_list
+		prm_score_classn_value_list
 			| transformed( [] (const score_classn_value &x) { return x.get_instance_label(); } )
 	);
 }
@@ -285,12 +285,12 @@ str_vec cath::score::get_instance_labels(const score_classn_value_list &arg_scor
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-str_size_pair_vec cath::score::get_sorted_instance_labels_and_indices(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+str_size_pair_vec cath::score::get_sorted_instance_labels_and_indices(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                                       ) {
 	return sort_copy(
 		transform_build<str_size_pair_vec>(
-			indices( arg_score_classn_value_list.size() ),
-			[&] (const size_t &x) { return make_pair( arg_score_classn_value_list[ x ].get_instance_label(), x ); }
+			indices( prm_score_classn_value_list.size() ),
+			[&] (const size_t &x) { return make_pair( prm_score_classn_value_list[ x ].get_instance_label(), x ); }
 		),
 		[] (const str_size_pair &x, const str_size_pair &y) { return x.first < y.first; }
 	);
@@ -299,12 +299,12 @@ str_size_pair_vec cath::score::get_sorted_instance_labels_and_indices(const scor
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-score_classn_value_vec cath::score::get_score_classn_values_of_instance_labels(const score_classn_value_list &arg_score_classn_value_list, ///< TODOCUMENT
-                                                                               const str_vec                 &arg_instance_labels          ///< TODOCUMENT,
+score_classn_value_vec cath::score::get_score_classn_values_of_instance_labels(const score_classn_value_list &prm_score_classn_value_list, ///< TODOCUMENT
+                                                                               const str_vec                 &prm_instance_labels          ///< TODOCUMENT,
                                                                                ) {
-	const auto instance_labels_and_indices = get_sorted_instance_labels_and_indices( arg_score_classn_value_list );
+	const auto instance_labels_and_indices = get_sorted_instance_labels_and_indices( prm_score_classn_value_list );
 	return transform_build<score_classn_value_vec>(
-		arg_instance_labels,
+		prm_instance_labels,
 		[&] (const string &x) {
 			const auto find_itr = find_if(
 				instance_labels_and_indices,
@@ -313,7 +313,7 @@ score_classn_value_vec cath::score::get_score_classn_values_of_instance_labels(c
 			if ( find_itr == cath::common::cend( instance_labels_and_indices ) ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find instance label in score_classn_value_list"));
 			}
-			return arg_score_classn_value_list[ find_itr->second ];
+			return prm_score_classn_value_list[ find_itr->second ];
 		}
 	);
 
@@ -325,18 +325,18 @@ score_classn_value_vec cath::score::get_score_classn_values_of_instance_labels(c
 /// if profiling flags it as a bottleneck
 ///
 /// \relates score_classn_value_list
-bool cath::score::instance_labels_match(const score_classn_value_list &arg_score_classn_value_list_a, ///< TODOCUMENT
-                                        const score_classn_value_list &arg_score_classn_value_list_b  ///< TODOCUMENT
+bool cath::score::instance_labels_match(const score_classn_value_list &prm_score_classn_value_list_a, ///< TODOCUMENT
+                                        const score_classn_value_list &prm_score_classn_value_list_b  ///< TODOCUMENT
                                         ) {
-	const auto instance_labels_a = get_sorted_instance_labels( arg_score_classn_value_list_a );
-	const auto instance_labels_b = get_sorted_instance_labels( arg_score_classn_value_list_b );
+	const auto instance_labels_a = get_sorted_instance_labels( prm_score_classn_value_list_a );
+	const auto instance_labels_b = get_sorted_instance_labels( prm_score_classn_value_list_b );
 
 //	cerr << "names_a has " << instance_labels_a.size() << " entries" << endl;
 //	cerr << "names_b has " << instance_labels_b.size() << " entries" << endl;
 
-	return ( instance_labels_a.size() == arg_score_classn_value_list_a.size() )
+	return ( instance_labels_a.size() == prm_score_classn_value_list_a.size() )
 	       &&
-	       ( instance_labels_b.size() == arg_score_classn_value_list_b.size() )
+	       ( instance_labels_b.size() == prm_score_classn_value_list_b.size() )
 	       &&
 		   equal( instance_labels_a, instance_labels_b );
 }
@@ -344,51 +344,51 @@ bool cath::score::instance_labels_match(const score_classn_value_list &arg_score
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-const bool & cath::score::get_higher_is_better(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+const bool & cath::score::get_higher_is_better(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                ) {
-	return arg_score_classn_value_list.get_better_than().get_higher_is_better();
+	return prm_score_classn_value_list.get_better_than().get_higher_is_better();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-double cath::score::worst_possible_score(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+double cath::score::worst_possible_score(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                          ) {
-	return cath::score::get_worst_possible_score( arg_score_classn_value_list.get_better_than() );
+	return cath::score::get_worst_possible_score( prm_score_classn_value_list.get_better_than() );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-score_classn_value_list cath::score::make_score_classn_value_list(const score_classn_value_vec &arg_score_classn_values, ///< TODOCUMENT
-                                                                  const bool                   &arg_higher_is_better,    ///< TODOCUMENT
-                                                                  const string                 &arg_name                 ///< TODOCUMENT
+score_classn_value_list cath::score::make_score_classn_value_list(const score_classn_value_vec &prm_score_classn_values, ///< TODOCUMENT
+                                                                  const bool                   &prm_higher_is_better,    ///< TODOCUMENT
+                                                                  const string                 &prm_name                 ///< TODOCUMENT
                                                                   ) {
-	return score_classn_value_list( arg_score_classn_values, arg_higher_is_better, arg_name );
+	return score_classn_value_list( prm_score_classn_values, prm_higher_is_better, prm_name );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-doub_doub_pair_vec cath::score::correlated_data(const score_classn_value_list &arg_score_classn_values_a, ///< TODOCUMENT
-                                                const score_classn_value_list &arg_score_classn_values_b  ///< TODOCUMENT
+doub_doub_pair_vec cath::score::correlated_data(const score_classn_value_list &prm_score_classn_values_a, ///< TODOCUMENT
+                                                const score_classn_value_list &prm_score_classn_values_b  ///< TODOCUMENT
                                                 ) {
-	if ( ! instance_labels_match( arg_score_classn_values_a, arg_score_classn_values_b ) ) {
+	if ( ! instance_labels_match( prm_score_classn_values_a, prm_score_classn_values_b ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get correlated data for score_classn_value_lists with mismatching instance labels"));
 	}
 	const auto index_b_of_label = transform_build<str_size_map>(
-		indices( arg_score_classn_values_b.size() ),
+		indices( prm_score_classn_values_b.size() ),
 		[&] (const size_t &x) {
-			return make_pair( arg_score_classn_values_b[ x ].get_instance_label(), x );
+			return make_pair( prm_score_classn_values_b[ x ].get_instance_label(), x );
 		}
 	);
 
 	return transform_build<doub_doub_pair_vec>(
-		indices( arg_score_classn_values_a.size() ),
+		indices( prm_score_classn_values_a.size() ),
 		[&] (const size_t &x) {
-			const auto &score_classn_value_a = arg_score_classn_values_a[ x ];
+			const auto &score_classn_value_a = prm_score_classn_values_a[ x ];
 			const auto &instance_label       = score_classn_value_a.get_instance_label();
-			const auto &score_classn_value_b = arg_score_classn_values_b[ index_b_of_label.at( instance_label ) ];
+			const auto &score_classn_value_b = prm_score_classn_values_b[ index_b_of_label.at( instance_label ) ];
 			return make_pair(
 				score_classn_value_a.get_score_value(),
 				score_classn_value_b.get_score_value()
@@ -400,14 +400,14 @@ doub_doub_pair_vec cath::score::correlated_data(const score_classn_value_list &a
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-score_classn_value_list cath::score::read_svmlight_predictions_file(const path   &arg_path, ///< TODOCUMENT
-                                                                    const string &arg_name  ///< TODOCUMENT
+score_classn_value_list cath::score::read_svmlight_predictions_file(const path   &prm_path, ///< TODOCUMENT
+                                                                    const string &prm_name  ///< TODOCUMENT
                                                                     ) {
 	constexpr bool higher_is_better = true;
 	return read_score_classn_value_list(
-		arg_path,
+		prm_path,
 		higher_is_better,
-		arg_name,
+		prm_name,
 //		[] (const str_vec &x) { cerr << join( x, ", ") << "\n"; return ( stod( x.at( 3 ) ) >= 0.0 ); }
 		[] (const str_vec &x) { return ( stod( x.at( 3 ) ) >= 0.0 ); }
 	);
@@ -416,10 +416,10 @@ score_classn_value_list cath::score::read_svmlight_predictions_file(const path  
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-score_classn_value_list_vec cath::score::read_svmlight_predictions_files(const vector<pair<path, string>> &arg_paths_and_names ///< TODOCUMENT
+score_classn_value_list_vec cath::score::read_svmlight_predictions_files(const vector<pair<path, string>> &prm_paths_and_names ///< TODOCUMENT
                                                                          ) {
 	return transform_build<score_classn_value_list_vec>(
-		arg_paths_and_names,
+		prm_paths_and_names,
 		[] (const pair<path, string> &x) {
 			return read_svmlight_predictions_file( x.first, x.second );
 		}
@@ -433,17 +433,17 @@ score_classn_value_list_vec cath::score::read_svmlight_predictions_files(const v
 ///       less_than predicate. Then, simplify this code accordingly.
 ///
 /// \relates score_classn_value_list
-named_true_false_pos_neg_list cath::score::make_named_true_false_pos_neg_list(const score_classn_value_list &arg_score_classn_value_list ///< TODOCUMENT
+named_true_false_pos_neg_list cath::score::make_named_true_false_pos_neg_list(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                                               ) {
 	// Grab functors for determining:
 	//  * whether a score_classn_value represents a positive instance
 	//  * whether one score_classn_value is better_than another
 	const auto reps_positive_instance = [] (const score_classn_value &x) { return x.get_instance_is_positive(); };
-	const auto better_than            = arg_score_classn_value_list.get_better_than();
+	const auto better_than            = prm_score_classn_value_list.get_better_than();
 
 	// Count the number of positive examples and subtract it from the total to get the total number of negatives
-	const size_t total_num           = arg_score_classn_value_list.size();
-	const size_t total_num_positives = numeric_cast<size_t>( count_if( arg_score_classn_value_list, reps_positive_instance ) );
+	const size_t total_num           = prm_score_classn_value_list.size();
+	const size_t total_num_positives = numeric_cast<size_t>( count_if( prm_score_classn_value_list, reps_positive_instance ) );
 	const size_t total_num_negatives = total_num - total_num_positives;
 
 	// Initialise running_tfpn_counts to have no positives and the correct number of true/false negatives
@@ -452,7 +452,7 @@ named_true_false_pos_neg_list cath::score::make_named_true_false_pos_neg_list(co
 
 	// Loop over the groups of equivalent score_classn_values
 	// (the unequal predicate only need test for better_than because the values are already sorted by better_than)
-	for (const auto &equivalent_score_classn_values : arg_score_classn_value_list | equal_grouped( better_than ) ) {
+	for (const auto &equivalent_score_classn_values : prm_score_classn_value_list | equal_grouped( better_than ) ) {
 
 		// Within the group of equivalent score_classn_values, count the number of entries, positives and negatives
 		const size_t num_in_group  = equivalent_score_classn_values.size();
@@ -466,29 +466,29 @@ named_true_false_pos_neg_list cath::score::make_named_true_false_pos_neg_list(co
 	}
 
 	// Return a true_false_pos_neg_list constructed from the true_false_pos_neg_vec
-	return { tfpns, arg_score_classn_value_list.get_name() };
+	return { tfpns, prm_score_classn_value_list.get_name() };
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-double cath::score::area_under_curve(const score_classn_value_list &arg_tfpns,         ///< TODOCUMENT
-                                     const classn_stat             &arg_classn_stat_x, ///< TODOCUMENT
-                                     const classn_stat             &arg_classn_stat_y  ///< TODOCUMENT
+double cath::score::area_under_curve(const score_classn_value_list &prm_tfpns,         ///< TODOCUMENT
+                                     const classn_stat             &prm_classn_stat_x, ///< TODOCUMENT
+                                     const classn_stat             &prm_classn_stat_y  ///< TODOCUMENT
                                      ) {
 	return area_under_curve(
-		make_named_true_false_pos_neg_list( arg_tfpns ),
-		arg_classn_stat_x,
-		arg_classn_stat_y
+		make_named_true_false_pos_neg_list( prm_tfpns ),
+		prm_classn_stat_x,
+		prm_classn_stat_y
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates score_classn_value_list
-double cath::score::area_under_roc_curve(const score_classn_value_list &arg_tfpns ///< TODOCUMENT
+double cath::score::area_under_roc_curve(const score_classn_value_list &prm_tfpns ///< TODOCUMENT
                                          ) {
-	return area_under_roc_curve( make_named_true_false_pos_neg_list( arg_tfpns ) );
+	return area_under_roc_curve( make_named_true_false_pos_neg_list( prm_tfpns ) );
 }
 
 

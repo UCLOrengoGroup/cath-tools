@@ -208,12 +208,12 @@ alignment_outputter_list cath_superpose_options::get_alignment_outputters() cons
 }
 
 /// \brief TODOCUMENT
-superposition_outputter_list cath_superpose_options::get_superposition_outputters(const default_supn_outputter &arg_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
+superposition_outputter_list cath_superpose_options::get_superposition_outputters(const default_supn_outputter &prm_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
                                                                                   ) const {
 	return the_superposition_output_ob.get_superposition_outputters(
 		the_display_ob.get_display_spec(),
 		the_content_ob.get_superposition_content_spec(),
-		arg_default_supn_outputter
+		prm_default_supn_outputter
 	);
 }
 
@@ -232,36 +232,36 @@ const domain_vec & cath_superpose_options::get_domains() const {
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
 /// \relates cath_superpose_options
-unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const cath_superpose_options &arg_cath_superpose_options ///< The cath_superpose_options to query
+unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const cath_superpose_options &prm_cath_superpose_options ///< The cath_superpose_options to query
                                                                         ) {
-	return align::get_alignment_acquirer( arg_cath_superpose_options.get_alignment_input_spec() );
+	return align::get_alignment_acquirer( prm_cath_superpose_options.get_alignment_input_spec() );
 }
 
 /// \brief Get align_refining as implied by the specified cath_superpose_options
 ///
 /// \relates cath_superpose_options
-align_refining cath::opts::get_align_refining(const cath_superpose_options &arg_cath_superpose_options ///< The cath_superpose_options to query
+align_refining cath::opts::get_align_refining(const cath_superpose_options &prm_cath_superpose_options ///< The cath_superpose_options to query
                                               ) {
-	return arg_cath_superpose_options.get_alignment_input_spec().get_refining();
+	return prm_cath_superpose_options.get_alignment_input_spec().get_refining();
 }
 
 /// \brief Get alignment and spanning tree as implied by the specified cath_superpose_options
 ///
 /// \relates cath_superpose_options
-pair<alignment, size_size_pair_vec> cath::opts::get_alignment_and_spanning_tree(const cath_superpose_options &arg_cath_sup_opts,  ///< The options to specify how to get the alignment and spanning tree
-                                                                                const strucs_context         &arg_strucs,         ///< The structures to use
-                                                                                const align_refining         &arg_align_refining  ///< How much refining should be done to the alignment
+pair<alignment, size_size_pair_vec> cath::opts::get_alignment_and_spanning_tree(const cath_superpose_options &prm_cath_sup_opts,  ///< The options to specify how to get the alignment and spanning tree
+                                                                                const strucs_context         &prm_strucs,         ///< The structures to use
+                                                                                const align_refining         &prm_align_refining  ///< How much refining should be done to the alignment
                                                                                 ) {
-	return get_alignment_acquirer( arg_cath_sup_opts )->get_alignment_and_spanning_tree( arg_strucs, arg_align_refining );
+	return get_alignment_acquirer( prm_cath_sup_opts )->get_alignment_and_spanning_tree( prm_strucs, prm_align_refining );
 }
 
 /// \brief Get the single pdbs_acquirer implied by the specified cath_superpose_options
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
 /// \relates cath_superpose_options
-unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_superpose_options &arg_cath_superpose_options ///< The cath_superpose_options to query
+unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_superpose_options &prm_cath_superpose_options ///< The cath_superpose_options to query
                                                               ) {
-	return get_pdbs_acquirer( arg_cath_superpose_options.get_pdb_input_spec() );
+	return get_pdbs_acquirer( prm_cath_superpose_options.get_pdb_input_spec() );
 }
 
 /// \brief Get PDBs and names as implied by the specified cath_superpose_options
@@ -269,15 +269,15 @@ unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_superpo
 /// throw an invalid_argument_exception if the cath_superpose_options isn't configured to read PDBs
 ///
 /// \relates cath_superpose_options
-strucs_context cath::opts::get_pdbs_and_names(const cath_superpose_options &arg_cath_sup_opts,          ///< The options to specify how to get the PDBs and names
-                                              istream                      &arg_istream,                ///< The istream, which may contain PDB data
-                                              const bool                   &arg_remove_partial_residues ///< Whether to remove partial residues from the PDB data
+strucs_context cath::opts::get_pdbs_and_names(const cath_superpose_options &prm_cath_sup_opts,          ///< The options to specify how to get the PDBs and names
+                                              istream                      &prm_istream,                ///< The istream, which may contain PDB data
+                                              const bool                   &prm_remove_partial_residues ///< Whether to remove partial residues from the PDB data
                                               ) {
 	return get_strucs_context(
-		*get_pdbs_acquirer( arg_cath_sup_opts ),
-		arg_istream,
-		arg_remove_partial_residues,
-		arg_cath_sup_opts.get_ids(),
-		arg_cath_sup_opts.get_domains()
+		*get_pdbs_acquirer( prm_cath_sup_opts ),
+		prm_istream,
+		prm_remove_partial_residues,
+		prm_cath_sup_opts.get_ids(),
+		prm_cath_sup_opts.get_domains()
 	);
 }

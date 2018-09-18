@@ -116,46 +116,46 @@ namespace cath {
 			///
 			/// Even in a debug build, this doesn't check the result is in range of rep_sets - that can be done
 			/// by the range-checked std::vector on the attempt to use the index on rep_sets
-			inline size_t scan_structure_data::get_rep_sets_index_of_res_rep_indices(const res_rep_index_type &arg_from_rep_index, ///< The rep res_pair index of the from-residue being queried
-			                                                                         const res_rep_index_type &arg_to_rep_index    ///< The rep res_pair index of the to-residue   being queried
+			inline size_t scan_structure_data::get_rep_sets_index_of_res_rep_indices(const res_rep_index_type &prm_from_rep_index, ///< The rep res_pair index of the from-residue being queried
+			                                                                         const res_rep_index_type &prm_to_rep_index    ///< The rep res_pair index of the to-residue   being queried
 			                                                                         ) const {
 				const auto num_to_res_reps = debug_numeric_cast<size_t>( get_num_reps_of_num_residues(
 					get_this_to_strider( *this ),
 					get_num_residues()
 				) );
-				return ( arg_from_rep_index * num_to_res_reps ) + arg_to_rep_index;
+				return ( prm_from_rep_index * num_to_res_reps ) + prm_to_rep_index;
 			}
 
 			/// \brief Ctor for building from required data and sanity checking
 			///
 			/// This is private; a public ctor that ensures consistency is provided and that ctor delegates to this one
-			inline scan_structure_data::scan_structure_data(single_struc_res_pair_list_vec  arg_rep_sets,         ///< The lists of neighbours for each of the rep res_pairs
-			                                                const index_type               &arg_num_residues,     ///< The total number of residues in the source protein
-			                                                roled_scan_stride               arg_roled_scan_stride ///< TODOCUMENT
-			                                                ) : rep_sets              { std::move( arg_rep_sets          ) },
-			                                                    num_residues          { arg_num_residues                   },
-			                                                    the_roled_scan_stride { std::move( arg_roled_scan_stride ) } {
+			inline scan_structure_data::scan_structure_data(single_struc_res_pair_list_vec  prm_rep_sets,         ///< The lists of neighbours for each of the rep res_pairs
+			                                                const index_type               &prm_num_residues,     ///< The total number of residues in the source protein
+			                                                roled_scan_stride               prm_roled_scan_stride ///< TODOCUMENT
+			                                                ) : rep_sets              { std::move( prm_rep_sets          ) },
+			                                                    num_residues          { prm_num_residues                   },
+			                                                    the_roled_scan_stride { std::move( prm_roled_scan_stride ) } {
 				sanity_check();
 			}
 
 			/// \brief Ctor for building from a protein and the relevant roled_scan_stride
-			inline scan_structure_data::scan_structure_data(const protein           &arg_protein,          ///< The protein that this scan_structure_data should represent
-			                                                const roled_scan_stride &arg_roled_scan_stride ///< TODOCUMENT
+			inline scan_structure_data::scan_structure_data(const protein           &prm_protein,          ///< The protein that this scan_structure_data should represent
+			                                                const roled_scan_stride &prm_roled_scan_stride ///< TODOCUMENT
 			                                                ) : scan_structure_data(
-			                                                    	detail::build_rep_sets( arg_protein, arg_roled_scan_stride ),
-			                                                    	debug_unwarned_numeric_cast<index_type>( arg_protein.get_length() ),
-			                                                    	arg_roled_scan_stride
+			                                                    	detail::build_rep_sets( prm_protein, prm_roled_scan_stride ),
+			                                                    	debug_unwarned_numeric_cast<index_type>( prm_protein.get_length() ),
+			                                                    	prm_roled_scan_stride
 			                                                    ) {
 			}
 
 			/// \brief Get the list of neighbour single_struc_res_pairs relating to the specified from/to rep indices
-			inline const single_struc_res_pair_list & scan_structure_data::get_res_pairs_of_rep_indices(const res_rep_index_type &arg_from_rep_index, ///< The rep index of the from residue of interest
-			                                                                                            const res_rep_index_type &arg_to_rep_index    ///< The rep index of the to   residue of interest
+			inline const single_struc_res_pair_list & scan_structure_data::get_res_pairs_of_rep_indices(const res_rep_index_type &prm_from_rep_index, ///< The rep index of the from residue of interest
+			                                                                                            const res_rep_index_type &prm_to_rep_index    ///< The rep index of the to   residue of interest
 			                                                                                            ) const {
 				return rep_sets[
 					get_rep_sets_index_of_res_rep_indices(
-						arg_from_rep_index,
-						arg_to_rep_index
+						prm_from_rep_index,
+						prm_to_rep_index
 					)
 				];
 			}
@@ -179,51 +179,51 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			inline rep_strider get_this_from_strider(const scan_structure_data &arg_scan_structure_data ///< TODOCUMENT
+			inline rep_strider get_this_from_strider(const scan_structure_data &prm_scan_structure_data ///< TODOCUMENT
 			                                         ) {
-				return get_this_from_strider( arg_scan_structure_data.get_roled_scan_stride() );
+				return get_this_from_strider( prm_scan_structure_data.get_roled_scan_stride() );
 			}
 
 			/// \brief TODOCUMENT
-			inline rep_strider get_this_to_strider(const scan_structure_data &arg_scan_structure_data ///< TODOCUMENT
+			inline rep_strider get_this_to_strider(const scan_structure_data &prm_scan_structure_data ///< TODOCUMENT
 			                                       ) {
-				return get_this_to_strider  ( arg_scan_structure_data.get_roled_scan_stride() );
+				return get_this_to_strider  ( prm_scan_structure_data.get_roled_scan_stride() );
 			}
 
 			/// \brief Get the list of single_struc_res_pair neighbours associated with
 			///        the specified rep specified multi_struc_res_rep_pair
 			///
 			/// \relates scan_structure_data
-			inline const single_struc_res_pair_list & get_res_pairs_of_rep_res_pair(const scan_structure_data      &arg_scan_structure_data, ///< The scan_structure_data to query
-			                                                                        const multi_struc_res_rep_pair &arg_res_pair             ///< The rep multi_struc_res_rep_pair for which the neighbours should be extracted
+			inline const single_struc_res_pair_list & get_res_pairs_of_rep_res_pair(const scan_structure_data      &prm_scan_structure_data, ///< The scan_structure_data to query
+			                                                                        const multi_struc_res_rep_pair &prm_res_pair             ///< The rep multi_struc_res_rep_pair for which the neighbours should be extracted
 			                                                                        ) {
-				return arg_scan_structure_data.get_res_pairs_of_rep_indices(
-					arg_res_pair.get_from_res_rep_index(),
-					arg_res_pair.get_to_res_rep_index()
+				return prm_scan_structure_data.get_res_pairs_of_rep_indices(
+					prm_res_pair.get_from_res_rep_index(),
+					prm_res_pair.get_to_res_rep_index()
 				);
 			}
 
 			/// \brief Get the full index in the source protein represented by the from-residue in the specified res_pair
 			///
 			/// \relates scan_structure_data
-			inline index_type get_from_res_index(const scan_structure_data      &arg_scan_structure_data, ///< The scan_structure_data associated with the specified res_pair
-			                                     const multi_struc_res_rep_pair &arg_res_pair             ///< The res_pair with the from-index for which the full index (in the source protein) should be extracted
+			inline index_type get_from_res_index(const scan_structure_data      &prm_scan_structure_data, ///< The scan_structure_data associated with the specified res_pair
+			                                     const multi_struc_res_rep_pair &prm_res_pair             ///< The res_pair with the from-index for which the full index (in the source protein) should be extracted
 			                                     ) {
 				return get_index_of_rep_index(
-					get_this_from_strider( arg_scan_structure_data ),
-					arg_res_pair.get_from_res_rep_index()
+					get_this_from_strider( prm_scan_structure_data ),
+					prm_res_pair.get_from_res_rep_index()
 				);
 			}
 
 			/// \brief Get the full index in the source protein represented by the to-residue in the specified res_pair
 			///
 			/// \relates scan_structure_data
-			inline index_type get_to_res_index(const scan_structure_data      &arg_scan_structure_data, ///< The scan_structure_data associated with the specified res_pair
-			                                   const multi_struc_res_rep_pair &arg_res_pair             ///< The res_pair with the to-index for which the full index (in the source protein) should be extracted
+			inline index_type get_to_res_index(const scan_structure_data      &prm_scan_structure_data, ///< The scan_structure_data associated with the specified res_pair
+			                                   const multi_struc_res_rep_pair &prm_res_pair             ///< The res_pair with the to-index for which the full index (in the source protein) should be extracted
 			                                   ) {
 				return get_index_of_rep_index(
-					get_this_to_strider( arg_scan_structure_data ),
-					arg_res_pair.get_to_res_rep_index()
+					get_this_to_strider( prm_scan_structure_data ),
+					prm_res_pair.get_to_res_rep_index()
 				);
 			}
 
@@ -241,16 +241,16 @@ namespace cath {
 			/// \relatesalso scan_multi_structure_data
 			///
 			/// \todo Provide an overload with the scan_multi_structure_data (correct name?) that uses
-			///       arg_res_pair.get_structure_index() to get the correct scan_structure_data and
+			///       prm_res_pair.get_structure_index() to get the correct scan_structure_data and
 			///       then calls this
-			inline bool are_not_violated_by(const quad_criteria            &arg_criteria,           ///< The criteria to apply
-			                                const multi_struc_res_rep_pair &arg_res_pair,           ///< The res_pair to be tested for whether it has any chance of matching another
-			                                const scan_structure_data      &arg_scan_structure_data ///< The corresponding scan_structure_data for this res_pair's structure
+			inline bool are_not_violated_by(const quad_criteria            &prm_criteria,           ///< The criteria to apply
+			                                const multi_struc_res_rep_pair &prm_res_pair,           ///< The res_pair to be tested for whether it has any chance of matching another
+			                                const scan_structure_data      &prm_scan_structure_data ///< The corresponding scan_structure_data for this res_pair's structure
 			                                ) {
 				return are_not_violated_by(
-					arg_criteria,
-					get_from_res_index( arg_scan_structure_data, arg_res_pair ),
-					get_to_res_index  ( arg_scan_structure_data, arg_res_pair )
+					prm_criteria,
+					get_from_res_index( prm_scan_structure_data, prm_res_pair ),
+					get_to_res_index  ( prm_scan_structure_data, prm_res_pair )
 				);
 			}
 

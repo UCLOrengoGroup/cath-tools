@@ -59,14 +59,14 @@ namespace cath {
 		};
 
 		/// \brief TODOCUMENT
-		inline constexpr scan_stride::scan_stride(const index_type &arg_query_from_stride, ///< TODOCUMENT
-		                                          const index_type &arg_query_to_stride,   ///< TODOCUMENT
-		                                          const index_type &arg_index_from_stride, ///< TODOCUMENT
-		                                          const index_type &arg_index_to_stride    ///< TODOCUMENT
-		                                          ) : query_from_strider ( arg_query_from_stride ),
-		                                              query_to_strider   ( arg_query_to_stride   ),
-		                                              index_from_strider ( arg_index_from_stride ),
-		                                              index_to_strider   ( arg_index_to_stride   ) {
+		inline constexpr scan_stride::scan_stride(const index_type &prm_query_from_stride, ///< TODOCUMENT
+		                                          const index_type &prm_query_to_stride,   ///< TODOCUMENT
+		                                          const index_type &prm_index_from_stride, ///< TODOCUMENT
+		                                          const index_type &prm_index_to_stride    ///< TODOCUMENT
+		                                          ) : query_from_strider ( prm_query_from_stride ),
+		                                              query_to_strider   ( prm_query_to_stride   ),
+		                                              index_from_strider ( prm_index_from_stride ),
+		                                              index_to_strider   ( prm_index_to_stride   ) {
 		}
 
 		/// \brief TODOCUMENT
@@ -90,63 +90,63 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline constexpr const index_type & get_query_from_stride(const scan_stride &arg_scan_stride ///< TODOCUMENT
+		inline constexpr const index_type & get_query_from_stride(const scan_stride &prm_scan_stride ///< TODOCUMENT
 		                                                          ) {
-			return arg_scan_stride.get_query_from_strider().get_stride();
+			return prm_scan_stride.get_query_from_strider().get_stride();
 		}
 
 		/// \brief TODOCUMENT
-		inline constexpr const index_type & get_query_to_stride(const scan_stride &arg_scan_stride ///< TODOCUMENT
+		inline constexpr const index_type & get_query_to_stride(const scan_stride &prm_scan_stride ///< TODOCUMENT
 		                                                        ) {
-			return arg_scan_stride.get_query_to_strider().get_stride();
+			return prm_scan_stride.get_query_to_strider().get_stride();
 		}
 
 		/// \brief TODOCUMENT
-		inline constexpr const index_type & get_index_from_stride(const scan_stride &arg_scan_stride ///< TODOCUMENT
+		inline constexpr const index_type & get_index_from_stride(const scan_stride &prm_scan_stride ///< TODOCUMENT
 		                                                          ) {
-			return arg_scan_stride.get_index_from_strider().get_stride();
+			return prm_scan_stride.get_index_from_strider().get_stride();
 		}
 
 		/// \brief TODOCUMENT
-		inline constexpr const index_type & get_index_to_stride(const scan_stride &arg_scan_stride ///< TODOCUMENT
+		inline constexpr const index_type & get_index_to_stride(const scan_stride &prm_scan_stride ///< TODOCUMENT
 		                                                        ) {
-			return arg_scan_stride.get_index_to_strider().get_stride();
+			return prm_scan_stride.get_index_to_strider().get_stride();
 		}
 
 		/// \brief TODOCUMENT
-		inline constexpr bool operator==(const scan_stride &arg_scan_stride_a, ///< TODOCUMENT
-		                                 const scan_stride &arg_scan_stride_b  ///< TODOCUMENT
+		inline constexpr bool operator==(const scan_stride &prm_scan_stride_a, ///< TODOCUMENT
+		                                 const scan_stride &prm_scan_stride_b  ///< TODOCUMENT
 		                                 ) {
 			return (
-				arg_scan_stride_a.get_query_from_strider() == arg_scan_stride_b.get_query_from_strider()
+				prm_scan_stride_a.get_query_from_strider() == prm_scan_stride_b.get_query_from_strider()
 				&&
-				arg_scan_stride_a.get_query_to_strider()   == arg_scan_stride_b.get_query_to_strider()
+				prm_scan_stride_a.get_query_to_strider()   == prm_scan_stride_b.get_query_to_strider()
 				&&
-				arg_scan_stride_a.get_index_from_strider() == arg_scan_stride_b.get_index_from_strider()
+				prm_scan_stride_a.get_index_from_strider() == prm_scan_stride_b.get_index_from_strider()
 				&&
-				arg_scan_stride_a.get_index_to_strider()   == arg_scan_stride_b.get_index_to_strider()
+				prm_scan_stride_a.get_index_to_strider()   == prm_scan_stride_b.get_index_to_strider()
 			);
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates scan_stride
-		inline constexpr index_type from_co_stride(const scan_stride &arg_stride ///< The scan_stride object containing the relevant stride values
+		inline constexpr index_type from_co_stride(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
 		                                           ) {
 			return co_stride(
-				arg_stride.get_query_from_strider(),
-				arg_stride.get_index_from_strider()
+				prm_stride.get_query_from_strider(),
+				prm_stride.get_index_from_strider()
 			);
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates scan_stride
-		inline constexpr index_type to_co_stride(const scan_stride &arg_stride ///< The scan_stride object containing the relevant stride values
+		inline constexpr index_type to_co_stride(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
 		                                         ) {
 			return co_stride(
-				arg_stride.get_query_to_strider(),
-				arg_stride.get_index_to_strider()
+				prm_stride.get_query_to_strider(),
+				prm_stride.get_index_to_strider()
 			);
 		}
 

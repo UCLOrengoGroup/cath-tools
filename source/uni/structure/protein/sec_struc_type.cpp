@@ -34,29 +34,29 @@ using namespace std;
 /// \brief Simple extraction operator for sec_struc_type that expects H or S
 ///
 /// \relates sec_struc_type
-istream & cath::operator>>(istream        &arg_istream,       ///< The istream from which to extract the sec_struc_type
-                           sec_struc_type &arg_sec_struc_type ///< The sec_struc_type to populate
+istream & cath::operator>>(istream        &prm_istream,       ///< The istream from which to extract the sec_struc_type
+                           sec_struc_type &prm_sec_struc_type ///< The sec_struc_type to populate
                            ) {
 	string input_string;
-	arg_istream >> input_string;
+	prm_istream >> input_string;
 	if (input_string == "H") {
-		arg_sec_struc_type = sec_struc_type::ALPHA_HELIX;
+		prm_sec_struc_type = sec_struc_type::ALPHA_HELIX;
 	}
 	else if (input_string == "S") {
-		arg_sec_struc_type = sec_struc_type::BETA_STRAND;
+		prm_sec_struc_type = sec_struc_type::BETA_STRAND;
 	}
 	else {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to recognise sec_struc type " + input_string));
 	}
-	return arg_istream;
+	return prm_istream;
 }
 
 /// \brief Generate a string describing the specified sec_struc_type
 ///
 /// \relates sec_struc_type
-string cath::to_string(const sec_struc_type &arg_sec_struc_type ///< The sec_struc_type to describe
+string cath::to_string(const sec_struc_type &prm_sec_struc_type ///< The sec_struc_type to describe
                        ) {
-	switch ( arg_sec_struc_type ) {
+	switch ( prm_sec_struc_type ) {
 		case ( sec_struc_type::ALPHA_HELIX ) : { return "H"; }
 		case ( sec_struc_type::BETA_STRAND ) : { return "S"; }
 		case ( sec_struc_type::COIL        ) : { return " "; }
@@ -67,9 +67,9 @@ string cath::to_string(const sec_struc_type &arg_sec_struc_type ///< The sec_str
 /// \brief Simple insertion operator for sec_struc_type that outputs H or S
 ///
 /// \relates sec_struc_type
-ostream & cath::operator<<(ostream              &arg_ostream,       ///< The ostream to which to output the sec_struc_type
-                           const sec_struc_type &arg_sec_struc_type ///< The sec_struc_type to output
+ostream & cath::operator<<(ostream              &prm_ostream,       ///< The ostream to which to output the sec_struc_type
+                           const sec_struc_type &prm_sec_struc_type ///< The sec_struc_type to output
                            ) {
-	arg_ostream << to_string( arg_sec_struc_type );
-	return arg_ostream;
+	prm_ostream << to_string( prm_sec_struc_type );
+	return prm_ostream;
 }

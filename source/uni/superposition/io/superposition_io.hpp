@@ -112,9 +112,9 @@ namespace cath {
 	
 		/// \brief Specialisation of cath::common::read_from_ptree for superposition
 		template <>
-		inline sup::superposition read_from_ptree<sup::superposition>(const boost::property_tree::ptree &arg_ptree ///< The ptree from which to read the superposition
+		inline sup::superposition read_from_ptree<sup::superposition>(const boost::property_tree::ptree &prm_ptree ///< The ptree from which to read the superposition
 		                                                              ) {
-			return sup::superposition_from_ptree( arg_ptree );
+			return sup::superposition_from_ptree( prm_ptree );
 		}
 	
 	} // namespace common

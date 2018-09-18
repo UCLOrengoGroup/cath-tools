@@ -35,13 +35,13 @@ bool cath::test::bootstrap_env_var_is_set() {
 }
 
 /// \brief Return whether a file should be written under the specified bootstrap_mode
-bool cath::test::should_overwrite(const bootstrap_mode &arg_bootstrap_mode ///< The bootstrap_mode for the file
+bool cath::test::should_overwrite(const bootstrap_mode &prm_bootstrap_mode ///< The bootstrap_mode for the file
                                   ) {
 	return (
-		( arg_bootstrap_mode == bootstrap_mode::ALWAYS )
+		( prm_bootstrap_mode == bootstrap_mode::ALWAYS )
 		||
 		(
-			( arg_bootstrap_mode == bootstrap_mode::IF_ENV )
+			( prm_bootstrap_mode == bootstrap_mode::IF_ENV )
 			&&
 			bootstrap_env_var_is_set()
 		)

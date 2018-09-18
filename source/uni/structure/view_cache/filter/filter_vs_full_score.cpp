@@ -47,10 +47,10 @@ const string filter_vs_full_score::STRING_PREFIX( "filter_vs_full_score[" );
 const string filter_vs_full_score::STRING_SUFFIX( "]"                     );
 
 /// \brief Ctor for filter_vs_full_score
-filter_vs_full_score::filter_vs_full_score(const double &arg_filter_score, ///< The filter score with which this should be constructed
-                                           const double &arg_full_score    ///< The full score with which this should be constructed
-                                           ) : filter_score( arg_filter_score ),
-                                               full_score  ( arg_full_score   ) {
+filter_vs_full_score::filter_vs_full_score(const double &prm_filter_score, ///< The filter score with which this should be constructed
+                                           const double &prm_full_score    ///< The full score with which this should be constructed
+                                           ) : filter_score( prm_filter_score ),
+                                               full_score  ( prm_full_score   ) {
 }
 
 /// \brief Getter for the filter score
@@ -66,13 +66,13 @@ const double & filter_vs_full_score::get_full_score() const {
 /// \brief Standard equality operator for filter_vs_full_score
 ///
 /// \relates filter_vs_full_score
-bool cath::index::filter::operator==(const filter_vs_full_score &arg_filter_vs_full_score_a, ///< The first filter_vs_full_score to compare
-                                     const filter_vs_full_score &arg_filter_vs_full_score_b  ///< The second filter_vs_full_score to compare
+bool cath::index::filter::operator==(const filter_vs_full_score &prm_filter_vs_full_score_a, ///< The first filter_vs_full_score to compare
+                                     const filter_vs_full_score &prm_filter_vs_full_score_b  ///< The second filter_vs_full_score to compare
                                      ) {
-	if ( arg_filter_vs_full_score_a.get_filter_score() != arg_filter_vs_full_score_b.get_filter_score() ) {
+	if ( prm_filter_vs_full_score_a.get_filter_score() != prm_filter_vs_full_score_b.get_filter_score() ) {
 		return false;
 	}
-	if ( arg_filter_vs_full_score_a.get_full_score()   != arg_filter_vs_full_score_b.get_full_score()   ) {
+	if ( prm_filter_vs_full_score_a.get_full_score()   != prm_filter_vs_full_score_b.get_full_score()   ) {
 		return false;
 	}
 	return true;
@@ -82,23 +82,23 @@ bool cath::index::filter::operator==(const filter_vs_full_score &arg_filter_vs_f
 ///        all full scores >= some value by selecting all filter scores >= some value)
 ///
 /// \relates filter_vs_full_score
-classn_outcome cath::index::filter::assess_real_scores_on_filter_attempt(const filter_vs_full_score &arg_real_scores,   ///< The real scores to be assessed
-                                                                         const filter_vs_full_score &arg_filter_attempt ///< The filter attempt (interpretation: this attempts to identify all entries with full score >= filter_vs_full_score's full score by selecting all entries with filter score >= filter_vs_full_score's filter score)
+classn_outcome cath::index::filter::assess_real_scores_on_filter_attempt(const filter_vs_full_score &prm_real_scores,   ///< The real scores to be assessed
+                                                                         const filter_vs_full_score &prm_filter_attempt ///< The filter attempt (interpretation: this attempts to identify all entries with full score >= filter_vs_full_score's full score by selecting all entries with filter score >= filter_vs_full_score's filter score)
                                                                          ) {
-	const bool correct_answer     = ( arg_real_scores.get_full_score()   >= arg_filter_attempt.get_full_score()   );
-	const bool decision_of_filter = ( arg_real_scores.get_filter_score() >= arg_filter_attempt.get_filter_score() );
+	const bool correct_answer     = ( prm_real_scores.get_full_score()   >= prm_filter_attempt.get_full_score()   );
+	const bool decision_of_filter = ( prm_real_scores.get_filter_score() >= prm_filter_attempt.get_filter_score() );
 	return outcome_of_correct_and_decision( correct_answer, decision_of_filter );
 }
 
 /// \brief Simple extraction operator for filter_vs_full_score
 ///
 /// \relates filter_vs_full_score
-istream & cath::index::filter::operator>>(istream              &arg_istream,             ///< The istream from which to extract the filter_vs_full_score
-                                          filter_vs_full_score &arg_filter_vs_full_score ///< The filter_vs_full_score to populate
+istream & cath::index::filter::operator>>(istream              &prm_istream,             ///< The istream from which to extract the filter_vs_full_score
+                                          filter_vs_full_score &prm_filter_vs_full_score ///< The filter_vs_full_score to populate
                                           ) {
 	// Grab the string
 	string input_string;
-	getline( arg_istream,  input_string );
+	getline( prm_istream,  input_string );
 
 	// Trim off any prefix/suffix at the start/end
 	if ( starts_with( input_string, filter_vs_full_score::STRING_PREFIX ) && ends_with( input_string, filter_vs_full_score::STRING_SUFFIX ) ) {
@@ -135,24 +135,24 @@ istream & cath::index::filter::operator>>(istream              &arg_istream,    
 	// to construct a filter_vs_full_score
 	const double filter_score = stod( input_strings[ 0 ] );
 	const double full_score   = stod( input_strings[ 1 ] );
-	arg_filter_vs_full_score  = filter_vs_full_score( filter_score, full_score );
+	prm_filter_vs_full_score  = filter_vs_full_score( filter_score, full_score );
 
 	// If all has gone well, then return the istream
-	return arg_istream;
+	return prm_istream;
 }
 
 /// \brief Simple insertion operator for filter_vs_full_score
 ///
 /// \relates filter_vs_full_score
-ostream & cath::index::filter::operator<<(ostream                    &arg_os,                  ///< The ostream to which the filter_vs_full_score should be output
-                                          const filter_vs_full_score &arg_filter_vs_full_score ///< The filter_vs_full_score to output
+ostream & cath::index::filter::operator<<(ostream                    &prm_os,                  ///< The ostream to which the filter_vs_full_score should be output
+                                          const filter_vs_full_score &prm_filter_vs_full_score ///< The filter_vs_full_score to output
                                           ) {
 	ostringstream temp_ss;
 	temp_ss << filter_vs_full_score::STRING_PREFIX;
-	temp_ss << right << setw( 7 ) << arg_filter_vs_full_score.get_filter_score();
+	temp_ss << right << setw( 7 ) << prm_filter_vs_full_score.get_filter_score();
 	temp_ss << ",";
-	temp_ss << right << setw( 7 ) << arg_filter_vs_full_score.get_full_score();
+	temp_ss << right << setw( 7 ) << prm_filter_vs_full_score.get_full_score();
 	temp_ss << filter_vs_full_score::STRING_SUFFIX;
-	arg_os << temp_ss.str();
-	return arg_os;
+	prm_os << temp_ss.str();
+	return prm_os;
 }

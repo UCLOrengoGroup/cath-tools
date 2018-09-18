@@ -50,13 +50,13 @@ tribool protein_only_length_getter::do_higher_is_better() const {
 }
 
 /// \brief TODOCUMENT
-size_t protein_only_length_getter::do_get_length(const alignment &/*arg_alignment*/, ///< TODOCUMENT
-			                                     const protein   &arg_protein_a,     ///< TODOCUMENT
-			                                     const protein   &arg_protein_b      ///< TODOCUMENT
+size_t protein_only_length_getter::do_get_length(const alignment &/*prm_alignment*/, ///< TODOCUMENT
+			                                     const protein   &prm_protein_a,     ///< TODOCUMENT
+			                                     const protein   &prm_protein_b      ///< TODOCUMENT
 			                                     ) const {
 	return do_get_length(
-		arg_protein_a,
-		arg_protein_b
+		prm_protein_a,
+		prm_protein_b
 	);
 }
 
@@ -91,10 +91,10 @@ unique_ptr<protein_only_length_getter> protein_only_length_getter::protein_only_
 }
 
 /// \brief TODOCUMENT
-size_t protein_only_length_getter::get_prot_only_length(const protein &arg_protein_a, ///< TODOCUMENT
-                                                        const protein &arg_protein_b  ///< TODOCUMENT
+size_t protein_only_length_getter::get_prot_only_length(const protein &prm_protein_a, ///< TODOCUMENT
+                                                        const protein &prm_protein_b  ///< TODOCUMENT
                                                         ) const {
-	return do_get_length( arg_protein_a, arg_protein_b );
+	return do_get_length( prm_protein_a, prm_protein_b );
 }
 
 /// \brief TODOCUMENT
@@ -116,11 +116,11 @@ ptr_vector<protein_only_length_getter> cath::score::get_all_protein_only_length_
 /// \brief TODOCUMENT
 ///
 /// \relates protein_only_length_getter
-score_value cath::score::get_length_score(const protein_only_length_getter &arg_length_getter, ///< TODOCUMENT
-                                          const protein                    &arg_protein_a,     ///< TODOCUMENT
-                                          const protein                    &arg_protein_b      ///< TODOCUMENT
+score_value cath::score::get_length_score(const protein_only_length_getter &prm_length_getter, ///< TODOCUMENT
+                                          const protein                    &prm_protein_a,     ///< TODOCUMENT
+                                          const protein                    &prm_protein_b      ///< TODOCUMENT
                                           ) {
 	return numeric_cast<score_value>(
-		arg_length_getter.get_prot_only_length( arg_protein_a, arg_protein_b )
+		prm_length_getter.get_prot_only_length( prm_protein_a, prm_protein_b )
 	);
 }

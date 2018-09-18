@@ -59,37 +59,37 @@ const bool & crh_input_spec::get_input_hits_are_grouped() const {
 }
 
 /// \brief Setter for the input file from which data should be read
-crh_input_spec & crh_input_spec::set_input_file(const path &arg_input_file ///< The input file from which data should be read
+crh_input_spec & crh_input_spec::set_input_file(const path &prm_input_file ///< The input file from which data should be read
                                                 ) {
-	input_file = arg_input_file;
+	input_file = prm_input_file;
 	return *this;
 }
 
 /// \brief Setter for whether to read the input data from stdin
-crh_input_spec & crh_input_spec::set_read_from_stdin(const bool &arg_read_from_stdin ///< Whether to read the input data from stdin
+crh_input_spec & crh_input_spec::set_read_from_stdin(const bool &prm_read_from_stdin ///< Whether to read the input data from stdin
                                                      ) {
-	read_from_stdin = arg_read_from_stdin;
+	read_from_stdin = prm_read_from_stdin;
 	return *this;
 }
 
 /// \brief Setter for the format of the input data
-crh_input_spec & crh_input_spec::set_input_format(const hits_input_format_tag &arg_input_format ///< The format of the input data
+crh_input_spec & crh_input_spec::set_input_format(const hits_input_format_tag &prm_input_format ///< The format of the input data
                                                   ) {
-	input_format = arg_input_format;
+	input_format = prm_input_format;
 	return *this;
 }
 
 /// \brief Setter for the minimum gap length to consider when parsing an alignment
-crh_input_spec & crh_input_spec::set_min_gap_length(const residx_t &arg_min_gap_length ///< The minimum gap length to consider when parsing an alignment
+crh_input_spec & crh_input_spec::set_min_gap_length(const residx_t &prm_min_gap_length ///< The minimum gap length to consider when parsing an alignment
                                                     ) {
-	min_gap_length = arg_min_gap_length;
+	min_gap_length = prm_min_gap_length;
 	return *this;
 }
 
 /// \brief Setter for whether the code can assume that the input data is pre-grouped by query_id
-crh_input_spec & crh_input_spec::set_input_hits_are_grouped(const bool &arg_input_hits_are_grouped ///< Whether the code can assume that the input data is pre-grouped by query_id
+crh_input_spec & crh_input_spec::set_input_hits_are_grouped(const bool &prm_input_hits_are_grouped ///< Whether the code can assume that the input data is pre-grouped by query_id
                                                             ) {
-	input_hits_are_grouped = arg_input_hits_are_grouped;
+	input_hits_are_grouped = prm_input_hits_are_grouped;
 	return *this;
 }
 
@@ -97,9 +97,9 @@ crh_input_spec & crh_input_spec::set_input_hits_are_grouped(const bool &arg_inpu
 ///        or none otherwise
 ///
 /// \relates crh_input_spec
-str_opt cath::rslv::get_invalid_description(const crh_input_spec &arg_spec ///< The crh_input_spec to query
+str_opt cath::rslv::get_invalid_description(const crh_input_spec &prm_spec ///< The crh_input_spec to query
                                             ) {
-	if ( arg_spec.get_input_file() && arg_spec.get_read_from_stdin() ) {
+	if ( prm_spec.get_input_file() && prm_spec.get_read_from_stdin() ) {
 		return "Cannot read from both a file and stdin"s;
 	}
 

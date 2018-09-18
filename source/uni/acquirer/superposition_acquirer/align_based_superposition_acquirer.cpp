@@ -72,7 +72,7 @@ using std::tuple;
 using std::vector;
 
 /// \brief TODOCUMENT
-superposition_context align_based_superposition_acquirer::do_get_superposition(ostream &arg_stderr ///< TODOCMENT
+superposition_context align_based_superposition_acquirer::do_get_superposition(ostream &prm_stderr ///< TODOCMENT
                                                                                ) const {
 	const pdb_list restricted_pdbs = get_restricted_pdbs( *this );
 	// Loop over all the PDBs after the first one and grab the common coords between it and the one before
@@ -83,12 +83,12 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 		const size_t &index_1 = tree_edge.first;
 		const size_t &index_2 = tree_edge.second;
 
-//		arg_stderr << "Extracting common coords between " << name_1 << " and " << name_2 << endl;
-//		arg_stderr << "the_alignment.get().num_entries() is " << the_alignment_ref.get().num_entries() << endl;
-//		arg_stderr << "the_alignment.get().length()      is " << the_alignment_ref.get().length()      << endl;
-//		arg_stderr << "restricted_pdbs.size()            is " << restricted_pdbs.size()                << endl;
-//		arg_stderr << "index_1                           is " << index_1                               << endl;
-//		arg_stderr << "index_2                           is " << index_2                               << endl;
+//		prm_stderr << "Extracting common coords between " << name_1 << " and " << name_2 << endl;
+//		prm_stderr << "the_alignment.get().num_entries() is " << the_alignment_ref.get().num_entries() << endl;
+//		prm_stderr << "the_alignment.get().length()      is " << the_alignment_ref.get().length()      << endl;
+//		prm_stderr << "restricted_pdbs.size()            is " << restricted_pdbs.size()                << endl;
+//		prm_stderr << "index_1                           is " << index_1                               << endl;
+//		prm_stderr << "index_2                           is " << index_2                               << endl;
 		const pair<coord_list, coord_list> all_common_coords = alignment_coord_extractor::get_common_coords(
 			get_alignment(),
 			restricted_pdbs[ index_1 ],
@@ -106,7 +106,7 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 //			const coord coord_a = all_common_coords.first[coord_ctr];
 //			const coord coord_b = all_common_coords.second[coord_ctr];
 //			const double distance = distance_between_points(coord_a, coord_b);
-////			arg_stderr << "distance : " << distance << endl;
+////			prm_stderr << "distance : " << distance << endl;
 //			if (distance <= 3.0) {
 //				++num_within_three_angstroms;
 //			}
@@ -115,12 +115,12 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 //			}
 //		}
 
-//		arg_stderr << "Standard RMSD of the structures in their original positions is : " << standard_rmsd_of_original_posns << endl;
-		arg_stderr << "Standard RMSD is : " << standard_rmsd << endl;
-//		arg_stderr << "percentage_within_three_angstrom       " << (100.0 * num_within_three_angstroms  / all_common_coords.first.size()) << endl;;
-//		arg_stderr << " (" << (100.0 * num_within_three_angstroms / all_common_coords.first.size()) << " %)" << endl;
-//		arg_stderr << "percentage_within_five_angstroms " << (100.0 * num_within_five_angstroms  / all_common_coords.first.size()) << endl;;
-//		arg_stderr << " (" << (100.0 * num_within_five_angstroms  / all_common_coords.first.size()) << " %)" << endl;
+//		prm_stderr << "Standard RMSD of the structures in their original positions is : " << standard_rmsd_of_original_posns << endl;
+		prm_stderr << "Standard RMSD is : " << standard_rmsd << endl;
+//		prm_stderr << "percentage_within_three_angstrom       " << (100.0 * num_within_three_angstroms  / all_common_coords.first.size()) << endl;;
+//		prm_stderr << " (" << (100.0 * num_within_three_angstroms / all_common_coords.first.size()) << " %)" << endl;
+//		prm_stderr << "percentage_within_five_angstroms " << (100.0 * num_within_five_angstroms  / all_common_coords.first.size()) << endl;;
+//		prm_stderr << " (" << (100.0 * num_within_five_angstroms  / all_common_coords.first.size()) << " %)" << endl;
 
 //		const common_residue_selection_policy &policy = (
 //			false
@@ -129,7 +129,7 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 //			: static_cast<const common_residue_selection_policy &>(select_all_policy)
 //		);
 
-//		const selection_policy_acquirer the_selection_policy_acquirer = arg_cath_superpose_options.get_selection_policy_acquirer();
+//		const selection_policy_acquirer the_selection_policy_acquirer = prm_cath_superpose_options.get_selection_policy_acquirer();
 		const pair<coord_list, coord_list> common_coords = get_common_coords(
 			the_selection_policy_acquirer,
 			get_alignment(),
@@ -168,7 +168,7 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 		//  * double : 2^52
 		//  * float  : 2^23
 		if ( boost::math::relative_difference( actual_full_rmsd, standard_rmsd ) > TOLERANCE_FOR_EQUAL_RMSDS ) {
-			arg_stderr << "Superposed using " << the_selection_policy_acquirer.get_descriptive_name() << " and actual full RMSD is : " << actual_full_rmsd << endl;
+			prm_stderr << "Superposed using " << the_selection_policy_acquirer.get_descriptive_name() << " and actual full RMSD is : " << actual_full_rmsd << endl;
 		}
 	}
 
@@ -189,14 +189,14 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 }
 
 /// \brief Ctor for align_based_superposition_acquirer
-align_based_superposition_acquirer::align_based_superposition_acquirer(const alignment           &arg_alignment,                ///< TODOCUMENT
-                                                                       const size_size_pair_vec  &arg_spanning_tree,            ///< TODOCUMENT
-                                                                       const strucs_context      &arg_strucs_context,           ///< TODOCUMENT
-                                                                       selection_policy_acquirer  arg_selection_policy_acquirer ///< TODOCUMENT
-                                                                       ) : the_alignment_ref             { arg_alignment                              },
-                                                                           spanning_tree_ref             { arg_spanning_tree                          },
-                                                                           context_ref                   { arg_strucs_context                         },
-                                                                           the_selection_policy_acquirer { std::move( arg_selection_policy_acquirer ) } {
+align_based_superposition_acquirer::align_based_superposition_acquirer(const alignment           &prm_alignment,                ///< TODOCUMENT
+                                                                       const size_size_pair_vec  &prm_spanning_tree,            ///< TODOCUMENT
+                                                                       const strucs_context      &prm_strucs_context,           ///< TODOCUMENT
+                                                                       selection_policy_acquirer  prm_selection_policy_acquirer ///< TODOCUMENT
+                                                                       ) : the_alignment_ref             { prm_alignment                              },
+                                                                           spanning_tree_ref             { prm_spanning_tree                          },
+                                                                           context_ref                   { prm_strucs_context                         },
+                                                                           the_selection_policy_acquirer { std::move( prm_selection_policy_acquirer ) } {
 }
 
 /// \brief TODOCUMENT
@@ -222,31 +222,31 @@ const selection_policy_acquirer & align_based_superposition_acquirer::get_select
 /// \brief TODOCUMENT
 ///
 /// \relates align_based_superposition_acquirer
-const pdb_list & cath::opts::get_pdbs(const align_based_superposition_acquirer &arg_align_based_superposition_acquirer ///< TODOCUMENT
+const pdb_list & cath::opts::get_pdbs(const align_based_superposition_acquirer &prm_align_based_superposition_acquirer ///< TODOCUMENT
                                       ) {
-	return arg_align_based_superposition_acquirer.get_strucs_context().get_pdbs();
+	return prm_align_based_superposition_acquirer.get_strucs_context().get_pdbs();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates align_based_superposition_acquirer
-const name_set_list & cath::opts::get_name_sets(const align_based_superposition_acquirer &arg_align_based_superposition_acquirer ///< TODOCUMENT
+const name_set_list & cath::opts::get_name_sets(const align_based_superposition_acquirer &prm_align_based_superposition_acquirer ///< TODOCUMENT
                                                 ) {
-	return arg_align_based_superposition_acquirer.get_strucs_context().get_name_sets();
+	return prm_align_based_superposition_acquirer.get_strucs_context().get_name_sets();
 }
 
 /// \brief Getter for the specification of the regions of the PDBs to which the alignment refers
 ///
 /// \relates align_based_superposition_acquirer
-const chop::region_vec_opt_vec & cath::opts::get_regions(const align_based_superposition_acquirer &arg_align_based_superposition_acquirer ///< TODOCUMENT
+const chop::region_vec_opt_vec & cath::opts::get_regions(const align_based_superposition_acquirer &prm_align_based_superposition_acquirer ///< TODOCUMENT
                                                          ) {
-	return arg_align_based_superposition_acquirer.get_strucs_context().get_regions();
+	return prm_align_based_superposition_acquirer.get_strucs_context().get_regions();
 }
 
 /// \brief Get a copy of the PDBs in the specified align_based_superposition_acquirer, restricted to its regions
 ///
 /// \relates align_based_superposition_acquirer
-pdb_list cath::opts::get_restricted_pdbs(const align_based_superposition_acquirer &arg_align_based_superposition_acquirer ///< The align_based_superposition_acquirer to query
+pdb_list cath::opts::get_restricted_pdbs(const align_based_superposition_acquirer &prm_align_based_superposition_acquirer ///< The align_based_superposition_acquirer to query
                                          ) {
-	return get_restricted_pdbs( arg_align_based_superposition_acquirer.get_strucs_context() );
+	return get_restricted_pdbs( prm_align_based_superposition_acquirer.get_strucs_context() );
 }

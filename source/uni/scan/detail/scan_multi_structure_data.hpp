@@ -63,9 +63,9 @@ namespace cath {
 			};
 
 			/// \brief Subscript operator to get a const reference to the scan_structure_data at the specified index
-			inline const scan_structure_data & scan_multi_structure_data::operator[](const index_type &arg_index ///< The index of the scan_structure_data to return
+			inline const scan_structure_data & scan_multi_structure_data::operator[](const index_type &prm_index ///< The index of the scan_structure_data to return
 			                                                                         ) const {
-				return structures_data[ arg_index ];
+				return structures_data[ prm_index ];
 			}
 
 			/// \brief Whether this is empty (ie doesn't contain any data on any structures)
@@ -94,35 +94,35 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <class... Ts>
-			void scan_multi_structure_data::emplace_back(Ts&& ... arg_values ///< TODOCUMENT
+			void scan_multi_structure_data::emplace_back(Ts&& ... prm_values ///< TODOCUMENT
 			                                             ) {
-				structures_data.emplace_back( std::forward<Ts>( arg_values ) ... );
+				structures_data.emplace_back( std::forward<Ts>( prm_values ) ... );
 			}
 
 
 			/// \brief Add the specified scan_structure_data to the end of the list
 			///
 			/// \pre TODOCUMENT (roled_scan_strides must match)
-			inline void scan_multi_structure_data::push_back(const scan_structure_data &arg_scan_structure_data ///< The scan_structure_data to append to the scan_multi_structure_data
+			inline void scan_multi_structure_data::push_back(const scan_structure_data &prm_scan_structure_data ///< The scan_structure_data to append to the scan_multi_structure_data
 			                                                 ) {
 				if ( ! empty() ) {
-					if ( common::front( *this ).get_roled_scan_stride() != arg_scan_structure_data.get_roled_scan_stride() ) {
+					if ( common::front( *this ).get_roled_scan_stride() != prm_scan_structure_data.get_roled_scan_stride() ) {
 						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot add a scan_data_structure to an existing scan_multi_structure_data which already has scan_data_structures with a different roled_scan_stride"));
 					}
 				}
-				structures_data.push_back( arg_scan_structure_data );
+				structures_data.push_back( prm_scan_structure_data );
 			}
 
 			/// \brief Get the list of single_struc_res_pair neighbours associated with
 			///        the specified rep specified multi_struc_res_rep_pair
 			///
 			/// \relates scan_multi_structure_data
-			inline const single_struc_res_pair_list & get_neighbours_of_rep_pair(const scan_multi_structure_data &arg_multi_structure_data, ///< The scan_multi_structure_data to query
-			                                                                     const multi_struc_res_rep_pair  &arg_res_pair              ///< The rep multi_struc_res_rep_pair for which the neighbours should be extracted
+			inline const single_struc_res_pair_list & get_neighbours_of_rep_pair(const scan_multi_structure_data &prm_multi_structure_data, ///< The scan_multi_structure_data to query
+			                                                                     const multi_struc_res_rep_pair  &prm_res_pair              ///< The rep multi_struc_res_rep_pair for which the neighbours should be extracted
 			                                                                     ) {
-				return arg_multi_structure_data[ arg_res_pair.get_structure_index() ].get_res_pairs_of_rep_indices(
-					arg_res_pair.get_from_res_rep_index(),
-					arg_res_pair.get_to_res_rep_index()
+				return prm_multi_structure_data[ prm_res_pair.get_structure_index() ].get_res_pairs_of_rep_indices(
+					prm_res_pair.get_from_res_rep_index(),
+					prm_res_pair.get_to_res_rep_index()
 				);
 			}
 
@@ -133,13 +133,13 @@ namespace cath {
 			/// (They're different because the scan_stride can specify different from/to strides for each.)
 			///
 			/// \relates scan_multi_structure_data
-			inline void add_structure_data(scan_multi_structure_data &arg_scan_multi_structure_data, ///< TODOCUMENT
-			                               const protein             &arg_protein,                   ///< TODOCUMENT
-			                               const roled_scan_stride   &arg_roled_scan_stride          ///< TODOCUMENT
+			inline void add_structure_data(scan_multi_structure_data &prm_scan_multi_structure_data, ///< TODOCUMENT
+			                               const protein             &prm_protein,                   ///< TODOCUMENT
+			                               const roled_scan_stride   &prm_roled_scan_stride          ///< TODOCUMENT
 			                               ) {
-				arg_scan_multi_structure_data.emplace_back(
-					arg_protein,
-					arg_roled_scan_stride
+				prm_scan_multi_structure_data.emplace_back(
+					prm_protein,
+					prm_roled_scan_stride
 				);
 			}
 
@@ -155,14 +155,14 @@ namespace cath {
 			/// \relates quad_criteria
 			///
 			/// \relatesalso scan_multi_structure_data
-			inline bool are_not_violated_by(const quad_criteria             &arg_criteria,           ///< The criteria to apply
-			                                const multi_struc_res_rep_pair  &arg_res_pair,           ///< The res_pair to be tested for whether it has any chance of matching another
-			                                const scan_multi_structure_data &arg_scan_structure_data ///< The corresponding scan_multi_structure_data containing the data for this res_pair's structure
+			inline bool are_not_violated_by(const quad_criteria             &prm_criteria,           ///< The criteria to apply
+			                                const multi_struc_res_rep_pair  &prm_res_pair,           ///< The res_pair to be tested for whether it has any chance of matching another
+			                                const scan_multi_structure_data &prm_scan_structure_data ///< The corresponding scan_multi_structure_data containing the data for this res_pair's structure
 			                                ) {
 				return are_not_violated_by(
-					arg_criteria,
-					arg_res_pair,
-					arg_scan_structure_data[ arg_res_pair.get_structure_index() ]
+					prm_criteria,
+					prm_res_pair,
+					prm_scan_structure_data[ prm_res_pair.get_structure_index() ]
 				);
 			}
 
@@ -171,20 +171,20 @@ namespace cath {
 			///
 			/// \relates scan_multi_structure_data
 			template <typename FN>
-			inline void act_on_multi_matches(const multi_struc_res_rep_pair_list &arg_list_a,               ///< TODOCUMENT
-			                                 const multi_struc_res_rep_pair_list &arg_list_b,               ///< TODOCUMENT
-			                                 const scan_multi_structure_data     &arg_query_structures_data, ///< TODOCUMENT
-			                                 const scan_multi_structure_data     &arg_index_structures_data, ///< TODOCUMENT
-			                                 const quad_criteria                 &arg_criteria,             ///< TODOCUMENT
-//			                                 const scan_stride                   &arg_stride,               ///< TODOCUMENT
-			                                 FN                                  &arg_fn                    ///< TODOCUMENT
+			inline void act_on_multi_matches(const multi_struc_res_rep_pair_list &prm_list_a,               ///< TODOCUMENT
+			                                 const multi_struc_res_rep_pair_list &prm_list_b,               ///< TODOCUMENT
+			                                 const scan_multi_structure_data     &prm_query_structures_data, ///< TODOCUMENT
+			                                 const scan_multi_structure_data     &prm_index_structures_data, ///< TODOCUMENT
+			                                 const quad_criteria                 &prm_criteria,             ///< TODOCUMENT
+//			                                 const scan_stride                   &prm_stride,               ///< TODOCUMENT
+			                                 FN                                  &prm_fn                    ///< TODOCUMENT
 			                                 ) {
-//				const auto query_from_strider = arg_stride.get_query_from_strider();
-//				const auto query_to_strider   = arg_stride.get_query_to_strider();
-//				const auto index_from_strider = arg_stride.get_index_from_strider();
-//				const auto index_to_strider   = arg_stride.get_index_to_strider();
+//				const auto query_from_strider = prm_stride.get_query_from_strider();
+//				const auto query_to_strider   = prm_stride.get_query_to_strider();
+//				const auto index_from_strider = prm_stride.get_index_from_strider();
+//				const auto index_to_strider   = prm_stride.get_index_to_strider();
 
-				for (const multi_struc_res_rep_pair &res_pair_a : arg_list_a) {
+				for (const multi_struc_res_rep_pair &res_pair_a : prm_list_a) {
 //					const auto query_from_idx = get_index_of_rep_index( query_from_strider, res_pair_a.get_from_res_rep_index() );
 //					const auto query_to_idx   = get_index_of_rep_index( query_to_strider,   res_pair_a.get_to_res_rep_index()   );
 //					std::cerr << "Query[ "
@@ -202,11 +202,11 @@ namespace cath {
 //					          << " ]; - "
 //					          << res_pair_a
 //					          << "\n";
-					if ( are_not_violated_by( arg_criteria, res_pair_a ) ) {
-						for (const multi_struc_res_rep_pair &res_pair_b : arg_list_b) {
+					if ( are_not_violated_by( prm_criteria, res_pair_a ) ) {
+						for (const multi_struc_res_rep_pair &res_pair_b : prm_list_b) {
 //							const auto index_from_idx = get_index_of_rep_index( index_from_strider, res_pair_b.get_from_res_rep_index() );
 //							const auto index_to_idx   = get_index_of_rep_index( index_to_strider,   res_pair_b.get_to_res_rep_index()   );
-							if ( are_not_violated_by( arg_criteria, res_pair_a ) && are_met_by( arg_criteria, res_pair_a, res_pair_b ) ) {
+							if ( are_not_violated_by( prm_criteria, res_pair_a ) && are_met_by( prm_criteria, res_pair_a, res_pair_b ) ) {
 //								std::cerr << "Investigating hit: query[ "
 //								          << query_from_idx << " - " << query_to_idx
 //								          << " in "
@@ -217,16 +217,16 @@ namespace cath {
 //								          << res_pair_b.get_structure_index()
 //								          << " ]\n";
 								act_on_single_matches(
-									get_neighbours_of_rep_pair( arg_query_structures_data, res_pair_a ),
-									get_neighbours_of_rep_pair( arg_index_structures_data, res_pair_b ),
+									get_neighbours_of_rep_pair( prm_query_structures_data, res_pair_a ),
+									get_neighbours_of_rep_pair( prm_index_structures_data, res_pair_b ),
 									res_pair_a.get_structure_index(),
 									res_pair_b.get_structure_index(),
-									arg_criteria,
-									arg_fn
+									prm_criteria,
+									prm_fn
 								);
 							}
 //							else {
-//								if ( are_not_violated_by( arg_criteria, res_pair_a ) ) {
+//								if ( are_not_violated_by( prm_criteria, res_pair_a ) ) {
 //									std::cerr << "Skipping index " << index_from_idx << " - " << index_to_idx << "\n";
 //								}
 //								else if ( query_from_idx == index_from_idx && query_to_idx == index_to_idx) {

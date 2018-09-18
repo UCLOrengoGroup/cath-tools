@@ -50,23 +50,23 @@ namespace cath {
 
 			public:
 				/// \brief Ctor from the ssap_scores_entry getter and label_pair_is_positive
-				score_classn_value_maker(score::label_pair_is_positive  arg_is_positive,  ///< A label_pair_is_positive to determine which pairs are positive
-				                         const GETR_FN                 &arg_score_getter, ///< The ssap_scores_entry getter member function with which to extract the score value
-				                         const NAME_FN                 &arg_name_getter   ///< TODOCUMENT
-				                         ) : the_is_positive { std::move( arg_is_positive ) },
-				                             f_score_getter  { arg_score_getter             },
-				                             f_name_getter   { arg_name_getter              } {
+				score_classn_value_maker(score::label_pair_is_positive  prm_is_positive,  ///< A label_pair_is_positive to determine which pairs are positive
+				                         const GETR_FN                 &prm_score_getter, ///< The ssap_scores_entry getter member function with which to extract the score value
+				                         const NAME_FN                 &prm_name_getter   ///< TODOCUMENT
+				                         ) : the_is_positive { std::move( prm_is_positive ) },
+				                             f_score_getter  { prm_score_getter             },
+				                             f_name_getter   { prm_name_getter              } {
 				}
 
 				/// \brief Build a score_classn_value from the specified ssap_scores_entry using the stored field getter and label_pair_is_positive
 				template <typename T>
-				score::score_classn_value operator()(const T &arg_entry ///< The ssap_scores_entry containing the data from which the score_classn_value should be built
+				score::score_classn_value operator()(const T &prm_entry ///< The ssap_scores_entry containing the data from which the score_classn_value should be built
 				                                     ) {
-					const auto names = f_name_getter( arg_entry );
+					const auto names = f_name_getter( prm_entry );
 					const std::string &name_1 = names.first;
 					const std::string &name_2 = names.second;
 					return {
-						boost::numeric_cast<double>( f_score_getter( arg_entry ) ),
+						boost::numeric_cast<double>( f_score_getter( prm_entry ) ),
 						the_is_positive.is_positive( name_1, name_2 ),
 						name_1 + " " + name_2
 					};
@@ -76,20 +76,20 @@ namespace cath {
 
 		/// \brief Build a score_classn_value_list for the specified ssap_scores_entry field from the specified ssap_scores_entry_vec
 		template <typename T, typename GETR_FN, typename NAME_FN>
-		score::score_classn_value_list make_val_list_of_scores_entries(const T                             &arg_entries,          ///< The ssap_scores_entry_vec data from which to generate the score_classn_value_list
-		                                                               const score::label_pair_is_positive &arg_positive_fn,      ///< The label_pair_is_positive to specify which of the ssap_scores_entries corresponds to a positive pair
-		                                                               const bool                          &arg_higher_is_better, ///< Whether higher is better for this score
-		                                                               const std::string                   &arg_name,             ///< The name to use for this field
-		                                                               GETR_FN                              arg_score_getter_fn,  ///< The ssap_scores_entry getter for the required field
-		                                                               NAME_FN                              arg_name_getter_fn    ///< The getter for the names
+		score::score_classn_value_list make_val_list_of_scores_entries(const T                             &prm_entries,          ///< The ssap_scores_entry_vec data from which to generate the score_classn_value_list
+		                                                               const score::label_pair_is_positive &prm_positive_fn,      ///< The label_pair_is_positive to specify which of the ssap_scores_entries corresponds to a positive pair
+		                                                               const bool                          &prm_higher_is_better, ///< Whether higher is better for this score
+		                                                               const std::string                   &prm_name,             ///< The name to use for this field
+		                                                               GETR_FN                              prm_score_getter_fn,  ///< The ssap_scores_entry getter for the required field
+		                                                               NAME_FN                              prm_name_getter_fn    ///< The getter for the names
 		                                                               ) {
 			return make_score_classn_value_list(
 				common::transform_build<score::score_classn_value_vec>(
-					arg_entries,
-					detail::score_classn_value_maker<GETR_FN, NAME_FN>( arg_positive_fn, arg_score_getter_fn, arg_name_getter_fn )
+					prm_entries,
+					detail::score_classn_value_maker<GETR_FN, NAME_FN>( prm_positive_fn, prm_score_getter_fn, prm_name_getter_fn )
 				),
-				arg_higher_is_better,
-				arg_name
+				prm_higher_is_better,
+				prm_name
 			);
 		}
 

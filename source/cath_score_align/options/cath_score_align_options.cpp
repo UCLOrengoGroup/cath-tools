@@ -154,18 +154,18 @@ const alignment_input_spec & cath_score_align_options::get_alignment_input_spec(
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
 /// \relates cath_score_align_options
-unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const cath_score_align_options &arg_cath_score_align_options ///< The cath_score_align_options to query
+unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const cath_score_align_options &prm_cath_score_align_options ///< The cath_score_align_options to query
                                                                         ) {
-	return align::get_alignment_acquirer( arg_cath_score_align_options.get_alignment_input_spec() );
+	return align::get_alignment_acquirer( prm_cath_score_align_options.get_alignment_input_spec() );
 }
 
 /// \brief Get the single pdbs_acquirer implied by the specified cath_score_align_options
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
 /// \relates cath_score_align_options
-unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_score_align_options &arg_cath_score_align_options ///< The cath_score_align_options to query
+unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_score_align_options &prm_cath_score_align_options ///< The cath_score_align_options to query
                                                               ) {
-	return get_pdbs_acquirer( arg_cath_score_align_options.get_pdb_input_spec() );
+	return get_pdbs_acquirer( prm_cath_score_align_options.get_pdb_input_spec() );
 }
 
 /// \brief Get PDBs and names as implied by the specified cath_score_align_options
@@ -173,13 +173,13 @@ unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_score_a
 /// Throws an invalid_argument_exception if the cath_score_align_options isn't configured to read PDBs
 ///
 /// \relates cath_score_align_options
-strucs_context cath::opts::get_pdbs_and_names(const cath_score_align_options &arg_cath_score_align_options, ///< The options to specify how to get the PDBs and names
-                                              istream                        &arg_istream,                  ///< The istream, which may contain PDB data
-                                              const bool                     &arg_remove_partial_residues   ///< Whether to remove partial residues from the PDB data
+strucs_context cath::opts::get_pdbs_and_names(const cath_score_align_options &prm_cath_score_align_options, ///< The options to specify how to get the PDBs and names
+                                              istream                        &prm_istream,                  ///< The istream, which may contain PDB data
+                                              const bool                     &prm_remove_partial_residues   ///< Whether to remove partial residues from the PDB data
                                               ) {
 	return get_strucs_context(
-		*get_pdbs_acquirer( arg_cath_score_align_options ),
-		arg_istream,
-		arg_remove_partial_residues
+		*get_pdbs_acquirer( prm_cath_score_align_options ),
+		prm_istream,
+		prm_remove_partial_residues
 	);
 }

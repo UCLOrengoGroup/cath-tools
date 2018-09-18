@@ -57,11 +57,11 @@ tribool length_score::do_higher_is_better() const {
 /// \brief Concrete implementation for calculating the number of common residues defined by this alignment
 ///
 /// This uses the score_common_coord_handler (and hence its policies)
-score_value length_score::do_calculate(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                       const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                       const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+score_value length_score::do_calculate(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                       const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                       const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                        ) const {
-	return get_length_score( *length_getter_ptr, arg_alignment, arg_protein_a, arg_protein_b );
+	return get_length_score( *length_getter_ptr, prm_alignment, prm_protein_a, prm_protein_b );
 }
 
 /// \brief Concrete implementation that describes what this score means
@@ -86,22 +86,22 @@ string length_score::do_long_name() const {
 }
 
 ///// \brief Build an aligned_pair_score of this concrete type from a short_name_spec string
-//unique_ptr<aligned_pair_score> length_score::do_build_from_short_name_spec(const string &arg_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
+//unique_ptr<aligned_pair_score> length_score::do_build_from_short_name_spec(const string &prm_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
 //                                                                           ) const {
-//	cerr << "Should build a length_score from string \"" << arg_short_name_spec << "\"" << endl;
+//	cerr << "Should build a length_score from string \"" << prm_short_name_spec << "\"" << endl;
 //	return clone();
 //}
 
 /// \brief TODOCUMENT
-bool length_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool length_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                        ) const {
-	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 	return ( *this < casted_aligned_pair_score );
 }
 
 /// \brief TODOCUMENT
-length_score::length_score(const length_getter &arg_length_getter ///< TODOCUMENT
-                           ) : length_getter_ptr( arg_length_getter.clone() ) {
+length_score::length_score(const length_getter &prm_length_getter ///< TODOCUMENT
+                           ) : length_getter_ptr( prm_length_getter.clone() ) {
 }
 
 /// \brief TODOCUMENT
@@ -118,10 +118,10 @@ string length_score::description_brackets_string() const {
 /// \brief TODOCUMENT
 ///
 /// \relates length_score
-bool cath::score::operator<(const length_score &arg_length_score_a, ///< TODOCUMENT
-                            const length_score &arg_length_score_b  ///< TODOCUMENT
+bool cath::score::operator<(const length_score &prm_length_score_a, ///< TODOCUMENT
+                            const length_score &prm_length_score_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_length_score_a, arg_length_score_b );
+	auto the_helper = make_less_than_helper( prm_length_score_a, prm_length_score_b );
 	the_helper.register_comparison_field( &length_score::get_length_getter );
 	return final_less_than_result( the_helper );
 }

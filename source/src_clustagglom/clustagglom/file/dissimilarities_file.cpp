@@ -39,10 +39,10 @@ using std::max;
 using std::string;
 
 /// \brief Parse the cluster dissimilarities/strengths (ie links) from the specified istream
-links cath::clust::parse_dissimilarities(istream           &arg_input,     ///< The istream from which the links should be read
-                                         id_of_str_bidirnl &arg_name_ider, ///< The name_ider to populate from the links data
-                                         const link_dirn   &arg_link_dirn, ///< Whether the links in the input file represent strengths or dissimilarities
-                                         const size_t      &arg_column_idx ///< The index (offset 0) of the column from which the strengths or dissimilarities should be parsed
+links cath::clust::parse_dissimilarities(istream           &prm_input,     ///< The istream from which the links should be read
+                                         id_of_str_bidirnl &prm_name_ider, ///< The name_ider to populate from the links data
+                                         const link_dirn   &prm_link_dirn, ///< Whether the links in the input file represent strengths or dissimilarities
+                                         const size_t      &prm_column_idx ///< The index (offset 0) of the column from which the strengths or dissimilarities should be parsed
                                          ) {
 	links result;
 	string line;
@@ -50,19 +50,19 @@ links cath::clust::parse_dissimilarities(istream           &arg_input,     ///< 
 	static constexpr size_t ID1_OFFSET     = 0;
 	static constexpr size_t ID2_OFFSET     = 1;
 
-	while ( getline( arg_input, line ) ) {
+	while ( getline( prm_input, line ) ) {
 		const auto     id1_itrs   = find_field_itrs( line, ID1_OFFSET                                      );
 		const auto     id2_itrs   = find_field_itrs( line, ID2_OFFSET,     1 + ID1_OFFSET, id1_itrs.second );
-		const auto     value_itrs = find_field_itrs( line, arg_column_idx, 1 + ID2_OFFSET, id2_itrs.second );
+		const auto     value_itrs = find_field_itrs( line, prm_column_idx, 1 + ID2_OFFSET, id2_itrs.second );
 		const auto     id1        = make_string_ref( id1_itrs.first, id1_itrs.second );
 		const auto     id2        = make_string_ref( id2_itrs.first, id2_itrs.second );
 		const strength seq_id     = std::is_same<strength, float>::value
 			? static_cast<strength>( parse_float_from_field ( value_itrs.first, value_itrs.second ) )
 			: static_cast<strength>( parse_double_from_field( value_itrs.first, value_itrs.second ) );
 
-		const strength link_val   = ( arg_link_dirn == link_dirn::STRENGTH ) ? -seq_id : seq_id;
-		const item_idx id_1_id    = debug_numeric_cast<item_idx>( arg_name_ider.add_name( id1 ) );
-		const item_idx id_2_id    = debug_numeric_cast<item_idx>( arg_name_ider.add_name( id2 ) );
+		const strength link_val   = ( prm_link_dirn == link_dirn::STRENGTH ) ? -seq_id : seq_id;
+		const item_idx id_1_id    = debug_numeric_cast<item_idx>( prm_name_ider.add_name( id1 ) );
+		const item_idx id_2_id    = debug_numeric_cast<item_idx>( prm_name_ider.add_name( id2 ) );
 		if ( id_1_id != id_2_id ) {
 			result.add_link_symmetrically( id_1_id, id_2_id, link_val );
 		}
@@ -72,24 +72,24 @@ links cath::clust::parse_dissimilarities(istream           &arg_input,     ///< 
 }
 
 /// \brief Parse the cluster dissimilarities/strengths (ie links) from the specified string
-links cath::clust::parse_dissimilarities(const string      &arg_input,     ///< The string from which the links should be read
-                                         id_of_str_bidirnl &arg_name_ider, ///< The name_ider to populate from the links data
-                                         const link_dirn   &arg_link_dirn, ///< Whether the links in the input file represent strengths or dissimilarities
-                                         const size_t      &arg_column_idx ///< The index (offset 0) of the column from which the strengths or dissimilarities should be parsed
+links cath::clust::parse_dissimilarities(const string      &prm_input,     ///< The string from which the links should be read
+                                         id_of_str_bidirnl &prm_name_ider, ///< The name_ider to populate from the links data
+                                         const link_dirn   &prm_link_dirn, ///< Whether the links in the input file represent strengths or dissimilarities
+                                         const size_t      &prm_column_idx ///< The index (offset 0) of the column from which the strengths or dissimilarities should be parsed
                                          ) {
-	istringstream in_ss{ arg_input };
-	return parse_dissimilarities( in_ss, arg_name_ider, arg_link_dirn, arg_column_idx );
+	istringstream in_ss{ prm_input };
+	return parse_dissimilarities( in_ss, prm_name_ider, prm_link_dirn, prm_column_idx );
 }
 
 /// \brief Parse the cluster dissimilarities/strengths (ie links) from the specified file
-links cath::clust::parse_dissimilarities(const path        &arg_input,     ///< The file from which the links should be read
-                                         id_of_str_bidirnl &arg_name_ider, ///< The name_ider to populate from the links data
-                                         const link_dirn   &arg_link_dirn, ///< Whether the links in the input file represent strengths or dissimilarities
-                                         const size_t      &arg_column_idx ///< The index (offset 0) of the column from which the strengths or dissimilarities should be parsed
+links cath::clust::parse_dissimilarities(const path        &prm_input,     ///< The file from which the links should be read
+                                         id_of_str_bidirnl &prm_name_ider, ///< The name_ider to populate from the links data
+                                         const link_dirn   &prm_link_dirn, ///< Whether the links in the input file represent strengths or dissimilarities
+                                         const size_t      &prm_column_idx ///< The index (offset 0) of the column from which the strengths or dissimilarities should be parsed
                                          ) {
 	ifstream in_stream;
-	open_ifstream( in_stream, arg_input );
-	links dissims = parse_dissimilarities( in_stream, arg_name_ider, arg_link_dirn, arg_column_idx );
+	open_ifstream( in_stream, prm_input );
+	links dissims = parse_dissimilarities( in_stream, prm_name_ider, prm_link_dirn, prm_column_idx );
 	in_stream.close();
 	return dissims;
 }

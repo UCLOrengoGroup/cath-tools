@@ -38,9 +38,9 @@ namespace cath {
 					}
 
 					/// \brief TODOCUMENT
-					auto operator()(const view_cache_index_entry &arg_entry ///< TODOCUMENT
-					                )->decltype( get_view_x( arg_entry ) ) {
-						return get_view_x( arg_entry );
+					auto operator()(const view_cache_index_entry &prm_entry ///< TODOCUMENT
+					                )->decltype( get_view_x( prm_entry ) ) {
+						return get_view_x( prm_entry );
 					}
 				};
 

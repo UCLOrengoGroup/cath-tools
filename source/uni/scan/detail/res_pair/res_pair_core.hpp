@@ -87,18 +87,18 @@ namespace cath {
 			}
 
 			/// \brief Ctor to populate all members
-			inline res_pair_core::res_pair_core(view_type      arg_view,           ///< The view of the to_residue from the from_residue
-			                                    frame_quat_rot arg_frame,          ///< The coordinate frame of the from_residue, as determined by its core atoms
-			                                    angle_type     arg_from_phi_angle, ///< The phi angle of the from_residue
-			                                    angle_type     arg_from_psi_angle, ///< The psi angle of the from_residue
-			                                    angle_type     arg_to_phi_angle,   ///< The phi angle of the to_residue
-			                                    angle_type     arg_to_psi_angle    ///< The psi angle of the to_residue
-			                                    ) : view           { std::move( arg_view           ) },
-			                                        frame          { std::move( arg_frame          ) },
-			                                        from_phi_angle { std::move( arg_from_phi_angle ) },
-			                                        from_psi_angle { std::move( arg_from_psi_angle ) },
-			                                        to_phi_angle   { std::move( arg_to_phi_angle   ) },
-			                                        to_psi_angle   { std::move( arg_to_psi_angle   ) } {
+			inline res_pair_core::res_pair_core(view_type      prm_view,           ///< The view of the to_residue from the from_residue
+			                                    frame_quat_rot prm_frame,          ///< The coordinate frame of the from_residue, as determined by its core atoms
+			                                    angle_type     prm_from_phi_angle, ///< The phi angle of the from_residue
+			                                    angle_type     prm_from_psi_angle, ///< The psi angle of the from_residue
+			                                    angle_type     prm_to_phi_angle,   ///< The phi angle of the to_residue
+			                                    angle_type     prm_to_psi_angle    ///< The psi angle of the to_residue
+			                                    ) : view           { std::move( prm_view           ) },
+			                                        frame          { std::move( prm_frame          ) },
+			                                        from_phi_angle { std::move( prm_from_phi_angle ) },
+			                                        from_psi_angle { std::move( prm_from_psi_angle ) },
+			                                        to_phi_angle   { std::move( prm_to_phi_angle   ) },
+			                                        to_psi_angle   { std::move( prm_to_psi_angle   ) } {
 			}
 
 			/// \brief Getter for view
@@ -134,42 +134,42 @@ namespace cath {
 			/// \brief Convenience function to get the x component of the view in the specified res_pair_core
 			///
 			/// \relates res_pair_core
-			inline const view_base_type & get_view_x(const res_pair_core &arg_res_pair ///< The res_pair_core to query
+			inline const view_base_type & get_view_x(const res_pair_core &prm_res_pair ///< The res_pair_core to query
 			                                          ) {
-			        return arg_res_pair.get_view().get<0>();
+			        return prm_res_pair.get_view().get<0>();
 			}
 
 			/// \brief Convenience function to get the y component of the view in the specified res_pair_core
 			///
 			/// \relates res_pair_core
-			inline const view_base_type & get_view_y(const res_pair_core &arg_res_pair ///< The res_pair_core to query
+			inline const view_base_type & get_view_y(const res_pair_core &prm_res_pair ///< The res_pair_core to query
 			                                          ) {
-			        return arg_res_pair.get_view().get<1>();
+			        return prm_res_pair.get_view().get<1>();
 			}
 
 			/// \brief Convenience function to get the z component of the view in the specified res_pair_core
 			///
 			/// \relates res_pair_core
-			inline const view_base_type & get_view_z(const res_pair_core &arg_res_pair ///< The res_pair_core to query
+			inline const view_base_type & get_view_z(const res_pair_core &prm_res_pair ///< The res_pair_core to query
 			                                          ) {
-			        return arg_res_pair.get_view().get<2>();
+			        return prm_res_pair.get_view().get<2>();
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates res_pair_core
-			inline res_pair_core make_res_pair_core(const residue &arg_from_residue, ///< TODOCUMENT
-			                                        const residue &arg_to_residue    ///< TODOCUMENT
+			inline res_pair_core make_res_pair_core(const residue &prm_from_residue, ///< TODOCUMENT
+			                                        const residue &prm_to_residue    ///< TODOCUMENT
 			                                        ) {
 				return {
-					view_vector_of_residue_pair( arg_from_residue, arg_to_residue ),
+					view_vector_of_residue_pair( prm_from_residue, prm_to_residue ),
 					geom::make_quat_rot_from_rotation<frame_quat_rot_type>(
-						view_frame( arg_from_residue, arg_to_residue )
+						view_frame( prm_from_residue, prm_to_residue )
 					),
-					geom::convert_angle_type<angle_base_type>( arg_from_residue.get_phi_angle() ).quick_shift(),
-					geom::convert_angle_type<angle_base_type>( arg_from_residue.get_psi_angle() ).quick_shift(),
-					geom::convert_angle_type<angle_base_type>( arg_to_residue.get_phi_angle()   ).quick_shift(),
-					geom::convert_angle_type<angle_base_type>( arg_to_residue.get_psi_angle()   ).quick_shift()
+					geom::convert_angle_type<angle_base_type>( prm_from_residue.get_phi_angle() ).quick_shift(),
+					geom::convert_angle_type<angle_base_type>( prm_from_residue.get_psi_angle() ).quick_shift(),
+					geom::convert_angle_type<angle_base_type>( prm_to_residue.get_phi_angle()   ).quick_shift(),
+					geom::convert_angle_type<angle_base_type>( prm_to_residue.get_psi_angle()   ).quick_shift()
 				};
 			}
 

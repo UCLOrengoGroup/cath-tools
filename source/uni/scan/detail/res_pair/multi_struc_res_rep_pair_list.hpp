@@ -66,8 +66,8 @@ namespace cath {
 			};
 
 			/// \brief Ctor from a vector of multi_struc_res_rep_pair objects
-			inline multi_struc_res_rep_pair_list::multi_struc_res_rep_pair_list(multi_struc_res_rep_pair_vec arg_multi_struc_res_rep_pairs ///< The vector of multi_struc_res_rep_pairs from which to construct the multi_struc_res_rep_pair_list
-			                                                                    ) : multi_struc_res_rep_pairs { std::move( arg_multi_struc_res_rep_pairs ) } {
+			inline multi_struc_res_rep_pair_list::multi_struc_res_rep_pair_list(multi_struc_res_rep_pair_vec prm_multi_struc_res_rep_pairs ///< The vector of multi_struc_res_rep_pairs from which to construct the multi_struc_res_rep_pair_list
+			                                                                    ) : multi_struc_res_rep_pairs { std::move( prm_multi_struc_res_rep_pairs ) } {
 			}
 
 			/// \brief Return whether this multi_struc_res_rep_pair_list is empty
@@ -81,22 +81,22 @@ namespace cath {
 			}
 
 			/// \brief Standard subscript operator
-			inline const multi_struc_res_rep_pair & multi_struc_res_rep_pair_list::operator[](const size_t &arg_index ///< The index of the entry to be queried
+			inline const multi_struc_res_rep_pair & multi_struc_res_rep_pair_list::operator[](const size_t &prm_index ///< The index of the entry to be queried
 			                                                                                  ) const {
-				return multi_struc_res_rep_pairs[ arg_index ];
+				return multi_struc_res_rep_pairs[ prm_index ];
 			}
 
 			/// \brief TODOCUMENT
 			template <class... Ts>
-			void multi_struc_res_rep_pair_list::emplace_back(Ts&& ... arg_values ///< TODOCUMENT
+			void multi_struc_res_rep_pair_list::emplace_back(Ts&& ... prm_values ///< TODOCUMENT
 			                                                 ) {
-				multi_struc_res_rep_pairs.emplace_back( std::forward<Ts>( arg_values ) ... );
+				multi_struc_res_rep_pairs.emplace_back( std::forward<Ts>( prm_values ) ... );
 			}
 
 			/// \brief TODOCUMENT
-			inline void multi_struc_res_rep_pair_list::push_back(const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
+			inline void multi_struc_res_rep_pair_list::push_back(const multi_struc_res_rep_pair &prm_res_pair ///< TODOCUMENT
 			                                                     ) {
-				multi_struc_res_rep_pairs.push_back( arg_res_pair );
+				multi_struc_res_rep_pairs.push_back( prm_res_pair );
 			}
 
 			/// \brief Standard const begin() method

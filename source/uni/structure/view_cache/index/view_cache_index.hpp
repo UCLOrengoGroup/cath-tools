@@ -109,30 +109,30 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename ACTN>
-		void view_cache_index::perform_action_on_matches(const view_cache_index_entry      &arg_entry,    ///< TODOCUMENT
-		                                                 const detail::vcie_match_criteria &arg_criteria, ///< TODOCUMENT
-		                                                 ACTN                              &arg_action    ///< TODOCUMENT
+		void view_cache_index::perform_action_on_matches(const view_cache_index_entry      &prm_entry,    ///< TODOCUMENT
+		                                                 const detail::vcie_match_criteria &prm_criteria, ///< TODOCUMENT
+		                                                 ACTN                              &prm_action    ///< TODOCUMENT
 		                                                 ) const {
-			the_index.perform_action_on_matches( arg_entry, arg_criteria, arg_action );
+			the_index.perform_action_on_matches( prm_entry, prm_criteria, prm_action );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename ACTN>
-		void view_cache_index::perform_action_on_all_match_at_leaves(const view_cache_index            &arg_search_index, ///< TODOCUMENT
-		                                                             const detail::vcie_match_criteria &arg_criteria,     ///< TODOCUMENT
-		                                                             ACTN                              &arg_action        ///< TODOCUMENT
+		void view_cache_index::perform_action_on_all_match_at_leaves(const view_cache_index            &prm_search_index, ///< TODOCUMENT
+		                                                             const detail::vcie_match_criteria &prm_criteria,     ///< TODOCUMENT
+		                                                             ACTN                              &prm_action        ///< TODOCUMENT
 		                                                             ) const {
-			const detail::pair_scan_action<view_cache_index> the_pair_scan_action( arg_search_index, arg_criteria, arg_action );
+			const detail::pair_scan_action<view_cache_index> the_pair_scan_action( prm_search_index, prm_criteria, prm_action );
 			the_index.perform_action_on_all_match_at_leaves( the_pair_scan_action );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename ACTN>
-		void view_cache_index::perform_action_on_all_match_at_nodes(const view_cache_index            &arg_search_index, ///< TODOCUMENT
-		                                                            const detail::vcie_match_criteria &arg_criteria,     ///< TODOCUMENT
-		                                                            ACTN                              &arg_action        ///< TODOCUMENT
+		void view_cache_index::perform_action_on_all_match_at_nodes(const view_cache_index            &prm_search_index, ///< TODOCUMENT
+		                                                            const detail::vcie_match_criteria &prm_criteria,     ///< TODOCUMENT
+		                                                            ACTN                              &prm_action        ///< TODOCUMENT
 		                                                            ) const {
-			the_index.perform_action_on_all_match_at_nodes( arg_search_index.the_index, arg_criteria, arg_action );
+			the_index.perform_action_on_all_match_at_nodes( prm_search_index.the_index, prm_criteria, prm_action );
 		}
 
 		view_cache_index build_view_cache_index(const double &,

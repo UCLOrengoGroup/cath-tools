@@ -52,10 +52,10 @@ using boost::filesystem::path;
 /// \brief Parse a dssp_file object from an istream
 ///
 /// \relates dssp_file
-dssp_file cath::file::read_dssp_file(const path &arg_dssp_file ///< The DSSP file from which to parse a dssp_file object
+dssp_file cath::file::read_dssp_file(const path &prm_dssp_file ///< The DSSP file from which to parse a dssp_file object
                                      ) {
 	ifstream my_dssp_istream;
-	open_ifstream( my_dssp_istream, arg_dssp_file );
+	open_ifstream( my_dssp_istream, prm_dssp_file );
 	const dssp_file the_dssp_file = read_dssp( my_dssp_istream );
 	my_dssp_istream.close();
 	return the_dssp_file;
@@ -64,11 +64,11 @@ dssp_file cath::file::read_dssp_file(const path &arg_dssp_file ///< The DSSP fil
 /// \brief Parse a dssp_file object from an istream
 ///
 /// \relates dssp_file
-dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which to parse a dssp_file object
+dssp_file cath::file::read_dssp(istream &prm_istream ///< The istream from which to parse a dssp_file object
                                 ) {
 	// Read the first line and check it looks vaguely like a DSSP header line
 	string dssp_first_line;
-	getline(arg_istream, dssp_first_line);
+	getline(prm_istream, dssp_first_line);
 	if ( !starts_with(dssp_first_line, "==== ") || !icontains(dssp_first_line, "DSSP") || dssp_first_line.length() > 300 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("First line is not a DSSP header line"));
 	}
@@ -77,16 +77,16 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 	bool found_column_headings( false );
 	while ( ! found_column_headings ) {
 		string dssp_header_line;
-		getline(arg_istream, dssp_header_line);
+		getline(prm_istream, dssp_header_line);
 		found_column_headings = starts_with(dssp_header_line, "  #  RESIDUE AA ");
 	}
 
 	// Read residues
 	size_t residue_ctr = 1;
 	residue_vec new_residues;
-	while ( ! arg_istream.eof()) {
+	while ( ! prm_istream.eof()) {
 		string dssp_residue_line;
-		getline(arg_istream, dssp_residue_line);
+		getline(prm_istream, dssp_residue_line);
 
 		// If this line contains nothing but whitespace, then skip it
 		if (all(dssp_residue_line, is_space())) {
@@ -137,40 +137,40 @@ dssp_file cath::file::read_dssp(istream &arg_istream ///< The istream from which
 }
 
 /// \brief TODOCUMENT
-size_residue_pair cath::file::parse_dssp_residue_line(const string &arg_dssp_residue_line ///< The DSSP residue line to parse
+size_residue_pair cath::file::parse_dssp_residue_line(const string &prm_dssp_residue_line ///< The DSSP residue line to parse
                                                       ) {
 	try {
-		const bool dssp_entry_is_null = ( arg_dssp_residue_line.at( 13 ) == '!' );
+		const bool dssp_entry_is_null = ( prm_dssp_residue_line.at( 13 ) == '!' );
 		if ( dssp_entry_is_null ) {
 			return { 0_z, residue::NULL_RESIDUE };
 		}
 		                                                                                         // Comments with DSSP format documentation
 		                                                                                         // (http://swift.cmbi.ru.nl/gv/dssp/)
-		const size_t        seq_res_num    =     stoul( arg_dssp_residue_line.substr(  0, 5)) ;  //   1 -   5    sequential resnumber, including chain breaks as extra residues
-		const string        res_name_str   = trim_copy( arg_dssp_residue_line.substr(  5, 6)) ;  //   6 -  11    original PDB resname, not nec. sequential, may contain letters
-		const char         &chain_char     =            arg_dssp_residue_line.at    ( 11   )  ;  //  12
-		const char         &amino_acid_c   =            arg_dssp_residue_line.at    ( 13   )  ;  //  14          amino acid sequence in one letter code
-		const char         &sstruc_code    =            arg_dssp_residue_line.at    ( 16   )  ;  //  17          secondary structure summary based on columns 19-38
-//		const char         &turn3_helix    =            arg_dssp_residue_line.at    ( 18   )  ;  //  19          3-turns/helix
-//		const char         &turn4_helix    =            arg_dssp_residue_line.at    ( 19   )  ;  //  20          4-turns/helix
-//		const char         &turn5_helix    =            arg_dssp_residue_line.at    ( 20   )  ;  //  21          5-turns/helix
-//		const char         &geom_bend      =            arg_dssp_residue_line.at    ( 21   )  ;  //  22          geometrical bend
-//		const char         &chirality      =            arg_dssp_residue_line.at    ( 22   )  ;  //  23          chirality
-//		const char         &beta_brid_1    =            arg_dssp_residue_line.at    ( 23   )  ;  //  24          beta bridge label
-//		const char         &beta_brid_2    =            arg_dssp_residue_line.at    ( 24   )  ;  //  25          beta bridge label
-//		const size_t        beta_part_1    =     stoul( arg_dssp_residue_line.substr( 25, 4)) ;  //  26 -  29    beta bridge partner resnum
-//		const size_t        beta_part_2    =     stoul( arg_dssp_residue_line.substr( 29, 4)) ;  //  30 -  33    beta bridge partner resnum
-//		const char         &sheet_label    =            arg_dssp_residue_line.at    ( 33   )  ;  //  34          beta sheet label
-		const size_t        solv_access    =     stoul( arg_dssp_residue_line.substr( 34, 4)) ;  //  35 -  38    solvent accessibility
+		const size_t        seq_res_num    =     stoul( prm_dssp_residue_line.substr(  0, 5)) ;  //   1 -   5    sequential resnumber, including chain breaks as extra residues
+		const string        res_name_str   = trim_copy( prm_dssp_residue_line.substr(  5, 6)) ;  //   6 -  11    original PDB resname, not nec. sequential, may contain letters
+		const char         &chain_char     =            prm_dssp_residue_line.at    ( 11   )  ;  //  12
+		const char         &amino_acid_c   =            prm_dssp_residue_line.at    ( 13   )  ;  //  14          amino acid sequence in one letter code
+		const char         &sstruc_code    =            prm_dssp_residue_line.at    ( 16   )  ;  //  17          secondary structure summary based on columns 19-38
+//		const char         &turn3_helix    =            prm_dssp_residue_line.at    ( 18   )  ;  //  19          3-turns/helix
+//		const char         &turn4_helix    =            prm_dssp_residue_line.at    ( 19   )  ;  //  20          4-turns/helix
+//		const char         &turn5_helix    =            prm_dssp_residue_line.at    ( 20   )  ;  //  21          5-turns/helix
+//		const char         &geom_bend      =            prm_dssp_residue_line.at    ( 21   )  ;  //  22          geometrical bend
+//		const char         &chirality      =            prm_dssp_residue_line.at    ( 22   )  ;  //  23          chirality
+//		const char         &beta_brid_1    =            prm_dssp_residue_line.at    ( 23   )  ;  //  24          beta bridge label
+//		const char         &beta_brid_2    =            prm_dssp_residue_line.at    ( 24   )  ;  //  25          beta bridge label
+//		const size_t        beta_part_1    =     stoul( prm_dssp_residue_line.substr( 25, 4)) ;  //  26 -  29    beta bridge partner resnum
+//		const size_t        beta_part_2    =     stoul( prm_dssp_residue_line.substr( 29, 4)) ;  //  30 -  33    beta bridge partner resnum
+//		const char         &sheet_label    =            prm_dssp_residue_line.at    ( 33   )  ;  //  34          beta sheet label
+		const size_t        solv_access    =     stoul( prm_dssp_residue_line.substr( 34, 4)) ;  //  35 -  38    solvent accessibility
 		// There are other four other columns here (N-H-->O, O-->H-N, N-H-->O and O-->H-N)
-//		const double        tco            =      stod( arg_dssp_residue_line.substr( 85, 6)) ;  //  86 -  91    cosine of angle between C=O of residue I and C=O of residue I-1. For α-helices, TCO is near +1, for β-sheets TCO is near -1. Not used for structure definition.
-//		const double        kappa          =      stod( arg_dssp_residue_line.substr( 91, 6)) ;  //  92 -  97    virtual bond angle (bend angle) defined by the three Cα atoms of residues I-2,I,I+2. Used to define bend (structure code 'S').
-//		const double        alpha          =      stod( arg_dssp_residue_line.substr( 97, 6)) ;  //  98 - 103    virtual torsion angle (dihedral angle) defined by the four Cα atoms of residues I-1,I,I+1,I+2.Used to define chirality (structure code '+' or '-').
-		const double        phi_in_degrees =      stod( arg_dssp_residue_line.substr(103, 6)) ;  // 104 - 109    IUPAC peptide backbone torsion angles
-		const double        psi_in_degrees =      stod( arg_dssp_residue_line.substr(109, 6)) ;  // 110 - 115    IUPAC peptide backbone torsion angles
-		const double        carbon_a_x     =      stod( arg_dssp_residue_line.substr(115, 7)) ;  // 116 - 122    echo of Ca atom coordinates
-		const double        carbon_a_y     =      stod( arg_dssp_residue_line.substr(122, 7)) ;  // 123 - 129    echo of Ca atom coordinates
-		const double        carbon_a_z     =      stod( arg_dssp_residue_line.substr(129, 7)) ;  // 130 - 136    echo of Ca atom coordinates
+//		const double        tco            =      stod( prm_dssp_residue_line.substr( 85, 6)) ;  //  86 -  91    cosine of angle between C=O of residue I and C=O of residue I-1. For α-helices, TCO is near +1, for β-sheets TCO is near -1. Not used for structure definition.
+//		const double        kappa          =      stod( prm_dssp_residue_line.substr( 91, 6)) ;  //  92 -  97    virtual bond angle (bend angle) defined by the three Cα atoms of residues I-2,I,I+2. Used to define bend (structure code 'S').
+//		const double        alpha          =      stod( prm_dssp_residue_line.substr( 97, 6)) ;  //  98 - 103    virtual torsion angle (dihedral angle) defined by the four Cα atoms of residues I-1,I,I+1,I+2.Used to define chirality (structure code '+' or '-').
+		const double        phi_in_degrees =      stod( prm_dssp_residue_line.substr(103, 6)) ;  // 104 - 109    IUPAC peptide backbone torsion angles
+		const double        psi_in_degrees =      stod( prm_dssp_residue_line.substr(109, 6)) ;  // 110 - 115    IUPAC peptide backbone torsion angles
+		const double        carbon_a_x     =      stod( prm_dssp_residue_line.substr(115, 7)) ;  // 116 - 122    echo of Ca atom coordinates
+		const double        carbon_a_y     =      stod( prm_dssp_residue_line.substr(122, 7)) ;  // 123 - 129    echo of Ca atom coordinates
+		const double        carbon_a_z     =      stod( prm_dssp_residue_line.substr(129, 7)) ;  // 130 - 136    echo of Ca atom coordinates
 
 		// Parse the residue name string into a residue_id
 		const residue_id res_id{ chain_label( chain_char ), make_residue_name( res_name_str ) };
@@ -230,6 +230,6 @@ size_residue_pair cath::file::parse_dssp_residue_line(const string &arg_dssp_res
 		};
 	}
 	catch ( const boost::bad_lexical_cast & ) {
-		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a DSSP residue record.\nRecord was \"" + arg_dssp_residue_line + "\""));
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a DSSP residue record.\nRecord was \"" + prm_dssp_residue_line + "\""));
 	}
 }

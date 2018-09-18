@@ -47,18 +47,18 @@ namespace cath {
 		/// This can cut out a lot of the boiler-plate code for types so the validate fn only need contain:
 		///
 		/// ~~~~~.cpp
-		/// arg_value = lex_castable_validator<my_type>::perform_validate( arg_value, arg_value_strings );
+		/// prm_value = lex_castable_validator<my_type>::perform_validate( prm_value, prm_value_strings );
 		/// ~~~~~
 		template <typename T, typename U>
-		boost::any lex_castable_validator<T, U>::perform_validate(const boost::any &arg_prev_value,   ///< The previous value (if any)
-		                                                          const str_vec    &arg_value_strings ///< The value strings
+		boost::any lex_castable_validator<T, U>::perform_validate(const boost::any &prm_prev_value,   ///< The previous value (if any)
+		                                                          const str_vec    &prm_value_strings ///< The value strings
 		                                                          ) {
 			// Standard validate boilerplate:
 			//  * Make sure no previous assignment to 'a' was made.
-			//  * Extract the first string from 'arg_value_strings'.
+			//  * Extract the first string from 'prm_value_strings'.
 			//    (If there is more than one string, it's an error, and exception will be thrown.)
-			boost::program_options::validators::check_first_occurrence( arg_prev_value );
-			const std::string &value_string = boost::program_options::validators::get_single_string( arg_value_strings );
+			boost::program_options::validators::check_first_occurrence( prm_prev_value );
+			const std::string &value_string = boost::program_options::validators::get_single_string( prm_value_strings );
 
 			// Attempt to lexical_cast value_string and if it fails, throw an invalid_option_value exception
 			try {

@@ -25,25 +25,25 @@ using namespace cath::scan::detail;
 using std::ostream;
 
  /// \brief TODOCUMENT
-ostream & cath::scan::detail::operator<<(ostream             &arg_os,           ///< TODOCUMENT
-                                         const res_pair_core &arg_res_pair_core ///< TODOCUMENT
+ostream & cath::scan::detail::operator<<(ostream             &prm_os,           ///< TODOCUMENT
+                                         const res_pair_core &prm_res_pair_core ///< TODOCUMENT
                                          ) {
-	arg_os << "";
-	arg_os << "view: [";
-	arg_os << arg_res_pair_core.get_view().get<0>();
-	arg_os << ", ";
-	arg_os << arg_res_pair_core.get_view().get<1>();
-	arg_os << ", ";
-	arg_os << arg_res_pair_core.get_view().get<2>();
-	arg_os << "]; frame: ";
-	arg_os << arg_res_pair_core.get_frame();
-	arg_os << "; from_phi: ";
-	arg_os << arg_res_pair_core.get_from_phi_angle();
-	arg_os << "; from_psi: ";
-	arg_os << arg_res_pair_core.get_from_psi_angle();
-	arg_os << "; to_phi: ";
-	arg_os << arg_res_pair_core.get_to_phi_angle();
-	arg_os << "; to_psi: ";
-	arg_os << arg_res_pair_core.get_to_psi_angle();
-	return arg_os;
+	prm_os << "";
+	prm_os << "view: [";
+	prm_os << prm_res_pair_core.get_view().get<0>();
+	prm_os << ", ";
+	prm_os << prm_res_pair_core.get_view().get<1>();
+	prm_os << ", ";
+	prm_os << prm_res_pair_core.get_view().get<2>();
+	prm_os << "]; frame: ";
+	prm_os << prm_res_pair_core.get_frame();
+	prm_os << "; from_phi: ";
+	prm_os << prm_res_pair_core.get_from_phi_angle();
+	prm_os << "; from_psi: ";
+	prm_os << prm_res_pair_core.get_from_psi_angle();
+	prm_os << "; to_phi: ";
+	prm_os << prm_res_pair_core.get_to_phi_angle();
+	prm_os << "; to_psi: ";
+	prm_os << prm_res_pair_core.get_to_psi_angle();
+	return prm_os;
 }

@@ -31,19 +31,19 @@ namespace cath {
 
 		/// \brief Implementation of make_char_arr() with the indices of the integers as template parameters
 		template <size_t Length, size_t... Indices>
-		constexpr std::array<char, Length - 1> make_char_arr_impl(const char ( &arg_cstring )[ Length ],    ///< The C-string from which the std::array should be built
+		constexpr std::array<char, Length - 1> make_char_arr_impl(const char ( &prm_cstring )[ Length ],    ///< The C-string from which the std::array should be built
 		                                                          std::integer_sequence<size_t, Indices...> ///< integer_sequence encoding the indices of the individual characters
 		                                                          ) {
-			return { { arg_cstring[ Indices ]... } };
+			return { { prm_cstring[ Indices ]... } };
 		}
 
 	} // namespace detail
 
 	/// \brief Make a std::array of the characters in the specified C-string
 	template <size_t Length>
-	constexpr auto make_char_arr(const char ( &arg_cstring )[ Length ] ///< The C-string from which the std::array should be built
+	constexpr auto make_char_arr(const char ( &prm_cstring )[ Length ] ///< The C-string from which the std::array should be built
 	                             ) {
-		return detail::make_char_arr_impl( arg_cstring, std::make_index_sequence<Length - 1>{} );
+		return detail::make_char_arr_impl( prm_cstring, std::make_index_sequence<Length - 1>{} );
 	}
 
 	/// \brief A type alias for a std::array of 2 chars

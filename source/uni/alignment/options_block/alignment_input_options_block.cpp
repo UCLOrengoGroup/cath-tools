@@ -77,8 +77,8 @@ string alignment_input_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void alignment_input_options_block::do_add_visible_options_to_description(options_description &arg_desc,       ///< The options_description to which the options are added
-                                                                          const size_t        &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void alignment_input_options_block::do_add_visible_options_to_description(options_description &prm_desc,       ///< The options_description to which the options are added
+                                                                          const size_t        &prm_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                           ) {
 	const auto &sep     = SUB_DESC_SEPARATOR;
 	const auto &sub_sep = SUB_DESC_PAIR_SEPARATOR;
@@ -97,7 +97,7 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 	};
 	const auto refining_notifier             = [&] (const align_refining &x) { the_alignment_input_spec.set_refining            ( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_RES_NAME_ALIGN.c_str(),
 			bool_switch()
@@ -144,7 +144,7 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 		);
 
 	// Create and add a sub-block for alignment refining
-	options_description sub_refine_desc( "Alignment refining", numeric_cast<unsigned int>( arg_line_length ) );
+	options_description sub_refine_desc( "Alignment refining", numeric_cast<unsigned int>( prm_line_length ) );
 	const str_vec refining_descs = layout_values_with_descs(
 		all_align_refinings,
 		[] (const align_refining &x) { return to_string( x ); },
@@ -162,14 +162,14 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 				+ join( refining_descs, sep ) + "\n"
 				+ "This can change the method of gluing alignments under --" + PO_SSAP_SCORE_INFILE + " and --" + PO_DO_THE_SSAPS ).c_str()
 		);
-	arg_desc.add( sub_refine_desc );
+	prm_desc.add( sub_refine_desc );
 
 	static_assert( ! alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN,
 		"If alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN isn't false, it might mess up the bool switch in here" );
 }
 
 /// \brief TODOCUMENT
-str_opt alignment_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt alignment_input_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                          ) const {
 	if ( get_num_acquirers( *this ) > 1 ) {
 		return "Cannot specify more than one alignment input"s;
@@ -203,8 +203,8 @@ str_vec alignment_input_options_block::do_get_all_options_names() const {
 }
 
 /// \brief Ctor from how much refining should be done to the alignment
-alignment_input_options_block::alignment_input_options_block(const align::align_refining &arg_align_refining ///< How much refining should be done to the alignment
-                                                             ) : the_alignment_input_spec{ arg_align_refining } {
+alignment_input_options_block::alignment_input_options_block(const align::align_refining &prm_align_refining ///< How much refining should be done to the alignment
+                                                             ) : the_alignment_input_spec{ prm_align_refining } {
 }
 
 /// \brief TODOCUMENT
@@ -215,7 +215,7 @@ const alignment_input_spec & alignment_input_options_block::get_alignment_input_
 /// \brief Get the number of alignment_acquirer objects implied by the alignment_input_spec in the specified alignment_input_options_block
 ///
 /// \relates alignment_input_options_block
-size_t cath::opts::get_num_acquirers(const alignment_input_options_block &arg_alignment_input_options_block ///< The alignment_input_options_block to query
+size_t cath::opts::get_num_acquirers(const alignment_input_options_block &prm_alignment_input_options_block ///< The alignment_input_options_block to query
                                      ) {
-	return get_num_acquirers( arg_alignment_input_options_block.get_alignment_input_spec() );
+	return get_num_acquirers( prm_alignment_input_options_block.get_alignment_input_spec() );
 }

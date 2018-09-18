@@ -32,13 +32,13 @@ namespace cath {
 
 			/// \brief Implementation of tuple_subtract
 			template <typename TplA, typename TplB, size_t... Index>
-			constexpr auto tuple_subtract_impl(const TplA &arg_tuple_a,      ///< The tuple from which the other should be subtracted
-			                                   const TplB &arg_tuple_b,      ///< The tuple to subtract from the other
+			constexpr auto tuple_subtract_impl(const TplA &prm_tuple_a,      ///< The tuple from which the other should be subtracted
+			                                   const TplB &prm_tuple_b,      ///< The tuple to subtract from the other
 			                                   std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 			                                   ) {
 				return std::make_tuple(
 					static_cast<std::common_type_t<std::tuple_element_t<Index, TplA>, std::tuple_element_t<Index, TplA>>>(
-						std::get<Index>( arg_tuple_a ) - std::get<Index>( arg_tuple_b )
+						std::get<Index>( prm_tuple_a ) - std::get<Index>( prm_tuple_b )
 					)...
 				);
 			}
@@ -49,16 +49,16 @@ namespace cath {
 				/// \brief Return the result of element-wise subtracting one tuple from another
 				template <typename TplA,
 				          typename TplB>
-				constexpr auto operator()(const TplA &arg_tuple_a, ///< The tuple from which the other should be subtracted
-				                          const TplB &arg_tuple_b  ///< The tuple to subtract from the other
+				constexpr auto operator()(const TplA &prm_tuple_a, ///< The tuple from which the other should be subtracted
+				                          const TplB &prm_tuple_b  ///< The tuple to subtract from the other
 				                          ) const {
 					static_assert(
 						std::tuple_size< std::decay_t< TplA > >::value == std::tuple_size< std::decay_t< TplB > >::value,
 						"tuple_subtract() can only be used on tuples of equal size"
 					);
 					return tuple_subtract_impl(
-						arg_tuple_a,
-						arg_tuple_b,
+						prm_tuple_a,
+						prm_tuple_b,
 						std::make_index_sequence<std::tuple_size< std::decay_t< TplA > >::value>{}
 					);
 				}

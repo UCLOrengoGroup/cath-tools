@@ -52,12 +52,12 @@ namespace cath {
 		/// if used on many comprehensive PRC searches. Optimisations:
 		///  * Uses explicit char comparisons for spaces rather than locale-based boost::algorithm::is_space / std::isspace()
 		///  * Searches along the string rather than using split()
-		inline prc_scores_entry prc_scores_line_parser::parse_line(const std::string &arg_prc_line ///< The PRC scores file line to be parsed
+		inline prc_scores_entry prc_scores_line_parser::parse_line(const std::string &prm_prc_line ///< The PRC scores file line to be parsed
 		                                                           ) {
 			const auto is_space_in_prc     = [] (const char &x) { return ( x == ' ' || x == '\t' || x == '\n' ); };
 			const auto is_not_space_in_prc = [] (const char &x) { return ( x != ' ' && x != '\t' && x != '\n' ); };
-			auto       start_itr = common::cbegin( arg_prc_line );
-			const auto end_itr   = common::cend  ( arg_prc_line );
+			auto       start_itr = common::cbegin( prm_prc_line );
+			const auto end_itr   = common::cend  ( prm_prc_line );
 			auto       next_itr  = std::find_if( start_itr, end_itr, is_space_in_prc );
 			size_t     ctr       = 0;
 			while ( start_itr != end_itr ) {

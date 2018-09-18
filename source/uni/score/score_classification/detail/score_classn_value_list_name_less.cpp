@@ -26,15 +26,15 @@ using namespace cath::score::detail;
 using namespace std;
 
 /// \brief TODOCUMENT
-bool score_classn_value_list_name_less::operator()(const score_classn_value_list &arg_score_classn_value_list_a, ///< The first  score_classn_value_list to compare
-                                                   const score_classn_value_list &arg_score_classn_value_list_b  ///< The second score_classn_value_list to compare
+bool score_classn_value_list_name_less::operator()(const score_classn_value_list &prm_score_classn_value_list_a, ///< The first  score_classn_value_list to compare
+                                                   const score_classn_value_list &prm_score_classn_value_list_b  ///< The second score_classn_value_list to compare
                                                    ) const {
-	return arg_score_classn_value_list_a.get_name() < arg_score_classn_value_list_b.get_name();
+	return prm_score_classn_value_list_a.get_name() < prm_score_classn_value_list_b.get_name();
 }
 
 /// \brief TODOCUMENT
-bool score_classn_value_list_name_less::operator()(const score_classn_value_list &arg_score_classn_value_list_a, ///< The first  score_classn_value_list to compare
-                                                   const string                  &arg_name_b                     ///< The second score_classn_value_list to compare
+bool score_classn_value_list_name_less::operator()(const score_classn_value_list &prm_score_classn_value_list_a, ///< The first  score_classn_value_list to compare
+                                                   const string                  &prm_name_b                     ///< The second score_classn_value_list to compare
                                                    ) const {
-	return arg_score_classn_value_list_a.get_name() < arg_name_b;
+	return prm_score_classn_value_list_a.get_name() < prm_name_b;
 }

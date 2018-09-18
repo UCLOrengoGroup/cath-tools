@@ -50,23 +50,23 @@ namespace cath {
 				///       which it isn't worth providing an insertion operator overload. If motivated, this could probably be done
 				///       with a compile-time check for whether T and U both have ostream insertion operator overloads.
 				template <typename T, typename U>
-				void check_equality_and_inequality_are_consistent(const T    &arg_value_1,        ///< The first argument to compare
-				                                                  const U    &arg_value_2,        ///< The second argument to compare
-				                                                  const bool &arg_should_be_equal ///< Whether the two arguments should compare equal
+				void check_equality_and_inequality_are_consistent(const T    &prm_value_1,        ///< The first argument to compare
+				                                                  const U    &prm_value_2,        ///< The second argument to compare
+				                                                  const bool &prm_should_be_equal ///< Whether the two arguments should compare equal
 				                                                  ) {
-					const bool are_equal     = ( arg_value_1 == arg_value_2 );
-					const bool are_not_equal = ( arg_value_1 != arg_value_2 );
+					const bool are_equal     = ( prm_value_1 == prm_value_2 );
+					const bool are_not_equal = ( prm_value_1 != prm_value_2 );
 					BOOST_REQUIRE_NE( are_equal, are_not_equal );
-					if ( arg_should_be_equal ) {
-						BOOST_CHECK_EQUAL( arg_value_1, arg_value_2 );
+					if ( prm_should_be_equal ) {
+						BOOST_CHECK_EQUAL( prm_value_1, prm_value_2 );
 					}
 					else {
-						BOOST_CHECK_NE( arg_value_1, arg_value_2 );
+						BOOST_CHECK_NE( prm_value_1, prm_value_2 );
 					}
-					BOOST_CHECK_EQUAL( are_equal, arg_should_be_equal );
+					BOOST_CHECK_EQUAL( are_equal, prm_should_be_equal );
 				}
 
-				/// \brief Boost Test that the equality/inequality operators are correct for comparing arg_value against itself
+				/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
 				///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
 				///
 				/// Requirements on T:
@@ -75,13 +75,13 @@ namespace cath {
 				template <bool T_is_copy_constructible>
 				struct check_equality_operators_on_value_impl final {
 					template <typename T>
-					static void check(const T &arg_value ///< The value to be compared with itself and copy-constructed copies of itself
+					static void check(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
 					                  ) {
-						detail::check_equality_and_inequality_are_consistent(    arg_value,      arg_value,   true );
+						detail::check_equality_and_inequality_are_consistent(    prm_value,      prm_value,   true );
 					}
 				};
 
-				/// \brief Boost Test that the equality/inequality operators are correct for comparing arg_value against itself
+				/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
 				///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
 				///
 				/// Requirements on T:
@@ -90,25 +90,25 @@ namespace cath {
 				template <>
 				struct check_equality_operators_on_value_impl<true> final {
 					template <typename T>
-					static void check(const T &arg_value ///< The value to be compared with itself and copy-constructed copies of itself
+					static void check(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
 					                  ) {
-						detail::check_equality_and_inequality_are_consistent( T( arg_value ),    arg_value,   true );
-						detail::check_equality_and_inequality_are_consistent(    arg_value,   T( arg_value ), true );
-						detail::check_equality_and_inequality_are_consistent(    arg_value,      arg_value,   true );
+						detail::check_equality_and_inequality_are_consistent( T( prm_value ),    prm_value,   true );
+						detail::check_equality_and_inequality_are_consistent(    prm_value,   T( prm_value ), true );
+						detail::check_equality_and_inequality_are_consistent(    prm_value,      prm_value,   true );
 					}
 				};
 			} // namespace detail
 
-			/// \brief Boost Test that the equality/inequality operators are correct for comparing arg_value against itself
+			/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
 			///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
 			///
 			/// Requirements on T:
 			///  * T is equality/inequality comparable with itself
 			///  * (Currently) T has an ostream insertion operator overload
 			template <typename T>
-			void check_equality_operators_on_value(const T &arg_value ///< The value to be compared with itself and copy-constructed copies of itself
+			void check_equality_operators_on_value(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
 			                                       ) {
-				detail::check_equality_operators_on_value_impl<std::is_copy_constructible<T>::value>::check( arg_value );
+				detail::check_equality_operators_on_value_impl<std::is_copy_constructible<T>::value>::check( prm_value );
 			}
 
 			/// \brief Boost Test that the equality/inequality operators give correct values for two different objects
@@ -158,10 +158,10 @@ namespace cath {
 
 			/// \brief
 			template <typename R>
-			void check_equality_operators_on_diff_vals_range(const R &arg_range ///< The range of values to compare
+			void check_equality_operators_on_diff_vals_range(const R &prm_range ///< The range of values to compare
 			                                                 ) {
-				for (auto itr_a = common::cbegin( arg_range ); itr_a != common::cend( arg_range ); ++itr_a) {
-					for (auto itr_b = common::cbegin( arg_range ); itr_b != common::cend( arg_range ); ++itr_b) {
+				for (auto itr_a = common::cbegin( prm_range ); itr_a != common::cend( prm_range ); ++itr_a) {
+					for (auto itr_b = common::cbegin( prm_range ); itr_b != common::cend( prm_range ); ++itr_b) {
 						if ( itr_a != itr_b ) {
 							check_equality_operators_on_diff_vals( *itr_a, *itr_b );
 						}

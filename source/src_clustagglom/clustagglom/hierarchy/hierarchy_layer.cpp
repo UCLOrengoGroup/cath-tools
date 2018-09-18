@@ -38,17 +38,17 @@ using std::string;
 /// \brief Generate string describing each of the groups in the specified hierarchy_layer
 ///
 /// \relates hierarchy_layer
-str_vec cath::clust::to_strings(const hierarchy_layer &arg_hierarchy_layer ///< The hierarchy_layer to describe
+str_vec cath::clust::to_strings(const hierarchy_layer &prm_hierarchy_layer ///< The hierarchy_layer to describe
                                 ) {
 	using std::to_string;
 	return transform_build<str_vec>(
-		indices( arg_hierarchy_layer.size() ),
+		indices( prm_hierarchy_layer.size() ),
 		[&] (const size_t &x) {
 			return
 				  "GROUP "
 				+ ( format( R"(%3d)" ) % x ).str()
 				+ ": "
-				+ to_string( arg_hierarchy_layer[ x ] );
+				+ to_string( prm_hierarchy_layer[ x ] );
 		}
 	);
 }
@@ -56,21 +56,21 @@ str_vec cath::clust::to_strings(const hierarchy_layer &arg_hierarchy_layer ///< 
 /// \brief Generate a string describing the specified hierarchy_layer
 ///
 /// \relates hierarchy_layer
-string cath::clust::to_string(const hierarchy_layer &arg_hierarchy_layer, ///< The hierarchy_layer to describe
-                              const string          &arg_join_string      ///< The string with which to join the strings describing the groups
+string cath::clust::to_string(const hierarchy_layer &prm_hierarchy_layer, ///< The hierarchy_layer to describe
+                              const string          &prm_join_string      ///< The string with which to join the strings describing the groups
                               ) {
 	return join(
-		to_strings( arg_hierarchy_layer ),
-		arg_join_string
+		to_strings( prm_hierarchy_layer ),
+		prm_join_string
 	);
 }
 
 /// \brief Insert a description of the specified hierarchy_layer into the specified ostream
 ///
 /// \relates hierarchy_layer
-ostream & cath::clust::operator<<(ostream               &arg_os,             ///< The ostream into which the description should be inserted
-                                  const hierarchy_layer &arg_hierarchy_layer ///< The hierarchy_layer to describe
+ostream & cath::clust::operator<<(ostream               &prm_os,             ///< The ostream into which the description should be inserted
+                                  const hierarchy_layer &prm_hierarchy_layer ///< The hierarchy_layer to describe
                                   ) {
-	arg_os << to_string( arg_hierarchy_layer );
-	return arg_os;
+	prm_os << to_string( prm_hierarchy_layer );
+	return prm_os;
 }

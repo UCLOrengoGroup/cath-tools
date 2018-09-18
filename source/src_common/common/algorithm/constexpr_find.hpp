@@ -34,18 +34,18 @@ namespace cath {
 		namespace detail {
 
 			/// \brief Return whether a match has been found
-			///        (ie whether arg_value equals the J-th entry of the I-th entry of arg_array)
+			///        (ie whether prm_value equals the J-th entry of the I-th entry of prm_array)
 			template <size_t I, size_t J, typename T, size_t N, typename V>
-			constexpr bool found_constexpr_match(const std::array<T, N> &arg_array, ///< The array to be searched
-			                                     const V                &arg_value  ///< The value to be searched for
+			constexpr bool found_constexpr_match(const std::array<T, N> &prm_array, ///< The array to be searched
+			                                     const V                &prm_value  ///< The value to be searched for
 			                                     ) {
-				return ( std::get<J>( std::get<I>( arg_array ) ) == arg_value );
+				return ( std::get<J>( std::get<I>( prm_array ) ) == prm_value );
 			}
 
 			/// \brief The recursive implementation for constexpr_find
 			template <size_t I, size_t J, typename T, size_t N, typename V>
-			constexpr const T & constexpr_find_impl(const std::array<T, N> &arg_array, ///< The array to be searched
-			                                        const V                &arg_value  ///< The value to be searched for
+			constexpr const T & constexpr_find_impl(const std::array<T, N> &prm_array, ///< The array to be searched
+			                                        const V                &prm_value  ///< The value to be searched for
 			                                        ) {
 				// Ensure the array isn't empty
 				static_assert( N > 0, "Cannot constexpr_find() in empty std::array" );
@@ -54,13 +54,13 @@ namespace cath {
 				// * Else if there are more indices left in the array, recursively try the next one
 				//   (being careful to avoid even *instantiating* constexpr_find_impl() beyond the end of the array)
 				// * Else fail (using a throw statement that generates compiler errors iff it's invoked)
-				return found_constexpr_match<I, J>( arg_array, arg_value ) ? std::get<I>( arg_array ) :
-				       ( I + 1 < N                                       ) ? constexpr_find_impl<constexpr_min(N-1, I+1), J>( arg_array, arg_value ) :
-				                                                            ( throw std::logic_error( "Unable to constexpr_find() element in std::array" ), std::get<0>( arg_array ) );
+				return found_constexpr_match<I, J>( prm_array, prm_value ) ? std::get<I>( prm_array ) :
+				       ( I + 1 < N                                       ) ? constexpr_find_impl<constexpr_min(N-1, I+1), J>( prm_array, prm_value ) :
+				                                                            ( throw std::logic_error( "Unable to constexpr_find() element in std::array" ), std::get<0>( prm_array ) );
 			}
 		} // namespace detail
 
-		/// \brief Recursively search through an array for an entry that has arg_value in position J (default 0)
+		/// \brief Recursively search through an array for an entry that has prm_value in position J (default 0)
 		///        (where the array's entries are of some type like pair or tuple that can be queried with std::get<J>() )
 		///
 		/// The important thing about this is that it is constexpr so this makes it possible to use array<pair<>> / array<tuple<>>
@@ -81,10 +81,10 @@ namespace cath {
 		/// \todo Come C++14 (GCC 5.0), the relaxed constexpr rules probably allow substantial
 		///       simplification of the implementation code
 		template <size_t J = 0, typename T, size_t N, typename V>
-		constexpr const T & constexpr_find(const std::array<T, N> &arg_array, ///< The array to be searched
-		                                   const V                &arg_value  ///< The value to be searched for
+		constexpr const T & constexpr_find(const std::array<T, N> &prm_array, ///< The array to be searched
+		                                   const V                &prm_value  ///< The value to be searched for
 		                                   ) {
-			return detail::constexpr_find_impl<0, J>( arg_array, arg_value );
+			return detail::constexpr_find_impl<0, J>( prm_array, prm_value );
 		}
 
 	} // namespace common

@@ -31,9 +31,9 @@ using namespace std;
 ///
 /// clone() is already used by length_getter::clone()
 template <>
-unique_ptr<protein_only_length_getter> cath::common::detail::make_clone(const protein_only_length_getter &arg_value ///< The value to be cloned
+unique_ptr<protein_only_length_getter> cath::common::detail::make_clone(const protein_only_length_getter &prm_value ///< The value to be cloned
                                                                         ) {
-	return arg_value.protein_only_clone();
+	return prm_value.protein_only_clone();
 }
 
 /// \brief Specialisation for getting a sym_protein_only_length_getter clone from a sym_protein_only_length_getter
@@ -41,7 +41,7 @@ unique_ptr<protein_only_length_getter> cath::common::detail::make_clone(const pr
 ///
 /// clone() is already used by length_getter::clone()
 template <>
-unique_ptr<sym_protein_only_length_getter> cath::common::detail::make_clone(const sym_protein_only_length_getter &arg_value ///< The value to be cloned
+unique_ptr<sym_protein_only_length_getter> cath::common::detail::make_clone(const sym_protein_only_length_getter &prm_value ///< The value to be cloned
                                                                             ) {
-	return arg_value.sym_protein_only_clone();
+	return prm_value.sym_protein_only_clone();
 }

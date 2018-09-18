@@ -57,25 +57,25 @@ namespace cath {
 			/// \brief Test that making the complete-linkage merge list for the data from the specified names/links files
 			///        (up to the specified max_dissim and reading the links from the file in the specified direction)
 			///        generates  data matching that in the specified expected file
-			void test_complete_linkage_merge_list(const path      &arg_names_file,                                             ///< The file containing the names data
-			                                      const path      &arg_links_file,                                             ///< The file containing the links data
-			                                      const path      &arg_expected_file,                                          ///< The expected file to compare against
-			                                      const strength  &arg_max_dissim = std::numeric_limits<strength>::infinity(), ///< The maximum dissimilarity at which merges may still happen
-			                                      const link_dirn &arg_link_dirn  = link_dirn::STRENGTH                        ///< Whether the links in the input file represent strengths or dissimilarities
+			void test_complete_linkage_merge_list(const path      &prm_names_file,                                             ///< The file containing the names data
+			                                      const path      &prm_links_file,                                             ///< The file containing the links data
+			                                      const path      &prm_expected_file,                                          ///< The expected file to compare against
+			                                      const strength  &prm_max_dissim = std::numeric_limits<strength>::infinity(), ///< The maximum dissimilarity at which merges may still happen
+			                                      const link_dirn &prm_link_dirn  = link_dirn::STRENGTH                        ///< Whether the links in the input file represent strengths or dissimilarities
 			                                      ) const {
 				id_of_str_bidirnl the_id_of_str_bidirnl;
-				const auto        props           = parse_names( arg_names_file, the_id_of_str_bidirnl );
-				auto              dissims         = parse_dissimilarities( arg_links_file, the_id_of_str_bidirnl, arg_link_dirn );
+				const auto        props           = parse_names( prm_names_file, the_id_of_str_bidirnl );
+				auto              dissims         = parse_dissimilarities( prm_links_file, the_id_of_str_bidirnl, prm_link_dirn );
 				const size_vec    sorting_indices = get_sorting_scores( the_id_of_str_bidirnl, props );
 				const auto        the_merge_list  = calc_complete_linkage_merge_list(
 					move( dissims ),
 					sorting_indices,
-					arg_max_dissim
+					prm_max_dissim
 				);
 
 				write_merge_list( temp_mergelist_file, the_merge_list );
 
-				BOOST_CHECK_FILES_EQUAL( temp_mergelist_file, arg_expected_file );
+				BOOST_CHECK_FILES_EQUAL( temp_mergelist_file, prm_expected_file );
 			}
 
 		};

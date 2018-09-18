@@ -47,21 +47,21 @@ namespace cath {
 			struct some_other_class final {};
 
 			/// \brief Tidy up the specified name string to remove common inline implementation namespaces
-			inline void tidy_string(std::string &arg_string ///< The string to tidy up
+			inline void tidy_string(std::string &prm_string ///< The string to tidy up
 			                        ) {
-				if ( boost::algorithm::starts_with( arg_string, "std::__1::" ) ) {
-					arg_string = "std::" + arg_string.substr( 10 );
+				if ( boost::algorithm::starts_with( prm_string, "std::__1::" ) ) {
+					prm_string = "std::" + prm_string.substr( 10 );
 				}
-				if ( boost::algorithm::starts_with( arg_string, "std::__debug::" ) ) {
-					arg_string = "std::" + arg_string.substr( 14 );
+				if ( boost::algorithm::starts_with( prm_string, "std::__debug::" ) ) {
+					prm_string = "std::" + prm_string.substr( 14 );
 				}
 			}
 
 			/// \brief Tidy up a copy of the specified name string to remove common inline implementation namespaces
-			inline std::string tidy_string_copy(std::string arg_string ///< The string to tidy up
+			inline std::string tidy_string_copy(std::string prm_string ///< The string to tidy up
 			                                    ) {
-				tidy_string( arg_string );
-				return arg_string;
+				tidy_string( prm_string );
+				return prm_string;
 			}
 
 			/// \brief Return a string with the name of the template wrapper T

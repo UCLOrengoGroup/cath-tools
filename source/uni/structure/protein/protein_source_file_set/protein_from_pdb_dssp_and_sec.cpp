@@ -64,25 +64,25 @@ bool protein_from_pdb_dssp_and_sec::do_makes_ssap_ready_protein() const {
 }
 
 /// \brief Grab the specified PDB, DSSP and SEC filenames and then use them in read_dssp_pdb_and_sec_files()
-protein protein_from_pdb_dssp_and_sec::do_read_files(const data_file_path_map &arg_filename_of_data_file, ///< The pre-loaded map of file types to filenames
-                                                     const string             &arg_protein_name,          ///< The name of the structure to be loaded
-                                                     ostream                  &arg_stderr                 ///< The ostream to which warnings/errors should be written
+protein protein_from_pdb_dssp_and_sec::do_read_files(const data_file_path_map &prm_filename_of_data_file, ///< The pre-loaded map of file types to filenames
+                                                     const string             &prm_protein_name,          ///< The name of the structure to be loaded
+                                                     ostream                  &prm_stderr                 ///< The ostream to which warnings/errors should be written
                                                      ) const {
-	const path &pdb_file  = arg_filename_of_data_file.at( data_file::PDB  );
-	const path &dssp_file = arg_filename_of_data_file.at( data_file::DSSP );
-	const path &sec_file  = arg_filename_of_data_file.at( data_file::SEC  );
+	const path &pdb_file  = prm_filename_of_data_file.at( data_file::PDB  );
+	const path &dssp_file = prm_filename_of_data_file.at( data_file::DSSP );
+	const path &sec_file  = prm_filename_of_data_file.at( data_file::SEC  );
 	return read_protein_from_dssp_pdb_and_sec_files(
 		dssp_file,
 		pdb_file,
 		sec_file,
 		the_dssp_skip_policy,
-		arg_protein_name,
-		ref( arg_stderr )
+		prm_protein_name,
+		ref( prm_stderr )
 	);
 }
 
 /// \brief Ctor for protein_from_pdb_dssp_and_sec
-protein_from_pdb_dssp_and_sec::protein_from_pdb_dssp_and_sec(const dssp_skip_policy &arg_dssp_skip_policy ///< Whether to limit to the residues in the DSSP file
-                                                             ) : the_dssp_skip_policy( arg_dssp_skip_policy ) {
+protein_from_pdb_dssp_and_sec::protein_from_pdb_dssp_and_sec(const dssp_skip_policy &prm_dssp_skip_policy ///< Whether to limit to the residues in the DSSP file
+                                                             ) : the_dssp_skip_policy( prm_dssp_skip_policy ) {
 }
 

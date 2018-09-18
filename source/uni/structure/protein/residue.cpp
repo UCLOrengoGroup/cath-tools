@@ -120,13 +120,13 @@ const residue residue::NULL_RESIDUE(
 );
 
 /// \brief Throw if angle is not in range [0, 360]
-void residue::check_phi_psi_angle(const doub_angle &arg_angle
+void residue::check_phi_psi_angle(const doub_angle &prm_angle
                                   ) {
 //	using boost::math::isfinite;
-	if ( arg_angle < zero_angle<double>() || arg_angle > one_revolution<double>() ) {
+	if ( prm_angle < zero_angle<double>() || prm_angle > one_revolution<double>() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Phi/psi angle ("
-			+ lexical_cast<string>( arg_angle )
+			+ lexical_cast<string>( prm_angle )
 			+ ") is not in valid range [0, 360]"
 		));
 	}
@@ -145,55 +145,55 @@ void residue::check_phi_psi_angle(const doub_angle &arg_angle
 //}
 
 /// \brief Ctor for residue.
-residue::residue(const residue_id     &arg_residue_id,         ///< TODOCUMENT
-                 amino_acid            arg_amino_acid,         ///< TODOCUMENT
-                 coord                 arg_carbon_alpha_coord, ///< Coordinates of the carbon alpha atom
-                 coord                 arg_carbon_beta_coord,  ///< Coordinates of the carbon beta atom
-                 const size_t         &arg_sec_struc_number,   ///< TODOCUMENT
-                 const sec_struc_type &arg_sec_struc_type,     ///< TODOCUMENT
-                 rotation              arg_frame,              ///< TODOCUMENT
-                 doub_angle            arg_phi,                ///< TODOCUMENT
-                 doub_angle            arg_psi,                ///< TODOCUMENT
-                 const size_t         &arg_access              ///< TODOCUMENT
-                 ) : the_residue_id    ( arg_residue_id                       ),
-                     the_amino_acid    ( std::move ( arg_amino_acid         ) ),
-                     carbon_alpha_coord( std::move ( arg_carbon_alpha_coord ) ),
-                     carbon_beta_coord ( std::move ( arg_carbon_beta_coord  ) ),
-                     sec_struc_number  ( arg_sec_struc_number                 ),
-                     the_sec_struc_type( arg_sec_struc_type                   ),
-                     frame             ( std::move ( arg_frame              ) ),
-                     phi_angle         ( std::move ( arg_phi                ) ),
-                     psi_angle         ( std::move ( arg_psi                ) ),
-                     access            ( arg_access                           ) {
+residue::residue(const residue_id     &prm_residue_id,         ///< TODOCUMENT
+                 amino_acid            prm_amino_acid,         ///< TODOCUMENT
+                 coord                 prm_carbon_alpha_coord, ///< Coordinates of the carbon alpha atom
+                 coord                 prm_carbon_beta_coord,  ///< Coordinates of the carbon beta atom
+                 const size_t         &prm_sec_struc_number,   ///< TODOCUMENT
+                 const sec_struc_type &prm_sec_struc_type,     ///< TODOCUMENT
+                 rotation              prm_frame,              ///< TODOCUMENT
+                 doub_angle            prm_phi,                ///< TODOCUMENT
+                 doub_angle            prm_psi,                ///< TODOCUMENT
+                 const size_t         &prm_access              ///< TODOCUMENT
+                 ) : the_residue_id    ( prm_residue_id                       ),
+                     the_amino_acid    ( std::move ( prm_amino_acid         ) ),
+                     carbon_alpha_coord( std::move ( prm_carbon_alpha_coord ) ),
+                     carbon_beta_coord ( std::move ( prm_carbon_beta_coord  ) ),
+                     sec_struc_number  ( prm_sec_struc_number                 ),
+                     the_sec_struc_type( prm_sec_struc_type                   ),
+                     frame             ( std::move ( prm_frame              ) ),
+                     phi_angle         ( std::move ( prm_phi                ) ),
+                     psi_angle         ( std::move ( prm_psi                ) ),
+                     access            ( prm_access                           ) {
 	check_phi_psi_angle( get_phi_angle() );
 	check_phi_psi_angle( get_psi_angle() );
 }
 
 /// \brief Setter for the amino acid
-residue & residue::set_amino_acid(const amino_acid &arg_amino_acid ///< The amino acid to set
+residue & residue::set_amino_acid(const amino_acid &prm_amino_acid ///< The amino acid to set
                                   ) {
-	the_amino_acid = arg_amino_acid;
+	the_amino_acid = prm_amino_acid;
 	return *this;
 }
 
 /// \brief Setter for the residue sec_struc number
-residue & residue::set_residue_sec_struc_number(const size_t &arg_sec_struc_number ///< The residue sec_struc number to set
+residue & residue::set_residue_sec_struc_number(const size_t &prm_sec_struc_number ///< The residue sec_struc number to set
                                                 ) {
-	sec_struc_number = arg_sec_struc_number;
+	sec_struc_number = prm_sec_struc_number;
 	return *this;
 }
 
 /// \brief Setter for the sec_struc_type
-residue & residue::set_sec_struc_type(const sec_struc_type &arg_sec_struc_type ///< The sec_struc_type to set
+residue & residue::set_sec_struc_type(const sec_struc_type &prm_sec_struc_type ///< The sec_struc_type to set
                                       ) {
-	the_sec_struc_type = arg_sec_struc_type;
+	the_sec_struc_type = prm_sec_struc_type;
 	return *this;
 }
 
 /// \brief Setter for the accessibility (calculated in a DSSP/wolf manner)
-residue & residue::set_access(const size_t &arg_accessibility ///< The accessibility (calculated in a DSSP/wolf manner) to set
+residue & residue::set_access(const size_t &prm_accessibility ///< The accessibility (calculated in a DSSP/wolf manner) to set
                               ) {
-	access = arg_accessibility;
+	access = prm_accessibility;
 	return *this;
 }
 
@@ -248,156 +248,156 @@ doub_angle residue::DEFAULT_PHI_PSI() {
 /// operator!= is provided by boost::equality_comparable
 ///
 /// \relates residue
-bool cath::operator==(const residue &arg_residue_1, ///< The first  residue to compare
-                      const residue &arg_residue_2  ///< The second residue to compare
+bool cath::operator==(const residue &prm_residue_1, ///< The first  residue to compare
+                      const residue &prm_residue_2  ///< The second residue to compare
                       ) {
 	return (
-		( arg_residue_1.get_pdb_residue_id()     == arg_residue_2.get_pdb_residue_id()     )
+		( prm_residue_1.get_pdb_residue_id()     == prm_residue_2.get_pdb_residue_id()     )
 		&&
-		( arg_residue_1.get_amino_acid()         == arg_residue_2.get_amino_acid()         )
+		( prm_residue_1.get_amino_acid()         == prm_residue_2.get_amino_acid()         )
 		&&
-		( arg_residue_1.get_carbon_alpha_coord() == arg_residue_2.get_carbon_alpha_coord() )
+		( prm_residue_1.get_carbon_alpha_coord() == prm_residue_2.get_carbon_alpha_coord() )
 		&&
-		( arg_residue_1.get_carbon_beta_coord()  == arg_residue_2.get_carbon_beta_coord()  )
+		( prm_residue_1.get_carbon_beta_coord()  == prm_residue_2.get_carbon_beta_coord()  )
 		&&
-		( arg_residue_1.get_sec_struc_number()   == arg_residue_2.get_sec_struc_number()   )
+		( prm_residue_1.get_sec_struc_number()   == prm_residue_2.get_sec_struc_number()   )
 		&&
-		( arg_residue_1.get_sec_struc_type()     == arg_residue_2.get_sec_struc_type()     )
+		( prm_residue_1.get_sec_struc_type()     == prm_residue_2.get_sec_struc_type()     )
 		&&
-		( arg_residue_1.get_frame()              == arg_residue_2.get_frame()              )
+		( prm_residue_1.get_frame()              == prm_residue_2.get_frame()              )
 		&&
-		( arg_residue_1.get_phi_angle()          == arg_residue_2.get_phi_angle()          )
+		( prm_residue_1.get_phi_angle()          == prm_residue_2.get_phi_angle()          )
 		&&
-		( arg_residue_1.get_psi_angle()          == arg_residue_2.get_psi_angle()          )
+		( prm_residue_1.get_psi_angle()          == prm_residue_2.get_psi_angle()          )
 		&&
-		( arg_residue_1.get_access()             == arg_residue_2.get_access()             )
+		( prm_residue_1.get_access()             == prm_residue_2.get_access()             )
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-const chain_label & cath::get_chain_label(const residue &arg_residue ///< TODOCUMENT
+const chain_label & cath::get_chain_label(const residue &prm_residue ///< TODOCUMENT
                                           ) {
-	return arg_residue.get_pdb_residue_id().get_chain_label();
+	return prm_residue.get_pdb_residue_id().get_chain_label();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-const residue_name & cath::get_pdb_residue_name(const residue &arg_residue ///< TODOCUMENT
+const residue_name & cath::get_pdb_residue_name(const residue &prm_residue ///< TODOCUMENT
                                                 ) {
-	return arg_residue.get_pdb_residue_id().get_residue_name();
+	return prm_residue.get_pdb_residue_id().get_residue_name();
 }
 
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-const int & cath::pdb_number(const residue &arg_residue ///< TODOCUMENT
+const int & cath::pdb_number(const residue &prm_residue ///< TODOCUMENT
                              ) {
-	return get_pdb_residue_name( arg_residue ).residue_number();
+	return get_pdb_residue_name( prm_residue ).residue_number();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-int cath::pdb_number_or_value_if_null(const residue &arg_residue, ///< TODOCUMENT
-                                      const int     &arg_value
+int cath::pdb_number_or_value_if_null(const residue &prm_residue, ///< TODOCUMENT
+                                      const int     &prm_value
                                       ) {
-	return residue_number_or_value_if_null( get_pdb_residue_name( arg_residue ), arg_value );
+	return residue_number_or_value_if_null( get_pdb_residue_name( prm_residue ), prm_value );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-bool cath::has_pdb_insert(const residue &arg_residue ///< TODOCUMENT
+bool cath::has_pdb_insert(const residue &prm_residue ///< TODOCUMENT
                           ) {
-	return has_insert( get_pdb_residue_name( arg_residue ) );
+	return has_insert( get_pdb_residue_name( prm_residue ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-bool cath::has_pdb_insert_or_value_if_null(const residue &arg_residue, ///< TODOCUMENT
-                                           const bool    &arg_value    ///< TODOCUMENT
+bool cath::has_pdb_insert_or_value_if_null(const residue &prm_residue, ///< TODOCUMENT
+                                           const bool    &prm_value    ///< TODOCUMENT
                                            ) {
-	return has_insert_or_value_if_null( get_pdb_residue_name( arg_residue ), arg_value );
+	return has_insert_or_value_if_null( get_pdb_residue_name( prm_residue ), prm_value );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-const char & cath::pdb_insert(const residue &arg_residue ///< TODOCUMENT
+const char & cath::pdb_insert(const residue &prm_residue ///< TODOCUMENT
                               ) {
-	if ( ! has_pdb_insert( arg_residue ) ) {
+	if ( ! has_pdb_insert( prm_residue ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get PDB residue insert code of residue that has no insert code"));
 	}
-	return insert( get_pdb_residue_name( arg_residue ) );
+	return insert( get_pdb_residue_name( prm_residue ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-char cath::pdb_insert_or_value_if_null(const residue &arg_residue, ///< TODOCUMENT
-                                       const char    &arg_value    ///< TODOCUMENT
+char cath::pdb_insert_or_value_if_null(const residue &prm_residue, ///< TODOCUMENT
+                                       const char    &prm_value    ///< TODOCUMENT
                                        ) {
-	return insert_or_value_if_null( get_pdb_residue_name( arg_residue ), arg_value );
+	return insert_or_value_if_null( get_pdb_residue_name( prm_residue ), prm_value );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-char cath::pdb_insert_or_value_if_null_or_absent(const residue &arg_residue, ///< TODOCUMENT
-                                                 const char    &arg_value    ///< TODOCUMENT
+char cath::pdb_insert_or_value_if_null_or_absent(const residue &prm_residue, ///< TODOCUMENT
+                                                 const char    &prm_value    ///< TODOCUMENT
                                                  ) {
-	return insert_or_value_if_null_or_absent( get_pdb_residue_name( arg_residue ), arg_value );
+	return insert_or_value_if_null_or_absent( get_pdb_residue_name( prm_residue ), prm_value );
 }
 
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-bool cath::residue_matches_residue_id(const residue    &arg_residue,   ///< TODOCUMENT
-                                      const residue_id &arg_residue_id ///< TODOCUMENT
+bool cath::residue_matches_residue_id(const residue    &prm_residue,   ///< TODOCUMENT
+                                      const residue_id &prm_residue_id ///< TODOCUMENT
                                       ) {
-	return ( arg_residue.get_pdb_residue_id() == arg_residue_id );
+	return ( prm_residue.get_pdb_residue_id() == prm_residue_id );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-char cath::get_amino_acid_letter_tolerantly(const residue &arg_residue ///< TODOCUMENT
+char cath::get_amino_acid_letter_tolerantly(const residue &prm_residue ///< TODOCUMENT
                                             ) {
-	return arg_residue.get_amino_acid().get_letter_tolerantly();
+	return prm_residue.get_amino_acid().get_letter_tolerantly();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-char_3_arr cath::get_amino_acid_code(const residue &arg_residue ///< TODOCUMENT
+char_3_arr cath::get_amino_acid_code(const residue &prm_residue ///< TODOCUMENT
                                      ) {
-	return arg_residue.get_amino_acid().get_code();
+	return prm_residue.get_amino_acid().get_code();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-string cath::get_amino_acid_name(const residue &arg_residue ///< TODOCUMENT
+string cath::get_amino_acid_name(const residue &prm_residue ///< TODOCUMENT
                                  ) {
-	return arg_residue.get_amino_acid().get_name();
+	return prm_residue.get_amino_acid().get_name();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-string cath::ssap_legacy_alignment_left_side_string(const residue &arg_residue ///< TODOCUMENT
+string cath::ssap_legacy_alignment_left_side_string(const residue &prm_residue ///< TODOCUMENT
                                                     ) {
 	ostringstream aln_ss;
-	aln_ss        <<    setw(4) << pdb_number_or_value_if_null( arg_residue, 0 );
-	aln_ss << " " << ( arg_residue.get_sec_struc_type() != sec_struc_type::COIL ? lexical_cast<string>( arg_residue.get_sec_struc_type() ) : "0" );
-	aln_ss << " " <<   pdb_insert_or_value_if_null_or_absent( arg_residue, '0' );
-	aln_ss << " " <<   get_amino_acid_letter_tolerantly( arg_residue );
+	aln_ss        <<    setw(4) << pdb_number_or_value_if_null( prm_residue, 0 );
+	aln_ss << " " << ( prm_residue.get_sec_struc_type() != sec_struc_type::COIL ? lexical_cast<string>( prm_residue.get_sec_struc_type() ) : "0" );
+	aln_ss << " " <<   pdb_insert_or_value_if_null_or_absent( prm_residue, '0' );
+	aln_ss << " " <<   get_amino_acid_letter_tolerantly( prm_residue );
 	return aln_ss.str();
 }
 
@@ -411,13 +411,13 @@ string cath::ssap_legacy_alignment_left_side_gap_string() {
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-string cath::ssap_legacy_alignment_right_side_string(const residue &arg_residue ///< TODOCUMENT
+string cath::ssap_legacy_alignment_right_side_string(const residue &prm_residue ///< TODOCUMENT
                                                      ) {
 	ostringstream aln_ss;
-	aln_ss        <<   get_amino_acid_letter_tolerantly( arg_residue );
-	aln_ss << " " <<   pdb_insert_or_value_if_null_or_absent( arg_residue, '0' );
-	aln_ss << " " << ( arg_residue.get_sec_struc_type() != sec_struc_type::COIL ? lexical_cast<string>( arg_residue.get_sec_struc_type() ) : "0" );
-	aln_ss << " " <<   setw(4) << pdb_number_or_value_if_null( arg_residue, 0 );
+	aln_ss        <<   get_amino_acid_letter_tolerantly( prm_residue );
+	aln_ss << " " <<   pdb_insert_or_value_if_null_or_absent( prm_residue, '0' );
+	aln_ss << " " << ( prm_residue.get_sec_struc_type() != sec_struc_type::COIL ? lexical_cast<string>( prm_residue.get_sec_struc_type() ) : "0" );
+	aln_ss << " " <<   setw(4) << pdb_number_or_value_if_null( prm_residue, 0 );
 	return aln_ss.str();
 }
 
@@ -431,48 +431,48 @@ string cath::ssap_legacy_alignment_right_side_gap_string() {
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-string cath::get_pdb_residue_id_string(const residue &arg_residue ///< TODOCUMENT
+string cath::get_pdb_residue_id_string(const residue &prm_residue ///< TODOCUMENT
                                        ) {
-	return to_string( arg_residue.get_pdb_residue_id() );
+	return to_string( prm_residue.get_pdb_residue_id() );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-int cath::get_accessi_of_residue(const residue &arg_residue ///< TODOCUMENT
+int cath::get_accessi_of_residue(const residue &prm_residue ///< TODOCUMENT
                                  ) {
-	const char one_letter_amino_acid = get_amino_acid_letter_tolerantly( arg_residue );
-	return ACCESSI.find( one_letter_amino_acid )->second - numeric_cast<int>( arg_residue.get_access() );
+	const char one_letter_amino_acid = get_amino_acid_letter_tolerantly( prm_residue );
+	return ACCESSI.find( one_letter_amino_acid )->second - numeric_cast<int>( prm_residue.get_access() );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-ostream & cath::operator<<(ostream       &arg_os,     ///< TODOCUMENT
-                           const residue &arg_residue ///< TODOCUMENT
+ostream & cath::operator<<(ostream       &prm_os,     ///< TODOCUMENT
+                           const residue &prm_residue ///< TODOCUMENT
                            ) {
-	arg_os << "residue[" << right << setw( 4 ) << pdb_number( arg_residue );
-	arg_os                                     << pdb_insert_or_value_if_null_or_absent( arg_residue, ' ' );
-	arg_os << ", SS:"                          << arg_residue.get_sec_struc_type();
-	arg_os << " ("       << right << setw( 2 ) << arg_residue.get_sec_struc_number();
-	arg_os << "), AA:"                         << get_amino_acid_letter_tolerantly( arg_residue );
-	arg_os << ", ACC:"   << right << setw( 2 ) << arg_residue.get_access();
-	arg_os << ", PHI:"   << right << setw( 4 ) << arg_residue.get_phi_angle();
-	arg_os << ", PSI:"   << right << setw( 4 ) << arg_residue.get_psi_angle();
-	arg_os << ", CA "                          << arg_residue.get_carbon_alpha_coord();
-	arg_os << ", CB "                          << arg_residue.get_carbon_beta_coord();
-	arg_os << ", Frame "                       << arg_residue.get_frame();
-	arg_os << "]";
-	return arg_os;
+	prm_os << "residue[" << right << setw( 4 ) << pdb_number( prm_residue );
+	prm_os                                     << pdb_insert_or_value_if_null_or_absent( prm_residue, ' ' );
+	prm_os << ", SS:"                          << prm_residue.get_sec_struc_type();
+	prm_os << " ("       << right << setw( 2 ) << prm_residue.get_sec_struc_number();
+	prm_os << "), AA:"                         << get_amino_acid_letter_tolerantly( prm_residue );
+	prm_os << ", ACC:"   << right << setw( 2 ) << prm_residue.get_access();
+	prm_os << ", PHI:"   << right << setw( 4 ) << prm_residue.get_phi_angle();
+	prm_os << ", PSI:"   << right << setw( 4 ) << prm_residue.get_psi_angle();
+	prm_os << ", CA "                          << prm_residue.get_carbon_alpha_coord();
+	prm_os << ", CB "                          << prm_residue.get_carbon_beta_coord();
+	prm_os << ", Frame "                       << prm_residue.get_frame();
+	prm_os << "]";
+	return prm_os;
 }
 
 /// \brief TODOCUMENT
-rotation cath::construct_residue_frame(const coord &arg_nitrogen_position,     ///< TODOCUMENT
-                                       const coord &arg_carbon_alpha_position, ///< TODOCUMENT
-                                       const coord &arg_carbon_position        ///< TODOCUMENT
+rotation cath::construct_residue_frame(const coord &prm_nitrogen_position,     ///< TODOCUMENT
+                                       const coord &prm_carbon_alpha_position, ///< TODOCUMENT
+                                       const coord &prm_carbon_position        ///< TODOCUMENT
                                        ) {
-	const coord unit_n_to_ca = normalise_copy( arg_carbon_alpha_position - arg_nitrogen_position );
-	const coord unit_n_to_c  = normalise_copy( arg_carbon_position       - arg_nitrogen_position );
+	const coord unit_n_to_ca = normalise_copy( prm_carbon_alpha_position - prm_nitrogen_position );
+	const coord unit_n_to_c  = normalise_copy( prm_carbon_position       - prm_nitrogen_position );
 	return rotation_to_x_axis_and_x_y_plane(unit_n_to_c, cross_product( unit_n_to_ca, unit_n_to_c ) );
 
 //	const coord unit_perp_to_n_ca_c_plane           = normalise_copy( cross_product( unit_n_to_ca, unit_n_to_c               ) );
@@ -487,15 +487,15 @@ rotation cath::construct_residue_frame(const coord &arg_nitrogen_position,     /
 /// \brief Combine two residue objects representing the same residue as parsed from a DSSP file and PDB file
 ///
 /// This populates the accessibility and secondary structure from the DSSP and everything else from the PDB
-residue cath::combine_residues_from_dssp_and_pdb(const residue                  &arg_dssp_residue,       ///< The residue that has been parsed from a DSSP file,
-                                                 const residue                  &arg_pdb_residue,        ///< An equivalent residue that has been parsed from a pdb file (and converted to a protein object via)
-                                                 const dssp_skip_angle_skipping &arg_pdb_skipped_angles, ///< Whether the PDB tried to break PHI/PSI angles like DSSP (so it's worth printing info where that's failed)
-                                                 const residue_makeup           &arg_residue_makeup      ///< The makeup of the PDB residue (so that when this is residue_makeup::SOME_NON_PROPER_AMINO_ACIDS the function knows to silently tolerate a DSSP AA of 'X' where the residue from the PDB has a sensible AA)
+residue cath::combine_residues_from_dssp_and_pdb(const residue                  &prm_dssp_residue,       ///< The residue that has been parsed from a DSSP file,
+                                                 const residue                  &prm_pdb_residue,        ///< An equivalent residue that has been parsed from a pdb file (and converted to a protein object via)
+                                                 const dssp_skip_angle_skipping &prm_pdb_skipped_angles, ///< Whether the PDB tried to break PHI/PSI angles like DSSP (so it's worth printing info where that's failed)
+                                                 const residue_makeup           &prm_residue_makeup      ///< The makeup of the PDB residue (so that when this is residue_makeup::SOME_NON_PROPER_AMINO_ACIDS the function knows to silently tolerate a DSSP AA of 'X' where the residue from the PDB has a sensible AA)
                                                  ) {
 	// Check that these residues match (or that the DSSP residue is an error residue)
-	const residue_id &dssp_residue_id = arg_dssp_residue.get_pdb_residue_id();
-	const residue_id &pdb_residue_id  = arg_pdb_residue.get_pdb_residue_id();
-	if ( dssp_residue_id != pdb_residue_id && arg_dssp_residue != residue::NULL_RESIDUE ) {
+	const residue_id &dssp_residue_id = prm_dssp_residue.get_pdb_residue_id();
+	const residue_id &pdb_residue_id  = prm_pdb_residue.get_pdb_residue_id();
+	if ( dssp_residue_id != pdb_residue_id && prm_dssp_residue != residue::NULL_RESIDUE ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"When combining a DSSP residue with a PDB residue, DSSP residue \""
 			+ to_string( dssp_residue_id )
@@ -506,8 +506,8 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 	}
 
 	// Check that the two residues' amino acids match
-	const amino_acid dssp_amino_acid = arg_dssp_residue.get_amino_acid();
-	const amino_acid pdb_amino_acid  = arg_pdb_residue.get_amino_acid();
+	const amino_acid dssp_amino_acid = prm_dssp_residue.get_amino_acid();
+	const amino_acid pdb_amino_acid  = prm_pdb_residue.get_amino_acid();
 	if ( dssp_amino_acid != pdb_amino_acid ) {
 		// If DSSP is UNK/X and PDB is ASX/B, GLX/Z, PYL/O or SEC/U or a non-proper amino acid from
 		// HETATM records, then just accept it (and go with the PDB decision)
@@ -539,7 +539,7 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 				<< "\" parsed from a DSSP - continuing because it looks "
 				<< "like nothing worse than DSSP not recognising a non-standard amino-acid code";
 		}
-		else if ( ! dssp_is_unk || arg_residue_makeup == residue_makeup::ALL_PROPER_AMINO_ACIDS ) {
+		else if ( ! dssp_is_unk || prm_residue_makeup == residue_makeup::ALL_PROPER_AMINO_ACIDS ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(
 				"Amino acid \""
 				+ get_code_string( dssp_amino_acid )
@@ -559,8 +559,8 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 	//       and then just loop over those two enum class values.
 	using str_ang_ang_tpl = tuple<string, doub_angle, doub_angle>;
 	const auto phi_psi_data = {
-		str_ang_ang_tpl{ "phi", arg_pdb_residue.get_phi_angle(), arg_dssp_residue.get_phi_angle() },
-		str_ang_ang_tpl{ "psi", arg_pdb_residue.get_psi_angle(), arg_dssp_residue.get_psi_angle() },
+		str_ang_ang_tpl{ "phi", prm_pdb_residue.get_phi_angle(), prm_dssp_residue.get_phi_angle() },
+		str_ang_ang_tpl{ "psi", prm_pdb_residue.get_psi_angle(), prm_dssp_residue.get_psi_angle() },
 	};
 	for (const auto &phi_psi_entry : phi_psi_data) {
 		const string     &angle_name = get<0>( phi_psi_entry );
@@ -568,7 +568,7 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 		const doub_angle &dssp_angle = get<2>( phi_psi_entry );
 		if ( angle_in_degrees( wrapped_difference( pdb_angle, dssp_angle ) ) > 1.0 ) {
 			if ( angle_in_degrees( dssp_angle ) == 360.0 ) {
-				if ( arg_pdb_skipped_angles == dssp_skip_angle_skipping::BREAK_ANGLES ) {
+				if ( prm_pdb_skipped_angles == dssp_skip_angle_skipping::BREAK_ANGLES ) {
 					BOOST_LOG_TRIVIAL( info ) << "The "
 						<< angle_name
 						<< " angle calculated for residue "
@@ -595,8 +595,8 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 
 	// Check that the PDB and DSSP give x/y/z coordinate values within 0.5001 of each other
 	using char_doub_doub_tpl = tuple<char, double, double>;
-	const auto &pdb_ca_coord  = arg_pdb_residue.get_carbon_alpha_coord();
-	const auto &dssp_ca_coord = arg_dssp_residue.get_carbon_alpha_coord();
+	const auto &pdb_ca_coord  = prm_pdb_residue.get_carbon_alpha_coord();
+	const auto &dssp_ca_coord = prm_dssp_residue.get_carbon_alpha_coord();
 	const auto coord_data = {
 		char_doub_doub_tpl{ 'x', pdb_ca_coord.get_x(), dssp_ca_coord.get_x() },
 		char_doub_doub_tpl{ 'y', pdb_ca_coord.get_y(), dssp_ca_coord.get_y() },
@@ -622,20 +622,20 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 	// and everything else from the PDB residue
 	const residue new_residue(
 		pdb_residue_id,
-		arg_pdb_residue.get_amino_acid(), //< Use the PDB's AA (see notes about PYL/SEC above)
-		arg_pdb_residue.get_carbon_alpha_coord(),
-		arg_pdb_residue.get_carbon_beta_coord(),
-		arg_dssp_residue.get_sec_struc_number(),
-		arg_dssp_residue.get_sec_struc_type(),
-		arg_pdb_residue.get_frame(),
-		arg_pdb_residue.get_phi_angle(),
-		arg_pdb_residue.get_psi_angle(),
-		arg_dssp_residue.get_access()
+		prm_pdb_residue.get_amino_acid(), //< Use the PDB's AA (see notes about PYL/SEC above)
+		prm_pdb_residue.get_carbon_alpha_coord(),
+		prm_pdb_residue.get_carbon_beta_coord(),
+		prm_dssp_residue.get_sec_struc_number(),
+		prm_dssp_residue.get_sec_struc_type(),
+		prm_pdb_residue.get_frame(),
+		prm_pdb_residue.get_phi_angle(),
+		prm_pdb_residue.get_psi_angle(),
+		prm_dssp_residue.get_access()
 	);
 
 	// Temporary debug statements
-//	cerr << "DSSP residue : " << arg_dssp_residue << endl;
-//	cerr << " PDB residue : " << arg_pdb_residue  << endl;
+//	cerr << "DSSP residue : " << prm_dssp_residue << endl;
+//	cerr << " PDB residue : " << prm_pdb_residue  << endl;
 //	cerr << " new residue : " << new_residue      << endl;
 
 	return new_residue;
@@ -647,16 +647,16 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 /// could probably be made more efficient if there is call for that.
 ///
 /// \relates residue
-bool cath::is_null_residue(const residue &arg_residue ///< TODOCUMENT
+bool cath::is_null_residue(const residue &prm_residue ///< TODOCUMENT
                            ) {
-	return (arg_residue == residue::NULL_RESIDUE);
+	return (prm_residue == residue::NULL_RESIDUE);
 }
 
 /// \brief Wipe the residue's secondary structure number and set its label to sec_struc_type::COIL
 ///
 /// \relates residue
-void cath::wipe_secondary_structure(residue &arg_residue ///< The residue to be modified
+void cath::wipe_secondary_structure(residue &prm_residue ///< The residue to be modified
                                     ) {
-	arg_residue.set_sec_struc_type          ( sec_struc_type::COIL );
-	arg_residue.set_residue_sec_struc_number( 0                    );
+	prm_residue.set_sec_struc_type          ( sec_struc_type::COIL );
+	prm_residue.set_residue_sec_struc_number( 0                    );
 }

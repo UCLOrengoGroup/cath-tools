@@ -37,24 +37,24 @@ using boost::algorithm::is_space;
 using boost::token_compress_on;
 
 /// \brief Ctor from all of the required pieces of information
-ssap_scores_entry::ssap_scores_entry(string        arg_prot1,      ///< Name of protein 1
-                                     string        arg_prot2,      ///< Name of protein 2
-                                     const size_t &arg_length1,    ///< Length of protein 1
-                                     const size_t &arg_length2,    ///< Length of protein 2
-                                     const double &arg_ssap_score, ///< SSAP score for structural comparison
-                                     const size_t &arg_num_equivs, ///< Number of equivalent/aligned residues
-                                     const double &arg_overlap_pc, ///< Percentage overlap  (100% x overlap /length of largest)
-                                     const double &arg_seq_id_pc,  ///< Percentage identity (100% x identity/length of smallest)
-                                     const double &arg_rmsd        ///< RMSD of superposed structures
-                                     ) : name_1     { std::move( arg_prot1 ) },
-                                         name_2     { std::move( arg_prot2 ) },
-                                         length_1   { arg_length1            },
-                                         length_2   { arg_length2            },
-                                         ssap_score { arg_ssap_score         },
-                                         num_equivs { arg_num_equivs         },
-                                         overlap_pc { arg_overlap_pc         },
-                                         seq_id_pc  { arg_seq_id_pc          },
-                                         rmsd       { arg_rmsd               } {
+ssap_scores_entry::ssap_scores_entry(string        prm_prot1,      ///< Name of protein 1
+                                     string        prm_prot2,      ///< Name of protein 2
+                                     const size_t &prm_length1,    ///< Length of protein 1
+                                     const size_t &prm_length2,    ///< Length of protein 2
+                                     const double &prm_ssap_score, ///< SSAP score for structural comparison
+                                     const size_t &prm_num_equivs, ///< Number of equivalent/aligned residues
+                                     const double &prm_overlap_pc, ///< Percentage overlap  (100% x overlap /length of largest)
+                                     const double &prm_seq_id_pc,  ///< Percentage identity (100% x identity/length of smallest)
+                                     const double &prm_rmsd        ///< RMSD of superposed structures
+                                     ) : name_1     { std::move( prm_prot1 ) },
+                                         name_2     { std::move( prm_prot2 ) },
+                                         length_1   { prm_length1            },
+                                         length_2   { prm_length2            },
+                                         ssap_score { prm_ssap_score         },
+                                         num_equivs { prm_num_equivs         },
+                                         overlap_pc { prm_overlap_pc         },
+                                         seq_id_pc  { prm_seq_id_pc          },
+                                         rmsd       { prm_rmsd               } {
 }
 
 /// \brief Getter for the name of protein 1
@@ -105,27 +105,27 @@ const double & ssap_scores_entry::get_rmsd() const {
 /// \brief Non-member equality operator for ssap_scores_entry
 ///
 /// \relates ssap_scores_entry
-bool cath::file::operator==(const ssap_scores_entry &arg_entry_a, ///< The first  ssap_scores_entry to compare
-                            const ssap_scores_entry &arg_entry_b  ///< The second ssap_scores_entry to compare
+bool cath::file::operator==(const ssap_scores_entry &prm_entry_a, ///< The first  ssap_scores_entry to compare
+                            const ssap_scores_entry &prm_entry_b  ///< The second ssap_scores_entry to compare
                             ) {
 	return (
-		arg_entry_a.get_name_1()     == arg_entry_b.get_name_1()
+		prm_entry_a.get_name_1()     == prm_entry_b.get_name_1()
 		&&
-		arg_entry_a.get_name_2()     == arg_entry_b.get_name_2()
+		prm_entry_a.get_name_2()     == prm_entry_b.get_name_2()
 		&&
-		arg_entry_a.get_length_1()   == arg_entry_b.get_length_1()
+		prm_entry_a.get_length_1()   == prm_entry_b.get_length_1()
 		&&
-		arg_entry_a.get_length_2()   == arg_entry_b.get_length_2()
+		prm_entry_a.get_length_2()   == prm_entry_b.get_length_2()
 		&&
-		arg_entry_a.get_ssap_score() == arg_entry_b.get_ssap_score()
+		prm_entry_a.get_ssap_score() == prm_entry_b.get_ssap_score()
 		&&
-		arg_entry_a.get_num_equivs() == arg_entry_b.get_num_equivs()
+		prm_entry_a.get_num_equivs() == prm_entry_b.get_num_equivs()
 		&&
-		arg_entry_a.get_overlap_pc() == arg_entry_b.get_overlap_pc()
+		prm_entry_a.get_overlap_pc() == prm_entry_b.get_overlap_pc()
 		&&
-		arg_entry_a.get_seq_id_pc()  == arg_entry_b.get_seq_id_pc()
+		prm_entry_a.get_seq_id_pc()  == prm_entry_b.get_seq_id_pc()
 		&&
-		arg_entry_a.get_rmsd()       == arg_entry_b.get_rmsd()
+		prm_entry_a.get_rmsd()       == prm_entry_b.get_rmsd()
 	);
 }
 
@@ -136,9 +136,9 @@ bool cath::file::operator==(const ssap_scores_entry &arg_entry_a, ///< The first
 ///     1cukA03  1hjpA03   48   44  94.92   44   91   97   0.71
 ///
 /// \relates ssap_scores_entry
-ssap_scores_entry cath::file::ssap_scores_entry_from_line(const string &arg_ssap_line_entry ///< The line from which to parse the data
+ssap_scores_entry cath::file::ssap_scores_entry_from_line(const string &prm_ssap_line_entry ///< The line from which to parse the data
                                                           ) {
-	const auto line_parts = split_build<str_vec>( arg_ssap_line_entry, is_space(), token_compress_on );
+	const auto line_parts = split_build<str_vec>( prm_ssap_line_entry, is_space(), token_compress_on );
 	if ( line_parts.size() != 9 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse ssap_scores_entry from line that doesn't contain 9 parts"));
 	}
@@ -160,26 +160,26 @@ ssap_scores_entry cath::file::ssap_scores_entry_from_line(const string &arg_ssap
 /// \brief Simple to_string() overload for ssap_scores_entry
 ///
 /// \relates ssap_scores_entry
-string cath::file::to_string(const ssap_scores_entry &arg_ssap_scores_entry ///< The ssap_scores_entry to be output as a string
+string cath::file::to_string(const ssap_scores_entry &prm_ssap_scores_entry ///< The ssap_scores_entry to be output as a string
                              ) {
-	return "ssap_scores_entry[" +                   arg_ssap_scores_entry.get_name_1()
-	     + ", "                 +                   arg_ssap_scores_entry.get_name_2()
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_length_1()    )
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_length_2()    )
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_ssap_score() )
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_num_equivs() )
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_overlap_pc() )
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_seq_id_pc()  )
-	     + ", "                 + ::std::to_string( arg_ssap_scores_entry.get_rmsd()       )
+	return "ssap_scores_entry[" +                   prm_ssap_scores_entry.get_name_1()
+	     + ", "                 +                   prm_ssap_scores_entry.get_name_2()
+	     + ", "                 + ::std::to_string( prm_ssap_scores_entry.get_length_1()    )
+	     + ", "                 + ::std::to_string( prm_ssap_scores_entry.get_length_2()    )
+	     + ", "                 + ::std::to_string( prm_ssap_scores_entry.get_ssap_score() )
+	     + ", "                 + ::std::to_string( prm_ssap_scores_entry.get_num_equivs() )
+	     + ", "                 + ::std::to_string( prm_ssap_scores_entry.get_overlap_pc() )
+	     + ", "                 + ::std::to_string( prm_ssap_scores_entry.get_seq_id_pc()  )
+	     + ", "                 + ::std::to_string( prm_ssap_scores_entry.get_rmsd()       )
 	     + "]";
 }
 
 /// \brief Simple insertion operator for ssap_scores_entry
 ///
 /// \relates ssap_scores_entry
-ostream & cath::file::operator<<(ostream                 &arg_os,               ///< The ostream to which the ssap_scores_entry should be output
-                                 const ssap_scores_entry &arg_ssap_scores_entry ///< The ssap_scores_entry to output
+ostream & cath::file::operator<<(ostream                 &prm_os,               ///< The ostream to which the ssap_scores_entry should be output
+                                 const ssap_scores_entry &prm_ssap_scores_entry ///< The ssap_scores_entry to output
                                  ) {
-	arg_os << to_string( arg_ssap_scores_entry );
-	return arg_os;
+	prm_os << to_string( prm_ssap_scores_entry );
+	return prm_os;
 }

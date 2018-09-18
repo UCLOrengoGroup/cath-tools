@@ -38,15 +38,15 @@ namespace cath {
 					}
 
 					/// \brief TODOCUMENT
-					auto operator()(const view_cache_index_entry &arg_entry ///< TODOCUMENT
-					                )->decltype( arg_entry.get_from_phi_angle() ) {
-						return arg_entry.get_from_phi_angle();
+					auto operator()(const view_cache_index_entry &prm_entry ///< TODOCUMENT
+					                )->decltype( prm_entry.get_from_phi_angle() ) {
+						return prm_entry.get_from_phi_angle();
 					}
 
 					/// \brief TODOCUMENT
-					auto operator()(const vcie_match_criteria &arg_criteria ///< TODOCUMENT
-					                )->decltype( arg_criteria.get_maximum_phi_angle_difference() ) {
-						return arg_criteria.get_maximum_phi_angle_difference();
+					auto operator()(const vcie_match_criteria &prm_criteria ///< TODOCUMENT
+					                )->decltype( prm_criteria.get_maximum_phi_angle_difference() ) {
+						return prm_criteria.get_maximum_phi_angle_difference();
 					}
 				};
 

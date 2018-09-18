@@ -44,14 +44,14 @@ using std::string;
 /// and by a ',' between segments.
 ///
 /// \relates calc_hit
-string cath::rslv::get_segments_string(const calc_hit &arg_hit ///< The calc_hit whose segments should be described
+string cath::rslv::get_segments_string(const calc_hit &prm_hit ///< The calc_hit whose segments should be described
                                        ) {
 	return join(
-		indices( get_num_segments( arg_hit ) )
+		indices( get_num_segments( prm_hit ) )
 			| boost::adaptors::transformed( [&] (const size_t &x) {
-				return ::std::to_string( get_start_res_index_of_segment( arg_hit, x ) )
+				return ::std::to_string( get_start_res_index_of_segment( prm_hit, x ) )
 				     + "-"
-				     + ::std::to_string( get_stop_res_index_of_segment ( arg_hit, x ) );
+				     + ::std::to_string( get_stop_res_index_of_segment ( prm_hit, x ) );
 			} ),
 		","
 	);
@@ -60,47 +60,47 @@ string cath::rslv::get_segments_string(const calc_hit &arg_hit ///< The calc_hit
 /// \brief Generate a string describing the specified calc_hit
 ///
 /// \relates calc_hit
-string cath::rslv::to_string(const calc_hit &arg_hit ///< The calc_hit to describe
+string cath::rslv::to_string(const calc_hit &prm_hit ///< The calc_hit to describe
                              ) {
 	using std::to_string;
 	return
 		  "calc_hit["
-		+ get_segments_string( arg_hit )
+		+ get_segments_string( prm_hit )
 		+ ", score: "
-		+ to_string( arg_hit.get_score() )
+		+ to_string( prm_hit.get_score() )
 		+ "]";
 }
 
 /// \brief Insert a description of the specified calc_hit into the specified ostream
 ///
 /// \relates calc_hit
-ostream & cath::rslv::operator<<(ostream        &arg_os,      ///< The ostream into which the description should be inserted
-                                 const calc_hit &arg_calc_hit ///< The calc_hit to describe
+ostream & cath::rslv::operator<<(ostream        &prm_os,      ///< The ostream into which the description should be inserted
+                                 const calc_hit &prm_calc_hit ///< The calc_hit to describe
                                  ) {
-	arg_os << to_string( arg_calc_hit );
-	return arg_os;
+	prm_os << to_string( prm_calc_hit );
+	return prm_os;
 }
 
 /// \brief Return whether the two specified hits are identical
 ///
 /// \relates calc_hit
-bool cath::rslv::operator==(const calc_hit &arg_lhs, ///< The first  calc_hit to compare
-                            const calc_hit &arg_rhs  ///< The second calc_hit to compare
+bool cath::rslv::operator==(const calc_hit &prm_lhs, ///< The first  calc_hit to compare
+                            const calc_hit &prm_rhs  ///< The second calc_hit to compare
                             ) {
 	return (
-		( get_num_segments( arg_lhs ) == get_num_segments( arg_rhs ) )
+		( get_num_segments( prm_lhs ) == get_num_segments( prm_rhs ) )
 		&&
-		( arg_lhs.get_score()         == arg_rhs.get_score()         )
+		( prm_lhs.get_score()         == prm_rhs.get_score()         )
 		&&
-		( arg_lhs.get_label_idx()     == arg_rhs.get_label_idx()     )
+		( prm_lhs.get_label_idx()     == prm_rhs.get_label_idx()     )
 		&&
 		all_of(
-			indices( get_num_segments( arg_lhs ) ),
+			indices( get_num_segments( prm_lhs ) ),
 			[&] (const size_t &seg_ctr) {
 				return (
-					get_start_arrow_of_segment( arg_lhs, seg_ctr ) == get_start_arrow_of_segment( arg_rhs, seg_ctr )
+					get_start_arrow_of_segment( prm_lhs, seg_ctr ) == get_start_arrow_of_segment( prm_rhs, seg_ctr )
 					&&
-					get_stop_arrow_of_segment ( arg_lhs, seg_ctr ) == get_stop_arrow_of_segment ( arg_rhs, seg_ctr )
+					get_stop_arrow_of_segment ( prm_lhs, seg_ctr ) == get_stop_arrow_of_segment ( prm_rhs, seg_ctr )
 				);
 			}
 		)

@@ -31,14 +31,14 @@ namespace cath {
 
 		/// \brief Standard approach to achieving a virtual copy-ctor
 		template <typename B, typename D>
-		inline std::unique_ptr<B> check_uptr_clone_against_this(std::unique_ptr<B>  arg_clone, ///< TODOCUMENT
-		                                                        const D            &arg_clonee ///< TODOCUMENT
+		inline std::unique_ptr<B> check_uptr_clone_against_this(std::unique_ptr<B>  prm_clone, ///< TODOCUMENT
+		                                                        const D            &prm_clonee ///< TODOCUMENT
 		                                                        ) {
-			assert( typeid( *arg_clone ) == typeid( arg_clonee ) );
+			assert( typeid( *prm_clone ) == typeid( prm_clonee ) );
 #ifdef NDEBUG
-			boost::ignore_unused( arg_clonee );
+			boost::ignore_unused( prm_clonee );
 #endif
-			return arg_clone;
+			return prm_clone;
 		}
 
 	} // namespace common

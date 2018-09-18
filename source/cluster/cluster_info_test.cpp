@@ -52,12 +52,12 @@ namespace cath {
 			using str_seq_seg_run_opt_pair_vec = vector< str_seq_seg_run_opt_pair >;
 
 			/// \brief Make a cluster_info from the specified str_seq_seg_run_opt_pair_vec
-			cluster_info make_cluster_info(const str_seq_seg_run_opt_pair_vec &arg_data ///< The data from which to build the cluster_info
+			cluster_info make_cluster_info(const str_seq_seg_run_opt_pair_vec &prm_data ///< The data from which to build the cluster_info
 			                               ) {
 				cluster_info result{};
 
 				// \TODO Come C++17 and structured bindings, use here
-				for (const pair<string, seq_seg_run_opt> &datum : arg_data) {
+				for (const pair<string, seq_seg_run_opt> &datum : prm_data) {
 					result.add_entry( datum.first, datum.second );
 				}
 				return result;

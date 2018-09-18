@@ -28,9 +28,9 @@ using std::string;
 /// \brief Generate a string describing the specified hit_score_type
 ///
 /// \relates hit_score_type
-string cath::rslv::to_string(const hit_score_type &arg_hit_score_type ///< The hit_score_type to describe
+string cath::rslv::to_string(const hit_score_type &prm_hit_score_type ///< The hit_score_type to describe
                              ) {
-	switch ( arg_hit_score_type ) {
+	switch ( prm_hit_score_type ) {
 		case ( hit_score_type::FULL_EVALUE ) : { return "evalue"    ; }
 		case ( hit_score_type::BITSCORE    ) : { return "bitscore"  ; }
 		case ( hit_score_type::CRH_SCORE   ) : { return "crh-value" ; }
@@ -41,9 +41,9 @@ string cath::rslv::to_string(const hit_score_type &arg_hit_score_type ///< The h
 /// \brief Insert a description of the specified hit_score_type into the specified ostream
 ///
 /// \relates hit_score_type
-ostream & cath::rslv::operator<<(ostream              &arg_os,            ///< The ostream into which the description should be inserted
-                                 const hit_score_type &arg_hit_score_type ///< The hit_score_type to describe
+ostream & cath::rslv::operator<<(ostream              &prm_os,            ///< The ostream into which the description should be inserted
+                                 const hit_score_type &prm_hit_score_type ///< The hit_score_type to describe
                                  ) {
-	arg_os << to_string( arg_hit_score_type );
-	return arg_os;
+	prm_os << to_string( prm_hit_score_type );
+	return prm_os;
 }

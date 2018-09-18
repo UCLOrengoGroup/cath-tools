@@ -55,16 +55,16 @@ void domain::sanity_check() const {
 }
 
 /// \brief Ctor for domain
-domain::domain(region_vec arg_segments, ///< TODOCUMENT
-               string     arg_domain_id ///< TODOCUMENT
-               ) : segments { std::move( arg_segments  ) },
-                   domain_id{ std::move( arg_domain_id ) } {
+domain::domain(region_vec prm_segments, ///< TODOCUMENT
+               string     prm_domain_id ///< TODOCUMENT
+               ) : segments { std::move( prm_segments  ) },
+                   domain_id{ std::move( prm_domain_id ) } {
 	sanity_check();
 }
 
 /// \brief Ctor for domain
-domain::domain(region_vec arg_segments ///< TODOCUMENT
-               ) : segments{ std::move( arg_segments ) } {
+domain::domain(region_vec prm_segments ///< TODOCUMENT
+               ) : segments{ std::move( prm_segments ) } {
 	sanity_check();
 }
 
@@ -74,21 +74,21 @@ size_t domain::num_segments() const {
 }
 
 ///// \brief TODOCUMENT
-//region domain::operator[](const size_t &arg_index ///< TODOCUMENT
+//region domain::operator[](const size_t &prm_index ///< TODOCUMENT
 //                          ) {
-//	return segments[ arg_index ];
+//	return segments[ prm_index ];
 //}
 
 /// \brief TODOCUMENT
-const region & domain::operator[](const size_t &arg_index ///< TODOCUMENT
+const region & domain::operator[](const size_t &prm_index ///< TODOCUMENT
                                   ) const {
-	return segments[ arg_index ];
+	return segments[ prm_index ];
 }
 
 /// \brief TODOCUMENT
-void domain::set_opt_domain_id(const str_opt &arg_opt_domain_id ///< TODOCUMENT
+void domain::set_opt_domain_id(const str_opt &prm_opt_domain_id ///< TODOCUMENT
                                ) {
-	domain_id = arg_opt_domain_id;
+	domain_id = prm_opt_domain_id;
 }
 
 /// \brief TODOCUMENT
@@ -121,14 +121,14 @@ domain::const_iterator domain::end() const {
 /// \relates domain
 ///
 /// \relatesalso region
-region_vec_opt cath::chop::get_regions_opt(const domain_opt &arg_domain_opt ///< The optional domain from which any regions should be extracted
+region_vec_opt cath::chop::get_regions_opt(const domain_opt &prm_domain_opt ///< The optional domain from which any regions should be extracted
                                            ) {
 	return make_optional_if_fn(
-		static_cast<bool>( arg_domain_opt ),
+		static_cast<bool>( prm_domain_opt ),
 		[&] {
 			return region_vec{
-				common::cbegin( *arg_domain_opt ),
-				common::cend  ( *arg_domain_opt ),
+				common::cbegin( *prm_domain_opt ),
+				common::cend  ( *prm_domain_opt ),
 			};
 		}
 	);
@@ -137,59 +137,59 @@ region_vec_opt cath::chop::get_regions_opt(const domain_opt &arg_domain_opt ///<
 /// \brief Return whether the two specified domains are identical
 ///
 /// \relates domain
-bool cath::chop::operator==(const domain &arg_lhs, ///, The first  domain to compare
-                            const domain &arg_rhs  ///, The second domain to compare
+bool cath::chop::operator==(const domain &prm_lhs, ///, The first  domain to compare
+                            const domain &prm_rhs  ///, The second domain to compare
                             ) {
 	return (
-		arg_lhs.get_opt_domain_id() == arg_rhs.get_opt_domain_id()
+		prm_lhs.get_opt_domain_id() == prm_rhs.get_opt_domain_id()
 		&&
-		equal( arg_lhs, arg_rhs )
+		equal( prm_lhs, prm_rhs )
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates domain
-bool cath::chop::has_domain_id(const domain &arg_domain ///< TODOCUMENT
+bool cath::chop::has_domain_id(const domain &prm_domain ///< TODOCUMENT
                                ) {
-	return static_cast<bool>( arg_domain.get_opt_domain_id() );
+	return static_cast<bool>( prm_domain.get_opt_domain_id() );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates domain
-string cath::chop::get_domain_id(const domain &arg_domain ///< TODOCUMENT
+string cath::chop::get_domain_id(const domain &prm_domain ///< TODOCUMENT
                                  ) {
-	return *arg_domain.get_opt_domain_id();
+	return *prm_domain.get_opt_domain_id();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates domain
-residue_locating_opt cath::chop::get_residue_locating(const domain &arg_domain ///< TODOCUMENT
+residue_locating_opt cath::chop::get_residue_locating(const domain &prm_domain ///< TODOCUMENT
                                                       ) {
 	// If there are no segments then this domain doesn't locate any residues so return none
-	if ( arg_domain.num_segments() == 0 ) {
+	if ( prm_domain.num_segments() == 0 ) {
 		return none;
 	}
 	// Otherwise return the residue_locating method of the first segment
-	return get_residue_locating( front( arg_domain ) );
+	return get_residue_locating( front( prm_domain ) );
 }
 
 
 /// \brief Generate a string describing the specified domain
 ///
 /// \relates domain
-string cath::chop::to_string(const domain &arg_domain ///< The domain to describe
+string cath::chop::to_string(const domain &prm_domain ///< The domain to describe
                              ) {
 	return "domain["
 		+ (
-			has_domain_id( arg_domain )
-			? ( "name:" + get_domain_id( arg_domain ) + ", " )
+			has_domain_id( prm_domain )
+			? ( "name:" + get_domain_id( prm_domain ) + ", " )
 			: ""s
 		)
 		+ join(
-			arg_domain
+			prm_domain
 				| transformed( [] (const region &x) { return to_string( x ); } ),
 			","
 		)
@@ -199,10 +199,10 @@ string cath::chop::to_string(const domain &arg_domain ///< The domain to describ
 /// \brief Insert a description of the specified domain into the specified ostream
 ///
 /// \relates domain
-ostream & cath::chop::operator<<(ostream      &arg_os,    ///< The ostream into which the description should be inserted
-                                 const domain &arg_domain ///< The domain to describe
+ostream & cath::chop::operator<<(ostream      &prm_os,    ///< The ostream into which the description should be inserted
+                                 const domain &prm_domain ///< The domain to describe
                                  ) {
-	arg_os << to_string( arg_domain );
-	return arg_os;
+	prm_os << to_string( prm_domain );
+	return prm_os;
 }
 

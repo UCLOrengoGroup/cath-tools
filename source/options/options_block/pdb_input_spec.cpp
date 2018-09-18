@@ -46,16 +46,16 @@ const bool & pdb_input_spec::get_read_from_stdin() const {
 }
 
 /// \brief Setter for the list of PDB files that should be read
-pdb_input_spec & pdb_input_spec::set_input_files(const path_vec &arg_input_files ///< The list of PDB files that should be read
+pdb_input_spec & pdb_input_spec::set_input_files(const path_vec &prm_input_files ///< The list of PDB files that should be read
                                                  ) {
-	input_files = arg_input_files;
+	input_files = prm_input_files;
 	return *this;
 }
 
 /// \brief Setter for whether to read PDBs from stdin
-pdb_input_spec & pdb_input_spec::set_read_from_stdin(const bool &arg_read_from_stdin ///< Whether to read PDBs from stdin
+pdb_input_spec & pdb_input_spec::set_read_from_stdin(const bool &prm_read_from_stdin ///< Whether to read PDBs from stdin
                                                      ) {
-	read_from_stdin = arg_read_from_stdin;
+	read_from_stdin = prm_read_from_stdin;
 	return *this;
 }
 
@@ -64,32 +64,32 @@ pdb_input_spec & pdb_input_spec::set_read_from_stdin(const bool &arg_read_from_s
 /// \relates pdb_input_spec
 ///
 /// \alsorelates pdb_acquirer
-size_t cath::opts::get_num_acquirers(const pdb_input_spec &arg_pdb_input_spec ///< The pdb_input_spec to query
+size_t cath::opts::get_num_acquirers(const pdb_input_spec &prm_pdb_input_spec ///< The pdb_input_spec to query
                                      ) {
 	return
-		( ! arg_pdb_input_spec.get_input_files().empty() ? 1_z : 0_z )
+		( ! prm_pdb_input_spec.get_input_files().empty() ? 1_z : 0_z )
 		+
-		(   arg_pdb_input_spec.get_read_from_stdin()     ? 1_z : 0_z );
+		(   prm_pdb_input_spec.get_read_from_stdin()     ? 1_z : 0_z );
 }
 
 /// \brief Generate a string describing the specified pdb_input_spec
 ///
 /// \relates pdb_input_spec
-string cath::opts::to_string(const pdb_input_spec &arg_pdb_input_spec ///< The pdb_input_spec to describe
+string cath::opts::to_string(const pdb_input_spec &prm_pdb_input_spec ///< The pdb_input_spec to describe
                              ) {
 	return "pdb_input_spec[input_files: "
-		+ join( arg_pdb_input_spec.get_input_files() | lexical_casted<string>(), ", " )
+		+ join( prm_pdb_input_spec.get_input_files() | lexical_casted<string>(), ", " )
 		+ "; read_from_stdin: "
-		+ booled_to_string( arg_pdb_input_spec.get_read_from_stdin() )
+		+ booled_to_string( prm_pdb_input_spec.get_read_from_stdin() )
 		+ "]";
 }
 
 /// \brief Insert a description of the specified pdb_input_spec into the specified ostream
 ///
 /// \relates pdb_input_spec
-ostream & cath::opts::operator<<(ostream              &arg_os,            ///< The ostream into which the description should be inserted
-                                 const pdb_input_spec &arg_pdb_input_spec ///< The pdb_input_spec to describe
+ostream & cath::opts::operator<<(ostream              &prm_os,            ///< The ostream into which the description should be inserted
+                                 const pdb_input_spec &prm_pdb_input_spec ///< The pdb_input_spec to describe
                                  ) {
-	arg_os << to_string( arg_pdb_input_spec );
-	return arg_os;
+	prm_os << to_string( prm_pdb_input_spec );
+	return prm_os;
 }

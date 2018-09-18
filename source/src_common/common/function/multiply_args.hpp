@@ -36,11 +36,11 @@ namespace cath {
 
 			/// \brief Implementation for multiply_args when there are two or more arguments
 			template <typename T, typename U, typename... Vs>
-			constexpr auto multiply_args_impl(const T  &   arg_1, ///< The first  argument to multiply
-			                                  const U  &   arg_2, ///< The second argument to multiply
+			constexpr auto multiply_args_impl(const T  &   prm_1, ///< The first  argument to multiply
+			                                  const U  &   prm_2, ///< The second argument to multiply
 			                                  const Vs &...args   ///< All remaining arguments to multiply
 			                                  ) {
-				return arg_1 * multiply_args_impl<U, Vs...>( arg_2, args... );
+				return prm_1 * multiply_args_impl<U, Vs...>( prm_2, args... );
 			}
 
 			/// \brief Function object to return the result of multiplying the arguments

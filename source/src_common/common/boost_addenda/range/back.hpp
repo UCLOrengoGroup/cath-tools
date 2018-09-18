@@ -34,9 +34,9 @@ namespace cath {
 		///
 		/// \todo Come C++14 (in GCC > v4.8), switch to std::rbegin in <iterator>
 		template <typename T>
-		inline typename boost::range_reference<T>::type back(T &arg_range ///< The range to query
+		inline typename boost::range_reference<T>::type back(T &prm_range ///< The range to query
 		                                                     ) {
-			return * boost::rbegin( arg_range );
+			return * boost::rbegin( prm_range );
 		}
 
 		/// \brief Return a const reference to the first element of a range
@@ -45,9 +45,9 @@ namespace cath {
 		///
 		/// \todo Come C++14 (in GCC > v4.8), switch to std::crbegin in <iterator>
 		template <typename T>
-		inline typename boost::range_reference<const T>::type back(const T &arg_range ///< The range to query
+		inline typename boost::range_reference<const T>::type back(const T &prm_range ///< The range to query
 		                                                           ) {
-			return * boost::const_rbegin( arg_range );
+			return * boost::const_rbegin( prm_range );
 		}
 
 	} // namespace common

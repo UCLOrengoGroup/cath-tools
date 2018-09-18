@@ -32,18 +32,18 @@ namespace cath {
 
 			/// \brief Non-const range overload of operator| for adjacented range adaptor
 			template <typename ForwardRng>
-			inline adjacented_range<ForwardRng> operator|(ForwardRng &arg_range, ///< The range to which the adjacented adaptor should be applied
+			inline adjacented_range<ForwardRng> operator|(ForwardRng &prm_range, ///< The range to which the adjacented adaptor should be applied
 			                                              adjacented_forwarder   ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
 			                                              ) {
-				return adjacented_range<ForwardRng>( arg_range );
+				return adjacented_range<ForwardRng>( prm_range );
 			}
 
 			/// \brief Const range overload of operator| for adjacented range adaptor
 			template <typename ForwardRng>
-			inline adjacented_range<const ForwardRng> operator|(const ForwardRng &arg_range, ///< The range to which the adjacented adaptor should be applied
+			inline adjacented_range<const ForwardRng> operator|(const ForwardRng &prm_range, ///< The range to which the adjacented adaptor should be applied
 			                                                    adjacented_forwarder         ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
 			                                                    ) {
-				return adjacented_range<const ForwardRng>( arg_range );
+				return adjacented_range<const ForwardRng>( prm_range );
 			}
 		} // namespace detail
 	} // namespace common

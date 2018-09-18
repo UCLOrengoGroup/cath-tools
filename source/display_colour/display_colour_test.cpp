@@ -55,14 +55,14 @@ namespace cath {
 
 		public:
 			/// \brief Check that the r, g and b component values of a viewer colour are as expected
-			void check_r_g_b_of_display_colour(const display_colour &arg_display_colour, ///< The display_colour to check
-			                                  const double        &arg_expected_r,    ///< The expected r component value
-			                                  const double        &arg_expected_g,    ///< The expected g component value
-			                                  const double        &arg_expected_b     ///< The expected b component value
+			void check_r_g_b_of_display_colour(const display_colour &prm_display_colour, ///< The display_colour to check
+			                                  const double        &prm_expected_r,    ///< The expected r component value
+			                                  const double        &prm_expected_g,    ///< The expected g component value
+			                                  const double        &prm_expected_b     ///< The expected b component value
 			                                  ) {
-				BOOST_CHECK_EQUAL( arg_expected_r, arg_display_colour.get_r() );
-				BOOST_CHECK_EQUAL( arg_expected_g, arg_display_colour.get_g() );
-				BOOST_CHECK_EQUAL( arg_expected_b, arg_display_colour.get_b() );
+				BOOST_CHECK_EQUAL( prm_expected_r, prm_display_colour.get_r() );
+				BOOST_CHECK_EQUAL( prm_expected_g, prm_display_colour.get_g() );
+				BOOST_CHECK_EQUAL( prm_expected_b, prm_display_colour.get_b() );
 			}
 
 			const double   EXPECTED_R               = { 0.684 };

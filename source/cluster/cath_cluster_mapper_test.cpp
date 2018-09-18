@@ -69,15 +69,15 @@ namespace cath {
 
 			/// \brief Call perform_map_clusters() with the specified arguments preceded by a pseudo-program-name
 			///        and the fixture's i/o streams.
-			void execute_perform_map_clusters(const str_vec &arg_arguments ///< The arguments to pass to perform_map_clusters(), preceded by a pseudo-program-name
+			void execute_perform_map_clusters(const str_vec &prm_arguments ///< The arguments to pass to perform_map_clusters(), preceded by a pseudo-program-name
 			                                  ) {
-				// std::cerr << "Options are :\n\t\"" << boost::algorithm::join( arg_arguments, "\"\n\t\"" ) << "\n";
+				// std::cerr << "Options are :\n\t\"" << boost::algorithm::join( prm_arguments, "\"\n\t\"" ) << "\n";
 
 				const auto progname_rng = { "pseudo_program_name"s };
 				perform_map_clusters(
 					copy_build<str_vec>( join(
 						progname_rng,
-						arg_arguments
+						prm_arguments
 					) ),
 					input_ss, output_ss, err_ss, parse_sources::CMND_LINE_ONLY
 				);

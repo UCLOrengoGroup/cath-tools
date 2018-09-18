@@ -31,14 +31,14 @@ namespace cath {
 	/// \brief A helper function to check offset_1 values are not 0
 	///
 	/// This should be temporary whilst transitioning from some old offset_1 code
-	inline void check_offset_1(const size_t &arg_index_offset_1 ///< The index (offset 1)
+	inline void check_offset_1(const size_t &prm_index_offset_1 ///< The index (offset 1)
 	                           ) {
 #ifndef NDEBUG
-		if ( arg_index_offset_1 == 0 ) {
+		if ( prm_index_offset_1 == 0 ) {
 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index specified with offset of 1 cannot be 0"));
 		}
 #else
-		boost::ignore_unused(arg_index_offset_1);
+		boost::ignore_unused(prm_index_offset_1);
 #endif
 	}
 } // namespace cath

@@ -61,16 +61,16 @@ using boost::numeric_cast;
 using std::chrono::high_resolution_clock;
 
 /// \brief Ctor for view_cache_index
-view_cache_index::view_cache_index(dim_tuple arg_dim_defaults ///< TODOCUMENT
-                                   ) : dim_defaults( std::move( arg_dim_defaults ) ),
+view_cache_index::view_cache_index(dim_tuple prm_dim_defaults ///< TODOCUMENT
+                                   ) : dim_defaults( std::move( prm_dim_defaults ) ),
                                        the_index   ( dim_defaults.get_head()       ) {
 }
 
 /// \brief TODOCUMENT
-void view_cache_index::store(const view_cache_index_entry &arg_entry ///< TODOCUMENT
+void view_cache_index::store(const view_cache_index_entry &prm_entry ///< TODOCUMENT
                              ) {
 	the_index.store(
-		arg_entry,
+		prm_entry,
 		dim_defaults.get_tail()
 	);
 }
@@ -78,14 +78,14 @@ void view_cache_index::store(const view_cache_index_entry &arg_entry ///< TODOCU
 ///// \brief TODOCUMENT
 /////
 ///// \relates view_cache_index
-//bool cath::index_contains_value(const view_cache_index &arg_view_cache_index, ///< TODOCUMENT
-//                                const coord            &arg_coord             ///< TODOCUMENT
+//bool cath::index_contains_value(const view_cache_index &prm_view_cache_index, ///< TODOCUMENT
+//                                const coord            &prm_coord             ///< TODOCUMENT
 //                                ) {
-//	const vcie_vec_cref_opt entries = arg_view_cache_index.get_entries( arg_coord );
+//	const vcie_vec_cref_opt entries = prm_view_cache_index.get_entries( prm_coord );
 //	/// \todo Make this neater with ranges/lambdas/algorithms etc
 //	if ( entries ) {
 //		for (const view_cache_index_entry &the_entry : *entries) {
-//			if ( the_entry.get_view() == arg_coord ) {
+//			if ( the_entry.get_view() == prm_coord ) {
 //				return true;
 //			}
 //		}
@@ -96,28 +96,28 @@ void view_cache_index::store(const view_cache_index_entry &arg_entry ///< TODOCU
 /// \brief TODOCUMENT
 ///	
 /// \relates view_cache_index
-view_cache_index cath::index::build_view_cache_index(const double              &arg_xyz_cell_width,       ///< TODOCUMENT
-                                                     const angle_type          &arg_phi_angle_cell_width, ///< TODOCUMENT
-                                                     const angle_type          &/*arg_psi_angle_cell_width*/, ///< TODOCUMENT
-                                                     const protein             &arg_protein,              ///< TODOCUMENT
-                                                     const vcie_match_criteria &arg_criteria              ///< TODOCUMENT
+view_cache_index cath::index::build_view_cache_index(const double              &prm_xyz_cell_width,       ///< TODOCUMENT
+                                                     const angle_type          &prm_phi_angle_cell_width, ///< TODOCUMENT
+                                                     const angle_type          &/*prm_psi_angle_cell_width*/, ///< TODOCUMENT
+                                                     const protein             &prm_protein,              ///< TODOCUMENT
+                                                     const vcie_match_criteria &prm_criteria              ///< TODOCUMENT
                                                      ) {
 	view_cache_index new_view_cache_index( boost::make_tuple(
 		view_cache_index_dim_dirn           (                          ),
-		view_cache_index_dim_linear_from_phi( arg_phi_angle_cell_width ),
-		// view_cache_index_dim_linear_from_psi( arg_psi_angle_cell_width ),
-		// view_cache_index_dim_linear_to_phi  ( arg_phi_angle_cell_width ),
-		// view_cache_index_dim_linear_to_psi  ( arg_psi_angle_cell_width ),
-		view_cache_index_dim_linear_x       ( numeric_cast<view_base_type>( arg_xyz_cell_width ) ),
-		view_cache_index_dim_linear_y       ( numeric_cast<view_base_type>( arg_xyz_cell_width ) ),
-		view_cache_index_dim_linear_z       ( numeric_cast<view_base_type>( arg_xyz_cell_width ) ),
+		view_cache_index_dim_linear_from_phi( prm_phi_angle_cell_width ),
+		// view_cache_index_dim_linear_from_psi( prm_psi_angle_cell_width ),
+		// view_cache_index_dim_linear_to_phi  ( prm_phi_angle_cell_width ),
+		// view_cache_index_dim_linear_to_psi  ( prm_psi_angle_cell_width ),
+		view_cache_index_dim_linear_x       ( numeric_cast<view_base_type>( prm_xyz_cell_width ) ),
+		view_cache_index_dim_linear_y       ( numeric_cast<view_base_type>( prm_xyz_cell_width ) ),
+		view_cache_index_dim_linear_z       ( numeric_cast<view_base_type>( prm_xyz_cell_width ) ),
 		view_cache_index_tail               (                          )
 	) );
-	const size_t num_residues = arg_protein.get_length();
+	const size_t num_residues = prm_protein.get_length();
 	for (const size_t &from_ctr : indices( num_residues ) ) {
 		for (const size_t &to_ctr : indices( num_residues ) ) {
-			const view_cache_index_entry the_entry = make_view_cache_index_entry( arg_protein, from_ctr, to_ctr );
-			if ( arg_criteria( the_entry ) ) {
+			const view_cache_index_entry the_entry = make_view_cache_index_entry( prm_protein, from_ctr, to_ctr );
+			if ( prm_criteria( the_entry ) ) {
 				new_view_cache_index.store( the_entry );
 			}
 		}
@@ -129,41 +129,41 @@ view_cache_index cath::index::build_view_cache_index(const double              &
 /// \brief TODOCUMENT
 ///
 /// \relates view_cache_index
-high_resolution_clock::duration cath::index::process_quads_indexed(const protein             &arg_protein_a,           ///< TODOCUMENT
-                                                                   const protein             &arg_protein_b,           ///< TODOCUMENT
-                                                                   const double              &arg_xyz_cell_size,       ///< TODOCUMENT
-                                                                   const angle_type          &arg_phi_angle_cell_size, ///< TODOCUMENT
-                                                                   const angle_type          &arg_psi_angle_cell_size, ///< TODOCUMENT
-                                                                   const vcie_match_criteria &arg_criteria,            ///< TODOCUMENT
-                                                                   quad_find_action_check    &arg_action               ///< TODOCUMENT
+high_resolution_clock::duration cath::index::process_quads_indexed(const protein             &prm_protein_a,           ///< TODOCUMENT
+                                                                   const protein             &prm_protein_b,           ///< TODOCUMENT
+                                                                   const double              &prm_xyz_cell_size,       ///< TODOCUMENT
+                                                                   const angle_type          &prm_phi_angle_cell_size, ///< TODOCUMENT
+                                                                   const angle_type          &prm_psi_angle_cell_size, ///< TODOCUMENT
+                                                                   const vcie_match_criteria &prm_criteria,            ///< TODOCUMENT
+                                                                   quad_find_action_check    &prm_action               ///< TODOCUMENT
                                                                    ) {
-	const protein_list proteins = make_protein_list( { arg_protein_a, arg_protein_b } );
+	const protein_list proteins = make_protein_list( { prm_protein_a, prm_protein_b } );
 
 //	const auto build_start_time   = high_resolution_clock::now();
 
 	const view_cache_index view_cache_index_a = build_view_cache_index(
-		arg_xyz_cell_size,
-		arg_phi_angle_cell_size,
-		arg_psi_angle_cell_size,
-		arg_protein_a,
-		arg_criteria
+		prm_xyz_cell_size,
+		prm_phi_angle_cell_size,
+		prm_psi_angle_cell_size,
+		prm_protein_a,
+		prm_criteria
 	);
 	const view_cache_index view_cache_index_b = build_view_cache_index(
-		arg_xyz_cell_size,
-		arg_phi_angle_cell_size,
-		arg_psi_angle_cell_size,
-		arg_protein_b,
-		arg_criteria
+		prm_xyz_cell_size,
+		prm_phi_angle_cell_size,
+		prm_psi_angle_cell_size,
+		prm_protein_b,
+		prm_criteria
 	);
 
 	const auto scan_start_time   = high_resolution_clock::now();
 
 	// cerr << "Before leaves" << endl;
-	// view_cache_index_a.perform_action_on_all_match_at_leaves( view_cache_index_b, arg_criteria, arg_action );
+	// view_cache_index_a.perform_action_on_all_match_at_leaves( view_cache_index_b, prm_criteria, prm_action );
 	// cerr << "After leaves" << endl;
 
 	cerr << "Before nodes" << endl;
-	view_cache_index_a.perform_action_on_all_match_at_nodes ( view_cache_index_b, arg_criteria, arg_action );
+	view_cache_index_a.perform_action_on_all_match_at_nodes ( view_cache_index_b, prm_criteria, prm_action );
 	cerr << "After nodes" << endl;
 	
 	// cerr << "Error: currently doing both of perform_action_on_all_match_at_leaves and perform_action_on_all_match_at_nodes" << endl;
@@ -176,9 +176,9 @@ high_resolution_clock::duration cath::index::process_quads_indexed(const protein
 
 
 //										const bool in_alignment = (
-//											alignment_contains_pair( arg_alignment, entry.get_from_index(), match.get_from_index() )
+//											alignment_contains_pair( prm_alignment, entry.get_from_index(), match.get_from_index() )
 //											&&
-//											alignment_contains_pair( arg_alignment, entry.get_to_index(),   match.get_to_index()   )
+//											alignment_contains_pair( prm_alignment, entry.get_to_index(),   match.get_to_index()   )
 //										);
 //
 //										total_scores[ vcie_a.get_from_index() ][ vcie_b.get_from_index() ] += score;
@@ -195,7 +195,7 @@ high_resolution_clock::duration cath::index::process_quads_indexed(const protein
 //	const alignment &scan_alignment    = score_and_alignment.second;
 //	const alignment  refined_alignment = alignment_refiner().iterate(
 //		scan_alignment,
-//		make_protein_list( { arg_protein_a, arg_protein_b } ),
+//		make_protein_list( { prm_protein_a, prm_protein_b } ),
 //		the_gap_penalty
 //	);
 //
@@ -248,14 +248,14 @@ high_resolution_clock::duration cath::index::process_quads_indexed(const protein
 /// \brief TODOCUMENT
 ///
 /// \relates view_cache_index
-high_resolution_clock::duration cath::index::process_quads_complete(const protein             &arg_protein_a, ///< TODOCUMENT
-                                                                    const protein             &arg_protein_b, ///< TODOCUMENT
-                                                                    const double              &/*arg_cell_size*/, ///< TODOCUMENT
-                                                                    const vcie_match_criteria &arg_criteria,  ///< TODOCUMENT
-                                                                    quad_find_action          &arg_action     ///< TODOCUMENT
+high_resolution_clock::duration cath::index::process_quads_complete(const protein             &prm_protein_a, ///< TODOCUMENT
+                                                                    const protein             &prm_protein_b, ///< TODOCUMENT
+                                                                    const double              &/*prm_cell_size*/, ///< TODOCUMENT
+                                                                    const vcie_match_criteria &prm_criteria,  ///< TODOCUMENT
+                                                                    quad_find_action          &prm_action     ///< TODOCUMENT
                                                                     ) {
-	const auto num_entries_a   = arg_protein_a.get_length();
-	const auto num_entries_b   = arg_protein_b.get_length();
+	const auto num_entries_a   = prm_protein_a.get_length();
+	const auto num_entries_b   = prm_protein_b.get_length();
 	float_score_vec_vec full_scores_all( num_entries_a, float_score_vec( num_entries_b, 0 ) );
 
 	const auto scan_start_time = high_resolution_clock::now();
@@ -268,9 +268,9 @@ high_resolution_clock::duration cath::index::process_quads_complete(const protei
 					for (const size_t &to_b : indices( num_entries_b ) ) {
 						if ( from_b != to_b ) {
 							const size_size_pair indices_b( from_b, to_b );
-							if ( arg_criteria( indices_a, indices_b, arg_protein_a, arg_protein_b ) ) {
+							if ( prm_criteria( indices_a, indices_b, prm_protein_a, prm_protein_b ) ) {
 
-//								const double sq_dist = squared_distance( indices_a, indices_b, arg_protein_a, arg_protein_b );
+//								const double sq_dist = squared_distance( indices_a, indices_b, prm_protein_a, prm_protein_b );
 //								const double score   = ( 10.0 / ( sq_dist + 10.0 ) );
 //
 //								std::cerr << "compl_match ";
@@ -285,7 +285,7 @@ high_resolution_clock::duration cath::index::process_quads_complete(const protei
 //								std::cerr << std::endl;
 
 
-								arg_action( indices_a, indices_b );
+								prm_action( indices_a, indices_b );
 							}
 						}
 					}
@@ -313,10 +313,10 @@ high_resolution_clock::duration cath::index::process_quads_complete(const protei
 //	// In the loop...
 // const bool             index_dirn_diff  = ! same_direction          ( indices_a, indices_b );
 // const size_t           min_index_diff   = min_index_difference      ( indices_a, indices_b );
-// const double           sq_dist          = squared_distance          ( indices_a, indices_b, arg_protein_a, arg_protein_b );
-// const angle            frame_diff_angle = angle_between_frame_angles( indices_a, indices_b, arg_protein_a, arg_protein_b );
-// const angle            max_phi_diff     = max_phi_angle_difference  ( indices_a, indices_b, arg_protein_a, arg_protein_b );
-// const angle            max_psi_diff     = max_psi_angle_difference  ( indices_a, indices_b, arg_protein_a, arg_protein_b );
+// const double           sq_dist          = squared_distance          ( indices_a, indices_b, prm_protein_a, prm_protein_b );
+// const angle            frame_diff_angle = angle_between_frame_angles( indices_a, indices_b, prm_protein_a, prm_protein_b );
+// const angle            max_phi_diff     = max_phi_angle_difference  ( indices_a, indices_b, prm_protein_a, prm_protein_b );
+// const angle            max_psi_diff     = max_psi_angle_difference  ( indices_a, indices_b, prm_protein_a, prm_protein_b );
 //	records.push_back(
 //		make_pair(
 //			make_tuple(
@@ -328,8 +328,8 @@ high_resolution_clock::duration cath::index::process_quads_complete(const protei
 //				angle_in_degrees( max_psi_diff )
 //			),
 //			make_pair(
-//				alignment_contains_pair( arg_alignment, from_a, from_b ),
-//				alignment_contains_pair( arg_alignment, to_a,   to_b   )
+//				alignment_contains_pair( prm_alignment, from_a, from_b ),
+//				alignment_contains_pair( prm_alignment, to_a,   to_b   )
 //			)
 //		)
 //	);

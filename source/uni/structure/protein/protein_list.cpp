@@ -38,15 +38,15 @@ using namespace cath::common;
 using namespace std;
 
 /// \brief TODOCUMENT
-void protein_list::push_back(const protein &arg_pdb ///< TODOCUMENT
+void protein_list::push_back(const protein &prm_pdb ///< TODOCUMENT
                              ) {
-	proteins.push_back(arg_pdb);
+	proteins.push_back(prm_pdb);
 }
 
 /// \brief TODOCUMENT
-void protein_list::reserve(const size_t &arg_size ///< TODOCUMENT
+void protein_list::reserve(const size_t &prm_size ///< TODOCUMENT
                            ) {
-	proteins.reserve(arg_size);
+	proteins.reserve(prm_size);
 }
 
 /// \brief TODOCUMENT
@@ -65,15 +65,15 @@ bool protein_list::empty() const {
 }
 
 /// \brief TODOCUMENT
-protein & protein_list::operator[](const size_t &arg_index ///< TODOCUMENT
+protein & protein_list::operator[](const size_t &prm_index ///< TODOCUMENT
                                    ) {
-	return proteins[arg_index];
+	return proteins[prm_index];
 }
 
 /// \brief TODOCUMENT
-const protein & protein_list::operator[](const size_t &arg_index ///< TODOCUMENT
+const protein & protein_list::operator[](const size_t &prm_index ///< TODOCUMENT
                                          ) const {
-	return proteins[arg_index];
+	return proteins[prm_index];
 }
 
 /// \brief Standard non-const begin() operator to provide range access
@@ -97,11 +97,11 @@ auto protein_list::end() const -> const_iterator {
 }
 
 /// \brief TODOCUMENT
-protein_list cath::make_protein_list(const protein_vec &arg_proteins ///< TODOCUMENT
+protein_list cath::make_protein_list(const protein_vec &prm_proteins ///< TODOCUMENT
                                      ) {
 	protein_list new_protein_list;
-	new_protein_list.reserve( arg_proteins.size() );
-	for ( const protein &the_protein : arg_proteins ) {
+	new_protein_list.reserve( prm_proteins.size() );
+	for ( const protein &the_protein : prm_proteins ) {
 		new_protein_list.push_back( the_protein );
 	}
 	return new_protein_list;
@@ -111,19 +111,19 @@ protein_list cath::make_protein_list(const protein_vec &arg_proteins ///< TODOCU
 ///
 /// \todo Consider retiring this and changing Boost Range adaptor style approach.
 ///       (At present, the only calls to this are commented out.)
-protein_list cath::make_subset_protein_list(const protein_list &arg_proteins, ///< TODOCUMENT
-                                            const size_vec     &arg_indices   ///< TODOCUMENT
+protein_list cath::make_subset_protein_list(const protein_list &prm_proteins, ///< TODOCUMENT
+                                            const size_vec     &prm_indices   ///< TODOCUMENT
                                             ) {
-	const size_t num_proteins = arg_proteins.size();
+	const size_t num_proteins = prm_proteins.size();
 
 	protein_vec new_proteins;
-	new_proteins.reserve( arg_indices.size() );
+	new_proteins.reserve( prm_indices.size() );
 
-	for (const size_t &index : arg_indices) {
+	for (const size_t &index : prm_indices) {
 		if ( index >= num_proteins ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 		}
-		new_proteins.push_back( arg_proteins[ index ] );
+		new_proteins.push_back( prm_proteins[ index ] );
 	}
 	return make_protein_list( new_proteins );
 }
@@ -131,10 +131,10 @@ protein_list cath::make_subset_protein_list(const protein_list &arg_proteins, //
 /// \brief TODOCUMENT
 ///
 /// \relates protein_list
-amino_acid_vec_vec cath::get_amino_acid_lists(const protein_list &arg_proteins ///< TODOCUMENT
+amino_acid_vec_vec cath::get_amino_acid_lists(const protein_list &prm_proteins ///< TODOCUMENT
                                               ) {
 	return transform_build<amino_acid_vec_vec>(
-		arg_proteins,
+		prm_proteins,
 		[] (const protein &x) { return get_amino_acid_list( x ); }
 	);
 }
@@ -142,10 +142,10 @@ amino_acid_vec_vec cath::get_amino_acid_lists(const protein_list &arg_proteins /
 /// \brief TODOCUMENT
 ///
 /// \relates protein_list
-size_vec cath::get_protein_lengths(const protein_list &arg_proteins ///< TODOCUMENT
+size_vec cath::get_protein_lengths(const protein_list &prm_proteins ///< TODOCUMENT
                                    ) {
 	return transform_build<size_vec>(
-		arg_proteins,
+		prm_proteins,
 		[] (const protein &x) { return x.get_length(); }
 	);
 }
@@ -153,13 +153,13 @@ size_vec cath::get_protein_lengths(const protein_list &arg_proteins ///< TODOCUM
 /// \brief TODOCUMENT
 ///
 /// \relates protein_list
-size_size_pair cath::min_max_protein_length(const protein_list &arg_protein_list ///< TODOCUMENT
+size_size_pair cath::min_max_protein_length(const protein_list &prm_protein_list ///< TODOCUMENT
                                             ) {
-	if ( arg_protein_list.empty() ) {
+	if ( prm_protein_list.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot calculate min_max_protein_length() for empty protein_list"));
 	}
 	const auto minmax_iters = common::minmax_element(
-		arg_protein_list,
+		prm_protein_list,
 		[] (const protein &x, const protein &y) { return x.get_length() < y.get_length(); }
 	);
 	return make_pair(

@@ -33,45 +33,45 @@ using boost::optional;
 
 /// \brief TODOCUMENT
 ///
-/// \pre arg_next_centre_index >= arg_entry_index else throws an invalid_argument_exception
-optional<index_type> cath::scan::detail::centre_index_of_index_and_next_centre_index(const index_type &arg_entry_index,      ///< TODOCUMENT
-                                                                                     const index_type &arg_co_stride,        ///< TODOCUMENT
-                                                                                     const index_type &arg_next_centre_index ///< TODOCUMENT
+/// \pre prm_next_centre_index >= prm_entry_index else throws an invalid_argument_exception
+optional<index_type> cath::scan::detail::centre_index_of_index_and_next_centre_index(const index_type &prm_entry_index,      ///< TODOCUMENT
+                                                                                     const index_type &prm_co_stride,        ///< TODOCUMENT
+                                                                                     const index_type &prm_next_centre_index ///< TODOCUMENT
                                                                                      ) {
-	if ( arg_next_centre_index < arg_entry_index ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("centre_index_of_index_and_next_centre_index() requires that arg_next_centre_index >= arg_entry_index"));
+	if ( prm_next_centre_index < prm_entry_index ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("centre_index_of_index_and_next_centre_index() requires that prm_next_centre_index >= prm_entry_index"));
 	}
-//	const auto       num_in_stride_range          = num_in_stride_neighbour_range           ( arg_co_stride );
-	const auto       centre_stride_neighour_index = detail::stride_neighbour_index_of_centre( arg_co_stride );
-	const index_type steps_to_next_centre         = arg_next_centre_index - arg_entry_index;
-	return ( steps_to_next_centre <= centre_stride_neighour_index ) ? optional<index_type>( arg_next_centre_index           ) :
-	       ( arg_entry_index      >= arg_co_stride                ) ? optional<index_type>( arg_entry_index - arg_co_stride ) :
+//	const auto       num_in_stride_range          = num_in_stride_neighbour_range           ( prm_co_stride );
+	const auto       centre_stride_neighour_index = detail::stride_neighbour_index_of_centre( prm_co_stride );
+	const index_type steps_to_next_centre         = prm_next_centre_index - prm_entry_index;
+	return ( steps_to_next_centre <= centre_stride_neighour_index ) ? optional<index_type>( prm_next_centre_index           ) :
+	       ( prm_entry_index      >= prm_co_stride                ) ? optional<index_type>( prm_entry_index - prm_co_stride ) :
 	                                                                  none;
 	}
 
 /// \brief TODOCUMENT
 ///
 /// \relates rep_strider
-rep_rep_pair_opt cath::scan::detail::get_rep_of_indices(const rep_strider &arg_rep_strider_a, ///< TODOCUMENT
-                                                        const index_type  &arg_index_a,       ///< TODOCUMENT
-                                                        const rep_strider &arg_rep_strider_b, ///< TODOCUMENT
-                                                        const index_type  &arg_index_b        ///< TODOCUMENT
+rep_rep_pair_opt cath::scan::detail::get_rep_of_indices(const rep_strider &prm_rep_strider_a, ///< TODOCUMENT
+                                                        const index_type  &prm_index_a,       ///< TODOCUMENT
+                                                        const rep_strider &prm_rep_strider_b, ///< TODOCUMENT
+                                                        const index_type  &prm_index_b        ///< TODOCUMENT
                                                         ) {
 	const auto coprime_pair = chinese_remainder_coprime_pair(
-		arg_index_a,
-		arg_index_b,
-		arg_rep_strider_a.get_stride() + 1,
-		arg_rep_strider_b.get_stride() + 1
+		prm_index_a,
+		prm_index_b,
+		prm_rep_strider_a.get_stride() + 1,
+		prm_rep_strider_b.get_stride() + 1
 	);
-	assert( coprime_pair.first + arg_index_b == coprime_pair.second + arg_index_a);
-	const auto the_co_stride = co_stride( arg_rep_strider_a.get_stride(), arg_rep_strider_b.get_stride() );
+	assert( coprime_pair.first + prm_index_b == coprime_pair.second + prm_index_a);
+	const auto the_co_stride = co_stride( prm_rep_strider_a.get_stride(), prm_rep_strider_b.get_stride() );
 	const auto centre_index_a = centre_index_of_index_and_next_centre_index(
-		arg_index_a,
+		prm_index_a,
 		the_co_stride,
 		coprime_pair.first
 	);
 	const auto centre_index_b = centre_index_of_index_and_next_centre_index(
-		arg_index_b,
+		prm_index_b,
 		the_co_stride,
 		coprime_pair.second
 	);
@@ -79,7 +79,7 @@ rep_rep_pair_opt cath::scan::detail::get_rep_of_indices(const rep_strider &arg_r
 		return none;
 	}
 	return { make_pair(
-		static_cast<res_rep_index_type>( *centre_index_a / ( arg_rep_strider_a.get_stride() + 1 ) ),
-		static_cast<res_rep_index_type>( *centre_index_b / ( arg_rep_strider_b.get_stride() + 1 ) )
+		static_cast<res_rep_index_type>( *centre_index_a / ( prm_rep_strider_a.get_stride() + 1 ) ),
+		static_cast<res_rep_index_type>( *centre_index_b / ( prm_rep_strider_b.get_stride() + 1 ) )
 	) };
 }

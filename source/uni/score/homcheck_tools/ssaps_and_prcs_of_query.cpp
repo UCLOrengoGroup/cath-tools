@@ -74,17 +74,17 @@ void ssaps_and_prcs_of_query::sanity_check() const {
 ///
 /// \pre All ssap_and_prc_entries have the same query_id else this
 ///      throws a invalid_argument_exception
-ssaps_and_prcs_of_query::ssaps_and_prcs_of_query(ssap_and_prc_vec arg_ssap_and_prc_entries ///< The vector of ssap_and_prc objects from which this ssaps_and_prcs_of_query should be constructed
-                                                 ) : ssap_and_prc_entries { std::move( arg_ssap_and_prc_entries ) } {
+ssaps_and_prcs_of_query::ssaps_and_prcs_of_query(ssap_and_prc_vec prm_ssap_and_prc_entries ///< The vector of ssap_and_prc objects from which this ssaps_and_prcs_of_query should be constructed
+                                                 ) : ssap_and_prc_entries { std::move( prm_ssap_and_prc_entries ) } {
 	sanity_check();
 }
 
 /// \brief Calculate the SVM scores for all the results using the specified SVM RBF model
-void ssaps_and_prcs_of_query::calculate_all_svm_scores(const rbf_model &arg_svm /// \brief The SVM RBF model with which to calculate the scores
+void ssaps_and_prcs_of_query::calculate_all_svm_scores(const rbf_model &prm_svm /// \brief The SVM RBF model with which to calculate the scores
                                                        ) {
 	for_each(
 		ssap_and_prc_entries,
-		[&] (ssap_and_prc &x) { x.calculate_svm_score( arg_svm ); }
+		[&] (ssap_and_prc &x) { x.calculate_svm_score( prm_svm ); }
 	);
 }
 
@@ -99,9 +99,9 @@ size_t ssaps_and_prcs_of_query::size() const {
 }
 
 /// \brief Get the ssap_and_prc object at the specified index
-const ssap_and_prc & ssaps_and_prcs_of_query::operator[](const size_t &arg_index ///< The index of the ssap_and_prc object to access
+const ssap_and_prc & ssaps_and_prcs_of_query::operator[](const size_t &prm_index ///< The index of the ssap_and_prc object to access
                                                          ) const {
-	return ssap_and_prc_entries[ arg_index ];
+	return ssap_and_prc_entries[ prm_index ];
 }
 
 /// \brief Standard begin() function to make this into a const range
@@ -115,33 +115,33 @@ auto ssaps_and_prcs_of_query::end() const -> const_iterator{
 }
 
 /// \brief Calculate the SVM scores for all the results in a copy of the specified ssaps_and_prcs_of_query and return that copy
-ssaps_and_prcs_of_query cath::homcheck::calculate_all_svm_scores_copy(ssaps_and_prcs_of_query  arg_ssaps_and_prcs, ///< The ssaps_and_prcs_of_query from which a copy should be taken, updated and returned
-                                                                      const rbf_model         &arg_svm             ///< The SVM RBF model with which to calculate the scores
+ssaps_and_prcs_of_query cath::homcheck::calculate_all_svm_scores_copy(ssaps_and_prcs_of_query  prm_ssaps_and_prcs, ///< The ssaps_and_prcs_of_query from which a copy should be taken, updated and returned
+                                                                      const rbf_model         &prm_svm             ///< The SVM RBF model with which to calculate the scores
                                                                       ) {
-	arg_ssaps_and_prcs.calculate_all_svm_scores( arg_svm );
-	return arg_ssaps_and_prcs;
+	prm_ssaps_and_prcs.calculate_all_svm_scores( prm_svm );
+	return prm_ssaps_and_prcs;
 }
 
 /// \brief Get the query ID from the specified SSAP and PRC results
 ///
 /// \relates ssaps_and_prcs_of_query
-const string & cath::homcheck::get_query_id(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs /// The SSAP and PRC results to query
+const string & cath::homcheck::get_query_id(const ssaps_and_prcs_of_query &prm_ssaps_and_prcs /// The SSAP and PRC results to query
                                             ) {
-	if ( arg_ssaps_and_prcs.empty() ) {
+	if ( prm_ssaps_and_prcs.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Can't get query of empty ssaps_and_prcs_of_query object"));
 	}
-	return front( arg_ssaps_and_prcs ).get_query_id();
+	return front( prm_ssaps_and_prcs ).get_query_id();
 }
 
 /// \brief Return the best by SVM hit to a domain in CATH of the specified results
 ///
 /// \relates ssaps_and_prcs_of_query
-ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs,        ///< The SSAP and PRC results for the query domain
-                                                          const superfamily_of_domain   &arg_superfamily_of_domain, ///< The superfamily_of_domain for finding which matches are assigned
-                                                          const double                  &arg_minimum_ssap_overlap   ///< TODOCUMENT
+ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_of_query &prm_ssaps_and_prcs,        ///< The SSAP and PRC results for the query domain
+                                                          const superfamily_of_domain   &prm_superfamily_of_domain, ///< The superfamily_of_domain for finding which matches are assigned
+                                                          const double                  &prm_minimum_ssap_overlap   ///< TODOCUMENT
                                                           ) {
 	return first_result_if(
-		arg_ssaps_and_prcs,
+		prm_ssaps_and_prcs,
 		[&] (const ssap_and_prc &x, const ssap_and_prc &y) {
 			// Reverse inequality to put the highest magic_function values to the start
 			return get_svm_score( x ) > get_svm_score( y );
@@ -150,9 +150,9 @@ ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_o
 			return (
 				get_svm_score( x ) >= 3.47554072714
 				&&
-				get_ssap_overlap_pc( x ) >= arg_minimum_ssap_overlap
+				get_ssap_overlap_pc( x ) >= prm_minimum_ssap_overlap
 				&&
-				arg_superfamily_of_domain.has_superfamily_of_domain( x.get_match_id() )
+				prm_superfamily_of_domain.has_superfamily_of_domain( x.get_match_id() )
 			);
 		}
 	);
@@ -161,12 +161,12 @@ ssap_and_prc_cref_opt cath::homcheck::best_svm_assignable(const ssaps_and_prcs_o
 /// \brief Return the best by magic-function hit to a domain in CATH of the specified results
 ///
 /// \relates ssaps_and_prcs_of_query
-ssap_and_prc_cref_opt cath::homcheck::best_magic_function_assignable(const ssaps_and_prcs_of_query &arg_ssaps_and_prcs,        ///< The SSAP and PRC results for the query domain
-                                                                     const superfamily_of_domain   &arg_superfamily_of_domain, ///< The superfamily_of_domain for finding which matches are assigned
-                                                                     const double                  &arg_minimum_ssap_overlap   ///< TODOCUMENT
+ssap_and_prc_cref_opt cath::homcheck::best_magic_function_assignable(const ssaps_and_prcs_of_query &prm_ssaps_and_prcs,        ///< The SSAP and PRC results for the query domain
+                                                                     const superfamily_of_domain   &prm_superfamily_of_domain, ///< The superfamily_of_domain for finding which matches are assigned
+                                                                     const double                  &prm_minimum_ssap_overlap   ///< TODOCUMENT
                                                                      ) {
 	return first_result_if(
-		arg_ssaps_and_prcs,
+		prm_ssaps_and_prcs,
 		[] (const ssap_and_prc &x, const ssap_and_prc &y) {
 			// Reverse inequality to put the highest magic_function values to the start
 			return x.get_magic_function_score() > y.get_magic_function_score();
@@ -175,9 +175,9 @@ ssap_and_prc_cref_opt cath::homcheck::best_magic_function_assignable(const ssaps
 			return (
 				x.get_magic_function_score() >= 79.7779328254
 				&&
-				get_ssap_overlap_pc( x ) >= arg_minimum_ssap_overlap
+				get_ssap_overlap_pc( x ) >= prm_minimum_ssap_overlap
 				&&
-				arg_superfamily_of_domain.has_superfamily_of_domain( x.get_match_id() )
+				prm_superfamily_of_domain.has_superfamily_of_domain( x.get_match_id() )
 			);
 		}
 	);
@@ -188,11 +188,11 @@ ssap_and_prc_cref_opt cath::homcheck::best_magic_function_assignable(const ssaps
 /// This uses Christine's criteria for a fold level match (SSAP score >= 70.0 && SSAP overlap >= 60.0)
 ///
 /// \relates ssaps_and_prcs_of_query
-ssap_scores_entry_cref_opt cath::homcheck::best_fold_level_match(const ssap_scores_entry_vec &arg_ssaps,                ///< The SSAP results for the query domain
-                                                                 const superfamily_of_domain &arg_superfamily_of_domain ///< The superfamily_of_domain for finding which matches are assigned
+ssap_scores_entry_cref_opt cath::homcheck::best_fold_level_match(const ssap_scores_entry_vec &prm_ssaps,                ///< The SSAP results for the query domain
+                                                                 const superfamily_of_domain &prm_superfamily_of_domain ///< The superfamily_of_domain for finding which matches are assigned
                                                                  ) {
 	return first_result_if(
-		arg_ssaps,
+		prm_ssaps,
 		[] (const ssap_scores_entry &x, const ssap_scores_entry &y) {
 			// Reverse inequality to put the highest SSAP scores to the start
 			return x.get_ssap_score() > y.get_ssap_score();
@@ -203,7 +203,7 @@ ssap_scores_entry_cref_opt cath::homcheck::best_fold_level_match(const ssap_scor
 				&&
 				x.get_overlap_pc() >= 60.0
 				&&
-				arg_superfamily_of_domain.has_superfamily_of_domain( x.get_name_2() )
+				prm_superfamily_of_domain.has_superfamily_of_domain( x.get_name_2() )
 			);
 		}
 	);
@@ -212,38 +212,38 @@ ssap_scores_entry_cref_opt cath::homcheck::best_fold_level_match(const ssap_scor
 /// \brief Build a ssaps_and_prcs_of_query from the specified ssap_scores_entries and prc_scores_entries
 ///
 /// \relates ssaps_and_prcs_of_query
-ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_scores_entry_vec &arg_ssaps, ///< The SSAPs from which the ssaps_and_prcs_of_query should be built
-                                                                     const prc_scores_entry_vec  &arg_prcs   ///< The PRCs from which the ssaps_and_prcs_of_query should be built
+ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_scores_entry_vec &prm_ssaps, ///< The SSAPs from which the ssaps_and_prcs_of_query should be built
+                                                                     const prc_scores_entry_vec  &prm_prcs   ///< The PRCs from which the ssaps_and_prcs_of_query should be built
                                                                      ) {
 	// Sanity check the inputs - step 1: check SSAP results have identical name_1s
 	const bool ssap_query_ids_identical = all_of(
-		arg_ssaps | adjacented,
+		prm_ssaps | adjacented,
 		[] (const pair<const ssap_scores_entry &, const ssap_scores_entry &> &x) { return x.first.get_name_1() == x.second.get_name_1(); }
 	);
 	if ( ! ssap_query_ids_identical ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Cannot construct ssaps_and_prcs_of_query from data because the SSAP results have inconsistent query IDs (first is \""
-			+ arg_ssaps.front().get_name_1()
+			+ prm_ssaps.front().get_name_1()
 			+ "\")"
 		));
 	}
 
 	// Sanity check the inputs - step 2: check PRC results have identical name_1s
 	const bool prc_query_ids_identical = all_of(
-		arg_prcs | adjacented,
+		prm_prcs | adjacented,
 		[] (const pair<const prc_scores_entry &, const prc_scores_entry &> &x) { return x.first.get_name_1() == x.second.get_name_1(); }
 	);
 	if ( ! prc_query_ids_identical ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot construct ssaps_and_prcs_of_query from data because the PRC results have inconsistent query IDs (first is \""
-			+ arg_prcs.front().get_name_1()
+			+ prm_prcs.front().get_name_1()
 			+ "\")"
 		));
 	}
 
 	// Sanity check the inputs - step 3: check the SSAP name_1 matches the PRC name_1
-	if ( ! arg_ssaps.empty() && ! arg_prcs.empty() ) {
-		const string &ssaps_name_1 = arg_ssaps.front().get_name_1();
-		const string &prcs_name_1  =  arg_prcs.front().get_name_1();
+	if ( ! prm_ssaps.empty() && ! prm_prcs.empty() ) {
+		const string &ssaps_name_1 = prm_ssaps.front().get_name_1();
+		const string &prcs_name_1  =  prm_prcs.front().get_name_1();
 		if ( ssaps_name_1 != prcs_name_1 ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(
 				"Cannot construct ssaps_and_prcs_of_query from data because the SSAP results query ID \""
@@ -256,15 +256,15 @@ ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_
 	}
 
 	const auto prc_index_of_ids = transform_build<unordered_map<str_str_pair, size_t, pair_hash> >(
-		indices( arg_prcs.size() ),
+		indices( prm_prcs.size() ),
 		[&] (const size_t &x) {
-			const auto &the_prc = arg_prcs[ x ];
+			const auto &the_prc = prm_prcs[ x ];
 			return make_pair( make_pair( the_prc.get_name_1(), the_prc.get_name_2() ), x );
 		}
 	);
 
 	vector<ssap_and_prc> ssap_and_prc_entries;
-	for (const ssap_scores_entry &the_ssap : arg_ssaps) {
+	for (const ssap_scores_entry &the_ssap : prm_ssaps) {
 		const string &query_id = the_ssap.get_name_1();
 		const string &match_id = the_ssap.get_name_2();
 
@@ -272,13 +272,13 @@ ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_
 		if ( prc_index_itr != common::cend( prc_index_of_ids ) ) {
 			ssap_and_prc_entries.emplace_back(
 				the_ssap,
-				arg_prcs[ prc_index_itr->second ]
+				prm_prcs[ prc_index_itr->second ]
 			);
 		}
 	}
 
-	const auto num_ssaps = arg_ssaps.size();
-	const auto num_prcs  = arg_prcs.size();
+	const auto num_ssaps = prm_ssaps.size();
+	const auto num_prcs  = prm_prcs.size();
 	const auto num_comb  = ssap_and_prc_entries.size();
 	const string query_id_str        = ( ! ssap_and_prc_entries.empty() ) ? ( " (query: " + get_query_id( ssaps_and_prcs_of_query{ ssap_and_prc_entries } ) + ")" ) : "";
 	const string unmatched_ssaps_str = ( num_ssaps > num_comb           ) ? ( std::to_string( num_ssaps - num_comb ) + " unmatched SSAP results from " + std::to_string( num_ssaps ) ) : "";

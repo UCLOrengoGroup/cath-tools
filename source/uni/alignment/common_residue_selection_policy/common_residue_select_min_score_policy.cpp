@@ -44,12 +44,12 @@ double common_residue_select_min_score_policy::get_score_cutoff() const {
 }
 
 /// \brief TODOCUMENT
-size_vec common_residue_select_min_score_policy::do_select_common_residues_with_scores(const doub_doub_pair_vec &arg_scores ///< TODOCUMENT
+size_vec common_residue_select_min_score_policy::do_select_common_residues_with_scores(const doub_doub_pair_vec &prm_scores ///< TODOCUMENT
                                                                                        ) const {
 	size_vec the_indices;
-	the_indices.reserve( arg_scores.size() );
-	for (const size_t &index_ctr : indices( arg_scores.size() ) ) {
-		const doub_doub_pair &score_pair = arg_scores[index_ctr];
+	the_indices.reserve( prm_scores.size() );
+	for (const size_t &index_ctr : indices( prm_scores.size() ) ) {
+		const doub_doub_pair &score_pair = prm_scores[index_ctr];
 		if ( min( score_pair.first, score_pair.second ) > get_score_cutoff() ) {
 			the_indices.push_back( index_ctr );
 		}
@@ -68,8 +68,8 @@ unique_ptr<common_residue_selection_policy> common_residue_select_min_score_poli
 }
 
 /// \brief Ctor for common_residue_select_min_score_policy
-common_residue_select_min_score_policy::common_residue_select_min_score_policy(const double &arg_score_cutoff ///< TODOCUMENT
-                                                                               ) : score_cutoff(arg_score_cutoff) {
+common_residue_select_min_score_policy::common_residue_select_min_score_policy(const double &prm_score_cutoff ///< TODOCUMENT
+                                                                               ) : score_cutoff(prm_score_cutoff) {
 	using boost::math::isfinite;
 	if (!isfinite(get_score_cutoff())) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argument score_cutoff must be a normal, finite floating-point number"));
@@ -85,7 +85,7 @@ common_residue_select_min_score_policy::common_residue_select_min_score_policy(c
 }
 
 /// \brief TODOCUMENT
-bool common_residue_select_min_score_policy::do_less_than_with_same_dynamic_type(const common_residue_selection_policy &/*arg_common_residue_selection_policy*/ ///< TODOCUMENT
+bool common_residue_select_min_score_policy::do_less_than_with_same_dynamic_type(const common_residue_selection_policy &/*prm_common_residue_selection_policy*/ ///< TODOCUMENT
                                                                                  ) const {
 	return false;
 }

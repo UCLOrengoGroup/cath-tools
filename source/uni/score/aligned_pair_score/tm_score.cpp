@@ -63,20 +63,20 @@ tribool tm_score::do_higher_is_better() const {
 }
 
 /// \brief Concrete implementation for calculating the SAS of an alignment
-score_value tm_score::do_calculate(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                   const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                   const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+score_value tm_score::do_calculate(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                   const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                   const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                    ) const {
 	// Extract the common coordinates to be chosen
 	const pair<coord_list_vec, coord_list_vec> common_coords = the_coord_handler.get_common_coords_by_residue(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b
 	);
 
 	return max(
-		score_for_target_length( common_coords, numeric_cast<score_value>( arg_protein_a.get_length() ) ),
-		score_for_target_length( common_coords, numeric_cast<score_value>( arg_protein_b.get_length() ) )
+		score_for_target_length( common_coords, numeric_cast<score_value>( prm_protein_a.get_length() ) ),
+		score_for_target_length( common_coords, numeric_cast<score_value>( prm_protein_b.get_length() ) )
 	);
 }
 
@@ -106,26 +106,26 @@ string tm_score::do_reference() const {
 }
 
 /// \brief TODOCUMENT
-bool tm_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool tm_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                    ) const {
-	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 	return ( *this < casted_aligned_pair_score );
 }
 
 /// \brief TODOCUMENT
-score_value tm_score::score_for_target_length(const pair<coord_list_vec, coord_list_vec> &arg_common_coords_by_residue,  ///< TODOCUMENT
-                                              const score_value                          &arg_target_length              ///< TODOCUMENT
+score_value tm_score::score_for_target_length(const pair<coord_list_vec, coord_list_vec> &prm_common_coords_by_residue,  ///< TODOCUMENT
+                                              const score_value                          &prm_target_length              ///< TODOCUMENT
                                               ) {
-	const score_value denominator = ( 1.24 * cbrt( arg_target_length - 15 ) ) - 1.8;
-//	cerr << "For length " << arg_target_length << ", denominator is : " << denominator << endl;
+	const score_value denominator = ( 1.24 * cbrt( prm_target_length - 15 ) ) - 1.8;
+//	cerr << "For length " << prm_target_length << ", denominator is : " << denominator << endl;
 
 	const auto superposed_second_coords = superpose_copy_second_coords_to_first(
-		arg_common_coords_by_residue.first,
-		arg_common_coords_by_residue.second
+		prm_common_coords_by_residue.first,
+		prm_common_coords_by_residue.second
 	);
 
 	return inner_product(
-		arg_common_coords_by_residue.first,
+		prm_common_coords_by_residue.first,
 		superposed_second_coords,
 		numeric_cast<score_value>( 0.0 ),
 		plus<score_value>(),
@@ -139,13 +139,13 @@ score_value tm_score::score_for_target_length(const pair<coord_list_vec, coord_l
 //			cerr << "final         is : " << final         << endl;
 			return final;
 		}
-	) / arg_target_length;
+	) / prm_target_length;
 }
 
 /// \brief Ctor for tm_score that allows the caller to specify the protein_only_length_getter, common_residue_selection_policy and common_atom_selection_policy
-tm_score::tm_score(const common_residue_selection_policy &arg_comm_res_seln_pol, ///< The policy to use for selecting common residues
-                   const common_atom_selection_policy    &arg_comm_atom_seln_pol ///< The policy to use for selecting common atoms
-                   ) : the_coord_handler ( arg_comm_res_seln_pol, arg_comm_atom_seln_pol  ) {
+tm_score::tm_score(const common_residue_selection_policy &prm_comm_res_seln_pol, ///< The policy to use for selecting common residues
+                   const common_atom_selection_policy    &prm_comm_atom_seln_pol ///< The policy to use for selecting common atoms
+                   ) : the_coord_handler ( prm_comm_res_seln_pol, prm_comm_atom_seln_pol  ) {
 }
 
 /// \brief TODOCUMENT
@@ -156,10 +156,10 @@ const score_common_coord_handler & tm_score::get_score_common_coord_handler() co
 /// \brief TODOCUMENT
 ///
 /// \relates tm_score
-bool cath::score::operator<(const tm_score &arg_tm_score_a, ///< TODOCUMENT
-                            const tm_score &arg_tm_score_b  ///< TODOCUMENT
+bool cath::score::operator<(const tm_score &prm_tm_score_a, ///< TODOCUMENT
+                            const tm_score &prm_tm_score_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_tm_score_a, arg_tm_score_b );
+	auto the_helper = make_less_than_helper( prm_tm_score_a, prm_tm_score_b );
 	the_helper.register_comparison_field( &tm_score::get_score_common_coord_handler );
 	return final_less_than_result( the_helper );
 }

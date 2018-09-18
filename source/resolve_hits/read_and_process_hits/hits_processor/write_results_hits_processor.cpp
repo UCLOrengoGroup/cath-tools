@@ -49,17 +49,17 @@ unique_ptr<hits_processor> write_results_hits_processor::do_clone() const {
 /// \brief Process the specified data
 ///
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-void write_results_hits_processor::do_process_hits_for_query(const string           &arg_query_id,        ///< The query_protein_id string
-                                                             const crh_filter_spec  &/*arg_filter_spec*/, ///< The filter_spec to apply to the hits
-                                                             const crh_score_spec   &arg_score_spec,      ///< The score spec to apply to the hits
-                                                             const crh_segment_spec &arg_segment_spec,    ///< The segment spec to apply to the hits
-                                                             const calc_hit_list    &arg_calc_hits        ///< The hits to process
+void write_results_hits_processor::do_process_hits_for_query(const string           &prm_query_id,        ///< The query_protein_id string
+                                                             const crh_filter_spec  &/*prm_filter_spec*/, ///< The filter_spec to apply to the hits
+                                                             const crh_score_spec   &prm_score_spec,      ///< The score spec to apply to the hits
+                                                             const crh_segment_spec &prm_segment_spec,    ///< The segment spec to apply to the hits
+                                                             const calc_hit_list    &prm_calc_hits        ///< The hits to process
                                                              ) {
 	// Resolve the hits
-	const auto result_hit_arch  = resolve_hits( arg_calc_hits, arg_score_spec.get_naive_greedy() );
+	const auto result_hit_arch  = resolve_hits( prm_calc_hits, prm_score_spec.get_naive_greedy() );
 	const auto result_full_hits = get_full_hits_of_hit_arch(
 		result_hit_arch,
-		arg_calc_hits.get_full_hits()
+		prm_calc_hits.get_full_hits()
 	);
 
 	const string CATH_TOOLS_VERSION{ CATH_TOOLS_GIT_VERSION };
@@ -73,19 +73,19 @@ void write_results_hits_processor::do_process_hits_for_query(const string       
 			ostream_ref.get()
 				<< "#FIELDS "
 				<< join(
-					get_field_headers( front( result_full_hits ), ! arg_query_id.empty(), true ),
+					get_field_headers( front( result_full_hits ), ! prm_query_id.empty(), true ),
 					" "
 				)
 				<< "\n";
 			written_header = true;
 		}
 
-		// Output the results to arg_ostream
+		// Output the results to prm_ostream
 		ostream_ref.get() << to_output_string(
 			result_full_hits,
-			arg_segment_spec,
+			prm_segment_spec,
 			hit_output_format::JON,
-			arg_query_id,
+			prm_query_id,
 			boundary_output
 		);
 	}
@@ -106,9 +106,9 @@ bool write_results_hits_processor::do_requires_strictly_worse_hits() const {
 }
 
 /// \brief Ctor for write_results_hits_processor
-write_results_hits_processor::write_results_hits_processor(ref_vec<ostream>           arg_ostreams,       ///< The ostream to which the results should be written
-                                                           const hit_boundary_output &arg_boundary_output ///< Whether to trim the boundaries before outputting them
-                                                           ) noexcept : super           { move( arg_ostreams ) },
-                                                                        boundary_output { arg_boundary_output  } {
+write_results_hits_processor::write_results_hits_processor(ref_vec<ostream>           prm_ostreams,       ///< The ostream to which the results should be written
+                                                           const hit_boundary_output &prm_boundary_output ///< Whether to trim the boundaries before outputting them
+                                                           ) noexcept : super           { move( prm_ostreams ) },
+                                                                        boundary_output { prm_boundary_output  } {
 }
 

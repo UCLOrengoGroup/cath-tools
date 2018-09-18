@@ -45,8 +45,8 @@ namespace cath {
 			};
 			/// \brief TODOCUMENT
 			template <typename FN>
-			equal_grouped_holder<FN>::equal_grouped_holder(FN arg_unequal_function ///< TODOCUMENT
-			                                               ) : unequal_function( arg_unequal_function ) {
+			equal_grouped_holder<FN>::equal_grouped_holder(FN prm_unequal_function ///< TODOCUMENT
+			                                               ) : unequal_function( prm_unequal_function ) {
 			}
 
 			/// \brief TODOCUMENT

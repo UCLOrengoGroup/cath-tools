@@ -34,22 +34,22 @@ namespace cath {
 
 		/// \brief Make a string_ref from the specified array of chars
 		template <size_t N>
-		inline boost::string_ref string_ref_of_char_arr(const std::array<char, N> &arg_char_arr ///< The array of chars from which to make the string_ref
+		inline boost::string_ref string_ref_of_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string_ref
 		                                                ) {
-			return { common::cbegin( arg_char_arr ), N };
+			return { common::cbegin( prm_char_arr ), N };
 		}
 
 		/// \brief Make a string from the specified array of chars that
 		///        may use a null to specify the end of the string
 		template <size_t N>
-		inline boost::string_ref string_ref_of_null_term_char_arr(const std::array<char, N> &arg_char_arr ///< The array of chars from which to make the string
+		inline boost::string_ref string_ref_of_null_term_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string
 		                                                          ) {
 			return {
-				common::cbegin( arg_char_arr ),
+				common::cbegin( prm_char_arr ),
 				static_cast<size_t>( std::distance(
-					common::cbegin( arg_char_arr ),
+					common::cbegin( prm_char_arr ),
 					boost::range::find_if(
-						arg_char_arr,
+						prm_char_arr,
 						[] (const char &x) { return ( x == 0 ); }
 					)
 				) )
@@ -58,11 +58,11 @@ namespace cath {
 
 		/// \brief Make a string from the specified array of chars
 		template <size_t N>
-		inline std::string string_of_char_arr(const std::array<char, N> &arg_char_arr ///< The array of chars from which to make the string
+		inline std::string string_of_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string
 		                                      ) {
 			return {
-				common::cbegin( arg_char_arr ),
-				common::cend  ( arg_char_arr )
+				common::cbegin( prm_char_arr ),
+				common::cend  ( prm_char_arr )
 			};
 		}
 

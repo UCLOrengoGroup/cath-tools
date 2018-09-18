@@ -29,11 +29,11 @@ using std::string;
 /// \brief Search for a particular file basename through a path of directories
 ///
 /// \returns The found file or an empty path object if one could not be found
-path cath::common::find_file(const path_vec &arg_path_dirs, ///< Directories through which to search for the file (in descending order of preference)
-                             const string   &arg_basename   ///< The basename of the file to be located (eg 1c0pA01.dssp)
+path cath::common::find_file(const path_vec &prm_path_dirs, ///< Directories through which to search for the file (in descending order of preference)
+                             const string   &prm_basename   ///< The basename of the file to be located (eg 1c0pA01.dssp)
                              ) {
-	for (const path &dir : arg_path_dirs) {
-		const path potential_file = dir / arg_basename;
+	for (const path &dir : prm_path_dirs) {
+		const path potential_file = dir / prm_basename;
 		if ( exists( potential_file ) ) {
 			return potential_file;
 		}

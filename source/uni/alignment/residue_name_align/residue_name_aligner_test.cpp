@@ -53,16 +53,16 @@ namespace cath {
 			///
 			/// \todo modify the actual call to residue_name_aligner::residue_name_align() to handle multiple lists
 			///       (after that subroutine has been altered to handle multiple lists)
-			void do_check_residue_name_aligner(const residue_name_vec_vec  &arg_residue_lists,
-			                                   const bool_deq_vec          &arg_correct_presence_lists,
-			                                   const size_vec_vec          &arg_correct_answer_lists,
-			                                   const bool                  &arg_should_throw
+			void do_check_residue_name_aligner(const residue_name_vec_vec  &prm_residue_lists,
+			                                   const bool_deq_vec          &prm_correct_presence_lists,
+			                                   const size_vec_vec          &prm_correct_answer_lists,
+			                                   const bool                  &prm_should_throw
 			                                   ) {
-				const size_t num_lists = arg_residue_lists.size();
+				const size_t num_lists = prm_residue_lists.size();
 				BOOST_REQUIRE_EQUAL(num_lists, 2_z); /// This code isn't yet able to process more than two at a time
-				if (!arg_should_throw) {
-					BOOST_REQUIRE_EQUAL(num_lists, arg_correct_presence_lists.size());
-					BOOST_REQUIRE_EQUAL(num_lists, arg_correct_answer_lists.size());
+				if (!prm_should_throw) {
+					BOOST_REQUIRE_EQUAL(num_lists, prm_correct_presence_lists.size());
+					BOOST_REQUIRE_EQUAL(num_lists, prm_correct_answer_lists.size());
 				}
 
 				// Construct a vector containing the indices of the lists
@@ -74,11 +74,11 @@ namespace cath {
 				// Loop over the permutations of the indices
 				do {
 					// If these residue lists should cause residue_name_aligner::residue_name_align() to throw then check they do
-					if (arg_should_throw) {
+					if (prm_should_throw) {
 						BOOST_CHECK_THROW(
 							residue_name_aligner::residue_name_align(
-								{ arg_residue_lists[ permutation_indices[ 0 ] ],
-								  arg_residue_lists[ permutation_indices[ 1 ] ] }
+								{ prm_residue_lists[ permutation_indices[ 0 ] ],
+								  prm_residue_lists[ permutation_indices[ 1 ] ] }
 							),
 							invalid_argument_exception
 						);
@@ -87,8 +87,8 @@ namespace cath {
 					else {
 						// Construct an alignment from this permutation of residue lists
 						const alignment my_alignment = residue_name_aligner::residue_name_align(
-							{ arg_residue_lists[permutation_indices[ 0 ]],
-							  arg_residue_lists[permutation_indices[ 1 ]] }
+							{ prm_residue_lists[permutation_indices[ 0 ]],
+							  prm_residue_lists[permutation_indices[ 1 ]] }
 						);
 						const alignment::size_type num_positions = my_alignment.length();
 
@@ -96,8 +96,8 @@ namespace cath {
 						for (const size_t &index_ctr : indices( num_lists ) ) {
 							// Grab the correct answer list under the current permutation
 							const size_t permutation_index           = permutation_indices[index_ctr];
-							const bool_deq &correct_presence_list = arg_correct_presence_lists[permutation_index];
-							const size_vec &correct_answer_list      = arg_correct_answer_lists[permutation_index];
+							const bool_deq &correct_presence_list = prm_correct_presence_lists[permutation_index];
+							const size_vec &correct_answer_list      = prm_correct_answer_lists[permutation_index];
 
 							const size_t correct_answer_size         = correct_answer_list.size();
 
@@ -124,17 +124,17 @@ namespace cath {
 
 		public:
 			/// Check that residue_name_aligner::residue_name_align() gives the correct results for all permutations of the residues lists
-			void check_residue_name_aligner_results(const residue_name_vec_vec &arg_residue_lists,
-			                                        const bool_deq_vec         &arg_correct_presence_lists,
-			                                        const size_vec_vec         &arg_correct_answer_lists
+			void check_residue_name_aligner_results(const residue_name_vec_vec &prm_residue_lists,
+			                                        const bool_deq_vec         &prm_correct_presence_lists,
+			                                        const size_vec_vec         &prm_correct_answer_lists
 			                                        ) {
-				do_check_residue_name_aligner( arg_residue_lists, arg_correct_presence_lists, arg_correct_answer_lists, false );
+				do_check_residue_name_aligner( prm_residue_lists, prm_correct_presence_lists, prm_correct_answer_lists, false );
 			}
 
 			/// Check that residue_name_aligner::residue_name_align() throws an errro for all permutations of the residues lists
-			void check_residue_name_aligner_throws(const residue_name_vec_vec &arg_residue_lists
+			void check_residue_name_aligner_throws(const residue_name_vec_vec &prm_residue_lists
 			                                       ) {
-				do_check_residue_name_aligner(arg_residue_lists, bool_deq_vec(), size_vec_vec(), true);
+				do_check_residue_name_aligner(prm_residue_lists, bool_deq_vec(), size_vec_vec(), true);
 			}
 		};
 

@@ -40,12 +40,12 @@ using cath::score::rbf_model;
 
 /// \brief Ctor from a ssap_scores_entry and a prc_scores_entry
 ///
-/// \pre arg_ssap and arg_prc must have matching name_1 and name_2 values,
+/// \pre prm_ssap and prm_prc must have matching name_1 and name_2 values,
 ///      else an invalid_argument_exception will be thrown
-ssap_and_prc::ssap_and_prc(ssap_scores_entry arg_ssap, ///< The SSAP scores from which this should be constructed
-                           prc_scores_entry  arg_prc   ///< The PRC scores from which this should be constructed
-                           ) : the_ssap             { std::move( arg_ssap               ) },
-                               the_prc              { std::move( arg_prc                ) },
+ssap_and_prc::ssap_and_prc(ssap_scores_entry prm_ssap, ///< The SSAP scores from which this should be constructed
+                           prc_scores_entry  prm_prc   ///< The PRC scores from which this should be constructed
+                           ) : the_ssap             { std::move( prm_ssap               ) },
+                               the_prc              { std::move( prm_prc                ) },
                                magic_function_score { magic_function( the_ssap, the_prc ) } {
 	if (
 		( the_ssap.get_name_1() != the_prc.get_name_1() )
@@ -57,9 +57,9 @@ ssap_and_prc::ssap_and_prc(ssap_scores_entry arg_ssap, ///< The SSAP scores from
 }
 
 /// \brief Calculate and store the SVM score using the specified SVM RBF model
-void ssap_and_prc::calculate_svm_score(const rbf_model &arg_svm ///< The SVM RBF model with which to calculate the score
+void ssap_and_prc::calculate_svm_score(const rbf_model &prm_svm ///< The SVM RBF model with which to calculate the score
                                        ) {
-	svm_score = get_score( arg_svm, *this );
+	svm_score = get_score( prm_svm, *this );
 }
 
 /// \brief Getter for the query_id (name_1) shared by the SSAP and PRC results
@@ -100,197 +100,197 @@ const optional<double> & ssap_and_prc::get_svm_score_opt() const {
 /// At present, this does not check that the two results have matching IDs
 ///
 /// The magic function is defined as: `ssap_score - log10( prc_evalue )`
-double cath::homcheck::magic_function(const ssap_scores_entry &arg_ssap, ///< The SSAP result with which the magic function should be computed
-                                      const prc_scores_entry  &arg_prc   ///< The PRC  result with which the magic function should be computed
+double cath::homcheck::magic_function(const ssap_scores_entry &prm_ssap, ///< The SSAP result with which the magic function should be computed
+                                      const prc_scores_entry  &prm_prc   ///< The PRC  result with which the magic function should be computed
                                       ) {
-	return arg_ssap.get_ssap_score() - std::log10( arg_prc.get_evalue() );
+	return prm_ssap.get_ssap_score() - std::log10( prm_prc.get_evalue() );
 }
 
 /// \brief Return whether this ssap_and_prc result has an SVM score set
 ///
 /// \relates ssap_and_prc
-bool cath::homcheck::has_svm_score(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc to query
+bool cath::homcheck::has_svm_score(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc to query
                                    ) {
-	return static_cast<bool>( arg_ssap_and_prc.get_svm_score_opt() );
+	return static_cast<bool>( prm_ssap_and_prc.get_svm_score_opt() );
 }
 
 /// \brief Return the SVM score set in the specified ssap_and_prc
 ///
-/// \pre `has_svm_score( arg_ssap_and_prc )` else an invalid_argument_exception is thrown
+/// \pre `has_svm_score( prm_ssap_and_prc )` else an invalid_argument_exception is thrown
 ///
 /// \relates ssap_and_prc
-const double & cath::homcheck::get_svm_score(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc to query
+const double & cath::homcheck::get_svm_score(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc to query
                                              ) {
-	if ( ! has_svm_score( arg_ssap_and_prc ) ) {
+	if ( ! has_svm_score( prm_ssap_and_prc ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot retrieve a ssap_and_prc result's SVM score if it hasn't been set"));
 	}
-	return *arg_ssap_and_prc.get_svm_score_opt();
+	return *prm_ssap_and_prc.get_svm_score_opt();
 }
 
 /// \brief Getter for the SSAP length_1 of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_ssap_length_1(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_ssap_length_1(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                  ) {
-	return arg_ssap_and_prc.get_ssap().get_length_1();
+	return prm_ssap_and_prc.get_ssap().get_length_1();
 }
 
 /// \brief Getter for the SSAP length_2 of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_ssap_length_2(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_ssap_length_2(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                  ) {
-	return arg_ssap_and_prc.get_ssap().get_length_2();
+	return prm_ssap_and_prc.get_ssap().get_length_2();
 }
 
 /// \brief Getter for the SSAP score of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const double & cath::homcheck::get_ssap_score(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const double & cath::homcheck::get_ssap_score(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                               ) {
-	return arg_ssap_and_prc.get_ssap().get_ssap_score();
+	return prm_ssap_and_prc.get_ssap().get_ssap_score();
 }
 
 /// \brief Getter for the SSAP num_equivs of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_ssap_num_equivs(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_ssap_num_equivs(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                    ) {
-	return arg_ssap_and_prc.get_ssap().get_num_equivs();
+	return prm_ssap_and_prc.get_ssap().get_num_equivs();
 }
 
 /// \brief Getter for the SSAP overlap_pc of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const double & cath::homcheck::get_ssap_overlap_pc(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const double & cath::homcheck::get_ssap_overlap_pc(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                    ) {
-	return arg_ssap_and_prc.get_ssap().get_overlap_pc();
+	return prm_ssap_and_prc.get_ssap().get_overlap_pc();
 }
 
 /// \brief Getter for the SSAP seq_id_pc of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const double & cath::homcheck::get_ssap_seq_id_pc(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const double & cath::homcheck::get_ssap_seq_id_pc(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                   ) {
-	return arg_ssap_and_prc.get_ssap().get_seq_id_pc();
+	return prm_ssap_and_prc.get_ssap().get_seq_id_pc();
 }
 
 /// \brief Getter for the SSAP RMSD of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const double & cath::homcheck::get_ssap_rmsd(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const double & cath::homcheck::get_ssap_rmsd(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                              ) {
-	return arg_ssap_and_prc.get_ssap().get_rmsd();
+	return prm_ssap_and_prc.get_ssap().get_rmsd();
 }
 
 /// \brief Getter for the PRC start_1 of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_prc_start_1(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_prc_start_1(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                ) {
-	return arg_ssap_and_prc.get_prc().get_start_1();
+	return prm_ssap_and_prc.get_prc().get_start_1();
 }
 
 /// \brief Getter for the PRC end_1 of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_prc_end_1(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_prc_end_1(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                              ) {
-	return arg_ssap_and_prc.get_prc().get_end_1();
+	return prm_ssap_and_prc.get_prc().get_end_1();
 }
 
 /// \brief Getter for the PRC length_1 of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_prc_length_1(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_prc_length_1(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                 ) {
-	return arg_ssap_and_prc.get_prc().get_length_1();
+	return prm_ssap_and_prc.get_prc().get_length_1();
 }
 
 /// \brief Getter for the PRC hit_num of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_prc_hit_num(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_prc_hit_num(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                ) {
-	return arg_ssap_and_prc.get_prc().get_hit_num();
+	return prm_ssap_and_prc.get_prc().get_hit_num();
 }
 
 /// \brief Getter for the PRC start_2 of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_prc_start_2(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_prc_start_2(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                ) {
-	return arg_ssap_and_prc.get_prc().get_start_2();
+	return prm_ssap_and_prc.get_prc().get_start_2();
 }
 
 /// \brief Getter for the PRC end_2 of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_prc_end_2(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_prc_end_2(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                              ) {
-	return arg_ssap_and_prc.get_prc().get_end_2();
+	return prm_ssap_and_prc.get_prc().get_end_2();
 }
 
 /// \brief Getter for the PRC length_2 of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const size_t & cath::homcheck::get_prc_length_2(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const size_t & cath::homcheck::get_prc_length_2(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                 ) {
-	return arg_ssap_and_prc.get_prc().get_length_2();
+	return prm_ssap_and_prc.get_prc().get_length_2();
 }
 
 /// \brief Getter for the PRC simple of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const double & cath::homcheck::get_prc_simple(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const double & cath::homcheck::get_prc_simple(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                               ) {
-	return arg_ssap_and_prc.get_prc().get_simple();
+	return prm_ssap_and_prc.get_prc().get_simple();
 }
 
 /// \brief Getter for the PRC reverse of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const double & cath::homcheck::get_prc_reverse(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const double & cath::homcheck::get_prc_reverse(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                                ) {
-	return arg_ssap_and_prc.get_prc().get_reverse();
+	return prm_ssap_and_prc.get_prc().get_reverse();
 }
 
 /// \brief Getter for the PRC evalue of the specified ssap_and_prc object
 ///
 /// \relates ssap_and_prc
-const double & cath::homcheck::get_prc_evalue(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc result to query
+const double & cath::homcheck::get_prc_evalue(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc result to query
                                               ) {
-	return arg_ssap_and_prc.get_prc().get_evalue();
+	return prm_ssap_and_prc.get_prc().get_evalue();
 }
 
 /// \brief Simple to_string() overload for ssap_and_prc
 ///
 /// \relates ssap_and_prc
-string cath::homcheck::to_string(const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc to be output as a string
+string cath::homcheck::to_string(const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc to be output as a string
                                  ) {
 	ostringstream evalue_ss;
-	evalue_ss << get_prc_evalue( arg_ssap_and_prc );
+	evalue_ss << get_prc_evalue( prm_ssap_and_prc );
 	return "ssap_and_prc[query_id:"
-		+ arg_ssap_and_prc.get_query_id()
+		+ prm_ssap_and_prc.get_query_id()
 		+ "; match_id:"
-		+ arg_ssap_and_prc.get_match_id()
+		+ prm_ssap_and_prc.get_match_id()
 		+ "; ssap_score:"
-		+ std::to_string( get_ssap_score( arg_ssap_and_prc ) )
+		+ std::to_string( get_ssap_score( prm_ssap_and_prc ) )
 		+ "; prc_evalue:"
 		+ evalue_ss.str()
-		+ ( has_svm_score( arg_ssap_and_prc ) ? ( "; SVM:" + ::std::to_string( get_svm_score( arg_ssap_and_prc ) ) ) : "" )
+		+ ( has_svm_score( prm_ssap_and_prc ) ? ( "; SVM:" + ::std::to_string( get_svm_score( prm_ssap_and_prc ) ) ) : "" )
 		+ "; magic_function:"
-		+ std::to_string( arg_ssap_and_prc.get_magic_function_score() )
+		+ std::to_string( prm_ssap_and_prc.get_magic_function_score() )
 		+ "]";
 }
 
 /// \brief Simple insertion operator for ssap_and_prc
 ///
 /// \relates ssap_and_prc
-ostream & cath::homcheck::operator<<(ostream            &arg_ostream,     ///< The ostream to which the ssap_and_prc should be output
-                                     const ssap_and_prc &arg_ssap_and_prc ///< The ssap_and_prc to output
+ostream & cath::homcheck::operator<<(ostream            &prm_ostream,     ///< The ostream to which the ssap_and_prc should be output
+                                     const ssap_and_prc &prm_ssap_and_prc ///< The ssap_and_prc to output
                                      ) {
-	arg_ostream << to_string( arg_ssap_and_prc );
-	return arg_ostream;
+	prm_ostream << to_string( prm_ssap_and_prc );
+	return prm_ostream;
 }
 

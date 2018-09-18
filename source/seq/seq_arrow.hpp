@@ -65,19 +65,19 @@ namespace cath {
 		/// \brief Return whether the first specified arrow appears earlier in the sequence than the second
 		///
 		/// \relates seq_arrow
-		constexpr bool operator<(const seq_arrow &arg_arrow_a, ///< The first  seq_arrow to compare
-		                         const seq_arrow &arg_arrow_b  ///< The second seq_arrow to compare
+		constexpr bool operator<(const seq_arrow &prm_arrow_a, ///< The first  seq_arrow to compare
+		                         const seq_arrow &prm_arrow_b  ///< The second seq_arrow to compare
 		                         ) {
-			return arg_arrow_a.get_index() < arg_arrow_b.get_index();
+			return prm_arrow_a.get_index() < prm_arrow_b.get_index();
 		}
 
 		/// \brief Return whether the two specified arrows are identical
 		///
 		/// \relates seq_arrow
-		constexpr bool operator==(const seq_arrow &arg_arrow_a, ///< The first  seq_arrow to compare
-		                          const seq_arrow &arg_arrow_b  ///< The second seq_arrow to compare
+		constexpr bool operator==(const seq_arrow &prm_arrow_a, ///< The first  seq_arrow to compare
+		                          const seq_arrow &prm_arrow_b  ///< The second seq_arrow to compare
 		                          ) {
-			return arg_arrow_a.get_index() == arg_arrow_b.get_index();
+			return prm_arrow_a.get_index() == prm_arrow_b.get_index();
 		}
 
 		std::string to_string(const seq_arrow &);
@@ -92,8 +92,8 @@ namespace cath {
 		///
 		/// This is private and should only be called by
 		/// `arrow_before_res(const residx_t &)` and `arrow_after_res (const residx_t &)`
-		inline constexpr seq_arrow::seq_arrow(const resarw_t &arg_res_arrow_index ///< The index of the arrow
-		                                      ) : arrow ( arg_res_arrow_index ) {
+		inline constexpr seq_arrow::seq_arrow(const resarw_t &prm_res_arrow_index ///< The index of the arrow
+		                                      ) : arrow ( prm_res_arrow_index ) {
 		}
 
 		/// \brief Get the index of the residue immediately before the arrow
@@ -120,23 +120,23 @@ namespace cath {
 		/// \brief Increment the arrow by the specified offset
 		///
 		/// \todo Come relaxed constexpr in all supported compilers, make this constexpr
-		inline seq_arrow & seq_arrow::operator+=(const resarw_t &arg_offset ///< The offset by which to increment the seq_arrow
+		inline seq_arrow & seq_arrow::operator+=(const resarw_t &prm_offset ///< The offset by which to increment the seq_arrow
 		                                         ) {
-			arrow += arg_offset;
+			arrow += prm_offset;
 			return *this;
 		}
 
 		/// \brief Decrement the arrow by the specified offset
 		///
 		/// \todo Come relaxed constexpr in all supported compilers, make this constexpr
-		inline seq_arrow & seq_arrow::operator-=(const resarw_t &arg_offset ///< The offset by which to decrement the seq_arrow
+		inline seq_arrow & seq_arrow::operator-=(const resarw_t &prm_offset ///< The offset by which to decrement the seq_arrow
 		                                         ) {
 #ifndef NDEBUG
-			if ( arg_offset > arrow ) {
+			if ( prm_offset > arrow ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot decrement seq_arrow below 0"));
 			}
 #endif
-			arrow -= arg_offset;
+			arrow -= prm_offset;
 			return *this;
 		}
 
@@ -146,19 +146,19 @@ namespace cath {
 		///       implement this using boost::additive<>
 		///
 		/// \relates seq_arrow
-		inline constexpr seq_arrow operator-(const seq_arrow &arg_res_arrow, ///< The seq_arrow whose copy should be decremented and returned
-		                                     const residx_t  &arg_offset     ///< The offset by which to decrement the copy of the seq_arrow
+		inline constexpr seq_arrow operator-(const seq_arrow &prm_res_arrow, ///< The seq_arrow whose copy should be decremented and returned
+		                                     const residx_t  &prm_offset     ///< The offset by which to decrement the copy of the seq_arrow
 		                                     ) {
 
 
 			return
 #ifndef NDEBUG
-				( arg_res_arrow.res_after() < arg_offset )
+				( prm_res_arrow.res_after() < prm_offset )
 				?
 					throw std::invalid_argument("Cannot decrement seq_arrow beyond 0")
 				:
 #endif
-					arrow_before_res( arg_res_arrow.res_after() - arg_offset );
+					arrow_before_res( prm_res_arrow.res_after() - prm_offset );
 		}
 
 		/// \brief Return the result of incrementing the specified arrow by some specified offset
@@ -167,37 +167,37 @@ namespace cath {
 		///       implement this using boost::additive<>
 		///
 		/// \relates seq_arrow
-		inline constexpr seq_arrow operator+(const seq_arrow &arg_res_arrow, ///< The seq_arrow whose copy should be incremented and returned
-		                                     const residx_t  &arg_offset     ///< The offset by which to increment the copy of the seq_arrow
+		inline constexpr seq_arrow operator+(const seq_arrow &prm_res_arrow, ///< The seq_arrow whose copy should be incremented and returned
+		                                     const residx_t  &prm_offset     ///< The offset by which to increment the copy of the seq_arrow
 		                                     ) {
-			return arrow_before_res( arg_res_arrow.res_after() + arg_offset );
+			return arrow_before_res( prm_res_arrow.res_after() + prm_offset );
 		}
 
 		/// \brief Return the result of subtracting one seq_arrow from another
 		///
 		/// \relates seq_arrow
-		inline constexpr residx_t operator-(const seq_arrow &arg_lhs, ///< The seq_arrow from which to subtract
-		                                    const seq_arrow &arg_rhs  ///< The seq_arrow to subtract
+		inline constexpr residx_t operator-(const seq_arrow &prm_lhs, ///< The seq_arrow from which to subtract
+		                                    const seq_arrow &prm_rhs  ///< The seq_arrow to subtract
 		                                    ) {
-			return arg_lhs.get_index() - arg_rhs.get_index();
+			return prm_lhs.get_index() - prm_rhs.get_index();
 		}
 
 		/// \brief Get the arrow immediately before the residue with the specified index
 		///
 		/// \relates seq_arrow
-		inline constexpr seq_arrow arrow_before_res(const residx_t &arg_res_index ///< The index of the residue immediately after the arrow to return
+		inline constexpr seq_arrow arrow_before_res(const residx_t &prm_res_index ///< The index of the residue immediately after the arrow to return
 		                                            ) {
 			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-			return seq_arrow{ arg_res_index     };
+			return seq_arrow{ prm_res_index     };
 		}
 
 		/// \brief Get the arrow immediately after the residue with the specified index
 		///
 		/// \relates seq_arrow
-		inline constexpr seq_arrow arrow_after_res(const residx_t &arg_res_index ///< The index of the residue immediately before the arrow to return
+		inline constexpr seq_arrow arrow_after_res(const residx_t &prm_res_index ///< The index of the residue immediately before the arrow to return
 		                                           ) {
 			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-			return seq_arrow{ arg_res_index + 1 };
+			return seq_arrow{ prm_res_index + 1 };
 		}
 
 		/// \brief Get the start arrow (ie the arrow before the residue with index 0)

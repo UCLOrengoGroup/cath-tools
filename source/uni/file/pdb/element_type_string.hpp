@@ -70,8 +70,8 @@ namespace cath {
 		};
 
 		/// \brief Constructor from lvalue string
-		inline element_type_string::element_type_string(char_4_arr arg_string ///< The source string
-		                                                ) : element_type_untrimmed( std::move( arg_string ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
+		inline element_type_string::element_type_string(char_4_arr prm_string ///< The source string
+		                                                ) : element_type_untrimmed( std::move( prm_string ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
 		                                                    trim_offsets {
 		                                                    	common::dumb_trim_string_ref_to_offsets<char>(
 		                                                    		common::string_ref_of_char_arr( element_type_untrimmed )
@@ -96,42 +96,42 @@ namespace cath {
 		}
 
 		/// \brief Get the untrimmed string_ref for the specified element_type_string
-		inline boost::string_ref get_element_type_untrimmed_str_ref(const element_type_string &arg_element_type_string ///< The element_type_string to query
+		inline boost::string_ref get_element_type_untrimmed_str_ref(const element_type_string &prm_element_type_string ///< The element_type_string to query
 		                                                            ) {
-			return common::string_ref_of_char_arr( arg_element_type_string.get_element_type_untrimmed() );
+			return common::string_ref_of_char_arr( prm_element_type_string.get_element_type_untrimmed() );
 		}
 
 		/// \brief Get the coarse_element_type corresponding to the specified trimmed element string
-		inline coarse_element_type get_coarse_element_type(const boost::string_ref &arg_trimmed_element_str ///< The trimmed element string (as it appears in PDB ATOM records)
+		inline coarse_element_type get_coarse_element_type(const boost::string_ref &prm_trimmed_element_str ///< The trimmed element string (as it appears in PDB ATOM records)
 		                                                   ) {
-			if ( arg_trimmed_element_str.empty() || arg_trimmed_element_str.length() > 2 ) {
+			if ( prm_trimmed_element_str.empty() || prm_trimmed_element_str.length() > 2 ) {
 				return coarse_element_type::NON_CORE;
 			}
-			if ( arg_trimmed_element_str.front() == 'C' ) {
-				if ( arg_trimmed_element_str == "CA" ) {
+			if ( prm_trimmed_element_str.front() == 'C' ) {
+				if ( prm_trimmed_element_str == "CA" ) {
 					return coarse_element_type::CARBON_ALPHA;
 				}
-				if ( arg_trimmed_element_str == "C"  ) {
+				if ( prm_trimmed_element_str == "C"  ) {
 					return coarse_element_type::CARBON;
 				}
-				if ( arg_trimmed_element_str == "CB" ) {
+				if ( prm_trimmed_element_str == "CB" ) {
 					return coarse_element_type::CARBON_BETA;
 				}
 				return coarse_element_type::NON_CORE;
 			}
-			if ( arg_trimmed_element_str == "N" ) {
+			if ( prm_trimmed_element_str == "N" ) {
 				return coarse_element_type::NITROGEN;
 			}
-			if ( arg_trimmed_element_str == "O" ) {
+			if ( prm_trimmed_element_str == "O" ) {
 				return coarse_element_type::OXYGEN;
 			}
 			return coarse_element_type::NON_CORE;
 		}
 
 		/// \brief Get the coarse_element_type corresponding to the specified element_type_string
-		inline coarse_element_type get_coarse_element_type(const element_type_string &arg_element_type_string ///< The element_type_string to query
+		inline coarse_element_type get_coarse_element_type(const element_type_string &prm_element_type_string ///< The element_type_string to query
 		                                                   ) {
-			return get_coarse_element_type( arg_element_type_string.get_element_type() );
+			return get_coarse_element_type( prm_element_type_string.get_element_type() );
 		}
 
 	} // namespace file

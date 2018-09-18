@@ -40,10 +40,10 @@ namespace cath {
 
 			/// \brief Implementation for tuple_increment
 			template <typename Tpl, size_t... Index>
-			constexpr auto tuple_increment_impl(const Tpl &arg_tuple,         ///< The tuple to be incremented
+			constexpr auto tuple_increment_impl(const Tpl &prm_tuple,         ///< The tuple to be incremented
 			                                    std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 			                                    ) {
-				return std::make_tuple( increment_copy( std::get<Index>( arg_tuple ) )... );
+				return std::make_tuple( increment_copy( std::get<Index>( prm_tuple ) )... );
 			}
 
 			/// \brief Function object to return the result of incrementing all the members of the specified tuple
@@ -53,15 +53,15 @@ namespace cath {
 				///
 				/// \todo Tidy up the enable_if / decltype()
 				template <typename Tpl, typename = std::enable_if< is_tuple< Tpl >::value > >
-				constexpr auto operator()(const Tpl &arg_tuple ///< The tuple from which a copy should be taken, its members incremented and returned
+				constexpr auto operator()(const Tpl &prm_tuple ///< The tuple from which a copy should be taken, its members incremented and returned
 				                          ) const -> decltype(
 				                                     	detail::tuple_increment_impl(
-				                                     		arg_tuple,
+				                                     		prm_tuple,
 				                                     		tuple_index_sequence<Tpl>{}
 				                                     	)
 				                                     ) {
 					return detail::tuple_increment_impl(
-						arg_tuple,
+						prm_tuple,
 						tuple_index_sequence<Tpl>{}
 					);
 				}

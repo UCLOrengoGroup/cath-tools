@@ -30,10 +30,10 @@ namespace cath {
 		///
 		/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
 		template <typename T>
-		boost::property_tree::ptree make_ptree_of(const T &arg_val ///< The value to represent in the ptree
+		boost::property_tree::ptree make_ptree_of(const T &prm_val ///< The value to represent in the ptree
 		                                          ) {
 			boost::property_tree::ptree new_ptree;
-			save_to_ptree( new_ptree, arg_val );
+			save_to_ptree( new_ptree, prm_val );
 			return new_ptree;
 		}
 

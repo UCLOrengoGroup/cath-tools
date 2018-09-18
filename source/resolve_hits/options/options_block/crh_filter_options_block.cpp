@@ -73,8 +73,8 @@ string crh_filter_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_filter_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                     const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_filter_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                     const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                      ) {
 	const string bitscore_varname { "<bitscore>" };
 	const string evalue_varname   { "<evalue>"   };
@@ -88,7 +88,7 @@ void crh_filter_options_block::do_add_visible_options_to_description(options_des
 	const auto filter_query_ids_notifier           = [&] (const str_vec  &x) { the_spec.set_filter_query_ids          ( x ); };
 	const auto limit_queries_notifier              = [&] (const size_t   &x) { the_spec.set_limit_queries             ( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			( PO_WORST_PERMISSIBLE_EVALUE ).c_str(),
 			value< prog_opt_num_range<resscr_t, 0, 1'000'000'000'000'000 > >()
@@ -135,8 +135,8 @@ void crh_filter_options_block::do_add_visible_options_to_description(options_des
 }
 
 /// \brief Add a hidden option to the options_description for the hmm coverage options
-void crh_filter_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_filter_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	const string percent_varname{ "<percent>" };
 
@@ -154,7 +154,7 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
 	const auto min_hmm_cvg_ntfr    = [&] (const double &x) { check_pc_fn( x, PO_MIN_HMM_COVERAGE    ); the_spec.set_min_hmm_coverage_frac   ( x / 100.0 ); };
 	const auto min_dc_hmm_cvg_ntfr = [&] (const double &x) { check_pc_fn( x, PO_MIN_DC_HMM_COVERAGE ); the_spec.set_min_dc_hmm_coverage_frac( x / 100.0 ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_MIN_HMM_COVERAGE.c_str(),
 			value<double>()
@@ -178,7 +178,7 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
 
 /// \brief Generate a description of any problem that makes the specified crh_filter_options_block invalid
 ///        or none otherwise
-str_opt crh_filter_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt crh_filter_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                     ) const {
 	if (the_spec.get_limit_queries() && ! the_spec.get_filter_query_ids().empty() ) {
 		return "Cannot specify both --" + PO_FILTER_QUERY_ID + " and --" + PO_LIMIT_QUERIES;

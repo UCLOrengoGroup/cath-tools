@@ -48,23 +48,23 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename T>
-			void check_closest_neighbours_covers(const orientation_covering_impl<T> &arg_covering,      ///< TODOCUMENT
-			                                     const quat_rot_impl<T>             &arg_orientation_a, ///< TODOCUMENT
-			                                     const quat_rot_impl<T>             &arg_orientation_b  ///< TODOCUMENT
+			void check_closest_neighbours_covers(const orientation_covering_impl<T> &prm_covering,      ///< TODOCUMENT
+			                                     const quat_rot_impl<T>             &prm_orientation_a, ///< TODOCUMENT
+			                                     const quat_rot_impl<T>             &prm_orientation_b  ///< TODOCUMENT
 			                                     ) {
-				const auto raw_angle   = angle_between_quat_rots( arg_orientation_a, arg_orientation_b );
+				const auto raw_angle   = angle_between_quat_rots( prm_orientation_a, prm_orientation_b );
 				const auto roomy_angle = raw_angle * static_cast<T>( 1.001 );
 
-				const auto general_neighbours   = calc_neighbours       ( arg_covering, roomy_angle );
-				const auto closest_neighbour_a  = get_closest_neighbour ( arg_covering, arg_orientation_a );
-				const auto closest_neighbour_b  = get_closest_neighbour ( arg_covering, arg_orientation_b );
+				const auto general_neighbours   = calc_neighbours       ( prm_covering, roomy_angle );
+				const auto closest_neighbour_a  = get_closest_neighbour ( prm_covering, prm_orientation_a );
+				const auto closest_neighbour_b  = get_closest_neighbour ( prm_covering, prm_orientation_b );
 				const auto candidates_for_a     = general_neighbours[ closest_neighbour_a ];
 				const auto candidates_for_b     = general_neighbours[ closest_neighbour_b ];
-				const auto closest_neighbours_a = get_closest_neighbours( arg_covering, arg_orientation_a, general_neighbours, roomy_angle );
-				const auto closest_neighbours_b = get_closest_neighbours( arg_covering, arg_orientation_b, general_neighbours, roomy_angle );
+				const auto closest_neighbours_a = get_closest_neighbours( prm_covering, prm_orientation_a, general_neighbours, roomy_angle );
+				const auto closest_neighbours_b = get_closest_neighbours( prm_covering, prm_orientation_b, general_neighbours, roomy_angle );
 
 //				if ( raw_angle > make_angle_from_degrees<T>( 21.5 ) && raw_angle < make_angle_from_degrees<T>( 23.5 ) ) {
-//					const auto covering_size     = numeric_cast<double>( arg_covering.size() );
+//					const auto covering_size     = numeric_cast<double>( prm_covering.size() );
 //					const auto neighbours_a_size = numeric_cast<double>( closest_neighbours_a.size() );
 //					const auto neighbours_b_size = numeric_cast<double>( closest_neighbours_b.size() );
 //					std::cerr << "***** The roomy angle is " << roomy_angle;
@@ -78,16 +78,16 @@ namespace cath {
 				if ( ! b_neighbours_contains_a ) {
 					cerr << "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n";
 					std::cerr << "The roomy angle is " << roomy_angle << "\n";
-					cerr << "arg_orientation_a    is    : " << arg_orientation_a   << "\n";
-					cerr << "arg_orientation_b    is    : " << arg_orientation_b   << "\n";
-					cerr << "closest_neighbour_a  is    : " << arg_covering[ closest_neighbour_a ] << "(" << angle_between_quat_rots( arg_orientation_a, arg_covering[ closest_neighbour_a ] ) << ")\n";
-					cerr << "closest_neighbour_b  is    : " << arg_covering[ closest_neighbour_b ] << "(" << angle_between_quat_rots( arg_orientation_b, arg_covering[ closest_neighbour_b ] ) << ")\n";
-					cerr << "angle twixt closest nghbrs : " << angle_between_quat_rots( arg_covering[ closest_neighbour_a ] , arg_covering[ closest_neighbour_b ] ) << "\n";
+					cerr << "prm_orientation_a    is    : " << prm_orientation_a   << "\n";
+					cerr << "prm_orientation_b    is    : " << prm_orientation_b   << "\n";
+					cerr << "closest_neighbour_a  is    : " << prm_covering[ closest_neighbour_a ] << "(" << angle_between_quat_rots( prm_orientation_a, prm_covering[ closest_neighbour_a ] ) << ")\n";
+					cerr << "closest_neighbour_b  is    : " << prm_covering[ closest_neighbour_b ] << "(" << angle_between_quat_rots( prm_orientation_b, prm_covering[ closest_neighbour_b ] ) << ")\n";
+					cerr << "angle twixt closest nghbrs : " << angle_between_quat_rots( prm_covering[ closest_neighbour_a ] , prm_covering[ closest_neighbour_b ] ) << "\n";
 					for (const auto &x : closest_neighbours_b) {
-						cerr << "closest_neighbours_b are.. : " << arg_covering[ x ] << "\n";
+						cerr << "closest_neighbours_b are.. : " << prm_covering[ x ] << "\n";
 					}
 					for (const auto &x : candidates_for_b) {
-						cerr << "candidates for b are    .. : " << arg_covering[ x ] << "\n";
+						cerr << "candidates for b are    .. : " << prm_covering[ x ] << "\n";
 					}
 					cerr << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
 					BOOST_CHECK( contains( closest_neighbours_b, closest_neighbour_a ) );
@@ -97,20 +97,20 @@ namespace cath {
 				if ( ! a_neighbours_contains_b ) {
 					cerr << "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n";
 					std::cerr << "The roomy angle is " << roomy_angle << "\n";
-					cerr << "arg_orientation_a    is    : " << arg_orientation_a   << "\n";
-					cerr << "arg_orientation_b    is    : " << arg_orientation_b   << "\n";
-					cerr << "closest_neighbour_a  is    : " << arg_covering[ closest_neighbour_a ] << "(" << angle_between_quat_rots( arg_orientation_a, arg_covering[ closest_neighbour_a ] ) << ")\n";
-					cerr << "closest_neighbour_b  is    : " << arg_covering[ closest_neighbour_b ] << "(" << angle_between_quat_rots( arg_orientation_b, arg_covering[ closest_neighbour_b ] ) << ")\n";
-					cerr << "angle twixt closest nghbrs : " << angle_between_quat_rots( arg_covering[ closest_neighbour_a ] , arg_covering[ closest_neighbour_b ] ) << "\n";
+					cerr << "prm_orientation_a    is    : " << prm_orientation_a   << "\n";
+					cerr << "prm_orientation_b    is    : " << prm_orientation_b   << "\n";
+					cerr << "closest_neighbour_a  is    : " << prm_covering[ closest_neighbour_a ] << "(" << angle_between_quat_rots( prm_orientation_a, prm_covering[ closest_neighbour_a ] ) << ")\n";
+					cerr << "closest_neighbour_b  is    : " << prm_covering[ closest_neighbour_b ] << "(" << angle_between_quat_rots( prm_orientation_b, prm_covering[ closest_neighbour_b ] ) << ")\n";
+					cerr << "angle twixt closest nghbrs : " << angle_between_quat_rots( prm_covering[ closest_neighbour_a ] , prm_covering[ closest_neighbour_b ] ) << "\n";
 					for (const auto &x : closest_neighbours_a) {
-						cerr << "closest_neighbours_a are.. : " << arg_covering[ x ] << "\n";
+						cerr << "closest_neighbours_a are.. : " << prm_covering[ x ] << "\n";
 					}
 					for (const auto &x : candidates_for_a) {
-						cerr << "candidates for a are    .. : " << arg_covering[ x ] << "\n";
+						cerr << "candidates for a are    .. : " << prm_covering[ x ] << "\n";
 					}
 					cerr << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
 					BOOST_CHECK( common::contains( closest_neighbours_a, closest_neighbour_b ) );
-					// auto get_closest_neighbours(const orientation_covering_impl<T> &arg_orientations,   ///< TODOCUMENT
+					// auto get_closest_neighbours(const orientation_covering_impl<T> &prm_orientations,   ///< TODOCUMENT
 				}
 			}
 		};
@@ -149,8 +149,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mid_point_is_halfway, quat_rot_type, all_quat_rot_
 }
 
 // Failure case:
-// arg_orientation_a    is    : quat_rot[-0.201507,-0.609419,-0.744985,0.18166]
-// arg_orientation_b    is    : quat_rot[0.0380258,-0.590544,-0.645591,0.482726]
+// prm_orientation_a    is    : quat_rot[-0.201507,-0.609419,-0.744985,0.18166]
+// prm_orientation_b    is    : quat_rot[0.0380258,-0.590544,-0.645591,0.482726]
 // closest_neighbour_a  is    : quat_rot[      0,0.707107,0.707107,      0](33.445409°)
 // closest_neighbour_b  is    : quat_rot[    0.5,   -0.5,   -0.5,    0.5](57.089721°)
 // angle twixt closest nghbrs : 90.000000°
@@ -242,8 +242,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mid_point_is_halfway, quat_rot_type, all_quat_rot_
 //
 ////	const auto the_neighbours = calc_neighbours( the_covering, make_angle_from_degrees<quat_rot_type>( 22.5 ) );
 //
-////size_vec_vec calc_neighbours(const orientation_covering_impl<T> &arg_orientations, ///< TODOCUMENT
-////		                             const geom::angle<A>               &arg_search_radius ///< TODOCUMENT
+////size_vec_vec calc_neighbours(const orientation_covering_impl<T> &prm_orientations, ///< TODOCUMENT
+////		                             const geom::angle<A>               &prm_search_radius ///< TODOCUMENT
 ////		                             ) {
 //}
 

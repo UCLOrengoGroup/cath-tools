@@ -48,51 +48,51 @@ using std::ofstream;
 
 /// \brief Perform resolve-hits according to the specified arguments strings with the specified i/o streams
 void cath::rslv::perform_resolve_hits(const str_vec       &args,             ///< The arguments strings specifying the resolve-hits action to perform
-                                      istream             &arg_istream,      ///< The input stream
-                                      ostream             &arg_stdout,       ///< The output stream
-                                      const parse_sources &arg_parse_sources ///< The sources from which options should be parsed
+                                      istream             &prm_istream,      ///< The input stream
+                                      ostream             &prm_stdout,       ///< The output stream
+                                      const parse_sources &prm_parse_sources ///< The sources from which options should be parsed
                                       ) {
 	perform_resolve_hits(
-		make_and_parse_options<crh_options>( args, arg_parse_sources ),
-		arg_istream,
-		arg_stdout
+		make_and_parse_options<crh_options>( args, prm_parse_sources ),
+		prm_istream,
+		prm_stdout
 	);
 }
 
 /// \brief Perform resolve-hits according to the specified crh_options with the specified i/o streams
-void cath::rslv::perform_resolve_hits(const crh_options &arg_opts,    ///< The crh_options specifying the resolve-hits action to perform
-                                      istream           &arg_istream, ///< The input stream
-                                      ostream           &arg_stdout   ///< The output stream
+void cath::rslv::perform_resolve_hits(const crh_options &prm_opts,    ///< The crh_options specifying the resolve-hits action to perform
+                                      istream           &prm_istream, ///< The input stream
+                                      ostream           &prm_stdout   ///< The output stream
                                       ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto &error_or_help_string = arg_opts.get_error_or_help_string();
+	const auto &error_or_help_string = prm_opts.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << *error_or_help_string;
+		prm_stdout << *error_or_help_string;
 		return;
 	}
 
 	perform_resolve_hits(
-		arg_opts.get_crh_spec(),
-		arg_istream,
-		arg_stdout
+		prm_opts.get_crh_spec(),
+		prm_istream,
+		prm_stdout
 	);
 }
 
 /// \brief Perform resolve-hits according to the specified crh_spec with the specified i/o streams
-void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh_input_spec specifying the resolve-hits action to perform
-                                      istream        &arg_istream,  ///< The input stream
-                                      ostream        &arg_stdout    ///< The output stream
+void cath::rslv::perform_resolve_hits(const crh_spec &prm_crh_spec, ///< The crh_input_spec specifying the resolve-hits action to perform
+                                      istream        &prm_istream,  ///< The input stream
+                                      ostream        &prm_stdout    ///< The output stream
                                       ) {
-	const auto &in_spec         = arg_crh_spec.get_input_spec();
-	const auto &out_spec        = arg_crh_spec.get_output_spec();
-	const auto &score_spec      = arg_crh_spec.get_score_spec();
+	const auto &in_spec         = prm_crh_spec.get_input_spec();
+	const auto &out_spec        = prm_crh_spec.get_output_spec();
+	const auto &score_spec      = prm_crh_spec.get_score_spec();
 	const auto &css_file_opt    = out_spec.get_export_css_file();
 	const auto &input_file_opt  = in_spec.get_input_file();
 	const auto &read_from_stdin = in_spec.get_read_from_stdin();
 
 	// If CSS requested, export it
 	if ( css_file_opt ) {
-		ofstream_list ofstreams{ arg_stdout };
+		ofstream_list ofstreams{ prm_stdout };
 		const auto ostream_refs = ofstreams.open_ofstreams( { *css_file_opt } );
 		if ( ostream_refs.size() != 1 ) {
 			BOOST_THROW_EXCEPTION(out_of_range_exception("argh"));
@@ -117,13 +117,13 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 		}
 		open_ifstream( input_file_stream, *input_file_opt );
 	}
-	istream &the_istream_ref = ( read_from_stdin ? arg_istream : input_file_stream );
+	istream &the_istream_ref = ( read_from_stdin ? prm_istream : input_file_stream );
 
 	// Prepare a read_and_process_mgr object
-	ofstream_list ofstreams{ arg_stdout };
+	ofstream_list ofstreams{ prm_stdout };
 	read_and_process_mgr the_read_and_process_mgr = make_read_and_process_mgr(
 		ofstreams,
-		arg_crh_spec
+		prm_crh_spec
 	);
 
 	try {
@@ -179,7 +179,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 			}
 		}
 	}
-	catch (const std::exception &arg_exception) {
+	catch (const std::exception &prm_exception) {
 		logger::log_and_exit(
 			logger::return_code::MALFORMED_RESOLVE_HITS_INFILE,
 			"Unable to parse/process resolve-hits input data file \""
@@ -187,7 +187,7 @@ void cath::rslv::perform_resolve_hits(const crh_spec &arg_crh_spec, ///< The crh
 				+ "\" of format "
 				+ to_string( in_spec.get_input_format() )
 				+ ". Error was:\n"
-				+ arg_exception.what()
+				+ prm_exception.what()
 		);
 	}
 

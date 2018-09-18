@@ -40,8 +40,8 @@ namespace cath {
 				gsl_vector_wrp() = delete;
 
 				/// \brief Ctor that wraps call to gsl_vector_alloc()
-				explicit gsl_vector_wrp(const size_t &arg_n ///< The dimension of the vector
-				                        ) : ptr{ gsl_vector_alloc( arg_n ) } {
+				explicit gsl_vector_wrp(const size_t &prm_n ///< The dimension of the vector
+				                        ) : ptr{ gsl_vector_alloc( prm_n ) } {
 
 					if ( ptr == nullptr ) {
 						BOOST_THROW_EXCEPTION(common::runtime_error_exception("Was unable to allocate gsl_vector"));
@@ -62,19 +62,19 @@ namespace cath {
 				gsl_vector_wrp(const gsl_vector_wrp &) = delete; ///< Make move-only
 
 				/// \brief Move ctor that sets RHS's ptr to null after the move
-				gsl_vector_wrp(gsl_vector_wrp &&arg_rhs ///< The gsl_vector_wrp to move into this
-				               ) : ptr { std::move( arg_rhs.ptr ) } {
-					arg_rhs.ptr = nullptr;
+				gsl_vector_wrp(gsl_vector_wrp &&prm_rhs ///< The gsl_vector_wrp to move into this
+				               ) : ptr { std::move( prm_rhs.ptr ) } {
+					prm_rhs.ptr = nullptr;
 				}
 
 				gsl_vector_wrp & operator=(const gsl_vector_wrp &) = delete; ///< Make move-only
 
 				/// \brief Move assignment operator that sets RHS's ptr to null after the move
-				gsl_vector_wrp & operator=(gsl_vector_wrp &&arg_rhs ///< The gsl_vector_wrp to move into this
+				gsl_vector_wrp & operator=(gsl_vector_wrp &&prm_rhs ///< The gsl_vector_wrp to move into this
 				                           ) {
-					if ( this != &arg_rhs ) {
-						ptr = std::move( arg_rhs.ptr );
-						arg_rhs.ptr = nullptr;
+					if ( this != &prm_rhs ) {
+						ptr = std::move( prm_rhs.ptr );
+						prm_rhs.ptr = nullptr;
 					}
 					return *this;
 				}
@@ -103,16 +103,16 @@ namespace cath {
 			/// \brief Generate a string describing the specified gsl_vector_wrp
 			///
 			/// \relates to_string
-			inline std::string to_string(const gsl_vector_wrp &arg_vector_wrap ///< The gsl_vector_wrp to describe
+			inline std::string to_string(const gsl_vector_wrp &prm_vector_wrap ///< The gsl_vector_wrp to describe
 			                             ) {
 				using std::to_string;
 				return
 					  "gsl_vector_wrp["
-					+ to_string( gsl_vector_get( arg_vector_wrap.get_ptr(), 0 ) )
+					+ to_string( gsl_vector_get( prm_vector_wrap.get_ptr(), 0 ) )
 					+ ", "
-					+ to_string( gsl_vector_get( arg_vector_wrap.get_ptr(), 1 ) )
+					+ to_string( gsl_vector_get( prm_vector_wrap.get_ptr(), 1 ) )
 					+ ", "
-					+ to_string( gsl_vector_get( arg_vector_wrap.get_ptr(), 2 ) )
+					+ to_string( gsl_vector_get( prm_vector_wrap.get_ptr(), 2 ) )
 					+ "]";
 			}
 

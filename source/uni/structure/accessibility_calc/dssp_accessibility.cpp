@@ -64,11 +64,11 @@ constexpr double dssp_ball_constants::RADIUS_WATER;
 constexpr double dssp_ball_constants::MAX_ATOM_DIST;
 
 /// \brief Make a load of points on teh surface of a unit sphere for accessibility calculations
-coord_vec cath::sec::make_dssp_ball_points(const size_t &arg_number ///< The input number (just copying DSSP code here; the actual number of points is 2 * this + 1)
+coord_vec cath::sec::make_dssp_ball_points(const size_t &prm_number ///< The input number (just copying DSSP code here; the actual number of points is 2 * this + 1)
                                            ) {
 	const double golden_ratio = ( 1.0 + sqrt( 5.0 ) ) / 2.0;
-	const size_t num_points   = 2_z * arg_number + 1_z;
-	const int    num_as_int   = debug_numeric_cast<int>( arg_number );
+	const size_t num_points   = 2_z * prm_number + 1_z;
+	const int    num_as_int   = debug_numeric_cast<int>( prm_number );
 
 	return transform_build<coord_vec>(
 		irange( -num_as_int, num_as_int + 1 ),
@@ -86,9 +86,9 @@ coord_vec cath::sec::make_dssp_ball_points(const size_t &arg_number ///< The inp
 }
 
 /// \brief Get the radius of the DSSP accessibility sphere associated with the specified coarse_element_type
-double cath::sec::get_dssp_access_radius_without_water(const coarse_element_type &arg_coarse_element_type ///< The coarse_element_type to query
+double cath::sec::get_dssp_access_radius_without_water(const coarse_element_type &prm_coarse_element_type ///< The coarse_element_type to query
                                                        ) {
-	switch ( arg_coarse_element_type ) {
+	switch ( prm_coarse_element_type ) {
 		case( coarse_element_type::NITROGEN     ) : { return dssp_ball_constants::RADIUS_N;         }
 		case( coarse_element_type::CARBON_ALPHA ) : { return dssp_ball_constants::RADIUS_CA;        }
 		case( coarse_element_type::CARBON       ) : { return dssp_ball_constants::RADIUS_C;         }
@@ -100,37 +100,37 @@ double cath::sec::get_dssp_access_radius_without_water(const coarse_element_type
 }
 
 /// \brief Get the radius of the DSSP accessibility sphere associated with the coarse_element_type of the specified pdb_atom
-double cath::sec::get_dssp_access_radius_without_water(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+double cath::sec::get_dssp_access_radius_without_water(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
                                                        ) {
-	return get_dssp_access_radius_without_water( get_coarse_element_type( arg_pdb_atom ) );
+	return get_dssp_access_radius_without_water( get_coarse_element_type( prm_pdb_atom ) );
 }
 
 /// \brief Get the radius of the DSSP accessibility sphere plus water sphere associated with the specified coarse_element_type
 ///
 /// This is the distance from the centre of a water sphere to the centre of a just-touching atom sphere of the relevant type
-double cath::sec::get_dssp_access_radius_with_water(const coarse_element_type &arg_coarse_element_type ///< The coarse_element_type to query
+double cath::sec::get_dssp_access_radius_with_water(const coarse_element_type &prm_coarse_element_type ///< The coarse_element_type to query
                                                     ) {
-	return get_dssp_access_radius_without_water( arg_coarse_element_type ) + dssp_ball_constants::RADIUS_WATER;
+	return get_dssp_access_radius_without_water( prm_coarse_element_type ) + dssp_ball_constants::RADIUS_WATER;
 }
 
 /// \brief Get the radius of the DSSP accessibility sphere plus water sphere associated with the coarse_element_type of the specified pdb_atom
 ///
 /// This is the distance from the centre of a water sphere to the centre of a just-touching atom sphere of the relevant type
-double cath::sec::get_dssp_access_radius_with_water(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+double cath::sec::get_dssp_access_radius_with_water(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
                                                     ) {
-	return get_dssp_access_radius_without_water( arg_pdb_atom ) + dssp_ball_constants::RADIUS_WATER;
+	return get_dssp_access_radius_without_water( prm_pdb_atom ) + dssp_ball_constants::RADIUS_WATER;
 }
 
 /// \brief Return whether the two specified atoms overlap at the specified ball point of the first
-bool cath::sec::access_overlap(const pdb_atom &arg_atom_lhs,   ///< The first atom to compare
-                               const coord    &arg_ball_point, ///< The ball point to use for the first atom
-                               const pdb_atom &arg_atom_rhs    ///< The second atom to compare
+bool cath::sec::access_overlap(const pdb_atom &prm_atom_lhs,   ///< The first atom to compare
+                               const coord    &prm_ball_point, ///< The ball point to use for the first atom
+                               const pdb_atom &prm_atom_rhs    ///< The second atom to compare
                                ) {
-	const double radius_rhs = get_dssp_access_radius_with_water( arg_atom_rhs );
+	const double radius_rhs = get_dssp_access_radius_with_water( prm_atom_rhs );
 	return (
 		squared_distance_between_points(
-			arg_atom_lhs.get_coord() + arg_ball_point,
-			arg_atom_rhs.get_coord()
+			prm_atom_lhs.get_coord() + prm_ball_point,
+			prm_atom_rhs.get_coord()
 		)
 		<=
 		( radius_rhs * radius_rhs )
@@ -138,21 +138,21 @@ bool cath::sec::access_overlap(const pdb_atom &arg_atom_lhs,   ///< The first at
 }
 
 /// \brief Get the accessibility count for the specified atom in the context of the specified PDB
-size_t cath::sec::get_accessibility_count(const pdb_atom &arg_pdb_atom, ///< The PDB atom for which the accessibility should be calculated
-                                          const pdb      &arg_pdb,      ///< The PDB in which the accesibility should be calculated 
-                                          const size_t   &arg_number    ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
+size_t cath::sec::get_accessibility_count(const pdb_atom &prm_pdb_atom, ///< The PDB atom for which the accessibility should be calculated
+                                          const pdb      &prm_pdb,      ///< The PDB in which the accesibility should be calculated 
+                                          const size_t   &prm_number    ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
                                           ) {
-	const coord_vec ball_points = make_dssp_ball_points( arg_number );
-	const double    radius      = get_dssp_access_radius_with_water( arg_pdb_atom );
+	const coord_vec ball_points = make_dssp_ball_points( prm_number );
+	const double    radius      = get_dssp_access_radius_with_water( prm_pdb_atom );
 
 	size_t count = 0;
 	for (const coord &orig_ball_point : ball_points) {
 		const coord ball_point = radius * orig_ball_point;
 		bool found_overlap = false;
-		for (const pdb_residue &the_res : arg_pdb) {
+		for (const pdb_residue &the_res : prm_pdb) {
 			for (const pdb_atom &the_atom : the_res) {
-				if ( arg_pdb_atom .get_coord() != the_atom.get_coord() ) {
-					found_overlap = found_overlap || access_overlap( arg_pdb_atom, ball_point, the_atom );
+				if ( prm_pdb_atom .get_coord() != the_atom.get_coord() ) {
+					found_overlap = found_overlap || access_overlap( prm_pdb_atom, ball_point, the_atom );
 				}
 			}
 		}
@@ -166,47 +166,47 @@ size_t cath::sec::get_accessibility_count(const pdb_atom &arg_pdb_atom, ///< The
 /// \brief Calculate the accessibility fraction for the specified atom in the specified PDB
 ///
 /// The fraction is the fraction of the points on the sphere that are found to be accessible
-double cath::sec::get_accessibility_fraction(const pdb_atom &arg_pdb_atom, ///< The PDB atom for which the accessibility should be calculated
-                                             const pdb      &arg_pdb,      ///< The PDB in which the accesibility should be calculated
-                                             const size_t   &arg_number    ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
+double cath::sec::get_accessibility_fraction(const pdb_atom &prm_pdb_atom, ///< The PDB atom for which the accessibility should be calculated
+                                             const pdb      &prm_pdb,      ///< The PDB in which the accesibility should be calculated
+                                             const size_t   &prm_number    ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
                                              ) {
-	const coord_vec ball_points = make_dssp_ball_points( arg_number );
+	const coord_vec ball_points = make_dssp_ball_points( prm_number );
 
-	return debug_numeric_cast<double>( get_accessibility_count( arg_pdb_atom, arg_pdb, arg_number ) )
-	     / debug_numeric_cast<double>( make_dssp_ball_points( arg_number ).size() );
+	return debug_numeric_cast<double>( get_accessibility_count( prm_pdb_atom, prm_pdb, prm_number ) )
+	     / debug_numeric_cast<double>( make_dssp_ball_points( prm_number ).size() );
 }
 
 /// \brief Calculate the accessibility surface-area for the specified atom in the specified PDB
-double cath::sec::get_accessibility_surface_area(const pdb_atom &arg_pdb_atom, ///< The PDB atom for which the accessibility should be calculated
-                                                 const pdb      &arg_pdb,      ///< The PDB in which the accesibility should be calculated
-                                                 const size_t   &arg_number    ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
+double cath::sec::get_accessibility_surface_area(const pdb_atom &prm_pdb_atom, ///< The PDB atom for which the accessibility should be calculated
+                                                 const pdb      &prm_pdb,      ///< The PDB in which the accesibility should be calculated
+                                                 const size_t   &prm_number    ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
                                                  ) {
-	const double radius              = get_dssp_access_radius_with_water( arg_pdb_atom );
+	const double radius              = get_dssp_access_radius_with_water( prm_pdb_atom );
 	const double sphere_surface_area = 4.0 * pi<double>() * radius * radius;
 
-	return get_accessibility_fraction( arg_pdb_atom, arg_pdb, arg_number ) * sphere_surface_area;
+	return get_accessibility_fraction( prm_pdb_atom, prm_pdb, prm_number ) * sphere_surface_area;
 }
 
 /// \brief Calculate the accessibility surface-area for the specified residue in the specified PDB
-double cath::sec::get_accessibility_surface_area(const pdb_residue &arg_pdb_residue, ///< The PDB residue for which the accessibility should be calculated
-                                                 const pdb         &arg_pdb,         ///< The PDB in which the accesibility should be calculated
-                                                 const size_t      &arg_number       ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
+double cath::sec::get_accessibility_surface_area(const pdb_residue &prm_pdb_residue, ///< The PDB residue for which the accessibility should be calculated
+                                                 const pdb         &prm_pdb,         ///< The PDB in which the accesibility should be calculated
+                                                 const size_t      &prm_number       ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
                                                  ) {
 	return accumulate_proj(
-		arg_pdb_residue,
+		prm_pdb_residue,
 		0.0,
 		plus<>{},
-		[&] (const pdb_atom &x) { return get_accessibility_surface_area( x, arg_pdb, arg_number ); }
+		[&] (const pdb_atom &x) { return get_accessibility_surface_area( x, prm_pdb, prm_number ); }
 	);
 }
 
 /// \brief Calculate the per-residue surface-area accessibilities for the specified PDBs
-doub_vec cath::sec::calc_accessibilities(const pdb    &arg_pdb,   ///< The PDB in which the accesibility should be calculated
-                                         const size_t &arg_number ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
+doub_vec cath::sec::calc_accessibilities(const pdb    &prm_pdb,   ///< The PDB in which the accesibility should be calculated
+                                         const size_t &prm_number ///< The number to use to specify the sphere of points (tip: you should probably just use the default value)
                                          ) {
 	return transform_build<doub_vec>(
-		arg_pdb,
-		[&] (const pdb_residue &x) { return get_accessibility_surface_area( x, arg_pdb, arg_number ); }
+		prm_pdb,
+		[&] (const pdb_residue &x) { return get_accessibility_surface_area( x, prm_pdb, prm_number ); }
 	);
 }
 
@@ -217,10 +217,10 @@ doub_vec cath::sec::calc_accessibilities(const pdb    &arg_pdb,   ///< The PDB i
 // };
 
 /// \brief Make a vector of all simple_locn_index values corresponding to the specified PDB
-vector<simple_locn_index> make_all_atom_entries(const pdb &arg_pdb ///< The PDB to query
+vector<simple_locn_index> make_all_atom_entries(const pdb &prm_pdb ///< The PDB to query
                                                 ) {
 	vector<simple_locn_index> results;
-	for (const pdb_residue &the_residue : arg_pdb) {
+	for (const pdb_residue &the_residue : prm_pdb) {
 		for (const pdb_atom &the_atom : the_residue) {
 			results.push_back(
 				make_simple_locn_index(
@@ -235,21 +235,21 @@ vector<simple_locn_index> make_all_atom_entries(const pdb &arg_pdb ///< The PDB 
 
 /// \brief Build a lattice of the specified PDB's atoms using the specified cell size and maximum distance
 template <sod Sod>
-auto make_access_atom_lattice(const pdb   &arg_pdb,       ///< The PDB for which the atom should be indesxed
-                              const float &arg_cell_size, ///< The cell size of the lattice
-                              const float &arg_max_dist   ///< The maximum distance between points that lattic should be used to find
+auto make_access_atom_lattice(const pdb   &prm_pdb,       ///< The PDB for which the atom should be indesxed
+                              const float &prm_cell_size, ///< The cell size of the lattice
+                              const float &prm_max_dist   ///< The maximum distance between points that lattic should be used to find
                               ) {
 	const auto keyer = make_res_pair_keyer(
-		simple_locn_x_keyer_part{ arg_cell_size },
-		simple_locn_y_keyer_part{ arg_cell_size },
-		simple_locn_z_keyer_part{ arg_cell_size }
+		simple_locn_x_keyer_part{ prm_cell_size },
+		simple_locn_y_keyer_part{ prm_cell_size },
+		simple_locn_z_keyer_part{ prm_cell_size }
 	);
 
-	const auto all_atom_entries = make_all_atom_entries( arg_pdb );
+	const auto all_atom_entries = make_all_atom_entries( prm_pdb );
 
 	using cell_type  = vector< simple_locn_index >;
 	using store_type = scan_index_lattice_store<decltype( keyer )::key_index_tuple_type, cell_type>;
-	auto the_store = empty_store_maker<sod::SPARSE, store_type>{}( all_atom_entries, keyer, simple_locn_crit{ arg_max_dist * arg_max_dist } );
+	auto the_store = empty_store_maker<sod::SPARSE, store_type>{}( all_atom_entries, keyer, simple_locn_crit{ prm_max_dist * prm_max_dist } );
 	for (const auto &data : all_atom_entries) {
 		the_store.push_back_entry_to_cell(
 			keyer.make_key( data ),
@@ -260,16 +260,16 @@ auto make_access_atom_lattice(const pdb   &arg_pdb,       ///< The PDB for which
 }
 
 /// \brief Calculate the accessibilities using scanning
-doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &arg_pdb ///< The PDB to query
+doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &prm_pdb ///< The PDB to query
                                                        ) {
 	constexpr float MAX_DIST  = static_cast<float>( dssp_ball_constants::MAX_ATOM_DIST ); // 6.54
 	constexpr float CELL_SIZE = 13.0;
 
-	if ( arg_pdb.empty() ) {
+	if ( prm_pdb.empty() ) {
 		return {};
 	}
 
-	const auto the_store = make_access_atom_lattice<sod::SPARSE>( arg_pdb, CELL_SIZE, MAX_DIST );
+	const auto the_store = make_access_atom_lattice<sod::SPARSE>( prm_pdb, CELL_SIZE, MAX_DIST );
 
 	const auto keyer = make_res_pair_keyer(
 		simple_locn_x_keyer_part{ CELL_SIZE },
@@ -283,7 +283,7 @@ doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &arg_pdb ///< T
 	coord_opt_vec ball_points( dssp_ball_points.size() );
 
 	return transform_build<doub_vec>(
-		arg_pdb,
+		prm_pdb,
 		[&] (const pdb_residue &this_residue) {
 			return accumulate_proj(
 				this_residue,

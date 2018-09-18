@@ -63,11 +63,11 @@ tribool length_getter::higher_is_better() const {
 }
 
 /// \brief TODOCUMENT
-size_t length_getter::get_length(const alignment &arg_alignment, ///< TODOCUMENT
-                                 const protein   &arg_protein_a, ///< TODOCUMENT
-                                 const protein   &arg_protein_b  ///< TODOCUMENT
+size_t length_getter::get_length(const alignment &prm_alignment, ///< TODOCUMENT
+                                 const protein   &prm_protein_a, ///< TODOCUMENT
+                                 const protein   &prm_protein_b  ///< TODOCUMENT
                                  ) const {
-	return do_get_length( arg_alignment, arg_protein_a, arg_protein_b );
+	return do_get_length( prm_alignment, prm_protein_a, prm_protein_b );
 }
 
 /// \brief TODOCUMENT
@@ -112,21 +112,21 @@ const string length_getter::description_brackets_string() const {
 
 /// \brief An NVI pass-through to the concrete class's do_less_than_with_same_dynamic_type(),
 ///        which defines the less-than operator when the argument's known to have the same dynamic type
-bool length_getter::less_than_with_same_dynamic_type(const length_getter &arg_length_getter ///< TODOCUMENT
+bool length_getter::less_than_with_same_dynamic_type(const length_getter &prm_length_getter ///< TODOCUMENT
                                                      ) const {
-	assert( typeid( *this ) == typeid( arg_length_getter ) );
-	return do_less_than_with_same_dynamic_type( arg_length_getter );
+	assert( typeid( *this ) == typeid( prm_length_getter ) );
+	return do_less_than_with_same_dynamic_type( prm_length_getter );
 }
 
 /// \brief TODOCUMENT
-str_bool_pair_vec cath::score::length_getter_as_short_name_suffixes(const length_getter &arg_length_getter,                    ///< TODOCUMENT
-                                                                    const bool          &arg_include_id_name_in_human_friendly ///< TODOCUMENT
+str_bool_pair_vec cath::score::length_getter_as_short_name_suffixes(const length_getter &prm_length_getter,                    ///< TODOCUMENT
+                                                                    const bool          &prm_include_id_name_in_human_friendly ///< TODOCUMENT
                                                                     ) {
-	const auto short_name_suffixes            = arg_length_getter.short_name_suffixes();
+	const auto short_name_suffixes            = prm_length_getter.short_name_suffixes();
 	const bool has_suffixes_in_human_friendly = any_of( short_name_suffixes, [] (const str_bool_pair &x) { return x.second; } );
-	const bool include_id_name                = has_suffixes_in_human_friendly || arg_include_id_name_in_human_friendly;
-//	const str_bool_pair_vec id_name_suffixes               = { make_pair( arg_length_getter.id_name(), include_id_name ) };
-	const auto id_name_suffixes               = { make_pair( arg_length_getter.id_name(), include_id_name ) };
+	const bool include_id_name                = has_suffixes_in_human_friendly || prm_include_id_name_in_human_friendly;
+//	const str_bool_pair_vec id_name_suffixes               = { make_pair( prm_length_getter.id_name(), include_id_name ) };
+	const auto id_name_suffixes               = { make_pair( prm_length_getter.id_name(), include_id_name ) };
 
 	return copy_build<str_bool_pair_vec>( join(
 		id_name_suffixes,
@@ -135,12 +135,12 @@ str_bool_pair_vec cath::score::length_getter_as_short_name_suffixes(const length
 }
 
 /// \brief TODOCUMENT
-str_bool_pair_vec cath::score::length_getter_as_short_name_suffixes(const length_getter              &arg_length_getter,                          ///< TODOCUMENT
-                                                                    const length_getter_category_vec &arg_category_to_exclude_from_human_friendly ///< TODOCUMENT
+str_bool_pair_vec cath::score::length_getter_as_short_name_suffixes(const length_getter              &prm_length_getter,                          ///< TODOCUMENT
+                                                                    const length_getter_category_vec &prm_category_to_exclude_from_human_friendly ///< TODOCUMENT
 																	) {
 	return length_getter_as_short_name_suffixes(
-		arg_length_getter,
-		! contains( arg_category_to_exclude_from_human_friendly, arg_length_getter.get_length_getter_category() )
+		prm_length_getter,
+		! contains( prm_category_to_exclude_from_human_friendly, prm_length_getter.get_length_getter_category() )
 	);
 }
 
@@ -162,16 +162,16 @@ ptr_vector<length_getter> cath::score::get_all_length_getters() {
 /// \brief TODOCUMENT
 ///
 /// \relates length_getter
-score_value cath::score::get_length_score(const length_getter &arg_length_getter, ///< TODOCUMENT
-                                          const alignment     &arg_alignment,     ///< TODOCUMENT
-                                          const protein       &arg_protein_a,     ///< TODOCUMENT
-                                          const protein       &arg_protein_b      ///< TODOCUMENT
+score_value cath::score::get_length_score(const length_getter &prm_length_getter, ///< TODOCUMENT
+                                          const alignment     &prm_alignment,     ///< TODOCUMENT
+                                          const protein       &prm_protein_a,     ///< TODOCUMENT
+                                          const protein       &prm_protein_b      ///< TODOCUMENT
                                           ) {
 	return numeric_cast<score_value>(
-		arg_length_getter.get_length(
-			arg_alignment,
-			arg_protein_a,
-			arg_protein_b
+		prm_length_getter.get_length(
+			prm_alignment,
+			prm_protein_a,
+			prm_protein_b
 		)
 	);
 }

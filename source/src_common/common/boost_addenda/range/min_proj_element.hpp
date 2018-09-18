@@ -35,14 +35,14 @@ namespace cath {
 		template <typename Rng,
 		          typename Pred = std::less<>,
 		          typename Proj = ident>
-		inline auto min_proj_element(Rng  &&arg_range,          ///< The range to query
-		                             Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
-		                             Proj &&arg_proj  = Proj{}  ///< The projection function
+		inline auto min_proj_element(Rng  &&prm_range,          ///< The range to query
+		                             Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+		                             Proj &&prm_proj  = Proj{}  ///< The projection function
 		                             ) {
 			return boost::range::min_element(
-				arg_range,
+				prm_range,
 				[&] (const auto & x, const auto & y) {
-					return std::forward<Pred>( arg_pred )( arg_proj( x ), arg_proj( y ) );
+					return std::forward<Pred>( prm_pred )( prm_proj( x ), prm_proj( y ) );
 				}
 			);
 		}
@@ -53,14 +53,14 @@ namespace cath {
 		template <typename Rng,
 		          typename Pred = std::less<>,
 		          typename Proj = ident>
-		inline auto min_proj(Rng  &&arg_range,          ///< The range to query
-		                     Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
-		                     Proj &&arg_proj  = Proj{}  ///< The projection function
+		inline auto min_proj(Rng  &&prm_range,          ///< The range to query
+		                     Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+		                     Proj &&prm_proj  = Proj{}  ///< The projection function
 		                     ) {
-			return arg_proj( *min_proj_element(
-				std::forward< Rng  >( arg_range ),
-				std::forward< Pred >( arg_pred  ),
-				std::forward< Proj >( arg_proj  )
+			return prm_proj( *min_proj_element(
+				std::forward< Rng  >( prm_range ),
+				std::forward< Pred >( prm_pred  ),
+				std::forward< Proj >( prm_proj  )
 			) );
 		}
 

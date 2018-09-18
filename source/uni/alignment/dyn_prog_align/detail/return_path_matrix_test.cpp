@@ -63,12 +63,12 @@ path_step cath::test::return_path_matrix_test_suite_fixture::make_random_step() 
 }
 
 /// \brief TODOCUMENT
-return_path_matrix cath::test::return_path_matrix_test_suite_fixture::make_random_return_path_matrix(const size_t &arg_length_a,    ///< TODOCUMENT
-                                                                                                     const size_t &arg_length_b,    ///< TODOCUMENT
-                                                                                                     const size_t &arg_window_width ///< TODOCUMENT
+return_path_matrix cath::test::return_path_matrix_test_suite_fixture::make_random_return_path_matrix(const size_t &prm_length_a,    ///< TODOCUMENT
+                                                                                                     const size_t &prm_length_b,    ///< TODOCUMENT
+                                                                                                     const size_t &prm_window_width ///< TODOCUMENT
                                                                                                      ) const {
-	return_path_matrix new_path(arg_length_a, arg_length_b, arg_window_width);
-	for (const size_t &ctr_a : indices( arg_length_a ) ) {
+	return_path_matrix new_path(prm_length_a, prm_length_b, prm_window_width);
+	for (const size_t &ctr_a : indices( prm_length_a ) ) {
 		const size_size_pair b_window_start_and_stop = get_b_window_start_and_stop_for_a_index(
 			new_path,
 			ctr_a

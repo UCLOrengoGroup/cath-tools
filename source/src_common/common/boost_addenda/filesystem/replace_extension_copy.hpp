@@ -28,11 +28,11 @@ namespace cath {
 
 		/// \brief Return a copy of the specified path in which the extension has been
 		///        replaced with the specified replacement
-		inline boost::filesystem::path replace_extension_copy(boost::filesystem::path        arg_file,
-		                                                      const boost::filesystem::path &arg_replacement = boost::filesystem::path()
+		inline boost::filesystem::path replace_extension_copy(boost::filesystem::path        prm_file,
+		                                                      const boost::filesystem::path &prm_replacement = boost::filesystem::path()
 		                                                      ) {
-			arg_file.replace_extension( arg_replacement );
-			return arg_file;
+			prm_file.replace_extension( prm_replacement );
+			return prm_file;
 		}
 
 	} // namespace common

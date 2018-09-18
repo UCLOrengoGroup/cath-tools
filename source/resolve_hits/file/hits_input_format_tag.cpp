@@ -63,9 +63,9 @@ str_vec all_hits_input_format_tag_names::get() {
 /// \brief Generate a string describing the specified hits_input_format_tag (ie its name)
 ///
 /// \relates hits_input_format_tag
-string cath::rslv::to_string(const hits_input_format_tag &arg_format_tag ///< The hits_input_format_tag to describe in a string
+string cath::rslv::to_string(const hits_input_format_tag &prm_format_tag ///< The hits_input_format_tag to describe in a string
                              ) {
-	switch ( arg_format_tag ) {
+	switch ( prm_format_tag ) {
 		case ( hits_input_format_tag::HMMER_DOMTBLOUT  ) : { return "hmmer_domtblout"  ; }
 		case ( hits_input_format_tag::HMMSCAN_OUT      ) : { return "hmmscan_out"      ; }
 		case ( hits_input_format_tag::HMMSEARCH_OUT    ) : { return "hmmsearch_out"    ; }
@@ -78,34 +78,34 @@ string cath::rslv::to_string(const hits_input_format_tag &arg_format_tag ///< Th
 /// \brief Insert a description of the specified hits_input_format_tag into the specified stream
 ///
 /// \relates hits_input_format_tag
-ostream & cath::rslv::operator<<(ostream                     &arg_os,        ///< The ostream into which the hits_input_format_tag's description should be inserted
-                                 const hits_input_format_tag &arg_format_tag ///< The hits_input_format_tag to describe in the ostream
+ostream & cath::rslv::operator<<(ostream                     &prm_os,        ///< The ostream into which the hits_input_format_tag's description should be inserted
+                                 const hits_input_format_tag &prm_format_tag ///< The hits_input_format_tag to describe in the ostream
                                  ) {
-	arg_os << to_string( arg_format_tag );
-	return arg_os;
+	prm_os << to_string( prm_format_tag );
+	return prm_os;
 }
 
 /// \brief Extract into the specified hits_input_format_tag from the specified stream
 ///
 /// \relates hits_input_format_tag
-istream & cath::rslv::operator>>(istream               &arg_is,        ///< The stream from which the hits_input_format_tag should be extracted
-                                 hits_input_format_tag &arg_format_tag ///< The hits_input_format_tag to populate from the specified stream
+istream & cath::rslv::operator>>(istream               &prm_is,        ///< The stream from which the hits_input_format_tag should be extracted
+                                 hits_input_format_tag &prm_format_tag ///< The hits_input_format_tag to populate from the specified stream
                                  ) {
 	string input_string;
-	arg_is >> input_string;
+	prm_is >> input_string;
 	to_lower( input_string );
 
 	const auto all_layout_tags_by_name = hits_input_format_tag_by_name::get();
-	arg_format_tag = all_layout_tags_by_name.at( input_string );
-	return arg_is;
+	prm_format_tag = all_layout_tags_by_name.at( input_string );
+	return prm_is;
 }
 
 /// \brief Generate a string containing a description of the specified hits_input_format_tag
 ///
 /// \relates hits_input_format_tag
-string cath::rslv::description_of_input_format(const hits_input_format_tag &arg_format_tag ///< The hits_input_format_tag to describe
+string cath::rslv::description_of_input_format(const hits_input_format_tag &prm_format_tag ///< The hits_input_format_tag to describe
                                                ) {
-	switch ( arg_format_tag ) {
+	switch ( prm_format_tag ) {
 		case ( hits_input_format_tag::HMMER_DOMTBLOUT  ) : { return "HMMER domtblout format (must assume all hits are continuous)"             ; }
 		case ( hits_input_format_tag::HMMSCAN_OUT      ) : { return "HMMER hmmscan output format (can be used to deduce discontinuous hits)"   ; }
 		case ( hits_input_format_tag::HMMSEARCH_OUT    ) : { return "HMMER hmmsearch output format (can be used to deduce discontinuous hits)" ; }
@@ -116,8 +116,8 @@ string cath::rslv::description_of_input_format(const hits_input_format_tag &arg_
 }
 
 /// \brief Provide Boost program_options validation for hits_input_format_tag
-void cath::rslv::validate(any           &arg_value,         ///< The value to populate
-                          const str_vec &arg_value_strings, ///< The string values to validate
+void cath::rslv::validate(any           &prm_value,         ///< The value to populate
+                          const str_vec &prm_value_strings, ///< The string values to validate
                           hits_input_format_tag *, int) {
-	arg_value = lex_castable_validator<hits_input_format_tag>::perform_validate( arg_value, arg_value_strings );
+	prm_value = lex_castable_validator<hits_input_format_tag>::perform_validate( prm_value, prm_value_strings );
 }

@@ -39,14 +39,14 @@ using boost::numeric_cast;
 using boost::inner_product;
 
 /// \brief Constructor for coord_list from a vector of coords.
-coord_list::coord_list(coord_vec arg_coords ///< The vector of coords with which this coord_list should be initialised
-                       ) : coords{ std::move( arg_coords ) } {
+coord_list::coord_list(coord_vec prm_coords ///< The vector of coords with which this coord_list should be initialised
+                       ) : coords{ std::move( prm_coords ) } {
 }
 
 /// \brief Standard reserve() method for reserving memory for more coords
-void coord_list::reserve(const size_t &arg_size ///< The number of coords that this coord list should have adequate memory to store
+void coord_list::reserve(const size_t &prm_size ///< The number of coords that this coord list should have adequate memory to store
                          ) {
-	coords.reserve( arg_size );
+	coords.reserve( prm_size );
 }
 
 /// \brief Standard empty() to return whether the coord list is empty (ie contains zero coords)
@@ -60,36 +60,36 @@ size_t coord_list::size() const {
 }
 
 /// \brief Standard push_back method to add a coord the back of a list
-void coord_list::push_back(const coord &arg_coord ///< The coord to push on the back of the list
+void coord_list::push_back(const coord &prm_coord ///< The coord to push on the back of the list
                            ) {
-	return coords.push_back( arg_coord );
+	return coords.push_back( prm_coord );
 }
 
 /// \brief Non-const-overload of standard subscript operator
-coord & coord_list::operator[](const size_t &arg_index ///< The index of the coord in the coord_list to access
+coord & coord_list::operator[](const size_t &prm_index ///< The index of the coord in the coord_list to access
                                ) {
-	return coords[ arg_index ];
+	return coords[ prm_index ];
 }
 
 /// \brief Const-overload of standard subscript operator
-const coord & coord_list::operator[](const size_t &arg_index ///< The index of the coord in the coord_list to access
+const coord & coord_list::operator[](const size_t &prm_index ///< The index of the coord in the coord_list to access
                                      ) const {
-	return coords[ arg_index ];
+	return coords[ prm_index ];
 }
 
 /// \brief Subtract a coord add to all entries in the coord list
-void coord_list::operator+=(const coord &arg_coord ///< The coord to add to all entries in the coord list
+void coord_list::operator+=(const coord &prm_coord ///< The coord to add to all entries in the coord list
                             ) {
 	for (coord &coord_loop : coords) {
-		coord_loop += arg_coord;
+		coord_loop += prm_coord;
 	}
 }
 
 /// \brief Subtract a coord from all entries in the coord list
-void coord_list::operator-=(const coord &arg_coord ///< The coord to subtract from all entries in the coord list
+void coord_list::operator-=(const coord &prm_coord ///< The coord to subtract from all entries in the coord list
                             ) {
 	for (coord &coord_loop : coords) {
-		coord_loop -= arg_coord;
+		coord_loop -= prm_coord;
 	}
 }
 
@@ -115,10 +115,10 @@ coord_list::const_iterator coord_list::end() const {
 /// \todo Make a `flattened` range adaptor and then see whether all calls to this can be replaced with that.
 ///
 /// \relates coord_list
-coord_list cath::geom::flatten_coord_lists(const coord_list_vec &arg_coord_lists ///< TODOCUMENT
+coord_list cath::geom::flatten_coord_lists(const coord_list_vec &prm_coord_lists ///< TODOCUMENT
                                            ) {
 	coord_list result;
-	for (const coord_list &the_coord_list : arg_coord_lists) {
+	for (const coord_list &the_coord_list : prm_coord_lists) {
 		for (const coord &the_coord : the_coord_list) {
 			result.push_back( the_coord );
 		}
@@ -129,22 +129,22 @@ coord_list cath::geom::flatten_coord_lists(const coord_list_vec &arg_coord_lists
 /// \brief Calculate the sum coord of a list of coords
 ///
 /// \relates coord_list
-coord cath::geom::sum(const coord_list &arg_coord_list ///< The list of coords to sum
+coord cath::geom::sum(const coord_list &prm_coord_list ///< The list of coords to sum
                       ) {
-	if ( arg_coord_list.empty() ) {
+	if ( prm_coord_list.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot calculate centre of gravity for empty coord_list"));
 	}
-	return accumulate( arg_coord_list, coord::ORIGIN_COORD );
+	return accumulate( prm_coord_list, coord::ORIGIN_COORD );
 }
 
 /// \brief Grab the number of coords in each coord_list and throw if they're zero or not equal
 ///
 /// \relates coord_list
-size_t cath::geom::check_non_empty_and_equal_size(const coord_list &arg_coord_list_1, ///< The first  list of coords to compare
-                                                  const coord_list &arg_coord_list_2  ///< The second list of coords to compare
+size_t cath::geom::check_non_empty_and_equal_size(const coord_list &prm_coord_list_1, ///< The first  list of coords to compare
+                                                  const coord_list &prm_coord_list_2  ///< The second list of coords to compare
                                                   ) {
-	const auto num_coords_1 = arg_coord_list_1.size();
-	const auto num_coords_2 = arg_coord_list_2.size();
+	const auto num_coords_1 = prm_coord_list_1.size();
+	const auto num_coords_2 = prm_coord_list_2.size();
 	if (num_coords_1 != num_coords_2) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("coord_lists must be of equal size for calc_rmsd()"));
 	}
@@ -157,27 +157,27 @@ size_t cath::geom::check_non_empty_and_equal_size(const coord_list &arg_coord_li
 /// \brief Calculate the centre of geometry from a list of coords
 ///
 /// \relates coord_list
-coord cath::geom::centre_of_gravity(const coord_list &arg_coord_list ///< The list of coords for which the centre_of_gravity should be calculated
+coord cath::geom::centre_of_gravity(const coord_list &prm_coord_list ///< The list of coords for which the centre_of_gravity should be calculated
                                     ) {
-	return sum( arg_coord_list ) / numeric_cast<double>( arg_coord_list.size() );
+	return sum( prm_coord_list ) / numeric_cast<double>( prm_coord_list.size() );
 }
 
 /// \brief Calculate the mean deviation between two lists of coords
 ///
 /// \relates coord_list
-double cath::geom::calc_mean_deviation(const coord_list &arg_coord_list_1, ///< The first  list of coords to compare
-                                       const coord_list &arg_coord_list_2  ///< The second list of coords to compare
+double cath::geom::calc_mean_deviation(const coord_list &prm_coord_list_1, ///< The first  list of coords to compare
+                                       const coord_list &prm_coord_list_2  ///< The second list of coords to compare
                                        ) {
 	// \brief Grab the number of coords in each coord_list and throw if they're zero or not equal
 	const auto num_coords = check_non_empty_and_equal_size(
-		arg_coord_list_1,
-		arg_coord_list_2
+		prm_coord_list_1,
+		prm_coord_list_2
 	);
 
 	// Calculate the sum of the squared distances between pairs of corresponding coords
 	const auto total_deviation = inner_product(
-		arg_coord_list_1,
-		arg_coord_list_2,
+		prm_coord_list_1,
+		prm_coord_list_2,
 		0.0,
 		plus<double>(),
 //		[] (const coord &x, const coord &y) { cerr << "Distance between " << x << " and " << y << " is " << distance_between_points( x, y ) << endl; return distance_between_points( x, y ); }
@@ -191,19 +191,19 @@ double cath::geom::calc_mean_deviation(const coord_list &arg_coord_list_1, ///< 
 /// \brief Calculate the RMSD between two lists of coords
 ///
 /// \relates coord_list
-double cath::geom::calc_rmsd(const coord_list &arg_coord_list_1, ///< The first  list of coords to compare
-                             const coord_list &arg_coord_list_2  ///< The second list of coords to compare
+double cath::geom::calc_rmsd(const coord_list &prm_coord_list_1, ///< The first  list of coords to compare
+                             const coord_list &prm_coord_list_2  ///< The second list of coords to compare
                              ) {
 	// \brief Grab the number of coords in each coord_list and throw if they're zero or not equal
 	const auto num_coords = check_non_empty_and_equal_size(
-		arg_coord_list_1,
-		arg_coord_list_2
+		prm_coord_list_1,
+		prm_coord_list_2
 	);
 
 	// Calculate the sum of the squared distances between pairs of corresponding coords
 	const auto total_squared_deviation = inner_product(
-		arg_coord_list_1,
-		arg_coord_list_2,
+		prm_coord_list_1,
+		prm_coord_list_2,
 		0.0,
 		plus<double>(),
 		[] (const coord &x, const coord &y) { return squared_distance_between_points( x, y ); }
@@ -219,13 +219,13 @@ double cath::geom::calc_rmsd(const coord_list &arg_coord_list_1, ///< The first 
 /// \brief Basic insertion operator to output a rough summary of an coord_list to an ostream
 ///
 /// \relates coord_list
-ostream & cath::geom::operator<<(ostream          &arg_os,        ///< The ostream to which to output the summary
-                                 const coord_list &arg_coord_list ///< The coord_list to summarise
+ostream & cath::geom::operator<<(ostream          &prm_os,        ///< The ostream to which to output the summary
+                                 const coord_list &prm_coord_list ///< The coord_list to summarise
                                  ) {
-	arg_os << "coord_list[\n";
-	for (const coord &curr_coord : arg_coord_list) {
-		arg_os << "\t" << curr_coord << "\n";
+	prm_os << "coord_list[\n";
+	for (const coord &curr_coord : prm_coord_list) {
+		prm_os << "\t" << curr_coord << "\n";
 	}
-	arg_os << "]";
-	return arg_os;
+	prm_os << "]";
+	return prm_os;
 }

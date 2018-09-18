@@ -72,18 +72,18 @@ namespace cath {
 }  // namespace cath
 
 /// \brief Check that the number of atoms in a vector of PDBs matches the expected numbers
-void cath::test::pdb_test_suite_fixture::check_nums_of_atoms(const pdb_list &arg_pdbs,                  ///< TODOCUMENT
-                                                             const size_vec &arg_expected_nums_of_atoms ///< TODOCUMENT
+void cath::test::pdb_test_suite_fixture::check_nums_of_atoms(const pdb_list &prm_pdbs,                  ///< TODOCUMENT
+                                                             const size_vec &prm_expected_nums_of_atoms ///< TODOCUMENT
                                                              ) const {
 	// Grab the numbers of atoms
 	size_vec got_nums_of_atoms;
-	got_nums_of_atoms.reserve(arg_pdbs.size());
-	for (const pdb &arg_pdb : arg_pdbs) {
-		got_nums_of_atoms.push_back( arg_pdb.get_num_atoms() );
+	got_nums_of_atoms.reserve(prm_pdbs.size());
+	for (const pdb &prm_pdb : prm_pdbs) {
+		got_nums_of_atoms.push_back( prm_pdb.get_num_atoms() );
 	}
 
 	// Check that they match
-	BOOST_CHECK_EQUAL_RANGES( arg_expected_nums_of_atoms, got_nums_of_atoms );
+	BOOST_CHECK_EQUAL_RANGES( prm_expected_nums_of_atoms, got_nums_of_atoms );
 }
 
 BOOST_FIXTURE_TEST_SUITE(pdb_test_suite, cath::test::pdb_test_suite_fixture)

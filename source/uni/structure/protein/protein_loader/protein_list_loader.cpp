@@ -35,23 +35,23 @@ using namespace std;
 using boost::filesystem::path;
 
 /// \brief TODOCUMENT
-protein_list_loader::protein_list_loader(const protein_source_file_set &arg_source_file_set, ///< TODOCUMENT
-                                         const path                    &arg_data_dir,        ///< TODOCUMENT
-                                         str_vec                        arg_protein_names    ///< TODOCUMENT
-                                         ) : source_file_set_ptr ( arg_source_file_set.clone()    ),
-                                             data_dir            ( arg_data_dir                   ),
-                                             protein_names       ( std::move( arg_protein_names ) ) {
+protein_list_loader::protein_list_loader(const protein_source_file_set &prm_source_file_set, ///< TODOCUMENT
+                                         const path                    &prm_data_dir,        ///< TODOCUMENT
+                                         str_vec                        prm_protein_names    ///< TODOCUMENT
+                                         ) : source_file_set_ptr ( prm_source_file_set.clone()    ),
+                                             data_dir            ( prm_data_dir                   ),
+                                             protein_names       ( std::move( prm_protein_names ) ) {
 }
 
 /// \brief TODOCUMENT
-pair<protein_list, hrc_duration> protein_list_loader::load_proteins(ostream &arg_stderr ///< TODOCUMENT
+pair<protein_list, hrc_duration> protein_list_loader::load_proteins(ostream &prm_stderr ///< TODOCUMENT
                                                                     ) const {
 	const auto scan_starttime = std::chrono::high_resolution_clock::now();
 	const auto the_proteins   = read_proteins_from_files(
 		*source_file_set_ptr,
 		data_dir,
 		protein_names,
-		ref( arg_stderr )
+		ref( prm_stderr )
 	);
 	return make_pair(
 		the_proteins,

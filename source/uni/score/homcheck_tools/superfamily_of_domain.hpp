@@ -40,9 +40,9 @@ namespace cath {
 				static const std::regex SUPERFAMILY_ID_REGEX;
 			public:
 				/// \brief Simple predicate function operator to return whether a string is a valid superfamily_id
-				inline bool operator()(const std::string &arg_superfamily_id_string ///< The string to check
+				inline bool operator()(const std::string &prm_superfamily_id_string ///< The string to check
 				                       ) const {
-				    return regex_search( arg_superfamily_id_string, SUPERFAMILY_ID_REGEX );
+				    return regex_search( prm_superfamily_id_string, SUPERFAMILY_ID_REGEX );
 				}
 			};
 
@@ -51,9 +51,9 @@ namespace cath {
 				static const std::regex NODE_ID_REGEX;
 			public:
 				/// \brief Simple predicate function operator to return whether a string is a valid cath_node_id
-				inline bool operator()(const std::string &arg_cath_node_id_string ///< The string to check
+				inline bool operator()(const std::string &prm_cath_node_id_string ///< The string to check
 									   ) const {
-					return regex_search( arg_cath_node_id_string, NODE_ID_REGEX );
+					return regex_search( prm_cath_node_id_string, NODE_ID_REGEX );
 				}
 			};
 			std::string fold_of_superfamily_id(const std::string &);

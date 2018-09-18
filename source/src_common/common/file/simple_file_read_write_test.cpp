@@ -44,22 +44,22 @@ namespace std {
 	///
 	/// It'd make more sense to use BOOST_TEST_DONT_PRINT_LOG_VALUE() but
 	/// that doesn't seem to work with BOOST_CHECK_EQUAL_COLLECTIONS (or BOOST_CHECK_EQUAL_RANGES)
-	ostream & operator<<(ostream                        &arg_os,   ///< TODOCUMENT
-	                     const cath::test::test_tuple_t &arg_tuple ///< TODOCUMENT
+	ostream & operator<<(ostream                        &prm_os,   ///< TODOCUMENT
+	                     const cath::test::test_tuple_t &prm_tuple ///< TODOCUMENT
 	                     ) {
 		ostringstream temp_ss;
-		arg_os << "double, size_t, bool, int, string>(";
-		arg_os << get<0>( arg_tuple );
-		arg_os << ", ";
-		arg_os << get<1>( arg_tuple );
-		arg_os << ", ";
-		arg_os << boolalpha << get<2>( arg_tuple ) << noboolalpha;
-		arg_os << ", ";
-		arg_os << get<3>( arg_tuple );
-		arg_os << ", ";
-		arg_os << get<4>( arg_tuple );
-		arg_os << ")";
-		return arg_os;
+		prm_os << "double, size_t, bool, int, string>(";
+		prm_os << get<0>( prm_tuple );
+		prm_os << ", ";
+		prm_os << get<1>( prm_tuple );
+		prm_os << ", ";
+		prm_os << boolalpha << get<2>( prm_tuple ) << noboolalpha;
+		prm_os << ", ";
+		prm_os << get<3>( prm_tuple );
+		prm_os << ", ";
+		prm_os << get<4>( prm_tuple );
+		prm_os << ")";
+		return prm_os;
 	}
 }  // namespace std
 

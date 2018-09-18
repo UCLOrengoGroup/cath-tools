@@ -29,13 +29,13 @@ using namespace std;
 /// \brief Simple insertion operator for data_option
 ///
 /// \relates data_option
-ostream & cath::opts::detail::operator<<(ostream                &arg_os,    ///< The ostream to which to output the data_option
-                                         const data_option &arg_data_option ///< The data_option to output
+ostream & cath::opts::detail::operator<<(ostream                &prm_os,    ///< The ostream to which to output the data_option
+                                         const data_option &prm_data_option ///< The data_option to output
                                          ) {
-	switch (arg_data_option) {
-		case ( data_option::PATH   ) : { arg_os << "data_option::PATH"   ; return arg_os ; }
-		case ( data_option::PREFIX ) : { arg_os << "data_option::PREFIX" ; return arg_os ; }
-		case ( data_option::SUFFIX ) : { arg_os << "data_option::SUFFIX" ; return arg_os ; }
+	switch (prm_data_option) {
+		case ( data_option::PATH   ) : { prm_os << "data_option::PATH"   ; return prm_os ; }
+		case ( data_option::PREFIX ) : { prm_os << "data_option::PREFIX" ; return prm_os ; }
+		case ( data_option::SUFFIX ) : { prm_os << "data_option::SUFFIX" ; return prm_os ; }
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of data_option not recognised whilst inserting into an ostream"));
 }

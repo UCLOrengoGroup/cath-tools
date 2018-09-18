@@ -57,9 +57,9 @@ namespace cath {
 		};
 
 		/// \brief TODOCUMENT
-		protein length_getter_test_suite_fixture::make_dummy_protein_of_n_residues(const size_t &arg_index ///< TODOCUMENT
+		protein length_getter_test_suite_fixture::make_dummy_protein_of_n_residues(const size_t &prm_index ///< TODOCUMENT
 		                                                                           ) {
-			return build_protein( residue_vec{ arg_index, residue::NULL_RESIDUE } );
+			return build_protein( residue_vec{ prm_index, residue::NULL_RESIDUE } );
 		}
 
 //		/// \brief TODOCUMENT

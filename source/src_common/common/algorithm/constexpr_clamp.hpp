@@ -26,16 +26,16 @@
 namespace cath {
 	namespace common {
 
-		/// \brief Return the result of clamping arg_value within the range [ arg_low, arg_high ]
+		/// \brief Return the result of clamping prm_value within the range [ prm_low, prm_high ]
 		template <typename T, typename U>
-		constexpr const T constexpr_clamp(const T &arg_value, ///< The value to be clamped
-		                                  const U &arg_low,   ///< The minimum value to which the arg_value must be clamped
-		                                  const U &arg_high   ///< The maximum value to which the arg_value must be clamped
+		constexpr const T constexpr_clamp(const T &prm_value, ///< The value to be clamped
+		                                  const U &prm_low,   ///< The minimum value to which the prm_value must be clamped
+		                                  const U &prm_high   ///< The maximum value to which the prm_value must be clamped
 		                                  ) {
-			return ( arg_low > arg_high ) ? throw std::logic_error("Unable to clamp to invalid range")
-			                              : ( arg_value < arg_low  ) ? arg_low  :
-			                                ( arg_value > arg_high ) ? arg_high :
-			                                                           arg_value;
+			return ( prm_low > prm_high ) ? throw std::logic_error("Unable to clamp to invalid range")
+			                              : ( prm_value < prm_low  ) ? prm_low  :
+			                                ( prm_value > prm_high ) ? prm_high :
+			                                                           prm_value;
 		}
 
 	} // namespace common

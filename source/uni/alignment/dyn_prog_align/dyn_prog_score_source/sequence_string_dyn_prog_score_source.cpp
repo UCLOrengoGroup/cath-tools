@@ -35,9 +35,9 @@ using boost::algorithm::is_upper;
 
 /// \brief Check that the specified string is valid (current checks: all characters are upper-case letters)
 ///        and throw invalid_argument_exception if not
-void sequence_string_dyn_prog_score_source::check_sequence_string(const string &arg_sequence_string ///< The string to be checked
+void sequence_string_dyn_prog_score_source::check_sequence_string(const string &prm_sequence_string ///< The string to be checked
                                                                   ) {
-	if ( !all( arg_sequence_string, is_upper() ) ) {
+	if ( !all( prm_sequence_string, is_upper() ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Sequence string contains characters other than upper-case letters"));
 	}
 }
@@ -53,11 +53,11 @@ size_t sequence_string_dyn_prog_score_source::do_get_length_b() const {
 }
 
 /// \brief Return 1 if the letters at the specified indices match and are not Xs, or return 0 otherwise
-score_type sequence_string_dyn_prog_score_source::do_get_score(const size_t &arg_index_a, ///< The index of the element of interest in the first  sequence
-                                                               const size_t &arg_index_b  ///< The index of the element of interest in the second sequence
+score_type sequence_string_dyn_prog_score_source::do_get_score(const size_t &prm_index_a, ///< The index of the element of interest in the first  sequence
+                                                               const size_t &prm_index_b  ///< The index of the element of interest in the second sequence
                                                                ) const {
-	const char &char_a = sequence_string_a[arg_index_a];
-	const char &char_b = sequence_string_b[arg_index_b];
+	const char &char_a = sequence_string_a[prm_index_a];
+	const char &char_b = sequence_string_b[prm_index_b];
 
 	const bool chars_match          = (char_a == char_b);
 	const bool chars_are_not_both_x = (char_a != 'X' || char_b != 'X');
@@ -66,10 +66,10 @@ score_type sequence_string_dyn_prog_score_source::do_get_score(const size_t &arg
 }
 
 /// \brief Ctor for sequence_string_dyn_prog_score_source
-sequence_string_dyn_prog_score_source::sequence_string_dyn_prog_score_source(string arg_sequence_string_a, ///< The first  sequence to align
-                                                                             string arg_sequence_string_b  ///< The second sequence to align
-                                                                             ) : sequence_string_a{ std::move( arg_sequence_string_a ) },
-                                                                                 sequence_string_b{ std::move( arg_sequence_string_b ) } {
+sequence_string_dyn_prog_score_source::sequence_string_dyn_prog_score_source(string prm_sequence_string_a, ///< The first  sequence to align
+                                                                             string prm_sequence_string_b  ///< The second sequence to align
+                                                                             ) : sequence_string_a{ std::move( prm_sequence_string_a ) },
+                                                                                 sequence_string_b{ std::move( prm_sequence_string_b ) } {
 	// Check that both sequences strings are valid
 	check_sequence_string(sequence_string_a);
 	check_sequence_string(sequence_string_b);

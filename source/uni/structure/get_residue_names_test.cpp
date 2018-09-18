@@ -78,20 +78,20 @@ namespace cath {
 
 		public:
 
-			void check_get_residue_ids(const string                        &arg_chain_id,
-			                           const get_residue_ids_test_filetype &arg_filetype
+			void check_get_residue_ids(const string                        &prm_chain_id,
+			                           const get_residue_ids_test_filetype &prm_filetype
 			                           ) const {
 				residue_id_vec got_residue_ids;
-				switch ( arg_filetype ) {
+				switch ( prm_filetype ) {
 					case ( get_residue_ids_test_filetype::PDB ) : {
-						const path pdb_file ( TEST_RESIDUE_IDS_DATA_DIR() / ( arg_chain_id + pdb_extension ) );
+						const path pdb_file ( TEST_RESIDUE_IDS_DATA_DIR() / ( prm_chain_id + pdb_extension ) );
 						pdb my_pdb;
 						my_pdb.read_file( pdb_file.string() );
 						got_residue_ids = my_pdb.get_residue_ids_of_first_chain__backbone_unchecked();
 						break;
 					}
 					case ( get_residue_ids_test_filetype::DSSP ) : {
-						const path the_dssp_file( TEST_RESIDUE_IDS_DATA_DIR() / ( arg_chain_id + dssp_extension ) );
+						const path the_dssp_file( TEST_RESIDUE_IDS_DATA_DIR() / ( prm_chain_id + dssp_extension ) );
 						const dssp_file my_dssp = read_dssp_file( the_dssp_file );
 						got_residue_ids = get_residue_ids( my_dssp, true );
 						break;
@@ -108,7 +108,7 @@ namespace cath {
 				//  * offer a bunch of check tools (eg equals, contains, regexp)
 				//  * optionally load a pattern file as a vector of strings, one per line
 				//  * provide better context information on mismatch
-				const path correct_residue_names_file(TEST_RESIDUE_IDS_DATA_DIR() / (arg_chain_id + correct_residue_names_extension));
+				const path correct_residue_names_file(TEST_RESIDUE_IDS_DATA_DIR() / (prm_chain_id + correct_residue_names_extension));
 				ifstream expected_stream;
 				open_ifstream( expected_stream, correct_residue_names_file );
 				residue_id_vec expected_values;

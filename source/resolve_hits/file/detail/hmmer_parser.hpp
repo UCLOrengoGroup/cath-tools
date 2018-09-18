@@ -121,7 +121,7 @@ namespace cath {
 				size_opt prefix_hmm_length;
 
 				template <typename T>
-				inline static auto get_query_id_impl(T &arg_hmmer_parser) -> decltype( *arg_hmmer_parser.query_id );
+				inline static auto get_query_id_impl(T &prm_hmmer_parser) -> decltype( *prm_hmmer_parser.query_id );
 
 				void advance_to_block_or_prefix();
 				bool line_is_at_prefix() const;
@@ -184,27 +184,27 @@ namespace cath {
 			/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
 			/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
 			template <typename T>
-			inline auto hmmer_parser::get_query_id_impl(T &arg_hmmer_parser ///< The (const / non-const) hmmer_parser on which the get_query_id() is being called
-			                                            ) -> decltype( *arg_hmmer_parser.query_id ) {
+			inline auto hmmer_parser::get_query_id_impl(T &prm_hmmer_parser ///< The (const / non-const) hmmer_parser on which the get_query_id() is being called
+			                                            ) -> decltype( *prm_hmmer_parser.query_id ) {
 				/* the complex logic around getting a possibly-const reference to my_bar */
-				if ( ! arg_hmmer_parser.query_id ) {
+				if ( ! prm_hmmer_parser.query_id ) {
 					BOOST_THROW_EXCEPTION(common::runtime_error_exception(
 						"Whilst parsing "
-						+ ( arg_hmmer_parser.format == hmmer_format::HMMSEARCH ? "hmmsearch"s : "hmmscan"s )
+						+ ( prm_hmmer_parser.format == hmmer_format::HMMSEARCH ? "hmmsearch"s : "hmmscan"s )
 						+ " input, was unable to retrieve a query ID when required."
 						+ (
-							arg_hmmer_parser.prefix_match_id
+							prm_hmmer_parser.prefix_match_id
 							?
 								" Another ID ("
-								+ *arg_hmmer_parser.prefix_match_id
+								+ *prm_hmmer_parser.prefix_match_id
 								+ ") was present - perhaps this is actually "
-								+ ( arg_hmmer_parser.format != hmmer_format::HMMSEARCH ? "hmmsearch"s : "hmmscan"s )
+								+ ( prm_hmmer_parser.format != hmmer_format::HMMSEARCH ? "hmmsearch"s : "hmmscan"s )
 								+ " output?"
 							: ""s
 						)
 					));
 				}
-				return *arg_hmmer_parser.query_id;
+				return *prm_hmmer_parser.query_id;
 			}
 
 
@@ -253,10 +253,10 @@ namespace cath {
 			}
 
 			/// \brief Ctor from the istream from which the data should be read
-			inline hmmer_parser::hmmer_parser(const hmmer_format &arg_format, ///< The HMMER format to parse
-			                                  std::istream       &arg_istream ///< The istream from which the data should be read
-			                                  ) : format     { arg_format  },
-			                                      the_istream{ arg_istream } {
+			inline hmmer_parser::hmmer_parser(const hmmer_format &prm_format, ///< The HMMER format to parse
+			                                  std::istream       &prm_istream ///< The istream from which the data should be read
+			                                  ) : format     { prm_format  },
+			                                      the_istream{ prm_istream } {
 			}
 
 			/// \brief Whether the end of the input data has been reached
@@ -359,12 +359,12 @@ namespace cath {
 			}
 
 			/// \brief Parse a summary from the current summary header line
-			inline void hmmer_parser::parse_summary_from_header(const bool            &arg_apply_cath_policies, ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
-			                                                    const crh_filter_spec &arg_filter_spec          ///< The filter spec, used to determine which hits to exclude on inadequate hmm coverage
+			inline void hmmer_parser::parse_summary_from_header(const bool            &prm_apply_cath_policies, ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
+			                                                    const crh_filter_spec &prm_filter_spec          ///< The filter spec, used to determine which hits to exclude on inadequate hmm coverage
 			                                                    ) {
 				// Get the min hmm coverage for this specific match ID
 				const doub_opt min_hmm_coverage = static_cast<bool>( prefix_match_id )
-					? hmm_coverage_for_match( arg_filter_spec, *prefix_match_id )
+					? hmm_coverage_for_match( prm_filter_spec, *prefix_match_id )
 					: boost::none;
 
 				summaries.clear();
@@ -405,10 +405,10 @@ namespace cath {
 						common::parse_double_from_field( bitscore_itrs.first, bitscore_itrs.second ),
 						common::parse_uint_from_field  ( env_from_itrs.first, env_from_itrs.second ),
 						common::parse_uint_from_field  ( env_to_itrs.first,   env_to_itrs.second   ),
-						arg_apply_cath_policies
+						prm_apply_cath_policies
 							? common::parse_uint_from_field ( ali_from_itrs.first, ali_from_itrs.second )
 							: 0,
-						arg_apply_cath_policies
+						prm_apply_cath_policies
 							? common::parse_uint_from_field ( ali_to_itrs.first,   ali_to_itrs.second   )
 							: 0,
 						hmmer_evalues_are_suspicious(
@@ -439,16 +439,16 @@ namespace cath {
 			}
 
 			/// \brief Finish the current alignment
-			inline void hmmer_parser::finish_alignment(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which complete hits should be added
-			                                           const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
-			                                           const seq::residx_t  &arg_min_gap_length,       ///< The minimum length for a gap to be considered a gap
-			                                           const bool           &arg_parse_hmmer_aln       ///< Whether to parse the HMMER alignment information for outputting later
+			inline void hmmer_parser::finish_alignment(read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to which complete hits should be added
+			                                           const bool           &prm_apply_cath_policies,  ///< Whether to apply CATH-Gene3D policies (see `cath-resolve-hits --cath-rules-help`)
+			                                           const seq::residx_t  &prm_min_gap_length,       ///< The minimum length for a gap to be considered a gap
+			                                           const bool           &prm_parse_hmmer_aln       ///< Whether to parse the HMMER alignment information for outputting later
 			                                           ) {
-				auto              aln_results   = the_aln.process_aln( arg_min_gap_length, arg_parse_hmmer_aln );
+				auto              aln_results   = the_aln.process_aln( prm_min_gap_length, prm_parse_hmmer_aln );
 				std::string      &id_a          = std::get<0>( aln_results );
 				seq::seq_seg_vec &segs          = std::get<1>( aln_results );
 				auto              alnd_rngs_opt = boost::make_optional(
-					arg_parse_hmmer_aln,
+					prm_parse_hmmer_aln,
 					std::get<2>( aln_results )
 				);
 
@@ -488,7 +488,7 @@ namespace cath {
 					}
 				}
 				else if ( summ.hmm_coverage_is_ok == hmm_coverage::OK ) {
-					const auto           id_score_cat  = cath_score_category_of_id( id_a, arg_apply_cath_policies );
+					const auto           id_score_cat  = cath_score_category_of_id( id_a, prm_apply_cath_policies );
 					const bool           apply_dc_cat  = ( id_score_cat == cath_id_score_category::DC_TYPE );
 					const seq::residx_t &start         = apply_dc_cat ? summ.ali_from : summ.env_from;
 					const seq::residx_t &stop          = apply_dc_cat ? summ.ali_to   : summ.env_to;
@@ -507,17 +507,17 @@ namespace cath {
 					segs.back ().set_stop_arrow ( seq::arrow_after_res ( stop  ) );
 
 					hit_extras_store extras;
-					if ( arg_parse_hmmer_aln ) {
+					if ( prm_parse_hmmer_aln ) {
 						extras.push_back< hit_extra_cat::ALND_RGNS >( to_string( std::get<2>( aln_results ) ) );
 					}
 					extras.push_back< hit_extra_cat::COND_EVAL >( summ.conditional_evalue );
 					extras.push_back< hit_extra_cat::INDP_EVAL >( summ.independent_evalue );
 
-					arg_read_and_process_mgr.add_hit(
+					prm_read_and_process_mgr.add_hit(
 						*query_id,
 						std::move( segs ),
 						std::move( id_a ),
-						summ.bitscore / bitscore_divisor( arg_apply_cath_policies, summ.evalues_are_susp ),
+						summ.bitscore / bitscore_divisor( prm_apply_cath_policies, summ.evalues_are_susp ),
 						hit_score_type::BITSCORE,
 						std::move( extras )
 					);

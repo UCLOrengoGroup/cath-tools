@@ -54,13 +54,13 @@ namespace cath {
 		/// \brief Equality operator for hbond_half
 		///
 		/// \relates hbond_half
-		inline constexpr bool operator==(const hbond_half &arg_lhs, ///< The first  hbond_half to compare
-		                                 const hbond_half &arg_rhs  ///< The second hbond_half to compare
+		inline constexpr bool operator==(const hbond_half &prm_lhs, ///< The first  hbond_half to compare
+		                                 const hbond_half &prm_rhs  ///< The second hbond_half to compare
 		                                 ) {
 			return (
-				arg_lhs.index  == arg_rhs.index
+				prm_lhs.index  == prm_rhs.index
 				&&
-				arg_lhs.energy == arg_rhs.energy
+				prm_lhs.energy == prm_rhs.energy
 			);
 		}
 
@@ -68,16 +68,16 @@ namespace cath {
 		///        or has the same strength but an earlier index
 		///
 		/// \relates hbond_half
-		inline constexpr bool is_bondier_than(const hbond_half &arg_lhs, ///< The first  hbond_half to compare
-		                                      const hbond_half &arg_rhs  ///< The second hbond_half to compare
+		inline constexpr bool is_bondier_than(const hbond_half &prm_lhs, ///< The first  hbond_half to compare
+		                                      const hbond_half &prm_rhs  ///< The second hbond_half to compare
 		                                      ) {
 			return (
-				( arg_lhs.energy < arg_rhs.energy )
+				( prm_lhs.energy < prm_rhs.energy )
 				||
 				(
-					( arg_lhs.energy == arg_rhs.energy )
+					( prm_lhs.energy == prm_rhs.energy )
 					&&
-					( arg_lhs.index  <  arg_rhs.index  )
+					( prm_lhs.index  <  prm_rhs.index  )
 				)
 			);
 		}
@@ -88,24 +88,24 @@ namespace cath {
 		std::string to_string(const hbond_half_opt &);
 
 		/// \brief Whether the specified hbond_half has a strong enough energy to be considered a true hbond
-		inline bool is_bondy_enough(const hbond_half &arg_hbond_half ///< The hbond_half to consider
+		inline bool is_bondy_enough(const hbond_half &prm_hbond_half ///< The hbond_half to consider
 		                            ) {
-			return arg_hbond_half.energy < hbond_half::HBOND_ENERGY_CUTOFF ;
+			return prm_hbond_half.energy < hbond_half::HBOND_ENERGY_CUTOFF ;
 		}
 
 		/// \brief Whether the specified hbond_half_opt is present and has a strong enough energy to be considered a true hbond
-		inline bool is_bondy_enough(const hbond_half_opt &arg_hbond_half_opt ///< The hbond_half_opt to consider
+		inline bool is_bondy_enough(const hbond_half_opt &prm_hbond_half_opt ///< The hbond_half_opt to consider
 		                            ) {
-			return ( arg_hbond_half_opt && is_bondy_enough( *arg_hbond_half_opt ) );
+			return ( prm_hbond_half_opt && is_bondy_enough( *prm_hbond_half_opt ) );
 		}
 
 		/// \brief Wipe the specified hbond_half_opt to none if 
 		///         * (a) it isn't already and
 		///         * (b) it isn't strong enough to be considered a true hbond
-		inline void remove_not_bondy_enough(hbond_half_opt &arg_hbond_half_opt ///< The hbond_half_opt to examine (and potentially wipe)
+		inline void remove_not_bondy_enough(hbond_half_opt &prm_hbond_half_opt ///< The hbond_half_opt to examine (and potentially wipe)
 		                                    ) {
-			if ( arg_hbond_half_opt && ! is_bondy_enough( *arg_hbond_half_opt ) ) {
-				arg_hbond_half_opt = boost::none;
+			if ( prm_hbond_half_opt && ! is_bondy_enough( *prm_hbond_half_opt ) ) {
+				prm_hbond_half_opt = boost::none;
 			}
 		}
 
@@ -121,27 +121,27 @@ namespace cath {
 		///
 		/// If new hbond_half is active and is better then either of the entries in the hbond_half_opt_pair
 		/// then insert it in the correct position
-		inline void update_half_bond_pair(hbond_half_opt_pair &arg_hbond_pair, ///< The hbond_half_opt_pair to update
-		                                  const hbond_half    &arg_hbond       ///< The new hbond_half with which to update the hbond_half_opt_pair
+		inline void update_half_bond_pair(hbond_half_opt_pair &prm_hbond_pair, ///< The hbond_half_opt_pair to update
+		                                  const hbond_half    &prm_hbond       ///< The new hbond_half with which to update the hbond_half_opt_pair
 		                                  ) {
 			// If the new one's better than the first, copy the first to the second and set
 			// first to the new one
-			if ( ! arg_hbond_pair.first || is_bondier_than( arg_hbond, *arg_hbond_pair.first ) ) {
-				arg_hbond_pair.second = arg_hbond_pair.first;
-				arg_hbond_pair.first = arg_hbond;
+			if ( ! prm_hbond_pair.first || is_bondier_than( prm_hbond, *prm_hbond_pair.first ) ) {
+				prm_hbond_pair.second = prm_hbond_pair.first;
+				prm_hbond_pair.first = prm_hbond;
 			}
 			// Else if the new one's better than the second, overwrite the second with the new one
-			else if ( ! arg_hbond_pair.second || is_bondier_than( arg_hbond, *arg_hbond_pair.second ) ) {
-				arg_hbond_pair.second = arg_hbond;
+			else if ( ! prm_hbond_pair.second || is_bondier_than( prm_hbond, *prm_hbond_pair.second ) ) {
+				prm_hbond_pair.second = prm_hbond;
 			}
 		}
 
 		/// \brief Copy the specified hbond_half_opt_pair and update_half_bond_pair() and return the copy
-		inline hbond_half_opt_pair update_half_bond_pair_copy(hbond_half_opt_pair  arg_hbond_pair, ///< The hbond_half_opt_pair from which to take a copy to update_half_bond_pair() and return
-		                                                      const hbond_half    &arg_hbond       ///< The hbond_half with which the copy of the hbond_half_opt_pair should be updated
+		inline hbond_half_opt_pair update_half_bond_pair_copy(hbond_half_opt_pair  prm_hbond_pair, ///< The hbond_half_opt_pair from which to take a copy to update_half_bond_pair() and return
+		                                                      const hbond_half    &prm_hbond       ///< The hbond_half with which the copy of the hbond_half_opt_pair should be updated
 		                                                      ) {
-			update_half_bond_pair( arg_hbond_pair, arg_hbond );
-			return arg_hbond_pair;
+			update_half_bond_pair( prm_hbond_pair, prm_hbond );
+			return prm_hbond_pair;
 		}
 
 		/// \brief Wipe each half of the specified hbond_half_opt_pair to none if 
@@ -151,10 +151,10 @@ namespace cath {
 		/// \pre If only one bond is present, it must be the first
 		///
 		/// \pre If both bonds are present, the first mustn't be weaker
-		inline void remove_not_bondy_enough(hbond_half_opt_pair &arg_hbond_pair ///< The hbond_half_opt_pair to examine (and potentially wipe)
+		inline void remove_not_bondy_enough(hbond_half_opt_pair &prm_hbond_pair ///< The hbond_half_opt_pair to examine (and potentially wipe)
 		                                    ) {
-			remove_not_bondy_enough( arg_hbond_pair.first  );
-			remove_not_bondy_enough( arg_hbond_pair.second );
+			remove_not_bondy_enough( prm_hbond_pair.first  );
+			remove_not_bondy_enough( prm_hbond_pair.second );
 		}
 
 		/// \brief Represent a possibly-bifurcating set of bonds from a given residue
@@ -177,16 +177,16 @@ namespace cath {
 		};
 
 		/// \brief Update the best h-bonds from the NH atoms of this residue with the new hbond_half
-		inline bifur_hbond & bifur_hbond::update_for_this_nh(const hbond_half &arg_hbond ///< The new hbond_half with which to update
+		inline bifur_hbond & bifur_hbond::update_for_this_nh(const hbond_half &prm_hbond ///< The new hbond_half with which to update
 		                                                     ) {
-			update_half_bond_pair( for_this_nh, arg_hbond );
+			update_half_bond_pair( for_this_nh, prm_hbond );
 			return *this;
 		}
 
 		/// \brief Update the best h-bonds from the CO atoms of this residue with the new hbond_half
-		inline bifur_hbond & bifur_hbond::update_for_this_co(const hbond_half &arg_hbond ///< The new hbond_half with which to update
+		inline bifur_hbond & bifur_hbond::update_for_this_co(const hbond_half &prm_hbond ///< The new hbond_half with which to update
 		                                                     ) {
-			update_half_bond_pair( for_this_co, arg_hbond );
+			update_half_bond_pair( for_this_co, prm_hbond );
 			return *this;
 		}
 
@@ -243,8 +243,8 @@ namespace cath {
 		};
 
 		/// \brief Ctor
-		inline bifur_hbond_list::bifur_hbond_list(const size_t &arg_size ///< The number of residues to represent 
-		                                          ) : bifur_hbonds( arg_size ) {
+		inline bifur_hbond_list::bifur_hbond_list(const size_t &prm_size ///< The number of residues to represent 
+		                                          ) : bifur_hbonds( prm_size ) {
 		}
 
 		/// \brief Whether this bifur_hbond_list is empty
@@ -258,9 +258,9 @@ namespace cath {
 		}
 
 		/// \brief Return (a const-reference to) the bifur_hbond corresponding to the residue at the specified index
-		inline const bifur_hbond & bifur_hbond_list::operator[](const size_t &arg_index ///< The index of the residue for which the bifur_hbond should be returned
+		inline const bifur_hbond & bifur_hbond_list::operator[](const size_t &prm_index ///< The index of the residue for which the bifur_hbond should be returned
 		                                                        ) const {
-			return bifur_hbonds[ arg_index ];
+			return bifur_hbonds[ prm_index ];
 		}
 
 		/// \brief Remove any candidate bonds that aren't strong enough to be considered true hbonds
@@ -273,12 +273,12 @@ namespace cath {
 
 		/// \brief Update the bifur_hbond_list with the specified h-bond energy between
 		///        the residues of specified indices
-		inline bifur_hbond_list & bifur_hbond_list::update_with_nh_idx_co_idx_energy(const hbond_partner_t &arg_nh_index, ///< The index of the residue at the NH side of the h-bond
-		                                                                             const hbond_partner_t &arg_co_index, ///< The index of the residue at the CO side of the h-bond
-		                                                                             const hbond_energy_t  &arg_energy    ///< The energy of the h-bond
+		inline bifur_hbond_list & bifur_hbond_list::update_with_nh_idx_co_idx_energy(const hbond_partner_t &prm_nh_index, ///< The index of the residue at the NH side of the h-bond
+		                                                                             const hbond_partner_t &prm_co_index, ///< The index of the residue at the CO side of the h-bond
+		                                                                             const hbond_energy_t  &prm_energy    ///< The energy of the h-bond
 		                                                                             ) {
-			bifur_hbonds[ arg_nh_index ].update_for_this_nh( { arg_co_index, arg_energy } );
-			bifur_hbonds[ arg_co_index ].update_for_this_co( { arg_nh_index, arg_energy } );
+			bifur_hbonds[ prm_nh_index ].update_for_this_nh( { prm_co_index, prm_energy } );
+			bifur_hbonds[ prm_co_index ].update_for_this_co( { prm_nh_index, prm_energy } );
 			return *this;
 		}
 
@@ -294,10 +294,10 @@ namespace cath {
 
 		/// \brief Remove any candidate bonds that aren't strong enough to be considered true hbonds
 		///        in a copy of the specified bifur_hbond_list and then return the copy
-		inline bifur_hbond_list remove_not_bondy_enough_copy(bifur_hbond_list arg_bifur_hbond_list ///< The bifur_hbond_list from which a copy should be taken, stripped and returned
+		inline bifur_hbond_list remove_not_bondy_enough_copy(bifur_hbond_list prm_bifur_hbond_list ///< The bifur_hbond_list from which a copy should be taken, stripped and returned
 		                                                     ) {
-			arg_bifur_hbond_list.remove_not_bondy_enough();
-			return arg_bifur_hbond_list;
+			prm_bifur_hbond_list.remove_not_bondy_enough();
+			return prm_bifur_hbond_list;
 		}
 
 		std::string to_string(const bifur_hbond_list &);

@@ -38,9 +38,9 @@ namespace cath {
 			struct ref_wrap_hasher final {
 				/// \brief The function operator that performs the hash on the T value
 				///        using std::hash<decay_t<T>>
-				size_t operator()(const ref_wrap_uom_wrap<T> &arg_value
+				size_t operator()(const ref_wrap_uom_wrap<T> &prm_value
 				                  ) const {
-					return std::hash<std::decay_t<T>>{}( arg_value.get() );
+					return std::hash<std::decay_t<T>>{}( prm_value.get() );
 				}
 			};
 		} // namespace detail

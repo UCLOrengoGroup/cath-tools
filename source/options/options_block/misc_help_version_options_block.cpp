@@ -74,21 +74,21 @@ string misc_help_version_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void misc_help_version_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                            const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void misc_help_version_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                            const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                             ) {
 	const string PO_HELP_W_CHAR    = PO_HELP    + ',' + PO_CHAR_HELP;
 	const string PO_VERSION_W_CHAR = PO_VERSION + ',' + PO_CHAR_VERSION;
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( PO_HELP_W_CHAR    . c_str(), bool_switch( &help    )->default_value( false ), "Output help message"        )
 		( PO_VERSION_W_CHAR . c_str(), bool_switch( &version )->default_value( false ), "Output version information" );
 }
 
 /// \brief Add a hidden option to the options_description for the hidden help option
-void misc_help_version_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                           const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void misc_help_version_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                           const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                            ) {
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( ( PO_HIDDEN_HELP ).c_str(), bool_switch( &hidden_help )->default_value( false ), "Output help message including all hidden options" );
 }
 
@@ -97,7 +97,7 @@ void misc_help_version_options_block::do_add_hidden_options_to_description(optio
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts
-str_opt misc_help_version_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt misc_help_version_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                            ) const {
 	return none;
 }
@@ -126,13 +126,13 @@ const bool & misc_help_version_options_block::get_version() const {
 }
 
 /// \brief Generate the help string
-string misc_help_version_options_block::get_help_string(const options_description &arg_visible_program_options, ///< The full options_description of visible options
-                                                        const string              &arg_help_message_prefix,     ///< The prefix to prepend to the output of the options_description
-                                                        const string              &arg_help_message_suffix      ///< The suffix to append to the output of the options_description
+string misc_help_version_options_block::get_help_string(const options_description &prm_visible_program_options, ///< The full options_description of visible options
+                                                        const string              &prm_help_message_prefix,     ///< The prefix to prepend to the output of the options_description
+                                                        const string              &prm_help_message_suffix      ///< The suffix to append to the output of the options_description
                                                         ) {
-	return arg_help_message_prefix + "\n"
-		+ lexical_cast<string>( arg_visible_program_options )
-		+ arg_help_message_suffix;
+	return prm_help_message_prefix + "\n"
+		+ lexical_cast<string>( prm_visible_program_options )
+		+ prm_help_message_suffix;
 }
 
 // Since Clang and GCC indicate the address sanitizer (ASAN) in different ways,
@@ -144,14 +144,14 @@ string misc_help_version_options_block::get_help_string(const options_descriptio
 #endif
 
 /// \brief Generate the version string
-string misc_help_version_options_block::get_version_string(const string &arg_program_name,       ///< The name of the program
-                                                           const string &arg_program_description ///< A description of the program
+string misc_help_version_options_block::get_version_string(const string &prm_program_name,       ///< The name of the program
+                                                           const string &prm_program_description ///< A description of the program
                                                            ) {
 	return "============\n"
-		+ arg_program_name + " " + CATH_TOOLS_VERSION + " [" + CATH_TOOLS_VERSION_DATE + "]\n"
+		+ prm_program_name + " " + CATH_TOOLS_VERSION + " [" + CATH_TOOLS_VERSION_DATE + "]\n"
 		+ "============\n"
 		+ "\n"
-		+ arg_program_description + "\n"
+		+ prm_program_description + "\n"
 		+ "\n"
 		+ "Build\n"
 		+ "-----\n"

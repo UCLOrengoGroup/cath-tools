@@ -23,20 +23,20 @@
 using namespace cath::rslv;
 
 /// \brief Ctor from the individual specs
-crh_spec::crh_spec(crh_input_spec         arg_input_spec,         ///< The input spec
-                   crh_segment_spec       arg_segment_spec,       ///< The segment spec
-                   crh_score_spec         arg_score_spec,         ///< The score spec
-                   crh_filter_spec        arg_filter_spec,        ///< The filter spec
-                   crh_single_output_spec arg_single_output_spec, ///< The single output spec
-                   crh_output_spec        arg_output_spec,        ///< The output spec
-                   crh_html_spec          arg_html_spec           ///< The html spec
-                   ) : the_input_spec         { std::move( arg_input_spec         ) },
-                       the_segment_spec       { std::move( arg_segment_spec       ) },
-                       the_score_spec         { std::move( arg_score_spec         ) },
-                       the_filter_spec        { std::move( arg_filter_spec        ) },
-                       the_single_output_spec { std::move( arg_single_output_spec ) },
-                       the_output_spec        { std::move( arg_output_spec        ) },
-                       the_html_spec          { std::move( arg_html_spec          ) } {
+crh_spec::crh_spec(crh_input_spec         prm_input_spec,         ///< The input spec
+                   crh_segment_spec       prm_segment_spec,       ///< The segment spec
+                   crh_score_spec         prm_score_spec,         ///< The score spec
+                   crh_filter_spec        prm_filter_spec,        ///< The filter spec
+                   crh_single_output_spec prm_single_output_spec, ///< The single output spec
+                   crh_output_spec        prm_output_spec,        ///< The output spec
+                   crh_html_spec          prm_html_spec           ///< The html spec
+                   ) : the_input_spec         { std::move( prm_input_spec         ) },
+                       the_segment_spec       { std::move( prm_segment_spec       ) },
+                       the_score_spec         { std::move( prm_score_spec         ) },
+                       the_filter_spec        { std::move( prm_filter_spec        ) },
+                       the_single_output_spec { std::move( prm_single_output_spec ) },
+                       the_output_spec        { std::move( prm_output_spec        ) },
+                       the_html_spec          { std::move( prm_html_spec          ) } {
 }
 
 /// \brief Non-const overload of getter for input_spec
@@ -110,50 +110,50 @@ const crh_html_spec & crh_spec::get_html_spec() const {
 }
 
 /// \brief Setter for the input spec
-crh_spec & crh_spec::set_input_spec(const crh_input_spec &arg_input_spec ///< The input spec
+crh_spec & crh_spec::set_input_spec(const crh_input_spec &prm_input_spec ///< The input spec
                                     ) {
-	get_input_spec() = arg_input_spec;
+	get_input_spec() = prm_input_spec;
 	return *this;
 }
 
 /// \brief Setter for the segment spec
-crh_spec & crh_spec::set_segment_spec(const crh_segment_spec &arg_segment_spec ///< The segment spec
+crh_spec & crh_spec::set_segment_spec(const crh_segment_spec &prm_segment_spec ///< The segment spec
                                       ) {
-	get_segment_spec() = arg_segment_spec;
+	get_segment_spec() = prm_segment_spec;
 	return *this;
 }
 
 /// \brief Setter for the score spec
-crh_spec & crh_spec::set_score_spec(const crh_score_spec &arg_score_spec ///< The score spec
+crh_spec & crh_spec::set_score_spec(const crh_score_spec &prm_score_spec ///< The score spec
                                     ) {
-	get_score_spec() = arg_score_spec;
+	get_score_spec() = prm_score_spec;
 	return *this;
 }
 
 /// \brief Setter for the filter spec
-crh_spec & crh_spec::set_filter_spec(const crh_filter_spec &arg_filter_spec ///< The filter spec
+crh_spec & crh_spec::set_filter_spec(const crh_filter_spec &prm_filter_spec ///< The filter spec
                                      ) {
-	get_filter_spec() = arg_filter_spec;
+	get_filter_spec() = prm_filter_spec;
 	return *this;
 }
 
 /// \brief Setter for the output spec
-crh_spec & crh_spec::set_single_output_spec(const crh_single_output_spec &arg_single_output_spec ///< The output spec
+crh_spec & crh_spec::set_single_output_spec(const crh_single_output_spec &prm_single_output_spec ///< The output spec
                                             ) {
-	get_single_output_spec() = arg_single_output_spec;
+	get_single_output_spec() = prm_single_output_spec;
 	return *this;
 }
 
 /// \brief Setter for the output spec
-crh_spec & crh_spec::set_output_spec(const crh_output_spec &arg_output_spec ///< The output spec
+crh_spec & crh_spec::set_output_spec(const crh_output_spec &prm_output_spec ///< The output spec
                                      ) {
-	get_output_spec() = arg_output_spec;
+	get_output_spec() = prm_output_spec;
 	return *this;
 }
 
 /// \brief Setter for the html spec
-crh_spec & crh_spec::set_html_spec(const crh_html_spec &arg_html_spec ///< The html spec
+crh_spec & crh_spec::set_html_spec(const crh_html_spec &prm_html_spec ///< The html spec
                                    ) {
-	get_html_spec() = arg_html_spec;
+	get_html_spec() = prm_html_spec;
 	return *this;
 }

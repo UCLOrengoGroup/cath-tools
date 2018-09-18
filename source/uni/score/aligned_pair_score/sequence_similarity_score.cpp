@@ -66,24 +66,24 @@ tribool sequence_similarity_score::do_higher_is_better() const {
 }
 
 /// \brief Concrete implementation for calculating the RMSD of an alignment
-score_value sequence_similarity_score::do_calculate(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                                    const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                                    const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+score_value sequence_similarity_score::do_calculate(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                                    const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                                    const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                                     ) const {
-	const size_t length = arg_alignment.length();
+	const size_t length = prm_alignment.length();
 
 	score_type score( 0 );
 	for (const size_t &index : indices( length ) ) {
-		if ( has_both_positions_of_index( arg_alignment, index ) ) {
-			const aln_posn_type a_posn  = get_a_position_of_index( arg_alignment, index  );
-			const aln_posn_type b_posn  = get_b_position_of_index( arg_alignment, index  );
-			const amino_acid    amino_a = get_amino_acid_of_index( arg_protein_a, a_posn );
-			const amino_acid    amino_b = get_amino_acid_of_index( arg_protein_b, b_posn );
+		if ( has_both_positions_of_index( prm_alignment, index ) ) {
+			const aln_posn_type a_posn  = get_a_position_of_index( prm_alignment, index  );
+			const aln_posn_type b_posn  = get_b_position_of_index( prm_alignment, index  );
+			const amino_acid    amino_a = get_amino_acid_of_index( prm_protein_a, a_posn );
+			const amino_acid    amino_b = get_amino_acid_of_index( prm_protein_b, b_posn );
 			score += scores.get_score( amino_a, amino_b );
 		}
 	}
 
-	const size_t      normalisation_length = length_getter_ptr->get_length( arg_alignment, arg_protein_a, arg_protein_b );
+	const size_t      normalisation_length = length_getter_ptr->get_length( prm_alignment, prm_protein_a, prm_protein_b );
 	const score_value normalisation_score  = numeric_cast<score_value>( normalisation_length * numeric_cast<size_t>( scores.get_highest_score() ) );
 	return 100.0 * numeric_cast<score_value>( score ) / normalisation_score;
 }
@@ -114,30 +114,30 @@ string sequence_similarity_score::do_long_name() const {
 }
 
 ///// \brief Build an aligned_pair_score of this concrete type from a short_name_spec string
-//unique_ptr<aligned_pair_score> sequence_similarity_score::do_build_from_short_name_spec(const string &arg_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
+//unique_ptr<aligned_pair_score> sequence_similarity_score::do_build_from_short_name_spec(const string &prm_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
 //                                                                                        ) const {
-//	cerr << "Should build a sequence_similarity_score from string \"" << arg_short_name_spec << "\"" << endl;
+//	cerr << "Should build a sequence_similarity_score from string \"" << prm_short_name_spec << "\"" << endl;
 //	return clone();
 //}
 
 /// \brief TODOCUMENT
-bool sequence_similarity_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool sequence_similarity_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                                     ) const {
-	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 	return ( *this < casted_aligned_pair_score );
 }
 
 /// \brief Default ctor for sequence_similarity_score (the substitution matrix defaults to the identity matrix)
-sequence_similarity_score::sequence_similarity_score(substitution_matrix arg_scores ///< The substitution matrix to use for scoring
-                                                     ) : scores { std::move( arg_scores ) } {
+sequence_similarity_score::sequence_similarity_score(substitution_matrix prm_scores ///< The substitution matrix to use for scoring
+                                                     ) : scores { std::move( prm_scores ) } {
 }
 
 /// \brief Ctor for sequence_similarity_score that allows the caller to specify the protein_only_length_getter
 ///        (the substitution matrix defaults to the identity matrix)
-sequence_similarity_score::sequence_similarity_score(const length_getter &arg_length_getter, ///< The method for choosing the length used for normalisation
-                                                     substitution_matrix  arg_scores         ///< The substitution matrix to use for scoring
-                                                     ) : scores            { std::move( arg_scores )   },
-                                                         length_getter_ptr { arg_length_getter.clone() } {
+sequence_similarity_score::sequence_similarity_score(const length_getter &prm_length_getter, ///< The method for choosing the length used for normalisation
+                                                     substitution_matrix  prm_scores         ///< The substitution matrix to use for scoring
+                                                     ) : scores            { std::move( prm_scores )   },
+                                                         length_getter_ptr { prm_length_getter.clone() } {
 }
 
 /// \brief TODOCUMENT
@@ -157,10 +157,10 @@ const length_getter & sequence_similarity_score::get_length_getter() const {
 /// \brief TODOCUMENT
 ///
 /// \relates sequence_similarity_score
-bool cath::score::operator<(const sequence_similarity_score &arg_sequence_similarity_score_a, ///< TODOCUMENT
-                            const sequence_similarity_score &arg_sequence_similarity_score_b  ///< TODOCUMENT
+bool cath::score::operator<(const sequence_similarity_score &prm_sequence_similarity_score_a, ///< TODOCUMENT
+                            const sequence_similarity_score &prm_sequence_similarity_score_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_sequence_similarity_score_a, arg_sequence_similarity_score_b );
+	auto the_helper = make_less_than_helper( prm_sequence_similarity_score_a, prm_sequence_similarity_score_b );
 	the_helper.register_comparison_field( &sequence_similarity_score::get_substitution_matrix );
 	the_helper.register_comparison_field( &sequence_similarity_score::get_length_getter       );
 	return final_less_than_result( the_helper );

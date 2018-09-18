@@ -80,11 +80,11 @@ string cath_assign_domains_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void cath_assign_domains_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                              const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void cath_assign_domains_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                              const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                               ) {
 	const string default_forbidden_nodes_str = join( DEFAULT_FORBIDDEN_NODES, ", " );
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( PO_SVMLIGHT_RBF_FILE.c_str(), value<path   >( &rbf_svm_file    ),                                                                        "File containing SVM-light RBF model for CATH assignment" )
 		( PO_FILELIST_FILE.c_str(),     value<path   >( &data_data_file  ),                                                                        "File of data files (one line per query domain containing: ssap_results_file prc_results_file)" )
 		( PO_SF_OF_DOMAIN_FILE.c_str(), value<path   >( &sf_of_dom_file  ),                                                                        "File containing up-to-date assignments (one line per domain containing: domain_id superfamily_id)" )
@@ -92,7 +92,7 @@ void cath_assign_domains_options_block::do_add_visible_options_to_description(op
 }
 
 /// \brief TODOCUMENT
-str_opt cath_assign_domains_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt cath_assign_domains_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                              ) const {
 	if ( ! rbf_svm_file.empty()   && ! is_acceptable_input_file( rbf_svm_file   ) ) {
 		return "SVM-light RBF model file " + rbf_svm_file.string() + " is not a valid input file";

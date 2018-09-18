@@ -81,14 +81,14 @@ namespace cath {
 				/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
 				/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
 				template <typename Store>
-				static auto find_cell_impl(Store     &arg_store, ///< TODOCUMENT
-				                           const Key &arg_key    ///< TODOCUMENT
-				                           ) -> decltype( arg_store.find_cell( arg_key ) ) {
-					return arg_store.the_store[
+				static auto find_cell_impl(Store     &prm_store, ///< TODOCUMENT
+				                           const Key &prm_key    ///< TODOCUMENT
+				                           ) -> decltype( prm_store.find_cell( prm_key ) ) {
+					return prm_store.the_store[
 						debug_numeric_cast<size_t>(
 							common::tuple_lattice_index(
-								common::tuple_subtract( arg_key, arg_store.mins_key ),
-								arg_store.nums_of_cells_key
+								common::tuple_subtract( prm_key, prm_store.mins_key ),
+								prm_store.nums_of_cells_key
 							)
 						)
 					].second;
@@ -123,26 +123,26 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline auto scan_index_lattice_store<Key, Cell>::find_cell(const Key &arg_key ///< TODOCUMENT
+			inline auto scan_index_lattice_store<Key, Cell>::find_cell(const Key &prm_key ///< TODOCUMENT
 			                                                           ) -> Cell & {
-				return find_cell_impl( *this, arg_key );
+				return find_cell_impl( *this, prm_key );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline auto scan_index_lattice_store<Key, Cell>::find_cell(const Key &arg_key ///< TODOCUMENT
+			inline auto scan_index_lattice_store<Key, Cell>::find_cell(const Key &prm_key ///< TODOCUMENT
 			                                                           ) const -> const Cell & {
-				return find_cell_impl( *this, arg_key );
+				return find_cell_impl( *this, prm_key );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline scan_index_lattice_store<Key, Cell>::scan_index_lattice_store(const Key &arg_mins_key, ///< TODOCUMENT
-			                                                                     const Key &arg_maxs_key  ///< TODOCUMENT
-			                                                                     ) : mins_key         { arg_mins_key                                        },
+			inline scan_index_lattice_store<Key, Cell>::scan_index_lattice_store(const Key &prm_mins_key, ///< TODOCUMENT
+			                                                                     const Key &prm_maxs_key  ///< TODOCUMENT
+			                                                                     ) : mins_key         { prm_mins_key                                        },
 			                                                                         nums_of_cells_key{
 			                                                                         	common::tuple_increment(
-			                                                                         		common::tuple_subtract( arg_maxs_key, arg_mins_key )
+			                                                                         		common::tuple_subtract( prm_maxs_key, prm_mins_key )
 			                                                                         	)
 			                                                                         },
 			                                                                         the_store        {
@@ -152,33 +152,33 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline void scan_index_lattice_store<Key, Cell>::push_back_entry_to_cell(const Key     &arg_key, ///< TODOCUMENT
-			                                                                         const value_t &arg_data ///< TODOCUMENT
+			inline void scan_index_lattice_store<Key, Cell>::push_back_entry_to_cell(const Key     &prm_key, ///< TODOCUMENT
+			                                                                         const value_t &prm_data ///< TODOCUMENT
 			                                                                         ) {
-				find_cell( arg_key ).push_back( arg_data );
+				find_cell( prm_key ).push_back( prm_data );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			template <typename... Ts>
-			inline void scan_index_lattice_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    arg_key, ///< TODOCUMENT
-			                                                                            Ts        &&... arg_data ///< TODOCUMENT
+			inline void scan_index_lattice_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    prm_key, ///< TODOCUMENT
+			                                                                            Ts        &&... prm_data ///< TODOCUMENT
 			                                                                            ) {
-				find_cell( arg_key ).emplace_back( std::forward<Ts>( arg_data )... );
+				find_cell( prm_key ).emplace_back( std::forward<Ts>( prm_data )... );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline bool scan_index_lattice_store<Key, Cell>::has_matches(const Key &arg_key ///< TODOCUMENT
+			inline bool scan_index_lattice_store<Key, Cell>::has_matches(const Key &prm_key ///< TODOCUMENT
 			                                                             ) const {
-				return common::tuple_within_range( common::tuple_subtract( arg_key, mins_key ), nums_of_cells_key );
+				return common::tuple_within_range( common::tuple_subtract( prm_key, mins_key ), nums_of_cells_key );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline auto scan_index_lattice_store<Key, Cell>::find_matches(const Key &arg_key ///< TODOCUMENT
+			inline auto scan_index_lattice_store<Key, Cell>::find_matches(const Key &prm_key ///< TODOCUMENT
 			                                                              ) const -> const Cell & {
-				return find_cell( arg_key );
+				return find_cell( prm_key );
 			}
 
 			/// \brief TODOCUMENT
@@ -210,22 +210,22 @@ namespace cath {
 
 			// /// \brief TODOCUMENT
 			// template <typename Cell, typename Key>
-			// scan_index_lattice_store<Key, Cell> make_scan_index_lattice_store(const Key &arg_mins_key, ///< TODOCUMENT
-			//                                                                   const Key &arg_maxs_key  ///< TODOCUMENT
+			// scan_index_lattice_store<Key, Cell> make_scan_index_lattice_store(const Key &prm_mins_key, ///< TODOCUMENT
+			//                                                                   const Key &prm_maxs_key  ///< TODOCUMENT
 			//                                                                   ) {
-			// 	return { arg_mins_key, arg_maxs_key };
+			// 	return { prm_mins_key, prm_maxs_key };
 			// }
 
 			// /// \brief TODOCUMENT
 			// template <typename Rng, typename Keyer>
-			// auto make_sparse_empty_lattice_store(const Rng   &arg_rng,  ///< TODOCUMENT
-			//                                      const Keyer &arg_keyer ///< TODOCUMENT
+			// auto make_sparse_empty_lattice_store(const Rng   &prm_rng,  ///< TODOCUMENT
+			//                                      const Keyer &prm_keyer ///< TODOCUMENT
 			//                                      ) {
 			// 	using value_t = common::range_value_t< Rng >;
 
 			// 	const auto mins_maxs = common::tuple_mins_maxs_element(
-			// 		arg_rng
-			// 			| boost::adaptors::transformed( [&] (const value_t &value) { return arg_keyer.make_key( value ); } )
+			// 		prm_rng
+			// 			| boost::adaptors::transformed( [&] (const value_t &value) { return prm_keyer.make_key( value ); } )
 			// 	);
 
 			// 	return make_scan_index_lattice_store< std::vector<value_t> >( mins_maxs.first, mins_maxs.second );
@@ -233,18 +233,18 @@ namespace cath {
 
 			// /// \brief TODOCUMENT
 			// template <typename Rng, typename Keyer, typename Crit>
-			// auto make_dense_empty_lattice_store(const Rng   &arg_rng,   ///< TODOCUMENT
-			//                                     const Keyer &arg_keyer, ///< TODOCUMENT
-			//                                     const Crit  &arg_crit   ///< TODOCUMENT
+			// auto make_dense_empty_lattice_store(const Rng   &prm_rng,   ///< TODOCUMENT
+			//                                     const Keyer &prm_keyer, ///< TODOCUMENT
+			//                                     const Crit  &prm_crit   ///< TODOCUMENT
 			//                                     ) {
 			// 	using value_t = common::range_value_t< Rng >;
 
 			// 	const auto mins_maxs = common::mins_maxs_tuple_pair_mins_maxs_element(
-			// 		arg_rng
+			// 		prm_rng
 			// 			| boost::adaptors::transformed( [&] (const value_t &value) {
 			// 				return std::make_pair(
-			// 					arg_keyer.make_min_close_key( value, arg_crit ),
-			// 					arg_keyer.make_max_close_key( value, arg_crit )
+			// 					prm_keyer.make_min_close_key( value, prm_crit ),
+			// 					prm_keyer.make_max_close_key( value, prm_crit )
 			// 				);
 			// 			} )
 			// 	);
@@ -254,25 +254,25 @@ namespace cath {
 
 			// /// \brief TODOCUMENT
 			// template <typename Rng, typename Keyer>
-			// auto make_sparse_lattice_store(const Rng   &arg_rng,  ///< TODOCUMENT
-			//                                const Keyer &arg_keyer ///< TODOCUMENT
+			// auto make_sparse_lattice_store(const Rng   &prm_rng,  ///< TODOCUMENT
+			//                                const Keyer &prm_keyer ///< TODOCUMENT
 			//                                ) {
-			// 	auto the_store = make_sparse_empty_lattice_store( arg_rng, arg_keyer );
-			// 	for (const auto &value : arg_rng) {
-			// 		the_store.push_back_entry_to_cell( arg_keyer.make_key( value ), value );
+			// 	auto the_store = make_sparse_empty_lattice_store( prm_rng, prm_keyer );
+			// 	for (const auto &value : prm_rng) {
+			// 		the_store.push_back_entry_to_cell( prm_keyer.make_key( value ), value );
 			// 	}
 			// 	return the_store;
 			// }
 
 			// /// \brief TODOCUMENT
 			// template <typename Rng, typename Keyer, typename Crit>
-			// auto make_dense_lattice_store(const Rng   &arg_rng,   ///< TODOCUMENT
-			//                               const Keyer &arg_keyer, ///< TODOCUMENT
-			//                               const Crit  &arg_crit   ///< TODOCUMENT
+			// auto make_dense_lattice_store(const Rng   &prm_rng,   ///< TODOCUMENT
+			//                               const Keyer &prm_keyer, ///< TODOCUMENT
+			//                               const Crit  &prm_crit   ///< TODOCUMENT
 			//                               ) {
-			// 	auto the_store = make_dense_empty_lattice_store( arg_rng, arg_keyer, arg_crit );
-			// 	for (const auto &value : arg_rng) {
-			// 		const auto close_keys = arg_keyer.make_close_keys( value, arg_crit );
+			// 	auto the_store = make_dense_empty_lattice_store( prm_rng, prm_keyer, prm_crit );
+			// 	for (const auto &value : prm_rng) {
+			// 		const auto close_keys = prm_keyer.make_close_keys( value, prm_crit );
 			// 		for (const auto &the_key : common::cross( close_keys ) ) {
 			// 			the_store.push_back_entry_to_cell( the_key, value );
 			// 		}

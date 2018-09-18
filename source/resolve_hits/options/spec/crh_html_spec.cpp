@@ -42,22 +42,22 @@ const bool & crh_html_spec::get_exclude_rejected_hits() const {
 }
 
 /// \brief Setter for whether to restrict HTML output to the contents of the body tag
-crh_html_spec & crh_html_spec::set_restrict_html_within_body(const bool &arg_restrict_html_within_body ///< Whether to restrict HTML output to the contents of the body tag
+crh_html_spec & crh_html_spec::set_restrict_html_within_body(const bool &prm_restrict_html_within_body ///< Whether to restrict HTML output to the contents of the body tag
                                                              ) {
-	restrict_html_within_body = arg_restrict_html_within_body;
+	restrict_html_within_body = prm_restrict_html_within_body;
 	return *this;
 }
 
 /// \brief Setter for the maximum number of non-solution hits to display in the HTML
-crh_html_spec & crh_html_spec::set_max_num_non_soln_hits(const size_t &arg_max_num_non_soln_hits ///< The maximum number of non-solution hits to display in the HTML
+crh_html_spec & crh_html_spec::set_max_num_non_soln_hits(const size_t &prm_max_num_non_soln_hits ///< The maximum number of non-solution hits to display in the HTML
                                                          ) {
-	max_num_non_soln_hits = arg_max_num_non_soln_hits;
+	max_num_non_soln_hits = prm_max_num_non_soln_hits;
 	return *this;
 }
 
 /// \brief Setter for whether to exclude hits rejected by the score filters from the HTML
-crh_html_spec & crh_html_spec::set_exclude_rejected_hits(const bool &arg_exclude_rejected_hits ///< Whether to exclude hits rejected by the score filters from the HTML
+crh_html_spec & crh_html_spec::set_exclude_rejected_hits(const bool &prm_exclude_rejected_hits ///< Whether to exclude hits rejected by the score filters from the HTML
                                                          ) {
-	exclude_rejected_hits = arg_exclude_rejected_hits;
+	exclude_rejected_hits = prm_exclude_rejected_hits;
 	return *this;
 }

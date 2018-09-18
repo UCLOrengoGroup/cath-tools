@@ -165,13 +165,13 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	template <typename T, size_t I, typename Proj>
-	inline std::unordered_map<T, uint> amino_acid::build_index_unordered_map(Proj &&arg_proj ///< An optional projection function to apply to each of the elements
+	inline std::unordered_map<T, uint> amino_acid::build_index_unordered_map(Proj &&prm_proj ///< An optional projection function to apply to each of the elements
 	                                                                         ) {
 		std::unordered_map<T, uint> index_map;
 		for (const uint &amino_acid_ctr : common::indices( static_cast<uint>( LETTER_CODE_AND_NAME_LIST().size() ) ) ) {
 			index_map.emplace(
 				common::invoke(
-					std::forward<Proj>( arg_proj ),
+					std::forward<Proj>( prm_proj ),
 					std::get<I>( LETTER_CODE_AND_NAME_LIST()[ amino_acid_ctr ] )
 				),
 				amino_acid_ctr
@@ -182,21 +182,21 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	template <typename T, size_t I>
-	inline T amino_acid::get_label(const size_t &arg_index ///< TODOCUMENT
+	inline T amino_acid::get_label(const size_t &prm_index ///< TODOCUMENT
 	                               ) {
-		if (arg_index >= amino_acid::LETTER_CODE_AND_NAME_LIST().size()) {
+		if (prm_index >= amino_acid::LETTER_CODE_AND_NAME_LIST().size()) {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Amino acid index is out of range"));
 		}
-		return std::get<I>( amino_acid::LETTER_CODE_AND_NAME_LIST()[ arg_index ] );
+		return std::get<I>( amino_acid::LETTER_CODE_AND_NAME_LIST()[ prm_index ] );
 	}
 
 	/// \brief TODOCUMENT
-	inline uint amino_acid::get_letter_index(const char &arg_letter ///< The 1 letter code
+	inline uint amino_acid::get_letter_index(const char &prm_letter ///< The 1 letter code
 	                                         ) {
-		const auto index_itr = INDEX_OF_LETTER().find( arg_letter );
+		const auto index_itr = INDEX_OF_LETTER().find( prm_letter );
 		if ( index_itr == common::cend( INDEX_OF_LETTER() ) ) {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-				"Amino acid letter \"" + std::string{ arg_letter } + "\" is not a recognised letter (currently case-sensitive)"
+				"Amino acid letter \"" + std::string{ prm_letter } + "\" is not a recognised letter (currently case-sensitive)"
 			));
 		}
 		return index_itr->second;
@@ -220,39 +220,39 @@ namespace cath {
 	}
 
 	/// \brief Ctor for amino_acid
-	inline amino_acid::amino_acid(const std::string      &arg_string,    ///< TODOCUMENT
-	                              const file::pdb_record &arg_pdb_record ///< TODOCUMENT
+	inline amino_acid::amino_acid(const std::string      &prm_string,    ///< TODOCUMENT
+	                              const file::pdb_record &prm_pdb_record ///< TODOCUMENT
 	                              ) {
-		switch ( arg_pdb_record ) {
+		switch ( prm_pdb_record ) {
 			case ( file::pdb_record::ATOM   ) : {
-				set_letter_code_or_name( arg_string );
+				set_letter_code_or_name( prm_string );
 				return;
 			}
 			case ( file::pdb_record::HETATM ) : {
-				if ( arg_string.length() != 3 ) {
+				if ( prm_string.length() != 3 ) {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 						"Cannot create a HETATM amino acid from a string that is not 3 characters long"
 					));
 				}
-				if ( common::contains( INDEX_OF_CODE(), arg_string ) ) {
-					set_letter_code_or_name( arg_string );
+				if ( common::contains( INDEX_OF_CODE(), prm_string ) ) {
+					set_letter_code_or_name( prm_string );
 				}
 				else {
 					data = char_3_arr{ {
-						arg_string[ 0 ],
-						arg_string[ 1 ],
-						arg_string[ 2 ]
+						prm_string[ 0 ],
+						prm_string[ 1 ],
+						prm_string[ 2 ]
 					} };
 				}
 				return;
 			}
 		}
-		BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of arg_pdb_record not recognised whilst constructing an amino_acid"));
+		BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of prm_pdb_record not recognised whilst constructing an amino_acid"));
 	}
 
 	/// \brief Ctor for amino_acid
-	inline amino_acid::amino_acid(const char &arg_letter ///< The 1 letter code
-	                              ) : data{ get_letter_index( arg_letter ) } {
+	inline amino_acid::amino_acid(const char &prm_letter ///< The 1 letter code
+	                              ) : data{ get_letter_index( prm_letter ) } {
 	}
 
 	namespace detail {
@@ -361,30 +361,30 @@ namespace cath {
 	/// \brief Get a string of the three-letter-code for the specified amino_acid
 	///
 	/// \relates amino_acid
-	inline std::string get_code_string(const amino_acid &arg_amino_acid ///< The amino_acid to query
+	inline std::string get_code_string(const amino_acid &prm_amino_acid ///< The amino_acid to query
 	                                   ) {
-		return common::char_arr_to_string( arg_amino_acid.get_code() );
+		return common::char_arr_to_string( prm_amino_acid.get_code() );
 	}
 
 	namespace detail {
 
 		/// \brief Make a less-than comparator for the specified amino_acid
-		inline std::tuple<uint8_t, char, char_3_arr> make_amino_acid_lt_comparator(const amino_acid &arg_aa ///< The amino_acid to query
+		inline std::tuple<uint8_t, char, char_3_arr> make_amino_acid_lt_comparator(const amino_acid &prm_aa ///< The amino_acid to query
 		                                                                           ) {
 			/// \todo Come GCC 6 as oldest compiler, remove this type alias and just return using braces
 			using uint8_char_char_3_arr_tpl = std::tuple<uint8_t, char, char_3_arr>;
-			switch ( arg_aa.get_type() ) {
+			switch ( prm_aa.get_type() ) {
 				case ( amino_acid_type::AA ) : {
-					return uint8_char_char_3_arr_tpl{ 0, *arg_aa.get_letter_if_amino_acid(), char_3_arr{ { 0, 0, 0 } } };
+					return uint8_char_char_3_arr_tpl{ 0, *prm_aa.get_letter_if_amino_acid(), char_3_arr{ { 0, 0, 0 } } };
 				}
 				case ( amino_acid_type::HETATOM ) : {
-					return uint8_char_char_3_arr_tpl{ 1, 0,                                  arg_aa.get_hetatm_chars() };
+					return uint8_char_char_3_arr_tpl{ 1, 0,                                  prm_aa.get_hetatm_chars() };
 				}
 				case ( amino_acid_type::DNA ) : {
 					return uint8_char_char_3_arr_tpl{ 2, 0,                                  char_3_arr{ { 0, 0, 0 } } };
 				}
 			}
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of arg_aa.get_type() not recognised whilst in make_amino_acid_lt_comparator()"));
+			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of prm_aa.get_type() not recognised whilst in make_amino_acid_lt_comparator()"));
 		}
 	} // namespace detail
 
@@ -400,30 +400,30 @@ namespace cath {
 	/// This is extended to the full range of <=, ==, !=, >, >= with Boost Operators (equivalent and totally_ordered).
 	///
 	/// \relates amino_acid
-	inline bool operator<(const amino_acid &arg_amino_acid_1, ///< The first  amino acid to compare
-	                      const amino_acid &arg_amino_acid_2  ///< The second amino acid to compare
+	inline bool operator<(const amino_acid &prm_amino_acid_1, ///< The first  amino acid to compare
+	                      const amino_acid &prm_amino_acid_2  ///< The second amino acid to compare
 	                      ) {
 		return (
-			detail::make_amino_acid_lt_comparator( arg_amino_acid_1 )
+			detail::make_amino_acid_lt_comparator( prm_amino_acid_1 )
 			<
-			detail::make_amino_acid_lt_comparator( arg_amino_acid_2 )
+			detail::make_amino_acid_lt_comparator( prm_amino_acid_2 )
 		);
 	}
 
 	/// \brief Return whether the specified amino_acid is a proper amino_acid (rather than a HETATM record or DNA/RNA pseudo-amino-acid)
 	///
 	/// \relates amino_acid
-	inline bool is_proper_amino_acid(const amino_acid &arg_amino_acid ///< The amino_acid to query
+	inline bool is_proper_amino_acid(const amino_acid &prm_amino_acid ///< The amino_acid to query
 	                                 ) {
-		return ( arg_amino_acid.get_type() == amino_acid_type::AA );
+		return ( prm_amino_acid.get_type() == amino_acid_type::AA );
 	}
 
 	/// \brief Return whether the specified amino_acid is for water (HOH)
 	///
 	/// \relates amino_acid
-	inline bool is_water(const amino_acid &arg_amino_acid ///< The amino_acid to query
+	inline bool is_water(const amino_acid &prm_amino_acid ///< The amino_acid to query
 	                     ) {
-		return ( arg_amino_acid.get_code() == char_3_arr{{ 'H', 'O', 'H' }} );
+		return ( prm_amino_acid.get_code() == char_3_arr{{ 'H', 'O', 'H' }} );
 	}
 
 	char_3_arr get_code_of_amino_acid_letter(const char &);

@@ -105,13 +105,13 @@ namespace cath {
 			}
 
 			/// \brief Ctor
-			inline hits_processor::hits_processor(std::ostream &arg_output_stream ///< The ostream to which results should be written
-			                                      ) noexcept : output_streams { { arg_output_stream } } {
+			inline hits_processor::hits_processor(std::ostream &prm_output_stream ///< The ostream to which results should be written
+			                                      ) noexcept : output_streams { { prm_output_stream } } {
 			}
 
 			/// \brief Ctor
-			inline hits_processor::hits_processor(ref_vec<std::ostream> arg_stream_refs ///< A vector of reference_wrappers to the ostreams to which results should be written
-			                                      ) noexcept : output_streams{ std::move( arg_stream_refs ) } {
+			inline hits_processor::hits_processor(ref_vec<std::ostream> prm_stream_refs ///< A vector of reference_wrappers to the ostreams to which results should be written
+			                                      ) noexcept : output_streams{ std::move( prm_stream_refs ) } {
 
 			}
 
@@ -121,41 +121,41 @@ namespace cath {
 			}
 
 			/// \brief NVI pass-through to the virtual do_process_hits_for_query() method
-			inline void hits_processor::process_hits_for_query(const std::string      &arg_query_id,         ///< The query_protein_id string
-			                                                   const crh_filter_spec  &arg_filter_spec,      ///< The filter spec to apply to hits
-			                                                   const crh_score_spec   &arg_crh_score_spec,   ///< The score spec to apply to incoming hits
-			                                                   const crh_segment_spec &arg_crh_segment_spec, ///< The segment spec to apply to incoming hits
-			                                                   full_hit_list          &arg_full_hits         ///< The full hits to be processed
+			inline void hits_processor::process_hits_for_query(const std::string      &prm_query_id,         ///< The query_protein_id string
+			                                                   const crh_filter_spec  &prm_filter_spec,      ///< The filter spec to apply to hits
+			                                                   const crh_score_spec   &prm_crh_score_spec,   ///< The score spec to apply to incoming hits
+			                                                   const crh_segment_spec &prm_crh_segment_spec, ///< The segment spec to apply to incoming hits
+			                                                   full_hit_list          &prm_full_hits         ///< The full hits to be processed
 			                                                   ) {
 				const calc_hit_list the_calc_hit_list{
-					std::move( arg_full_hits ),
-					arg_crh_score_spec,
-					arg_crh_segment_spec,
-					arg_filter_spec
+					std::move( prm_full_hits ),
+					prm_crh_score_spec,
+					prm_crh_segment_spec,
+					prm_filter_spec
 				};
-				arg_full_hits = full_hit_list{};
+				prm_full_hits = full_hit_list{};
 				return do_process_hits_for_query(
-					arg_query_id,
-					arg_filter_spec,
-					arg_crh_score_spec,
-					arg_crh_segment_spec,
+					prm_query_id,
+					prm_filter_spec,
+					prm_crh_score_spec,
+					prm_crh_segment_spec,
 					the_calc_hit_list
 				);
 			}
 
 			/// \brief NVI pass-through to the virtual do_process_hits_for_query() method
-			inline void hits_processor::process_hits_for_query(const std::string      &arg_query_id,         ///< The query_protein_id string
-			                                                   const crh_filter_spec  &arg_filter_spec,      ///< The filter spec to apply to hits
-			                                                   const crh_score_spec   &arg_crh_score_spec,   ///< The score spec to apply to incoming hits
-			                                                   const crh_segment_spec &arg_crh_segment_spec, ///< The segment spec to apply to incoming hits
-			                                                   const calc_hit_list    &arg_calc_hits         ///< The calc hits to be processed
+			inline void hits_processor::process_hits_for_query(const std::string      &prm_query_id,         ///< The query_protein_id string
+			                                                   const crh_filter_spec  &prm_filter_spec,      ///< The filter spec to apply to hits
+			                                                   const crh_score_spec   &prm_crh_score_spec,   ///< The score spec to apply to incoming hits
+			                                                   const crh_segment_spec &prm_crh_segment_spec, ///< The segment spec to apply to incoming hits
+			                                                   const calc_hit_list    &prm_calc_hits         ///< The calc hits to be processed
 			                                                   ) {
 				return do_process_hits_for_query(
-					arg_query_id,
-					arg_filter_spec,
-					arg_crh_score_spec,
-					arg_crh_segment_spec,
-					arg_calc_hits
+					prm_query_id,
+					prm_filter_spec,
+					prm_crh_score_spec,
+					prm_crh_segment_spec,
+					prm_calc_hits
 				);
 			}
 

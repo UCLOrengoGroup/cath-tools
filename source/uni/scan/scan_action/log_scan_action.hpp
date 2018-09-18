@@ -30,20 +30,20 @@ namespace cath {
 		template <typename T> class TD;
 		struct log_scan_action final {
 			long long unsigned int num_matches = 0;
-			void operator()(const detail::single_struc_res_pair &/*arg_res_pair_a*/,  ///< TODOCUMENT
-			                const detail::single_struc_res_pair &/*arg_res_pair_b*/,  ///< TODOCUMENT
-			                const index_type                    &/*arg_structure_a*/, ///< TODOCUMENT
-			                const index_type                    &/*arg_structure_b*/  ///< TODOCUMENT
+			void operator()(const detail::single_struc_res_pair &/*prm_res_pair_a*/,  ///< TODOCUMENT
+			                const detail::single_struc_res_pair &/*prm_res_pair_b*/,  ///< TODOCUMENT
+			                const index_type                    &/*prm_structure_a*/, ///< TODOCUMENT
+			                const index_type                    &/*prm_structure_b*/  ///< TODOCUMENT
 			                ) {
 				++num_matches;
 //				std::cerr << "For query residue pair [query_structure: ";
-//				std::cerr << arg_structure_a;
+//				std::cerr << prm_structure_a;
 //				std::cerr << "; ";
-//				std::cerr << arg_res_pair_a;
+//				std::cerr << prm_res_pair_a;
 //				std::cerr << "], found match [match_structure: ";
-//				std::cerr << arg_structure_b;
+//				std::cerr << prm_structure_b;
 //				std::cerr << "; ";
-//				std::cerr << arg_res_pair_b;
+//				std::cerr << prm_res_pair_b;
 //				std::cerr << "]\n";
 			}
 		};

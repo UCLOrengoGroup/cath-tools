@@ -116,13 +116,13 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-//bool operator==(const clone_ptr_test_abstract_base &arg_obj1, ///< TODOCUMENT
-//                const clone_ptr_test_abstract_base &arg_obj2  ///< TODOCUMENT
+//bool operator==(const clone_ptr_test_abstract_base &prm_obj1, ///< TODOCUMENT
+//                const clone_ptr_test_abstract_base &prm_obj2  ///< TODOCUMENT
 //                ) {
-//	if (typeid(arg_obj1) != typeid(arg_obj2)) {
+//	if (typeid(prm_obj1) != typeid(prm_obj2)) {
 //		return false;
 //	}
-//	return (arg_obj1.method() == arg_obj2.method());
+//	return (prm_obj1.method() == prm_obj2.method());
 //}
 
 BOOST_CLASS_EXPORT(clone_ptr_test_concrete1)

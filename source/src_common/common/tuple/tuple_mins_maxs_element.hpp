@@ -38,27 +38,27 @@ namespace cath {
 
 			/// \brief Update a min and max with a new value
 			template <typename T>
-			inline int update_min_max_with_value_impl(T       &arg_min,  ///< The min value
-			                                          T       &arg_max,  ///< The max value
-			                                          const T &arg_value ///< The new value
+			inline int update_min_max_with_value_impl(T       &prm_min,  ///< The min value
+			                                          T       &prm_max,  ///< The max value
+			                                          const T &prm_value ///< The new value
 			                                          ) {
-				if ( arg_value < arg_min ) { arg_min = arg_value; }
-				if ( arg_value > arg_max ) { arg_max = arg_value; }
+				if ( prm_value < prm_min ) { prm_min = prm_value; }
+				if ( prm_value > prm_max ) { prm_max = prm_value; }
 				return 0;
 			}
 
 			/// \brief Implementation for update_mins_maxs_with_value
 			template <typename Tpl, size_t... Index>
-			inline void update_mins_maxs_with_value_impl(Tpl       &arg_mins,          ///< The min tuple
-			                                             Tpl       &arg_maxs,          ///< The max tuple
-			                                             const Tpl &arg_value,         ///< The new tuple
+			inline void update_mins_maxs_with_value_impl(Tpl       &prm_mins,          ///< The min tuple
+			                                             Tpl       &prm_maxs,          ///< The max tuple
+			                                             const Tpl &prm_value,         ///< The new tuple
 			                                             std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 			                                             ) {
 				auto dummy_list = {
 					update_min_max_with_value_impl(
-						std::get<Index>( arg_mins  ),
-						std::get<Index>( arg_maxs  ),
-						std::get<Index>( arg_value )
+						std::get<Index>( prm_mins  ),
+						std::get<Index>( prm_maxs  ),
+						std::get<Index>( prm_value )
 					)...
 				};
 				boost::ignore_unused( dummy_list );
@@ -66,14 +66,14 @@ namespace cath {
 
 			/// \brief Element-wise update a min tuple and a max tuple with a new tuple
 			template <typename Tpl>
-			inline void update_mins_maxs_with_value(Tpl       &arg_mins, ///< The min tuple
-			                                        Tpl       &arg_maxs, ///< The max tuple
-			                                        const Tpl &arg_value ///< The new tuple
+			inline void update_mins_maxs_with_value(Tpl       &prm_mins, ///< The min tuple
+			                                        Tpl       &prm_maxs, ///< The max tuple
+			                                        const Tpl &prm_value ///< The new tuple
 			                                        ) {
 				return update_mins_maxs_with_value_impl(
-					arg_mins,
-					arg_maxs,
-					arg_value,
+					prm_mins,
+					prm_maxs,
+					prm_value,
 					tuple_index_sequence<Tpl>{}
 				);
 			}
@@ -83,16 +83,16 @@ namespace cath {
 
 				/// \brief Find the element-wise mins and maxs tuples of a range of tuples
 				template <typename Rng>
-				inline auto operator()(Rng &&arg_rng ///< A range of tuples
+				inline auto operator()(Rng &&prm_rng ///< A range of tuples
 				                       ) const {
 					using value_t = common::range_value_t<Rng>;
 
 					static_assert( is_tuple< value_t >::value, "tuple_mins_maxs_element requires a range of tuples" );
 
-					auto       begin_itr     = common::cbegin( arg_rng );
-					const auto end_itr       = common::cend  ( arg_rng );
+					auto       begin_itr     = common::cbegin( prm_rng );
+					const auto end_itr       = common::cend  ( prm_rng );
 
-					assert( begin_itr != end_itr ); // arg_rng mustn't be empty
+					assert( begin_itr != end_itr ); // prm_rng mustn't be empty
 
 					// Set the mins and maxs to the element
 					value_t mins = *begin_itr;

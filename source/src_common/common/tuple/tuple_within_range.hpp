@@ -33,12 +33,12 @@ namespace cath {
 
 			/// \brief Implementation function for tuple_within_range
 			template <typename Tpl, size_t... Index>
-			constexpr bool in_range_impl(const Tpl &arg_indexes,       ///< The index tuple whose values are to be checked
-			                             const Tpl &arg_nums_cells,    ///< The tuple containing the values that the corresponding index values should be strictly less than
+			constexpr bool in_range_impl(const Tpl &prm_indexes,       ///< The index tuple whose values are to be checked
+			                             const Tpl &prm_nums_cells,    ///< The tuple containing the values that the corresponding index values should be strictly less than
 			                             std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 			                             ) {
 				return variadic_and(
-					std::get<Index>( arg_indexes ) >= 0 && std::get<Index>( arg_indexes ) < std::get<Index>( arg_nums_cells )...
+					std::get<Index>( prm_indexes ) >= 0 && std::get<Index>( prm_indexes ) < std::get<Index>( prm_nums_cells )...
 				);
 			}
 
@@ -49,12 +49,12 @@ namespace cath {
 				/// \brief Check that each value in the specified index tuple is non-negative
 				///        and is strictly less than the corresponding value in the specified nums tuple
 				template <typename Tpl>
-				constexpr bool operator()(const Tpl &arg_indexes,   ///< The index tuple whose values are to be checked
-				                          const Tpl &arg_nums_cells ///< The tuple containing the values that the corresponding index values should be strictly less than
+				constexpr bool operator()(const Tpl &prm_indexes,   ///< The index tuple whose values are to be checked
+				                          const Tpl &prm_nums_cells ///< The tuple containing the values that the corresponding index values should be strictly less than
 				                          ) const {
 					return in_range_impl(
-						arg_indexes,
-						arg_nums_cells,
+						prm_indexes,
+						prm_nums_cells,
 						tuple_index_sequence<Tpl>{}
 					);
 				}

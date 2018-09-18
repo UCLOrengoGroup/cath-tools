@@ -46,29 +46,29 @@ using std::make_pair;
 ///
 /// The other segments may include the original segment (though that may
 /// suggest that the client code isn't correctly handling hits)
-res_arrow_opt cath::rslv::detail::get_boundary_impl(const boundary_wanted  &arg_dirn,            ///< The direction of the boundary to query
-                                                    const seq_seg          &arg_segment,         ///< The hit to query
-                                                    const seq_seg_vec      &arg_other_segments,  ///< The other segments from other hits
-                                                    const crh_segment_spec &arg_crh_segment_spec ///< The crh_segment_spec to use
+res_arrow_opt cath::rslv::detail::get_boundary_impl(const boundary_wanted  &prm_dirn,            ///< The direction of the boundary to query
+                                                    const seq_seg          &prm_segment,         ///< The hit to query
+                                                    const seq_seg_vec      &prm_other_segments,  ///< The other segments from other hits
+                                                    const crh_segment_spec &prm_crh_segment_spec ///< The crh_segment_spec to use
                                                     ) {
 	// Make a function that returns whether the specified segment is long enough
 	const auto is_long_enough_fn = [&] (const seq_seg &x) {
-		return get_length( x ) >= arg_crh_segment_spec.get_min_seg_length();
+		return get_length( x ) >= prm_crh_segment_spec.get_min_seg_length();
 	};
 
 	// If the query segment isn't long enough then return none
-	if ( ! is_long_enough_fn( arg_segment ) ) {
+	if ( ! is_long_enough_fn( prm_segment ) ) {
 		return none;
 	}
 
 	// Create a range that excludes the query segment
-	const auto other_segments = arg_other_segments
-		| filtered( [&] (const seq_seg &x) { return x != arg_segment; } );
+	const auto other_segments = prm_other_segments
+		| filtered( [&] (const seq_seg &x) { return x != prm_segment; } );
 
 	// Make a function that returns whether the first seg is more in the
 	// direction of the end of interest than the second
 	const auto in_wanted_dirn_fn = [&] (const seq_seg &x, const seq_seg &y) {
-		return ( arg_dirn == boundary_wanted::START )
+		return ( prm_dirn == boundary_wanted::START )
 			? ( midpoint_less( x, y ) )
 			: ( midpoint_less( y, x ) );
 	};
@@ -76,7 +76,7 @@ res_arrow_opt cath::rslv::detail::get_boundary_impl(const boundary_wanted  &arg_
 	// long enough and on the correct side of the query segment
 	const auto is_long_enough_and_on_correct_side_fn = [&] (const seq_seg &x) {
 		return (
-			in_wanted_dirn_fn( x, arg_segment )
+			in_wanted_dirn_fn( x, prm_segment )
 			&&
 			is_long_enough_fn( x )
 		);
@@ -102,45 +102,45 @@ res_arrow_opt cath::rslv::detail::get_boundary_impl(const boundary_wanted  &arg_
 			other_segs_on_correct_side,
 			in_wanted_dirn_fn
 		),
-		arg_segment,
-		arg_crh_segment_spec.get_overlap_trim_spec()
+		prm_segment,
+		prm_crh_segment_spec.get_overlap_trim_spec()
 	);
 }
 
 /// \brief Get the start boundary for the specified segment in the context of the other segments and crh_segment_spec
-res_arrow_opt cath::rslv::get_start_boundary(const seq_seg          &arg_segment,         ///< The hit to query
-                                             const seq_seg_vec      &arg_other_segments,  ///< The other segments from other hits
-                                             const crh_segment_spec &arg_crh_segment_spec ///< The crh_segment_spec to use
+res_arrow_opt cath::rslv::get_start_boundary(const seq_seg          &prm_segment,         ///< The hit to query
+                                             const seq_seg_vec      &prm_other_segments,  ///< The other segments from other hits
+                                             const crh_segment_spec &prm_crh_segment_spec ///< The crh_segment_spec to use
                                              ) {
 	return get_boundary_impl(
 		detail::boundary_wanted::START,
-		arg_segment,
-		arg_other_segments,
-		arg_crh_segment_spec
+		prm_segment,
+		prm_other_segments,
+		prm_crh_segment_spec
 	);
 }
 
 /// \brief Get the stop boundary for the specified segment in the context of the other segments and crh_segment_spec
-res_arrow_opt cath::rslv::get_stop_boundary(const seq_seg          &arg_segment,         ///< The hit to query
-                                            const seq_seg_vec      &arg_other_segments,  ///< The other segments from other hits
-                                            const crh_segment_spec &arg_crh_segment_spec ///< The crh_segment_spec to use
+res_arrow_opt cath::rslv::get_stop_boundary(const seq_seg          &prm_segment,         ///< The hit to query
+                                            const seq_seg_vec      &prm_other_segments,  ///< The other segments from other hits
+                                            const crh_segment_spec &prm_crh_segment_spec ///< The crh_segment_spec to use
                                             ) {
 	return get_boundary_impl(
 		detail::boundary_wanted::STOP,
-		arg_segment,
-		arg_other_segments,
-		arg_crh_segment_spec
+		prm_segment,
+		prm_other_segments,
+		prm_crh_segment_spec
 	);
 }
 
 /// \brief Get the start/stop boundary pair for the specified segment in the context of the other segments and crh_segment_spec
-seg_boundary_pair cath::rslv::get_boundary_pair(const seq_seg          &arg_segment,        ///< The hit to query
-                                                const seq_seg_vec      &arg_other_segments, ///< The other segments from other hits
-                                                const crh_segment_spec &arg_crh_segment_spec       ///< The crh_segment_spec to use
+seg_boundary_pair cath::rslv::get_boundary_pair(const seq_seg          &prm_segment,        ///< The hit to query
+                                                const seq_seg_vec      &prm_other_segments, ///< The other segments from other hits
+                                                const crh_segment_spec &prm_crh_segment_spec       ///< The crh_segment_spec to use
                                                 ) {
 	return make_pair(
-		get_start_boundary( arg_segment, arg_other_segments, arg_crh_segment_spec ),
-		get_stop_boundary ( arg_segment, arg_other_segments, arg_crh_segment_spec )
+		get_start_boundary( prm_segment, prm_other_segments, prm_crh_segment_spec ),
+		get_stop_boundary ( prm_segment, prm_other_segments, prm_crh_segment_spec )
 	);
 }
 
@@ -149,14 +149,14 @@ seg_boundary_pair cath::rslv::get_boundary_pair(const seq_seg          &arg_segm
 /// If the segments don't overlap, then this returns none
 ///
 /// The segments do not need to be provided in order
-res_arrow_opt cath::rslv::calc_resolved_boundary(const seq_seg   &arg_segment_a, ///< The first  segment to compare
-                                                 const seq_seg   &arg_segment_b, ///< The second segment to compare
-                                                 const trim_spec &arg_trim_spec  ///< The trim_spec to use
+res_arrow_opt cath::rslv::calc_resolved_boundary(const seq_seg   &prm_segment_a, ///< The first  segment to compare
+                                                 const seq_seg   &prm_segment_b, ///< The second segment to compare
+                                                 const trim_spec &prm_trim_spec  ///< The trim_spec to use
                                                  ) {
 	// Get the correct order for the segments
-	const bool a_is_first = midpoint_less( arg_segment_a, arg_segment_b );
-	const seq_seg &seg_lhs =     a_is_first   ? arg_segment_a : arg_segment_b;
-	const seq_seg &seg_rhs = ( ! a_is_first ) ? arg_segment_a : arg_segment_b;
+	const bool a_is_first = midpoint_less( prm_segment_a, prm_segment_b );
+	const seq_seg &seg_lhs =     a_is_first   ? prm_segment_a : prm_segment_b;
+	const seq_seg &seg_rhs = ( ! a_is_first ) ? prm_segment_a : prm_segment_b;
 
 	// If the segments don't overlap, return none
 	if ( seg_lhs.get_stop_arrow() <= seg_rhs.get_start_arrow() ) {
@@ -164,8 +164,8 @@ res_arrow_opt cath::rslv::calc_resolved_boundary(const seq_seg   &arg_segment_a,
 	}
 
 	// Otherwise, grab the relevant trim lengths and resolve the boundary
-	const auto lhs_stop_trim  = stop_trimming_of_length ( arg_trim_spec, get_length( seg_lhs ) );
-	const auto rhs_start_trim = start_trimming_of_length( arg_trim_spec, get_length( seg_rhs ) );
+	const auto lhs_stop_trim  = stop_trimming_of_length ( prm_trim_spec, get_length( seg_lhs ) );
+	const auto rhs_start_trim = start_trimming_of_length( prm_trim_spec, get_length( seg_rhs ) );
 	return resolve_boundary(
 		seg_lhs.get_stop_arrow () - lhs_stop_trim,
 		lhs_stop_trim,

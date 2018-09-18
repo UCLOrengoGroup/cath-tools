@@ -40,17 +40,17 @@ size_t new_matrix_dyn_prog_score_source::do_get_length_b() const {
 }
 
 /// \brief TODOCUMENT
-score_type new_matrix_dyn_prog_score_source::do_get_score(const size_t &arg_index_a, ///< The index of the element of interest in the first  sequence
-                                                          const size_t &arg_index_b  ///< The index of the element of interest in the second sequence
+score_type new_matrix_dyn_prog_score_source::do_get_score(const size_t &prm_index_a, ///< The index of the element of interest in the first  sequence
+                                                          const size_t &prm_index_b  ///< The index of the element of interest in the second sequence
                                                           ) const {
-	return numeric_cast<score_type>(matrix[ arg_index_a ][ arg_index_b ]);
+	return numeric_cast<score_type>(matrix[ prm_index_a ][ prm_index_b ]);
 }
 
 /// \brief Ctor for new_matrix_dyn_prog_score_source
-new_matrix_dyn_prog_score_source::new_matrix_dyn_prog_score_source(const float_score_vec_vec &arg_matrix,   ///< TODOCUMENT
-                                                                   const size_t              &arg_length_a, ///< TODOCUMENT
-                                                                   const size_t              &arg_length_b  ///< TODOCUMENT
-                                                                   ) : matrix   ( arg_matrix   ),
-                                                                       length_a ( arg_length_a ),
-                                                                       length_b ( arg_length_b ) {
+new_matrix_dyn_prog_score_source::new_matrix_dyn_prog_score_source(const float_score_vec_vec &prm_matrix,   ///< TODOCUMENT
+                                                                   const size_t              &prm_length_a, ///< TODOCUMENT
+                                                                   const size_t              &prm_length_b  ///< TODOCUMENT
+                                                                   ) : matrix   ( prm_matrix   ),
+                                                                       length_a ( prm_length_a ),
+                                                                       length_b ( prm_length_b ) {
 }

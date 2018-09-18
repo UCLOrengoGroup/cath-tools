@@ -30,9 +30,9 @@ using std::string;
 /// \brief Generate a string describing the specified coarse_element_type
 ///
 /// \relates coarse_element_type
-string cath::file::to_string(const coarse_element_type &arg_element ///< The coarse_element_type to describe
+string cath::file::to_string(const coarse_element_type &prm_element ///< The coarse_element_type to describe
                              ) {
-	switch ( arg_element ) {
+	switch ( prm_element ) {
 		case ( coarse_element_type::CARBON       ) : { return "carbon"       ; }
 		case ( coarse_element_type::CARBON_ALPHA ) : { return "carbon_alpha" ; }
 		case ( coarse_element_type::CARBON_BETA  ) : { return "carbon_beta"  ; }
@@ -46,9 +46,9 @@ string cath::file::to_string(const coarse_element_type &arg_element ///< The coa
 /// \brief Insert a description of the specified coarse_element_type into the specified ostream
 ///
 /// \relates coarse_element_type
-ostream & cath::file::operator<<(ostream                   &arg_os,     ///< The ostream into which the description should be inserted
-                                 const coarse_element_type &arg_element ///< The coarse_element_type to describe
+ostream & cath::file::operator<<(ostream                   &prm_os,     ///< The ostream into which the description should be inserted
+                                 const coarse_element_type &prm_element ///< The coarse_element_type to describe
                                  ) {
-	arg_os << to_string( arg_element );
-	return arg_os;
+	prm_os << to_string( prm_element );
+	return prm_os;
 }

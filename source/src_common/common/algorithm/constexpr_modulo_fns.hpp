@@ -38,155 +38,155 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename T, typename U>
-			inline constexpr std::pair<U, T> flip_pair(const std::pair<T, U> &arg_pair ///< TODOCUMENT
+			inline constexpr std::pair<U, T> flip_pair(const std::pair<T, U> &prm_pair ///< TODOCUMENT
 			                                           ) {
-				return std::make_pair( arg_pair.second, arg_pair.first );
+				return std::make_pair( prm_pair.second, prm_pair.first );
 			}
 
 			/// \brief TODOCUMENT
 			///
-			/// \pre arg_r_i >= arg_r_i_plus_one
+			/// \pre prm_r_i >= prm_r_i_plus_one
 			template <typename T, typename U>
-			inline constexpr std::pair<U, U> extended_euclid_algo_impl(const T &arg_r_i,          ///< TODOCUMENT
-			                                                           const U &arg_s_i,          ///< TODOCUMENT
-			                                                           const U &arg_t_i,          ///< TODOCUMENT
-			                                                           const T &arg_r_i_plus_one, ///< TODOCUMENT
-			                                                           const U &arg_s_i_plus_one, ///< TODOCUMENT
-			                                                           const U &arg_t_i_plus_one  ///< TODOCUMENT
+			inline constexpr std::pair<U, U> extended_euclid_algo_impl(const T &prm_r_i,          ///< TODOCUMENT
+			                                                           const U &prm_s_i,          ///< TODOCUMENT
+			                                                           const U &prm_t_i,          ///< TODOCUMENT
+			                                                           const T &prm_r_i_plus_one, ///< TODOCUMENT
+			                                                           const U &prm_s_i_plus_one, ///< TODOCUMENT
+			                                                           const U &prm_t_i_plus_one  ///< TODOCUMENT
 			                                                           ) {
 				static_assert( std::is_unsigned<T>::value, "constexpr_gcd() must be performed on an unsigned integral type" );
-				return ( arg_r_i_plus_one == 0 ) ? throw("Cannot perform extended_euclid_algo_impl with a 0") :
-				       ( arg_r_i_plus_one == 1 ) ? std::make_pair( arg_s_i_plus_one, arg_t_i_plus_one ) :
+				return ( prm_r_i_plus_one == 0 ) ? throw("Cannot perform extended_euclid_algo_impl with a 0") :
+				       ( prm_r_i_plus_one == 1 ) ? std::make_pair( prm_s_i_plus_one, prm_t_i_plus_one ) :
 				                                   extended_euclid_algo_impl(
-				                                   	arg_r_i_plus_one,
-				                                   	arg_s_i_plus_one,
-				                                   	arg_t_i_plus_one,
-				                                   	static_cast<T>( arg_r_i % arg_r_i_plus_one ),
-				                                   	static_cast<U>( arg_s_i - ( arg_s_i_plus_one * static_cast<U>( arg_r_i / arg_r_i_plus_one) ) ),
-				                                   	static_cast<U>( arg_t_i - ( arg_t_i_plus_one * static_cast<U>( arg_r_i / arg_r_i_plus_one) ) )
+				                                   	prm_r_i_plus_one,
+				                                   	prm_s_i_plus_one,
+				                                   	prm_t_i_plus_one,
+				                                   	static_cast<T>( prm_r_i % prm_r_i_plus_one ),
+				                                   	static_cast<U>( prm_s_i - ( prm_s_i_plus_one * static_cast<U>( prm_r_i / prm_r_i_plus_one) ) ),
+				                                   	static_cast<U>( prm_t_i - ( prm_t_i_plus_one * static_cast<U>( prm_r_i / prm_r_i_plus_one) ) )
 				                                   );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename T>
-			inline constexpr auto extended_euclid_algo(const T &arg_a, ///< TODOCUMENT
-			                                           const T &arg_b  ///< TODOCUMENT
+			inline constexpr auto extended_euclid_algo(const T &prm_a, ///< TODOCUMENT
+			                                           const T &prm_b  ///< TODOCUMENT
 			                                           ) {
-				return ( arg_a >= arg_b )
+				return ( prm_a >= prm_b )
 				? extended_euclid_algo_impl(
-					arg_a, static_cast<std::make_signed_t<T>>( 1 ), static_cast<std::make_signed_t<T>>( 0 ),
-					arg_b, static_cast<std::make_signed_t<T>>( 0 ), static_cast<std::make_signed_t<T>>( 1 )
+					prm_a, static_cast<std::make_signed_t<T>>( 1 ), static_cast<std::make_signed_t<T>>( 0 ),
+					prm_b, static_cast<std::make_signed_t<T>>( 0 ), static_cast<std::make_signed_t<T>>( 1 )
 				)
 				: flip_pair( extended_euclid_algo_impl(
-					arg_b, static_cast<std::make_signed_t<T>>( 1 ), static_cast<std::make_signed_t<T>>( 0 ),
-					arg_a, static_cast<std::make_signed_t<T>>( 0 ), static_cast<std::make_signed_t<T>>( 1 )
+					prm_b, static_cast<std::make_signed_t<T>>( 1 ), static_cast<std::make_signed_t<T>>( 0 ),
+					prm_a, static_cast<std::make_signed_t<T>>( 0 ), static_cast<std::make_signed_t<T>>( 1 )
 				) );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename T>
-			inline constexpr auto extended_euclid_algo_products(const T &arg_a, ///< TODOCUMENT
-			                                                    const T &arg_b  ///< TODOCUMENT
+			inline constexpr auto extended_euclid_algo_products(const T &prm_a, ///< TODOCUMENT
+			                                                    const T &prm_b  ///< TODOCUMENT
 			                                                    ) {
 				return std::make_pair(
-					detail::extended_euclid_algo( arg_a, arg_b ).first  * static_cast<std::make_signed_t<T>>( arg_a ),
-					detail::extended_euclid_algo( arg_a, arg_b ).second * static_cast<std::make_signed_t<T>>( arg_b )
+					detail::extended_euclid_algo( prm_a, prm_b ).first  * static_cast<std::make_signed_t<T>>( prm_a ),
+					detail::extended_euclid_algo( prm_a, prm_b ).second * static_cast<std::make_signed_t<T>>( prm_b )
 				);
 			}
 
 			/// \brief TODOCUMENT
 			template <typename T>
-			inline constexpr std::make_signed_t<T> chinese_remainder_coprime_pair_num(const T &arg_index_a, ///< TODOCUMENT
-			                                                                          const T &arg_index_b, ///< TODOCUMENT
-			                                                                          const T &arg_mod_a,   ///< TODOCUMENT
-			                                                                          const T &arg_mod_b    ///< TODOCUMENT
+			inline constexpr std::make_signed_t<T> chinese_remainder_coprime_pair_num(const T &prm_index_a, ///< TODOCUMENT
+			                                                                          const T &prm_index_b, ///< TODOCUMENT
+			                                                                          const T &prm_mod_a,   ///< TODOCUMENT
+			                                                                          const T &prm_mod_b    ///< TODOCUMENT
 			                                                                          ) {
 				return (
-					( detail::extended_euclid_algo_products( arg_mod_a, arg_mod_b ).first  * static_cast<std::make_signed_t<T>>( arg_index_a ) )
+					( detail::extended_euclid_algo_products( prm_mod_a, prm_mod_b ).first  * static_cast<std::make_signed_t<T>>( prm_index_a ) )
 					+
-					( detail::extended_euclid_algo_products( arg_mod_a, arg_mod_b ).second * static_cast<std::make_signed_t<T>>( arg_index_b ) )
-				) % static_cast<std::make_signed_t<T>>( constexpr_lcm( arg_mod_a, arg_mod_b ) );
+					( detail::extended_euclid_algo_products( prm_mod_a, prm_mod_b ).second * static_cast<std::make_signed_t<T>>( prm_index_b ) )
+				) % static_cast<std::make_signed_t<T>>( constexpr_lcm( prm_mod_a, prm_mod_b ) );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename T>
-			inline constexpr T chinese_remainder_coprime_pair_num_above(const T &arg_index_a, ///< TODOCUMENT
-			                                                            const T &arg_index_b, ///< TODOCUMENT
-			                                                            const T &arg_mod_a,   ///< TODOCUMENT
-			                                                            const T &arg_mod_b    ///< TODOCUMENT
+			inline constexpr T chinese_remainder_coprime_pair_num_above(const T &prm_index_a, ///< TODOCUMENT
+			                                                            const T &prm_index_b, ///< TODOCUMENT
+			                                                            const T &prm_mod_a,   ///< TODOCUMENT
+			                                                            const T &prm_mod_b    ///< TODOCUMENT
 			                                                            ) {
 				return
 					(
-						static_cast<std::make_signed_t<T>>( arg_index_a + arg_index_b )
+						static_cast<std::make_signed_t<T>>( prm_index_a + prm_index_b )
 						>
-						chinese_remainder_coprime_pair_num( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b )
+						chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 					)
 					? static_cast<T>(
-						chinese_remainder_coprime_pair_num( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b )
+						chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 						+
 						(
 							round_up_mod(
-								static_cast<std::make_signed_t<T>>( arg_index_a + arg_index_b )
+								static_cast<std::make_signed_t<T>>( prm_index_a + prm_index_b )
 								-
-								chinese_remainder_coprime_pair_num( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b ),
-								static_cast<std::make_signed_t<T>>( constexpr_lcm( arg_mod_a, arg_mod_b ) )
+								chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b ),
+								static_cast<std::make_signed_t<T>>( constexpr_lcm( prm_mod_a, prm_mod_b ) )
 							)
 						)
 					)
 					: static_cast<T>(
-						chinese_remainder_coprime_pair_num( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b )
+						chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 					);
 			}
 
 //			/// \brief TODOCUMENT
 //			template <typename T>
-//			inline constexpr T chinese_remainder_coprime_pair_num_above(const T &arg_index_a, ///< TODOCUMENT
-//			                                                            const T &arg_index_b, ///< TODOCUMENT
-//			                                                            const T &arg_mod_a,   ///< TODOCUMENT
-//			                                                            const T &arg_mod_b    ///< TODOCUMENT
+//			inline constexpr T chinese_remainder_coprime_pair_num_above(const T &prm_index_a, ///< TODOCUMENT
+//			                                                            const T &prm_index_b, ///< TODOCUMENT
+//			                                                            const T &prm_mod_a,   ///< TODOCUMENT
+//			                                                            const T &prm_mod_b    ///< TODOCUMENT
 //			                                                            ) {
 //				return
 //					(
-//						static_cast<std::make_signed_t<T>>( arg_index_a + arg_index_b )
+//						static_cast<std::make_signed_t<T>>( prm_index_a + prm_index_b )
 //						>
-//						chinese_remainder_coprime_pair_num( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b )
+//						chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 //					)
 //					? static_cast<T>(
-//						chinese_remainder_coprime_pair_num( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b )
+//						chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 //						+
 //						(
-//							static_cast<std::make_signed_t<T>>( constexpr_lcm( arg_mod_a, arg_mod_b ) )
+//							static_cast<std::make_signed_t<T>>( constexpr_lcm( prm_mod_a, prm_mod_b ) )
 //							*
 //							(
 //								static_cast<std::make_signed_t<T>>( 1 )
 //								+
 //								(
 //									(
-//										static_cast<std::make_signed_t<T>>( arg_index_a + arg_index_b )
+//										static_cast<std::make_signed_t<T>>( prm_index_a + prm_index_b )
 //										-
-//										chinese_remainder_coprime_pair_num( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b )
+//										chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 //									)
 //									/
-//									static_cast<std::make_signed_t<T>>( constexpr_lcm( arg_mod_a, arg_mod_b ) )
+//									static_cast<std::make_signed_t<T>>( constexpr_lcm( prm_mod_a, prm_mod_b ) )
 //								)
 //							)
 //						)
 //					)
 //					: static_cast<T>(
-//						chinese_remainder_coprime_pair_num( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b )
+//						chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 //					);
 //			}
 
 			/// \brief TODOCUMENT
 			template <typename T>
-			inline constexpr std::pair<T, T> chinese_remainder_coprime_pair(const T &arg_index_a, ///< TODOCUMENT
-			                                                                const T &arg_index_b, ///< TODOCUMENT
-			                                                                const T &arg_mod_a,   ///< TODOCUMENT
-			                                                                const T &arg_mod_b    ///< TODOCUMENT
+			inline constexpr std::pair<T, T> chinese_remainder_coprime_pair(const T &prm_index_a, ///< TODOCUMENT
+			                                                                const T &prm_index_b, ///< TODOCUMENT
+			                                                                const T &prm_mod_a,   ///< TODOCUMENT
+			                                                                const T &prm_mod_b    ///< TODOCUMENT
 			                                                                ) {
 				return std::make_pair(
-					chinese_remainder_coprime_pair_num_above( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b ) - arg_index_b,
-					chinese_remainder_coprime_pair_num_above( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b ) - arg_index_a
+					chinese_remainder_coprime_pair_num_above( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b ) - prm_index_b,
+					chinese_remainder_coprime_pair_num_above( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b ) - prm_index_a
 				);
 			}
 		} // namespace detail
@@ -219,12 +219,12 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline constexpr std::pair<T, T> chinese_remainder_coprime_pair(const T &arg_index_a, ///< TODOCUMENT
-		                                                                const T &arg_index_b, ///< TODOCUMENT
-		                                                                const T &arg_mod_a,   ///< TODOCUMENT
-		                                                                const T &arg_mod_b    ///< TODOCUMENT
+		inline constexpr std::pair<T, T> chinese_remainder_coprime_pair(const T &prm_index_a, ///< TODOCUMENT
+		                                                                const T &prm_index_b, ///< TODOCUMENT
+		                                                                const T &prm_mod_a,   ///< TODOCUMENT
+		                                                                const T &prm_mod_b    ///< TODOCUMENT
 		                                                                ) {
-			return detail::chinese_remainder_coprime_pair( arg_index_a, arg_index_b, arg_mod_a, arg_mod_b );
+			return detail::chinese_remainder_coprime_pair( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b );
 		}
 
 	} // namespace common

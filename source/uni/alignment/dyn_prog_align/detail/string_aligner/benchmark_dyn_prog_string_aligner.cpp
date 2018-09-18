@@ -44,15 +44,15 @@ using boost::numeric_cast;
 using boost::range::reverse;
 
 /// \brief TODOCUMENT
-void benchmark_dyn_prog_string_aligner::make_ends_spaces(string &arg_string ///< TODOCUMENT
+void benchmark_dyn_prog_string_aligner::make_ends_spaces(string &prm_string ///< TODOCUMENT
                                                          ) {
-	for (char &letter : arg_string) {
+	for (char &letter : prm_string) {
 		if (letter != '-') {
 			break;
 		}
 		letter = ' ';
 	}
-	for (char &letter : arg_string | reversed ) {
+	for (char &letter : prm_string | reversed ) {
 		if (letter != '-') {
 			break;
 		}
@@ -88,18 +88,18 @@ void benchmark_dyn_prog_string_aligner::make_ends_spaces(string &arg_string ///<
 ///                : CECC
 ///                : C-AD
 ///
-str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_string_a,   ///< TODOCUMENT
-                                                         const string      &arg_string_b,   ///< TODOCUMENT
-                                                         const gap_penalty &arg_gap_penalty ///< The gap penalty to be applied
+str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &prm_string_a,   ///< TODOCUMENT
+                                                         const string      &prm_string_b,   ///< TODOCUMENT
+                                                         const gap_penalty &prm_gap_penalty ///< The gap penalty to be applied
                                                          ) const {
 	// Check that the open and extend gap penalties are equal and then grab one of them
-	if ( arg_gap_penalty.get_open_gap_penalty() != arg_gap_penalty.get_extend_gap_penalty() ) {
+	if ( prm_gap_penalty.get_open_gap_penalty() != prm_gap_penalty.get_extend_gap_penalty() ) {
 		BOOST_THROW_EXCEPTION(not_implemented_exception("benchmark_dyn_prog_string_aligner unable to handle non-equal open and extend gap_penalty values"));
 	}
-	const score_type   common_gap_penalty = arg_gap_penalty.get_open_gap_penalty();
+	const score_type   common_gap_penalty = prm_gap_penalty.get_open_gap_penalty();
 
-	const size_t       length_a   = arg_string_a.length();
-	const size_t       length_b   = arg_string_b.length();
+	const size_t       length_a   = prm_string_a.length();
+	const size_t       length_b   = prm_string_b.length();
 	const size_t       max_length = max(length_a, length_b);
 	vector<score_type> accumulation_matrix(    max_length * max_length );
 	vector<ptrdiff_t>  prev_seq_1_posn_matrix( max_length * max_length );
@@ -126,7 +126,7 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 				best_row_index[seq_2_ctr] = 0;
 
 				// If residues seq1Ctr and seq2Ctr are a good match then set matrix entries to 1
-				if (arg_string_a[seq_1_ctr] == arg_string_b[seq_2_ctr] && arg_string_a[seq_1_ctr] != 'X') {
+				if (prm_string_a[seq_1_ctr] == prm_string_b[seq_2_ctr] && prm_string_a[seq_1_ctr] != 'X') {
 					accumulation_matrix[seq_2_ctr] = 1;
 					best_row_value     [seq_2_ctr] = 1;
 					top_score = 1;
@@ -195,7 +195,7 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 
 				// This cell represents aligning argString1[seq1Ctr] and argString2[seq2Ctr] so
 				// if they are a good match, award another point
-				if (arg_string_a[seq_1_ctr] == arg_string_b[seq_2_ctr] && arg_string_a[seq_1_ctr] != 'X') {
+				if (prm_string_a[seq_1_ctr] == prm_string_b[seq_2_ctr] && prm_string_a[seq_1_ctr] != 'X') {
 					++this_value;
 				}
 
@@ -252,10 +252,10 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 		aligned_1 += string( numeric_cast<size_t>( seq_2_tail_length - seq_1_tail_length ), '-');
 	}
 	for (const size_t &tail_1_ctr : irange( best_seq_1_end, length_a ) | reversed ) {
-		aligned_1 += arg_string_a[ tail_1_ctr ];
+		aligned_1 += prm_string_a[ tail_1_ctr ];
 	}
 	for (const size_t &tail_2_ctr : irange( best_seq_2_end, length_b ) | reversed ) {
-		aligned_2 += arg_string_b[ tail_2_ctr ];
+		aligned_2 += prm_string_b[ tail_2_ctr ];
 	}
 
 	// Now work back through the matrix, appending to aligned1 and aligned2
@@ -268,27 +268,27 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &arg_
 		if (seq_1_ctr - new_seq_1_ctr > 1) {
 			aligned_2 += string( numeric_cast<size_t>( seq_1_ctr - new_seq_1_ctr - 1 ), '-' );
 			for (const size_t &ins_1_ctr : irange( numeric_cast<size_t>( new_seq_1_ctr + 1 ), numeric_cast<size_t>( seq_1_ctr ) ) | reversed) {
-				aligned_1 += arg_string_a[ ins_1_ctr ];
+				aligned_1 += prm_string_a[ ins_1_ctr ];
 			}
 		}
 		else if (seq_2_ctr - new_seq_2_ctr > 1) {
 			aligned_1 += string( numeric_cast<size_t>( seq_2_ctr - new_seq_2_ctr - 1 ), '-' );
 			for (const size_t &ins_2_ctr : irange( numeric_cast<size_t>( new_seq_2_ctr + 1 ), numeric_cast<size_t>( seq_2_ctr ) ) | reversed ) {
-				aligned_2 += arg_string_b[ ins_2_ctr ];
+				aligned_2 += prm_string_b[ ins_2_ctr ];
 			}
 		}
-		aligned_2 += arg_string_b[ numeric_cast<size_t>( new_seq_2_ctr ) ];
-		aligned_1 += arg_string_a[ numeric_cast<size_t>( new_seq_1_ctr ) ];
+		aligned_2 += prm_string_b[ numeric_cast<size_t>( new_seq_2_ctr ) ];
+		aligned_1 += prm_string_a[ numeric_cast<size_t>( new_seq_1_ctr ) ];
 		seq_1_ctr = new_seq_1_ctr;
 		seq_2_ctr = new_seq_2_ctr;
 	}
 
 	// Finally construct the heads
 	for (const size_t &head_1_ctr : indices( numeric_cast<size_t>( seq_1_ctr ) ) | reversed ) {
-		aligned_1 += arg_string_a[ head_1_ctr ];
+		aligned_1 += prm_string_a[ head_1_ctr ];
 	}
 	for (const size_t &head_2_ctr : indices( numeric_cast<size_t>( seq_2_ctr ) ) | reversed ) {
-		aligned_2 += arg_string_b[ head_2_ctr ];
+		aligned_2 += prm_string_b[ head_2_ctr ];
 	}
 	if (seq_1_ctr > seq_2_ctr) {
 		aligned_2 += string( numeric_cast<size_t>( seq_1_ctr - seq_2_ctr ), '-' );

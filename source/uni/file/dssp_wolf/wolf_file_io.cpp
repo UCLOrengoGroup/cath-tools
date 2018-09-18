@@ -47,7 +47,7 @@ using boost::numeric_cast;
 /// \brief TODOCUMENT
 ///
 /// \relates protein
-wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
+wolf_file cath::file::read_wolf(const path &prm_wolf_filename ///< TODOCUMENT
                                 ) {
 	const double WOLF_ROTATION_TOLERANCE(0.00021);
 
@@ -57,8 +57,8 @@ wolf_file cath::file::read_wolf(const path &arg_wolf_filename ///< TODOCUMENT
 
 	// Open residue data file
 	FILE *wolf_infile;
-	if ( ( wolf_infile = fopen(arg_wolf_filename.string().c_str(),"r") ) == nullptr )  {
-		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to open wolf file \"" + arg_wolf_filename.string() + "\" for reading"));
+	if ( ( wolf_infile = fopen(prm_wolf_filename.string().c_str(),"r") ) == nullptr )  {
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to open wolf file \"" + prm_wolf_filename.string() + "\" for reading"));
 	}
 
 	size_t length = 0;

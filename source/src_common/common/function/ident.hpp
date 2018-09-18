@@ -31,9 +31,9 @@ namespace cath {
 		public:
 			/// \brief Return the argument using perfect-forwarding
 			template <typename T>
-			T && operator()(T &&arg_value
+			T && operator()(T &&prm_value
 			                ) const noexcept {
-				return std::forward<T>( arg_value );
+				return std::forward<T>( prm_value );
 			}
 
 			/// \brief Indicate that this can be used in any smart, heterogeneous-lookup magic

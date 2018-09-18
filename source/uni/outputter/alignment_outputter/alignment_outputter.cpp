@@ -36,12 +36,12 @@ unique_ptr<alignment_outputter> alignment_outputter::clone() const {
 }
 
 /// \brief TODOCUMENT
-void alignment_outputter::output_alignment(const alignment_context &arg_alignment_context, ///< TODOCUMENT
-                                           ostream                 &arg_ostream            ///< TODOCUMENT
+void alignment_outputter::output_alignment(const alignment_context &prm_alignment_context, ///< TODOCUMENT
+                                           ostream                 &prm_ostream            ///< TODOCUMENT
                                            ) const {
 	do_output_alignment(
-		arg_alignment_context,
-		arg_ostream
+		prm_alignment_context,
+		prm_ostream
 	);
 }
 

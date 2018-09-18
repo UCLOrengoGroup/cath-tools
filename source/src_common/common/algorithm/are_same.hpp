@@ -38,15 +38,15 @@ namespace cath {
 		          typename Eq   = std::equal_to<>,
 		          typename Proj = ident
 		          >
-		bool are_same_itr(BeginItr &&arg_begin_itr,     ///< The begin of the range to query
-		                  EndItr   &&arg_end_itr,       ///< The end of the range to query
-		                  Eq       &&arg_equal = Eq{},  ///< The binary predicate to use as the equality operator
-		                  Proj     &&arg_proj  = Proj{} ///< The function to use to project the elements
+		bool are_same_itr(BeginItr &&prm_begin_itr,     ///< The begin of the range to query
+		                  EndItr   &&prm_end_itr,       ///< The end of the range to query
+		                  Eq       &&prm_equal = Eq{},  ///< The binary predicate to use as the equality operator
+		                  Proj     &&prm_proj  = Proj{} ///< The function to use to project the elements
 		                  ) {
-			if ( arg_begin_itr != arg_end_itr ) {
-				const auto &first = invoke( arg_proj, *arg_begin_itr );
-				for (auto start_itr = arg_begin_itr; start_itr != arg_end_itr; ++start_itr) {
-					if ( ! invoke( arg_equal, first, invoke( arg_proj, *start_itr ) ) ) {
+			if ( prm_begin_itr != prm_end_itr ) {
+				const auto &first = invoke( prm_proj, *prm_begin_itr );
+				for (auto start_itr = prm_begin_itr; start_itr != prm_end_itr; ++start_itr) {
+					if ( ! invoke( prm_equal, first, invoke( prm_proj, *start_itr ) ) ) {
 						return false;
 					}
 				}
@@ -60,15 +60,15 @@ namespace cath {
 		          typename Eq   = std::equal_to<>,
 		          typename Proj = ident
 		          >
-		bool are_same(Rng  &&arg_rng,           ///< The range to query
-		              Eq   &&arg_equal = Eq{},  ///< The binary predicate to use as the equality operator
-		              Proj &&arg_proj  = Proj{} ///< The function to use to project the elements
+		bool are_same(Rng  &&prm_rng,           ///< The range to query
+		              Eq   &&prm_equal = Eq{},  ///< The binary predicate to use as the equality operator
+		              Proj &&prm_proj  = Proj{} ///< The function to use to project the elements
 		              ) {
 			return are_same_itr(
-				common::cbegin      ( arg_rng   ),
-				common::cend        ( arg_rng   ),
-				std::forward< Eq   >( arg_equal ),
-				std::forward< Proj >( arg_proj  )
+				common::cbegin      ( prm_rng   ),
+				common::cend        ( prm_rng   ),
+				std::forward< Eq   >( prm_equal ),
+				std::forward< Proj >( prm_proj  )
 			);
 		}
 

@@ -40,36 +40,36 @@ using std::get;
 using std::string;
 
 /// \brief A convenience function to append a glued row to the end of an alignment
-void cath::align::detail::append_glued_row(alignment                  &arg_alignment,     ///< The alignment to which the glued row should be appended
-                                           const aln_ent_ind_tup_pair &arg_data,          ///< The data structure containing the two source (alignment+entry+index)s
-                                           const glued_row_type       &arg_glued_row_type ///< The type of glued row to add (from a, from b or from both)
+void cath::align::detail::append_glued_row(alignment                  &prm_alignment,     ///< The alignment to which the glued row should be appended
+                                           const aln_ent_ind_tup_pair &prm_data,          ///< The data structure containing the two source (alignment+entry+index)s
+                                           const glued_row_type       &prm_glued_row_type ///< The type of glued row to add (from a, from b or from both)
                                            ) {
 	// Grab the details from the aln_ent_ind_tup_pair
-	const alignment &alignment_a = get<0>( arg_data.first  );
-	const size_t    &entry_a     = get<1>( arg_data.first  );
-	const size_t    &index_a     = get<2>( arg_data.first  );
-	const alignment &alignment_b = get<0>( arg_data.second );
-	const size_t    &entry_b     = get<1>( arg_data.second );
-	const size_t    &index_b     = get<2>( arg_data.second );
+	const alignment &alignment_a = get<0>( prm_data.first  );
+	const size_t    &entry_a     = get<1>( prm_data.first  );
+	const size_t    &index_a     = get<2>( prm_data.first  );
+	const alignment &alignment_b = get<0>( prm_data.second );
+	const size_t    &entry_b     = get<1>( prm_data.second );
+	const size_t    &index_b     = get<2>( prm_data.second );
 
 	// Switch on the type of glue row (add a, add b or add both)
-	switch (arg_glued_row_type) {
+	switch (prm_glued_row_type) {
 		case ( glued_row_type::FROM_A    ) : {
-			append_row( arg_alignment, glue_empties_onto_row(
+			append_row( prm_alignment, glue_empties_onto_row(
 				get_row_of_alignment( alignment_a, index_a ),
 				alignment_b.num_entries()
 			));
 			break;
 		}
 		case ( glued_row_type::FROM_B    ) : {
-			append_row( arg_alignment, glue_aln_row_onto_empties(
+			append_row( prm_alignment, glue_aln_row_onto_empties(
 				alignment_a.num_entries(),                           entry_a,
 				get_row_of_alignment( alignment_b, index_b ), entry_b
 			));
 			break;
 		}
 		case ( glued_row_type::FROM_BOTH ) : {
-			append_row( arg_alignment, glue_aln_rows_together(
+			append_row( prm_alignment, glue_aln_rows_together(
 				get_row_of_alignment( alignment_a, index_a ), entry_a,
 				get_row_of_alignment( alignment_b, index_b ), entry_b
 			));
@@ -85,23 +85,23 @@ void cath::align::detail::append_glued_row(alignment                  &arg_align
 /// \relates alignment
 ///
 /// \returns TODOCUMENT
-alignment cath::align::glue_two_alignments(const alignment &arg_alignment_a,    ///< The first alignment to be glued together
-                                           const size_t    &arg_entry_in_aln_a, ///< The entry in the first  alignment to be identified with an entry in the second
-                                           const alignment &arg_alignment_b,    ///< The second alignment to be glued together
-                                           const size_t    &arg_entry_in_aln_b  ///< The entry in the second alignment to be identified with an entry in the first
+alignment cath::align::glue_two_alignments(const alignment &prm_alignment_a,    ///< The first alignment to be glued together
+                                           const size_t    &prm_entry_in_aln_a, ///< The entry in the first  alignment to be identified with an entry in the second
+                                           const alignment &prm_alignment_b,    ///< The second alignment to be glued together
+                                           const size_t    &prm_entry_in_aln_b  ///< The entry in the second alignment to be identified with an entry in the first
                                            ) {
 	using size_type = alignment::size_type;
 
 	// Grab the number of entries and the lengths from the two alignments
-	const size_type num_entries_in_a = arg_alignment_a.num_entries();
-	const size_type num_entries_in_b = arg_alignment_b.num_entries();
-	const size_type length_a         = arg_alignment_a.length();
-	const size_type length_b         = arg_alignment_b.length();
+	const size_type num_entries_in_a = prm_alignment_a.num_entries();
+	const size_type num_entries_in_b = prm_alignment_b.num_entries();
+	const size_type length_a         = prm_alignment_a.length();
+	const size_type length_b         = prm_alignment_b.length();
 
 	// Sanity check the indices of the two entries to be identified
-	if ( arg_entry_in_aln_a >= num_entries_in_a || arg_entry_in_aln_b >= num_entries_in_b ) {
-		const size_t &problem_index = ( arg_entry_in_aln_a >= num_entries_in_a ) ? arg_entry_in_aln_a   : arg_entry_in_aln_b;
-		const size_t &problem_size  = ( arg_entry_in_aln_a >= num_entries_in_a ) ? num_entries_in_a : num_entries_in_b;
+	if ( prm_entry_in_aln_a >= num_entries_in_a || prm_entry_in_aln_b >= num_entries_in_b ) {
+		const size_t &problem_index = ( prm_entry_in_aln_a >= num_entries_in_a ) ? prm_entry_in_aln_a   : prm_entry_in_aln_b;
+		const size_t &problem_size  = ( prm_entry_in_aln_a >= num_entries_in_a ) ? num_entries_in_a : num_entries_in_b;
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Unable to glue first alignment because index "
 			+ lexical_cast<string>( problem_index )
@@ -122,12 +122,12 @@ alignment cath::align::glue_two_alignments(const alignment &arg_alignment_a,    
 	while ( index_ctr_a < length_a || index_ctr_b < length_b ) {
 		const bool before_end_of_a               = ( index_ctr_a < length_a );
 		const bool before_end_of_b               = ( index_ctr_b < length_b );
-		const bool alignment_a_has_glue_position = before_end_of_a && has_position_of_entry_of_index( arg_alignment_a, arg_entry_in_aln_a, index_ctr_a );
-		const bool alignment_b_has_glue_position = before_end_of_b && has_position_of_entry_of_index( arg_alignment_b, arg_entry_in_aln_b, index_ctr_b );
+		const bool alignment_a_has_glue_position = before_end_of_a && has_position_of_entry_of_index( prm_alignment_a, prm_entry_in_aln_a, index_ctr_a );
+		const bool alignment_b_has_glue_position = before_end_of_b && has_position_of_entry_of_index( prm_alignment_b, prm_entry_in_aln_b, index_ctr_b );
 
 		const aln_ent_ind_tup_pair a_and_b_data = make_pair(
-			aln_ent_ind_tup( arg_alignment_a, arg_entry_in_aln_a, index_ctr_a ),
-			aln_ent_ind_tup( arg_alignment_b, arg_entry_in_aln_b, index_ctr_b )
+			aln_ent_ind_tup( prm_alignment_a, prm_entry_in_aln_a, index_ctr_a ),
+			aln_ent_ind_tup( prm_alignment_b, prm_entry_in_aln_b, index_ctr_b )
 		);
 
 		// If only the a side should be added, do that
@@ -144,8 +144,8 @@ alignment cath::align::glue_two_alignments(const alignment &arg_alignment_a,    
 		// both sides should be added - do that
 		else {
 			// Both positions should match so check that they do
-			const aln_posn_type glue_position_a = get_position_of_entry_of_index( arg_alignment_a, arg_entry_in_aln_a, index_ctr_a );
-			const aln_posn_type glue_position_b = get_position_of_entry_of_index( arg_alignment_b, arg_entry_in_aln_b, index_ctr_b );
+			const aln_posn_type glue_position_a = get_position_of_entry_of_index( prm_alignment_a, prm_entry_in_aln_a, index_ctr_a );
+			const aln_posn_type glue_position_b = get_position_of_entry_of_index( prm_alignment_b, prm_entry_in_aln_b, index_ctr_b );
 			if ( glue_position_a == glue_position_b ) {
 
 				// Both positions match so add both sides
@@ -157,13 +157,13 @@ alignment cath::align::glue_two_alignments(const alignment &arg_alignment_a,    
 			else {
 				// Warn that problems have been detected
 				BOOST_LOG_TRIVIAL( warning ) << "Whilst gluing alignments, found mismatching positions ( alignment_a[ entry: "
-				                             << lexical_cast<string>( arg_entry_in_aln_a )
+				                             << lexical_cast<string>( prm_entry_in_aln_a )
 				                             << ", index: "
 				                             << lexical_cast<string>( index_ctr_a        )
 				                             << " ] at position "
 				                             << lexical_cast<string>( glue_position_a    )
 				                             << " and alignment_b[ entry: "
-				                             << lexical_cast<string>( arg_entry_in_aln_b )
+				                             << lexical_cast<string>( prm_entry_in_aln_b )
 				                             << ", index: "
 				                             << lexical_cast<string>( index_ctr_b        )
 				                             << " ] at position "
@@ -193,17 +193,17 @@ alignment cath::align::glue_two_alignments(const alignment &arg_alignment_a,    
 /// \pre TODOCUMENT
 ///
 /// \relates alignment
-alignment cath::align::build_alignment_from_parts(const size_size_alignment_tuple_vec &arg_spanning_alignments, ///< TODOCUMENT
-                                                  const protein_list                  &arg_proteins,            ///< TODOCUMENT
-                                                  const aln_glue_style                &arg_strategy             ///< The approach that should be used for glueing alignments together
+alignment cath::align::build_alignment_from_parts(const size_size_alignment_tuple_vec &prm_spanning_alignments, ///< TODOCUMENT
+                                                  const protein_list                  &prm_proteins,            ///< TODOCUMENT
+                                                  const aln_glue_style                &prm_strategy             ///< The approach that should be used for glueing alignments together
                                                   ) {
-	const size_t num_entries = arg_spanning_alignments.size() + 1;
+	const size_t num_entries = prm_spanning_alignments.size() + 1;
 	alignment new_alignment( num_entries );
 
 	multi_align_builder builder( num_entries );
 
-	for (const size_size_alignment_tuple &branch_alignment : arg_spanning_alignments) {
-		add_alignment_branch( builder, branch_alignment, arg_proteins, arg_strategy );
+	for (const size_size_alignment_tuple &branch_alignment : prm_spanning_alignments) {
+		add_alignment_branch( builder, branch_alignment, prm_proteins, prm_strategy );
 	}
 
 	return builder.get_alignment();

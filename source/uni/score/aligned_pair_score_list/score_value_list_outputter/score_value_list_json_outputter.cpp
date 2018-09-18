@@ -35,10 +35,10 @@ using boost::property_tree::ptree;
 constexpr json_style score_value_list_json_outputter::DEFAULT_JSON_STYLE;
 
 /// \brief Ctor for score_value_list_json_outputter
-score_value_list_json_outputter::score_value_list_json_outputter(const aligned_pair_score_value_list &arg_aligned_pair_score_value_list, ///< The alignment to be output
-                                                                 const json_style                    &arg_json_style                     ///< The style in which the JSON should be written
-                                                                 ) : the_aligned_pair_score_value_list ( arg_aligned_pair_score_value_list ),
-                                                                     the_json_style                    ( arg_json_style                    ) {
+score_value_list_json_outputter::score_value_list_json_outputter(const aligned_pair_score_value_list &prm_aligned_pair_score_value_list, ///< The alignment to be output
+                                                                 const json_style                    &prm_json_style                     ///< The style in which the JSON should be written
+                                                                 ) : the_aligned_pair_score_value_list ( prm_aligned_pair_score_value_list ),
+                                                                     the_json_style                    ( prm_json_style                    ) {
 }
 
 /// \brief Getter for the const reference to the aligned_pair_score_value_list
@@ -54,17 +54,17 @@ const json_style & score_value_list_json_outputter::get_json_style() const {
 /// \brief Output the aligned_pair_score_value_list to the ostream in JSON format
 ///
 /// \relates score_value_list_json_outputter
-ostream & cath::score::operator<<(ostream                               &arg_os,                             ///< The ostream to which the aligned_pair_score_value_list should be output
-                                  const score_value_list_json_outputter &arg_score_value_list_json_outputter ///< A score_value_list_json_outputter that wraps the aligned_pair_score_value_list to be output
+ostream & cath::score::operator<<(ostream                               &prm_os,                             ///< The ostream to which the aligned_pair_score_value_list should be output
+                                  const score_value_list_json_outputter &prm_score_value_list_json_outputter ///< A score_value_list_json_outputter that wraps the aligned_pair_score_value_list to be output
                                   ) {
 	// Grab aligned_pair_score_value_list and then whether the JSON should be pretty printed
-	const aligned_pair_score_value_list &the_aligned_pair_score_value_list = arg_score_value_list_json_outputter.get_aligned_pair_score_value_list();
-	const json_style                    &the_json_style                    = arg_score_value_list_json_outputter.get_json_style();
+	const aligned_pair_score_value_list &the_aligned_pair_score_value_list = prm_score_value_list_json_outputter.get_aligned_pair_score_value_list();
+	const json_style                    &the_json_style                    = prm_score_value_list_json_outputter.get_json_style();
 
 	ptree temp_ptree;
 	save_to_ptree( temp_ptree, the_aligned_pair_score_value_list );
-	write_json( arg_os, temp_ptree, ( the_json_style == json_style::PRETTY ) );
+	write_json( prm_os, temp_ptree, ( the_json_style == json_style::PRETTY ) );
 
 	// Return the specified ostream
-	return arg_os;
+	return prm_os;
 }

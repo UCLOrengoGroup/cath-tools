@@ -66,21 +66,21 @@ namespace cath {
 			/// \brief Insert a new string and return its new ID
 			///
 			/// Can be used if the name already exists
-			inline const std::pair<const detail::ref_wrap_uom_wrap<const std::string>, id_type> & emplace(const string_cref &arg_string ///< The string to insert
+			inline const std::pair<const detail::ref_wrap_uom_wrap<const std::string>, id_type> & emplace(const string_cref &prm_string ///< The string to insert
 			                                                                                              ) {
-				return *( the_map.emplace( arg_string, the_map.size() ).first );
+				return *( the_map.emplace( prm_string, the_map.size() ).first );
 			}
 
 			/// \brief Get the ID corresponding to the specified string
-			inline id_type operator[](const string_cref &arg_string ///< The string to lookup
+			inline id_type operator[](const string_cref &prm_string ///< The string to lookup
 			                          ) const {
-				return the_map.find( arg_string )->second;
+				return the_map.find( prm_string )->second;
 			}
 
 			/// \brief Return whether this contains the specified string_cref
-			inline bool contains(const string_cref &arg_string ///< The string to lookup
+			inline bool contains(const string_cref &prm_string ///< The string to lookup
 			                     ) const {
-				return ( the_map.find( arg_string ) != common::cend( the_map ) );
+				return ( the_map.find( prm_string ) != common::cend( the_map ) );
 			}
 
 			/// \brief Return whether this id_of_string_ref is empty
@@ -94,9 +94,9 @@ namespace cath {
 			}
 
 			/// \brief Reserve space for the specified number of strings
-			inline void reserve(const size_t &arg_count ///< The number of strings for which space should be reserved
+			inline void reserve(const size_t &prm_count ///< The number of strings for which space should be reserved
 			                    ) {
-				the_map.reserve( arg_count );
+				the_map.reserve( prm_count );
 			}
 
 			/// \brief Clear the id_of_string_ref of all strings

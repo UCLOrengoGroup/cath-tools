@@ -66,9 +66,9 @@ namespace cath {
 
 			/// \brief End-of-recursion implementation function for make_tuple_with_skips()
 			template <typename... Ts>
-			constexpr auto make_tuple_with_skips_recursive(const std::tuple<Ts...> &arg_ts_tpl ///< The tuple built so far
+			constexpr auto make_tuple_with_skips_recursive(const std::tuple<Ts...> &prm_ts_tpl ///< The tuple built so far
 			                                               ) {
-				return arg_ts_tpl;
+				return prm_ts_tpl;
 			}
 
 			// Declaration of function used in make_tuple_with_skips_recursive_tag_dispatch()
@@ -80,43 +80,43 @@ namespace cath {
 			/// \brief Tag-distpactch recursive implementation function for make_tuple_with_skips
 			template <typename... Ts, typename U, typename... Vs>
 			constexpr auto make_tuple_with_skips_recursive_tag_dispatch(const std::true_type     &,           ///< Tag to pick this overload for tpl_elmnt_skip_t U (after decaying U)
-			                                                            const std::tuple<Ts...>  &arg_ts_tpl, ///< The tuple built so far
-			                                                            U                       &&/*arg_u*/,  ///< The argument currently being processed
-			                                                            Vs                      &&...arg_vs   ///< The remaining arguments to process
+			                                                            const std::tuple<Ts...>  &prm_ts_tpl, ///< The tuple built so far
+			                                                            U                       &&/*prm_u*/,  ///< The argument currently being processed
+			                                                            Vs                      &&...prm_vs   ///< The remaining arguments to process
 			                                                            ) {
 				return make_tuple_with_skips_recursive(
-					arg_ts_tpl,
-					std::forward< Vs >( arg_vs )...
+					prm_ts_tpl,
+					std::forward< Vs >( prm_vs )...
 				);
 			}
 
 			/// \brief Tag-distpactch recursive implementation function for make_tuple_with_skips
 			template <typename... Ts, typename U, typename... Vs>
 			constexpr auto make_tuple_with_skips_recursive_tag_dispatch(const std::false_type    &,           ///< Tag to pick this overload for non-tpl_elmnt_skip_t U (after decaying U)
-			                                                            const std::tuple<Ts...>  &arg_ts_tpl, ///< The tuple built so far
-			                                                            U                       &&arg_u,      ///< The argument currently being processed
-			                                                            Vs                      &&...arg_vs   ///< The remaining arguments to process
+			                                                            const std::tuple<Ts...>  &prm_ts_tpl, ///< The tuple built so far
+			                                                            U                       &&prm_u,      ///< The argument currently being processed
+			                                                            Vs                      &&...prm_vs   ///< The remaining arguments to process
 			                                                            ) {
 				return make_tuple_with_skips_recursive(
 					std::tuple_cat(
-						arg_ts_tpl,
-						std::make_tuple( std::forward< U  >( arg_u ) )
+						prm_ts_tpl,
+						std::make_tuple( std::forward< U  >( prm_u ) )
 					),
-					std::forward< Vs >( arg_vs )...
+					std::forward< Vs >( prm_vs )...
 				);
 			}
 
 			/// \brief Recursive implementation function for make_tuple_with_skips
 			template <typename... Ts, typename U, typename... Vs>
-			constexpr auto make_tuple_with_skips_recursive(const std::tuple<Ts...>  &arg_ts_tpl, ///< The tuple built so far
-			                                               U                       &&arg_u,      ///< The argument currently being processed
-			                                               Vs                      &&...arg_vs   ///< The remaining arguments to process
+			constexpr auto make_tuple_with_skips_recursive(const std::tuple<Ts...>  &prm_ts_tpl, ///< The tuple built so far
+			                                               U                       &&prm_u,      ///< The argument currently being processed
+			                                               Vs                      &&...prm_vs   ///< The remaining arguments to process
 			                                               ) {
 				return make_tuple_with_skips_recursive_tag_dispatch(
 					std::is_same< std::decay_t<U>, tpl_elmnt_skip_t >{},
-					arg_ts_tpl,
-					std::forward< U  >( arg_u  ),
-					std::forward< Vs >( arg_vs )...
+					prm_ts_tpl,
+					std::forward< U  >( prm_u  ),
+					std::forward< Vs >( prm_vs )...
 				);
 			}
 
@@ -128,11 +128,11 @@ namespace cath {
 
 		/// \brief Do the same as std::make_tuple() but skip any elements of type tpl_elmnt_skip_t
 		template <typename... Vs>
-		constexpr tuple_with_skips_t<Vs...> make_tuple_with_skips(Vs &&...arg_vs ///< The arguments from which to make the tuple
+		constexpr tuple_with_skips_t<Vs...> make_tuple_with_skips(Vs &&...prm_vs ///< The arguments from which to make the tuple
 		                                                          ) {
 			return detail::make_tuple_with_skips_recursive(
 				std::make_tuple(),
-				std::forward<Vs>( arg_vs )...
+				std::forward<Vs>( prm_vs )...
 			);
 		}
 

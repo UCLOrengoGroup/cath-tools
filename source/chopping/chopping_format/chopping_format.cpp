@@ -28,11 +28,11 @@ using std::string;
 /// \brief TODOCUMENT
 ///
 /// \relates chopping_format
-domain cath::chop::parse_domain(const chopping_format &arg_chopping_format,        ///< TODOCUMENT
-                                const string          &arg_domain_chopping_string, ///< TODOCUMENT
-                                const string          &arg_domain_id               ///< TODOCUMENT
+domain cath::chop::parse_domain(const chopping_format &prm_chopping_format,        ///< TODOCUMENT
+                                const string          &prm_domain_chopping_string, ///< TODOCUMENT
+                                const string          &prm_domain_id               ///< TODOCUMENT
                                 ) {
-	domain new_domain = arg_chopping_format.parse_domain( arg_domain_chopping_string );
-	new_domain.set_opt_domain_id( arg_domain_id );
+	domain new_domain = prm_chopping_format.parse_domain( prm_domain_chopping_string );
+	new_domain.set_opt_domain_id( prm_domain_id );
 	return new_domain;
 }

@@ -32,12 +32,12 @@ using std::string;
 /// \brief Generate a string describing the specified link_list
 ///
 /// \relates links
-string cath::clust::link_list_string(const link_list &arg_links, ///< The link_list to describe
-                                     const size_t    &arg_base   ///< The base node from which the links emanate
+string cath::clust::link_list_string(const link_list &prm_links, ///< The link_list to describe
+                                     const size_t    &prm_base   ///< The base node from which the links emanate
                                      ) {
 	using std::to_string;
-	return to_string( arg_base ) + " -> " + join(
-		arg_links
+	return to_string( prm_base ) + " -> " + join(
+		prm_links
 			| transformed( [] (const link &x) {
 				return
 					  to_string( x.node   )

@@ -55,10 +55,10 @@ using boost::lexical_cast;
 /// \brief Read a sec file into a sec_file object
 ///
 /// \relates sec_file
-sec_file cath::file::read_sec(const path &arg_sec_filename ///< The file from which to parse the sec data
+sec_file cath::file::read_sec(const path &prm_sec_filename ///< The file from which to parse the sec data
                               ) {
 	ifstream my_sec_istream;
-	open_ifstream(my_sec_istream, arg_sec_filename);
+	open_ifstream(my_sec_istream, prm_sec_filename);
 	const sec_file the_sec_file = read_sec( my_sec_istream );
 	my_sec_istream.close();
 	return the_sec_file;
@@ -88,12 +88,12 @@ sec_file cath::file::read_sec(const path &arg_sec_filename ///< The file from wh
 ///          8    S *    48    54  -11.34   1.01 -22.49    -0.57 -0.24  0.79
 ///          -172.73 156.51 -162.99
 ///          9    S *    57    63  -11.17   5.11 -20.75     0.86  0.09 -0.51
-sec_file cath::file::read_sec(istream &arg_istream ///< The istream from which to parse the sec file
+sec_file cath::file::read_sec(istream &prm_istream ///< The istream from which to parse the sec file
                               ) {
 	// Grab the number of secondary structures from the first line
 	size_t num_sec_strucs;
 	try {
-		num_sec_strucs = lexical_cast_trimmed_line<size_t>(arg_istream);
+		num_sec_strucs = lexical_cast_trimmed_line<size_t>(prm_istream);
 	}
 	catch (const boost::bad_lexical_cast &) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Invalid sec file - first line does not consist of a valid number of secondary structures"));
@@ -110,7 +110,7 @@ sec_file cath::file::read_sec(istream &arg_istream ///< The istream from which t
 	for (const size_t &sec_record_ctr : indices( num_sec_strucs ) ) {
 		// Parse the next line as a sec main line
 		string sec_main_line;
-		getline(arg_istream, sec_main_line);
+		getline(prm_istream, sec_main_line);
 		pair<size_t, sec_file_record> index_and_sec_record = parse_sec_main_line( sec_main_line );
 		const size_t    &new_sec_record_index = index_and_sec_record.first;
 		sec_file_record &new_sec_record       = index_and_sec_record.second;
@@ -129,7 +129,7 @@ sec_file cath::file::read_sec(istream &arg_istream ///< The istream from which t
 		// Parse the next line as a sec angles line, check the number of entries
 		// and then add them to the back new_planar_angles
 		string sec_angles_line;
-		getline(arg_istream, sec_angles_line);
+		getline(prm_istream, sec_angles_line);
 		const sec_struc_planar_angles_vec parsed_planar_angles = parse_sec_angles_line(sec_angles_line);
 		if (num_sec_strucs - sec_record_ctr - 1 != parsed_planar_angles.size()) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("The number of planar angles parsed from sec file was not as expected"));
@@ -140,9 +140,9 @@ sec_file cath::file::read_sec(istream &arg_istream ///< The istream from which t
 	}
 
 	// If the input stream is not at the end, try gobbling up all whitespace and then throw an error if it's still not at the end
-	if (!arg_istream.eof()) {
-		ws(arg_istream);
-		if (!arg_istream.eof()) {
+	if (!prm_istream.eof()) {
+		ws(prm_istream);
+		if (!prm_istream.eof()) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Further data remains in the input stream after successfully parsing a sec file from it"));
 		}
 	}
@@ -155,7 +155,7 @@ sec_file cath::file::read_sec(istream &arg_istream ///< The istream from which t
 /// \relates sec_struc
 ///
 /// \todo Consider moving part of this code into a sec_file_record extraction operator
-pair<size_t, sec_file_record> cath::file::detail::parse_sec_main_line(const string &arg_sec_line_string ///< String containing the sec file main line
+pair<size_t, sec_file_record> cath::file::detail::parse_sec_main_line(const string &prm_sec_line_string ///< String containing the sec file main line
                                                                       ) {
 	// Prepare variables to hold the parsed data
 	size_t         sec_struc_number;
@@ -167,7 +167,7 @@ pair<size_t, sec_file_record> cath::file::detail::parse_sec_main_line(const stri
 
 	// Put the string into an istringstream and then parse out the parts
 	// (and do this in a try block so that cast conversion failures can be caught)
-	istringstream sec_line_ss(arg_sec_line_string);
+	istringstream sec_line_ss(prm_sec_line_string);
 	try {
 		sec_line_ss >> sec_struc_number;
 		sec_line_ss >> helix_or_strand;
@@ -177,7 +177,7 @@ pair<size_t, sec_file_record> cath::file::detail::parse_sec_main_line(const stri
 		sec_line_ss >> unit_dirn_x >> unit_dirn_y >> unit_dirn_z;
 	}
 	catch (const boost::bad_lexical_cast &) {
-		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a main lie record from a sec file, which probably means the line's malformed.\nRecord was \"" + arg_sec_line_string + "\""));
+		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a main lie record from a sec file, which probably means the line's malformed.\nRecord was \"" + prm_sec_line_string + "\""));
 	}
 
 	// Return a pair containing the index and a newly populated sec_file_record
@@ -196,10 +196,10 @@ pair<size_t, sec_file_record> cath::file::detail::parse_sec_main_line(const stri
 /// \brief Parse sec_struc_planar angles out a sec file planar angles line
 ///
 /// \relates sec_struc
-sec_struc_planar_angles_vec cath::file::parse_sec_angles_line(const string &arg_sec_line_string ///< String containing the sec file planar angles line
+sec_struc_planar_angles_vec cath::file::parse_sec_angles_line(const string &prm_sec_line_string ///< String containing the sec file planar angles line
                                                               ) {
 	// Trim any whitespace of the ends of the string and just return an empty vector if that's empty
-	const string trimmed_sec_angles_string(trim_copy(arg_sec_line_string));
+	const string trimmed_sec_angles_string(trim_copy(prm_sec_line_string));
 	if (trimmed_sec_angles_string.empty()) {
 		return sec_struc_planar_angles_vec();
 	}
@@ -225,7 +225,7 @@ sec_struc_planar_angles_vec cath::file::parse_sec_angles_line(const string &arg_
 			const double planar_angle_z       = stod( line_parts.front() );
 			line_parts.pop_front();
 			if ( ! isfinite( planar_angle_x ) || ! isfinite( planar_angle_minus_y ) || ! isfinite( planar_angle_z ) ) {
-				BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to get a finite number from a column whilst parsing a planar angles value from a sec file, which probably means the line has an infinite or 'nan' (not-a-number) value.\nRecord was \"" + arg_sec_line_string + "\""));
+				BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to get a finite number from a column whilst parsing a planar angles value from a sec file, which probably means the line has an infinite or 'nan' (not-a-number) value.\nRecord was \"" + prm_sec_line_string + "\""));
 			}
 			planar_angles.push_back(sec_struc_planar_angles(
 				planar_angle_x,
@@ -234,7 +234,7 @@ sec_struc_planar_angles_vec cath::file::parse_sec_angles_line(const string &arg_
 			));
 		}
 		catch (const boost::bad_lexical_cast &) {
-			BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a planar angles value from a sec file, which probably means the line's malformed.\nRecord was \"" + arg_sec_line_string + "\""));
+			BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a planar angles value from a sec file, which probably means the line's malformed.\nRecord was \"" + prm_sec_line_string + "\""));
 		}
 	}
 

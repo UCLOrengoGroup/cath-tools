@@ -40,11 +40,11 @@ namespace cath {
 		/// This is useful for converting (an ordering of indices) into
 		/// (a lookup from index to rank in the ordering)
 		template <typename Cont = std::vector<size_t>, typename Rng>
-		Cont invert_permutation(const Rng &arg_range ///< The range containing the permutation to invert
+		Cont invert_permutation(const Rng &prm_range ///< The range containing the permutation to invert
 		                        ) {
-			const size_t range_size = boost::size( arg_range );
+			const size_t range_size = boost::size( prm_range );
 			Cont index_scores( range_size, range_size );
-			for (const auto &val : combine( common::indices( range_size ), arg_range ) ) {
+			for (const auto &val : combine( common::indices( range_size ), prm_range ) ) {
 				index_scores[ static_cast<size_t>( boost::get<1>( val ) ) ] = boost::get<0>( val );
 			}
 			return index_scores;

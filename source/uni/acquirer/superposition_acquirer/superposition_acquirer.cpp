@@ -38,7 +38,7 @@ using std::ostream;
 constexpr double superposition_acquirer::TOLERANCE_FOR_EQUAL_RMSDS;
 
 /// \brief TODOCUMENT
-superposition_context superposition_acquirer::get_superposition(ostream &arg_stderr ///< TODOCUMENT
+superposition_context superposition_acquirer::get_superposition(ostream &prm_stderr ///< TODOCUMENT
                                                                 ) const {
-	return do_get_superposition( arg_stderr );
+	return do_get_superposition( prm_stderr );
 }

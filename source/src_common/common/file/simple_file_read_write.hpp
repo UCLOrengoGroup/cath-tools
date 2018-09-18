@@ -52,28 +52,28 @@ namespace cath {
 
 				/// \brief Stream an individual part from the_istream
 				template <typename T>
-				void istream_part(T &arg_value ///< The part to be populated from the istream
+				void istream_part(T &prm_value ///< The part to be populated from the istream
 				                  ) {
-					the_istream >> arg_value;
+					the_istream >> prm_value;
 				}
 
 			public:
 				/// \brief Ctor from istream from which the parts should be read
-				explicit tuple_parts_istreamer(std::istream &arg_istream ///< The istream from which the parts should be read
-				                               ) : the_istream( arg_istream ) {
+				explicit tuple_parts_istreamer(std::istream &prm_istream ///< The istream from which the parts should be read
+				                               ) : the_istream( prm_istream ) {
 				}
 
 				/// \brief Populate the arguments from the_istream
 				///
 				/// This is the function that's called by transform tuple
 				template <typename... Ks>
-				void operator()(Ks &... arg_parts ///< Non-const references to the parts to be populated
+				void operator()(Ks &... prm_parts ///< Non-const references to the parts to be populated
 				                ) {
 					// Use array initialisation to ensure the correct order of evaluation
 					// (function calls don't guarantee evaluation order of parts and
 					//  though initializer_lists should, GCC had a bug undermining around
 					//  versions v4.7 and v4.8)
-					bool b[] = { true, ( istream_part( arg_parts ), true )... };
+					bool b[] = { true, ( istream_part( prm_parts ), true )... };
 					boost::ignore_unused( b );
 				}
 			};
@@ -81,9 +81,9 @@ namespace cath {
 			/// \brief Explicit specialisation of istream_part for bool that uses boolalpha for
 			///        the single element
 			template <>
-			inline void tuple_parts_istreamer::istream_part<bool>(bool &arg_value ///< The bool value to be populated from the_istream
+			inline void tuple_parts_istreamer::istream_part<bool>(bool &prm_value ///< The bool value to be populated from the_istream
 			                                                      ) {
-				the_istream >> std::boolalpha >> arg_value >> std::noboolalpha;
+				the_istream >> std::boolalpha >> prm_value >> std::noboolalpha;
 			}
 
 			/// \brief Template for reading a line from an istream into an arbitrary type T
@@ -93,10 +93,10 @@ namespace cath {
 			struct type_line_reader final {
 
 				/// \brief Read a line from the specified istream into a T and return the results
-				static T read_line(std::istream &arg_is ///< The istream containing the line to be read
+				static T read_line(std::istream &prm_is ///< The istream containing the line to be read
 				                   ) {
 					T value;
-					if ( arg_is >> value ) {
+					if ( prm_is >> value ) {
 						return value;
 					}
 					BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to parse value from input stream"));
@@ -117,10 +117,10 @@ namespace cath {
 			struct type_line_reader<std::tuple<Ts...>> final {
 
 				/// \brief Read a line from the specified istream into a T
-				static std::tuple<Ts...> read_line(std::istream &arg_is ///< The istream containing the line to be read
+				static std::tuple<Ts...> read_line(std::istream &prm_is ///< The istream containing the line to be read
 				                                   ) {
 					std::tuple<Ts...> new_tuple;
-					apply( tuple_parts_istreamer( arg_is ), new_tuple );
+					apply( tuple_parts_istreamer( prm_is ), new_tuple );
 					return new_tuple;
 				}
 			};
@@ -135,11 +135,11 @@ namespace cath {
 			struct type_line_reader<std::pair<T, U>> final {
 
 				/// \brief TODOCUMENT
-				static std::pair<T, U> read_line(std::istream &arg_is ///< The istream containing the line to be read
+				static std::pair<T, U> read_line(std::istream &prm_is ///< The istream containing the line to be read
 				                                 ) {
 					std::pair<T, U> value;
-					value.first  = type_line_reader<T>::read_line( arg_is );
-					value.second = type_line_reader<U>::read_line( arg_is );
+					value.first  = type_line_reader<T>::read_line( prm_is );
+					value.second = type_line_reader<U>::read_line( prm_is );
 					return value;
 				}
 			};
@@ -149,10 +149,10 @@ namespace cath {
 			struct type_line_reader<bool> final {
 
 				/// \brief TODOCUMENT
-				static bool read_line(std::istream &arg_is ///< The istream containing the line to be read
+				static bool read_line(std::istream &prm_is ///< The istream containing the line to be read
 				                      ) {
 					bool value = false;
-					if ( arg_is >> std::boolalpha >> value >> std::noboolalpha ) {
+					if ( prm_is >> std::boolalpha >> value >> std::noboolalpha ) {
 						return value;
 					}
 					BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to parse bool value from input stream"));
@@ -169,37 +169,37 @@ namespace cath {
 
 				/// \brief TODOCUMENT
 				template <typename T>
-				void ostream_part(const T &arg_value) {
-					the_ostream <<  arg_value;
+				void ostream_part(const T &prm_value) {
+					the_ostream <<  prm_value;
 				}
 
 				/// \brief TODOCUMENT
-				void ostream_part(const bool &arg_value) {
-					the_ostream << std::boolalpha << arg_value << std::noboolalpha;
+				void ostream_part(const bool &prm_value) {
+					the_ostream << std::boolalpha << prm_value << std::noboolalpha;
 				}
 
 			public:
 				/// \brief TODOCUMENT
-				explicit tuple_parts_ostreamer(std::ostream &arg_ostream
-				                               ) : the_ostream ( arg_ostream ) {
+				explicit tuple_parts_ostreamer(std::ostream &prm_ostream
+				                               ) : the_ostream ( prm_ostream ) {
 				}
 
 				/// \brief TODOCUMENT
 				template <typename T1, typename T2, typename... Ts>
-				void operator()(const T1 &     arg_value_1,         ///< TODOCUMENT
-				                const T2 &     arg_value_2,         ///< TODOCUMENT
-				                const Ts & ... arg_values_3_onwards ///< TODOCUMENT
+				void operator()(const T1 &     prm_value_1,         ///< TODOCUMENT
+				                const T2 &     prm_value_2,         ///< TODOCUMENT
+				                const Ts & ... prm_values_3_onwards ///< TODOCUMENT
 				                ) {
-					ostream_part( arg_value_1 );
+					ostream_part( prm_value_1 );
 					the_ostream << " ";
-					(*this)( arg_value_2, arg_values_3_onwards... );
+					(*this)( prm_value_2, prm_values_3_onwards... );
 				}
 
 				/// \brief TODOCUMENT
 				template <typename T>
-				void operator()(const T &arg_value ///< TODOCUMENT
+				void operator()(const T &prm_value ///< TODOCUMENT
 				                ) {
-					ostream_part( arg_value );
+					ostream_part( prm_value );
 				}
 			};
 
@@ -210,38 +210,38 @@ namespace cath {
 			private:
 				/// \brief TODOCUMENT
 				template <typename T>
-				void write_part(std::ostream &arg_os,   ///< TODOCUMENT
-				                const T      &arg_value ///< TODOCUMENT
+				void write_part(std::ostream &prm_os,   ///< TODOCUMENT
+				                const T      &prm_value ///< TODOCUMENT
 				                ) const {
-					write_part( arg_os, std::make_tuple( arg_value) );
+					write_part( prm_os, std::make_tuple( prm_value) );
 				}
 
 				/// \brief TODOCUMENT
 				template <typename T, typename U>
-				void write_part(std::ostream          &arg_os,   ///< TODOCUMENT
-				                const std::pair<T, U> &arg_value ///< TODOCUMENT
+				void write_part(std::ostream          &prm_os,   ///< TODOCUMENT
+				                const std::pair<T, U> &prm_value ///< TODOCUMENT
 				                ) const {
-					write_part( arg_os, arg_value.first  );
-					arg_os << " ";
-					write_part( arg_os, arg_value.second );
+					write_part( prm_os, prm_value.first  );
+					prm_os << " ";
+					write_part( prm_os, prm_value.second );
 				}
 
 				/// \brief TODOCUMENT
 				template <typename... Ts>
-				void write_part(std::ostream            &arg_os,   ///< TODOCUMENT
-				                const std::tuple<Ts...> &arg_value ///< TODOCUMENT
+				void write_part(std::ostream            &prm_os,   ///< TODOCUMENT
+				                const std::tuple<Ts...> &prm_value ///< TODOCUMENT
 				                ) const {
-					apply( tuple_parts_ostreamer( arg_os ), arg_value );
+					apply( tuple_parts_ostreamer( prm_os ), prm_value );
 				}
 
 			public:
 				/// \brief TODOCUMENT
 				template <typename T>
-				void operator()(std::ostream &arg_os,   ///< TODOCUMENT
-				                const T      &arg_value ///< TODOCUMENT
+				void operator()(std::ostream &prm_os,   ///< TODOCUMENT
+				                const T      &prm_value ///< TODOCUMENT
 				                ) const {
-					write_part( arg_os, arg_value );
-					arg_os << "\n";
+					write_part( prm_os, prm_value );
+					prm_os << "\n";
 				}
 			};
 
@@ -250,10 +250,10 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		std::vector<T> read_file(const boost::filesystem::path &arg_file ///< TODOCUMENT
+		std::vector<T> read_file(const boost::filesystem::path &prm_file ///< TODOCUMENT
 		                         ) {
 			std::ifstream input_stream;
-			open_ifstream( input_stream, arg_file );
+			open_ifstream( input_stream, prm_file );
 			std::vector<T> line_entries;
 			std::string line_string;
 			while ( getline( input_stream, line_string ) ) {
@@ -266,14 +266,14 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename ITER>
-		void write_file(const boost::filesystem::path &arg_file,  ///< TODOCUMENT
-		                const ITER                    &arg_begin, ///< TODOCUMENT
-		                const ITER                    &arg_end    ///< TODOCUMENT
+		void write_file(const boost::filesystem::path &prm_file,  ///< TODOCUMENT
+		                const ITER                    &prm_begin, ///< TODOCUMENT
+		                const ITER                    &prm_end    ///< TODOCUMENT
 		                ) {
 			BOOST_CONCEPT_ASSERT(( boost::forward_iterator_archetype<ITER> ));
 			std::ofstream output_stream;
-			open_ofstream( output_stream, arg_file );
-			for (const auto &value : boost::iterator_range<ITER>( arg_begin, arg_end ) ) {
+			open_ofstream( output_stream, prm_file );
+			for (const auto &value : boost::iterator_range<ITER>( prm_begin, prm_end ) ) {
 				detail::type_line_writer()( output_stream, value );
 			}
 			output_stream << std::flush;
@@ -282,24 +282,24 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename SinglePassRange>
-		void write_file(const boost::filesystem::path &arg_file, ///< TODOCUMENT
-		                const SinglePassRange         &arg_range ///< TODOCUMENT
+		void write_file(const boost::filesystem::path &prm_file, ///< TODOCUMENT
+		                const SinglePassRange         &prm_range ///< TODOCUMENT
 		                ) {
 			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept<const SinglePassRange> ));
 			cath::common::write_file(
-				arg_file,
-				common::cbegin( arg_range ),
-				common::cend  ( arg_range )
+				prm_file,
+				common::cbegin( prm_range ),
+				common::cend  ( prm_range )
 			);
 		}
 
 		/// \brief Write a single string to a file
-		inline void write_file(const boost::filesystem::path &arg_file,  ///< The file to which the string should be written
-		                       const std::string             &arg_string ///< The string to write
+		inline void write_file(const boost::filesystem::path &prm_file,  ///< The file to which the string should be written
+		                       const std::string             &prm_string ///< The string to write
 		                       ) {
 			cath::common::write_file(
-				arg_file,
-				str_vec{ { arg_string } }
+				prm_file,
+				str_vec{ { prm_string } }
 			);
 		}
 	} // namespace common

@@ -92,70 +92,70 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		inline constexpr res_pair_keyer<KPs...>::res_pair_keyer(const KPs &... arg_keyer_parts ///< TODOCUMENT
-		                                                        ) : keyer_parts( arg_keyer_parts... ) {
+		inline constexpr res_pair_keyer<KPs...>::res_pair_keyer(const KPs &... prm_keyer_parts ///< TODOCUMENT
+		                                                        ) : keyer_parts( prm_keyer_parts... ) {
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		template <typename Store, typename Key, typename Data>
-		inline void res_pair_keyer<KPs...>::store_emplace_value(Store      &arg_store, ///< The store in which to emplace_back the value components
-		                                                        const Key  &arg_key,   ///< The key under which the value should be recorded
-		                                                        Data      &&arg_data   ///< The data to be passed to the keyer_parts
+		inline void res_pair_keyer<KPs...>::store_emplace_value(Store      &prm_store, ///< The store in which to emplace_back the value components
+		                                                        const Key  &prm_key,   ///< The key under which the value should be recorded
+		                                                        Data      &&prm_data   ///< The data to be passed to the keyer_parts
 		                                                        ) const {
 			detail::store_emplace_value(
-				arg_store,
-				arg_key,
+				prm_store,
+				prm_key,
 				keyer_parts,
-				std::forward<Data>( arg_data )
+				std::forward<Data>( prm_data )
 			);
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		template <typename Data>
-		inline constexpr auto res_pair_keyer<KPs...>::make_value(Data &&arg_data ///< TODOCUMENT
+		inline constexpr auto res_pair_keyer<KPs...>::make_value(Data &&prm_data ///< TODOCUMENT
 		                                                         ) const -> key_value_tuple_type {
-			return detail::make_value( keyer_parts, std::forward<Data>( arg_data ) );
+			return detail::make_value( keyer_parts, std::forward<Data>( prm_data ) );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		template <typename Data>
-		inline constexpr auto res_pair_keyer<KPs...>::make_key(Data &&arg_data ///< TODOCUMENT
+		inline constexpr auto res_pair_keyer<KPs...>::make_key(Data &&prm_data ///< TODOCUMENT
 		                                                       ) const -> key_index_tuple_type {
-			return detail::make_key( keyer_parts, std::forward<Data>( arg_data ) );
+			return detail::make_key( keyer_parts, std::forward<Data>( prm_data ) );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		template <typename Data, typename Crit>
-		inline constexpr auto res_pair_keyer<KPs...>::make_close_keys(Data &&arg_data,    ///< TODOCUMENT
-		                                                              Crit &&arg_criteria ///< The criteria defining what is considered a match
+		inline constexpr auto res_pair_keyer<KPs...>::make_close_keys(Data &&prm_data,    ///< TODOCUMENT
+		                                                              Crit &&prm_criteria ///< The criteria defining what is considered a match
 		                                                              ) const -> key_ranges_tuple_type {
 			return detail::make_close_keys(
 				keyer_parts,
-				std::forward<Data>( arg_data ),
-				std::forward<Crit>( arg_criteria )
+				std::forward<Data>( prm_data ),
+				std::forward<Crit>( prm_criteria )
 			);
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		template <typename Data, typename Crit>
-		inline constexpr auto res_pair_keyer<KPs...>::make_min_close_key(Data &&arg_data,    ///< TODOCUMENT
-		                                                                 Crit &&arg_criteria ///< The criteria defining what is considered a match
+		inline constexpr auto res_pair_keyer<KPs...>::make_min_close_key(Data &&prm_data,    ///< TODOCUMENT
+		                                                                 Crit &&prm_criteria ///< The criteria defining what is considered a match
 		                                                                 ) const -> key_index_tuple_type {
-			return detail::make_min_close_key( keyer_parts, std::forward<Data>( arg_data ), std::forward<Crit>( arg_criteria ) );
+			return detail::make_min_close_key( keyer_parts, std::forward<Data>( prm_data ), std::forward<Crit>( prm_criteria ) );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		template <typename Data, typename Crit>
-		inline constexpr auto res_pair_keyer<KPs...>::make_max_close_key(Data &&arg_data,    ///< TODOCUMENT
-		                                                                 Crit &&arg_criteria ///< The criteria defining what is considered a match
+		inline constexpr auto res_pair_keyer<KPs...>::make_max_close_key(Data &&prm_data,    ///< TODOCUMENT
+		                                                                 Crit &&prm_criteria ///< The criteria defining what is considered a match
 		                                                                 ) const -> key_index_tuple_type {
-			return detail::make_max_close_key( keyer_parts, std::forward<Data>( arg_data ), std::forward<Crit>( arg_criteria ) );
+			return detail::make_max_close_key( keyer_parts, std::forward<Data>( prm_data ), std::forward<Crit>( prm_criteria ) );
 		}
 
 		/// \brief TODOCUMENT
@@ -166,19 +166,19 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		constexpr res_pair_keyer<KPs...> make_res_pair_keyer(KPs ... arg_keyer_parts ///< TODOCUMENT
+		constexpr res_pair_keyer<KPs...> make_res_pair_keyer(KPs ... prm_keyer_parts ///< TODOCUMENT
 		                                                     ) {
 			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-			return res_pair_keyer<KPs...>{ arg_keyer_parts... };
+			return res_pair_keyer<KPs...>{ prm_keyer_parts... };
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		std::ostream & operator<<(std::ostream                 &arg_os,   ///< TODOCUMENT
-		                          const res_pair_keyer<KPs...> &arg_keyer ///< TODOCUMENT
+		std::ostream & operator<<(std::ostream                 &prm_os,   ///< TODOCUMENT
+		                          const res_pair_keyer<KPs...> &prm_keyer ///< TODOCUMENT
 		                          ) {
-			arg_os << "res_pair_keyer[ " << arg_keyer.parts_names() << " ]";
-			return arg_os;
+			prm_os << "res_pair_keyer[ " << prm_keyer.parts_names() << " ]";
+			return prm_os;
 		}
 
 //		auto make_example() {

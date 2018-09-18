@@ -67,22 +67,22 @@ namespace cath {
 		};
 
 		/// \brief Ctor
-		inline name_set::name_set(std::string arg_name_from_acq,           ///< The name that came from the acquirer
-		                          str_opt     arg_specified_id,            ///< An optional name that may have been explicitly specified
-		                          str_opt     arg_domain_name_from_regions ///< An optional (domain) name that may have come from regions (eg D[2zkmX03]308-465:X,516-669:X)
-		                          ) : name_from_acq            { std::move( arg_name_from_acq            ) },
-		                              specified_id             { std::move( arg_specified_id             ) },
-		                              domain_name_from_regions { std::move( arg_domain_name_from_regions ) } {
+		inline name_set::name_set(std::string prm_name_from_acq,           ///< The name that came from the acquirer
+		                          str_opt     prm_specified_id,            ///< An optional name that may have been explicitly specified
+		                          str_opt     prm_domain_name_from_regions ///< An optional (domain) name that may have come from regions (eg D[2zkmX03]308-465:X,516-669:X)
+		                          ) : name_from_acq            { std::move( prm_name_from_acq            ) },
+		                              specified_id             { std::move( prm_specified_id             ) },
+		                              domain_name_from_regions { std::move( prm_domain_name_from_regions ) } {
 		}
 
 		/// \brief Ctor
-		inline name_set::name_set(boost::filesystem::path arg_primary_source_file,     ///< The primary file from which the data was parsed
-		                          str_opt                 arg_specified_id,            ///< An optional name that may have been explicitly specified
-		                          str_opt                 arg_domain_name_from_regions ///< An optional (domain) name that may have come from regions (eg D[2zkmX03]308-465:X,516-669:X)
-		                          ) : name_from_acq            { arg_primary_source_file.filename().string() },
-		                              primary_source_file      { std::move( arg_primary_source_file        ) },
-		                              specified_id             { std::move( arg_specified_id               ) },
-		                              domain_name_from_regions { std::move( arg_domain_name_from_regions   ) } {
+		inline name_set::name_set(boost::filesystem::path prm_primary_source_file,     ///< The primary file from which the data was parsed
+		                          str_opt                 prm_specified_id,            ///< An optional name that may have been explicitly specified
+		                          str_opt                 prm_domain_name_from_regions ///< An optional (domain) name that may have come from regions (eg D[2zkmX03]308-465:X,516-669:X)
+		                          ) : name_from_acq            { prm_primary_source_file.filename().string() },
+		                              primary_source_file      { std::move( prm_primary_source_file        ) },
+		                              specified_id             { std::move( prm_specified_id               ) },
+		                              domain_name_from_regions { std::move( prm_domain_name_from_regions   ) } {
 		}
 
 		/// \brief Getter for the name that came from the acquirer
@@ -106,45 +106,45 @@ namespace cath {
 		}
 
 		/// \brief Setter for the name that came from the acquirer
-		inline name_set & name_set::set_name_from_acq(std::string arg_name_from_acq ///< The name that came from the acquirer
+		inline name_set & name_set::set_name_from_acq(std::string prm_name_from_acq ///< The name that came from the acquirer
 		                                              ) {
-			name_from_acq = std::move( arg_name_from_acq );
+			name_from_acq = std::move( prm_name_from_acq );
 			return *this;
 		}
 
 		/// \brief Setter for an optional primary file from which the data was parsed
-		inline name_set & name_set::set_primary_source_file(path_opt arg_primary_source_file ///< An optional primary file from which the data was parsed
+		inline name_set & name_set::set_primary_source_file(path_opt prm_primary_source_file ///< An optional primary file from which the data was parsed
 		                                                    ) {
-			primary_source_file = std::move( arg_primary_source_file );
+			primary_source_file = std::move( prm_primary_source_file );
 			return *this;
 		}
 
 		/// \brief Setter for an optional name that may have been explicitly specified
-		inline name_set & name_set::set_specified_id(str_opt arg_specified_id ///< An optional name that may have been explicitly specified
+		inline name_set & name_set::set_specified_id(str_opt prm_specified_id ///< An optional name that may have been explicitly specified
 		                                             ) {
-			specified_id = std::move( arg_specified_id );
+			specified_id = std::move( prm_specified_id );
 			return *this;
 		}
 
 		/// \brief Setter for an optional (domain) name that may have come from regions (eg D[2zkmX03]308-465:X,516-669:X)
-		inline name_set & name_set::set_domain_name_from_regions(str_opt arg_domain_name_from_regions ///< An optional (domain) name that may have come from regions (eg D[2zkmX03]308-465:X,516-669:X)
+		inline name_set & name_set::set_domain_name_from_regions(str_opt prm_domain_name_from_regions ///< An optional (domain) name that may have come from regions (eg D[2zkmX03]308-465:X,516-669:X)
 		                                                         ) {
-			domain_name_from_regions = std::move( arg_domain_name_from_regions );
+			domain_name_from_regions = std::move( prm_domain_name_from_regions );
 			return *this;
 		}
 
 		/// \brief Return whether the two specified name_sets are identical
 		///
 		/// \relates name_set
-		inline bool operator==(const name_set &arg_lhs, ///< The first  name_set to compare
-		                       const name_set &arg_rhs  ///< The second name_set to compare
+		inline bool operator==(const name_set &prm_lhs, ///< The first  name_set to compare
+		                       const name_set &prm_rhs  ///< The second name_set to compare
 		                       ) {
 			return (
-				arg_lhs.get_name_from_acq()            == arg_rhs.get_name_from_acq()
+				prm_lhs.get_name_from_acq()            == prm_rhs.get_name_from_acq()
 				&&
-				arg_lhs.get_specified_id()             == arg_rhs.get_specified_id()
+				prm_lhs.get_specified_id()             == prm_rhs.get_specified_id()
 				&&
-				arg_lhs.get_domain_name_from_regions() == arg_rhs.get_domain_name_from_regions()
+				prm_lhs.get_domain_name_from_regions() == prm_rhs.get_domain_name_from_regions()
 			);
 		}
 

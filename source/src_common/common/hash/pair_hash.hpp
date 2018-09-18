@@ -32,9 +32,9 @@ namespace cath {
 			/// \brief Generic function operator for hashing a pair by
 			///        combining the results of a standard hash of each value
 			template <typename T, typename U>
-			size_t operator()(const std::pair<T, U> &arg_pair ///< The
+			size_t operator()(const std::pair<T, U> &prm_pair ///< The
 			                  ) const {
-				return std::hash<T>()( arg_pair.first ) ^ std::hash<U>()( arg_pair.second );
+				return std::hash<T>()( prm_pair.first ) ^ std::hash<U>()( prm_pair.second );
 			}
 		};
 

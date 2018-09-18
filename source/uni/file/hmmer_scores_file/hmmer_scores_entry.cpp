@@ -41,58 +41,58 @@ using boost::numeric_cast;
 using boost::token_compress_on;
 
 /// \brief TODOCUMENT
-string cath::file::detail::strip_header_name(const string &arg_string ///< TODOCUMENT
+string cath::file::detail::strip_header_name(const string &prm_string ///< TODOCUMENT
                                              ) {
 	const regex the_regex( R"(^cath\|\d_\d_\d\|(\d\w{3}\S\d{2})/)" );
 	smatch the_smatch;
-	if ( regex_search( arg_string, the_smatch, the_regex ) ) {
-		return arg_string.substr(
+	if ( regex_search( prm_string, the_smatch, the_regex ) ) {
+		return prm_string.substr(
 			numeric_cast<size_t>( the_smatch.position( 1 ) ),
 			numeric_cast<size_t>( the_smatch.length  ( 1 ) )
 		);
 	}
-	return arg_string;
+	return prm_string;
 }
 
 /// \brief Ctor from all of the required pieces of information
-hmmer_scores_entry::hmmer_scores_entry(string        arg_name_1,               ///< TODOCUMENT
-                                       string        arg_accession_1,          ///< TODOCUMENT
-                                       string        arg_name_2,               ///< TODOCUMENT
-                                       string        arg_accession_2,          ///< TODOCUMENT
-                                       const double &arg_full_sequence_evalue, ///< TODOCUMENT
-                                       const double &arg_full_sequence_score,  ///< TODOCUMENT
-                                       const double &arg_full_sequence_bias,   ///< TODOCUMENT
-                                       const double &arg_best_1_domain_evalue, ///< TODOCUMENT
-                                       const double &arg_best_1_domain_score,  ///< TODOCUMENT
-                                       const double &arg_best_1_domain_bias,   ///< TODOCUMENT
-                                       const double &arg_expected_num_doms,    ///< TODOCUMENT
-                                       const size_t &arg_reg,                  ///< TODOCUMENT
-                                       const size_t &arg_clu,                  ///< TODOCUMENT
-                                       const size_t &arg_ov,                   ///< TODOCUMENT
-                                       const size_t &arg_env,                  ///< TODOCUMENT
-                                       const size_t &arg_dom,                  ///< TODOCUMENT
-                                       const size_t &arg_rep,                  ///< TODOCUMENT
-                                       const size_t &arg_inc,                  ///< TODOCUMENT
-                                       string        arg_description           ///< TODOCUMENT
-                                       ) : name_1               { std::move( arg_name_1      ) },
-                                           accession_1          { std::move( arg_accession_1 ) },
-                                           name_2               { std::move( arg_name_2      ) },
-                                           accession_2          { std::move( arg_accession_2 ) },
-                                           full_sequence_evalue { arg_full_sequence_evalue     },
-                                           full_sequence_score  { arg_full_sequence_score      },
-                                           full_sequence_bias   { arg_full_sequence_bias       },
-                                           best_1_domain_evalue { arg_best_1_domain_evalue     },
-                                           best_1_domain_score  { arg_best_1_domain_score      },
-                                           best_1_domain_bias   { arg_best_1_domain_bias       },
-                                           expected_num_doms    { arg_expected_num_doms        },
-                                           reg                  { arg_reg                      },
-                                           clu                  { arg_clu                      },
-                                           ov                   { arg_ov                       },
-                                           env                  { arg_env                      },
-                                           dom                  { arg_dom                      },
-                                           rep                  { arg_rep                      },
-                                           inc                  { arg_inc                      },
-                                           description          { std::move( arg_description ) } {
+hmmer_scores_entry::hmmer_scores_entry(string        prm_name_1,               ///< TODOCUMENT
+                                       string        prm_accession_1,          ///< TODOCUMENT
+                                       string        prm_name_2,               ///< TODOCUMENT
+                                       string        prm_accession_2,          ///< TODOCUMENT
+                                       const double &prm_full_sequence_evalue, ///< TODOCUMENT
+                                       const double &prm_full_sequence_score,  ///< TODOCUMENT
+                                       const double &prm_full_sequence_bias,   ///< TODOCUMENT
+                                       const double &prm_best_1_domain_evalue, ///< TODOCUMENT
+                                       const double &prm_best_1_domain_score,  ///< TODOCUMENT
+                                       const double &prm_best_1_domain_bias,   ///< TODOCUMENT
+                                       const double &prm_expected_num_doms,    ///< TODOCUMENT
+                                       const size_t &prm_reg,                  ///< TODOCUMENT
+                                       const size_t &prm_clu,                  ///< TODOCUMENT
+                                       const size_t &prm_ov,                   ///< TODOCUMENT
+                                       const size_t &prm_env,                  ///< TODOCUMENT
+                                       const size_t &prm_dom,                  ///< TODOCUMENT
+                                       const size_t &prm_rep,                  ///< TODOCUMENT
+                                       const size_t &prm_inc,                  ///< TODOCUMENT
+                                       string        prm_description           ///< TODOCUMENT
+                                       ) : name_1               { std::move( prm_name_1      ) },
+                                           accession_1          { std::move( prm_accession_1 ) },
+                                           name_2               { std::move( prm_name_2      ) },
+                                           accession_2          { std::move( prm_accession_2 ) },
+                                           full_sequence_evalue { prm_full_sequence_evalue     },
+                                           full_sequence_score  { prm_full_sequence_score      },
+                                           full_sequence_bias   { prm_full_sequence_bias       },
+                                           best_1_domain_evalue { prm_best_1_domain_evalue     },
+                                           best_1_domain_score  { prm_best_1_domain_score      },
+                                           best_1_domain_bias   { prm_best_1_domain_bias       },
+                                           expected_num_doms    { prm_expected_num_doms        },
+                                           reg                  { prm_reg                      },
+                                           clu                  { prm_clu                      },
+                                           ov                   { prm_ov                       },
+                                           env                  { prm_env                      },
+                                           dom                  { prm_dom                      },
+                                           rep                  { prm_rep                      },
+                                           inc                  { prm_inc                      },
+                                           description          { std::move( prm_description ) } {
 }
 
 /// \brief TODOCUMENT
@@ -193,47 +193,47 @@ string hmmer_scores_entry::get_description() const {
 /// \brief Non-member equality operator for hmmer_scores_entry
 ///
 /// \relates hmmer_scores_entry
-bool cath::file::operator==(const hmmer_scores_entry &arg_entry_a, ///< The first  hmmer_scores_entry to compare
-                            const hmmer_scores_entry &arg_entry_b  ///< The second hmmer_scores_entry to compare
+bool cath::file::operator==(const hmmer_scores_entry &prm_entry_a, ///< The first  hmmer_scores_entry to compare
+                            const hmmer_scores_entry &prm_entry_b  ///< The second hmmer_scores_entry to compare
                             ) {
 	return (
-		arg_entry_a.get_name_1()               == arg_entry_b.get_name_1()
+		prm_entry_a.get_name_1()               == prm_entry_b.get_name_1()
 		&&
-		arg_entry_a.get_accession_1()          == arg_entry_b.get_accession_1()
+		prm_entry_a.get_accession_1()          == prm_entry_b.get_accession_1()
 		&&
-		arg_entry_a.get_name_2()               == arg_entry_b.get_name_2()
+		prm_entry_a.get_name_2()               == prm_entry_b.get_name_2()
 		&&
-		arg_entry_a.get_accession_2()          == arg_entry_b.get_accession_2()
+		prm_entry_a.get_accession_2()          == prm_entry_b.get_accession_2()
 		&&
-		arg_entry_a.get_full_sequence_evalue() == arg_entry_b.get_full_sequence_evalue()
+		prm_entry_a.get_full_sequence_evalue() == prm_entry_b.get_full_sequence_evalue()
 		&&
-		arg_entry_a.get_full_sequence_score()  == arg_entry_b.get_full_sequence_score()
+		prm_entry_a.get_full_sequence_score()  == prm_entry_b.get_full_sequence_score()
 		&&
-		arg_entry_a.get_full_sequence_bias()   == arg_entry_b.get_full_sequence_bias()
+		prm_entry_a.get_full_sequence_bias()   == prm_entry_b.get_full_sequence_bias()
 		&&
-		arg_entry_a.get_best_1_domain_evalue() == arg_entry_b.get_best_1_domain_evalue()
+		prm_entry_a.get_best_1_domain_evalue() == prm_entry_b.get_best_1_domain_evalue()
 		&&
-		arg_entry_a.get_best_1_domain_score()  == arg_entry_b.get_best_1_domain_score()
+		prm_entry_a.get_best_1_domain_score()  == prm_entry_b.get_best_1_domain_score()
 		&&
-		arg_entry_a.get_best_1_domain_bias()   == arg_entry_b.get_best_1_domain_bias()
+		prm_entry_a.get_best_1_domain_bias()   == prm_entry_b.get_best_1_domain_bias()
 		&&
-		arg_entry_a.get_expected_num_doms()    == arg_entry_b.get_expected_num_doms()
+		prm_entry_a.get_expected_num_doms()    == prm_entry_b.get_expected_num_doms()
 		&&
-		arg_entry_a.get_reg()                  == arg_entry_b.get_reg()
+		prm_entry_a.get_reg()                  == prm_entry_b.get_reg()
 		&&
-		arg_entry_a.get_clu()                  == arg_entry_b.get_clu()
+		prm_entry_a.get_clu()                  == prm_entry_b.get_clu()
 		&&
-		arg_entry_a.get_ov()                   == arg_entry_b.get_ov()
+		prm_entry_a.get_ov()                   == prm_entry_b.get_ov()
 		&&
-		arg_entry_a.get_env()                  == arg_entry_b.get_env()
+		prm_entry_a.get_env()                  == prm_entry_b.get_env()
 		&&
-		arg_entry_a.get_dom()                  == arg_entry_b.get_dom()
+		prm_entry_a.get_dom()                  == prm_entry_b.get_dom()
 		&&
-		arg_entry_a.get_rep()                  == arg_entry_b.get_rep()
+		prm_entry_a.get_rep()                  == prm_entry_b.get_rep()
 		&&
-		arg_entry_a.get_inc()                  == arg_entry_b.get_inc()
+		prm_entry_a.get_inc()                  == prm_entry_b.get_inc()
 		&&
-		arg_entry_a.get_description()          == arg_entry_b.get_description()
+		prm_entry_a.get_description()          == prm_entry_b.get_description()
 	);
 }
 
@@ -244,17 +244,17 @@ bool cath::file::operator==(const hmmer_scores_entry &arg_entry_a, ///< The firs
 ///     cath|4_0_0|102mA00/0-153-i5                                   -          cath|4_0_0|3ixfA00/1-137 -            5.4e-09   34.1   0.1   1.1e-08   33.1   0.1   1.4   1   1   0   1   1   1   1 -
 ///
 /// \relates hmmer_scores_entry
-hmmer_scores_entry cath::file::hmmer_scores_entry_from_line(const string              &arg_hmmer_line,         ///< The line from which to parse the data
-                                                            const hmmer_name_handling &arg_hmmer_name_handling ///< TODOCUMENT
+hmmer_scores_entry cath::file::hmmer_scores_entry_from_line(const string              &prm_hmmer_line,         ///< The line from which to parse the data
+                                                            const hmmer_name_handling &prm_hmmer_name_handling ///< TODOCUMENT
                                                             ) {
-	const auto line_parts = split_build<str_vec>( arg_hmmer_line, is_space(), token_compress_on );
+	const auto line_parts = split_build<str_vec>( prm_hmmer_line, is_space(), token_compress_on );
 	if ( line_parts.size() != 19 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse hmmer_scores_entry from line that doesn't contain 19 parts"));
 	}
 
 	const auto &raw_name1     = line_parts[ 0 ];
 	const auto &raw_name2     = line_parts[ 2 ];
-	const bool  strip_headers = ( arg_hmmer_name_handling == hmmer_name_handling::STRIP );
+	const bool  strip_headers = ( prm_hmmer_name_handling == hmmer_name_handling::STRIP );
 	const auto  name1         = strip_headers ? detail::strip_header_name( raw_name1 ) : raw_name1;
 	const auto  name2         = strip_headers ? detail::strip_header_name( raw_name2 ) : raw_name2;
 
@@ -285,36 +285,36 @@ hmmer_scores_entry cath::file::hmmer_scores_entry_from_line(const string        
 /// \brief Simple to_string() overload for hmmer_scores_entry
 ///
 /// \relates hmmer_scores_entry
-string cath::file::to_string(const hmmer_scores_entry &arg_hmmer_scores_entry ///< The hmmer_scores_entry to be output as a string
+string cath::file::to_string(const hmmer_scores_entry &prm_hmmer_scores_entry ///< The hmmer_scores_entry to be output as a string
                              ) {
-	return "hmmer_scores_entry[" +                 arg_hmmer_scores_entry.get_name_1()
-	     + ", "                  +                 arg_hmmer_scores_entry.get_accession_1()
-	     + ", "                  +                 arg_hmmer_scores_entry.get_name_2()
-	     + ", "                  +                 arg_hmmer_scores_entry.get_accession_2()
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_full_sequence_evalue()  )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_full_sequence_score()   )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_full_sequence_bias()    )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_best_1_domain_evalue()  )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_best_1_domain_score()   )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_full_sequence_bias()    )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_expected_num_doms()     )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_reg()                   )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_clu()                   )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_ov()                    )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_env()                   )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_dom()                   )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_rep()                   )
-	     + ", "                  + std::to_string( arg_hmmer_scores_entry.get_inc()                   )
-	     + ", "                  +                 arg_hmmer_scores_entry.get_description()
+	return "hmmer_scores_entry[" +                 prm_hmmer_scores_entry.get_name_1()
+	     + ", "                  +                 prm_hmmer_scores_entry.get_accession_1()
+	     + ", "                  +                 prm_hmmer_scores_entry.get_name_2()
+	     + ", "                  +                 prm_hmmer_scores_entry.get_accession_2()
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_full_sequence_evalue()  )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_full_sequence_score()   )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_full_sequence_bias()    )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_best_1_domain_evalue()  )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_best_1_domain_score()   )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_full_sequence_bias()    )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_expected_num_doms()     )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_reg()                   )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_clu()                   )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_ov()                    )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_env()                   )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_dom()                   )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_rep()                   )
+	     + ", "                  + std::to_string( prm_hmmer_scores_entry.get_inc()                   )
+	     + ", "                  +                 prm_hmmer_scores_entry.get_description()
 	     + "]";
 }
 
 /// \brief Simple insertion operator for hmmer_scores_entry
 ///
 /// \relates hmmer_scores_entry
-ostream & cath::file::operator<<(ostream                &arg_os,   ///< The ostream to which the hmmer_scores_entry should be output
-                                 const hmmer_scores_entry &arg_entry ///< The hmmer_scores_entry to output
+ostream & cath::file::operator<<(ostream                &prm_os,   ///< The ostream to which the hmmer_scores_entry should be output
+                                 const hmmer_scores_entry &prm_entry ///< The hmmer_scores_entry to output
                                  ) {
-	arg_os << to_string( arg_entry );
-	return arg_os;
+	prm_os << to_string( prm_entry );
+	return prm_os;
 }

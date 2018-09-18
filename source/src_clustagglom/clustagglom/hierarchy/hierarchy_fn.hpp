@@ -49,12 +49,12 @@ namespace cath {
 				/// \brief Recursively traverse the specified hierarchy from the specified depth and group
 				///        calling the specified function at each entry
 				template <typename Fn>
-				void traverse_recurse(const hierarchy  &arg_hierarchy, ///< The hierarchy to traverse
-				                      const size_t     &arg_depth,     ///< The depth from which the traversal should be conducted
-				                      const size_t     &arg_group,     ///< The index of the group at the specified depth from which the traversal should be conducted
-				                      Fn              &&arg_fn         ///< The function to call at each entry
+				void traverse_recurse(const hierarchy  &prm_hierarchy, ///< The hierarchy to traverse
+				                      const size_t     &prm_depth,     ///< The depth from which the traversal should be conducted
+				                      const size_t     &prm_group,     ///< The index of the group at the specified depth from which the traversal should be conducted
+				                      Fn              &&prm_fn         ///< The function to call at each entry
 				                      ) {
-					const hierarchy_group &entry = arg_hierarchy[ arg_depth ][ arg_group ];
+					const hierarchy_group &entry = prm_hierarchy[ prm_depth ][ prm_group ];
 
 					// Add a new layer of counter
 					ctrs.push_back( CTR_INIT );
@@ -65,17 +65,17 @@ namespace cath {
 
 						// If this value refers to an entry, temporarily fill out the counters and call the function
 						if ( value.get_type() == hierarchy_ref::ENTRY ) {
-							ctrs.resize( arg_hierarchy.size(), CTR_INIT );
-							common::invoke( arg_fn, ctrs, value.get_index() );
-							ctrs.resize( arg_depth + 1 );
+							ctrs.resize( prm_hierarchy.size(), CTR_INIT );
+							common::invoke( prm_fn, ctrs, value.get_index() );
+							ctrs.resize( prm_depth + 1 );
 						}
 						// Otherwise recurse into traversing within the child group
 						else {
 							traverse_recurse(
-								arg_hierarchy,
-								arg_depth + 1,
+								prm_hierarchy,
+								prm_depth + 1,
 								value.get_index(),
-								arg_fn
+								prm_fn
 							);
 						}
 
@@ -92,12 +92,12 @@ namespace cath {
 				/// \brief Perform a depth-first traversal through the specified hierarchy and call
 				///        the specified function with the (CATHSOLID-like) counters and index for each leaf node
 				template <typename Fn>
-				void traverse(const hierarchy  &arg_hierarchy, ///< The hierarchy to traverse
-				              Fn              &&arg_fn         ///< The function to apply to each node
+				void traverse(const hierarchy  &prm_hierarchy, ///< The hierarchy to traverse
+				              Fn              &&prm_fn         ///< The function to apply to each node
 				              ) {
 					ctrs.clear();
-					ctrs.reserve( arg_hierarchy.size() );
-					traverse_recurse( arg_hierarchy, INIT_DEPTH, INIT_GROUP, std::forward<Fn>( arg_fn ) );
+					ctrs.reserve( prm_hierarchy.size() );
+					traverse_recurse( prm_hierarchy, INIT_DEPTH, INIT_GROUP, std::forward<Fn>( prm_fn ) );
 				}
 
 			};
@@ -105,11 +105,11 @@ namespace cath {
 			/// \brief Perform a depth-first traversal through the specified hierarchy and call
 			///        the specified function with the (CATHSOLID-like) counters and index for each leaf node
 			template <typename Fn>
-			void depth_first_traverse_hierachy(const hierarchy  &arg_hierarchy, ///< The hierarchy to traverse
-			                                   Fn              &&arg_fn         ///< The function to apply to each node
+			void depth_first_traverse_hierachy(const hierarchy  &prm_hierarchy, ///< The hierarchy to traverse
+			                                   Fn              &&prm_fn         ///< The function to apply to each node
 			                                   ) {
 				depth_first_hierachy_traverser traverser;
-				traverser.traverse( arg_hierarchy, std::forward<Fn>( arg_fn ) );
+				traverser.traverse( prm_hierarchy, std::forward<Fn>( prm_fn ) );
 			}
 
 		} // namespace detail

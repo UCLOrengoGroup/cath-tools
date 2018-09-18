@@ -69,12 +69,12 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner_use_case(const str_vec &arg_command_line_args,    ///< TODOCUMENT
-                                                                                          istream       &arg_istream,              ///< TODOCUMENT
-                                                                                          const path    &arg_expected_output_file, ///< TODOCUMENT
-                                                                                          const bool    &arg_outputs_to_temp_file  ///< TODOCUMENT
+void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
+                                                                                          istream       &prm_istream,              ///< TODOCUMENT
+                                                                                          const path    &prm_expected_output_file, ///< TODOCUMENT
+                                                                                          const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
                                                                                           ) {
-		argc_argv_faker faked_argc_and_argv( arg_command_line_args );
+		argc_argv_faker faked_argc_and_argv( prm_command_line_args );
 		const auto my_cath_refine_align_options = make_and_parse_options<cath_refine_align_options>(
 			faked_argc_and_argv.get_argc(),
 			faked_argc_and_argv.get_argv()
@@ -84,29 +84,29 @@ void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner
 		stringstream test_ostream;
 
 		// Perform the superposition and then close the input file
-		cath_align_refiner::refine( my_cath_refine_align_options, arg_istream, test_ostream );
+		cath_align_refiner::refine( my_cath_refine_align_options, prm_istream, test_ostream );
 
-		if (arg_outputs_to_temp_file) {
-			BOOST_CHECK_FILES_EQUAL( get_filename( temp_cath_align_refiner_output_file ), arg_expected_output_file);
+		if (prm_outputs_to_temp_file) {
+			BOOST_CHECK_FILES_EQUAL( get_filename( temp_cath_align_refiner_output_file ), prm_expected_output_file);
 		}
 		else {
-			BOOST_CHECK_ISTREAM_AND_FILE_EQUAL(test_ostream, "stdout_from_cath_align_refine", arg_expected_output_file);
+			BOOST_CHECK_ISTREAM_AND_FILE_EQUAL(test_ostream, "stdout_from_cath_align_refine", prm_expected_output_file);
 		}
 	}
 
-void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner_std_in_use_case(const str_vec &arg_command_line_args,    ///< TODOCUMENT
-                                                                                                 const path    &arg_input_file,           ///< TODOCUMENT
-                                                                                                 const path    &arg_expected_output_file, ///< TODOCUMENT
-                                                                                                 const bool    &arg_outputs_to_temp_file  ///< TODOCUMENT
+void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner_std_in_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
+                                                                                                 const path    &prm_input_file,           ///< TODOCUMENT
+                                                                                                 const path    &prm_expected_output_file, ///< TODOCUMENT
+                                                                                                 const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
                                                                                                  ) {
 	// Prepare an ifstream to read input from the input file
 	ifstream stdin_like_ifstream;
-	open_ifstream(stdin_like_ifstream, arg_input_file);
+	open_ifstream(stdin_like_ifstream, prm_input_file);
 	check_cath_align_refiner_use_case(
-		arg_command_line_args,
+		prm_command_line_args,
 		stdin_like_ifstream,
-		arg_expected_output_file,
-		arg_outputs_to_temp_file
+		prm_expected_output_file,
+		prm_outputs_to_temp_file
 	);
 	stdin_like_ifstream.close();
 }

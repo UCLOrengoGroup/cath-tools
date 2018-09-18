@@ -132,13 +132,13 @@ namespace cath {
 		///
 		/// \relates score_classn_value_list
 		template <typename FN>
-		score_classn_value_list read_score_classn_value_list(const boost::filesystem::path &arg_path,             ///< TODOCUMENT
-		                                                     const bool                    &arg_higher_is_better, ///< TODOCUMENT
-		                                                     const std::string             &arg_name,             ///< TODOCUMENT
-		                                                     FN                             arg_is_positive_fn    ///< TODOCUMENT
+		score_classn_value_list read_score_classn_value_list(const boost::filesystem::path &prm_path,             ///< TODOCUMENT
+		                                                     const bool                    &prm_higher_is_better, ///< TODOCUMENT
+		                                                     const std::string             &prm_name,             ///< TODOCUMENT
+		                                                     FN                             prm_is_positive_fn    ///< TODOCUMENT
 		                                                     ) {
 			std::ifstream input_stream;
-			common::open_ifstream( input_stream, arg_path );
+			common::open_ifstream( input_stream, prm_path );
 
 			score_classn_value_vec score_classn_values;
 			std::string line_string;
@@ -153,7 +153,7 @@ namespace cath {
 				const std::string &id1         = line_parts[ 0 ];
 				const std::string &id2         = line_parts[ 1 ];
 				const double       score       = std::stod( line_parts[ 2 ] );
-				const bool         is_positive = arg_is_positive_fn( line_parts );
+				const bool         is_positive = prm_is_positive_fn( line_parts );
 
 				score_classn_values.emplace_back( score, is_positive, id1 + " " + id2 );
 
@@ -165,7 +165,7 @@ namespace cath {
 			}
 			input_stream.close();
 
-			return make_score_classn_value_list( score_classn_values, arg_higher_is_better, arg_name );
+			return make_score_classn_value_list( score_classn_values, prm_higher_is_better, prm_name );
 		}
 
 		score_classn_value_list read_svmlight_predictions_file(const boost::filesystem::path &,

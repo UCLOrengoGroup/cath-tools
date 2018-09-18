@@ -30,9 +30,9 @@ using namespace cath::opts;
 using namespace std;
 
 /// \brief TODOCUMENT
-void alignment_outputter_list::push_back(const alignment_outputter &arg_outputter ///< TODOCUMENT
+void alignment_outputter_list::push_back(const alignment_outputter &prm_outputter ///< TODOCUMENT
                                          ) {
-	cath::common::push_back( outputters, arg_outputter.clone() );
+	cath::common::push_back( outputters, prm_outputter.clone() );
 }
 
 /// \brief TODOCUMENT
@@ -53,24 +53,24 @@ alignment_outputter_list::const_iterator alignment_outputter_list::end() const {
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_outputter_list
-void cath::opts::use_all_alignment_outputters(const alignment_outputter_list &arg_alignment_outputters, ///< TODOCUMENT
-                                              const alignment_context        &arg_alignment_context,    ///< TODOCUMENT
-                                              ostream                        &arg_stdout,               ///< TODOCUMENT
-                                              ostream                        &/*arg_stderr*/            ///< TODOCUMENT
+void cath::opts::use_all_alignment_outputters(const alignment_outputter_list &prm_alignment_outputters, ///< TODOCUMENT
+                                              const alignment_context        &prm_alignment_context,    ///< TODOCUMENT
+                                              ostream                        &prm_stdout,               ///< TODOCUMENT
+                                              ostream                        &/*prm_stderr*/            ///< TODOCUMENT
                                               ) {
 	// For each of the alignment_outputters specified by the cath_superpose_options, output the alignment
-	for (const alignment_outputter &outputter : arg_alignment_outputters) {
-		outputter.output_alignment(arg_alignment_context, arg_stdout);
+	for (const alignment_outputter &outputter : prm_alignment_outputters) {
+		outputter.output_alignment(prm_alignment_context, prm_stdout);
 	}
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_outputter_list
-bool cath::opts::any_alignment_outputters_involve_display_spec(const alignment_outputter_list &arg_alignment_outputters ///< TODOCUMENT
+bool cath::opts::any_alignment_outputters_involve_display_spec(const alignment_outputter_list &prm_alignment_outputters ///< TODOCUMENT
                                                                ) {
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
-	for (const alignment_outputter &outputter : arg_alignment_outputters) {
+	for (const alignment_outputter &outputter : prm_alignment_outputters) {
 		if ( outputter.involves_display_spec() ) {
 			return true;
 		}

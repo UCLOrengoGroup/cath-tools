@@ -44,10 +44,10 @@ namespace cath {
 				using value_t    = view_base_type;
 
 				/// \brief Sanity check the specified cell width
-				static constexpr value_t sanity_check_cell_width(const value_t &arg_cell_width ///< The cell width to be sanity-checked
+				static constexpr value_t sanity_check_cell_width(const value_t &prm_cell_width ///< The cell width to be sanity-checked
 				                                                 ) {
-					return ( arg_cell_width <= 0.0 || arg_cell_width > 16384.0 ) ? throw std::logic_error( "Cannot create an axis-based res_pair keyer_part with a cell_width that isn't a sensible, strictly-positive value" )
-					                                                             : arg_cell_width;
+					return ( prm_cell_width <= 0.0 || prm_cell_width > 16384.0 ) ? throw std::logic_error( "Cannot create an axis-based res_pair keyer_part with a cell_width that isn't a sensible, strictly-positive value" )
+					                                                             : prm_cell_width;
 				}
 
 				/// \brief Get a short name that describes this key part
@@ -56,15 +56,15 @@ namespace cath {
 				}
 
 				/// \brief Extract the relevant value from the specified res_pair
-				static constexpr value_t get_value(const stored_t &arg_res_pair ///< The res_pair from which the relevant value should be extracted
+				static constexpr value_t get_value(const stored_t &prm_res_pair ///< The res_pair from which the relevant value should be extracted
 				                                   ) {
-					return get_view_x( arg_res_pair );
+					return get_view_x( prm_res_pair );
 				}
 
 				/// \brief Extract the search radius from the specified quad_criteria
-				static constexpr value_t get_search_radius(const criteria_t &arg_criteria ///< The criteria defining what is considered a match
+				static constexpr value_t get_search_radius(const criteria_t &prm_criteria ///< The criteria defining what is considered a match
 				                                           ) {
-					return get_maximum_distance( arg_criteria );
+					return get_maximum_distance( prm_criteria );
 				}
 			};
 

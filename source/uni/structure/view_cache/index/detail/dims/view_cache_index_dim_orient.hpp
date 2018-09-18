@@ -110,24 +110,24 @@ namespace cath {
 			///
 			/// \todo Test this by scanning the all-against-all anchor pairs and then for each, check:
 			///        * the half-way quaternion is the same angle to both of the pair
-			///        * the pair's in neighbours iff the half-way quaternion is within arg_search_radius of both
+			///        * the pair's in neighbours iff the half-way quaternion is within prm_search_radius of both
 			///
 			/// \todo Once the above tests are in place, try changing the code to calculate the
-			///       distance_1_of_angle(2.0 * arg_search_radius) at the start and then compare
+			///       distance_1_of_angle(2.0 * prm_search_radius) at the start and then compare
 			///       the distance_1_of_quat_rot( anchor, neighbour ) to that value
-			size_vec_vec view_cache_index_dim_orient::calc_neighbours(const frame_quat_rot_vec &arg_anchor_quat_rots, ///< TODOCUMENT
-			                                                          const angle_type         &arg_search_radius     ///< TODOCUMENT
+			size_vec_vec view_cache_index_dim_orient::calc_neighbours(const frame_quat_rot_vec &prm_anchor_quat_rots, ///< TODOCUMENT
+			                                                          const angle_type         &prm_search_radius     ///< TODOCUMENT
 			                                                          ) {
-				const size_t num_anchor_quat_rots = arg_anchor_quat_rots.size();
+				const size_t num_anchor_quat_rots = prm_anchor_quat_rots.size();
 
 				size_vec_vec new_neighbours;
 				new_neighbours.reserve( num_anchor_quat_rots );
 
-				for (const frame_quat_rot &anchor : arg_anchor_quat_rots) {
+				for (const frame_quat_rot &anchor : prm_anchor_quat_rots) {
 					size_vec local_neighbours;
 					for (const size_t &neighbour_ctr : indices( num_anchor_quat_rots ) ) {
-						const frame_quat_rot &neighbour = arg_anchor_quat_rots[ neighbour_ctr ];
-						if ( angle_between_quat_rots( anchor, neighbour ) / 2.0 < arg_search_radius ) {
+						const frame_quat_rot &neighbour = prm_anchor_quat_rots[ neighbour_ctr ];
+						if ( angle_between_quat_rots( anchor, neighbour ) / 2.0 < prm_search_radius ) {
 							local_neighbours.push_back( neighbour_ctr );
 						}
 					}
@@ -147,147 +147,147 @@ namespace cath {
 			}
 
 			/// \brief The cell index of the specified value in the current state of the index
-			int view_cache_index_dim_orient::cell_index_of_value_in_current(const value_type &arg_value ///< TODOCUMENT
+			int view_cache_index_dim_orient::cell_index_of_value_in_current(const value_type &prm_value ///< TODOCUMENT
 			                                                                ) const {
-				return cath::debug_numeric_cast<int>( floor( arg_value / cell_width) ) - start_offset;
+				return cath::debug_numeric_cast<int>( floor( prm_value / cell_width) ) - start_offset;
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS>
-			bool view_cache_index_dim_orient::has_cell_at_value(const CELLS      &arg_cells, ///< TODOCUMENT
-			                                                    const value_type &arg_value  ///< TODOCUMENT
+			bool view_cache_index_dim_orient::has_cell_at_value(const CELLS      &prm_cells, ///< TODOCUMENT
+			                                                    const value_type &prm_value  ///< TODOCUMENT
 			                                                    ) const {
-				const int cell_index_in_current = cell_index_of_value_in_current( arg_value );
-				return ( cell_index_in_current > 0 && static_cast<size_t>( cell_index_in_current ) < arg_cells.size() );
+				const int cell_index_in_current = cell_index_of_value_in_current( prm_value );
+				return ( cell_index_in_current > 0 && static_cast<size_t>( cell_index_in_current ) < prm_cells.size() );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS>
-			typename CELLS::value_type & view_cache_index_dim_orient::cell_at_value(CELLS                            &arg_cells,        ///< TODOCUMENT
-			                                                                        const typename CELLS::value_type &arg_default_cell, ///< TODOCUMENT
-			                                                                        const value_type                 &arg_value         ///< TODOCUMENT
+			typename CELLS::value_type & view_cache_index_dim_orient::cell_at_value(CELLS                            &prm_cells,        ///< TODOCUMENT
+			                                                                        const typename CELLS::value_type &prm_default_cell, ///< TODOCUMENT
+			                                                                        const value_type                 &prm_value         ///< TODOCUMENT
 			                                                                        ) {
-				const int cell_index_in_current = cell_index_of_value_in_current( arg_value );
-				if ( arg_cells.empty() ) {
-					arg_cells.assign( 1, arg_default_cell );
+				const int cell_index_in_current = cell_index_of_value_in_current( prm_value );
+				if ( prm_cells.empty() ) {
+					prm_cells.assign( 1, prm_default_cell );
 					start_offset = cell_index_in_current;
-					return arg_cells.front();
+					return prm_cells.front();
 				}
 				else if ( cell_index_in_current < 0 ) {
 					const size_t num_to_prepend = cath::debug_numeric_cast<size_t>( -cell_index_in_current );
 					const int new_start_offest = get_start_offset() + cell_index_in_current;
-					arg_cells.insert( common::cbegin( arg_cells ), num_to_prepend, arg_default_cell );
+					prm_cells.insert( common::cbegin( prm_cells ), num_to_prepend, prm_default_cell );
 					start_offset = new_start_offest;
-					return arg_cells.front();
+					return prm_cells.front();
 				}
-				else if ( static_cast<size_t>( cell_index_in_current ) >= arg_cells.size() ) {
+				else if ( static_cast<size_t>( cell_index_in_current ) >= prm_cells.size() ) {
 					const size_t new_size    = 1 + cath::debug_numeric_cast<size_t>( cell_index_in_current );
-					arg_cells.resize( new_size, arg_default_cell );
-					return arg_cells.back();
+					prm_cells.resize( new_size, prm_default_cell );
+					return prm_cells.back();
 				}
 				else {
-					return arg_cells[ cath::debug_numeric_cast<size_t>( cell_index_in_current ) ];
+					return prm_cells[ cath::debug_numeric_cast<size_t>( cell_index_in_current ) ];
 				}
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS>
-			const typename CELLS::value_type & view_cache_index_dim_orient::cell_at_value(const CELLS      &arg_cells, ///< TODOCUMENT
-			                                                                              const value_type &arg_value  ///< TODOCUMENT
+			const typename CELLS::value_type & view_cache_index_dim_orient::cell_at_value(const CELLS      &prm_cells, ///< TODOCUMENT
+			                                                                              const value_type &prm_value  ///< TODOCUMENT
 			                                                                              ) const {
 #ifndef NDEBUG
-				if ( arg_cells.empty() ) {
+				if ( prm_cells.empty() ) {
 					BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot get entry at_value() with no populated cells"));
 				}
-				if ( ! has_cell_at_value( arg_cells, arg_value ) ) {
+				if ( ! has_cell_at_value( prm_cells, prm_value ) ) {
 					BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Value is not found in any of the cells"));
 				}
 #endif
-				return arg_cells[ cell_index_of_value_in_current( arg_value ) ];
+				return prm_cells[ cell_index_of_value_in_current( prm_value ) ];
 			}
 
 			/// \brief TODOCUMENT
-			view_cache_index_dim_orient::view_cache_index_dim_orient(const value_type &arg_cell_width ///< TODOCUMENT
-			                                                         ) : cell_width   ( arg_cell_width ),
+			view_cache_index_dim_orient::view_cache_index_dim_orient(const value_type &prm_cell_width ///< TODOCUMENT
+			                                                         ) : cell_width   ( prm_cell_width ),
 			                                                             start_offset ( 0              ) {
 				T().check_cell_width( get_cell_width() );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS, typename DEFAULTS>
-			void view_cache_index_dim_orient::store(const view_cache_index_entry &arg_entry,   ///< TODOCUMENT
-			                                        CELLS                        &arg_cells,   ///< TODOCUMENT
-			                                        const DEFAULTS               &arg_defaults ///< TODOCUMENT
+			void view_cache_index_dim_orient::store(const view_cache_index_entry &prm_entry,   ///< TODOCUMENT
+			                                        CELLS                        &prm_cells,   ///< TODOCUMENT
+			                                        const DEFAULTS               &prm_defaults ///< TODOCUMENT
 			                                        ) {
 				// Grab the value in question and TODOCUMENT
-				const value_type &value = T().get_index_value( arg_entry );
-				cell_at_value( arg_cells, arg_defaults.get_head(), value ).store(
-					arg_entry,
-					arg_defaults.get_tail()
+				const value_type &value = T().get_index_value( prm_entry );
+				cell_at_value( prm_cells, prm_defaults.get_head(), value ).store(
+					prm_entry,
+					prm_defaults.get_tail()
 				);
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS, typename ACTN>
-			void view_cache_index_dim_orient::perform_action_on_matches(const view_cache_index_entry      &arg_entry,    ///< TODOCUMENT
-			                                                            const CELLS                       &arg_cells,    ///< TODOCUMENT
-			                                                            const detail::vcie_match_criteria &arg_criteria, ///< TODOCUMENT
-			                                                            ACTN                              &arg_action    ///< TODOCUMENT
+			void view_cache_index_dim_orient::perform_action_on_matches(const view_cache_index_entry      &prm_entry,    ///< TODOCUMENT
+			                                                            const CELLS                       &prm_cells,    ///< TODOCUMENT
+			                                                            const detail::vcie_match_criteria &prm_criteria, ///< TODOCUMENT
+			                                                            ACTN                              &prm_action    ///< TODOCUMENT
 			                                                            ) const {
-				const value_type &value         = T().get_index_value  ( arg_entry    );
-				const value_type &search_radius = T().get_search_radius( arg_criteria );
+				const value_type &value         = T().get_index_value  ( prm_entry    );
+				const value_type &search_radius = T().get_search_radius( prm_criteria );
 
-				const int num_cells      = debug_numeric_cast<int>( arg_cells.size() - 1 );
+				const int num_cells      = debug_numeric_cast<int>( prm_cells.size() - 1 );
 				const int min_cell_index = std::max( 0,         cell_index_of_value_in_current( value - search_radius ) );
 				const int max_cell_index = std::min( num_cells, cell_index_of_value_in_current( value + search_radius ) );
 
 				for (const int &cell_index : irange( min_cell_index, max_cell_index + 1 ) ) {
-					arg_cells[ cell_index ].perform_action_on_matches( arg_entry, arg_criteria, arg_action );
+					prm_cells[ cell_index ].perform_action_on_matches( prm_entry, prm_criteria, prm_action );
 				}
 			}
 
 			/// \brief TODOCUMENT
-			size_t index_of_closest_quat_rep(const spanning_quads &arg_spanning_quats, ///< TODOCUMENT
-			                                 const frame_quat_rot &arg_quat_rot        ///< TODOCUMENT
+			size_t index_of_closest_quat_rep(const spanning_quads &prm_spanning_quats, ///< TODOCUMENT
+			                                 const frame_quat_rot &prm_quat_rot        ///< TODOCUMENT
 			                                 ) {
 				const auto closest_itr = boost::range::min_element(
-					arg_spanning_quats,
+					prm_spanning_quats,
 					[] (const frame_quat_rot &x, const frame_quat_rot &y) {
 						return (
-							distance_1_between_quat_rots( arg_quat_rot, x )
+							distance_1_between_quat_rots( prm_quat_rot, x )
 							<
-							distance_1_between_quat_rots( arg_quat_rot, y )
+							distance_1_between_quat_rots( prm_quat_rot, y )
 						);
 					}
 				);
-				if ( closest_itr == common::cend( arg_spanning_quats ) ) {
+				if ( closest_itr == common::cend( prm_spanning_quats ) ) {
 					BOOST_THROW_EXCEPTION(out_of_range_exception(""));
 				}
 				return boost::numeric_cast<size_t>( std::distance(
-					common::cbegin( arg_spanning_quats ),
+					common::cbegin( prm_spanning_quats ),
 					closest_itr
 				) );
 			}
 
 			/// \brief TODOCUMENT
-			size_t index_of_closest_quat_rep(const spanning_quads &arg_spanning_quats, ///< TODOCUMENT
-			                                 const frame_quat_rot &arg_quat_rot        ///< TODOCUMENT
+			size_t index_of_closest_quat_rep(const spanning_quads &prm_spanning_quats, ///< TODOCUMENT
+			                                 const frame_quat_rot &prm_quat_rot        ///< TODOCUMENT
 			                                 ) {
 				const auto closest_itr = boost::range::min_element(
-					arg_spanning_quats,
+					prm_spanning_quats,
 					[] (const frame_quat_rot &x, const frame_quat_rot &y) {
 						return (
-							distance_1_between_quat_rots( arg_quat_rot, x )
+							distance_1_between_quat_rots( prm_quat_rot, x )
 							<
-							distance_1_between_quat_rots( arg_quat_rot, y )
+							distance_1_between_quat_rots( prm_quat_rot, y )
 						);
 					}
 				);
-				if ( closest_itr == common::cend( arg_spanning_quats ) ) {
+				if ( closest_itr == common::cend( prm_spanning_quats ) ) {
 					BOOST_THROW_EXCEPTION(out_of_range_exception(""));
 				}
 				return boost::numeric_cast<size_t>( std::distance(
-					common::cbegin( arg_spanning_quats ),
+					common::cbegin( prm_spanning_quats ),
 					closest_itr
 				) );
 			}

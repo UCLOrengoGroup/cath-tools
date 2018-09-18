@@ -40,10 +40,10 @@ using std::max;
 using std::min;
 
 /// \brief Ctor to populate the sec_file_records and planar_angles_lists
-sec_file::sec_file(sec_file_record_vec             arg_sec_file_records,   ///< The list of sec_file_records
-                   sec_struc_planar_angles_vec_vec arg_inter_planar_angles ///< The list of planar_angle_lists
-                   ) : records             { std::move( arg_sec_file_records    ) },
-                       inter_planar_angles { std::move( arg_inter_planar_angles ) } {
+sec_file::sec_file(sec_file_record_vec             prm_sec_file_records,   ///< The list of sec_file_records
+                   sec_struc_planar_angles_vec_vec prm_inter_planar_angles ///< The list of planar_angle_lists
+                   ) : records             { std::move( prm_sec_file_records    ) },
+                       inter_planar_angles { std::move( prm_inter_planar_angles ) } {
 	if ( records.empty() ) {
 		if ( ! inter_planar_angles.empty() ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("There are inter_planar_angles despite there being no sec file records"));
@@ -71,19 +71,19 @@ sec_file::size_type sec_file::size() const {
 }
 
 /// \brief TODOCUMENT
-const sec_struc_planar_angles & sec_file::get_planar_angles_of_indices(const size_t &arg_index_first, ///< TODOCUMENT
-                                                                       const size_t &arg_index_second ///< TODOCUMENT
+const sec_struc_planar_angles & sec_file::get_planar_angles_of_indices(const size_t &prm_index_first, ///< TODOCUMENT
+                                                                       const size_t &prm_index_second ///< TODOCUMENT
                                                                        ) const {
 	// Sanity check the inputs
-	if (arg_index_first >= arg_index_second) {
+	if (prm_index_first >= prm_index_second) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("The first index must be strictly less than the second"));
 	}
-	if (arg_index_second >= records.size()) {
+	if (prm_index_second >= records.size()) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("The indices must both be less than the number of sec records"));
 	}
 
 	// Return the desired inter_planar_angles
-	return inter_planar_angles[arg_index_first][arg_index_second - arg_index_first - 1];
+	return inter_planar_angles[prm_index_first][prm_index_second - prm_index_first - 1];
 
 }
 
@@ -100,12 +100,12 @@ sec_file::const_iterator sec_file::end() const {
 /// \brief Non-member, non-friend function for converting a sec_file to a sec_struc_vec
 ///
 /// \relates sec_file
-sec_struc_vec cath::file::make_sec_struc_list(const sec_file &arg_sec_file ///< The sec_file to convert
+sec_struc_vec cath::file::make_sec_struc_list(const sec_file &prm_sec_file ///< The sec_file to convert
                                               ) {
 	// Build a vector of sec_strucs from the vector of sec_file_records
 	sec_struc_vec new_sec_strucs;
-	new_sec_strucs.reserve(arg_sec_file.size());
-	for (const sec_file_record &the_sec_file_record : arg_sec_file) {
+	new_sec_strucs.reserve(prm_sec_file.size());
+	for (const sec_file_record &the_sec_file_record : prm_sec_file) {
 		new_sec_strucs.push_back(make_sec_struc(the_sec_file_record));
 	}
 
@@ -126,7 +126,7 @@ sec_struc_vec cath::file::make_sec_struc_list(const sec_file &arg_sec_file ///< 
 				new_planar_angles.push_back(sec_struc_planar_angles::NULL_SEC_STRUC_PLANAR_ANGLES);
 			}
 			else {
-				new_planar_angles.push_back(arg_sec_file.get_planar_angles_of_indices(
+				new_planar_angles.push_back(prm_sec_file.get_planar_angles_of_indices(
 					min(sec_struc_ctr_a, sec_struc_ctr_b),
 					max(sec_struc_ctr_a, sec_struc_ctr_b)
 				));
@@ -145,20 +145,20 @@ sec_struc_vec cath::file::make_sec_struc_list(const sec_file &arg_sec_file ///< 
 /// of the angles between that sec_file_record and each of the following sec_file_records.
 ///
 /// \relates sec_file
-sec_struc_planar_angles_vec_vec cath::file::calc_planar_angles(const sec_file_record_vec &arg_sec_file_records ///< The sec_file_records for which to calculate the planar_angles
+sec_struc_planar_angles_vec_vec cath::file::calc_planar_angles(const sec_file_record_vec &prm_sec_file_records ///< The sec_file_records for which to calculate the planar_angles
                                                                ) {
-	if ( arg_sec_file_records.empty() ) {
+	if ( prm_sec_file_records.empty() ) {
 		return {};
 	}
 	return transform_build<sec_struc_planar_angles_vec_vec>(
-		indices( arg_sec_file_records.size() - 1 ),
+		indices( prm_sec_file_records.size() - 1 ),
 		[&] (const size_t &x) {
 			return transform_build<sec_struc_planar_angles_vec>(
-				irange( x + 1_z, arg_sec_file_records.size() ),
+				irange( x + 1_z, prm_sec_file_records.size() ),
 				[&] (const size_t &y) {
 					return make_planar_angles(
-						arg_sec_file_records[ x ],
-						arg_sec_file_records[ y ]
+						prm_sec_file_records[ x ],
+						prm_sec_file_records[ y ]
 					);
 				}
 			);
@@ -169,10 +169,10 @@ sec_struc_planar_angles_vec_vec cath::file::calc_planar_angles(const sec_file_re
 /// \brief Make a sec_file from the specified vector of sec_file_records by calculating the planar_angles
 ///
 /// \relates sec_file
-sec_file cath::file::make_sec_file_with_calced_planar_angles(const sec_file_record_vec &arg_sec_file_records ///< The sec_file_records from which to build the sec_file
+sec_file cath::file::make_sec_file_with_calced_planar_angles(const sec_file_record_vec &prm_sec_file_records ///< The sec_file_records from which to build the sec_file
                                                              ) {
 	return {
-		arg_sec_file_records,
-		calc_planar_angles( arg_sec_file_records )
+		prm_sec_file_records,
+		calc_planar_angles( prm_sec_file_records )
 	};
 }

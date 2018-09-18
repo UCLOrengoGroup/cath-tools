@@ -34,23 +34,23 @@ using namespace cath::detail;
 ///
 /// For an alignment_free_display_colourer, this just means calling do_get_colour_spec_from_num_entries()
 /// with the number of entries
-display_colour_spec alignment_free_display_colourer::do_get_colour_spec(const alignment_context &arg_alignment_context ///< The alignment_context to use to colour this alignment
+display_colour_spec alignment_free_display_colourer::do_get_colour_spec(const alignment_context &prm_alignment_context ///< The alignment_context to use to colour this alignment
                                                                         ) const {
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return display_colour_spec{
 		do_get_colour_spec_from_regions(
-			get_regions( arg_alignment_context )
+			get_regions( prm_alignment_context )
 		)
 	};
 }
 
 /// \brief Ctor
-alignment_free_display_colourer::alignment_free_display_colourer(const score_colour_handler &arg_score_handler ///< Specification for post-modifying the colouring based on scores
-                                                                 ) : super( arg_score_handler ) {
+alignment_free_display_colourer::alignment_free_display_colourer(const score_colour_handler &prm_score_handler ///< Specification for post-modifying the colouring based on scores
+                                                                 ) : super( prm_score_handler ) {
 }
 
 /// \brief NVI wrapper to get colouring based on the regions
-broad_display_colour_spec alignment_free_display_colourer::get_colour_spec_from_regions(const region_vec_opt_vec &arg_regions ///< The key regions of the structures
+broad_display_colour_spec alignment_free_display_colourer::get_colour_spec_from_regions(const region_vec_opt_vec &prm_regions ///< The key regions of the structures
                                                                                         ) const {
-	return do_get_colour_spec_from_regions( arg_regions );
+	return do_get_colour_spec_from_regions( prm_regions );
 }

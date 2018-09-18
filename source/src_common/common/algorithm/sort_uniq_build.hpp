@@ -65,44 +65,44 @@ namespace cath {
 		///
 		/// ATM, this doesn't perform any concept checks and leaves that to Boost Range's sort().
 		template <typename Container, typename R>
-		Container sort_build(R arg_range ///< The range on which the sorted copy should be based
+		Container sort_build(R prm_range ///< The range on which the sorted copy should be based
 		                     ) {
 			return sort_build<Container>(
-				common::cbegin( arg_range ),
-				common::cend  ( arg_range )
+				common::cbegin( prm_range ),
+				common::cend  ( prm_range )
 			);
 		}
 
 		/// \overload
 		template <typename Container, typename R, typename P>
-		Container sort_build(R arg_range,   ///< The range on which the sorted copy should be based
-		                     P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		Container sort_build(R prm_range,   ///< The range on which the sorted copy should be based
+		                     P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		                     ) {
 			return sort_build<Container>(
-				common::cbegin( arg_range ),
-				common::cend  ( arg_range ),
-				arg_bin_pred
+				common::cbegin( prm_range ),
+				common::cend  ( prm_range ),
+				prm_bin_pred
 			);
 		}
 
 		template <typename Container, typename I>
-		Container sort_build(I arg_begin, ///< The begin iterator for the range on which the sorted copy should be based
-		                     I arg_end    ///< The begin iterator for the range on which the sorted copy should be based
+		Container sort_build(I prm_begin, ///< The begin iterator for the range on which the sorted copy should be based
+		                     I prm_end    ///< The begin iterator for the range on which the sorted copy should be based
 		                     ) {
 			return sort_copy(
-				Container{ arg_begin, arg_end }
+				Container{ prm_begin, prm_end }
 			);
 		}
 
 		/// \overload
 		template <typename Container, typename I, typename P>
-		Container sort_build(I arg_begin, ///< The begin iterator for the range on which the sorted copy should be based
-		                     I arg_end,   ///< The begin iterator for the range on which the sorted copy should be based
-		                     P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		Container sort_build(I prm_begin, ///< The begin iterator for the range on which the sorted copy should be based
+		                     I prm_end,   ///< The begin iterator for the range on which the sorted copy should be based
+		                     P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		                     ) {
 			return sort_copy(
-				Container{ arg_begin, arg_end },
-				arg_bin_pred
+				Container{ prm_begin, prm_end },
+				prm_bin_pred
 			);
 		}
 
@@ -124,27 +124,27 @@ namespace cath {
 		///
 		/// ATM, this doesn't perform any concept checks and leaves that to Boost Range's sort().
 		template <typename Container, typename R>
-		Container stable_sort_build(R arg_range ///< The range on which the sorted copy should be based
+		Container stable_sort_build(R prm_range ///< The range on which the sorted copy should be based
 		                            ) {
 			return stable_sort_copy(
 				Container(
-					common::cbegin( arg_range ),
-					common::cend  ( arg_range )
+					common::cbegin( prm_range ),
+					common::cend  ( prm_range )
 				)
 			);
 		}
 
 		/// \overload
 		template <typename Container, typename R, typename P>
-		Container stable_sort_build(R arg_range,   ///< The range on which the sorted copy should be based
-		                            P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		Container stable_sort_build(R prm_range,   ///< The range on which the sorted copy should be based
+		                            P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		                            ) {
 			return stable_sort_copy(
 				Container(
-					common::cbegin( arg_range ),
-					common::cend  ( arg_range )
+					common::cbegin( prm_range ),
+					common::cend  ( prm_range )
 				),
-				arg_bin_pred
+				prm_bin_pred
 			);
 		}
 
@@ -157,12 +157,12 @@ namespace cath {
 		///
 		/// \copydetails sort_build()
 		template <typename Container, typename R>
-		Container uniq_build(R arg_range ///< The range on which the uniqued copy should be based
+		Container uniq_build(R prm_range ///< The range on which the uniqued copy should be based
 		                     ) {
 			return uniq_copy(
 				Container(
-					common::cbegin( arg_range ),
-					common::cend  ( arg_range )
+					common::cbegin( prm_range ),
+					common::cend  ( prm_range )
 				)
 			);
 		}
@@ -173,12 +173,12 @@ namespace cath {
 		///
 		/// \copydetails sort_build()
 		template <typename Container, typename R>
-		Container sort_uniq_build(R arg_range ///< The range on which the sorted, uniqued copy should be based
+		Container sort_uniq_build(R prm_range ///< The range on which the sorted, uniqued copy should be based
 		                          ) {
 			return sort_uniq_copy(
 				Container(
-					common::cbegin( arg_range ),
-					common::cend  ( arg_range )
+					common::cbegin( prm_range ),
+					common::cend  ( prm_range )
 				)
 			);
 		}
@@ -189,15 +189,15 @@ namespace cath {
 		///
 		/// \copydetails sort_build()
 		template <typename Container, typename R, typename P>
-		Container sort_uniq_build(R arg_range,   ///< The range on which the sorted, uniqued copy should be based
-		                          P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		Container sort_uniq_build(R prm_range,   ///< The range on which the sorted, uniqued copy should be based
+		                          P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		                          ) {
 			return sort_uniq_copy(
 				Container(
-					common::cbegin( arg_range ),
-					common::cend  ( arg_range )
+					common::cbegin( prm_range ),
+					common::cend  ( prm_range )
 				),
-				arg_bin_pred
+				prm_bin_pred
 			);
 		}
 
@@ -208,12 +208,12 @@ namespace cath {
 		///
 		/// \copydetails sort_build()
 		template <typename Container, typename R>
-		Container stable_sort_uniq_build(R arg_range ///< The range on which the stable_sorted, uniqued copy should be based
+		Container stable_sort_uniq_build(R prm_range ///< The range on which the stable_sorted, uniqued copy should be based
 		                                 ) {
 			return stable_sort_uniq_copy(
 				Container(
-					common::cbegin( arg_range ),
-					common::cend  ( arg_range )
+					common::cbegin( prm_range ),
+					common::cend  ( prm_range )
 				)
 			);
 		}

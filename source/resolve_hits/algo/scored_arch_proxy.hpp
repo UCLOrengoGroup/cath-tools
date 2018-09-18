@@ -79,9 +79,9 @@ namespace cath {
 		}
 
 		/// \brief Get the hit index stored at the specified index
-		inline const hitidx_t & scored_arch_proxy::operator[](const size_t &arg_index ///< The index of the hit index to return
+		inline const hitidx_t & scored_arch_proxy::operator[](const size_t &prm_index ///< The index of the hit index to return
 		                                                      ) const {
-			return hit_indices[ arg_index ];
+			return hit_indices[ prm_index ];
 		}
 
 		/// \brief Standard const begin() method, as part of making this a range over hit indices
@@ -95,23 +95,23 @@ namespace cath {
 		}
 
 		/// \brief Add the specified hit index and associated score to this scored_arch_proxy
-		inline scored_arch_proxy & scored_arch_proxy::add_hit(const resscr_t &arg_score,    ///< The score associated with the hit to add
-		                                                      const hitidx_t &arg_hit_index ///< The index of the hit to add
+		inline scored_arch_proxy & scored_arch_proxy::add_hit(const resscr_t &prm_score,    ///< The score associated with the hit to add
+		                                                      const hitidx_t &prm_hit_index ///< The index of the hit to add
 		                                                      ) {
-			the_score += arg_score;
-			hit_indices.push_back( arg_hit_index );
+			the_score += prm_score;
+			hit_indices.push_back( prm_hit_index );
 			return *this;
 		}
 
 		/// \brief Add the specified hit index and associated score to a copy of the specified scored_arch_proxy
 		///
 		/// \relates scored_arch_proxy
-		inline scored_arch_proxy add_hit_copy(scored_arch_proxy  arg_scored_arch_proxy, ///< The scored_arch_proxy to copy and then add the hit to the copy of
-		                                      const resscr_t    &arg_score,             ///< The score associated with the hit to add
-		                                      const hitidx_t    &arg_hit_index          ///< The index of the hit to add
+		inline scored_arch_proxy add_hit_copy(scored_arch_proxy  prm_scored_arch_proxy, ///< The scored_arch_proxy to copy and then add the hit to the copy of
+		                                      const resscr_t    &prm_score,             ///< The score associated with the hit to add
+		                                      const hitidx_t    &prm_hit_index          ///< The index of the hit to add
 		                                      ) {
-			arg_scored_arch_proxy.add_hit( arg_score, arg_hit_index );
-			return arg_scored_arch_proxy;
+			prm_scored_arch_proxy.add_hit( prm_score, prm_hit_index );
+			return prm_scored_arch_proxy;
 		}
 
 		std::string to_string(const scored_arch_proxy &);

@@ -105,14 +105,14 @@ namespace cath {
 		};
 
 		/// \brief Non-default constructor for coord.
-		inline constexpr coord::coord(const double &arg_x, ///< TODOCUMENT
-		                              const double &arg_y, ///< TODOCUMENT
-		                              const double &arg_z  ///< TODOCUMENT
-		                              ) : x ( arg_x ),
-		                                  y ( arg_y ),
-		                                  z ( arg_z ) {
+		inline constexpr coord::coord(const double &prm_x, ///< TODOCUMENT
+		                              const double &prm_y, ///< TODOCUMENT
+		                              const double &prm_z  ///< TODOCUMENT
+		                              ) : x ( prm_x ),
+		                                  y ( prm_y ),
+		                                  z ( prm_z ) {
 	// #ifndef NDEBUG
-	// 		if ( ! boost::math::isfinite( arg_x ) || ! boost::math::isfinite( arg_y ) || ! boost::math::isfinite( arg_z ) ) {
+	// 		if ( ! boost::math::isfinite( prm_x ) || ! boost::math::isfinite( prm_y ) || ! boost::math::isfinite( prm_z ) ) {
 	// 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Arguments x, y and z must be a normal, finite floating-point numbers"));
 	// 		}
 	// #endif
@@ -120,11 +120,11 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline coord::coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &arg_point /// \brief TODOCUMENT
+		inline coord::coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &prm_point /// \brief TODOCUMENT
 		                    ) : coord(
-		                        	boost::numeric_cast<double>( arg_point.template get<0>() ),
-		                        	boost::numeric_cast<double>( arg_point.template get<1>() ),
-		                        	boost::numeric_cast<double>( arg_point.template get<2>() )
+		                        	boost::numeric_cast<double>( prm_point.template get<0>() ),
+		                        	boost::numeric_cast<double>( prm_point.template get<1>() ),
+		                        	boost::numeric_cast<double>( prm_point.template get<2>() )
 		                        ) {
 		}
 
@@ -144,46 +144,46 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline coord & coord::operator-=(const coord &arg_coord ///< TODOCUMENT
+		inline coord & coord::operator-=(const coord &prm_coord ///< TODOCUMENT
 		                                 ) {
-			x -= arg_coord.get_x();
-			y -= arg_coord.get_y();
-			z -= arg_coord.get_z();
+			x -= prm_coord.get_x();
+			y -= prm_coord.get_y();
+			z -= prm_coord.get_z();
 			return ( *this );
 		}
 
 		/// \brief TODOCUMENT
-		inline coord & coord::operator+=(const coord &arg_coord ///< TODOCUMENT
+		inline coord & coord::operator+=(const coord &prm_coord ///< TODOCUMENT
 		                                  ) {
-			x += arg_coord.get_x();
-			y += arg_coord.get_y();
-			z += arg_coord.get_z();
+			x += prm_coord.get_x();
+			y += prm_coord.get_y();
+			z += prm_coord.get_z();
 			return ( *this );
 		}
 
 		/// \brief TODOCUMENT
-		inline coord & coord::operator*=(const double &arg_factor ///< TODOCUMENT
+		inline coord & coord::operator*=(const double &prm_factor ///< TODOCUMENT
 		                                 ) {
 	#ifndef NDEBUG
-			if ( boost::math::isnan( arg_factor ) ) {
+			if ( boost::math::isnan( prm_factor ) ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("InvalidcoordFactor"));
 			}
 	#endif
-			x *= arg_factor;
-			y *= arg_factor;
-			z *= arg_factor;
+			x *= prm_factor;
+			y *= prm_factor;
+			z *= prm_factor;
 			return ( *this );
 		}
 
 		/// \brief TODOCUMENT
-		inline coord & coord::operator/=(const double &arg_factor ///< TODOCUMENT
+		inline coord & coord::operator/=(const double &prm_factor ///< TODOCUMENT
 		                                 ) {
 	#ifndef NDEBUG
-			if ( ! boost::math::isnormal(arg_factor) ) {
+			if ( ! boost::math::isnormal(prm_factor) ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("InvalidcoordFactor"));
 			}
 	#endif
-			return operator*=( 1.0 / arg_factor );
+			return operator*=( 1.0 / prm_factor );
 		}
 
 		/// \brief TODOCUMENT
@@ -192,13 +192,13 @@ namespace cath {
 		///       implement this using boost::additive<>
 		///
 		/// \relates coord
-		inline constexpr coord operator-(const coord &arg_coord_lhs, ///< TODOCUMENT
-		                                 const coord &arg_coord_rhs  ///< TODOCUMENT
+		inline constexpr coord operator-(const coord &prm_coord_lhs, ///< TODOCUMENT
+		                                 const coord &prm_coord_rhs  ///< TODOCUMENT
 		                                 ) {
 			return {
-				arg_coord_lhs.get_x() - arg_coord_rhs.get_x(),
-				arg_coord_lhs.get_y() - arg_coord_rhs.get_y(),
-				arg_coord_lhs.get_z() - arg_coord_rhs.get_z(),
+				prm_coord_lhs.get_x() - prm_coord_rhs.get_x(),
+				prm_coord_lhs.get_y() - prm_coord_rhs.get_y(),
+				prm_coord_lhs.get_z() - prm_coord_rhs.get_z(),
 			};
 		}
 
@@ -208,13 +208,13 @@ namespace cath {
 		///       implement this using boost::additive<>
 		///
 		/// \relates coord
-		inline constexpr coord operator+(const coord &arg_coord_lhs, ///< TODOCUMENT
-		                                 const coord &arg_coord_rhs  ///< TODOCUMENT
+		inline constexpr coord operator+(const coord &prm_coord_lhs, ///< TODOCUMENT
+		                                 const coord &prm_coord_rhs  ///< TODOCUMENT
 		                                 ) {
 			return {
-				arg_coord_lhs.get_x() + arg_coord_rhs.get_x(),
-				arg_coord_lhs.get_y() + arg_coord_rhs.get_y(),
-				arg_coord_lhs.get_z() + arg_coord_rhs.get_z(),
+				prm_coord_lhs.get_x() + prm_coord_rhs.get_x(),
+				prm_coord_lhs.get_y() + prm_coord_rhs.get_y(),
+				prm_coord_lhs.get_z() + prm_coord_rhs.get_z(),
 			};
 		}
 
@@ -224,13 +224,13 @@ namespace cath {
 		///       implement this using boost::multiplicative<>
 		///
 		/// \relates coord
-		inline constexpr coord operator*(const coord  &arg_coord, ///< TODOCUMENT
-		                                 const double &arg_factor ///< TODOCUMENT
+		inline constexpr coord operator*(const coord  &prm_coord, ///< TODOCUMENT
+		                                 const double &prm_factor ///< TODOCUMENT
 		                                 ) {
 			return {
-				arg_coord.get_x() * arg_factor,
-				arg_coord.get_y() * arg_factor,
-				arg_coord.get_z() * arg_factor
+				prm_coord.get_x() * prm_factor,
+				prm_coord.get_y() * prm_factor,
+				prm_coord.get_z() * prm_factor
 			};
 		}
 
@@ -240,13 +240,13 @@ namespace cath {
 		///       implement this using boost::multiplicative<>
 		///
 		/// \relates coord
-		inline constexpr coord operator*(const double &arg_factor, ///< TODOCUMENT
-		                                 const coord  &arg_coord   ///< TODOCUMENT
+		inline constexpr coord operator*(const double &prm_factor, ///< TODOCUMENT
+		                                 const coord  &prm_coord   ///< TODOCUMENT
 		                                 ) {
 			return {
-				arg_coord.get_x() * arg_factor,
-				arg_coord.get_y() * arg_factor,
-				arg_coord.get_z() * arg_factor
+				prm_coord.get_x() * prm_factor,
+				prm_coord.get_y() * prm_factor,
+				prm_coord.get_z() * prm_factor
 			};
 		}
 
@@ -256,13 +256,13 @@ namespace cath {
 		///       implement this using boost::multiplicative<>
 		///
 		/// \relates coord
-		inline constexpr coord operator/(const coord  &arg_coord, ///< TODOCUMENT
-		                                 const double &arg_factor ///< TODOCUMENT
+		inline constexpr coord operator/(const coord  &prm_coord, ///< TODOCUMENT
+		                                 const double &prm_factor ///< TODOCUMENT
 		                                 ) {
 			return {
-				arg_coord.get_x() / arg_factor,
-				arg_coord.get_y() / arg_factor,
-				arg_coord.get_z() / arg_factor
+				prm_coord.get_x() / prm_factor,
+				prm_coord.get_y() / prm_factor,
+				prm_coord.get_z() / prm_factor
 			};
 		}
 
@@ -272,13 +272,13 @@ namespace cath {
 		///       implement this using boost::multiplicative<>
 		///
 		/// \relates coord
-		inline constexpr coord operator/(const double &arg_factor, ///< TODOCUMENT
-		                                 const coord  &arg_coord   ///< TODOCUMENT
+		inline constexpr coord operator/(const double &prm_factor, ///< TODOCUMENT
+		                                 const coord  &prm_coord   ///< TODOCUMENT
 		                                 ) {
 			return {
-				arg_coord.get_x() / arg_factor,
-				arg_coord.get_y() / arg_factor,
-				arg_coord.get_z() / arg_factor
+				prm_coord.get_x() / prm_factor,
+				prm_coord.get_y() / prm_factor,
+				prm_coord.get_z() / prm_factor
 			};
 		}
 
@@ -347,53 +347,53 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline constexpr double squared_length(const coord &arg_coord ///< TODOCUMENT
+		inline constexpr double squared_length(const coord &prm_coord ///< TODOCUMENT
 		                                       ) {
 			return (
-				arg_coord.get_x() * arg_coord.get_x() +
-				arg_coord.get_y() * arg_coord.get_y() +
-				arg_coord.get_z() * arg_coord.get_z()
+				prm_coord.get_x() * prm_coord.get_x() +
+				prm_coord.get_y() * prm_coord.get_y() +
+				prm_coord.get_z() * prm_coord.get_z()
 			);
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline double length(const coord &arg_coord ///< TODOCUMENT
+		inline double length(const coord &prm_coord ///< TODOCUMENT
 		                     ) {
-			return sqrt( squared_length( arg_coord ) );
+			return sqrt( squared_length( prm_coord ) );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline double distance_between_points(const coord &arg_coord1, ///< TODOCUMENT
-		                                      const coord &arg_coord2  ///< TODOCUMENT
+		inline double distance_between_points(const coord &prm_coord1, ///< TODOCUMENT
+		                                      const coord &prm_coord2  ///< TODOCUMENT
 		                                      ) {
 			// Equivalently, either :
-			//   length(arg_coord2 - arg_coord1)
+			//   length(prm_coord2 - prm_coord1)
 			// or
-			//   sqrt(squared_distance_between_points(arg_coord1, arg_coord2));
-			return length( arg_coord2 - arg_coord1 );
+			//   sqrt(squared_distance_between_points(prm_coord1, prm_coord2));
+			return length( prm_coord2 - prm_coord1 );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline constexpr double squared_distance_between_points(const coord &arg_coord1, ///< TODOCUMENT
-		                                                        const coord &arg_coord2  ///< TODOCUMENT
+		inline constexpr double squared_distance_between_points(const coord &prm_coord1, ///< TODOCUMENT
+		                                                        const coord &prm_coord2  ///< TODOCUMENT
 		                                                        ) {
-			return squared_length( arg_coord2 - arg_coord1 );
+			return squared_length( prm_coord2 - prm_coord1 );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline constexpr bool operator==(const coord &arg_coord1, ///< TODOCUMENT
-		                                 const coord &arg_coord2  ///< TODOCUMENT
+		inline constexpr bool operator==(const coord &prm_coord1, ///< TODOCUMENT
+		                                 const coord &prm_coord2  ///< TODOCUMENT
 		                                 ) {
 			return (
-				squared_distance_between_points( arg_coord1, arg_coord2 )
+				squared_distance_between_points( prm_coord1, prm_coord2 )
 				<
 				coord::TOLERANCE_FOR_COORD_CLOSENESS_CHECKS * coord::TOLERANCE_FOR_COORD_CLOSENESS_CHECKS
 			);
@@ -402,23 +402,23 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline coord operator-(const coord &arg_coord ///< TODOCUMENT
+		inline coord operator-(const coord &prm_coord ///< TODOCUMENT
 		                       ) {
-			return ( coord::ORIGIN_COORD - arg_coord );
+			return ( coord::ORIGIN_COORD - prm_coord );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline bool not_zero(const coord &arg_coord ///< TODOCUMENT
+		inline bool not_zero(const coord &prm_coord ///< TODOCUMENT
 		                     ) {
-			if ( arg_coord.get_x() != 0.0 ) {
+			if ( prm_coord.get_x() != 0.0 ) {
 				return true;
 			}
-			if ( arg_coord.get_y() != 0.0 ) {
+			if ( prm_coord.get_y() != 0.0 ) {
 				return true;
 			}
-			if ( arg_coord.get_z() != 0.0 ) {
+			if ( prm_coord.get_z() != 0.0 ) {
 				return true;
 			}
 			return false;
@@ -427,69 +427,69 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline double dot_product(const coord &arg_coord1, ///< TODOCUMENT
-		                          const coord &arg_coord2  ///< TODOCUMENT
+		inline double dot_product(const coord &prm_coord1, ///< TODOCUMENT
+		                          const coord &prm_coord2  ///< TODOCUMENT
 		                          ) {
 			return (
-				arg_coord1.get_x() * arg_coord2.get_x() +
-				arg_coord1.get_y() * arg_coord2.get_y() +
-				arg_coord1.get_z() * arg_coord2.get_z()
+				prm_coord1.get_x() * prm_coord2.get_x() +
+				prm_coord1.get_y() * prm_coord2.get_y() +
+				prm_coord1.get_z() * prm_coord2.get_z()
 			);
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline coord cross_product(const coord &arg_coord1, ///< TODOCUMENT
-		                           const coord &arg_coord2  ///< TODOCUMENT
+		inline coord cross_product(const coord &prm_coord1, ///< TODOCUMENT
+		                           const coord &prm_coord2  ///< TODOCUMENT
 		                           ) {
 			return coord(
-				arg_coord1.get_y() * arg_coord2.get_z() - arg_coord1.get_z() * arg_coord2.get_y(),
-				arg_coord1.get_z() * arg_coord2.get_x() - arg_coord1.get_x() * arg_coord2.get_z(),
-				arg_coord1.get_x() * arg_coord2.get_y() - arg_coord1.get_y() * arg_coord2.get_x()
+				prm_coord1.get_y() * prm_coord2.get_z() - prm_coord1.get_z() * prm_coord2.get_y(),
+				prm_coord1.get_z() * prm_coord2.get_x() - prm_coord1.get_x() * prm_coord2.get_z(),
+				prm_coord1.get_x() * prm_coord2.get_y() - prm_coord1.get_y() * prm_coord2.get_x()
 			);
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline coord int_cast_copy(const coord &arg_coord ///< TODOCUMENT
+		inline coord int_cast_copy(const coord &prm_coord ///< TODOCUMENT
 		                           ) {
 			return coord(
-				boost::numeric_cast<int>( arg_coord.get_x() ),
-				boost::numeric_cast<int>( arg_coord.get_y() ),
-				boost::numeric_cast<int>( arg_coord.get_z() )
+				boost::numeric_cast<int>( prm_coord.get_x() ),
+				boost::numeric_cast<int>( prm_coord.get_y() ),
+				boost::numeric_cast<int>( prm_coord.get_z() )
 			);
-			return arg_coord;
+			return prm_coord;
 		}
 
 		/// \brief Return the scalar component of the first specified coord in the direction of the second
 		///
 		/// \relates coord
-		inline double scalar_component(const coord &arg_source_coord, ///< The coord of which to return the scalar component
-		                               const coord &arg_dirn          ///< The direction in which the component should be taken (does not have to be normalised)
+		inline double scalar_component(const coord &prm_source_coord, ///< The coord of which to return the scalar component
+		                               const coord &prm_dirn          ///< The direction in which the component should be taken (does not have to be normalised)
 		                               ) {
-			return dot_product( arg_source_coord, normalise_copy( arg_dirn ) );
+			return dot_product( prm_source_coord, normalise_copy( prm_dirn ) );
 		}
 
 		/// \brief Return the parallel component of the first specified coord in the direction of the second
 		///
 		/// \relates coord
-		inline coord parallel_component_copy(const coord &arg_source_coord, ///< The coord of which to return the parallel component
-		                                     const coord &arg_dirn          ///< The direction in which the component should be taken (does not have to be normalised)
+		inline coord parallel_component_copy(const coord &prm_source_coord, ///< The coord of which to return the parallel component
+		                                     const coord &prm_dirn          ///< The direction in which the component should be taken (does not have to be normalised)
 		                                     ) {
-			return scalar_component( arg_source_coord, arg_dirn ) * normalise_copy( arg_dirn );
+			return scalar_component( prm_source_coord, prm_dirn ) * normalise_copy( prm_dirn );
 		}
 
 		/// \brief Return the perpendicular component of the first specified coord in the direction perpendicular to the second
 		///
 		/// \relates coord
-		inline coord perpendicular_component_copy(const coord &arg_source_coord, ///< The coord of which to return the perpendicular component
-		                                          const coord &arg_dirn          ///< The direction perpendicular to which the component should be taken (does not have to be normalised)
+		inline coord perpendicular_component_copy(const coord &prm_source_coord, ///< The coord of which to return the perpendicular component
+		                                          const coord &prm_dirn          ///< The direction perpendicular to which the component should be taken (does not have to be normalised)
 		                                          ) {
-			const coord  unit_dirn = normalise_copy( arg_dirn );
-			const double factor    = dot_product   ( arg_source_coord, unit_dirn );
-			return arg_source_coord - ( factor * unit_dirn );
+			const coord  unit_dirn = normalise_copy( prm_dirn );
+			const double factor    = dot_product   ( prm_source_coord, unit_dirn );
+			return prm_source_coord - ( factor * unit_dirn );
 		}
 
 
@@ -499,9 +499,9 @@ namespace cath {
 	
 		/// \brief Specialisation of cath::common::read_from_ptree for coord
 		template <>
-		inline geom::coord read_from_ptree<geom::coord>(const boost::property_tree::ptree &arg_ptree ///< The ptree from which to read the coord
+		inline geom::coord read_from_ptree<geom::coord>(const boost::property_tree::ptree &prm_ptree ///< The ptree from which to read the coord
 		                                                ) {
-			return geom::coord_from_ptree( arg_ptree );
+			return geom::coord_from_ptree( prm_ptree );
 		}
 	
 	} // namespace common

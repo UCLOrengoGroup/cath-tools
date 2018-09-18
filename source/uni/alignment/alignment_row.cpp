@@ -36,12 +36,12 @@ using boost::lexical_cast;
 ///        and throw an exception if not
 ///
 /// \pre The specified entry value must be less than num_entries() else an invalid_argument_exception will be thrown
-void alignment_row::sanity_check_entry(const size_t &arg_entry ///< The entry value to check
+void alignment_row::sanity_check_entry(const size_t &prm_entry ///< The entry value to check
                                        ) const {
-	if ( arg_entry >= num_entries() ) {
+	if ( prm_entry >= num_entries() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Entry "
-			+ lexical_cast<string>( arg_entry )
+			+ lexical_cast<string>( prm_entry )
 			+ " is out of range in this alignment_row, which has "
 			+ lexical_cast<string>( num_entries() )
 			+ " entries"
@@ -53,20 +53,20 @@ void alignment_row::sanity_check_entry(const size_t &arg_entry ///< The entry va
 ///        and throw an exception if not
 ///
 /// \pre This alignment row must has_position_of_entry() at this entry else an invalid_argument_exception will be thrown
-void alignment_row::check_has_position_of_entry(const size_t &arg_entry ///< The entry value to check
+void alignment_row::check_has_position_of_entry(const size_t &prm_entry ///< The entry value to check
                                                 ) const {
-	if ( ! has_position_of_entry( *this, arg_entry) ) {
+	if ( ! has_position_of_entry( *this, prm_entry) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Cannot use position at entry "
-			+ lexical_cast<string>( arg_entry )
+			+ lexical_cast<string>( prm_entry )
 			+ " of alignment_row because it does not have a position there"
 		));
 	}
 }
 
 /// \brief Ctor for alignment_row from a vector of optional alignment positions
-alignment_row::alignment_row(aln_posn_opt_vec arg_positions ///< The vector of optional alignment positions from which to build the alignment row
-                             ) : positions{ std::move( arg_positions ) } {
+alignment_row::alignment_row(aln_posn_opt_vec prm_positions ///< The vector of optional alignment positions from which to build the alignment row
+                             ) : positions{ std::move( prm_positions ) } {
 }
 
 /// \brief Get the number of entries in this alignment row
@@ -75,38 +75,38 @@ size_t alignment_row::num_entries() const {
 }
 
 /// \brief Get the aln_posn_opt of the specified entry
-aln_posn_opt alignment_row::position_of_entry(const size_t &arg_entry ///< The entry to query in the alignment_row
+aln_posn_opt alignment_row::position_of_entry(const size_t &prm_entry ///< The entry to query in the alignment_row
                                               ) const {
-	sanity_check_entry( arg_entry );
-	return positions[ arg_entry ];
+	sanity_check_entry( prm_entry );
+	return positions[ prm_entry ];
 }
 
 /// \brief Convenience function to query whether a given position
 ///
 /// \relates alignment_row
-bool cath::align::has_position_of_entry(const alignment_row &arg_row,  ///< TODOCUMENT
-                                        const size_t        &arg_entry ///< TODOCUMENT
+bool cath::align::has_position_of_entry(const alignment_row &prm_row,  ///< TODOCUMENT
+                                        const size_t        &prm_entry ///< TODOCUMENT
                                         ) {
-	return static_cast<bool>( arg_row.position_of_entry( arg_entry ) );
+	return static_cast<bool>( prm_row.position_of_entry( prm_entry ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-aln_posn_type cath::align::get_position_of_entry(const alignment_row &arg_row,  ///< TODOCUMENT
-                                                 const size_t        &arg_entry ///< TODOCUMENT
+aln_posn_type cath::align::get_position_of_entry(const alignment_row &prm_row,  ///< TODOCUMENT
+                                                 const size_t        &prm_entry ///< TODOCUMENT
                                                  ) {
-	return *arg_row.position_of_entry( arg_entry );
+	return *prm_row.position_of_entry( prm_entry );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-bool cath::align::any_entries_present(const alignment_row &arg_alignment_row ///< TODOCUMENT
+bool cath::align::any_entries_present(const alignment_row &prm_alignment_row ///< TODOCUMENT
                                       ) {
-	const size_t num_entries = arg_alignment_row.num_entries();
+	const size_t num_entries = prm_alignment_row.num_entries();
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		if ( has_position_of_entry( arg_alignment_row, entry_ctr ) ) {
+		if ( has_position_of_entry( prm_alignment_row, entry_ctr ) ) {
 			return true;
 		}
 	}
@@ -116,15 +116,15 @@ bool cath::align::any_entries_present(const alignment_row &arg_alignment_row ///
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-bool cath::align::any_entries_present(const alignment &arg_alignment, ///< TODOCUMENT
-                                      const size_vec  &arg_entries,   ///< TODOCUMENT
-                                      const size_t    &arg_index      ///< TODOCUMENT
+bool cath::align::any_entries_present(const alignment &prm_alignment, ///< TODOCUMENT
+                                      const size_vec  &prm_entries,   ///< TODOCUMENT
+                                      const size_t    &prm_index      ///< TODOCUMENT
                                       ) {
 	return any_entries_present(
 		get_row_of_entries_of_alignment(
-			arg_alignment,
-			arg_entries,
-			arg_index
+			prm_alignment,
+			prm_entries,
+			prm_index
 		)
 	);
 }
@@ -132,15 +132,15 @@ bool cath::align::any_entries_present(const alignment &arg_alignment, ///< TODOC
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::get_row_of_entries_of_alignment(const alignment &arg_alignment, ///< TODOCUMENT
-                                                           const size_vec  &arg_entries,   ///< TODOCUMENT
-                                                           const size_t    &arg_index      ///< TODOCUMENT
+alignment_row cath::align::get_row_of_entries_of_alignment(const alignment &prm_alignment, ///< TODOCUMENT
+                                                           const size_vec  &prm_entries,   ///< TODOCUMENT
+                                                           const size_t    &prm_index      ///< TODOCUMENT
                                                            ) {
-	const size_t num_entries = arg_entries.size();
+	const size_t num_entries = prm_entries.size();
 	aln_posn_opt_vec positions;
 	positions.reserve( num_entries );
-	for (const size_t &entry : arg_entries) {
-		const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry, arg_index );
+	for (const size_t &entry : prm_entries) {
+		const aln_posn_opt position = prm_alignment.position_of_entry_of_index( entry, prm_index );
 		positions.push_back( position );
 	}
 	return alignment_row( positions );
@@ -149,14 +149,14 @@ alignment_row cath::align::get_row_of_entries_of_alignment(const alignment &arg_
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::get_row_of_alignment(const alignment &arg_alignment, ///< TODOCUMENT
-                                                const size_t    &arg_index      ///< TODOCUMENT
+alignment_row cath::align::get_row_of_alignment(const alignment &prm_alignment, ///< TODOCUMENT
+                                                const size_t    &prm_index      ///< TODOCUMENT
                                                 ) {
-	const size_t num_entries = arg_alignment.num_entries();
+	const size_t num_entries = prm_alignment.num_entries();
 	aln_posn_opt_vec positions;
 	positions.reserve( num_entries );
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry_ctr, arg_index );
+		const aln_posn_opt position = prm_alignment.position_of_entry_of_index( entry_ctr, prm_index );
 		positions.push_back( position );
 	}
 	return alignment_row( positions );
@@ -165,9 +165,9 @@ alignment_row cath::align::get_row_of_alignment(const alignment &arg_alignment, 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::make_empty_aln_row(const size_t &arg_num_empties ///< TODOCUMENT
+alignment_row cath::align::make_empty_aln_row(const size_t &prm_num_empties ///< TODOCUMENT
                                               ) {
-	return alignment_row( aln_posn_opt_vec ( arg_num_empties ) );
+	return alignment_row( aln_posn_opt_vec ( prm_num_empties ) );
 }
 
 //		append_row( local_aln, make_row_with_single_value( entry, local_aln.num_entries, pdb_res_indices.size() - 1 ) );
@@ -176,28 +176,28 @@ alignment_row cath::align::make_empty_aln_row(const size_t &arg_num_empties ///<
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::make_row_with_single_value(const size_t &arg_entry,       ///< TODOCUMENT
-                                                      const size_t &arg_num_entries, ///< TODOCUMENT
-                                                      const size_t &arg_value        ///< TODOCUMENT
+alignment_row cath::align::make_row_with_single_value(const size_t &prm_entry,       ///< TODOCUMENT
+                                                      const size_t &prm_num_entries, ///< TODOCUMENT
+                                                      const size_t &prm_value        ///< TODOCUMENT
                                                       ) {
-	aln_posn_opt_vec positions( arg_num_entries );
-	positions[ arg_entry ] = arg_value;
+	aln_posn_opt_vec positions( prm_num_entries );
+	positions[ prm_entry ] = prm_value;
 	return alignment_row( positions );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-void cath::align::append_row_with_single_value(alignment    &arg_alignment, ///< TODOCUMENT
-                                               const size_t &arg_entry,     ///< TODOCUMENT
-                                               const size_t &arg_value      ///< TODOCUMENT
+void cath::align::append_row_with_single_value(alignment    &prm_alignment, ///< TODOCUMENT
+                                               const size_t &prm_entry,     ///< TODOCUMENT
+                                               const size_t &prm_value      ///< TODOCUMENT
                                                ) {
 	append_row(
-		arg_alignment,
+		prm_alignment,
 		make_row_with_single_value(
-			arg_entry,
-			arg_alignment.num_entries(),
-			arg_value
+			prm_entry,
+			prm_alignment.num_entries(),
+			prm_value
 		)
 	);
 }
@@ -205,50 +205,50 @@ void cath::align::append_row_with_single_value(alignment    &arg_alignment, ///<
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::copy_aln_row_entry(const alignment_row &arg_row,               ///< TODOCUMENT
-                                              const size_t        &arg_copy_target_entry, ///< TODOCUMENT
-                                              const alignment_row &arg_other_row,         ///< TODOCUMENT
-                                              const size_t        &arg_copy_source_entry  ///< TODOCUMENT
+alignment_row cath::align::copy_aln_row_entry(const alignment_row &prm_row,               ///< TODOCUMENT
+                                              const size_t        &prm_copy_target_entry, ///< TODOCUMENT
+                                              const alignment_row &prm_other_row,         ///< TODOCUMENT
+                                              const size_t        &prm_copy_source_entry  ///< TODOCUMENT
                                               ) {
-	aln_posn_opt_vec positions = get_has_posns_and_posns(arg_row);
-	positions[ arg_copy_target_entry ] = arg_other_row.position_of_entry( arg_copy_source_entry );
+	aln_posn_opt_vec positions = get_has_posns_and_posns(prm_row);
+	positions[ prm_copy_target_entry ] = prm_other_row.position_of_entry( prm_copy_source_entry );
 	return alignment_row( positions );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::glue_aln_row_onto_empties(const size_t        &arg_num_entries_in_empties,    ///< TODOCUMENT
-                                                     const size_t        &arg_identify_entry_in_empties, ///< TODOCUMENT
-                                                     const alignment_row &arg_aln_row,                   ///< TODOCUMENT
-                                                     const size_t        &arg_identify_entry_in_row      ///< TODOCUMENT
+alignment_row cath::align::glue_aln_row_onto_empties(const size_t        &prm_num_entries_in_empties,    ///< TODOCUMENT
+                                                     const size_t        &prm_identify_entry_in_empties, ///< TODOCUMENT
+                                                     const alignment_row &prm_aln_row,                   ///< TODOCUMENT
+                                                     const size_t        &prm_identify_entry_in_row      ///< TODOCUMENT
                                                      ) {
-	const alignment_row all_empties_row = make_empty_aln_row( arg_num_entries_in_empties );
-	const alignment_row empties_row     = copy_aln_row_entry( all_empties_row, arg_identify_entry_in_empties, arg_aln_row, arg_identify_entry_in_row);
-	const alignment_row row_from_b      = remove_entry_from_row( arg_aln_row, arg_identify_entry_in_row );
+	const alignment_row all_empties_row = make_empty_aln_row( prm_num_entries_in_empties );
+	const alignment_row empties_row     = copy_aln_row_entry( all_empties_row, prm_identify_entry_in_empties, prm_aln_row, prm_identify_entry_in_row);
+	const alignment_row row_from_b      = remove_entry_from_row( prm_aln_row, prm_identify_entry_in_row );
 	return join( empties_row, row_from_b );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::glue_empties_onto_row(const alignment_row &arg_aln_row,               ///< TODOCUMENT
-                                                 const size_t        &arg_num_entries_in_empties ///< TODOCUMENT
+alignment_row cath::align::glue_empties_onto_row(const alignment_row &prm_aln_row,               ///< TODOCUMENT
+                                                 const size_t        &prm_num_entries_in_empties ///< TODOCUMENT
                                                  ) {
-	return join( arg_aln_row, make_empty_aln_row( arg_num_entries_in_empties - 1 ) );
+	return join( prm_aln_row, make_empty_aln_row( prm_num_entries_in_empties - 1 ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::glue_aln_rows_together(const alignment_row &arg_aln_row_a,        ///< TODOCUMENT
-                                                  const size_t        &arg_identify_entry_a, ///< TODOCUMENT
-                                                  const alignment_row &arg_aln_row_b,        ///< TODOCUMENT
-                                                  const size_t        &arg_identify_entry_b  ///< TODOCUMENT
+alignment_row cath::align::glue_aln_rows_together(const alignment_row &prm_aln_row_a,        ///< TODOCUMENT
+                                                  const size_t        &prm_identify_entry_a, ///< TODOCUMENT
+                                                  const alignment_row &prm_aln_row_b,        ///< TODOCUMENT
+                                                  const size_t        &prm_identify_entry_b  ///< TODOCUMENT
                                                   ) {
 	// Grab the two positions and check they're both present
-	const aln_posn_opt position_a = arg_aln_row_a.position_of_entry( arg_identify_entry_a );
-	const aln_posn_opt position_b = arg_aln_row_b.position_of_entry( arg_identify_entry_b );
+	const aln_posn_opt position_a = prm_aln_row_a.position_of_entry( prm_identify_entry_a );
+	const aln_posn_opt position_b = prm_aln_row_b.position_of_entry( prm_identify_entry_b );
 	if ( ! position_a ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("first alignment_row does not have a position in the entry on which it is to be glued"));
 	}
@@ -268,24 +268,24 @@ alignment_row cath::align::glue_aln_rows_together(const alignment_row &arg_aln_r
 	}
 
 	// Return the result
-	return join( arg_aln_row_a, remove_entry_from_row( arg_aln_row_b, arg_identify_entry_b ) );
+	return join( prm_aln_row_a, remove_entry_from_row( prm_aln_row_b, prm_identify_entry_b ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::join(const alignment_row &arg_joinee_a, ///< TODOCUMENT
-                                const alignment_row &arg_joinee_b  ///< TODOCUMENT
+alignment_row cath::align::join(const alignment_row &prm_joinee_a, ///< TODOCUMENT
+                                const alignment_row &prm_joinee_b  ///< TODOCUMENT
                                 ) {
 	// Grab the total number of entries
-	const size_t total_num_entries = arg_joinee_a.num_entries() + arg_joinee_b.num_entries();
+	const size_t total_num_entries = prm_joinee_a.num_entries() + prm_joinee_b.num_entries();
 
 	// Prepare a positions to be populated
 	aln_posn_opt_vec positions;
 	positions.reserve( total_num_entries );
 
 	// Loop over the two joinees, populating positions
-	for ( const alignment_row &joinee : { cref( arg_joinee_a ), cref( arg_joinee_b ) } ) {
+	for ( const alignment_row &joinee : { cref( prm_joinee_a ), cref( prm_joinee_b ) } ) {
 
 		// Loop over the entries in the joinee
 		const size_t num_entries = joinee.num_entries();
@@ -303,18 +303,18 @@ alignment_row cath::align::join(const alignment_row &arg_joinee_a, ///< TODOCUME
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-void cath::align::set_positions_of_entries_from_row(aln_posn_opt_vec    &arg_positions,  ///< TODOCUMENT
-                                                    const alignment_row &arg_source_row, ///< TODOCUMENT
-                                                    const size_vec      &arg_entries     ///< TODOCUMENT
+void cath::align::set_positions_of_entries_from_row(aln_posn_opt_vec    &prm_positions,  ///< TODOCUMENT
+                                                    const alignment_row &prm_source_row, ///< TODOCUMENT
+                                                    const size_vec      &prm_entries     ///< TODOCUMENT
                                                     ) {
-	const size_t num_dest_entries   = arg_positions.size();
-	const size_t num_source_entries = arg_entries.size();
-	if ( arg_source_row.num_entries() != num_source_entries ) {
+	const size_t num_dest_entries   = prm_positions.size();
+	const size_t num_source_entries = prm_entries.size();
+	if ( prm_source_row.num_entries() != num_source_entries ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of entries in does not match number of entries in entry list"));
 	}
 
 	for (const size_t &entry_ctr : indices( num_source_entries ) ) {
-		const size_t new_entry = arg_entries[ entry_ctr ];
+		const size_t new_entry = prm_entries[ entry_ctr ];
 //		cerr << "entry_ctr is " << entry_ctr << " and new_entry is " << new_entry << endl;
 		if ( new_entry >= num_dest_entries ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(
@@ -327,42 +327,42 @@ void cath::align::set_positions_of_entries_from_row(aln_posn_opt_vec    &arg_pos
 				+ " destination entries"
 			));
 		}
-		if ( arg_positions[ new_entry ] ) {
+		if ( prm_positions[ new_entry ] ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Attempt to set a value that has already been set"));
 		}
-		arg_positions[ new_entry ] = arg_source_row.position_of_entry( entry_ctr );
+		prm_positions[ new_entry ] = prm_source_row.position_of_entry( entry_ctr );
 	}
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-alignment_row cath::align::weave(const alignment_row &arg_row_a,     ///< TODOCUMENT
-                                 const size_vec      &arg_entries_a, ///< TODOCUMENT
-                                 const alignment_row &arg_row_b,     ///< TODOCUMENT
-                                 const size_vec      &arg_entries_b  ///< TODOCUMENT
+alignment_row cath::align::weave(const alignment_row &prm_row_a,     ///< TODOCUMENT
+                                 const size_vec      &prm_entries_a, ///< TODOCUMENT
+                                 const alignment_row &prm_row_b,     ///< TODOCUMENT
+                                 const size_vec      &prm_entries_b  ///< TODOCUMENT
                                  ) {
-	const size_t num_entries_a = arg_entries_a.size();
-	const size_t num_entries_b = arg_entries_b.size();
+	const size_t num_entries_a = prm_entries_a.size();
+	const size_t num_entries_b = prm_entries_b.size();
 	const size_t num_entries = num_entries_a + num_entries_b;
 	aln_posn_opt_vec positions( num_entries );
-	set_positions_of_entries_from_row( positions, arg_row_a, arg_entries_a );
-	set_positions_of_entries_from_row( positions, arg_row_b, arg_entries_b );
+	set_positions_of_entries_from_row( positions, prm_row_a, prm_entries_a );
+	set_positions_of_entries_from_row( positions, prm_row_b, prm_entries_b );
 	return alignment_row( positions );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-const alignment_row cath::align::remove_entry_from_row(const alignment_row &arg_aln_row, ///< TODOCUMENT
-                                                       const size_t        &arg_entry    ///< TODOCUMENT
+const alignment_row cath::align::remove_entry_from_row(const alignment_row &prm_aln_row, ///< TODOCUMENT
+                                                       const size_t        &prm_entry    ///< TODOCUMENT
                                                        ) {
-	// Grab the number of entries and sanity check that arg_entry is less than this
-	const size_t num_entries = arg_aln_row.num_entries();
-	if ( arg_entry >= num_entries ) {
+	// Grab the number of entries and sanity check that prm_entry is less than this
+	const size_t num_entries = prm_aln_row.num_entries();
+	if ( prm_entry >= num_entries ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Cannot remove entry "
-			+ lexical_cast<string>( arg_entry   )
+			+ lexical_cast<string>( prm_entry   )
 			+ " from alignment_row with "
 			+ lexical_cast<string>( num_entries )
 			+ " entries"
@@ -373,12 +373,12 @@ const alignment_row cath::align::remove_entry_from_row(const alignment_row &arg_
 	aln_posn_opt_vec positions;
 	positions.reserve( num_entries );
 
-	// Loop over the entries in arg_aln_row
+	// Loop over the entries in prm_aln_row
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		// If this isn't the entry to be removed then copy it to has_positions and positions
-		if ( arg_entry != entry_ctr ) {
+		if ( prm_entry != entry_ctr ) {
 			// Append the position to positions
-			const aln_posn_opt position = arg_aln_row.position_of_entry( entry_ctr );
+			const aln_posn_opt position = prm_aln_row.position_of_entry( entry_ctr );
 			positions.push_back( position );
 		}
 	}
@@ -390,12 +390,12 @@ const alignment_row cath::align::remove_entry_from_row(const alignment_row &arg_
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-aln_posn_opt_vec cath::align::get_has_posns_and_posns(const alignment_row &arg_aln_row ///< TODOCUMENT
+aln_posn_opt_vec cath::align::get_has_posns_and_posns(const alignment_row &prm_aln_row ///< TODOCUMENT
                                                       ) {
-	const size_t num_entries = arg_aln_row.num_entries();
+	const size_t num_entries = prm_aln_row.num_entries();
 	aln_posn_opt_vec new_positions( num_entries );
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		const aln_posn_opt position = arg_aln_row.position_of_entry( entry_ctr );
+		const aln_posn_opt position = prm_aln_row.position_of_entry( entry_ctr );
 		new_positions[ entry_ctr ] = position;
 	}
 	return new_positions;

@@ -30,23 +30,23 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename RNG, typename FN>
-		inline auto minmax_element(RNG &arg_range ///< TODOCUMENT
+		inline auto minmax_element(RNG &prm_range ///< TODOCUMENT
 		                           ) {
 			return boost::minmax_element(
-				common::cbegin( arg_range ),
-				common::cend  ( arg_range )
+				common::cbegin( prm_range ),
+				common::cend  ( prm_range )
 			);
 		}
 
 		/// \brief TODOCUMENT
 		template <typename RNG, typename FN>
-		inline auto minmax_element(RNG &arg_range,   ///< TODOCUMENT
-		                           FN   arg_function ///< TODOCUMENT
+		inline auto minmax_element(RNG &prm_range,   ///< TODOCUMENT
+		                           FN   prm_function ///< TODOCUMENT
 		                           ) {
 			return boost::minmax_element(
-				common::cbegin( arg_range ),
-				common::cend  ( arg_range ),
-				arg_function
+				common::cbegin( prm_range ),
+				common::cend  ( prm_range ),
+				prm_function
 			);
 		}
 

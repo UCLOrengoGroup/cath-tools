@@ -112,30 +112,30 @@ namespace cath {
 		}
 
 		/// \brief Non-const-overload of standard subscript operator
-		inline link_list & links::operator[](const size_t &arg_index ///< The index of the list of links to access
+		inline link_list & links::operator[](const size_t &prm_index ///< The index of the list of links to access
 		                                     ) {
-			return the_link_lists[ arg_index ];
+			return the_link_lists[ prm_index ];
 		}
 
 		/// \brief Const-overload of standard subscript operator
-		inline const link_list & links::operator[](const size_t &arg_index ///< The index of the list of links to access
+		inline const link_list & links::operator[](const size_t &prm_index ///< The index of the list of links to access
 		                                           ) const {
-			return the_link_lists[ arg_index ];
+			return the_link_lists[ prm_index ];
 		}
 
 		/// \brief Symmetrically add a link of the specified dissimilarity between the specified items
-		inline links & links::add_link_symmetrically(const size_t   &arg_index_a,      ///< The first  item to be linked
-		                                             const size_t   &arg_index_b,      ///< The second item to be linked
-		                                             const strength &arg_dissimilarity ///< The dissimilarity between the two items
+		inline links & links::add_link_symmetrically(const size_t   &prm_index_a,      ///< The first  item to be linked
+		                                             const size_t   &prm_index_b,      ///< The second item to be linked
+		                                             const strength &prm_dissimilarity ///< The dissimilarity between the two items
 		                                             ) {
-			if ( arg_index_a == arg_index_b ) {
+			if ( prm_index_a == prm_index_b ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot add a self-link to links"));
 			}
-			if ( the_link_lists.size() < std::max( arg_index_a, arg_index_b ) + 1 ) {
-				the_link_lists.resize( std::max( arg_index_a, arg_index_b ) + 1 );
+			if ( the_link_lists.size() < std::max( prm_index_a, prm_index_b ) + 1 ) {
+				the_link_lists.resize( std::max( prm_index_a, prm_index_b ) + 1 );
 			}
-			the_link_lists[ arg_index_a ].emplace_back( arg_index_b, arg_dissimilarity );
-			the_link_lists[ arg_index_b ].emplace_back( arg_index_a, arg_dissimilarity );
+			the_link_lists[ prm_index_a ].emplace_back( prm_index_b, prm_dissimilarity );
+			the_link_lists[ prm_index_b ].emplace_back( prm_index_a, prm_dissimilarity );
 			return *this;
 		}
 
@@ -144,46 +144,46 @@ namespace cath {
 		///        new cluster and others based on the previous cluster's dissimilarities to
 		///        the cluster in question
 		template <typename Fn>
-		links & links::merge(const item_idx &arg_a,         ///< The first  cluster to merge
-		                     const item_idx &arg_b,         ///< The second cluster to merge
-		                     const item_idx &arg_new_label, ///< The label of the new cluster to form
-		                     Fn            &&arg_fn         ///< The function from the index of the target cluster and the two dissimilarities with that cluster from the mergee clusters. The target cluster may no-longer exist. May return none for no link.
+		links & links::merge(const item_idx &prm_a,         ///< The first  cluster to merge
+		                     const item_idx &prm_b,         ///< The second cluster to merge
+		                     const item_idx &prm_new_label, ///< The label of the new cluster to form
+		                     Fn            &&prm_fn         ///< The function from the index of the target cluster and the two dissimilarities with that cluster from the mergee clusters. The target cluster may no-longer exist. May return none for no link.
 		                                                    ///< !!!!! At the moment, this function is only called where both links exists - OK for complete-linkage but not others
 		                     ) {
 			// Ensure that there is enough space in the_link_lists
-			the_link_lists.resize( arg_new_label + 1 );
+			the_link_lists.resize( prm_new_label + 1 );
 
 			// Update distances...
 			update_dists_data.assign(
-				arg_new_label + 1,
+				prm_new_label + 1,
 				detail::num_prev_scores_strength_pair{ detail::num_prev_scores::ZERO, 0.0 }
 			);
 			// Copy all the dissimilarities from the first links_list into update_dists_data
-			for (const link &x : the_link_lists[ arg_a ] ) {
+			for (const link &x : the_link_lists[ prm_a ] ) {
 				update_dists_data[ x.node ] = { detail::num_prev_scores::ONE, x.dissim };
 			}
 
-			// Swap the already-allocated memory from the_link_lists[ arg_a ] with the_link_lists[ arg_new_label ] and clear it
-			std::swap( the_link_lists[ arg_a ], the_link_lists[ arg_new_label ] );
-			the_link_lists[ arg_new_label ].clear();
+			// Swap the already-allocated memory from the_link_lists[ prm_a ] with the_link_lists[ prm_new_label ] and clear it
+			std::swap( the_link_lists[ prm_a ], the_link_lists[ prm_new_label ] );
+			the_link_lists[ prm_new_label ].clear();
 
 			// Update all the links between the new cluster and each target cluster
-			for (const link &x : the_link_lists[ arg_b ] ) {
+			for (const link &x : the_link_lists[ prm_b ] ) {
 				const auto &update_dists_val = update_dists_data[ x.node ];
 				if ( update_dists_val.first == detail::num_prev_scores::ONE ) {
-					const strength_opt dissim_opt = common::invoke( arg_fn, x.node, update_dists_val.second, x.dissim );
+					const strength_opt dissim_opt = common::invoke( prm_fn, x.node, update_dists_val.second, x.dissim );
 					if ( dissim_opt ) {
-						the_link_lists[ arg_new_label ].emplace_back( x.node,        *dissim_opt );
-						the_link_lists[ x.node        ].emplace_back( arg_new_label, *dissim_opt );
+						the_link_lists[ prm_new_label ].emplace_back( x.node,        *dissim_opt );
+						the_link_lists[ x.node        ].emplace_back( prm_new_label, *dissim_opt );
 					}
 				}
 			}
 
 			// Free up memory that's no longer required
-			the_link_lists[ arg_a ].clear();
-			the_link_lists[ arg_a ].shrink_to_fit();
-			the_link_lists[ arg_b ].clear();
-			the_link_lists[ arg_b ].shrink_to_fit();
+			the_link_lists[ prm_a ].clear();
+			the_link_lists[ prm_a ].shrink_to_fit();
+			the_link_lists[ prm_b ].clear();
+			the_link_lists[ prm_b ].shrink_to_fit();
 
 			return *this;
 		}
@@ -201,17 +201,17 @@ namespace cath {
 		/// \brief Symmetrically add the specified link tuple to the specified links
 		///
 		/// This forwards the parts of the tuple to the add_link_symmetrically() method of links
-		inline void add_link_symmetrically(links                        &arg_links, ///< The links to which the new link should be added
-		                                   const item_item_strength_tpl &arg_link   ///< The link specified as a tuple
+		inline void add_link_symmetrically(links                        &prm_links, ///< The links to which the new link should be added
+		                                   const item_item_strength_tpl &prm_link   ///< The link specified as a tuple
 		                                   ) {
-			// Pass the parts of the tuple as arguments to the add_link_symmetrically() member function of arg_links
+			// Pass the parts of the tuple as arguments to the add_link_symmetrically() member function of prm_links
 			common::apply(
 				[&] (auto...args) {
-					arg_links.add_link_symmetrically(
+					prm_links.add_link_symmetrically(
 						std::forward< decltype( args ) >( args )...
 					);
 				},
-				arg_link
+				prm_link
 			);
 		}
 

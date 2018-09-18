@@ -33,11 +33,11 @@ using std::string;
 /// \brief Generate a string describing the specified hierarchy_group
 ///
 /// \relates hierarchy_layer
-string cath::clust::to_string(const hierarchy_group &arg_hierarchy_group ///< The hierarchy_group to describe
+string cath::clust::to_string(const hierarchy_group &prm_hierarchy_group ///< The hierarchy_group to describe
                               ) {
 	return "hierarchy_group["
 		+ join(
-			arg_hierarchy_group
+			prm_hierarchy_group
 				| transformed( [] (const hierarchy_value &x) {
 					return to_string( x );
 				} ),
@@ -49,9 +49,9 @@ string cath::clust::to_string(const hierarchy_group &arg_hierarchy_group ///< Th
 /// \brief Insert a description of the specified hierarchy_group into the specified ostream
 ///
 /// \relates hierarchy_layer
-ostream & cath::clust::operator<<(ostream               &arg_os,             ///< The ostream into which the description should be inserted
-                                  const hierarchy_group &arg_hierarchy_group ///< The hierarchy_group to describe
+ostream & cath::clust::operator<<(ostream               &prm_os,             ///< The ostream into which the description should be inserted
+                                  const hierarchy_group &prm_hierarchy_group ///< The hierarchy_group to describe
                                   ) {
-	arg_os << to_string( arg_hierarchy_group );
-	return arg_os;
+	prm_os << to_string( prm_hierarchy_group );
+	return prm_os;
 }

@@ -27,18 +27,18 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	template <typename Target, typename Source>
-	inline Target debug_unwarned_numeric_cast(const Source &arg_value ///< TODOCUMENT
+	inline Target debug_unwarned_numeric_cast(const Source &prm_value ///< TODOCUMENT
 	                                          ) {
 #ifndef NDEBUG
-		return boost::numeric_cast<Target>( arg_value );
+		return boost::numeric_cast<Target>( prm_value );
 #else
-		return static_cast<Target>( arg_value );
+		return static_cast<Target>( prm_value );
 #endif
 	}
 
 	/// \brief TODOCUMENT
 	template <typename Target, typename Source>
-	inline Target debug_numeric_cast(const Source &arg_value ///< TODOCUMENT
+	inline Target debug_numeric_cast(const Source &prm_value ///< TODOCUMENT
 	                                 ) {
 		using stripped_target  = typename std::remove_reference<typename std::remove_const<Target>::type>::type;
 		using stripped_source  = typename std::remove_reference<typename std::remove_const<Source>::type>::type;
@@ -46,7 +46,7 @@ namespace cath {
 			! std::is_same<stripped_target, stripped_source>::value,
 			"debug_numeric_cast is being used to cast a type to itself"
 		);
-		return debug_unwarned_numeric_cast<Target, Source>( arg_value );
+		return debug_unwarned_numeric_cast<Target, Source>( prm_value );
 	}
 } // namespace cath
 

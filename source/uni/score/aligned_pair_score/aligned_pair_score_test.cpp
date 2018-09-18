@@ -157,44 +157,44 @@ namespace cath {
 }  // namespace cath
 
 /// \brief TODOCUMENT
-void cath::test::aligned_pair_score_fixture::check_ssap_scores(const alignment   &arg_alignment,                      ///< TODOCUMENT
-                                                               const protein     &arg_protein_a,                      ///< TODOCUMENT
-                                                               const protein     &arg_protein_b,                      ///< TODOCUMENT
-                                                               const score_value &arg_accurate_score_over_longer,     ///< TODOCUMENT
-                                                               const score_value &arg_accurate_score_over_shorter,    ///< TODOCUMENT
-                                                               const score_value &arg_accurate_score_over_num_aligned ///< TODOCUMENT
+void cath::test::aligned_pair_score_fixture::check_ssap_scores(const alignment   &prm_alignment,                      ///< TODOCUMENT
+                                                               const protein     &prm_protein_a,                      ///< TODOCUMENT
+                                                               const protein     &prm_protein_b,                      ///< TODOCUMENT
+                                                               const score_value &prm_accurate_score_over_longer,     ///< TODOCUMENT
+                                                               const score_value &prm_accurate_score_over_shorter,    ///< TODOCUMENT
+                                                               const score_value &prm_accurate_score_over_num_aligned ///< TODOCUMENT
                                                                ) const {
-	const ssap_scores the_ssap_scores = calculate_log_score( arg_alignment, arg_protein_a, arg_protein_b, residue_querier() );
+	const ssap_scores the_ssap_scores = calculate_log_score( prm_alignment, prm_protein_a, prm_protein_b, residue_querier() );
 	constexpr size_t exclude = 5;
 	BOOST_CHECK_CLOSE(
-		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( arg_alignment, arg_protein_a, arg_protein_b ),
+		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		the_ssap_scores.get_ssap_score_over_larger(),
 		ACCURACY_PERCENTAGE()
 	);
 	BOOST_CHECK_CLOSE(
-		ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( arg_alignment, arg_protein_a, arg_protein_b ),
+		ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		the_ssap_scores.get_ssap_score_over_smaller(),
 		ACCURACY_PERCENTAGE()
 	);
 	BOOST_CHECK_CLOSE(
-		ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( arg_alignment, arg_protein_a, arg_protein_b ),
+		ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		the_ssap_scores.get_ssap_score_over_compared(),
 		ACCURACY_PERCENTAGE()
 	);
 
 	BOOST_CHECK_CLOSE(
-		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( arg_alignment, arg_protein_a, arg_protein_b ),
-		arg_accurate_score_over_longer,
+		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+		prm_accurate_score_over_longer,
 		ACCURACY_PERCENTAGE()
 	);
 	BOOST_CHECK_CLOSE(
-		ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( arg_alignment, arg_protein_a, arg_protein_b ),
-		arg_accurate_score_over_shorter,
+		ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+		prm_accurate_score_over_shorter,
 		ACCURACY_PERCENTAGE()
 	);
 	BOOST_CHECK_CLOSE(
-		ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( arg_alignment, arg_protein_a, arg_protein_b ),
-		arg_accurate_score_over_num_aligned,
+		ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+		prm_accurate_score_over_num_aligned,
 		ACCURACY_PERCENTAGE()
 	);
 }

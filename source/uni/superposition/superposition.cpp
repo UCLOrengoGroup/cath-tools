@@ -79,14 +79,14 @@ static_assert( constexpr_is_uniq( superposition::SUPERPOSITION_CHAIN_CHARS ), "T
 ///
 /// Note: this previously said "[...]make the first coord_list best fit the second in the second's current position[...]"
 ///
-coord_rot_pair superposition::fit_second_to_first(const coord_list &arg_coords_a, ///< TODOCUMENT
-                                                  const coord_list &arg_coords_b  ///< TODOCUMENT
+coord_rot_pair superposition::fit_second_to_first(const coord_list &prm_coords_a, ///< TODOCUMENT
+                                                  const coord_list &prm_coords_b  ///< TODOCUMENT
                                                   ) {
 	// Find the centres of gravity of each and generate versions that are each centred
-	const coord      centre_of_gravity_a = centre_of_gravity( arg_coords_a );
-	const coord      centre_of_gravity_b = centre_of_gravity( arg_coords_b );
-	const coord_list centred_coords_a    = arg_coords_a - centre_of_gravity_a;
-	const coord_list centred_coords_b    = arg_coords_b - centre_of_gravity_b;
+	const coord      centre_of_gravity_a = centre_of_gravity( prm_coords_a );
+	const coord      centre_of_gravity_b = centre_of_gravity( prm_coords_b );
+	const coord_list centred_coords_a    = prm_coords_a - centre_of_gravity_a;
+	const coord_list centred_coords_b    = prm_coords_b - centre_of_gravity_b;
 
 	// Calculate rotation matrix
 	//
@@ -120,18 +120,18 @@ coord_rot_pair superposition::fit_second_to_first(const coord_list &arg_coords_a
 ///
 /// It is useful to allow a superposition for a single entry so that cath-superpose doesn't
 /// have to treat that as a special case.
-superposition::superposition(const vector<indices_and_coord_lists_type> &arg_indices_and_coord_lists, ///< TODOCUMENT
-                             const size_t                               &arg_base_index,       ///< Optionally specify which entry in the resulting superposition is the "base" (default: 0)
-                             const coord                                &arg_base_translation, ///< Optionally specify the translation to apply to the base structure
-                             const rotation                             &arg_base_rotation     ///< Optionally specify the rotation    to apply to the base structure
+superposition::superposition(const vector<indices_and_coord_lists_type> &prm_indices_and_coord_lists, ///< TODOCUMENT
+                             const size_t                               &prm_base_index,       ///< Optionally specify which entry in the resulting superposition is the "base" (default: 0)
+                             const coord                                &prm_base_translation, ///< Optionally specify the translation to apply to the base structure
+                             const rotation                             &prm_base_rotation     ///< Optionally specify the rotation    to apply to the base structure
                              ) {
 	// Sanity check the inputs: check that each entry in the input has indices within range
-	const size_t num_entries = arg_indices_and_coord_lists.size() + 1; // A tree
+	const size_t num_entries = prm_indices_and_coord_lists.size() + 1; // A tree
 	// Sanity check the inputs: check that there are enough entries in input
 	if (num_entries < 1) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot generate a superposition for zero entries"));
 	}
-	for (const indices_and_coord_lists_type &indices_and_coord_lists_entry : arg_indices_and_coord_lists) {
+	for (const indices_and_coord_lists_type &indices_and_coord_lists_entry : prm_indices_and_coord_lists) {
 		if ( get<0>( indices_and_coord_lists_entry ) >= num_entries || get<2>( indices_and_coord_lists_entry ) >= num_entries ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Superposition input data index exceeds or equals the number of entries"));
 		}
@@ -139,28 +139,28 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &arg_ind
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Superposition input data indices are equal"));
 		}
 	}
-	// Sanity check the inputs: check that the arg_index_to_use_as_base is within range
-	if (arg_base_index >= num_entries) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Superposition arg_index_to_use_as_base exceeds or equals the number of entries"));
+	// Sanity check the inputs: check that the prm_index_to_use_as_base is within range
+	if (prm_base_index >= num_entries) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Superposition prm_index_to_use_as_base exceeds or equals the number of entries"));
 	}
 
 //	rmsds.assign(num_entries - 1, INVALID_RMSD);
 
 	translations.assign( num_entries, coord::ORIGIN_COORD           );
 	rotations.assign   ( num_entries, rotation::IDENTITY_ROTATION() );
-	translations[ arg_base_index ] = arg_base_translation;
-	rotations   [ arg_base_index ] = arg_base_rotation;
+	translations[ prm_base_index ] = prm_base_translation;
+	rotations   [ prm_base_index ] = prm_base_rotation;
 
-	size_set entries_loaded = { arg_base_index };
-	bool_deq inputs_processed( arg_indices_and_coord_lists.size(), false );
+	size_set entries_loaded = { prm_base_index };
+	bool_deq inputs_processed( prm_indices_and_coord_lists.size(), false );
 
 	// While any of the inputs_processed are false
 	while ( any_of( inputs_processed, logical_not<bool>() ) ) {
 		bool made_progress = false;
 
-		for (const size_t &input_ctr : indices( arg_indices_and_coord_lists.size() ) ) {
+		for (const size_t &input_ctr : indices( prm_indices_and_coord_lists.size() ) ) {
 			if ( ! inputs_processed[input_ctr]) {
-				const indices_and_coord_lists_type &indices_and_coord_lists_entry = arg_indices_and_coord_lists[input_ctr];
+				const indices_and_coord_lists_type &indices_and_coord_lists_entry = prm_indices_and_coord_lists[input_ctr];
 				const size_t     &index_a      = get<0>( indices_and_coord_lists_entry );
 				const coord_list &coord_list_a = get<1>( indices_and_coord_lists_entry );
 				const size_t     &index_b      = get<2>( indices_and_coord_lists_entry );
@@ -207,10 +207,10 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &arg_ind
 }
 
 /// \brief TODOCUMENT
-superposition::superposition(coord_vec    arg_translations, ///< TODOCUMENT
-                             rotation_vec arg_rotations     ///< TODOCUMENT
-                             ) : translations{ std::move( arg_translations ) },
-                                 rotations   { std::move( arg_rotations    ) } {
+superposition::superposition(coord_vec    prm_translations, ///< TODOCUMENT
+                             rotation_vec prm_rotations     ///< TODOCUMENT
+                             ) : translations{ std::move( prm_translations ) },
+                                 rotations   { std::move( prm_rotations    ) } {
 }
 
 /// \brief TODOCUMENT
@@ -219,35 +219,35 @@ size_t superposition::get_num_entries() const {
 }
 
 /// \brief TODOCUMENT
-const coord & superposition::get_translation_of_index(const size_t &arg_index ///< TODOCUMENT
+const coord & superposition::get_translation_of_index(const size_t &prm_index ///< TODOCUMENT
                                                       ) const {
-	return translations[ arg_index ];
+	return translations[ prm_index ];
 }
 
 /// \brief TODOCUMENT
-const rotation & superposition::get_rotation_of_index(const size_t &arg_index ///< TODOCUMENT
+const rotation & superposition::get_rotation_of_index(const size_t &prm_index ///< TODOCUMENT
                                                       ) const {
-	return rotations[ arg_index ];
+	return rotations[ prm_index ];
 }
 
 /// \brief Modify the superposition so that it has the same effect as applying the original superposition and then the specified translation
-superposition & superposition::post_translate(const coord &arg_translation ///< The post-superposition translation to add into the superposition
+superposition & superposition::post_translate(const coord &prm_translation ///< The post-superposition translation to add into the superposition
                                               ) {
 	// \TODO Come C++17 and structured bindings, use here
 	for (const boost::tuple<coord &, const rotation &> &x : combine( translations, rotations ) ) {
 		auto       &the_trans = x.get<0>();
 		const auto &the_rotn  = x.get<1>();
-		the_trans += rotate_copy( transpose_copy( the_rotn ), arg_translation );
+		the_trans += rotate_copy( transpose_copy( the_rotn ), prm_translation );
 	}
 	return *this;
 }
 
 /// \brief Modify the superposition so that it has the same effect as applying the original superposition and then the specified rotation
-superposition & superposition::post_rotate(const rotation &arg_rotation ///< The post-superposition rotation to add into the superposition
+superposition & superposition::post_rotate(const rotation &prm_rotation ///< The post-superposition rotation to add into the superposition
                                            ) {
 	for (rotation &the_rotn : rotations) {
 		// \todo Consider adding a `rotation & left_multiply_by(const rotation &);` method to rotation and using it here
-		the_rotn = arg_rotation * the_rotn;
+		the_rotn = prm_rotation * the_rotn;
 	}
 	return *this;
 }
@@ -256,153 +256,153 @@ superposition & superposition::post_rotate(const rotation &arg_rotation ///< The
 ///        applying the original superposition and then the specified translation and then rotation
 ///
 /// \relates superposition
-void cath::sup::post_translate_and_rotate(superposition  &arg_superposition, ///< The superposition to modify
-                                          const coord    &arg_translation,   ///< The translation to apply after the superposition
-                                          const rotation &arg_rotation       ///< The rotation to apply last, after the translation
+void cath::sup::post_translate_and_rotate(superposition  &prm_superposition, ///< The superposition to modify
+                                          const coord    &prm_translation,   ///< The translation to apply after the superposition
+                                          const rotation &prm_rotation       ///< The rotation to apply last, after the translation
                                           ) {
-	arg_superposition.post_translate( arg_translation );
-	arg_superposition.post_rotate   ( arg_rotation    );
+	prm_superposition.post_translate( prm_translation );
+	prm_superposition.post_rotate   ( prm_rotation    );
 }
 
 /// \brief Modify and return a copy of the specified superposition so that it has the same effect as
 ///        applying the original superposition and then the specified translation and then rotation
 ///
 /// \relates superposition
-superposition cath::sup::post_translate_and_rotate_copy(superposition   arg_superposition, ///< The superposition from which a copy should be taken, so it can be modified and returned
-                                                        const coord    &arg_translation,   ///< The translation to apply after the superposition
-                                                        const rotation &arg_rotation       ///< The rotation to apply last, after the translation
+superposition cath::sup::post_translate_and_rotate_copy(superposition   prm_superposition, ///< The superposition from which a copy should be taken, so it can be modified and returned
+                                                        const coord    &prm_translation,   ///< The translation to apply after the superposition
+                                                        const rotation &prm_rotation       ///< The rotation to apply last, after the translation
                                                         ) {
-	post_translate_and_rotate( arg_superposition, arg_translation, arg_rotation );
-	return arg_superposition;
+	post_translate_and_rotate( prm_superposition, prm_translation, prm_rotation );
+	return prm_superposition;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-void cath::sup::transform(const superposition &arg_superposition, ///< TODOCUMENT
-                          const size_t        &arg_index,         ///< TODOCUMENT
-                          coord               &arg_coord          ///< TODOCUMENT
+void cath::sup::transform(const superposition &prm_superposition, ///< TODOCUMENT
+                          const size_t        &prm_index,         ///< TODOCUMENT
+                          coord               &prm_coord          ///< TODOCUMENT
                           ) {
 	// Grab the translation and rotation
-	const coord    &the_translation = arg_superposition.get_translation_of_index( arg_index );
-	const rotation &the_rotation    = arg_superposition.get_rotation_of_index   ( arg_index );
+	const coord    &the_translation = prm_superposition.get_translation_of_index( prm_index );
+	const rotation &the_rotation    = prm_superposition.get_rotation_of_index   ( prm_index );
 	
 	// Apply them to the specified coord
-	arg_coord += the_translation;
-	cath::geom::rotate( the_rotation, arg_coord );
+	prm_coord += the_translation;
+	cath::geom::rotate( the_rotation, prm_coord );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-coord cath::sup::transform_copy(const superposition &arg_superposition, ///< TODOCUMENT
-                                const size_t        &arg_index,         ///< TODOCUMENT
-                                coord                arg_coord          ///< TODOCUMENT
+coord cath::sup::transform_copy(const superposition &prm_superposition, ///< TODOCUMENT
+                                const size_t        &prm_index,         ///< TODOCUMENT
+                                coord                prm_coord          ///< TODOCUMENT
                                 ) {
-	transform( arg_superposition, arg_index, arg_coord );
-	return arg_coord;
+	transform( prm_superposition, prm_index, prm_coord );
+	return prm_coord;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-void cath::sup::transform(const superposition &arg_superposition, ///< TODOCUMENT
-                          const size_t        &arg_index,         ///< TODOCUMENT
-                          coord_list          &arg_coord_list     ///< TODOCUMENT
+void cath::sup::transform(const superposition &prm_superposition, ///< TODOCUMENT
+                          const size_t        &prm_index,         ///< TODOCUMENT
+                          coord_list          &prm_coord_list     ///< TODOCUMENT
                           ) {
 	// Grab the translation and rotation
-	const coord    &the_translation = arg_superposition.get_translation_of_index( arg_index );
-	const rotation &the_rotation    = arg_superposition.get_rotation_of_index   ( arg_index );
+	const coord    &the_translation = prm_superposition.get_translation_of_index( prm_index );
+	const rotation &the_rotation    = prm_superposition.get_rotation_of_index   ( prm_index );
 	
 	// Apply them to the specified coord
-	arg_coord_list += the_translation;
-	cath::geom::rotate( the_rotation, arg_coord_list );
+	prm_coord_list += the_translation;
+	cath::geom::rotate( the_rotation, prm_coord_list );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-coord_list cath::sup::transform_copy(const superposition &arg_superposition, ///< TODOCUMENT
-                                     const size_t        &arg_index,         ///< TODOCUMENT
-                                     coord_list           arg_coord_list     ///< TODOCUMENT
+coord_list cath::sup::transform_copy(const superposition &prm_superposition, ///< TODOCUMENT
+                                     const size_t        &prm_index,         ///< TODOCUMENT
+                                     coord_list           prm_coord_list     ///< TODOCUMENT
                                      ) {
-	transform( arg_superposition, arg_index, arg_coord_list );
-	return arg_coord_list;
+	transform( prm_superposition, prm_index, prm_coord_list );
+	return prm_coord_list;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-void cath::sup::transform(const superposition &arg_superposition, ///< TODOCUMENT
-                          const size_t        &arg_index,         ///< TODOCUMENT
-                          coord_list_vec      &arg_coord_lists    ///< TODOCUMENT
+void cath::sup::transform(const superposition &prm_superposition, ///< TODOCUMENT
+                          const size_t        &prm_index,         ///< TODOCUMENT
+                          coord_list_vec      &prm_coord_lists    ///< TODOCUMENT
                           ) {
 	for_each(
-		arg_coord_lists,
-		[&] (coord_list &x) { transform( arg_superposition, arg_index, x ); }
+		prm_coord_lists,
+		[&] (coord_list &x) { transform( prm_superposition, prm_index, x ); }
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-geom::coord_list_vec cath::sup::transform_copy(const superposition &arg_superposition, ///< TODOCUMENT
-                                               const size_t        &arg_index,         ///< TODOCUMENT
-                                               coord_list_vec       arg_coord_lists    ///< TODOCUMENT
+geom::coord_list_vec cath::sup::transform_copy(const superposition &prm_superposition, ///< TODOCUMENT
+                                               const size_t        &prm_index,         ///< TODOCUMENT
+                                               coord_list_vec       prm_coord_lists    ///< TODOCUMENT
                                                ) {
-	transform( arg_superposition, arg_index, arg_coord_lists );
-	return arg_coord_lists;
+	transform( prm_superposition, prm_index, prm_coord_lists );
+	return prm_coord_lists;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-double cath::sup::superposed_distance(const superposition &arg_superposition, ///< TODOCUMENT
-                                      const size_t        &arg_index_a,       ///< TODOCUMENT
-                                      coord                arg_coord_a,       ///< TODOCUMENT
-                                      const size_t        &arg_index_b,       ///< TODOCUMENT
-                                      coord                arg_coord_b        ///< TODOCUMENT
+double cath::sup::superposed_distance(const superposition &prm_superposition, ///< TODOCUMENT
+                                      const size_t        &prm_index_a,       ///< TODOCUMENT
+                                      coord                prm_coord_a,       ///< TODOCUMENT
+                                      const size_t        &prm_index_b,       ///< TODOCUMENT
+                                      coord                prm_coord_b        ///< TODOCUMENT
                                       ) {
-	transform( arg_superposition, arg_index_a, arg_coord_a );
-	transform( arg_superposition, arg_index_b, arg_coord_b );
-	return distance_between_points( arg_coord_a, arg_coord_b );
+	transform( prm_superposition, prm_index_a, prm_coord_a );
+	transform( prm_superposition, prm_index_b, prm_coord_b );
+	return distance_between_points( prm_coord_a, prm_coord_b );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-double cath::sup::calc_rmsd_between_superposed_entries(const superposition &arg_superposition, ///< TODOCUMENT
-                                                       const size_t        &arg_index_a,       ///< TODOCUMENT
-                                                       coord_list           arg_coord_list_a,  ///< TODOCUMENT
-                                                       const size_t        &arg_index_b,       ///< TODOCUMENT
-                                                       coord_list           arg_coord_list_b   ///< TODOCUMENT
+double cath::sup::calc_rmsd_between_superposed_entries(const superposition &prm_superposition, ///< TODOCUMENT
+                                                       const size_t        &prm_index_a,       ///< TODOCUMENT
+                                                       coord_list           prm_coord_list_a,  ///< TODOCUMENT
+                                                       const size_t        &prm_index_b,       ///< TODOCUMENT
+                                                       coord_list           prm_coord_list_b   ///< TODOCUMENT
                                                        ) {
-	transform( arg_superposition, arg_index_a, arg_coord_list_a );
-	transform( arg_superposition, arg_index_b, arg_coord_list_b );
+	transform( prm_superposition, prm_index_a, prm_coord_list_a );
+	transform( prm_superposition, prm_index_b, prm_coord_list_b );
 
-	return calc_rmsd( arg_coord_list_a, arg_coord_list_b );
+	return calc_rmsd( prm_coord_list_a, prm_coord_list_b );
 }
 
 /// \brief Non-member equality operator for the superposition class
 ///
 /// \relates superposition
-bool cath::sup::operator==(const superposition &arg_sup_a, ///< TODOCUMENT
-                           const superposition &arg_sup_b  ///< TODOCUMENT
+bool cath::sup::operator==(const superposition &prm_sup_a, ///< TODOCUMENT
+                           const superposition &prm_sup_b  ///< TODOCUMENT
                            ) {
 	// Return false if the number of entries differ
-	if (arg_sup_a.get_num_entries() != arg_sup_b.get_num_entries()) {
+	if (prm_sup_a.get_num_entries() != prm_sup_b.get_num_entries()) {
 		return false;
 	}
 
 	// Otherwise, check each of the positions match
-	const size_t num_entries = arg_sup_a.get_num_entries();
+	const size_t num_entries = prm_sup_a.get_num_entries();
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		if (arg_sup_a.get_translation_of_index(entry_ctr) != arg_sup_b.get_translation_of_index(entry_ctr) ) {
+		if (prm_sup_a.get_translation_of_index(entry_ctr) != prm_sup_b.get_translation_of_index(entry_ctr) ) {
 			return false;
 		}
-		const rotation arg_rotation_a = arg_sup_a.get_rotation_of_index(entry_ctr);
-		const rotation arg_rotation_b = arg_sup_b.get_rotation_of_index(entry_ctr);
-		if ( arg_rotation_a != arg_rotation_b ) {
+		const rotation prm_rotation_a = prm_sup_a.get_rotation_of_index(entry_ctr);
+		const rotation prm_rotation_b = prm_sup_b.get_rotation_of_index(entry_ctr);
+		if ( prm_rotation_a != prm_rotation_b ) {
 			return false;
 		}
 	}
@@ -413,43 +413,43 @@ bool cath::sup::operator==(const superposition &arg_sup_a, ///< TODOCUMENT
 /// \brief Basic insertion operator to output a rough summary of an superposition to an ostream
 ///
 /// \relates superposition
-ostream & cath::sup::operator<<(ostream             &arg_ostream,      ///< The stream to which to output
-                                const superposition &arg_superposition ///< The superposition to summarise
+ostream & cath::sup::operator<<(ostream             &prm_ostream,      ///< The stream to which to output
+                                const superposition &prm_superposition ///< The superposition to summarise
                                 ) {
-	const size_t num_entries = arg_superposition.get_num_entries();
-	arg_ostream << "superposition[";
-	arg_ostream << num_entries;
-	arg_ostream << " entries:";
+	const size_t num_entries = prm_superposition.get_num_entries();
+	prm_ostream << "superposition[";
+	prm_ostream << num_entries;
+	prm_ostream << " entries:";
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		arg_ostream << (entry_ctr > 0 ? "; " : " ");
-		arg_ostream << arg_superposition.get_translation_of_index(entry_ctr);
-		arg_ostream << ", ";
-		arg_ostream << arg_superposition.get_rotation_of_index(entry_ctr);
+		prm_ostream << (entry_ctr > 0 ? "; " : " ");
+		prm_ostream << prm_superposition.get_translation_of_index(entry_ctr);
+		prm_ostream << ", ";
+		prm_ostream << prm_superposition.get_rotation_of_index(entry_ctr);
 	}
-	arg_ostream << "]";
-	return arg_ostream;
+	prm_ostream << "]";
+	return prm_ostream;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-bool cath::sup::are_close(const superposition &arg_sup_1,  ///< TODOCUMENT
-                          const superposition &arg_sup_2   ///< TODOCUMENT
+bool cath::sup::are_close(const superposition &prm_sup_1,  ///< TODOCUMENT
+                          const superposition &prm_sup_2   ///< TODOCUMENT
                           ) {
-	const size_t num_entries = arg_sup_1.get_num_entries();
+	const size_t num_entries = prm_sup_1.get_num_entries();
 
-	if (num_entries != arg_sup_2.get_num_entries()) {
+	if (num_entries != prm_sup_2.get_num_entries()) {
 		return false;
 	}
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
 		const bool translations_are_close = (
-			arg_sup_1.get_translation_of_index(entry_ctr) == arg_sup_2.get_translation_of_index(entry_ctr)
+			prm_sup_1.get_translation_of_index(entry_ctr) == prm_sup_2.get_translation_of_index(entry_ctr)
 		);
 		if (!translations_are_close) {
 			return false;
 		}
 		const bool rotations_are_close = are_close(
-			arg_sup_1.get_rotation_of_index(entry_ctr),      arg_sup_2.get_rotation_of_index(entry_ctr)
+			prm_sup_1.get_rotation_of_index(entry_ctr),      prm_sup_2.get_rotation_of_index(entry_ctr)
 		);
 		if (!rotations_are_close) {
 			return false;
@@ -461,37 +461,37 @@ bool cath::sup::are_close(const superposition &arg_sup_1,  ///< TODOCUMENT
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-void cath::sup::write_superposition(ostream             &arg_os,           ///< TODOCUMENT
-                                    const superposition &arg_superposition ///< TODOCUMENT
+void cath::sup::write_superposition(ostream             &prm_os,           ///< TODOCUMENT
+                                    const superposition &prm_superposition ///< TODOCUMENT
                                     ) {
-	const streamsize old_precision = arg_os.precision();
-	arg_os.precision(30);
-	const size_t num_entries = arg_superposition.get_num_entries();
+	const streamsize old_precision = prm_os.precision();
+	prm_os.precision(30);
+	const size_t num_entries = prm_superposition.get_num_entries();
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		const coord    entry_translation = arg_superposition.get_translation_of_index( entry_ctr );
-		const rotation entry_rotation    = arg_superposition.get_rotation_of_index(    entry_ctr );
-		arg_os << entry_translation.get_x() << " " << entry_translation.get_y() << " " << entry_translation.get_z();
-		arg_os << " "  << entry_rotation.get_value<0, 0>();
-		arg_os << " "  << entry_rotation.get_value<0, 1>();
-		arg_os << " "  << entry_rotation.get_value<0, 2>();
-		arg_os << " "  << entry_rotation.get_value<1, 0>();
-		arg_os << " "  << entry_rotation.get_value<1, 1>();
-		arg_os << " "  << entry_rotation.get_value<1, 2>();
-		arg_os << " "  << entry_rotation.get_value<2, 0>();
-		arg_os << " "  << entry_rotation.get_value<2, 1>();
-		arg_os << " "  << entry_rotation.get_value<2, 2>();
-		arg_os << "\n";
+		const coord    entry_translation = prm_superposition.get_translation_of_index( entry_ctr );
+		const rotation entry_rotation    = prm_superposition.get_rotation_of_index(    entry_ctr );
+		prm_os << entry_translation.get_x() << " " << entry_translation.get_y() << " " << entry_translation.get_z();
+		prm_os << " "  << entry_rotation.get_value<0, 0>();
+		prm_os << " "  << entry_rotation.get_value<0, 1>();
+		prm_os << " "  << entry_rotation.get_value<0, 2>();
+		prm_os << " "  << entry_rotation.get_value<1, 0>();
+		prm_os << " "  << entry_rotation.get_value<1, 1>();
+		prm_os << " "  << entry_rotation.get_value<1, 2>();
+		prm_os << " "  << entry_rotation.get_value<2, 0>();
+		prm_os << " "  << entry_rotation.get_value<2, 1>();
+		prm_os << " "  << entry_rotation.get_value<2, 2>();
+		prm_os << "\n";
 	}
-	arg_os.precision(old_precision);
+	prm_os.precision(old_precision);
 }
 /// \brief TODOCUMENT
-superposition cath::sup::read_superposition(istream &arg_is ///< TODOCUMENT
+superposition cath::sup::read_superposition(istream &prm_is ///< TODOCUMENT
 		                                    ) {
 	constexpr size_t CORRECT_NUM_PARTS = 12;
 	coord_vec    translations;
 	rotation_vec rotations;
 	string       line_string;
-	while ( getline( arg_is, line_string ) ) {
+	while ( getline( prm_is, line_string ) ) {
 		const str_vec line_parts = split_build<str_vec>( line_string, is_any_of( " " ), token_compress_on );
 		if (line_parts.size() != CORRECT_NUM_PARTS) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to parse superposition because line does not contain " + lexical_cast<string>(CORRECT_NUM_PARTS) + " parts."));
@@ -523,24 +523,24 @@ superposition cath::sup::read_superposition(istream &arg_is ///< TODOCUMENT
 ///
 /// Rather than needing to use the more complicated superposition constructor,
 /// this can be used to provide and interface to it.
-superposition cath::sup::create_pairwise_superposition(const coord_list &arg_coord_list_1,     ///< TODOCUMENT
-                                                       const coord_list &arg_coord_list_2,     ///< TODOCUMENT
-                                                       const bool       &arg_first_as_base,    ///< TODOCUMENT
-                                                       const coord      &arg_base_translation, ///< TODOCUMENT
-                                                       const rotation   &arg_base_rotation     ///< TODOCUMENT
+superposition cath::sup::create_pairwise_superposition(const coord_list &prm_coord_list_1,     ///< TODOCUMENT
+                                                       const coord_list &prm_coord_list_2,     ///< TODOCUMENT
+                                                       const bool       &prm_first_as_base,    ///< TODOCUMENT
+                                                       const coord      &prm_base_translation, ///< TODOCUMENT
+                                                       const rotation   &prm_base_rotation     ///< TODOCUMENT
                                                        ) {
 	const superposition new_superposition(
 		vector<superposition::indices_and_coord_lists_type>( {
 			std::make_tuple(
 				superposition::INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION,
-				arg_coord_list_1,
+				prm_coord_list_1,
 				superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION,
-				arg_coord_list_2
+				prm_coord_list_2
 			)
 		} ),
-		( arg_first_as_base ? superposition::INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION : superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION ),
-		arg_base_translation,
-		arg_base_rotation
+		( prm_first_as_base ? superposition::INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION : superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION ),
+		prm_base_translation,
+		prm_base_rotation
 	);
 	return new_superposition;
 }
@@ -548,45 +548,45 @@ superposition cath::sup::create_pairwise_superposition(const coord_list &arg_coo
 /// \brief A convenience function to superpose one set of coordinates to another
 ///
 /// \relates superposition
-void cath::sup::superpose_second_coords_to_first(const coord_list &arg_coord_list_1, ///< The first set of coordinates (to which the others should be superposed)
-                                                 coord_list       &arg_coord_list_2  ///< The second set of coordinates (to superpose to the others)
+void cath::sup::superpose_second_coords_to_first(const coord_list &prm_coord_list_1, ///< The first set of coordinates (to which the others should be superposed)
+                                                 coord_list       &prm_coord_list_2  ///< The second set of coordinates (to superpose to the others)
                                                  ) {
-	const auto the_sup = create_pairwise_superposition( arg_coord_list_1, arg_coord_list_2 );
-	transform( the_sup, superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION, arg_coord_list_2 );
+	const auto the_sup = create_pairwise_superposition( prm_coord_list_1, prm_coord_list_2 );
+	transform( the_sup, superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION, prm_coord_list_2 );
 }
 
 /// \brief A convenience function to create a copy of one set of coordinates superposed to another
 ///
 /// \relates superposition
-coord_list cath::sup::superpose_copy_second_coords_to_first(const coord_list &arg_coord_list_1, ///< TODOCUMENT
-                                                            coord_list        arg_coord_list_2  ///< TODOCUMENT
+coord_list cath::sup::superpose_copy_second_coords_to_first(const coord_list &prm_coord_list_1, ///< TODOCUMENT
+                                                            coord_list        prm_coord_list_2  ///< TODOCUMENT
                                                             ) {
-	superpose_second_coords_to_first( arg_coord_list_1, arg_coord_list_2 );
-	return arg_coord_list_2;
+	superpose_second_coords_to_first( prm_coord_list_1, prm_coord_list_2 );
+	return prm_coord_list_2;
 }
 
 
 /// \brief A convenience function to superpose one set of coordinates to another
 ///
 /// \relates superposition
-void cath::sup::superpose_second_coords_to_first(const coord_list_vec &arg_coord_list_1, ///< The first set of coordinates (to which the others should be superposed)
-                                                 coord_list_vec       &arg_coord_list_2  ///< The second set of coordinates (to superpose to the others)
+void cath::sup::superpose_second_coords_to_first(const coord_list_vec &prm_coord_list_1, ///< The first set of coordinates (to which the others should be superposed)
+                                                 coord_list_vec       &prm_coord_list_2  ///< The second set of coordinates (to superpose to the others)
                                                  ) {
 	const auto the_sup = create_pairwise_superposition(
-		flatten_coord_lists( arg_coord_list_1 ),
-		flatten_coord_lists( arg_coord_list_2 )
+		flatten_coord_lists( prm_coord_list_1 ),
+		flatten_coord_lists( prm_coord_list_2 )
 	);
-	transform( the_sup, superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION, arg_coord_list_2 );
+	transform( the_sup, superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION, prm_coord_list_2 );
 }
 
 /// \brief A convenience function to create a copy of one set of coordinates superposed to another
 ///
 /// \relates superposition
-coord_list_vec cath::sup::superpose_copy_second_coords_to_first(const coord_list_vec &arg_coord_list_1, ///< TODOCUMENT
-                                                                coord_list_vec        arg_coord_list_2  ///< TODOCUMENT
+coord_list_vec cath::sup::superpose_copy_second_coords_to_first(const coord_list_vec &prm_coord_list_1, ///< TODOCUMENT
+                                                                coord_list_vec        prm_coord_list_2  ///< TODOCUMENT
                                                                 ) {
-	superpose_second_coords_to_first( arg_coord_list_1, arg_coord_list_2 );
-	return arg_coord_list_2;
+	superpose_second_coords_to_first( prm_coord_list_1, prm_coord_list_2 );
+	return prm_coord_list_2;
 }
 
 
@@ -595,28 +595,28 @@ coord_list_vec cath::sup::superpose_copy_second_coords_to_first(const coord_list
 /// \relates superposition
 ///
 /// Rather than needing to use the more complicated
-double cath::sup::calc_pairwise_superposition_rmsd(const coord_list &arg_coord_list_1, ///< TODOCUMENT
-                                                   const coord_list &arg_coord_list_2  ///< TODOCUMENT
+double cath::sup::calc_pairwise_superposition_rmsd(const coord_list &prm_coord_list_1, ///< TODOCUMENT
+                                                   const coord_list &prm_coord_list_2  ///< TODOCUMENT
                                                    ) {
 	const superposition new_sup = create_pairwise_superposition(
-		arg_coord_list_1,
-		arg_coord_list_2
+		prm_coord_list_1,
+		prm_coord_list_2
 	);
 	return calc_rmsd_between_superposed_entries(
 		new_sup,
 		superposition::INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION,
-		arg_coord_list_1,
+		prm_coord_list_1,
 		superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION,
-		arg_coord_list_2
+		prm_coord_list_2
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
-void cath::sup::check_superposition_is_pairwise(const superposition &arg_superposition ///< TODOCUMENT
+void cath::sup::check_superposition_is_pairwise(const superposition &prm_superposition ///< TODOCUMENT
                                                 ) {
-	if (arg_superposition.get_num_entries() != superposition::NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION) {
+	if (prm_superposition.get_num_entries() != superposition::NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Superposition is not pairwise"));
 	}
 }
@@ -624,10 +624,10 @@ void cath::sup::check_superposition_is_pairwise(const superposition &arg_superpo
 /// \brief Make an identity superposition for the specified number of entries
 ///
 /// \relates superposition
-superposition cath::sup::make_identity_superposition(const size_t &arg_num_entries ///< The number of entries to be superposed
+superposition cath::sup::make_identity_superposition(const size_t &prm_num_entries ///< The number of entries to be superposed
                                                      ) {
 	return {
-		coord_vec   ( arg_num_entries, coord::ORIGIN_COORD           ),
-		rotation_vec( arg_num_entries, rotation::IDENTITY_ROTATION() )
+		coord_vec   ( prm_num_entries, coord::ORIGIN_COORD           ),
+		rotation_vec( prm_num_entries, rotation::IDENTITY_ROTATION() )
 	};
 }

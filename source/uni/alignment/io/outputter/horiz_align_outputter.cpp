@@ -37,8 +37,8 @@ using boost::lexical_cast;
 using boost::numeric_cast;
 
 /// \brief Ctor for horiz_align_outputter
-horiz_align_outputter::horiz_align_outputter(const alignment &arg_alignment ///< The alignment to be output
-                                             ) : the_alignment( arg_alignment ) {
+horiz_align_outputter::horiz_align_outputter(const alignment &prm_alignment ///< The alignment to be output
+                                             ) : the_alignment( prm_alignment ) {
 }
 
 /// \brief Getter for the const reference to the alignment
@@ -55,11 +55,11 @@ const alignment & horiz_align_outputter::get_alignment() const {
 /// position number.
 ///
 /// \relates horiz_align_outputter
-ostream & cath::align::operator<<(ostream                     &arg_os,                   ///< The ostream to which the alignment should be output
-                                  const horiz_align_outputter &arg_horiz_align_outputter ///< A horiz_align_outputter that wraps the alignment to be output
+ostream & cath::align::operator<<(ostream                     &prm_os,                   ///< The ostream to which the alignment should be output
+                                  const horiz_align_outputter &prm_horiz_align_outputter ///< A horiz_align_outputter that wraps the alignment to be output
                                   ) {
 	// Grab alignment and then some basic information from it
-	const alignment     &the_alignment   = arg_horiz_align_outputter.get_alignment();
+	const alignment     &the_alignment   = prm_horiz_align_outputter.get_alignment();
 	const auto           length          = the_alignment.length();
 	const auto           num_entries     = the_alignment.num_entries();
 	const aln_posn_opt   max_index_opt   = get_max_last_present_position( the_alignment );
@@ -67,26 +67,26 @@ ostream & cath::align::operator<<(ostream                     &arg_os,          
 	const size_t         max_index_width = lexical_cast<string>( max_index ).length();
 
 	// Loop over the positions, and output them
-	arg_os << "alignment[";
+	prm_os << "alignment[";
 	for (const alignment::size_type &entry_ctr : indices( num_entries ) ) {
-		arg_os << "\n\t";
+		prm_os << "\n\t";
 		for (const alignment::size_type &index_ctr : indices( length ) ) {
-			arg_os << " ";
+			prm_os << " ";
 			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( position ) {
 				ostringstream posn_ss;
 				posn_ss << setw( numeric_cast<int>( max_index_width ) ) << setfill( ' ' );
 				posn_ss << *position;
-				arg_os  << posn_ss.str();
+				prm_os  << posn_ss.str();
 			}
 			else {
-				arg_os << string( max_index_width - 1, ' ') << "-";
+				prm_os << string( max_index_width - 1, ' ') << "-";
 			}
 		}
 	}
-	arg_os << ( ( num_entries > 0 ) ? "\n" : "" );
-	arg_os << "]";
+	prm_os << ( ( num_entries > 0 ) ? "\n" : "" );
+	prm_os << "]";
 
 	// Return the specified ostream
-	return arg_os;
+	return prm_os;
 }

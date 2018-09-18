@@ -61,12 +61,12 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		scan_policy<KPs...>::scan_policy(const res_pair_keyer<KPs...> &arg_keyer,      ///< TODOCUMENT
-		                                 quad_criteria                 arg_criteria,   ///< TODOCUMENT
-		                                 scan_stride                   arg_scan_stride ///< TODOCUMENT
-		                                 ) : keyer        { arg_keyer                    },
-		                                     the_criteria { std::move( arg_criteria    ) },
-		                                     the_stride   { std::move( arg_scan_stride ) } {
+		scan_policy<KPs...>::scan_policy(const res_pair_keyer<KPs...> &prm_keyer,      ///< TODOCUMENT
+		                                 quad_criteria                 prm_criteria,   ///< TODOCUMENT
+		                                 scan_stride                   prm_scan_stride ///< TODOCUMENT
+		                                 ) : keyer        { prm_keyer                    },
+		                                     the_criteria { std::move( prm_criteria    ) },
+		                                     the_stride   { std::move( prm_scan_stride ) } {
 		}
 
 		/// \brief TODOCUMENT
@@ -89,14 +89,14 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		scan_policy<KPs...> make_scan_policy(const res_pair_keyer<KPs...> &arg_keyer,      ///< TODOCUMENT
-		                                     const quad_criteria       &arg_criteria,   ///< TODOCUMENT
-		                                     const scan_stride         &arg_scan_stride ///< TODOCUMENT
+		scan_policy<KPs...> make_scan_policy(const res_pair_keyer<KPs...> &prm_keyer,      ///< TODOCUMENT
+		                                     const quad_criteria       &prm_criteria,   ///< TODOCUMENT
+		                                     const scan_stride         &prm_scan_stride ///< TODOCUMENT
 		                                     ) {
 			return {
-				arg_keyer,
-				arg_criteria,
-				arg_scan_stride
+				prm_keyer,
+				prm_criteria,
+				prm_scan_stride
 			};
 		}
 

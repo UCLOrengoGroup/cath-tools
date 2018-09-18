@@ -84,9 +84,9 @@ const map<string, dna_atom> DNA_RNA_RESIDUE_NAMES = {
 /// \brief Generate a string describing the specified amino_acid_type
 ///
 /// \relates amino_acid_type
-string cath::to_string(const amino_acid_type &arg_amino_acid_type ///< The amino_acid_type to describe
+string cath::to_string(const amino_acid_type &prm_amino_acid_type ///< The amino_acid_type to describe
                        ) {
-	switch ( arg_amino_acid_type ) {
+	switch ( prm_amino_acid_type ) {
 		case ( amino_acid_type::AA      ) : { return "AA"      ; };
 		case ( amino_acid_type::HETATOM ) : { return "HETATOM" ; };
 		case ( amino_acid_type::DNA     ) : { return "DNA"     ; };
@@ -115,11 +115,11 @@ auto amino_acid::INDEX_OF_NAME() -> const string_size_unordered_map & {
 }
 
 /// \brief TODOCUMENT
-void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name ///< The 1 letter code, three letter code or name to which the amino_acid should be set
+void amino_acid::set_letter_code_or_name(const string &prm_letter_code_or_name ///< The 1 letter code, three letter code or name to which the amino_acid should be set
                                          ) {
 	// If the argument matches any names, then set to the corresponding index and return
-	if ( arg_letter_code_or_name.length() > 3 ) {
-		const auto index_itr = INDEX_OF_NAME().find( arg_letter_code_or_name );
+	if ( prm_letter_code_or_name.length() > 3 ) {
+		const auto index_itr = INDEX_OF_NAME().find( prm_letter_code_or_name );
 		if ( index_itr != common::cend( INDEX_OF_NAME() ) ) {
 			data = index_itr->second;
 			return;
@@ -127,14 +127,14 @@ void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name /
 	}
 
 	// If the argument has one character and matches any of the LETTERS, then set to the corresponding index and return
-	if ( arg_letter_code_or_name.length() == 1 ) {
-		data = get_letter_index( arg_letter_code_or_name.front() );
+	if ( prm_letter_code_or_name.length() == 1 ) {
+		data = get_letter_index( prm_letter_code_or_name.front() );
 		return;
 	}
 
 	// If the argument has three characters and matches any of the codes,  then set to the corresponding index and return
-	if ( arg_letter_code_or_name.length() == 3 ) {
-		const auto index_itr = INDEX_OF_CODE().find( arg_letter_code_or_name );
+	if ( prm_letter_code_or_name.length() == 3 ) {
+		const auto index_itr = INDEX_OF_CODE().find( prm_letter_code_or_name );
 		if ( index_itr != common::cend( INDEX_OF_CODE() ) ) {
 			data = index_itr->second;
 			return;
@@ -142,9 +142,9 @@ void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name /
 	}
 
 	// Check whether the string represents a DNA/RNA base
-	if ( arg_letter_code_or_name.length() == 3 ) {
-		if ( contains( DNA_RNA_RESIDUE_NAMES, arg_letter_code_or_name ) ) {
-			data = DNA_RNA_RESIDUE_NAMES.at( arg_letter_code_or_name );
+	if ( prm_letter_code_or_name.length() == 3 ) {
+		if ( contains( DNA_RNA_RESIDUE_NAMES, prm_letter_code_or_name ) ) {
+			data = DNA_RNA_RESIDUE_NAMES.at( prm_letter_code_or_name );
 		}
 		// Hacks to handle erroneous ATOM AA in versions of 2yjd from before it was fixed in January 2017
 		//
@@ -152,10 +152,10 @@ void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name /
 		//
 		// > Noteworthy exceptions to the above treatment of modified residues are the cases of
 		// > acetylation of the N-terminus (residue ACE) and amidation of the C-terminus (residue NH2).
-		else if ( arg_letter_code_or_name == "ACE" ) { data = hetatm_variant_t{ { 'A', 'C', 'E' } }; }
-		else if ( arg_letter_code_or_name == "NH2" ) { data = hetatm_variant_t{ { 'N', 'H', '2' } }; }
+		else if ( prm_letter_code_or_name == "ACE" ) { data = hetatm_variant_t{ { 'A', 'C', 'E' } }; }
+		else if ( prm_letter_code_or_name == "NH2" ) { data = hetatm_variant_t{ { 'N', 'H', '2' } }; }
 		else {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid string \"" + arg_letter_code_or_name + "\" has three characters but is not a recognised code (currently case-sensitive)"));
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("Amino acid string \"" + prm_letter_code_or_name + "\" has three characters but is not a recognised code (currently case-sensitive)"));
 		}
 		return;
 	}
@@ -167,18 +167,18 @@ void amino_acid::set_letter_code_or_name(const string &arg_letter_code_or_name /
 /// \brief Ctor for amino_acid
 ///
 /// This is deliberately not explicit to allow implicit conversions from strings to amino_acid object
-amino_acid::amino_acid(const string &arg_code_or_name
+amino_acid::amino_acid(const string &prm_code_or_name
                        ) {
-	set_letter_code_or_name(arg_code_or_name);
+	set_letter_code_or_name(prm_code_or_name);
 }
 
 /// \brief Make a vector of amino acids from a vector of amino acid chars
 ///
 /// \relates amino_acid
-amino_acid_vec cath::make_amino_acids_of_chars(const char_vec &arg_amino_acid_chars ///< A vector of chars for amino acids
+amino_acid_vec cath::make_amino_acids_of_chars(const char_vec &prm_amino_acid_chars ///< A vector of chars for amino acids
                                                ) {
 	return transform_build<amino_acid_vec>(
-		arg_amino_acid_chars,
+		prm_amino_acid_chars,
 		[] (const char &x) { return amino_acid{ x }; }
 	);
 }
@@ -188,9 +188,9 @@ amino_acid_vec cath::make_amino_acids_of_chars(const char_vec &arg_amino_acid_ch
 /// eg 'A' -> "ALA"
 ///
 /// \relates amino_acid
-char_3_arr cath::get_code_of_amino_acid_letter(const char &arg_one_letter_aa ///< The single-letter amino acid (eg 'A' for alanine)
+char_3_arr cath::get_code_of_amino_acid_letter(const char &prm_one_letter_aa ///< The single-letter amino acid (eg 'A' for alanine)
                                                ) {
-	return amino_acid( arg_one_letter_aa ).get_code();
+	return amino_acid( prm_one_letter_aa ).get_code();
 }
 
 /// \brief Get the three-letter-code string associated with the specified one letter
@@ -198,40 +198,40 @@ char_3_arr cath::get_code_of_amino_acid_letter(const char &arg_one_letter_aa ///
 /// eg 'A' -> "ALA"
 ///
 /// \relates amino_acid
-string cath::get_code_str_of_amino_acid_letter(const char &arg_one_letter_aa ///< The single-letter amino acid (eg 'A' for alanine)
+string cath::get_code_str_of_amino_acid_letter(const char &prm_one_letter_aa ///< The single-letter amino acid (eg 'A' for alanine)
                                                ) {
-	return char_arr_to_string( get_code_of_amino_acid_letter( arg_one_letter_aa ) );
+	return char_arr_to_string( get_code_of_amino_acid_letter( prm_one_letter_aa ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates amino_acid
-char cath::get_letter_of_amino_acid_code(const string &arg_three_letter_aa ///< TODOCUMENT
+char cath::get_letter_of_amino_acid_code(const string &prm_three_letter_aa ///< TODOCUMENT
                                          ) {
-	return *( amino_acid( arg_three_letter_aa ).get_letter_if_amino_acid() );
+	return *( amino_acid( prm_three_letter_aa ).get_letter_if_amino_acid() );
 }
 
 /// \brief Insert a description of the specified amino_acid into the specified ostream
 ///
 /// \relates amino_acid
-ostream & cath::operator<<(ostream          &arg_os,        ///< The ostream into which the description should be inserted
-                           const amino_acid &arg_amino_acid ///< The amino_acid to describe
+ostream & cath::operator<<(ostream          &prm_os,        ///< The ostream into which the description should be inserted
+                           const amino_acid &prm_amino_acid ///< The amino_acid to describe
                            ) {
-	arg_os << get_code_string( arg_amino_acid );
-	return arg_os;
+	prm_os << get_code_string( prm_amino_acid );
+	return prm_os;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates amino_acid
 istream & cath::operator>>(istream    &is,            ///< The istream from which to parse the amino_acid
-                           amino_acid &arg_amino_acid ///< The amino acid to populate
+                           amino_acid &prm_amino_acid ///< The amino acid to populate
                            ) {
 	string input_string;
 	is >> input_string;
 
 	try {
-		arg_amino_acid = amino_acid(input_string);
+		prm_amino_acid = amino_acid(input_string);
 	}
 	catch (const invalid_argument_exception &) {
 		BOOST_THROW_EXCEPTION(invalid_argument("invalid_evaluator_argument"));

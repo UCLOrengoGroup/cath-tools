@@ -28,14 +28,14 @@ constexpr bool     crh_score_spec::DEFAULT_APPLY_CATH_RULES;
 constexpr bool     crh_score_spec::DEFAULT_NAIVE_GREEDY;
 
 /// \brief Ctor
-crh_score_spec::crh_score_spec(const bool     &arg_apply_cath_rules,        ///< Whether to apply rules specific to CATH-Gene3D
-                               const resscr_t &arg_long_domains_preference, ///< The degree to which long domains are preferred
-                               const resscr_t &arg_high_scores_preference,  ///< The degree to which high scores are preferred
-                               const bool     &arg_naive_greedy             ///< Whether to use a naive, greedy approach to resolving
-                               ) : long_domains_preference { arg_long_domains_preference },
-                                   high_scores_preference  { arg_high_scores_preference  },
-                                   apply_cath_rules        { arg_apply_cath_rules        },
-                                   naive_greedy            { arg_naive_greedy            } {
+crh_score_spec::crh_score_spec(const bool     &prm_apply_cath_rules,        ///< Whether to apply rules specific to CATH-Gene3D
+                               const resscr_t &prm_long_domains_preference, ///< The degree to which long domains are preferred
+                               const resscr_t &prm_high_scores_preference,  ///< The degree to which high scores are preferred
+                               const bool     &prm_naive_greedy             ///< Whether to use a naive, greedy approach to resolving
+                               ) : long_domains_preference { prm_long_domains_preference },
+                                   high_scores_preference  { prm_high_scores_preference  },
+                                   apply_cath_rules        { prm_apply_cath_rules        },
+                                   naive_greedy            { prm_naive_greedy            } {
 }
 
 /// \brief Getter for the degree to which long domains are preferred
@@ -59,30 +59,30 @@ const bool & crh_score_spec::get_naive_greedy() const {
 }
 
 /// \brief Setter for the degree to which long domains are preferred
-crh_score_spec & crh_score_spec::set_long_domains_preference(const resscr_t &arg_long_domains_preference ///< The degree to which long domains are preferred
+crh_score_spec & crh_score_spec::set_long_domains_preference(const resscr_t &prm_long_domains_preference ///< The degree to which long domains are preferred
                                                              ) {
-	long_domains_preference = arg_long_domains_preference;
+	long_domains_preference = prm_long_domains_preference;
 	return *this;
 }
 
 /// \brief Setter for the degree to which high scores are preferred
-crh_score_spec & crh_score_spec::set_high_scores_preference(const resscr_t &arg_high_scores_preference ///< The degree to which high scores are preferred
+crh_score_spec & crh_score_spec::set_high_scores_preference(const resscr_t &prm_high_scores_preference ///< The degree to which high scores are preferred
                                                             ) {
-	high_scores_preference = arg_high_scores_preference;
+	high_scores_preference = prm_high_scores_preference;
 	return *this;
 }
 
 /// \brief Setter for whether to apply rules specific to CATH-Gene3D
-crh_score_spec & crh_score_spec::set_apply_cath_rules(const bool &arg_apply_cath_rules ///< Whether to apply rules specific to CATH-Gene3D
+crh_score_spec & crh_score_spec::set_apply_cath_rules(const bool &prm_apply_cath_rules ///< Whether to apply rules specific to CATH-Gene3D
                                                       ) {
-	apply_cath_rules = arg_apply_cath_rules;
+	apply_cath_rules = prm_apply_cath_rules;
 	return *this;
 }
 
 /// \brief Setter for whether to use a naive, greedy approach to resolving
-crh_score_spec & crh_score_spec::set_naive_greedy(const bool &arg_naive_greedy ///< Whether to use a naive, greedy approach to resolving
+crh_score_spec & crh_score_spec::set_naive_greedy(const bool &prm_naive_greedy ///< Whether to use a naive, greedy approach to resolving
                                                   ) {
-	naive_greedy = arg_naive_greedy;
+	naive_greedy = prm_naive_greedy;
 	return *this;
 }
 

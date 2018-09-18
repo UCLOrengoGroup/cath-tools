@@ -84,29 +84,29 @@ namespace cath {
 		};
 
 		/// \brief Ctor from an id_of_str_bidirnl reference
-		inline old_cluster_data::old_cluster_data(common::id_of_str_bidirnl &arg_id_of_str ///< The id_of_str_bidirnl to use to map from sequences names to IDs
-		                                          ) noexcept : id_of_seq_name{ arg_id_of_str } {
+		inline old_cluster_data::old_cluster_data(common::id_of_str_bidirnl &prm_id_of_str ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+		                                          ) noexcept : id_of_seq_name{ prm_id_of_str } {
 		}
 
 		/// \brief Add an entry with the specified sequence name and (optional) segments to the cluster with
 		///        the specified name
-		inline clust_entry_problem old_cluster_data::add_entry(const boost::string_ref &arg_clust_name, ///< The name of the cluster of the entry
-		                                                       const boost::string_ref &arg_seq_id,     ///< The name of the sequence within which this entry appears
-		                                                       const boost::string_ref &arg_domain_id,  ///< The name of the entry
-		                                                       seq::seq_seg_run_opt     arg_segments    ///< The (optional) segments of the entry within the sequence
+		inline clust_entry_problem old_cluster_data::add_entry(const boost::string_ref &prm_clust_name, ///< The name of the cluster of the entry
+		                                                       const boost::string_ref &prm_seq_id,     ///< The name of the sequence within which this entry appears
+		                                                       const boost::string_ref &prm_domain_id,  ///< The name of the entry
+		                                                       seq::seq_seg_run_opt     prm_segments    ///< The (optional) segments of the entry within the sequence
 		                                                       ) {
 			try {
 				const auto cluster_id = update_info_and_get_id_for_cluster_of_name(
 					clust_info,
-					arg_clust_name,
-					arg_domain_id,
-					arg_segments
+					prm_clust_name,
+					prm_domain_id,
+					prm_segments
 				);
-				const size_t &seq_id = id_of_seq_name.get().add_name( arg_seq_id.to_string() );
+				const size_t &seq_id = id_of_seq_name.get().add_name( prm_seq_id.to_string() );
 				return clusters.add_domain_to_cluster(
 					cluster_id,
 					seq_id,
-					std::move( arg_segments )
+					std::move( prm_segments )
 				);
 			}
 			catch (...) {
@@ -135,9 +135,9 @@ namespace cath {
 		}
 
 		/// \brief Get the cluster_domains associated with the sequence with the specified index
-		inline const cluster_domains & old_cluster_data::operator[](const size_t &arg_index ///< The index of the cluster_domains to get
+		inline const cluster_domains & old_cluster_data::operator[](const size_t &prm_index ///< The index of the cluster_domains to get
 		                                                            ) const {
-			return clusters[ arg_index ];
+			return clusters[ prm_index ];
 		}
 
 		/// \brief Standard const begin() method, as part of making this into a range over the cluster_domains entries
@@ -153,49 +153,49 @@ namespace cath {
 		/// \brief Get the number of clusters from the specified old_cluster_data
 		///
 		/// \relates old_cluster_data
-		inline size_t get_num_clusters(const old_cluster_data &arg_old_cluster_data ///< The old_cluster_data to query
+		inline size_t get_num_clusters(const old_cluster_data &prm_old_cluster_data ///< The old_cluster_data to query
 		                               ) {
-			return arg_old_cluster_data.get_clust_info().get_num_clusters();
+			return prm_old_cluster_data.get_clust_info().get_num_clusters();
 		}
 
 		/// \brief Get the cluster_info of the cluster with the specified ID from the specified old_cluster_data
 		///
 		/// \relates old_cluster_data
-		inline const cluster_info & get_info_of_cluster_of_id(const old_cluster_data &arg_old_cluster_data, ///< The old_cluster_data to query
-		                                                      const cluster_id_t     &arg_cluster_id        ///< The ID of the cluster of interest
+		inline const cluster_info & get_info_of_cluster_of_id(const old_cluster_data &prm_old_cluster_data, ///< The old_cluster_data to query
+		                                                      const cluster_id_t     &prm_cluster_id        ///< The ID of the cluster of interest
 		                                                      ) {
-			return arg_old_cluster_data.get_clust_info().get_info_of_cluster_of_id( arg_cluster_id );
+			return prm_old_cluster_data.get_clust_info().get_info_of_cluster_of_id( prm_cluster_id );
 		}
 
 		/// \brief Get the size of the cluster with the specified ID from the specified old_cluster_data
 		///
 		/// \relates old_cluster_data
-		inline size_t get_size_of_cluster_of_id(const old_cluster_data &arg_old_cluster_data, ///< The old_cluster_data to query
-		                                        const cluster_id_t     &arg_cluster_id        ///< The ID of the cluster of interest
+		inline size_t get_size_of_cluster_of_id(const old_cluster_data &prm_old_cluster_data, ///< The old_cluster_data to query
+		                                        const cluster_id_t     &prm_cluster_id        ///< The ID of the cluster of interest
 		                                        ) {
-			return get_info_of_cluster_of_id( arg_old_cluster_data, arg_cluster_id ).get_size();
+			return get_info_of_cluster_of_id( prm_old_cluster_data, prm_cluster_id ).get_size();
 		}
 
 		/// \brief Get the total number of entries in the clusters of the specified old_cluster_data
 		///
 		/// \relates old_cluster_data
-		inline size_t get_num_entries(const old_cluster_data &arg_old_cluster_data ///< The old_cluster_data to query
+		inline size_t get_num_entries(const old_cluster_data &prm_old_cluster_data ///< The old_cluster_data to query
 		                              ) {
 			return common::accumulate_proj(
-				common::indices( get_num_clusters( arg_old_cluster_data ) ),
+				common::indices( get_num_clusters( prm_old_cluster_data ) ),
 				0_z,
 				std::plus<>{},
-				[&] (const size_t &x) { return get_size_of_cluster_of_id( arg_old_cluster_data, x ); }
+				[&] (const size_t &x) { return get_size_of_cluster_of_id( prm_old_cluster_data, x ); }
 			);
 		}
 
 		/// \brief Get the name of the cluster with the specified ID in the specified old_cluster_data
 		///
 		/// \relates old_cluster_data
-		inline const std::string & get_name_of_cluster_of_id(const old_cluster_data &arg_old_cluster_data, ///< The old_cluster_data to query
-		                                                     const cluster_id_t     &arg_cluster_id        ///< The ID of the cluster of interest
+		inline const std::string & get_name_of_cluster_of_id(const old_cluster_data &prm_old_cluster_data, ///< The old_cluster_data to query
+		                                                     const cluster_id_t     &prm_cluster_id        ///< The ID of the cluster of interest
 		                                                     ) {
-			return arg_old_cluster_data.get_clust_info().get_name_of_cluster_of_id( arg_cluster_id );
+			return prm_old_cluster_data.get_clust_info().get_name_of_cluster_of_id( prm_cluster_id );
 		}
 
 		std::string to_string(const old_cluster_data &);

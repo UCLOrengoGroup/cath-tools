@@ -32,18 +32,18 @@ namespace cath {
 
 		/// \brief Non-const range overload of operator| for lexical_casted range adaptor
 		template <typename T, typename ForwardRng>
-		inline detail::lexical_casted_range<T, ForwardRng> operator|(ForwardRng              &arg_range, ///< The range to which the lexical_casted adaptor should be applied
+		inline detail::lexical_casted_range<T, ForwardRng> operator|(ForwardRng              &prm_range, ///< The range to which the lexical_casted adaptor should be applied
 		                                                             const lexical_casted<T> &           ///< A dummy lexical_casted parameter for determining which adaptor should be applied
 		                                                             ) {
-			return detail::lexical_casted_range<T, ForwardRng>( arg_range );
+			return detail::lexical_casted_range<T, ForwardRng>( prm_range );
 		}
 
 		/// \brief Const range overload of operator| for lexical_casted range adaptor
 		template <typename T, typename ForwardRng>
-		inline detail::lexical_casted_range<T, const ForwardRng> operator|(const ForwardRng        &arg_range, ///< The range to which the lexical_casted adaptor should be applied
+		inline detail::lexical_casted_range<T, const ForwardRng> operator|(const ForwardRng        &prm_range, ///< The range to which the lexical_casted adaptor should be applied
 		                                                                   const lexical_casted<T> &           ///< A dummy lexical_casted parameter for determining which adaptor should be applied
 		                                                                   ) {
-			return detail::lexical_casted_range<T, const ForwardRng>( arg_range );
+			return detail::lexical_casted_range<T, const ForwardRng>( prm_range );
 		}
 
 	} // namespace common

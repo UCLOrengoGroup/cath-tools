@@ -94,12 +94,12 @@ namespace cath {
 
 				static constexpr beta_bridge_context DEFAULT_CONTEXT = beta_bridge_context::LONE_BRIDGE;
 
-				beta_bridge(const size_t              &arg_partner_idx,
-				            const beta_bridge_type    &arg_type,
-				            const beta_bridge_context &arg_context = DEFAULT_CONTEXT
-				            ) : partner_idx { arg_partner_idx },
-				                type        { arg_type        },
-				                context     { arg_context     } {
+				beta_bridge(const size_t              &prm_partner_idx,
+				            const beta_bridge_type    &prm_type,
+				            const beta_bridge_context &prm_context = DEFAULT_CONTEXT
+				            ) : partner_idx { prm_partner_idx },
+				                type        { prm_type        },
+				                context     { prm_context     } {
 				}
 
 				beta_bridge(const beta_bridge &) noexcept = default;

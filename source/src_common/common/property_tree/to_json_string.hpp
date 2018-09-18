@@ -36,14 +36,14 @@ namespace cath {
 		///
 		/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
 		template <typename T>
-		std::string to_json_string(const T          &arg_val,                            ///< The value to represent in the JSON string
-		                           const json_style &arg_json_style = json_style::PRETTY ///< The style in which the JSON should be written
+		std::string to_json_string(const T          &prm_val,                            ///< The value to represent in the JSON string
+		                           const json_style &prm_json_style = json_style::PRETTY ///< The style in which the JSON should be written
 		                           ) {
 			std::ostringstream json_ss;
 			write_json(
 				json_ss,
-				make_ptree_of( arg_val ),
-				( arg_json_style == json_style::PRETTY )
+				make_ptree_of( prm_val ),
+				( prm_json_style == json_style::PRETTY )
 			);
 			return json_ss.str();
 		}

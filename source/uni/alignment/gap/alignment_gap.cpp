@@ -55,18 +55,18 @@ using boost::numeric_cast;
 /// \brief Return the number of gaps in the specified entry of the specified alignment
 ///
 /// \relates alignment
-size_t cath::align::gap::detail::get_naive_num_gaps_of_entry(const alignment &arg_alignment, ///< The alignment in which the gaps should be counted
-                                                             const size_t    &arg_entry      ///< The entry within the alignment in which the gaps should be counted
+size_t cath::align::gap::detail::get_naive_num_gaps_of_entry(const alignment &prm_alignment, ///< The alignment in which the gaps should be counted
+                                                             const size_t    &prm_entry      ///< The entry within the alignment in which the gaps should be counted
                                                              ) {
 	// Get the index of the first and last present position of the entry
 	// (and sanity check that they are values for both)
 	const aln_size_opt index_of_first_present_position = get_index_of_first_present_position_of_entry(
-		arg_alignment,
-		arg_entry
+		prm_alignment,
+		prm_entry
 	);
 	const aln_size_opt index_of_last_present_position  = get_index_of_last_present_position_of_entry(
-		arg_alignment,
-		arg_entry
+		prm_alignment,
+		prm_entry
 	);
 	if ( ! index_of_first_present_position || ! index_of_last_present_position ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot calculate the number of gaps of an entry in an alignment with no positions present"));
@@ -75,7 +75,7 @@ size_t cath::align::gap::detail::get_naive_num_gaps_of_entry(const alignment &ar
 	// Generate a vector representing of unique presence flags
 	vector<bool> uniq_presence_list;
 	for (const alignment::size_type &aln_ctr : irange( *index_of_first_present_position, *index_of_last_present_position + 1 ) ) {
-		const bool present = has_position_of_entry_of_index( arg_alignment, arg_entry, aln_ctr );
+		const bool present = has_position_of_entry_of_index( prm_alignment, prm_entry, aln_ctr );
 		if (uniq_presence_list.empty() || ( uniq_presence_list.back() != present ) ) {
 			uniq_presence_list.push_back(present);
 		}
@@ -85,7 +85,7 @@ size_t cath::align::gap::detail::get_naive_num_gaps_of_entry(const alignment &ar
 	if (uniq_presence_list.size() % 2 != 1) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
 			"When counting the number of gaps for entry "
-			+ lexical_cast<string>( arg_entry )
+			+ lexical_cast<string>( prm_entry )
 			+ " in an alignment, the number of unique presences/absences is "
 			+ lexical_cast<string>( uniq_presence_list.size() )
 			+ " which is even (but which should be odd)"
@@ -99,16 +99,16 @@ size_t cath::align::gap::detail::get_naive_num_gaps_of_entry(const alignment &ar
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-size_size_pair cath::align::gap::detail::gap_open_and_extend_counts_of_pair_in_alignment(const alignment &arg_alignment, ///< TODOCUMENT
-                                                                                         const size_t    &arg_entry_a,   ///< TODOCUMENT
-                                                                                         const size_t    &arg_entry_b    ///< TODOCUMENT
+size_size_pair cath::align::gap::detail::gap_open_and_extend_counts_of_pair_in_alignment(const alignment &prm_alignment, ///< TODOCUMENT
+                                                                                         const size_t    &prm_entry_a,   ///< TODOCUMENT
+                                                                                         const size_t    &prm_entry_b    ///< TODOCUMENT
                                                                                          ) {
 	// Initialise the counts to 0 and 0
 	size_size_pair open_and_extend_counts = make_pair( 0_z, 0_z );
 
 	// Grab the indices in which these two entries first/last both appear together
-	const aln_size_opt first_index = get_index_of_first_present_position_of_both_entries( arg_alignment, arg_entry_a, arg_entry_b );
-	const aln_size_opt last_index  = get_index_of_last_present_position_of_both_entries ( arg_alignment, arg_entry_a, arg_entry_b );
+	const aln_size_opt first_index = get_index_of_first_present_position_of_both_entries( prm_alignment, prm_entry_a, prm_entry_b );
+	const aln_size_opt last_index  = get_index_of_last_present_position_of_both_entries ( prm_alignment, prm_entry_a, prm_entry_b );
 
 	// If there are such indices then look for gaps in between
 	if ( first_index && last_index ) {
@@ -120,12 +120,12 @@ size_size_pair cath::align::gap::detail::gap_open_and_extend_counts_of_pair_in_a
 		// Loop from the first simultaneous appearance to the last
 		for (const size_t &index : irange( *first_index, *last_index ) ) {
 			// If this has a position in both entries then close both gaps
-			if ( has_position_of_both_entries_of_index( arg_alignment, arg_entry_a, arg_entry_b, index ) ) {
+			if ( has_position_of_both_entries_of_index( prm_alignment, prm_entry_a, prm_entry_b, index ) ) {
 				gap_open_in_a = false;
 				gap_open_in_b = false;
 			}
 			// Else if this has a position in b (and hence a gap in a) then...
-			else if ( has_position_of_entry_of_index( arg_alignment, arg_entry_b, index ) ) {
+			else if ( has_position_of_entry_of_index( prm_alignment, prm_entry_b, index ) ) {
 				// If a gap is already in a open then increment the extend count
 				if ( gap_open_in_a ) {
 					open_and_extend_counts.second++;
@@ -139,7 +139,7 @@ size_size_pair cath::align::gap::detail::gap_open_and_extend_counts_of_pair_in_a
 				}
 			}
 			// Else if this has a position in a (and hence a gap in b) then...
-			else if ( has_position_of_entry_of_index( arg_alignment, arg_entry_a, index ) ) {
+			else if ( has_position_of_entry_of_index( prm_alignment, prm_entry_a, index ) ) {
 				// If a gap is already in b open then increment the extend count
 				if ( gap_open_in_b ) {
 					open_and_extend_counts.second++;
@@ -162,9 +162,9 @@ size_size_pair cath::align::gap::detail::gap_open_and_extend_counts_of_pair_in_a
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-float_score_type cath::align::gap::gap_count_of_alignment(const alignment &arg_alignment ///< The alignment to assess
+float_score_type cath::align::gap::gap_count_of_alignment(const alignment &prm_alignment ///< The alignment to assess
                                                           ) {
-	return gap_open_and_extend_counts_of_alignment( arg_alignment ).first;
+	return gap_open_and_extend_counts_of_alignment( prm_alignment ).first;
 }
 
 /// \brief Calculate open and extend gap counts for an alignment
@@ -273,11 +273,11 @@ float_score_type cath::align::gap::gap_count_of_alignment(const alignment &arg_a
 
 ///
 /// \relates alignment
-float_score_float_score_pair cath::align::gap::gap_open_and_extend_counts_of_alignment(const alignment &arg_alignment ///< The alignment to assess
+float_score_float_score_pair cath::align::gap::gap_open_and_extend_counts_of_alignment(const alignment &prm_alignment ///< The alignment to assess
                                                                                        ) {
-	check_entry_positions_are_consecutive( arg_alignment );
+	check_entry_positions_are_consecutive( prm_alignment );
 
-	const size_t num_entries = arg_alignment.num_entries();
+	const size_t num_entries = prm_alignment.num_entries();
 
 	// Loop over distinct pairs, to accumulate the open/extend counts for each
 	size_size_pair total_open_and_extend_counts = make_pair( 0_z, 0_z );
@@ -285,7 +285,7 @@ float_score_float_score_pair cath::align::gap::gap_open_and_extend_counts_of_ali
 		for (const size_t &entry_b : irange( entry_a, num_entries ) ) {
 			// Calculate the counts for the pair and add them to the running count
 			const size_size_pair pair_couts = detail::gap_open_and_extend_counts_of_pair_in_alignment(
-				arg_alignment,
+				prm_alignment,
 				entry_a,
 				entry_b
 			);
@@ -305,28 +305,28 @@ float_score_float_score_pair cath::align::gap::gap_open_and_extend_counts_of_ali
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-float_score_type cath::align::gap::gap_penalty_value_of_alignment(const alignment   &arg_alignment,  ///< The alignment to assess
-                                                                  const gap_penalty &arg_gap_penalty ///< The gap penalty to apply
+float_score_type cath::align::gap::gap_penalty_value_of_alignment(const alignment   &prm_alignment,  ///< The alignment to assess
+                                                                  const gap_penalty &prm_gap_penalty ///< The gap penalty to apply
                                                                   ) {
-	const float_score_float_score_pair open_and_extend_counts = gap_open_and_extend_counts_of_alignment( arg_alignment );
+	const float_score_float_score_pair open_and_extend_counts = gap_open_and_extend_counts_of_alignment( prm_alignment );
 	const float_score_type &open_count   = open_and_extend_counts.first;
 	const float_score_type &extend_count = open_and_extend_counts.second;
 	return (
-		  open_count   * numeric_cast<float_score_type>( arg_gap_penalty.get_open_gap_penalty()   )
-		+ extend_count * numeric_cast<float_score_type>( arg_gap_penalty.get_extend_gap_penalty() )
+		  open_count   * numeric_cast<float_score_type>( prm_gap_penalty.get_open_gap_penalty()   )
+		+ extend_count * numeric_cast<float_score_type>( prm_gap_penalty.get_extend_gap_penalty() )
 	);
 }
 
 /// \brief Return the total number of gaps in the specified alignment
 ///
 /// \relates alignment
-size_t cath::align::gap::get_naive_num_gaps(const alignment &arg_alignment ///< The alignment in which the gaps should be counted
+size_t cath::align::gap::get_naive_num_gaps(const alignment &prm_alignment ///< The alignment in which the gaps should be counted
                                             ) {
 	// Loop over the entries in the alignment and add up the number of gaps of each
 	size_t num_gaps = 0;
-	const alignment::size_type num_entries = arg_alignment.num_entries();
+	const alignment::size_type num_entries = prm_alignment.num_entries();
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		num_gaps += detail::get_naive_num_gaps_of_entry( arg_alignment, entry_ctr );
+		num_gaps += detail::get_naive_num_gaps_of_entry( prm_alignment, entry_ctr );
 	}
 
 	// Return the total number of gaps

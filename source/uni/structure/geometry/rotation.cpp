@@ -72,12 +72,12 @@ constexpr double rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS;
 /// \brief Non-member equality operator for the rotation class
 ///
 /// \relates rotation
-bool cath::geom::operator==(const rotation &arg_rot_a, ///< TODOCUMENT
-                            const rotation &arg_rot_b  ///< TODOCUMENT
+bool cath::geom::operator==(const rotation &prm_rot_a, ///< TODOCUMENT
+                            const rotation &prm_rot_b  ///< TODOCUMENT
                             ) {
 	for (const size_t &new_row_ctr : indices( coord::NUM_DIMS ) ) {
 		for (const size_t &new_col_ctr : indices( coord::NUM_DIMS ) ) {
-			if ( difference( arg_rot_a.get_value( new_row_ctr, new_col_ctr ), arg_rot_b.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
+			if ( difference( prm_rot_a.get_value( new_row_ctr, new_col_ctr ), prm_rot_b.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
 				return false;
 			}
 		}
@@ -89,19 +89,19 @@ bool cath::geom::operator==(const rotation &arg_rot_a, ///< TODOCUMENT
 /// \brief TODOCUMENT
 ///
 /// \relates rotation
-std::ostream & cath::geom::operator<<(std::ostream   &arg_os,      ///< TODOCUMENT
-                                      const rotation &arg_rotation ///< TODOCUMENT
+std::ostream & cath::geom::operator<<(std::ostream   &prm_os,      ///< TODOCUMENT
+                                      const rotation &prm_rotation ///< TODOCUMENT
                                       ) {
-	arg_os << "rotation[";
+	prm_os << "rotation[";
 	for (const size_t &new_row_ctr : indices( coord::NUM_DIMS ) ) {
-		arg_os << ((new_row_ctr == 0) ? "" : "; ");
+		prm_os << ((new_row_ctr == 0) ? "" : "; ");
 		for (const size_t &new_col_ctr : indices( coord::NUM_DIMS ) ) {
-			arg_os << ((new_col_ctr == 0) ? "" : ", ");
-			arg_os << right << setw( 7 ) << arg_rotation.get_value(new_row_ctr, new_col_ctr);
+			prm_os << ((new_col_ctr == 0) ? "" : ", ");
+			prm_os << right << setw( 7 ) << prm_rotation.get_value(new_row_ctr, new_col_ctr);
 		}
 	}
-	arg_os << "]";
-	return arg_os;
+	prm_os << "]";
+	return prm_os;
 }
 
 /// \brief Return whether two rotations are very close to each other.
@@ -109,12 +109,12 @@ std::ostream & cath::geom::operator<<(std::ostream   &arg_os,      ///< TODOCUME
 /// \relates rotation
 ///
 /// This compares each pair of values and uses rotation::TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS to determine "close".
-bool cath::geom::are_close(const rotation &arg_rotn_1, ///< TODOCUMENT
-                           const rotation &arg_rotn_2  ///< TODOCUMENT
+bool cath::geom::are_close(const rotation &prm_rotn_1, ///< TODOCUMENT
+                           const rotation &prm_rotn_2  ///< TODOCUMENT
                            ) {
 	for (const size_t &new_row_ctr : indices( coord::NUM_DIMS ) ) {
 		for (const size_t &new_col_ctr : indices( coord::NUM_DIMS ) ) {
-			if ( difference( arg_rotn_1.get_value( new_row_ctr, new_col_ctr ), arg_rotn_2.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
+			if ( difference( prm_rotn_1.get_value( new_row_ctr, new_col_ctr ), prm_rotn_2.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
 				return false;
 			}
 		}
@@ -125,14 +125,14 @@ bool cath::geom::are_close(const rotation &arg_rotn_1, ///< TODOCUMENT
 /// \brief Finds the rotation that rotates the first coord on the x-axis and the second on the x-y plane, with positive y
 ///
 /// \relates rotation
-rotation cath::geom::rotation_to_x_axis_and_x_y_plane(const coord &arg_a, ///< TODOCUMENT
-                                                      const coord &arg_b  ///< TODOCUMENT
+rotation cath::geom::rotation_to_x_axis_and_x_y_plane(const coord &prm_a, ///< TODOCUMENT
+                                                      const coord &prm_b  ///< TODOCUMENT
                                                       ) {
-	assert(not_zero(arg_a));
-	assert(not_zero(arg_b));
-	const coord normalised_a          = normalise_copy(arg_a);
-	assert(not_zero(cross_product(normalised_a, arg_b)));
-	const coord orthogonal_to_a_and_b = normalise_copy(cross_product(normalised_a, arg_b));
+	assert(not_zero(prm_a));
+	assert(not_zero(prm_b));
+	const coord normalised_a          = normalise_copy(prm_a);
+	assert(not_zero(cross_product(normalised_a, prm_b)));
+	const coord orthogonal_to_a_and_b = normalise_copy(cross_product(normalised_a, prm_b));
 	const coord b_perpendicular       = normalise_copy(cross_product(orthogonal_to_a_and_b, normalised_a));
 
 	return rotation(
@@ -150,7 +150,7 @@ rotation cath::geom::rotation_to_x_axis_and_x_y_plane(const coord &arg_a, ///< T
 rotation cath::geom::tidy_rotation(const double &val_00, const double &val_01, const double &val_02,
                                    const double &val_10, const double &val_11, const double &val_12,
                                    const double &val_20, const double &val_21, const double &val_22,
-                                   const double &arg_tolerance ///< The maximum difference that should be tolerated between the input values and the result before an exception is thrown
+                                   const double &prm_tolerance ///< The maximum difference that should be tolerated between the input values and the result before an exception is thrown
                                    ) {
 	/// Attempt to build a new matrix like the original but of higher precision
 	const rotation new_rotation = rotation_to_x_axis_and_x_y_plane(
@@ -179,7 +179,7 @@ rotation cath::geom::tidy_rotation(const double &val_00, const double &val_01, c
 //			<< lexical_cast<string>( new_rotation.get_value(row_ctr, col_ctr) )
 //			<< ")\t"
 //			<< boolalpha
-//			<< ( difference( values[ value_index_ctr_temp ], new_rotation.get_value( row_ctr, col_ctr ) ) > arg_tolerance )
+//			<< ( difference( values[ value_index_ctr_temp ], new_rotation.get_value( row_ctr, col_ctr ) ) > prm_tolerance )
 //			<< endl;
 //			++value_index_ctr_temp;
 //		}
@@ -188,10 +188,10 @@ rotation cath::geom::tidy_rotation(const double &val_00, const double &val_01, c
 	size_t value_index_ctr = 0;
 	for (const size_t &row_ctr : indices( coord::NUM_DIMS ) ) {
 		for (const size_t &col_ctr : indices( coord::NUM_DIMS ) ) {
-			if ( difference( values[ value_index_ctr ], new_rotation.get_value( row_ctr, col_ctr ) ) > arg_tolerance ) {
+			if ( difference( values[ value_index_ctr ], new_rotation.get_value( row_ctr, col_ctr ) ) > prm_tolerance ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(
 					"Unable to create rotation that is within tolerance "
-					+ boost::lexical_cast<std::string>( arg_tolerance )
+					+ boost::lexical_cast<std::string>( prm_tolerance )
 					+ " to specified elements (failure at row "
 					+ boost::lexical_cast<std::string>( row_ctr )
 					+ " and column "
@@ -213,14 +213,14 @@ rotation cath::geom::tidy_rotation(const double &val_00, const double &val_01, c
 /// \brief Tidy up the values for a rotation matrix if they are not quite precise enough
 ///
 /// \relates rotation
-rotation cath::geom::tidy_copy(const rotation &arg_rotation, ///< The rotation matrix to tidy up
-                               const double   &arg_tolerance ///< The maximum difference that should be tolerated between the input values and the result before an exception is thrown
+rotation cath::geom::tidy_copy(const rotation &prm_rotation, ///< The rotation matrix to tidy up
+                               const double   &prm_tolerance ///< The maximum difference that should be tolerated between the input values and the result before an exception is thrown
                                ) {
 	return tidy_rotation(
-		arg_rotation.get_value<0, 0>(), arg_rotation.get_value<0, 1>(), arg_rotation.get_value<0, 2>(),
-		arg_rotation.get_value<1, 0>(), arg_rotation.get_value<1, 1>(), arg_rotation.get_value<1, 2>(),
-		arg_rotation.get_value<2, 0>(), arg_rotation.get_value<2, 1>(), arg_rotation.get_value<2, 2>(),
-		arg_tolerance
+		prm_rotation.get_value<0, 0>(), prm_rotation.get_value<0, 1>(), prm_rotation.get_value<0, 2>(),
+		prm_rotation.get_value<1, 0>(), prm_rotation.get_value<1, 1>(), prm_rotation.get_value<1, 2>(),
+		prm_rotation.get_value<2, 0>(), prm_rotation.get_value<2, 1>(), prm_rotation.get_value<2, 2>(),
+		prm_tolerance
 	);
 }
 
@@ -228,12 +228,12 @@ rotation cath::geom::tidy_copy(const rotation &arg_rotation, ///< The rotation m
 ///        value at the specified row and column
 ///
 /// \relates rotation
-ptree cath::geom::detail::make_ptree_of_row_and_col(const rotation &arg_rotation, ///< The rotation containing the entry to be saved
-                                                    const size_t   &arg_row,      ///< The row index of the entry to be saved within the specified rotation
-                                                    const size_t   &arg_column    ///< The column index of the entry to be saved within the specified rotation
+ptree cath::geom::detail::make_ptree_of_row_and_col(const rotation &prm_rotation, ///< The rotation containing the entry to be saved
+                                                    const size_t   &prm_row,      ///< The row index of the entry to be saved within the specified rotation
+                                                    const size_t   &prm_column    ///< The column index of the entry to be saved within the specified rotation
                                                     ) {
 	ptree new_ptree;
-	new_ptree.put( "", arg_rotation.get_value( arg_row, arg_column ) );
+	new_ptree.put( "", prm_rotation.get_value( prm_row, prm_column ) );
 	return new_ptree;
 }
 
@@ -241,30 +241,30 @@ ptree cath::geom::detail::make_ptree_of_row_and_col(const rotation &arg_rotation
 ///        values in the specified row
 ///
 /// \relates rotation
-ptree cath::geom::detail::make_ptree_of_row(const rotation &arg_rotation, ///< The rotation containing the row to be saved
-                                            const size_t   &arg_row       ///< The row index of the specified rotation to be saved
+ptree cath::geom::detail::make_ptree_of_row(const rotation &prm_rotation, ///< The rotation containing the row to be saved
+                                            const size_t   &prm_row       ///< The row index of the specified rotation to be saved
                                             ) {
 	ptree new_ptree;
-	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( arg_rotation, arg_row, 0 ) ) );
-	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( arg_rotation, arg_row, 1 ) ) );
-	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( arg_rotation, arg_row, 2 ) ) );
+	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( prm_rotation, prm_row, 0 ) ) );
+	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( prm_rotation, prm_row, 1 ) ) );
+	new_ptree.push_back( make_pair( "", make_ptree_of_row_and_col( prm_rotation, prm_row, 2 ) ) );
 	return new_ptree;
 }
 
 /// \brief Build a rotation from a rotation-populated ptree
 ///
 /// \relates rotation
-rotation cath::geom::rotation_from_ptree(const ptree &arg_ptree ///< The ptree from which the rotation should be read
+rotation cath::geom::rotation_from_ptree(const ptree &prm_ptree ///< The ptree from which the rotation should be read
                                          ) {
-	if ( arg_ptree.size() != coord::NUM_DIMS || arg_ptree.count( "" ) != coord::NUM_DIMS ) {
+	if ( prm_ptree.size() != coord::NUM_DIMS || prm_ptree.count( "" ) != coord::NUM_DIMS ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse rotation from property_tree that doesn't have three anonymous entries for the three rows"));
 	}
-	if ( any_of( arg_ptree, [&] (const pair<const string, ptree> &x) { return ( x.second.size() != coord::NUM_DIMS || x.second.count( "" ) != coord::NUM_DIMS ); } ) ) {
+	if ( any_of( prm_ptree, [&] (const pair<const string, ptree> &x) { return ( x.second.size() != coord::NUM_DIMS || x.second.count( "" ) != coord::NUM_DIMS ); } ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse rotation from property_tree with a row that doesn't contain three anonymous entries"));
 	}
 	doub_vec values;
 	values.reserve( coord::NUM_DIMS * coord::NUM_DIMS );
-	for (const auto &row : arg_ptree) {
+	for (const auto &row : prm_ptree) {
 		for (const auto &row_col : row.second ) {
 			values.push_back( row_col.second.get<double>( "" ) );
 		}
@@ -276,10 +276,10 @@ rotation cath::geom::rotation_from_ptree(const ptree &arg_ptree ///< The ptree f
 /// \brief Save the specified rotation to the specified Boost Property Tree ptree
 ///
 /// \relates rotation
-void cath::geom::save_to_ptree(ptree          &arg_ptree,   ///< The ptree to which the rotation should be saved
-                               const rotation &arg_rotation ///< The rotation to be saved
+void cath::geom::save_to_ptree(ptree          &prm_ptree,   ///< The ptree to which the rotation should be saved
+                               const rotation &prm_rotation ///< The rotation to be saved
                                ) {
-	arg_ptree.push_back( make_pair( "", detail::make_ptree_of_row( arg_rotation, 0 ) ) );
-	arg_ptree.push_back( make_pair( "", detail::make_ptree_of_row( arg_rotation, 1 ) ) );
-	arg_ptree.push_back( make_pair( "", detail::make_ptree_of_row( arg_rotation, 2 ) ) );
+	prm_ptree.push_back( make_pair( "", detail::make_ptree_of_row( prm_rotation, 0 ) ) );
+	prm_ptree.push_back( make_pair( "", detail::make_ptree_of_row( prm_rotation, 1 ) ) );
+	prm_ptree.push_back( make_pair( "", detail::make_ptree_of_row( prm_rotation, 2 ) ) );
 }

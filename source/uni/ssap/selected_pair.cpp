@@ -23,12 +23,12 @@
 using namespace cath;
 
 /// \brief Simple ctor
-selected_pair::selected_pair(const size_t     &arg_index_a, ///< The pair's first  index
-                             const size_t     &arg_index_b, ///< The pair's second index
-                             const score_type &arg_score    ///< The pair's score
-                             ) : index_a(arg_index_a),
-                                 index_b(arg_index_b),
-                                 score  (arg_score) {
+selected_pair::selected_pair(const size_t     &prm_index_a, ///< The pair's first  index
+                             const size_t     &prm_index_b, ///< The pair's second index
+                             const score_type &prm_score    ///< The pair's score
+                             ) : index_a(prm_index_a),
+                                 index_b(prm_index_b),
+                                 score  (prm_score) {
 }
 
 /// \brief Getter for first index
@@ -47,8 +47,8 @@ score_type selected_pair::get_score() const {
 }
 
 /// \brief Less-than operator that returns the result of a less-than comparison of the selected_pairs' scores
-bool cath::operator<(const selected_pair &arg_selected_pair_1, ///< The first  selected_pair to be compared
-                     const selected_pair &arg_selected_pair_2  ///< The second selected_pair to be compared
+bool cath::operator<(const selected_pair &prm_selected_pair_1, ///< The first  selected_pair to be compared
+                     const selected_pair &prm_selected_pair_2  ///< The second selected_pair to be compared
                      ) {
-	return (arg_selected_pair_1.get_score() < arg_selected_pair_2.get_score());
+	return (prm_selected_pair_1.get_score() < prm_selected_pair_2.get_score());
 }

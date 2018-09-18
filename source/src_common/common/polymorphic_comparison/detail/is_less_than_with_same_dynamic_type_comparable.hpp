@@ -44,10 +44,10 @@ namespace cath {
 				}
 
 				/// \brief Ctor just to prevent compiler complaining that value references won't ever get initialised
-				is_less_than_with_same_dynamic_type_comparable(const X &arg_value_1,
-				                                               const X &arg_value_2
-				                                               ) : value_1( arg_value_1 ),
-				                                                   value_2( arg_value_2 ) {
+				is_less_than_with_same_dynamic_type_comparable(const X &prm_value_1,
+				                                               const X &prm_value_2
+				                                               ) : value_1( prm_value_1 ),
+				                                                   value_2( prm_value_2 ) {
 				}
 
 			private:

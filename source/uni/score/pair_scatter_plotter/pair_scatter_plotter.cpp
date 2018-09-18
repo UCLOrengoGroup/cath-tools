@@ -32,14 +32,14 @@
 
 //using gnuplotio::Gnuplot;
 
-//void pair_scatter_plotter::plot(const path               &arg_output_file_stem, ///< TODOCUMENT
-//                                const doub_doub_pair_vec &arg_data,             ///< TODOCUMENT
-//                                const string             &arg_x_axis_label,     ///< TODOCUMENT
-//                                const string             &arg_y_axis_label      ///< TODOCUMENT
+//void pair_scatter_plotter::plot(const path               &prm_output_file_stem, ///< TODOCUMENT
+//                                const doub_doub_pair_vec &prm_data,             ///< TODOCUMENT
+//                                const string             &prm_x_axis_label,     ///< TODOCUMENT
+//                                const string             &prm_y_axis_label      ///< TODOCUMENT
 //                                ) const {
-//	const path gnuplot_file  = replace_extension_copy( arg_output_file_stem, ".gnuplot"  );
-//	const path eps_file      = replace_extension_copy( arg_output_file_stem, ".eps"      );
-//	const path the_data_file = replace_extension_copy( arg_output_file_stem, ".data.txt" );
+//	const path gnuplot_file  = replace_extension_copy( prm_output_file_stem, ".gnuplot"  );
+//	const path eps_file      = replace_extension_copy( prm_output_file_stem, ".eps"      );
+//	const path the_data_file = replace_extension_copy( prm_output_file_stem, ".data.txt" );
 //
 //	const auto gnuplot_pipe = suppress_execution ? string( " > /dev/null " )
 //	                                             : string( " | gnuplot "   );
@@ -55,8 +55,8 @@
 //	gp << "set   output " << eps_file << "\n";
 //
 ////	gp << "set title  'Some ROC curves'\n";
-//	gp << "set xlabel '" << arg_x_axis_label << R"(' font "Helvetica,20")" << "\n";
-//	gp << "set ylabel '" << arg_y_axis_label << R"(' font "Helvetica,20")" << "\n";
+//	gp << "set xlabel '" << prm_x_axis_label << R"(' font "Helvetica,20")" << "\n";
+//	gp << "set ylabel '" << prm_y_axis_label << R"(' font "Helvetica,20")" << "\n";
 //
 //	gp << R"(
 //set size square 2,2
@@ -77,6 +77,6 @@
 //)";
 //
 //
-//	gp << "plot " << gp.file1d( arg_data, the_data_file.string() ) + " with points \n";
+//	gp << "plot " << gp.file1d( prm_data, the_data_file.string() ) + " with points \n";
 //	// To check: has removing the final endl from here caused any problems?
 //}

@@ -36,21 +36,21 @@ namespace cath {
 		template <typename Rng,
 		          typename FnLhs,
 		          typename FnRhs>
-		str_vec layout_values_with_descs(const Rng         &arg_range,   ///< The range of values 
-		                                 FnLhs              arg_fn_lhs,  ///< The first,  left-hand  function which must return a string when given a value of the range
-		                                 FnRhs              arg_fn_rhs,  ///< The second, right-hand function which must return a string when given a value of the range
-		                                 const std::string &arg_pair_sep ///< The separator with which to join the two functions' strings for each value
+		str_vec layout_values_with_descs(const Rng         &prm_range,   ///< The range of values 
+		                                 FnLhs              prm_fn_lhs,  ///< The first,  left-hand  function which must return a string when given a value of the range
+		                                 FnRhs              prm_fn_rhs,  ///< The second, right-hand function which must return a string when given a value of the range
+		                                 const std::string &prm_pair_sep ///< The separator with which to join the two functions' strings for each value
 		                                 ) {
-			const auto length_lhs_fn  = [&] (const auto &x) { return arg_fn_lhs( x ).length(); };
-			const auto max_length_lhs = common::max_proj( arg_range, std::less<>{}, length_lhs_fn );
+			const auto length_lhs_fn  = [&] (const auto &x) { return prm_fn_lhs( x ).length(); };
+			const auto max_length_lhs = common::max_proj( prm_range, std::less<>{}, length_lhs_fn );
 
 			return transform_build<str_vec>(
-				arg_range,
+				prm_range,
 				[&] (const auto &x) {
 					return
-						  arg_fn_lhs( x )
-						+ std::string( max_length_lhs - length_lhs_fn( x ), ' ' ) + arg_pair_sep
-						+ arg_fn_rhs( x );
+						  prm_fn_lhs( x )
+						+ std::string( max_length_lhs - length_lhs_fn( x ), ' ' ) + prm_pair_sep
+						+ prm_fn_rhs( x );
 				}
 			);
 		}

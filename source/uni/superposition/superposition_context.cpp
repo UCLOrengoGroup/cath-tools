@@ -67,47 +67,47 @@ using std::pair;
 using std::string;
 
 /// \brief Ctor for superposition_context
-superposition_context::superposition_context(superposition  arg_superposition, ///< TODOCUMENT
-                                             strucs_context arg_context        ///< TODOCUMENT
-                                             ) : the_superposition { std::move( arg_superposition ) },
-                                                 context           { std::move( arg_context       ) } {
+superposition_context::superposition_context(superposition  prm_superposition, ///< TODOCUMENT
+                                             strucs_context prm_context        ///< TODOCUMENT
+                                             ) : the_superposition { std::move( prm_superposition ) },
+                                                 context           { std::move( prm_context       ) } {
 }
 
 /// \brief Ctor for superposition_context
-superposition_context::superposition_context(superposition  arg_superposition, ///< TODOCUMENT
-                                             strucs_context arg_context,       ///< TODOCUMENT
-                                             alignment      arg_alignment      ///< TODOCUMENT
-                                             ) : the_superposition { std::move( arg_superposition ) },
-                                                 context           { std::move( arg_context       ) },
-                                                 any_alignment     { std::move( arg_alignment     ) } {
+superposition_context::superposition_context(superposition  prm_superposition, ///< TODOCUMENT
+                                             strucs_context prm_context,       ///< TODOCUMENT
+                                             alignment      prm_alignment      ///< TODOCUMENT
+                                             ) : the_superposition { std::move( prm_superposition ) },
+                                                 context           { std::move( prm_context       ) },
+                                                 any_alignment     { std::move( prm_alignment     ) } {
 }
 
 /// \brief Ctor for superposition_context
-superposition_context::superposition_context(superposition      arg_superposition, ///< TODOCUMENT
-                                             pdb_list           arg_pdbs,          ///< TODOCUMENT
-                                             name_set_list      arg_name_sets,     ///< TODOCUMENT
-                                             region_vec_opt_vec arg_regions        ///< The key regions of the structures
-                                             ) : the_superposition { std::move( arg_superposition )   },
+superposition_context::superposition_context(superposition      prm_superposition, ///< TODOCUMENT
+                                             pdb_list           prm_pdbs,          ///< TODOCUMENT
+                                             name_set_list      prm_name_sets,     ///< TODOCUMENT
+                                             region_vec_opt_vec prm_regions        ///< The key regions of the structures
+                                             ) : the_superposition { std::move( prm_superposition )   },
                                                  context           {
-                                                 	std::move( arg_pdbs      ),
-                                                 	std::move( arg_name_sets ),
-                                                 	std::move( arg_regions   )
+                                                 	std::move( prm_pdbs      ),
+                                                 	std::move( prm_name_sets ),
+                                                 	std::move( prm_regions   )
                                                  } {
 }
 
 /// \brief Ctor for superposition_context
-superposition_context::superposition_context(superposition      arg_superposition, ///< TODOCUMENT
-                                             pdb_list           arg_pdbs,          ///< TODOCUMENT
-                                             name_set_list      arg_name_sets,     ///< TODOCUMENT
-                                             region_vec_opt_vec arg_regions,       ///< The key regions of the structures
-                                             alignment          arg_alignment      ///< TODOCUMENT
-                                             ) : the_superposition { std::move( arg_superposition )   },
+superposition_context::superposition_context(superposition      prm_superposition, ///< TODOCUMENT
+                                             pdb_list           prm_pdbs,          ///< TODOCUMENT
+                                             name_set_list      prm_name_sets,     ///< TODOCUMENT
+                                             region_vec_opt_vec prm_regions,       ///< The key regions of the structures
+                                             alignment          prm_alignment      ///< TODOCUMENT
+                                             ) : the_superposition { std::move( prm_superposition )   },
                                                  context           {
-                                                 	std::move( arg_pdbs      ),
-                                                 	std::move( arg_name_sets ),
-                                                 	std::move( arg_regions   )
+                                                 	std::move( prm_pdbs      ),
+                                                 	std::move( prm_name_sets ),
+                                                 	std::move( prm_regions   )
                                                  },
-                                                 any_alignment     { std::move( arg_alignment     )   } {
+                                                 any_alignment     { std::move( prm_alignment     )   } {
 }
 
 /// \brief TODOCUMENT
@@ -135,66 +135,66 @@ const alignment & superposition_context::get_alignment() const {
 
 /// \brief Setter for the PDBs
 ///
-/// \pre arg_pdbs.size() == get_num_entries( *this ) else this throws an invalid_argument_exception
-superposition_context & superposition_context::set_pdbs(const pdb_list &arg_pdbs ///< The PDBs to set
+/// \pre prm_pdbs.size() == get_num_entries( *this ) else this throws an invalid_argument_exception
+superposition_context & superposition_context::set_pdbs(const pdb_list &prm_pdbs ///< The PDBs to set
                                                         ) {
-	if ( arg_pdbs.size() != get_num_entries( *this ) ) {
+	if ( prm_pdbs.size() != get_num_entries( *this ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
-			"Unable to load "                                           + ::std::to_string( arg_pdbs.size()          )
+			"Unable to load "                                           + ::std::to_string( prm_pdbs.size()          )
 			+ " pdbs into superposition context of superposition with " + ::std::to_string( get_num_entries( *this ) )
 			+ " entries"
 		));
 	}
-	context.set_pdbs( arg_pdbs );
+	context.set_pdbs( prm_pdbs );
 	return *this;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition_context
-const pdb_list & cath::sup::get_pdbs(const superposition_context &arg_supn_context ///< TODOCUMENT
+const pdb_list & cath::sup::get_pdbs(const superposition_context &prm_supn_context ///< TODOCUMENT
                                      ) {
-	return arg_supn_context.get_strucs_context().get_pdbs();
+	return prm_supn_context.get_strucs_context().get_pdbs();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition_context
-const name_set_list & cath::sup::get_name_sets(const superposition_context &arg_supn_context ///< TODOCUMENT
+const name_set_list & cath::sup::get_name_sets(const superposition_context &prm_supn_context ///< TODOCUMENT
                                                ) {
-	return arg_supn_context.get_strucs_context().get_name_sets();
+	return prm_supn_context.get_strucs_context().get_name_sets();
 }
 
 /// \brief Getter for the specification of the key regions of the structures
 ///
 /// \relates superposition_context
-const region_vec_opt_vec & cath::sup::get_regions(const superposition_context &arg_supn_context ///< TODOCUMENT
+const region_vec_opt_vec & cath::sup::get_regions(const superposition_context &prm_supn_context ///< TODOCUMENT
                                                   ) {
-	return arg_supn_context.get_strucs_context().get_regions();
+	return prm_supn_context.get_strucs_context().get_regions();
 }
 
 ///// \brief TODOCUMENT
 /////
 ///// \relates superposition_context
-//bool cath::sup::operator==(const superposition_context &arg_sup_con_a, ///< TODOCUMENT
-//                           const superposition_context &arg_sup_con_b  ///< TODOCUMENT
+//bool cath::sup::operator==(const superposition_context &prm_sup_con_a, ///< TODOCUMENT
+//                           const superposition_context &prm_sup_con_b  ///< TODOCUMENT
 //                           ) {
 //}
 
 ///// \brief TODOCUMENT
 /////
 ///// \relates superposition_context
-//ostream & cath::sup::operator<<(ostream                     &arg_os,     ///< TODOCUMENT
-//                                const superposition_context &arg_sup_con ///< TODOCUMENT
+//ostream & cath::sup::operator<<(ostream                     &prm_os,     ///< TODOCUMENT
+//                                const superposition_context &prm_sup_con ///< TODOCUMENT
 //                                ) {
 //}
 
 /// \brief Get a copy of the PDBs in the specified superposition_context, restricted to its regions
 ///
 /// \relates superposition_context
-pdb_list cath::sup::get_restricted_pdbs(const superposition_context &arg_superposition_context ///< The superposition_context to query
+pdb_list cath::sup::get_restricted_pdbs(const superposition_context &prm_superposition_context ///< The superposition_context to query
                                         ) {
-	return get_restricted_pdbs( arg_superposition_context.get_strucs_context() );
+	return get_restricted_pdbs( prm_superposition_context.get_strucs_context() );
 }
 
 /// \brief Get a PDB with the appropriate parts of the specified PDB according to the specified
@@ -208,12 +208,12 @@ pdb_list cath::sup::get_restricted_pdbs(const superposition_context &arg_superpo
 ///
 /// This does a similar job to get_regions_limited_pdb() but adds in the extra
 /// handling of the superposition_content_spec.
-pdb cath::sup::get_supn_content_pdb(const pdb                        &arg_pdb,         ///< The source PDB
-                                    const region_vec_opt             &arg_regions,     ///< The key regions of the structure
-                                    const superposition_content_spec &arg_content_spec ///< The specification of what should be included in the superposition
+pdb cath::sup::get_supn_content_pdb(const pdb                        &prm_pdb,         ///< The source PDB
+                                    const region_vec_opt             &prm_regions,     ///< The key regions of the structure
+                                    const superposition_content_spec &prm_content_spec ///< The specification of what should be included in the superposition
                                     ) {
-	if ( ! arg_regions ) {
-		return arg_pdb;
+	if ( ! prm_regions ) {
+		return prm_pdb;
 	}
 
 	// From http://www.proteopedia.org/wiki/index.php/Hydrogen_bonds:
@@ -226,20 +226,20 @@ pdb cath::sup::get_supn_content_pdb(const pdb                        &arg_pdb,  
 	// ...where reference [1] is:
 	// Jeffrey, George A., An introduction to hydrogen bonding, Oxford University Press, 1997.
 	constexpr double EXTEND_DIST = 4.2;
-	const doub_opt &include_dna_within_distance     = arg_content_spec.get_include_dna_within_distance();
-	const doub_opt &include_organic_within_distance = arg_content_spec.get_include_organic_within_distance();
+	const doub_opt &include_dna_within_distance     = prm_content_spec.get_include_dna_within_distance();
+	const doub_opt &include_organic_within_distance = prm_content_spec.get_include_organic_within_distance();
 
-	const auto      expanded_regions = get_regions_expanded_for_context( *arg_regions, arg_content_spec );
+	const auto      expanded_regions = get_regions_expanded_for_context( *prm_regions, prm_content_spec );
 
-	const proximity_calculator prox_calc{ arg_pdb, *arg_regions };
+	const proximity_calculator prox_calc{ prm_pdb, *prm_regions };
 
 	const chain_label_set nearby_dna_chains = nearby_dna_rna_chain_labels(
-		arg_pdb,
+		prm_pdb,
 		prox_calc,
 		include_dna_within_distance
 	);
 	const pdb_residue_vec nearby_post_ter_coords = get_nearby_post_ter_res_atoms(
-		arg_pdb,
+		prm_pdb,
 		prox_calc,
 		include_organic_within_distance,
 		EXTEND_DIST
@@ -260,7 +260,7 @@ pdb cath::sup::get_supn_content_pdb(const pdb                        &arg_pdb,  
 	// Build a PDB from the information and return it
 	pdb result_pdb = get_regions_limited_pdb(
 		all_regions,
-		arg_pdb
+		prm_pdb
 	);
 	result_pdb.set_post_ter_residues( nearby_post_ter_coords );
 	return result_pdb;
@@ -270,16 +270,16 @@ pdb cath::sup::get_supn_content_pdb(const pdb                        &arg_pdb,  
 ///        regions and the specified superposition_content_spec
 ///
 /// \relates superposition_context
-pdb_list cath::sup::get_supn_content_pdbs(const superposition_context      &arg_superposition_context, ///< The superposition_context containing the PDBs and regions to extract
-                                          const superposition_content_spec &arg_content_spec           ///< The specification of what should be included in the superposition 
+pdb_list cath::sup::get_supn_content_pdbs(const superposition_context      &prm_superposition_context, ///< The superposition_context containing the PDBs and regions to extract
+                                          const superposition_content_spec &prm_content_spec           ///< The specification of what should be included in the superposition 
                                           ) {
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return pdb_list{
 		transform_build<pdb_vec>(
-			get_pdbs   ( arg_superposition_context ),
-			get_regions( arg_superposition_context ),
+			get_pdbs   ( prm_superposition_context ),
+			get_regions( prm_superposition_context ),
 			[&] (const pdb &the_pdb, const region_vec_opt &the_regions) {
-				return get_supn_content_pdb( the_pdb, the_regions, arg_content_spec );
+				return get_supn_content_pdb( the_pdb, the_regions, prm_content_spec );
 			}
 		)
 	};
@@ -288,32 +288,32 @@ pdb_list cath::sup::get_supn_content_pdbs(const superposition_context      &arg_
 /// \brief Return a copy of the specified superposition_context in which the specified PDBs have been set
 ///
 /// \relates superposition_context
-superposition_context cath::sup::set_pdbs_copy(superposition_context  arg_sup_con, ///< The superposition_context from which a copy should be taken, altered and returned
-                                               const pdb_list        &arg_pdbs     ///< The PDBs to set on the copy of the superposition_context
+superposition_context cath::sup::set_pdbs_copy(superposition_context  prm_sup_con, ///< The superposition_context from which a copy should be taken, altered and returned
+                                               const pdb_list        &prm_pdbs     ///< The PDBs to set on the copy of the superposition_context
                                                ) {
-	arg_sup_con.set_pdbs( arg_pdbs );
-	return arg_sup_con;
+	prm_sup_con.set_pdbs( prm_pdbs );
+	return prm_sup_con;
 }
 
 /// \brief Get the number of entries in the specified superposition_context
 ///
 /// \relates superposition_context
-size_t cath::sup::get_num_entries(const superposition_context &arg_superposition_context ///< The superposition_context to query
+size_t cath::sup::get_num_entries(const superposition_context &prm_superposition_context ///< The superposition_context to query
                                   ) {
-	return arg_superposition_context.get_superposition().get_num_entries();
+	return prm_superposition_context.get_superposition().get_num_entries();
 }
 
 /// \brief Load the specified superposition_context's PDBs using its names and the specified data_dirs_options_block
 ///
 /// \relates superposition_context
-void cath::sup::load_pdbs_from_names(superposition_context &arg_supn_context, ///< The superposition_context for which the PDBs should be loaded based on its names
-                                     const data_dirs_spec  &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
+void cath::sup::load_pdbs_from_names(superposition_context &prm_supn_context, ///< The superposition_context for which the PDBs should be loaded based on its names
+                                     const data_dirs_spec  &prm_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
                                      ) {
-	arg_supn_context.set_pdbs(
+	prm_supn_context.set_pdbs(
 		pdb_list{ transform_build<pdb_vec>(
-			get_name_sets( arg_supn_context ),
+			get_name_sets( prm_supn_context ),
 			[&] (const name_set &the_name_set) {
-				return read_pdb_file( find_file( arg_data_dirs, data_file::PDB, the_name_set ) );
+				return read_pdb_file( find_file( prm_data_dirs, data_file::PDB, the_name_set ) );
 			}
 		) }
 	);
@@ -322,11 +322,11 @@ void cath::sup::load_pdbs_from_names(superposition_context &arg_supn_context, //
 /// \brief Return a copy of the specified superposition_context with the PDBs loaded using its names and the specified data_dirs_options_block
 ///
 /// \relates superposition_context
-superposition_context cath::sup::load_pdbs_from_names_copy(superposition_context  arg_supn_context, ///< The superposition_context from which the copy should be taken with the PDBs loaded based on its names
-                                                           const data_dirs_spec  &arg_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
+superposition_context cath::sup::load_pdbs_from_names_copy(superposition_context  prm_supn_context, ///< The superposition_context from which the copy should be taken with the PDBs loaded based on its names
+                                                           const data_dirs_spec  &prm_data_dirs     ///< The data_dirs_options_block with which to convert names into PDB filenames
                                                            ) {
-	load_pdbs_from_names( arg_supn_context, arg_data_dirs );
-	return arg_supn_context;
+	load_pdbs_from_names( prm_supn_context, prm_data_dirs );
+	return prm_supn_context;
 }
 
 /// \brief TODOCUMENT
@@ -334,23 +334,23 @@ superposition_context cath::sup::load_pdbs_from_names_copy(superposition_context
 /// \relates superposition_context
 ///
 /// \relatesalso alignment_context
-alignment_context cath::sup::make_restricted_alignment_context(const superposition_context &arg_superposition_context ///< TODOCUMENT
+alignment_context cath::sup::make_restricted_alignment_context(const superposition_context &prm_superposition_context ///< TODOCUMENT
                                                                ) {
-	if ( ! arg_superposition_context.has_alignment() ) {
+	if ( ! prm_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("WARNING: Unable to extract alignment from superposition_context with no alignment"));
 	}
 	return {
-		arg_superposition_context.get_alignment(),
-		get_restricted_pdbs( arg_superposition_context ),
-		get_name_sets      ( arg_superposition_context ),
-		get_regions        ( arg_superposition_context )
+		prm_superposition_context.get_alignment(),
+		get_restricted_pdbs( prm_superposition_context ),
+		get_name_sets      ( prm_superposition_context ),
+		get_regions        ( prm_superposition_context )
 	};
 }
 
 /// \brief  Build a coord from a superposition_context-populated ptree
 ///
 /// \relates superposition_context
-superposition_context cath::sup::superposition_context_from_ptree(const ptree &arg_ptree ///< The ptree from which the superposition_context should be read
+superposition_context cath::sup::superposition_context_from_ptree(const ptree &prm_ptree ///< The ptree from which the superposition_context should be read
                                                                   ) {
 	// Define a lambda for checking whether an entry ptree is invalid
 	const auto entry_is_invalid = [] (const ptree &x) {
@@ -365,10 +365,10 @@ superposition_context cath::sup::superposition_context_from_ptree(const ptree &a
 	};
 
 	// Sanity check the ptree [ Step 1: check there's one key, which is entries ]
-	if ( arg_ptree.size() != 1 || arg_ptree.count( superposition_io_consts::ENTRIES_KEY ) != 1 ) {
+	if ( prm_ptree.size() != 1 || prm_ptree.count( superposition_io_consts::ENTRIES_KEY ) != 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse a superposition_context from ptree data that doesn't have one entries key and no other keys"));
 	}
-	const auto entries = arg_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
+	const auto entries = prm_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
 
 	// Sanity check the ptree [ Step 2: check that all entries have empty keys ]
 	if ( entries.size() != entries.count( "" ) ) {
@@ -419,21 +419,21 @@ superposition_context cath::sup::superposition_context_from_ptree(const ptree &a
 /// with the alignment or the PDBs
 ///
 /// \relates superposition_context
-void cath::sup::save_to_ptree(ptree                       &arg_ptree,      ///< TODOCUMENT
-                              const superposition_context &arg_sup_context ///< TODOCUMENT
+void cath::sup::save_to_ptree(ptree                       &prm_ptree,      ///< TODOCUMENT
+                              const superposition_context &prm_sup_context ///< TODOCUMENT
                               ) {
-	if ( arg_sup_context.has_alignment() ) {
+	if ( prm_sup_context.has_alignment() ) {
 		BOOST_LOG_TRIVIAL( warning ) << "Whilst converting a superposition_context to JSON, its alignment will be ignored because that is not currently supported";
 	}
 
-	const auto supn_ptree          = make_ptree_of( arg_sup_context.get_superposition() );
+	const auto supn_ptree          = make_ptree_of( prm_sup_context.get_superposition() );
 	const auto trans_ptrees        = supn_ptree.get_child( superposition_io_consts::TRANSFORMATIONS_KEY );
 
-	arg_ptree.put_child( superposition_io_consts::ENTRIES_KEY, ptree{} );
-	auto &entries_ptree = arg_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
+	prm_ptree.put_child( superposition_io_consts::ENTRIES_KEY, ptree{} );
+	auto &entries_ptree = prm_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
 
 	for_each(
-		get_supn_json_names( get_name_sets( arg_sup_context ) ),
+		get_supn_json_names( get_name_sets( prm_sup_context ) ),
 		trans_ptrees,
 		[&] (const string &name, const pair<string, ptree> &trans_ptree) {
 			ptree entry_ptree;

@@ -38,106 +38,106 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename I, typename T>
-		bool contains(const I &arg_begin, ///< TODOCUMENT
-		              const I &arg_end,   ///< TODOCUMENT
-		              const T &arg_value  ///< TODOCUMENT
+		bool contains(const I &prm_begin, ///< TODOCUMENT
+		              const I &prm_end,   ///< TODOCUMENT
+		              const T &prm_value  ///< TODOCUMENT
 		              ) {
-			return ( arg_end != std::find( arg_begin, arg_end, arg_value ) );
+			return ( prm_end != std::find( prm_begin, prm_end, prm_value ) );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename R, typename T>
-		bool contains(const R &arg_range, ///< TODOCUMENT
-		              const T &arg_value  ///< TODOCUMENT
+		bool contains(const R &prm_range, ///< TODOCUMENT
+		              const T &prm_value  ///< TODOCUMENT
 		              ) {
-			return ( common::cend( arg_range ) != boost::range::find( arg_range, arg_value ) );
+			return ( common::cend( prm_range ) != boost::range::find( prm_range, prm_value ) );
 		}
 
 
 
 		/// \brief TODOCUMENT
 		template <typename K, typename V, typename T>
-		bool contains(const std::map<K, V> &arg_map,   ///< TODOCUMENT
-		              const T              &arg_value  ///< TODOCUMENT
+		bool contains(const std::map<K, V> &prm_map,   ///< TODOCUMENT
+		              const T              &prm_value  ///< TODOCUMENT
 		              ) {
-			return ( arg_map.count( arg_value ) > 0 );
+			return ( prm_map.count( prm_value ) > 0 );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename K, typename T>
-		bool contains(const std::set<K> &arg_set,   ///< TODOCUMENT
-		              const T           &arg_value  ///< TODOCUMENT
+		bool contains(const std::set<K> &prm_set,   ///< TODOCUMENT
+		              const T           &prm_value  ///< TODOCUMENT
 		              ) {
-			return ( arg_set.count( arg_value ) > 0 );
+			return ( prm_set.count( prm_value ) > 0 );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename K, typename V, typename T>
-		bool contains(const std::unordered_map<K, V> &arg_map,   ///< TODOCUMENT
-		              const T                        &arg_value  ///< TODOCUMENT
+		bool contains(const std::unordered_map<K, V> &prm_map,   ///< TODOCUMENT
+		              const T                        &prm_value  ///< TODOCUMENT
 		              ) {
-			return ( arg_map.count( arg_value ) > 0 );
+			return ( prm_map.count( prm_value ) > 0 );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename K, typename V, typename T>
-		bool contains(const boost::ptr_map<K, V> &arg_map,   ///< TODOCUMENT
-		              const T                    &arg_value  ///< TODOCUMENT
+		bool contains(const boost::ptr_map<K, V> &prm_map,   ///< TODOCUMENT
+		              const T                    &prm_value  ///< TODOCUMENT
 		              ) {
-			return ( arg_map.count( arg_value ) > 0 );
+			return ( prm_map.count( prm_value ) > 0 );
 		}
 
 
 
 		/// \brief TODOCUMENT
 		template <class I, class P>
-		bool contains_if(const I &arg_begin,   ///< TODOCUMENT
-		                 const I &arg_end,     ///< TODOCUMENT
-		                 P        arg_uni_pred ///< TODOCUMENT
+		bool contains_if(const I &prm_begin,   ///< TODOCUMENT
+		                 const I &prm_end,     ///< TODOCUMENT
+		                 P        prm_uni_pred ///< TODOCUMENT
 		                 ) {
-			return ( arg_end != std::find_if( arg_begin, arg_end, arg_uni_pred ) );
+			return ( prm_end != std::find_if( prm_begin, prm_end, prm_uni_pred ) );
 		}
 
 		/// \brief TODOCUMENT
 		template <class R, class P>
-		bool contains_if(const R &arg_range,   ///< TODOCUMENT
-		                 P        arg_uni_pred ///< TODOCUMENT
+		bool contains_if(const R &prm_range,   ///< TODOCUMENT
+		                 P        prm_uni_pred ///< TODOCUMENT
 		                 ) {
-			return ( common::cend( arg_range ) != boost::range::find_if( arg_range, arg_uni_pred ) );
+			return ( common::cend( prm_range ) != boost::range::find_if( prm_range, prm_uni_pred ) );
 		}
 
 
 
 		/// \brief TODOCUMENT
 		template <typename I>
-		bool contains_adjacent_match(const I &arg_begin, ///< TODOCUMENT
-		                             const I &arg_end    ///< TODOCUMENT
+		bool contains_adjacent_match(const I &prm_begin, ///< TODOCUMENT
+		                             const I &prm_end    ///< TODOCUMENT
 		                             ) {
-			return ( arg_end != std::adjacent_find( arg_begin, arg_end ) );
+			return ( prm_end != std::adjacent_find( prm_begin, prm_end ) );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename I, typename P>
-		bool contains_adjacent_match(const I &arg_begin,   ///< TODOCUMENT
-		                             const I &arg_end,     ///< TODOCUMENT
-		                             P        arg_bin_pred ///< TODOCUMENT
+		bool contains_adjacent_match(const I &prm_begin,   ///< TODOCUMENT
+		                             const I &prm_end,     ///< TODOCUMENT
+		                             P        prm_bin_pred ///< TODOCUMENT
 		                             ) {
-			return ( arg_end != std::adjacent_find( arg_begin, arg_end, arg_bin_pred ) );
+			return ( prm_end != std::adjacent_find( prm_begin, prm_end, prm_bin_pred ) );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename R>
-		bool contains_adjacent_match(const R &arg_range ///< TODOCUMENT
+		bool contains_adjacent_match(const R &prm_range ///< TODOCUMENT
 		                             ) {
-			return ( common::cend( arg_range ) != boost::range::adjacent_find( arg_range ) );
+			return ( common::cend( prm_range ) != boost::range::adjacent_find( prm_range ) );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename R, typename P>
-		bool contains_adjacent_match(const R &arg_range,   ///< TODOCUMENT
-		                             P        arg_bin_pred ///< TODOCUMENT
+		bool contains_adjacent_match(const R &prm_range,   ///< TODOCUMENT
+		                             P        prm_bin_pred ///< TODOCUMENT
 		                             ) {
-			return ( common::cend( arg_range ) != boost::range::adjacent_find( arg_range, arg_bin_pred ) );
+			return ( common::cend( prm_range ) != boost::range::adjacent_find( prm_range, prm_bin_pred ) );
 		}
 	} // namespace common
 } // namespace cath

@@ -77,19 +77,19 @@ namespace cath {
 		///
 		/// ATM, this doesn't perform any concept checks and leaves that to Boost Range's sort().
 		template <typename R>
-		R sort_copy(R arg_range ///< The range on which the sorted copy should be based
+		R sort_copy(R prm_range ///< The range on which the sorted copy should be based
 		            ) {
-			boost::range::sort( arg_range );
-			return arg_range;
+			boost::range::sort( prm_range );
+			return prm_range;
 		}
 
 		/// \overload
 		template <typename R, typename P>
-		R sort_copy(R arg_range,   ///< The range on which the sorted copy should be based
-		            P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		R sort_copy(R prm_range,   ///< The range on which the sorted copy should be based
+		            P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		            ) {
-			boost::range::sort( arg_range, arg_bin_pred );
-			return arg_range;
+			boost::range::sort( prm_range, prm_bin_pred );
+			return prm_range;
 		}
 
 		/// \brief Convenience function for making a stable_sorted copy of a range
@@ -110,27 +110,27 @@ namespace cath {
 		///
 		/// ATM, this doesn't perform any concept checks and leaves that to Boost Range's stable_sort().
 		template <typename R>
-		R stable_sort_copy(R arg_range ///< The range on which the stable_sorted copy should be based
+		R stable_sort_copy(R prm_range ///< The range on which the stable_sorted copy should be based
 		                   ) {
-			boost::range::stable_sort( arg_range );
-			return arg_range;
+			boost::range::stable_sort( prm_range );
+			return prm_range;
 		}
 
 		/// \overload
 		template <typename R, typename P>
-		R stable_sort_copy(R arg_range,   ///< The range on which the stable_sorted copy should be based
-		                   P arg_bin_pred ///< The binary predicate to use as a less-than operator for stable_sorting
+		R stable_sort_copy(R prm_range,   ///< The range on which the stable_sorted copy should be based
+		                   P prm_bin_pred ///< The binary predicate to use as a less-than operator for stable_sorting
 		                   ) {
-			boost::range::stable_sort( arg_range, arg_bin_pred );
-			return arg_range;
+			boost::range::stable_sort( prm_range, prm_bin_pred );
+			return prm_range;
 		}
 
 		/// \brief Convenience function for uniquing a range and
 		///        (unlike the std/boost unique() functions) erasing leftover elements
 		template <typename R>
-		void uniq(R &arg_range ///< The range to unique(-erase)
+		void uniq(R &prm_range ///< The range to unique(-erase)
 		          ) {
-			boost::range::erase( arg_range, boost::range::unique<boost::return_found_end>( arg_range ) );
+			boost::range::erase( prm_range, boost::range::unique<boost::return_found_end>( prm_range ) );
 		}
 
 		/// \brief Convenience function for making a uniqued copy of a range
@@ -142,38 +142,38 @@ namespace cath {
 		///
 		/// \copydetails sort_copy()
 		template <typename R>
-		R uniq_copy(R arg_range ///< The range on which the uniqued copy should be based
+		R uniq_copy(R prm_range ///< The range on which the uniqued copy should be based
 		            ) {
-			uniq( arg_range );
-			return arg_range;
+			uniq( prm_range );
+			return prm_range;
 		}
 
 		/// \brief Convenience function for sorting+uniquing a range and
 		///        (unlike the std/boost unique() functions) erasing leftover elements
 		template <typename R>
-		void sort_uniq(R &arg_range ///< The range to sort and unique(-erase)
+		void sort_uniq(R &prm_range ///< The range to sort and unique(-erase)
 		               ) {
-			boost::range::sort( arg_range );
-			uniq( arg_range );
+			boost::range::sort( prm_range );
+			uniq( prm_range );
 		}
 
 		/// \brief Convenience function for sorting+uniquing a range and
 		///        (unlike the std/boost unique() functions) erasing leftover elements
 		template <typename R, typename P>
-		void sort_uniq(R &arg_range,  ///< The range to sort and unique(-erase)
-		               P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		void sort_uniq(R &prm_range,  ///< The range to sort and unique(-erase)
+		               P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		               ) {
-			boost::range::sort( arg_range, arg_bin_pred );
-			uniq( arg_range );
+			boost::range::sort( prm_range, prm_bin_pred );
+			uniq( prm_range );
 		}
 
 		/// \brief Convenience function for stable_sorting+uniquing a range and
 		///        (unlike the std/boost unique() functions) erasing leftover elements
 		template <typename R>
-		void stable_sort_uniq(R &arg_range ///< The range to stable_sort and unique(-erase)
+		void stable_sort_uniq(R &prm_range ///< The range to stable_sort and unique(-erase)
 		                      ) {
-			boost::range::stable_sort( arg_range );
-			uniq( arg_range );
+			boost::range::stable_sort( prm_range );
+			uniq( prm_range );
 		}
 
 		/// \brief Convenience function for making a sorted, uniqued copy of a range
@@ -182,19 +182,19 @@ namespace cath {
 		///
 		/// \copydetails sort_copy()
 		template <typename R>
-		R sort_uniq_copy(R arg_range ///< The range on which the sorted, uniqued copy should be based
+		R sort_uniq_copy(R prm_range ///< The range on which the sorted, uniqued copy should be based
 		                 ) {
-			sort_uniq( arg_range );
-			return arg_range;
+			sort_uniq( prm_range );
+			return prm_range;
 		}
 
 		/// \overload
 		template <typename R, typename P>
-		R sort_uniq_copy(R arg_range,   ///< The range on which the sorted, uniqued copy should be based
-		                 P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		R sort_uniq_copy(R prm_range,   ///< The range on which the sorted, uniqued copy should be based
+		                 P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		                 ) {
-			sort_uniq( arg_range, arg_bin_pred );
-			return arg_range;
+			sort_uniq( prm_range, prm_bin_pred );
+			return prm_range;
 		}
 
 		/// \brief Convenience function for making a stable_sorted, uniqued copy of a range
@@ -203,10 +203,10 @@ namespace cath {
 		///
 		/// \copydetails stable_sort_copy()
 		template <typename R>
-		R stable_sort_uniq_copy(R arg_range ///< The range on which the stable_sorted, uniqued copy should be based
+		R stable_sort_uniq_copy(R prm_range ///< The range on which the stable_sorted, uniqued copy should be based
 		                        ) {
-			stable_sort_uniq( arg_range );
-			return arg_range;
+			stable_sort_uniq( prm_range );
+			return prm_range;
 		}
 
 	} // namespace common

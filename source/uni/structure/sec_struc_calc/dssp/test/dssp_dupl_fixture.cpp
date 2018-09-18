@@ -72,37 +72,37 @@ using std::string;
 ///        to a hbond_half_opt
 ///
 /// \relates dsspfile_hbond
-hbond_half_opt cath::sec::mapped_dsspfile_hbond(const dsspfile_hbond_opt &arg_dsspfile_hbond_opt,        ///< The dsspfile_hbond_opt as parsed from a DSSP file
-                                                const size_t             &arg_residue_index,             ///< The index of the residue in the DSSP file
-                                                const size_vec           &arg_normal_index_of_dssp_index ///< A mapping from normal index to the DSSP index
+hbond_half_opt cath::sec::mapped_dsspfile_hbond(const dsspfile_hbond_opt &prm_dsspfile_hbond_opt,        ///< The dsspfile_hbond_opt as parsed from a DSSP file
+                                                const size_t             &prm_residue_index,             ///< The index of the residue in the DSSP file
+                                                const size_vec           &prm_normal_index_of_dssp_index ///< A mapping from normal index to the DSSP index
                                                 ) {
 	// No hbond in -> no hbond out
-	if ( ! arg_dsspfile_hbond_opt ) {
+	if ( ! prm_dsspfile_hbond_opt ) {
 		return none;
 	}
 
-	// Calculate the DSSP index of arg_dsspfile_hbond_opt and check it's non-negative
-	const int dssp_index = static_cast<int>( arg_residue_index ) + arg_dsspfile_hbond_opt->first - 1;
+	// Calculate the DSSP index of prm_dsspfile_hbond_opt and check it's non-negative
+	const int dssp_index = static_cast<int>( prm_residue_index ) + prm_dsspfile_hbond_opt->first - 1;
 	if ( dssp_index < 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("DSSP bond destination residue index is less than 0 (" + ::std::to_string( dssp_index ) + ")"));
 	}
 
 	// Check the DSSP index is within range
 	const size_t dssp_index_size = static_cast<size_t>( dssp_index );
-	if ( dssp_index_size >= arg_normal_index_of_dssp_index.size() ) {
+	if ( dssp_index_size >= prm_normal_index_of_dssp_index.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"DSSP hbond destination index is "
 			+ ::std::to_string( dssp_index_size )
 			+ ", which is greater than or equal to the number of entries ("
-			+ ::std::to_string( arg_normal_index_of_dssp_index.size() )
+			+ ::std::to_string( prm_normal_index_of_dssp_index.size() )
 			+ ")"
 		));
 	}
 
 	// Generate the hbond_half
 	return { hbond_half{
-		debug_numeric_cast< hbond_partner_t >( arg_normal_index_of_dssp_index[ dssp_index_size ] ),
-		arg_dsspfile_hbond_opt->second
+		debug_numeric_cast< hbond_partner_t >( prm_normal_index_of_dssp_index[ dssp_index_size ] ),
+		prm_dsspfile_hbond_opt->second
 	} };
 }
 
@@ -110,39 +110,39 @@ hbond_half_opt cath::sec::mapped_dsspfile_hbond(const dsspfile_hbond_opt &arg_ds
 ///        (in the context described by the specified string) or return none if there isn't any difference
 ///
 /// \relates hbond_half
-str_opt cath::sec::difference_string(const string         &arg_context_str,        ///< A string describing the context of this comparison
-                                     const hbond_half_opt &arg_dsspfile_hbond_opt, ///< The hbond_half_opt parsed from the DSSP file (and converted via mapped_dsspfile_hbond())
-                                     const hbond_half_opt &arg_hbond_half_opt      ///< The hbond_half_opt calculated independently
+str_opt cath::sec::difference_string(const string         &prm_context_str,        ///< A string describing the context of this comparison
+                                     const hbond_half_opt &prm_dsspfile_hbond_opt, ///< The hbond_half_opt parsed from the DSSP file (and converted via mapped_dsspfile_hbond())
+                                     const hbond_half_opt &prm_hbond_half_opt      ///< The hbond_half_opt calculated independently
                                      ) {
-	if ( ( ! arg_dsspfile_hbond_opt ) != ( ! arg_hbond_half_opt ) ) {
-		if ( arg_dsspfile_hbond_opt ) {
-			return "DSSP has a " + arg_context_str + " bond (" + to_string( *arg_dsspfile_hbond_opt )  + ") where one hasn't been calculated"s;
+	if ( ( ! prm_dsspfile_hbond_opt ) != ( ! prm_hbond_half_opt ) ) {
+		if ( prm_dsspfile_hbond_opt ) {
+			return "DSSP has a " + prm_context_str + " bond (" + to_string( *prm_dsspfile_hbond_opt )  + ") where one hasn't been calculated"s;
 		}
-		return "Calculated a " + arg_context_str + " bond (" + to_string( *arg_hbond_half_opt )  + ") where DSSP doesn't have one"s;
+		return "Calculated a " + prm_context_str + " bond (" + to_string( *prm_hbond_half_opt )  + ") where DSSP doesn't have one"s;
 	}
-	if ( arg_dsspfile_hbond_opt && arg_hbond_half_opt ) {
-		if ( arg_dsspfile_hbond_opt->index != arg_hbond_half_opt->index ) {
+	if ( prm_dsspfile_hbond_opt && prm_hbond_half_opt ) {
+		if ( prm_dsspfile_hbond_opt->index != prm_hbond_half_opt->index ) {
 			return "DSSP "
-				+ arg_context_str
+				+ prm_context_str
 				+ " bond destination residue index of "
-				+ ::std::to_string( arg_dsspfile_hbond_opt->index )
+				+ ::std::to_string( prm_dsspfile_hbond_opt->index )
 				+ " (with bond energy of "
-				+ ::std::to_string( arg_dsspfile_hbond_opt->energy )
+				+ ::std::to_string( prm_dsspfile_hbond_opt->energy )
 				+ ") doesn't match calculated index of "
-				+ ::std::to_string( arg_hbond_half_opt->index )
+				+ ::std::to_string( prm_hbond_half_opt->index )
 				+ " (with bond energy of "
-				+ ::std::to_string( arg_hbond_half_opt->energy )
+				+ ::std::to_string( prm_hbond_half_opt->energy )
 				+ ")";
 		}
 
-		const auto rounded_calc_energy = stod( ( format("%3.1f") % arg_hbond_half_opt->energy ).str() );
-		if ( ! check_is_close( arg_dsspfile_hbond_opt->energy, rounded_calc_energy, percent_tolerance( 0.0001 ) ) ) {
+		const auto rounded_calc_energy = stod( ( format("%3.1f") % prm_hbond_half_opt->energy ).str() );
+		if ( ! check_is_close( prm_dsspfile_hbond_opt->energy, rounded_calc_energy, percent_tolerance( 0.0001 ) ) ) {
 			return "DSSP calculated bond energy of "
-				+ ::std::to_string( arg_dsspfile_hbond_opt->energy )
+				+ ::std::to_string( prm_dsspfile_hbond_opt->energy )
 				+ " doesn't match calculated energy of "
 				+ ::std::to_string( rounded_calc_energy )
 				+ " (rounded from "
-				+ ::std::to_string( arg_hbond_half_opt->energy )
+				+ ::std::to_string( prm_hbond_half_opt->energy )
 				+ ")";
 		}
 	}
@@ -153,18 +153,18 @@ str_opt cath::sec::difference_string(const string         &arg_context_str,     
 ///        and the specified bifur_hbond or return none if there isn't any difference
 ///
 /// \relates dssp_dupl_res
-str_opt cath::sec::difference_string(const dssp_dupl_res &arg_dssp_dupl_res,             ///< A dssp_dupl_res parsed from a DSSP file
-                                     const bifur_hbond   &arg_bifur_hbond,               ///< The dssp_dupl_res to be compared to the dssp_dupl_res
-                                     const size_vec      &arg_normal_index_of_dssp_index ///< A mapping from normal index to the DSSP index 
+str_opt cath::sec::difference_string(const dssp_dupl_res &prm_dssp_dupl_res,             ///< A dssp_dupl_res parsed from a DSSP file
+                                     const bifur_hbond   &prm_bifur_hbond,               ///< The dssp_dupl_res to be compared to the dssp_dupl_res
+                                     const size_vec      &prm_normal_index_of_dssp_index ///< A mapping from normal index to the DSSP index 
                                      ) {
-	const auto &res_idx = arg_dssp_dupl_res.residue_index;
-	const str_opt nh_1st = difference_string( "nh-1st", mapped_dsspfile_hbond( arg_dssp_dupl_res.hbonds_this_nh_1st_2nd.first,  res_idx, arg_normal_index_of_dssp_index ), arg_bifur_hbond.get_bound_pair_for_this_nh().first  );
-	const str_opt nh_2nd = difference_string( "nh-2nd", mapped_dsspfile_hbond( arg_dssp_dupl_res.hbonds_this_nh_1st_2nd.second, res_idx, arg_normal_index_of_dssp_index ), arg_bifur_hbond.get_bound_pair_for_this_nh().second );
-	const str_opt co_1st = difference_string( "co-1st", mapped_dsspfile_hbond( arg_dssp_dupl_res.hbonds_this_co_1st_2nd.first,  res_idx, arg_normal_index_of_dssp_index ), arg_bifur_hbond.get_bound_pair_for_this_co().first  );
-	const str_opt co_2nd = difference_string( "co-2nd", mapped_dsspfile_hbond( arg_dssp_dupl_res.hbonds_this_co_1st_2nd.second, res_idx, arg_normal_index_of_dssp_index ), arg_bifur_hbond.get_bound_pair_for_this_co().second );
+	const auto &res_idx = prm_dssp_dupl_res.residue_index;
+	const str_opt nh_1st = difference_string( "nh-1st", mapped_dsspfile_hbond( prm_dssp_dupl_res.hbonds_this_nh_1st_2nd.first,  res_idx, prm_normal_index_of_dssp_index ), prm_bifur_hbond.get_bound_pair_for_this_nh().first  );
+	const str_opt nh_2nd = difference_string( "nh-2nd", mapped_dsspfile_hbond( prm_dssp_dupl_res.hbonds_this_nh_1st_2nd.second, res_idx, prm_normal_index_of_dssp_index ), prm_bifur_hbond.get_bound_pair_for_this_nh().second );
+	const str_opt co_1st = difference_string( "co-1st", mapped_dsspfile_hbond( prm_dssp_dupl_res.hbonds_this_co_1st_2nd.first,  res_idx, prm_normal_index_of_dssp_index ), prm_bifur_hbond.get_bound_pair_for_this_co().first  );
+	const str_opt co_2nd = difference_string( "co-2nd", mapped_dsspfile_hbond( prm_dssp_dupl_res.hbonds_this_co_1st_2nd.second, res_idx, prm_normal_index_of_dssp_index ), prm_bifur_hbond.get_bound_pair_for_this_co().second );
 
 	const string suffix_string = " at DSSP residue "
-		+ to_string( arg_dssp_dupl_res.pdb_residue_name )
+		+ to_string( prm_dssp_dupl_res.pdb_residue_name )
 		+ " (index "
 		+ ::std::to_string( res_idx )
 		+ ")";
@@ -180,17 +180,17 @@ str_opt cath::sec::difference_string(const dssp_dupl_res &arg_dssp_dupl_res,    
 ///        and the specified bifur_hbond_list or return none if there isn't any difference
 ///
 /// \relates dssp_dupl_res
-str_opt cath::sec::difference_string(const dssp_dupl_res_vec &arg_dssp_dupl_res_vec, ///< A vector of dssp_dupl_res parsed from a DSSP file
-                                     const bifur_hbond_list  &arg_bifur_hbond_list   ///< The dssp_dupl_res_list to be compared to the dssp_dupl_res vector
+str_opt cath::sec::difference_string(const dssp_dupl_res_vec &prm_dssp_dupl_res_vec, ///< A vector of dssp_dupl_res parsed from a DSSP file
+                                     const bifur_hbond_list  &prm_bifur_hbond_list   ///< The dssp_dupl_res_list to be compared to the dssp_dupl_res vector
                                      ) {
-	const auto num_dssp_dupl_res = arg_dssp_dupl_res_vec.size();
-	const auto arg_bifur_hbonds  = arg_bifur_hbond_list.size();
+	const auto num_dssp_dupl_res = prm_dssp_dupl_res_vec.size();
+	const auto prm_bifur_hbonds  = prm_bifur_hbond_list.size();
 
 	const auto dssp_non_null_indices = copy_build<size_vec>(
 		indices( num_dssp_dupl_res )
 			| filtered(
 				[&] (const size_t &x) {
-					return ! arg_dssp_dupl_res_vec[ x ].pdb_residue_name.is_null();
+					return ! prm_dssp_dupl_res_vec[ x ].pdb_residue_name.is_null();
 				}
 			)
 	);
@@ -198,11 +198,11 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &arg_dssp_dupl_res_
 	const size_t num_non_null_residues = dssp_non_null_indices.size();
 
 	const str_opt num_prob = make_optional(
-		( num_non_null_residues != arg_bifur_hbonds ),
+		( num_non_null_residues != prm_bifur_hbonds ),
 		"Number of (non-null) DSSP hbond residues ("
 			+ ::std::to_string( num_non_null_residues )
 			+ "), doesn't match the number of calculated hbond residues ("
-			+ ::std::to_string( arg_bifur_hbonds )
+			+ ::std::to_string( prm_bifur_hbonds )
 			+ "). "
 	);
 
@@ -214,8 +214,8 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &arg_dssp_dupl_res_
 		return result;
 	}();
 
-	for (const size_t &index : indices( min( num_dssp_dupl_res, arg_bifur_hbonds ) ) ) {
-		const auto diff_str = difference_string( arg_dssp_dupl_res_vec[ dssp_non_null_indices[ index ] ], arg_bifur_hbond_list[ index ], normal_index_of_dssp_index );
+	for (const size_t &index : indices( min( num_dssp_dupl_res, prm_bifur_hbonds ) ) ) {
+		const auto diff_str = difference_string( prm_dssp_dupl_res_vec[ dssp_non_null_indices[ index ] ], prm_bifur_hbond_list[ index ], normal_index_of_dssp_index );
 		if ( diff_str ) {
 			return ( num_prob ? *num_prob : string{} ) + *diff_str;
 		}
@@ -227,21 +227,21 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &arg_dssp_dupl_res_
 }
 
 /// \brief Parse a DSSP file from the specified file into a dssp_dupl_res_vec for testing
-dssp_dupl_res_vec dssp_dupl_fixture::parse_dssp_for_calc_testing(const path &arg_dssp_file ///< The file from which to parse the data
+dssp_dupl_res_vec dssp_dupl_fixture::parse_dssp_for_calc_testing(const path &prm_dssp_file ///< The file from which to parse the data
                                                                  ) {
 	ifstream my_dssp_istream;
-	open_ifstream( my_dssp_istream, arg_dssp_file );
+	open_ifstream( my_dssp_istream, prm_dssp_file );
 	const auto parsed_results = parse_dssp_for_calc_testing( my_dssp_istream );
 	my_dssp_istream.close();
 	return parsed_results;
 }
 
 /// \brief Parse a DSSP file from the specified istream into a dssp_dupl_res_vec for testing
-dssp_dupl_res_vec dssp_dupl_fixture::parse_dssp_for_calc_testing(istream &arg_dssp_stream ///< The istream from which to parse the data
+dssp_dupl_res_vec dssp_dupl_fixture::parse_dssp_for_calc_testing(istream &prm_dssp_stream ///< The istream from which to parse the data
                                                                  ) {
 	// Read the first line and check it looks vaguely like a DSSP header line
 	string dssp_first_line;
-	getline(arg_dssp_stream, dssp_first_line);
+	getline(prm_dssp_stream, dssp_first_line);
 	if ( !starts_with(dssp_first_line, "==== ") || !icontains(dssp_first_line, "DSSP") || dssp_first_line.length() > 300 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("First line is not a DSSP header line"));
 	}
@@ -249,18 +249,18 @@ dssp_dupl_res_vec dssp_dupl_fixture::parse_dssp_for_calc_testing(istream &arg_ds
 
 	// Scan through the header
 	bool found_column_headings( false );
-	while ( ! found_column_headings && ! arg_dssp_stream.eof() ) {
+	while ( ! found_column_headings && ! prm_dssp_stream.eof() ) {
 		string dssp_header_line;
-		getline( arg_dssp_stream, dssp_header_line );
+		getline( prm_dssp_stream, dssp_header_line );
 		found_column_headings = starts_with(dssp_header_line, "  #  RESIDUE AA ");
 	}
 
 	// Read residues
 	size_t residue_ctr = 1;
 	dssp_dupl_res_vec dssp_dupl_residues;
-	while ( ! arg_dssp_stream.eof() ) {
+	while ( ! prm_dssp_stream.eof() ) {
 		string dssp_residue_line;
-		getline( arg_dssp_stream, dssp_residue_line );
+		getline( prm_dssp_stream, dssp_residue_line );
 
 		// If this line contains nothing but whitespace, then skip it
 		if ( all( dssp_residue_line, is_space() ) ) {
@@ -303,25 +303,25 @@ dssp_dupl_res_vec dssp_dupl_fixture::parse_dssp_for_calc_testing(istream &arg_ds
 }
 
 /// \brief Parse data from the specified DSSP line
-pair<size_t, dssp_dupl_res> dssp_dupl_fixture::parse_dssp_residue_line(const string &arg_dssp_residue_line ///< The DSSP residue line to parse
+pair<size_t, dssp_dupl_res> dssp_dupl_fixture::parse_dssp_residue_line(const string &prm_dssp_residue_line ///< The DSSP residue line to parse
                                                                        ) {
 	// try {
-		const bool dssp_entry_is_null = ( arg_dssp_residue_line.at( 13 ) == '!' );
+		const bool dssp_entry_is_null = ( prm_dssp_residue_line.at( 13 ) == '!' );
 		if ( dssp_entry_is_null ) {
 			return { 0_z, make_null_dssp_dupl_res() };
 		}
-		const size_t seq_res_num  =     stoul( arg_dssp_residue_line.substr(  0, 5)) ;  //   1 -   5    sequential resnumber, including chain breaks as extra residues
-		const string res_name_str = trim_copy( arg_dssp_residue_line.substr(  5, 6)) ;  //   6 -  11    original PDB resname, not nec. sequential, may contain letters
+		const size_t seq_res_num  =     stoul( prm_dssp_residue_line.substr(  0, 5)) ;  //   1 -   5    sequential resnumber, including chain breaks as extra residues
+		const string res_name_str = trim_copy( prm_dssp_residue_line.substr(  5, 6)) ;  //   6 -  11    original PDB resname, not nec. sequential, may contain letters
 
-		const string hbond_a_str  = trim_copy( arg_dssp_residue_line.substr( 39, 11 ) );
-		const string hbond_b_str  = trim_copy( arg_dssp_residue_line.substr( 50, 11 ) );
-		const string hbond_c_str  = trim_copy( arg_dssp_residue_line.substr( 61, 11 ) );
-		const string hbond_d_str  = trim_copy( arg_dssp_residue_line.substr( 72, 11 ) );
+		const string hbond_a_str  = trim_copy( prm_dssp_residue_line.substr( 39, 11 ) );
+		const string hbond_b_str  = trim_copy( prm_dssp_residue_line.substr( 50, 11 ) );
+		const string hbond_c_str  = trim_copy( prm_dssp_residue_line.substr( 61, 11 ) );
+		const string hbond_d_str  = trim_copy( prm_dssp_residue_line.substr( 72, 11 ) );
 
-		const auto   hbond_a      = parse_dsspfile_bond( trim_copy( arg_dssp_residue_line.substr( 39, 11 ) ) );
-		const auto   hbond_b      = parse_dsspfile_bond( trim_copy( arg_dssp_residue_line.substr( 50, 11 ) ) );
-		const auto   hbond_c      = parse_dsspfile_bond( trim_copy( arg_dssp_residue_line.substr( 61, 11 ) ) );
-		const auto   hbond_d      = parse_dsspfile_bond( trim_copy( arg_dssp_residue_line.substr( 72, 11 ) ) );
+		const auto   hbond_a      = parse_dsspfile_bond( trim_copy( prm_dssp_residue_line.substr( 39, 11 ) ) );
+		const auto   hbond_b      = parse_dsspfile_bond( trim_copy( prm_dssp_residue_line.substr( 50, 11 ) ) );
+		const auto   hbond_c      = parse_dsspfile_bond( trim_copy( prm_dssp_residue_line.substr( 61, 11 ) ) );
+		const auto   hbond_d      = parse_dsspfile_bond( trim_copy( prm_dssp_residue_line.substr( 72, 11 ) ) );
 
 		const residue_name res_name = make_residue_name( res_name_str );
 
@@ -336,14 +336,14 @@ pair<size_t, dssp_dupl_res> dssp_dupl_fixture::parse_dssp_residue_line(const str
 		};
 	// }
 	// catch ( const boost::bad_lexical_cast & ) {
-	// 	BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a DSSP residue record.\nRecord was \"" + arg_dssp_residue_line + "\""));
+	// 	BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to cast a column whilst parsing a DSSP residue record.\nRecord was \"" + prm_dssp_residue_line + "\""));
 	// }
 }
 
 /// \brief Parse an hbond from the specified string from within a DSSP line
-dsspfile_hbond_opt dssp_dupl_fixture::parse_dsspfile_bond(const string &arg_hbond_string ///< The string containing the DSSP h-bond data (eg "-2,-2.6")
+dsspfile_hbond_opt dssp_dupl_fixture::parse_dsspfile_bond(const string &prm_hbond_string ///< The string containing the DSSP h-bond data (eg "-2,-2.6")
                                                           ) {
-	const str_vec parts = split_build<str_vec>( arg_hbond_string, is_any_of( "," ), token_compress_on );
+	const str_vec parts = split_build<str_vec>( prm_hbond_string, is_any_of( "," ), token_compress_on );
 	if ( parts.size() != 2 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Did not find two parts in DSSP file h-bond"));
 	}

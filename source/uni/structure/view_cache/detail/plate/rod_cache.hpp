@@ -49,34 +49,34 @@ namespace cath {
 				/// \brief Check that an element is in-range in a conversion between indices and rod/notch
 				///
 				/// This is used conversions in both directions
-				inline void check_indices(const size_t &arg_index_a, ///< The index to check in the first dimension
-				                          const size_t &arg_index_b, ///< The index to check in the second dimension
-				                          const size_t &arg_size_a,  ///< The size of the matrix in the first dimension
-				                          const size_t &arg_size_b   ///< The size of the matrix in the second dimension
+				inline void check_indices(const size_t &prm_index_a, ///< The index to check in the first dimension
+				                          const size_t &prm_index_b, ///< The index to check in the second dimension
+				                          const size_t &prm_size_a,  ///< The size of the matrix in the first dimension
+				                          const size_t &prm_size_b   ///< The size of the matrix in the second dimension
 				                          ) {
 					// Check that both indices are in range
-					if ( arg_index_a >= arg_size_a) {
+					if ( prm_index_a >= prm_size_a) {
 						BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Unable to convert between rod/notch and indices because the input specify a location that is out of range with respect to size_a"));
 					}
-					if ( arg_index_b >= arg_size_b) {
+					if ( prm_index_b >= prm_size_b) {
 						BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Unable to convert between rod/notch and indices because the input specify a location that is out of range with respect to size_a"));
 					}
 				}
 
 				/// \brief Perform the rod/notch -> index_a conversion without any out-of-range checks
-				inline size_t get_index_a_of_rod_and_notch_unchecked(const size_t &arg_rod_index,    ///< The rod of the element
-				                                                     const size_t &arg_notch_index,  ///< The notch of the element
-				                                                     const size_t &arg_size_a        ///< The size of the matrix in the first dimension
+				inline size_t get_index_a_of_rod_and_notch_unchecked(const size_t &prm_rod_index,    ///< The rod of the element
+				                                                     const size_t &prm_notch_index,  ///< The notch of the element
+				                                                     const size_t &prm_size_a        ///< The size of the matrix in the first dimension
 				                                                     ) {
-					return std::max( arg_size_a - 1, arg_rod_index ) + arg_notch_index - arg_rod_index;
+					return std::max( prm_size_a - 1, prm_rod_index ) + prm_notch_index - prm_rod_index;
 				}
 
 				/// \brief Perform the rod/notch -> index_b conversion without any out-of-range checks
-				inline size_t get_index_b_of_rod_and_notch_unchecked(const size_t &arg_rod_index,    ///< The rod of the element
-				                                                     const size_t &arg_notch_index,  ///< The notch of the element
-				                                                     const size_t &arg_size_a        ///< The size of the matrix in the first dimension
+				inline size_t get_index_b_of_rod_and_notch_unchecked(const size_t &prm_rod_index,    ///< The rod of the element
+				                                                     const size_t &prm_notch_index,  ///< The notch of the element
+				                                                     const size_t &prm_size_a        ///< The size of the matrix in the first dimension
 				                                                     ) {
-					return std::max( arg_size_a - 1, arg_rod_index ) + arg_notch_index - ( arg_size_a - 1 );
+					return std::max( prm_size_a - 1, prm_rod_index ) + prm_notch_index - ( prm_size_a - 1 );
 				}
 
 			} // namespace detail
@@ -92,22 +92,22 @@ namespace cath {
 			///     (1,0)  (2,1)  (3,1)
 			///     (0,0)  (1,1)  (2,2)
 			///
-			/// \pre If arg_check is true then the values must specify a valid position in the matrix,
+			/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 			///      else an invalid_argument_exception will be thrown
-			inline size_t get_rod_of_indices(const size_t &arg_index_a,      ///< The index in the first dimension
-			                                 const size_t &arg_index_b,      ///< The index in the second dimension
-			                                 const size_t &arg_size_a,       ///< The size of the matrix in the first dimension
-			                                 const size_t &arg_size_b,       ///< The size of the matrix in the second dimension
+			inline size_t get_rod_of_indices(const size_t &prm_index_a,      ///< The index in the first dimension
+			                                 const size_t &prm_index_b,      ///< The index in the second dimension
+			                                 const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
+			                                 const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
 #ifndef NDEBUG
-			                                 const bool   &arg_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
+			                                 const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
 #else
-			                                 const bool   &arg_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
+			                                 const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 #endif
 			                                 ) {
-				if ( arg_check ) {
-					detail::check_indices( arg_index_a, arg_index_b, arg_size_a, arg_size_b );
+				if ( prm_check ) {
+					detail::check_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b );
 				}
-				return ( arg_size_a - 1 - arg_index_a ) + arg_index_b;
+				return ( prm_size_a - 1 - prm_index_a ) + prm_index_b;
 			}
 
 			/// \brief Get the notch of the entry in the matrix of specified dimensions with the specified indices
@@ -121,22 +121,22 @@ namespace cath {
 			///     (1,0)  (2,1)  (3,1)
 			///     (0,0)  (1,1)  (2,2)
 			///
-			/// \pre If arg_check is true then the values must specify a valid position in the matrix,
+			/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 			///      else an invalid_argument_exception will be thrown
-			inline size_t get_notch_of_indices(const size_t &arg_index_a,      ///< The index in the first dimension
-			                                   const size_t &arg_index_b,      ///< The index in the second dimension
-			                                   const size_t &arg_size_a,       ///< The size of the matrix in the first dimension
-			                                   const size_t &arg_size_b,       ///< The size of the matrix in the second dimension
+			inline size_t get_notch_of_indices(const size_t &prm_index_a,      ///< The index in the first dimension
+			                                   const size_t &prm_index_b,      ///< The index in the second dimension
+			                                   const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
+			                                   const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
 #ifndef NDEBUG
-			                                   const bool   &arg_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
+			                                   const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
 #else
-			                                   const bool   &arg_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
+			                                   const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 #endif
 			                                   ) {
-				if ( arg_check ) {
-					detail::check_indices( arg_index_a, arg_index_b, arg_size_a, arg_size_b );
+				if ( prm_check ) {
+					detail::check_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b );
 				}
-				return std::min( arg_index_a, arg_index_b );
+				return std::min( prm_index_a, prm_index_b );
 			}
 
 			/// \brief Get the rod and notch of the entry in the matrix of specified dimensions with the specified indices
@@ -150,24 +150,24 @@ namespace cath {
 			///     (1,0)  (2,1)  (3,1)
 			///     (0,0)  (1,1)  (2,2)
 			///
-			/// \pre If arg_check is true then the values must specify a valid position in the matrix,
+			/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 			///      else an invalid_argument_exception will be thrown
-			inline size_size_pair get_rod_and_notch_of_indices(const size_t &arg_index_a,      ///< The index in the first dimension
-			                                                   const size_t &arg_index_b,      ///< The index in the second dimension
-			                                                   const size_t &arg_size_a,       ///< The size of the matrix in the first dimension
-			                                                   const size_t &arg_size_b,       ///< The size of the matrix in the second dimension
+			inline size_size_pair get_rod_and_notch_of_indices(const size_t &prm_index_a,      ///< The index in the first dimension
+			                                                   const size_t &prm_index_b,      ///< The index in the second dimension
+			                                                   const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
+			                                                   const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
 #ifndef NDEBUG
-			                                                   const bool   &arg_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
+			                                                   const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
 #else
-			                                                   const bool   &arg_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
+			                                                   const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 #endif
 			                                                   ) {
-				if ( arg_check ) {
-					detail::check_indices( arg_index_a, arg_index_b, arg_size_a, arg_size_b );
+				if ( prm_check ) {
+					detail::check_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b );
 				}
 				return std::make_pair(
-					get_rod_of_indices  ( arg_index_a, arg_index_b, arg_size_a, arg_size_b, false ),
-					get_notch_of_indices( arg_index_a, arg_index_b, arg_size_a, arg_size_b, false )
+					get_rod_of_indices  ( prm_index_a, prm_index_b, prm_size_a, prm_size_b, false ),
+					get_notch_of_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b, false )
 				);
 			}
 
@@ -182,22 +182,22 @@ namespace cath {
 			///     (1,0)  (2,1)  (3,1)
 			///     (0,0)  (1,1)  (2,2)
 			///
-			/// \pre If arg_check is true then the values must specify a valid position in the matrix,
+			/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 			///      else an invalid_argument_exception will be thrown
-			inline size_t get_index_a_of_rod_and_notch(const size_t &arg_rod_index,    ///< The rod of the element
-			                                           const size_t &arg_notch_index,  ///< The notch of the element
-			                                           const size_t &arg_size_a,       ///< The size of the matrix in the first dimension
-			                                           const size_t &arg_size_b,       ///< The size of the matrix in the second dimension
+			inline size_t get_index_a_of_rod_and_notch(const size_t &prm_rod_index,    ///< The rod of the element
+			                                           const size_t &prm_notch_index,  ///< The notch of the element
+			                                           const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
+			                                           const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
 #ifndef NDEBUG
-			                                           const bool   &arg_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
+			                                           const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
 #else
-			                                           const bool   &arg_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
+			                                           const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 #endif
 			                                           ) {
-				const size_t index_a = detail::get_index_a_of_rod_and_notch_unchecked( arg_rod_index, arg_notch_index, arg_size_a );
-				if ( arg_check ) {
-					const size_t index_b = detail::get_index_b_of_rod_and_notch_unchecked( arg_rod_index, arg_notch_index, arg_size_a );
-					detail::check_indices( index_a, index_b, arg_size_a, arg_size_b );
+				const size_t index_a = detail::get_index_a_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
+				if ( prm_check ) {
+					const size_t index_b = detail::get_index_b_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
+					detail::check_indices( index_a, index_b, prm_size_a, prm_size_b );
 				}
 				return index_a;
 			}
@@ -213,22 +213,22 @@ namespace cath {
 			///     (1,0)  (2,1)  (3,1)
 			///     (0,0)  (1,1)  (2,2)
 			///
-			/// \pre If arg_check is true then the values must specify a valid position in the matrix,
+			/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 			///      else an invalid_argument_exception will be thrown
-			inline size_t get_index_b_of_rod_and_notch(const size_t &arg_rod_index,    ///< The rod of the element
-			                                           const size_t &arg_notch_index,  ///< The notch of the element
-			                                           const size_t &arg_size_a,       ///< The size of the matrix in the first dimension
-			                                           const size_t &arg_size_b,       ///< The size of the matrix in the second dimension
+			inline size_t get_index_b_of_rod_and_notch(const size_t &prm_rod_index,    ///< The rod of the element
+			                                           const size_t &prm_notch_index,  ///< The notch of the element
+			                                           const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
+			                                           const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
 #ifndef NDEBUG
-			                                           const bool   &arg_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
+			                                           const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
 #else
-			                                           const bool   &arg_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
+			                                           const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 #endif
 			                                           ) {
-				const size_t index_b = detail::get_index_b_of_rod_and_notch_unchecked( arg_rod_index, arg_notch_index, arg_size_a );
-				if ( arg_check ) {
-					const size_t index_a = detail::get_index_a_of_rod_and_notch_unchecked( arg_rod_index, arg_notch_index, arg_size_a );
-					detail::check_indices( index_a, index_b, arg_size_a, arg_size_b );
+				const size_t index_b = detail::get_index_b_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
+				if ( prm_check ) {
+					const size_t index_a = detail::get_index_a_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
+					detail::check_indices( index_a, index_b, prm_size_a, prm_size_b );
 				}
 				return index_b;
 			}
@@ -244,22 +244,22 @@ namespace cath {
 			///     (1,0)  (2,1)  (3,1)
 			///     (0,0)  (1,1)  (2,2)
 			///
-			/// \pre If arg_check is true then the values must specify a valid position in the matrix,
+			/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 			///      else an invalid_argument_exception will be thrown
-			inline size_size_pair get_indices_of_rod_and_notch(const size_t &arg_rod_index,    ///< The rod of the element
-			                                                   const size_t &arg_notch_index,  ///< The notch of the element
-			                                                   const size_t &arg_size_a,       ///< The size of the matrix in the first dimension
-			                                                   const size_t &arg_size_b,       ///< The size of the matrix in the second dimension
+			inline size_size_pair get_indices_of_rod_and_notch(const size_t &prm_rod_index,    ///< The rod of the element
+			                                                   const size_t &prm_notch_index,  ///< The notch of the element
+			                                                   const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
+			                                                   const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
 #ifndef NDEBUG
-			                                                   const bool   &arg_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
+			                                                   const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
 #else
-			                                                   const bool   &arg_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
+			                                                   const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 #endif
 			                                                   ) {
-				const size_t index_a = detail::get_index_a_of_rod_and_notch_unchecked( arg_rod_index, arg_notch_index, arg_size_a );
-				const size_t index_b = detail::get_index_b_of_rod_and_notch_unchecked( arg_rod_index, arg_notch_index, arg_size_a );
-				if ( arg_check ) {
-					detail::check_indices( index_a, index_b, arg_size_a, arg_size_b );
+				const size_t index_a = detail::get_index_a_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
+				const size_t index_b = detail::get_index_b_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
+				if ( prm_check ) {
+					detail::check_indices( index_a, index_b, prm_size_a, prm_size_b );
 				}
 				return std::make_pair( index_a, index_b );
 			}

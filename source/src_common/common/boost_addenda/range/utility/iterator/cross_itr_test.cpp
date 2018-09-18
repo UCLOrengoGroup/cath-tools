@@ -44,18 +44,18 @@ namespace std {
 	///
 	/// It'd make more sense to use BOOST_TEST_DONT_PRINT_LOG_VALUE() but
 	/// that doesn't seem to work with BOOST_CHECK_EQUAL_COLLECTIONS (or BOOST_CHECK_EQUAL_RANGES)
-	ostream & operator<<(ostream                 &arg_os,   ///< TODOCUMENT
-	                     const bool_size_str_tpl &arg_tuple ///< TODOCUMENT
+	ostream & operator<<(ostream                 &prm_os,   ///< TODOCUMENT
+	                     const bool_size_str_tpl &prm_tuple ///< TODOCUMENT
 	                     ) {
 		ostringstream temp_ss;
-		arg_os << "tuple<bool,size_t,string>(";
-		arg_os << boolalpha << get<0>( arg_tuple ) << noboolalpha;
-		arg_os << ", ";
-		arg_os << get<1>( arg_tuple );
-		arg_os << ", ";
-		arg_os << get<2>( arg_tuple );
-		arg_os << ")";
-		return arg_os;
+		prm_os << "tuple<bool,size_t,string>(";
+		prm_os << boolalpha << get<0>( prm_tuple ) << noboolalpha;
+		prm_os << ", ";
+		prm_os << get<1>( prm_tuple );
+		prm_os << ", ";
+		prm_os << get<2>( prm_tuple );
+		prm_os << ")";
+		return prm_os;
 	}
 }  // namespace std
 

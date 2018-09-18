@@ -35,21 +35,21 @@ using namespace cath::common;
 using namespace std;
 
 /// \brief Private method for converting two indices to a internal index
-size_t windowed_matrix::get_internal_index(const size_type &/*arg_index_a*/,
-                                           const size_type &/*arg_index_b*/
+size_t windowed_matrix::get_internal_index(const size_type &/*prm_index_a*/,
+                                           const size_type &/*prm_index_b*/
                                            ) const {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("Not implemented matrix indexing yet"));
 	return 0;
 }
 
 /// \brief Ctor for windowed_matrix
-windowed_matrix::windowed_matrix(const size_type &arg_length_a,        ///< The length of the first  entry (or the number of rows    in     matrix)
-                                 const size_type &arg_length_b,        ///< The length of the second entry (or the number of columns in the matrix)
-                                 const size_type &arg_requested_window ///< The requested width (or equivalently, height) of the window
-                                 ) : length_a             ( arg_length_a                ),
-                                     length_b             ( arg_length_b                ),
-                                     requested_window_size( arg_requested_window        ),
-                                     data                 ( arg_length_a * arg_length_b ) {
+windowed_matrix::windowed_matrix(const size_type &prm_length_a,        ///< The length of the first  entry (or the number of rows    in     matrix)
+                                 const size_type &prm_length_b,        ///< The length of the second entry (or the number of columns in the matrix)
+                                 const size_type &prm_requested_window ///< The requested width (or equivalently, height) of the window
+                                 ) : length_a             ( prm_length_a                ),
+                                     length_b             ( prm_length_b                ),
+                                     requested_window_size( prm_requested_window        ),
+                                     data                 ( prm_length_a * prm_length_b ) {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("Not implemented matrix size"));
 	check_lengths_and_window_size_are_valid( length_a, length_b, requested_window_size );
 }
@@ -70,19 +70,19 @@ windowed_matrix::size_type windowed_matrix::get_window_size() const {
 }
 
 /// \brief TODOCUMENT
-void windowed_matrix::set_value(const size_type &arg_index_a, ///< TODOCUMENT
-                                const size_type &arg_index_b, ///< TODOCUMENT
-                                const double    &arg_value    ///< TODOCUMENT
+void windowed_matrix::set_value(const size_type &prm_index_a, ///< TODOCUMENT
+                                const size_type &prm_index_b, ///< TODOCUMENT
+                                const double    &prm_value    ///< TODOCUMENT
                                 ) {
-	const size_t internal_index = get_internal_index( arg_index_a, arg_index_b );
-	data[ internal_index ] = arg_value;
+	const size_t internal_index = get_internal_index( prm_index_a, prm_index_b );
+	data[ internal_index ] = prm_value;
 }
 
 /// \brief TODOCUMENT
-double windowed_matrix::get_value(const size_type &arg_index_a, ///< TODOCUMENT
-                                  const size_type &arg_index_b  ///< TODOCUMENT
+double windowed_matrix::get_value(const size_type &prm_index_a, ///< TODOCUMENT
+                                  const size_type &prm_index_b  ///< TODOCUMENT
                                   ) const {
-	const size_t internal_index = get_internal_index( arg_index_a, arg_index_b );
+	const size_t internal_index = get_internal_index( prm_index_a, prm_index_b );
 	return data[ internal_index ];
 }
 

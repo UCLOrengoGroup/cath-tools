@@ -95,10 +95,10 @@ namespace cath {
 		                   const hit_arch &);
 
 		/// \brief In-place sort the specified vector of calc_hits by calc_hit::get_hit_start_less() (ie, by their starts)
-		inline void hit_arch::sort_hit_vec(calc_hit_vec &arg_hit_vec ///< The vector of calc_hits to in-place sort
+		inline void hit_arch::sort_hit_vec(calc_hit_vec &prm_hit_vec ///< The vector of calc_hits to in-place sort
 		                                   ) {
 			boost::range::sort(
-				arg_hit_vec,
+				prm_hit_vec,
 				calc_hit::get_hit_start_less()
 			);
 		}
@@ -127,8 +127,8 @@ namespace cath {
 		}
 
 		/// \brief Ctor from a vector of calc_hits
-		inline hit_arch::hit_arch(calc_hit_vec arg_hit_arch ///< The vector of calc_hits from which to construct the hit_arch. Must have no mutually overlapping calc_hits. Need not be pre-sorted.
-		                          ) : the_hits( std::move( arg_hit_arch ) ) {
+		inline hit_arch::hit_arch(calc_hit_vec prm_hit_arch ///< The vector of calc_hits from which to construct the hit_arch. Must have no mutually overlapping calc_hits. Need not be pre-sorted.
+		                          ) : the_hits( std::move( prm_hit_arch ) ) {
 			sort_hit_vec( the_hits );
 			sanity_check();
 		}
@@ -144,9 +144,9 @@ namespace cath {
 		}
 
 		/// \brief Const subscript operator for accessing the calc_hit at the specified index (after sorting in ascending order of start residue)
-		inline const calc_hit & hit_arch::operator[](const size_t &arg_index ///< The index of the calc_hit to return
+		inline const calc_hit & hit_arch::operator[](const size_t &prm_index ///< The index of the calc_hit to return
 		                                             ) const {
-			return the_hits[ arg_index ];
+			return the_hits[ prm_index ];
 		}
 
 		/// \brief Standard const begin() operator to make hit_arch into a range
@@ -160,10 +160,10 @@ namespace cath {
 		}
 
 		/// \brief If the hit_arch contains the specified calc_hit, remove it and return true; otherwise, return false
-		inline bool hit_arch::remove(const calc_hit &arg_hit ///< The calc_hit to remove from the hit_arch
+		inline bool hit_arch::remove(const calc_hit &prm_hit ///< The calc_hit to remove from the hit_arch
 		                             ) {
 			// Do score second so that this can propagate any hit_arch::operator-=(const hit_arch &) exception guarantee
-			const auto find_itr = boost::range::find( the_hits, arg_hit );
+			const auto find_itr = boost::range::find( the_hits, prm_hit );
 			if ( find_itr != common::cend( the_hits ) ) {
 				the_hits.erase( find_itr );
 				return true;
@@ -174,9 +174,9 @@ namespace cath {
 		/// \brief Add the specified calc_hit to this hit_arch
 		///
 		/// \pre The specified calc_hit may not overlap with any of the calc_hits contained within the hit_arch
-		inline hit_arch & hit_arch::operator+=(const calc_hit &arg_hit ///< The calc_hit to add to this hit_arch
+		inline hit_arch & hit_arch::operator+=(const calc_hit &prm_hit ///< The calc_hit to add to this hit_arch
 		                                       ) {
-			the_hits.push_back( arg_hit );
+			the_hits.push_back( prm_hit );
 			sort_hit_vec( the_hits );
 			sanity_check();
 			return *this;
@@ -185,9 +185,9 @@ namespace cath {
 		/// \brief Add the specified hit_arch's calc_hits to this hit_arch
 		///
 		/// \pre The specified hit_arch's calc_hits may not overlap with any of the calc_hits contained within the hit_arch
-		inline hit_arch & hit_arch::operator+=(const hit_arch &arg_hit_arch ///< The hit_arch whose calc_hits should be added to this hit_arch
+		inline hit_arch & hit_arch::operator+=(const hit_arch &prm_hit_arch ///< The hit_arch whose calc_hits should be added to this hit_arch
 		                                       ) {
-			for (const calc_hit &the_hit : arg_hit_arch) {
+			for (const calc_hit &the_hit : prm_hit_arch) {
 				( *this ) += the_hit;
 			}
 			return *this;
@@ -200,11 +200,11 @@ namespace cath {
 		/// The first hit_arch is taken by non-const value to avoid copying an rvalue argument
 		///
 		/// \relates hit_arch
-		inline hit_arch operator+(hit_arch        arg_hit_arch, ///< The hit_arch to which the calc_hit should be added
-		                          const calc_hit &arg_hit       ///< The calc_hit to add to the hit_arch
+		inline hit_arch operator+(hit_arch        prm_hit_arch, ///< The hit_arch to which the calc_hit should be added
+		                          const calc_hit &prm_hit       ///< The calc_hit to add to the hit_arch
 		                          ) {
-			arg_hit_arch += arg_hit;
-			return arg_hit_arch;
+			prm_hit_arch += prm_hit;
+			return prm_hit_arch;
 		}
 
 		/// \brief Add the second specified hit_arch's calc_hits to the first specified hit_arch
@@ -212,11 +212,11 @@ namespace cath {
 		/// The first hit_arch is taken by non-const value to avoid copying an rvalue argument
 		///
 		/// \relates hit_arch
-		inline hit_arch operator+(hit_arch        arg_hit_arch_lhs, ///< The hit_arch to which the calc_hits should be added
-		                          const hit_arch &arg_hit_arch_rhs  ///< The hit_arch whose calc_hits should be added to the other hit_arch
+		inline hit_arch operator+(hit_arch        prm_hit_arch_lhs, ///< The hit_arch to which the calc_hits should be added
+		                          const hit_arch &prm_hit_arch_rhs  ///< The hit_arch whose calc_hits should be added to the other hit_arch
 		                          ) {
-			arg_hit_arch_lhs += arg_hit_arch_rhs;
-			return arg_hit_arch_lhs;
+			prm_hit_arch_lhs += prm_hit_arch_rhs;
+			return prm_hit_arch_lhs;
 		}
 
 

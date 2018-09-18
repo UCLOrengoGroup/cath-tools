@@ -56,8 +56,8 @@ string detail_help_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void detail_help_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                      const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void detail_help_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                      const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                       ) {
 	// Foreach option requested
 	for (const str_str_str_pair_pair &option_help_pair : desc_and_help_of_option_name) {
@@ -66,8 +66,8 @@ void detail_help_options_block::do_add_visible_options_to_description(options_de
 		const string &description = option_help_pair.second.first;
 		bool         &value_bool  = values[option_name];
 
-		// Add this option to arg_desc
-		arg_desc.add_options()
+		// Add this option to prm_desc
+		prm_desc.add_options()
 			(option_name.c_str(), bool_switch(&value_bool)->default_value(false), description.c_str());
 	}
 }
@@ -77,7 +77,7 @@ void detail_help_options_block::do_add_visible_options_to_description(options_de
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts all options
-str_opt detail_help_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt detail_help_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                      ) const {
 	return none;
 }
@@ -88,8 +88,8 @@ str_vec detail_help_options_block::do_get_all_options_names() const {
 }
 
 /// \brief Construct a detail_help_options_block from a map from option name to a pair of description and help message
-detail_help_options_block::detail_help_options_block(str_str_str_pair_map arg_desc_and_help_of_option_name ///< A map of option name (string) to a pair of description (string) and help message (string)
-                                                     ) : desc_and_help_of_option_name { std::move( arg_desc_and_help_of_option_name ) } {
+detail_help_options_block::detail_help_options_block(str_str_str_pair_map prm_desc_and_help_of_option_name ///< A map of option name (string) to a pair of description (string) and help message (string)
+                                                     ) : desc_and_help_of_option_name { std::move( prm_desc_and_help_of_option_name ) } {
 }
 
 /// \brief Whether the options specified in this detail_help_options_block are requesting any help strings

@@ -43,14 +43,14 @@ namespace cath {
 			~pymol_tools_test_suite_fixture() noexcept = default;
 
 			// Check that the asking for the y of either of the original x values gives back the original x value
-			void check_pymol_size_ends(const size_t &arg_x_1,
-			                           const double       &arg_y_1,
-			                           const size_t &arg_x_2,
-			                           const double       &arg_y_2
+			void check_pymol_size_ends(const size_t &prm_x_1,
+			                           const double       &prm_y_1,
+			                           const size_t &prm_x_2,
+			                           const double       &prm_y_2
 			                           ) {
-				BOOST_CHECK_CLOSE( arg_y_1, pymol_tools::pymol_size(arg_x_1, arg_y_1, arg_x_2, arg_y_2, arg_x_1    ), ACCURACY_PERCENTAGE() );
-				BOOST_CHECK_CLOSE( arg_y_2, pymol_tools::pymol_size(arg_x_1, arg_y_1, arg_x_2, arg_y_2, arg_x_2    ), ACCURACY_PERCENTAGE() );
-				BOOST_CHECK_LT   ( 0.0,     pymol_tools::pymol_size(arg_x_1, arg_y_1, arg_x_2, arg_y_2, 10000000_z )                        );
+				BOOST_CHECK_CLOSE( prm_y_1, pymol_tools::pymol_size(prm_x_1, prm_y_1, prm_x_2, prm_y_2, prm_x_1    ), ACCURACY_PERCENTAGE() );
+				BOOST_CHECK_CLOSE( prm_y_2, pymol_tools::pymol_size(prm_x_1, prm_y_1, prm_x_2, prm_y_2, prm_x_2    ), ACCURACY_PERCENTAGE() );
+				BOOST_CHECK_LT   ( 0.0,     pymol_tools::pymol_size(prm_x_1, prm_y_1, prm_x_2, prm_y_2, 10000000_z )                        );
 			}
 		};
 

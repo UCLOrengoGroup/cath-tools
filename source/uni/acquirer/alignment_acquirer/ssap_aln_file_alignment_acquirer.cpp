@@ -63,9 +63,9 @@ bool ssap_aln_file_alignment_acquirer::do_requires_backbone_complete_input() con
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context ///< TODOCUMENT
                                                                                                          ) const {
-	const auto   &the_pdbs = arg_strucs_context.get_pdbs();
+	const auto   &the_pdbs = prm_strucs_context.get_pdbs();
 	const size_t  num_pdbs = the_pdbs.size();
 	if ( num_pdbs != 2 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Superposing with a SSAP alignment requires exactly two PDBs"));
@@ -90,7 +90,7 @@ pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_ali
 		);
 	}
 
-	const protein_list proteins_of_pdbs = build_protein_list( arg_strucs_context );
+	const protein_list proteins_of_pdbs = build_protein_list( prm_strucs_context );
 	score_alignment( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 	// Return the results
@@ -101,8 +101,8 @@ pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_ali
 }
 
 /// \brief Ctor for ssap_aln_file_alignment_acquirer
-ssap_aln_file_alignment_acquirer::ssap_aln_file_alignment_acquirer(const path &arg_ssap_alignment_file ///< TODOCUMENT
-                                                                   ) : ssap_alignment_file( arg_ssap_alignment_file ) {
+ssap_aln_file_alignment_acquirer::ssap_aln_file_alignment_acquirer(const path &prm_ssap_alignment_file ///< TODOCUMENT
+                                                                   ) : ssap_alignment_file( prm_ssap_alignment_file ) {
 }
 
 /// \brief TODOCUMENT

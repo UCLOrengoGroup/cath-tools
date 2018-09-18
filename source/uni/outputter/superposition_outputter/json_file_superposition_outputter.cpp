@@ -47,11 +47,11 @@ unique_ptr<superposition_outputter> json_file_superposition_outputter::do_clone(
 }
 
 /// \brief TODOCUMENT
-void json_file_superposition_outputter::do_output_superposition(const superposition_context &arg_superposition_context, ///< The superpositon_context object to output
-                                                                ostream                     &/*arg_ostream*/,           ///< An ostream object to which any warnings/errors may be written (currently ignored)
-                                                                const string_ref            &/*arg_name*/               ///< A name for the superposition (so users of the superposition know what it represents)
+void json_file_superposition_outputter::do_output_superposition(const superposition_context &prm_superposition_context, ///< The superpositon_context object to output
+                                                                ostream                     &/*prm_ostream*/,           ///< An ostream object to which any warnings/errors may be written (currently ignored)
+                                                                const string_ref            &/*prm_name*/               ///< A name for the superposition (so users of the superposition know what it represents)
                                                                 ) const {
-	write_to_json_file( output_file, arg_superposition_context, the_json_style );
+	write_to_json_file( output_file, prm_superposition_context, the_json_style );
 }
 
 /// \brief Specify that this outputter doesn't involve a display_spec
@@ -65,9 +65,9 @@ string json_file_superposition_outputter::do_get_name() const {
 }
 
 /// \brief Ctor for json_file_superposition_outputter
-json_file_superposition_outputter::json_file_superposition_outputter(const path       &arg_output_file, ///< The file to which the superposition should be written
-                                                                     const json_style &arg_json_style   ///< The style in which the JSON should be written
-                                                                     ) : output_file    ( arg_output_file  ),
-                                                                         the_json_style ( arg_json_style   ) {
+json_file_superposition_outputter::json_file_superposition_outputter(const path       &prm_output_file, ///< The file to which the superposition should be written
+                                                                     const json_style &prm_json_style   ///< The style in which the JSON should be written
+                                                                     ) : output_file    ( prm_output_file  ),
+                                                                         the_json_style ( prm_json_style   ) {
 }
 

@@ -51,24 +51,24 @@ using namespace std;
 ///
 /// The input and output stream parameters default to cin and cout respectively but are configurable,
 /// primarily for testing purposes
-void cath_align_scorer::score(const cath_score_align_options &arg_cath_score_align_options, ///< The details of the cath-score-align job to perform
-                              istream                         &arg_istream,                 ///< The istream from which any stdin-like input should be read
-                              ostream                         &arg_stdout,                  ///< The ostream to which any stdout-like output should be written
-                              ostream                         &/*arg_stderr*/               ///< The ostream to which any stderr-like output should be written
+void cath_align_scorer::score(const cath_score_align_options &prm_cath_score_align_options, ///< The details of the cath-score-align job to perform
+                              istream                         &prm_istream,                 ///< The istream from which any stdin-like input should be read
+                              ostream                         &prm_stdout,                  ///< The ostream to which any stdout-like output should be written
+                              ostream                         &/*prm_stderr*/               ///< The ostream to which any stderr-like output should be written
                               ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto &error_or_help_string = arg_cath_score_align_options.get_error_or_help_string();
+	const auto &error_or_help_string = prm_cath_score_align_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << *error_or_help_string;
+		prm_stdout << *error_or_help_string;
 		return;
 	}
 
 	// Grab the PDBs and their IDs
-	const strucs_context context  = get_pdbs_and_names( arg_cath_score_align_options, arg_istream, false );
+	const strucs_context context  = get_pdbs_and_names( prm_cath_score_align_options, prm_istream, false );
 	const protein_list   proteins = build_protein_list( context );
 
 	// An alignment is required but this should have been checked elsewhere
-	const auto       alignment_acq_ptr  = get_alignment_acquirer( arg_cath_score_align_options );
+	const auto       alignment_acq_ptr  = get_alignment_acquirer( prm_cath_score_align_options );
 	const auto       alignment_and_tree = alignment_acq_ptr->get_alignment_and_spanning_tree( context );
 	const alignment &the_alignment      = alignment_and_tree.first;
 	// const auto      &spanning_tree      = alignment_and_tree.second;
@@ -92,5 +92,5 @@ void cath_align_scorer::score(const cath_score_align_options &arg_cath_score_ali
 		protein_a,
 		protein_b
 	);
-	arg_stdout << score_value_list_json_outputter( the_scores_and_values ) << endl;
+	prm_stdout << score_value_list_json_outputter( the_scores_and_values ) << endl;
 }

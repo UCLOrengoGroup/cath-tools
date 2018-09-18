@@ -134,42 +134,42 @@ const variables_map & executable_options::get_variables_map() const {
 ///
 /// Note that this registers the options_block but doesn't take ownership of it
 /// The client should
-void executable_options::add_options_block(options_block &arg_options_block ///< The options block to register
+void executable_options::add_options_block(options_block &prm_options_block ///< The options block to register
                                            ) {
 	if (processed_options) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot add an options_block once the options have been processed"));
 	}
-	all_options_blocks.push_back( arg_options_block );
+	all_options_blocks.push_back( prm_options_block );
 }
 
 /// \brief Add a string into the options usage
 ///
 /// This is implemented by adding a no-options string_options_block.
 /// The slight annoyance is that it will automatically append a ':'.
-void executable_options::add_string(string arg_string ///< The string to add into the options usage
+void executable_options::add_string(string prm_string ///< The string to add into the options usage
                                     ) {
-	string_obj_blocks.emplace_back( arg_string );
+	string_obj_blocks.emplace_back( prm_string );
 	all_options_blocks.push_back( string_obj_blocks.back() );
 }
 
 /// \brief Add all the options of the specified options_block to the specified options_description
-void executable_options::add_all_options_to_description(options_description &arg_options_description, ///< The options_description to which the options should be added
-                                                        options_block       &arg_options_block,       ///< The options_block from which the options to be added should be drawn
-                                                        const size_t        &arg_prog_ops_line_length ///< The length of the line to use
+void executable_options::add_all_options_to_description(options_description &prm_options_description, ///< The options_description to which the options should be added
+                                                        options_block       &prm_options_block,       ///< The options_block from which the options to be added should be drawn
+                                                        const size_t        &prm_prog_ops_line_length ///< The length of the line to use
                                                         ) {
-	arg_options_description.add( arg_options_block.get_visible_options_description( arg_prog_ops_line_length ) );
-	const auto hidden_opts_block = arg_options_block.get_hidden_options_description ( arg_prog_ops_line_length );
+	prm_options_description.add( prm_options_block.get_visible_options_description( prm_prog_ops_line_length ) );
+	const auto hidden_opts_block = prm_options_block.get_hidden_options_description ( prm_prog_ops_line_length );
 	if ( ! hidden_opts_block.options().empty() ) {
-		arg_options_description.add( hidden_opts_block );
+		prm_options_description.add( hidden_opts_block );
 	}
 }
 
 /// \brief Add the visible options of the specified options_block to the specified options_description
-void executable_options::add_visble_options_to_description(options_description &arg_options_description, ///< The options_description to which the options should be added
-                                                           options_block       &arg_options_block,       ///< The options_block from which the options to be added should be drawn
-                                                           const size_t        &arg_prog_ops_line_length ///< The length of the line to use
+void executable_options::add_visble_options_to_description(options_description &prm_options_description, ///< The options_description to which the options should be added
+                                                           options_block       &prm_options_block,       ///< The options_block from which the options to be added should be drawn
+                                                           const size_t        &prm_prog_ops_line_length ///< The length of the line to use
                                                            ) {
-	arg_options_description.add( arg_options_block.get_visible_options_description( arg_prog_ops_line_length ) );
+	prm_options_description.add( prm_options_block.get_visible_options_description( prm_prog_ops_line_length ) );
 }
 
 /// \brief Attempt to parse the specified options
@@ -185,7 +185,7 @@ void executable_options::add_visble_options_to_description(options_description &
 /// \post The options will be parsed and ready for querying
 void executable_options::parse_options(const int           &argc,             ///< The argc from command line parameters
                                        const char * const   argv[],           ///< The argv from command line parameters
-                                       const parse_sources &arg_parse_sources ///< The sources from which options should be parsed
+                                       const parse_sources &prm_parse_sources ///< The sources from which options should be parsed
                                        ) {
 	// Check the options haven't already been processed
 	if ( processed_options ) {
@@ -226,9 +226,9 @@ void executable_options::parse_options(const int           &argc,             //
 
 	// return prog_opts_try(
 	// 	[&] {
-	// 		const auto parsed = arg_parser.run();
-	// 		store( parsed, arg_vm );
-	// 		notify( arg_vm );
+	// 		const auto parsed = prm_parser.run();
+	// 		store( parsed, prm_vm );
+	// 		notify( prm_vm );
 	// 		return parsed;
 	// 	}
 	// );
@@ -300,7 +300,7 @@ void executable_options::parse_options(const int           &argc,             //
 		}
 	);
 
-	if ( arg_parse_sources == parse_sources::CMND_ENV_AND_FILE ) {
+	if ( prm_parse_sources == parse_sources::CMND_ENV_AND_FILE ) {
 
 		// If running in test mode, complain that shouldn't be parsing env-vars or config files
 		//

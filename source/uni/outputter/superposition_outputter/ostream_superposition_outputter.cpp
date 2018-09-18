@@ -43,14 +43,14 @@ unique_ptr<superposition_outputter> ostream_superposition_outputter::do_clone() 
 }
 
 /// \brief TODOCUMENT
-void ostream_superposition_outputter::do_output_superposition(const superposition_context &arg_supn_context, ///< TODOCUMENT
-                                                              ostream                     &arg_ostream,      ///< TODOCUMENT
-                                                              const string_ref            &/*arg_name*/      ///< A name for the superposition (so users of the superposition know what it represents)
+void ostream_superposition_outputter::do_output_superposition(const superposition_context &prm_supn_context, ///< TODOCUMENT
+                                                              ostream                     &prm_ostream,      ///< TODOCUMENT
+                                                              const string_ref            &/*prm_name*/      ///< A name for the superposition (so users of the superposition know what it represents)
                                                               ) const {
 	write_superposed_pdbs_to_ostream(
-		arg_ostream,
-		arg_supn_context.get_superposition(),
-		get_supn_content_pdbs( arg_supn_context, content_spec ),
+		prm_ostream,
+		prm_supn_context.get_superposition(),
+		get_supn_content_pdbs( prm_supn_context, content_spec ),
 		sup_pdbs_script_policy::LEAVE_RAW_PDBS,
 		chain_relabel_policy::RELABEL
 	);
@@ -67,6 +67,6 @@ string ostream_superposition_outputter::do_get_name() const {
 }
 
 /// \brief Ctor for ostream_superposition_outputter
-ostream_superposition_outputter::ostream_superposition_outputter(superposition_content_spec arg_content_spec ///< The specification of what should be included in the superposition
-                                                                 ) : content_spec { std::move( arg_content_spec ) } {
+ostream_superposition_outputter::ostream_superposition_outputter(superposition_content_spec prm_content_spec ///< The specification of what should be included in the superposition
+                                                                 ) : content_spec { std::move( prm_content_spec ) } {
 }

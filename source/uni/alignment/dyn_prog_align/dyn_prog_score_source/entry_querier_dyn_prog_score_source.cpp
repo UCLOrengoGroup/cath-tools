@@ -37,25 +37,25 @@ size_t entry_querier_dyn_prog_score_source::do_get_length_b() const {
 }
 
 /// \brief TODOCUMENT
-score_type entry_querier_dyn_prog_score_source::do_get_score(const size_t &arg_index_a, ///< The index of the element of interest in the first  sequence
-                                                             const size_t &arg_index_b  ///< The index of the element of interest in the second sequence
+score_type entry_querier_dyn_prog_score_source::do_get_score(const size_t &prm_index_a, ///< The index of the element of interest in the first  sequence
+                                                             const size_t &prm_index_b  ///< The index of the element of interest in the second sequence
                                                              ) const {
 	return the_entry_querier.distance_score__offset_1(
 		protein_a,             protein_b,
 		view_from_index_a + 1, view_from_index_b + 1,
-		arg_index_a       + 1, arg_index_b       + 1
+		prm_index_a       + 1, prm_index_b       + 1
 	);
 }
 
 /// \brief Ctor for entry_querier_dyn_prog_score_source
-entry_querier_dyn_prog_score_source::entry_querier_dyn_prog_score_source(const entry_querier &arg_entry_querier,     ///< TODOCUMENT
-                                                                         const protein       &arg_protein_a,         ///< TODOCUMENT
-                                                                         const protein       &arg_protein_b,         ///< TODOCUMENT
-                                                                         const size_t        &arg_view_from_index_a, ///< TODOCUMENT
-                                                                         const size_t        &arg_view_from_index_b  ///< TODOCUMENT
-                                                                         ) : the_entry_querier ( arg_entry_querier     ),
-                                                                             protein_a         ( arg_protein_a         ),
-                                                                             protein_b         ( arg_protein_b         ),
-                                                                             view_from_index_a ( arg_view_from_index_a ),
-                                                                             view_from_index_b ( arg_view_from_index_b ) {
+entry_querier_dyn_prog_score_source::entry_querier_dyn_prog_score_source(const entry_querier &prm_entry_querier,     ///< TODOCUMENT
+                                                                         const protein       &prm_protein_a,         ///< TODOCUMENT
+                                                                         const protein       &prm_protein_b,         ///< TODOCUMENT
+                                                                         const size_t        &prm_view_from_index_a, ///< TODOCUMENT
+                                                                         const size_t        &prm_view_from_index_b  ///< TODOCUMENT
+                                                                         ) : the_entry_querier ( prm_entry_querier     ),
+                                                                             protein_a         ( prm_protein_a         ),
+                                                                             protein_b         ( prm_protein_b         ),
+                                                                             view_from_index_a ( prm_view_from_index_a ),
+                                                                             view_from_index_b ( prm_view_from_index_b ) {
 }

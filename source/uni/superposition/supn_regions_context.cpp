@@ -70,17 +70,17 @@ str_vec all_supn_regions_context_names::get() {
 ///        the specified supn_regions_context
 ///
 /// \relates supn_regions_context
-region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec           &arg_regions,             ///< The regions to expand
-                                                           const supn_regions_context &arg_supn_regions_context ///< The supn_regions_context describing how (if at all) the regions should be expanded
+region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec           &prm_regions,             ///< The regions to expand
+                                                           const supn_regions_context &prm_supn_regions_context ///< The supn_regions_context describing how (if at all) the regions should be expanded
                                                            ) {
-	switch ( arg_supn_regions_context ) {
+	switch ( prm_supn_regions_context ) {
 		case ( supn_regions_context::ALONE    ) : {
-			return arg_regions;
+			return prm_regions;
 		}
 		case ( supn_regions_context::IN_CHAIN ) : {
 			// \todo Come a later GCC, just use this:
 			//     return sort_uniq_build<region_vec>(
-			//     	arg_regions
+			//     	prm_regions
 			//     		| transformed( [] (const region &x) {
 			//     			return expand_to_chain( x );
 			//     		} ),
@@ -89,7 +89,7 @@ region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec     
 			//     	}
 			//     );
 			auto expanded_region_chain_labels = transform_build<set<chain_label>>(
-				arg_regions,
+				prm_regions,
 				[] (const region &x) {
 					return get_chain_label( x );
 				}
@@ -110,18 +110,18 @@ region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec     
 ///        the supn_regions_context implied by the specified superposition_content_spec
 ///
 /// \relates superposition_content_spec
-region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec                 &arg_regions,     ///< The regions to expand
-                                                           const superposition_content_spec &arg_content_spec ///< The superposition_content_spec to query for the supn_regions_context
+region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec                 &prm_regions,     ///< The regions to expand
+                                                           const superposition_content_spec &prm_content_spec ///< The superposition_content_spec to query for the supn_regions_context
                                                            ) {
-	return get_regions_expanded_for_context( arg_regions, arg_content_spec.get_regions_context() );
+	return get_regions_expanded_for_context( prm_regions, prm_content_spec.get_regions_context() );
 }
 
 /// \brief Generate a string describing the specified supn_regions_context
 ///
 /// \relates supn_regions_context
-string cath::sup::to_string(const supn_regions_context &arg_context ///< The supn_regions_context to describe
+string cath::sup::to_string(const supn_regions_context &prm_context ///< The supn_regions_context to describe
                             ) {
-	switch ( arg_context ) {
+	switch ( prm_context ) {
 		case ( supn_regions_context::ALONE    ) : { return "alone"    ; }
 		case ( supn_regions_context::IN_CHAIN ) : { return "in_chain" ; }
 		case ( supn_regions_context::IN_PDB   ) : { return "in_pdb"   ; }
@@ -132,34 +132,34 @@ string cath::sup::to_string(const supn_regions_context &arg_context ///< The sup
 /// \brief Insert a description of the specified supn_regions_context into the specified ostream
 ///
 /// \relates supn_regions_context
-ostream & cath::sup::operator<<(ostream                    &arg_os,     ///< The ostream into which the description should be inserted
-                                const supn_regions_context &arg_context ///< The supn_regions_context to describe
+ostream & cath::sup::operator<<(ostream                    &prm_os,     ///< The ostream into which the description should be inserted
+                                const supn_regions_context &prm_context ///< The supn_regions_context to describe
                                 ) {
-	arg_os << to_string( arg_context );
-	return arg_os;
+	prm_os << to_string( prm_context );
+	return prm_os;
 }
 
 /// \brief Extract into the specified supn_regions_context from the specified stream
 ///
 /// \relates supn_regions_context
-istream & cath::sup::operator>>(istream              &arg_is,        ///< The stream from which the supn_regions_context should be extracted
-                                supn_regions_context &arg_format_tag ///< The supn_regions_context to populate from the specified stream
+istream & cath::sup::operator>>(istream              &prm_is,        ///< The stream from which the supn_regions_context should be extracted
+                                supn_regions_context &prm_format_tag ///< The supn_regions_context to populate from the specified stream
                                 ) {
 	string input_string;
-	arg_is >> input_string;
+	prm_is >> input_string;
 	to_lower( input_string );
 
 	const auto all_layout_tags_by_name = supn_regions_context_by_name::get();
-	arg_format_tag = all_layout_tags_by_name.at( input_string );
-	return arg_is;
+	prm_format_tag = all_layout_tags_by_name.at( input_string );
+	return prm_is;
 }
 
 /// \brief Generate a string containing a description of the specified supn_regions_context
 ///
 /// \relates supn_regions_context
-string cath::sup::description_of_supn_regions_context(const supn_regions_context &arg_format_tag ///< The supn_regions_context to describe
+string cath::sup::description_of_supn_regions_context(const supn_regions_context &prm_format_tag ///< The supn_regions_context to describe
                                                       ) {
-	switch ( arg_format_tag ) {
+	switch ( prm_format_tag ) {
 		case ( supn_regions_context::ALONE    ) : { return "alone"                                           ; }
 		case ( supn_regions_context::IN_CHAIN ) : { return "within the chain(s) in which the regions appear" ; }
 		case ( supn_regions_context::IN_PDB   ) : { return "within the PDB in which the regions appear"      ; }
@@ -168,8 +168,8 @@ string cath::sup::description_of_supn_regions_context(const supn_regions_context
 }
 
 /// \brief Provide Boost program_options validation for supn_regions_context
-void cath::sup::validate(any           &arg_value,         ///< The value to populate
-                         const str_vec &arg_value_strings, ///< The string values to validate
+void cath::sup::validate(any           &prm_value,         ///< The value to populate
+                         const str_vec &prm_value_strings, ///< The string values to validate
                          supn_regions_context *, int) {
-	arg_value = lex_castable_validator<supn_regions_context>::perform_validate( arg_value, arg_value_strings );
+	prm_value = lex_castable_validator<supn_regions_context>::perform_validate( prm_value, prm_value_strings );
 }

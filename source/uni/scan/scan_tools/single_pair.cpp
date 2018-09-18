@@ -56,12 +56,12 @@ unique_ptr<scan_type> single_pair::do_clone() const {
 /// \brief TODOCUMENT
 ///
 /// This can be used to scan all of one protein_list against all of another or all of a protein_list
-/// against itself (by passing the same protein_list as arg_query_protein_list and arg_match_protein_list)
+/// against itself (by passing the same protein_list as prm_query_protein_list and prm_match_protein_list)
 
-pair<record_scores_scan_action, scan_metrics> single_pair::do_perform_scan(const protein_list &arg_query_protein_list, ///< TODOCUMENT,
-                                                                           const protein_list &arg_match_protein_list  ///< TODOCUMENT
+pair<record_scores_scan_action, scan_metrics> single_pair::do_perform_scan(const protein_list &prm_query_protein_list, ///< TODOCUMENT,
+                                                                           const protein_list &prm_match_protein_list  ///< TODOCUMENT
                                                                            ) const {
-	if ( arg_query_protein_list.size() != 1 || arg_match_protein_list.size() != 1 ) {
+	if ( prm_query_protein_list.size() != 1 || prm_match_protein_list.size() != 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to perform single_pair scan because the two protein_lists don't both contain one entry"));
 	}
 
@@ -82,12 +82,12 @@ pair<record_scores_scan_action, scan_metrics> single_pair::do_perform_scan(const
 		scan_stride{ 4, 4, 2, 2 }
 	);
 
-	const auto the_query_set = make_scan_query_set( the_scan_policy, arg_query_protein_list );
-	const auto the_index     = make_scan_index    ( the_scan_policy, arg_match_protein_list );
+	const auto the_query_set = make_scan_query_set( the_scan_policy, prm_query_protein_list );
+	const auto the_index     = make_scan_index    ( the_scan_policy, prm_match_protein_list );
 
 	record_scores_scan_action the_action(
-		arg_query_protein_list.size(),
-		arg_match_protein_list.size()
+		prm_query_protein_list.size(),
+		prm_match_protein_list.size()
 	);
 
 	const auto scan_duration  = the_query_set.do_magic( the_index, the_action );

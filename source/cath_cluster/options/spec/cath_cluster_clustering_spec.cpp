@@ -55,9 +55,9 @@ const strength_vec & cath_cluster_clustering_spec::get_levels() const {
 }
 
 /// \brief Setter for the levels at which the clustering should be performed
-cath_cluster_clustering_spec & cath_cluster_clustering_spec::set_levels(const strength_vec &arg_levels ///< The levels at which the clustering should be performed
+cath_cluster_clustering_spec & cath_cluster_clustering_spec::set_levels(const strength_vec &prm_levels ///< The levels at which the clustering should be performed
                                                                                   ) {
-	levels = arg_levels;
+	levels = prm_levels;
 	return *this;
 }
 
@@ -65,9 +65,9 @@ cath_cluster_clustering_spec & cath_cluster_clustering_spec::set_levels(const st
 ///        or none otherwise
 ///
 /// \relates cath_cluster_clustering_spec
-str_opt cath::clust::get_invalid_description(const cath_cluster_clustering_spec &arg_clustering_spec ///< The cath_cluster_clustering_spec to query
+str_opt cath::clust::get_invalid_description(const cath_cluster_clustering_spec &prm_clustering_spec ///< The cath_cluster_clustering_spec to query
                                              ) {
-	if ( arg_clustering_spec.get_levels().empty() ) {
+	if ( prm_clustering_spec.get_levels().empty() ) {
 		return "Most specify at least one clustering level"s;
 	}
 
@@ -76,61 +76,61 @@ str_opt cath::clust::get_invalid_description(const cath_cluster_clustering_spec 
 
 /// \brief Get a warning string if the specified clustering levels aren't sorted suitable for the specified link_dirn
 ///        or none otherwise
-str_opt cath::clust::get_dissim_sort_warning(const strength_vec &arg_levels,   ///< The clustering levels to check
-                                             const link_dirn    &arg_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
+str_opt cath::clust::get_dissim_sort_warning(const strength_vec &prm_levels,   ///< The clustering levels to check
+                                             const link_dirn    &prm_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
                                              ) {
-	const bool is_correct = ( arg_link_dirn == link_dirn::STRENGTH )
-		? is_sorted( arg_levels, less   <>{} )
-		: is_sorted( arg_levels, greater<>{} );
+	const bool is_correct = ( prm_link_dirn == link_dirn::STRENGTH )
+		? is_sorted( prm_levels, less   <>{} )
+		: is_sorted( prm_levels, greater<>{} );
 	return make_optional(
 		! is_correct,
 		"The levels ("
 			+ join(
-				arg_levels
+				prm_levels
 					| transformed( [] (const strength &x) { return lexical_cast<string>( x ); } ),
 				", "
 			)
 			+ ") are not sorted to be "
-			+ ( ( arg_link_dirn == link_dirn::STRENGTH ) ? "increasing" : "decreasing" )
+			+ ( ( prm_link_dirn == link_dirn::STRENGTH ) ? "increasing" : "decreasing" )
 			+ " as would be expected with a "
-			+ to_lower_copy( to_string( arg_link_dirn ) )
+			+ to_lower_copy( to_string( prm_link_dirn ) )
 			+ " link direction"
 	);
 }
 
 /// \brief Convert the specified clustering levels into dissimilarities
 ///        (as necessary according to the specified link_dirn) and sort
-void cath::clust::make_dissim_and_sort(strength_vec    &arg_levels,   ///< The clustering levels to alter
-                                       const link_dirn &arg_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
+void cath::clust::make_dissim_and_sort(strength_vec    &prm_levels,   ///< The clustering levels to alter
+                                       const link_dirn &prm_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
                                        ) {
-	if ( arg_link_dirn == link_dirn::STRENGTH ) {
-		for (strength &x : arg_levels) {
+	if ( prm_link_dirn == link_dirn::STRENGTH ) {
+		for (strength &x : prm_levels) {
 			x = -x;
 		}
 	}
-	sort( arg_levels );
+	sort( prm_levels );
 }
 
 /// \brief Convert a copy of the specified clustering levels into dissimilarities
 ///        (as necessary according to the specified link_dirn), sort and return
-strength_vec cath::clust::make_dissim_and_sort_copy(strength_vec     arg_levels,   ///< The clustering levels to query
-                                                    const link_dirn &arg_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
+strength_vec cath::clust::make_dissim_and_sort_copy(strength_vec     prm_levels,   ///< The clustering levels to query
+                                                    const link_dirn &prm_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
                                                     ) {
-	make_dissim_and_sort( arg_levels, arg_link_dirn );
-	return arg_levels;
+	make_dissim_and_sort( prm_levels, prm_link_dirn );
+	return prm_levels;
 }
 
 /// \brief Get the maximum dissimilarity value corresponding to the specified clustering levels which are in the specified link_dirn
-strength cath::clust::get_max_dissim(const strength_vec &arg_levels,   ///< The clustering levels to query
-                                     const link_dirn    &arg_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
+strength cath::clust::get_max_dissim(const strength_vec &prm_levels,   ///< The clustering levels to query
+                                     const link_dirn    &prm_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
                                      ) {
-	if ( arg_levels.empty() ) {
+	if ( prm_levels.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get the max dissimilarity of an empty list of levels"));
 	}
 	return max_proj(
-		arg_levels,
+		prm_levels,
 		std::less<>{},
-		[&] (const strength &x) { return ( arg_link_dirn == link_dirn::STRENGTH ) ? -x : x; }
+		[&] (const strength &x) { return ( prm_link_dirn == link_dirn::STRENGTH ) ? -x : x; }
 	);
 }
 
@@ -138,28 +138,28 @@ strength cath::clust::get_max_dissim(const strength_vec &arg_levels,   ///< The 
 ///        sorted suitable for the specified link_dirn or none otherwise
 ///
 /// \relates cath_cluster_clustering_spec
-str_opt cath::clust::get_dissim_sort_warning(const cath_cluster_clustering_spec &arg_spec,     ///< The cath_cluster_clustering_spec to check
-                                             const link_dirn                    &arg_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
+str_opt cath::clust::get_dissim_sort_warning(const cath_cluster_clustering_spec &prm_spec,     ///< The cath_cluster_clustering_spec to check
+                                             const link_dirn                    &prm_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
                                              ) {
-	return get_dissim_sort_warning( arg_spec.get_levels(), arg_link_dirn );
+	return get_dissim_sort_warning( prm_spec.get_levels(), prm_link_dirn );
 }
 
 /// \brief Convert a copy of the specified cath_cluster_clustering_spec's clustering levels into dissimilarities
 ///        (as necessary according to the specified link_dirn), sort and return
 ///
 /// \relates cath_cluster_clustering_spec
-strength_vec cath::clust::get_sorted_dissims(const cath_cluster_clustering_spec &arg_spec,     ///< The cath_cluster_clustering_spec to query
-                                             const link_dirn                    &arg_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
+strength_vec cath::clust::get_sorted_dissims(const cath_cluster_clustering_spec &prm_spec,     ///< The cath_cluster_clustering_spec to query
+                                             const link_dirn                    &prm_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
                                              ) {
-	return make_dissim_and_sort_copy( arg_spec.get_levels(), arg_link_dirn );
+	return make_dissim_and_sort_copy( prm_spec.get_levels(), prm_link_dirn );
 }
 
 /// \brief Get the maximum dissimilarity value corresponding to the specified cath_cluster_clustering_spec's
 ///        clustering levels which are in the specified link_dirn
 ///
 /// \relates cath_cluster_clustering_spec
-strength cath::clust::get_max_dissim(const cath_cluster_clustering_spec &arg_spec,     ///< The cath_cluster_clustering_spec to query
-                                     const link_dirn                    &arg_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
+strength cath::clust::get_max_dissim(const cath_cluster_clustering_spec &prm_spec,     ///< The cath_cluster_clustering_spec to query
+                                     const link_dirn                    &prm_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
                                      ) {
-	return get_max_dissim( arg_spec.get_levels(), arg_link_dirn );
+	return get_max_dissim( prm_spec.get_levels(), prm_link_dirn );
 }

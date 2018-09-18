@@ -54,12 +54,12 @@ tribool sas_score::do_higher_is_better() const {
 }
 
 /// \brief Concrete implementation for calculating the SAS of an alignment
-score_value sas_score::do_calculate(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                    const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                    const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+score_value sas_score::do_calculate(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                    const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                    const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                     ) const {
-	return 100.0 * rmsd.calculate( arg_alignment, arg_protein_a, arg_protein_b )
-	             / num_aligned_residues.calculate( arg_alignment, arg_protein_a, arg_protein_b );
+	return 100.0 * rmsd.calculate( prm_alignment, prm_protein_a, prm_protein_b )
+	             / num_aligned_residues.calculate( prm_alignment, prm_protein_a, prm_protein_b );
 }
 
 /// \brief Concrete implementation that describes what this score means
@@ -95,24 +95,24 @@ string sas_score::do_reference() const {
 }
 
 ///// \brief Build an aligned_pair_score of this concrete type from a short_name_spec string
-//unique_ptr<aligned_pair_score> sas_score::do_build_from_short_name_spec(const string &arg_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
+//unique_ptr<aligned_pair_score> sas_score::do_build_from_short_name_spec(const string &prm_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
 //                                                                        ) const {
-//	cerr << "Should build a sas_score from string \"" << arg_short_name_spec << "\"" << endl;
+//	cerr << "Should build a sas_score from string \"" << prm_short_name_spec << "\"" << endl;
 //	return clone();
 //}
 
 /// \brief TODOCUMENT
-bool sas_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool sas_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                     ) const {
-	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 	return ( *this < casted_aligned_pair_score );
 }
 
 /// \brief Ctor for sas_score that allows the caller to specify the common_residue_selection_policy and common_atom_selection_policy
-sas_score::sas_score(const common_residue_selection_policy &arg_comm_res_seln_pol, ///< The policy to use for selecting common residues
-                     const common_atom_selection_policy    &arg_comm_atom_seln_pol  ///< The policy to use for selecting common atoms
-                     ) : rmsd                ( arg_comm_res_seln_pol, arg_comm_atom_seln_pol ),
-                         num_aligned_residues( num_aligned_length_getter( arg_comm_res_seln_pol ) ) {
+sas_score::sas_score(const common_residue_selection_policy &prm_comm_res_seln_pol, ///< The policy to use for selecting common residues
+                     const common_atom_selection_policy    &prm_comm_atom_seln_pol  ///< The policy to use for selecting common atoms
+                     ) : rmsd                ( prm_comm_res_seln_pol, prm_comm_atom_seln_pol ),
+                         num_aligned_residues( num_aligned_length_getter( prm_comm_res_seln_pol ) ) {
 }
 
 /// \brief TODOCUMENT
@@ -128,10 +128,10 @@ const length_score & sas_score::get_num_aligned_residues() const {
 /// \brief TODOCUMENT
 ///
 /// \relates sas_score
-bool cath::score::operator<(const sas_score &arg_sas_score_a, ///< TODOCUMENT
-                            const sas_score &arg_sas_score_b  ///< TODOCUMENT
+bool cath::score::operator<(const sas_score &prm_sas_score_a, ///< TODOCUMENT
+                            const sas_score &prm_sas_score_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_sas_score_a, arg_sas_score_b );
+	auto the_helper = make_less_than_helper( prm_sas_score_a, prm_sas_score_b );
 	the_helper.register_comparison_field( &sas_score::get_rmsd_score           );
 	the_helper.register_comparison_field( &sas_score::get_num_aligned_residues );
 	return final_less_than_result( the_helper );

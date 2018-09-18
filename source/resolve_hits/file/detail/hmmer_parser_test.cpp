@@ -68,14 +68,14 @@ namespace cath {
 
 			/// \brief Test whether the result of parsing the specified type of HMMER data from
 			///        the specified file matches the specified data
-			void test_parse(const path                       &arg_input_file,   ///< The file to parse
-			                const hmmer_format               &arg_hmmer_format, ///< The type of HMMER data to expect
-			                const str_full_hit_list_pair_vec &arg_expected      ///< The expected results
+			void test_parse(const path                       &prm_input_file,   ///< The file to parse
+			                const hmmer_format               &prm_hmmer_format, ///< The type of HMMER data to expect
+			                const str_full_hit_list_pair_vec &prm_expected      ///< The expected results
 			                ) {
 				const auto got = transform_build<str_full_hit_list_pair_vec>(
 					parse_hmmer_out_file(
-						arg_input_file,
-						arg_hmmer_format,
+						prm_input_file,
+						prm_hmmer_format,
 						APPLY_CATH_POLICIES,
 						MIN_GAP_LENGTH,
 						OUTPUT_HMMER_ALN
@@ -85,7 +85,7 @@ namespace cath {
 					}
 				);
 
-				BOOST_TEST( got == arg_expected, per_element{} );
+				BOOST_TEST( got == prm_expected, per_element{} );
 			}
 
 		};

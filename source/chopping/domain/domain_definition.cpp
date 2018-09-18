@@ -30,10 +30,10 @@ using namespace cath::opts;
 using std::string;
 
 /// \brief Ctor for domain_definition
-domain_definition::domain_definition(domain arg_domain,  ///< TODOCUMENT
-                                     string arg_pdb_name ///< TODOCUMENT
-                                     ) : the_domain{ std::move( arg_domain   ) },
-                                         pdb_name  { std::move( arg_pdb_name ) } {
+domain_definition::domain_definition(domain prm_domain,  ///< TODOCUMENT
+                                     string prm_pdb_name ///< TODOCUMENT
+                                     ) : the_domain{ std::move( prm_domain   ) },
+                                         pdb_name  { std::move( prm_pdb_name ) } {
 }
 
 /// \brief TODOCUMENT

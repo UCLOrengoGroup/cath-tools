@@ -39,13 +39,13 @@ unique_ptr<alignment_outputter> file_alignment_outputter::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-void file_alignment_outputter::do_output_alignment(const alignment_context &arg_alignment_context, ///< TODOCUMENT
-                                                   ostream                 &/*arg_ostream*/        ///< TODOCUMENT
+void file_alignment_outputter::do_output_alignment(const alignment_context &prm_alignment_context, ///< TODOCUMENT
+                                                   ostream                 &/*prm_ostream*/        ///< TODOCUMENT
                                                    ) const {
 	ofstream pdb_ostream;
 	open_ofstream( pdb_ostream, output_file );
 
-	ostream_alignment_outputter_ptr->output_alignment( arg_alignment_context, pdb_ostream );
+	ostream_alignment_outputter_ptr->output_alignment( prm_alignment_context, pdb_ostream );
 
 	pdb_ostream << flush;
 	pdb_ostream.close();
@@ -57,10 +57,10 @@ bool file_alignment_outputter::do_involves_display_spec() const {
 }
 
 /// \brief Ctor for file_alignment_outputter.
-file_alignment_outputter::file_alignment_outputter(const path                &arg_output_file,        ///< TODOCUMENT
-                                                   const alignment_outputter &arg_alignment_outputter ///< TODOCUMENT
-                                                   ) : output_file                    ( arg_output_file                 ),
-                                                       ostream_alignment_outputter_ptr( arg_alignment_outputter.clone() ) {
+file_alignment_outputter::file_alignment_outputter(const path                &prm_output_file,        ///< TODOCUMENT
+                                                   const alignment_outputter &prm_alignment_outputter ///< TODOCUMENT
+                                                   ) : output_file                    ( prm_output_file                 ),
+                                                       ostream_alignment_outputter_ptr( prm_alignment_outputter.clone() ) {
 }
 
 /// \brief Get a name for this alignment_outputter

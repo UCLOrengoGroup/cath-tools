@@ -36,21 +36,21 @@ namespace cath {
 		template <typename Rng,
 		          typename Pred = std::less<>,
 		          typename Proj = ident>
-		inline auto sort_proj(Rng  &&arg_range,          ///< The range to sort
-		                      Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
-		                      Proj &&arg_proj  = Proj{}  ///< The projection function
+		inline auto sort_proj(Rng  &&prm_range,          ///< The range to sort
+		                      Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+		                      Proj &&prm_proj  = Proj{}  ///< The projection function
 		                      ) {
 			return boost::range::sort(
-				arg_range,
+				prm_range,
 				[&] (const auto & x, const auto & y) {
 					return common::invoke(
-						std::forward<Pred>( arg_pred ),
+						std::forward<Pred>( prm_pred ),
 						common::invoke(
-							std::forward< Proj >( arg_proj ),
+							std::forward< Proj >( prm_proj ),
 							x
 						),
 						common::invoke(
-							std::forward< Proj >( arg_proj ),
+							std::forward< Proj >( prm_proj ),
 							y
 						)
 					);

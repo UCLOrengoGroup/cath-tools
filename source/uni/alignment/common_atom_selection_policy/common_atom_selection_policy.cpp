@@ -43,19 +43,19 @@ using boost::assign::ptr_push_back;
 using boost::ptr_vector;
 
 /// \brief NVI pass-through method to the concrete class's do_select_common_atoms() which defines how the policy extracts common atoms from a pair of residues
-void common_atom_selection_policy::append_common_atoms_to_coord_lists(coord_list_coord_list_pair &arg_coord_lists, ///< The previous common coord_lists to which the new selections should be appended
-                                                                      const residue              &arg_residue_a,   ///< The first  residue from which common atoms should be extracted
-                                                                      const residue              &arg_residue_b    ///< The second residue from which common atoms should be extracted
+void common_atom_selection_policy::append_common_atoms_to_coord_lists(coord_list_coord_list_pair &prm_coord_lists, ///< The previous common coord_lists to which the new selections should be appended
+                                                                      const residue              &prm_residue_a,   ///< The first  residue from which common atoms should be extracted
+                                                                      const residue              &prm_residue_b    ///< The second residue from which common atoms should be extracted
                                                                       ) const {
 	// Sanity check the inputs
-	if ( arg_coord_lists.first.size() != arg_coord_lists.second.size() ) {
+	if ( prm_coord_lists.first.size() != prm_coord_lists.second.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("The common coord_lists passed to append_common_atoms_to_coord_lists() must be of equal length"));
 	}
 
-	do_append_common_atoms_to_coord_lists( arg_coord_lists, arg_residue_a, arg_residue_b );
+	do_append_common_atoms_to_coord_lists( prm_coord_lists, prm_residue_a, prm_residue_b );
 
 	// Sanity check the altered coord_lists
-	if ( arg_coord_lists.first.size() != arg_coord_lists.second.size() ) {
+	if ( prm_coord_lists.first.size() != prm_coord_lists.second.size() ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("common_atom_selection_policy has appended an unequal number of common coordinates to the two lists"));
 	}
 }
@@ -72,22 +72,22 @@ unique_ptr<common_atom_selection_policy> common_atom_selection_policy::clone() c
 
 /// \brief An NVI pass-through to the concrete class's do_less_than_with_same_dynamic_type(),
 ///        which defines the less-than operator when the argument's known to have the same dynamic type
-bool common_atom_selection_policy::less_than_with_same_dynamic_type(const common_atom_selection_policy &arg_common_atom_selection_policy ///< TODOCUMENT
+bool common_atom_selection_policy::less_than_with_same_dynamic_type(const common_atom_selection_policy &prm_common_atom_selection_policy ///< TODOCUMENT
                                                      ) const {
-	assert( typeid( *this ) == typeid( arg_common_atom_selection_policy ) );
-	return do_less_than_with_same_dynamic_type( arg_common_atom_selection_policy );
+	assert( typeid( *this ) == typeid( prm_common_atom_selection_policy ) );
+	return do_less_than_with_same_dynamic_type( prm_common_atom_selection_policy );
 }
 
 /// \brief Convenience function for creating a new pair of coord_lists that the common_atom_selection_policy selects from the two residues
 ///
 /// \relates common_atom_selection_policy
-coord_list_coord_list_pair cath::align::select_common_atoms(const common_atom_selection_policy &arg_comm_atom_seln_pol, ///< The common_atom_selection_policy to make the selections
-                                                            const residue                      &arg_residue_a,          ///< The first  residue from which common atoms should be extracted
-                                                            const residue                      &arg_residue_b           ///< The second residue from which common atoms should be extracted
+coord_list_coord_list_pair cath::align::select_common_atoms(const common_atom_selection_policy &prm_comm_atom_seln_pol, ///< The common_atom_selection_policy to make the selections
+                                                            const residue                      &prm_residue_a,          ///< The first  residue from which common atoms should be extracted
+                                                            const residue                      &prm_residue_b           ///< The second residue from which common atoms should be extracted
                                                             ) {
 	// Create a new pair of coord_lists, perform the selections and then return the results
 	pair<coord_list, coord_list> new_selections;
-	arg_comm_atom_seln_pol.append_common_atoms_to_coord_lists( new_selections, arg_residue_a, arg_residue_b );
+	prm_comm_atom_seln_pol.append_common_atoms_to_coord_lists( new_selections, prm_residue_a, prm_residue_b );
 	return new_selections;
 }
 
@@ -114,7 +114,7 @@ unique_ptr<common_atom_selection_policy> cath::align::make_default_common_atom_s
 /// common_atom_selection_policy hierarchy
 ///
 /// \relates common_atom_selection_policy
-bool cath::align::is_default_policy(const common_atom_selection_policy &arg_comm_atom_seln_pol ///< The arg_comm_atom_seln_pol to be tested for default-ness
+bool cath::align::is_default_policy(const common_atom_selection_policy &prm_comm_atom_seln_pol ///< The prm_comm_atom_seln_pol to be tested for default-ness
                                     ) {
-	return ( make_default_common_atom_selection_policy()->get_descriptive_name() == arg_comm_atom_seln_pol.get_descriptive_name() );
+	return ( make_default_common_atom_selection_policy()->get_descriptive_name() == prm_comm_atom_seln_pol.get_descriptive_name() );
 }

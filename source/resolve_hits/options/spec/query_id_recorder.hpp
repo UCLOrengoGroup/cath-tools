@@ -68,23 +68,23 @@ namespace cath {
 		}
 
 		/// \brief Return whether the specified query ID has already been seen
-		inline bool query_id_recorder::seen_query_id(const std::string &arg_query_id ///< The query ID for which to search
+		inline bool query_id_recorder::seen_query_id(const std::string &prm_query_id ///< The query ID for which to search
 		                                             ) const {
-			return common::contains( seen_query_ids, arg_query_id );
+			return common::contains( seen_query_ids, prm_query_id );
 		}
 
 		/// \brief Return whether the specified query ID has already been seen
-		inline bool query_id_recorder::seen_query_id(const boost::string_ref &arg_query_id ///< The query ID for which to search
+		inline bool query_id_recorder::seen_query_id(const boost::string_ref &prm_query_id ///< The query ID for which to search
 		                                             ) const {
-			return common::contains( seen_query_ids, arg_query_id );
+			return common::contains( seen_query_ids, prm_query_id );
 		}
 
 		/// \brief Add the specified query ID to those that have been seen
 		///
 		/// Consider using should_skip_query_and_update() rather than calling this method directly
-		inline query_id_recorder & query_id_recorder::add_query_id(const std::string &arg_query_id ///< The query ID to add
+		inline query_id_recorder & query_id_recorder::add_query_id(const std::string &prm_query_id ///< The query ID to add
 		                                                           ) {
-			seen_query_ids.insert( arg_query_id );
+			seen_query_ids.insert( prm_query_id );
 			return *this;
 		}
 
@@ -102,7 +102,7 @@ namespace cath {
 		/// \brief Add the specified query ID to those that have been seen
 		///
 		/// Consider using should_skip_query_and_update() rather than calling this method directly
-		inline query_id_recorder & query_id_recorder::add_query_id(const boost::string_ref &arg_query_id ///< The query ID to add
+		inline query_id_recorder & query_id_recorder::add_query_id(const boost::string_ref &prm_query_id ///< The query ID to add
 		                                                           ) {
 			// Find the place where query ID would go
 			const auto lower_bound_itr = seen_query_ids.lower_bound(
@@ -112,7 +112,7 @@ namespace cath {
 				static_cast<std::string>(
 #endif
 #endif
-				arg_query_id
+				prm_query_id
 #ifdef __GLIBCXX__
 #if __GLIBCXX__ < 20160801
 				)
@@ -121,11 +121,11 @@ namespace cath {
 			);
 
 			// If the query ID should be added, then emplace directly
-			if ( lower_bound_itr == common::cend( seen_query_ids ) || *lower_bound_itr != arg_query_id ) {
+			if ( lower_bound_itr == common::cend( seen_query_ids ) || *lower_bound_itr != prm_query_id ) {
 				seen_query_ids.emplace_hint(
 					lower_bound_itr,
-					common::cbegin( arg_query_id ),
-					common::cend  ( arg_query_id )
+					common::cbegin( prm_query_id ),
+					common::cend  ( prm_query_id )
 				);
 			}
 			return *this;

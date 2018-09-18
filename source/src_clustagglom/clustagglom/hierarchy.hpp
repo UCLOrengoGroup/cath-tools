@@ -103,11 +103,11 @@ namespace cath {
 
 		/// \brief Ctor from the specified vector of hierarchy_layers
 		///
-		/// \pre `! arg_layers.empty()`
+		/// \pre `! prm_layers.empty()`
 		///
-		/// \pre `arg_layers[ 0 ].size() == 1`
-		inline hierarchy::hierarchy(hierarchy_layer_vec arg_layers ///< The hierarchy_layers from which to construct this hierarchy
-		                            ) : layers{ std::move( arg_layers ) } {
+		/// \pre `prm_layers[ 0 ].size() == 1`
+		inline hierarchy::hierarchy(hierarchy_layer_vec prm_layers ///< The hierarchy_layers from which to construct this hierarchy
+		                            ) : layers{ std::move( prm_layers ) } {
 			if ( layers.empty() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create a hierarchy with no layers"));
 			}
@@ -122,15 +122,15 @@ namespace cath {
 		}
 
 		/// \brief Get the hierarchy_layer associated with the sequence with the specified index
-		inline hierarchy_layer & hierarchy::operator[](const size_t &arg_index ///< The index of the hierarchy_layer to retrieve
+		inline hierarchy_layer & hierarchy::operator[](const size_t &prm_index ///< The index of the hierarchy_layer to retrieve
 		                                               ) {
-			return layers[ arg_index ];
+			return layers[ prm_index ];
 		}
 
 		/// \brief Get the hierarchy_layer associated with the sequence with the specified index
-		inline const hierarchy_layer & hierarchy::operator[](const size_t &arg_index ///< The index of the hierarchy_layer to retrieve
+		inline const hierarchy_layer & hierarchy::operator[](const size_t &prm_index ///< The index of the hierarchy_layer to retrieve
 		                                                     ) const {
-			return layers[ arg_index ];
+			return layers[ prm_index ];
 		}
 
 		/// \brief Standard const begin() method, as part of making this into a range over the hierarchy_layer entries
@@ -204,35 +204,35 @@ namespace cath {
 		/// \brief Make a hierarchy by adding a root layer (including the specified leaf indices)
 		///        to the specified reverse-order layers (ie deepest first) and then reversing them
 		///
-		/// \pre `reverse(arg_layers)` must still make a valid hierarchy
+		/// \pre `reverse(prm_layers)` must still make a valid hierarchy
 		///
 		/// \relates hierarchy
 		template <typename Rng>
-		hierarchy make_hierarchy_from_reversed_without_root_layer(hierarchy_layer_vec  arg_layers,      ///< The reverse-order layers from which to make the hierarchy (ie deepest first)
-		                                                          const Rng           &arg_leaf_indices ///< The indices of any leaf items that must be added as separate items in the final layer's group
+		hierarchy make_hierarchy_from_reversed_without_root_layer(hierarchy_layer_vec  prm_layers,      ///< The reverse-order layers from which to make the hierarchy (ie deepest first)
+		                                                          const Rng           &prm_leaf_indices ///< The indices of any leaf items that must be added as separate items in the final layer's group
 		                                                          ) {
 			// Create a single group for the final layer
 			hierarchy_group new_group;
 
 			// If there are previous layers then add each of the last layer's groups as children of this group
-			if ( ! arg_layers.empty() ) {
-				for (const auto &x : common::indices( arg_layers.back().size() ) ) {
+			if ( ! prm_layers.empty() ) {
+				for (const auto &x : common::indices( prm_layers.back().size() ) ) {
 					new_group.emplace_back( hierarchy_ref::CLUSTER, x );
 				}
 			}
 
 			// Add any specified leaf nodes to the group
-			for (const auto &leaf_index : arg_leaf_indices) {
+			for (const auto &leaf_index : prm_leaf_indices) {
 				new_group.emplace_back( hierarchy_ref::ENTRY, leaf_index );
 			}
 
 			// Add a final with the group
 			hierarchy_layer layer;
 			layer.emplace_back( std::move( new_group ) );
-			arg_layers.push_back( std::move( layer ) );
+			prm_layers.push_back( std::move( layer ) );
 
 			// Make a hierarchy from the (reversed) layers
-			return make_hierarchy_from_reversed_layers( std::move( arg_layers ) );
+			return make_hierarchy_from_reversed_layers( std::move( prm_layers ) );
 		}
 
 	} // namespace clust

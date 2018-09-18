@@ -39,9 +39,9 @@ constexpr size_t sec_struc_querier::SEC_STRUC_MIN_SCORE_CUTOFF;
 constexpr size_t sec_struc_querier::SEC_STRUC_MAX_DIST_SQ_CUTOFF;
 
 /// \brief TODOCUMENT
-size_t sec_struc_querier::do_get_length(const protein &arg_protein ///< TODOCUMENT
+size_t sec_struc_querier::do_get_length(const protein &prm_protein ///< TODOCUMENT
                                         ) const {
-	return arg_protein.get_num_sec_strucs();
+	return prm_protein.get_num_sec_strucs();
 }
 
 /// \brief TODOCUMENT
@@ -65,54 +65,54 @@ string sec_struc_querier::do_get_entry_name() const {
 }
 
 /// \brief TODOCUMENT
-score_type sec_struc_querier::do_distance_score__offset_1(const protein &arg_protein_a,                   ///< TODOCUMENT
-                                                          const protein &arg_protein_b,                   ///< TODOCUMENT
-                                                          const size_t  &arg_a_view_from_index__offset_1, ///< TODOCUMENT
-                                                          const size_t  &arg_b_view_from_index__offset_1, ///< TODOCUMENT
-                                                          const size_t  &arg_a_dest_to_index__offset_1,   ///< TODOCUMENT
-                                                          const size_t  &arg_b_dest_to_index__offset_1    ///< TODOCUMENT
+score_type sec_struc_querier::do_distance_score__offset_1(const protein &prm_protein_a,                   ///< TODOCUMENT
+                                                          const protein &prm_protein_b,                   ///< TODOCUMENT
+                                                          const size_t  &prm_a_view_from_index__offset_1, ///< TODOCUMENT
+                                                          const size_t  &prm_b_view_from_index__offset_1, ///< TODOCUMENT
+                                                          const size_t  &prm_a_dest_to_index__offset_1,   ///< TODOCUMENT
+                                                          const size_t  &prm_b_dest_to_index__offset_1    ///< TODOCUMENT
                                                           ) const {
 	// Sanity check the inputs
-	const size_t num_sec_strucs_in_a = arg_protein_a.get_num_sec_strucs();
-	if (arg_a_view_from_index__offset_1 < 1 || arg_a_view_from_index__offset_1 > num_sec_strucs_in_a ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("arg_a_view_from_index__offset_1 is out of range"));
+	const size_t num_sec_strucs_in_a = prm_protein_a.get_num_sec_strucs();
+	if (prm_a_view_from_index__offset_1 < 1 || prm_a_view_from_index__offset_1 > num_sec_strucs_in_a ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("prm_a_view_from_index__offset_1 is out of range"));
 	}
-	if (arg_a_dest_to_index__offset_1   < 1 || arg_a_dest_to_index__offset_1   > num_sec_strucs_in_a ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("arg_a_dest_to_index__offset_1   is out of range"));
+	if (prm_a_dest_to_index__offset_1   < 1 || prm_a_dest_to_index__offset_1   > num_sec_strucs_in_a ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("prm_a_dest_to_index__offset_1   is out of range"));
 	}
-	const size_t num_sec_strucs_in_b = arg_protein_b.get_num_sec_strucs();
-	if (arg_b_view_from_index__offset_1 < 1 || arg_b_view_from_index__offset_1 > num_sec_strucs_in_b ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("arg_b_view_from_index__offset_1 is out of range"));
+	const size_t num_sec_strucs_in_b = prm_protein_b.get_num_sec_strucs();
+	if (prm_b_view_from_index__offset_1 < 1 || prm_b_view_from_index__offset_1 > num_sec_strucs_in_b ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("prm_b_view_from_index__offset_1 is out of range"));
 	}
-	if (arg_b_dest_to_index__offset_1   < 1 || arg_b_dest_to_index__offset_1   > num_sec_strucs_in_b ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("arg_b_dest_to_index__offset_1   is out of range"));
+	if (prm_b_dest_to_index__offset_1   < 1 || prm_b_dest_to_index__offset_1   > num_sec_strucs_in_b ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("prm_b_dest_to_index__offset_1   is out of range"));
 	}
 
 	// Pass through to context_sec (whilst switching the indices to use offset 0)
 	return context_sec(
-		arg_protein_a,                       arg_protein_b,
-		arg_a_view_from_index__offset_1 - 1, arg_b_view_from_index__offset_1 - 1,
-		arg_a_dest_to_index__offset_1   - 1, arg_b_dest_to_index__offset_1   - 1
+		prm_protein_a,                       prm_protein_b,
+		prm_a_view_from_index__offset_1 - 1, prm_b_view_from_index__offset_1 - 1,
+		prm_a_dest_to_index__offset_1   - 1, prm_b_dest_to_index__offset_1   - 1
 	);
 }
 
 /// \brief TODOCUMENT
-bool sec_struc_querier::do_are_comparable__offset_1(const protein &arg_protein_a,                   ///< TODOCUMENT
-                                                    const protein &arg_protein_b,                   ///< TODOCUMENT
-                                                    const size_t  &arg_a_view_from_index__offset_1, ///< TODOCUMENT
-                                                    const size_t  &arg_b_view_from_index__offset_1, ///< TODOCUMENT
-                                                    const size_t  &arg_a_dest_to_index__offset_1,   ///< TODOCUMENT
-                                                    const size_t  &arg_b_dest_to_index__offset_1    ///< TODOCUMENT
+bool sec_struc_querier::do_are_comparable__offset_1(const protein &prm_protein_a,                   ///< TODOCUMENT
+                                                    const protein &prm_protein_b,                   ///< TODOCUMENT
+                                                    const size_t  &prm_a_view_from_index__offset_1, ///< TODOCUMENT
+                                                    const size_t  &prm_b_view_from_index__offset_1, ///< TODOCUMENT
+                                                    const size_t  &prm_a_dest_to_index__offset_1,   ///< TODOCUMENT
+                                                    const size_t  &prm_b_dest_to_index__offset_1    ///< TODOCUMENT
                                                     ) const {
-	check_offset_1( arg_a_view_from_index__offset_1 );
-	check_offset_1( arg_b_view_from_index__offset_1 );
-	check_offset_1( arg_a_dest_to_index__offset_1   );
-	check_offset_1( arg_b_dest_to_index__offset_1   );
+	check_offset_1( prm_a_view_from_index__offset_1 );
+	check_offset_1( prm_b_view_from_index__offset_1 );
+	check_offset_1( prm_a_dest_to_index__offset_1   );
+	check_offset_1( prm_b_dest_to_index__offset_1   );
 
-	const sec_struc &sec_struc_i_a = arg_protein_a.get_sec_struc_ref_of_index( arg_a_view_from_index__offset_1 - 1 );
-	const sec_struc &sec_struc_i_b = arg_protein_b.get_sec_struc_ref_of_index( arg_b_view_from_index__offset_1 - 1 );
-	const sec_struc &sec_struc_j_a = arg_protein_a.get_sec_struc_ref_of_index( arg_a_dest_to_index__offset_1   - 1 );
-	const sec_struc &sec_struc_j_b = arg_protein_b.get_sec_struc_ref_of_index( arg_b_dest_to_index__offset_1   - 1 );
+	const sec_struc &sec_struc_i_a = prm_protein_a.get_sec_struc_ref_of_index( prm_a_view_from_index__offset_1 - 1 );
+	const sec_struc &sec_struc_i_b = prm_protein_b.get_sec_struc_ref_of_index( prm_b_view_from_index__offset_1 - 1 );
+	const sec_struc &sec_struc_j_a = prm_protein_a.get_sec_struc_ref_of_index( prm_a_dest_to_index__offset_1   - 1 );
+	const sec_struc &sec_struc_j_b = prm_protein_b.get_sec_struc_ref_of_index( prm_b_dest_to_index__offset_1   - 1 );
 
 	const bool i_sec_strucs_match  = ( sec_struc_i_a.get_type() != sec_struc_i_b.get_type() );
 	const bool j_sec_strucs_match  = ( sec_struc_j_a.get_type() != sec_struc_j_b.get_type() );
@@ -121,16 +121,16 @@ bool sec_struc_querier::do_are_comparable__offset_1(const protein &arg_protein_a
 }
 
 /// \brief TODOCUMENT
-bool sec_struc_querier::do_are_similar__offset_1(const protein &arg_protein_a,         ///< TODOCUMENT
-                                                 const protein &arg_protein_b,         ///< TODOCUMENT
-                                                 const size_t  &arg_index_a__offset_1, ///< TODOCUMENT
-                                                 const size_t  &arg_index_b__offset_1  ///< TODOCUMENT
+bool sec_struc_querier::do_are_similar__offset_1(const protein &prm_protein_a,         ///< TODOCUMENT
+                                                 const protein &prm_protein_b,         ///< TODOCUMENT
+                                                 const size_t  &prm_index_a__offset_1, ///< TODOCUMENT
+                                                 const size_t  &prm_index_b__offset_1  ///< TODOCUMENT
                                                  ) const {
-	check_offset_1( arg_index_a__offset_1 );
-	check_offset_1( arg_index_b__offset_1 );
+	check_offset_1( prm_index_a__offset_1 );
+	check_offset_1( prm_index_b__offset_1 );
 
-	const sec_struc &sec_struc_a = arg_protein_a.get_sec_struc_ref_of_index( arg_index_a__offset_1 - 1 );
-	const sec_struc &sec_struc_b = arg_protein_b.get_sec_struc_ref_of_index( arg_index_b__offset_1 - 1 );
+	const sec_struc &sec_struc_a = prm_protein_a.get_sec_struc_ref_of_index( prm_index_a__offset_1 - 1 );
+	const sec_struc &sec_struc_b = prm_protein_b.get_sec_struc_ref_of_index( prm_index_b__offset_1 - 1 );
 
 	return ( sec_struc_a.get_type() == sec_struc_b.get_type() );
 }

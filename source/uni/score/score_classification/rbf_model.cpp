@@ -92,12 +92,12 @@ constexpr value_list_scaling rbf_model::SSAP_SCORE_SCALING;
 #endif
 
 /// \brief TODOCUMENT
-rbf_model::rbf_model(const double                          &arg_gamma,       ///< The SVM RBF gamma parameter
-                     const double                          &arg_b,           ///< The SVM RBF b parameter
-                     vector<pair<double, double_octuple> >  arg_model_values ///< The SVM RBF support vectors
-                     ) : gamma           { arg_gamma                     },
-                         b               { arg_b                         },
-                         support_vectors { std::move( arg_model_values ) } {
+rbf_model::rbf_model(const double                          &prm_gamma,       ///< The SVM RBF gamma parameter
+                     const double                          &prm_b,           ///< The SVM RBF b parameter
+                     vector<pair<double, double_octuple> >  prm_model_values ///< The SVM RBF support vectors
+                     ) : gamma           { prm_gamma                     },
+                         b               { prm_b                         },
+                         support_vectors { std::move( prm_model_values ) } {
 }
 
 // Stop suppressing the GCC warning again
@@ -108,38 +108,38 @@ rbf_model::rbf_model(const double                          &arg_gamma,       ///
 #endif
 
 /// \brief Make the standard list of scores for use with an rbf_model from the specified ssap_and_prc
-double_octuple rbf_model::make_standard_scores(const ssap_and_prc &arg_ssap_and_prc ///< The SSAP and PRC scores from which to make the scores to be used with an rbf_model
+double_octuple rbf_model::make_standard_scores(const ssap_and_prc &prm_ssap_and_prc ///< The SSAP and PRC scores from which to make the scores to be used with an rbf_model
                                                ) {
 	return make_tuple(
-		scale_value_copy( PRC_EVALUE_SCALING,                     log10( get_prc_evalue     ( arg_ssap_and_prc ) ) ),
-		scale_value_copy( PRC_REVERSE_SCALING,                           get_prc_reverse    ( arg_ssap_and_prc )   ),
-		scale_value_copy( PRC_SIMPLE_SCALING,                            get_prc_simple     ( arg_ssap_and_prc )   ),
-		scale_value_copy( SSAP_NUM_EQUIVS_SCALING, numeric_cast<double>( get_ssap_num_equivs( arg_ssap_and_prc ) ) ),
-		scale_value_copy( SSAP_OVERLAP_PC_SCALING,                       get_ssap_overlap_pc( arg_ssap_and_prc )   ),
-		scale_value_copy( SSAP_RMSD_SCALING,                             get_ssap_rmsd      ( arg_ssap_and_prc )   ),
-		scale_value_copy( SSAP_SEQ_ID_PC_SCALING,                        get_ssap_seq_id_pc ( arg_ssap_and_prc )   ),
-		scale_value_copy( SSAP_SCORE_SCALING,                            get_ssap_score     ( arg_ssap_and_prc )   )
+		scale_value_copy( PRC_EVALUE_SCALING,                     log10( get_prc_evalue     ( prm_ssap_and_prc ) ) ),
+		scale_value_copy( PRC_REVERSE_SCALING,                           get_prc_reverse    ( prm_ssap_and_prc )   ),
+		scale_value_copy( PRC_SIMPLE_SCALING,                            get_prc_simple     ( prm_ssap_and_prc )   ),
+		scale_value_copy( SSAP_NUM_EQUIVS_SCALING, numeric_cast<double>( get_ssap_num_equivs( prm_ssap_and_prc ) ) ),
+		scale_value_copy( SSAP_OVERLAP_PC_SCALING,                       get_ssap_overlap_pc( prm_ssap_and_prc )   ),
+		scale_value_copy( SSAP_RMSD_SCALING,                             get_ssap_rmsd      ( prm_ssap_and_prc )   ),
+		scale_value_copy( SSAP_SEQ_ID_PC_SCALING,                        get_ssap_seq_id_pc ( prm_ssap_and_prc )   ),
+		scale_value_copy( SSAP_SCORE_SCALING,                            get_ssap_score     ( prm_ssap_and_prc )   )
 	);
 }
 
 /// \brief Make the standard list of scores for use with an rbf_model from the specified SSAP scores and PRC scores
-double_octuple rbf_model::make_standard_scores(const prc_scores_entry  &arg_prc, ///< The PRC scores from which to make the scores to be used with an rbf_model
-                                               const ssap_scores_entry &arg_ssap ///< The SSAP scores from which to make the scores to be used with an rbf_model
+double_octuple rbf_model::make_standard_scores(const prc_scores_entry  &prm_prc, ///< The PRC scores from which to make the scores to be used with an rbf_model
+                                               const ssap_scores_entry &prm_ssap ///< The SSAP scores from which to make the scores to be used with an rbf_model
                                                ) {
 	return make_tuple(
-		scale_value_copy( PRC_EVALUE_SCALING,                     log10(  arg_prc.get_evalue()     ) ),
-		scale_value_copy( PRC_REVERSE_SCALING,                            arg_prc.get_reverse()      ),
-		scale_value_copy( PRC_SIMPLE_SCALING,                             arg_prc.get_simple()       ),
-		scale_value_copy( SSAP_NUM_EQUIVS_SCALING, numeric_cast<double>( arg_ssap.get_num_equivs() ) ),
-		scale_value_copy( SSAP_OVERLAP_PC_SCALING,                       arg_ssap.get_overlap_pc()   ),
-		scale_value_copy( SSAP_RMSD_SCALING,                             arg_ssap.get_rmsd()         ),
-		scale_value_copy( SSAP_SEQ_ID_PC_SCALING,                        arg_ssap.get_seq_id_pc()    ),
-		scale_value_copy( SSAP_SCORE_SCALING,                            arg_ssap.get_ssap_score()   )
+		scale_value_copy( PRC_EVALUE_SCALING,                     log10(  prm_prc.get_evalue()     ) ),
+		scale_value_copy( PRC_REVERSE_SCALING,                            prm_prc.get_reverse()      ),
+		scale_value_copy( PRC_SIMPLE_SCALING,                             prm_prc.get_simple()       ),
+		scale_value_copy( SSAP_NUM_EQUIVS_SCALING, numeric_cast<double>( prm_ssap.get_num_equivs() ) ),
+		scale_value_copy( SSAP_OVERLAP_PC_SCALING,                       prm_ssap.get_overlap_pc()   ),
+		scale_value_copy( SSAP_RMSD_SCALING,                             prm_ssap.get_rmsd()         ),
+		scale_value_copy( SSAP_SEQ_ID_PC_SCALING,                        prm_ssap.get_seq_id_pc()    ),
+		scale_value_copy( SSAP_SCORE_SCALING,                            prm_ssap.get_ssap_score()   )
 	);
 }
 
 /// \brief Get the SVM the this RBF model assigns to the input vector
-double rbf_model::get_score(const double_octuple &arg_to_be_scored ///< The vector to be scored
+double rbf_model::get_score(const double_octuple &prm_to_be_scored ///< The vector to be scored
                             ) const {
 	return accumulate(
 		support_vectors,
@@ -149,14 +149,14 @@ double rbf_model::get_score(const double_octuple &arg_to_be_scored ///< The vect
 			return x + (
 					get<0>( support_vector_entry ) * ::std::exp(
 					0.0 - gamma * (
-						   ( ( get<0>( arg_to_be_scored ) - get<0>( sup_vec ) ) * ( get<0>( arg_to_be_scored ) - get<0>( sup_vec ) ) )
-						 + ( ( get<1>( arg_to_be_scored ) - get<1>( sup_vec ) ) * ( get<1>( arg_to_be_scored ) - get<1>( sup_vec ) ) )
-						 + ( ( get<2>( arg_to_be_scored ) - get<2>( sup_vec ) ) * ( get<2>( arg_to_be_scored ) - get<2>( sup_vec ) ) )
-						 + ( ( get<3>( arg_to_be_scored ) - get<3>( sup_vec ) ) * ( get<3>( arg_to_be_scored ) - get<3>( sup_vec ) ) )
-						 + ( ( get<4>( arg_to_be_scored ) - get<4>( sup_vec ) ) * ( get<4>( arg_to_be_scored ) - get<4>( sup_vec ) ) )
-						 + ( ( get<5>( arg_to_be_scored ) - get<5>( sup_vec ) ) * ( get<5>( arg_to_be_scored ) - get<5>( sup_vec ) ) )
-						 + ( ( get<6>( arg_to_be_scored ) - get<6>( sup_vec ) ) * ( get<6>( arg_to_be_scored ) - get<6>( sup_vec ) ) )
-						 + ( ( get<7>( arg_to_be_scored ) - get<7>( sup_vec ) ) * ( get<7>( arg_to_be_scored ) - get<7>( sup_vec ) ) )
+						   ( ( get<0>( prm_to_be_scored ) - get<0>( sup_vec ) ) * ( get<0>( prm_to_be_scored ) - get<0>( sup_vec ) ) )
+						 + ( ( get<1>( prm_to_be_scored ) - get<1>( sup_vec ) ) * ( get<1>( prm_to_be_scored ) - get<1>( sup_vec ) ) )
+						 + ( ( get<2>( prm_to_be_scored ) - get<2>( sup_vec ) ) * ( get<2>( prm_to_be_scored ) - get<2>( sup_vec ) ) )
+						 + ( ( get<3>( prm_to_be_scored ) - get<3>( sup_vec ) ) * ( get<3>( prm_to_be_scored ) - get<3>( sup_vec ) ) )
+						 + ( ( get<4>( prm_to_be_scored ) - get<4>( sup_vec ) ) * ( get<4>( prm_to_be_scored ) - get<4>( sup_vec ) ) )
+						 + ( ( get<5>( prm_to_be_scored ) - get<5>( sup_vec ) ) * ( get<5>( prm_to_be_scored ) - get<5>( sup_vec ) ) )
+						 + ( ( get<6>( prm_to_be_scored ) - get<6>( sup_vec ) ) * ( get<6>( prm_to_be_scored ) - get<6>( sup_vec ) ) )
+						 + ( ( get<7>( prm_to_be_scored ) - get<7>( sup_vec ) ) * ( get<7>( prm_to_be_scored ) - get<7>( sup_vec ) ) )
 					)
 				)
 			);
@@ -167,7 +167,7 @@ double rbf_model::get_score(const double_octuple &arg_to_be_scored ///< The vect
 /// \brief Parse an rbf_model from an SVM-light RBF model file
 ///
 /// \relates rbf_model
-rbf_model cath::score::parse_rbf_model(istream &arg_model_istream ///< The istream containing the SVM-light RBF model file data
+rbf_model cath::score::parse_rbf_model(istream &prm_model_istream ///< The istream containing the SVM-light RBF model file data
                                        ) {
 	// Prepare some constants that are useful in the parsing
 	constexpr size_t NUM_VECTOR_COMPONENTS       = 8;
@@ -179,7 +179,7 @@ rbf_model cath::score::parse_rbf_model(istream &arg_model_istream ///< The istre
 
 	// Check that the first line is the expected header, else throw an exception
 	string line_string;
-	getline( arg_model_istream, line_string );
+	getline( prm_model_istream, line_string );
 	if ( ! icontains( line_string, svmlight_header_string ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse data as SVM-light model because it doesn't begin with an SVM-light header"));
 	}
@@ -187,7 +187,7 @@ rbf_model cath::score::parse_rbf_model(istream &arg_model_istream ///< The istre
 	// Attempt to parse the rest of the header lines and extract the gamma and b parameters
 	optional<double> parsed_gamma;
 	optional<double> parsed_b;
-	while ( getline( arg_model_istream, line_string ) ) {
+	while ( getline( prm_model_istream, line_string ) ) {
 		if ( contains( line_string, gamma_comment_string ) ) {
 			parsed_gamma = stod( split_build<str_vec>( line_string, is_space(), token_compress_on ).front() );
 		}
@@ -206,7 +206,7 @@ rbf_model cath::score::parse_rbf_model(istream &arg_model_istream ///< The istre
 
 	// Parse the remaining lines as support vectors
 	vector<pair<double, double_octuple> > support_vectors;
-	while ( getline( arg_model_istream, line_string ) ) {
+	while ( getline( prm_model_istream, line_string ) ) {
 
 		// Split the line on whitespace and if there aren't at least NUM_VECTOR_COMPONENTS + 1 parts, throw an exception
 		const auto line_parts = split_build<str_vec>( line_string, is_space(), token_compress_on );
@@ -261,10 +261,10 @@ rbf_model cath::score::parse_rbf_model(istream &arg_model_istream ///< The istre
 /// \brief Parse an rbf_model from an SVM-light RBF model file
 ///
 /// \relates rbf_model
-rbf_model cath::score::parse_rbf_model(const path &arg_svmlight_model_file ///< The SVM-light RBF model file
+rbf_model cath::score::parse_rbf_model(const path &prm_svmlight_model_file ///< The SVM-light RBF model file
                                        ) {
 	ifstream model_stream;
-	open_ifstream( model_stream, arg_svmlight_model_file );
+	open_ifstream( model_stream, prm_svmlight_model_file );
 	const auto the_model = parse_rbf_model( model_stream );
 	model_stream.close();
 	return the_model;
@@ -273,19 +273,19 @@ rbf_model cath::score::parse_rbf_model(const path &arg_svmlight_model_file ///< 
 /// \brief Get the score that the specified SVM assigns to the specified ssap_and_prc result
 ///
 /// \relates rbf_model
-double cath::score::get_score(const rbf_model    &arg_rbf_model,    ///< The SVM RBF model with which to score the SSAP/PRC data
-                              const ssap_and_prc &arg_ssaps_and_prc ///< The SSAP/PRC data to score
+double cath::score::get_score(const rbf_model    &prm_rbf_model,    ///< The SVM RBF model with which to score the SSAP/PRC data
+                              const ssap_and_prc &prm_ssaps_and_prc ///< The SSAP/PRC data to score
                               ) {
-	return arg_rbf_model.get_score( rbf_model::make_standard_scores( arg_ssaps_and_prc ) );
+	return prm_rbf_model.get_score( rbf_model::make_standard_scores( prm_ssaps_and_prc ) );
 }
 
 /// \brief Get the score that the specified SVM assigns to the specified SSAP scores and PRC scores
 ///
 /// \relates rbf_model
-double cath::score::get_score(const rbf_model         &arg_rbf_model, ///< The SVM RBF model with which to score the SSAP/PRC data
-                              const prc_scores_entry  &arg_prc,       ///< The PRC data to score
-                              const ssap_scores_entry &arg_ssap       ///< The SSAP data to score
+double cath::score::get_score(const rbf_model         &prm_rbf_model, ///< The SVM RBF model with which to score the SSAP/PRC data
+                              const prc_scores_entry  &prm_prc,       ///< The PRC data to score
+                              const ssap_scores_entry &prm_ssap       ///< The SSAP data to score
                               ) {
-	return arg_rbf_model.get_score( rbf_model::make_standard_scores( arg_prc, arg_ssap ) );
+	return prm_rbf_model.get_score( rbf_model::make_standard_scores( prm_prc, prm_ssap ) );
 }
 

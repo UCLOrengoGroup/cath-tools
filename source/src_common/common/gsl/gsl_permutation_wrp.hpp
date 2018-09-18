@@ -40,8 +40,8 @@ namespace cath {
 				gsl_permutation_wrp() = delete;
 
 				/// \brief Ctor that wraps call to gsl_permutation_calloc() (which allocates *and* initialises)
-				gsl_permutation_wrp(const size_t &arg_n ///< The dimension of the permutation
-				                    ) : ptr{ gsl_permutation_calloc( arg_n ) } {
+				gsl_permutation_wrp(const size_t &prm_n ///< The dimension of the permutation
+				                    ) : ptr{ gsl_permutation_calloc( prm_n ) } {
 					if ( ptr == nullptr ) {
 						BOOST_THROW_EXCEPTION(common::runtime_error_exception("Was unable to allocate+initialise gsl_permutation"));
 					}
@@ -61,19 +61,19 @@ namespace cath {
 				gsl_permutation_wrp(const gsl_permutation_wrp &) = delete; ///< Make move-only
 
 				/// \brief Move ctor that sets RHS's ptr to null after the move
-				gsl_permutation_wrp(gsl_permutation_wrp &&arg_rhs ///< The gsl_permutation_wrp to move into this
-				                    ) : ptr { std::move( arg_rhs.ptr ) } {
-					arg_rhs.ptr = nullptr;
+				gsl_permutation_wrp(gsl_permutation_wrp &&prm_rhs ///< The gsl_permutation_wrp to move into this
+				                    ) : ptr { std::move( prm_rhs.ptr ) } {
+					prm_rhs.ptr = nullptr;
 				}
 
 				gsl_permutation_wrp & operator=(const gsl_permutation_wrp &) = delete; ///< Make move-only
 
 				/// \brief Move assignment operator that sets RHS's ptr to null after the move
-				gsl_permutation_wrp & operator=(gsl_permutation_wrp &&arg_rhs ///< The gsl_permutation_wrp to move into this
+				gsl_permutation_wrp & operator=(gsl_permutation_wrp &&prm_rhs ///< The gsl_permutation_wrp to move into this
 				                           ) {
-					if ( this != &arg_rhs ) {
-						ptr = std::move( arg_rhs.ptr );
-						arg_rhs.ptr = nullptr;
+					if ( this != &prm_rhs ) {
+						ptr = std::move( prm_rhs.ptr );
+						prm_rhs.ptr = nullptr;
 					}
 					return *this;
 				}

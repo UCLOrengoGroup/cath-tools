@@ -52,38 +52,38 @@ namespace cath {
 		};
 
 		/// \brief Getter to retrieve the view_cache for the specified index
-		inline const view_cache & view_cache_list::get_view_cache(const size_t &arg_index ///< The index of the residue list (eg protein) of interest
+		inline const view_cache & view_cache_list::get_view_cache(const size_t &prm_index ///< The index of the residue list (eg protein) of interest
 		                                                          ) const {
-			return view_caches[ arg_index ];
+			return view_caches[ prm_index ];
 		}
 
 		/// \brief Get the view in the specified view_cache_list for the specified
 		///        residue list (eg protein) index, from_residue index and to_residue index
 		///
 		/// \relates view_cache_list
-		inline const geom::coord & get_view(const view_cache_list &arg_cache_list, ///< The view_cache_list to query
-		                                    const size_t          &arg_index,      ///< The index of the residue list (eg protein) of interest
-		                                    const size_t          &arg_from_index, ///< The index of the from_residue in the residue list (eg protein)
-		                                    const size_t          &arg_to_index    ///< The index of the to_residue   in the residue list (eg protein)
+		inline const geom::coord & get_view(const view_cache_list &prm_cache_list, ///< The view_cache_list to query
+		                                    const size_t          &prm_index,      ///< The index of the residue list (eg protein) of interest
+		                                    const size_t          &prm_from_index, ///< The index of the from_residue in the residue list (eg protein)
+		                                    const size_t          &prm_to_index    ///< The index of the to_residue   in the residue list (eg protein)
 		                                    ) {
-			return arg_cache_list.get_view_cache( arg_index ).get_view( arg_from_index, arg_to_index );
+			return prm_cache_list.get_view_cache( prm_index ).get_view( prm_from_index, prm_to_index );
 		}
 
 		/// \brief Retrieve two from/to residue pairs from the specified view_cache_list and return the residue_context between them
 		///
 		/// \relates view_cache_list
-		inline float_score_type get_residue_context(const view_cache_list &arg_cache_list,   ///< The view_cache_list to query
-		                                            const size_t          &arg_index_a,      ///< The index of the first  residue list (eg protein) of interest
-		                                            const size_t          &arg_index_b,      ///< The index of the second residue list (eg protein) of interest
-		                                            const size_t          &arg_from_index_a, ///< The index of the first  from_residue in the first  residue list (eg protein)
-		                                            const size_t          &arg_from_index_b, ///< The index of the second from_residue in the second residue list (eg protein)
-		                                            const size_t          &arg_to_index_a,   ///< The index of the first  to_residue   in the first  residue list (eg protein)
-		                                            const size_t          &arg_to_index_b    ///< The index of the second to_residue   in the second residue list (eg protein)
+		inline float_score_type get_residue_context(const view_cache_list &prm_cache_list,   ///< The view_cache_list to query
+		                                            const size_t          &prm_index_a,      ///< The index of the first  residue list (eg protein) of interest
+		                                            const size_t          &prm_index_b,      ///< The index of the second residue list (eg protein) of interest
+		                                            const size_t          &prm_from_index_a, ///< The index of the first  from_residue in the first  residue list (eg protein)
+		                                            const size_t          &prm_from_index_b, ///< The index of the second from_residue in the second residue list (eg protein)
+		                                            const size_t          &prm_to_index_a,   ///< The index of the first  to_residue   in the first  residue list (eg protein)
+		                                            const size_t          &prm_to_index_b    ///< The index of the second to_residue   in the second residue list (eg protein)
 		                                            ) {
 			/// \todo Consider replacing simplified_context_res_vec() with context_res_vec<false, distance_score_formula::SIMPLIFIED>()
 			return simplified_context_res_vec(
-				get_view( arg_cache_list, arg_index_a, arg_from_index_a, arg_to_index_a ),
-				get_view( arg_cache_list, arg_index_b, arg_from_index_b, arg_to_index_b )
+				get_view( prm_cache_list, prm_index_a, prm_from_index_a, prm_to_index_a ),
+				get_view( prm_cache_list, prm_index_b, prm_from_index_b, prm_to_index_b )
 			);
 		}
 

@@ -150,12 +150,12 @@ namespace cath {
 			///
 			/// This can be the case if the from_index matches the to_index or their absolute difference is
 			/// otherwise less than the criteria's minimum_index_distance
-			inline bool vcie_match_criteria::operator()(const view_cache_index_entry &arg_cache ///< The view_cache_index_entry to be tested for whether it has any chance of matching another
+			inline bool vcie_match_criteria::operator()(const view_cache_index_entry &prm_cache ///< The view_cache_index_entry to be tested for whether it has any chance of matching another
 			                                            ) const {
-				if ( arg_cache.get_from_index()    == arg_cache.get_to_index()     ) {
+				if ( prm_cache.get_from_index()    == prm_cache.get_to_index()     ) {
 					return false;
 				}
-				if ( index_difference( arg_cache ) <  get_minimum_index_distance() ) {
+				if ( index_difference( prm_cache ) <  get_minimum_index_distance() ) {
 					return false;
 				}
 				return true;
@@ -170,24 +170,24 @@ namespace cath {
 			///
 			/// IMPORTANT: This result should only be considered if both vcies also pass the single vcie test above.
 //			template <bool CHECK_DIRN = false>
-			inline bool vcie_match_criteria::operator()(const view_cache_index_entry &arg_cache_a,   ///< The first  view_cache_index_entry to test
-			                                            const view_cache_index_entry &arg_cache_b    ///< The second view_cache_index_entry to test
+			inline bool vcie_match_criteria::operator()(const view_cache_index_entry &prm_cache_a,   ///< The first  view_cache_index_entry to test
+			                                            const view_cache_index_entry &prm_cache_b    ///< The second view_cache_index_entry to test
 			                                            ) const {
 //				if ( CHECK_DIRN ) {
-//					if ( get_require_matching_directions() && ! same_direction( arg_indices_a, arg_indices_b ) ) {
+//					if ( get_require_matching_directions() && ! same_direction( prm_indices_a, prm_indices_b ) ) {
 //						return false;
 //					}
 //				}
-				if ( squared_distance         ( arg_cache_a, arg_cache_b ) > get_maximum_squared_distance()       ) {
+				if ( squared_distance         ( prm_cache_a, prm_cache_b ) > get_maximum_squared_distance()       ) {
 					return false;
 				}
-				if ( distance_1_between_frames( arg_cache_a, arg_cache_b ) > get_maximum_frame_angle_distance_1() ) {
+				if ( distance_1_between_frames( prm_cache_a, prm_cache_b ) > get_maximum_frame_angle_distance_1() ) {
 					return false;
 				}
-				if ( max_phi_angle_difference ( arg_cache_a, arg_cache_b ) > get_maximum_phi_angle_difference()   ) {
+				if ( max_phi_angle_difference ( prm_cache_a, prm_cache_b ) > get_maximum_phi_angle_difference()   ) {
 					return false;
 				}
-				if ( max_psi_angle_difference ( arg_cache_a, arg_cache_b ) > get_maximum_psi_angle_difference()   ) {
+				if ( max_psi_angle_difference ( prm_cache_a, prm_cache_b ) > get_maximum_psi_angle_difference()   ) {
 					return false;
 				}
 				return true;
@@ -195,37 +195,37 @@ namespace cath {
 
 			/// \brief Return whether a quad of residues are considered a match
 			///        by using only the raw indices and proteins
-			inline bool vcie_match_criteria::operator()(const size_size_pair &arg_indices_a, ///< The from_index and from_index for the first  protein
-			                                            const size_size_pair &arg_indices_b, ///< The from_index and from_index for the second protein
-			                                            const protein        &arg_protein_a, ///< The first  protein
-			                                            const protein        &arg_protein_b  ///< The second protein
+			inline bool vcie_match_criteria::operator()(const size_size_pair &prm_indices_a, ///< The from_index and from_index for the first  protein
+			                                            const size_size_pair &prm_indices_b, ///< The from_index and from_index for the second protein
+			                                            const protein        &prm_protein_a, ///< The first  protein
+			                                            const protein        &prm_protein_b  ///< The second protein
 			                                            ) const {
 // #ifndef NDEBUG
 // 				// Until the class's internal protein references get removed, check that they refer to the
 // 				// same objects as the ones passed as arguments here
-// 				if ( &arg_protein_a != &( protein_a.get() ) ) {
+// 				if ( &prm_protein_a != &( protein_a.get() ) ) {
 // 					BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("vcie_match_criteria function operator called with different protein_a from the one used to initialise the vcie_match_criteria object"));
 // 				}
-// 				if ( &arg_protein_b != &( protein_b.get() ) ) {
+// 				if ( &prm_protein_b != &( protein_b.get() ) ) {
 // 					BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("vcie_match_criteria function operator called with different protein_b from the one used to initialise the vcie_match_criteria object"));
 // 				}
 // #endif
-				if ( get_require_matching_directions() && ! same_direction( arg_indices_a, arg_indices_b ) ) {
+				if ( get_require_matching_directions() && ! same_direction( prm_indices_a, prm_indices_b ) ) {
 					return false;
 				}
-				if ( min_index_difference      ( arg_indices_a, arg_indices_b                               ) < get_minimum_index_distance()         ) {
+				if ( min_index_difference      ( prm_indices_a, prm_indices_b                               ) < get_minimum_index_distance()         ) {
 					return false;
 				}
-				if ( squared_distance          ( arg_indices_a, arg_indices_b, arg_protein_a, arg_protein_b ) > get_maximum_squared_distance()       ) {
+				if ( squared_distance          ( prm_indices_a, prm_indices_b, prm_protein_a, prm_protein_b ) > get_maximum_squared_distance()       ) {
 					return false;
 				}
-				if ( angle_between_frames      ( arg_indices_a, arg_indices_b, arg_protein_a, arg_protein_b ) > get_maximum_frame_angle_difference() ) {
+				if ( angle_between_frames      ( prm_indices_a, prm_indices_b, prm_protein_a, prm_protein_b ) > get_maximum_frame_angle_difference() ) {
 					return false;
 				}
-				if ( max_phi_angle_difference  ( arg_indices_a, arg_indices_b, arg_protein_a, arg_protein_b ) > get_maximum_phi_angle_difference()   ) {
+				if ( max_phi_angle_difference  ( prm_indices_a, prm_indices_b, prm_protein_a, prm_protein_b ) > get_maximum_phi_angle_difference()   ) {
 					return false;
 				}
-				if ( max_psi_angle_difference  ( arg_indices_a, arg_indices_b, arg_protein_a, arg_protein_b ) > get_maximum_psi_angle_difference()   ) {
+				if ( max_psi_angle_difference  ( prm_indices_a, prm_indices_b, prm_protein_a, prm_protein_b ) > get_maximum_psi_angle_difference()   ) {
 					return false;
 				}
 				return true;

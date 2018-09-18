@@ -44,10 +44,10 @@ namespace cath {
 			line() = delete;
 
 			/// \brief Ctor
-			constexpr line(coord arg_point_on_line, ///< A point on the line
-			               coord arg_dirn           ///< A non-zero direction vector along the line (at present, this doesn't have to have length 1)
-			               ) : point_on_line{ std::move( arg_point_on_line ) },
-			                   dirn         { std::move( arg_dirn          ) } {
+			constexpr line(coord prm_point_on_line, ///< A point on the line
+			               coord prm_dirn           ///< A non-zero direction vector along the line (at present, this doesn't have to have length 1)
+			               ) : point_on_line{ std::move( prm_point_on_line ) },
+			                   dirn         { std::move( prm_dirn          ) } {
 			}
 
 			/// \brief Getter for point_on_line
@@ -62,14 +62,14 @@ namespace cath {
 		};
 
 		/// \brief Calculate the point on the specified line that is closest to the specified point
-		inline coord closest_point_on_line_to_point(const line  &arg_line, ///< The line on which to find the point
-		                                            const coord &arg_point ///< The point to get closest to
+		inline coord closest_point_on_line_to_point(const line  &prm_line, ///< The line on which to find the point
+		                                            const coord &prm_point ///< The point to get closest to
 		                                            ) {
 			return
-				arg_line.get_point_on_line()
+				prm_line.get_point_on_line()
 				+ parallel_component_copy(
-					arg_point - arg_line.get_point_on_line(),
-					arg_line.get_dirn()
+					prm_point - prm_line.get_point_on_line(),
+					prm_line.get_dirn()
 				);
 		}
 

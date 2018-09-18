@@ -90,10 +90,10 @@ namespace cath {
 
 		/// \brief Calculate the DSSP hbond energy between the specified N & H coords of one
 		///        residue and the C & O coords of another
-		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy(const geom::coord &arg_n, ///< The N coord of one residue
-		                                                        const geom::coord &arg_h, ///< The H coord of one residue
-		                                                        const geom::coord &arg_c, ///< The C coord of another residue
-		                                                        const geom::coord &arg_o  ///< The O coord of another residue
+		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy(const geom::coord &prm_n, ///< The N coord of one residue
+		                                                        const geom::coord &prm_h, ///< The H coord of one residue
+		                                                        const geom::coord &prm_c, ///< The C coord of another residue
+		                                                        const geom::coord &prm_o  ///< The O coord of another residue
 		                                                        ) {
 			constexpr double         MIN_DISTANCE      = 0.5;
 			constexpr double         ENERGY_MULTIPLIER = 0.42 * 0.2 * 332;
@@ -101,10 +101,10 @@ namespace cath {
 			constexpr hbond_energy_t MAX_ENERGY        = static_cast<hbond_energy_t>(    0.0 );
 			constexpr hbond_energy_t ROUNDING_FACTOR   = static_cast<hbond_energy_t>( 1000.0 );
 
-			const double dist_no = distance_between_points( arg_n, arg_o );
-			const double dist_hc = distance_between_points( arg_h, arg_c );
-			const double dist_ho = distance_between_points( arg_h, arg_o );
-			const double dist_nc = distance_between_points( arg_n, arg_c );
+			const double dist_no = distance_between_points( prm_n, prm_o );
+			const double dist_hc = distance_between_points( prm_h, prm_c );
+			const double dist_ho = distance_between_points( prm_h, prm_o );
+			const double dist_nc = distance_between_points( prm_n, prm_c );
 
 			if ( dist_ho < MIN_DISTANCE || dist_hc < MIN_DISTANCE || dist_nc < MIN_DISTANCE || dist_no < MIN_DISTANCE ) {
 				return MIN_ENERGY;
@@ -126,42 +126,42 @@ namespace cath {
 
 		/// \brief Calculate the DSSP hbond energy between the specified two residues (with supporting info
 		///        from the residue that precedes the first one)
-		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy(const boost::optional<file::pdb_residue> &arg_residue_i_prev, ///< The residue that precedes the first residue
-		                                                        const file::pdb_residue                  &arg_residue_i,      ///< The first residue
-		                                                        const file::pdb_residue                  &arg_residue_j       ///< The second residue
+		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy(const boost::optional<file::pdb_residue> &prm_residue_i_prev, ///< The residue that precedes the first residue
+		                                                        const file::pdb_residue                  &prm_residue_i,      ///< The first residue
+		                                                        const file::pdb_residue                  &prm_residue_j       ///< The second residue
 		                                                        ) {
 			const auto pseudo_h = [&] {
-				if ( arg_residue_i_prev ) {
-					const auto prev_c_to_o = get_oxygen_coord( *arg_residue_i_prev )
+				if ( prm_residue_i_prev ) {
+					const auto prev_c_to_o = get_oxygen_coord( *prm_residue_i_prev )
 					                         -
-					                         get_carbon_coord( *arg_residue_i_prev );
-					return get_nitrogen_coord( arg_residue_i ) - ( prev_c_to_o / length( prev_c_to_o ) );
+					                         get_carbon_coord( *prm_residue_i_prev );
+					return get_nitrogen_coord( prm_residue_i ) - ( prev_c_to_o / length( prev_c_to_o ) );
 				}
-				return get_nitrogen_coord( arg_residue_i );
+				return get_nitrogen_coord( prm_residue_i );
 			} ();
 			return get_hbond_energy(
-				get_nitrogen_coord( arg_residue_i ),
+				get_nitrogen_coord( prm_residue_i ),
 				pseudo_h,
-				get_carbon_coord  ( arg_residue_j ),
-				get_oxygen_coord  ( arg_residue_j )
+				get_carbon_coord  ( prm_residue_j ),
+				get_oxygen_coord  ( prm_residue_j )
 			);
 		}
 
 		/// \brief Calculate the DSSP hbond energy between the two residues at the specified indices of the specified PDB
 		///
-		/// As indicated by the name, this result is asymmetrical; swapping arg_i and arg_j will likely
+		/// As indicated by the name, this result is asymmetrical; swapping prm_i and prm_j will likely
 		/// change the result
-		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy_asymm(const file::pdb &arg_pdb, ///< The PDB containing the residues in question
-		                                                              const size_t    &arg_i,   ///< The index of the first  residue in the PDB
-		                                                              const size_t    &arg_j    ///< The index of the second residue in the PDB
+		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy_asymm(const file::pdb &prm_pdb, ///< The PDB containing the residues in question
+		                                                              const size_t    &prm_i,   ///< The index of the first  residue in the PDB
+		                                                              const size_t    &prm_j    ///< The index of the second residue in the PDB
 		                                                              ) {
-			const auto prev_index = index_of_preceding_residue_in_same_chain( arg_pdb, arg_i );
+			const auto prev_index = index_of_preceding_residue_in_same_chain( prm_pdb, prm_i );
 			return get_hbond_energy(
 				prev_index
-					? boost::make_optional( arg_pdb.get_residue_of_index__backbone_unchecked( *prev_index ) )
+					? boost::make_optional( prm_pdb.get_residue_of_index__backbone_unchecked( *prev_index ) )
 					: boost::none,
-				arg_pdb.get_residue_of_index__backbone_unchecked( arg_i     ),
-				arg_pdb.get_residue_of_index__backbone_unchecked( arg_j     )
+				prm_pdb.get_residue_of_index__backbone_unchecked( prm_i     ),
+				prm_pdb.get_residue_of_index__backbone_unchecked( prm_j     )
 			);
 		}
 
@@ -170,69 +170,69 @@ namespace cath {
 		///
 		/// If calling with a PDB and indices, prefer to use the wrapper function below because that can
 		/// make additional checks on the indices
-		inline bool dssp_hbond_calc::has_hbond_energy(const boost::optional<file::pdb_residue> &arg_residue_i_prev, ///< The residue that precedes the first residue
-		                                              const file::pdb_residue                  &arg_residue_i,      ///< The first residue
-		                                              const file::pdb_residue                  &arg_residue_j       ///< The second residue
+		inline bool dssp_hbond_calc::has_hbond_energy(const boost::optional<file::pdb_residue> &prm_residue_i_prev, ///< The residue that precedes the first residue
+		                                              const file::pdb_residue                  &prm_residue_i,      ///< The first residue
+		                                              const file::pdb_residue                  &prm_residue_j       ///< The second residue
 		                                              ) {
 			constexpr double MIN_NO_HBOND_CA_DIST = 9.0;
 
 			return (
-				arg_residue_i.has_carbon_alpha()
+				prm_residue_i.has_carbon_alpha()
 				&&
-				arg_residue_j.has_carbon_alpha()
+				prm_residue_j.has_carbon_alpha()
 				&&
 				(
 					distance_between_points(
-						get_carbon_alpha_coord( arg_residue_i ),
-						get_carbon_alpha_coord( arg_residue_j )
+						get_carbon_alpha_coord( prm_residue_i ),
+						get_carbon_alpha_coord( prm_residue_j )
 					)
 					< MIN_NO_HBOND_CA_DIST
 				)
 				&&
 				(
-					! arg_residue_i_prev
+					! prm_residue_i_prev
 					||
 					(
-						arg_residue_i_prev->has_carbon()
+						prm_residue_i_prev->has_carbon()
 						&&
-						arg_residue_i_prev->has_oxygen()
+						prm_residue_i_prev->has_oxygen()
 					)
 				)
 				&&
-				arg_residue_i.has_nitrogen()
+				prm_residue_i.has_nitrogen()
 				&&
-				arg_residue_j.has_carbon()
+				prm_residue_j.has_carbon()
 				&&
-				arg_residue_j.has_oxygen()
+				prm_residue_j.has_oxygen()
 				&&
 				(
-					! is_proper_amino_acid( arg_residue_i.get_amino_acid() )
+					! is_proper_amino_acid( prm_residue_i.get_amino_acid() )
 					||
-					arg_residue_i.get_amino_acid() != amino_acid{ 'P' } // Proline has side-chain on N
+					prm_residue_i.get_amino_acid() != amino_acid{ 'P' } // Proline has side-chain on N
 				)
 			);
 		}
 
 		/// \brief Whether DSSP might assign a valid hbond energy between the specified two residues
 		///        (with supporting info from the residue that precedes the first one)
-		inline bool dssp_hbond_calc::has_hbond_energy_asymm(const file::pdb &arg_pdb, ///< The PDB containing the residues in question
-		                                                    const size_t    &arg_i,   ///< The index of the first  residue in the PDB
-		                                                    const size_t    &arg_j    ///< The index of the second residue in the PDB
+		inline bool dssp_hbond_calc::has_hbond_energy_asymm(const file::pdb &prm_pdb, ///< The PDB containing the residues in question
+		                                                    const size_t    &prm_i,   ///< The index of the first  residue in the PDB
+		                                                    const size_t    &prm_j    ///< The index of the second residue in the PDB
 		                                                    ) {
-			const auto prev_index = index_of_preceding_residue_in_same_chain( arg_pdb, arg_i );
+			const auto prev_index = index_of_preceding_residue_in_same_chain( prm_pdb, prm_i );
 			return (
 				(
-					arg_i < arg_j
+					prm_i < prm_j
 					||
-					arg_i > arg_j + 1
+					prm_i > prm_j + 1
 				)
 				&&
 				has_hbond_energy(
 					prev_index
-						? boost::make_optional( arg_pdb.get_residue_of_index__backbone_unchecked( *prev_index ) )
+						? boost::make_optional( prm_pdb.get_residue_of_index__backbone_unchecked( *prev_index ) )
 						: boost::none,
-					arg_pdb.get_residue_of_index__backbone_unchecked( arg_i     ),
-					arg_pdb.get_residue_of_index__backbone_unchecked( arg_j     )
+					prm_pdb.get_residue_of_index__backbone_unchecked( prm_i     ),
+					prm_pdb.get_residue_of_index__backbone_unchecked( prm_j     )
 				)
 			);
 		}

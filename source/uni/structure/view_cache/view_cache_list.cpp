@@ -31,14 +31,14 @@
 using namespace cath::index;
 
 /// \brief Build a vector of view_cache objects from a protein_list object
-view_cache_vec view_cache_list::build_caches(const protein_list &arg_protein_list ///< The list of proteins from which the view_cache_vec should be constructed
+view_cache_vec view_cache_list::build_caches(const protein_list &prm_protein_list ///< The list of proteins from which the view_cache_vec should be constructed
                                              ) {
-	const size_t num_proteins = arg_protein_list.size();
+	const size_t num_proteins = prm_protein_list.size();
 
 	view_cache_vec new_caches;
 	new_caches.reserve( num_proteins );
 
-	for (const protein &the_protein : arg_protein_list) {
+	for (const protein &the_protein : prm_protein_list) {
 		new_caches.push_back( view_cache( the_protein ) );
 	}
 
@@ -46,6 +46,6 @@ view_cache_vec view_cache_list::build_caches(const protein_list &arg_protein_lis
 }
 
 /// \brief Ctor for view_cache_list from a protein_list
-view_cache_list::view_cache_list(const protein_list &arg_protein_list ///< The list of proteins from which the view_cache_list should be constructed
-                                 ) : view_caches( build_caches( arg_protein_list ) ) {
+view_cache_list::view_cache_list(const protein_list &prm_protein_list ///< The list of proteins from which the view_cache_list should be constructed
+                                 ) : view_caches( build_caches( prm_protein_list ) ) {
 }

@@ -49,33 +49,33 @@ namespace cath {
 			~constexpr_modulo_fns_test_suite_fixture() noexcept = default;
 
 			/// \brief TODOCUMENT
-			void check_crcp(const size_t &arg_result_a, ///< TODOCUMENT
-			                const size_t &arg_result_b, ///< TODOCUMENT
-			                const size_t &arg_index_a,  ///< TODOCUMENT
-			                const size_t &arg_index_b,  ///< TODOCUMENT
-			                const size_t &arg_mod_a,    ///< TODOCUMENT
-			                const size_t &arg_mod_b     ///< TODOCUMENT
+			void check_crcp(const size_t &prm_result_a, ///< TODOCUMENT
+			                const size_t &prm_result_b, ///< TODOCUMENT
+			                const size_t &prm_index_a,  ///< TODOCUMENT
+			                const size_t &prm_index_b,  ///< TODOCUMENT
+			                const size_t &prm_mod_a,    ///< TODOCUMENT
+			                const size_t &prm_mod_b     ///< TODOCUMENT
 			                ) {
 				// Check that the result does indeed hit one of the representative pairs
-				BOOST_CHECK_EQUAL( arg_result_a % arg_mod_a, 0_z );
-				BOOST_CHECK_EQUAL( arg_result_b % arg_mod_b, 0_z );
+				BOOST_CHECK_EQUAL( prm_result_a % prm_mod_a, 0_z );
+				BOOST_CHECK_EQUAL( prm_result_b % prm_mod_b, 0_z );
 
 				// Check that the result is on the same diagonal as the original point
 				// and is at least as far along it as the original point
-				BOOST_REQUIRE_GE ( arg_result_a, arg_index_a );
-				BOOST_REQUIRE_GE ( arg_result_b, arg_index_b );
-				BOOST_CHECK_EQUAL( arg_result_a - arg_index_a, arg_result_b - arg_index_b );
+				BOOST_REQUIRE_GE ( prm_result_a, prm_index_a );
+				BOOST_REQUIRE_GE ( prm_result_b, prm_index_b );
+				BOOST_CHECK_EQUAL( prm_result_a - prm_index_a, prm_result_b - prm_index_b );
 
 				// Check that there isn't any earlier match (from the original point onwards)
 				// that hits a representative pair
-				const auto try_range_a = irange( arg_index_a, arg_result_a );
-				const auto try_range_b = irange( arg_index_b, arg_result_b );
+				const auto try_range_a = irange( prm_index_a, prm_result_a );
+				const auto try_range_b = irange( prm_index_b, prm_result_b );
 				BOOST_CHECK( none_of(
 					combine( try_range_a, try_range_b ),
 					[&] (const boost::tuple<size_t, size_t> &x) {
 						const auto &try_a = get<0>( x );
 						const auto &try_b = get<1>( x );
-						const bool correct_result = ( try_a % arg_mod_a == 0 && try_b % arg_mod_b == 0 );
+						const bool correct_result = ( try_a % prm_mod_a == 0 && try_b % prm_mod_b == 0 );
 //						cerr << "Checking none_of [" << try_a << ", " << try_b << "] - result is " << boolalpha << correct_result << noboolalpha << "\n";
 						return correct_result;
 					}

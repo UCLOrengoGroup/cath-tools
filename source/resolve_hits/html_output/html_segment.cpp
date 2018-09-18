@@ -42,21 +42,21 @@ using boost::none;
 using std::string;
 
 /// \brief Get an HTML span string to represent some aspect of a segment
-string html_segment::get_html_string(const seq_arrow          &arg_start,           ///< The start of the segment to render
-                                     const res_arrow_opt      &arg_stop,            ///< The stop of the segment to render (or none for a boundary)
-                                     const string             &arg_css_class,       ///< The CSS classes with which the HTML span should be marked
-                                     const str_str_pair_vec   &arg_data_key_values, ///< A set of key/value pairs to be inserted as data attributes in the span (keys are prefixed with "data-" if not already)
-                                     const display_colour_opt &arg_border_colour,   ///< The colour with which the border should be rendered
-                                     const display_colour     &arg_fill_colour,     ///< The colour with which to fill the pill
-                                     const size_t             &arg_full_seq_length, ///< The length of the full sequence on which this hit appears
-                                     const pill_rounding      &arg_pill_rounding    ///< Which side of the pill (or neither/both) should be rounded
+string html_segment::get_html_string(const seq_arrow          &prm_start,           ///< The start of the segment to render
+                                     const res_arrow_opt      &prm_stop,            ///< The stop of the segment to render (or none for a boundary)
+                                     const string             &prm_css_class,       ///< The CSS classes with which the HTML span should be marked
+                                     const str_str_pair_vec   &prm_data_key_values, ///< A set of key/value pairs to be inserted as data attributes in the span (keys are prefixed with "data-" if not already)
+                                     const display_colour_opt &prm_border_colour,   ///< The colour with which the border should be rendered
+                                     const display_colour     &prm_fill_colour,     ///< The colour with which to fill the pill
+                                     const size_t             &prm_full_seq_length, ///< The length of the full sequence on which this hit appears
+                                     const pill_rounding      &prm_pill_rounding    ///< Which side of the pill (or neither/both) should be rounded
                                      ) {
-	const double length_mult = 100.0 / debug_numeric_cast<double>( arg_full_seq_length );
+	const double length_mult = 100.0 / debug_numeric_cast<double>( prm_full_seq_length );
 	return R"(<span class=")"
-		+ arg_css_class
+		+ prm_css_class
 		+ R"(" )"
 		+ join(
-			arg_data_key_values
+			prm_data_key_values
 				| transformed( [] (const str_str_pair &x) {
 					return
 						( starts_with( x.first, "data-" ) ? ""s : "data-" )
@@ -66,30 +66,30 @@ string html_segment::get_html_string(const seq_arrow          &arg_start,       
 			" "
 		)
 		+ R"( style="background-color: #)"
-		+ hex_string_of_colour( arg_fill_colour )
+		+ hex_string_of_colour( prm_fill_colour )
 		+ ";" 
 		+ (
-			arg_border_colour
-			? ( " border-color: #" + hex_string_of_colour( *arg_border_colour ) + ";" )
+			prm_border_colour
+			? ( " border-color: #" + hex_string_of_colour( *prm_border_colour ) + ";" )
 			: ""s
 		)
 		+ " left: "
-		+ ::std::to_string( length_mult * debug_numeric_cast<double>( arg_start.res_after() - 1 ) )
+		+ ::std::to_string( length_mult * debug_numeric_cast<double>( prm_start.res_after() - 1 ) )
 		+ R"(%;)"
 		+ (
-			arg_stop
+			prm_stop
 				? " width: "
-					+ ::std::to_string( length_mult * debug_numeric_cast<double>( *arg_stop - arg_start ) )
+					+ ::std::to_string( length_mult * debug_numeric_cast<double>( *prm_stop - prm_start ) )
 					+ R"(%;)"
 				: ""s
 		)
 		+ (
-			( arg_pill_rounding == pill_rounding::NEITHER || arg_pill_rounding == pill_rounding::RIGHT_ONLY )
+			( prm_pill_rounding == pill_rounding::NEITHER || prm_pill_rounding == pill_rounding::RIGHT_ONLY )
 			? " border-top-left-radius: 0; border-bottom-left-radius: 0;"s
 			: ""s
 		)
 		+ (
-			( arg_pill_rounding == pill_rounding::NEITHER || arg_pill_rounding == pill_rounding::LEFT_ONLY )
+			( prm_pill_rounding == pill_rounding::NEITHER || prm_pill_rounding == pill_rounding::LEFT_ONLY )
 			? " border-top-right-radius: 0; border-bottom-right-radius: 0;"s
 			: ""s
 		)
@@ -97,18 +97,18 @@ string html_segment::get_html_string(const seq_arrow          &arg_start,       
 }
 
 /// \brief Get a resolved boundary HTML string
-string html_segment::get_resolve_boundary_html_string(const seq_arrow      &arg_point,          ///< The location of the arrow
-                                                      const display_colour &arg_colour,         ///< The colour in which this boundary should be rendered
-                                                      const size_t         &arg_full_seq_length ///< The length of the full sequence on which this hit appears
+string html_segment::get_resolve_boundary_html_string(const seq_arrow      &prm_point,          ///< The location of the arrow
+                                                      const display_colour &prm_colour,         ///< The colour in which this boundary should be rendered
+                                                      const size_t         &prm_full_seq_length ///< The length of the full sequence on which this hit appears
                                                       ) {
 	return get_html_string(
-		arg_point,
+		prm_point,
 		none,
 		"crh-hit-boundary",
 		{},
 		display_colour::BLACK,
-		darken_by_fraction( arg_colour, 0.60 ),
-		arg_full_seq_length
+		darken_by_fraction( prm_colour, 0.60 ),
+		prm_full_seq_length
 	);
 }
 
@@ -181,9 +181,9 @@ string html_segment::get_strong_front_html_string() const {
 }
 
 /// \brief Get the list of HTML span strings to represent this segment
-str_vec html_segment::get_all_span_html_strs(const bool &arg_do_layers ///< Whether render multiple layers or a single layer as in a full result
+str_vec html_segment::get_all_span_html_strs(const bool &prm_do_layers ///< Whether render multiple layers or a single layer as in a full result
                                              ) const {
-	if ( ! arg_do_layers ) {
+	if ( ! prm_do_layers ) {
 		return { get_full_result_html_string() };
 	}
 	if ( ! trimmed_start || ! trimmed_stop ) {

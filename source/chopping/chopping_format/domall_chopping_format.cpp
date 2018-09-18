@@ -42,9 +42,9 @@ bool domall_chopping_format::do_represents_fragments() const {
 	return true;
 }
 
-domain domall_chopping_format::do_parse_domain(const string &arg_domain_chopping_string ///< TODOCUMENT
+domain domall_chopping_format::do_parse_domain(const string &prm_domain_chopping_string ///< TODOCUMENT
                                                ) const {
-	std::cerr << "domain_chopping_string is " << arg_domain_chopping_string << "\n";
+	std::cerr << "domain_chopping_string is " << prm_domain_chopping_string << "\n";
 
 	BOOST_THROW_EXCEPTION(not_implemented_exception("domall_chopping_format::do_parse_domain()"));
 
@@ -52,13 +52,13 @@ domain domall_chopping_format::do_parse_domain(const string &arg_domain_chopping
 }
 
 /// \brief Concrete definition of this chopping_format writes a region to a string
-string domall_chopping_format::do_write_region(const region &/*arg_region*/ ///< The region to write to a string
+string domall_chopping_format::do_write_region(const region &/*prm_region*/ ///< The region to write to a string
                                                ) const {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("domall_chopping_format cannot currently write regions"));
 }
 
 /// \brief Concrete definition of this chopping_format writes a domain to a string
-string domall_chopping_format::do_write_domain(const domain &/*arg_domain*/ ///< The domain to write to a string
+string domall_chopping_format::do_write_domain(const domain &/*prm_domain*/ ///< The domain to write to a string
                                                ) const {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("domall_chopping_format cannot currently write domains"));
 }

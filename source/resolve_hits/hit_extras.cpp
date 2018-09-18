@@ -29,9 +29,9 @@ using std::string;
 /// \brief Generate a string describing the specified hit_extra_cat
 ///
 /// \relates hit_extra_cat
-string cath::rslv::to_string(const hit_extra_cat &arg_hit_extra_cat ///< The hit_extra_cat to describe
+string cath::rslv::to_string(const hit_extra_cat &prm_hit_extra_cat ///< The hit_extra_cat to describe
                              ) {
-	switch (arg_hit_extra_cat) {
+	switch (prm_hit_extra_cat) {
 		case ( hit_extra_cat::ALND_RGNS ) : { return "aligned-regions"; }
 		case ( hit_extra_cat::COND_EVAL ) : { return "cond-evalue";     }
 		case ( hit_extra_cat::INDP_EVAL ) : { return "indp-evalue";     }

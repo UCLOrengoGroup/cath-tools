@@ -40,12 +40,12 @@ unique_ptr<pdbs_acquirer> istream_pdbs_acquirer::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-pdb_list_name_set_list_pair istream_pdbs_acquirer::do_get_pdbs_and_names(istream &arg_istream ///< TODOCUMENT
+pdb_list_name_set_list_pair istream_pdbs_acquirer::do_get_pdbs_and_names(istream &prm_istream ///< TODOCUMENT
                                                                          ) const {
 	using std::to_string;
 
 	// Read PDBs from the_istream
-	const pdb_list pdbs = read_end_separated_pdb_files( arg_istream );
+	const pdb_list pdbs = read_end_separated_pdb_files( prm_istream );
 
 	return make_pair(
 		pdbs,

@@ -40,9 +40,9 @@ using boost::adaptors::filtered;
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-void cath::align::check_alignment_is_a_pair(const alignment &arg_alignment ///< TODOCUMENT
+void cath::align::check_alignment_is_a_pair(const alignment &prm_alignment ///< TODOCUMENT
                                             ) {
-	if (arg_alignment.num_entries() != alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT) {
+	if (prm_alignment.num_entries() != alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Alignment is not a pair alignment"));
 	}
 }
@@ -50,37 +50,37 @@ void cath::align::check_alignment_is_a_pair(const alignment &arg_alignment ///< 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_opt cath::align::a_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                              const size_t    &arg_index      ///< The index to query
+aln_posn_opt cath::align::a_position_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                              const size_t    &prm_index      ///< The index to query
                                               ) {
-	check_alignment_is_a_pair(arg_alignment);
-	return arg_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, arg_index );
+	check_alignment_is_a_pair(prm_alignment);
+	return prm_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, prm_index );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_opt cath::align::b_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                              const size_t    &arg_index      ///< The index to query
+aln_posn_opt cath::align::b_position_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                              const size_t    &prm_index      ///< The index to query
                                               ) {
-	check_alignment_is_a_pair( arg_alignment );
-	return arg_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, arg_index );
+	check_alignment_is_a_pair( prm_alignment );
+	return prm_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, prm_index );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-bool cath::align::alignment_contains_pair(const alignment &arg_alignment, ///< TODOCUMENT
-                                          const size_t    &arg_posn_a,    ///< TODOCUMENT
-							              const size_t    &arg_posn_b     ///< TODOCUMENT
+bool cath::align::alignment_contains_pair(const alignment &prm_alignment, ///< TODOCUMENT
+                                          const size_t    &prm_posn_a,    ///< TODOCUMENT
+							              const size_t    &prm_posn_b     ///< TODOCUMENT
 							              ) {
-	check_alignment_is_a_pair( arg_alignment );
+	check_alignment_is_a_pair( prm_alignment );
 
-	const size_t length = arg_alignment.length();
+	const size_t length = prm_alignment.length();
 	for (const size_t &index : indices( length ) ) {
-		const aln_posn_opt &posn_a = arg_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, index );
-		const aln_posn_opt &posn_b = arg_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, index );
-		if ( posn_a && *posn_a == arg_posn_a && posn_b && *posn_b == arg_posn_b ) {
+		const aln_posn_opt &posn_a = prm_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, index );
+		const aln_posn_opt &posn_b = prm_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, index );
+		if ( posn_a && *posn_a == prm_posn_a && posn_b && *posn_b == prm_posn_b ) {
 			return true;
 		}
 	}
@@ -90,54 +90,54 @@ bool cath::align::alignment_contains_pair(const alignment &arg_alignment, ///< T
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-bool cath::align::has_a_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                          const size_t    &arg_index      ///< The index to query
+bool cath::align::has_a_position_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                          const size_t    &prm_index      ///< The index to query
                                           ) {
-	return static_cast<bool>( a_position_of_index( arg_alignment, arg_index ) );
+	return static_cast<bool>( a_position_of_index( prm_alignment, prm_index ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-bool cath::align::has_b_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                          const size_t    &arg_index      ///< The index to query
+bool cath::align::has_b_position_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                          const size_t    &prm_index      ///< The index to query
                                           ) {
-	return static_cast<bool>( b_position_of_index( arg_alignment, arg_index ) );
+	return static_cast<bool>( b_position_of_index( prm_alignment, prm_index ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-bool cath::align::has_both_positions_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                              const size_t    &arg_index      ///< The index to query
+bool cath::align::has_both_positions_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                              const size_t    &prm_index      ///< The index to query
                                               ) {
 	return (
-		has_a_position_of_index( arg_alignment, arg_index )
+		has_a_position_of_index( prm_alignment, prm_index )
 		&&
-		has_b_position_of_index( arg_alignment, arg_index )
+		has_b_position_of_index( prm_alignment, prm_index )
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_type cath::align::get_a_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                                   const size_t    &arg_index      ///< The index to query
+aln_posn_type cath::align::get_a_position_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                                   const size_t    &prm_index      ///< The index to query
                                                    ) {
 	// This uses get_position_of_entry_of_index() so that it benefits from the check that will
 	// ensure errors result in an invalid_error_exception rather than an exception from boost::optional
-	return get_position_of_entry_of_index( arg_alignment, alignment::PAIR_A_IDX, arg_index );
+	return get_position_of_entry_of_index( prm_alignment, alignment::PAIR_A_IDX, prm_index );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_type cath::align::get_b_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                                   const size_t    &arg_index      ///< The index to query
+aln_posn_type cath::align::get_b_position_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                                   const size_t    &prm_index      ///< The index to query
                                                    ) {
 	// This uses get_position_of_entry_of_index() so that it benefits from the check that will
 	// ensure errors result in an invalid_error_exception rather than an exception from boost::optional
-	return get_position_of_entry_of_index( arg_alignment, alignment::PAIR_B_IDX, arg_index );
+	return get_position_of_entry_of_index( prm_alignment, alignment::PAIR_B_IDX, prm_index );
 }
 
 /// \brief TODOCUMENT
@@ -145,10 +145,10 @@ aln_posn_type cath::align::get_b_position_of_index(const alignment &arg_alignmen
 /// \relates alignment
 ///
 /// WARNING: The returned value starts at 1, not 0
-aln_posn_type cath::align::get_a_offset_1_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                                            const size_t    &arg_index      ///< The index to query
+aln_posn_type cath::align::get_a_offset_1_position_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                                            const size_t    &prm_index      ///< The index to query
                                                             ) {
-	return get_a_position_of_index(arg_alignment, arg_index) + 1;
+	return get_a_position_of_index(prm_alignment, prm_index) + 1;
 }
 
 /// \brief TODOCUMENT
@@ -156,35 +156,35 @@ aln_posn_type cath::align::get_a_offset_1_position_of_index(const alignment &arg
 /// \relates alignment
 ///
 /// WARNING: The returned value starts at 1, not 0
-aln_posn_type cath::align::get_b_offset_1_position_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                                            const size_t    &arg_index      ///< The index to query
+aln_posn_type cath::align::get_b_offset_1_position_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                                            const size_t    &prm_index      ///< The index to query
                                                             ) {
-	return get_b_position_of_index(arg_alignment, arg_index) + 1;
+	return get_b_position_of_index(prm_alignment, prm_index) + 1;
 }
 
 ///\brief TODOCUMENT
 ///
 /// \relates alignment
-bool cath::align::has_last_a_position(const alignment &arg_alignment ///< TODOCUMENT
+bool cath::align::has_last_a_position(const alignment &prm_alignment ///< TODOCUMENT
                                       ) {
-	return has_last_position_of_entry( arg_alignment, alignment::PAIR_A_IDX );
+	return has_last_position_of_entry( prm_alignment, alignment::PAIR_A_IDX );
 }
 
 ///\brief TODOCUMENT
 ///
 /// \relates alignment
-bool cath::align::has_last_b_position(const alignment &arg_alignment ///< TODOCUMENT
+bool cath::align::has_last_b_position(const alignment &prm_alignment ///< TODOCUMENT
                                       ) {
-	return has_last_position_of_entry( arg_alignment, alignment::PAIR_B_IDX );
+	return has_last_position_of_entry( prm_alignment, alignment::PAIR_B_IDX );
 }
 
 ///\brief TODOCUMENT
 ///
 /// \relates alignment
-bool cath::align::has_last_position_of_entry(const alignment &arg_alignment, ///< TODOCUMENT
-                                             const size_t    &arg_entry      ///< TODOCUMENT
+bool cath::align::has_last_position_of_entry(const alignment &prm_alignment, ///< TODOCUMENT
+                                             const size_t    &prm_entry      ///< TODOCUMENT
                                              ) {
-	return has_position_of_entry_of_index( arg_alignment, arg_entry, arg_alignment.length() - 1);
+	return has_position_of_entry_of_index( prm_alignment, prm_entry, prm_alignment.length() - 1);
 }
 
 /// \brief Convenience function for finding the index of the first present position for the first half in the specified alignment
@@ -193,9 +193,9 @@ bool cath::align::has_last_position_of_entry(const alignment &arg_alignment, ///
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates alignment
-aln_posn_opt cath::align::get_first_present_a_position(const alignment &arg_alignment ///< The alignment to be queried
+aln_posn_opt cath::align::get_first_present_a_position(const alignment &prm_alignment ///< The alignment to be queried
                                                        ) {
-	return get_first_present_position_of_entry( arg_alignment, alignment::PAIR_A_IDX );
+	return get_first_present_position_of_entry( prm_alignment, alignment::PAIR_A_IDX );
 }
 
 /// \brief Convenience function for finding the index of the first present position for the second half in the specified alignment
@@ -204,9 +204,9 @@ aln_posn_opt cath::align::get_first_present_a_position(const alignment &arg_alig
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates alignment
-aln_posn_opt cath::align::get_first_present_b_position(const alignment &arg_alignment ///< The alignment to be queried
+aln_posn_opt cath::align::get_first_present_b_position(const alignment &prm_alignment ///< The alignment to be queried
                                                        ) {
-	return get_first_present_position_of_entry( arg_alignment, alignment::PAIR_B_IDX );
+	return get_first_present_position_of_entry( prm_alignment, alignment::PAIR_B_IDX );
 }
 
 /// \brief Convenience function for finding the index of the last present position for the first half in the specified alignment
@@ -215,9 +215,9 @@ aln_posn_opt cath::align::get_first_present_b_position(const alignment &arg_alig
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates alignment
-aln_posn_opt cath::align::get_last_present_a_position(const alignment &arg_alignment ///< The alignment to be queried
+aln_posn_opt cath::align::get_last_present_a_position(const alignment &prm_alignment ///< The alignment to be queried
                                                       ) {
-	return get_last_present_position_of_entry( arg_alignment, alignment::PAIR_A_IDX );
+	return get_last_present_position_of_entry( prm_alignment, alignment::PAIR_A_IDX );
 }
 
 /// \brief Convenience function for finding the index of the last present position for the second half in the specified alignment
@@ -226,95 +226,95 @@ aln_posn_opt cath::align::get_last_present_a_position(const alignment &arg_align
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates alignment
-aln_posn_opt cath::align::get_last_present_b_position(const alignment &arg_alignment ///< The alignment to be queried
+aln_posn_opt cath::align::get_last_present_b_position(const alignment &prm_alignment ///< The alignment to be queried
                                                       ) {
-	return get_last_present_position_of_entry( arg_alignment, alignment::PAIR_B_IDX );
+	return get_last_present_position_of_entry( prm_alignment, alignment::PAIR_B_IDX );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_type cath::align::get_last_a_position(const alignment &arg_alignment ///< TODOCUMENT
+aln_posn_type cath::align::get_last_a_position(const alignment &prm_alignment ///< TODOCUMENT
                                                ) {
-	return get_last_position_of_entry( arg_alignment, alignment::PAIR_A_IDX );
+	return get_last_position_of_entry( prm_alignment, alignment::PAIR_A_IDX );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_type cath::align::get_last_b_position(const alignment &arg_alignment ///< TODOCUMENT
+aln_posn_type cath::align::get_last_b_position(const alignment &prm_alignment ///< TODOCUMENT
                                                ) {
-	return get_last_position_of_entry( arg_alignment, alignment::PAIR_B_IDX );
+	return get_last_position_of_entry( prm_alignment, alignment::PAIR_B_IDX );
 }
 
 ///\brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_type cath::align::get_last_position_of_entry(const alignment &arg_alignment, ///< TODOCUMENT
-                                                      const size_t    &arg_entry      ///< TODOCUMENT
+aln_posn_type cath::align::get_last_position_of_entry(const alignment &prm_alignment, ///< TODOCUMENT
+                                                      const size_t    &prm_entry      ///< TODOCUMENT
                                                       ) {
-	return get_position_of_entry_of_index( arg_alignment, arg_entry, arg_alignment.length() - 1 );
+	return get_position_of_entry_of_index( prm_alignment, prm_entry, prm_alignment.length() - 1 );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_type cath::align::get_last_a_offset_1_position(const alignment &arg_alignment ///< TODOCUMENT
+aln_posn_type cath::align::get_last_a_offset_1_position(const alignment &prm_alignment ///< TODOCUMENT
                                                         ) {
-	return get_last_a_position( arg_alignment ) + 1;
+	return get_last_a_position( prm_alignment ) + 1;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_type cath::align::get_last_b_offset_1_position(const alignment &arg_alignment ///< TODOCUMENT
+aln_posn_type cath::align::get_last_b_offset_1_position(const alignment &prm_alignment ///< TODOCUMENT
                                                         ) {
-	return get_last_b_position( arg_alignment ) + 1;
+	return get_last_b_position( prm_alignment ) + 1;
 }
 
 ///\brief TODOCUMENT
 ///
 /// \relates alignment
-aln_posn_type cath::align::get_last_offset_1_position_of_entry(const alignment &arg_alignment, ///< TODOCUMENT
-                                                               const size_t    &arg_entry      ///< TODOCUMENT
+aln_posn_type cath::align::get_last_offset_1_position_of_entry(const alignment &prm_alignment, ///< TODOCUMENT
+                                                               const size_t    &prm_entry      ///< TODOCUMENT
                                                                ) {
-	return get_last_position_of_entry( arg_alignment, arg_entry ) + 1;
+	return get_last_position_of_entry( prm_alignment, prm_entry ) + 1;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-void cath::align::append_position_a(alignment           &arg_alignment,   ///<TODOCUMENT
-                                    const aln_posn_type &arg_position_val ///< TODOCUMENT
+void cath::align::append_position_a(alignment           &prm_alignment,   ///<TODOCUMENT
+                                    const aln_posn_type &prm_position_val ///< TODOCUMENT
                                     ) {
-	check_alignment_is_a_pair(arg_alignment);
-	const size_t length = arg_alignment.length();
-	arg_alignment.set_position_value(alignment::PAIR_A_IDX, length, arg_position_val);
+	check_alignment_is_a_pair(prm_alignment);
+	const size_t length = prm_alignment.length();
+	prm_alignment.set_position_value(alignment::PAIR_A_IDX, length, prm_position_val);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-void cath::align::append_position_b(alignment           &arg_alignment,   ///<TODOCUMENT
-                                    const aln_posn_type &arg_position_val ///< TODOCUMENT
+void cath::align::append_position_b(alignment           &prm_alignment,   ///<TODOCUMENT
+                                    const aln_posn_type &prm_position_val ///< TODOCUMENT
                                     ) {
-	check_alignment_is_a_pair(arg_alignment);
-	const size_t length = arg_alignment.length();
-	arg_alignment.set_position_value(alignment::PAIR_B_IDX, length, arg_position_val);
+	check_alignment_is_a_pair(prm_alignment);
+	const size_t length = prm_alignment.length();
+	prm_alignment.set_position_value(alignment::PAIR_B_IDX, length, prm_position_val);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-void cath::align::append_position_both(alignment           &arg_alignment,      ///< TODOCUMENT
-                                       const aln_posn_type &arg_a_position_val, ///< TODOCUMENT
-                                       const aln_posn_type &arg_b_position_val  ///< TODOCUMENT
+void cath::align::append_position_both(alignment           &prm_alignment,      ///< TODOCUMENT
+                                       const aln_posn_type &prm_a_position_val, ///< TODOCUMENT
+                                       const aln_posn_type &prm_b_position_val  ///< TODOCUMENT
                                        ) {
-	check_alignment_is_a_pair(arg_alignment);
-	const size_t length = arg_alignment.length();
-	arg_alignment.set_position_value(alignment::PAIR_A_IDX, length, arg_a_position_val);
-	arg_alignment.set_position_value(alignment::PAIR_B_IDX, length, arg_b_position_val);
-//	arg_alignment.append_position(
+	check_alignment_is_a_pair(prm_alignment);
+	const size_t length = prm_alignment.length();
+	prm_alignment.set_position_value(alignment::PAIR_A_IDX, length, prm_a_position_val);
+	prm_alignment.set_position_value(alignment::PAIR_B_IDX, length, prm_b_position_val);
+//	prm_alignment.append_position(
 //		{       true       ,       true       },
 //		{ position_a_value , position_b_value }
 //	);
@@ -323,78 +323,78 @@ void cath::align::append_position_both(alignment           &arg_alignment,      
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-void cath::align::append_position_a_offset_1(alignment           &arg_alignment,   ///<TODOCUMENT
-                                             const aln_posn_type &arg_position_val ///< TODOCUMENT
+void cath::align::append_position_a_offset_1(alignment           &prm_alignment,   ///<TODOCUMENT
+                                             const aln_posn_type &prm_position_val ///< TODOCUMENT
                                              ) {
-	check_offset_1(arg_position_val);
-	append_position_a( arg_alignment, arg_position_val - 1 );
+	check_offset_1(prm_position_val);
+	append_position_a( prm_alignment, prm_position_val - 1 );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-void cath::align::append_position_b_offset_1(alignment           &arg_alignment,   ///<TODOCUMENT
-                                             const aln_posn_type &arg_position_val ///< TODOCUMENT
+void cath::align::append_position_b_offset_1(alignment           &prm_alignment,   ///<TODOCUMENT
+                                             const aln_posn_type &prm_position_val ///< TODOCUMENT
                                              ) {
-	check_offset_1(arg_position_val);
-	append_position_b( arg_alignment, arg_position_val - 1 );
+	check_offset_1(prm_position_val);
+	append_position_b( prm_alignment, prm_position_val - 1 );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-void cath::align::append_position_both_offset_1(alignment           &arg_alignment,      ///< TODOCUMENT
-                                                const aln_posn_type &arg_a_position_val, ///< TODOCUMENT
-                                                const aln_posn_type &arg_b_position_val  ///< TODOCUMENT
+void cath::align::append_position_both_offset_1(alignment           &prm_alignment,      ///< TODOCUMENT
+                                                const aln_posn_type &prm_a_position_val, ///< TODOCUMENT
+                                                const aln_posn_type &prm_b_position_val  ///< TODOCUMENT
                                                 ) {
-	check_offset_1(arg_a_position_val);
-	check_offset_1(arg_b_position_val);
-	append_position_both( arg_alignment, arg_a_position_val - 1, arg_b_position_val - 1 );
+	check_offset_1(prm_a_position_val);
+	check_offset_1(prm_b_position_val);
+	append_position_both( prm_alignment, prm_a_position_val - 1, prm_b_position_val - 1 );
 }
 
 /// \brief Convenience function for getting a const reference to an a residue using a pair alignment and index
 ///
 /// \relates alignment
-const residue & cath::align::get_a_residue_cref_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                                         const protein   &arg_protein,   ///< TODOCUMENT
-                                                         const size_t    &arg_index      ///< TODOCUMENT
+const residue & cath::align::get_a_residue_cref_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                                         const protein   &prm_protein,   ///< TODOCUMENT
+                                                         const size_t    &prm_index      ///< TODOCUMENT
                                                          ) {
-	check_alignment_is_a_pair(arg_alignment);
-	const aln_posn_type a_position__offset_1 = get_a_offset_1_position_of_index( arg_alignment, arg_index );
+	check_alignment_is_a_pair(prm_alignment);
+	const aln_posn_type a_position__offset_1 = get_a_offset_1_position_of_index( prm_alignment, prm_index );
 	check_offset_1(a_position__offset_1);
-	return arg_protein.get_residue_ref_of_index(a_position__offset_1 - 1);
+	return prm_protein.get_residue_ref_of_index(a_position__offset_1 - 1);
 }
 
 /// \brief Convenience function for getting a const reference to an a residue using a pair alignment and index
 ///
 /// \relates alignment
-const residue & cath::align::get_b_residue_cref_of_index(const alignment &arg_alignment, ///< TODOCUMENT
-                                                         const protein   &arg_protein,   ///< TODOCUMENT
-                                                         const size_t    &arg_index      ///< TODOCUMENT
+const residue & cath::align::get_b_residue_cref_of_index(const alignment &prm_alignment, ///< TODOCUMENT
+                                                         const protein   &prm_protein,   ///< TODOCUMENT
+                                                         const size_t    &prm_index      ///< TODOCUMENT
                                                          ) {
-	check_alignment_is_a_pair(arg_alignment);
-	const aln_posn_type b_position__offset_1 = get_b_offset_1_position_of_index( arg_alignment, arg_index );
+	check_alignment_is_a_pair(prm_alignment);
+	const aln_posn_type b_position__offset_1 = get_b_offset_1_position_of_index( prm_alignment, prm_index );
 	check_offset_1(b_position__offset_1);
-	return arg_protein.get_residue_ref_of_index(b_position__offset_1 - 1);
+	return prm_protein.get_residue_ref_of_index(b_position__offset_1 - 1);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-size_t cath::align::num_present_positions_of_both_entries(const alignment &arg_alignment ///< TODOCUMENT
+size_t cath::align::num_present_positions_of_both_entries(const alignment &prm_alignment ///< TODOCUMENT
                                                           ) {
-	check_alignment_is_a_pair(arg_alignment);
-	return num_present_positions_of_both_entries(arg_alignment, alignment::PAIR_A_IDX, alignment::PAIR_B_IDX );
+	check_alignment_is_a_pair(prm_alignment);
+	return num_present_positions_of_both_entries(prm_alignment, alignment::PAIR_A_IDX, alignment::PAIR_B_IDX );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-size_vec cath::align::indices_of_present_positions_of_both_entries(const alignment &arg_alignment ///< TODOCUMENT
+size_vec cath::align::indices_of_present_positions_of_both_entries(const alignment &prm_alignment ///< TODOCUMENT
                                                                    ) {
 	return copy_build<size_vec>(
-		indices( arg_alignment.length() - 1 )
-			| filtered( [&] (const size_t &x) { return has_both_positions_of_index( arg_alignment, x ); } )
+		indices( prm_alignment.length() - 1 )
+			| filtered( [&] (const size_t &x) { return has_both_positions_of_index( prm_alignment, x ); } )
 	);
 }
 
@@ -402,18 +402,18 @@ size_vec cath::align::indices_of_present_positions_of_both_entries(const alignme
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-void cath::align::set_pair_alignment_duplicate_scores(alignment           &arg_alignment, ///< TODOCUMENT
-                                                      const score_opt_vec &arg_scores     ///< TODOCUMENT
+void cath::align::set_pair_alignment_duplicate_scores(alignment           &prm_alignment, ///< TODOCUMENT
+                                                      const score_opt_vec &prm_scores     ///< TODOCUMENT
                                                       ) {
-	set_scores( arg_alignment, score_opt_vec_vec( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT, arg_scores ) );
+	set_scores( prm_alignment, score_opt_vec_vec( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT, prm_scores ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-alignment cath::align::set_pair_alignment_duplicate_scores_copy(alignment            arg_alignment, ///< TODOCUMENT
-                                                                const score_opt_vec &arg_scores     ///< TODOCUMENT
+alignment cath::align::set_pair_alignment_duplicate_scores_copy(alignment            prm_alignment, ///< TODOCUMENT
+                                                                const score_opt_vec &prm_scores     ///< TODOCUMENT
                                                                 ) {
-	set_pair_alignment_duplicate_scores( arg_alignment, arg_scores );
-	return arg_alignment;
+	set_pair_alignment_duplicate_scores( prm_alignment, prm_scores );
+	return prm_alignment;
 }

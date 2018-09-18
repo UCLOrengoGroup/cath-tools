@@ -81,53 +81,53 @@ namespace cath {
 		};
 
 		template <typename T>
-		void plot_classn_stat(const classn_stat_plotter         &arg_classn_stat_plotter,      ///< TODOCUMENT
-		                      const boost::filesystem::path     &arg_output_file_stem,         ///< TODOCUMENT
-		                      const score_classn_value_list_vec &arg_score_classn_value_lists, ///< TODOCUMENT
-		                      const classn_stat_plotter_spec    &arg_plot_spec                 ///< TODOCUMENT
+		void plot_classn_stat(const classn_stat_plotter         &prm_classn_stat_plotter,      ///< TODOCUMENT
+		                      const boost::filesystem::path     &prm_output_file_stem,         ///< TODOCUMENT
+		                      const score_classn_value_list_vec &prm_score_classn_value_lists, ///< TODOCUMENT
+		                      const classn_stat_plotter_spec    &prm_plot_spec                 ///< TODOCUMENT
 		                      ) {
 			using first_classn_stat  = typename T::first_type;
 			using second_classn_stat = typename T::second_type;
-			arg_classn_stat_plotter.plot(
-				arg_output_file_stem,
-				arg_score_classn_value_lists,
+			prm_classn_stat_plotter.plot(
+				prm_output_file_stem,
+				prm_score_classn_value_lists,
 				first_classn_stat(),
 				second_classn_stat(),
-				arg_plot_spec
+				prm_plot_spec
 			);
 		}
 
 		template <typename T>
-		void plot_classn_stat(const classn_stat_plotter            &arg_classn_stat_plotter,      ///< TODOCUMENT
-		                      const boost::filesystem::path        &arg_output_file_stem,         ///< TODOCUMENT
-		                      const score_classn_value_results_set &arg_scv_results_set,          ///< TODOCUMENT
-		                      const classn_stat_plotter_spec       &arg_plot_spec                 ///< TODOCUMENT
+		void plot_classn_stat(const classn_stat_plotter            &prm_classn_stat_plotter,      ///< TODOCUMENT
+		                      const boost::filesystem::path        &prm_output_file_stem,         ///< TODOCUMENT
+		                      const score_classn_value_results_set &prm_scv_results_set,          ///< TODOCUMENT
+		                      const classn_stat_plotter_spec       &prm_plot_spec                 ///< TODOCUMENT
 		                      ) {
 			using first_classn_stat  = typename T::first_type;
 			using second_classn_stat = typename T::second_type;
-			arg_classn_stat_plotter.plot(
-				arg_output_file_stem,
-				arg_scv_results_set,
+			prm_classn_stat_plotter.plot(
+				prm_output_file_stem,
+				prm_scv_results_set,
 				first_classn_stat(),
 				second_classn_stat(),
-				arg_plot_spec
+				prm_plot_spec
 			);
 		}
 
 		template <typename T>
-		void plot_classn_stat(const classn_stat_plotter           &arg_classn_stat_plotter,      ///< TODOCUMENT
-		                      const boost::filesystem::path       &arg_output_file_stem,         ///< TODOCUMENT
-		                      const named_true_false_pos_neg_list &arg_named_tfpn,               ///< TODOCUMENT
-		                      const classn_stat_plotter_spec      &arg_plot_spec                 ///< TODOCUMENT
+		void plot_classn_stat(const classn_stat_plotter           &prm_classn_stat_plotter,      ///< TODOCUMENT
+		                      const boost::filesystem::path       &prm_output_file_stem,         ///< TODOCUMENT
+		                      const named_true_false_pos_neg_list &prm_named_tfpn,               ///< TODOCUMENT
+		                      const classn_stat_plotter_spec      &prm_plot_spec                 ///< TODOCUMENT
 		                      ) {
 			using first_classn_stat  = typename T::first_type;
 			using second_classn_stat = typename T::second_type;
-			arg_classn_stat_plotter.plot(
-				arg_output_file_stem,
-				arg_named_tfpn,
+			prm_classn_stat_plotter.plot(
+				prm_output_file_stem,
+				prm_named_tfpn,
 				first_classn_stat(),
 				second_classn_stat(),
-				arg_plot_spec
+				prm_plot_spec
 			);
 		}
 

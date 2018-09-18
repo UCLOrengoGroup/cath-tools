@@ -33,10 +33,10 @@ namespace cath {
 		/// \brief Read a string from the specified file
 		///
 		/// This is named after Perl's Path::Tiny / Path::Class::File slurp() method
-		inline std::string slurp(const boost::filesystem::path &arg_file ///< The file from which the string should be read
+		inline std::string slurp(const boost::filesystem::path &prm_file ///< The file from which the string should be read
 		                         ) {
 			std::ifstream input_stream;
-			open_ifstream( input_stream, arg_file );
+			open_ifstream( input_stream, prm_file );
 
 			std::string result_str;
 			input_stream.seekg( 0, std::ios::end );

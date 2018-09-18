@@ -69,38 +69,38 @@ constexpr score_value                ssap_score::min_total_score;
 /// \brief TODOCUMENT
 ///
 /// \todo Parameterise on atoms (CA/CB) and whether to use all residues in alignment (common_residue_selection_policy)
-score_size_pair ssap_score::calculate_total_score_and_num_quads(const alignment              &arg_alignment,             ///< The pair alignment to be scored
-                                                                const protein                &arg_protein_a,             ///< The protein associated with the first  half of the alignment
-                                                                const protein                &arg_protein_b,             ///< The protein associated with the first  half of the alignment
-                                                                const ssap_score_accuracy    &arg_accuracy,              ///< TODOCUMENT
-                                                                const size_t                 &arg_num_excluded_on_sides, ///< TODOCUMENT
-                                                                const distance_score_formula &arg_distance_formula       ///< TODOCUMENT
+score_size_pair ssap_score::calculate_total_score_and_num_quads(const alignment              &prm_alignment,             ///< The pair alignment to be scored
+                                                                const protein                &prm_protein_a,             ///< The protein associated with the first  half of the alignment
+                                                                const protein                &prm_protein_b,             ///< The protein associated with the first  half of the alignment
+                                                                const ssap_score_accuracy    &prm_accuracy,              ///< TODOCUMENT
+                                                                const size_t                 &prm_num_excluded_on_sides, ///< TODOCUMENT
+                                                                const distance_score_formula &prm_distance_formula       ///< TODOCUMENT
                                                                 ) {
-	const size_t length       = arg_alignment.length();
-	const bool   use_rounding = ( arg_accuracy == ssap_score_accuracy::LOW );
+	const size_t length       = prm_alignment.length();
+	const bool   use_rounding = ( prm_accuracy == ssap_score_accuracy::LOW );
 
 	score_value the_score = 0.0;
 	size_t      num_quads = 0;
 	for (const size_t &from_ctr : indices( length ) ) {
-		if ( has_both_positions_of_index( arg_alignment, from_ctr ) ) {
-			const aln_posn_type a_from = get_a_position_of_index( arg_alignment, from_ctr );
-			const aln_posn_type b_from = get_b_position_of_index( arg_alignment, from_ctr );
+		if ( has_both_positions_of_index( prm_alignment, from_ctr ) ) {
+			const aln_posn_type a_from = get_a_position_of_index( prm_alignment, from_ctr );
+			const aln_posn_type b_from = get_b_position_of_index( prm_alignment, from_ctr );
 
 			for (const size_t &to_ctr : indices( length ) ) {
-				if ( has_both_positions_of_index( arg_alignment, to_ctr ) ) {
-					const aln_posn_type a_to = get_a_position_of_index( arg_alignment, to_ctr );
-					const aln_posn_type b_to = get_b_position_of_index( arg_alignment, to_ctr );
+				if ( has_both_positions_of_index( prm_alignment, to_ctr ) ) {
+					const aln_posn_type a_to = get_a_position_of_index( prm_alignment, to_ctr );
+					const aln_posn_type b_to = get_b_position_of_index( prm_alignment, to_ctr );
 
-					const bool a_included = pair_is_not_excluded( arg_num_excluded_on_sides, a_from, a_to );
-					const bool b_included = pair_is_not_excluded( arg_num_excluded_on_sides, b_from, b_to );
+					const bool a_included = pair_is_not_excluded( prm_num_excluded_on_sides, a_from, a_to );
+					const bool b_included = pair_is_not_excluded( prm_num_excluded_on_sides, b_from, b_to );
 
 					if ( a_included && b_included ) {
 						const score_value raw_quad_score = context_res(
-							arg_protein_a, arg_protein_b,
+							prm_protein_a, prm_protein_b,
 							a_from,        b_from,
 							a_to,          b_to,
 							use_rounding,
-							arg_distance_formula
+							prm_distance_formula
 						);
 						const score_value quad_score = use_rounding ? floor( raw_quad_score )
 						                                            :        raw_quad_score;
@@ -116,8 +116,8 @@ score_size_pair ssap_score::calculate_total_score_and_num_quads(const alignment 
 		}
 	}
 
-//	const float_score_type gap_penalty_value = gap_penalty_value_of_alignment( arg_alignment, gap_penalty( 1.0, 0.0 ) );
-//	const float_score_float_score_pair open_and_extend_counts = gap_open_and_extend_counts_of_alignment( arg_alignment );
+//	const float_score_type gap_penalty_value = gap_penalty_value_of_alignment( prm_alignment, gap_penalty( 1.0, 0.0 ) );
+//	const float_score_float_score_pair open_and_extend_counts = gap_open_and_extend_counts_of_alignment( prm_alignment );
 //	cerr << endl;
 //	cerr << "open count         : " << open_and_extend_counts.first             << endl;
 //	cerr << "extend count       : " << open_and_extend_counts.second            << endl;
@@ -128,10 +128,10 @@ score_size_pair ssap_score::calculate_total_score_and_num_quads(const alignment 
 //	cerr << endl;
 
 //	cerr << "the_score is                           " << the_score << endl;
-//	cerr << "get_naive_num_gaps( arg_alignment ) is " << get_naive_num_gaps( arg_alignment ) << endl;
+//	cerr << "get_naive_num_gaps( prm_alignment ) is " << get_naive_num_gaps( prm_alignment ) << endl;
 
-	the_score -= numeric_cast<score_value>( get_naive_num_gaps( arg_alignment ) );
-//	the_score -= gap_penalty_value_of_alignment( arg_alignment, gap_penalty( 1, 0 ) );
+	the_score -= numeric_cast<score_value>( get_naive_num_gaps( prm_alignment ) );
+//	the_score -= gap_penalty_value_of_alignment( prm_alignment, gap_penalty( 1, 0 ) );
 	return make_pair(
 		max( min_total_score, the_score),
 		num_quads
@@ -139,32 +139,32 @@ score_size_pair ssap_score::calculate_total_score_and_num_quads(const alignment 
 }
 
 /// \brief TODOCUMENT
-score_value ssap_score::log_score_copy(const score_value &arg_score ///< TODOCUMENT
+score_value ssap_score::log_score_copy(const score_value &prm_score ///< TODOCUMENT
                                        ) {
 	const double      final_score_scaling  = 1000.0;
 	const score_value k                    = final_score_scaling * residue_querier::RESIDUE_A_VALUE
 	                                                             / residue_querier::RESIDUE_B_VALUE;
 	const score_value log_k                = log( k );
-	return 1.0 + log( arg_score ) / log_k;
+	return 1.0 + log( prm_score ) / log_k;
 }
 
 /// \brief TODOCUMENT
-score_value ssap_score::simple_normalise(const score_value &arg_score,           ///< TODOCUMENT
+score_value ssap_score::simple_normalise(const score_value &prm_score,           ///< TODOCUMENT
                                          const size_t      &num_aligned_length,  ///< TODOCUMENT
                                          const size_t      &normalisation_length ///< TODOCUMENT
                                          ) {
-	return arg_score * numeric_cast<score_value>( num_aligned_length   )
+	return prm_score * numeric_cast<score_value>( num_aligned_length   )
 	                 / numeric_cast<score_value>( normalisation_length );
 }
 
 /// \brief TODOCUMENT
-score_value ssap_score::complex_normalise(const score_value &arg_score,            ///< TODOCUMENT
+score_value ssap_score::complex_normalise(const score_value &prm_score,            ///< TODOCUMENT
                                           const size_t      &num_quads,            ///< TODOCUMENT
                                           const size_t      &normalisation_length, ///< TODOCUMENT
                                           const size_t      &num_excluded_on_sides ///< TODOCUMENT
                                           ) {
 	const size_t num_comparable = _num_comparable_impl( num_excluded_on_sides, normalisation_length );
-	return arg_score * numeric_cast<score_value>( num_quads      )
+	return prm_score * numeric_cast<score_value>( num_quads      )
 	                 / numeric_cast<score_value>( num_comparable );
 }
 
@@ -179,15 +179,15 @@ tribool ssap_score::do_higher_is_better() const {
 }
 
 /// \brief Concrete implementation for calculating the SSAP score of an alignment
-score_value ssap_score::do_calculate(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                     const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                     const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+score_value ssap_score::do_calculate(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                     const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                     const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                      ) const {
 
 	const score_size_pair total_score_and_num_quads = calculate_total_score_and_num_quads(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b,
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b,
 		accuracy,
 		num_excluded_on_sides,
 		distance_formula
@@ -204,8 +204,8 @@ score_value ssap_score::do_calculate(const alignment &arg_alignment, ///< The pa
 	                                         : mean_score;
 
 	const bool         simple_normls        = normalisation_is_simple( post_processing );
-	const size_t       num_aligned_length   = num_aligned_length_getter().get_length( arg_alignment, arg_protein_a, arg_protein_b );
-	const size_t       normalisation_length = length_getter_ptr->get_length         ( arg_alignment, arg_protein_a, arg_protein_b );
+	const size_t       num_aligned_length   = num_aligned_length_getter().get_length( prm_alignment, prm_protein_a, prm_protein_b );
+	const size_t       normalisation_length = length_getter_ptr->get_length         ( prm_alignment, prm_protein_a, prm_protein_b );
 	const score_value  post_score           = simple_normls ? simple_normalise ( pre_score, num_aligned_length, normalisation_length )
 	                                                        : complex_normalise( pre_score, num_quads, normalisation_length, num_excluded_on_sides );
 
@@ -277,53 +277,53 @@ string ssap_score::do_reference() const {
 }
 
 ///// \brief Build an aligned_pair_score of this concrete type from a short_name_spec string
-//unique_ptr<aligned_pair_score> ssap_score::do_build_from_short_name_spec(const string &arg_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
+//unique_ptr<aligned_pair_score> ssap_score::do_build_from_short_name_spec(const string &prm_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
 //                                                                         ) const {
-//	cerr << "Should build a ssap_score from string \"" << arg_short_name_spec << "\"" << endl;
+//	cerr << "Should build a ssap_score from string \"" << prm_short_name_spec << "\"" << endl;
 //	return clone();
 //}
 
 /// \brief TODOCUMENT
-bool ssap_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool ssap_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                      ) const {
-	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 	return ( *this < casted_aligned_pair_score );
 }
 
 /// \brief Default ctor for ssap_score (because all three arguments have default values)
-ssap_score::ssap_score(const ssap_score_post_processing &arg_post_processing,      ///< (optional) How to post process the basic score once it has been calculated
-                       const ssap_score_accuracy        &arg_accuracy,             ///< (optional) Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
-                       const size_t                     &arg_num_excluded_on_sides ///< (optional) The number of residues on each side that are excluded from view calculations
-                       ) : post_processing      ( arg_post_processing         ),
-                           accuracy             ( arg_accuracy                ),
-                           num_excluded_on_sides( arg_num_excluded_on_sides   ) {
+ssap_score::ssap_score(const ssap_score_post_processing &prm_post_processing,      ///< (optional) How to post process the basic score once it has been calculated
+                       const ssap_score_accuracy        &prm_accuracy,             ///< (optional) Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
+                       const size_t                     &prm_num_excluded_on_sides ///< (optional) The number of residues on each side that are excluded from view calculations
+                       ) : post_processing      ( prm_post_processing         ),
+                           accuracy             ( prm_accuracy                ),
+                           num_excluded_on_sides( prm_num_excluded_on_sides   ) {
 }
 
 /// \brief Ctor for ssap_score that allows the caller to specify the protein_only_length_getter
-ssap_score::ssap_score(const length_getter              &arg_length_getter,        ///< The method for choosing which of the two proteins should be used in the normalisation
-                       const ssap_score_post_processing &arg_post_processing,      ///< (optional) How to post process the basic score once it has been calculated
-                       const ssap_score_accuracy        &arg_accuracy,             ///< (optional) Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
-                       const size_t                     &arg_num_excluded_on_sides ///< (optional) The number of residues on each side that are excluded from view calculations
-                       ) : length_getter_ptr    ( arg_length_getter.clone() ),
-                           post_processing      ( arg_post_processing       ),
-                           accuracy             ( arg_accuracy              ),
-                           num_excluded_on_sides( arg_num_excluded_on_sides ) {
+ssap_score::ssap_score(const length_getter              &prm_length_getter,        ///< The method for choosing which of the two proteins should be used in the normalisation
+                       const ssap_score_post_processing &prm_post_processing,      ///< (optional) How to post process the basic score once it has been calculated
+                       const ssap_score_accuracy        &prm_accuracy,             ///< (optional) Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
+                       const size_t                     &prm_num_excluded_on_sides ///< (optional) The number of residues on each side that are excluded from view calculations
+                       ) : length_getter_ptr    ( prm_length_getter.clone() ),
+                           post_processing      ( prm_post_processing       ),
+                           accuracy             ( prm_accuracy              ),
+                           num_excluded_on_sides( prm_num_excluded_on_sides ) {
 }
 
 /// \brief Ctor for ssap_score that allows the caller to specify the protein_only_length_getter, common_residue_selection_policy and common_atom_selection_policy
-ssap_score::ssap_score(const length_getter                   &arg_length_getter,         ///< The method for choosing which of the two proteins should be used in the normalisation
-                       const common_residue_selection_policy &arg_comm_res_seln_pol,     ///< The policy to use for selecting common residues
-                       const common_atom_selection_policy    &arg_comm_atom_seln_pol,    ///< The policy to use for selecting common atoms
-                       const ssap_score_post_processing      &arg_post_processing,       ///< (optional) How to post process the basic score once it has been calculated
-                       const ssap_score_accuracy             &arg_accuracy,              ///< (optional) Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
-                       const size_t                          &arg_num_excluded_on_sides, ///< (optional) The number of residues on each side that are excluded from view calculations
-                       const distance_score_formula          &arg_distance_formula       ///< (optional) The formula to use to score the distance between distance within views
-                       ) : the_coord_handler     ( arg_comm_res_seln_pol, arg_comm_atom_seln_pol ),
-                           length_getter_ptr     ( arg_length_getter.clone() ),
-                           post_processing       ( arg_post_processing       ),
-                           accuracy              ( arg_accuracy              ),
-                           num_excluded_on_sides ( arg_num_excluded_on_sides ),
-                           distance_formula      ( arg_distance_formula      ) {
+ssap_score::ssap_score(const length_getter                   &prm_length_getter,         ///< The method for choosing which of the two proteins should be used in the normalisation
+                       const common_residue_selection_policy &prm_comm_res_seln_pol,     ///< The policy to use for selecting common residues
+                       const common_atom_selection_policy    &prm_comm_atom_seln_pol,    ///< The policy to use for selecting common atoms
+                       const ssap_score_post_processing      &prm_post_processing,       ///< (optional) How to post process the basic score once it has been calculated
+                       const ssap_score_accuracy             &prm_accuracy,              ///< (optional) Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
+                       const size_t                          &prm_num_excluded_on_sides, ///< (optional) The number of residues on each side that are excluded from view calculations
+                       const distance_score_formula          &prm_distance_formula       ///< (optional) The formula to use to score the distance between distance within views
+                       ) : the_coord_handler     ( prm_comm_res_seln_pol, prm_comm_atom_seln_pol ),
+                           length_getter_ptr     ( prm_length_getter.clone() ),
+                           post_processing       ( prm_post_processing       ),
+                           accuracy              ( prm_accuracy              ),
+                           num_excluded_on_sides ( prm_num_excluded_on_sides ),
+                           distance_formula      ( prm_distance_formula      ) {
 }
 
 /// \brief TODOCUMENT
@@ -354,10 +354,10 @@ const score_common_coord_handler & ssap_score::get_score_common_coord_handler() 
 /// \brief TODOCUMENT
 ///
 /// \relates ssap_score
-bool cath::score::operator<(const ssap_score &arg_ssap_score_a, ///< TODOCUMENT
-                            const ssap_score &arg_ssap_score_b  ///< TODOCUMENT
+bool cath::score::operator<(const ssap_score &prm_ssap_score_a, ///< TODOCUMENT
+                            const ssap_score &prm_ssap_score_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_ssap_score_a, arg_ssap_score_b );
+	auto the_helper = make_less_than_helper( prm_ssap_score_a, prm_ssap_score_b );
 	the_helper.register_comparison_field( &ssap_score::get_length_getter         );
 	the_helper.register_comparison_field( &ssap_score::get_post_processing       );
 	the_helper.register_comparison_field( &ssap_score::get_accuracy              );

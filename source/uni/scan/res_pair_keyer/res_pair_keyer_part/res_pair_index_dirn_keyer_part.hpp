@@ -53,36 +53,36 @@ namespace cath {
 			}
 
 			/// \brief Extract the relevant value from the specified res_pair
-			value_t get_value(const detail::multi_struc_res_rep_pair &arg_res_pair ///< The res_pair from which the relevant value should be extracted
+			value_t get_value(const detail::multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
 			                  ) const {
-				return direction( arg_res_pair );
+				return direction( prm_res_pair );
 			}
 
 			/// \brief Extract the search radius from the specified quad_criteria
-			search_radius_t get_search_radius(const quad_criteria &arg_criteria ///< The criteria defining what is considered a match
+			search_radius_t get_search_radius(const quad_criteria &prm_criteria ///< The criteria defining what is considered a match
 			                                  ) const {
-				return arg_criteria.get_index_direction_criterion();
+				return prm_criteria.get_index_direction_criterion();
 			}
 
 			/// \brief Generate the key part for the specified value
-			cell_index_t key_part(const value_t &arg_value ///< The value for which the key_part should be extracted
+			cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
 			                      ) const {
-				return arg_value;
+				return prm_value;
 			}
 
 			/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified value
 			///        within the specified search radius
-			cell_index_list_t close_key_parts(const value_t         &arg_value,        ///< The value for which the key_part should be extracted
-			                                  const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+			cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The value for which the key_part should be extracted
+			                                  const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 			                                  ) const {
 #ifndef NDEBUG
-				if ( arg_search_radius != res_pair_index_dirn_criterion::MUST_MATCH ) {
+				if ( prm_search_radius != res_pair_index_dirn_criterion::MUST_MATCH ) {
 					BOOST_THROW_EXCEPTION(common::not_implemented_exception("res_pair_index_dirn_keyer_part currently requires that the search radius is false (ie require_matching_directions)"));
 				}
 #else
-				boost::ignore_unused( arg_search_radius );
+				boost::ignore_unused( prm_search_radius );
 #endif
-				return { { arg_value } };
+				return { { prm_value } };
 			}
 		};
 

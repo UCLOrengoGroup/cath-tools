@@ -59,15 +59,15 @@ namespace cath {
 
 			public:
 				/// \brief Ctor from require_strictly_worse_hits
-				inline explicit calc_hit_prune_builder(const seg_dupl_hit_policy &arg_policy ///< Whether the strictly-worse hits should be preserved or pruned
-				                                       ) : policy { arg_policy } {
+				inline explicit calc_hit_prune_builder(const seg_dupl_hit_policy &prm_policy ///< Whether the strictly-worse hits should be preserved or pruned
+				                                       ) : policy { prm_policy } {
 				}
 
 				/// \brief Reserve space for the specified number of hits
-				inline void reserve(const size_t &arg_capacity ///< The number of hits for which space should be reserved
+				inline void reserve(const size_t &prm_capacity ///< The number of hits for which space should be reserved
 				                    ) {
-					hits.reserve( arg_capacity );
-					index_of_signature_hash.reserve( arg_capacity );
+					hits.reserve( prm_capacity );
+					index_of_signature_hash.reserve( prm_capacity );
 				}
 
 				/// \brief Return the number of hits stored thus far (after any pruning)
@@ -81,28 +81,28 @@ namespace cath {
 				}
 
 				/// \brief Add a hit (or skip it if it's found to be worse than existing hit)
-				inline void add_hit(calc_hit             arg_calc_hit, ///< The hit to be added
-				                    const full_hit_list &arg_full_hits ///< The full_hit_list from which the calc_hit comes (for allowing comparison with first_hit_is_better() )
+				inline void add_hit(calc_hit             prm_calc_hit, ///< The hit to be added
+				                    const full_hit_list &prm_full_hits ///< The full_hit_list from which the calc_hit comes (for allowing comparison with first_hit_is_better() )
 				                    ) {
 					if ( policy == seg_dupl_hit_policy::PRESERVE ) {
-						hits.push_back( std::move( arg_calc_hit ) );
+						hits.push_back( std::move( prm_calc_hit ) );
 						return;
 					}
 
-					const size_t hash_value = calc_hash( arg_calc_hit.get_segments() );
+					const size_t hash_value = calc_hash( prm_calc_hit.get_segments() );
 					const auto   itr        = index_of_signature_hash.find( hash_value );
 					if ( itr == common::cend( index_of_signature_hash ) ) {
 						index_of_signature_hash.emplace( hash_value, hits.size() );
-						hits.push_back( std::move( arg_calc_hit ) );
+						hits.push_back( std::move( prm_calc_hit ) );
 					}
 					else {
 						const auto &comp_hit = hits[ itr->second ];
-						const auto  result   = first_hit_is_better( arg_calc_hit, comp_hit, arg_full_hits );
+						const auto  result   = first_hit_is_better( prm_calc_hit, comp_hit, prm_full_hits );
 						if ( common::is_true( result ) ) {
-							hits[ itr->second ] = std::move( arg_calc_hit );
+							hits[ itr->second ] = std::move( prm_calc_hit );
 						}
 						else if ( boost::logic::indeterminate( result ) ) {
-							hits.push_back( std::move( arg_calc_hit ) );
+							hits.push_back( std::move( prm_calc_hit ) );
 						}
 					}
 				}

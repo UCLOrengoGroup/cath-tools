@@ -39,11 +39,11 @@ unique_ptr<sym_protein_only_length_getter> mean_length_getter::do_sym_protein_on
 }
 
 /// \brief TODOCUMENT
-size_t mean_length_getter::do_get_length(const protein &arg_protein_a, ///< TODOCUMENT
-                                         const protein &arg_protein_b  ///< TODOCUMENT
+size_t mean_length_getter::do_get_length(const protein &prm_protein_a, ///< TODOCUMENT
+                                         const protein &prm_protein_b  ///< TODOCUMENT
                                          ) const {
-	const size_t length_a  = arg_protein_a.get_length();
-	const size_t length_b  = arg_protein_b.get_length();
+	const size_t length_a  = prm_protein_a.get_length();
+	const size_t length_b  = prm_protein_b.get_length();
 	const double mean_doub = numeric_cast<double>( length_a + length_b ) / 2.0;
 	return numeric_cast<size_t>( round( mean_doub ) );
 }
@@ -59,7 +59,7 @@ string mean_length_getter::do_get_choice_adjective() const {
 }
 
 /// \brief TODOCUMENT
-bool mean_length_getter::do_less_than_with_same_dynamic_type(const length_getter &/*arg_length_getter*/ ///< TODOCUMENT
+bool mean_length_getter::do_less_than_with_same_dynamic_type(const length_getter &/*prm_length_getter*/ ///< TODOCUMENT
                                                              ) const {
 	return false;
 }

@@ -35,24 +35,24 @@ using boost::algorithm::join;
 /// \brief Generate a string describing the specified old_cluster_data
 ///
 /// \relates old_cluster_data
-std::string cath::clust::to_string(const old_cluster_data &arg_old_cluster_data ///< The old_cluster_data to describe
+std::string cath::clust::to_string(const old_cluster_data &prm_old_cluster_data ///< The old_cluster_data to describe
                                    ) {
 	using std::to_string;
 
 	// Return a string summarising the old_cluster_data
 	return "old_cluster_data["
-		+ to_string( get_num_clusters( arg_old_cluster_data ) )
+		+ to_string( get_num_clusters( prm_old_cluster_data ) )
 		+ " clusters, clusters{ "
 		+ join(
-			indices( get_num_clusters( arg_old_cluster_data ) )
+			indices( get_num_clusters( prm_old_cluster_data ) )
 				| transformed( [&] (const size_t &x) {
 					return to_string( x )
 						+ R"((")"
-						+ get_name_of_cluster_of_id( arg_old_cluster_data, x )
+						+ get_name_of_cluster_of_id( prm_old_cluster_data, x )
 						+ R"("): )"
 						+ to_string(
-							arg_old_cluster_data[ x ],
-							arg_old_cluster_data.get_id_of_seq_name()
+							prm_old_cluster_data[ x ],
+							prm_old_cluster_data.get_id_of_seq_name()
 						);
 				} ),
 			", "
@@ -63,21 +63,21 @@ std::string cath::clust::to_string(const old_cluster_data &arg_old_cluster_data 
 /// \brief Get the largest number if the names are all numeric or none otherwise
 ///
 /// \relates old_cluster_data
-optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers(const old_cluster_data &arg_old_cluster_data ///< The old_cluster_data to describe
+optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers(const old_cluster_data &prm_old_cluster_data ///< The old_cluster_data to describe
                                                                               ) {
 	return largest_number_if_names_all_numeric_integers(
-		arg_old_cluster_data.get_clust_info().get_ider()
+		prm_old_cluster_data.get_clust_info().get_ider()
 	);
 }
 
 /// \brief Get the largest number if the names are all numeric
-///        or arg_value if no old_cluster_data is present
+///        or prm_value if no old_cluster_data is present
 ///        or none if the cluster names aren't all numeric
 ///
 /// \relates old_cluster_data
-optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers_of_val_if_none(const old_cluster_data_opt &arg_old_cluster_data, ///< The old_cluster_data to describe
-                                                                                             const ptrdiff_t            &arg_value             ///< The value to return if no old_cluster_data is present
+optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers_of_val_if_none(const old_cluster_data_opt &prm_old_cluster_data, ///< The old_cluster_data to describe
+                                                                                             const ptrdiff_t            &prm_value             ///< The value to return if no old_cluster_data is present
                                                                                              ) {
-	return arg_old_cluster_data ? largest_number_if_names_all_numeric_integers( *arg_old_cluster_data )
-	                            : arg_value;
+	return prm_old_cluster_data ? largest_number_if_names_all_numeric_integers( *prm_old_cluster_data )
+	                            : prm_value;
 }

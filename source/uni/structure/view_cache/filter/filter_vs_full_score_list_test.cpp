@@ -58,7 +58,7 @@ namespace cath {
 ///  * randomly (uniformly) generating filter_scores in [0,1) and then squaring to get a filter score
 ///  * randomly (uniformly) generating some noise to add to the filter score (noise_width)
 ///  * before adding the noise, scaling the filter score down so that range with the noise will be [0,1)
-filter_vs_full_score_list cath::test::filter_vs_full_score_list_test_suite_fixture::generate_random_filter_vs_full_score_list(const size_t &arg_num_entries ///< The number of entries the randomly generated filter_vs_full_score_list should contain
+filter_vs_full_score_list cath::test::filter_vs_full_score_list_test_suite_fixture::generate_random_filter_vs_full_score_list(const size_t &prm_num_entries ///< The number of entries the randomly generated filter_vs_full_score_list should contain
                                                                                                                               ) const {
 	// Specify the width of the random noise, and calculate the scaling that it implies
 	const double noise_width       = 0.1;
@@ -72,7 +72,7 @@ filter_vs_full_score_list cath::test::filter_vs_full_score_list_test_suite_fixtu
 	// Loop over the number of entries, building a vector of filter_vs_full_score objects
 	filter_vs_full_score_vec new_filter_vs_full_scores;
 	for_n(
-		arg_num_entries,
+		prm_num_entries,
 		[&] {
 			const double full_score         = full_score_distn( rng );
 			const double raw_filter_score   = full_score * full_score;

@@ -66,10 +66,10 @@ bool residue_name_alignment_acquirer::do_requires_backbone_complete_input() cons
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context ///< TODOCUMENT
                                                                                                         ) const {
-	const protein_list  proteins_of_pdbs = build_protein_list( arg_strucs_context );
-	const auto         &the_pdbs         = arg_strucs_context.get_pdbs();
+	const protein_list  proteins_of_pdbs = build_protein_list( prm_strucs_context );
+	const auto         &the_pdbs         = prm_strucs_context.get_pdbs();
 	const size_t        num_pdbs         = the_pdbs.size();
 
 	// Grab lists of the names of the residues in each PDB

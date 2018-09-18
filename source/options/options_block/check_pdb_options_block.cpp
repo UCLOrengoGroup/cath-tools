@@ -59,18 +59,18 @@ string check_pdb_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void check_pdb_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void check_pdb_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( PO_PERMIT.c_str(), bool_switch( &permit_no_atoms )->default_value( false ), "Permit success for a file that has no ATOM records" );
 }
 
 /// \brief Add this block's hidden options to the provided options_description
-void check_pdb_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void check_pdb_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( PO_PDB_FILE.c_str(), value<path>( &pdb_file ), "PDB file to check" );
 }
 
@@ -79,7 +79,7 @@ void check_pdb_options_block::do_add_hidden_options_to_description(options_descr
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts all options
-str_opt check_pdb_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt check_pdb_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 	// If there is no PDB file to check then grumble
 	//

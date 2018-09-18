@@ -84,30 +84,30 @@ namespace cath {
 		}
 
 		/// \brief Setter for a batch ID to optionally append as a last column to the output
-		inline clustmap_output_spec & clustmap_output_spec::set_append_batch_id(const str_opt &arg_append_batch_id ///< A batch ID to optionally append as a last column to the output
+		inline clustmap_output_spec & clustmap_output_spec::set_append_batch_id(const str_opt &prm_append_batch_id ///< A batch ID to optionally append as a last column to the output
 		                                                                        ) {
-			append_batch_id = arg_append_batch_id;
+			append_batch_id = prm_append_batch_id;
 			return *this;
 		}
 
 		/// \brief Setter for an optional file to which output should be redirected
-		inline clustmap_output_spec & clustmap_output_spec::set_output_to_file(const path_opt &arg_output_to_file ///< An optional file to which output should be redirected
+		inline clustmap_output_spec & clustmap_output_spec::set_output_to_file(const path_opt &prm_output_to_file ///< An optional file to which output should be redirected
 		                                                                       ) {
-			output_to_file = arg_output_to_file;
+			output_to_file = prm_output_to_file;
 			return *this;
 		}
 
 		/// \brief Setter for an optional file to which a Markdown summary should be written
-		inline clustmap_output_spec & clustmap_output_spec::set_summarise_to_file(const path_opt &arg_summarise_to_file ///< An optional file to which a Markdown summary should be written
+		inline clustmap_output_spec & clustmap_output_spec::set_summarise_to_file(const path_opt &prm_summarise_to_file ///< An optional file to which a Markdown summary should be written
 		                                                                          ) {
-			summarise_to_file = arg_summarise_to_file;
+			summarise_to_file = prm_summarise_to_file;
 			return *this;
 		}
 
 		/// \brief Setter for whether to print out per-domain mapping info
-		inline clustmap_output_spec & clustmap_output_spec::set_print_domain_mapping(const bool &arg_print_domain_mapping ///< Whether to print out per-domain mapping info
+		inline clustmap_output_spec & clustmap_output_spec::set_print_domain_mapping(const bool &prm_print_domain_mapping ///< Whether to print out per-domain mapping info
 		                                                                             ) {
-			print_domain_mapping = arg_print_domain_mapping;
+			print_domain_mapping = prm_print_domain_mapping;
 			return *this;
 		}
 

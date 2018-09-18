@@ -31,12 +31,12 @@ using namespace cath::geom;
 using namespace std;
 
 /// \brief Concrete implementation for selecting common atoms by selecting the two residues' carbon alpha atoms
-void common_atom_select_ca_policy::do_append_common_atoms_to_coord_lists(coord_list_coord_list_pair &arg_coord_lists, ///< The previous common coord_lists to which the new selections should be appended
-                                                                         const residue              &arg_residue_a,   ///< The first  residue from which common atoms should be extracted
-                                                                         const residue              &arg_residue_b    ///< The second residue from which common atoms should be extracted
+void common_atom_select_ca_policy::do_append_common_atoms_to_coord_lists(coord_list_coord_list_pair &prm_coord_lists, ///< The previous common coord_lists to which the new selections should be appended
+                                                                         const residue              &prm_residue_a,   ///< The first  residue from which common atoms should be extracted
+                                                                         const residue              &prm_residue_b    ///< The second residue from which common atoms should be extracted
                                                                          ) const {
-	arg_coord_lists.first.push_back ( arg_residue_a.get_carbon_alpha_coord() );
-	arg_coord_lists.second.push_back( arg_residue_b.get_carbon_alpha_coord() );
+	prm_coord_lists.first.push_back ( prm_residue_a.get_carbon_alpha_coord() );
+	prm_coord_lists.second.push_back( prm_residue_b.get_carbon_alpha_coord() );
 }
 
 /// \brief Concrete implementation for providing a descriptive name of this policy
@@ -50,7 +50,7 @@ unique_ptr<common_atom_selection_policy> common_atom_select_ca_policy::do_clone(
 }
 
 /// \brief TODOCUMENT
-bool common_atom_select_ca_policy::do_less_than_with_same_dynamic_type(const common_atom_selection_policy &/*arg_common_atom_selection_policy*/ ///< TODOCUMENT
+bool common_atom_select_ca_policy::do_less_than_with_same_dynamic_type(const common_atom_selection_policy &/*prm_common_atom_selection_policy*/ ///< TODOCUMENT
                                                                        ) const {
 	return false;
 }

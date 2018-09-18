@@ -35,18 +35,18 @@ using std::regex;
 using std::string;
 
 /// \brief Get the cath_id_score_category for the specified ID
-///        (or return cath_id_score_category::NORMAL if `!arg_apply_cath_policies` )
+///        (or return cath_id_score_category::NORMAL if `!prm_apply_cath_policies` )
 ///
 /// \relates cath_id_score_category
-cath_id_score_category cath::rslv::cath_score_category_of_id(const string_ref &arg_id,                 ///< The ID to examine
-                                                             const bool       &arg_apply_cath_policies ///< Whether to actually examine arg_id, rather than just returning cath_id_score_category::NORMAL
+cath_id_score_category cath::rslv::cath_score_category_of_id(const string_ref &prm_id,                 ///< The ID to examine
+                                                             const bool       &prm_apply_cath_policies ///< Whether to actually examine prm_id, rather than just returning cath_id_score_category::NORMAL
                                                              ) {
-	if ( arg_apply_cath_policies ) {
+	if ( prm_apply_cath_policies ) {
 		static const regex  dc_regex        { R"(^dc_\w{32}$)" };
 		static const string dc_prefix_suffix{ "dc_" };
 
-		if ( arg_id.length() == 35 && arg_id.starts_with( dc_prefix_suffix ) ) {
-			if ( regex_search( common::cbegin( arg_id ), common::cend( arg_id ), dc_regex ) ) {
+		if ( prm_id.length() == 35 && prm_id.starts_with( dc_prefix_suffix ) ) {
+			if ( regex_search( common::cbegin( prm_id ), common::cend( prm_id ), dc_regex ) ) {
 				return cath_id_score_category::DC_TYPE;
 			}
 		}
@@ -57,9 +57,9 @@ cath_id_score_category cath::rslv::cath_score_category_of_id(const string_ref &a
 /// \brief Generate a string describing the specified cath_id_score_category
 ///
 /// \relates cath_id_score_category
-string cath::rslv::to_string(const cath_id_score_category &arg_cath_id_score_category ///< The cath_id_score_category to describe
+string cath::rslv::to_string(const cath_id_score_category &prm_cath_id_score_category ///< The cath_id_score_category to describe
                              ) {
-	switch ( arg_cath_id_score_category ) {
+	switch ( prm_cath_id_score_category ) {
 		case ( cath_id_score_category::NORMAL      ) : { return "cath_id_score_category::NORMAL"      ; }
 		case ( cath_id_score_category::DC_TYPE     ) : { return "cath_id_score_category::DC_TYPE"     ; }
 	}
@@ -69,9 +69,9 @@ string cath::rslv::to_string(const cath_id_score_category &arg_cath_id_score_cat
 /// \brief Insert a description of the specified cath_id_score_category into the specified ostream
 ///
 /// \relates cath_id_score_category
-ostream & cath::rslv::operator<<(ostream                      &arg_os,                    ///< The ostream into which the description should be inserted
-                                 const cath_id_score_category &arg_cath_id_score_category ///< The cath_id_score_category to describe
+ostream & cath::rslv::operator<<(ostream                      &prm_os,                    ///< The ostream into which the description should be inserted
+                                 const cath_id_score_category &prm_cath_id_score_category ///< The cath_id_score_category to describe
                                  ) {
-	arg_os << to_string( arg_cath_id_score_category );
-	return arg_os;
+	prm_os << to_string( prm_cath_id_score_category );
+	return prm_os;
 }

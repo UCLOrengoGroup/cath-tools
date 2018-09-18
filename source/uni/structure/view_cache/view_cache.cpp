@@ -32,10 +32,10 @@ using namespace cath::index;
 
 
 /// \brief Private static method that implements the process of building the views from proteins
-coord_vec_vec view_cache::build_views(const protein &arg_protein ///< The protein which the view_cache should be built to represent
+coord_vec_vec view_cache::build_views(const protein &prm_protein ///< The protein which the view_cache should be built to represent
                                       ) {
 	// Grab the number of residues and prepare the views accordingly
-	const size_t num_residues = arg_protein.get_length();
+	const size_t num_residues = prm_protein.get_length();
 	coord_vec_vec new_views( num_residues );
 	for (coord_vec &view_of : new_views) {
 		view_of.reserve( num_residues );
@@ -46,8 +46,8 @@ coord_vec_vec view_cache::build_views(const protein &arg_protein ///< The protei
 		for (const size_t &to_res_ctr : indices( num_residues ) ) {
 			coord_vec &view_of_from = new_views[ from_res_ctr ];
 			view_of_from.push_back( view_vector_of_residue_pair(
-				arg_protein.get_residue_ref_of_index( from_res_ctr ),
-				arg_protein.get_residue_ref_of_index( to_res_ctr   )
+				prm_protein.get_residue_ref_of_index( from_res_ctr ),
+				prm_protein.get_residue_ref_of_index( to_res_ctr   )
 			) );
 		}
 	}
@@ -55,7 +55,7 @@ coord_vec_vec view_cache::build_views(const protein &arg_protein ///< The protei
 }
 
 /// \brief Ctor for view_cache from a protein that the view_cache should represent
-view_cache::view_cache(const protein &arg_protein ///< The protein which the view_cache should be built to represent
-                       ) : views( build_views( arg_protein ) ) {
+view_cache::view_cache(const protein &prm_protein ///< The protein which the view_cache should be built to represent
+                       ) : views( build_views( prm_protein ) ) {
 }
 

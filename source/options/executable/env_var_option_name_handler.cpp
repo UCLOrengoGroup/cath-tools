@@ -36,12 +36,12 @@ using boost::to_lower_copy;
 using boost::to_upper_copy;
 
 /// \brief Ctor for env_var_option_name_handler
-env_var_option_name_handler::env_var_option_name_handler(string                     arg_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_TOOLS_"
-                                                         const bool                &arg_allow_unknown, ///< Whether to allow unrecognised options (by not passing them back to parse_environment(), which would complain)
-                                                         const options_description &arg_options        ///< The options_description containing the options that should be accepted (can be left to default empty value if arg_allow_unknown is false)
-                                                         ) : prefix        { std::move( arg_prefix ) },
-                                                             allow_unknown { arg_allow_unknown       },
-                                                             the_options   { arg_options             } {
+env_var_option_name_handler::env_var_option_name_handler(string                     prm_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_TOOLS_"
+                                                         const bool                &prm_allow_unknown, ///< Whether to allow unrecognised options (by not passing them back to parse_environment(), which would complain)
+                                                         const options_description &prm_options        ///< The options_description containing the options that should be accepted (can be left to default empty value if prm_allow_unknown is false)
+                                                         ) : prefix        { std::move( prm_prefix ) },
+                                                             allow_unknown { prm_allow_unknown       },
+                                                             the_options   { prm_options             } {
 }
 
 /// \brief Operator() that takes an environment variable name and converts it to an option name that should be processed or an empty string
@@ -54,9 +54,9 @@ env_var_option_name_handler::env_var_option_name_handler(string                 
 ///  - stripping of the prefix,
 ///  - lower-casing the name and
 ///  - replacing underscores with hyphens.
-string env_var_option_name_handler::operator()(const string &arg_environment_variable_name ///< The environment variable name
+string env_var_option_name_handler::operator()(const string &prm_environment_variable_name ///< The environment variable name
                                                ) const {
-	const string option_string = option_of_environment_variable_and_prefix(arg_environment_variable_name, prefix);
+	const string option_string = option_of_environment_variable_and_prefix(prm_environment_variable_name, prefix);
 	// If this name doesn't begin with the prefix, it should just be ignored so return an empty string
 	// (note: this test is necessary because an empty option_string shouldn't be passed to find_nothrow())
 	if (option_string.empty()) {
@@ -85,15 +85,15 @@ string env_var_option_name_handler::operator()(const string &arg_environment_var
 ///  - the environment variable "SOME_OTHER_ENVIRONMENT_VARIABLE" and the prefix "CATH_TOOLS_" would produce ""
 ///
 /// \relates env_var_option_name_handler
-string cath::opts::option_of_environment_variable_and_prefix(const string &arg_env_variable_name, ///< The environment variable name
-                                                             const string &arg_prefix             ///< The prefix with which the environment variable should begin for it to be accepted
+string cath::opts::option_of_environment_variable_and_prefix(const string &prm_env_variable_name, ///< The environment variable name
+                                                             const string &prm_prefix             ///< The prefix with which the environment variable should begin for it to be accepted
                                                              ) {
 	// If this environment variable doesn't start with the correct prefix, ignore it
-	if (!starts_with(arg_env_variable_name, arg_prefix)) {
+	if (!starts_with(prm_env_variable_name, prm_prefix)) {
 		return "";
 	}
 
-	const string unprefixed_name       = erase_first_copy(arg_env_variable_name, arg_prefix);
+	const string unprefixed_name       = erase_first_copy(prm_env_variable_name, prm_prefix);
 	const string lower_unprefixed_name = to_lower_copy(unprefixed_name);
 	return replace_all_copy(lower_unprefixed_name, "_", "-");
 }
@@ -108,9 +108,9 @@ string cath::opts::option_of_environment_variable_and_prefix(const string &arg_e
 /// For example, "tesT-progRam-name" would produce "TEST_PROGRAM_NAME_"
 ///
 /// \relates env_var_option_name_handler
-string cath::opts::environment_variable_prefix_of_program_name(const string &arg_program_name ///< The program name to convert
+string cath::opts::environment_variable_prefix_of_program_name(const string &prm_program_name ///< The program name to convert
                                                                ) {
-	const string upper_program_name             = to_upper_copy(   arg_program_name            );
+	const string upper_program_name             = to_upper_copy(   prm_program_name            );
 	const string underscored_upper_program_name = replace_all_copy(upper_program_name, "-", "_");
 	return underscored_upper_program_name + "_";
 }

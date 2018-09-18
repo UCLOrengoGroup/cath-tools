@@ -62,31 +62,31 @@ namespace cath {
 		size_t size(const strucs_context &);
 
 		/// \brief Ctor for strucs_context
-		inline strucs_context::strucs_context(pdb_list arg_pdbs ///< The PDBs of the structures
+		inline strucs_context::strucs_context(pdb_list prm_pdbs ///< The PDBs of the structures
 		                                      ) : strucs_context{
-		                                          	arg_pdbs,
-		                                          	name_set_list           ( arg_pdbs.size() ),
-		                                          	chop::region_vec_opt_vec( arg_pdbs.size() )
+		                                          	prm_pdbs,
+		                                          	name_set_list           ( prm_pdbs.size() ),
+		                                          	chop::region_vec_opt_vec( prm_pdbs.size() )
 		                                          } {
 		}
 
 		/// \brief Ctor for strucs_context
-		inline strucs_context::strucs_context(pdb_list      arg_pdbs,     ///< The PDBs of the structures
-		                                      name_set_list arg_name_sets ///< The IDs of the structures
+		inline strucs_context::strucs_context(pdb_list      prm_pdbs,     ///< The PDBs of the structures
+		                                      name_set_list prm_name_sets ///< The IDs of the structures
 		                                      ) : strucs_context{
-		                                          	arg_pdbs,
-		                                          	arg_name_sets,
-		                                          	chop::region_vec_opt_vec( arg_pdbs.size() )
+		                                          	prm_pdbs,
+		                                          	prm_name_sets,
+		                                          	chop::region_vec_opt_vec( prm_pdbs.size() )
 		                                          } {
 		}
 
 		/// \brief Ctor for strucs_context
-		inline strucs_context::strucs_context(pdb_list                 arg_pdbs,      ///< The PDBs of the structures
-		                                      name_set_list            arg_name_sets, ///< The IDs of the structures
-		                                      chop::region_vec_opt_vec arg_regions    ///< The key regions of each structure to which this refers (or none where it refers to all of a structure)
-		                                      ) : pdbs      { std::move( arg_pdbs      ) },
-		                                          name_sets { std::move( arg_name_sets ) },
-		                                          regions   { std::move( arg_regions   ) } {
+		inline strucs_context::strucs_context(pdb_list                 prm_pdbs,      ///< The PDBs of the structures
+		                                      name_set_list            prm_name_sets, ///< The IDs of the structures
+		                                      chop::region_vec_opt_vec prm_regions    ///< The key regions of each structure to which this refers (or none where it refers to all of a structure)
+		                                      ) : pdbs      { std::move( prm_pdbs      ) },
+		                                          name_sets { std::move( prm_name_sets ) },
+		                                          regions   { std::move( prm_regions   ) } {
 			if ( pdbs.size() != name_sets.size() || pdbs.size() != regions.size() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot construct a strucs_context with inconsistent numbers of PDBs / names / regions"));
 			}
@@ -108,19 +108,19 @@ namespace cath {
 		}
 
 		/// \brief Set the PDBs to the specified PDBs
-		inline strucs_context & strucs_context::set_pdbs(const file::pdb_list &arg_pdbs ///< The PDBs to set
+		inline strucs_context & strucs_context::set_pdbs(const file::pdb_list &prm_pdbs ///< The PDBs to set
 		                                                 ) {
-			if ( arg_pdbs.size() != size( *this ) ) {
+			if ( prm_pdbs.size() != size( *this ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot set an inconsistent number of PDBs in a strucs_context"));
 			}
-			pdbs = arg_pdbs;
+			pdbs = prm_pdbs;
 			return *this;
 		}
 
 		/// \brief Get the number of entries in the specified strucs_context
-		inline size_t size(const strucs_context &arg_strucs_context ///< The strucs_context to query
+		inline size_t size(const strucs_context &prm_strucs_context ///< The strucs_context to query
 		                   ) {
-			return arg_strucs_context.get_name_sets().size();
+			return prm_strucs_context.get_name_sets().size();
 		}
 
 		strucs_context strucs_context_of_backbone_complete_subset_pdbs(const strucs_context &,

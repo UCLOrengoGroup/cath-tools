@@ -151,12 +151,12 @@ unique_ptr<dyn_prog_aligner> std_dyn_prog_aligner::do_clone() const {
 ///  * prefer a move toward the diagonal passing through the bottom-right corner
 ///  * fall back on a parameter that instructs which way to go
 
-score_alignment_pair std_dyn_prog_aligner::do_align(const dyn_prog_score_source &arg_scorer,          ///< TODOCUMENT
-                                                    const gap_penalty           &arg_gap_penalty,     ///< The gap penalty to be applied for each gap step (ie for opening OR extending a gap)
-                                                    const size_type             &/*arg_window_width*/ ///< TODOCUMENT
+score_alignment_pair std_dyn_prog_aligner::do_align(const dyn_prog_score_source &prm_scorer,          ///< TODOCUMENT
+                                                    const gap_penalty           &prm_gap_penalty,     ///< The gap penalty to be applied for each gap step (ie for opening OR extending a gap)
+                                                    const size_type             &/*prm_window_width*/ ///< TODOCUMENT
                                                     ) const {
-	const size_t length_a     = arg_scorer.get_length_a();
-	const size_t length_b     = arg_scorer.get_length_b();
+	const size_t length_a     = prm_scorer.get_length_a();
+	const size_t length_b     = prm_scorer.get_length_b();
 	const size_t window_width = get_window_width_for_full_matrix(length_a, length_b);
 
 	the_return_path.reset(        length_a, length_b, window_width );
@@ -168,8 +168,8 @@ score_alignment_pair std_dyn_prog_aligner::do_align(const dyn_prog_score_source 
 			const path_step_score_map score_of_path_step = get_total_scores_of_path_steps_from_point(
 				the_accumulated_scores,
 				the_return_path,
-				arg_gap_penalty,
-				arg_scorer,
+				prm_gap_penalty,
+				prm_scorer,
 				index_a,
 				index_b
 			);
@@ -191,31 +191,31 @@ score_alignment_pair std_dyn_prog_aligner::do_align(const dyn_prog_score_source 
 //			cerr << index_b;
 //			cerr << ", the chosen path_step is ";
 
-//			matrix_plot<gnuplot_matrix_plotter>( arg_scorer, the_return_path, the_accumulated_scores );
+//			matrix_plot<gnuplot_matrix_plotter>( prm_scorer, the_return_path, the_accumulated_scores );
 		}
 	}
-//	matrix_plot<gnuplot_matrix_plotter>( "std_dyn_prog_aligner", arg_scorer, the_return_path, the_accumulated_scores );
+//	matrix_plot<gnuplot_matrix_plotter>( "std_dyn_prog_aligner", prm_scorer, the_return_path, the_accumulated_scores );
 	const alignment  final_alignment( make_alignment(the_return_path)                             );
 	const score_type final_score(     the_accumulated_scores.get_score_towards_end_at_point(0, 0) );
 	return make_pair( final_score, final_alignment );
 }
 
 /// \brief TODOCUMENT
-path_step std_dyn_prog_aligner::choose_path_step(const path_step_score_map &arg_score_of_path, ///< TODOCUMENT
-                                                 const size_t              &arg_index_a,       ///< TODOCUMENT
-                                                 const size_t              &arg_index_b,       ///< TODOCUMENT
-                                                 const size_t              &arg_length_a,      ///< TODOCUMENT
-                                                 const size_t              &arg_length_b       ///< TODOCUMENT
+path_step std_dyn_prog_aligner::choose_path_step(const path_step_score_map &prm_score_of_path, ///< TODOCUMENT
+                                                 const size_t              &prm_index_a,       ///< TODOCUMENT
+                                                 const size_t              &prm_index_b,       ///< TODOCUMENT
+                                                 const size_t              &prm_length_a,      ///< TODOCUMENT
+                                                 const size_t              &prm_length_b       ///< TODOCUMENT
                                                  ) const {
 	// Grab the maximum score that's achieved by any of the possible path_steps
-	const score_type max_score = max_path_step_score(arg_score_of_path);
+	const score_type max_score = max_path_step_score(prm_score_of_path);
 
 //	cerr << "At ";
-//	cerr << arg_index_a;
+//	cerr << prm_index_a;
 //	cerr << ", ";
-//	cerr << arg_index_b;
+//	cerr << prm_index_b;
 //	cerr << " [";
-//	for (const path_step_score_pair &path_and_score : arg_score_of_path) {
+//	for (const path_step_score_pair &path_and_score : prm_score_of_path) {
 //		cerr << " ";
 //		cerr << path_and_score.first;
 //		cerr << ":";
@@ -225,9 +225,9 @@ path_step std_dyn_prog_aligner::choose_path_step(const path_step_score_map &arg_
 //	cerr << max_score;
 //	cerr << endl;
 
-//	const score_type align_pair_score         = arg_score_of_path.at( path_step::ALIGN_PAIR         );
-	const score_type insert_into_first_score  = arg_score_of_path.at( path_step::INSERT_INTO_FIRST  );
-	const score_type insert_into_second_score = arg_score_of_path.at( path_step::INSERT_INTO_SECOND );
+//	const score_type align_pair_score         = prm_score_of_path.at( path_step::ALIGN_PAIR         );
+	const score_type insert_into_first_score  = prm_score_of_path.at( path_step::INSERT_INTO_FIRST  );
+	const score_type insert_into_second_score = prm_score_of_path.at( path_step::INSERT_INTO_SECOND );
 
 	// If only path_step::ALIGN_PAIR achieves the maximum score then prefer that
 	if ( insert_into_first_score != max_score && insert_into_second_score != max_score ) {
@@ -252,13 +252,13 @@ path_step std_dyn_prog_aligner::choose_path_step(const path_step_score_map &arg_
 	// be generated by flipping the order of the two inputs.
 
 	const map<path_step, size_size_pair> after_indices_by_step = indices_of_point_by_path_step(
-		arg_index_a,
-		arg_index_b
+		prm_index_a,
+		prm_index_b
 	);
 
 	// Prefer the step that moves closer to the line between the start and end
-	const double first_to_second_ratio =   numeric_cast<double>(arg_length_a)
-	                                     / numeric_cast<double>(arg_length_b);
+	const double first_to_second_ratio =   numeric_cast<double>(prm_length_a)
+	                                     / numeric_cast<double>(prm_length_b);
 	const size_size_pair indices_after_insert_into_first  = after_indices_by_step.at( path_step::INSERT_INTO_FIRST  );
 	const size_size_pair indices_after_insert_into_second = after_indices_by_step.at( path_step::INSERT_INTO_SECOND );
 	const double ratio_after_insert_into_first  =   numeric_cast<double>( indices_after_insert_into_first.first   )

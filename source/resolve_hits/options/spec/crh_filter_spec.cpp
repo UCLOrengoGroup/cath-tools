@@ -65,57 +65,57 @@ const doub_opt & crh_filter_spec::get_min_dc_hmm_coverage_frac() const {
 }
 
 /// \brief Setter for the worst permissible evalue before a hit is ignored
-crh_filter_spec & crh_filter_spec::set_worst_permissible_evalue(const resscr_t &arg_worst_permissible_evalue ///< The worst permissible evalue before a hit is ignored
+crh_filter_spec & crh_filter_spec::set_worst_permissible_evalue(const resscr_t &prm_worst_permissible_evalue ///< The worst permissible evalue before a hit is ignored
                                                                 ) {
-	worst_permissible_evalue = arg_worst_permissible_evalue;
+	worst_permissible_evalue = prm_worst_permissible_evalue;
 	return *this;
 }
 
 /// \brief Setter for the worst permissible cath-resolve-hits score before a hit is ignored
-crh_filter_spec & crh_filter_spec::set_worst_permissible_bitscore(const resscr_t &arg_worst_permissible_bitscore ///< The worst permissible cath-resolve-hits score before a hit is ignored
+crh_filter_spec & crh_filter_spec::set_worst_permissible_bitscore(const resscr_t &prm_worst_permissible_bitscore ///< The worst permissible cath-resolve-hits score before a hit is ignored
                                                                   ) {
-	worst_permissible_bitscore = arg_worst_permissible_bitscore;
+	worst_permissible_bitscore = prm_worst_permissible_bitscore;
 	return *this;
 }
 
 /// \brief Setter for the worst permissible cath-resolve-hits score before a hit is ignored
-crh_filter_spec & crh_filter_spec::set_worst_permissible_score(const resscr_opt &arg_worst_permissible_score ///< The worst permissible cath-resolve-hits score before a hit is ignored
+crh_filter_spec & crh_filter_spec::set_worst_permissible_score(const resscr_opt &prm_worst_permissible_score ///< The worst permissible cath-resolve-hits score before a hit is ignored
                                                                ) {
-	worst_permissible_score = arg_worst_permissible_score;
+	worst_permissible_score = prm_worst_permissible_score;
 	return *this;
 }
 
 /// \brief Setter for the query IDs on which to filter the input, if any are present
-crh_filter_spec & crh_filter_spec::set_filter_query_ids(const str_vec &arg_filter_query_ids ///< The query IDs on which to filter the input, if any are present
+crh_filter_spec & crh_filter_spec::set_filter_query_ids(const str_vec &prm_filter_query_ids ///< The query IDs on which to filter the input, if any are present
                                                         ) {
-	filter_query_ids = arg_filter_query_ids;
+	filter_query_ids = prm_filter_query_ids;
 	return *this;
 }
 
 /// \brief Setter for the (optional) maximum number of queries to process
-crh_filter_spec & crh_filter_spec::set_limit_queries(const size_opt &arg_limit_queries ///< The (optional) maximum number of queries to process
+crh_filter_spec & crh_filter_spec::set_limit_queries(const size_opt &prm_limit_queries ///< The (optional) maximum number of queries to process
                                                      ) {
-	limit_queries = arg_limit_queries;
+	limit_queries = prm_limit_queries;
 	return *this;
 }
 
 /// \brief Setter for the default value for the worst permissible evalue before a hit is ignored
-crh_filter_spec & crh_filter_spec::set_min_hmm_coverage_frac(const doub_opt &arg_min_hmm_coverage_frac ///< The default value for the worst permissible evalue before a hit is ignored
+crh_filter_spec & crh_filter_spec::set_min_hmm_coverage_frac(const doub_opt &prm_min_hmm_coverage_frac ///< The default value for the worst permissible evalue before a hit is ignored
                                                              ) {
-	if ( ! ( arg_min_hmm_coverage_frac >= 0.0 && arg_min_hmm_coverage_frac <= 1.0 ) ) {
+	if ( ! ( prm_min_hmm_coverage_frac >= 0.0 && prm_min_hmm_coverage_frac <= 1.0 ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("min_hmm_coverage_frac must be between 0 and 1 (inclusive)"));
 	}
-	min_hmm_coverage_frac = arg_min_hmm_coverage_frac;
+	min_hmm_coverage_frac = prm_min_hmm_coverage_frac;
 	return *this;
 }
 
 /// \brief Setter for the default value for the worst permissible bitscore before a hit is ignored
-crh_filter_spec & crh_filter_spec::set_min_dc_hmm_coverage_frac(const doub_opt &arg_min_dc_hmm_coverage_frac ///< The default value for the worst permissible bitscore before a hit is ignored
+crh_filter_spec & crh_filter_spec::set_min_dc_hmm_coverage_frac(const doub_opt &prm_min_dc_hmm_coverage_frac ///< The default value for the worst permissible bitscore before a hit is ignored
                                                                 ) {
-	if ( ! ( arg_min_dc_hmm_coverage_frac >= 0.0 && arg_min_dc_hmm_coverage_frac <= 1.0 ) ) {
+	if ( ! ( prm_min_dc_hmm_coverage_frac >= 0.0 && prm_min_dc_hmm_coverage_frac <= 1.0 ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("min_dc_hmm_coverage_frac must be between 0 and 1 (inclusive)"));
 	}
-	min_dc_hmm_coverage_frac = arg_min_dc_hmm_coverage_frac;
+	min_dc_hmm_coverage_frac = prm_min_dc_hmm_coverage_frac;
 	return *this;
 }
 

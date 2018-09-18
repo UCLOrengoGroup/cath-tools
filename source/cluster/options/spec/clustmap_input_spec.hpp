@@ -75,23 +75,23 @@ namespace cath {
 		}
 
 		/// \brief Setter for the cluster-membership file for the working clusters
-		inline clustmap_input_spec & clustmap_input_spec::set_working_clustmemb_file(const boost::filesystem::path &arg_working_clustmemb_file ///< The cluster-membership file for the working clusters
+		inline clustmap_input_spec & clustmap_input_spec::set_working_clustmemb_file(const boost::filesystem::path &prm_working_clustmemb_file ///< The cluster-membership file for the working clusters
 		                                                                             ) {
-			working_clustmemb_file = arg_working_clustmemb_file;
+			working_clustmemb_file = prm_working_clustmemb_file;
 			return *this;
 		}
 
 		/// \brief Setter for an optional file specify a cluster-membership file for map-from clusters
-		inline clustmap_input_spec & clustmap_input_spec::set_map_from_clustmemb_file(const path_opt &arg_map_from_clustmemb_file ///< An optional file specify a cluster-membership file for map-from clusters
+		inline clustmap_input_spec & clustmap_input_spec::set_map_from_clustmemb_file(const path_opt &prm_map_from_clustmemb_file ///< An optional file specify a cluster-membership file for map-from clusters
 		                                                                              ) {
-			map_from_clustmemb_file = arg_map_from_clustmemb_file;
+			map_from_clustmemb_file = prm_map_from_clustmemb_file;
 			return *this;
 		}
 
 		/// \brief Setter for whether to read batches from working_clustmemb_file (rather than cluster membership directly)
-		inline clustmap_input_spec & clustmap_input_spec::set_read_batches_from_input(const bool &arg_read_batches_from_input ///< Whether to read batches from working_clustmemb_file (rather than cluster membership directly)
+		inline clustmap_input_spec & clustmap_input_spec::set_read_batches_from_input(const bool &prm_read_batches_from_input ///< Whether to read batches from working_clustmemb_file (rather than cluster membership directly)
 		                                                                              ) {
-			read_batches_from_input = arg_read_batches_from_input;
+			read_batches_from_input = prm_read_batches_from_input;
 			return *this;
 		}
 

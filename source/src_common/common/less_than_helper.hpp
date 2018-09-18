@@ -91,23 +91,23 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		less_than_helper<T>::less_than_helper(const T &arg_val_a, ///< TODOCUMENT
-		                                      const T &arg_val_b  ///< TODOCUMENT
-		                                      ) : val_a( arg_val_a ),
-		                                          val_b( arg_val_b ) {
+		less_than_helper<T>::less_than_helper(const T &prm_val_a, ///< TODOCUMENT
+		                                      const T &prm_val_b  ///< TODOCUMENT
+		                                      ) : val_a( prm_val_a ),
+		                                          val_b( prm_val_b ) {
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
 		template <typename U, typename V>
-		void less_than_helper<T>::register_comparison_values(const U &arg_value_a, ///< TODOCUMENT
-		                                                     const V &arg_value_b  ///< TODOCUMENT
+		void less_than_helper<T>::register_comparison_values(const U &prm_value_a, ///< TODOCUMENT
+		                                                     const V &prm_value_b  ///< TODOCUMENT
 		                                                     ) {
 			if ( boost::logic::indeterminate( result ) ) {
-				if ( arg_value_a < arg_value_b ) {
+				if ( prm_value_a < prm_value_b ) {
 					result = true;
 				}
-				else if ( arg_value_b < arg_value_a ) {
+				else if ( prm_value_b < prm_value_a ) {
 					result = false;
 				}
 			}
@@ -116,12 +116,12 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename T>
 		template <typename F>
-		void less_than_helper<T>::register_comparison_field(F arg_getter ///< TODOCUMENT
+		void less_than_helper<T>::register_comparison_field(F prm_getter ///< TODOCUMENT
 		                                                    ) {
 			if ( boost::logic::indeterminate( result ) ) {
 				register_comparison_values(
-					std::bind( arg_getter, std::cref( val_a.get() ) )(),
-					std::bind( arg_getter, std::cref( val_b.get() ) )()
+					std::bind( prm_getter, std::cref( val_a.get() ) )(),
+					std::bind( prm_getter, std::cref( val_b.get() ) )()
 				);
 			}
 		}
@@ -134,24 +134,24 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		bool final_less_than_result(const less_than_helper<T> &arg_less_than_helper ///< TODOCUMENT
+		bool final_less_than_result(const less_than_helper<T> &prm_less_than_helper ///< TODOCUMENT
 		                            ) {
-			return static_cast<bool>( arg_less_than_helper.final_less_than_spaceship_result() );
+			return static_cast<bool>( prm_less_than_helper.final_less_than_spaceship_result() );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		bool final_equivalent_result(const less_than_helper<T> &arg_less_than_helper ///< TODOCUMENT
+		bool final_equivalent_result(const less_than_helper<T> &prm_less_than_helper ///< TODOCUMENT
 		                             ) {
-			return boost::logic::indeterminate( arg_less_than_helper.final_less_than_spaceship_result() );
+			return boost::logic::indeterminate( prm_less_than_helper.final_less_than_spaceship_result() );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		less_than_helper<T> make_less_than_helper(const T &arg_val_a, ///< TODOCUMENT
-		                                          const T &arg_val_b  ///< TODOCUMENT
+		less_than_helper<T> make_less_than_helper(const T &prm_val_a, ///< TODOCUMENT
+		                                          const T &prm_val_b  ///< TODOCUMENT
 		                                          ) {
-			return less_than_helper<T>( arg_val_a, arg_val_b );
+			return less_than_helper<T>( prm_val_a, prm_val_b );
 		}
 
 	} // namespace common

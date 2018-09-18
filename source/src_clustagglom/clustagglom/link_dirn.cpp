@@ -54,9 +54,9 @@ map<string, link_dirn> link_dirn_by_name::get() {
 /// \brief Generate a string describing the specified link_dirn (ie its name)
 ///
 /// \relates link_dirn
-string cath::clust::to_string(const link_dirn &arg_format_tag ///< The link_dirn to describe in a string
+string cath::clust::to_string(const link_dirn &prm_format_tag ///< The link_dirn to describe in a string
                               ) {
-	switch ( arg_format_tag ) {
+	switch ( prm_format_tag ) {
 		case ( link_dirn::DISSIMILARITY ) : { return "DISTANCE" ; }
 		case ( link_dirn::STRENGTH      ) : { return "STRENGTH" ; }
 	}
@@ -66,24 +66,24 @@ string cath::clust::to_string(const link_dirn &arg_format_tag ///< The link_dirn
 /// \brief Extract into the specified link_dirn from the specified stream
 ///
 /// \relates link_dirn
-istream & cath::clust::operator>>(istream   &arg_is,       ///< The stream from which the link_dirn should be extracted
-                                  link_dirn &arg_link_dirn ///< The link_dirn to populate from the specified stream
+istream & cath::clust::operator>>(istream   &prm_is,       ///< The stream from which the link_dirn should be extracted
+                                  link_dirn &prm_link_dirn ///< The link_dirn to populate from the specified stream
                                   ) {
 	string input_string;
-	arg_is >> input_string;
+	prm_is >> input_string;
 	to_upper( input_string );
 
 	const auto all_link_dirns_by_name = link_dirn_by_name::get();
-	arg_link_dirn = all_link_dirns_by_name.at( input_string );
-	return arg_is;
+	prm_link_dirn = all_link_dirns_by_name.at( input_string );
+	return prm_is;
 }
 
 /// \brief Generate a string containing a description of the specified link_dirn
 ///
 /// \relates link_dirn
-string cath::clust::description_of_link_dirn(const link_dirn &arg_format_tag ///< The link_dirn to describe
+string cath::clust::description_of_link_dirn(const link_dirn &prm_format_tag ///< The link_dirn to describe
                                              ) {
-	switch ( arg_format_tag ) {
+	switch ( prm_format_tag ) {
 		case ( link_dirn::DISSIMILARITY ) : { return "A higher value means the corresponding two entries are more distant"   ; }
 		case ( link_dirn::STRENGTH      ) : { return "A higher value means the corresponding tow entries are more connected" ; }
 	}
@@ -93,8 +93,8 @@ string cath::clust::description_of_link_dirn(const link_dirn &arg_format_tag ///
 /// \brief Provide Boost program_options validation for link_dirn
 ///
 /// \relates link_dirn
-void cath::clust::validate(any           &arg_value,         ///< The value to populate
-                           const str_vec &arg_value_strings, ///< The string values to validate
+void cath::clust::validate(any           &prm_value,         ///< The value to populate
+                           const str_vec &prm_value_strings, ///< The string values to validate
                            link_dirn *, int) {
-	arg_value = lex_castable_validator<link_dirn>::perform_validate( arg_value, arg_value_strings );
+	prm_value = lex_castable_validator<link_dirn>::perform_validate( prm_value, prm_value_strings );
 }

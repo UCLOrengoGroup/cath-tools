@@ -39,14 +39,14 @@ using boost::ptr_vector;
 using boost::range::adjacent_find;
 
 /// \brief Ctor for aligned_pair_score_list that allows the caller to specify a ptr_vector of aligned_pair_scores
-aligned_pair_score_list::aligned_pair_score_list(const ptr_vector<aligned_pair_score> &arg_aligned_pair_scores ///< The ptr_vector of aligned_pair_scores with which this aligned_pair_score_list should be initialised
-                                                 ) : scores(arg_aligned_pair_scores) {
+aligned_pair_score_list::aligned_pair_score_list(const ptr_vector<aligned_pair_score> &prm_aligned_pair_scores ///< The ptr_vector of aligned_pair_scores with which this aligned_pair_score_list should be initialised
+                                                 ) : scores(prm_aligned_pair_scores) {
 }
 
 /// \brief Add the specified aligned_pair_score to this list
-void aligned_pair_score_list::add_aligned_pair_score(const aligned_pair_score &arg_aligned_pair_score ///< The aligned_pair_score to add to this list
+void aligned_pair_score_list::add_aligned_pair_score(const aligned_pair_score &prm_aligned_pair_score ///< The aligned_pair_score to add to this list
                                                      ) {
-	cath::common::push_back( scores, arg_aligned_pair_score.clone() );
+	cath::common::push_back( scores, prm_aligned_pair_score.clone() );
 }
 
 /// \brief Return the number of scores currently held in this aligned_pair_score_list
@@ -59,17 +59,17 @@ size_t aligned_pair_score_list::size() const {
 /// \brief Return the score for the specified index
 ///
 /// This is a pass-through to non-const subscript operator of scores
-aligned_pair_score & aligned_pair_score_list::operator[](const size_t &arg_index ///< The index of the score to be retrieved
+aligned_pair_score & aligned_pair_score_list::operator[](const size_t &prm_index ///< The index of the score to be retrieved
                                                          ) {
-	return scores[arg_index];
+	return scores[prm_index];
 }
 
 /// \brief Return the score for the specified index
 ///
 /// This is a pass-through to const subscript operator of scores
-const aligned_pair_score & aligned_pair_score_list::operator[](const size_t &arg_index ///< The index of the score to be retrieved
+const aligned_pair_score & aligned_pair_score_list::operator[](const size_t &prm_index ///< The index of the score to be retrieved
                                                                ) const {
-	return scores[arg_index];
+	return scores[prm_index];
 }
 
 /// \brief Standard begin() operator to allow aligned_pair_score_list to be accessed as range
@@ -85,10 +85,10 @@ aligned_pair_score_list::const_iterator aligned_pair_score_list::end() const {
 /// \brief TODOCUMENT
 ///
 /// \relates aligned_pair_score_list
-void cath::score::warn_on_duplicate_human_friendly_names(const aligned_pair_score_list &arg_aligned_pair_score_list ///< TODOCUMENT
+void cath::score::warn_on_duplicate_human_friendly_names(const aligned_pair_score_list &prm_aligned_pair_score_list ///< TODOCUMENT
                                                          ) {
 	const auto sorted_human_friendly_names = sort_copy( transform_build<str_vec>(
-		arg_aligned_pair_score_list,
+		prm_aligned_pair_score_list,
 		[&] (const aligned_pair_score &x) {
 			return x.human_friendly_short_name();
 		}
@@ -102,10 +102,10 @@ void cath::score::warn_on_duplicate_human_friendly_names(const aligned_pair_scor
 /// \brief Return a vector of the short names of all the aligned_pair_scores in the specified aligned_pair_score_list
 ///
 /// \relates aligned_pair_score_list
-str_vec cath::score::get_short_names(const aligned_pair_score_list &arg_aligned_pair_score_list ///< The aligned_pair_score_list from which the short names should be retrieved
+str_vec cath::score::get_short_names(const aligned_pair_score_list &prm_aligned_pair_score_list ///< The aligned_pair_score_list from which the short names should be retrieved
                                      ) {
 	return transform_build<str_vec>(
-		arg_aligned_pair_score_list,
+		prm_aligned_pair_score_list,
 		[] (const aligned_pair_score &x) { return x.human_friendly_short_name(); }
 	);
 }
@@ -113,10 +113,10 @@ str_vec cath::score::get_short_names(const aligned_pair_score_list &arg_aligned_
 /// \brief Return a vector of the long names of all the aligned_pair_scores in the specified aligned_pair_score_list
 ///
 /// \relates aligned_pair_score_list
-str_vec cath::score::get_long_names(const aligned_pair_score_list &arg_aligned_pair_score_list ///< The aligned_pair_score_list from which the long names should be retrieved
+str_vec cath::score::get_long_names(const aligned_pair_score_list &prm_aligned_pair_score_list ///< The aligned_pair_score_list from which the long names should be retrieved
                                     ) {
 	return transform_build<str_vec>(
-		arg_aligned_pair_score_list,
+		prm_aligned_pair_score_list,
 		[] (const aligned_pair_score &x) { return x.long_name(); }
 	);
 }
@@ -124,10 +124,10 @@ str_vec cath::score::get_long_names(const aligned_pair_score_list &arg_aligned_p
 /// \brief Return a vector of the descriptions of all the aligned_pair_scores in the specified aligned_pair_score_list
 ///
 /// \relates aligned_pair_score_list
-str_vec cath::score::get_descriptions(const aligned_pair_score_list &arg_aligned_pair_score_list ///< The aligned_pair_score_list from which the descriptions should be retrieved
+str_vec cath::score::get_descriptions(const aligned_pair_score_list &prm_aligned_pair_score_list ///< The aligned_pair_score_list from which the descriptions should be retrieved
                                       ) {
 	return transform_build<str_vec>(
-		arg_aligned_pair_score_list,
+		prm_aligned_pair_score_list,
 		[] (const aligned_pair_score &x) { return x.description(); }
 	);
 }
@@ -136,10 +136,10 @@ str_vec cath::score::get_descriptions(const aligned_pair_score_list &arg_aligned
 ///        (including empty strings for the aligned_pair_scores that have no references)
 ///
 /// \relates aligned_pair_score_list
-str_vec cath::score::get_references(const aligned_pair_score_list &arg_aligned_pair_score_list ///< The aligned_pair_score_list from which the references should be retrieved
+str_vec cath::score::get_references(const aligned_pair_score_list &prm_aligned_pair_score_list ///< The aligned_pair_score_list from which the references should be retrieved
 		                            ) {
 	return transform_build<str_vec>(
-		arg_aligned_pair_score_list,
+		prm_aligned_pair_score_list,
 		[] (const aligned_pair_score &x) { return x.reference(); }
 	);
 }

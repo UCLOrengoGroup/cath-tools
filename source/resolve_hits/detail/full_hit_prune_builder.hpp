@@ -41,15 +41,15 @@ namespace cath {
 			/// Note: this doesn't offer the strong exception safety guarantee; it just
 			///       moves elements across without checking if T's move operations are noexcept
 			template <typename T>
-			std::vector<T> make_vector_of_rvalue_deque(std::deque<T> &&arg_deque ///< An rvalue deque<T> to "move" into a vector<T>
+			std::vector<T> make_vector_of_rvalue_deque(std::deque<T> &&prm_deque ///< An rvalue deque<T> to "move" into a vector<T>
 			                                           ) {
 				std::vector<T> results;
-				results.reserve( arg_deque.size() );
-				for (const T &element : arg_deque) {
+				results.reserve( prm_deque.size() );
+				for (const T &element : prm_deque) {
 					// Better to push_back() or emplace_back() if given an rvalue T?
 					results.push_back( std::move( element ) );
 				}
-				arg_deque.clear();
+				prm_deque.clear();
 				return results;
 			}
 
@@ -62,9 +62,9 @@ namespace cath {
 			///        which just hashes the full_hit's segments
 			struct full_hit_ref_segs_hasher final {
 				/// \brief The function operator that performs the hash on the full_hit's segments
-				size_t operator()(const std::reference_wrapper<full_hit> &arg_value
+				size_t operator()(const std::reference_wrapper<full_hit> &prm_value
 				                  ) const {
-					return calc_hash( arg_value.get().get_segments() );
+					return calc_hash( prm_value.get().get_segments() );
 				}
 			};
 
@@ -72,12 +72,12 @@ namespace cath {
 			///        which just compares the full_hit's segments
 			struct full_hit_ref_segs_equal_to final {
 				/// \brief The function operator that performs compares two full_hits' segments
-				size_t operator()(const std::reference_wrapper<full_hit> &arg_lhs, ///< The first  reference_wrapper<full_hit> to compare
-				                  const std::reference_wrapper<full_hit> &arg_rhs  ///< The second reference_wrapper<full_hit> to compare
+				size_t operator()(const std::reference_wrapper<full_hit> &prm_lhs, ///< The first  reference_wrapper<full_hit> to compare
+				                  const std::reference_wrapper<full_hit> &prm_rhs  ///< The second reference_wrapper<full_hit> to compare
 				                  ) const {
 					return boost::range::equal(
-						arg_lhs.get().get_segments(),
-						arg_rhs.get().get_segments()
+						prm_lhs.get().get_segments(),
+						prm_rhs.get().get_segments()
 					);
 				}
 			};
@@ -111,14 +111,14 @@ namespace cath {
 
 			public:
 				/// \brief Ctor to populate require_strictly_worse_hits
-				inline explicit full_hit_prune_builder(const seg_dupl_hit_policy &arg_policy ///< Whether the strictly-worse hits should be preserved or pruned
-				                                       ) : policy { arg_policy } {
+				inline explicit full_hit_prune_builder(const seg_dupl_hit_policy &prm_policy ///< Whether the strictly-worse hits should be preserved or pruned
+				                                       ) : policy { prm_policy } {
 				}
 
 				/// \brief Reserve space for the specified number of hits
-				inline void reserve(const size_t &arg_capacity ///< The number of hits for which space should be reserved
+				inline void reserve(const size_t &prm_capacity ///< The number of hits for which space should be reserved
 				                    ) {
-					index_of_full_hit_ref.reserve( arg_capacity );
+					index_of_full_hit_ref.reserve( prm_capacity );
 				}
 
 
@@ -133,23 +133,23 @@ namespace cath {
 				}
 
 				/// \brief Add a hit (or skip it if it's found to be worse than existing hit)
-				inline void add_hit(full_hit arg_full_hit ///< The hit to be added
+				inline void add_hit(full_hit prm_full_hit ///< The hit to be added
 				                    ) {
 					if ( policy == seg_dupl_hit_policy::PRESERVE ) {
-						hits.push_back( std::move( arg_full_hit ) );
+						hits.push_back( std::move( prm_full_hit ) );
 						return;
 					}
-					const auto itr = index_of_full_hit_ref.find( arg_full_hit );
+					const auto itr = index_of_full_hit_ref.find( prm_full_hit );
 					if ( itr == common::cend( index_of_full_hit_ref ) ) {
 						const auto hits_size_before = hits.size();
-						hits.push_back( std::move( arg_full_hit ) );
+						hits.push_back( std::move( prm_full_hit ) );
 						index_of_full_hit_ref.emplace( hits.back(), hits_size_before );
 					}
 					else {
 						const auto &comp_hit = hits[ itr->second ];
-						const auto  result   = first_hit_is_better( arg_full_hit, comp_hit );
+						const auto  result   = first_hit_is_better( prm_full_hit, comp_hit );
 						if ( common::is_true( result ) ) {
-							hits[ itr->second ] = std::move( arg_full_hit );
+							hits[ itr->second ] = std::move( prm_full_hit );
 						}
 						else {
 						}

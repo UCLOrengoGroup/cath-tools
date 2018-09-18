@@ -40,18 +40,18 @@ namespace cath {
 		          typename T,
 		          typename Op = std::plus<>,
 		          typename Proj = ident>
-		inline auto accumulate_proj(Rng  &&arg_range,          ///< The range to query
-		                            T    &&arg_init,           ///< The initial value from which to start the accumulation
-		                            Op   &&arg_op    = Op{},   ///< The operation to apply the value-so-far and new-value
-		                            Proj &&arg_proj  = Proj{}  ///< The projection function
+		inline auto accumulate_proj(Rng  &&prm_range,          ///< The range to query
+		                            T    &&prm_init,           ///< The initial value from which to start the accumulation
+		                            Op   &&prm_op    = Op{},   ///< The operation to apply the value-so-far and new-value
+		                            Proj &&prm_proj  = Proj{}  ///< The projection function
 		                            ) {
 			return boost::accumulate(
-				std::forward<Rng>( arg_range )
+				std::forward<Rng>( prm_range )
 					| boost::adaptors::transformed( [&] (const auto &x) {
-						return invoke( std::forward<Proj>( arg_proj ), x );
+						return invoke( std::forward<Proj>( prm_proj ), x );
 					} ),
-				std::forward< T  >( arg_init ),
-				std::forward< Op >( arg_op   )
+				std::forward< T  >( prm_init ),
+				std::forward< Op >( prm_op   )
 			);
 		}
 

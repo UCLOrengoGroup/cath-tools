@@ -46,20 +46,20 @@ unique_ptr<alignment_outputter> ssap_ostream_alignment_outputter::do_clone() con
 }
 
 /// \brief TODOCUMENT
-void ssap_ostream_alignment_outputter::do_output_alignment(const alignment_context &arg_alignment_context, ///< TODOCUMENT
-                                                           ostream                 &arg_ostream            ///< TODOCUMENT
+void ssap_ostream_alignment_outputter::do_output_alignment(const alignment_context &prm_alignment_context, ///< TODOCUMENT
+                                                           ostream                 &prm_ostream            ///< TODOCUMENT
                                                            ) const {
-	const region_vec_opt_vec &regions_opts  = get_regions( arg_alignment_context );
-	const alignment          &the_alignment = arg_alignment_context.get_alignment();
+	const region_vec_opt_vec &regions_opts  = get_regions( prm_alignment_context );
+	const alignment          &the_alignment = prm_alignment_context.get_alignment();
 	check_alignment_is_a_pair( the_alignment );
 
 	const protein_list temp_protein_list = build_protein_list_of_pdb_list_and_names(
-		get_pdbs      ( arg_alignment_context ),
-		get_name_sets ( arg_alignment_context )
+		get_pdbs      ( prm_alignment_context ),
+		get_name_sets ( prm_alignment_context )
 	);
 
 	output_alignment_to_cath_ssap_legacy_format(
-		arg_ostream,
+		prm_ostream,
 		the_alignment,
 		temp_protein_list[ 0 ],
 		temp_protein_list[ 1 ],

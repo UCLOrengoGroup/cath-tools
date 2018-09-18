@@ -66,10 +66,10 @@ string alignment_output_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void alignment_output_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                           const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void alignment_output_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                           const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                            ) {
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( PO_ALN_TO_CATH_ALN_FILE.c_str(),   value<path>( &aln_to_cath_aln_file   ),                       "[EXPERIMENTAL] Write the alignment to a CATH alignment file"           )
 		( PO_ALN_TO_CATH_ALN_STDOUT.c_str(), bool_switch( &aln_to_cath_aln_stdout )->default_value(false), "[EXPERIMENTAL] Print the alignment to stdout in CATH alignment format" )
 		( PO_ALN_TO_FASTA_FILE.c_str(),      value<path>( &aln_to_fasta_file      ),                       "Write the alignment to a FASTA file"                                   )
@@ -81,7 +81,7 @@ void alignment_output_options_block::do_add_visible_options_to_description(optio
 }
 
 /// \brief TODOCUMENT
-str_opt alignment_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt alignment_output_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                           ) const {
 	if ( ! get_aln_to_cath_aln_file().empty() && ! is_acceptable_output_file( get_aln_to_cath_aln_file() ) ) {
 		return "Not a valid alignment CATH alignment output file :\"" + get_aln_to_cath_aln_file().string() + "\"";
@@ -157,7 +157,7 @@ bool alignment_output_options_block::get_aln_to_html_stdout() const {
 }
 
 /// \brief TODOCUMENT
-alignment_outputter_list alignment_output_options_block::get_alignment_outputters(const display_spec &arg_display_spec ///< TODOCUMENT
+alignment_outputter_list alignment_output_options_block::get_alignment_outputters(const display_spec &prm_display_spec ///< TODOCUMENT
                                                                                   ) const {
 	alignment_outputter_list alignment_outputters;
 
@@ -183,10 +183,10 @@ alignment_outputter_list alignment_output_options_block::get_alignment_outputter
 	}
 
 	if ( ! get_aln_to_html_file().empty() ) {
-		alignment_outputters.push_back( file_alignment_outputter( get_aln_to_html_file(), make_html_ostream_alignment_outputter( arg_display_spec ) ) );
+		alignment_outputters.push_back( file_alignment_outputter( get_aln_to_html_file(), make_html_ostream_alignment_outputter( prm_display_spec ) ) );
 	}
 	if ( get_aln_to_html_stdout() ) {
-		alignment_outputters.push_back( make_html_ostream_alignment_outputter( arg_display_spec ) );
+		alignment_outputters.push_back( make_html_ostream_alignment_outputter( prm_display_spec ) );
 	}
 
 	return alignment_outputters;

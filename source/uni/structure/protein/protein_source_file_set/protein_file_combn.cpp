@@ -35,9 +35,9 @@ using namespace std;
 /// \brief Convert a protein_file_combn to (a smart pointer to) the equivalent protein_source_file_set
 ///
 /// \relates protein_file_combn
-unique_ptr<const protein_source_file_set> cath::get_protein_source_file_set(const protein_file_combn &arg_protein_file_combn /// The protein_file_combn to be converted
+unique_ptr<const protein_source_file_set> cath::get_protein_source_file_set(const protein_file_combn &prm_protein_file_combn /// The protein_file_combn to be converted
                                                                             ) {
-	switch ( arg_protein_file_combn ) {
+	switch ( prm_protein_file_combn ) {
 		case( protein_file_combn::WOLF_SEC          ) : { return { common::make_unique< protein_from_wolf_and_sec          >() }; break; }
 		case( protein_file_combn::PDB               ) : { return { common::make_unique< protein_from_pdb                   >() }; break; }
 		case( protein_file_combn::PDB_DSSP_SEC      ) : { return { common::make_unique< protein_from_pdb_dssp_and_sec      >() }; break; }
@@ -50,60 +50,60 @@ unique_ptr<const protein_source_file_set> cath::get_protein_source_file_set(cons
 /// \brief Simple extraction operator for protein_file_combn
 ///
 /// \relates protein_file_combn
-istream & cath::operator>>(istream            &arg_is,                ///< The istream from which to extract the protein_file_combn
-                           protein_file_combn &arg_protein_file_combn ///< The protein_file_combn to populate
+istream & cath::operator>>(istream            &prm_is,                ///< The istream from which to extract the protein_file_combn
+                           protein_file_combn &prm_protein_file_combn ///< The protein_file_combn to populate
                            ) {
 	string input_string;
-	arg_is >> input_string;
+	prm_is >> input_string;
 	if ( input_string == "WOLF_SEC" ) {
-		arg_protein_file_combn = protein_file_combn::WOLF_SEC;
+		prm_protein_file_combn = protein_file_combn::WOLF_SEC;
 	}
 	else if ( input_string == "PDB_SIMPLE" ) {
-		arg_protein_file_combn = protein_file_combn::PDB;
+		prm_protein_file_combn = protein_file_combn::PDB;
 	}
 	else if ( input_string == "PDB_DSSP_SEC" ) {
-		arg_protein_file_combn = protein_file_combn::PDB_DSSP_SEC;
+		prm_protein_file_combn = protein_file_combn::PDB_DSSP_SEC;
 	}
 	else if ( input_string == "PDB_DSSP" ) {
-		arg_protein_file_combn = protein_file_combn::PDB_DSSP_AND_CALC;
+		prm_protein_file_combn = protein_file_combn::PDB_DSSP_AND_CALC;
 	}
 	else if ( input_string == "PDB" ) {
-		arg_protein_file_combn = protein_file_combn::PDB_AND_CALC;
+		prm_protein_file_combn = protein_file_combn::PDB_AND_CALC;
 	}
 	else {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to recognise protein_file_combn type " + input_string));
 	}
-	return arg_is;
+	return prm_is;
 }
 
 /// \brief Simple insertion operator for protein_file_combn
 ///
 /// \relates protein_file_combn
-ostream & cath::operator<<(ostream                  &arg_os,                ///< The stream to which to output
-                           const protein_file_combn &arg_protein_file_combn ///< The protein_file_combn to output to the stream
+ostream & cath::operator<<(ostream                  &prm_os,                ///< The stream to which to output
+                           const protein_file_combn &prm_protein_file_combn ///< The protein_file_combn to output to the stream
                            ) {
-	switch( arg_protein_file_combn ) {
+	switch( prm_protein_file_combn ) {
 		case( protein_file_combn::WOLF_SEC ) : {
-			arg_os << "WOLF_SEC";
+			prm_os << "WOLF_SEC";
 			break;
 		}
 		case( protein_file_combn::PDB ) : {
-			arg_os << "PDB_SIMPLE";
+			prm_os << "PDB_SIMPLE";
 			break;
 		}
 		case( protein_file_combn::PDB_DSSP_SEC ) : {
-			arg_os << "PDB_DSSP_SEC";
+			prm_os << "PDB_DSSP_SEC";
 			break;
 		}
 		case( protein_file_combn::PDB_DSSP_AND_CALC ) : {
-			arg_os << "PDB_DSSP";
+			prm_os << "PDB_DSSP";
 			break;
 		}
 		case( protein_file_combn::PDB_AND_CALC ) : {
-			arg_os << "PDB";
+			prm_os << "PDB";
 			break;
 		}
 	}
-	return arg_os;
+	return prm_os;
 }
 

@@ -63,16 +63,16 @@ using std::string;
 using std::unique_ptr;
 
 /// \brief Read a PDB and restrict it by the specified regions
-protein protein_source_file_set::do_read_and_restrict_files(const data_file_path_map &arg_filename_of_data_file, ///< The pre-loaded map of file types to filenames
-                                                            const string             &arg_protein_name,          ///< The name of the protein that is to be read from files
-                                                            const region_vec_opt     &arg_regions,               ///< The regions to which the resulting protein should be restricted
-                                                            ostream                  &arg_stderr                 ///< The ostream to which any warnings/errors should be written
+protein protein_source_file_set::do_read_and_restrict_files(const data_file_path_map &prm_filename_of_data_file, ///< The pre-loaded map of file types to filenames
+                                                            const string             &prm_protein_name,          ///< The name of the protein that is to be read from files
+                                                            const region_vec_opt     &prm_regions,               ///< The regions to which the resulting protein should be restricted
+                                                            ostream                  &prm_stderr                 ///< The ostream to which any warnings/errors should be written
                                                             ) const {
-	protein the_protein = do_read_files( arg_filename_of_data_file, arg_protein_name, arg_stderr );
-	return arg_regions
+	protein the_protein = do_read_files( prm_filename_of_data_file, prm_protein_name, prm_stderr );
+	return prm_regions
 		? restrict_to_regions_copy(
 			std::move( the_protein ),
-			arg_regions
+			prm_regions
 		)
 		: the_protein;
 }
@@ -104,49 +104,49 @@ bool protein_source_file_set::makes_ssap_ready_protein() const {
 }
 
 /// \brief An NVI pass-through method to read the files that have been specified
-protein protein_source_file_set::read_files(const data_dirs_spec &arg_data_dirs,    ///< The data_dirs_options_block to specify how things should be done
-                                            const string         &arg_protein_name, ///< The name of the protein that is to be read from files
-                                            const region_vec_opt &arg_regions,      ///< The regions to which the resulting protein should be restricted
-                                            ostream              &arg_stderr        ///< The ostream to which any warnings/errors should be written
+protein protein_source_file_set::read_files(const data_dirs_spec &prm_data_dirs,    ///< The data_dirs_options_block to specify how things should be done
+                                            const string         &prm_protein_name, ///< The name of the protein that is to be read from files
+                                            const region_vec_opt &prm_regions,      ///< The regions to which the resulting protein should be restricted
+                                            ostream              &prm_stderr        ///< The ostream to which any warnings/errors should be written
                                             ) const {
 	const data_file_path_map filename_of_data_file = get_filename_of_data_file(
 		*this,
-		arg_data_dirs,
-		arg_protein_name
+		prm_data_dirs,
+		prm_protein_name
 	);
 
 	return do_read_and_restrict_files(
 		filename_of_data_file,
-		arg_protein_name,
-		arg_regions,
-		arg_stderr
+		prm_protein_name,
+		prm_regions,
+		prm_stderr
 	).set_name_set( name_set{
 		get_primary_file_from_map( *this, filename_of_data_file ),
-		arg_protein_name
+		prm_protein_name
 	} );
 }
 
 /// \brief Read a protein from the specified files and apply any name from the optional domain
 ///
 /// \relates protein_source_file_set
-protein cath::read_protein_from_files(const protein_source_file_set &arg_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
-                                      const data_dirs_spec          &arg_data_dirs,       ///< The data_dirs_options_block to specify how things should be done
-                                      const string                  &arg_protein_name,    ///< The name of the protein that is to be read from files
-                                      const domain_opt              &arg_domain,          ///< The domain to which the resulting protein should be restricted
-                                      ostream                       &arg_stderr           ///< The ostream to which any warnings/errors should be written
+protein cath::read_protein_from_files(const protein_source_file_set &prm_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
+                                      const data_dirs_spec          &prm_data_dirs,       ///< The data_dirs_options_block to specify how things should be done
+                                      const string                  &prm_protein_name,    ///< The name of the protein that is to be read from files
+                                      const domain_opt              &prm_domain,          ///< The domain to which the resulting protein should be restricted
+                                      ostream                       &prm_stderr           ///< The ostream to which any warnings/errors should be written
                                       ) {
 	const region_vec_opt regions = make_optional_if_fn(
-		static_cast<bool>( arg_domain ),
-		[&] { return region_vec{ common::cbegin( *arg_domain ), common::cend( *arg_domain ) }; }
+		static_cast<bool>( prm_domain ),
+		[&] { return region_vec{ common::cbegin( *prm_domain ), common::cend( *prm_domain ) }; }
 	);
-	protein the_protein = arg_source_file_set.read_files(
-		arg_data_dirs,
-		arg_protein_name,
+	protein the_protein = prm_source_file_set.read_files(
+		prm_data_dirs,
+		prm_protein_name,
 		regions,
-		arg_stderr
+		prm_stderr
 	);
-	if ( arg_domain && has_domain_id( *arg_domain ) ) {
-		the_protein.get_name_set().set_domain_name_from_regions( get_domain_id( *arg_domain ) );
+	if ( prm_domain && has_domain_id( *prm_domain ) ) {
+		the_protein.get_name_set().set_domain_name_from_regions( get_domain_id( *prm_domain ) );
 	}
 	return the_protein;
 }
@@ -154,38 +154,38 @@ protein cath::read_protein_from_files(const protein_source_file_set &arg_source_
 /// \brief TODOCUMENT
 ///
 /// \relates protein_source_file_set
-protein cath::read_protein_from_files(const protein_source_file_set &arg_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
-                                      const path                    &arg_data_dir,        ///< The directory from which the files should be read
-                                      const string                  &arg_protein_name,    ///< The name of the protein that is to be read from files
-                                      const ostream_ref_opt         &arg_ostream          ///< An optional reference to an ostream to which any warnings/errors should be written
+protein cath::read_protein_from_files(const protein_source_file_set &prm_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
+                                      const path                    &prm_data_dir,        ///< The directory from which the files should be read
+                                      const string                  &prm_protein_name,    ///< The name of the protein that is to be read from files
+                                      const ostream_ref_opt         &prm_ostream          ///< An optional reference to an ostream to which any warnings/errors should be written
                                       ) {
 	ostringstream parse_ss;
-	return arg_source_file_set.read_files(
-		build_data_dirs_spec_of_dir( arg_data_dir ),
-		arg_protein_name,
+	return prm_source_file_set.read_files(
+		build_data_dirs_spec_of_dir( prm_data_dir ),
+		prm_protein_name,
 		none,
-		( arg_ostream ? arg_ostream->get() : parse_ss )
+		( prm_ostream ? prm_ostream->get() : parse_ss )
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates protein_source_file_set
-protein_list cath::read_proteins_from_files(const protein_source_file_set &arg_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
-                                            const path                    &arg_data_dir,        ///< The directory from which the files should be read
-                                            const str_vec                 &arg_protein_names,   ///< The name of the protein that is to be read from files
-                                            const ostream_ref_opt         &arg_ostream          ///< An optional reference to an ostream to which any warnings/errors should be written
+protein_list cath::read_proteins_from_files(const protein_source_file_set &prm_source_file_set, /// The protein_source_file_set specifying which set of files should be used to build the protein
+                                            const path                    &prm_data_dir,        ///< The directory from which the files should be read
+                                            const str_vec                 &prm_protein_names,   ///< The name of the protein that is to be read from files
+                                            const ostream_ref_opt         &prm_ostream          ///< An optional reference to an ostream to which any warnings/errors should be written
                                             ) {
 	protein_list the_proteins;
 	transform(
-		arg_protein_names,
+		prm_protein_names,
 		back_inserter( the_proteins ),
 		[&] (const string &x) {
 			return read_protein_from_files(
-				arg_source_file_set,
-				arg_data_dir,
+				prm_source_file_set,
+				prm_data_dir,
 				x,
-				arg_ostream
+				prm_ostream
 			);
 		}
 	);
@@ -199,15 +199,15 @@ protein_list cath::read_proteins_from_files(const protein_source_file_set &arg_s
 /// \returns A map of data_file to the filename selected for that file type
 ///
 /// \relates protein_source_file_set
-data_file_path_map cath::get_filename_of_data_file(const protein_source_file_set &arg_protein_source_file_set, ///< The protein_source_file_set which specifies the file types it requires for reading a protein
-                                                   const data_dirs_spec          &arg_data_dirs,               ///< The data_dirs_spec specifying how to map a file type and a name to a filename
-                                                   const string                  &arg_protein_name             ///< The name of the protein that is to be read from files
+data_file_path_map cath::get_filename_of_data_file(const protein_source_file_set &prm_protein_source_file_set, ///< The protein_source_file_set which specifies the file types it requires for reading a protein
+                                                   const data_dirs_spec          &prm_data_dirs,               ///< The data_dirs_spec specifying how to map a file type and a name to a filename
+                                                   const string                  &prm_protein_name             ///< The name of the protein that is to be read from files
                                                    ) {
-	const auto file_set = arg_protein_source_file_set.get_file_set();
+	const auto file_set = prm_protein_source_file_set.get_file_set();
 	return transform_build<data_file_path_map>(
 		file_set,
 		[&] (const data_file &x) {
-			return make_pair( x, find_file( arg_data_dirs, x, arg_protein_name ) );
+			return make_pair( x, find_file( prm_data_dirs, x, prm_protein_name ) );
 		}
 	);
 }
@@ -216,11 +216,11 @@ data_file_path_map cath::get_filename_of_data_file(const protein_source_file_set
 ///        the specified protein_source_file_set's primary file
 ///
 /// \relates protein_source_file_set
-path cath::get_primary_file_from_map(const protein_source_file_set &arg_protein_source_file_set, ///< The protein_source_file_set to query
-                                     const data_file_path_map      &arg_filename_of_data_file    ///< The data_file_path_map to query
+path cath::get_primary_file_from_map(const protein_source_file_set &prm_protein_source_file_set, ///< The protein_source_file_set to query
+                                     const data_file_path_map      &prm_filename_of_data_file    ///< The data_file_path_map to query
                                      ) {
-	return arg_filename_of_data_file.at(
-		arg_protein_source_file_set.get_primary_file()
+	return prm_filename_of_data_file.at(
+		prm_protein_source_file_set.get_primary_file()
 	);
 }
 
@@ -240,10 +240,10 @@ protein_source_file_set_pvec cath::get_all_protein_source_file_sets() {
 /// \brief Convert a ptr_vector of protein_source_file_sets to a vector<protein_file_combn>
 ///
 /// \relates protein_source_file_set
-protein_file_combn_vec cath::get_ssap_ready_protein_file_combns(const protein_source_file_set_pvec &arg_protein_source_file_sets ///< The ptr_vector of protein_source_file_sets to convert
+protein_file_combn_vec cath::get_ssap_ready_protein_file_combns(const protein_source_file_set_pvec &prm_protein_source_file_sets ///< The ptr_vector of protein_source_file_sets to convert
                                                                 ) {
 	return transform_build<protein_file_combn_vec>(
-		arg_protein_source_file_sets
+		prm_protein_source_file_sets
 			| filtered( [] (const auto &x) { return x.makes_ssap_ready_protein(); } ),
 		[] (const protein_source_file_set &x) { return x.get_protein_file_combn(); }
 	);
@@ -252,10 +252,10 @@ protein_file_combn_vec cath::get_ssap_ready_protein_file_combns(const protein_so
 /// \brief Convert a ptr_vector of protein_source_file_sets to a vector<protein_file_combn>
 ///
 /// \relates protein_source_file_set
-protein_file_combn_vec cath::get_protein_file_combns(const protein_source_file_set_pvec &arg_protein_source_file_sets ///< The ptr_vector of protein_source_file_sets to convert
+protein_file_combn_vec cath::get_protein_file_combns(const protein_source_file_set_pvec &prm_protein_source_file_sets ///< The ptr_vector of protein_source_file_sets to convert
                                                      ) {
 	return transform_build<protein_file_combn_vec>(
-		arg_protein_source_file_sets,
+		prm_protein_source_file_sets,
 		[] (const protein_source_file_set &x) { return x.get_protein_file_combn(); }
 	);
 }
@@ -280,10 +280,10 @@ protein_file_combn_vec cath::get_all_protein_file_combns() {
 /// \todo Create a "lexically_casted" Range adaptor, which can do this more generally
 ///
 /// \relates protein_source_file_set
-str_vec cath::get_protein_file_combn_strings(const protein_file_combn_vec &arg_protein_file_combns ///< The protein_file_combn values to convert
+str_vec cath::get_protein_file_combn_strings(const protein_file_combn_vec &prm_protein_file_combns ///< The protein_file_combn values to convert
                                              ) {
 	return transform_build<str_vec>(
-		arg_protein_file_combns,
+		prm_protein_file_combns,
 		[] (const protein_file_combn &x) { return lexical_cast<string>( x ); }
 	);
 }

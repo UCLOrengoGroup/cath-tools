@@ -89,16 +89,16 @@ constexpr size_t pymol_viewer::RESIDUE_BATCH_SIZE;
 ///
 /// \todo Separate out the code that identifies the residue links in the alignment from the code that writes
 ///       this information in Pymol-ese (so that the first bit of code can be reused with other viewers)
-void cath::detail::write_pymol_pair_alignments(ostream                     &arg_os,                   ///< TODOCUMENT
-                                               const superposition_context &arg_superposition_context ///< TODOCUMENT
+void cath::detail::write_pymol_pair_alignments(ostream                     &prm_os,                   ///< TODOCUMENT
+                                               const superposition_context &prm_superposition_context ///< TODOCUMENT
                                                ) {
-	if ( ! arg_superposition_context.has_alignment() ) {
+	if ( ! prm_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot write PyMOL pair alignments for superposition_context with no alignment"));
 	}
-	const alignment     &the_alignment     = arg_superposition_context.get_alignment();
-// 	const superposition &the_superposition = arg_superposition_context.get_superposition();
-	const pdb_list       pdbs              = get_restricted_pdbs( arg_superposition_context );
-	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
+	const alignment     &the_alignment     = prm_superposition_context.get_alignment();
+// 	const superposition &the_superposition = prm_superposition_context.get_superposition();
+	const pdb_list       pdbs              = get_restricted_pdbs( prm_superposition_context );
+	const str_vec        names             = clean_names_for_viewer( prm_superposition_context );
 	
 	// Grab some basic details
 	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
@@ -138,7 +138,7 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 					const residue_id &residue_id_a = residue_ids_a[ *position_a ];
 					const residue_id &residue_id_b = residue_ids_b[ *position_b ];
 
-					arg_os << "distance "
+					prm_os << "distance "
 						+ name_a
 						+ "_"
 						+ name_b
@@ -151,7 +151,7 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 			}
 
 			if (added_pair_distances) {
-				arg_os << "disable "
+				prm_os << "disable "
 					+ name_a
 					+ "_"
 					+ name_b
@@ -159,7 +159,7 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 			}
 		}
 	}
-	arg_os << "hide labels\n"
+	prm_os << "hide labels\n"
 		"set dash_gap,    0.0\n"
 		"set dash_color,  black\n"
 		"set dash_radius, 0.05\n";
@@ -174,16 +174,16 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &arg_
 ///
 /// \todo Separate out the code that identifies the residue links in each alignment from the code that writes
 ///       this information in Pymol-ese (so that the first bit of code can be reused with other viewers)
-void cath::detail::write_pymol_global_alignment(ostream                     &arg_os,                   ///< TODOCUMENT
-                                                const superposition_context &arg_superposition_context ///< TODOCUMENT
+void cath::detail::write_pymol_global_alignment(ostream                     &prm_os,                   ///< TODOCUMENT
+                                                const superposition_context &prm_superposition_context ///< TODOCUMENT
                                                 ) {
-	if ( ! arg_superposition_context.has_alignment() ) {
+	if ( ! prm_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot write PyMOL global alignment for superposition_context with no alignment"));
 	}
-	const alignment     &the_alignment     = arg_superposition_context.get_alignment();
-	const superposition &the_superposition = arg_superposition_context.get_superposition();
-	const pdb_list       pdbs              = get_restricted_pdbs( arg_superposition_context );
-	const str_vec        names             = clean_names_for_viewer( arg_superposition_context );
+	const alignment     &the_alignment     = prm_superposition_context.get_alignment();
+	const superposition &the_superposition = prm_superposition_context.get_superposition();
+	const pdb_list       pdbs              = get_restricted_pdbs( prm_superposition_context );
+	const str_vec        names             = clean_names_for_viewer( prm_superposition_context );
 	
 	// Grab some basic details
 	const alignment::size_type num_entries = min( the_alignment.num_entries(), names.size() );
@@ -247,7 +247,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 			const residue_id    &res_name_a  = residue_ids[ entry_a ][ res_index_a ];
 			const residue_id    &res_name_b  = residue_ids[ entry_b ][ res_index_b ];
 
-			arg_os << "distance alignment, "
+			prm_os << "distance alignment, "
 				+ pymol_tools::pymol_res_seln_str( name_a, { res_name_a }, "CA"s )
 				+ ", "
 				+ pymol_tools::pymol_res_seln_str( name_b, { res_name_b }, "CA"s )
@@ -255,7 +255,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 		}
 	}
 	if (added_distances) {
-		arg_os << "disable alignment\n";
+		prm_os << "disable alignment\n";
 	}
 
 	enum class coreness : bool {
@@ -282,7 +282,7 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 				}
 			}
 		}
-		arg_os << join(
+		prm_os << join(
 			core_res_ids_of_entry_name
 				// \TODO Come C++17 and structured bindings, use here
 				| transformed( [] (const pair<const coreness, str_res_id_vec_map> &core_data) {
@@ -322,24 +322,24 @@ void cath::detail::write_pymol_global_alignment(ostream                     &arg
 				} ),
 			"\n"
 		) << "\n";
-		arg_os << "deselect\n";
+		prm_os << "deselect\n";
 	}
 
-	arg_os << "hide labels\n";
-	arg_os << "set dash_gap, 0.0\n";
-	arg_os << "set dash_color, black\n";
-	arg_os << "set dash_radius, 0.05\n";
+	prm_os << "hide labels\n";
+	prm_os << "set dash_gap, 0.0\n";
+	prm_os << "set dash_color, black\n";
+	prm_os << "set dash_radius, 0.05\n";
 }
 
 /// \brief Write PyMOL commands to store the current scene under the specified label to the specified ostream
-void pymol_viewer::record_scene(ostream           &arg_os,             ///< The ostream to which to write the PyMOL commands
-                                const std::string &arg_colouring_label ///< The label under which the scene should be stored
+void pymol_viewer::record_scene(ostream           &prm_os,             ///< The ostream to which to write the PyMOL commands
+                                const std::string &prm_colouring_label ///< The label under which the scene should be stored
                                 ) {
-	arg_os
+	prm_os
 		<< "scene F"
 		<< scene_count
 		<< ", store, message=\""
-		<< arg_colouring_label
+		<< prm_colouring_label
 		<< "\", color=1, view=0, active=0, rep=0, frame=0\n";
 	++scene_count;
 }
@@ -355,32 +355,32 @@ string pymol_viewer::do_default_file_extension() const {
 }
 
 /// \brief TODOCUMENT
-void pymol_viewer::do_write_start(ostream &arg_os ///< TODOCUMENT
+void pymol_viewer::do_write_start(ostream &prm_os ///< TODOCUMENT
                                   ) const {
-	arg_os << "feedback disable,all,output\n";
+	prm_os << "feedback disable,all,output\n";
 }
 
 /// \brief TODOCUMENT
-void pymol_viewer::do_write_load_pdbs(ostream             &arg_os,            ///< TODOCUMENT
-                                      const superposition &arg_superposition, ///< TODOCUMENT
-                                      const pdb_list      &arg_pdbs,          ///< TODOCUMENT
-                                      const str_vec       &arg_names          ///< TODOCUMENT
+void pymol_viewer::do_write_load_pdbs(ostream             &prm_os,            ///< TODOCUMENT
+                                      const superposition &prm_superposition, ///< TODOCUMENT
+                                      const pdb_list      &prm_pdbs,          ///< TODOCUMENT
+                                      const str_vec       &prm_names          ///< TODOCUMENT
                                       ) const {
-	const size_t num_pdbs = arg_pdbs.size();
+	const size_t num_pdbs = prm_pdbs.size();
 	for (const size_t &pdb_ctr : indices( num_pdbs ) ) {
-		arg_os << "cmd.read_pdbstr(\"\"\"";
+		prm_os << "cmd.read_pdbstr(\"\"\"";
 		ostringstream superposed_pdb_ss;
-		write_superposed_pdb_to_ostream( superposed_pdb_ss, arg_superposition, arg_pdbs[pdb_ctr], pdb_ctr );
-		arg_os << replace_all_copy(superposed_pdb_ss.str(), "\n", "\\\n");
-		arg_os << "\"\"\",\"" << arg_names[pdb_ctr] << "\")\n";
+		write_superposed_pdb_to_ostream( superposed_pdb_ss, prm_superposition, prm_pdbs[pdb_ctr], pdb_ctr );
+		prm_os << replace_all_copy(superposed_pdb_ss.str(), "\n", "\\\n");
+		prm_os << "\"\"\",\"" << prm_names[pdb_ctr] << "\")\n";
 	}
-	arg_os << "hide all\n";
-	arg_os << "set cartoon_rect_length  = " << pymol_tools::pymol_size(2, 1.50,  100, 0.090,  num_pdbs) << "\n";
-	arg_os << "set cartoon_rect_width   = " << pymol_tools::pymol_size(2, 0.40,  100, 0.024,  num_pdbs) << "\n";
-	arg_os << "set cartoon_oval_length  = " << pymol_tools::pymol_size(2, 1.35,  100, 0.081,  num_pdbs) << "\n";
-	arg_os << "set cartoon_oval_width   = " << pymol_tools::pymol_size(2, 0.25,  100, 0.015,  num_pdbs) << "\n";
-	arg_os << "set cartoon_loop_radius  = " << pymol_tools::pymol_size(2, 0.20,  100, 0.036,  num_pdbs) << "\n";
-	arg_os << "set cartoon_helix_radius = " << pymol_tools::pymol_size(2, 2.00,  100, 0.120,  num_pdbs) << R"(
+	prm_os << "hide all\n";
+	prm_os << "set cartoon_rect_length  = " << pymol_tools::pymol_size(2, 1.50,  100, 0.090,  num_pdbs) << "\n";
+	prm_os << "set cartoon_rect_width   = " << pymol_tools::pymol_size(2, 0.40,  100, 0.024,  num_pdbs) << "\n";
+	prm_os << "set cartoon_oval_length  = " << pymol_tools::pymol_size(2, 1.35,  100, 0.081,  num_pdbs) << "\n";
+	prm_os << "set cartoon_oval_width   = " << pymol_tools::pymol_size(2, 0.25,  100, 0.015,  num_pdbs) << "\n";
+	prm_os << "set cartoon_loop_radius  = " << pymol_tools::pymol_size(2, 0.20,  100, 0.036,  num_pdbs) << "\n";
+	prm_os << "set cartoon_helix_radius = " << pymol_tools::pymol_size(2, 2.00,  100, 0.120,  num_pdbs) << R"(
 set cartoon_cylindrical_helices, 0
 set cartoon_fancy_helices, 0
 bg_color white
@@ -389,14 +389,14 @@ color    black
 }
 
 /// \brief TODOCUMENT
-void pymol_viewer::do_define_colour(ostream              &arg_os,         ///< TODOCUMENT
-                                    const display_colour &arg_colour,     ///< TODOCUMENT
-                                    const string         &arg_colour_name ///< TODOCUMENT
+void pymol_viewer::do_define_colour(ostream              &prm_os,         ///< TODOCUMENT
+                                    const display_colour &prm_colour,     ///< TODOCUMENT
+                                    const string         &prm_colour_name ///< TODOCUMENT
                                     ) const {
-	arg_os << "set_color "
-		+ arg_colour_name
+	prm_os << "set_color "
+		+ prm_colour_name
 		+ ", ["
-		+ comma_separated_string_of_display_colour( arg_colour )
+		+ comma_separated_string_of_display_colour( prm_colour )
 		+ "]\n";
 }
 
@@ -406,33 +406,33 @@ bool pymol_viewer::do_accepts_multiple_colourings() const {
 }
 
 /// \brief Write PyMOL commands to the specified ostream to prepare for a new, specified colouring
-void pymol_viewer::do_begin_colouring(ostream                &arg_os,          ///< The ostream to which the PyMOL commands should be written
-                                      const display_colourer &/*arg_colourer*/ ///< The display_colourer to be used for the colouring that is beginning
+void pymol_viewer::do_begin_colouring(ostream                &prm_os,          ///< The ostream to which the PyMOL commands should be written
+                                      const display_colourer &/*prm_colourer*/ ///< The display_colourer to be used for the colouring that is beginning
                                       ) {
 	// If this is the first colouring, precede it by colouring by secondary structure and storing that as the first scene
 	if ( scene_count == 1 ) {
-		arg_os << R"(color black
+		prm_os << R"(color black
 color density, ss s
 color rutherfordium, ss h
 )";
-		record_scene( arg_os, "Colour by secondary structure" );
+		record_scene( prm_os, "Colour by secondary structure" );
 	}
 }
 
 /// \brief Get a string for colouring the base (ie everything) in the colour that has previously been defined with the specified name
-string pymol_viewer::do_get_colour_base_str(const string &arg_colour_name ///< The previously-defined colour with which to colour the base
+string pymol_viewer::do_get_colour_base_str(const string &prm_colour_name ///< The previously-defined colour with which to colour the base
                                             ) const {
-	return "colour " + arg_colour_name + "\n";
+	return "colour " + prm_colour_name + "\n";
 }
 
 /// \brief TODOCUMENT
-string pymol_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///< TODOCUMENT
-                                           const string &arg_pdb_name     ///< TODOCUMENT
+string pymol_viewer::do_get_colour_pdb_str(const string &prm_colour_name, ///< TODOCUMENT
+                                           const string &prm_pdb_name     ///< TODOCUMENT
                                            ) const {
 	return "colour "
-		+ arg_colour_name
+		+ prm_colour_name
 		+ R"(, ")"
-		+ arg_pdb_name
+		+ prm_pdb_name
 		+ "\"\n";
 }
 
@@ -440,21 +440,21 @@ string pymol_viewer::do_get_colour_pdb_str(const string &arg_colour_name, ///< T
 ///
 /// This splits the list of residues into batches of RESIDUE_BATCH_SIZE
 /// because PyMOL just ignores a list of residues that's too long
-string pymol_viewer::do_get_colour_pdb_residues_str(const string         &arg_colour_name, ///< TODOCUMENT
-                                                    const string         &arg_pdb_name,    ///< TODOCUMENT
-                                                    const residue_id_vec &arg_residue_ids  ///< TODOCUMENT
+string pymol_viewer::do_get_colour_pdb_residues_str(const string         &prm_colour_name, ///< TODOCUMENT
+                                                    const string         &prm_pdb_name,    ///< TODOCUMENT
+                                                    const residue_id_vec &prm_residue_ids  ///< TODOCUMENT
                                                     ) const {
-	const size_t num_res_names   = arg_residue_ids.size();
+	const size_t num_res_names   = prm_residue_ids.size();
 	const size_t num_res_batches = num_batches( num_res_names, RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
-	return "colour " + arg_colour_name + ", "
+	return "colour " + prm_colour_name + ", "
 		+ join(
 			transform_build<str_vec>(
 				indices( num_res_batches ),
 				[&] (const size_t &batch_idx) {
 					return pymol_tools::pymol_res_seln_str(
-						arg_pdb_name,
+						prm_pdb_name,
 						copy_build<residue_id_vec>(
-							batch_subrange( arg_residue_ids, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
+							batch_subrange( prm_residue_ids, RESIDUE_BATCH_SIZE, batch_idx, broken_batch_tol::PERMIT )
 						)
 					);
 				}
@@ -465,24 +465,24 @@ string pymol_viewer::do_get_colour_pdb_residues_str(const string         &arg_co
 }
 
 /// \brief Write PyMOL commands to the specified ostream to finish the specified colouring
-void pymol_viewer::do_end_colouring(ostream                &arg_os,      ///< The ostream to which the PyMOL commands should be written
-                                    const display_colourer &arg_colourer ///< The display_colourer to be used for the colouring that is ending
+void pymol_viewer::do_end_colouring(ostream                &prm_os,      ///< The ostream to which the PyMOL commands should be written
+                                    const display_colourer &prm_colourer ///< The display_colourer to be used for the colouring that is ending
                                     ) {
 	// Store the scene
-	record_scene( arg_os, arg_colourer.get_label() );
+	record_scene( prm_os, prm_colourer.get_label() );
 }
 
 /// \brief TODOCUMENT
-void pymol_viewer::do_write_alignment_extras(ostream                     &arg_os,                   ///< TODOCUMENT
-                                             const superposition_context &arg_superposition_context ///< TODOCUMENT
+void pymol_viewer::do_write_alignment_extras(ostream                     &prm_os,                   ///< TODOCUMENT
+                                             const superposition_context &prm_superposition_context ///< TODOCUMENT
                                              ) const {
-	write_pymol_global_alignment( arg_os, arg_superposition_context );
-//	write_pymol_pair_alignments ( arg_os, arg_superposition_context );
+	write_pymol_global_alignment( prm_os, prm_superposition_context );
+//	write_pymol_pair_alignments ( prm_os, prm_superposition_context );
 }
 
 /// \brief TODOCUMENT
-void pymol_viewer::do_write_end(ostream          &arg_os,  ///< TODOCUMENT
-                                const string_ref &arg_name ///< TODOCUMENT
+void pymol_viewer::do_write_end(ostream          &prm_os,  ///< TODOCUMENT
+                                const string_ref &prm_name ///< TODOCUMENT
                                 ) const {
 	const string CATH_TOOLS_VERSION{ CATH_TOOLS_GIT_VERSION };
 	const string advert_msg = "Superposition generated by cath-superpose (" + CATH_TOOLS_VERSION + "), one of the cath-tools."
@@ -491,7 +491,7 @@ void pymol_viewer::do_write_end(ostream          &arg_os,  ///< TODOCUMENT
 				? ( " Use functions keys F1 - F" + std::to_string( scene_count - 1 ) + " to switch between colouring schemes." )
 				: ""
 		);
-	arg_os << R"(scene F)" << scene_count << R"(, store, message="Colour me badd", color=0, view=0, active=0, rep=0, frame=0
+	prm_os << R"(scene F)" << scene_count << R"(, store, message="Colour me badd", color=0, view=0, active=0, rep=0, frame=0
 show cartoon
 set cartoon_smooth_loops,1
 show_as sticks, organic
@@ -513,9 +513,9 @@ cmd.wizard( "message", ")" << advert_msg << R"(" );
 feedback enable,all,output
 )"
 	<< (
-		arg_name.empty()
+		prm_name.empty()
 		? ""
-		: ( "print \"" + arg_name.to_string() + "\"\n" )
+		: ( "print \"" + prm_name.to_string() + "\"\n" )
 	);
 }
 

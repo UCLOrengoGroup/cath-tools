@@ -42,11 +42,11 @@ using ::boost::log::trivial::severity;
 using ::boost::log::trivial::warning;
 
 /// \brief A simple private function to provide a standard way of outputting the context of a catch to a stream.
-void program_exception_wrapper::output_catch_context(ostream            &arg_os,
-                                                     const char * const  arg_program_name
+void program_exception_wrapper::output_catch_context(ostream            &prm_os,
+                                                     const char * const  prm_program_name
                                                      ) const {
-	arg_os << "Whilst running program " << arg_program_name;
-	arg_os << " (via a program_exception_wrapper with typeid: \"" << demangle( typeid( *this ).name() ) << "\")";
+	prm_os << "Whilst running program " << prm_program_name;
+	prm_os << " (via a program_exception_wrapper with typeid: \"" << demangle( typeid( *this ).name() ) << "\")";
 }
 
 /// \brief Virtual destructor for program_exception_wrapper.
@@ -72,18 +72,18 @@ program_exception_wrapper::~program_exception_wrapper() noexcept {
 ///
 /// Then just write a main that calls run_program on an instance of that class.
 
-int program_exception_wrapper::run_program(int      arg_c,   ///< The main()-style argc parameter
-                                           char *   arg_v[], ///< The main()-style argv parameter
-                                           ostream &arg_os   ///< The ostream to which problems should be reported [Default: cerr (ie stderr)]
+int program_exception_wrapper::run_program(int      prm_c,   ///< The main()-style argc parameter
+                                           char *   prm_v[], ///< The main()-style argv parameter
+                                           ostream &prm_os   ///< The ostream to which problems should be reported [Default: cerr (ie stderr)]
                                            ) {
 	// Check that some arguments have been provided
-	if (arg_c <= 0) {
-		arg_os << "Cannot run_program() without a strictly positive number of arguments (the program name should be the first)" << endl;
+	if (prm_c <= 0) {
+		prm_os << "Cannot run_program() without a strictly positive number of arguments (the program name should be the first)" << endl;
 		return static_cast<int>( logger::return_code::GENERIC_FAILURE_RETURN_CODE );
 	}
 
 	// Try calling do_run_program with the arguments.
-	// Catch any errors and describe them to arg_os
+	// Catch any errors and describe them to prm_os
 	try {
 		// If using Boost Log, then add a sink that writes to stderr, rather than using the default stdout sink
 		boost_log_sink_sptr = boost::log::add_console_log(
@@ -99,7 +99,7 @@ int program_exception_wrapper::run_program(int      arg_c,   ///< The main()-sty
 		);
 		boost::log::add_common_attributes();
 
-		do_run_program(arg_c, arg_v);
+		do_run_program(prm_c, prm_v);
 
 		// If this has added a sink to the Boost Log core then try to remove it
 		if ( boost_log_sink_sptr ) {
@@ -108,23 +108,23 @@ int program_exception_wrapper::run_program(int      arg_c,   ///< The main()-sty
 		}
 	}
 	catch (const boost::exception &e) {
-		output_catch_context(arg_os, arg_v[ 0 ] );
-		arg_os << ", caught a boost::exception:\n";
-		arg_os << diagnostic_information(e);
-		arg_os << "\n" << endl;
+		output_catch_context(prm_os, prm_v[ 0 ] );
+		prm_os << ", caught a boost::exception:\n";
+		prm_os << diagnostic_information(e);
+		prm_os << "\n" << endl;
 		return static_cast<int>( logger::return_code::GENERIC_FAILURE_RETURN_CODE );
 	}
 	catch (const std::exception &e) {
-		output_catch_context(arg_os, arg_v[ 0 ] );
-		arg_os << ", caught a std::exception:\n";
-		arg_os << e.what();
-		arg_os << "\n" << endl;
+		output_catch_context(prm_os, prm_v[ 0 ] );
+		prm_os << ", caught a std::exception:\n";
+		prm_os << e.what();
+		prm_os << "\n" << endl;
 		return static_cast<int>( logger::return_code::GENERIC_FAILURE_RETURN_CODE );
 	}
 	catch (...) {
-		output_catch_context(arg_os, arg_v[ 0 ] );
-		arg_os << ", caught an exception of unrecognised type";
-		arg_os << "\n" << endl;
+		output_catch_context(prm_os, prm_v[ 0 ] );
+		prm_os << ", caught an exception of unrecognised type";
+		prm_os << "\n" << endl;
 		return static_cast<int>( logger::return_code::GENERIC_FAILURE_RETURN_CODE );
 	}
 

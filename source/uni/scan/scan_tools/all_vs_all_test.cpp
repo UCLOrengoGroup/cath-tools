@@ -68,16 +68,16 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			double calc_plot_colour_component(const size_size_pair &arg_length_range,
-			                                  const size_t         &arg_length
+			double calc_plot_colour_component(const size_size_pair &prm_length_range,
+			                                  const size_t         &prm_length
 			                                  ) {
-				const auto &min = arg_length_range.first;
-				const auto &max = arg_length_range.second;
-				if ( min > max || arg_length < min || arg_length > max ) {
+				const auto &min = prm_length_range.first;
+				const auto &max = prm_length_range.second;
+				if ( min > max || prm_length < min || prm_length > max ) {
 					BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot calc_plot_colour_component() for invalid length/range"));
 				}
 
-				const auto length_less_min = numeric_cast<double>( arg_length - min );
+				const auto length_less_min = numeric_cast<double>( prm_length - min );
 				const auto max_less_min    = numeric_cast<double>(        max - min );
 				return ( max == min) ? 0.0
 				                     : ( length_less_min / max_less_min );

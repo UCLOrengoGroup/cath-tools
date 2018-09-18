@@ -39,11 +39,11 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename... STRs>
-			std::string join_strings(const std::string &    arg_separator, ///< TODOCUMENT
-			                         const STRs        &... arg_strings    ///< TODOCUMENT
+			std::string join_strings(const std::string &    prm_separator, ///< TODOCUMENT
+			                         const STRs        &... prm_strings    ///< TODOCUMENT
 			                         ) {
-				const auto strings_init_list = { arg_strings... };
-				return boost::algorithm::join( strings_init_list, arg_separator );
+				const auto strings_init_list = { prm_strings... };
+				return boost::algorithm::join( strings_init_list, prm_separator );
 			}
 
 			/// \brief TODOCUMENT
@@ -54,29 +54,29 @@ namespace cath {
 
 			public:
 				/// \brief TODOCUMENT
-				explicit string_joiner(const std::string &arg_separator
-				                       ) : separator ( arg_separator ) {
+				explicit string_joiner(const std::string &prm_separator
+				                       ) : separator ( prm_separator ) {
 				}
 
 				/// \brief TODOCUMENT
 				template <typename... STRs>
-				std::string operator()(const STRs &...arg_strings ///< TODOCUMENT
+				std::string operator()(const STRs &...prm_strings ///< TODOCUMENT
 				                       ) {
-					return join_strings( separator, arg_strings... );
+					return join_strings( separator, prm_strings... );
 				}
 			};
 
 			/// \brief TODOCUMENT
 			template <typename... STRs>
-			std::string join_string_tuple(const std::tuple<STRs...> &arg_strings,  ///< TODOCUMENT
-			                              const std::string         &arg_separator ///< TODOCUMENT
+			std::string join_string_tuple(const std::tuple<STRs...> &prm_strings,  ///< TODOCUMENT
+			                              const std::string         &prm_separator ///< TODOCUMENT
 			                              ) {
-				return common::apply( string_joiner( arg_separator ), arg_strings );
+				return common::apply( string_joiner( prm_separator ), prm_strings );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename... STRs>
-			std::string markdown_table(const std::vector<std::tuple<STRs...>> &arg_data ///< TODOCUMENT
+			std::string markdown_table(const std::vector<std::tuple<STRs...>> &prm_data ///< TODOCUMENT
 			                           ) {
 				const std::string bar        = "|";
 				const std::string spaced_bar = " " + bar + " ";
@@ -84,12 +84,12 @@ namespace cath {
 
 				// Grab the number of elements in the tuples
 				constexpr size_t num_strings = sizeof...(STRs);
-				if ( arg_data.empty() ) {
+				if ( prm_data.empty() ) {
 					return "";
 				}
 
 				// Build a string of headers separated by |s
-				const std::string headers  = spaced_bar + join_string_tuple( arg_data.front(), spaced_bar ) + spaced_bar;
+				const std::string headers  = spaced_bar + join_string_tuple( prm_data.front(), spaced_bar ) + spaced_bar;
 
 				// Build a string of rules separated by |s
 				const auto num_fence_posts = ( num_strings > 0 ) ? ( num_strings + 1 ) : 0;
@@ -107,7 +107,7 @@ namespace cath {
 					boost::range::join(
 						headers_and_rules,
 						common::transform_build<str_vec>(
-							arg_data | boost::adaptors::sliced( 1, arg_data.size() ),
+							prm_data | boost::adaptors::sliced( 1, prm_data.size() ),
 							[&] (const std::tuple<STRs...> &x) {
 								return spaced_bar + join_string_tuple( x, spaced_bar ) + spaced_bar;
 							}

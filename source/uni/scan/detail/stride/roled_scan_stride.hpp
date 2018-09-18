@@ -47,10 +47,10 @@ namespace cath {
 			};
 
 			/// \brief Ctor from scan_role and scan_stride
-			inline constexpr roled_scan_stride::roled_scan_stride(const scan_role &arg_scan_role,  ///< TODOCUMENT
-			                                                      scan_stride      arg_scan_stride ///< TODOCUMENT
-			                                                      ) : the_role   { arg_scan_role                },
-			                                                          the_stride { std::move( arg_scan_stride ) } {
+			inline constexpr roled_scan_stride::roled_scan_stride(const scan_role &prm_scan_role,  ///< TODOCUMENT
+			                                                      scan_stride      prm_scan_stride ///< TODOCUMENT
+			                                                      ) : the_role   { prm_scan_role                },
+			                                                          the_stride { std::move( prm_scan_stride ) } {
 			}
 
 			/// \brief TODOCUMENT
@@ -64,46 +64,46 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			inline constexpr bool operator==(const roled_scan_stride &arg_roled_scan_stride_a, ///< TODOCUMENT
-			                                 const roled_scan_stride &arg_roled_scan_stride_b  ///< TODOCUMENT
+			inline constexpr bool operator==(const roled_scan_stride &prm_roled_scan_stride_a, ///< TODOCUMENT
+			                                 const roled_scan_stride &prm_roled_scan_stride_b  ///< TODOCUMENT
 			                                 ) {
 				return (
-					arg_roled_scan_stride_a.get_scan_role()   == arg_roled_scan_stride_b.get_scan_role()
+					prm_roled_scan_stride_a.get_scan_role()   == prm_roled_scan_stride_b.get_scan_role()
 					&&
-					arg_roled_scan_stride_a.get_scan_stride() == arg_roled_scan_stride_b.get_scan_stride()
+					prm_roled_scan_stride_a.get_scan_stride() == prm_roled_scan_stride_b.get_scan_stride()
 				);
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr const rep_strider & get_query_from_strider(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr const rep_strider & get_query_from_strider(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                            ) {
-				return arg_roled_stride.get_scan_stride().get_query_from_strider();
+				return prm_roled_stride.get_scan_stride().get_query_from_strider();
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr const rep_strider & get_query_to_strider(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr const rep_strider & get_query_to_strider(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                          ) {
-				return arg_roled_stride.get_scan_stride().get_query_to_strider();
+				return prm_roled_stride.get_scan_stride().get_query_to_strider();
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr const rep_strider & get_index_from_strider(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr const rep_strider & get_index_from_strider(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                            ) {
-				return arg_roled_stride.get_scan_stride().get_index_from_strider();
+				return prm_roled_stride.get_scan_stride().get_index_from_strider();
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr const rep_strider & get_index_to_strider(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr const rep_strider & get_index_to_strider(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                          ) {
-				return arg_roled_stride.get_scan_stride().get_index_to_strider();
+				return prm_roled_stride.get_scan_stride().get_index_to_strider();
 			}
 
 
@@ -111,37 +111,37 @@ namespace cath {
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr const rep_strider & get_this_from_strider(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr const rep_strider & get_this_from_strider(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                           ) {
-				return ( arg_roled_stride.get_scan_role() == scan_role::QUERY ) ? get_query_from_strider( arg_roled_stride )
-				                                                                : get_index_from_strider( arg_roled_stride );
+				return ( prm_roled_stride.get_scan_role() == scan_role::QUERY ) ? get_query_from_strider( prm_roled_stride )
+				                                                                : get_index_from_strider( prm_roled_stride );
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr const rep_strider & get_this_to_strider(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr const rep_strider & get_this_to_strider(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                         ) {
-				return ( arg_roled_stride.get_scan_role() == scan_role::QUERY ) ? get_query_to_strider( arg_roled_stride )
-				                                                                : get_index_to_strider( arg_roled_stride );
+				return ( prm_roled_stride.get_scan_role() == scan_role::QUERY ) ? get_query_to_strider( prm_roled_stride )
+				                                                                : get_index_to_strider( prm_roled_stride );
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr const rep_strider & get_other_from_strider(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr const rep_strider & get_other_from_strider(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                            ) {
-				return ( arg_roled_stride.get_scan_role() == scan_role::QUERY ) ? get_index_from_strider( arg_roled_stride )
-				                                                                : get_query_from_strider( arg_roled_stride );
+				return ( prm_roled_stride.get_scan_role() == scan_role::QUERY ) ? get_index_from_strider( prm_roled_stride )
+				                                                                : get_query_from_strider( prm_roled_stride );
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr const rep_strider & get_other_to_strider(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr const rep_strider & get_other_to_strider(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                          ) {
-				return ( arg_roled_stride.get_scan_role() == scan_role::QUERY ) ? get_index_to_strider( arg_roled_stride )
-				                                                                : get_query_to_strider( arg_roled_stride );
+				return ( prm_roled_stride.get_scan_role() == scan_role::QUERY ) ? get_index_to_strider( prm_roled_stride )
+				                                                                : get_query_to_strider( prm_roled_stride );
 			}
 
 
@@ -149,50 +149,50 @@ namespace cath {
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr index_type get_this_from_stride(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr index_type get_this_from_stride(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                 ) {
-				return get_this_from_strider( arg_roled_stride ).get_stride();
+				return get_this_from_strider( prm_roled_stride ).get_stride();
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr index_type get_this_to_stride(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr index_type get_this_to_stride(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                               ) {
-				return get_this_to_strider( arg_roled_stride ).get_stride();
+				return get_this_to_strider( prm_roled_stride ).get_stride();
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr index_type get_other_from_stride(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr index_type get_other_from_stride(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                  ) {
-				return get_other_from_strider( arg_roled_stride ).get_stride();
+				return get_other_from_strider( prm_roled_stride ).get_stride();
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates roled_scan_stride
-			inline constexpr index_type get_other_to_stride(const roled_scan_stride &arg_roled_stride ///< TODOCUMENT
+			inline constexpr index_type get_other_to_stride(const roled_scan_stride &prm_roled_stride ///< TODOCUMENT
 			                                                ) {
-				return get_other_to_strider( arg_roled_stride ).get_stride();
+				return get_other_to_strider( prm_roled_stride ).get_stride();
 			}
 
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates scan_stride
-			inline constexpr index_type from_co_stride(const roled_scan_stride &arg_roled_scan_stride ///< TODOCUMENT
+			inline constexpr index_type from_co_stride(const roled_scan_stride &prm_roled_scan_stride ///< TODOCUMENT
 			                                           ) {
-				return from_co_stride( arg_roled_scan_stride.get_scan_stride() );
+				return from_co_stride( prm_roled_scan_stride.get_scan_stride() );
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates scan_stride
-			inline constexpr index_type to_co_stride(const roled_scan_stride &arg_roled_scan_stride ///< TODOCUMENT
+			inline constexpr index_type to_co_stride(const roled_scan_stride &prm_roled_scan_stride ///< TODOCUMENT
 			                                         ) {
-				return to_co_stride( arg_roled_scan_stride.get_scan_stride() );
+				return to_co_stride( prm_roled_scan_stride.get_scan_stride() );
 			}
 
 		} // namespace detail

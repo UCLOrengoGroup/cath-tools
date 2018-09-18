@@ -53,52 +53,52 @@ using std::ostream;
 
 /// \brief Perform map-clusters according to the specified arguments strings with the specified i/o streams
 void cath::clust::perform_map_clusters(const str_vec       &args,             ///< The arguments strings specifying the map-clusters action to perform
-                                       istream             &arg_istream,      ///< The input stream
-                                       ostream             &arg_stdout,       ///< The output stream
-                                       ostream             &arg_stderr,       ///< The error stream
-                                       const parse_sources &arg_parse_sources ///< The sources from which options should be parsed
+                                       istream             &prm_istream,      ///< The input stream
+                                       ostream             &prm_stdout,       ///< The output stream
+                                       ostream             &prm_stderr,       ///< The error stream
+                                       const parse_sources &prm_parse_sources ///< The sources from which options should be parsed
                                        ) {
 	perform_map_clusters(
-		make_and_parse_options<clustmap_options>( args, arg_parse_sources ),
-		arg_istream,
-		arg_stdout,
-		arg_stderr
+		make_and_parse_options<clustmap_options>( args, prm_parse_sources ),
+		prm_istream,
+		prm_stdout,
+		prm_stderr
 	);
 }
 
 /// \brief Perform map-clusters according to the specified clustmap_options with the specified i/o streams
-void cath::clust::perform_map_clusters(const clustmap_options &arg_opts,    ///< The clustmap_options specifying the map-clusters action to perform
-                                       istream                &arg_istream, ///< The input stream
-                                       ostream                &arg_stdout,  ///< The output stream
-                                       ostream                &arg_stderr   ///< The error stream
+void cath::clust::perform_map_clusters(const clustmap_options &prm_opts,    ///< The clustmap_options specifying the map-clusters action to perform
+                                       istream                &prm_istream, ///< The input stream
+                                       ostream                &prm_stdout,  ///< The output stream
+                                       ostream                &prm_stderr   ///< The error stream
                                        ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto &error_or_help_string = arg_opts.get_error_or_help_string();
+	const auto &error_or_help_string = prm_opts.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << *error_or_help_string;
+		prm_stdout << *error_or_help_string;
 		return;
 	}
 
 	perform_map_clusters(
-		arg_opts.get_clustmap_input_spec(),
-		arg_opts.get_clust_mapping_spec(),
-		arg_opts.get_clustmap_output_spec(),
-		arg_istream,
-		arg_stdout,
-		arg_stderr
+		prm_opts.get_clustmap_input_spec(),
+		prm_opts.get_clust_mapping_spec(),
+		prm_opts.get_clustmap_output_spec(),
+		prm_istream,
+		prm_stdout,
+		prm_stderr
 	);
 }
 
 /// \brief Perform map-clusters according to the specified crh_spec with the specified i/o streams
-void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_spec,   ///< The clustmap_input_spec specifying the map-clusters action to perform
-                                       const clust_mapping_spec    &arg_mapping_spec, ///< The clustmap_mapping_spec specifying the map-clusters action to perform
-                                       const clustmap_output_spec  &arg_output_spec,  ///< The clustmap_output_spec specifying the map-clusters action to perform
-                                       istream                     &arg_istream,      ///< The input stream
-                                       ostream                     &arg_stdout,       ///< The output stream
-                                       ostream                     &arg_stderr        ///< The error stream
+void cath::clust::perform_map_clusters(const clustmap_input_spec   &prm_input_spec,   ///< The clustmap_input_spec specifying the map-clusters action to perform
+                                       const clust_mapping_spec    &prm_mapping_spec, ///< The clustmap_mapping_spec specifying the map-clusters action to perform
+                                       const clustmap_output_spec  &prm_output_spec,  ///< The clustmap_output_spec specifying the map-clusters action to perform
+                                       istream                     &prm_istream,      ///< The input stream
+                                       ostream                     &prm_stdout,       ///< The output stream
+                                       ostream                     &prm_stderr        ///< The error stream
                                        ) {
-	const path     &working_clustmemb_file  = arg_input_spec.get_working_clustmemb_file();
-	const bool     &read_batches_from_input = arg_input_spec.get_read_batches_from_input();
+	const path     &working_clustmemb_file  = prm_input_spec.get_working_clustmemb_file();
+	const bool     &read_batches_from_input = prm_input_spec.get_read_batches_from_input();
 
 	// Organise the input stream
 	if ( working_clustmemb_file != "-" && ! exists( working_clustmemb_file ) ) {
@@ -108,7 +108,7 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_sp
 		);
 	}
 
-	path_or_istream istream_wrapper{ arg_istream };
+	path_or_istream istream_wrapper{ prm_istream };
 	istream_wrapper.set_path( working_clustmemb_file ).get_istream();
 
 	const mapping_job_vec jobs = read_batches_from_input ? read_batch_mapping_file(
@@ -116,18 +116,18 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_sp
 	                                                     )
 	                                                     : mapping_job_vec{ {
 	                                                     	mapping_job{
-	                                                     		arg_output_spec.get_append_batch_id(),
+	                                                     		prm_output_spec.get_append_batch_id(),
 	                                                     		working_clustmemb_file,
-	                                                     		arg_input_spec.get_map_from_clustmemb_file()
+	                                                     		prm_input_spec.get_map_from_clustmemb_file()
 	                                                     	}
 	                                                     } };
 	istream_wrapper.close();
 
-	aggregate_map_results agg_results{ arg_mapping_spec };
+	aggregate_map_results agg_results{ prm_mapping_spec };
 
-	ofstream_list out_list{ arg_stdout };
+	ofstream_list out_list{ prm_stdout };
 	auto the_ostreams = out_list.open_ofstreams(
-		path_vec{ { arg_output_spec.get_output_to_file().value_or( out_list.get_flag() ) } }
+		path_vec{ { prm_output_spec.get_output_to_file().value_or( out_list.get_flag() ) } }
 	);
 
 	// \TODO Come C++17 and structured bindings, use here
@@ -140,22 +140,22 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_sp
 		id_of_str_bidirnl seq_ider;
 
 		auto &the_istream = istream_wrapper.set_path( job_new_clustmemb_file ).get_istream();
-		const new_cluster_data new_to_clusters = parse_new_membership( the_istream, seq_ider, ref( arg_stderr ) );
+		const new_cluster_data new_to_clusters = parse_new_membership( the_istream, seq_ider, ref( prm_stderr ) );
 		istream_wrapper.close();
 
 		const old_cluster_data_opt old_from_clusters = make_optional_if_fn(
 			static_cast<bool>( job_old_clustmemb_file ),
-			[&] { return parse_old_membership( *job_old_clustmemb_file, seq_ider, ref( arg_stderr )  ); }
+			[&] { return parse_old_membership( *job_old_clustmemb_file, seq_ider, ref( prm_stderr )  ); }
 		);
 
 		const auto results = map_clusters(
 			old_from_clusters,
 			new_to_clusters,
-			arg_mapping_spec,
-			make_optional_if( arg_output_spec.get_print_domain_mapping(), the_ostreams.front() )
+			prm_mapping_spec,
+			make_optional_if( prm_output_spec.get_print_domain_mapping(), the_ostreams.front() )
 		);
 
-		if ( ! arg_output_spec.get_print_domain_mapping() ) {
+		if ( ! prm_output_spec.get_print_domain_mapping() ) {
 			for (auto &the_ostream : the_ostreams) {
 				the_ostream.get() << results_string( old_from_clusters, new_to_clusters, results, job_batch_id, ( job_idx == 0 ) );
 				// the_ostream.get() << longer_results_string( old_from_clusters, new_to_clusters, results, job_batch_id );
@@ -167,7 +167,7 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &arg_input_sp
 		}
 	}
 
-	if ( arg_output_spec.get_summarise_to_file() ) {
-		write_markdown_summary_string_to_file( *arg_output_spec.get_summarise_to_file(), agg_results );
+	if ( prm_output_spec.get_summarise_to_file() ) {
+		write_markdown_summary_string_to_file( *prm_output_spec.get_summarise_to_file(), agg_results );
 	}
 }

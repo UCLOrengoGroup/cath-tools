@@ -59,8 +59,8 @@ namespace cath {
 
 			public:
 				/// \brief Ctor from cell_width
-				explicit constexpr axis_keyer_part(const value_t &arg_cell_width ///< The cell width to use in keying this part
-				                                   ) : cell_width( Spec::sanity_check_cell_width( arg_cell_width ) ) {
+				explicit constexpr axis_keyer_part(const value_t &prm_cell_width ///< The cell width to use in keying this part
+				                                   ) : cell_width( Spec::sanity_check_cell_width( prm_cell_width ) ) {
 				}
 
 				/// \brief Get a short name that describes this key part
@@ -69,51 +69,51 @@ namespace cath {
 				}
 
 				/// \brief Extract the relevant value from the specified res_pair
-				constexpr value_t get_value(const stored_t &arg_res_pair ///< The res_pair from which the relevant value should be extracted
+				constexpr value_t get_value(const stored_t &prm_res_pair ///< The res_pair from which the relevant value should be extracted
 				                            ) const {
-					return Spec::get_value( arg_res_pair );
+					return Spec::get_value( prm_res_pair );
 				}
 
 				/// \brief Extract the search radius from the specified criteria
-				constexpr search_radius_t get_search_radius(const criteria_t &arg_criteria   ///< The criteria defining what is considered a match
+				constexpr search_radius_t get_search_radius(const criteria_t &prm_criteria   ///< The criteria defining what is considered a match
 				                                            ) const {
-					return Spec::get_search_radius( arg_criteria  );
+					return Spec::get_search_radius( prm_criteria  );
 				}
 
 				/// \brief Generate the key part for the specified value
-				constexpr cell_index_t key_part(const value_t &arg_value ///< The value for which the key_part should be extracted
+				constexpr cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
 				                                ) const {
-					// return static_cast<cell_index_t>( common::constexpr_floor( arg_value / cell_width ) );
-					return static_cast<cell_index_t>( floor( arg_value / cell_width ) );
+					// return static_cast<cell_index_t>( common::constexpr_floor( prm_value / cell_width ) );
+					return static_cast<cell_index_t>( floor( prm_value / cell_width ) );
 				}
 
 				/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified value
 				///        within the specified search radius
-				cell_index_list_t close_key_parts(const value_t         &arg_value,        ///< The res_pair whose matches' key parts should be generated
-				                                  const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+				cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The res_pair whose matches' key parts should be generated
+				                                  const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 				                                  ) const {
 					return boost::irange(
-						min_close_key_part( arg_value, arg_search_radius ),
-						static_cast<cell_index_t>( max_close_key_part( arg_value, arg_search_radius ) + 1 )
+						min_close_key_part( prm_value, prm_search_radius ),
+						static_cast<cell_index_t>( max_close_key_part( prm_value, prm_search_radius ) + 1 )
 					);
 				}
 
 				/// \brief Generate the minimum key part within the specified search radius for the specified value
 				///
 				/// This is an extra that makes this usable for dense storing in a lattice
-				constexpr cell_index_t min_close_key_part(const value_t         &arg_value,        ///< The value for which the key_part should be extracted
-				                                          const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+				constexpr cell_index_t min_close_key_part(const value_t         &prm_value,        ///< The value for which the key_part should be extracted
+				                                          const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 				                                          ) const {
-					return key_part( arg_value - arg_search_radius );
+					return key_part( prm_value - prm_search_radius );
 				}
 
 				/// \brief Generate the maximum key part within the specified search radius for the specified value
 				///
 				/// This is an extra that makes this usable for dense storing in a lattice
-				constexpr cell_index_t max_close_key_part(const value_t         &arg_value,        ///< The value for which the key_part should be extracted
-				                                          const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+				constexpr cell_index_t max_close_key_part(const value_t         &prm_value,        ///< The value for which the key_part should be extracted
+				                                          const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 				                                          ) const {
-					return key_part( arg_value + arg_search_radius );
+					return key_part( prm_value + prm_search_radius );
 				}
 			};
 

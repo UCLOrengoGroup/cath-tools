@@ -38,17 +38,17 @@ using boost::filesystem::temp_directory_path;
 using boost::none;
 
 /// \brief Constructor for temp_file.
-temp_file::temp_file(const string &arg_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
-                     ) : filename( ! arg_filename_pattern.empty() ? path_opt( temp_filename_of_basename_pattern( arg_filename_pattern ) ) : none ) {
+temp_file::temp_file(const string &prm_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
+                     ) : filename( ! prm_filename_pattern.empty() ? path_opt( temp_filename_of_basename_pattern( prm_filename_pattern ) ) : none ) {
 }
 
 /// \brief A function to construct a temporary filename from a pattern.
-path temp_file::temp_filename_of_basename_pattern(const string &arg_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
+path temp_file::temp_filename_of_basename_pattern(const string &prm_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
                                                   ) {
-	if (path(arg_filename_pattern).has_parent_path()) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("temp_file pattern \"" + arg_filename_pattern + "\" should just be a basename, not a full path"));
+	if (path(prm_filename_pattern).has_parent_path()) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("temp_file pattern \"" + prm_filename_pattern + "\" should just be a basename, not a full path"));
 	}
-	return unique_path( temp_directory_path() / arg_filename_pattern );
+	return unique_path( temp_directory_path() / prm_filename_pattern );
 }
 
 /// \brief Destructor for temp_file
@@ -69,12 +69,12 @@ const path_opt & temp_file::get_opt_filename() const {
 }
 
 /// \brief TODOCUMENT
-bool cath::common::has_filename(const temp_file &arg_temp_file ///< TODOCUMENT
+bool cath::common::has_filename(const temp_file &prm_temp_file ///< TODOCUMENT
                                 ) {
-	return static_cast<bool>( arg_temp_file.get_opt_filename() );
+	return static_cast<bool>( prm_temp_file.get_opt_filename() );
 }
 /// \brief TODOCUMENT
-path cath::common::get_filename(const temp_file &arg_temp_file ///< TODOCUMENT
+path cath::common::get_filename(const temp_file &prm_temp_file ///< TODOCUMENT
                                 ) {
-	return *arg_temp_file.get_opt_filename();
+	return *prm_temp_file.get_opt_filename();
 }

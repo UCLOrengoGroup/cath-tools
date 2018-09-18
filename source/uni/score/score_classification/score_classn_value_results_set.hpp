@@ -88,15 +88,15 @@ namespace cath {
 			/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
 			/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
 			template <typename Set>
-			static auto get_score_classn_value_list_of_name_impl(Set               &arg_set, ///< TODOCUMENT
-			                                                     const std::string &arg_name ///< TODOCUMENT
-			                                                     ) -> decltype( arg_set.get_score_classn_value_list_of_name( arg_name ) ) {
+			static auto get_score_classn_value_list_of_name_impl(Set               &prm_set, ///< TODOCUMENT
+			                                                     const std::string &prm_name ///< TODOCUMENT
+			                                                     ) -> decltype( prm_set.get_score_classn_value_list_of_name( prm_name ) ) {
 				const auto found_itr = boost::range::lower_bound(
-					arg_set.score_classn_value_lists,
-					arg_name,
+					prm_set.score_classn_value_lists,
+					prm_name,
 					detail::score_classn_value_list_name_less{}
 				);
-				if ( found_itr == common::cend( arg_set.score_classn_value_lists ) || found_itr->get_name() != arg_name ) {
+				if ( found_itr == common::cend( prm_set.score_classn_value_lists ) || found_itr->get_name() != prm_name ) {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot find score_classn_value_list of name"));
 				}
 				return *found_itr;
@@ -185,12 +185,12 @@ namespace cath {
 		classn_stat_pair_series_list make_precision_recall_series_list(const score_classn_value_results_set &);
 
 		template <typename T>
-		classn_stat_pair_series_list make_standard_classn_stat_pair_series_list(const score_classn_value_results_set &arg_score_classn_value_results_set ///< TODOCUMENT
+		classn_stat_pair_series_list make_standard_classn_stat_pair_series_list(const score_classn_value_results_set &prm_score_classn_value_results_set ///< TODOCUMENT
 		                                                                        ) {
 			using first_classn_stat  = typename T::first_type;
 			using second_classn_stat = typename T::second_type;
 			return make_classn_stat_pair_series_list(
-				arg_score_classn_value_results_set,
+				prm_score_classn_value_results_set,
 				first_classn_stat(),
 				second_classn_stat()
 			);
@@ -202,15 +202,15 @@ namespace cath {
 		/// FN should take a single boost::filesystem::path and return optional<pair<bool, string>>,
 		/// representing files that should be processed with a bool indicating whether it's a positive instance and a label
 		template <typename FN>
-		score_classn_value_results_set read_from_dir(const boost::filesystem::path &arg_directory,                     ///< TODOCUMENT
-		                                             const FN                       arg_positive_and_label_of_filename ///< TODOCUMENT
+		score_classn_value_results_set read_from_dir(const boost::filesystem::path &prm_directory,                     ///< TODOCUMENT
+		                                             const FN                       prm_positive_and_label_of_filename ///< TODOCUMENT
 		                                             ) {
-			if ( ! boost::filesystem::is_directory( arg_directory ) ) {
+			if ( ! boost::filesystem::is_directory( prm_directory ) ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot read_from_dir() for non-directory path"));
 			}
 
 			const auto the_dir_range = boost::make_iterator_range(
-				boost::filesystem::directory_iterator( arg_directory ),
+				boost::filesystem::directory_iterator( prm_directory ),
 				boost::filesystem::directory_iterator(               )
 			);
 
@@ -219,7 +219,7 @@ namespace cath {
 			size_t file_ctr      = 0;
 			for (const auto &dir_entry : the_dir_range) {
 				const auto &the_filename       = dir_entry.path();
-				const auto  positive_and_label = arg_positive_and_label_of_filename( the_filename );
+				const auto  positive_and_label = prm_positive_and_label_of_filename( the_filename );
 				if ( positive_and_label ) {
 					std::cerr << "About to attempt to read file " << std::right << std::setw(6) << read_file_ctr << " / " << file_ctr << " : " << the_filename << std::endl;
 					const auto the_scores = score_value_reader::read( the_filename );

@@ -51,8 +51,8 @@ namespace cath {
 			using test_type_vec = std::vector<test_type>;
 
 			/// \brief TODOCUMENT
-			bool less_than_using_helper(const test_type &arg_helper_test_type_a, ///< TODOCUMENT
-			                            const test_type &arg_helper_test_type_b  ///< TODOCUMENT
+			bool less_than_using_helper(const test_type &prm_helper_test_type_a, ///< TODOCUMENT
+			                            const test_type &prm_helper_test_type_b  ///< TODOCUMENT
 			                            ) const;
 
 			/// \brief TODOCUMENT
@@ -61,10 +61,10 @@ namespace cath {
 		};
 
 		/// \brief TODOCUMENT
-		bool less_than_helper_test_suite_fixture::less_than_using_helper(const test_type &arg_helper_test_type_a, ///< TODOCUMENT
-		                                                                 const test_type &arg_helper_test_type_b  ///< TODOCUMENT
+		bool less_than_helper_test_suite_fixture::less_than_using_helper(const test_type &prm_helper_test_type_a, ///< TODOCUMENT
+		                                                                 const test_type &prm_helper_test_type_b  ///< TODOCUMENT
 		                                                                 ) const {
-			auto the_helper = make_less_than_helper( arg_helper_test_type_a, arg_helper_test_type_b );
+			auto the_helper = make_less_than_helper( prm_helper_test_type_a, prm_helper_test_type_b );
 			the_helper.register_comparison_field( [] (const test_type &x) { return get<0>( x ); } );
 			the_helper.register_comparison_field( [] (const test_type &x) { return get<1>( x ); } );
 			the_helper.register_comparison_field( [] (const test_type &x) { return get<2>( x ); } );

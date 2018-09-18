@@ -43,25 +43,25 @@ namespace cath {
 			/// - tries to open the file
 			/// - catches any failure and rethrows as a runtime_error_exception
 			template <typename fstream_t>
-			void open_fstream_impl(fstream_t                     &arg_fstream,     ///< TODOCUMENT
-			                       const boost::filesystem::path &arg_filename,    ///< TODOCUMENT
-			                       const std::ios_base::openmode &arg_mode,        ///< TODOCUMENT
-			                       const fstream_type            &arg_fstream_type ///< TODOCUMENT
+			void open_fstream_impl(fstream_t                     &prm_fstream,     ///< TODOCUMENT
+			                       const boost::filesystem::path &prm_filename,    ///< TODOCUMENT
+			                       const std::ios_base::openmode &prm_mode,        ///< TODOCUMENT
+			                       const fstream_type            &prm_fstream_type ///< TODOCUMENT
 			                       ) {
-				const bool is_reading                     = (arg_fstream_type == fstream_type::READING);
+				const bool is_reading                     = (prm_fstream_type == fstream_type::READING);
 				const std::string r_or_w_str              = is_reading ? "reading" : "writing";
 				const std::ios_base::iostate r_or_w_state = is_reading ? (                     std::ios::badbit )
 				                                                       : ( std::ios::failbit | std::ios::badbit );
-				arg_fstream.exceptions( r_or_w_state );
+				prm_fstream.exceptions( r_or_w_state );
 				try {
-					arg_fstream.open(arg_filename.string().c_str(), arg_mode);
+					prm_fstream.open(prm_filename.string().c_str(), prm_mode);
 				}
 				// Catch any I/O exceptions
 				catch (const std::exception &ex) {
-			//		const std::string reading_or_writing_str = (arg_fstream_type == FILE_READING) ? "reading" : "writing";
+			//		const std::string reading_or_writing_str = (prm_fstream_type == FILE_READING) ? "reading" : "writing";
 					const std::string error_message(
 						"Cannot open file \""
-						+ arg_filename.string()
+						+ prm_filename.string()
 						+ "\" for "
 						+ r_or_w_str
 						+ " ["
@@ -72,8 +72,8 @@ namespace cath {
 					BOOST_THROW_EXCEPTION(cath::common::runtime_error_exception(error_message));
 				};
 
-				assert(arg_fstream.is_open());
-				assert(arg_fstream.good());
+				assert(prm_fstream.is_open());
+				assert(prm_fstream.good());
 			}
 		} // namespace detail
 

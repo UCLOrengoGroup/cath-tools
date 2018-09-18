@@ -36,13 +36,13 @@ namespace cath {
 		///
 		/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
 		template <typename T>
-		void write_to_json_file(const boost::filesystem::path &arg_json_out_file,                  ///< TODOCUMENT
-		                        const T                       &arg_val,                            ///< The value to represent in the JSON string
-		                        const json_style              &arg_json_style = json_style::PRETTY ///< The style in which the JSON should be written
+		void write_to_json_file(const boost::filesystem::path &prm_json_out_file,                  ///< TODOCUMENT
+		                        const T                       &prm_val,                            ///< The value to represent in the JSON string
+		                        const json_style              &prm_json_style = json_style::PRETTY ///< The style in which the JSON should be written
 		                        ) {
 			std::ofstream json_file_ostream;
-			open_ofstream( json_file_ostream, arg_json_out_file );
-			json_file_ostream << to_json_string( arg_val, arg_json_style );
+			open_ofstream( json_file_ostream, prm_json_out_file );
+			json_file_ostream << to_json_string( prm_val, prm_json_style );
 			json_file_ostream << std::flush;
 			json_file_ostream.close();
 		}

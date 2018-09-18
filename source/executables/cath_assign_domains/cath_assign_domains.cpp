@@ -67,10 +67,10 @@ using boost::make_optional;
 namespace cath {
 
 	/// \brief Parse a file with each line containing two, whitespace-separated entries: the SSAP and PRC files
-	vector<pair<path, path> > parse_ssap_and_prc_files_data(const path &arg_filename ///< The file to parse
+	vector<pair<path, path> > parse_ssap_and_prc_files_data(const path &prm_filename ///< The file to parse
 	                                                        ) {
 		ifstream data_data_ifstream;
-		open_ifstream( data_data_ifstream, arg_filename );
+		open_ifstream( data_data_ifstream, prm_filename );
 
 		vector<pair<path, path> > data;
 		string line_string;
@@ -85,68 +85,68 @@ namespace cath {
 
 	/// \brief The query ID extracted from either SSAP or PRC results, whichever is non-empty
 	///        or boost::none if both are empty
-	str_opt query_id_of_either(const ssap_scores_entry_vec &arg_ssaps, ///< The possibly-empty SSAP results
-	                           const prc_scores_entry_vec  &arg_prcs   ///< The possibly-empty PRC  results
+	str_opt query_id_of_either(const ssap_scores_entry_vec &prm_ssaps, ///< The possibly-empty SSAP results
+	                           const prc_scores_entry_vec  &prm_prcs   ///< The possibly-empty PRC  results
 	                           ) {
-		return ( ! arg_prcs.empty()                   ) ? make_optional( arg_prcs.front().get_name_1()  ) :
-		       ( ! arg_ssaps.empty()                  ) ? make_optional( arg_ssaps.front().get_name_1() ) :
+		return ( ! prm_prcs.empty()                   ) ? make_optional( prm_prcs.front().get_name_1()  ) :
+		       ( ! prm_ssaps.empty()                  ) ? make_optional( prm_ssaps.front().get_name_1() ) :
 		                                                  boost::none;
 	}
 
 	/// \brief The query length extracted from either SSAP or PRC results, whichever is non-empty
 	///        or boost::none if both are empty
-	size_opt query_length_of_either(const ssap_scores_entry_vec &arg_ssaps, ///< The possibly-empty SSAP results
-	                                const prc_scores_entry_vec  &arg_prcs   ///< The possibly-empty PRC  results
+	size_opt query_length_of_either(const ssap_scores_entry_vec &prm_ssaps, ///< The possibly-empty SSAP results
+	                                const prc_scores_entry_vec  &prm_prcs   ///< The possibly-empty PRC  results
 	                                ) {
-		return ( ! arg_prcs.empty()                   ) ? make_optional( arg_prcs.front().get_length_1()  ) :
-		       ( ! arg_ssaps.empty()                  ) ? make_optional( arg_ssaps.front().get_length_1() ) :
+		return ( ! prm_prcs.empty()                   ) ? make_optional( prm_prcs.front().get_length_1()  ) :
+		       ( ! prm_ssaps.empty()                  ) ? make_optional( prm_ssaps.front().get_length_1() ) :
 		                                                  boost::none;
 	}
 
 	/// \brief Get the best specified number of PRC hits to domains in CATH
-	prc_scores_entry_vec best_n_prc_hits(const prc_scores_entry_vec  &arg_prcs,      ///< The PRC results for the query in question (the query must be entry 1 in all PRC results)
-	                                     const superfamily_of_domain &arg_sf_of_dom, ///< The superfamily_of_domain for finding which matches are assigned
-	                                     const size_t                &arg_n          ///< The maximum number of results to return
+	prc_scores_entry_vec best_n_prc_hits(const prc_scores_entry_vec  &prm_prcs,      ///< The PRC results for the query in question (the query must be entry 1 in all PRC results)
+	                                     const superfamily_of_domain &prm_sf_of_dom, ///< The superfamily_of_domain for finding which matches are assigned
+	                                     const size_t                &prm_n          ///< The maximum number of results to return
 	                                     ) {
 		return first_n_results_if(
-			arg_prcs,
+			prm_prcs,
 			[] (const prc_scores_entry &x, const prc_scores_entry &y) {
 				// Keep less-than inequality to put the smallest PRC evalues to the start
 				return x.get_evalue() < y.get_evalue();
 			},
 			[&] (const prc_scores_entry &x) {
-				return arg_sf_of_dom.has_superfamily_of_domain( x.get_name_2() );
+				return prm_sf_of_dom.has_superfamily_of_domain( x.get_name_2() );
 			},
-			arg_n
+			prm_n
 		);
 	}
 
 	/// \brief Get the best specified number of SSAP hits to domains in CATH
-	ssap_scores_entry_vec best_n_ssap_hits(const ssap_scores_entry_vec &arg_ssaps,     ///< The SSAP results for the query in question (the query must be entry 1 in all SSAP results)
-	                                       const superfamily_of_domain &arg_sf_of_dom, ///< The superfamily_of_domain for finding which matches are assigned
-	                                       const size_t                &arg_n          ///< The maximum number of results to return
+	ssap_scores_entry_vec best_n_ssap_hits(const ssap_scores_entry_vec &prm_ssaps,     ///< The SSAP results for the query in question (the query must be entry 1 in all SSAP results)
+	                                       const superfamily_of_domain &prm_sf_of_dom, ///< The superfamily_of_domain for finding which matches are assigned
+	                                       const size_t                &prm_n          ///< The maximum number of results to return
 	                                       ) {
 		return first_n_results_if(
-			arg_ssaps,
+			prm_ssaps,
 			[] (const ssap_scores_entry &x, const ssap_scores_entry &y) {
 				// Reverse inequality to put the highest SSAP scores to the start
 				return x.get_ssap_score() > y.get_ssap_score();
 			},
 			[&] (const ssap_scores_entry &x) {
-				return arg_sf_of_dom.has_superfamily_of_domain( x.get_name_2() );
+				return prm_sf_of_dom.has_superfamily_of_domain( x.get_name_2() );
 			},
-			arg_n
+			prm_n
 		);
 	}
 
 	/// \brief Return whether the specified CATH node is (in) one of the specified list of forbidden CATH nodes
-	bool node_is_forbidden(const string  &arg_query_node,     ///< The CATH node to query
-	                       const str_vec &arg_forbidden_nodes ///< The list of CATH nodes to which assignment is forbidden
+	bool node_is_forbidden(const string  &prm_query_node,     ///< The CATH node to query
+	                       const str_vec &prm_forbidden_nodes ///< The list of CATH nodes to which assignment is forbidden
 	                       ) {
 		return any_of(
-			arg_forbidden_nodes,
+			prm_forbidden_nodes,
 			[&] (const string &x) {
-				return starts_with( arg_query_node, x );
+				return starts_with( prm_query_node, x );
 			}
 		);
 	}
@@ -154,26 +154,26 @@ namespace cath {
 	/// \brief Generate Trac Wiki string describing a new fold result
 	///
 	/// ||=  Query Domain  =||=  Query Length  =||=  Best SSAP Hits  =||=  Best PRC Hits  =||
-	string string_for_new_fold_strings(const path                  &arg_ssap_file, ///< The file from which the SSAP results have been parsed
-	                                   const path                  &arg_prc_file,  ///< The file from which the PRC  results have been parsed
-	                                   const ssap_scores_entry_vec &arg_ssaps,     ///< The SSAP results
-	                                   const prc_scores_entry_vec  &arg_prcs,      ///< The PRC  results
-	                                   const superfamily_of_domain &arg_sf_of_dom  ///< The superfamily_of_domain information
+	string string_for_new_fold_strings(const path                  &prm_ssap_file, ///< The file from which the SSAP results have been parsed
+	                                   const path                  &prm_prc_file,  ///< The file from which the PRC  results have been parsed
+	                                   const ssap_scores_entry_vec &prm_ssaps,     ///< The SSAP results
+	                                   const prc_scores_entry_vec  &prm_prcs,      ///< The PRC  results
+	                                   const superfamily_of_domain &prm_sf_of_dom  ///< The superfamily_of_domain information
 	                                   ) {
 		constexpr size_t NUM_BEST_HITS = 6;
-		const auto query_id     = query_id_of_either    ( arg_ssaps, arg_prcs );
-		const auto query_length = query_length_of_either( arg_ssaps, arg_prcs );
+		const auto query_id     = query_id_of_either    ( prm_ssaps, prm_prcs );
+		const auto query_length = query_length_of_either( prm_ssaps, prm_prcs );
 		if ( ! query_id || ! query_length ) {
-			return "|| COMPLETELY EMPTY RESULTS FOR " + arg_ssap_file.string() + " and " + arg_prc_file.string() + "||";
+			return "|| COMPLETELY EMPTY RESULTS FOR " + prm_ssap_file.string() + " and " + prm_prc_file.string() + "||";
 		}
 
 		// Generate string describing this query's best SSAP hits
 		const auto best_ssap_strings = transform_build<str_vec>(
-			best_n_ssap_hits( arg_ssaps, arg_sf_of_dom, NUM_BEST_HITS ),
+			best_n_ssap_hits( prm_ssaps, prm_sf_of_dom, NUM_BEST_HITS ),
 			[&] (const ssap_scores_entry &x) {
 				const string &match_id   = x.get_name_2();
-				const string &match_sf   = arg_sf_of_dom.get_superfamily_of_domain( match_id );
-				const bool    created_sf = arg_sf_of_dom.is_in_created_sf         ( match_id );
+				const string &match_sf   = prm_sf_of_dom.get_superfamily_of_domain( match_id );
+				const bool    created_sf = prm_sf_of_dom.is_in_created_sf         ( match_id );
 				return match_id
 					+ "; SSAP:**" + ( boost::format( "%g") % x.get_ssap_score() ).str()
 					+ "**; O/L:**"  + ( boost::format( "%g") % x.get_overlap_pc() ).str()
@@ -185,11 +185,11 @@ namespace cath {
 
 		// Generate string describing this query's best PRC hits
 		const auto best_prc_strings = transform_build<str_vec>(
-			best_n_prc_hits( arg_prcs, arg_sf_of_dom, NUM_BEST_HITS ),
+			best_n_prc_hits( prm_prcs, prm_sf_of_dom, NUM_BEST_HITS ),
 			[&] (const prc_scores_entry &x) {
 				const string &match_id   = x.get_name_2();
-				const string &match_sf   = arg_sf_of_dom.get_superfamily_of_domain( match_id );
-				const bool    created_sf = arg_sf_of_dom.is_in_created_sf( match_id );
+				const string &match_sf   = prm_sf_of_dom.get_superfamily_of_domain( match_id );
+				const bool    created_sf = prm_sf_of_dom.is_in_created_sf( match_id );
 				return x.get_name_2()
 					+ "; PRC:**"  + ( boost::format( "%g") % x.get_evalue() ).str()
 					+ "**; **" + ( created_sf ? "" : "cathid:" ) + match_sf

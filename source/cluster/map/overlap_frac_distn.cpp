@@ -49,7 +49,7 @@ constexpr size_t overlap_frac_distn::num_gaps;
 constexpr size_t overlap_frac_distn::num_posns;
 
 /// \brief Find the index of the bin containing the i-th overlap fraction for specified i (where the overlap fractions are in ascending order)
-size_t overlap_frac_distn::find_index_of_nth(const size_t &arg_n ///< The index of the overlap fraction required
+size_t overlap_frac_distn::find_index_of_nth(const size_t &prm_n ///< The index of the overlap fraction required
                                              ) const {
 	size_t sum = 0;
 
@@ -60,7 +60,7 @@ size_t overlap_frac_distn::find_index_of_nth(const size_t &arg_n ///< The index 
 
 		if ( value > 0 ) {
 			sum += value;
-			if ( sum > arg_n ) {
+			if ( sum > prm_n ) {
 				return index;
 			}
 		}
@@ -69,16 +69,16 @@ size_t overlap_frac_distn::find_index_of_nth(const size_t &arg_n ///< The index 
 }
 
 /// \brief Get the number of overlap fractions that are in the specified [begin, end) half-open range
-size_t overlap_frac_distn::get_num_in_range(const double &arg_lower_fraction, ///< The lower fraction, which is inclusive
-                                            const double &arg_upper_fraction  ///< The upper fraction, which is exclusive and can go over 1
+size_t overlap_frac_distn::get_num_in_range(const double &prm_lower_fraction, ///< The lower fraction, which is inclusive
+                                            const double &prm_upper_fraction  ///< The upper fraction, which is exclusive and can go over 1
                                             ) const {
-	for (const double &fraction : { arg_lower_fraction, arg_upper_fraction  } ) {
+	for (const double &fraction : { prm_lower_fraction, prm_upper_fraction  } ) {
 		if ( ! boost::math::isfinite( fraction ) || fraction < 0.0 ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get num from overlap_frac_distn in range with invalid fraction"));
 		}
 	}
-	const auto lower_index = static_cast<size_t>( round( get_index_of_fraction( arg_lower_fraction ) ) );
-	const auto upper_index = static_cast<size_t>( round( get_index_of_fraction( arg_upper_fraction ) ) );
+	const auto lower_index = static_cast<size_t>( round( get_index_of_fraction( prm_lower_fraction ) ) );
+	const auto upper_index = static_cast<size_t>( round( get_index_of_fraction( prm_upper_fraction ) ) );
 
 	return accumulate(
 		next( common::cbegin( *this ), static_cast<ptrdiff_t>( min( num_posns, lower_index ) ) ),
@@ -88,14 +88,14 @@ size_t overlap_frac_distn::get_num_in_range(const double &arg_lower_fraction, //
 }
 
 /// \brief Get the number at the specified fraction
-size_t overlap_frac_distn::get_num_at_fraction(const double &arg_fraction ///< The fraction to query
+size_t overlap_frac_distn::get_num_at_fraction(const double &prm_fraction ///< The fraction to query
                                                ) const {
-	if ( ! boost::math::isfinite( arg_fraction ) || arg_fraction < 0.0 || arg_fraction > 1.0 ) {
+	if ( ! boost::math::isfinite( prm_fraction ) || prm_fraction < 0.0 || prm_fraction > 1.0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get_num_at_fraction() from overlap_frac_distn with invalid fraction"));
 	}
 	return *next(
 		common::cbegin( *this ),
-		static_cast<ptrdiff_t>( round( get_index_of_fraction( arg_fraction ) ) )
+		static_cast<ptrdiff_t>( round( get_index_of_fraction( prm_fraction ) ) )
 	);
 }
 
@@ -103,10 +103,10 @@ size_t overlap_frac_distn::get_num_at_fraction(const double &arg_fraction ///< T
 ///
 /// This uses the nearest-rank percentile (that does no interpolation and just takes the value at the i-th place
 /// where i = ceil( P / 100 * N )
-double overlap_frac_distn::get_frac_at_percentile(const double        &arg_percentile,   ///< The percentile to look for
-                                                  const zeroes_policy &arg_zeroes_policy ///< Whether to exclude any zero overlap fractions from calculations
+double overlap_frac_distn::get_frac_at_percentile(const double        &prm_percentile,   ///< The percentile to look for
+                                                  const zeroes_policy &prm_zeroes_policy ///< Whether to exclude any zero overlap fractions from calculations
                                                   ) const {
-	const size_t zeroes_offset = ( arg_zeroes_policy == zeroes_policy::EXCLUDE )
+	const size_t zeroes_offset = ( prm_zeroes_policy == zeroes_policy::EXCLUDE )
 	                             ? fraction_counts.front()
 	                             : 0_z;
 	const size_t num_fractions = size() - zeroes_offset;
@@ -114,7 +114,7 @@ double overlap_frac_distn::get_frac_at_percentile(const double        &arg_perce
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get_frac_at_percentile on an unpopulated overlap_frac_distn (after zeroes removed if requested)"));
 	}
 
-	const size_t nth = max( 1_z, static_cast<size_t>( ceil( arg_percentile / 100.0 * static_cast<double>( num_fractions ) ) ) ) - 1_z;
+	const size_t nth = max( 1_z, static_cast<size_t>( ceil( prm_percentile / 100.0 * static_cast<double>( num_fractions ) ) ) ) - 1_z;
 
 	return get_fraction_of_index( find_index_of_nth( nth + zeroes_offset ) );
 }
@@ -122,22 +122,22 @@ double overlap_frac_distn::get_frac_at_percentile(const double        &arg_perce
 /// \brief Get the number in the specified half open-closed range
 ///
 /// \relates overlap_frac_distn
-size_t cath::clust::get_num_in_open_closed_range(const overlap_frac_distn &arg_overlap_frac_distn, ///< The overlap_frac_distn to query
-                                                 const double             &arg_lower_fraction,     ///< The lower fraction, which is exclusive
-                                                 const double             &arg_upper_fraction      ///< The upper fraction, which is inclusive
+size_t cath::clust::get_num_in_open_closed_range(const overlap_frac_distn &prm_overlap_frac_distn, ///< The overlap_frac_distn to query
+                                                 const double             &prm_lower_fraction,     ///< The lower fraction, which is exclusive
+                                                 const double             &prm_upper_fraction      ///< The upper fraction, which is inclusive
                                                  ) {
-	return arg_overlap_frac_distn.get_num_in_range( arg_lower_fraction, arg_upper_fraction )
-		- arg_overlap_frac_distn.get_num_at_fraction( arg_lower_fraction )
-		+ arg_overlap_frac_distn.get_num_at_fraction( arg_upper_fraction );
+	return prm_overlap_frac_distn.get_num_in_range( prm_lower_fraction, prm_upper_fraction )
+		- prm_overlap_frac_distn.get_num_at_fraction( prm_lower_fraction )
+		+ prm_overlap_frac_distn.get_num_at_fraction( prm_upper_fraction );
 }
 
 /// \brief Build a overlap_frac_distn from the specified list of overlap fractions
 ///
 /// \relates overlap_frac_distn
-overlap_frac_distn cath::clust::build_overlap_frac_distn_from_overlap_fractions(const doub_vec &arg_overlap_fractions ///< The list of overlap fractions from which to populate the new overlap_frac_distn
+overlap_frac_distn cath::clust::build_overlap_frac_distn_from_overlap_fractions(const doub_vec &prm_overlap_fractions ///< The list of overlap fractions from which to populate the new overlap_frac_distn
                                                                                 ) {
 	overlap_frac_distn result;
-	for (const double &overlap_fraction : arg_overlap_fractions) {
+	for (const double &overlap_fraction : prm_overlap_fractions) {
 		result.add_overlap_fraction( overlap_fraction );
 	}
 	return result;
@@ -146,14 +146,14 @@ overlap_frac_distn cath::clust::build_overlap_frac_distn_from_overlap_fractions(
 /// \brief Generate percentile data for the specified overlap_frac_distn at the specified percentile points
 ///
 /// \relates overlap_frac_distn
-doub_doub_pair_vec cath::clust::percentile_data(const overlap_frac_distn                &arg_overlap_frac_distn, ///< The overlap_frac_distn to query
-                                                const doub_vec                          &arg_percentiles,        ///< The percentile points to calculate values for (eg median is 50.0)
-                                                const overlap_frac_distn::zeroes_policy &arg_zeroes_policy       ///< Whether to exclude any zero overlap fractions from calculations
+doub_doub_pair_vec cath::clust::percentile_data(const overlap_frac_distn                &prm_overlap_frac_distn, ///< The overlap_frac_distn to query
+                                                const doub_vec                          &prm_percentiles,        ///< The percentile points to calculate values for (eg median is 50.0)
+                                                const overlap_frac_distn::zeroes_policy &prm_zeroes_policy       ///< Whether to exclude any zero overlap fractions from calculations
                                                 ) {
 	return transform_build<doub_doub_pair_vec>(
-		arg_percentiles,
+		prm_percentiles,
 		[&] (const double &percentile) -> doub_doub_pair {
-			return { percentile, 100.0 * arg_overlap_frac_distn.get_frac_at_percentile( percentile, arg_zeroes_policy ) };
+			return { percentile, 100.0 * prm_overlap_frac_distn.get_frac_at_percentile( percentile, prm_zeroes_policy ) };
 		}
 	);
 }
@@ -161,28 +161,28 @@ doub_doub_pair_vec cath::clust::percentile_data(const overlap_frac_distn        
 /// \brief Generate a Markdown table of percentile data for the specified overlap_frac_distn at the specified percentile points
 ///
 /// \relates overlap_frac_distn
-string cath::clust::percentile_markdown_table(const overlap_frac_distn                &arg_overlap_frac_distn, ///< The overlap_frac_distn to query
-                                              const doub_vec                          &arg_percentiles,        ///< The percentile points to calculate values for (eg median is 50.0)
-                                              const string                            &arg_percentile_title,   ///< The title for the percentiles column
-                                              const string                            &arg_value_title,        ///< The title for the values column
-                                              const overlap_frac_distn::zeroes_policy &arg_zeroes_policy       ///< Whether to exclude any zero overlap fractions from calculations
+string cath::clust::percentile_markdown_table(const overlap_frac_distn                &prm_overlap_frac_distn, ///< The overlap_frac_distn to query
+                                              const doub_vec                          &prm_percentiles,        ///< The percentile points to calculate values for (eg median is 50.0)
+                                              const string                            &prm_percentile_title,   ///< The title for the percentiles column
+                                              const string                            &prm_value_title,        ///< The title for the values column
+                                              const overlap_frac_distn::zeroes_policy &prm_zeroes_policy       ///< Whether to exclude any zero overlap fractions from calculations
                                               ) {
 	using std::to_string;
 
-	const doub_doub_pair_vec data = percentile_data( arg_overlap_frac_distn, arg_percentiles, arg_zeroes_policy );
-	return "| " + arg_percentile_title + " | " + arg_value_title + " |\n"
-		+ "|" + string( 2 + arg_percentile_title.length(), '-' )
+	const doub_doub_pair_vec data = percentile_data( prm_overlap_frac_distn, prm_percentiles, prm_zeroes_policy );
+	return "| " + prm_percentile_title + " | " + prm_value_title + " |\n"
+		+ "|" + string( 2 + prm_percentile_title.length(), '-' )
 		// + "--------------------------------------------------------"
-		+ "|" + string( 2 + arg_value_title.length(),      '-' )
+		+ "|" + string( 2 + prm_value_title.length(),      '-' )
 		+ "|"
 		+ join(
 			data
 				| transformed( [&] (const doub_doub_pair &x) {
 					return
 						  "\n| "
-						+ ( format( R"(%)" + to_string( arg_percentile_title.length() ) + "d" ) % x.first  ).str()
+						+ ( format( R"(%)" + to_string( prm_percentile_title.length() ) + "d" ) % x.first  ).str()
 						+ " |"
-						+ ( format( R"(%)" + to_string( arg_value_title.length()      ) + "d" ) % x.second ).str()
+						+ ( format( R"(%)" + to_string( prm_value_title.length()      ) + "d" ) % x.second ).str()
 						+ R"(% |)";
 				} ),
 			""
@@ -193,22 +193,22 @@ string cath::clust::percentile_markdown_table(const overlap_frac_distn          
 ///        number of domains that mapped at 0% with nothing on the parent sequence
 ///
 /// \relates overlap_frac_distn
-str_size_doub_tpl_vec cath::clust::histogram_data(const overlap_frac_distn &arg_overlap_frac_distn,        ///< The overlap_frac_distn to query
-                                                  const size_t             &arg_num_with_nothing_on_parent ///< The number of domains that mapped at 0% with nothing on the parent sequence
+str_size_doub_tpl_vec cath::clust::histogram_data(const overlap_frac_distn &prm_overlap_frac_distn,        ///< The overlap_frac_distn to query
+                                                  const size_t             &prm_num_with_nothing_on_parent ///< The number of domains that mapped at 0% with nothing on the parent sequence
                                                   ) {
 	using std::to_string;
 
-	const size_t total       = arg_overlap_frac_distn.size();
-	const size_t num_at_zero = arg_overlap_frac_distn.get_num_at_fraction( 0.0 );
+	const size_t total       = prm_overlap_frac_distn.size();
+	const size_t num_at_zero = prm_overlap_frac_distn.get_num_at_fraction( 0.0 );
 
-	if ( arg_num_with_nothing_on_parent > num_at_zero || num_at_zero > total ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("The number at zero is incompatible with the arg_num_with_nothing_on_parent or total"));
+	if ( prm_num_with_nothing_on_parent > num_at_zero || num_at_zero > total ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("The number at zero is incompatible with the prm_num_with_nothing_on_parent or total"));
 	}
 
 	str_size_pair_vec results = { {
 		str_size_pair{ R"(All)",                                        total                                        },
-		             { R"(0% (with no other match on the sequence))",   arg_num_with_nothing_on_parent               },
-		             { R"(0% (with some other match on the sequence))", num_at_zero - arg_num_with_nothing_on_parent },
+		             { R"(0% (with no other match on the sequence))",   prm_num_with_nothing_on_parent               },
+		             { R"(0% (with some other match on the sequence))", num_at_zero - prm_num_with_nothing_on_parent },
 	} };
 
 	for (const size_t &frac_tenth : indices( 10_z ) ) {
@@ -218,7 +218,7 @@ str_size_doub_tpl_vec cath::clust::histogram_data(const overlap_frac_distn &arg_
 		const double range_frac_end   = static_cast<double>( range_pc_end   ) / 100.0;
 		results.emplace_back(
 			to_string( range_pc_begin ) + R"(% < x <= )" + to_string( range_pc_end ) + R"(%)",
-			get_num_in_open_closed_range( arg_overlap_frac_distn, range_frac_begin, range_frac_end )
+			get_num_in_open_closed_range( prm_overlap_frac_distn, range_frac_begin, range_frac_end )
 		);
 	}
 
@@ -233,15 +233,15 @@ str_size_doub_tpl_vec cath::clust::histogram_data(const overlap_frac_distn &arg_
 /// \brief Generate a Markdown histogram string for the specified overlap_frac_distn
 ///
 /// \relates overlap_frac_distn
-string cath::clust::histogram_markdown_table(const overlap_frac_distn &arg_overlap_frac_distn,        ///< The overlap_frac_distn to query
-                                             const string             &arg_range_title,               ///< The title for the range column
-                                             const string             &arg_value_title,               ///< The title for the values column
-                                             const string             &arg_percent_title,             ///< The title for the percent column
-                                             const size_t             &arg_num_with_nothing_on_parent ///< The number of domains that mapped at 0% with nothing on the parent sequence
+string cath::clust::histogram_markdown_table(const overlap_frac_distn &prm_overlap_frac_distn,        ///< The overlap_frac_distn to query
+                                             const string             &prm_range_title,               ///< The title for the range column
+                                             const string             &prm_value_title,               ///< The title for the values column
+                                             const string             &prm_percent_title,             ///< The title for the percent column
+                                             const size_t             &prm_num_with_nothing_on_parent ///< The number of domains that mapped at 0% with nothing on the parent sequence
                                              ) {
 	using std::to_string;
 
-	const auto data = histogram_data( arg_overlap_frac_distn, arg_num_with_nothing_on_parent );
+	const auto data = histogram_data( prm_overlap_frac_distn, prm_num_with_nothing_on_parent );
 
 	const size_t longest_first_col_length = data.empty()
 		? 0_z
@@ -254,13 +254,13 @@ string cath::clust::histogram_markdown_table(const overlap_frac_distn &arg_overl
 		);
 
 	return
-		  "| "  + ( format( R"(%)" + to_string( longest_first_col_length ) + "s"   ) % arg_range_title ).str()
-		+ " | " + arg_value_title
-		+ " | " + arg_percent_title
+		  "| "  + ( format( R"(%)" + to_string( longest_first_col_length ) + "s"   ) % prm_range_title ).str()
+		+ " | " + prm_value_title
+		+ " | " + prm_percent_title
 		+ " |\n"
 		+ "|-"  + string( longest_first_col_length,   '-' )
-		+ "-|-" + string( arg_value_title.length(),   '-' )
-		+ "-|-" + string( arg_percent_title.length(), '-' )
+		+ "-|-" + string( prm_value_title.length(),   '-' )
+		+ "-|-" + string( prm_percent_title.length(), '-' )
 		+ "-|"
 		+ join(
 			data
@@ -269,9 +269,9 @@ string cath::clust::histogram_markdown_table(const overlap_frac_distn &arg_overl
 						  "\n| "
 						+ ( format( R"(%)" + to_string( longest_first_col_length   ) + "s"   ) % get<0>( x ) ).str()
 						+ " | "
-						+ ( format( R"(%)" + to_string( arg_value_title.length()   ) + "d"   ) % get<1>( x ) ).str()
+						+ ( format( R"(%)" + to_string( prm_value_title.length()   ) + "d"   ) % get<1>( x ) ).str()
 						+ " |"
-						+ ( format( R"(%)" + to_string( arg_percent_title.length() ) + ".3g" ) % get<2>( x ) ).str()
+						+ ( format( R"(%)" + to_string( prm_percent_title.length() ) + ".3g" ) % get<2>( x ) ).str()
 						+ R"(% |)";
 				} ),
 			""

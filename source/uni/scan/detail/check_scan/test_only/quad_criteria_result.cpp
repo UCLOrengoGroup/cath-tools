@@ -29,9 +29,9 @@ using namespace std;
 /// \brief TODOCUMENT
 ///
 /// \relates quad_criteria_result
-string cath::scan::detail::to_string(const quad_criteria_result &arg_crit_res ///< TODOCUMENT
+string cath::scan::detail::to_string(const quad_criteria_result &prm_crit_res ///< TODOCUMENT
                                      ) {
-	switch ( arg_crit_res ) {
+	switch ( prm_crit_res ) {
 		case ( quad_criteria_result::PASS                      ) : { return { "PASS"                      }; }
 		case ( quad_criteria_result::QUERY_FAILS_SINGLE_CHECKS ) : { return { "QUERY_FAILS_SINGLE_CHECKS" }; }
 		case ( quad_criteria_result::INDEX_FAILS_SINGLE_CHECKS ) : { return { "INDEX_FAILS_SINGLE_CHECKS" }; }
@@ -48,9 +48,9 @@ string cath::scan::detail::to_string(const quad_criteria_result &arg_crit_res //
 /// \brief TODOCUMENT
 ///
 /// \relates quad_criteria_result
-ostream & cath::scan::detail::operator<<(ostream                    &arg_os,      ///< TODOCUMENT
-                                         const quad_criteria_result &arg_crit_res ///< TODOCUMENT
+ostream & cath::scan::detail::operator<<(ostream                    &prm_os,      ///< TODOCUMENT
+                                         const quad_criteria_result &prm_crit_res ///< TODOCUMENT
                                          ) {
-	arg_os << to_string( arg_crit_res );
-	return arg_os;
+	prm_os << to_string( prm_crit_res );
+	return prm_os;
 }

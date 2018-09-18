@@ -44,24 +44,24 @@ using boost::lexical_cast;
 using boost::token_compress_on;
 
 /// \brief Ctor from a map of pairs of labels to is_positive bools
-label_pair_is_positive::label_pair_is_positive(str_str_pair_bool_map arg_positive_of_label_pairs ///< A map of pairs of labels to is_positive bools from which to construct this label_pair_is_positive
-                                               ) : all_pairs { std::move( arg_positive_of_label_pairs ) } {
+label_pair_is_positive::label_pair_is_positive(str_str_pair_bool_map prm_positive_of_label_pairs ///< A map of pairs of labels to is_positive bools from which to construct this label_pair_is_positive
+                                               ) : all_pairs { std::move( prm_positive_of_label_pairs ) } {
 
 }
 
 /// \brief Query whether a given pair is positive
 ///
 /// \pre An entry should be stored for the specified pair else an invalid_argument_exception will be thrown
-bool label_pair_is_positive::is_positive(const string &arg_label_a, ///< The first  label to query
-                                         const string &arg_label_b  ///< The second label to query
+bool label_pair_is_positive::is_positive(const string &prm_label_a, ///< The first  label to query
+                                         const string &prm_label_b  ///< The second label to query
                                          ) const {
-	const auto find_itr = all_pairs.find( make_pair( arg_label_a, arg_label_b ) );
+	const auto find_itr = all_pairs.find( make_pair( prm_label_a, prm_label_b ) );
 	if ( find_itr == common::cend( all_pairs ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Unable to find label pair \""
-			+ arg_label_a
+			+ prm_label_a
 			+ "\", \""
-			+ arg_label_b
+			+ prm_label_b
 			+ "\" in label_pair_is_positive"
 		));
 	}
@@ -71,11 +71,11 @@ bool label_pair_is_positive::is_positive(const string &arg_label_a, ///< The fir
 /// \brief Parse a label_pair_is_positive from an istream that has one line per entry, each with two labels and a true/false or 1/0
 ///
 /// \relates label_pair_is_positive
-label_pair_is_positive cath::score::make_label_pair_is_positive(istream &arg_input_text ///< The istream of data from which to parse the label_pair_is_positive
+label_pair_is_positive cath::score::make_label_pair_is_positive(istream &prm_input_text ///< The istream of data from which to parse the label_pair_is_positive
                                                                 ) {
 	string                line_string;
 	str_str_pair_bool_map results;
-	while ( getline( arg_input_text, line_string ) ) {
+	while ( getline( prm_input_text, line_string ) ) {
 		// If this line isn't empty...
 		trim_left( line_string );
 		if ( ! line_string.empty() ) {
@@ -94,10 +94,10 @@ label_pair_is_positive cath::score::make_label_pair_is_positive(istream &arg_inp
 /// \brief Parse a label_pair_is_positive from a file that has one line per entry, each with two labels and a true/false or 1/0
 ///
 /// \relates label_pair_is_positive
-label_pair_is_positive cath::score::make_label_pair_is_positive(const path &arg_input_file ///< The file of data from which to parse the label_pair_is_positive
+label_pair_is_positive cath::score::make_label_pair_is_positive(const path &prm_input_file ///< The file of data from which to parse the label_pair_is_positive
                                                                 ) {
 	ifstream ssap_scores_ifstream;
-	open_ifstream( ssap_scores_ifstream, arg_input_file );
+	open_ifstream( ssap_scores_ifstream, prm_input_file );
 	const auto the_label_pair_is_positive = make_label_pair_is_positive(ssap_scores_ifstream);
 	ssap_scores_ifstream.close();
 	return the_label_pair_is_positive;

@@ -31,19 +31,19 @@ namespace cath {
 		///
 		/// This is the default template implementation that just calls std::to_string().
 		template <typename T>
-		inline std::string booled_to_string(const T &arg_value ///< The value to be converted to a string
+		inline std::string booled_to_string(const T &prm_value ///< The value to be converted to a string
 		                                    ) {
-			return std::to_string( arg_value );
+			return std::to_string( prm_value );
 		}
 
 		/// \brief Specialisation to return a "true"/false" string for a bool
 		///
 		/// This uses std::boolalpha on a std::ostringstream.
 		template <>
-		inline std::string booled_to_string<bool>(const bool &arg_value ///< The bool value to be converted to a string
+		inline std::string booled_to_string<bool>(const bool &prm_value ///< The bool value to be converted to a string
 		                                          ) {
 			std::ostringstream out_ss;
-			out_ss << std::boolalpha << arg_value;
+			out_ss << std::boolalpha << prm_value;
 			return out_ss.str();
 		}
 

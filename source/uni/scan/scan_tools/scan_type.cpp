@@ -29,10 +29,10 @@ using namespace cath::scan;
 using namespace std;
 
 /// \brief TODOCUMENT
-pair<record_scores_scan_action, scan_metrics> scan_type::perform_scan(const protein_list &arg_query_protein_list, ///< TODOCUMENT
-                                                                      const protein_list &arg_match_protein_list  ///< TODOCUMENT
+pair<record_scores_scan_action, scan_metrics> scan_type::perform_scan(const protein_list &prm_query_protein_list, ///< TODOCUMENT
+                                                                      const protein_list &prm_match_protein_list  ///< TODOCUMENT
                                                                       ) {
-	return do_perform_scan( arg_query_protein_list, arg_match_protein_list );
+	return do_perform_scan( prm_query_protein_list, prm_match_protein_list );
 }
 
 /// \brief Standard approach to achieving a virtual copy-ctor

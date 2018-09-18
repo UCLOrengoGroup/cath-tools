@@ -25,7 +25,7 @@ using namespace cath::chop;
 using std::string;
 
 /// \brief TODOCUMENT
-string region_writer::write_region(const region &arg_region ///< TODOCUMENT
+string region_writer::write_region(const region &prm_region ///< TODOCUMENT
                                    ) const {
-	return do_write_region( arg_region );
+	return do_write_region( prm_region );
 }

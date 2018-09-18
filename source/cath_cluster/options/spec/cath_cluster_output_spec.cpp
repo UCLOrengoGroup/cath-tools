@@ -65,51 +65,51 @@ const path_opt & cath_cluster_output_spec::get_sorted_links_to_file() const {
 }
 
 /// \brief Setter for an optional file to which clusters should be written
-cath_cluster_output_spec & cath_cluster_output_spec::set_clusters_to_file(const path_opt &arg_clusters_to_file ///< An optional file to which clusters should be written
+cath_cluster_output_spec & cath_cluster_output_spec::set_clusters_to_file(const path_opt &prm_clusters_to_file ///< An optional file to which clusters should be written
                                                                           ) {
-	clusters_to_file = arg_clusters_to_file;
+	clusters_to_file = prm_clusters_to_file;
 	return *this;
 }
 
 /// \brief Setter for an optional file to which merges should be written
-cath_cluster_output_spec & cath_cluster_output_spec::set_merges_to_file(const path_opt &arg_merges_to_file ///< An optional file to which merges should be written
+cath_cluster_output_spec & cath_cluster_output_spec::set_merges_to_file(const path_opt &prm_merges_to_file ///< An optional file to which merges should be written
                                                                         ) {
-	merges_to_file = arg_merges_to_file;
+	merges_to_file = prm_merges_to_file;
 	return *this;
 }
 
 /// \brief Setter for an optional file to which clust_spans should be written
-cath_cluster_output_spec & cath_cluster_output_spec::set_clust_spans_to_file(const path_opt &arg_clust_spans_to_file ///< An optional file to which clust_spans should be written
+cath_cluster_output_spec & cath_cluster_output_spec::set_clust_spans_to_file(const path_opt &prm_clust_spans_to_file ///< An optional file to which clust_spans should be written
                                                                              ) {
-	clust_spans_to_file = arg_clust_spans_to_file;
+	clust_spans_to_file = prm_clust_spans_to_file;
 	return *this;
 }
 
 /// \brief Setter for an optional file to which reps should be written
-cath_cluster_output_spec & cath_cluster_output_spec::set_reps_to_file(const path_opt &arg_reps_to_file ///< An optional file to which reps should be written
+cath_cluster_output_spec & cath_cluster_output_spec::set_reps_to_file(const path_opt &prm_reps_to_file ///< An optional file to which reps should be written
                                                                       ) {
-	reps_to_file = arg_reps_to_file;
+	reps_to_file = prm_reps_to_file;
 	return *this;
 }
 
 /// \brief Setter for an optional file to which sorted_links should be written
-cath_cluster_output_spec & cath_cluster_output_spec::set_sorted_links_to_file(const path_opt &arg_sorted_links_to_file ///< An optional file to which sorted_links should be written
+cath_cluster_output_spec & cath_cluster_output_spec::set_sorted_links_to_file(const path_opt &prm_sorted_links_to_file ///< An optional file to which sorted_links should be written
                                                                               ) {
-	sorted_links_to_file = arg_sorted_links_to_file;
+	sorted_links_to_file = prm_sorted_links_to_file;
 	return *this;
 }
 
 /// \brief Get the number of output paths implied by the specified cath_cluster_output_spec
 ///
 /// \relates cath_cluster_output_spec
-size_t cath::clust::get_num_output_paths(const cath_cluster_output_spec &arg_output_spec ///< The cath_cluster_output_spec to query
+size_t cath::clust::get_num_output_paths(const cath_cluster_output_spec &prm_output_spec ///< The cath_cluster_output_spec to query
                                          ) {
 	const auto file_presences = make_array(
-		static_cast<bool>( arg_output_spec.get_clusters_to_file    () ),
-		static_cast<bool>( arg_output_spec.get_merges_to_file      () ),
-		static_cast<bool>( arg_output_spec.get_clust_spans_to_file () ),
-		static_cast<bool>( arg_output_spec.get_reps_to_file        () ),
-		static_cast<bool>( arg_output_spec.get_sorted_links_to_file() )
+		static_cast<bool>( prm_output_spec.get_clusters_to_file    () ),
+		static_cast<bool>( prm_output_spec.get_merges_to_file      () ),
+		static_cast<bool>( prm_output_spec.get_clust_spans_to_file () ),
+		static_cast<bool>( prm_output_spec.get_reps_to_file        () ),
+		static_cast<bool>( prm_output_spec.get_sorted_links_to_file() )
 	);
 	return static_cast<size_t>( count( file_presences, true ) );
 }
@@ -117,23 +117,23 @@ size_t cath::clust::get_num_output_paths(const cath_cluster_output_spec &arg_out
 /// \brief Get all output paths implied by the specified cath_cluster_output_spec
 ///
 /// \relates cath_cluster_output_spec
-path_vec cath::clust::get_all_output_paths(const cath_cluster_output_spec &arg_output_spec ///< The cath_cluster_output_spec to query
+path_vec cath::clust::get_all_output_paths(const cath_cluster_output_spec &prm_output_spec ///< The cath_cluster_output_spec to query
                                            ) {
 	path_vec the_paths;
-	if ( arg_output_spec.get_clusters_to_file() ) {
-		the_paths.push_back( *arg_output_spec.get_clusters_to_file() );
+	if ( prm_output_spec.get_clusters_to_file() ) {
+		the_paths.push_back( *prm_output_spec.get_clusters_to_file() );
 	}
-	if ( arg_output_spec.get_merges_to_file() ) {
-		the_paths.push_back( *arg_output_spec.get_merges_to_file() );
+	if ( prm_output_spec.get_merges_to_file() ) {
+		the_paths.push_back( *prm_output_spec.get_merges_to_file() );
 	}
-	if ( arg_output_spec.get_clust_spans_to_file() ) {
-		the_paths.push_back( *arg_output_spec.get_clust_spans_to_file() );
+	if ( prm_output_spec.get_clust_spans_to_file() ) {
+		the_paths.push_back( *prm_output_spec.get_clust_spans_to_file() );
 	}
-	if ( arg_output_spec.get_reps_to_file() ) {
-		the_paths.push_back( *arg_output_spec.get_reps_to_file() );
+	if ( prm_output_spec.get_reps_to_file() ) {
+		the_paths.push_back( *prm_output_spec.get_reps_to_file() );
 	}
-	if ( arg_output_spec.get_sorted_links_to_file() ) {
-		the_paths.push_back( *arg_output_spec.get_sorted_links_to_file() );
+	if ( prm_output_spec.get_sorted_links_to_file() ) {
+		the_paths.push_back( *prm_output_spec.get_sorted_links_to_file() );
 	}
 	return the_paths;
 }
@@ -142,10 +142,10 @@ path_vec cath::clust::get_all_output_paths(const cath_cluster_output_spec &arg_o
 ///        one of their corresponding option names, else return none
 ///
 /// \relates cath_cluster_output_spec
-str_opt cath::clust::has_output_requiring_single_level_clustering(const cath_cluster_output_spec &arg_output_spec ///< The cath_cluster_output_spec to query
+str_opt cath::clust::has_output_requiring_single_level_clustering(const cath_cluster_output_spec &prm_output_spec ///< The cath_cluster_output_spec to query
                                                                   ) {
-	return arg_output_spec.get_clust_spans_to_file() ? make_optional( cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE ) :
-	       arg_output_spec.get_reps_to_file()        ? make_optional( cath_cluster_output_options_block::PO_REPS_TO_FILE        ) :
+	return prm_output_spec.get_clust_spans_to_file() ? make_optional( cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE ) :
+	       prm_output_spec.get_reps_to_file()        ? make_optional( cath_cluster_output_options_block::PO_REPS_TO_FILE        ) :
 	                                                   none;
 }
 
@@ -153,9 +153,9 @@ str_opt cath::clust::has_output_requiring_single_level_clustering(const cath_clu
 ///        or none otherwise
 ///
 /// \relates cath_cluster_output_spec
-str_opt cath::clust::get_invalid_description(const cath_cluster_output_spec &arg_output_spec ///< The cath_cluster_output_spec to query
+str_opt cath::clust::get_invalid_description(const cath_cluster_output_spec &prm_output_spec ///< The cath_cluster_output_spec to query
                                              ) {
-	const auto all_sorted_paths = sort_copy( get_all_output_paths( arg_output_spec ) );
+	const auto all_sorted_paths = sort_copy( get_all_output_paths( prm_output_spec ) );
 
 	const size_t num_stdouts = numeric_cast<size_t>( count( all_sorted_paths, path{ "-" } ) );
 	if ( num_stdouts > 1 ) {

@@ -33,23 +33,23 @@ namespace cath {
 		/// Note: previously used insert from boost/range/algorithm_ext/insert.hpp but
 		/// that appeared to sometimes cause problems detected by Clang Asan.
 		template <typename Cont, typename Rng>
-		inline Cont & append(Cont      &arg_container, ///< The container to which the range should be appended
-		                     const Rng &arg_suffix     ///< The range to append to the container
+		inline Cont & append(Cont      &prm_container, ///< The container to which the range should be appended
+		                     const Rng &prm_suffix     ///< The range to append to the container
 		                     ) {
 			boost::range::copy(
-				arg_suffix,
-				std::back_inserter( arg_container )
+				prm_suffix,
+				std::back_inserter( prm_container )
 			);
-			return arg_container;
+			return prm_container;
 		}
 
 		/// \brief Append the specified range to a copy of the specified container
 		template <typename Cont, typename Rng>
-		inline Cont append_copy(Cont       arg_container, ///< The container to which the range should be appended
-		                        const Rng &arg_suffix     ///< The range to append to the container
+		inline Cont append_copy(Cont       prm_container, ///< The container to which the range should be appended
+		                        const Rng &prm_suffix     ///< The range to append to the container
 		                        ) {
-			append( arg_container, arg_suffix );
-			return arg_container;
+			append( prm_container, prm_suffix );
+			return prm_container;
 		}
 
 	} // namespace common

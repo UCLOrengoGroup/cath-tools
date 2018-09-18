@@ -58,8 +58,8 @@ string crh_segment_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_segment_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                      const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_segment_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                      const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                       ) {
 	const string length_varname { "<length>" };
 	const string trim_varname   { "<trim>"   };
@@ -67,7 +67,7 @@ void crh_segment_options_block::do_add_visible_options_to_description(options_de
 	const auto overlap_trim_spec_notifier = [&] (const trim_spec &x) { the_spec.set_overlap_trim_spec  ( x ); };
 	const auto min_seg_length_notifier    = [&] (const residx_t  &x) { the_spec.set_min_seg_length     ( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			( PO_OVERLAP_TRIM_SPEC ).c_str(),
 			value<trim_spec>()
@@ -97,7 +97,7 @@ void crh_segment_options_block::do_add_visible_options_to_description(options_de
 
 /// \brief Generate a description of any problem that makes the specified crh_segment_options_block invalid
 ///        or none otherwise
-str_opt crh_segment_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt crh_segment_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                      ) const {
 	return none;
 }

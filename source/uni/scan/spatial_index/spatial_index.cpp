@@ -49,22 +49,22 @@ namespace cath {
 
 				/// \brief TODOCUMENT
 				template <typename Rng>
-				auto operator()(const Rng   &arg_rng,       ///< TODOCUMENT
-				                const float &arg_cell_size, ///< TODOCUMENT
-				                const float &arg_max_dist   ///< TODOCUMENT
+				auto operator()(const Rng   &prm_rng,       ///< TODOCUMENT
+				                const float &prm_cell_size, ///< TODOCUMENT
+				                const float &prm_max_dist   ///< TODOCUMENT
 				                ) {
 					const auto keyer = make_res_pair_keyer(
-						simple_locn_x_keyer_part{ arg_cell_size },
-						simple_locn_y_keyer_part{ arg_cell_size },
-						simple_locn_z_keyer_part{ arg_cell_size },
+						simple_locn_x_keyer_part{ prm_cell_size },
+						simple_locn_y_keyer_part{ prm_cell_size },
+						simple_locn_z_keyer_part{ prm_cell_size },
 						res_pair_from_to_index_keyer_part{}
 					);
 
 					using store_type = scan_index_lattice_store<decltype( keyer )::key_index_tuple_type, Cell>;
 					return store_maker<Sod, store_type>{}(
-						arg_rng,
+						prm_rng,
 						keyer,
-						simple_locn_crit{ arg_max_dist * arg_max_dist }
+						simple_locn_crit{ prm_max_dist * prm_max_dist }
 					);
 				}
 			};
@@ -77,61 +77,61 @@ namespace cath {
 static_assert( std::is_copy_assignable<cath::scan::simple_locn_index>::value, "" );
 
 /// \brief TODOCUMENT
-locn_index_store cath::scan::make_sparse_lattice(const protein &arg_protein,   ///< TODOCUMENT
-                                                 const float   &arg_cell_size, ///< TODOCUMENT
-                                                 const float   &arg_max_dist   ///< TODOCUMENT
+locn_index_store cath::scan::make_sparse_lattice(const protein &prm_protein,   ///< TODOCUMENT
+                                                 const float   &prm_cell_size, ///< TODOCUMENT
+                                                 const float   &prm_max_dist   ///< TODOCUMENT
                                                  ) {
 	return simple_spatial_lattice_store_maker< sod::SPARSE, vector< simple_locn_index > >{}(
-		indices( arg_protein.get_length() )
+		indices( prm_protein.get_length() )
 			| transformed( [&] (const size_t &x) {
-				return make_simple_locn_index_of_ca( arg_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
+				return make_simple_locn_index_of_ca( prm_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
-		arg_cell_size,
-		arg_max_dist
+		prm_cell_size,
+		prm_max_dist
 	);
 }
 
 /// \brief TODOCUMENT
-locn_index_store cath::scan::make_dense_lattice(const protein &arg_protein,   ///< TODOCUMENT
-                                                const float   &arg_cell_size, ///< TODOCUMENT
-                                                const float   &arg_max_dist   ///< TODOCUMENT
+locn_index_store cath::scan::make_dense_lattice(const protein &prm_protein,   ///< TODOCUMENT
+                                                const float   &prm_cell_size, ///< TODOCUMENT
+                                                const float   &prm_max_dist   ///< TODOCUMENT
                                                 ) {
 	return simple_spatial_lattice_store_maker< sod::DENSE, vector< simple_locn_index > >{}(
-		indices( arg_protein.get_length() )
+		indices( prm_protein.get_length() )
 			| transformed( [&] (const size_t &x) {
-				return make_simple_locn_index_of_ca( arg_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
+				return make_simple_locn_index_of_ca( prm_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
-		arg_cell_size,
-		arg_max_dist
+		prm_cell_size,
+		prm_max_dist
 	);
 }
 
 /// \brief TODOCUMENT
-locn_index_store cath::scan::make_sparse_lattice(const pdb   &arg_pdb,       ///< TODOCUMENT
-                                                 const float &arg_cell_size, ///< TODOCUMENT
-                                                 const float &arg_max_dist   ///< TODOCUMENT
+locn_index_store cath::scan::make_sparse_lattice(const pdb   &prm_pdb,       ///< TODOCUMENT
+                                                 const float &prm_cell_size, ///< TODOCUMENT
+                                                 const float &prm_max_dist   ///< TODOCUMENT
                                                  ) {
 	return simple_spatial_lattice_store_maker< sod::SPARSE, vector< simple_locn_index > >{}(
-		indices( arg_pdb.get_num_residues() )
+		indices( prm_pdb.get_num_residues() )
 			| transformed( [&] (const size_t &x) {
-				return make_simple_locn_index_of_ca( arg_pdb.get_residue_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
+				return make_simple_locn_index_of_ca( prm_pdb.get_residue_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
-		arg_cell_size,
-		arg_max_dist
+		prm_cell_size,
+		prm_max_dist
 	);
 }
 
 /// \brief TODOCUMENT
-locn_index_store cath::scan::make_dense_lattice(const pdb   &arg_pdb,       ///< TODOCUMENT
-                                                const float &arg_cell_size, ///< TODOCUMENT
-                                                const float &arg_max_dist   ///< TODOCUMENT
+locn_index_store cath::scan::make_dense_lattice(const pdb   &prm_pdb,       ///< TODOCUMENT
+                                                const float &prm_cell_size, ///< TODOCUMENT
+                                                const float &prm_max_dist   ///< TODOCUMENT
                                                 ) {
 	return simple_spatial_lattice_store_maker< sod::DENSE, vector< simple_locn_index > >{}(
-		indices( arg_pdb.get_num_residues() )
+		indices( prm_pdb.get_num_residues() )
 			| transformed( [&] (const size_t &x) {
-				return make_simple_locn_index_of_ca( arg_pdb.get_residue_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
+				return make_simple_locn_index_of_ca( prm_pdb.get_residue_of_index__backbone_unchecked( x ), debug_numeric_cast<unsigned int>( x ) );
 			} ),
-		arg_cell_size,
-		arg_max_dist
+		prm_cell_size,
+		prm_max_dist
 	);
 }

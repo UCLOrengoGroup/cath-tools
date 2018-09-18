@@ -55,13 +55,13 @@ namespace cath {
 
 			/// \brief Test that making clusters from the data in the specified names/merges files at
 			///        the specified cutoffs generates data matching that in the specified expected file
-			void test_clusters_of_merges(const path         &arg_names_file,   ///< The file containing the names data
-			                             const path         &arg_merge_file,   ///< The file containing the merges data
-			                             const strength_vec &arg_cutoffs,      ///< The cutoffs at which the clusters should be performed
-			                             const path         &arg_expected_file ///< The expected file to compare against
+			void test_clusters_of_merges(const path         &prm_names_file,   ///< The file containing the names data
+			                             const path         &prm_merge_file,   ///< The file containing the merges data
+			                             const strength_vec &prm_cutoffs,      ///< The cutoffs at which the clusters should be performed
+			                             const path         &prm_expected_file ///< The expected file to compare against
 			                             ) const {
-				const merge_vec          merges                = read_merge_list( arg_merge_file );
-				const auto               parse_names_results   = parse_names( arg_names_file );
+				const merge_vec          merges                = read_merge_list( prm_merge_file );
+				const auto               parse_names_results   = parse_names( prm_names_file );
 				const id_of_str_bidirnl &the_id_of_str_bidirnl = parse_names_results.second;
 				const size_vec           sorting_indices       = get_sorting_scores(
 					the_id_of_str_bidirnl,
@@ -71,12 +71,12 @@ namespace cath {
 				const hierarchy the_hierarchy = make_clusters_from_merges_and_sort(
 					merges,
 					sorting_indices,
-					arg_cutoffs
+					prm_cutoffs
 				);
 
 				write_cluster( temp_clusters_file, the_hierarchy, the_id_of_str_bidirnl );
 
-				BOOST_CHECK_FILES_EQUAL( temp_clusters_file, arg_expected_file );
+				BOOST_CHECK_FILES_EQUAL( temp_clusters_file, prm_expected_file );
 			}
 		};
 	}

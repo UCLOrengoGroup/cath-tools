@@ -55,14 +55,14 @@ tribool mi_score::do_higher_is_better() const {
 }
 
 /// \brief Concrete implementation for calculating the SAS of an alignment
-score_value mi_score::do_calculate(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                   const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                   const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+score_value mi_score::do_calculate(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                   const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                   const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                    ) const {
 	const score_value w0                    = 1.5;
-	const score_value one_plus_num_aligned  = 1 + get_length_score( num_aligned_getter,      arg_alignment, arg_protein_a, arg_protein_b );
-	const score_value one_plus_length       = 1 + get_length_score( *full_length_getter_ptr,                arg_protein_a, arg_protein_b );
-	const score_value one_plus_rmsd_over_w0 = 1 + rmsd.calculate( arg_alignment, arg_protein_a, arg_protein_b ) / w0;
+	const score_value one_plus_num_aligned  = 1 + get_length_score( num_aligned_getter,      prm_alignment, prm_protein_a, prm_protein_b );
+	const score_value one_plus_length       = 1 + get_length_score( *full_length_getter_ptr,                prm_protein_a, prm_protein_b );
+	const score_value one_plus_rmsd_over_w0 = 1 + rmsd.calculate( prm_alignment, prm_protein_a, prm_protein_b ) / w0;
 	return 1 - (one_plus_num_aligned / ( one_plus_rmsd_over_w0 * one_plus_length ) );
 }
 
@@ -107,31 +107,31 @@ string mi_score::do_reference() const {
 }
 
 ///// \brief Build an aligned_pair_score of this concrete type from a short_name_spec string
-//unique_ptr<aligned_pair_score> mi_score::do_build_from_short_name_spec(const string &arg_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
+//unique_ptr<aligned_pair_score> mi_score::do_build_from_short_name_spec(const string &prm_short_name_spec ///< The short_name_spec that defines any properties that the resulting aligned_pair_score should have
 //                                                                       ) const {
-//	cerr << "Should build a mi_score from string \"" << arg_short_name_spec << "\"" << endl;
+//	cerr << "Should build a mi_score from string \"" << prm_short_name_spec << "\"" << endl;
 //	return clone();
 //}
 
 /// \brief TODOCUMENT
-bool mi_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool mi_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                    ) const {
-	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 	return ( *this < casted_aligned_pair_score );
 }
 
 /// \brief Ctor for mi_score that allows the caller to specify the protein_only_length_getter
-mi_score::mi_score(const sym_protein_only_length_getter &arg_length_choice ///< The method for choosing which of the two proteins should be used in the normalisation
-                   ) : full_length_getter_ptr( arg_length_choice.sym_protein_only_clone() ) {
+mi_score::mi_score(const sym_protein_only_length_getter &prm_length_choice ///< The method for choosing which of the two proteins should be used in the normalisation
+                   ) : full_length_getter_ptr( prm_length_choice.sym_protein_only_clone() ) {
 }
 
 /// \brief Ctor for mi_score that allows the caller to specify the protein_only_length_getter, common_residue_selection_policy and common_atom_selection_policy
-mi_score::mi_score(const sym_protein_only_length_getter  &arg_length_choice,     ///< The method for choosing which of the two proteins should be used in the normalisation
-                   const common_residue_selection_policy &arg_comm_res_seln_pol, ///< The policy to use for selecting common residues
-                   const common_atom_selection_policy    &arg_comm_atom_seln_pol ///< The policy to use for selecting common atoms
-                   ) : rmsd              ( arg_comm_res_seln_pol, arg_comm_atom_seln_pol  ),
-                       num_aligned_getter( arg_comm_res_seln_pol                          ),
-                       full_length_getter_ptr( arg_length_choice.sym_protein_only_clone() ) {
+mi_score::mi_score(const sym_protein_only_length_getter  &prm_length_choice,     ///< The method for choosing which of the two proteins should be used in the normalisation
+                   const common_residue_selection_policy &prm_comm_res_seln_pol, ///< The policy to use for selecting common residues
+                   const common_atom_selection_policy    &prm_comm_atom_seln_pol ///< The policy to use for selecting common atoms
+                   ) : rmsd              ( prm_comm_res_seln_pol, prm_comm_atom_seln_pol  ),
+                       num_aligned_getter( prm_comm_res_seln_pol                          ),
+                       full_length_getter_ptr( prm_length_choice.sym_protein_only_clone() ) {
 }
 
 /// \brief TODOCUMENT
@@ -152,10 +152,10 @@ const sym_protein_only_length_getter & mi_score::get_full_length_getter() const 
 /// \brief TODOCUMENT
 ///
 /// \relates mi_score
-bool cath::score::operator<(const mi_score &arg_mi_score_a, ///< TODOCUMENT
-                            const mi_score &arg_mi_score_b  ///< TODOCUMENT
+bool cath::score::operator<(const mi_score &prm_mi_score_a, ///< TODOCUMENT
+                            const mi_score &prm_mi_score_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_mi_score_a, arg_mi_score_b );
+	auto the_helper = make_less_than_helper( prm_mi_score_a, prm_mi_score_b );
 	the_helper.register_comparison_field( &mi_score::get_rmsd               );
 	the_helper.register_comparison_field( &mi_score::get_num_aligned_getter );
 	the_helper.register_comparison_field( &mi_score::get_full_length_getter );

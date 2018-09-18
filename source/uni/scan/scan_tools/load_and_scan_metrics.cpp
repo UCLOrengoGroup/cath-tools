@@ -43,10 +43,10 @@ using std::string;
 using std::to_string;
 
 /// \brief TODOCUMENT
-load_and_scan_metrics::load_and_scan_metrics(const hrc_duration &arg_load_files_durn, ///< TODOCUMENT
-                                             scan_metrics        arg_scan_metrics     ///< TODOCUMENT
-                                             ) : load_files_durn  { arg_load_files_durn           },
-                                                 the_scan_metrics { std::move( arg_scan_metrics ) } {
+load_and_scan_metrics::load_and_scan_metrics(const hrc_duration &prm_load_files_durn, ///< TODOCUMENT
+                                             scan_metrics        prm_scan_metrics     ///< TODOCUMENT
+                                             ) : load_files_durn  { prm_load_files_durn           },
+                                                 the_scan_metrics { std::move( prm_scan_metrics ) } {
 }
 
 /// \brief TODOCUMENT
@@ -62,59 +62,59 @@ const scan_metrics & load_and_scan_metrics::get_scan_metrics() const {
 /// \brief TODOCUMENT
 ///
 /// \relates load_and_scan_metrics
-const durn_mem_pair & cath::scan::get_query_strucs_metrics(const load_and_scan_metrics &arg_load_and_scan_metrics ///< TODOCUMENT
+const durn_mem_pair & cath::scan::get_query_strucs_metrics(const load_and_scan_metrics &prm_load_and_scan_metrics ///< TODOCUMENT
                                                            ) {
-	return arg_load_and_scan_metrics.get_scan_metrics().get_query_strucs_metrics();
+	return prm_load_and_scan_metrics.get_scan_metrics().get_query_strucs_metrics();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates load_and_scan_metrics
-const durn_mem_pair & cath::scan::get_query_index_metrics(const load_and_scan_metrics &arg_load_and_scan_metrics ///< TODOCUMENT
+const durn_mem_pair & cath::scan::get_query_index_metrics(const load_and_scan_metrics &prm_load_and_scan_metrics ///< TODOCUMENT
                                                           ) {
-	return arg_load_and_scan_metrics.get_scan_metrics().get_query_index_metrics();
+	return prm_load_and_scan_metrics.get_scan_metrics().get_query_index_metrics();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates load_and_scan_metrics
-const durn_mem_pair & cath::scan::get_index_strucs_metrics(const load_and_scan_metrics &arg_load_and_scan_metrics ///< TODOCUMENT
+const durn_mem_pair & cath::scan::get_index_strucs_metrics(const load_and_scan_metrics &prm_load_and_scan_metrics ///< TODOCUMENT
                                                            ) {
-	return arg_load_and_scan_metrics.get_scan_metrics().get_index_strucs_metrics();
+	return prm_load_and_scan_metrics.get_scan_metrics().get_index_strucs_metrics();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates load_and_scan_metrics
-const durn_mem_pair & cath::scan::get_index_index_metrics(const load_and_scan_metrics &arg_load_and_scan_metrics ///< TODOCUMENT
+const durn_mem_pair & cath::scan::get_index_index_metrics(const load_and_scan_metrics &prm_load_and_scan_metrics ///< TODOCUMENT
                                                           ) {
-	return arg_load_and_scan_metrics.get_scan_metrics().get_index_index_metrics();
+	return prm_load_and_scan_metrics.get_scan_metrics().get_index_index_metrics();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates load_and_scan_metrics
-const hrc_duration & cath::scan::get_scan_durn(const load_and_scan_metrics &arg_load_and_scan_metrics ///< TODOCUMENT
+const hrc_duration & cath::scan::get_scan_durn(const load_and_scan_metrics &prm_load_and_scan_metrics ///< TODOCUMENT
                                                ) {
-	return arg_load_and_scan_metrics.get_scan_metrics().get_scan_durn();
+	return prm_load_and_scan_metrics.get_scan_metrics().get_scan_durn();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates load_and_scan_metrics
-string cath::scan::to_markdown_string(const load_and_scan_metrics &arg_load_and_scan_metrics ///< TODOCUMENT
+string cath::scan::to_markdown_string(const load_and_scan_metrics &prm_load_and_scan_metrics ///< TODOCUMENT
                                       ) {
-	const auto &query_strucs_metrics = get_query_strucs_metrics( arg_load_and_scan_metrics );
-	const auto &query_index_metrics  = get_query_index_metrics ( arg_load_and_scan_metrics );
-	const auto &index_strucs_metrics = get_index_strucs_metrics( arg_load_and_scan_metrics );
-	const auto &index_index_metrics  = get_index_index_metrics ( arg_load_and_scan_metrics );
+	const auto &query_strucs_metrics = get_query_strucs_metrics( prm_load_and_scan_metrics );
+	const auto &query_index_metrics  = get_query_index_metrics ( prm_load_and_scan_metrics );
+	const auto &index_strucs_metrics = get_index_strucs_metrics( prm_load_and_scan_metrics );
+	const auto &index_index_metrics  = get_index_index_metrics ( prm_load_and_scan_metrics );
 
-	const auto &load_files_durn      = arg_load_and_scan_metrics.get_load_files_durn();
+	const auto &load_files_durn      = prm_load_and_scan_metrics.get_load_files_durn();
 	const auto &query_strucs_durn    = query_strucs_metrics.first;
 	const auto &query_index_durn     = query_index_metrics.first;
 	const auto &index_strucs_durn    = index_strucs_metrics.first;
 	const auto &index_index_durn     = index_index_metrics.first;
-	const auto &scan_durn            = get_scan_durn           ( arg_load_and_scan_metrics );
+	const auto &scan_durn            = get_scan_durn           ( prm_load_and_scan_metrics );
 	const auto total_durn            =   load_files_durn
 	                                   + query_strucs_durn
 	                                   + query_index_durn
@@ -150,11 +150,11 @@ string cath::scan::to_markdown_string(const load_and_scan_metrics &arg_load_and_
 /// \brief TODOCUMENT
 ///
 /// \relates load_and_scan_metrics
-void cath::scan::to_markdown_file(const load_and_scan_metrics &arg_scan_metrics,    ///< TODOCUMENT
-                                  const path                  &arg_markdown_outfile ///< TODOCUMENT
+void cath::scan::to_markdown_file(const load_and_scan_metrics &prm_scan_metrics,    ///< TODOCUMENT
+                                  const path                  &prm_markdown_outfile ///< TODOCUMENT
                                   ) {
 	ofstream test_ofstream;
-	open_ofstream( test_ofstream, arg_markdown_outfile );
-	test_ofstream << to_markdown_string( arg_scan_metrics );
+	open_ofstream( test_ofstream, prm_markdown_outfile );
+	test_ofstream << to_markdown_string( prm_scan_metrics );
 	test_ofstream.close();
 }

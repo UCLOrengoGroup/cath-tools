@@ -79,14 +79,14 @@ bool do_the_ssaps_alignment_acquirer::do_requires_backbone_complete_input() cons
 }
 
 /// \brief Run the necessary cath-ssaps and then use them to get the alignment and spanning tree
-pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context, ///< The details of the structures for which the alignment and spanning tree is required
-                                                                                                        const align_refining &arg_align_refining  ///< How much refining should be done to the alignment
+pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< The details of the structures for which the alignment and spanning tree is required
+                                                                                                        const align_refining &prm_align_refining  ///< How much refining should be done to the alignment
                                                                                                         ) const {
 	using std::to_string;
 
 	// Get the directory in which the cath-ssaps should be done
 	const path ssaps_dir = get_directory_of_joy().value_or(
-		make_temp_dir_for_doing_ssaps( arg_strucs_context )
+		make_temp_dir_for_doing_ssaps( prm_strucs_context )
 	);
 
 	// Ensure the directory exists
@@ -103,7 +103,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 
 	// Perform any necessary cath-ssaps
 	path_vec scores_files;
-	const size_t num_strucs        = size( arg_strucs_context );
+	const size_t num_strucs        = size( prm_strucs_context );
 	const size_t num_ssaps         = ( num_strucs * ( max( 1_z, num_strucs ) - 1_z ) ) / 2_z;
 	const string num_str           = to_string( num_ssaps );
 	const size_t num_str_width     = num_str.length();
@@ -122,8 +122,8 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 				+ num_str;
 
 			// \TODO: Abstract out functions for making these standard file names
-			const string id_1   = get_domain_or_specified_or_name_from_acq( arg_strucs_context.get_name_sets()[ struc_1_index ] );
-			const string id_2   = get_domain_or_specified_or_name_from_acq( arg_strucs_context.get_name_sets()[ struc_2_index ] );
+			const string id_1   = get_domain_or_specified_or_name_from_acq( prm_strucs_context.get_name_sets()[ struc_1_index ] );
+			const string id_2   = get_domain_or_specified_or_name_from_acq( prm_strucs_context.get_name_sets()[ struc_2_index ] );
 			const path   scores_file = ssaps_dir / ( id_1 + id_2 + ".scores" );
 			const path   alnmnt_file = ssaps_dir / ( id_1 + id_2 + ".list"   );
 
@@ -142,8 +142,8 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 					"--" + old_ssap_options_block::PO_ALIGN_DIR, ssaps_dir.string()
 				};
 				for (const size_t &index : { struc_1_index, struc_2_index } ) {
-					const auto       &name_set   = arg_strucs_context.get_name_sets()[ index ];
-					const domain_opt  opt_domain = get_domain_opt_of_index( arg_strucs_context, index );
+					const auto       &name_set   = prm_strucs_context.get_name_sets()[ index ];
+					const domain_opt  opt_domain = get_domain_opt_of_index( prm_strucs_context, index );
 					cath_ssap_args.push_back( name_set.get_name_from_acq() );
 					if ( opt_domain ) {
 						cath_ssap_args.push_back( "--" + align_regions_options_block::PO_ALN_REGIONS );
@@ -185,12 +185,12 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 
 	// Use the ssap_scores_file_alignment_acquirer on the directory of data
 	return ssap_scores_file_alignment_acquirer{ scores_file }
-		.get_alignment_and_spanning_tree( arg_strucs_context, arg_align_refining );
+		.get_alignment_and_spanning_tree( prm_strucs_context, prm_align_refining );
 }
 
 /// \brief Ctor for do_the_ssaps_alignment_acquirer
-do_the_ssaps_alignment_acquirer::do_the_ssaps_alignment_acquirer(const path_opt &arg_directory_of_joy ///< The directory in which the cath-ssaps should be performed
-                                                                 ) : directory_of_joy { arg_directory_of_joy } {
+do_the_ssaps_alignment_acquirer::do_the_ssaps_alignment_acquirer(const path_opt &prm_directory_of_joy ///< The directory in which the cath-ssaps should be performed
+                                                                 ) : directory_of_joy { prm_directory_of_joy } {
 }
 
 /// \brief Getter for the directory in which the cath-ssaps should be performed
@@ -204,12 +204,12 @@ const path_opt & do_the_ssaps_alignment_acquirer::get_directory_of_joy() const {
 /// but very unlikely to clash amongst different inputs
 ///
 /// This doesn't actually create the directory
-path do_the_ssaps_alignment_acquirer::make_temp_dir_for_doing_ssaps(const strucs_context &arg_strucs_context ///< The strucs_context for which the directory should make a cath-ssaps temporary directory
+path do_the_ssaps_alignment_acquirer::make_temp_dir_for_doing_ssaps(const strucs_context &prm_strucs_context ///< The strucs_context for which the directory should make a cath-ssaps temporary directory
                                                                     ) {
 	return temp_directory_path() / (
 		  "cath-tools.tmp."
-		+ ( boost::format( R"(%|08X|)" ) % non_crypto_hash_copy( 0, arg_strucs_context ) ).str()
+		+ ( boost::format( R"(%|08X|)" ) % non_crypto_hash_copy( 0, prm_strucs_context ) ).str()
 		+ "_"
-		+ ( boost::format( R"(%|08X|)" ) % non_crypto_hash_copy( 1, arg_strucs_context ) ).str()
+		+ ( boost::format( R"(%|08X|)" ) % non_crypto_hash_copy( 1, prm_strucs_context ) ).str()
 	);
 }

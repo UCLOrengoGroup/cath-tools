@@ -37,10 +37,10 @@ void chopping::sanity_check() const {
 }
 
 /// \brief Ctor for chopping
-chopping::chopping(domain_vec arg_domains,  ///< TODOCUMENT
-                   region_vec arg_fragments ///< TODOCUMENT
-                   ) : domains  { std::move( arg_domains   ) },
-                       fragments{ std::move( arg_fragments ) } {
+chopping::chopping(domain_vec prm_domains,  ///< TODOCUMENT
+                   region_vec prm_fragments ///< TODOCUMENT
+                   ) : domains  { std::move( prm_domains   ) },
+                       fragments{ std::move( prm_fragments ) } {
 }
 
 /// \brief TODOCUMENT
@@ -54,9 +54,9 @@ size_t chopping::num_fragments() const {
 }
 
 /// \brief TODOCUMENT
-const region & chopping::get_fragment_of_index(const size_t &arg_index ///< TODOCUMENT
+const region & chopping::get_fragment_of_index(const size_t &prm_index ///< TODOCUMENT
                                                ) const {
-	return fragments[ arg_index ];
+	return fragments[ prm_index ];
 }
 
 /// \brief TODOCUMENT

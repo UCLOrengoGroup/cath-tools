@@ -32,19 +32,19 @@ using namespace cath::common;
 ///
 ///        (ie the position in the resulting size_vec that corresponds to the "first"
 ///         element has value 0)
-size_vec cath::clust::get_sorting_scores(const id_of_str_bidirnl &arg_name_ider, ///< The name/ID lookup for the entries (used in ascending sorting)
-                                         const doub_vec          &arg_props      ///< The properties on which to sort the entries (used in ascending sorting)
+size_vec cath::clust::get_sorting_scores(const id_of_str_bidirnl &prm_name_ider, ///< The name/ID lookup for the entries (used in ascending sorting)
+                                         const doub_vec          &prm_props      ///< The properties on which to sort the entries (used in ascending sorting)
                                          ) {
-	if ( arg_props.size() != arg_name_ider.size() ) {
+	if ( prm_props.size() != prm_name_ider.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get sorting_scores for a name_ider and properties list that have different sizes"));
 	}
 	return common::invert_permutation( common::sorted_indices(
-		arg_name_ider.size(),
+		prm_name_ider.size(),
 		[&] (const size_t &x, const size_t &y) {
 			return (
-				tie( arg_props[ x ], arg_name_ider.get_name_of_id( x ) )
+				tie( prm_props[ x ], prm_name_ider.get_name_of_id( x ) )
 				<
-				tie( arg_props[ y ], arg_name_ider.get_name_of_id( y ) )
+				tie( prm_props[ y ], prm_name_ider.get_name_of_id( y ) )
 			);
 		}
 	) );
@@ -54,15 +54,15 @@ size_vec cath::clust::get_sorting_scores(const id_of_str_bidirnl &arg_name_ider,
 ///
 ///        (ie the position in the resulting size_vec that corresponds to the "first"
 ///         element has value 0)
-size_vec cath::clust::get_sorting_scores(const id_of_str_bidirnl &arg_name_ider ///< The name/ID lookup for the entries (used in ascending sorting)
+size_vec cath::clust::get_sorting_scores(const id_of_str_bidirnl &prm_name_ider ///< The name/ID lookup for the entries (used in ascending sorting)
                                          ) {
 	return common::invert_permutation( common::sorted_indices(
-		arg_name_ider.size(),
+		prm_name_ider.size(),
 		[&] (const size_t &x, const size_t &y) {
 			return (
-				tie( arg_name_ider.get_name_of_id( x ) )
+				tie( prm_name_ider.get_name_of_id( x ) )
 				<
-				tie( arg_name_ider.get_name_of_id( y ) )
+				tie( prm_name_ider.get_name_of_id( y ) )
 			);
 		}
 	) );

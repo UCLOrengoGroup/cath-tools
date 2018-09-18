@@ -88,16 +88,16 @@ namespace cath {
 		};
 
 		/// \brief TODOCUMENT
-		float_score_type view_cache_index_entry_test_suite_fixture::compare(const view_cache_index_entry_vec &arg_vcies_a,  ///< TODOCUMENT
-		                                                                    const view_cache_index_entry_vec &arg_vcies_b,  ///< TODOCUMENT
-								                                            const vcie_match_criteria        &arg_criteria ///< TODOCUMENT
+		float_score_type view_cache_index_entry_test_suite_fixture::compare(const view_cache_index_entry_vec &prm_vcies_a,  ///< TODOCUMENT
+		                                                                    const view_cache_index_entry_vec &prm_vcies_b,  ///< TODOCUMENT
+								                                            const vcie_match_criteria        &prm_criteria ///< TODOCUMENT
 								                                            ) {
 			float_score_type total_score = 0.0;
-			auto vcies_a_itr = cath::common::cbegin( arg_vcies_a );
-			auto vcies_b_itr = cath::common::cbegin( arg_vcies_b );
-			const auto vcies_end_itr = cath::common::cend( arg_vcies_a );
+			auto vcies_a_itr = cath::common::cbegin( prm_vcies_a );
+			auto vcies_b_itr = cath::common::cbegin( prm_vcies_b );
+			const auto vcies_end_itr = cath::common::cend( prm_vcies_a );
 			while ( vcies_a_itr != vcies_end_itr ) {
-				if ( arg_criteria( *vcies_a_itr, *vcies_b_itr ) ) {
+				if ( prm_criteria( *vcies_a_itr, *vcies_b_itr ) ) {
 					const float_score_type distance = sqrt( squared_distance( *vcies_a_itr, *vcies_b_itr ) );
 					const float_score_type score    = static_cast<float_score_type>( 1.0 ) - (distance / static_cast<float_score_type>( 7.0 ) );
 					if ( score > 0 ) {
@@ -110,10 +110,10 @@ namespace cath {
 			return total_score;
 
 //			return accumulate(
-//				combine( arg_vcies_a, arg_vcies_b ),
+//				combine( prm_vcies_a, prm_vcies_b ),
 //				static_cast<float_score_type>( 0.0 ),
 //				[&] (const float_score_type &x, const boost::tuple<const view_cache_index_entry &, const view_cache_index_entry &> &y) {
-//					if ( ! arg_criteria( y.get<0>(), y.get<1>() ) ) {
+//					if ( ! prm_criteria( y.get<0>(), y.get<1>() ) ) {
 //						return x;
 //					}
 //					const float_score_type distance = sqrt( squared_distance( y.get<0>(), y.get<1>() ) );
@@ -126,10 +126,10 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		hrc_duration view_cache_index_entry_test_suite_fixture::time_comparison(const vcie_vcie_vec_pair &arg_vcies_pair ///< TODOCUMENT
+		hrc_duration view_cache_index_entry_test_suite_fixture::time_comparison(const vcie_vcie_vec_pair &prm_vcies_pair ///< TODOCUMENT
 		                                                                        ) {
-			const auto &vcies_1 = arg_vcies_pair.first;
-			const auto &vcies_2 = arg_vcies_pair.second;
+			const auto &vcies_1 = prm_vcies_pair.first;
+			const auto &vcies_2 = prm_vcies_pair.second;
 
 			if ( vcies_1.size() != vcies_2.size() ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
@@ -141,20 +141,20 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		view_cache_index_entry_vec view_cache_index_entry_test_suite_fixture::build_random_vcies(const size_t  &arg_num_entries, ///< TODOCUMENT
-		                                                                                         const protein &arg_protein,     ///< TODOCUMENT
-		                                                                                         mt19937       &arg_rng          ///< TODOCUMENT
+		view_cache_index_entry_vec view_cache_index_entry_test_suite_fixture::build_random_vcies(const size_t  &prm_num_entries, ///< TODOCUMENT
+		                                                                                         const protein &prm_protein,     ///< TODOCUMENT
+		                                                                                         mt19937       &prm_rng          ///< TODOCUMENT
 		                                                                                         ) {
-			if ( arg_protein.get_length() < 2 ) {
+			if ( prm_protein.get_length() < 2 ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot build random vcies if the protein has fewer than two residues"));
 			}
-			const auto &length = arg_protein.get_length();
+			const auto &length = prm_protein.get_length();
 			return generate_n_build<view_cache_index_entry_vec>(
-				arg_num_entries,
+				prm_num_entries,
 				[&] {
-					const auto index_pair = pick_random_pair( 0_z, length - 1, arg_rng );
+					const auto index_pair = pick_random_pair( 0_z, length - 1, prm_rng );
 					return make_view_cache_index_entry(
-						arg_protein,
+						prm_protein,
 						index_pair.first,
 						index_pair.second
 					);
@@ -163,62 +163,62 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		vcie_vcie_vec_pair view_cache_index_entry_test_suite_fixture::build_random_vcies_pair(const size_t  &arg_num_entries, ///< TODOCUMENT
-		                                                                                      const protein &arg_protein_a,   ///< TODOCUMENT
-		                                                                                      const protein &arg_protein_b,   ///< TODOCUMENT
-		                                                                                      mt19937       &arg_rng          ///< TODOCUMENT
+		vcie_vcie_vec_pair view_cache_index_entry_test_suite_fixture::build_random_vcies_pair(const size_t  &prm_num_entries, ///< TODOCUMENT
+		                                                                                      const protein &prm_protein_a,   ///< TODOCUMENT
+		                                                                                      const protein &prm_protein_b,   ///< TODOCUMENT
+		                                                                                      mt19937       &prm_rng          ///< TODOCUMENT
 		                                                                                      ) {
 			return make_pair(
-				build_random_vcies( arg_num_entries, arg_protein_a, arg_rng ),
-				build_random_vcies( arg_num_entries, arg_protein_b, arg_rng )
+				build_random_vcies( prm_num_entries, prm_protein_a, prm_rng ),
+				build_random_vcies( prm_num_entries, prm_protein_b, prm_rng )
 			);
 		}
 
 		/// \brief TODOCUMENT
-		vcie_vcie_vec_pair view_cache_index_entry_test_suite_fixture::build_alignment_vcies_pair(const size_t    &arg_num_entries, ///< TODOCUMENT
-		                                                                                         const protein   &arg_protein_a,   ///< TODOCUMENT
-		                                                                                         const protein   &arg_protein_b,   ///< TODOCUMENT
-		                                                                                         const alignment &arg_alignment,   ///< TODOCUMENT
-		                                                                                         mt19937         &arg_rng          ///< TODOCUMENT
+		vcie_vcie_vec_pair view_cache_index_entry_test_suite_fixture::build_alignment_vcies_pair(const size_t    &prm_num_entries, ///< TODOCUMENT
+		                                                                                         const protein   &prm_protein_a,   ///< TODOCUMENT
+		                                                                                         const protein   &prm_protein_b,   ///< TODOCUMENT
+		                                                                                         const alignment &prm_alignment,   ///< TODOCUMENT
+		                                                                                         mt19937         &prm_rng          ///< TODOCUMENT
 		                                                                                         ) {
-			const auto &present_posn_indices     = indices_of_present_positions_of_both_entries( arg_alignment );
+			const auto &present_posn_indices     = indices_of_present_positions_of_both_entries( prm_alignment );
 			const auto  num_present_posn_indices = present_posn_indices.size();
 			if ( num_present_posn_indices < 2 ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot build random_vcie pairs if the alignment has fewer than two residues"));
 			}
 			vcie_vcie_vec_pair results;
-			for (const auto &entry_ctr : indices( arg_num_entries ) ) {
+			for (const auto &entry_ctr : indices( prm_num_entries ) ) {
 				ignore_unused( entry_ctr );
-				const auto  index_pair = pick_random_pair( 0_z, num_present_posn_indices - 1, arg_rng );
+				const auto  index_pair = pick_random_pair( 0_z, num_present_posn_indices - 1, prm_rng );
 				const auto &index_1    = present_posn_indices[ index_pair.first  ];
 				const auto &index_2    = present_posn_indices[ index_pair.second ];
 				results.first.push_back( make_view_cache_index_entry(
-					arg_protein_a,
-					get_a_position_of_index( arg_alignment, index_1 ),
-					get_a_position_of_index( arg_alignment, index_2 )
+					prm_protein_a,
+					get_a_position_of_index( prm_alignment, index_1 ),
+					get_a_position_of_index( prm_alignment, index_2 )
 				) );
 				results.second.push_back( make_view_cache_index_entry(
-					arg_protein_b,
-					get_b_position_of_index( arg_alignment, index_1 ),
-					get_b_position_of_index( arg_alignment, index_2 )
+					prm_protein_b,
+					get_b_position_of_index( prm_alignment, index_1 ),
+					get_b_position_of_index( prm_alignment, index_2 )
 				) );
 			}
 			return results;
 		}
 
 		/// \brief TODOCUMENT
-		hrc_duration_vec view_cache_index_entry_test_suite_fixture::time_comparisons(const vcie_vcie_vec_pair &arg_vcies_pair, ///< TODOCUMENT
-		                                                                             const size_t             &arg_num_repeats ///< TODOCUMENT
+		hrc_duration_vec view_cache_index_entry_test_suite_fixture::time_comparisons(const vcie_vcie_vec_pair &prm_vcies_pair, ///< TODOCUMENT
+		                                                                             const size_t             &prm_num_repeats ///< TODOCUMENT
 		                                                                             ) {
-			const auto vcies_1 = arg_vcies_pair.first;
-			const auto vcies_2 = arg_vcies_pair.second;
+			const auto vcies_1 = prm_vcies_pair.first;
+			const auto vcies_2 = prm_vcies_pair.second;
 
 			if ( vcies_1.size() != vcies_1.size() ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 			}
 			return generate_n_build<hrc_duration_vec>(
-				arg_num_repeats,
-				[&] { return time_comparison( arg_vcies_pair ); }
+				prm_num_repeats,
+				[&] { return time_comparison( prm_vcies_pair ); }
 			);
 		}
 	}  // namespace test

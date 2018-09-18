@@ -70,7 +70,7 @@ namespace cath {
 			using const_iterator = calc_hit_vec::const_iterator;
 
 			/// \brief Less-than function as used for keeping the hits sorted in the calc_hit_list
-			static auto get_less_than_fn(const full_hit_list &arg_full_hits ///< The full_hits from which these hits were drawn
+			static auto get_less_than_fn(const full_hit_list &prm_full_hits ///< The full_hits from which these hits were drawn
 			                             ) {
 				return [&] (const calc_hit &x, const calc_hit &y) {
 					const auto num_segs_lhs = get_num_segments( x );
@@ -96,9 +96,9 @@ namespace cath {
 					}
 
 					return (
-						arg_full_hits[ x.get_label_idx() ].get_label()
+						prm_full_hits[ x.get_label_idx() ].get_label()
 						<
-						arg_full_hits[ y.get_label_idx() ].get_label()
+						prm_full_hits[ y.get_label_idx() ].get_label()
 					);
 				};
 			}
@@ -159,28 +159,28 @@ namespace cath {
 
 
 		/// \brief Private-static method for in-place sorting hits using get_less_than_fn()
-		inline void calc_hit_list::sort_hit_vec(calc_hit_vec        &arg_hit_vec,  ///< The hits to in-place sort
-		                                        const full_hit_list &arg_full_hits ///< The full_hits from which these hits were drawn
+		inline void calc_hit_list::sort_hit_vec(calc_hit_vec        &prm_hit_vec,  ///< The hits to in-place sort
+		                                        const full_hit_list &prm_full_hits ///< The full_hits from which these hits were drawn
 		                                        ) {
 			boost::range::sort(
-				arg_hit_vec,
-				get_less_than_fn( arg_full_hits )
+				prm_hit_vec,
+				get_less_than_fn( prm_full_hits )
 			);
 		}
 
 		/// \brief Ctor
-		inline calc_hit_list::calc_hit_list(full_hit_list              arg_full_hits,        ///< The full_hits from which these hits are to be drawn
-		                                    const crh_score_spec      &arg_score_spec,       ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
-		                                    const crh_segment_spec    &arg_crh_segment_spec, ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
-		                                    const crh_filter_spec     &arg_filter_spec,      ///< The crh_filter_spec specifying how hits should be filtered
-		                                    const seg_dupl_hit_policy &arg_policy            ///< Whether the strictly-worse hits should be pruned
-		                                    ) : full_hits { std::move( arg_full_hits ) },
+		inline calc_hit_list::calc_hit_list(full_hit_list              prm_full_hits,        ///< The full_hits from which these hits are to be drawn
+		                                    const crh_score_spec      &prm_score_spec,       ///< The crh_score_spec to specify how the crh-scores are to be calculated from the full-hits
+		                                    const crh_segment_spec    &prm_crh_segment_spec, ///< The crh_segment_spec to specify how the segments are to be handled before being put into the hits for calculation
+		                                    const crh_filter_spec     &prm_filter_spec,      ///< The crh_filter_spec specifying how hits should be filtered
+		                                    const seg_dupl_hit_policy &prm_policy            ///< Whether the strictly-worse hits should be pruned
+		                                    ) : full_hits { std::move( prm_full_hits ) },
 		                                        the_hits  { make_sorted_pruned_calc_hit_vec(
 		                                        	full_hits,
-		                                        	arg_score_spec,
-		                                        	arg_crh_segment_spec,
-		                                        	arg_filter_spec,
-		                                        	arg_policy
+		                                        	prm_score_spec,
+		                                        	prm_crh_segment_spec,
+		                                        	prm_filter_spec,
+		                                        	prm_policy
 		                                        ) } {
 			remove_redundant_hits( the_hits, full_hits );
 		}
@@ -196,9 +196,9 @@ namespace cath {
 		}
 
 		/// \brief Return the calc_hit stored at the specified index
-		inline const calc_hit & calc_hit_list::operator[](const size_t &arg_index ///< The index of the calc_hit to return
+		inline const calc_hit & calc_hit_list::operator[](const size_t &prm_index ///< The index of the calc_hit to return
 		                                                  ) const {
-			return the_hits[ arg_index ];
+			return the_hits[ prm_index ];
 		}
 
 		/// \brief Get the list of labels corresponding to the hits (but not necessarily in the same order)

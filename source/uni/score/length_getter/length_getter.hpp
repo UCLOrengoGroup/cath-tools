@@ -134,9 +134,9 @@ namespace cath {
         ///
         /// \returns A raw pointer to a new copy of the length_getter argument, with the same dynamic type.
         ///          The caller is responsible for deleting this new object.
-        inline length_getter * new_clone(const length_getter &arg_length_getter ///< The length_getter to clone
+        inline length_getter * new_clone(const length_getter &prm_length_getter ///< The length_getter to clone
                                          ) {
-                return arg_length_getter.clone().release();
+                return prm_length_getter.clone().release();
         }
 	} // namespace score
 } // namespace cath

@@ -79,21 +79,21 @@ namespace cath {
 
 		/// \brief Use the specified DSSP file to check the hbond calculations for the specified PDB file
 		///
-		/// \todo Remove the arg_warn_only_on_diff argument if dssp_ignores_valid_residue_1 is resolved
-		inline void dssp_hbond_calc_test_suite_fixture::use_dssp_file_to_check_hbonds_calcs(const path &arg_dssp_file, ///< The DSSP file to compare against
-		                                                                                    const path &arg_pdb_file   ///< The PDB file to check
+		/// \todo Remove the prm_warn_only_on_diff argument if dssp_ignores_valid_residue_1 is resolved
+		inline void dssp_hbond_calc_test_suite_fixture::use_dssp_file_to_check_hbonds_calcs(const path &prm_dssp_file, ///< The DSSP file to compare against
+		                                                                                    const path &prm_pdb_file   ///< The PDB file to check
 		                                                                                    ) {
-			BOOST_REQUIRE( exists( arg_pdb_file ) );
+			BOOST_REQUIRE( exists( prm_pdb_file ) );
 			// const auto read_dssp_start_time = high_resolution_clock::now();
-			const auto dssp_hbonds = parse_dssp_for_calc_testing( arg_dssp_file );
+			const auto dssp_hbonds = parse_dssp_for_calc_testing( prm_dssp_file );
 			// const auto read_dssp_stop_time  = high_resolution_clock::now();
 
 			if ( ! dssp_hbonds.empty() ) {
 				// const auto read_pdb_start_time = high_resolution_clock::now();
-				const auto parsed_pdb          = read_pdb_file( arg_pdb_file );
+				const auto parsed_pdb          = read_pdb_file( prm_pdb_file );
 				// const auto read_pdb_stop_time  = high_resolution_clock::now();
 
-				protein_from_dssp_and_pdb( read_dssp_file( arg_dssp_file ), parsed_pdb, dssp_skip_policy::DONT_SKIP__BREAK_ANGLES );
+				protein_from_dssp_and_pdb( read_dssp_file( prm_dssp_file ), parsed_pdb, dssp_skip_policy::DONT_SKIP__BREAK_ANGLES );
 
 				// const auto calc_start_time = high_resolution_clock::now();
 				const auto bifur_hbonds = dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_residues(
@@ -106,31 +106,31 @@ namespace cath {
 				// std::cerr << "Calc hbonds : " << durn_to_seconds_string ( calc_stop_time      - calc_start_time      ) << "\n";
 
 				// BOOST_TEST_INFO() isn't present in Boost > 1.58.0
-				// BOOST_TEST_INFO  ( "Checking DSSP file \"" + arg_dssp_file.string() + "\"" );
+				// BOOST_TEST_INFO  ( "Checking DSSP file \"" + prm_dssp_file.string() + "\"" );
 				BOOST_CHECK_EQUAL( difference_string( dssp_hbonds, bifur_hbonds ), none );
 			}
 		}
 
 		/// \brief Use the specified DSSP file to check the hbond calculations for the PDB file with the same filename but with the extension stripped off
 		///
-		/// \todo Remove the arg_warn_only_on_diff argument if dssp_ignores_valid_residue_1 is resolved
-		inline void dssp_hbond_calc_test_suite_fixture::use_dssp_file_to_check_hbonds_calcs(const path &arg_dssp_file ///< The DSSP file to compare against
+		/// \todo Remove the prm_warn_only_on_diff argument if dssp_ignores_valid_residue_1 is resolved
+		inline void dssp_hbond_calc_test_suite_fixture::use_dssp_file_to_check_hbonds_calcs(const path &prm_dssp_file ///< The DSSP file to compare against
 		                                                                                    ) {
-			use_dssp_file_to_check_hbonds_calcs( arg_dssp_file, replace_extension_copy( arg_dssp_file ) );
+			use_dssp_file_to_check_hbonds_calcs( prm_dssp_file, replace_extension_copy( prm_dssp_file ) );
 		}
 
 		/// \brief Use the specified directory of DSSP files to check the hbond calculations on the corresponding PDB files
 		///        in the specified directory (where the DSSP files are assumed to end ".dssp" and the corresponding PDB files
 		///        are assumed to have the same filename but with the extension stripped off)
-		inline void dssp_hbond_calc_test_suite_fixture::use_dir_of_dssp_files_to_check_hbonds_calcs(const path &arg_dssp_dir, ///< The directory of DSSP files to compare against
-		                                                                                            const path &arg_pdb_dir   ///< The directory of PDB files to check
+		inline void dssp_hbond_calc_test_suite_fixture::use_dir_of_dssp_files_to_check_hbonds_calcs(const path &prm_dssp_dir, ///< The directory of DSSP files to compare against
+		                                                                                            const path &prm_pdb_dir   ///< The directory of PDB files to check
 		                                                                                            ) {
-			BOOST_REQUIRE( is_directory( arg_dssp_dir ) );
-			BOOST_REQUIRE( is_directory( arg_pdb_dir  ) );
+			BOOST_REQUIRE( is_directory( prm_dssp_dir ) );
+			BOOST_REQUIRE( is_directory( prm_pdb_dir  ) );
 
 			const path_vec sorted_dssp_files = [&] {
 				path_vec results;
-				for (const directory_entry &dssp_entry : directory_iterator( arg_dssp_dir ) ) {
+				for (const directory_entry &dssp_entry : directory_iterator( prm_dssp_dir ) ) {
 					const path &dssp_file = dssp_entry.path();
 					if ( boost::ends_with( dssp_file.string(), ".dssp" ) ) {
 						results.push_back( dssp_file );
@@ -142,7 +142,7 @@ namespace cath {
 
 			for (const path &dssp_file : sorted_dssp_files ) {
 				// std::cerr << dssp_file << "\n";
-				const path pdb_file = replace_extension_copy( arg_pdb_dir / dssp_file.filename() );
+				const path pdb_file = replace_extension_copy( prm_pdb_dir / dssp_file.filename() );
 				use_dssp_file_to_check_hbonds_calcs( dssp_file, pdb_file );
 			}
 		}

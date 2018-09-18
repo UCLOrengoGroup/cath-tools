@@ -83,13 +83,13 @@ namespace cath {
 		/// \pre The hit_extra_cat and associated hit_extra_variant must match
 		//       (ie type_of_hit_extra_cat_t of the hit_extra_cat must match the type stored in the hit_extra_variant)
 		template <typename Fn>
-		void invoke_for_hit_extra_info(Fn                           &&arg_fn,  ///< The function to invoke
-		                               const hit_extra_cat_var_pair  &arg_pair ///< The pair of hit_extra_cat and associated hit_extra_variant
+		void invoke_for_hit_extra_info(Fn                           &&prm_fn,  ///< The function to invoke
+		                               const hit_extra_cat_var_pair  &prm_pair ///< The pair of hit_extra_cat and associated hit_extra_variant
 		                               ) {
-			switch ( arg_pair.first ) {
-				case( hit_extra_cat::ALND_RGNS ) : { common::invoke( std::forward<Fn>( arg_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::ALND_RGNS > >( arg_pair.second ) ); return; }
-				case( hit_extra_cat::COND_EVAL ) : { common::invoke( std::forward<Fn>( arg_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::COND_EVAL > >( arg_pair.second ) ); return; }
-				case( hit_extra_cat::INDP_EVAL ) : { common::invoke( std::forward<Fn>( arg_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::INDP_EVAL > >( arg_pair.second ) ); return; }
+			switch ( prm_pair.first ) {
+				case( hit_extra_cat::ALND_RGNS ) : { common::invoke( std::forward<Fn>( prm_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::ALND_RGNS > >( prm_pair.second ) ); return; }
+				case( hit_extra_cat::COND_EVAL ) : { common::invoke( std::forward<Fn>( prm_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::COND_EVAL > >( prm_pair.second ) ); return; }
+				case( hit_extra_cat::INDP_EVAL ) : { common::invoke( std::forward<Fn>( prm_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::INDP_EVAL > >( prm_pair.second ) ); return; }
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_extra_cat not recognised whilst trying to do something with it"));
 		}
@@ -106,35 +106,35 @@ namespace cath {
 				std::reference_wrapper<std::string> result_string;
 
 				/// \brief Ctor to pass the string to be populated into result_string 
-				info_stringifier(std::string &arg_string ///< The string to be populated
-				                 ) : result_string{ arg_string } {
+				info_stringifier(std::string &prm_string ///< The string to be populated
+				                 ) : result_string{ prm_string } {
 				}
 
 				/// \brief Stringify the specified value to result_string
 				template <typename T>
-				void operator()(const T &arg_value ///< The value to stringify
+				void operator()(const T &prm_value ///< The value to stringify
 				              ) {
 
-					result_string.get() = std::to_string( arg_value );
+					result_string.get() = std::to_string( prm_value );
 				}
 
 			};
 
 			/// \brief Specialisation for stringifying a string
 			template <>
-			inline void info_stringifier::operator()<std::string>(const std::string &arg_value ///< The string to stringify
+			inline void info_stringifier::operator()<std::string>(const std::string &prm_value ///< The string to stringify
 			                                                      ) {
-				result_string.get() = arg_value;
+				result_string.get() = prm_value;
 			}
 
 		} // namespace detail
 
 		/// \brief Return a string of the value information in the specified hit_extra_cat_var_pair
-		inline std::string string_of_info(const hit_extra_cat_var_pair &arg_pair ///< The hit_extra_cat_var_pair to describe
+		inline std::string string_of_info(const hit_extra_cat_var_pair &prm_pair ///< The hit_extra_cat_var_pair to describe
 		                                  ) {
 			std::string result;
 			detail::info_stringifier the_stringifier{ result };
-			invoke_for_hit_extra_info( the_stringifier, arg_pair );
+			invoke_for_hit_extra_info( the_stringifier, prm_pair );
 			return result;
 		}
 
@@ -154,9 +154,9 @@ namespace cath {
 
 			/// \brief Add the specified piece of information
 			template <hit_extra_cat Cat>
-			hit_extras_store & push_back(type_of_hit_extra_cat_t<Cat> arg_extra ///< The piece of information to store
+			hit_extras_store & push_back(type_of_hit_extra_cat_t<Cat> prm_extra ///< The piece of information to store
 			                             ) {
-				extras.emplace_back( Cat, std::move( arg_extra ) );
+				extras.emplace_back( Cat, std::move( prm_extra ) );
 				return *this;
 			}
 
@@ -186,9 +186,9 @@ namespace cath {
 		///
 		/// \relates hit_extras_store
 		template <hit_extra_cat Cat>
-		boost::optional<type_of_hit_extra_cat_t<Cat>> get_first(const hit_extras_store &arg_store ///< The hit_extras_store to query
+		boost::optional<type_of_hit_extra_cat_t<Cat>> get_first(const hit_extras_store &prm_store ///< The hit_extras_store to query
 		                                                        ) {
-			for (const auto &extra_pair : arg_store) {
+			for (const auto &extra_pair : prm_store) {
 				if ( extra_pair.first == Cat ) {
 					return boost::make_optional( boost::get<type_of_hit_extra_cat_t<Cat>>( extra_pair.second ) );
 				}
@@ -199,11 +199,11 @@ namespace cath {
 		/// \brief Generate a string describing the specified hit_extras_store
 		///
 		/// \relates hit_extras_store
-		inline std::string to_string(const hit_extras_store &arg_store ///< The hit_extras_store to describe
+		inline std::string to_string(const hit_extras_store &prm_store ///< The hit_extras_store to describe
 		                             ) {
 			return "hit_extras_store["
 				+ boost::algorithm::join(
-					arg_store
+					prm_store
 						| boost::adaptors::transformed( [] (const hit_extra_cat_var_pair &x) {
 							return to_string( x.first ) + ":" + string_of_info( x );
 						} ),
@@ -215,11 +215,11 @@ namespace cath {
 		/// \brief Insert a description of the specified hit_extras_store into the specified ostream
 		///
 		/// \relates hit_extras_store
-		inline std::ostream & operator<<(std::ostream           &arg_os,   ///< The ostream into which the description should be inserted
-		                                 const hit_extras_store &arg_store ///< The hit_extras_store to describe
+		inline std::ostream & operator<<(std::ostream           &prm_os,   ///< The ostream into which the description should be inserted
+		                                 const hit_extras_store &prm_store ///< The hit_extras_store to describe
 		                                 ) {
-			arg_os << to_string( arg_store );
-			return arg_os;
+			prm_os << to_string( prm_store );
+			return prm_os;
 		}
 
 	} // namespace rslv

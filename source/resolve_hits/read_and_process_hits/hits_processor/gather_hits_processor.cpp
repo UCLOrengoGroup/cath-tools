@@ -37,15 +37,15 @@ unique_ptr<hits_processor> gather_hits_processor::do_clone() const {
 /// \brief Process the specified data
 ///
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-void gather_hits_processor::do_process_hits_for_query(const string           &arg_query_id,         ///< The query_protein_id string
-                                                      const crh_filter_spec  &/*arg_filter_spec*/,  ///< The filter_spec to apply to the hits
-                                                      const crh_score_spec   &/*arg_score_spec*/,   ///< The score spec to apply to the hits
-                                                      const crh_segment_spec &/*arg_segment_spec*/, ///< The segment spec to apply to the hits
-                                                      const calc_hit_list    &arg_calc_hits         ///< The hits to process
+void gather_hits_processor::do_process_hits_for_query(const string           &prm_query_id,         ///< The query_protein_id string
+                                                      const crh_filter_spec  &/*prm_filter_spec*/,  ///< The filter_spec to apply to the hits
+                                                      const crh_score_spec   &/*prm_score_spec*/,   ///< The score spec to apply to the hits
+                                                      const crh_segment_spec &/*prm_segment_spec*/, ///< The segment spec to apply to the hits
+                                                      const calc_hit_list    &prm_calc_hits         ///< The hits to process
                                                       ) {
 	hit_lists.get().emplace_back(
-		arg_query_id,
-		arg_calc_hits
+		prm_query_id,
+		prm_calc_hits
 	);
 }
 
@@ -64,6 +64,6 @@ bool gather_hits_processor::do_requires_strictly_worse_hits() const {
 }
 
 /// \brief Ctor from the data structure into which the data should be placed
-gather_hits_processor::gather_hits_processor(str_calc_hit_list_pair_vec &arg_hit_lists ///< The data structure into which the data should be placed
-                                             ) noexcept : hit_lists { arg_hit_lists } {
+gather_hits_processor::gather_hits_processor(str_calc_hit_list_pair_vec &prm_hit_lists ///< The data structure into which the data should be placed
+                                             ) noexcept : hit_lists { prm_hit_lists } {
 }

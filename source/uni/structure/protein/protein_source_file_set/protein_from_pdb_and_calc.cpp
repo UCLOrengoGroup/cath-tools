@@ -64,15 +64,15 @@ bool protein_from_pdb_and_calc::do_makes_ssap_ready_protein() const {
 }
 
 /// \brief Grab the specified PDB filename and then use it in read_protein_from_pdb_and_calc_dssp_and_sec()
-protein protein_from_pdb_and_calc::do_read_and_restrict_files(const data_file_path_map &arg_filename_of_data_file, ///< The pre-loaded map of file types to filenames
-                                                              const string             &arg_protein_name,          ///< The name of the structure to be loaded
-                                                              const region_vec_opt     &arg_regions,               ///< The regions to which the resulting protein should be restricted
-                                                              ostream                  &arg_stderr                 ///< The ostream to which warnings/errors should be written
+protein protein_from_pdb_and_calc::do_read_and_restrict_files(const data_file_path_map &prm_filename_of_data_file, ///< The pre-loaded map of file types to filenames
+                                                              const string             &prm_protein_name,          ///< The name of the structure to be loaded
+                                                              const region_vec_opt     &prm_regions,               ///< The regions to which the resulting protein should be restricted
+                                                              ostream                  &prm_stderr                 ///< The ostream to which warnings/errors should be written
                                                               ) const {
 	return read_protein_from_pdb_and_calc_dssp_and_sec(
-		arg_filename_of_data_file.at( data_file::PDB ),
-		arg_protein_name,
-		arg_regions,
-		ref( arg_stderr )
+		prm_filename_of_data_file.at( data_file::PDB ),
+		prm_protein_name,
+		prm_regions,
+		ref( prm_stderr )
 	);
 }

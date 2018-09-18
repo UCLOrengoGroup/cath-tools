@@ -27,7 +27,7 @@ using namespace cath::chop;
 using std::string;
 
 /// \brief TODOCUMENT
-region region_reader::read_region(const string &arg_region_string ///< TODOCUMENT
+region region_reader::read_region(const string &prm_region_string ///< TODOCUMENT
                                   ) const {
-	return do_read_region( arg_region_string );
+	return do_read_region( prm_region_string );
 }

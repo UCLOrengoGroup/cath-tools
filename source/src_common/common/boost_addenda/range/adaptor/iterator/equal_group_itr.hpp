@@ -108,27 +108,27 @@ namespace cath {
 		/// Note that this isn't very efficient for ranges that aren't random access.
 		/// If that turns out to be an issue, then this could be changed.
 		template <class RNG>
-		typename equal_group_itr<RNG>::base_iterator_type equal_group_itr<RNG>::checked_next(const base_iterator_type &arg_itr,              ///< TODOCUMENT
-		                                                                                     const base_iterator_type &arg_end_itr,          ///< TODOCUMENT
-		                                                                                     const ineq_fn_type       &arg_unequal_function, ///< TODOCUMENT
-		                                                                                     const bool               &arg_permit_end_itr    ///< Whether to permit ( arg_itr == arg_end_itr ) and just return arg_itr unincremented, or just throw.
+		typename equal_group_itr<RNG>::base_iterator_type equal_group_itr<RNG>::checked_next(const base_iterator_type &prm_itr,              ///< TODOCUMENT
+		                                                                                     const base_iterator_type &prm_end_itr,          ///< TODOCUMENT
+		                                                                                     const ineq_fn_type       &prm_unequal_function, ///< TODOCUMENT
+		                                                                                     const bool               &prm_permit_end_itr    ///< Whether to permit ( prm_itr == prm_end_itr ) and just return prm_itr unincremented, or just throw.
 		                                                                                                                                     ///< The former is needed for when constructing an end equal_group_itr
 		                                                                                     ) {
 			// Check whether this is an end_itr and if so then either return it unincremented
-			// or throw, depending on the value of arg_permit_end_itr
-			if ( arg_itr == arg_end_itr ) {
-				if ( arg_permit_end_itr ) {
-					return arg_itr;
+			// or throw, depending on the value of prm_permit_end_itr
+			if ( prm_itr == prm_end_itr ) {
+				if ( prm_permit_end_itr ) {
+					return prm_itr;
 				}
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Attempt to increment end equal_group_itr"));
 			}
 
 			const auto next_itr = std::adjacent_find(
-				arg_itr,
-				arg_end_itr,
-				arg_unequal_function
+				prm_itr,
+				prm_end_itr,
+				prm_unequal_function
 			);
-			return ( next_itr == arg_end_itr ) ? arg_end_itr
+			return ( next_itr == prm_end_itr ) ? prm_end_itr
 			                                   : std::next( next_itr );
 		}
 
@@ -142,9 +142,9 @@ namespace cath {
 		///
 		/// \todo This doesn't check the
 		template <class RNG>
-		bool equal_group_itr<RNG>::equal(const equal_group_itr &arg_equal_group_itr ///< TODOCUMENT
+		bool equal_group_itr<RNG>::equal(const equal_group_itr &prm_equal_group_itr ///< TODOCUMENT
 		                                 ) const {
-			return ( get_begin_itr() == arg_equal_group_itr.get_begin_itr() );
+			return ( get_begin_itr() == prm_equal_group_itr.get_begin_itr() );
 		}
 
 		/// \brief TODOCUMENT
@@ -159,18 +159,18 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <class RNG>
 		template <class FN>
-		equal_group_itr<RNG>::equal_group_itr(const base_iterator_type &arg_begin_itr,       ///< TODOCUMENT
-		                                      const base_iterator_type &arg_end_itr,         ///< TODOCUMENT
-		                                      FN                        arg_unequal_function ///< TODOCUMENT
-		                                      ) : super              ( arg_begin_itr          ),
+		equal_group_itr<RNG>::equal_group_itr(const base_iterator_type &prm_begin_itr,       ///< TODOCUMENT
+		                                      const base_iterator_type &prm_end_itr,         ///< TODOCUMENT
+		                                      FN                        prm_unequal_function ///< TODOCUMENT
+		                                      ) : super              ( prm_begin_itr          ),
 		                                          equal_group_end_itr( checked_next(
-		                                          	arg_begin_itr,
-		                                          	arg_end_itr,
-		                                          	arg_unequal_function,
+		                                          	prm_begin_itr,
+		                                          	prm_end_itr,
+		                                          	prm_unequal_function,
 		                                          	true
 		                                          ) ),
-		                                          end_itr            ( arg_end_itr            ),
-		                                          unequal_function   ( arg_unequal_function   ) {
+		                                          end_itr            ( prm_end_itr            ),
+		                                          unequal_function   ( prm_unequal_function   ) {
 			if ( ! unequal_function ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to construct equal_group_itr with null unequal_function"));
 			}
@@ -179,12 +179,12 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <class RNG>
 		template <class FN>
-		equal_group_itr<RNG>::equal_group_itr(RNG &arg_range,             ///< TODOCUMENT
-		                                      FN   arg_less_than_function ///< TODOCUMENT
+		equal_group_itr<RNG>::equal_group_itr(RNG &prm_range,             ///< TODOCUMENT
+		                                      FN   prm_less_than_function ///< TODOCUMENT
 		                                      ) : equal_group_itr(
-		                                          	std::begin( arg_range ),
-		                                          	std::end  ( arg_range ),
-		                                          	arg_less_than_function
+		                                          	std::begin( prm_range ),
+		                                          	std::end  ( prm_range ),
+		                                          	prm_less_than_function
 		                                          ){
 		}
 

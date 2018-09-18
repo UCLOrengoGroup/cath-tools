@@ -136,10 +136,10 @@ namespace cath {
 
 		/// \brief Calculate the numerator and denominator of the rate and return a rational
 		template <std_classn_rate_stat S>
-		size_rational classn_rate_stat<S>::do_calculate(const true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg from which to calculate the rate
+		size_rational classn_rate_stat<S>::do_calculate(const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg from which to calculate the rate
 		                                                ) const {
-			const size_t &numerator_val = arg_true_false_pos_neg.get_num< numerator   >();
-			const size_t &other_val     = arg_true_false_pos_neg.get_num< denominator >();
+			const size_t &numerator_val = prm_true_false_pos_neg.get_num< numerator   >();
+			const size_t &other_val     = prm_true_false_pos_neg.get_num< denominator >();
 			return {
 				numerator_val,
 				std::max( numerator_val + other_val, 1_z )

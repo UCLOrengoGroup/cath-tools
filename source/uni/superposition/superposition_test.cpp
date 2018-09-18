@@ -75,22 +75,22 @@ namespace cath {
 
 			/// \brief Check that superposition returned by post_translate_and_rotate() has the
 			///        same effect on 7 key points as applying the parts separately
-			void check_post_translate_and_rotate(const coord    &arg_orig_supn_transltn, ///< The translation part of the original superposition to apply first
-			                                     const rotation &arg_orig_supn_rottn,    ///< The translation part of the original superposition to apply first
-			                                     const coord    &arg_translation,        ///< The translation to apply after the superposition
-			                                     const rotation &arg_rotation            ///< The rotation to apply last, after the translation
+			void check_post_translate_and_rotate(const coord    &prm_orig_supn_transltn, ///< The translation part of the original superposition to apply first
+			                                     const rotation &prm_orig_supn_rottn,    ///< The translation part of the original superposition to apply first
+			                                     const coord    &prm_translation,        ///< The translation to apply after the superposition
+			                                     const rotation &prm_rotation            ///< The rotation to apply last, after the translation
 			                                     ) {
 				constexpr size_t IDX = 0;
-				const superposition orig_supn{ { arg_orig_supn_transltn }, { arg_orig_supn_rottn } };
-				const superposition ptar_supn = post_translate_and_rotate_copy( orig_supn, arg_translation, arg_rotation );
+				const superposition orig_supn{ { prm_orig_supn_transltn }, { prm_orig_supn_rottn } };
+				const superposition ptar_supn = post_translate_and_rotate_copy( orig_supn, prm_translation, prm_rotation );
 				for (const coord &x : {  coord::ORIGIN_COORD,
 				                         coord::UNIT_X,  coord::UNIT_Y,  coord::UNIT_Z,
 				                        -coord::UNIT_X, -coord::UNIT_Y, -coord::UNIT_Z } ) {
 					BOOST_CHECK_EQUAL(
 						transform_copy( ptar_supn, IDX, x ),
 						rotate_copy(
-							arg_rotation,
-							transform_copy( orig_supn, IDX, x ) + arg_translation
+							prm_rotation,
+							transform_copy( orig_supn, IDX, x ) + prm_translation
 						)
 					);
 				}

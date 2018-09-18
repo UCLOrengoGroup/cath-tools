@@ -42,22 +42,22 @@ namespace cath {
 	namespace scan {
 
 		/// \brief TODOCUMENT
-		inline simple_locn_index make_simple_locn_index_of_ca(const residue      &arg_res,   ///< TODOCUMENT
-		                                                      const unsigned int &arg_index  ///< TODOCUMENT
+		inline simple_locn_index make_simple_locn_index_of_ca(const residue      &prm_res,   ///< TODOCUMENT
+		                                                      const unsigned int &prm_index  ///< TODOCUMENT
 		                                                      ) {
 			return make_simple_locn_index(
-				arg_res.get_carbon_alpha_coord(),
-				arg_index
+				prm_res.get_carbon_alpha_coord(),
+				prm_index
 			);
 		}
 
 		/// \brief TODOCUMENT
-		inline simple_locn_index make_simple_locn_index_of_ca(const file::pdb_residue &arg_res,   ///< TODOCUMENT
-		                                                      const unsigned int      &arg_index  ///< TODOCUMENT
+		inline simple_locn_index make_simple_locn_index_of_ca(const file::pdb_residue &prm_res,   ///< TODOCUMENT
+		                                                      const unsigned int      &prm_index  ///< TODOCUMENT
 		                                                      ) {
 			return make_simple_locn_index(
-				get_carbon_alpha_coord( arg_res ),
-				arg_index
+				get_carbon_alpha_coord( prm_res ),
+				prm_index
 			);
 		}
 
@@ -83,31 +83,31 @@ namespace cath {
 		using simple_locn_z_keyer_part = detail::axis_keyer_part< detail::res_pair_view_z_keyer_part_spec< simple_locn_index, simple_locn_crit > >;
 
 		template <typename Fn>
-		void scan_sparse_lattice(const locn_index_store &arg_store,     ///< TODOCUMENT
-		                         const protein          &arg_protein,   ///< TODOCUMENT
-		                         const float            &arg_cell_size, ///< TODOCUMENT
-		                         const float            &arg_max_dist,  ///< TODOCUMENT
-		                         Fn                      arg_fn         ///< TODOCUMENT
+		void scan_sparse_lattice(const locn_index_store &prm_store,     ///< TODOCUMENT
+		                         const protein          &prm_protein,   ///< TODOCUMENT
+		                         const float            &prm_cell_size, ///< TODOCUMENT
+		                         const float            &prm_max_dist,  ///< TODOCUMENT
+		                         Fn                      prm_fn         ///< TODOCUMENT
 		                         ) {
 			const auto the_keyer = make_res_pair_keyer(
-				simple_locn_x_keyer_part{ arg_cell_size },
-				simple_locn_y_keyer_part{ arg_cell_size },
-				simple_locn_z_keyer_part{ arg_cell_size },
+				simple_locn_x_keyer_part{ prm_cell_size },
+				simple_locn_y_keyer_part{ prm_cell_size },
+				simple_locn_z_keyer_part{ prm_cell_size },
 				res_pair_from_to_index_keyer_part{}
 			);
 
-			const float max_squared_dist = arg_max_dist * arg_max_dist;
+			const float max_squared_dist = prm_max_dist * prm_max_dist;
 			const simple_locn_crit the_crit{ max_squared_dist };
 
-			for (const size_t &the_res_idx : common::indices( arg_protein.get_length() ) ) {
-				const auto &the_res = arg_protein.get_residue_ref_of_index( the_res_idx );
+			for (const size_t &the_res_idx : common::indices( prm_protein.get_length() ) ) {
+				const auto &the_res = prm_protein.get_residue_ref_of_index( the_res_idx );
 				const auto  data    = make_simple_locn_index_of_ca( the_res, debug_numeric_cast<unsigned int>( the_res_idx ) );
 				for (const auto &key : common::cross( the_keyer.make_close_keys( data, the_crit ) ) ) {
-					if ( arg_store.has_matches( key ) ) {
-						for (const simple_locn_index &eg : arg_store.find_matches( key ) ) {
-							// if ( are_within_distance( eg, data, arg_max_dist, max_squared_dist ) ) {
+					if ( prm_store.has_matches( key ) ) {
+						for (const simple_locn_index &eg : prm_store.find_matches( key ) ) {
+							// if ( are_within_distance( eg, data, prm_max_dist, max_squared_dist ) ) {
 							if ( get_squared_distance( eg, data ) < max_squared_dist ) {
-								arg_fn( data, eg );
+								prm_fn( data, eg );
 							}
 						}
 					}
@@ -116,31 +116,31 @@ namespace cath {
 		}
 
 		template <typename Fn>
-		void scan_sparse_lattice(const locn_index_store &arg_store,     ///< TODOCUMENT
-		                         const file::pdb        &arg_pdb,       ///< TODOCUMENT
-		                         const float            &arg_cell_size, ///< TODOCUMENT
-		                         const float            &arg_max_dist,  ///< TODOCUMENT
-		                         Fn                      arg_fn         ///< TODOCUMENT
+		void scan_sparse_lattice(const locn_index_store &prm_store,     ///< TODOCUMENT
+		                         const file::pdb        &prm_pdb,       ///< TODOCUMENT
+		                         const float            &prm_cell_size, ///< TODOCUMENT
+		                         const float            &prm_max_dist,  ///< TODOCUMENT
+		                         Fn                      prm_fn         ///< TODOCUMENT
 		                         ) {
 			const auto the_keyer = make_res_pair_keyer(
-				simple_locn_x_keyer_part{ arg_cell_size },
-				simple_locn_y_keyer_part{ arg_cell_size },
-				simple_locn_z_keyer_part{ arg_cell_size },
+				simple_locn_x_keyer_part{ prm_cell_size },
+				simple_locn_y_keyer_part{ prm_cell_size },
+				simple_locn_z_keyer_part{ prm_cell_size },
 				res_pair_from_to_index_keyer_part{}
 			);
 
-			const float max_squared_dist = arg_max_dist * arg_max_dist;
+			const float max_squared_dist = prm_max_dist * prm_max_dist;
 			const simple_locn_crit the_crit{ max_squared_dist };
 
-			for (const size_t &the_res_idx : common::indices( arg_pdb.get_num_residues() ) ) {
-				const auto &the_res = arg_pdb.get_residue_of_index__backbone_unchecked( the_res_idx );
+			for (const size_t &the_res_idx : common::indices( prm_pdb.get_num_residues() ) ) {
+				const auto &the_res = prm_pdb.get_residue_of_index__backbone_unchecked( the_res_idx );
 				const auto  data    = make_simple_locn_index_of_ca( the_res, debug_numeric_cast<unsigned int>( the_res_idx ) );
 				for (const auto &key : common::cross( the_keyer.make_close_keys( data, the_crit ) ) ) {
-					if ( arg_store.has_matches( key ) ) {
-						for (const simple_locn_index &eg : arg_store.find_matches( key ) ) {
-							// if ( are_within_distance( eg, data, arg_max_dist, max_squared_dist ) ) {
+					if ( prm_store.has_matches( key ) ) {
+						for (const simple_locn_index &eg : prm_store.find_matches( key ) ) {
+							// if ( are_within_distance( eg, data, prm_max_dist, max_squared_dist ) ) {
 							if ( get_squared_distance( eg, data ) < max_squared_dist ) {
-								arg_fn( data, eg );
+								prm_fn( data, eg );
 							}
 						}
 					}
@@ -149,29 +149,29 @@ namespace cath {
 		}
 
 		template <typename Fn>
-		void scan_dense_lattice(const locn_index_store &arg_store,     ///< TODOCUMENT
-		                        const protein          &arg_protein,   ///< TODOCUMENT
-		                        const float            &arg_cell_size, ///< TODOCUMENT
-		                        const float            &arg_max_dist,  ///< TODOCUMENT
-		                        Fn                      arg_fn         ///< TODOCUMENT
+		void scan_dense_lattice(const locn_index_store &prm_store,     ///< TODOCUMENT
+		                        const protein          &prm_protein,   ///< TODOCUMENT
+		                        const float            &prm_cell_size, ///< TODOCUMENT
+		                        const float            &prm_max_dist,  ///< TODOCUMENT
+		                        Fn                      prm_fn         ///< TODOCUMENT
 		                        ) {
 			const auto the_keyer = make_res_pair_keyer(
-				simple_locn_x_keyer_part{ arg_cell_size },
-				simple_locn_y_keyer_part{ arg_cell_size },
-				simple_locn_z_keyer_part{ arg_cell_size }
+				simple_locn_x_keyer_part{ prm_cell_size },
+				simple_locn_y_keyer_part{ prm_cell_size },
+				simple_locn_z_keyer_part{ prm_cell_size }
 			);
 
-			const float max_squared_dist = arg_max_dist * arg_max_dist;
+			const float max_squared_dist = prm_max_dist * prm_max_dist;
 			// const simple_locn_crit the_crit{ max_squared_dist };
 
-			for (const size_t &the_res_idx : common::indices( arg_protein.get_length() ) ) {
-				const auto &the_res = arg_protein.get_residue_ref_of_index( the_res_idx );
+			for (const size_t &the_res_idx : common::indices( prm_protein.get_length() ) ) {
+				const auto &the_res = prm_protein.get_residue_ref_of_index( the_res_idx );
 				const auto  data    = make_simple_locn_index_of_ca( the_res, debug_numeric_cast<unsigned int>( the_res_idx ) );
 				const auto &key = the_keyer.make_key( data );
-				for (const simple_locn_index &eg : arg_store.find_matches( key ) ) {
-					// if ( are_within_distance( eg, data, arg_max_dist, max_squared_dist ) ) {
+				for (const simple_locn_index &eg : prm_store.find_matches( key ) ) {
+					// if ( are_within_distance( eg, data, prm_max_dist, max_squared_dist ) ) {
 					if ( get_squared_distance( eg, data ) < max_squared_dist ) {
-						arg_fn( data, eg );
+						prm_fn( data, eg );
 					}
 				}
 			}
@@ -216,35 +216,35 @@ namespace cath {
 			}
 
 			/// \brief Extract the relevant value from the specified simple_locn_index
-			constexpr value_t get_value(const simple_locn_index &arg_locn_index ///< TODOCUMENT
+			constexpr value_t get_value(const simple_locn_index &prm_locn_index ///< TODOCUMENT
 			                            ) const {
-				return arg_locn_index.index;
+				return prm_locn_index.index;
 			}
 
 			/// \brief Extract the search radius from the specified criteria
-			constexpr search_radius_t get_search_radius(const simple_locn_crit &/*arg_criteria*/ ///< The criteria defining what is considered a match
+			constexpr search_radius_t get_search_radius(const simple_locn_crit &/*prm_criteria*/ ///< The criteria defining what is considered a match
 			                                            ) const {
 				return 0;
 			}
 
 			/// \brief Generate the key part for the specified value
-			constexpr cell_index_t key_part(const value_t &arg_value ///< The value for which the key_part should be extracted
+			constexpr cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
 			                                ) const {
-				return arg_value;
+				return prm_value;
 			}
 
 			/// \brief Generate a list of all key parts for all conceivable simple_locn_indexs that would match the specified value
 			///        within the specified search radius
-			constexpr cell_index_list_t close_key_parts(const value_t         &arg_value,        ///< The value for which the key_part should be extracted
-			                                            const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+			constexpr cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The value for which the key_part should be extracted
+			                                            const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 			                                            ) const {
 				return
 #ifndef NDEBUG
-					( arg_search_radius == 0 )
+					( prm_search_radius == 0 )
 #else
-					common::constexpr_ignore_unused( arg_search_radius )
+					common::constexpr_ignore_unused( prm_search_radius )
 #endif
-						? cell_index_list_t{ { arg_value } }
+						? cell_index_list_t{ { prm_value } }
 						: throw std::invalid_argument("simple_locn_index_keyer_part currently requires that the search radius is 0 (ie requires matching indices)");
 			}
 		};

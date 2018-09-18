@@ -42,8 +42,8 @@ namespace cath {
 			};
 
 			/// \brief TODOCUMENT
-			inline limited_holder::limited_holder(const size_t &arg_max_num_elements ///< TODOCUMENT
-			                                      ) : max_num_elements( arg_max_num_elements ) {
+			inline limited_holder::limited_holder(const size_t &prm_max_num_elements ///< TODOCUMENT
+			                                      ) : max_num_elements( prm_max_num_elements ) {
 			}
 
 			/// \brief TODOCUMENT

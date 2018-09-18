@@ -46,7 +46,7 @@ namespace cath {
 		/// ATM, the first is basically a chunk of SSAP code that has been moved here
 		/// and the second is a new subroutine to do similar work for residue_name_aligner alignments in cath_superpose.
 		///
-		/// ATM, one difference is that the first can be configured with a arg_min_sup_score whereas
+		/// ATM, one difference is that the first can be configured with a prm_min_sup_score whereas
 		/// in the second case, the alignment will never be scored so this is of no use.
 		///
 		/// In the future, it might be nice to be able to score residue_name_aligner alignments

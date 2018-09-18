@@ -59,11 +59,11 @@ unique_ptr<display_colourer> display_colourer_score::do_clone() const {
 ///        stretching it in proportion to the alignment's residue scores if they're present
 ///
 /// See the class notes for more details
-display_colour_spec display_colourer_score::do_get_colour_spec(const alignment_context &arg_alignment_context ///< The alignment_context to gradient-colour
+display_colour_spec display_colourer_score::do_get_colour_spec(const alignment_context &prm_alignment_context ///< The alignment_context to gradient-colour
                                                                    ) const {
 	// Grab some basic details of the alignment and its score
 	// (total score is less half the first and half the last scores because they won't be counted
-	const alignment           &the_alignment = arg_alignment_context.get_alignment();
+	const alignment           &the_alignment = prm_alignment_context.get_alignment();
 	const alignment::size_type num_entries   = the_alignment.num_entries();
 	const alignment::size_type aln_length    = the_alignment.length();
 	const float_score_vec      scores        = get_total_score_or_num_positions_by_index( the_alignment );
@@ -111,13 +111,13 @@ const display_colour_gradient & display_colourer_score::get_gradient() const {
 }
 
 /// \brief Ctor
-display_colourer_score::display_colourer_score(display_colour_gradient arg_gradient ///< The gradient with which this display_colourer_score should colour alignments
-                                                       ) : gradient { std::move( arg_gradient ) } {
+display_colourer_score::display_colourer_score(display_colour_gradient prm_gradient ///< The gradient with which this display_colourer_score should colour alignments
+                                                       ) : gradient { std::move( prm_gradient ) } {
 }
 
 /// \brief Ctor
-display_colourer_score::display_colourer_score(display_colour_gradient     arg_gradient,     ///< The gradient with which this display_colourer_score should colour alignments
-                                                       const score_colour_handler &arg_score_handler ///< Specification for post-modifying the colouring based on scores
-                                                       ) : super    { arg_score_handler         },
-                                                           gradient { std::move( arg_gradient ) } {
+display_colourer_score::display_colourer_score(display_colour_gradient     prm_gradient,     ///< The gradient with which this display_colourer_score should colour alignments
+                                                       const score_colour_handler &prm_score_handler ///< Specification for post-modifying the colouring based on scores
+                                                       ) : super    { prm_score_handler         },
+                                                           gradient { std::move( prm_gradient ) } {
 }

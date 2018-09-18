@@ -37,9 +37,9 @@ namespace cath {
 			/// \brief Hasher for boost::string_ref
 			struct string_view_hasher final {
 				/// \brief The function operator that hashes the character range referred to by the string_ref
-				size_t operator()(const boost::string_ref &arg_value ///< The string_ref value to hash
+				size_t operator()(const boost::string_ref &prm_value ///< The string_ref value to hash
 				                  ) const {
-					return boost::hash_range( arg_value.begin(), arg_value.end() );
+					return boost::hash_range( prm_value.begin(), prm_value.end() );
 				}
 			};
 		} // namespace detail
@@ -80,15 +80,15 @@ namespace cath {
 			/// \brief Insert a new string and return its new ID
 			///
 			/// Can be used if the name already exists
-			inline const std::pair<const boost::string_ref, id_type> & emplace(const boost::string_ref &arg_string ///< The string to insert
+			inline const std::pair<const boost::string_ref, id_type> & emplace(const boost::string_ref &prm_string ///< The string to insert
 			                                                                   ) {
-				return *( the_map.emplace( arg_string, the_map.size() ).first );
+				return *( the_map.emplace( prm_string, the_map.size() ).first );
 			}
 
 			/// \brief Get the ID corresponding to the specified string
-			inline boost::optional<id_type> operator[](const boost::string_ref &arg_string ///< The string to lookup
+			inline boost::optional<id_type> operator[](const boost::string_ref &prm_string ///< The string to lookup
 			                                           ) const {
-				const auto find_itr = the_map.find( arg_string );
+				const auto find_itr = the_map.find( prm_string );
 				return make_optional_if_fn(
 					find_itr != common::cend( the_map ),
 					[&] { return find_itr->second; }
@@ -96,9 +96,9 @@ namespace cath {
 			}
 
 			/// \brief Return whether this contains the specified boost::string_ref
-			inline bool contains(const boost::string_ref &arg_string ///< The string to lookup
+			inline bool contains(const boost::string_ref &prm_string ///< The string to lookup
 			                     ) const {
-				return ( the_map.find( arg_string ) != common::cend( the_map ) );
+				return ( the_map.find( prm_string ) != common::cend( the_map ) );
 			}
 
 			/// \brief Return whether this id_of_string_view is empty
@@ -112,9 +112,9 @@ namespace cath {
 			}
 
 			/// \brief Reserve space for the specified number of strings
-			inline void reserve(const size_t &arg_count ///< The number of strings for which space should be reserved
+			inline void reserve(const size_t &prm_count ///< The number of strings for which space should be reserved
 			                    ) {
-				the_map.reserve( arg_count );
+				the_map.reserve( prm_count );
 			}
 
 			/// \brief Clear the id_of_string_view of all strings

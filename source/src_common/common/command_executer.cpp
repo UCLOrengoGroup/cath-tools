@@ -44,23 +44,23 @@ using std::strerror;
 ///  https://www.securecoding.cert.org/confluence/display/cplusplus/ENV04-CPP.+Do+not+call+system%28%29+if+you+do+not+need+a+command+processor
 ///
 /// \retval Success whether the call executed successfully
-bool command_executer::execute(const path    &arg_command,  ///< TODOCUMENT
-                               const str_vec &arg_arguments ///< TODOCUMENT
+bool command_executer::execute(const path    &prm_command,  ///< TODOCUMENT
+                               const str_vec &prm_arguments ///< TODOCUMENT
                                ) {
 	// Prepare a vector of the command and the arguments
-	const auto command_range = { arg_command.string() };
-	const auto arguments     = copy_build<str_vec>( join( command_range, arg_arguments ) );
+	const auto command_range = { prm_command.string() };
+	const auto arguments     = copy_build<str_vec>( join( command_range, prm_arguments ) );
 	argc_argv_faker arguments_faker( arguments );
 
 	// Fork so that on half can become the command and the other half can wait for it and then continue
 	const pid_t pid = fork();
 	if (pid == -1) {
-		BOOST_THROW_EXCEPTION(runtime_error_exception( "Unable to fork in command_executer::execute() to execute " + arg_command.string() ));
+		BOOST_THROW_EXCEPTION(runtime_error_exception( "Unable to fork in command_executer::execute() to execute " + prm_command.string() ));
 	}
 	else if (pid == 0) {
-		if ( execvp( arg_command.string().c_str(), arguments_faker.get_argv() ) == -1) {
+		if ( execvp( prm_command.string().c_str(), arguments_faker.get_argv() ) == -1) {
 			cerr << "Error executing "
-				<< arg_command.string()
+				<< prm_command.string()
 				<< " : "
 				<< strerror( errno )
 				<< "\n";
@@ -72,7 +72,7 @@ bool command_executer::execute(const path    &arg_command,  ///< TODOCUMENT
 		pid_t ret;
 		while ((ret = waitpid(pid, &status, 0)) == -1) {
 			if (errno != EINTR) {
-				BOOST_THROW_EXCEPTION(runtime_error_exception( "Error executing " + arg_command.string()));
+				BOOST_THROW_EXCEPTION(runtime_error_exception( "Error executing " + prm_command.string()));
 				return false;
 			}
 		}

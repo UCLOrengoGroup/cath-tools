@@ -51,13 +51,13 @@ using std::tie;
 ///       so that effort needn't be wasted calculating merges past that point
 ///
 /// \relates links
-merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_links,        ///< The links to analyse
-                                                        const size_vec   &arg_sort_indices, ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
-                                                        const strength   &arg_max_dissim    ///< The maximum dissimilarity at which merges may still happen
+merge_vec cath::clust::calc_complete_linkage_merge_list(links             prm_links,        ///< The links to analyse
+                                                        const size_vec   &prm_sort_indices, ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
+                                                        const strength   &prm_max_dissim    ///< The maximum dissimilarity at which merges may still happen
                                                         ) {
 	using std::to_string;
 
-	const size_t num_entities = arg_sort_indices.size();
+	const size_t num_entities = prm_sort_indices.size();
 	// std::cerr << "num_entities is : " << num_entities << "\n";
 
 	// const auto cluster_start_time = high_resolution_clock::now();
@@ -67,10 +67,10 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_li
 	detail::clust_id_pot clust_ids( num_entities );
 	size_t num_clusts = num_entities;
 
-	if ( ! arg_links.empty() ) {
+	if ( ! prm_links.empty() ) {
 
-		size_vec sorted_indices{ arg_sort_indices };
-		size_vec sizes( arg_links.size(), 1_z );
+		size_vec sorted_indices{ prm_sort_indices };
+		size_vec sizes( prm_links.size(), 1_z );
 		item_vec chain;
 
 		while ( num_clusts > 1 ) {
@@ -104,7 +104,7 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_li
 
 			strength dist;
 			do {
-				auto &a_links = arg_links[ a ];
+				auto &a_links = prm_links[ a ];
 
 				a_links.erase(
 					partition(
@@ -159,7 +159,7 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_li
 			}
 			sorted_indices.push_back( min( sorted_indices[ a ], sorted_indices[ b ] ) );
 
-			arg_links.merge(
+			prm_links.merge(
 				a,
 				b,
 				new_label,
@@ -183,11 +183,11 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_li
 			[] (const merge &x) { return x.dissim; }
 		);
 
-		// Remove any merges that went beyond arg_max_dissim
+		// Remove any merges that went beyond prm_max_dissim
 		results.erase(
 			upper_bound(
 				results,
-				arg_max_dissim,
+				prm_max_dissim,
 				[] (const strength &max_dissim, const merge &x) { return max_dissim < x.dissim; }
 			),
 			common::cend( results )
@@ -222,14 +222,14 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_li
 ///
 /// Since no preferred ranking of the items is specified, any ambiguities will
 /// be resolved by preferring the items in descending order
-merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_links,     ///< The links to analyse
-                                                        const size_t     &arg_size,      ///< The number of items to be merged
-                                                        const strength   &arg_max_dissim ///< The maximum dissimilarity at which merges may still happen
+merge_vec cath::clust::calc_complete_linkage_merge_list(links             prm_links,     ///< The links to analyse
+                                                        const size_t     &prm_size,      ///< The number of items to be merged
+                                                        const strength   &prm_max_dissim ///< The maximum dissimilarity at which merges may still happen
                                                         ) {
 	return calc_complete_linkage_merge_list(
-		std::move( arg_links ),
-		copy_build<size_vec>( indices( arg_size ) ),
-		arg_max_dissim
+		std::move( prm_links ),
+		copy_build<size_vec>( indices( prm_size ) ),
+		prm_max_dissim
 	);
 }
 
@@ -241,14 +241,14 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             arg_li
 ///
 /// \TODO Consider adding a parameter of the worst tolerable dissimilarity
 ///       so that effort needn't be wasted calculating merges past that point
-merge_vec cath::clust::calc_complete_linkage_merge_list(const item_item_strength_tpl_vec &arg_links,        ///< The links to analyse
-                                                        const size_vec                   &arg_sort_indices, ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
-                                                        const strength                   &arg_max_dissim    ///< The maximum dissimilarity at which merges may still happen
+merge_vec cath::clust::calc_complete_linkage_merge_list(const item_item_strength_tpl_vec &prm_links,        ///< The links to analyse
+                                                        const size_vec                   &prm_sort_indices, ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
+                                                        const strength                   &prm_max_dissim    ///< The maximum dissimilarity at which merges may still happen
                                                         ) {
 	return calc_complete_linkage_merge_list(
-		make_links( arg_links ),
-		arg_sort_indices,
-		arg_max_dissim
+		make_links( prm_links ),
+		prm_sort_indices,
+		prm_max_dissim
 	);
 }
 
@@ -263,13 +263,13 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(const item_item_strength
 ///
 /// Since no preferred ranking of the items is specified, any ambiguities will
 /// be resolved by preferring the items in descending order
-merge_vec cath::clust::calc_complete_linkage_merge_list(const item_item_strength_tpl_vec &arg_links,     ///< The links to analyse
-                                                        const size_t                     &arg_size,      ///< The number of items to be merged
-                                                        const strength                   &arg_max_dissim ///< The maximum dissimilarity at which merges may still happen
+merge_vec cath::clust::calc_complete_linkage_merge_list(const item_item_strength_tpl_vec &prm_links,     ///< The links to analyse
+                                                        const size_t                     &prm_size,      ///< The number of items to be merged
+                                                        const strength                   &prm_max_dissim ///< The maximum dissimilarity at which merges may still happen
                                                         ) {
 	return calc_complete_linkage_merge_list(
-		make_links( arg_links ),
-		arg_size,
-		arg_max_dissim
+		make_links( prm_links ),
+		prm_size,
+		prm_max_dissim
 	);
 }

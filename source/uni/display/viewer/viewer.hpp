@@ -156,17 +156,17 @@ namespace cath {
 	}
 
 	/// \brief NVI pass-through to the virtual do_begin_colouring()
-	inline void viewer::begin_colouring(std::ostream           &arg_os,      ///< The ostream to which the PyMOL commands should be written
-	                                    const display_colourer &arg_colourer ///< The display_colourer to be used for the colouring that is beginning
+	inline void viewer::begin_colouring(std::ostream           &prm_os,      ///< The ostream to which the PyMOL commands should be written
+	                                    const display_colourer &prm_colourer ///< The display_colourer to be used for the colouring that is beginning
 	                                    ) {
-		do_begin_colouring( arg_os, arg_colourer );
+		do_begin_colouring( prm_os, prm_colourer );
 	}
 
 	/// \brief NVI pass-through to the virtual do_end_colouring()
-	inline void viewer::end_colouring(std::ostream           &arg_os,      ///< The ostream to which the PyMOL commands should be written
-	                                  const display_colourer &arg_colourer ///< The display_colourer to be used for the colouring that is ending
+	inline void viewer::end_colouring(std::ostream           &prm_os,      ///< The ostream to which the PyMOL commands should be written
+	                                  const display_colourer &prm_colourer ///< The display_colourer to be used for the colouring that is ending
 	                                  ) {
-		do_end_colouring( arg_os, arg_colourer );
+		do_end_colouring( prm_os, prm_colourer );
 	}
 
 } // namespace cath

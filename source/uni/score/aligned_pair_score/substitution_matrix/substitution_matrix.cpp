@@ -70,12 +70,12 @@ const score_type & substitution_matrix::get_score_for_two_unknown_aas() const {
 /// \brief Construct the permutation represented by changing from the original amino acid ordering to the new amino acid ordering
 ///
 /// \todo Tidied up this code
-size_vec substitution_matrix::order_permutation(const amino_acid_vec &arg_orig_aa_ordering, ///< The original amino acid ordering
-                                                const amino_acid_vec &arg_new_aa_ordering   ///< The new amino acid ordering
+size_vec substitution_matrix::order_permutation(const amino_acid_vec &prm_orig_aa_ordering, ///< The original amino acid ordering
+                                                const amino_acid_vec &prm_new_aa_ordering   ///< The new amino acid ordering
                                                 ) {
 	// Grab the number of amino acids and check it's consistent
-	const size_t num_amino_acids = arg_orig_aa_ordering.size();
-	if ( num_amino_acids != arg_new_aa_ordering.size() ) {
+	const size_t num_amino_acids = prm_orig_aa_ordering.size();
+	if ( num_amino_acids != prm_new_aa_ordering.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Mismatch in the number of amino acids"));
 	}
 
@@ -84,12 +84,12 @@ size_vec substitution_matrix::order_permutation(const amino_acid_vec &arg_orig_a
 	permutation.reserve( num_amino_acids );
 
 	// For each of the amino acids in the original ordering...
-	for (const amino_acid &orig_amino_acid : arg_orig_aa_ordering) {
+	for (const amino_acid &orig_amino_acid : prm_orig_aa_ordering) {
 		// Find the index of the amino acid in the new ordering
 		const size_t index_in_new = numeric_cast<size_t>( distance(
-			common::cbegin( arg_new_aa_ordering ),
+			common::cbegin( prm_new_aa_ordering ),
 			find(
-				arg_new_aa_ordering,
+				prm_new_aa_ordering,
 				orig_amino_acid
 			)
 		) );
@@ -105,13 +105,13 @@ size_vec substitution_matrix::order_permutation(const amino_acid_vec &arg_orig_a
 }
 
 /// \brief Reorder the scores corresponding to the first amino acid ordering to the second amino acid ordering
-score_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig_aa_ordering, ///< The original amino acid ordering
-                                                  const amino_acid_vec &arg_new_aa_ordering,  ///< The required, new amino acid ordering
-                                                  const score_vec_vec  &arg_scores            ///< Scores corresponding to the original amino acid ordering
+score_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &prm_orig_aa_ordering, ///< The original amino acid ordering
+                                                  const amino_acid_vec &prm_new_aa_ordering,  ///< The required, new amino acid ordering
+                                                  const score_vec_vec  &prm_scores            ///< Scores corresponding to the original amino acid ordering
                                                   ) {
 	// Get the permutation required to get from the new ordering back to the old one
 	const size_vec back_permutation = invert_permutation(
-		order_permutation( arg_orig_aa_ordering, arg_new_aa_ordering )
+		order_permutation( prm_orig_aa_ordering, prm_new_aa_ordering )
 	);
 
 	// Construct a matrix to hold the new scores
@@ -123,7 +123,7 @@ score_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig
 		const size_t orig_aa_index_a = back_permutation[ new_aa_index_a ];
 		for (const size_t &new_aa_index_b : indices( num_amino_acids ) ) {
 			const size_t orig_aa_index_b = back_permutation[ new_aa_index_b ];
-			scores[ new_aa_index_a ][ new_aa_index_b ] = arg_scores[ orig_aa_index_a ][ orig_aa_index_b ];
+			scores[ new_aa_index_a ][ new_aa_index_b ] = prm_scores[ orig_aa_index_a ][ orig_aa_index_b ];
 		}
 	}
 
@@ -132,16 +132,16 @@ score_vec_vec substitution_matrix::reorder_scores(const amino_acid_vec &arg_orig
 }
 
 /// \brief Return whether one row/column has a lower highest score than the next
-bool substitution_matrix::has_lower_highest_score(const score_vec &arg_scores_a, ///< The first row/column of scores to compare
-                                                  const score_vec &arg_scores_b  ///< The second row/column of scores to compare
+bool substitution_matrix::has_lower_highest_score(const score_vec &prm_scores_a, ///< The first row/column of scores to compare
+                                                  const score_vec &prm_scores_b  ///< The second row/column of scores to compare
                                                   ) {
-	return ( highest_score_of_scores( arg_scores_a ) < highest_score_of_scores( arg_scores_b ) );
+	return ( highest_score_of_scores( prm_scores_a ) < highest_score_of_scores( prm_scores_b ) );
 }
 
 /// \brief Return the highest score to be found in the specified row/column
-score_type substitution_matrix::highest_score_of_scores(const score_vec &arg_scores ///< The row/column of scores to examine
+score_type substitution_matrix::highest_score_of_scores(const score_vec &prm_scores ///< The row/column of scores to examine
                                                         ) {
-	return *max_element( arg_scores );
+	return *max_element( prm_scores );
 }
 
 /// \brief Check that the matrix is symmetric
@@ -160,17 +160,17 @@ void substitution_matrix::check_is_symmetric() const {
 
 /// \brief Ctor for substitution_matrix
 ///
-/// arg_amino_acids needn't necessarily be sorted
-substitution_matrix::substitution_matrix(const amino_acid_vec &arg_amino_acids,               ///< The list of amino acids
-                                         const score_vec_vec  &arg_scores,                    ///< The all-against-all scores corresponding to the list of amino acids
-                                         const score_type     &arg_score_for_one_unknown_aa,  ///< The score that's returned if one of the query amino acids is unrecognised
-                                         const score_type     &arg_score_for_two_unknown_aas, ///< The score that's returned if both query amino acids are unrecognised
-                                         string                arg_name                       ///< A name for the substitution matrix
-                                         ) : amino_acids               { sort_copy( arg_amino_acids )  },
-                                             scores                    { reorder_scores( arg_amino_acids, amino_acids, arg_scores ) },
-                                             score_for_one_unknown_aa  { arg_score_for_one_unknown_aa  },
-                                             score_for_two_unknown_aas { arg_score_for_two_unknown_aas },
-                                             name                      { std::move( arg_name )         } {
+/// prm_amino_acids needn't necessarily be sorted
+substitution_matrix::substitution_matrix(const amino_acid_vec &prm_amino_acids,               ///< The list of amino acids
+                                         const score_vec_vec  &prm_scores,                    ///< The all-against-all scores corresponding to the list of amino acids
+                                         const score_type     &prm_score_for_one_unknown_aa,  ///< The score that's returned if one of the query amino acids is unrecognised
+                                         const score_type     &prm_score_for_two_unknown_aas, ///< The score that's returned if both query amino acids are unrecognised
+                                         string                prm_name                       ///< A name for the substitution matrix
+                                         ) : amino_acids               { sort_copy( prm_amino_acids )  },
+                                             scores                    { reorder_scores( prm_amino_acids, amino_acids, prm_scores ) },
+                                             score_for_one_unknown_aa  { prm_score_for_one_unknown_aa  },
+                                             score_for_two_unknown_aas { prm_score_for_two_unknown_aas },
+                                             name                      { std::move( prm_name )         } {
 	// Check that the generated matrix is symmetric
 	check_is_symmetric();
 
@@ -197,19 +197,19 @@ score_type substitution_matrix::get_highest_score() const {
 /// \brief Get the score corresponding to the two specified amino acids
 ///
 /// \todo Tidied up this code
-score_type substitution_matrix::get_score(const amino_acid &arg_amino_acid_a, ///< The first amino acid of the query
-                                          const amino_acid &arg_amino_acid_b  ///< The second amino acid of the query
+score_type substitution_matrix::get_score(const amino_acid &prm_amino_acid_a, ///< The first amino acid of the query
+                                          const amino_acid &prm_amino_acid_b  ///< The second amino acid of the query
                                           ) const {
 	// Grab the index of the first amino acid in amino_acids
 	const size_t index_a = numeric_cast<size_t>( distance(
 		common::cbegin( amino_acids ),
-		lower_bound( amino_acids, arg_amino_acid_a )
+		lower_bound( amino_acids, prm_amino_acid_a )
 	) );
 
 	// Grab the index of the second amino acid in amino_acids
 	const size_t index_b = numeric_cast<size_t>( distance(
 		common::cbegin( amino_acids ),
-		lower_bound( amino_acids, arg_amino_acid_b )
+		lower_bound( amino_acids, prm_amino_acid_b )
 	) );
 
 	// Bounds check both results
@@ -227,10 +227,10 @@ score_type substitution_matrix::get_score(const amino_acid &arg_amino_acid_a, //
 /// \brief TODOCUMENT
 ///
 /// \relates substitution_matrix
-bool cath::score::operator<(const substitution_matrix &arg_substitution_matrix_a, ///< TODOCUMENT
-                            const substitution_matrix &arg_substitution_matrix_b  ///< TODOCUMENT
+bool cath::score::operator<(const substitution_matrix &prm_substitution_matrix_a, ///< TODOCUMENT
+                            const substitution_matrix &prm_substitution_matrix_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_substitution_matrix_a, arg_substitution_matrix_b );
+	auto the_helper = make_less_than_helper( prm_substitution_matrix_a, prm_substitution_matrix_b );
 
 	the_helper.register_comparison_field( &substitution_matrix::get_name                      );
 	the_helper.register_comparison_field( &substitution_matrix::get_amino_acids               );

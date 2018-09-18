@@ -41,20 +41,20 @@ namespace cath {
 		// ///     sp|Q14807|KIF22_HUMAN -            665 2h58A00_round_1      -            284   4.2e-96  308.5   0.0   2   2      0.36      0.72   -4.0   0.0    83   111   577   605   569   623 0.65 Kinesin-like protein KIF22 OS=Homo sapiens GN=KIF22 PE=1 SV=5
 		// ///                      0.00048828125
 		// ///    For now, will add 2^-10 = 1/1024 ~= 0.0009765625 which should make scores positive
-		// inline constexpr resscr_t jon_score_of_hmmer_scores(const resscr_t               &arg_bitscore,                                      ///< The HMMER bit-score
-		//                                                     const resscr_t               &arg_cond_evalue,                                   ///< The HMMER conditional evalue
-		//                                                     const resscr_t               &arg_indp_evalue,                                   ///< The HMMER independent evalue
-		//                                                     const cath_id_score_category &arg_cath_category = cath_id_score_category::NORMAL ///< (optional) The type of id, allowing for Jon's special handling of certain match ID types
+		// inline constexpr resscr_t jon_score_of_hmmer_scores(const resscr_t               &prm_bitscore,                                      ///< The HMMER bit-score
+		//                                                     const resscr_t               &prm_cond_evalue,                                   ///< The HMMER conditional evalue
+		//                                                     const resscr_t               &prm_indp_evalue,                                   ///< The HMMER independent evalue
+		//                                                     const cath_id_score_category &prm_cath_category = cath_id_score_category::NORMAL ///< (optional) The type of id, allowing for Jon's special handling of certain match ID types
 		//                                                     ) {
 		// 	constexpr resscr_t STD_DENOMINATOR = static_cast<resscr_t>( 50.000 );
 		// 	constexpr resscr_t CUTOFF          = static_cast<resscr_t>(  0.001 );
 
-		// 	const bool     is_suspicious  = ( ( arg_cond_evalue <= CUTOFF ) && ( arg_indp_evalue > CUTOFF ) && ( arg_cath_category != cath_id_score_category::DC_TYPE ) );
-		// 	const bool     is_later_round =   arg_cath_category == cath_id_score_category::LATER_ROUND;
+		// 	const bool     is_suspicious  = ( ( prm_cond_evalue <= CUTOFF ) && ( prm_indp_evalue > CUTOFF ) && ( prm_cath_category != cath_id_score_category::DC_TYPE ) );
+		// 	const bool     is_later_round =   prm_cath_category == cath_id_score_category::LATER_ROUND;
 		// 	const resscr_t denom_mult     = is_suspicious  ? 4.0 :
 		// 	                                is_later_round ? 2.0 :
 		// 	                                                 1.0;
-		// 	const resscr_t ratio          = ( arg_bitscore / ( STD_DENOMINATOR * denom_mult ) );
+		// 	const resscr_t ratio          = ( prm_bitscore / ( STD_DENOMINATOR * denom_mult ) );
 		// 	return ratio * ratio * ratio;
 		// }
 

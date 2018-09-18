@@ -28,22 +28,22 @@ using namespace cath::common;
 using namespace cath::chop;
 
 /// \brief Ctor for residue_location
-residue_location::residue_location(const residue_name &arg_residue_name ///< TODOCUMENT
-                                   ) : the_residue_name( arg_residue_name )  {
+residue_location::residue_location(const residue_name &prm_residue_name ///< TODOCUMENT
+                                   ) : the_residue_name( prm_residue_name )  {
 
 }
 
 /// \brief Ctor for residue_location
-residue_location::residue_location(const residue_name &arg_residue_name, ///< TODOCUMENT
-                                   const size_t       &arg_residue_index ///< TODOCUMENT
-                                   ) : the_residue_name( arg_residue_name  ),
-                                       residue_index   ( arg_residue_index ) {
+residue_location::residue_location(const residue_name &prm_residue_name, ///< TODOCUMENT
+                                   const size_t       &prm_residue_index ///< TODOCUMENT
+                                   ) : the_residue_name( prm_residue_name  ),
+                                       residue_index   ( prm_residue_index ) {
 
 }
 
 /// \brief Ctor for residue_location
-residue_location::residue_location(const size_t &arg_residue_index ///< TODOCUMENT
-                                   ) : residue_index( arg_residue_index ) {
+residue_location::residue_location(const size_t &prm_residue_index ///< TODOCUMENT
+                                   ) : residue_index( prm_residue_index ) {
 
 }
 
@@ -60,56 +60,56 @@ const size_opt & residue_location::get_opt_residue_index() const {
 /// \brief TODOCUMENT
 ///
 /// \relates residue_location
-bool cath::chop::has_residue_name(const residue_location &arg_residue_location ///< TODOCUMENT
+bool cath::chop::has_residue_name(const residue_location &prm_residue_location ///< TODOCUMENT
                                   ) {
-	return static_cast<bool>( arg_residue_location.get_opt_residue_name() );
+	return static_cast<bool>( prm_residue_location.get_opt_residue_name() );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_location
-bool cath::chop::has_residue_index(const residue_location &arg_residue_location ///< TODOCUMENT
+bool cath::chop::has_residue_index(const residue_location &prm_residue_location ///< TODOCUMENT
                                    ) {
-	return static_cast<bool>( arg_residue_location.get_opt_residue_index() );
+	return static_cast<bool>( prm_residue_location.get_opt_residue_index() );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_location
-residue_name cath::chop::get_residue_name(const residue_location &arg_residue_location ///< TODOCUMENT
+residue_name cath::chop::get_residue_name(const residue_location &prm_residue_location ///< TODOCUMENT
                                           ) {
-	return *arg_residue_location.get_opt_residue_name();
+	return *prm_residue_location.get_opt_residue_name();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_location
-size_t cath::chop::get_residue_index(const residue_location &arg_residue_location ///< TODOCUMENT
+size_t cath::chop::get_residue_index(const residue_location &prm_residue_location ///< TODOCUMENT
                                      ) {
-	return *arg_residue_location.get_opt_residue_index();
+	return *prm_residue_location.get_opt_residue_index();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_location
-residue_locating cath::chop::get_residue_locating(const residue_location &arg_residue_location ///< TODOCUMENT
+residue_locating cath::chop::get_residue_locating(const residue_location &prm_residue_location ///< TODOCUMENT
                                                   ) {
 	return make_residue_locating_of_has_name_and_has_index(
-		has_residue_name ( arg_residue_location ),
-		has_residue_index( arg_residue_location )
+		has_residue_name ( prm_residue_location ),
+		has_residue_index( prm_residue_location )
 	);
 }
 
 /// \brief Non-member equality operator for residue_location
 ///
 /// \relates residue_location
-bool cath::chop::operator==(const residue_location &arg_lhs, ///< The first  residue_location to compare
-                            const residue_location &arg_rhs  ///< The second residue_location to compare
+bool cath::chop::operator==(const residue_location &prm_lhs, ///< The first  residue_location to compare
+                            const residue_location &prm_rhs  ///< The second residue_location to compare
                             ) {
 	return (
-		arg_lhs.get_opt_residue_name()  == arg_rhs.get_opt_residue_name()
+		prm_lhs.get_opt_residue_name()  == prm_rhs.get_opt_residue_name()
 		&&
-		arg_lhs.get_opt_residue_index() == arg_rhs.get_opt_residue_index()
+		prm_lhs.get_opt_residue_index() == prm_rhs.get_opt_residue_index()
 	);
 }
 
@@ -118,13 +118,13 @@ bool cath::chop::operator==(const residue_location &arg_lhs, ///< The first  res
 /// \relates residue_location
 ///
 /// \pre Both residues must have index information
-///      (ie has_residue_name( arg_residue_location_a) and has_residue_name( arg_residue_location_b) )
-bool cath::chop::operator<(const residue_location &arg_residue_location_a, ///< TODOCUMENT
-                           const residue_location &arg_residue_location_b  ///< TODOCUMENT
+///      (ie has_residue_name( prm_residue_location_a) and has_residue_name( prm_residue_location_b) )
+bool cath::chop::operator<(const residue_location &prm_residue_location_a, ///< TODOCUMENT
+                           const residue_location &prm_residue_location_b  ///< TODOCUMENT
                            ) {
 	// Check pre-condition that the both residue_locations have indices
-	const bool has_residue_index_a = has_residue_index( arg_residue_location_a );
-	const bool has_residue_index_b = has_residue_index( arg_residue_location_b );
+	const bool has_residue_index_a = has_residue_index( prm_residue_location_a );
+	const bool has_residue_index_b = has_residue_index( prm_residue_location_b );
 	if ( ! has_residue_index_a && ! has_residue_index_b ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to compare two residue locations because neither has an associated index"));
 	}
@@ -136,7 +136,7 @@ bool cath::chop::operator<(const residue_location &arg_residue_location_a, ///< 
 	}
 
 	// Both have indices so return the result of comparing them
-	const size_t residue_index_a = get_residue_index( arg_residue_location_a );
-	const size_t residue_index_b = get_residue_index( arg_residue_location_b );
+	const size_t residue_index_a = get_residue_index( prm_residue_location_a );
+	const size_t residue_index_b = get_residue_index( prm_residue_location_b );
 	return ( residue_index_a < residue_index_b );
 }

@@ -50,9 +50,9 @@ constexpr bool                crh_single_output_spec::DEFAULT_SUMMARISE;
 /// \brief Generate a string describing the specified crh_out_format
 ///
 /// \relates crh_out_format
-string cath::rslv::to_string(const crh_out_format &arg_out_format ///< The crh_out_format to describe
+string cath::rslv::to_string(const crh_out_format &prm_out_format ///< The crh_out_format to describe
                              ) {
-	switch ( arg_out_format ) {
+	switch ( prm_out_format ) {
 		case ( crh_out_format::STANDARD ) : { return "standard"  ; }
 		case ( crh_out_format::SUMMARY  ) : { return "a summary" ; }
 		case ( crh_out_format::HTML     ) : { return "HTML"      ; }
@@ -82,59 +82,59 @@ const bool & crh_single_output_spec::get_summarise() const {
 }
 
 /// \brief Setter for the output file to which data should be written
-crh_single_output_spec & crh_single_output_spec::set_output_file(const path &arg_output_file ///< The output file to which data should be written
+crh_single_output_spec & crh_single_output_spec::set_output_file(const path &prm_output_file ///< The output file to which data should be written
                                                                  ) {
-	output_file = arg_output_file;
+	output_file = prm_output_file;
 	return *this;
 }
 
 /// \brief Setter for whether to output HTML describing the hits and the results
-crh_single_output_spec & crh_single_output_spec::set_generate_html_output(const bool &arg_generate_html_output ///< Whether to output HTML describing the hits and the results
+crh_single_output_spec & crh_single_output_spec::set_generate_html_output(const bool &prm_generate_html_output ///< Whether to output HTML describing the hits and the results
                                                                           ) {
-	generate_html_output = arg_generate_html_output;
+	generate_html_output = prm_generate_html_output;
 	return *this;
 }
 
 /// \brief Setter for whether to output the results in JSON format
-crh_single_output_spec & crh_single_output_spec::set_json_output(const bool &arg_json_output ///< Whether to output the results in JSON format
+crh_single_output_spec & crh_single_output_spec::set_json_output(const bool &prm_json_output ///< Whether to output the results in JSON format
                                                                  ) {
-	json_output = arg_json_output;
+	json_output = prm_json_output;
 	return *this;
 }
 
 /// \brief Setter for whether to output a summary of the input data
-crh_single_output_spec & crh_single_output_spec::set_summarise(const bool &arg_summarise ///< Whether to output a summary of the input data
+crh_single_output_spec & crh_single_output_spec::set_summarise(const bool &prm_summarise ///< Whether to output a summary of the input data
                                                                ) {
-	summarise = arg_summarise;
+	summarise = prm_summarise;
 	return *this;
 }
 
 /// \brief Return whether the specified crh_single_output_spec is in a default state
 ///
 /// \relates crh_single_output_spec
-bool cath::rslv::is_default(const crh_single_output_spec &arg_single_output_spec ///< The crh_single_output_spec to query
+bool cath::rslv::is_default(const crh_single_output_spec &prm_single_output_spec ///< The crh_single_output_spec to query
                             ) {
 	return (
-		! arg_single_output_spec.get_output_file()
+		! prm_single_output_spec.get_output_file()
 		&&
-		! arg_single_output_spec.get_summarise()
+		! prm_single_output_spec.get_summarise()
 		&&
-		! arg_single_output_spec.get_generate_html_output()
+		! prm_single_output_spec.get_generate_html_output()
 		&&
-		! arg_single_output_spec.get_json_output()
+		! prm_single_output_spec.get_json_output()
 	);
 }
 
 /// \brief Get a list of non-deprecated option strings suggested to replicate the behaviour implied by the specified crh_single_output_spec
 ///
 /// \relates crh_single_output_spec
-str_vec cath::rslv::get_deprecated_suggestion(const crh_single_output_spec &arg_single_output_spec ///< The crh_single_output_spec to query
+str_vec cath::rslv::get_deprecated_suggestion(const crh_single_output_spec &prm_single_output_spec ///< The crh_single_output_spec to query
                                               ) {
-	if ( get_invalid_description( arg_single_output_spec ) ) {
+	if ( get_invalid_description( prm_single_output_spec ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get deprecated suggestion for invalid crh_single_output_spec"));
 	}
-	const crh_out_format  output_format = get_out_format( arg_single_output_spec );
-	const path_opt       &output_file   = arg_single_output_spec.get_output_file();
+	const crh_out_format  output_format = get_out_format( prm_single_output_spec );
+	const path_opt       &output_file   = prm_single_output_spec.get_output_file();
 	if ( ! output_file ) {
 		switch ( output_format ) {
 			case ( crh_out_format::STANDARD ) : { return {                                                                                                                           }; }
@@ -157,9 +157,9 @@ str_vec cath::rslv::get_deprecated_suggestion(const crh_single_output_spec &arg_
 /// \brief Get a string containing non-deprecated option strings suggested to replicate the behaviour implied by the specified crh_single_output_spec
 ///
 /// \relates crh_single_output_spec
-string cath::rslv::get_deprecated_suggestion_str(const crh_single_output_spec &arg_crh_single_output_spec ///< The crh_single_output_spec to query
+string cath::rslv::get_deprecated_suggestion_str(const crh_single_output_spec &prm_crh_single_output_spec ///< The crh_single_output_spec to query
                                                  ) {
-	return join( get_deprecated_suggestion( arg_crh_single_output_spec ), " " );
+	return join( get_deprecated_suggestion( prm_crh_single_output_spec ), " " );
 }
 
 /// \brief Get the crh_out_format implied by the specified crh_single_output_spec
@@ -167,15 +167,15 @@ string cath::rslv::get_deprecated_suggestion_str(const crh_single_output_spec &a
 /// \pre There is a single, unambiguous output format
 ///
 /// \relates crh_single_output_spec
-crh_out_format cath::rslv::get_out_format(const crh_single_output_spec &arg_single_output_spec ///< The crh_single_output_spec to query
+crh_out_format cath::rslv::get_out_format(const crh_single_output_spec &prm_single_output_spec ///< The crh_single_output_spec to query
                                           ) {
-	if ( arg_single_output_spec.get_summarise() ) {
+	if ( prm_single_output_spec.get_summarise() ) {
 		return crh_out_format::SUMMARY;
 	}
-	if ( arg_single_output_spec.get_generate_html_output() ) {
+	if ( prm_single_output_spec.get_generate_html_output() ) {
 		return crh_out_format::HTML;
 	}
-	if ( arg_single_output_spec.get_json_output() ) {
+	if ( prm_single_output_spec.get_json_output() ) {
 		return crh_out_format::JSON;
 	}
 	return crh_out_format::STANDARD;
@@ -185,14 +185,14 @@ crh_out_format cath::rslv::get_out_format(const crh_single_output_spec &arg_sing
 ///        or none otherwise
 ///
 /// \relates crh_single_output_spec
-str_opt cath::rslv::get_invalid_description(const crh_single_output_spec &arg_single_output_spec ///< The crh_single_output_spec to query
+str_opt cath::rslv::get_invalid_description(const crh_single_output_spec &prm_single_output_spec ///< The crh_single_output_spec to query
                                             ) {
 	// Prepare a list of the mutually exclusive outputs that have been requested
 	// Note: Don't include CSS export here because that takes a file argument and is independent of the output format
 	const auto  mut_excl_output_opts = crh_out_format_opt_vec{
-		make_optional( arg_single_output_spec.get_summarise(),            crh_out_format::SUMMARY ),
-		make_optional( arg_single_output_spec.get_generate_html_output(), crh_out_format::HTML    ),
-		make_optional( arg_single_output_spec.get_json_output(),          crh_out_format::JSON    )
+		make_optional( prm_single_output_spec.get_summarise(),            crh_out_format::SUMMARY ),
+		make_optional( prm_single_output_spec.get_generate_html_output(), crh_out_format::HTML    ),
+		make_optional( prm_single_output_spec.get_json_output(),          crh_out_format::JSON    )
 	};
 	const auto  mut_excl_outputs = transform_build<crh_out_format_vec>(
 		mut_excl_output_opts | filtered( [] (const crh_out_format_opt &x) { return static_cast<bool>( x ); } ),

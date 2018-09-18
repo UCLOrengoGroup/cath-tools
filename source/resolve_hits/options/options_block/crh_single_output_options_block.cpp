@@ -58,8 +58,8 @@ string crh_single_output_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_single_output_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                            const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_single_output_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                            const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                             ) {
 	const string file_varname   { "<file>"   };
 
@@ -68,7 +68,7 @@ void crh_single_output_options_block::do_add_visible_options_to_description(opti
 	const auto generate_html_output_notifier = [&] (const bool &x) { the_spec.set_generate_html_output (           x ); };
 	const auto json_output_notifier          = [&] (const bool &x) { the_spec.set_json_output          (           x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_OUTPUT_FILE.c_str(),
 			value<path>()
@@ -106,7 +106,7 @@ void crh_single_output_options_block::do_add_visible_options_to_description(opti
 
 /// \brief Generate a description of any problem that makes the specified crh_single_output_options_block invalid
 ///        or none otherwise
-str_opt crh_single_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt crh_single_output_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                            ) const {
 	return get_invalid_description( the_spec );
 }
@@ -129,7 +129,7 @@ const crh_single_output_spec & crh_single_output_options_block::get_crh_single_o
 /// \brief Get the crh_out_format for the crh_single_output_spec of the specified crh_single_output_options_block
 ///
 /// \relates crh_single_output_options_block
-crh_out_format cath::rslv::get_out_format(const crh_single_output_options_block &arg_crh_single_output_options_block ///< The crh_single_output_options_block to query
+crh_out_format cath::rslv::get_out_format(const crh_single_output_options_block &prm_crh_single_output_options_block ///< The crh_single_output_options_block to query
                                           ) {
-	return get_out_format( arg_crh_single_output_options_block.get_crh_single_output_spec() );
+	return get_out_format( prm_crh_single_output_options_block.get_crh_single_output_spec() );
 }

@@ -36,9 +36,9 @@ using boost::range::max_element;
 /// \brief TODOCUMENT
 ///
 /// \relates data_file
-string cath::file::to_string(const data_file &arg_data_file ///< The data_file to output
+string cath::file::to_string(const data_file &prm_data_file ///< The data_file to output
                              ) {
-	switch ( arg_data_file ) {
+	switch ( prm_data_file ) {
 		case ( data_file::PDB  ) : { return "data_file::PDB"  ; }
 		case ( data_file::DSSP ) : { return "data_file::DSSP" ; }
 		case ( data_file::WOLF ) : { return "data_file::WOLF" ; }
@@ -50,19 +50,19 @@ string cath::file::to_string(const data_file &arg_data_file ///< The data_file t
 /// \brief Simple insertion operator for data_file
 ///
 /// \relates data_file
-ostream & cath::file::operator<<(ostream         &arg_os,       ///< The ostream to which to output the data_file
-                                 const data_file &arg_data_file ///< The data_file to output
+ostream & cath::file::operator<<(ostream         &prm_os,       ///< The ostream to which to output the data_file
+                                 const data_file &prm_data_file ///< The data_file to output
                                  ) {
-	arg_os << to_string( arg_data_file );
-	return arg_os;
+	prm_os << to_string( prm_data_file );
+	return prm_os;
 }
 
 /// \brief The length of the string representing the specified data_file
 ///
 /// \relates data_file
-size_t cath::file::str_length_of_data_file(const data_file &arg_data_file ///< The data_file whose string length should be returned
+size_t cath::file::str_length_of_data_file(const data_file &prm_data_file ///< The data_file whose string length should be returned
                                            ) {
-	return to_string( arg_data_file ).length();
+	return to_string( prm_data_file ).length();
 }
 
 /// \brief The maximum length of the string representation of all data_file values

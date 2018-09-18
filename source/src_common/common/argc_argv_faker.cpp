@@ -38,14 +38,14 @@ using boost::shared_array;
 /// \todo In C++11, one ctor can call another directly so, once our build moves
 ///       to the C++11 standard, move this code back into the str_vec ctor
 ///       and have the other ctor call that one.
-void argc_argv_faker::init(const str_vec &arg_arguments
+void argc_argv_faker::init(const str_vec &prm_arguments
                            ) {
-	if (arg_arguments.empty()) {
+	if (prm_arguments.empty()) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to construct argc_argv_faker with no arguments"));
 	}
 
-	arguments.reserve(arg_arguments.size());
-	for (const string &argument : arg_arguments) {
+	arguments.reserve(prm_arguments.size());
+	for (const string &argument : prm_arguments) {
 		shared_array<char> array_pointer(new char[argument.length() + 1]);
 		strncpy(array_pointer.get(), argument.c_str(), argument.length() + 1);
 		arguments.push_back(array_pointer);
@@ -61,19 +61,19 @@ void argc_argv_faker::init(const str_vec &arg_arguments
 }
 
 /// \brief Constructor for argc_argv_faker from str_vec arguments.
-argc_argv_faker::argc_argv_faker(const str_vec &arg_arguments
+argc_argv_faker::argc_argv_faker(const str_vec &prm_arguments
                                  ) {
-	init(arg_arguments);
+	init(prm_arguments);
 }
 
 /// \brief Constructor for argc_argv_faker from const argv-style arguments.
-argc_argv_faker::argc_argv_faker(const int          &arg_argc,
-                                 const char * const  arg_argv[]
+argc_argv_faker::argc_argv_faker(const int          &prm_argc,
+                                 const char * const  prm_argv[]
                                  ) {
 	str_vec argument_strings;
-	argument_strings.reserve( numeric_cast<size_t>( arg_argc ) );
-	for (const int &arg_ctr : indices( arg_argc ) ) {
-		argument_strings.push_back( arg_argv[ arg_ctr ] );
+	argument_strings.reserve( numeric_cast<size_t>( prm_argc ) );
+	for (const int &prm_ctr : indices( prm_argc ) ) {
+		argument_strings.push_back( prm_argv[ prm_ctr ] );
 	}
 	init( argument_strings );
 }
@@ -101,15 +101,15 @@ char * const * argc_argv_faker::get_argv() const {
 /// \brief Simple insertion operator for argc_argv_faker
 ///
 /// \relates argc_argv_faker
-ostream & cath::operator<<(ostream               &arg_os,             ///< The ostream to which to output the argc_argv_faker
-                           const argc_argv_faker &arg_argc_argv_faker ///< The argc_argv_faker to output
+ostream & cath::operator<<(ostream               &prm_os,             ///< The ostream to which to output the argc_argv_faker
+                           const argc_argv_faker &prm_argc_argv_faker ///< The argc_argv_faker to output
                            ) {
-	const int            &argc = arg_argc_argv_faker.get_argc();
-	const char * const *  argv = arg_argc_argv_faker.get_argv();
-	for (const size_t &arg_ctr : indices( numeric_cast<size_t>(argc) ) ) {
-		arg_os << ((arg_ctr > 0) ? ", " : "");
-		arg_os << argv[arg_ctr];
+	const int            &argc = prm_argc_argv_faker.get_argc();
+	const char * const *  argv = prm_argc_argv_faker.get_argv();
+	for (const size_t &prm_ctr : indices( numeric_cast<size_t>(argc) ) ) {
+		prm_os << ((prm_ctr > 0) ? ", " : "");
+		prm_os << argv[prm_ctr];
 	}
 
-	return arg_os;
+	return prm_os;
 }

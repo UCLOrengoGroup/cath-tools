@@ -38,29 +38,29 @@ namespace cath {
 
 			/// \brief Update a min and max with a new value
 			template <typename T>
-			int update_min_max_with_value_impl(T       &arg_min,       ///< The min value
-			                                   T       &arg_max,       ///< The max value
-			                                   const T &arg_min_value, ///< The new min value
-			                                   const T &arg_max_value  ///< The new max value
+			int update_min_max_with_value_impl(T       &prm_min,       ///< The min value
+			                                   T       &prm_max,       ///< The max value
+			                                   const T &prm_min_value, ///< The new min value
+			                                   const T &prm_max_value  ///< The new max value
 			                                   ) {
-				if ( arg_min_value < arg_min ) { arg_min = arg_min_value; }
-				if ( arg_max_value > arg_max ) { arg_max = arg_max_value; }
+				if ( prm_min_value < prm_min ) { prm_min = prm_min_value; }
+				if ( prm_max_value > prm_max ) { prm_max = prm_max_value; }
 				return 0;
 			}
 
 			/// \brief Implementation for update_mins_maxs_with_value
 			template <typename Tpl, size_t... Index>
-			void update_mins_maxs_with_value_impl(Tpl                       &arg_mins,  ///< The min tuple
-			                                      Tpl                       &arg_maxs,  ///< The max tuple
-			                                      const std::pair<Tpl, Tpl> &arg_value, ///< The new tuple
+			void update_mins_maxs_with_value_impl(Tpl                       &prm_mins,  ///< The min tuple
+			                                      Tpl                       &prm_maxs,  ///< The max tuple
+			                                      const std::pair<Tpl, Tpl> &prm_value, ///< The new tuple
 			                                      std::index_sequence<Index...>         ///< An index_sequence matching the indices of Tpl
 			                                      ) {
 				auto dummy_list = {
 					update_min_max_with_value_impl(
-						std::get<Index>( arg_mins         ),
-						std::get<Index>( arg_maxs         ),
-						std::get<Index>( arg_value.first  ),
-						std::get<Index>( arg_value.second )
+						std::get<Index>( prm_mins         ),
+						std::get<Index>( prm_maxs         ),
+						std::get<Index>( prm_value.first  ),
+						std::get<Index>( prm_value.second )
 					)...
 				};
 				boost::ignore_unused( dummy_list );
@@ -68,14 +68,14 @@ namespace cath {
 
 			/// \brief Element-wise update a min tuple and a max tuple with a new tuple
 			template <typename Tpl>
-			void update_mins_maxs_with_value(Tpl                       &arg_mins, ///< The min tuple
-			                                 Tpl                       &arg_maxs, ///< The max tuple
-			                                 const std::pair<Tpl, Tpl> &arg_value ///< The new tuple
+			void update_mins_maxs_with_value(Tpl                       &prm_mins, ///< The min tuple
+			                                 Tpl                       &prm_maxs, ///< The max tuple
+			                                 const std::pair<Tpl, Tpl> &prm_value ///< The new tuple
 			                                 ) {
 				return update_mins_maxs_with_value_impl(
-					arg_mins,
-					arg_maxs,
-					arg_value,
+					prm_mins,
+					prm_maxs,
+					prm_value,
 					tuple_index_sequence<Tpl>{}
 				);
 			}
@@ -85,7 +85,7 @@ namespace cath {
 
 				/// \brief Find the element-wise mins and maxs tuples of a range of tuples
 				template <typename Rng>
-				auto operator()(Rng &&arg_rng ///< A range of tuples
+				auto operator()(Rng &&prm_rng ///< A range of tuples
 				                ) const {
 					using pair_t  = common::range_value_t<Rng>;
 					static_assert(
@@ -102,10 +102,10 @@ namespace cath {
 						"mins_maxs_tuple_pair_mins_maxs_element_fn() can only be applied to pairs of *tuples*"
 					);
 
-					auto       begin_itr     = common::cbegin( arg_rng );
-					const auto end_itr       = common::cend  ( arg_rng );
+					auto       begin_itr     = common::cbegin( prm_rng );
+					const auto end_itr       = common::cend  ( prm_rng );
 
-					assert( begin_itr != end_itr ); // arg_rng mustn't be empty
+					assert( begin_itr != end_itr ); // prm_rng mustn't be empty
 
 					// Set the mins and maxs to the element
 					value_t mins = begin_itr->first;

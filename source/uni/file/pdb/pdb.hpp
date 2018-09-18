@@ -198,16 +198,16 @@ namespace cath {
 
 		/// \brief Get the residue of the specified index
 		///        (with no checking for which residues are backbone-complete)
-		inline const pdb_residue & pdb::get_residue_of_index__backbone_unchecked(const size_t &arg_index ///< The index of the residue to retun
+		inline const pdb_residue & pdb::get_residue_of_index__backbone_unchecked(const size_t &prm_index ///< The index of the residue to retun
 		                                                                         ) const {
 #ifndef NDEBUG
-			if ( arg_index >= get_num_residues() ) {
+			if ( prm_index >= get_num_residues() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 					"Unable to get_residue_ca_coord_of_index__backbone_unchecked() for index >= number of residues"
 				));
 			}
 #endif
-			return pdb_residues[ arg_index ];
+			return pdb_residues[ prm_index ];
 		}
 
 		/// \brief Standard const begin method for the range of residues
@@ -224,12 +224,12 @@ namespace cath {
 		///        as the residue at the specified index, or return none if there is none
 		///
 		/// \relates pdb
-		inline size_opt index_of_preceding_residue_in_same_chain(const pdb    &arg_pdb,  ///< The PDB containing the residues in question
-		                                                         const size_t &arg_index ///< The index of the query residue
+		inline size_opt index_of_preceding_residue_in_same_chain(const pdb    &prm_pdb,  ///< The PDB containing the residues in question
+		                                                         const size_t &prm_index ///< The index of the query residue
 		                                                         ) {
-			const auto &chain = get_chain_label( arg_pdb.get_residue_of_index__backbone_unchecked( arg_index ) );
-			for (const size_t &index : common::indices( arg_index ) | boost::adaptors::reversed ) {
-				if ( chain == get_chain_label( arg_pdb.get_residue_of_index__backbone_unchecked( index ) ) ) {
+			const auto &chain = get_chain_label( prm_pdb.get_residue_of_index__backbone_unchecked( prm_index ) );
+			for (const size_t &index : common::indices( prm_index ) | boost::adaptors::reversed ) {
+				if ( chain == get_chain_label( prm_pdb.get_residue_of_index__backbone_unchecked( index ) ) ) {
 					return index;
 				}
 			}

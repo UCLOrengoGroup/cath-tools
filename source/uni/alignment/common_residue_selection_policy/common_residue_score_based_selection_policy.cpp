@@ -29,25 +29,25 @@ using namespace cath::align;
 using namespace cath::common;
 using namespace std;
 
-size_vec common_residue_score_based_selection_policy::do_select_common_residues(const alignment                    &arg_alignment, ///< TODOCUMENT
-                                                                                const vector<alignment::size_type> &arg_indices,   ///< TODOCUMENT
-                                                                                const alignment::size_type         &arg_entry_a,   ///< TODOCUMENT
-                                                                                const alignment::size_type         &arg_entry_b    ///< TODOCUMENT
+size_vec common_residue_score_based_selection_policy::do_select_common_residues(const alignment                    &prm_alignment, ///< TODOCUMENT
+                                                                                const vector<alignment::size_type> &prm_indices,   ///< TODOCUMENT
+                                                                                const alignment::size_type         &prm_entry_a,   ///< TODOCUMENT
+                                                                                const alignment::size_type         &prm_entry_b    ///< TODOCUMENT
                                                                                 ) const {
 	// Sanity check the alignment is scored
-	if ( ! arg_alignment.is_scored() ) {
+	if ( ! prm_alignment.is_scored() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot use a common_residue_score_based_selection_policy to select common coords for an unscored alignment"));
 	}
 
-	// Grab the scores of the positions that are in common between the entries arg_entry_a and arg_entry_b
+	// Grab the scores of the positions that are in common between the entries prm_entry_a and prm_entry_b
 	// Also keep track of the original indices of these positions to reconstruct them afterwards
 	doub_doub_pair_vec scores;
-	scores.reserve( arg_indices.size() );
-	for (const size_t &index : arg_indices) {
-		if ( num_present_positions_of_index( arg_alignment, index ) > 1 ) {
+	scores.reserve( prm_indices.size() );
+	for (const size_t &index : prm_indices) {
+		if ( num_present_positions_of_index( prm_alignment, index ) > 1 ) {
 			scores.push_back( make_pair(
-				get_score_of_entry_and_index( arg_alignment, arg_entry_a, index ),
-				get_score_of_entry_and_index( arg_alignment, arg_entry_b, index )
+				get_score_of_entry_and_index( prm_alignment, prm_entry_a, index ),
+				get_score_of_entry_and_index( prm_alignment, prm_entry_b, index )
 			) );
 		}
 	}

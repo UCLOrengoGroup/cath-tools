@@ -39,25 +39,25 @@ using ::std::string;
 /// \brief Extract into the specified clustering_levels from the specified stream
 ///
 /// \relates clustering_levels
-std::istream & cath::clust::operator>>(istream           &arg_is,               ///< The stream from which the clustering_levels should be extracted
-                                       clustering_levels &arg_clustering_levels ///< The clustering_levels to populate from the specified stream
+std::istream & cath::clust::operator>>(istream           &prm_is,               ///< The stream from which the clustering_levels should be extracted
+                                       clustering_levels &prm_clustering_levels ///< The clustering_levels to populate from the specified stream
                                        ) {
 	string input_string;
-	arg_is >> input_string;
+	prm_is >> input_string;
 
-	arg_clustering_levels.levels = transform_build<strength_vec>(
+	prm_clustering_levels.levels = transform_build<strength_vec>(
 		split_build<str_vec>( input_string, is_any_of( "," ) ),
 		[] (const string &x) { return lexical_cast<strength>( x ); }
 	);
 
-	return arg_is;
+	return prm_is;
 }
 
 /// \brief Provide Boost program_options validation for clustering_levels
 ///
 /// \relates clustering_levels
-void cath::clust::validate(any           &arg_value,         ///< The value to populate
-                           const str_vec &arg_value_strings, ///< The string values to validate
+void cath::clust::validate(any           &prm_value,         ///< The value to populate
+                           const str_vec &prm_value_strings, ///< The string values to validate
                            clustering_levels *, int) {
-	arg_value = lex_castable_validator<clustering_levels>::perform_validate( arg_value, arg_value_strings );
+	prm_value = lex_castable_validator<clustering_levels>::perform_validate( prm_value, prm_value_strings );
 }

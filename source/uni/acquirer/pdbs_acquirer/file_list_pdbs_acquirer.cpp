@@ -43,7 +43,7 @@ unique_ptr<pdbs_acquirer> file_list_pdbs_acquirer::do_clone() const {
 }
 
 /// \brief TODOCUMENT
-pdb_list_name_set_list_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istream &/*arg_istream*/ ///< TODOCUMENT
+pdb_list_name_set_list_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istream &/*prm_istream*/ ///< TODOCUMENT
                                                                            ) const {
 	// Create a vector of PDBs to be superposed
 	pdb_list pdbs;
@@ -61,8 +61,8 @@ pdb_list_name_set_list_pair file_list_pdbs_acquirer::do_get_pdbs_and_names(istre
 }
 
 /// \brief Ctor for file_list_pdbs_acquirer.
-file_list_pdbs_acquirer::file_list_pdbs_acquirer(path_vec arg_files ///< TODOCUMENT
-                                                 ) : files { std::move( arg_files ) } {
+file_list_pdbs_acquirer::file_list_pdbs_acquirer(path_vec prm_files ///< TODOCUMENT
+                                                 ) : files { std::move( prm_files ) } {
 }
 
 

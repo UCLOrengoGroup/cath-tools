@@ -51,10 +51,10 @@ namespace cath {
 
 		/// \brief Ctor from a range
 		template <typename RNG>
-		adjacented_range<RNG>::adjacented_range(const RNG &arg_range ///< The range over which to apply this adjacented_range
+		adjacented_range<RNG>::adjacented_range(const RNG &prm_range ///< The range over which to apply this adjacented_range
 		                                        ) : super(
-		                                            	adjacented_iterator( cath::common::cbegin( arg_range ), cath::common::cend  ( arg_range ) ),
-		                                            	adjacented_iterator( cath::common::cend  ( arg_range ), cath::common::cend  ( arg_range ) )
+		                                            	adjacented_iterator( cath::common::cbegin( prm_range ), cath::common::cend  ( prm_range ) ),
+		                                            	adjacented_iterator( cath::common::cend  ( prm_range ), cath::common::cend  ( prm_range ) )
 		                                            ) {
 		}
 

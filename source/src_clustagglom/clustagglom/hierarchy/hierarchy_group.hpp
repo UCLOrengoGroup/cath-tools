@@ -65,9 +65,9 @@ namespace cath {
 		}
 
 		/// \brief Get the hierarchy_value associated with the sequence with the specified index
-		inline const hierarchy_value & hierarchy_group::operator[](const size_t &arg_index ///< The index of the hierarchy_value to retrieve
+		inline const hierarchy_value & hierarchy_group::operator[](const size_t &prm_index ///< The index of the hierarchy_value to retrieve
 		                                                           ) const {
-			return values[ arg_index ];
+			return values[ prm_index ];
 		}
 
 		/// \brief Emplace a hierarchy_value to be constructed with the specified arguments

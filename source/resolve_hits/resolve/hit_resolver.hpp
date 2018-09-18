@@ -95,43 +95,43 @@ namespace cath {
 			///        on the best result seen so far
 			///
 			/// To update, the new score must beat:
-			///  * arg_best_so_far->get_score() if arg_best_so_far is set
-			///  * arg_score_to_beat            otherwise
-			inline void hit_resolver::update_best_if_hit_improves(scored_arch_proxy_opt   &arg_best_so_far,         ///< The best architecture and score seen so far
-			                                                      const resscr_t          &arg_hit_score,           ///< The score of the new hit
-			                                                      const hitidx_t          &arg_hit_index,           ///< The index of the new hit
-			                                                      const scored_arch_proxy &arg_best_hit_complement, ///< The best architecture to complement this new hit
-			                                                      const resscr_t          &arg_score_to_beat        ///< The base score that any result must beat
+			///  * prm_best_so_far->get_score() if prm_best_so_far is set
+			///  * prm_score_to_beat            otherwise
+			inline void hit_resolver::update_best_if_hit_improves(scored_arch_proxy_opt   &prm_best_so_far,         ///< The best architecture and score seen so far
+			                                                      const resscr_t          &prm_hit_score,           ///< The score of the new hit
+			                                                      const hitidx_t          &prm_hit_index,           ///< The index of the new hit
+			                                                      const scored_arch_proxy &prm_best_hit_complement, ///< The best architecture to complement this new hit
+			                                                      const resscr_t          &prm_score_to_beat        ///< The base score that any result must beat
 			                                                      ) {
-				const resscr_t this_score = arg_hit_score + arg_best_hit_complement.get_score();
-				const bool improves = arg_best_so_far ? ( this_score > arg_best_so_far->get_score() )
-				                                      : ( this_score > arg_score_to_beat            );
+				const resscr_t this_score = prm_hit_score + prm_best_hit_complement.get_score();
+				const bool improves = prm_best_so_far ? ( this_score > prm_best_so_far->get_score() )
+				                                      : ( this_score > prm_score_to_beat            );
 				if ( improves ) {
-					arg_best_so_far = add_hit_copy( arg_best_hit_complement, arg_hit_score, arg_hit_index );
+					prm_best_so_far = add_hit_copy( prm_best_hit_complement, prm_hit_score, prm_hit_index );
 				}
 			}
 
 			/// \brief Get the best architecture that can be achieved using one of the specified hits
 			///        that all stop at the same boundary
 			///
-			/// \todo Consider getting arg_start_arrow from arg_bests
+			/// \todo Consider getting prm_start_arrow from prm_bests
 			///
 			/// Note: Not using max_element because that'd probably call get_complex_hit_score() twice for many elements
-			inline scored_arch_proxy_opt hit_resolver::get_best_scored_arch_with_one_of_hits(const boost::sub_range<boost::integer_range<hitidx_t>> &arg_hit_indices,  ///< The indices of the hits to consider
-			                                                                                 const calc_hit_vec                                     &arg_mask,         ///< The active mask defining no-go regions
-			                                                                                 const seq::seq_arrow                                   &arg_start_arrow,  ///< The start point of the current scan (from which arg_bests should have results (up to the one place before the stop of these hits))
-			                                                                                                                                                           ///< Guaranteed to be at the boundary of a segment in arg_masks, or at the very start if arg_masks is empty
-			                                                                                 const best_scan_arches                                 &arg_bests,        ///< The history of best-seen architectures so far in this layer of dynamic programming. This is setup to handle the current forbidden arg_masks.
-			                                                                                 const resscr_t                                         &arg_score_to_beat ///< The existing score to beat. This is setup to handle the current forbidden arg_masks.
+			inline scored_arch_proxy_opt hit_resolver::get_best_scored_arch_with_one_of_hits(const boost::sub_range<boost::integer_range<hitidx_t>> &prm_hit_indices,  ///< The indices of the hits to consider
+			                                                                                 const calc_hit_vec                                     &prm_mask,         ///< The active mask defining no-go regions
+			                                                                                 const seq::seq_arrow                                   &prm_start_arrow,  ///< The start point of the current scan (from which prm_bests should have results (up to the one place before the stop of these hits))
+			                                                                                                                                                           ///< Guaranteed to be at the boundary of a segment in prm_masks, or at the very start if prm_masks is empty
+			                                                                                 const best_scan_arches                                 &prm_bests,        ///< The history of best-seen architectures so far in this layer of dynamic programming. This is setup to handle the current forbidden prm_masks.
+			                                                                                 const resscr_t                                         &prm_score_to_beat ///< The existing score to beat. This is setup to handle the current forbidden prm_masks.
 			                                                                                 ) {
-				// Loop over each of the hits that stop at arg_current_arrow
+				// Loop over each of the hits that stop at prm_current_arrow
 				scored_arch_proxy_opt best_so_far;
-				for (const auto &hit_index : arg_hit_indices) {
+				for (const auto &hit_index : prm_hit_indices) {
 					const auto &the_hit = hits.get()[ hit_index ];
 
-					// If this hit clashes with the forbidden regions marked out by arg_mask,
+					// If this hit clashes with the forbidden regions marked out by prm_mask,
 					// then it can't be used so skip to the next one
-					if ( hit_overlaps_with_any_of_hits( the_hit, arg_mask ) ) {
+					if ( hit_overlaps_with_any_of_hits( the_hit, prm_mask ) ) {
 						continue;
 					}
 
@@ -140,17 +140,17 @@ namespace cath {
 					//  * the best score/arch before the start
 					//
 					// (and we know that the local best_scan_arches will include an entry for the hit's start_arrow because
-					//  the hit must be within this scan because the hit is contiguous and arg_start_arrow is never within
+					//  the hit must be within this scan because the hit is contiguous and prm_start_arrow is never within
 					//  the middle of a free stretch)
 					//
-					// If that's an improvement on best_so_far/arg_score_to_beat then update best_so_far
+					// If that's an improvement on best_so_far/prm_score_to_beat then update best_so_far
 					if ( ! is_discontig( the_hit ) ) {
 						update_best_if_hit_improves(
 							best_so_far,
 							the_hit.get_score(),
 							hit_index,
-							arg_bests.get_best_scored_arch_up_to_arrow( get_start_arrow( the_hit ) ),
-							arg_score_to_beat
+							prm_bests.get_best_scored_arch_up_to_arrow( get_start_arrow( the_hit ) ),
+							prm_score_to_beat
 						);
 					}
 					// Else if the hit is discontiguous...
@@ -159,43 +159,43 @@ namespace cath {
 
 						const scored_arch_proxy &best_hit_complement =
 							// If the discontiguous hit is within this region
-							//   (ie hit_start >= arg_start_arrow;
+							//   (ie hit_start >= prm_start_arrow;
 							//    we already know it must stop before the end of scan, else we wouldn't be considering it)
 							//
 							// Then the score/arch is the sum of:
 							//  * the score/arch of this hit itself
 							//  * the best score/arch that can be found by recursing into a new layer of dynamic-programming:
-							//    [ up to the end of the hit that doesn't clash with arg_mask or the_hit;
+							//    [ up to the end of the hit that doesn't clash with prm_mask or the_hit;
 							//      starting from the start of this hit, by using the (already calculated) best score/arch up to that point ]
-							( hit_start >= arg_start_arrow ) ? get_best_score_and_arch_of_specified_regions(
-								arg_mask + the_hit,
+							( hit_start >= prm_start_arrow ) ? get_best_score_and_arch_of_specified_regions(
+								prm_mask + the_hit,
 								get_stop_of_first_segment( the_hit ),
 								get_start_of_last_segment( the_hit ),
-								arg_bests.get_best_scored_arch_up_to_arrow( hit_start )
+								prm_bests.get_best_scored_arch_up_to_arrow( hit_start )
 							) :
 
-							// Else this is a discontiguous hit that starts before arg_start_arrow
+							// Else this is a discontiguous hit that starts before prm_start_arrow
 							//
 							// Then the score/arch is the sum of:
 							//  * the score/arch of this hit itself
 							//  * the best score/arch that can be found by recursing into a new layer of dynamic programming:
-							//    [ up to the end of the hit that doesn't clash with arg_mask or the_hit;
+							//    [ up to the end of the hit that doesn't clash with prm_mask or the_hit;
 							//      starting from start_arrow again, by using the previously recorded partial pickup of
-							//      best score/arch up to there that doesn't clash with (arg_mask + the_hit) ]
+							//      best score/arch up to there that doesn't clash with (prm_mask + the_hit) ]
 							get_best_score_and_arch_of_specified_regions(
-								arg_mask + the_hit,
-								arg_start_arrow,
+								prm_mask + the_hit,
+								prm_start_arrow,
 								get_start_of_last_segment( the_hit ),
-								get_best_for_masks_up_to_arrow( the_masked_bests_cache, arg_mask + the_hit, arg_start_arrow )
+								get_best_for_masks_up_to_arrow( the_masked_bests_cache, prm_mask + the_hit, prm_start_arrow )
 							);
 
-						// If that's an improvement on best_so_far/arg_score_to_beat then update best_so_far
+						// If that's an improvement on best_so_far/prm_score_to_beat then update best_so_far
 						update_best_if_hit_improves(
 							best_so_far,
 							the_hit.get_score(),
 							hit_index,
 							best_hit_complement,
-							arg_score_to_beat
+							prm_score_to_beat
 						);
 					}
 				}

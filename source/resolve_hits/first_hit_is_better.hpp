@@ -59,27 +59,27 @@ namespace cath {
 		/// \relates calc_hit
 		///
 		/// \relatesalso full_hit_list
-		inline boost::logic::tribool first_hit_is_better(const calc_hit      &arg_lhs,      ///< The first hit to compare
-		                                                 const calc_hit      &arg_rhs,      ///< The second hit to compare
-		                                                 const full_hit_list &arg_full_hits ///< The full hits, which are need for comparing labels for otherwise very similar hits
+		inline boost::logic::tribool first_hit_is_better(const calc_hit      &prm_lhs,      ///< The first hit to compare
+		                                                 const calc_hit      &prm_rhs,      ///< The second hit to compare
+		                                                 const full_hit_list &prm_full_hits ///< The full hits, which are need for comparing labels for otherwise very similar hits
 		                                                 ) {
 			// If the neither of the hits covers the other, than neither can be better than the other
-			if ( ! one_covers_other( arg_lhs, arg_rhs ) ) {
+			if ( ! one_covers_other( prm_lhs, prm_rhs ) ) {
 				return boost::logic::indeterminate;
 			}
 
 			// If the first's score is better...
-			if ( arg_lhs.get_score() > arg_rhs.get_score() ) {
+			if ( prm_lhs.get_score() > prm_rhs.get_score() ) {
 				// If the first is (non-strictly) within the second, it's better; else neither is better
-				return first_is_not_outside_second( arg_lhs, arg_rhs )
+				return first_is_not_outside_second( prm_lhs, prm_rhs )
 					? boost::logic::tribool{ true }
 					: boost::logic::indeterminate;
 			}
 
 			// If the second's score is better...
-			if ( arg_lhs.get_score() < arg_rhs.get_score() ) {
+			if ( prm_lhs.get_score() < prm_rhs.get_score() ) {
 				// If the second is (non-strictly) within the first, it's better; else neither is better
-				return first_is_not_outside_second( arg_rhs, arg_lhs )
+				return first_is_not_outside_second( prm_rhs, prm_lhs )
 					? boost::logic::tribool{ false }
 					: boost::logic::indeterminate;
 			}
@@ -87,21 +87,21 @@ namespace cath {
 			// Otherwise, scores are equal so...
 
 			// If the first hit is strictly within the second, it's better; else...
-			if ( first_is_shorter_and_within_second( arg_lhs, arg_rhs ) ) {
+			if ( first_is_shorter_and_within_second( prm_lhs, prm_rhs ) ) {
 				return boost::logic::tribool{ true };
 			}
 			// If the second hit is strictly within the first, it's better; else...
-			if ( first_is_shorter_and_within_second( arg_rhs, arg_lhs ) ) {
+			if ( first_is_shorter_and_within_second( prm_rhs, prm_lhs ) ) {
 				return boost::logic::tribool{ false };
 			}
 
 			// Otherwise, both score and segments are equal so...
 
 			/// Compare labels and then label indices
-			const hitidx_t    &idx_lhs   = arg_lhs.get_label_idx();
-			const hitidx_t    &idx_rhs   = arg_rhs.get_label_idx();
-			const std::string &label_lhs = arg_full_hits[ idx_lhs ].get_label();
-			const std::string &label_rhs = arg_full_hits[ idx_rhs ].get_label();
+			const hitidx_t    &idx_lhs   = prm_lhs.get_label_idx();
+			const hitidx_t    &idx_rhs   = prm_rhs.get_label_idx();
+			const std::string &label_lhs = prm_full_hits[ idx_lhs ].get_label();
+			const std::string &label_rhs = prm_full_hits[ idx_rhs ].get_label();
 			return ( std::tie( label_lhs, idx_lhs ) < std::tie( label_rhs, idx_rhs ) ) ? boost::logic::tribool{ true  } :
 			       ( std::tie( label_lhs, idx_lhs ) > std::tie( label_rhs, idx_rhs ) ) ? boost::logic::tribool{ false } :
 			                                                                             boost::logic::indeterminate;
@@ -135,26 +135,26 @@ namespace cath {
 		/// \relates calc_hit
 		///
 		/// \relatesalso full_hit_list
-		inline boost::logic::tribool first_hit_is_better(const full_hit &arg_lhs, ///< The first hit to compare
-		                                                 const full_hit &arg_rhs  ///< The second hit to compare
+		inline boost::logic::tribool first_hit_is_better(const full_hit &prm_lhs, ///< The first hit to compare
+		                                                 const full_hit &prm_rhs  ///< The second hit to compare
 		                                                 ) {
 			// If the neither of the hits covers the other, than neither can be better than the other
-			if ( ! one_covers_other( arg_lhs, arg_rhs ) ) {
+			if ( ! one_covers_other( prm_lhs, prm_rhs ) ) {
 				return boost::logic::indeterminate;
 			}
 
 			// If the first's score is better...
-			if ( arg_lhs.get_score() > arg_rhs.get_score() ) {
+			if ( prm_lhs.get_score() > prm_rhs.get_score() ) {
 				// If the first is (non-strictly) within the second, it's better; else neither is better
-				return first_is_not_outside_second( arg_lhs, arg_rhs )
+				return first_is_not_outside_second( prm_lhs, prm_rhs )
 					? boost::logic::tribool{ true }
 					: boost::logic::indeterminate;
 			}
 
 			// If the second's score is better...
-			if ( arg_lhs.get_score() < arg_rhs.get_score() ) {
+			if ( prm_lhs.get_score() < prm_rhs.get_score() ) {
 				// If the second is (non-strictly) within the first, it's better; else neither is better
-				return first_is_not_outside_second( arg_rhs, arg_lhs )
+				return first_is_not_outside_second( prm_rhs, prm_lhs )
 					? boost::logic::tribool{ false }
 					: boost::logic::indeterminate;
 			}
@@ -162,19 +162,19 @@ namespace cath {
 			// Otherwise, scores are equal so...
 
 			// If the first hit is strictly within the second, it's better; else...
-			if ( first_is_shorter_and_within_second( arg_lhs, arg_rhs ) ) {
+			if ( first_is_shorter_and_within_second( prm_lhs, prm_rhs ) ) {
 				return boost::logic::tribool{ true };
 			}
 			// If the second hit is strictly within the first, it's better; else...
-			if ( first_is_shorter_and_within_second( arg_rhs, arg_lhs ) ) {
+			if ( first_is_shorter_and_within_second( prm_rhs, prm_lhs ) ) {
 				return boost::logic::tribool{ false };
 			}
 
 			// Otherwise, both score and segments are equal so...
 
 			/// Compare labels and then label indices
-			const std::string &label_lhs = arg_lhs.get_label();
-			const std::string &label_rhs = arg_rhs.get_label();
+			const std::string &label_lhs = prm_lhs.get_label();
+			const std::string &label_rhs = prm_rhs.get_label();
 			return ( label_lhs < label_rhs ) ? boost::logic::tribool{ true  } :
 			       ( label_lhs > label_rhs ) ? boost::logic::tribool{ false } :
 			                                   boost::logic::indeterminate;

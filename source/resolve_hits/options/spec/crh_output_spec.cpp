@@ -85,108 +85,108 @@ const bool & crh_output_spec::get_output_hmmer_aln() const {
 }
 
 /// \brief Setter for any files to which hits text should be output
-crh_output_spec & crh_output_spec::set_hits_text_files(const path_vec &arg_hits_text_files ///< Any files to which hits text should be output
+crh_output_spec & crh_output_spec::set_hits_text_files(const path_vec &prm_hits_text_files ///< Any files to which hits text should be output
                                                        ) {
-	hits_text_files = arg_hits_text_files;
+	hits_text_files = prm_hits_text_files;
 	return *this;
 }
 
 /// \brief Setter for whether to suppress the default output of hits text to stdout
-crh_output_spec & crh_output_spec::set_quiet(const bool &arg_quiet ///< Whether to suppress the default output of hits text to stdout
+crh_output_spec & crh_output_spec::set_quiet(const bool &prm_quiet ///< Whether to suppress the default output of hits text to stdout
                                              ) {
-	quiet = arg_quiet;
+	quiet = prm_quiet;
 	return *this;
 }
 
 /// \brief Setter for whether to output the hits starts/stops *after* trimming
-crh_output_spec & crh_output_spec::set_boundary_output(const hit_boundary_output &arg_boundary_output ///< Whether to output the hits starts/stops *after* trimming
+crh_output_spec & crh_output_spec::set_boundary_output(const hit_boundary_output &prm_boundary_output ///< Whether to output the hits starts/stops *after* trimming
                                                        ) {
-	boundary_output = arg_boundary_output;
+	boundary_output = prm_boundary_output;
 	return *this;
 }
 
 /// \brief Setter for any files to which a summary of the input should be output
-crh_output_spec & crh_output_spec::set_summarise_files(const path_vec &arg_summarise_files ///< Any files to which a summary of the input should be output
+crh_output_spec & crh_output_spec::set_summarise_files(const path_vec &prm_summarise_files ///< Any files to which a summary of the input should be output
                                                        ) {
-	summarise_files = arg_summarise_files;
+	summarise_files = prm_summarise_files;
 	return *this;
 }
 
 /// \brief Setter for any files to which HTML should be output
-crh_output_spec & crh_output_spec::set_html_output_files(const path_vec &arg_html_output_files ///< Any files to which HTML should be output
+crh_output_spec & crh_output_spec::set_html_output_files(const path_vec &prm_html_output_files ///< Any files to which HTML should be output
                                                          ) {
-	html_output_files = arg_html_output_files;
+	html_output_files = prm_html_output_files;
 	return *this;
 }
 
 /// \brief Setter for any files to which JSON should be output
-crh_output_spec & crh_output_spec::set_json_output_files(const path_vec &arg_json_output_files ///< Any files to which JSON should be output
+crh_output_spec & crh_output_spec::set_json_output_files(const path_vec &prm_json_output_files ///< Any files to which JSON should be output
                                                          ) {
-	json_output_files = arg_json_output_files;
+	json_output_files = prm_json_output_files;
 	return *this;
 }
 
 /// \brief Setter for any files to which the HTML's CSS should be output
-crh_output_spec & crh_output_spec::set_export_css_file(const path_opt &arg_export_css_file ///< Any files to which the HTML's CSS should be output
+crh_output_spec & crh_output_spec::set_export_css_file(const path_opt &prm_export_css_file ///< Any files to which the HTML's CSS should be output
                                                        ) {
-	export_css_file = arg_export_css_file;
+	export_css_file = prm_export_css_file;
 	return *this;
 }
 
 /// \brief Setter for whether to output a summary of the HMMER alignment
-crh_output_spec & crh_output_spec::set_output_hmmer_aln(const bool &arg_output_hmmer_aln ///< Whether to output a summary of the HMMER alignment
+crh_output_spec & crh_output_spec::set_output_hmmer_aln(const bool &prm_output_hmmer_aln ///< Whether to output a summary of the HMMER alignment
                                                         ) {
-	output_hmmer_aln = arg_output_hmmer_aln;
+	output_hmmer_aln = prm_output_hmmer_aln;
 	return *this;
 }
 
 /// \brief Return whether the specified crh_output_spec implies any HTML output
 ///
 /// \relates crh_output_spec
-bool cath::rslv::has_html_output(const crh_output_spec &arg_output_spec ///< The crh_output_spec to query
+bool cath::rslv::has_html_output(const crh_output_spec &prm_output_spec ///< The crh_output_spec to query
                                  ) {
-	return ! arg_output_spec.get_html_output_files().empty();
+	return ! prm_output_spec.get_html_output_files().empty();
 }
 
 /// \brief Return whether the specified crh_output_spec implies any hits-text output
 ///
 /// \relates crh_output_spec
-bool cath::rslv::has_hits_text_output(const crh_output_spec &arg_output_spec ///< The crh_output_spec to query
+bool cath::rslv::has_hits_text_output(const crh_output_spec &prm_output_spec ///< The crh_output_spec to query
                                       ) {
-	return ! arg_output_spec.get_hits_text_files().empty();
+	return ! prm_output_spec.get_hits_text_files().empty();
 }
 
 /// \brief Return whether the specified crh_output_spec has any output files that match the specified file
 ///
 /// \relates crh_output_spec
-bool cath::rslv::has_any_out_files_matching(const crh_output_spec &arg_output_spec, ///< The crh_output_spec to query
-                                            const path            &arg_query_path   ///< The file being searched for
+bool cath::rslv::has_any_out_files_matching(const crh_output_spec &prm_output_spec, ///< The crh_output_spec to query
+                                            const path            &prm_query_path   ///< The file being searched for
                                             ) {
 	return (
-		contains( arg_output_spec.get_hits_text_files(),   arg_query_path )
+		contains( prm_output_spec.get_hits_text_files(),   prm_query_path )
 		||
-		contains( arg_output_spec.get_summarise_files(),   arg_query_path )
+		contains( prm_output_spec.get_summarise_files(),   prm_query_path )
 		||
-		contains( arg_output_spec.get_html_output_files(), arg_query_path )
+		contains( prm_output_spec.get_html_output_files(), prm_query_path )
 		||
-		contains( arg_output_spec.get_json_output_files(), arg_query_path )
+		contains( prm_output_spec.get_json_output_files(), prm_query_path )
 		||
-		( arg_output_spec.get_export_css_file() == arg_query_path )
+		( prm_output_spec.get_export_css_file() == prm_query_path )
 	);
 }
 
 /// \brief Get all output paths implied by the specified crh_output_spec
 ///
 /// \relates crh_output_spec
-path_vec cath::rslv::get_all_output_paths(const crh_output_spec &arg_output_spec ///< The crh_output_spec to query
+path_vec cath::rslv::get_all_output_paths(const crh_output_spec &prm_output_spec ///< The crh_output_spec to query
                                           ) {
 	path_vec the_paths;
-	append( the_paths, arg_output_spec.get_hits_text_files()   );
-	append( the_paths, arg_output_spec.get_summarise_files()   );
-	append( the_paths, arg_output_spec.get_html_output_files() );
-	append( the_paths, arg_output_spec.get_json_output_files() );
-	if ( arg_output_spec.get_export_css_file() ) {
-		the_paths.push_back( *arg_output_spec.get_export_css_file() );
+	append( the_paths, prm_output_spec.get_hits_text_files()   );
+	append( the_paths, prm_output_spec.get_summarise_files()   );
+	append( the_paths, prm_output_spec.get_html_output_files() );
+	append( the_paths, prm_output_spec.get_json_output_files() );
+	if ( prm_output_spec.get_export_css_file() ) {
+		the_paths.push_back( *prm_output_spec.get_export_css_file() );
 	}
 	return the_paths;
 }
@@ -195,16 +195,16 @@ path_vec cath::rslv::get_all_output_paths(const crh_output_spec &arg_output_spec
 ///        or none otherwise
 ///
 /// \relates crh_output_spec
-str_opt cath::rslv::get_invalid_description(const crh_output_spec &arg_output_spec ///< The crh_output_spec to query
+str_opt cath::rslv::get_invalid_description(const crh_output_spec &prm_output_spec ///< The crh_output_spec to query
                                             ) {
-	const auto all_sorted_paths = sort_copy( get_all_output_paths( arg_output_spec ) );
+	const auto all_sorted_paths = sort_copy( get_all_output_paths( prm_output_spec ) );
 
 	const size_t num_stdouts = numeric_cast<size_t>( count( all_sorted_paths, path{ "-" } ) );
 	if ( num_stdouts > 1 ) {
 		return "Cannot send more than one type of output to stdout (which is specified as file \"-\")"s;
 	}
 
-	if ( num_stdouts > 0 && arg_output_spec.get_quiet() ) {
+	if ( num_stdouts > 0 && prm_output_spec.get_quiet() ) {
 		return "Cannot send output to stdout when requesting --" + crh_output_options_block::PO_QUIET;
 	}
 
@@ -212,8 +212,8 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &arg_output_sp
 		return "Cannot send more than one type of output to the same output file"s;
 	}
 
-	const bool hits_text_to_stdout = num_stdouts == 0 && ! arg_output_spec.get_quiet();
-	if ( means_output_trimmed_hits( arg_output_spec.get_boundary_output() ) && ! ( hits_text_to_stdout || has_hits_text_output( arg_output_spec ) ) ) {
+	const bool hits_text_to_stdout = num_stdouts == 0 && ! prm_output_spec.get_quiet();
+	if ( means_output_trimmed_hits( prm_output_spec.get_boundary_output() ) && ! ( hits_text_to_stdout || has_hits_text_output( prm_output_spec ) ) ) {
 		return
 			"Cannot specify trimmed boundaries if not outputting any hits text (with --"
 			+ crh_output_options_block::PO_HITS_TEXT_TO_FILE
@@ -226,8 +226,8 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &arg_output_sp
 /// \brief Convenience setter for whether to output the hits starts/stops *after* trimming
 ///
 /// \relates crh_output_spec
-crh_output_spec & cath::rslv::set_output_trimmed_hits(crh_output_spec &arg_output_spec,        ///< The crh_output_spec to modify
-                                                      const bool      &arg_output_trimmed_hits ///< Whether to output the hits starts/stops *after* trimming
+crh_output_spec & cath::rslv::set_output_trimmed_hits(crh_output_spec &prm_output_spec,        ///< The crh_output_spec to modify
+                                                      const bool      &prm_output_trimmed_hits ///< Whether to output the hits starts/stops *after* trimming
                                                       ) {
-	return arg_output_spec.set_boundary_output( hit_boundary_output_of_output_trimmed_hits( arg_output_trimmed_hits ) );
+	return prm_output_spec.set_boundary_output( hit_boundary_output_of_output_trimmed_hits( prm_output_trimmed_hits ) );
 }

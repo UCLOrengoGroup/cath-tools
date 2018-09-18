@@ -36,12 +36,12 @@ namespace cath {
 			class res_pair_from_psi_keyer_part_spec final {
 			public:
 				/// \brief Sanity check the specified cell width
-				static angle_type sanity_check_cell_width(const angle_type &arg_cell_width ///< The cell width to be sanity-checked
+				static angle_type sanity_check_cell_width(const angle_type &prm_cell_width ///< The cell width to be sanity-checked
 				                                          ) {
 					/// \todo Create a `bool is_shifted(const angle &, ...)` helper function for angle and use it here
-					return ( arg_cell_width <= geom::zero_angle<angle_base_type>() || arg_cell_width > geom::one_revolution<angle_base_type>() )
+					return ( prm_cell_width <= geom::zero_angle<angle_base_type>() || prm_cell_width > geom::one_revolution<angle_base_type>() )
 						? throw std::logic_error( "Cannot create an angle-based res_pair keyer_part with a cell_width that isn't in ( 0, 2pi ]" )
-						: arg_cell_width;
+						: prm_cell_width;
 				}
 
 				/// \brief Get a short name that describes this key part
@@ -50,15 +50,15 @@ namespace cath {
 				}
 
 				/// \brief Extract the relevant value from the specified res_pair
-				static angle_type get_value(const multi_struc_res_rep_pair &arg_res_pair ///< The res_pair from which the relevant value should be extracted
+				static angle_type get_value(const multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
 				                            ) {
-					return arg_res_pair.get_res_pair_core().get_from_psi_angle();
+					return prm_res_pair.get_res_pair_core().get_from_psi_angle();
 				}
 
 				/// \brief Extract the search radius from the specified quad_criteria
-				static angle_type get_search_radius(const quad_criteria &arg_criteria   ///< The criteria defining what is considered a match
+				static angle_type get_search_radius(const quad_criteria &prm_criteria   ///< The criteria defining what is considered a match
 				                                    ) {
-					return arg_criteria.get_maximum_psi_angle_difference();
+					return prm_criteria.get_maximum_psi_angle_difference();
 				}
 			};
 

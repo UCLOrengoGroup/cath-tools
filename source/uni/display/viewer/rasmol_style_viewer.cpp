@@ -30,7 +30,7 @@ string rasmol_style_viewer::do_default_file_extension() const {
 }
 
 /// \brief TODOCUMENT
-void rasmol_style_viewer::do_write_alignment_extras(ostream                     &/*arg_os*/,                   ///< TODOCUMENT
-                                                    const superposition_context &/*arg_superposition_context*/ ///< TODOCUMENT
+void rasmol_style_viewer::do_write_alignment_extras(ostream                     &/*prm_os*/,                   ///< TODOCUMENT
+                                                    const superposition_context &/*prm_superposition_context*/ ///< TODOCUMENT
                                                     ) const {
 }

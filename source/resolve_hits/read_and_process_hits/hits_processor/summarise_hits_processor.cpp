@@ -54,16 +54,16 @@ unique_ptr<hits_processor> summarise_hits_processor::do_clone() const {
 /// \brief Process the specified data
 ///
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-void summarise_hits_processor::do_process_hits_for_query(const string           &arg_query_id,         ///< The query_protein_id string
-                                                         const crh_filter_spec  &/*arg_filter_spec*/,  ///< The filter_spec to apply to the hits
-                                                         const crh_score_spec   &/*arg_score_spec*/,   ///< The score spec to apply to the hits
-                                                         const crh_segment_spec &/*arg_segment_spec*/, ///< The segment spec to apply to the hits
-                                                         const calc_hit_list    &arg_calc_hits         ///< The hits to process
+void summarise_hits_processor::do_process_hits_for_query(const string           &prm_query_id,         ///< The query_protein_id string
+                                                         const crh_filter_spec  &/*prm_filter_spec*/,  ///< The filter_spec to apply to the hits
+                                                         const crh_score_spec   &/*prm_score_spec*/,   ///< The score spec to apply to the hits
+                                                         const crh_segment_spec &/*prm_segment_spec*/, ///< The segment spec to apply to the hits
+                                                         const calc_hit_list    &prm_calc_hits         ///< The hits to process
                                                          ) {
-	const full_hit_list &full_hits = arg_calc_hits.get_full_hits();
+	const full_hit_list &full_hits = prm_calc_hits.get_full_hits();
 	if ( ! example_query_id_and_hit && ! full_hits.empty() ) {
 		example_query_id_and_hit = make_pair(
-			arg_query_id,
+			prm_query_id,
 			front( full_hits )
 		);
 	}
@@ -146,6 +146,6 @@ bool summarise_hits_processor::do_requires_strictly_worse_hits() const {
 }
 
 /// \brief Ctor for the summarise_hits_processor
-summarise_hits_processor::summarise_hits_processor(ref_vec<ostream> arg_ostreams ///< The ostream to which the results should be written
-                                                   ) noexcept : super{ move( arg_ostreams ) } {
+summarise_hits_processor::summarise_hits_processor(ref_vec<ostream> prm_ostreams ///< The ostream to which the results should be written
+                                                   ) noexcept : super{ move( prm_ostreams ) } {
 }

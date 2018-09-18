@@ -33,12 +33,12 @@ namespace cath {
 
 		/// \brief Invoke the specified callable the specified number of times
 		template <typename Fn>
-		void for_n(const size_t  &arg_n, ///< The number of time to invoke the callable
-		           Fn           &&arg_fn ///< The callable to invoke the specified number of times
+		void for_n(const size_t  &prm_n, ///< The number of time to invoke the callable
+		           Fn           &&prm_fn ///< The callable to invoke the specified number of times
 		           ) {
-			for (const auto &x : indices( arg_n ) ) {
+			for (const auto &x : indices( prm_n ) ) {
 				boost::ignore_unused( x );
-				invoke( std::forward<Fn>( arg_fn ) );
+				invoke( std::forward<Fn>( prm_fn ) );
 			}
 		}
 

@@ -42,21 +42,21 @@ using boost::irange;
 using boost::numeric_cast;
 
 /// \brief TODOCUMENT
-void matrix_plotter::check_lengths_match(const size_t &arg_length_a, ///< TODOCUMENT
-                                         const size_t &arg_length_b  ///< TODOCUMENT
+void matrix_plotter::check_lengths_match(const size_t &prm_length_a, ///< TODOCUMENT
+                                         const size_t &prm_length_b  ///< TODOCUMENT
                                          ) const {
-	if (arg_length_a != get_length_a()) {
+	if (prm_length_a != get_length_a()) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot plot entry associated with a mismatching first length"));
 	}
-	if (arg_length_b != get_length_b()) {
+	if (prm_length_b != get_length_b()) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot plot entry associated with a mismatching second length"));
 	}
 }
 
 /// \brief TODOCUMENT
-void matrix_plotter::check_window_width_matches(const size_t &arg_window_width ///< TODOCUMENT
+void matrix_plotter::check_window_width_matches(const size_t &prm_window_width ///< TODOCUMENT
                                                 ) {
-	if (arg_window_width != get_window_width()) {
+	if (prm_window_width != get_window_width()) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot plot entry associated with a mismatching window width"));
 	}
 }
@@ -83,26 +83,26 @@ size_t matrix_plotter::get_window_width() const {
 }
 
 /// \brief Ctor for matrix_plotter
-matrix_plotter::matrix_plotter(const size_t &arg_length_a, ///< The length of the first  entry (the number of rows    in the matrix)
-                               const size_t &arg_length_b  ///< The length of the second entry (the number of columns in the matrix)
-                               ) : length_a              { arg_length_a },
-                                   length_b              { arg_length_b },
+matrix_plotter::matrix_plotter(const size_t &prm_length_a, ///< The length of the first  entry (the number of rows    in the matrix)
+                               const size_t &prm_length_b  ///< The length of the second entry (the number of columns in the matrix)
+                               ) : length_a              { prm_length_a },
+                                   length_b              { prm_length_b },
                                    simplified_windowless { true         } {
 }
 
 /// \brief Ctor for matrix_plotter
-matrix_plotter::matrix_plotter(const size_t &arg_length_a,    ///< The length of the first  entry (the number of rows    in the matrix)
-                               const size_t &arg_length_b,    ///< The length of the second entry (the number of columns in the matrix)
-                               const size_t &arg_window_width ///< The window width to use when plotting
-                               ) : length_a     { arg_length_a     },
-                                   length_b     { arg_length_b     },
-                                   window_width { arg_window_width } {
+matrix_plotter::matrix_plotter(const size_t &prm_length_a,    ///< The length of the first  entry (the number of rows    in the matrix)
+                               const size_t &prm_length_b,    ///< The length of the second entry (the number of columns in the matrix)
+                               const size_t &prm_window_width ///< The window width to use when plotting
+                               ) : length_a     { prm_length_a     },
+                                   length_b     { prm_length_b     },
+                                   window_width { prm_window_width } {
 }
 
 /// \brief Plot the original scores for the matrix
-void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< The source of the scores to plot
+void matrix_plotter::plot_scores(const dyn_prog_score_source &prm_scorer ///< The source of the scores to plot
                                  ) {
-	check_lengths_match( arg_scorer.get_length_a(), arg_scorer.get_length_b() );
+	check_lengths_match( prm_scorer.get_length_a(), prm_scorer.get_length_b() );
 
 	const size_t lcl_length_a     = get_length_a();
 	const size_t lcl_length_b     = get_length_b();
@@ -111,7 +111,7 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< Th
 	doub_vec_vec scores( lcl_length_a, doub_vec( lcl_length_b, 0.0 ) );
 
 	if ( simplified_windowless ) {
-		const auto score_of_idx_tpl = [&] (const tuple<size_t, size_t> &x) { return numeric_cast<double>( arg_scorer.get_score( get<0>( x ), get<1>( x ) ) ); };
+		const auto score_of_idx_tpl = [&] (const tuple<size_t, size_t> &x) { return numeric_cast<double>( prm_scorer.get_score( get<0>( x ), get<1>( x ) ) ); };
 
 		const auto index_range_a     = indices( lcl_length_a );
 		const auto index_range_b     = indices( lcl_length_b );
@@ -159,7 +159,7 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< Th
 				ctr_b + 1
 			) - 1;
 			for (const size_t &ctr_a : irange( window_start_a, window_stop_a + 1 ) ) {
-				const double score = numeric_cast<double>( arg_scorer.get_score( ctr_a, ctr_b ) );
+				const double score = numeric_cast<double>( prm_scorer.get_score( ctr_a, ctr_b ) );
 				scores[ctr_a][ctr_b] = score;
 
 				// (pairs flipped due to switching from matrix order (row index then column index) to graph order (x then y))
@@ -179,10 +179,10 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &arg_scorer ///< Th
 }
 
 /// \brief TODOCUMENT
-void matrix_plotter::plot_return_path_matrix(const return_path_matrix &arg_return_path_matrix ///< TODOCUMENT
+void matrix_plotter::plot_return_path_matrix(const return_path_matrix &prm_return_path_matrix ///< TODOCUMENT
                                              ) {
-	check_lengths_match( arg_return_path_matrix.get_length_a(), arg_return_path_matrix.get_length_b() );
-	check_window_width_matches( arg_return_path_matrix.get_window_width() );
+	check_lengths_match( prm_return_path_matrix.get_length_a(), prm_return_path_matrix.get_length_b() );
+	check_window_width_matches( prm_return_path_matrix.get_window_width() );
 
 	const size_t lcl_length_a     = get_length_a();
 	const size_t lcl_length_b     = get_length_b();
@@ -207,7 +207,7 @@ void matrix_plotter::plot_return_path_matrix(const return_path_matrix &arg_retur
 			ctr_b + 1
 		) - 1;
 		for (const size_t &ctr_a : irange( window_start_a, window_stop_a + 1 ) ) {
-			const path_step      next_step  = arg_return_path_matrix.get_path_step_towards_end_at_point( ctr_a, ctr_b );
+			const path_step      next_step  = prm_return_path_matrix.get_path_step_towards_end_at_point( ctr_a, ctr_b );
 			const size_size_pair next_point = indices_of_point_after_path_step(next_step, ctr_a, ctr_b);
 
 			// (pairs flipped due to switching from matrix order (row index then column index) to graph order (x then y))
@@ -217,10 +217,10 @@ void matrix_plotter::plot_return_path_matrix(const return_path_matrix &arg_retur
 }
 
 /// \brief TODOCUMENT
-void matrix_plotter::plot_accumulated_scores(const score_accumulation_matrix &arg_score_accumulation_matrix ///< TODOCUMENT
+void matrix_plotter::plot_accumulated_scores(const score_accumulation_matrix &prm_score_accumulation_matrix ///< TODOCUMENT
                                              ) {
-	check_lengths_match( arg_score_accumulation_matrix.get_length_a(), arg_score_accumulation_matrix.get_length_b() );
-	check_window_width_matches( arg_score_accumulation_matrix.get_window_width() );
+	check_lengths_match( prm_score_accumulation_matrix.get_length_a(), prm_score_accumulation_matrix.get_length_b() );
+	check_window_width_matches( prm_score_accumulation_matrix.get_window_width() );
 
 	const size_t lcl_length_a     = get_length_a();
 	const size_t lcl_length_b     = get_length_b();
@@ -245,7 +245,7 @@ void matrix_plotter::plot_accumulated_scores(const score_accumulation_matrix &ar
 			ctr_b + 1
 		) - 1;
 		for (const size_t &ctr_a : irange( window_start_a, window_stop_a + 1 ) ) {
-			const score_type score = arg_score_accumulation_matrix.get_score_towards_end_at_point( ctr_a, ctr_b );
+			const score_type score = prm_score_accumulation_matrix.get_score_towards_end_at_point( ctr_a, ctr_b );
 			// (pair flipped due to switching from matrix order (row index then column index) to graph order (x then y))
 			do_write_corner_score( ctr_b, ctr_a, numeric_cast<double>(score) );
 		}
@@ -253,6 +253,6 @@ void matrix_plotter::plot_accumulated_scores(const score_accumulation_matrix &ar
 }
 
 /// \brief TODOCUMENT
-void matrix_plotter::finish(const path &arg_output_stem) const {
-	return do_finish(arg_output_stem);
+void matrix_plotter::finish(const path &prm_output_stem) const {
+	return do_finish(prm_output_stem);
 }

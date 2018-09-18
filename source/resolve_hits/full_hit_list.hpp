@@ -74,8 +74,8 @@ namespace cath {
 
 
 		/// \brief Ctor
-		inline full_hit_list::full_hit_list(full_hit_vec arg_full_hit_list ///< The full_hits
-		                                    ) : the_full_hits( std::move( arg_full_hit_list ) ) {
+		inline full_hit_list::full_hit_list(full_hit_vec prm_full_hit_list ///< The full_hits
+		                                    ) : the_full_hits( std::move( prm_full_hit_list ) ) {
 			// sort_full_hit_vec( the_full_hits, full_hit_labels );
 		}
 
@@ -97,9 +97,9 @@ namespace cath {
 		}
 
 		/// \brief Return the full_hit stored at the specified index
-		inline const full_hit & full_hit_list::operator[](const size_t &arg_index ///< The index of the full_hit to return
+		inline const full_hit & full_hit_list::operator[](const size_t &prm_index ///< The index of the full_hit to return
 		                                                  ) const {
-			return the_full_hits[ arg_index ];
+			return the_full_hits[ prm_index ];
 		}
 
 		/// \brief Standard non-const begin() method, as part of making this into a range over the full_hits

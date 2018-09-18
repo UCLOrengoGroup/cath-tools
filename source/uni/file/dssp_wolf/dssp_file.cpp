@@ -53,8 +53,8 @@ using boost::numeric_cast;
 using boost::range::count_if;
 
 /// \brief Ctor for dssp_file
-dssp_file::dssp_file(residue_vec arg_dssp_residues ///< TODOCUMENT
-                     ) : dssp_residues { std::move( arg_dssp_residues ) } {
+dssp_file::dssp_file(residue_vec prm_dssp_residues ///< TODOCUMENT
+                     ) : dssp_residues { std::move( prm_dssp_residues ) } {
 }
 
 /// \brief TODOCUMENT
@@ -63,9 +63,9 @@ size_t dssp_file::get_num_residues() const {
 }
 
 /// \brief TODOCUMENT
-const residue & dssp_file::get_residue_of_index(const size_t &arg_index ///< TODOCUMENT
+const residue & dssp_file::get_residue_of_index(const size_t &prm_index ///< TODOCUMENT
                                                 ) const {
-	return dssp_residues[arg_index];
+	return dssp_residues[prm_index];
 }
 
 /// \brief TODOCUMENT
@@ -84,31 +84,31 @@ dssp_file::const_iterator dssp_file::end() const {
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
 ///       (fix all errors, *then* provide default of boost::none)
-protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_file,        ///< The dssp_file object for a given structure
-                                              const pdb              &arg_pdb_file,         ///< The dssp_file object for a given structure
-                                              const dssp_skip_policy &arg_dssp_skip_policy, ///< Whether to exclude residues that are in the PDB but not the DSSP
-                                              const name_set         &arg_name_set,         ///< The name_set to set as the title of the protein
-                                              const ostream_ref_opt  &arg_ostream           ///< An optional reference to an ostream to which any logging should be sent
+protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &prm_dssp_file,        ///< The dssp_file object for a given structure
+                                              const pdb              &prm_pdb_file,         ///< The dssp_file object for a given structure
+                                              const dssp_skip_policy &prm_dssp_skip_policy, ///< Whether to exclude residues that are in the PDB but not the DSSP
+                                              const name_set         &prm_name_set,         ///< The name_set to set as the title of the protein
+                                              const ostream_ref_opt  &prm_ostream           ///< An optional reference to an ostream to which any logging should be sent
                                               ) {
 	// Build a rough protein object from the pdb object
 	const auto  built_protein     = build_protein_of_pdb(
-		arg_pdb_file,
-		arg_ostream,
-		( arg_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES )
+		prm_pdb_file,
+		prm_ostream,
+		( prm_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES )
 			? dssp_skip_policy::DONT_SKIP__BREAK_ANGLES
-			: arg_dssp_skip_policy
+			: prm_dssp_skip_policy
 	);
 	const auto &pdb_protein       = built_protein.first;
 	const auto &pdb_prot_info     = built_protein.second;
-	const auto  pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( arg_pdb_file, arg_ostream );
+	const auto  pdb_skip_indices  = get_protein_res_indices_that_dssp_might_skip( prm_pdb_file, prm_ostream );
 
 	// Grab the number of residues in the protein and dssp_file objects
-	const auto  num_dssp_residues = arg_dssp_file.get_num_residues();
+	const auto  num_dssp_residues = prm_dssp_file.get_num_residues();
 	const auto  num_pdb_residues  = pdb_protein.get_length();
 
 	// Grab the residues names from the DSSP and PDB and then tally them up
 	const auto  pdb_res_names     = get_residue_ids  ( pdb_protein );
-	const auto  dssp_res_names    = get_residue_ids  ( arg_dssp_file, false );
+	const auto  dssp_res_names    = get_residue_ids  ( prm_dssp_file, false );
 	const auto  alignment         = tally_residue_ids(
 		pdb_res_names,
 		dssp_res_names,
@@ -119,7 +119,7 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
 
 	// Prepare a list of new residue to populate
 	residue_vec new_residues;
-	new_residues.reserve( ( arg_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES ) ? num_dssp_residues : num_pdb_residues );
+	new_residues.reserve( ( prm_dssp_skip_policy == dssp_skip_policy::SKIP__BREAK_ANGLES ) ? num_dssp_residues : num_pdb_residues );
 
 	// Loop over the residues
 	size_t alignment_ctr = 0;
@@ -131,12 +131,12 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
 		const bool is_in_alignment     = ( (alignment_ctr < alignment.size() ) && ( alignment[alignment_ctr].first == pdb_residue_ctr ) );
 		if ( is_in_alignment ) {
 			// Combine the two residues and add them to the back
-			const residue &the_dssp_residue = arg_dssp_file.get_residue_of_index( alignment[alignment_ctr].second );
+			const residue &the_dssp_residue = prm_dssp_file.get_residue_of_index( alignment[alignment_ctr].second );
 			new_residues.push_back(
 				combine_residues_from_dssp_and_pdb(
 					the_dssp_residue,
 					the_pdb_residue,
-					angle_skipping_of_dssp_skip_policy( arg_dssp_skip_policy ),
+					angle_skipping_of_dssp_skip_policy( prm_dssp_skip_policy ),
 					res_makeup
 				)
 			);
@@ -144,13 +144,13 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
 			// Increment the alignment counter
 			++alignment_ctr;
 		}
-		else if ( res_skipping_of_dssp_skip_policy( arg_dssp_skip_policy ) == dssp_skip_res_skipping::DONT_SKIP ) {
+		else if ( res_skipping_of_dssp_skip_policy( prm_dssp_skip_policy ) == dssp_skip_res_skipping::DONT_SKIP ) {
 			new_residues.push_back( the_pdb_residue );
 		}
 	}
 
 	// Construct a new protein from the new list of residues
-	return { arg_name_set, new_residues };
+	return { prm_name_set, new_residues };
 }
 
 /// \brief Extract the names of the residues of the specified dssp_file
@@ -158,15 +158,15 @@ protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &arg_dssp_f
 /// \relates dssp_file
 ///
 /// \returns A vector of strings, each containing the PDB residue name or an empty string for a null residue record
-residue_id_vec cath::file::get_residue_ids(const dssp_file &arg_dssp_file,            ///< The dssp_file object for a given structure
-                                           const bool      &arg_exclude_null_residues ///< Whether to exclude null residues (rather than represent them with empty strings)
+residue_id_vec cath::file::get_residue_ids(const dssp_file &prm_dssp_file,            ///< The dssp_file object for a given structure
+                                           const bool      &prm_exclude_null_residues ///< Whether to exclude null residues (rather than represent them with empty strings)
                                            ) {
 	return copy_build<residue_id_vec>(
-		arg_dssp_file
+		prm_dssp_file
 			// Include if this isn't a null residue or if null residues aren't to be excluded
 			| filtered(
 				[&] (const residue &x) {
-					return ! arg_exclude_null_residues || ! is_null_residue( x );
+					return ! prm_exclude_null_residues || ! is_null_residue( x );
 				}
 			)
 			// Grab the residue name of the residue (or residue_name() for null residues)
@@ -181,10 +181,10 @@ residue_id_vec cath::file::get_residue_ids(const dssp_file &arg_dssp_file,      
 /// \brief TODOCUMENT
 ///
 /// \relates dssp_file
-size_t cath::file::get_num_non_null_residues(const dssp_file &arg_dssp_file ///< TODOCUMENT
+size_t cath::file::get_num_non_null_residues(const dssp_file &prm_dssp_file ///< TODOCUMENT
                                              ) {
 	return numeric_cast<size_t>( count_if(
-		arg_dssp_file,
+		prm_dssp_file,
 		[] (const residue &x) { return ! is_null_residue( x ); }
 	) );
 }

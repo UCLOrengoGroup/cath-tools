@@ -29,20 +29,20 @@ using std::string;
 /// \brief Generate a string describing the specified hierarchy_value
 ///
 /// \relates hierarchy_layer
-string cath::clust::to_string(const hierarchy_value &arg_hierarchy_value ///< The hierarchy_value to describe
+string cath::clust::to_string(const hierarchy_value &prm_hierarchy_value ///< The hierarchy_value to describe
                               ) {
 	using std::to_string;
-	return ( arg_hierarchy_value.get_type() == hierarchy_ref::CLUSTER )
-		? "deeper_group_" + to_string( arg_hierarchy_value.get_index() )
-		: to_string( arg_hierarchy_value.get_index() );
+	return ( prm_hierarchy_value.get_type() == hierarchy_ref::CLUSTER )
+		? "deeper_group_" + to_string( prm_hierarchy_value.get_index() )
+		: to_string( prm_hierarchy_value.get_index() );
 }
 
 /// \brief Insert a description of the specified hierarchy_value into the specified ostream
 ///
 /// \relates hierarchy_layer
-ostream & cath::clust::operator<<(ostream               &arg_os,             ///< The ostream into which the description should be inserted
-                                  const hierarchy_value &arg_hierarchy_value ///< The hierarchy_value to describe
+ostream & cath::clust::operator<<(ostream               &prm_os,             ///< The ostream into which the description should be inserted
+                                  const hierarchy_value &prm_hierarchy_value ///< The hierarchy_value to describe
                                   ) {
-	arg_os << to_string( arg_hierarchy_value );
-	return arg_os;
+	prm_os << to_string( prm_hierarchy_value );
+	return prm_os;
 }

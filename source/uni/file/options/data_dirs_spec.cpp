@@ -94,36 +94,36 @@ data_dirs_spec::data_dirs_spec() : values( DATA_FILE_TYPE_OPTION_DEFAULTS ) {
 ///
 /// data_option is a private, implementation detail so this method provides a common interface for
 /// the public getters to use to access values.
-string data_dirs_spec::get_value_of_option_and_data_file(const data_option &arg_option_type, ///< The option type to query
-                                                         const data_file   &arg_data_file    ///< The data type to query
+string data_dirs_spec::get_value_of_option_and_data_file(const data_option &prm_option_type, ///< The option type to query
+                                                         const data_file   &prm_data_file    ///< The data type to query
                                                          ) const {
-	if ( ! contains( values, arg_data_file ) ) {
+	if ( ! contains( values, prm_data_file ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Unable to any value for data file type "
-			+ lexical_cast<string>(arg_data_file)
+			+ lexical_cast<string>(prm_data_file)
 			+ " in data_dirs_options_block"
 		));
 	}
 
-	const data_option_str_map &values_of_arg_data_file = values.find( arg_data_file )->second;
-	if ( ! contains( values_of_arg_data_file, arg_option_type ) ) {
+	const data_option_str_map &values_of_arg_data_file = values.find( prm_data_file )->second;
+	if ( ! contains( values_of_arg_data_file, prm_option_type ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Unable to find value for option type "
-			+ lexical_cast<string>(arg_option_type)
+			+ lexical_cast<string>(prm_option_type)
 			+ " and data file type "
-			+ lexical_cast<string>(arg_data_file)
+			+ lexical_cast<string>(prm_data_file)
 			+ " in data_dirs_options_block"
 		));
 	}
-	return values_of_arg_data_file.find( arg_option_type )->second;
+	return values_of_arg_data_file.find( prm_option_type )->second;
 }
 
 /// \brief Getter for the name of a given data type
 ///
 /// This is static because the name of each data type is static.
-string data_dirs_spec::get_name_of_data_file(const data_file &arg_data_file ///< The data type to query
+string data_dirs_spec::get_name_of_data_file(const data_file &prm_data_file ///< The data type to query
                                              ) {
-	return DATA_FILE_NAMES.at( arg_data_file );
+	return DATA_FILE_NAMES.at( prm_data_file );
 }
 
 /// \brief Getter for cath_root_dir
@@ -132,63 +132,63 @@ const path & data_dirs_spec::get_cath_root_dir() const {
 }
 
 /// \brief TODOCUMENT
-data_dirs_spec & data_dirs_spec::set_value_of_option_and_data_file(const data_option &arg_option_type, ///< TODOCUMENT
-                                                                   const data_file   &arg_data_file,   ///< TODOCUMENT
-                                                                   const string      &arg_value        ///< TODOCUMENT
+data_dirs_spec & data_dirs_spec::set_value_of_option_and_data_file(const data_option &prm_option_type, ///< TODOCUMENT
+                                                                   const data_file   &prm_data_file,   ///< TODOCUMENT
+                                                                   const string      &prm_value        ///< TODOCUMENT
                                                                    ) {
-	values[ arg_data_file ][ arg_option_type ] = arg_value;
+	values[ prm_data_file ][ prm_option_type ] = prm_value;
 	return *this;
 }
 
 /// \brief TODOCUMENT
-data_dirs_spec & data_dirs_spec::set_path_of_data_file(const data_file &arg_data_file, ///< TODOCUMENT
-                                                       const string    &arg_path       ///< TODOCUMENT
+data_dirs_spec & data_dirs_spec::set_path_of_data_file(const data_file &prm_data_file, ///< TODOCUMENT
+                                                       const string    &prm_path       ///< TODOCUMENT
                                                        ) {
 	set_value_of_option_and_data_file(
 		data_option::PATH,
-		arg_data_file,
-		arg_path
+		prm_data_file,
+		prm_path
 	);
 	return *this;
 }
 
 /// \brief Setter for cath_root_dir
-data_dirs_spec & data_dirs_spec::set_cath_root_dir(const path &arg_cath_root_dir ///< The cath_root_dir value to set
+data_dirs_spec & data_dirs_spec::set_cath_root_dir(const path &prm_cath_root_dir ///< The cath_root_dir value to set
                                                    ) {
-	cath_root_dir = arg_cath_root_dir;
+	cath_root_dir = prm_cath_root_dir;
 	return *this;
 }
 
 /// \brief Getter for the path value of a given data type
-string cath::opts::get_path_of_data_file(const data_dirs_spec &arg_data_dirs_spec, ///< TODOCUMENT
-                                         const data_file      &arg_data_file       ///< The data type to query
+string cath::opts::get_path_of_data_file(const data_dirs_spec &prm_data_dirs_spec, ///< TODOCUMENT
+                                         const data_file      &prm_data_file       ///< The data type to query
                                          ) {
-	return arg_data_dirs_spec.get_value_of_option_and_data_file( data_option::PATH, arg_data_file );
+	return prm_data_dirs_spec.get_value_of_option_and_data_file( data_option::PATH, prm_data_file );
 }
 
 /// \brief Getter for the prefix value of a given data type
-string cath::opts::get_prefix_of_data_file(const data_dirs_spec &arg_data_dirs_spec, ///< TODOCUMENT
-                                           const data_file      &arg_data_file ///< The data type to query
+string cath::opts::get_prefix_of_data_file(const data_dirs_spec &prm_data_dirs_spec, ///< TODOCUMENT
+                                           const data_file      &prm_data_file ///< The data type to query
                                            ) {
-	return arg_data_dirs_spec.get_value_of_option_and_data_file( data_option::PREFIX, arg_data_file );
+	return prm_data_dirs_spec.get_value_of_option_and_data_file( data_option::PREFIX, prm_data_file );
 }
 
 /// \brief Getter for the suffix value of a given data type
-string cath::opts::get_suffix_of_data_file(const data_dirs_spec &arg_data_dirs_spec, ///< TODOCUMENT
-                                           const data_file      &arg_data_file ///< The data type to query
+string cath::opts::get_suffix_of_data_file(const data_dirs_spec &prm_data_dirs_spec, ///< TODOCUMENT
+                                           const data_file      &prm_data_file ///< The data type to query
                                            ) {
-	return arg_data_dirs_spec.get_value_of_option_and_data_file( data_option::SUFFIX, arg_data_file );
+	return prm_data_dirs_spec.get_value_of_option_and_data_file( data_option::SUFFIX, prm_data_file );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates data_dirs_spec
-data_dirs_spec cath::opts::build_data_dirs_spec_of_path(const path_vec &arg_path ///< TODOCUMENT
+data_dirs_spec cath::opts::build_data_dirs_spec_of_path(const path_vec &prm_path ///< TODOCUMENT
                                                         ) {
-	const string arg_path_string = join_directories_into_path(arg_path);
+	const string prm_path_string = join_directories_into_path(prm_path);
 	data_dirs_spec new_data_dirs;
 	for (const data_file &the_data_file : all_data_file_types) {
-		new_data_dirs.set_path_of_data_file( the_data_file, arg_path_string );
+		new_data_dirs.set_path_of_data_file( the_data_file, prm_path_string );
 	}
 	return new_data_dirs;
 }
@@ -196,22 +196,22 @@ data_dirs_spec cath::opts::build_data_dirs_spec_of_path(const path_vec &arg_path
 /// \brief TODOCUMENT
 ///
 /// \relates data_dirs_spec
-data_dirs_spec cath::opts::build_data_dirs_spec_of_dir(const path &arg_path ///< TODOCUMENT
+data_dirs_spec cath::opts::build_data_dirs_spec_of_dir(const path &prm_path ///< TODOCUMENT
                                                        ) {
-	return build_data_dirs_spec_of_path( { arg_path } );
+	return build_data_dirs_spec_of_path( { prm_path } );
 }
 
 /// \brief Convenience function to return a path_vec of directories for the path for a given data_file
 ///
 /// \relates data_dirs_spec
-path_vec cath::opts::get_paths_of_data_file(const data_dirs_spec &arg_data_dirs_options, ///< The data_dirs_spec from which to grab the path
-                                            const data_file      &arg_data_file          ///< The data type to query
+path_vec cath::opts::get_paths_of_data_file(const data_dirs_spec &prm_data_dirs_options, ///< The data_dirs_spec from which to grab the path
+                                            const data_file      &prm_data_file          ///< The data type to query
                                             ) {
-	const path   &cath_root_dir = arg_data_dirs_options.get_cath_root_dir();
-	const string  path_string   = get_path_of_data_file( arg_data_dirs_options, arg_data_file );
+	const path   &cath_root_dir = prm_data_dirs_options.get_cath_root_dir();
+	const string  path_string   = get_path_of_data_file( prm_data_dirs_options, prm_data_file );
 	path_vec      path_dirs     = split_path_into_directories( path_string );
 	if ( ! cath_root_dir.empty() ) {
-		path_dirs.push_back( cath_root_dir / data_dirs_spec::DEFAULT_SUBDIR_NAME.at( arg_data_file ) );
+		path_dirs.push_back( cath_root_dir / data_dirs_spec::DEFAULT_SUBDIR_NAME.at( prm_data_file ) );
 	}
 	return path_dirs;
 }
@@ -221,17 +221,17 @@ path_vec cath::opts::get_paths_of_data_file(const data_dirs_spec &arg_data_dirs_
 /// \returns The found file or an empty path object if one could not be found
 ///
 /// \relates data_dirs_spec
-path cath::opts::find_file(const data_dirs_spec &arg_data_dirs_options, ///< The data_dirs_spec specifying how to find the file
-                           const data_file      &arg_data_file,         ///< The data type of file that's required
-                           const string         &arg_name               ///< The name for which to find the file (eg 1c0pA01)
+path cath::opts::find_file(const data_dirs_spec &prm_data_dirs_options, ///< The data_dirs_spec specifying how to find the file
+                           const data_file      &prm_data_file,         ///< The data type of file that's required
+                           const string         &prm_name               ///< The name for which to find the file (eg 1c0pA01)
                            ) {
-	const path_vec path_dirs       = get_paths_of_data_file( arg_data_dirs_options,  arg_data_file );
+	const path_vec path_dirs       = get_paths_of_data_file( prm_data_dirs_options,  prm_data_file );
 
-	const string   file_type_name  = arg_data_dirs_options.get_name_of_data_file  ( arg_data_file );
-	const string   prefix          = get_prefix_of_data_file( arg_data_dirs_options, arg_data_file );
-	const string   suffix          = get_suffix_of_data_file( arg_data_dirs_options, arg_data_file );
+	const string   file_type_name  = prm_data_dirs_options.get_name_of_data_file  ( prm_data_file );
+	const string   prefix          = get_prefix_of_data_file( prm_data_dirs_options, prm_data_file );
+	const string   suffix          = get_suffix_of_data_file( prm_data_dirs_options, prm_data_file );
 
-	const string   basename        = prefix + arg_name + suffix;
+	const string   basename        = prefix + prm_name + suffix;
 
 	const path     found_file      = common::find_file( path_dirs, basename );
 
@@ -241,7 +241,7 @@ path cath::opts::find_file(const data_dirs_spec &arg_data_dirs_options, ///< The
 		error_ss << "Unable to find a "                 << file_type_name
 		         << " file called "                     << basename
 		         << " (built from the prefix \""        << prefix
-		         << "\", the name \""                   << arg_name
+		         << "\", the name \""                   << prm_name
 		         << "\" and the suffix \""              << suffix
 		         << "\") in any of directories in the " << file_type_name
 		         << " path [";
@@ -261,14 +261,14 @@ path cath::opts::find_file(const data_dirs_spec &arg_data_dirs_options, ///< The
 /// \returns The found file or an empty path object if one could not be found
 ///
 /// \relates data_dirs_spec
-path cath::opts::find_file(const data_dirs_spec  &arg_data_dirs_options, ///< The data_dirs_spec specifying how to find the file
-                           const file::data_file &arg_data_file,         ///< The data type of file that's required
-                           const file::name_set  &arg_name_set           ///< The name for which to find the file (eg 1c0pA01)
+path cath::opts::find_file(const data_dirs_spec  &prm_data_dirs_options, ///< The data_dirs_spec specifying how to find the file
+                           const file::data_file &prm_data_file,         ///< The data type of file that's required
+                           const file::name_set  &prm_name_set           ///< The name for which to find the file (eg 1c0pA01)
                            ) {
 	return find_file(
-		arg_data_dirs_options,
-		arg_data_file,
-		arg_name_set.get_name_from_acq()
+		prm_data_dirs_options,
+		prm_data_file,
+		prm_name_set.get_name_from_acq()
 	);
 }
 
@@ -279,9 +279,9 @@ path cath::opts::find_file(const data_dirs_spec  &arg_data_dirs_options, ///< Th
 /// (eg input "/tmp::/var" would only return a vector with two entries)
 ///
 /// \relates data_dirs_spec
-path_vec cath::opts::split_path_into_directories(const string &arg_path_string ///< The path of colon-separated directory names
+path_vec cath::opts::split_path_into_directories(const string &prm_path_string ///< The path of colon-separated directory names
                                                  ) {
-	str_vec dir_strings = split_build<str_vec>( arg_path_string, is_any_of( ":" ), token_compress_on );
+	str_vec dir_strings = split_build<str_vec>( prm_path_string, is_any_of( ":" ), token_compress_on );
 	path_vec dirs;
 	dirs.reserve(dir_strings.size());
 	for (const string &dir_string : dir_strings) {
@@ -295,11 +295,11 @@ path_vec cath::opts::split_path_into_directories(const string &arg_path_string /
 /// \brief Convenience function to join a vector of directories into a colon-separated string
 ///
 /// \relates data_dirs_spec
-string cath::opts::join_directories_into_path(const path_vec &arg_dirs ///< The vector of directories
+string cath::opts::join_directories_into_path(const path_vec &prm_dirs ///< The vector of directories
                                               ) {
-	// Return the result of joining the strings of the arg_dirs with colon characters
+	// Return the result of joining the strings of the prm_dirs with colon characters
 	return join(
-		arg_dirs | transformed( [] (const path &x) { return x.string(); } ),
+		prm_dirs | transformed( [] (const path &x) { return x.string(); } ),
 		":"
 	);
 }

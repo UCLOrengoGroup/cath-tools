@@ -48,15 +48,15 @@ using std::tie;
 
 /// \brief Get the res_index_key_coord_and_dist values for the specified PDB, restricted
 ///        to the specified regions
-res_index_key_coord_and_dist_vec proximity_calculator::get_res_indices_key_coords_and_dists(const pdb            &arg_pdb,    ///< The PDB to index
-                                                                                            const region_vec_opt &arg_regions ///< The regions of the PDB to index
+res_index_key_coord_and_dist_vec proximity_calculator::get_res_indices_key_coords_and_dists(const pdb            &prm_pdb,    ///< The PDB to index
+                                                                                            const region_vec_opt &prm_regions ///< The regions of the PDB to index
                                                                                             ) {
 	detail::res_index_key_coord_and_dist_vec results;
-	regions_limiter the_limiter{ arg_regions };
+	regions_limiter the_limiter{ prm_regions };
 
 	// Loop over the residues (tracking the index)
-	for (const size_t &res_ctr : indices( arg_pdb.get_num_residues() ) ) {
-		const auto &res        = arg_pdb.get_residue_of_index__backbone_unchecked( res_ctr );
+	for (const size_t &res_ctr : indices( prm_pdb.get_num_residues() ) ) {
+		const auto &res        = prm_pdb.get_residue_of_index__backbone_unchecked( res_ctr );
 
 		// If this residue is included in the regions and isn't empty...
 		const bool is_included = the_limiter.update_residue_is_included( res.get_residue_id() );
@@ -80,21 +80,21 @@ res_index_key_coord_and_dist_vec proximity_calculator::get_res_indices_key_coord
 }
 
 /// \brief Ctor from a PDB and (optionally) some regions
-proximity_calculator::proximity_calculator(const pdb            &arg_pdb,    ///< The PDB to index
-                                           const region_vec_opt &arg_regions ///< The regions to index
-                                           ) : source_pdb { arg_pdb },
+proximity_calculator::proximity_calculator(const pdb            &prm_pdb,    ///< The PDB to index
+                                           const region_vec_opt &prm_regions ///< The regions to index
+                                           ) : source_pdb { prm_pdb },
                                                obj_res_indices_key_coords_and_dists{
-                                               	get_res_indices_key_coords_and_dists( arg_pdb, arg_regions )
+                                               	get_res_indices_key_coords_and_dists( prm_pdb, prm_regions )
                                                } {
 }
 
 /// \brief Return whether there are any atoms in the original PDB that are
 ///        within the specified distance of the specified coord
-bool proximity_calculator::is_within_distance(const coord  &arg_coord,   ///< The coord to query
-                                              const double &arg_distance ///< The maximum distance to the original PDB
+bool proximity_calculator::is_within_distance(const coord  &prm_coord,   ///< The coord to query
+                                              const double &prm_distance ///< The maximum distance to the original PDB
                                               ) const {
 	// Prepare the squared distance for quicker calculation later
-	const double distance_sq = arg_distance * arg_distance;
+	const double distance_sq = prm_distance * prm_distance;
 
 	// Return whether the lambda returns true for any of the obj_res_indices_key_coords_and_dists
 	return any_of(
@@ -105,7 +105,7 @@ bool proximity_calculator::is_within_distance(const coord  &arg_coord,   ///< Th
 			const size_t &res_indx     = res.res_index;
 			const coord  &res_locn     = res.key_coord;
 			const double &res_dist     = res.furthest_atom_dist;
-			const auto    squared_dist = squared_distance_between_points( res_locn, arg_coord );
+			const auto    squared_dist = squared_distance_between_points( res_locn, prm_coord );
 
 			// If the distance to the key coord is less than the distance then the condition
 			// is met, so return true
@@ -116,7 +116,7 @@ bool proximity_calculator::is_within_distance(const coord  &arg_coord,   ///< Th
 			// If the distance to the key coord is longer than the allowable distance plus the
 			// furthest distance from any of the atoms to the key coord, then none of the atoms
 			// can possibly be close enough, so return false
-			if ( squared_dist > ( arg_distance + res_dist ) * ( arg_distance + res_dist ) ) {
+			if ( squared_dist > ( prm_distance + res_dist ) * ( prm_distance + res_dist ) ) {
 				return false;
 			}
 
@@ -124,7 +124,7 @@ bool proximity_calculator::is_within_distance(const coord  &arg_coord,   ///< Th
 			return any_of(
 				source_pdb.get().get_residue_of_index__backbone_unchecked( res_indx ),
 				[&] (const pdb_atom &atom) {
-					return ( squared_distance_between_points( atom.get_coord(), arg_coord ) <= distance_sq );
+					return ( squared_distance_between_points( atom.get_coord(), prm_coord ) <= distance_sq );
 				}
 			);
 		}
@@ -135,14 +135,14 @@ bool proximity_calculator::is_within_distance(const coord  &arg_coord,   ///< Th
 ///        within the specified distance of the specified pdb_residue
 ///
 /// \relates proximity_calculator
-bool cath::file::is_within_distance(const proximity_calculator &arg_prox_calc, ///< The proximity_calculator to query
-                                    const pdb_residue          &arg_residue,   ///< The pdb_residue to query
-                                    const double               &arg_distance   ///< The maximum distance to the original PDB
+bool cath::file::is_within_distance(const proximity_calculator &prm_prox_calc, ///< The proximity_calculator to query
+                                    const pdb_residue          &prm_residue,   ///< The pdb_residue to query
+                                    const double               &prm_distance   ///< The maximum distance to the original PDB
                                     ) {
 	return any_of(
-		arg_residue,
+		prm_residue,
 		[&] (const pdb_atom &x) {
-			return arg_prox_calc.is_within_distance( x.get_coord(), arg_distance );
+			return prm_prox_calc.is_within_distance( x.get_coord(), prm_distance );
 		}
 	);
 }
@@ -152,20 +152,20 @@ bool cath::file::is_within_distance(const proximity_calculator &arg_prox_calc, /
 ///        the specified distance of the original PDB of the specified proximity_calculator
 ///
 /// \relates proximity_calculator
-chain_label_set cath::file::nearby_dna_rna_chain_labels(const pdb                  &arg_pdb,       ///< The PDB in question
-                                                        const proximity_calculator &arg_prox_calc, ///< The proximity_calculator to query
-                                                        const double               &arg_distance   ///< The maximum distance to the original PDB
+chain_label_set cath::file::nearby_dna_rna_chain_labels(const pdb                  &prm_pdb,       ///< The PDB in question
+                                                        const proximity_calculator &prm_prox_calc, ///< The proximity_calculator to query
+                                                        const double               &prm_distance   ///< The maximum distance to the original PDB
                                                         ) {
 	chain_label_set results;
 
 	// Loop over residues
-	for (const pdb_residue &res : arg_pdb) {
+	for (const pdb_residue &res : prm_pdb) {
 
 		// If the residue is a DNA/RNA residue on a not-yet-recorded chain
 		if ( res.get_amino_acid().get_type() == amino_acid_type::DNA && ! contains( results, get_chain_label( res ) ) ) {
 
-			// If the residue has any atoms within distance of the arg_prox_calc
-			if ( is_within_distance( arg_prox_calc, res, arg_distance ) ) {
+			// If the residue has any atoms within distance of the prm_prox_calc
+			if ( is_within_distance( prm_prox_calc, res, prm_distance ) ) {
 
 				// Insert the residue's chain_label into results
 				results.insert( get_chain_label( res ) );
@@ -182,12 +182,12 @@ chain_label_set cath::file::nearby_dna_rna_chain_labels(const pdb               
 ///        or an empty set if the distance is none
 ///
 /// \relates proximity_calculator
-chain_label_set cath::file::nearby_dna_rna_chain_labels(const pdb                  &arg_pdb,       ///< The PDB in question
-                                                        const proximity_calculator &arg_prox_calc, ///< The proximity_calculator to query
-                                                        const doub_opt             &arg_dist_opt   ///< The maximum distance to the original PDB
+chain_label_set cath::file::nearby_dna_rna_chain_labels(const pdb                  &prm_pdb,       ///< The PDB in question
+                                                        const proximity_calculator &prm_prox_calc, ///< The proximity_calculator to query
+                                                        const doub_opt             &prm_dist_opt   ///< The maximum distance to the original PDB
                                                         ) {
-	if ( arg_dist_opt ) {
-		return nearby_dna_rna_chain_labels( arg_pdb, arg_prox_calc, *arg_dist_opt );
+	if ( prm_dist_opt ) {
+		return nearby_dna_rna_chain_labels( prm_pdb, prm_prox_calc, *prm_dist_opt );
 	}
 	return {};
 }
@@ -199,23 +199,23 @@ chain_label_set cath::file::nearby_dna_rna_chain_labels(const pdb               
 /// The returned data may be unsorted
 ///
 /// \relates proximity_calculator
-void cath::file::restrict_to_linkage_proximate(coord_coord_linkage_pair_vec &arg_coords,            ///< The coord vector to modify
-                                               const proximity_calculator   &arg_prox_calc,         ///< The proximity_calculator to query
-                                               const double                 &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
-                                               const double                 &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
+void cath::file::restrict_to_linkage_proximate(coord_coord_linkage_pair_vec &prm_coords,            ///< The coord vector to modify
+                                               const proximity_calculator   &prm_prox_calc,         ///< The proximity_calculator to query
+                                               const double                 &prm_primary_distance,  ///< The maximum primary allowed distance to the PDB
+                                               const double                 &prm_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
                                                ) {
 	restrict_to_single_linkage_extension(
-		arg_coords,
+		prm_coords,
 		partition(
-			arg_coords,
+			prm_coords,
 			[&] (const coord_coord_linkage_pair &x) {
-				return arg_prox_calc.is_within_distance(
+				return prm_prox_calc.is_within_distance(
 					x.first,
-					arg_primary_distance
+					prm_primary_distance
 				);
 			}
 		),
-		arg_extension_distance
+		prm_extension_distance
 	);
 }
 
@@ -227,22 +227,22 @@ void cath::file::restrict_to_linkage_proximate(coord_coord_linkage_pair_vec &arg
 /// The returned data may be unsorted
 ///
 /// \relates proximity_calculator
-coord_coord_linkage_pair_vec cath::file::restrict_to_linkage_proximate_copy(coord_coord_linkage_pair_vec  arg_coords,            ///< The coord vector to copy and return modified version of
-                                                                            const proximity_calculator   &arg_prox_calc,         ///< The proximity_calculator to query
-                                                                            const double                 &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
-                                                                            const double                 &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
+coord_coord_linkage_pair_vec cath::file::restrict_to_linkage_proximate_copy(coord_coord_linkage_pair_vec  prm_coords,            ///< The coord vector to copy and return modified version of
+                                                                            const proximity_calculator   &prm_prox_calc,         ///< The proximity_calculator to query
+                                                                            const double                 &prm_primary_distance,  ///< The maximum primary allowed distance to the PDB
+                                                                            const double                 &prm_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
                                                                             ) {
-	restrict_to_linkage_proximate( arg_coords, arg_prox_calc, arg_primary_distance, arg_extension_distance );
-	return arg_coords;
+	restrict_to_linkage_proximate( prm_coords, prm_prox_calc, prm_primary_distance, prm_extension_distance );
+	return prm_coords;
 }
 
 /// \brief Get a pdb_residue_vec of those post-TER residues in the specified PDB that are
 ///        nearby to the original PDB of the specified proximity_calculator (within the specified primary distance
 ///        or reachable from there through other coords in steps of the specified extension distance or less)
-pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb                  &arg_pdb,               ///< The PDB with the post-TER records to query
-                                                          const proximity_calculator &arg_prox_calc,         ///< The proximity_calculator to query
-                                                          const double               &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
-                                                          const double               &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
+pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb                  &prm_pdb,               ///< The PDB with the post-TER records to query
+                                                          const proximity_calculator &prm_prox_calc,         ///< The proximity_calculator to query
+                                                          const double               &prm_primary_distance,  ///< The maximum primary allowed distance to the PDB
+                                                          const double               &prm_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
                                                           ) {
 	// Create a function object for less-than-comparing the coord part of the coord_coord_linkage_pairs
 	//
@@ -260,15 +260,15 @@ pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb             
 	};
 
 	// Get a sorted list of the post-ter residue coords that are "nearby"
-	// (within arg_primary_distance) according to proximity_calculator or
+	// (within prm_primary_distance) according to proximity_calculator or
 	// are connected to any such through a chain of others with a maximum
-	// link distance of arg_extension_distance
+	// link distance of prm_extension_distance
 	const coord_coord_linkage_pair_vec resorted_nearbys = sort_copy(
 		restrict_to_linkage_proximate_copy(
-			get_all_coords_with_linkage( arg_pdb.get_post_ter_residues() ),
-			arg_prox_calc,
-			arg_primary_distance,
-			arg_extension_distance
+			get_all_coords_with_linkage( prm_pdb.get_post_ter_residues() ),
+			prm_prox_calc,
+			prm_primary_distance,
+			prm_extension_distance
 		),
 		coord_less_fn
 	);
@@ -292,7 +292,7 @@ pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb             
 
 	// Return the ???
 	return copy_build<pdb_residue_vec>(
-		arg_pdb.get_post_ter_residues()
+		prm_pdb.get_post_ter_residues()
 			| transformed( restrict_res_to_nearby_atoms_fn )
 			| filtered   ( res_is_not_empty_fn             )
 	);
@@ -304,17 +304,17 @@ pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb             
 ///        or an empty set if the distance is none
 ///
 /// \relates proximity_calculator
-pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb                  &arg_pdb,               ///< The PDB with the post-TER records to query
-                                                          const proximity_calculator &arg_prox_calc,         ///< The proximity_calculator to query
-                                                          const doub_opt             &arg_primary_distance,  ///< The maximum primary allowed distance to the PDB
-                                                          const double               &arg_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
+pdb_residue_vec cath::file::get_nearby_post_ter_res_atoms(const pdb                  &prm_pdb,               ///< The PDB with the post-TER records to query
+                                                          const proximity_calculator &prm_prox_calc,         ///< The proximity_calculator to query
+                                                          const doub_opt             &prm_primary_distance,  ///< The maximum primary allowed distance to the PDB
+                                                          const double               &prm_extension_distance ///< The maximum extension distance to pull in more coords in a single-linkage fashion
                                                           ) {
-	if ( arg_primary_distance ) {
+	if ( prm_primary_distance ) {
 		return get_nearby_post_ter_res_atoms(
-			arg_pdb,
-			arg_prox_calc,
-			*arg_primary_distance,
-			arg_extension_distance
+			prm_pdb,
+			prm_prox_calc,
+			*prm_primary_distance,
+			prm_extension_distance
 		);
 	}
 	return {};

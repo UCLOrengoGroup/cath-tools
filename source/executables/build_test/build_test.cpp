@@ -45,10 +45,10 @@ namespace cath {
 	namespace test {
 
 		/// \brief TODOCUMENT
-		void boost_exception_translator(const boost::exception &arg_excptn ///< TODOCUMENT
+		void boost_exception_translator(const boost::exception &prm_excptn ///< TODOCUMENT
 		                                ) {
 			cerr << "The execution_monitor caught a boost::exception and passed it to the boost_exception_translator :\n"
-			     << diagnostic_information( arg_excptn ) << "\n"
+			     << diagnostic_information( prm_excptn ) << "\n"
 			     << endl;
 			throw;
 		}

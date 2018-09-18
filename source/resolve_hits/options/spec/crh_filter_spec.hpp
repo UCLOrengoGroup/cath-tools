@@ -90,44 +90,44 @@ namespace cath {
 		crh_filter_spec make_accept_all_filter_spec();
 
 		/// \brief Return whether the specified score of the specified type passes the specified filter_spec
-		inline bool score_passes_filter(const crh_filter_spec &arg_filter_spec, ///< The filter_spec to apply
-		                                const double          &arg_score,       ///< The score to test
-		                                const hit_score_type  &arg_score_type   ///< The type of score to test
+		inline bool score_passes_filter(const crh_filter_spec &prm_filter_spec, ///< The filter_spec to apply
+		                                const double          &prm_score,       ///< The score to test
+		                                const hit_score_type  &prm_score_type   ///< The type of score to test
 		                                ) {
-			switch ( arg_score_type ) {
-				case ( hit_score_type::FULL_EVALUE ) : { return  ( arg_score <= arg_filter_spec.get_worst_permissible_evalue  () ); }
-				case ( hit_score_type::BITSCORE    ) : { return  ( arg_score >= arg_filter_spec.get_worst_permissible_bitscore() ); }
+			switch ( prm_score_type ) {
+				case ( hit_score_type::FULL_EVALUE ) : { return  ( prm_score <= prm_filter_spec.get_worst_permissible_evalue  () ); }
+				case ( hit_score_type::BITSCORE    ) : { return  ( prm_score >= prm_filter_spec.get_worst_permissible_bitscore() ); }
 				case ( hit_score_type::CRH_SCORE   ) : {
 					return (
-						! arg_filter_spec.get_worst_permissible_score()
+						! prm_filter_spec.get_worst_permissible_score()
 						||
-						arg_score >= *arg_filter_spec.get_worst_permissible_score() );
+						prm_score >= *prm_filter_spec.get_worst_permissible_score() );
 				}
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst checking score_passes_filter()"));
 		}
 
 		/// \brief Whether the data for the specified query ID should be specified given the specified filter query IDs
-		inline bool should_skip_query_id(const str_vec     &arg_filter_query_ids, ///< The list of query IDs to filter (or allow everything if this is empty)
-		                                 const std::string &arg_query_id          ///< The query ID string to check
+		inline bool should_skip_query_id(const str_vec     &prm_filter_query_ids, ///< The list of query IDs to filter (or allow everything if this is empty)
+		                                 const std::string &prm_query_id          ///< The query ID string to check
 		                                 ) {
 			// If there are filter query IDs, then if this amongst them, skip this entry
 			return (
-				! arg_filter_query_ids.empty()
+				! prm_filter_query_ids.empty()
 				&&
-				! common::contains( arg_filter_query_ids, arg_query_id )
+				! common::contains( prm_filter_query_ids, prm_query_id )
 			);
 		}
 
 		/// \brief Whether the data for the specified query ID should be specified given the specified filter query IDs
-		inline bool should_skip_query_id(const str_vec           &arg_filter_query_ids, ///< The list of query IDs to filter (or allow everything if this is empty)
-		                                 const boost::string_ref &arg_query_id          ///< The query ID string_ref to check
+		inline bool should_skip_query_id(const str_vec           &prm_filter_query_ids, ///< The list of query IDs to filter (or allow everything if this is empty)
+		                                 const boost::string_ref &prm_query_id          ///< The query ID string_ref to check
 		                                 ) {
 			// If there are filter query IDs, then if this amongst them, skip this entry
 			return (
-				! arg_filter_query_ids.empty()
+				! prm_filter_query_ids.empty()
 				&&
-				! common::contains( arg_filter_query_ids, arg_query_id )
+				! common::contains( prm_filter_query_ids, prm_query_id )
 			);
 		}
 
@@ -137,25 +137,25 @@ namespace cath {
 		/// \TODO Consider extracting common code from this and cath_score_category_of_id()
 		///
 		/// \relates crh_filter_spec
-		inline doub_opt hmm_coverage_for_match(const crh_filter_spec &arg_filter_spec, ///< The filter_spec to apply
-		                                       const std::string     &arg_match_id     ///< The match ID under consideration
+		inline doub_opt hmm_coverage_for_match(const crh_filter_spec &prm_filter_spec, ///< The filter_spec to apply
+		                                       const std::string     &prm_match_id     ///< The match ID under consideration
 		                                       ) {
 			static const std::regex  dc_regex        { R"(^dc_\w{32}$)" };
 			static const std::string dc_prefix_suffix{ "dc_"            };
 
 			// If a min_dc_hmm_coverage fraction has been specified then that takes precedence if
 			// this is a /^dc_\w{32}$/ query ID so check that and return the min_dc_hmm_coverage fraction if so
-			const auto &min_dc_hmm_coverage_frac = arg_filter_spec.get_min_dc_hmm_coverage_frac();
+			const auto &min_dc_hmm_coverage_frac = prm_filter_spec.get_min_dc_hmm_coverage_frac();
 			if ( min_dc_hmm_coverage_frac ) {
-				if ( arg_match_id.length() == 35 && boost::algorithm::starts_with( arg_match_id, dc_prefix_suffix ) ) {
-					if ( regex_search( common::cbegin( arg_match_id ), common::cend( arg_match_id ), dc_regex ) ) {
+				if ( prm_match_id.length() == 35 && boost::algorithm::starts_with( prm_match_id, dc_prefix_suffix ) ) {
+					if ( regex_search( common::cbegin( prm_match_id ), common::cend( prm_match_id ), dc_regex ) ) {
 						return min_dc_hmm_coverage_frac;
 					}
 				}
 			}
 
 			// Otherwise return any min_hmm_coverage fraction that has been specified (or none if none)
-			return arg_filter_spec.get_min_hmm_coverage_frac();
+			return prm_filter_spec.get_min_hmm_coverage_frac();
 		}
 
 	} // namespace rslv

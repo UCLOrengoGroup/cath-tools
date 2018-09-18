@@ -54,11 +54,11 @@ constexpr double common_residue_select_best_score_percent_policy::MAX_BEST_SCORE
 constexpr double common_residue_select_best_score_percent_policy::DEFAULT_BEST_SCORE_PERCENTAGE;
 
 /// \brief TODOCUMENT
-size_vec common_residue_select_best_score_percent_policy::do_select_common_residues_with_scores(const doub_doub_pair_vec &arg_scores ///< TODOCUMENT
+size_vec common_residue_select_best_score_percent_policy::do_select_common_residues_with_scores(const doub_doub_pair_vec &prm_scores ///< TODOCUMENT
                                                                                                 ) const {
 	// Grab the a list of the smaller value from each pair of scores
 	const auto min_scores = transform_build<doub_vec>(
-		arg_scores,
+		prm_scores,
 		[] (const doub_doub_pair &x) { return min( x.first, x.second ); }
 	);
 
@@ -99,8 +99,8 @@ unique_ptr<common_residue_selection_policy> common_residue_select_best_score_per
 }
 
 /// \brief Ctor for common_residue_select_best_score_percent_policy
-common_residue_select_best_score_percent_policy::common_residue_select_best_score_percent_policy(const double &arg_best_score_percentage ///< TODOCUMENT
-                                                                                                 ) : best_score_percentage(arg_best_score_percentage) {
+common_residue_select_best_score_percent_policy::common_residue_select_best_score_percent_policy(const double &prm_best_score_percentage ///< TODOCUMENT
+                                                                                                 ) : best_score_percentage(prm_best_score_percentage) {
 	using boost::math::isfinite;
 	if ( ! isfinite( best_score_percentage ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argument best_score_percentage must be a normal, finite floating-point number"));
@@ -116,7 +116,7 @@ common_residue_select_best_score_percent_policy::common_residue_select_best_scor
 }
 
 /// \brief TODOCUMENT
-bool common_residue_select_best_score_percent_policy::do_less_than_with_same_dynamic_type(const common_residue_selection_policy &/*arg_common_residue_selection_policy*/ ///< TODOCUMENT
+bool common_residue_select_best_score_percent_policy::do_less_than_with_same_dynamic_type(const common_residue_selection_policy &/*prm_common_residue_selection_policy*/ ///< TODOCUMENT
                                                                                           ) const {
 	return false;
 }

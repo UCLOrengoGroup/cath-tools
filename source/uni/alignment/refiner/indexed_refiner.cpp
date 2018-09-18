@@ -105,11 +105,11 @@ inline std::string simplify_name_copy(std::string arg
 }
 
 template <typename Fn, typename... Ts>
-hrc_duration time_execution(Fn &&arg_fn,
-                            Ts &&...arg_vars
+hrc_duration time_execution(Fn &&prm_fn,
+                            Ts &&...prm_vars
                             ) {
 	const auto start_time = high_resolution_clock::now();
-	invoke( arg_fn, std::forward< Ts >( arg_vars )... );
+	invoke( prm_fn, std::forward< Ts >( prm_vars )... );
 	return high_resolution_clock::now() - start_time;
 }
 
@@ -122,24 +122,24 @@ private:
 	template <sod Sod,
 	          typename T,
 	          typename U>
-	void process_index_type_pair_sod(vector<pair<string, doub_doub_pair_vec>> &arg_data,
-	                                 const protein                            &arg_protein_a,    ///< TODOCUMENT
-	                                 const protein                            &arg_protein_b,    ///< TODOCUMENT
-	                                 const alignment                          &arg_alignment ///< TODOCUMENT
+	void process_index_type_pair_sod(vector<pair<string, doub_doub_pair_vec>> &prm_data,
+	                                 const protein                            &prm_protein_a,    ///< TODOCUMENT
+	                                 const protein                            &prm_protein_b,    ///< TODOCUMENT
+	                                 const alignment                          &prm_alignment ///< TODOCUMENT
 	                                 ) {
 		// std::cerr << "Emplacing back " << demangle( typeid( T ).name() ) << " and " << demangle( typeid( U ).name() ) << "\n";
 
 		// const auto keyer = make_res_pair_keyer(
-		// 	simple_locn_x_keyer_part{ arg_cell_size },
-		// 	simple_locn_y_keyer_part{ arg_cell_size },
-		// 	simple_locn_z_keyer_part{ arg_cell_size }
+		// 	simple_locn_x_keyer_part{ prm_cell_size },
+		// 	simple_locn_y_keyer_part{ prm_cell_size },
+		// 	simple_locn_z_keyer_part{ prm_cell_size }
 		// );
 
 		// return make_pair(
 		// 	store_maker<sod::DENSE, T>{}(
-		// 	arg_rng,
+		// 	prm_rng,
 		// 	keyer,
-		// 	simple_locn_crit{ arg_max_dist * arg_max_dist }
+		// 	simple_locn_crit{ prm_max_dist * prm_max_dist }
 		// );
 
 		// store_maker<sod::DENSE, T>{}(
@@ -166,13 +166,13 @@ private:
 				[&] {
 					const T store_wrapper_a{
 						std::integral_constant< sod, Sod >{},
-						arg_protein_a,
+						prm_protein_a,
 						fot::FROM,
 						cell_size
 					};
 					const T store_wrapper_b{
 						std::integral_constant< sod, Sod >{},
-						arg_protein_b,
+						prm_protein_b,
 						fot::FROM,
 						cell_size
 					};
@@ -180,10 +180,10 @@ private:
 
 
 
-					for (const auto &aln_index : indices( arg_alignment.length() ) ) {
-						if ( has_both_positions_of_index( arg_alignment, aln_index ) ) {
-							const auto &a_posn = get_a_position_of_index( arg_alignment, aln_index );
-							const auto &b_posn = get_b_position_of_index( arg_alignment, aln_index );
+					for (const auto &aln_index : indices( prm_alignment.length() ) ) {
+						if ( has_both_positions_of_index( prm_alignment, aln_index ) ) {
+							const auto &a_posn = get_a_position_of_index( prm_alignment, aln_index );
+							const auto &b_posn = get_b_position_of_index( prm_alignment, aln_index );
 							const auto &cells_a = store_wrapper_a.the_store[ a_posn ];
 							const auto &cells_b = store_wrapper_b.the_store[ b_posn ];
 
@@ -211,7 +211,7 @@ private:
 			// "build durn : " + durn_to_seconds_string( build_durn ) + " size "s + boost::lexical_cast<string>( memory_usage.value() ) + "b"
 		}
 
-		arg_data.emplace_back(
+		prm_data.emplace_back(
 			to_string( Sod )
 				+ ":"
 				+ simplify_name_copy( common::type_to_string<T>() ),
@@ -221,35 +221,35 @@ private:
 
 	template <typename T,
 	          typename U>
-	int process_index_type_pair(vector<pair<string, doub_doub_pair_vec>> &arg_data,      ///< TODOCUMENT
-	                            const protein                            &arg_protein_a, ///< TODOCUMENT
-	                            const protein                            &arg_protein_b, ///< TODOCUMENT
-	                            const alignment                          &arg_alignment  ///< TODOCUMENT
+	int process_index_type_pair(vector<pair<string, doub_doub_pair_vec>> &prm_data,      ///< TODOCUMENT
+	                            const protein                            &prm_protein_a, ///< TODOCUMENT
+	                            const protein                            &prm_protein_b, ///< TODOCUMENT
+	                            const alignment                          &prm_alignment  ///< TODOCUMENT
 	                            ) {
-		process_index_type_pair_sod< sod::SPARSE, T, U >( arg_data, arg_protein_a, arg_protein_b, arg_alignment );
-		process_index_type_pair_sod< sod::DENSE,  T, U >( arg_data, arg_protein_a, arg_protein_b, arg_alignment );
+		process_index_type_pair_sod< sod::SPARSE, T, U >( prm_data, prm_protein_a, prm_protein_b, prm_alignment );
+		process_index_type_pair_sod< sod::DENSE,  T, U >( prm_data, prm_protein_a, prm_protein_b, prm_alignment );
 		return 0;
 	}
 
 public:
 	/// \brief TODOCUMENT
-	vector<pair<string, doub_doub_pair_vec>> operator()(const protein   &arg_protein_a, ///< TODOCUMENT
-	                                                    const protein   &arg_protein_b, ///< TODOCUMENT
-	                                                    const alignment &arg_alignment  ///< TODOCUMENT
+	vector<pair<string, doub_doub_pair_vec>> operator()(const protein   &prm_protein_a, ///< TODOCUMENT
+	                                                    const protein   &prm_protein_b, ///< TODOCUMENT
+	                                                    const alignment &prm_alignment  ///< TODOCUMENT
 	                                                    ) {
 		vector<pair<string, doub_doub_pair_vec>> data;
-		const std::initializer_list<int> dummy_list = { process_index_type_pair< Ts, Ts >( data, arg_protein_a, arg_protein_b, arg_alignment )... };
+		const std::initializer_list<int> dummy_list = { process_index_type_pair< Ts, Ts >( data, prm_protein_a, prm_protein_b, prm_alignment )... };
 		boost::ignore_unused( dummy_list );
 		return data;
 	}
 };
 
-void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMENT
-                                  const protein   &arg_protein_b, ///< TODOCUMENT
-                                  const alignment &arg_alignment  ///< TODOCUMENT
+void cath::align::do_some_gubbins(const protein   &prm_protein_a, ///< TODOCUMENT
+                                  const protein   &prm_protein_b, ///< TODOCUMENT
+                                  const alignment &prm_alignment  ///< TODOCUMENT
                                   ) {
 	// std::cerr << "Doing some gubbins" << std::endl;
-	const auto results = index_type_pair_processor< combined_list >{}( arg_protein_a, arg_protein_b, arg_alignment );
+	const auto results = index_type_pair_processor< combined_list >{}( prm_protein_a, prm_protein_b, prm_alignment );
 
 	const path base_filename    = "/tmp/indexed_refiner_graph.eps";
 
@@ -296,42 +296,42 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 
 
 // /// \brief TODOCUMENT
-// bool_aln_pair indexed_refiner::iterate_step(const alignment       &arg_alignment,       ///< TODOCUMENT
-//                                             const protein_list    &arg_proteins,        ///< TODOCUMENT
-//                                             // const view_cache_list &arg_view_cache_list, ///< TODOCUMENT
-//                                             const gap_penalty     &arg_gap_penalty      ///< TODOCUMENT
+// bool_aln_pair indexed_refiner::iterate_step(const alignment       &prm_alignment,       ///< TODOCUMENT
+//                                             const protein_list    &prm_proteins,        ///< TODOCUMENT
+//                                             // const view_cache_list &prm_view_cache_list, ///< TODOCUMENT
+//                                             const gap_penalty     &prm_gap_penalty      ///< TODOCUMENT
 //                                             ) {
-// 	cerr << "Will try to find ways to split alignment with " << arg_alignment.num_entries() << " entries" << endl;
+// 	cerr << "Will try to find ways to split alignment with " << prm_alignment.num_entries() << " entries" << endl;
 
-// 	const size_t num_entries = arg_alignment.num_entries();
-// 	if ( arg_proteins.size() != num_entries ) {
+// 	const size_t num_entries = prm_alignment.num_entries();
+// 	if ( prm_proteins.size() != num_entries ) {
 // 		BOOST_THROW_EXCEPTION(not_implemented_exception("Mismatch between number of entries in alignment and in protein list"));
 // 	}
 
 // 	return iterate_step_for_alignment_split_list(
-// 		arg_alignment,
-// 		arg_proteins,
-// 		// arg_view_cache_list,
-// 		arg_gap_penalty,
-// 		get_standard_alignment_splits( arg_alignment )
+// 		prm_alignment,
+// 		prm_proteins,
+// 		// prm_view_cache_list,
+// 		prm_gap_penalty,
+// 		get_standard_alignment_splits( prm_alignment )
 // 	);
 // }
 
 // /// \brief TODOCUMENT
-// bool_aln_pair indexed_refiner::iterate_step_for_alignment_split_list(const alignment            &arg_alignment,           ///< TODOCUMENT
-//                                                                      const protein_list         &arg_proteins,            ///< TODOCUMENT
-//                                                                      // const view_cache_list      &arg_view_cache_list,     ///< TODOCUMENT
-//                                                                      const gap_penalty          &arg_gap_penalty,         ///< TODOCUMENT
-//                                                                      const alignment_split_list &arg_alignment_split_list ///< TODOCUMENT
+// bool_aln_pair indexed_refiner::iterate_step_for_alignment_split_list(const alignment            &prm_alignment,           ///< TODOCUMENT
+//                                                                      const protein_list         &prm_proteins,            ///< TODOCUMENT
+//                                                                      // const view_cache_list      &prm_view_cache_list,     ///< TODOCUMENT
+//                                                                      const gap_penalty          &prm_gap_penalty,         ///< TODOCUMENT
+//                                                                      const alignment_split_list &prm_alignment_split_list ///< TODOCUMENT
 //                                                                      ) {
-// 	alignment iter_aln( arg_alignment );
+// 	alignment iter_aln( prm_alignment );
 // 	bool inserted_residues = false;
-// 	for (const alignment_split &the_split : arg_alignment_split_list) {
+// 	for (const alignment_split &the_split : prm_alignment_split_list) {
 // 		const bool_aln_pair inserted_res_and_aln = iterate_step_for_alignment_split(
 // 			iter_aln,
-// 			arg_proteins,
-// 			// arg_view_cache_list,
-// 			arg_gap_penalty,
+// 			prm_proteins,
+// 			// prm_view_cache_list,
+// 			prm_gap_penalty,
 // 			the_split
 // 		);
 // 		inserted_residues = ( inserted_res_and_aln.first || inserted_residues );
@@ -341,27 +341,27 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 // }
 
 // /// \brief TODOCUMENT
-// bool_aln_pair indexed_refiner::iterate_step_for_alignment_split(const alignment       &arg_alignment,       ///< TODOCUMENT
-//                                                                 const protein_list    &arg_proteins,        ///< TODOCUMENT
-//                                                                 // const view_cache_list &arg_view_cache_list, ///< TODOCUMENT
-//                                                                 const gap_penalty     &arg_gap_penalty,     ///< TODOCUMENT
-//                                                                 const alignment_split &arg_alignment_split  ///< TODOCUMENT
+// bool_aln_pair indexed_refiner::iterate_step_for_alignment_split(const alignment       &prm_alignment,       ///< TODOCUMENT
+//                                                                 const protein_list    &prm_proteins,        ///< TODOCUMENT
+//                                                                 // const view_cache_list &prm_view_cache_list, ///< TODOCUMENT
+//                                                                 const gap_penalty     &prm_gap_penalty,     ///< TODOCUMENT
+//                                                                 const alignment_split &prm_alignment_split  ///< TODOCUMENT
 //                                                                 ) {
-// 	const size_vec correct_lengths = get_protein_lengths( arg_proteins );
+// 	const size_vec correct_lengths = get_protein_lengths( prm_proteins );
 
-// 	cerr << "Iterating alignment with " << arg_alignment.num_entries() << " entries using split :";
-// 	for (const size_t &split_member : arg_alignment_split) {
+// 	cerr << "Iterating alignment with " << prm_alignment.num_entries() << " entries using split :";
+// 	for (const size_t &split_member : prm_alignment_split) {
 // 		cerr << " " << split_member;
 // 	}
 // 	cerr << endl;
 
-// 	if ( arg_alignment_split.get_num_entries() != arg_alignment.num_entries() ) {
+// 	if ( prm_alignment_split.get_num_entries() != prm_alignment.num_entries() ) {
 // 		BOOST_THROW_EXCEPTION(not_implemented_exception("Number of entries in alignment split doesn't match number in alignment"));
 // 	}
 
 // 	// bob
-// 	const alignment_split_mapping mapping_a = make_alignment_split_mapping( arg_alignment, arg_alignment_split, alignment_split_half::FIRST,  correct_lengths );
-// 	const alignment_split_mapping mapping_b = make_alignment_split_mapping( arg_alignment, arg_alignment_split, alignment_split_half::SECOND, correct_lengths );
+// 	const alignment_split_mapping mapping_a = make_alignment_split_mapping( prm_alignment, prm_alignment_split, alignment_split_half::FIRST,  correct_lengths );
+// 	const alignment_split_mapping mapping_b = make_alignment_split_mapping( prm_alignment, prm_alignment_split, alignment_split_half::SECOND, correct_lengths );
 // 	const bool inserted_residues = ( mapping_a.inserted_entries() || mapping_b.inserted_entries() );
 
 // 	// Grab the lengths
@@ -372,11 +372,11 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 // 	from_and_to_alignment_scores.assign( full_length_a, float_score_vec( full_length_b, 0.0 ) );
 // 	// to_alignment_scores.assign  ( full_length_a, float_score_vec( full_length_b, 0.0 ) );
 
-// //	cerr << "number of entries in alignment is " << arg_alignment.num_entries() << endl;
+// //	cerr << "number of entries in alignment is " << prm_alignment.num_entries() << endl;
 // //	cerr << "number of entries in half a of split is " << mapping_a.num_entries() << endl;
 // //	cerr << "number of entries in half b of split is " << mapping_b.num_entries() << endl;
 
-// 	const alignment::size_type alignment_length = arg_alignment.length();
+// 	const alignment::size_type alignment_length = prm_alignment.length();
 // 	for (const size_t &aln_ctr : indices( alignment_length ) ) {
 // 		const size_opt mapping_index_a = mapping_a.index_of_orig_aln_index( aln_ctr );
 // 		const size_opt mapping_index_b = mapping_b.index_of_orig_aln_index( aln_ctr );
@@ -396,8 +396,8 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 // 				const aln_posn_type b_position      = get_position_of_entry_of_index( mapping_b, present_entry_b, *mapping_index_b );
 
 // 	//			cerr << "Rescoring based on pair " << a_position << ", " << b_position << endl;
-// 				const protein &protein_a = arg_proteins[ present_orig_aln_entry_a ];
-// 				const protein &protein_b = arg_proteins[ present_orig_aln_entry_b ];
+// 				const protein &protein_a = prm_proteins[ present_orig_aln_entry_a ];
+// 				const protein &protein_b = prm_proteins[ present_orig_aln_entry_b ];
 // 				const size_t   length_a  = protein_a.get_length();
 // 				const size_t   length_b  = protein_b.get_length();
 // //				const residue &residue_a = protein_a.get_residue_ref_of_index( a_position );
@@ -447,7 +447,7 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 
 // 	const new_matrix_dyn_prog_score_source scorer( avg_scores, full_length_a, full_length_b );
 
-// 	const score_alignment_pair score_and_alignment = std_dyn_prog_aligner().align( scorer, arg_gap_penalty, full_window_width );
+// 	const score_alignment_pair score_and_alignment = std_dyn_prog_aligner().align( scorer, prm_gap_penalty, full_window_width );
 
 // 	alignment new_alignment = set_empty_scores_copy(
 // 		build_alignment(
@@ -460,25 +460,25 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 // }
 
 // // /// \brief TODOCUMENT
-// // alignment indexed_refiner::iterate(const alignment    &arg_alignment,  ///< TODOCUMENT
-// //                                    const protein_list &arg_proteins,   ///< TODOCUMENT
-// //                                    const gap_penalty  &arg_gap_penalty ///< TODOCUMENT
+// // alignment indexed_refiner::iterate(const alignment    &prm_alignment,  ///< TODOCUMENT
+// //                                    const protein_list &prm_proteins,   ///< TODOCUMENT
+// //                                    const gap_penalty  &prm_gap_penalty ///< TODOCUMENT
 // //                                    ) {
 // // 	return iterate(
-// // 		arg_alignment,
-// // 		arg_proteins,
-// // 		view_cache_list( arg_proteins ),
-// // 		arg_gap_penalty
+// // 		prm_alignment,
+// // 		prm_proteins,
+// // 		view_cache_list( prm_proteins ),
+// // 		prm_gap_penalty
 // // 	);
 // // }
 
 // /// \brief TODOCUMENT
-// alignment indexed_refiner::iterate(const alignment       &arg_alignment,       ///< TODOCUMENT
-//                                    const protein_list    &arg_proteins,        ///< TODOCUMENT
-//                                    // const view_cache_list &arg_view_cache_list, ///< TODOCUMENT
-//                                    const gap_penalty     &arg_gap_penalty      ///< TODOCUMENT
+// alignment indexed_refiner::iterate(const alignment       &prm_alignment,       ///< TODOCUMENT
+//                                    const protein_list    &prm_proteins,        ///< TODOCUMENT
+//                                    // const view_cache_list &prm_view_cache_list, ///< TODOCUMENT
+//                                    const gap_penalty     &prm_gap_penalty      ///< TODOCUMENT
 //                                    ) {
-// //	if (arg_proteins.size() != 2 || arg_alignment.num_entries() != 2) {
+// //	if (prm_proteins.size() != 2 || prm_alignment.num_entries() != 2) {
 // //		BOOST_THROW_EXCEPTION(not_implemented_exception("Currently only able to iterate alignments of more than two structures"));
 // //	}
 
@@ -488,10 +488,10 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 
 // 	size_t iter_ctr = 0;
 // 	alignment prev_alignment( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT );
-// 	alignment curr_alignment( arg_alignment );
+// 	alignment curr_alignment( prm_alignment );
 // 	bool inserted_residues = true;
 // 	while ( inserted_residues || curr_alignment != prev_alignment ) {
-// 		const bool_aln_pair ins_res_and_next_aln = iterate_step( curr_alignment, arg_proteins, arg_gap_penalty );
+// 		const bool_aln_pair ins_res_and_next_aln = iterate_step( curr_alignment, prm_proteins, prm_gap_penalty );
 // 		inserted_residues        = ins_res_and_next_aln.first;
 // 		alignment next_alignment = ins_res_and_next_aln.second;
 // 		const bool next_matches_prev= ( next_alignment == prev_alignment );
@@ -502,8 +502,8 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 // 			cerr << "Refining alignment, step : " << iter_ctr << endl;
 
 // //			// For debugging why 1fyvA00 vs 2rirA01 never stops
-// //			const protein &protein_a         = arg_proteins[0];
-// //			const protein &protein_b         = arg_proteins[1];
+// //			const protein &protein_a         = prm_proteins[0];
+// //			const protein &protein_b         = prm_proteins[1];
 // //			const path temp_align_out_file( "temp_align." + lexical_cast<string>(iter_ctr) + ".txt" );
 // //			ofstream temp_align_ofstream;
 // //			open_ofstream( temp_align_ofstream, temp_align_out_file );
@@ -517,9 +517,9 @@ void cath::align::do_some_gubbins(const protein   &arg_protein_a, ///< TODOCUMEN
 
 // 		++iter_ctr;
 // 	}
-// //	const protein &protein_a         = arg_proteins[0];
-// //	const protein &protein_b         = arg_proteins[1];
-// //	score_alignment( residue_scorer(), curr_alignment, arg_proteins );
+// //	const protein &protein_a         = prm_proteins[0];
+// //	const protein &protein_b         = prm_proteins[1];
+// //	score_alignment( residue_scorer(), curr_alignment, prm_proteins );
 // //	output_alignment_to_cath_ssap_legacy_format( cout, curr_alignment, protein_a, protein_b );
 
 // 	return curr_alignment;

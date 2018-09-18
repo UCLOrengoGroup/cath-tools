@@ -121,15 +121,15 @@ namespace cath {
 			static constexpr seq_seg_seq_seg_pair sngls_same                   { seg_zero_one,   seg_zero_one   };
 
 			/// \brief Make a seq_seg_run of the first seq_seg in the specified pair
-			seq_seg_run sngl_run_1(const seq_seg_seq_seg_pair &arg_seq_segs ///< The pair of single seq_segs to query
+			seq_seg_run sngl_run_1(const seq_seg_seq_seg_pair &prm_seq_segs ///< The pair of single seq_segs to query
 			                       ) {
-				return { { arg_seq_segs.first } };
+				return { { prm_seq_segs.first } };
 			}
 
 			/// \brief Make a seq_seg_run of the second seq_seg in the specified pair
-			seq_seg_run sngl_run_2(const seq_seg_seq_seg_pair &arg_seq_segs ///< The pair of single seq_segs to query
+			seq_seg_run sngl_run_2(const seq_seg_seq_seg_pair &prm_seq_segs ///< The pair of single seq_segs to query
 			                      ) {
-				return { { arg_seq_segs.second } };
+				return { { prm_seq_segs.second } };
 			}
 		};
 

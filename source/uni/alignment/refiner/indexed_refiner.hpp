@@ -56,23 +56,23 @@ namespace cath {
 		// namespace detail {
 		// 	template <typename Idx,
 		// 	          typename Keyer>
-		// 	Idx build_gubbins(const protein   &arg_protein,         ///< TODOCUMENT
-		// 	                  const scan::sod &arg_sparse_or_dense, ///< TODOCUMENT
-		// 	                  const fot       &arg_from_or_to,      ///< TODOCUMENT
-		// 	                  const float     &arg_cell_size,       ///< TODOCUMENT
-		// 	                  const Keyer     &arg_keyer            ///< TODOCUMENT
+		// 	Idx build_gubbins(const protein   &prm_protein,         ///< TODOCUMENT
+		// 	                  const scan::sod &prm_sparse_or_dense, ///< TODOCUMENT
+		// 	                  const fot       &prm_from_or_to,      ///< TODOCUMENT
+		// 	                  const float     &prm_cell_size,       ///< TODOCUMENT
+		// 	                  const Keyer     &prm_keyer            ///< TODOCUMENT
 		// 	                  ) {
 		// 		constexpr float MAX_DIST = 7.0; // ??????????????????????
 		// 		constexpr scan::simple_locn_crit the_crit{ indexed_refiner_constants::MAX_SQ_DIST };
 
-		// 		const auto the_range = common::indices( arg_protein.get_length() )
+		// 		const auto the_range = common::indices( prm_protein.get_length() )
 		// 			| transformed( [&] (const size_t &x) {
-		// 				return scan::make_simple_locn_index_of_ca( arg_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
+		// 				return scan::make_simple_locn_index_of_ca( prm_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
 		// 			} );
 
-		// 		auto the_store = make_dense_empty_lattice_store( the_range, arg_keyer, the_crit );
+		// 		auto the_store = make_dense_empty_lattice_store( the_range, prm_keyer, the_crit );
 		// 		for (const auto &value : the_range) {
-		// 			const auto close_keys = arg_keyer.make_close_keys( value, the_crit );
+		// 			const auto close_keys = prm_keyer.make_close_keys( value, the_crit );
 		// 			for (const auto &the_key : common::cross( close_keys ) ) {
 		// 				the_store.push_back_entry_to_cell( the_key, value );
 		// 			}
@@ -82,32 +82,32 @@ namespace cath {
 
 		// 		return make_dense_lattice_store(
 		// 			,
-		// 			arg_keyer,
+		// 			prm_keyer,
 		// 			,
-		// 			arg_cell_size,
+		// 			prm_cell_size,
 		// 			MAX_DIST
 		// 		);
 
 		// 		// make_dense_lattice_store_impl(
-		// 		// 	common::indices( arg_protein.get_length() )
+		// 		// 	common::indices( prm_protein.get_length() )
 		// 		// 		| transformed( [&] (const size_t &x) {
-		// 		// 			return make_simple_locn_index_of_ca( arg_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
+		// 		// 			return make_simple_locn_index_of_ca( prm_protein.get_residue_ref_of_index( x ), debug_numeric_cast<unsigned int>( x ) );
 		// 		// 		} ),
-		// 		// 	arg_cell_size,
-		// 		// 	arg_max_dist
+		// 		// 	prm_cell_size,
+		// 		// 	prm_max_dist
 		// 		// );
 		// 	}
 		// }
 
 		/// \brief TODOCUMENT
-		inline geom::coord view_vector_of_rotns_coords_and_indices(const std::vector<geom::rotation> &arg_rotns,      ///< TODOCUMENT
-		                                                           const std::vector<geom::coord>    &arg_coords,     ///< TODOCUMENT
-		                                                           const size_t                      &arg_from_index, ///< TODOCUMENT
-		                                                           const size_t                      &arg_to_index    ///< TODOCUMENT
+		inline geom::coord view_vector_of_rotns_coords_and_indices(const std::vector<geom::rotation> &prm_rotns,      ///< TODOCUMENT
+		                                                           const std::vector<geom::coord>    &prm_coords,     ///< TODOCUMENT
+		                                                           const size_t                      &prm_from_index, ///< TODOCUMENT
+		                                                           const size_t                      &prm_to_index    ///< TODOCUMENT
 		                                                           ) {
 			return rotate_copy(
-				arg_rotns[ arg_from_index ],
-				arg_coords[ arg_to_index ] - arg_coords[ arg_from_index ]
+				prm_rotns[ prm_from_index ],
+				prm_coords[ prm_to_index ] - prm_coords[ prm_from_index ]
 			);
 		}
 
@@ -115,19 +115,19 @@ namespace cath {
 		///
 		/// Note that the range this returns uses references to all of the arguments so it
 		/// mustn't be used beyond the end of any of their lifetimes.
-		inline auto make_range_of_index(const std::vector<geom::rotation> &arg_rotns,      ///< TODOCUMENT
-		                                const std::vector<geom::coord>    &arg_coords,     ///< TODOCUMENT
-		                                const fot                         &arg_from_or_to, ///< TODOCUMENT
-		                                const size_t                      &arg_index       ///< TODOCUMENT
+		inline auto make_range_of_index(const std::vector<geom::rotation> &prm_rotns,      ///< TODOCUMENT
+		                                const std::vector<geom::coord>    &prm_coords,     ///< TODOCUMENT
+		                                const fot                         &prm_from_or_to, ///< TODOCUMENT
+		                                const size_t                      &prm_index       ///< TODOCUMENT
 		                                ) {
-			return common::indices( debug_numeric_cast<unsigned int>( arg_rotns.size() ) )
+			return common::indices( debug_numeric_cast<unsigned int>( prm_rotns.size() ) )
 				| boost::adaptors::transformed( [&] (const unsigned int &x) {
 					return scan::make_simple_locn_index(
 						view_vector_of_rotns_coords_and_indices(
-							arg_rotns,
-							arg_coords,
-							( ( arg_from_or_to == fot::FROM ) ? arg_index : x         ),
-							( ( arg_from_or_to == fot::FROM ) ? x         : arg_index )
+							prm_rotns,
+							prm_coords,
+							( ( prm_from_or_to == fot::FROM ) ? prm_index : x         ),
+							( ( prm_from_or_to == fot::FROM ) ? x         : prm_index )
 						),
 						x
 					);
@@ -135,19 +135,19 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline auto make_range_of_all(const std::vector<geom::rotation> &arg_rotns,     ///< TODOCUMENT
-		                              const std::vector<geom::coord>    &arg_coords,    ///< TODOCUMENT
-		                              const fot                         &arg_from_or_to ///< TODOCUMENT
+		inline auto make_range_of_all(const std::vector<geom::rotation> &prm_rotns,     ///< TODOCUMENT
+		                              const std::vector<geom::coord>    &prm_coords,    ///< TODOCUMENT
+		                              const fot                         &prm_from_or_to ///< TODOCUMENT
 		                              ) {
-			const auto index_range = common::indices( debug_numeric_cast<unsigned int>( arg_rotns.size() ) );
+			const auto index_range = common::indices( debug_numeric_cast<unsigned int>( prm_rotns.size() ) );
 			return common::cross( index_range, index_range )
 				| boost::adaptors::transformed( [&] (const std::tuple<unsigned int, unsigned int> &x) {
 					return scan::make_simple_locn_index(
 						view_vector_of_rotns_coords_and_indices(
-							arg_rotns,
-							arg_coords,
-							( ( arg_from_or_to == fot::FROM ) ? std::get<0>( x ) : std::get<1>( x ) ),
-							( ( arg_from_or_to == fot::FROM ) ? std::get<1>( x ) : std::get<0>( x ) )
+							prm_rotns,
+							prm_coords,
+							( ( prm_from_or_to == fot::FROM ) ? std::get<0>( x ) : std::get<1>( x ) ),
+							( ( prm_from_or_to == fot::FROM ) ? std::get<1>( x ) : std::get<0>( x ) )
 						),
 						std::get<1>( x )
 					);
@@ -155,25 +155,25 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline auto make_rotns_and_coords(const protein &arg_protein ///< TODOCUMENT
+		inline auto make_rotns_and_coords(const protein &prm_protein ///< TODOCUMENT
 		                                  ) {
 			std::pair<std::vector<geom::rotation>, std::vector<geom::coord>> result;
-			for (const size_t &x : common::indices( arg_protein.get_length() ) ) {
-				result . first  . push_back( arg_protein.get_residue_ref_of_index( x ).get_frame()             );
-				result . second . push_back( arg_protein.get_residue_ref_of_index( x ).get_carbon_beta_coord() );
+			for (const size_t &x : common::indices( prm_protein.get_length() ) ) {
+				result . first  . push_back( prm_protein.get_residue_ref_of_index( x ).get_frame()             );
+				result . second . push_back( prm_protein.get_residue_ref_of_index( x ).get_carbon_beta_coord() );
 			}
 			return result;
 		}
 
 		/// \brief TODOCUMENT
-		inline auto make_range_of_all(const protein &arg_protein,   ///< TODOCUMENT
-		                              const fot     &arg_from_or_to ///< TODOCUMENT
+		inline auto make_range_of_all(const protein &prm_protein,   ///< TODOCUMENT
+		                              const fot     &prm_from_or_to ///< TODOCUMENT
 		                              ) {
-			const auto rotns_and_coords = make_rotns_and_coords( arg_protein );
+			const auto rotns_and_coords = make_rotns_and_coords( prm_protein );
 			return make_range_of_all(
 				rotns_and_coords.first,
 				rotns_and_coords.second,
-				arg_from_or_to
+				prm_from_or_to
 			);
 		}
 
@@ -181,12 +181,12 @@ namespace cath {
 		template <scan::sod Sod,
 		          typename T,
 		          typename Keyer>
-		std::vector<T> prepare_vec_based_simple_locn_index_store(const protein &arg_protein,    ///< TODOCUMENT
-		                                                         const fot     &arg_from_or_to, ///< TODOCUMENT
-		                                                         const Keyer   &arg_keyer       ///< TODOCUMENT
+		std::vector<T> prepare_vec_based_simple_locn_index_store(const protein &prm_protein,    ///< TODOCUMENT
+		                                                         const fot     &prm_from_or_to, ///< TODOCUMENT
+		                                                         const Keyer   &prm_keyer       ///< TODOCUMENT
 		                                                         ) {
-			const auto    rotns_and_coords = make_rotns_and_coords( arg_protein );
-			const size_t &length           = arg_protein.get_length();
+			const auto    rotns_and_coords = make_rotns_and_coords( prm_protein );
+			const size_t &length           = prm_protein.get_length();
 
 			std::vector<T> result;
 			result.reserve( length );
@@ -200,8 +200,8 @@ namespace cath {
 					const auto the_view = view_vector_of_rotns_coords_and_indices(
 						rotns_and_coords.first,
 						rotns_and_coords.second,
-						( ( arg_from_or_to == fot::FROM ) ? outer_index : inner_index ),
-						( ( arg_from_or_to == fot::FROM ) ? inner_index : outer_index )
+						( ( prm_from_or_to == fot::FROM ) ? outer_index : inner_index ),
+						( ( prm_from_or_to == fot::FROM ) ? inner_index : outer_index )
 					);
 					lists.emplace_back(
 						debug_numeric_cast< scan::detail::view_base_type>( the_view.get_x() ),
@@ -214,7 +214,7 @@ namespace cath {
 				result.push_back(
 					scan::detail::store_maker<Sod, T>{}(
 						lists,
-						arg_keyer,
+						prm_keyer,
 						scan::simple_locn_crit{ indexed_refiner_constants::MAX_SQ_DIST }
 					)
 				);
@@ -242,19 +242,19 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			vector_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
-			                    const protein                                &arg_protein,    ///< TODOCUMENT
-			                    const fot                                    &arg_from_or_to, ///< TODOCUMENT
-			                    const float                                  &arg_cell_size   ///< TODOCUMENT
+			                    const protein                                &prm_protein,    ///< TODOCUMENT
+			                    const fot                                    &prm_from_or_to, ///< TODOCUMENT
+			                    const float                                  &prm_cell_size   ///< TODOCUMENT
 			                    ) : the_keyer{
 			                        	make_res_pair_keyer(
-			                        		scan::simple_locn_x_keyer_part{ arg_cell_size },
-			                        		scan::simple_locn_y_keyer_part{ arg_cell_size },
-			                        		scan::simple_locn_z_keyer_part{ arg_cell_size },
+			                        		scan::simple_locn_x_keyer_part{ prm_cell_size },
+			                        		scan::simple_locn_y_keyer_part{ prm_cell_size },
+			                        		scan::simple_locn_z_keyer_part{ prm_cell_size },
 			                        		scan::res_pair_from_to_index_keyer_part{}
 			                        	)
 			                        },
 			                        the_store{ scan::detail::store_maker<Sod, store_type>{}(
-			                        	make_range_of_all( arg_protein, arg_from_or_to ),
+			                        	make_range_of_all( prm_protein, prm_from_or_to ),
 			                        	the_keyer,
 			                        	scan::simple_locn_crit{ indexed_refiner_constants::MAX_SQ_DIST }
 			                        ) } {
@@ -285,21 +285,21 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			vec_of_vectors_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
-			                            const protein                                &arg_protein,    ///< TODOCUMENT
-			                            const fot                                    &arg_from_or_to, ///< TODOCUMENT
-			                            const float                                  &arg_cell_size   ///< TODOCUMENT
+			                            const protein                                &prm_protein,    ///< TODOCUMENT
+			                            const fot                                    &prm_from_or_to, ///< TODOCUMENT
+			                            const float                                  &prm_cell_size   ///< TODOCUMENT
 			                            ) : the_keyer{
 			                                	make_res_pair_keyer(
-			                                		scan::simple_locn_x_keyer_part{ arg_cell_size },
-			                                		scan::simple_locn_y_keyer_part{ arg_cell_size },
-			                                		scan::simple_locn_z_keyer_part{ arg_cell_size },
+			                                		scan::simple_locn_x_keyer_part{ prm_cell_size },
+			                                		scan::simple_locn_y_keyer_part{ prm_cell_size },
+			                                		scan::simple_locn_z_keyer_part{ prm_cell_size },
 			                                		scan::res_pair_from_to_index_keyer_part{}
 			                                	)
 			                                },
 			                                the_store{
 			                                	prepare_vec_based_simple_locn_index_store<Sod, store_type>(
-			                                		arg_protein,
-			                                		arg_from_or_to,
+			                                		prm_protein,
+			                                		prm_from_or_to,
 			                                		the_keyer
 			                                	)
 			                                } {
@@ -339,19 +339,19 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			hash_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
-			                  const protein                                &arg_protein,    ///< TODOCUMENT
-			                  const fot                                    &arg_from_or_to, ///< TODOCUMENT
-			                  const float                                  &arg_cell_size   ///< TODOCUMENT
+			                  const protein                                &prm_protein,    ///< TODOCUMENT
+			                  const fot                                    &prm_from_or_to, ///< TODOCUMENT
+			                  const float                                  &prm_cell_size   ///< TODOCUMENT
 			                  ) : the_keyer{
 			                      	make_res_pair_keyer(
-			                      		scan::simple_locn_x_keyer_part{ arg_cell_size },
-			                      		scan::simple_locn_y_keyer_part{ arg_cell_size },
-			                      		scan::simple_locn_z_keyer_part{ arg_cell_size },
+			                      		scan::simple_locn_x_keyer_part{ prm_cell_size },
+			                      		scan::simple_locn_y_keyer_part{ prm_cell_size },
+			                      		scan::simple_locn_z_keyer_part{ prm_cell_size },
 			                      		scan::res_pair_from_to_index_keyer_part{}
 			                      	)
 			                      },
 			                      the_store{ scan::detail::store_maker<Sod, store_type>{}(
-			                      	make_range_of_all( arg_protein, arg_from_or_to ),
+			                      	make_range_of_all( prm_protein, prm_from_or_to ),
 			                      	the_keyer,
 			                      	scan::simple_locn_crit{ indexed_refiner_constants::MAX_SQ_DIST }
 			                      ) } {
@@ -384,21 +384,21 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			vec_of_hashes_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
-			                           const protein                                &arg_protein,    ///< TODOCUMENT
-			                           const fot                                    &arg_from_or_to, ///< TODOCUMENT
-			                           const float                                  &arg_cell_size   ///< TODOCUMENT
+			                           const protein                                &prm_protein,    ///< TODOCUMENT
+			                           const fot                                    &prm_from_or_to, ///< TODOCUMENT
+			                           const float                                  &prm_cell_size   ///< TODOCUMENT
 			                           ) : the_keyer{
 			                               	make_res_pair_keyer(
-			                               		scan::simple_locn_x_keyer_part{ arg_cell_size },
-			                               		scan::simple_locn_y_keyer_part{ arg_cell_size },
-			                               		scan::simple_locn_z_keyer_part{ arg_cell_size },
+			                               		scan::simple_locn_x_keyer_part{ prm_cell_size },
+			                               		scan::simple_locn_y_keyer_part{ prm_cell_size },
+			                               		scan::simple_locn_z_keyer_part{ prm_cell_size },
 			                               		scan::res_pair_from_to_index_keyer_part{}
 			                               	)
 			                               },
 			                               the_store{
 			                               	prepare_vec_based_simple_locn_index_store<Sod, store_type>(
-			                               		arg_protein,
-			                               		arg_from_or_to,
+			                               		prm_protein,
+			                               		prm_from_or_to,
 			                               		the_keyer
 			                               	)
 			                               } {
@@ -438,35 +438,35 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			lattice_refine_index(const std::integral_constant<scan::sod, Sod> &,               ///< TODOCUMENT
-			                     const protein                                &arg_protein,    ///< TODOCUMENT
-			                     const fot                                    &arg_from_or_to, ///< TODOCUMENT
-			                     const float                                  &arg_cell_size   ///< TODOCUMENT
+			                     const protein                                &prm_protein,    ///< TODOCUMENT
+			                     const fot                                    &prm_from_or_to, ///< TODOCUMENT
+			                     const float                                  &prm_cell_size   ///< TODOCUMENT
 			                     ) : the_keyer{
 			                         	make_res_pair_keyer(
-			                         		scan::simple_locn_x_keyer_part{ arg_cell_size },
-			                         		scan::simple_locn_y_keyer_part{ arg_cell_size },
-			                         		scan::simple_locn_z_keyer_part{ arg_cell_size },
+			                         		scan::simple_locn_x_keyer_part{ prm_cell_size },
+			                         		scan::simple_locn_y_keyer_part{ prm_cell_size },
+			                         		scan::simple_locn_z_keyer_part{ prm_cell_size },
 			                         		scan::res_pair_from_to_index_keyer_part{}
 			                         	)
 			                         },
 			                         the_store{ scan::detail::store_maker<Sod, store_type>{}(
-			                         	make_range_of_all( arg_protein, arg_from_or_to ),
+			                         	make_range_of_all( prm_protein, prm_from_or_to ),
 			                         	the_keyer,
 			                         	scan::simple_locn_crit{ indexed_refiner_constants::MAX_SQ_DIST }
 			                         ) } {
-				// if ( arg_sparse_or_dense == scan::sod::SPARSE ) {
+				// if ( prm_sparse_or_dense == scan::sod::SPARSE ) {
 				// 	// locn_index_store cath::scan::
 				// 	make_sparse_lattice(
-				// 		arg_protein,
-				// 		arg_cell_size,
-				// 		arg_max_dist
+				// 		prm_protein,
+				// 		prm_cell_size,
+				// 		prm_max_dist
 				// 	);
 				// }
 				// else {
 				// 	// locn_index_store cath::scan::
-				// 	make_dense_lattice(const protein &arg_protein,   ///< TODOCUMENT
-				// 	                   const float   &arg_cell_size, ///< TODOCUMENT
-				// 	                   const float   &arg_max_dist   ///< TODOCUMENT
+				// 	make_dense_lattice(const protein &prm_protein,   ///< TODOCUMENT
+				// 	                   const float   &prm_cell_size, ///< TODOCUMENT
+				// 	                   const float   &prm_max_dist   ///< TODOCUMENT
 				// 	                   );
 				// }
 			}
@@ -498,21 +498,21 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <scan::sod Sod>
 			vec_of_lattices_refine_index(const std::integral_constant<scan::sod, Sod> &, ///< TODOCUMENT
-			                             const protein &arg_protein,                     ///< TODOCUMENT
-			                             const fot     &arg_from_or_to,                  ///< TODOCUMENT
-			                             const float   &arg_cell_size                    ///< TODOCUMENT
+			                             const protein &prm_protein,                     ///< TODOCUMENT
+			                             const fot     &prm_from_or_to,                  ///< TODOCUMENT
+			                             const float   &prm_cell_size                    ///< TODOCUMENT
 			                             ) : the_keyer{
 			                                 	make_res_pair_keyer(
-			                                 		scan::simple_locn_x_keyer_part{ arg_cell_size },
-			                                 		scan::simple_locn_y_keyer_part{ arg_cell_size },
-			                                 		scan::simple_locn_z_keyer_part{ arg_cell_size },
+			                                 		scan::simple_locn_x_keyer_part{ prm_cell_size },
+			                                 		scan::simple_locn_y_keyer_part{ prm_cell_size },
+			                                 		scan::simple_locn_z_keyer_part{ prm_cell_size },
 			                                 		scan::res_pair_from_to_index_keyer_part{}
 			                                 	)
 			                                 },
 			                                 the_store{
 			                                 	prepare_vec_based_simple_locn_index_store<Sod, store_type>(
-			                                 		arg_protein,
-			                                 		arg_from_or_to,
+			                                 		prm_protein,
+			                                 		prm_from_or_to,
 			                                 		the_keyer
 			                                 	)
 			                                 } {

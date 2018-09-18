@@ -62,8 +62,8 @@ namespace cath {
 		};
 
 		/// \brief Ctor from an id_of_str_bidirnl
-		inline domain_cluster_ids_by_seq::domain_cluster_ids_by_seq(common::id_of_str_bidirnl &arg_id_of_seq_name ///< The id_of_str_bidirnl to use to map from entry (sequence) names to numeric IDs
-		                                                            ) : id_of_seq_name{ arg_id_of_seq_name } {
+		inline domain_cluster_ids_by_seq::domain_cluster_ids_by_seq(common::id_of_str_bidirnl &prm_id_of_seq_name ///< The id_of_str_bidirnl to use to map from entry (sequence) names to numeric IDs
+		                                                            ) : id_of_seq_name{ prm_id_of_seq_name } {
 		}
 
 		/// \brief Add the specified domain_cluster_id under the sequence with the specified name
@@ -73,23 +73,23 @@ namespace cath {
 		///       and can avoid making a new string when it doesn't need to store.
 		///       That said, there's probably less reuse of IDs than for clusters
 		///       so it may make little difference.
-		inline clust_entry_problem domain_cluster_ids_by_seq::add(const boost::string_ref &arg_seq_id,           ///< The name of the sequence under which to store the domain_cluster_id
-		                                                          domain_cluster_id        arg_domain_cluster_id ///< The domain_cluster_id to store
+		inline clust_entry_problem domain_cluster_ids_by_seq::add(const boost::string_ref &prm_seq_id,           ///< The name of the sequence under which to store the domain_cluster_id
+		                                                          domain_cluster_id        prm_domain_cluster_id ///< The domain_cluster_id to store
 		                                                          ) {
-			const auto &id = id_of_seq_name.get().add_name( arg_seq_id.to_string() );
+			const auto &id = id_of_seq_name.get().add_name( prm_seq_id.to_string() );
 			if ( id >= domain_cluster_ids_of_seq_id.size() ) {
 				domain_cluster_ids_of_seq_id.resize( id + 1 );
 			}
 			domain_cluster_ids &the_domain_cluster_ids = domain_cluster_ids_of_seq_id[ id ];
 
 			for (const auto &the_domain_cluster_id : the_domain_cluster_ids) {
-				const auto intrcn = interaction( arg_domain_cluster_id, the_domain_cluster_id );
+				const auto intrcn = interaction( prm_domain_cluster_id, the_domain_cluster_id );
 				if ( intrcn != clust_entry_problem::NONE ) {
 					return intrcn;
 				}
 			}
 
-			the_domain_cluster_ids.emplace_back( std::move( arg_domain_cluster_id ) );
+			the_domain_cluster_ids.emplace_back( std::move( prm_domain_cluster_id ) );
 			return clust_entry_problem::NONE;
 		}
 
@@ -109,44 +109,44 @@ namespace cath {
 		}
 
 		/// \brief Get the domain_cluster_ids associated with the sequence with the specified ID
-		inline const domain_cluster_ids & domain_cluster_ids_by_seq::operator[](const size_t &arg_seq_id ///< The ID of the sequence to query
+		inline const domain_cluster_ids & domain_cluster_ids_by_seq::operator[](const size_t &prm_seq_id ///< The ID of the sequence to query
 		                                                                        ) const {
-			return domain_cluster_ids_of_seq_id[ arg_seq_id ];
+			return domain_cluster_ids_of_seq_id[ prm_seq_id ];
 		}
 
 		/// \brief Get the cluster ID of the sequence with the specified name from the specified domain_cluster_ids_by_seq
 		///
 		/// \relates domain_cluster_ids_by_seq
-		inline cluster_id_t get_cluster_id_of_seq_name(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
-		                                               const std::string               &arg_seq_name                ///< The name of the sequence of interest
+		inline cluster_id_t get_cluster_id_of_seq_name(const domain_cluster_ids_by_seq &prm_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
+		                                               const std::string               &prm_seq_name                ///< The name of the sequence of interest
 		                                               ) {
-			return arg_dom_cluster_ids_by_seq.get_id_of_seq_name().get_id_of_name( arg_seq_name );
+			return prm_dom_cluster_ids_by_seq.get_id_of_seq_name().get_id_of_name( prm_seq_name );
 		}
 
 		/// \brief Get whether there is a non-empty domain_cluster_ids for the sequence with the specified id in the specified domain_cluster_ids_by_seq
 		///
 		/// \relates domain_cluster_ids_by_seq
-		inline bool has_domain_cluster_ids_of_seq_id(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
-		                                             const cluster_id_t              &arg_seq_id                  ///< The id of the sequence of interest
+		inline bool has_domain_cluster_ids_of_seq_id(const domain_cluster_ids_by_seq &prm_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
+		                                             const cluster_id_t              &prm_seq_id                  ///< The id of the sequence of interest
 		                                             ) {
 			return (
-				arg_seq_id < arg_dom_cluster_ids_by_seq.size()
+				prm_seq_id < prm_dom_cluster_ids_by_seq.size()
 				&&
-				! arg_dom_cluster_ids_by_seq[ arg_seq_id ].empty()
+				! prm_dom_cluster_ids_by_seq[ prm_seq_id ].empty()
 			);
 		}
 
 		/// \brief Get whether there is a non-empty domain_cluster_ids for the sequence with the specified name in the specified domain_cluster_ids_by_seq
 		///
 		/// \relates domain_cluster_ids_by_seq
-		inline bool has_domain_cluster_ids_of_seq_name(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
-		                                               const std::string               &arg_seq_name                ///< The name of the sequence of interest
+		inline bool has_domain_cluster_ids_of_seq_name(const domain_cluster_ids_by_seq &prm_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
+		                                               const std::string               &prm_seq_name                ///< The name of the sequence of interest
 		                                               ) {
 			return has_domain_cluster_ids_of_seq_id(
-				arg_dom_cluster_ids_by_seq,
+				prm_dom_cluster_ids_by_seq,
 				get_cluster_id_of_seq_name(
-					arg_dom_cluster_ids_by_seq,
-					arg_seq_name
+					prm_dom_cluster_ids_by_seq,
+					prm_seq_name
 				)
 			);
 		}
@@ -154,10 +154,10 @@ namespace cath {
 		/// \brief Get the domain_cluster_ids of the sequence with the specified name from the specified domain_cluster_ids_by_seq
 		///
 		/// \relates domain_cluster_ids_by_seq
-		inline const domain_cluster_ids & get_domain_cluster_ids_of_seq_name(const domain_cluster_ids_by_seq &arg_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
-		                                                                     const std::string               &arg_seq_name                ///< The name of the sequence of interest
+		inline const domain_cluster_ids & get_domain_cluster_ids_of_seq_name(const domain_cluster_ids_by_seq &prm_dom_cluster_ids_by_seq, ///< The domain_cluster_ids_by_seq to query
+		                                                                     const std::string               &prm_seq_name                ///< The name of the sequence of interest
 		                                                                     ) {
-			return arg_dom_cluster_ids_by_seq[ get_cluster_id_of_seq_name( arg_dom_cluster_ids_by_seq, arg_seq_name ) ];
+			return prm_dom_cluster_ids_by_seq[ get_cluster_id_of_seq_name( prm_dom_cluster_ids_by_seq, prm_seq_name ) ];
 		}
 
 	} // namespace clust

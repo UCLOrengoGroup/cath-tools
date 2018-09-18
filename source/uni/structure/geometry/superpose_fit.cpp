@@ -38,22 +38,22 @@ using namespace cath::geom::detail;
 /// \brief Find the rotation that, when applied to the first specified coord_list,
 ///        best superposes it onto the second specified coord list
 ///
-/// \pre `arg_coords_a.size() == arg_coords_b.size()` else an invalid_argument_exception will be thrown
+/// \pre `prm_coords_a.size() == prm_coords_b.size()` else an invalid_argument_exception will be thrown
 ///
-/// \pre Both arg_coords_a and arg_coords_b must be translated to have the their centres of gravity at the origin
+/// \pre Both prm_coords_a and prm_coords_b must be translated to have the their centres of gravity at the origin
 ///      else bad stuff might happen (most likely: meaningless results will be returned)
 ///
 /// This uses the Kabsch algorithm, eg see https://en.wikipedia.org/wiki/Kabsch_algorithm
-rotation cath::geom::superpose_fit_1st_to_2nd(const coord_list &arg_coords_a, ///< The first  list of coords to superpose onto the second
-                                              const coord_list &arg_coords_b  ///< The second list of coords
+rotation cath::geom::superpose_fit_1st_to_2nd(const coord_list &prm_coords_a, ///< The first  list of coords to superpose onto the second
+                                              const coord_list &prm_coords_b  ///< The second list of coords
                                               ) {
 	// Check the sizes match
-	if ( arg_coords_a.size() != arg_coords_b.size() ) {
+	if ( prm_coords_a.size() != prm_coords_b.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("This subroutine cannot fit lists of coordinates of different length"));
 	}
 
 	// Grab a cross-covariance matrix
-	auto x_cov_mat = cross_covariance_matrix( arg_coords_a, arg_coords_b );
+	auto x_cov_mat = cross_covariance_matrix( prm_coords_a, prm_coords_b );
 
 	// Do a singular value decomposition of the matrix into svd_left . S. svd_right ^T
 	gsl_matrix_wrp  V    { 3, 3 };
@@ -117,12 +117,12 @@ rotation cath::geom::superpose_fit_1st_to_2nd(const coord_list &arg_coords_a, //
 /// \brief Find the rotation that, when applied to the second specified coord_list,
 ///        best superposes it onto the first specified coord list
 ///
-/// \pre `arg_coords_a.size() == arg_coords_b.size()` else an invalid_argument_exception will be thrown
+/// \pre `prm_coords_a.size() == prm_coords_b.size()` else an invalid_argument_exception will be thrown
 ///
-/// \pre Both arg_coords_a and arg_coords_b must be translated to have the their centres of gravity at the origin
+/// \pre Both prm_coords_a and prm_coords_b must be translated to have the their centres of gravity at the origin
 ///      else bad stuff might happen (most likely: meaningless results will be returned)
-rotation cath::geom::superpose_fit_2nd_to_1st(const coord_list &arg_coords_a, ///< The first  list of coords
-                                              const coord_list &arg_coords_b  ///< The second list of coords to superpose onto the first
+rotation cath::geom::superpose_fit_2nd_to_1st(const coord_list &prm_coords_a, ///< The first  list of coords
+                                              const coord_list &prm_coords_b  ///< The second list of coords to superpose onto the first
                                               ) {
-	return superpose_fit_1st_to_2nd( arg_coords_b, arg_coords_a );
+	return superpose_fit_1st_to_2nd( prm_coords_b, prm_coords_a );
 }

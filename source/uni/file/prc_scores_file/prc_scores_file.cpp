@@ -49,17 +49,17 @@ using boost::algorithm::trim_left;
 using boost::filesystem::path;
 
 /// \brief TODOCUMENT
-prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_vec &arg_prc_scores_entries ///< TODOCUMENT
+prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_vec &prm_prc_scores_entries ///< TODOCUMENT
                                                         ) {
 	prc_scores_entry_vec  results;
 
 	unordered_map<str_str_pair, size_t, pair_hash> index_of_previously_seen;
 
 	return transform_build<prc_scores_entry_vec>(
-		indices( arg_prc_scores_entries.size() )
+		indices( prm_prc_scores_entries.size() )
 			| filtered(
 				[&] (const size_t &x) {
-					const auto &entry     = arg_prc_scores_entries[ x ];
+					const auto &entry     = prm_prc_scores_entries[ x ];
 					const auto &id1       = entry.get_name_1();
 					const auto &id2       = entry.get_name_2();
 					const auto &evalue    = entry.get_evalue();
@@ -72,7 +72,7 @@ prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_v
 						return true;
 					}
 
-					const auto prev_entry = arg_prc_scores_entries[ find_itr->second ];
+					const auto prev_entry = prm_prc_scores_entries[ find_itr->second ];
 //					if ( entry.get_hit_num() <= prev_entry.get_hit_num() ) {
 //						BOOST_THROW_EXCEPTION(invalid_argument_exception(
 //							"When parsing PRC results, found hit between " + id1 + " and " + id2 + " with hit number that isn't higher than for previous result"
@@ -94,18 +94,18 @@ prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_v
 					return false;
 				}
 			),
-		[&] (const size_t &x) { return arg_prc_scores_entries[ x ]; }
+		[&] (const size_t &x) { return prm_prc_scores_entries[ x ]; }
 	);
 	return results;
 }
 
 /// \brief Parse a vector of prc_scores_entry objects from the specified istream
-prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(istream &arg_prc_scores_is ///< The istream of prc scores data from which to parse the prc_scores_entry objects
+prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(istream &prm_prc_scores_is ///< The istream of prc scores data from which to parse the prc_scores_entry objects
                                                             ) {
 	string                 line_string;
 	prc_scores_entry_vec   results;
 	prc_scores_line_parser parser;
-	while ( getline( arg_prc_scores_is, line_string ) ) {
+	while ( getline( prm_prc_scores_is, line_string ) ) {
 
 		// If this line is neither empty nor a comment line (a comment line is a line with a '#' character as the first non-whitespace character)
 		trim_left( line_string );
@@ -117,17 +117,17 @@ prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(istream &arg_prc_sco
 }
 
 /// \brief Parse a vector of prc_scores_entry objects from the specified string
-prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const string &arg_prc_scores_str ///< The string of prc scores data from which to parse the prc_scores_entry objects
+prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const string &prm_prc_scores_str ///< The string of prc scores data from which to parse the prc_scores_entry objects
                                                             ) {
-	istringstream input_ss{ arg_prc_scores_str };
+	istringstream input_ss{ prm_prc_scores_str };
 	return parse_prc_scores_file( input_ss );
 }
 
 /// \brief TODOCUMENT
-prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const path &arg_prc_scores_file ///< TODOCUMENT
+prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const path &prm_prc_scores_file ///< TODOCUMENT
                                                             ) {
 	ifstream prc_scores_ifstream;
-	open_ifstream( prc_scores_ifstream, arg_prc_scores_file );
+	open_ifstream( prc_scores_ifstream, prm_prc_scores_file );
 	const auto prc_scores_data = prc_scores_file::parse_prc_scores_file( prc_scores_ifstream );
 	prc_scores_ifstream.close();
 	return prc_scores_data;
@@ -135,20 +135,20 @@ prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const path &arg_prc_
 
 
 /// \brief Parse a vector of prc_scores_entry objects from the specified istream
-prc_scores_entry_vec prc_scores_file::parse_prc_scores_file_fancy(istream &arg_prc_scores_is ///< The istream of prc scores data from which to parse the prc_scores_entry objects
+prc_scores_entry_vec prc_scores_file::parse_prc_scores_file_fancy(istream &prm_prc_scores_is ///< The istream of prc scores data from which to parse the prc_scores_entry objects
                                                                   ) {
-	return remove_duplicates( parse_prc_scores_file( arg_prc_scores_is ) );
+	return remove_duplicates( parse_prc_scores_file( prm_prc_scores_is ) );
 }
 
 /// \brief Parse a vector of prc_scores_entry objects from the specified string
-prc_scores_entry_vec prc_scores_file::parse_prc_scores_file_fancy(const string &arg_prc_scores_str ///< The string of prc scores data from which to parse the prc_scores_entry objects
+prc_scores_entry_vec prc_scores_file::parse_prc_scores_file_fancy(const string &prm_prc_scores_str ///< The string of prc scores data from which to parse the prc_scores_entry objects
                                                                   ) {
-	istringstream input_ss{ arg_prc_scores_str };
+	istringstream input_ss{ prm_prc_scores_str };
 	return parse_prc_scores_file_fancy( input_ss );
 }
 
 /// \brief TODOCUMENT
-prc_scores_entry_vec prc_scores_file::parse_prc_scores_file_fancy(const path &arg_prc_scores_file ///< TODOCUMENT
+prc_scores_entry_vec prc_scores_file::parse_prc_scores_file_fancy(const path &prm_prc_scores_file ///< TODOCUMENT
                                                                   ) {
-	return remove_duplicates( parse_prc_scores_file( arg_prc_scores_file ) );
+	return remove_duplicates( parse_prc_scores_file( prm_prc_scores_file ) );
 }

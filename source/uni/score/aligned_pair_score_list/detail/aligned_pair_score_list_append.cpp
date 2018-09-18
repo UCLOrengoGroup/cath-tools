@@ -41,78 +41,78 @@ using namespace cath::score::detail;
 using boost::ptr_vector;
 
 template <>
-void score_variety_factory::append_all_varieties<drmsd_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<drmsd_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                               ) {
-	atom_and_res_pol_varieties_append<drmsd_score>(arg_scores);
+	atom_and_res_pol_varieties_append<drmsd_score>(prm_scores);
 }
 
 template <>
-void score_variety_factory::append_all_varieties<gsas_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<gsas_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                              ) {
-	atom_and_res_pol_varieties_append<gsas_score>(arg_scores);
+	atom_and_res_pol_varieties_append<gsas_score>(prm_scores);
 }
 
 template <>
-void score_variety_factory::append_all_varieties<length_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<length_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                                ) {
-	length_varieties_append<length_score>(arg_scores);
+	length_varieties_append<length_score>(prm_scores);
 }
 
 template <>
-void score_variety_factory::append_all_varieties<lddt_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<lddt_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                              ) {
-	threshold_and_atom_and_res_pol_varieties_append<lddt_score>(arg_scores);
+	threshold_and_atom_and_res_pol_varieties_append<lddt_score>(prm_scores);
 }
 
 template <>
-void score_variety_factory::append_all_varieties<mi_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<mi_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                            ) {
-	sym_leng_choice_and_atom_and_res_pol_varieties_append<mi_score>(arg_scores);
+	sym_leng_choice_and_atom_and_res_pol_varieties_append<mi_score>(prm_scores);
 }
 
 template <>
-void score_variety_factory::append_all_varieties<rmsd_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<rmsd_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                              ) {
-	atom_and_res_pol_varieties_append<rmsd_score>(arg_scores);
+	atom_and_res_pol_varieties_append<rmsd_score>(prm_scores);
 }
 
 template <>
-void score_variety_factory::append_all_varieties<sequence_similarity_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<sequence_similarity_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                                             ) {
-	leng_choice_and_subs_matrices_append<sequence_similarity_score>(arg_scores);
+	leng_choice_and_subs_matrices_append<sequence_similarity_score>(prm_scores);
 }
 
 template <>
-void score_variety_factory::append_all_varieties<sas_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<sas_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                             ) {
-	atom_and_res_pol_varieties_append<sas_score>(arg_scores);
+	atom_and_res_pol_varieties_append<sas_score>(prm_scores);
 }
 
 template <>
-void score_variety_factory::append_all_varieties<si_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<si_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                            ) {
-	sym_leng_choice_and_atom_and_res_pol_varieties_append<si_score>(arg_scores);
+	sym_leng_choice_and_atom_and_res_pol_varieties_append<si_score>(prm_scores);
 }
 
 /// \brief This fails to test many of the varieties of SSAP score so it should be extended
 template <>
-void score_variety_factory::append_all_varieties<ssap_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<ssap_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                              ) {
-	ssap_varieties_append<ssap_score>(arg_scores);
+	ssap_varieties_append<ssap_score>(prm_scores);
 }
 
 /// \brief TODOCUMENT
 template <>
-void score_variety_factory::append_all_varieties<structal_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<structal_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                              ) {
-	atom_and_res_pol_varieties_append<structal_score>( arg_scores );
+	atom_and_res_pol_varieties_append<structal_score>( prm_scores );
 }
 
 /// \brief TODOCUMENT
 template <>
-void score_variety_factory::append_all_varieties<tm_score>(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_all_varieties<tm_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                            ) {
-	atom_and_res_pol_varieties_append<tm_score>( arg_scores );
+	atom_and_res_pol_varieties_append<tm_score>( prm_scores );
 }
 
 /// Comparing areas under ROC curves on a sensible data-set, an experiment showed that most of the substitution matrices
@@ -125,8 +125,8 @@ void score_variety_factory::append_all_varieties<tm_score>(ptr_vector<aligned_pa
 /// Apart from "identity", the improvements to be had over num_aligned_residues are very small.
 /// Hence this adds the num_aligned_residues version of everything and then adds an extra, standard
 /// identity-over-longer_protein_length for good measure.
-void score_variety_factory::append_sensible_sequence_similarity_varieties(ptr_vector<aligned_pair_score> &arg_scores ///< TODOCUMENT
+void score_variety_factory::append_sensible_sequence_similarity_varieties(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT
                                                                           ) {
-	subs_matrices_append<sequence_similarity_score>(arg_scores, num_aligned_length_getter() );
-	boost::assign::ptr_push_back<sequence_similarity_score>(arg_scores)();
+	subs_matrices_append<sequence_similarity_score>(prm_scores, num_aligned_length_getter() );
+	boost::assign::ptr_push_back<sequence_similarity_score>(prm_scores)();
 }

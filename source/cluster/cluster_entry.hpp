@@ -42,10 +42,10 @@ namespace cath {
 			cluster_entry() = delete;
 
 			/// \brief Ctor from name and segments
-			explicit cluster_entry(std::string      arg_name, ///< The name of the cluster_entry
-			                       seq::seq_seg_run arg_segs  ///< The segments of the cluster_entry
-			                       ) : name    { std::move( arg_name ) },
-			                           segments{ std::move( arg_segs ) } {
+			explicit cluster_entry(std::string      prm_name, ///< The name of the cluster_entry
+			                       seq::seq_seg_run prm_segs  ///< The segments of the cluster_entry
+			                       ) : name    { std::move( prm_name ) },
+			                           segments{ std::move( prm_segs ) } {
 			}
 		};
 

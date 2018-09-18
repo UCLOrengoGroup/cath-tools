@@ -35,10 +35,10 @@ unique_ptr<dyn_prog_aligner> dyn_prog_aligner::clone() const {
 }
 
 /// \brief NVI pass-through to virtual do_align() method
-score_alignment_pair dyn_prog_aligner::align(const dyn_prog_score_source &arg_scorer,      ///< TODOCUMENT
-                                             const gap_penalty           &arg_gap_penalty, ///< The gap penalty to be applied for each gap step (ie for opening OR extending a gap)
-                                             const size_type             &arg_window_width ///< TODOCUMENT
+score_alignment_pair dyn_prog_aligner::align(const dyn_prog_score_source &prm_scorer,      ///< TODOCUMENT
+                                             const gap_penalty           &prm_gap_penalty, ///< The gap penalty to be applied for each gap step (ie for opening OR extending a gap)
+                                             const size_type             &prm_window_width ///< TODOCUMENT
                                              ) const {
-	return do_align(arg_scorer, arg_gap_penalty, arg_window_width);
+	return do_align(prm_scorer, prm_gap_penalty, prm_window_width);
 }
 

@@ -39,41 +39,41 @@ map<ssap_score_post_processing, string> name_of_ssap_score_post_processing::get(
 /// \brief TODOCUMENT
 ///
 /// \relates ssap_score_post_processing
-ostream & cath::score::operator<<(ostream                          &arg_os,                        ///< TODOCUMENT
-                                  const ssap_score_post_processing &arg_ssap_score_post_processing ///< TODOCUMENT
+ostream & cath::score::operator<<(ostream                          &prm_os,                        ///< TODOCUMENT
+                                  const ssap_score_post_processing &prm_ssap_score_post_processing ///< TODOCUMENT
                                   ) {
-	arg_os << name_of_ssap_score_post_processing::get().at( arg_ssap_score_post_processing );
-	return arg_os;
+	prm_os << name_of_ssap_score_post_processing::get().at( prm_ssap_score_post_processing );
+	return prm_os;
 }
 
 /// \brief Whether the ssap_score_post_processing implies taking logs after normalisation
-bool cath::score::has_post_log(const ssap_score_post_processing &arg_post_processing ///< The ssap_score_post_processing to assess
+bool cath::score::has_post_log(const ssap_score_post_processing &prm_post_processing ///< The ssap_score_post_processing to assess
                                ) {
 	return (
-		arg_post_processing == ssap_score_post_processing::SIMPLE_NORMLS_THEN_LOG
+		prm_post_processing == ssap_score_post_processing::SIMPLE_NORMLS_THEN_LOG
 		||
-		arg_post_processing == ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG
+		prm_post_processing == ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG
 	);
 }
 
 
 /// \brief Whether the ssap_score_post_processing implies taking logs before normalisation
-bool cath::score::has_pre_log(const ssap_score_post_processing &arg_post_processing ///< The ssap_score_post_processing to assess
+bool cath::score::has_pre_log(const ssap_score_post_processing &prm_post_processing ///< The ssap_score_post_processing to assess
                               ) {
 	return (
-		arg_post_processing == ssap_score_post_processing::LOG_THEN_SIMPLE_NORMLS
+		prm_post_processing == ssap_score_post_processing::LOG_THEN_SIMPLE_NORMLS
 	);
 }
 
 /// \brief Whether the ssap_score_post_processing implies a simple normalisation
-bool cath::score::normalisation_is_simple(const ssap_score_post_processing &arg_post_processing ///< The ssap_score_post_processing to assess
+bool cath::score::normalisation_is_simple(const ssap_score_post_processing &prm_post_processing ///< The ssap_score_post_processing to assess
                                           ) {
 	return (
-		arg_post_processing == ssap_score_post_processing::SIMPLE_NORMLS
+		prm_post_processing == ssap_score_post_processing::SIMPLE_NORMLS
 		||
-		arg_post_processing == ssap_score_post_processing::SIMPLE_NORMLS_THEN_LOG
+		prm_post_processing == ssap_score_post_processing::SIMPLE_NORMLS_THEN_LOG
 		||
-		arg_post_processing == ssap_score_post_processing::LOG_THEN_SIMPLE_NORMLS
+		prm_post_processing == ssap_score_post_processing::LOG_THEN_SIMPLE_NORMLS
 	);
 }
 

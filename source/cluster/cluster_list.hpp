@@ -36,12 +36,12 @@ namespace cath {
 			cluster_domains_vec cluster_seq_domains;
 
 			/// \brief Ensure that there is a cluster_domains for the specified index and return it
-			cluster_domains & ensure_and_get_cluster_domains_of_cluster_id(const size_t &arg_index ///< The index of the cluster_domains to ensure and return
+			cluster_domains & ensure_and_get_cluster_domains_of_cluster_id(const size_t &prm_index ///< The index of the cluster_domains to ensure and return
 			                                                               ) {
-				if ( arg_index >= cluster_seq_domains.size() ) {
-					cluster_seq_domains.resize( arg_index + 1 );
+				if ( prm_index >= cluster_seq_domains.size() ) {
+					cluster_seq_domains.resize( prm_index + 1 );
 				}
-				return cluster_seq_domains[ arg_index ];
+				return cluster_seq_domains[ prm_index ];
 			}
 
 		public:
@@ -50,14 +50,14 @@ namespace cath {
 
 			/// \brief Add a domain with the specified (optional) segments in the specified cluster
 			///        under the specified sequence ID
-			clust_entry_problem add_domain_to_cluster(const cluster_id_t                  &arg_cluster_id, ///< The cluster ID of the domain to add
-			                                          const common::id_of_string::id_type &arg_seq_id,     ///< The ID of the sequence on which the domain to add appears
-			                                          seq::seq_seg_run_opt                 arg_segments    ///< The (optional) segments of the domain to add
+			clust_entry_problem add_domain_to_cluster(const cluster_id_t                  &prm_cluster_id, ///< The cluster ID of the domain to add
+			                                          const common::id_of_string::id_type &prm_seq_id,     ///< The ID of the sequence on which the domain to add appears
+			                                          seq::seq_seg_run_opt                 prm_segments    ///< The (optional) segments of the domain to add
 			                                          ) {
-				return ensure_and_get_cluster_domains_of_cluster_id( arg_cluster_id ).add_domain(
-					arg_seq_id,
-					arg_segments,
-					arg_cluster_id
+				return ensure_and_get_cluster_domains_of_cluster_id( prm_cluster_id ).add_domain(
+					prm_seq_id,
+					prm_segments,
+					prm_cluster_id
 				);
 			}
 
@@ -72,9 +72,9 @@ namespace cath {
 			}
 
 			/// \brief Get the cluster_domains associated with the sequence with the specified index
-			const cluster_domains & operator[](const size_t &arg_index ///< The index of the cluster_domains to retrieve
+			const cluster_domains & operator[](const size_t &prm_index ///< The index of the cluster_domains to retrieve
 			                                   ) const {
-				return cluster_seq_domains[ arg_index ];
+				return cluster_seq_domains[ prm_index ];
 			}
 
 			/// \brief Standard const begin() method, as part of making this into a range over the cluster_domains entries

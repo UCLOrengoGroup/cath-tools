@@ -29,36 +29,36 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename DURN>
-		inline double durn_to_seconds_double(const DURN &arg_duration ///< The duration to convert
+		inline double durn_to_seconds_double(const DURN &prm_duration ///< The duration to convert
 		                                     ) {
 			return std::chrono::duration_cast<std::chrono::duration<double>>(
-				arg_duration
+				prm_duration
 			).count();
 		}
 
 		/// \brief TODOCUMENT
 		template <typename DURN>
-		inline std::string durn_to_seconds_string(const DURN &arg_duration ///< The duration to convert
+		inline std::string durn_to_seconds_string(const DURN &prm_duration ///< The duration to convert
 		                                          ) {
 			return std::to_string(
 				std::chrono::duration_cast<std::chrono::duration<double>>(
-					arg_duration
+					prm_duration
 				).count()
 			) + " seconds";
 		}
 
 		/// \brief TODOCUMENT
 		template <typename DURN>
-		inline double durn_to_rate_per_second(const DURN &arg_duration ///< The duration to convert
+		inline double durn_to_rate_per_second(const DURN &prm_duration ///< The duration to convert
 		                                      ) {
-			return 1.0 / durn_to_seconds_double( arg_duration );
+			return 1.0 / durn_to_seconds_double( prm_duration );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename DURN>
-		inline std::string durn_to_rate_per_second_string(const DURN &arg_duration ///< The duration to convert
+		inline std::string durn_to_rate_per_second_string(const DURN &prm_duration ///< The duration to convert
 		                                                  ) {
-			return std::to_string( durn_to_rate_per_second( arg_duration ) ) + " / second";
+			return std::to_string( durn_to_rate_per_second( prm_duration ) ) + " / second";
 		}
 
 	} // namespace common

@@ -34,10 +34,10 @@ using namespace cath::score;
 using namespace std;
 
 /// \brief TODOCUMENT
-classn_stat_pair_series::classn_stat_pair_series(doub_doub_pair_vec arg_data, ///< TODOCUMENT
-                                                 string             arg_name  ///< TODOCUMENT
-                                                 ) : data { std::move( arg_data ) },
-                                                     name { std::move( arg_name ) } {
+classn_stat_pair_series::classn_stat_pair_series(doub_doub_pair_vec prm_data, ///< TODOCUMENT
+                                                 string             prm_name  ///< TODOCUMENT
+                                                 ) : data { std::move( prm_data ) },
+                                                     name { std::move( prm_name ) } {
 }
 
 /// \brief TODOCUMENT
@@ -51,9 +51,9 @@ size_t classn_stat_pair_series::size() const {
 }
 
 /// \brief TODOCUMENT
-const doub_doub_pair & classn_stat_pair_series::operator[](const size_t &arg_index ///< TODOCUMENT
+const doub_doub_pair & classn_stat_pair_series::operator[](const size_t &prm_index ///< TODOCUMENT
                                                            ) const {
-	return data[ arg_index ];
+	return data[ prm_index ];
 }
 
 /// \brief TODOCUMENT
@@ -82,12 +82,12 @@ const string & classn_stat_pair_series::get_name() const {
 ///       elements in a range. Then use that here in tandem with the standard accumulate.
 ///
 /// \relates classn_stat_pair_series
-double cath::score::area_under_curve(const classn_stat_pair_series &arg_curve ///< TODOCUMENT
+double cath::score::area_under_curve(const classn_stat_pair_series &prm_curve ///< TODOCUMENT
                                      ) {
 	using value_type = range_value_t<const classn_stat_pair_series>;
 
 	return adjacent_accumulate(
-		arg_curve,
+		prm_curve,
 		0.0,
 		[] (const value_type &a, const value_type &b) {
 			// Sanity check the inputs...

@@ -55,39 +55,39 @@ static constexpr size_t CLUSTER_ID_OFFSET = 0;
 static constexpr size_t DOMAIN_ID_OFFSET  = 1;
 
 /// \brief Print any warnings to the specified (optional) ostream arising from the interaction (if any) of the new entry
-inline void warn_if_neccessary(const clust_entry_problem &arg_problem,                 ///< The type of problem encountered when reading the new entry
-                               const ostream_ref_opt     &arg_ostream_ref_opt,         ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
-                               const string_ref          &arg_cluster_name,            ///< A string_ref to the name of the cluster
-                               const string_ref          &arg_entry_name,              ///< A string_ref to the name of the entry
-                               bool                      &arg_warned_duplicate,        ///< Whether a warning about duplicates has already been given
-                               const str_opt             &arg_extra_info = boost::none ///< An optional string containing extra information about the problem (if any)
+inline void warn_if_neccessary(const clust_entry_problem &prm_problem,                 ///< The type of problem encountered when reading the new entry
+                               const ostream_ref_opt     &prm_ostream_ref_opt,         ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+                               const string_ref          &prm_cluster_name,            ///< A string_ref to the name of the cluster
+                               const string_ref          &prm_entry_name,              ///< A string_ref to the name of the entry
+                               bool                      &prm_warned_duplicate,        ///< Whether a warning about duplicates has already been given
+                               const str_opt             &prm_extra_info = boost::none ///< An optional string containing extra information about the problem (if any)
                                ) {
-	if ( arg_problem != clust_entry_problem::NONE && arg_ostream_ref_opt ) {
-		const log_to_ostream_guard ostream_log_guard{ arg_ostream_ref_opt.get().get() };
+	if ( prm_problem != clust_entry_problem::NONE && prm_ostream_ref_opt ) {
+		const log_to_ostream_guard ostream_log_guard{ prm_ostream_ref_opt.get().get() };
 
-		switch ( arg_problem ) {
+		switch ( prm_problem ) {
 			case ( clust_entry_problem::REPEAT ) : {
-				if ( ! arg_warned_duplicate ) {
+				if ( ! prm_warned_duplicate ) {
 					BOOST_LOG_TRIVIAL( warning ) << "Skipping entry "
-						<< arg_entry_name   << " (in cluster "
-						<< arg_cluster_name << ") because it duplicates a previous entry in the same cluster-membership input data. Will not warn about any further duplicate entries."
-						<< ( arg_extra_info ? " - " + *arg_extra_info : string{} );
-					arg_warned_duplicate = true;
+						<< prm_entry_name   << " (in cluster "
+						<< prm_cluster_name << ") because it duplicates a previous entry in the same cluster-membership input data. Will not warn about any further duplicate entries."
+						<< ( prm_extra_info ? " - " + *prm_extra_info : string{} );
+					prm_warned_duplicate = true;
 				}
 				break;
 			}
 			case ( clust_entry_problem::CLASH ) : {
 				BOOST_LOG_TRIVIAL( warning ) << "Skipping entry "
-					<< arg_entry_name   << " (in cluster "
-					<< arg_cluster_name << ") because it clashes with a previous entry in the same cluster-membership input data"
-					<< ( arg_extra_info ? " - " + *arg_extra_info : string{} );
+					<< prm_entry_name   << " (in cluster "
+					<< prm_cluster_name << ") because it clashes with a previous entry in the same cluster-membership input data"
+					<< ( prm_extra_info ? " - " + *prm_extra_info : string{} );
 				break;
 			}
 			case ( clust_entry_problem::PARSE_ERROR ) : {
 				BOOST_LOG_TRIVIAL( warning ) << "Problem parsing segments from entry "
-					<< arg_entry_name   << " (in cluster "
-					<< arg_cluster_name << ")"
-					<< ( arg_extra_info ? " - " + *arg_extra_info : string{} );
+					<< prm_entry_name   << " (in cluster "
+					<< prm_cluster_name << ")"
+					<< ( prm_extra_info ? " - " + *prm_extra_info : string{} );
 				break;
 			}
 			case ( clust_entry_problem::NONE ) : {}
@@ -96,17 +96,17 @@ inline void warn_if_neccessary(const clust_entry_problem &arg_problem,          
 }
 
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-old_cluster_data cath::clust::parse_old_membership(istream               &arg_istream,           ///< The istream to parse from
-                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+old_cluster_data cath::clust::parse_old_membership(istream               &prm_istream,           ///< The istream to parse from
+                                                   id_of_str_bidirnl     &prm_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &prm_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	using std::to_string;
 	bool warned_duplicate = false;
-	old_cluster_data result{ arg_id_of_str_bidirnl };
+	old_cluster_data result{ prm_id_of_str_bidirnl };
 	seq_seg_run_parser segs_parser;
 	string line;
 	size_t line_ctr = 0;
-	while ( getline( arg_istream, line ) ) {
+	while ( getline( prm_istream, line ) ) {
 		++line_ctr;
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
@@ -151,12 +151,12 @@ old_cluster_data cath::clust::parse_old_membership(istream               &arg_is
 					}
 				)
 			);
-			warn_if_neccessary( interaction, arg_ostream_ref_opt, cluster_name, entry_name, warned_duplicate );
+			warn_if_neccessary( interaction, prm_ostream_ref_opt, cluster_name, entry_name, warned_duplicate );
 		}
 		catch (const std::exception &x) {
 			warn_if_neccessary(
 				clust_entry_problem::PARSE_ERROR,
-				arg_ostream_ref_opt,
+				prm_ostream_ref_opt,
 				cluster_name,
 				entry_name,
 				warned_duplicate,
@@ -168,36 +168,36 @@ old_cluster_data cath::clust::parse_old_membership(istream               &arg_is
 }
 
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-old_cluster_data cath::clust::parse_old_membership(const string          &arg_input,             ///< The string to parse from
-                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+old_cluster_data cath::clust::parse_old_membership(const string          &prm_input,             ///< The string to parse from
+                                                   id_of_str_bidirnl     &prm_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &prm_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
-	istringstream in_ss{ arg_input };
-	return parse_old_membership( in_ss, arg_id_of_str_bidirnl, arg_ostream_ref_opt );
+	istringstream in_ss{ prm_input };
+	return parse_old_membership( in_ss, prm_id_of_str_bidirnl, prm_ostream_ref_opt );
 }
 
 /// \brief Parse the data for old "from" clusters from a cluster membership istream
-old_cluster_data cath::clust::parse_old_membership(const path            &arg_input,             ///< The file to parse from
-                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+old_cluster_data cath::clust::parse_old_membership(const path            &prm_input,             ///< The file to parse from
+                                                   id_of_str_bidirnl     &prm_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &prm_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	ifstream in_stream;
-	open_ifstream( in_stream, arg_input );
-	return parse_old_membership( in_stream, arg_id_of_str_bidirnl, arg_ostream_ref_opt );
+	open_ifstream( in_stream, prm_input );
+	return parse_old_membership( in_stream, prm_id_of_str_bidirnl, prm_ostream_ref_opt );
 }
 
 /// \brief Parse the data for new "to" clusters from a cluster membership istream
-new_cluster_data cath::clust::parse_new_membership(istream               &arg_istream,           ///< The istream to parse from
-                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+new_cluster_data cath::clust::parse_new_membership(istream               &prm_istream,           ///< The istream to parse from
+                                                   id_of_str_bidirnl     &prm_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &prm_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	using std::to_string;
 	bool warned_duplicate = false;
-	new_cluster_data result{ arg_id_of_str_bidirnl };
+	new_cluster_data result{ prm_id_of_str_bidirnl };
 	seq_seg_run_parser segs_parser;
 	string line;
 	size_t line_ctr = 0;
-	while ( getline( arg_istream, line ) ) {
+	while ( getline( prm_istream, line ) ) {
 		++line_ctr;
 		const auto cluster_id_itrs = find_field_itrs( line, CLUSTER_ID_OFFSET                                               );
 		const auto domain_id_itrs  = find_field_itrs( line, DOMAIN_ID_OFFSET, 1 + CLUSTER_ID_OFFSET, cluster_id_itrs.second );
@@ -241,12 +241,12 @@ new_cluster_data cath::clust::parse_new_membership(istream               &arg_is
 					}
 				)
 			);
-			warn_if_neccessary( problem, arg_ostream_ref_opt, cluster_name, entry_name, warned_duplicate );
+			warn_if_neccessary( problem, prm_ostream_ref_opt, cluster_name, entry_name, warned_duplicate );
 		}
 		catch (const std::exception &x) {
 			warn_if_neccessary(
 				clust_entry_problem::PARSE_ERROR,
-				arg_ostream_ref_opt,
+				prm_ostream_ref_opt,
 				cluster_name,
 				entry_name,
 				warned_duplicate,
@@ -259,20 +259,20 @@ new_cluster_data cath::clust::parse_new_membership(istream               &arg_is
 }
 
 /// \brief Parse the data for new "to" clusters from a cluster membership istream
-new_cluster_data cath::clust::parse_new_membership(const string          &arg_input,             ///< The string to parse from
-                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+new_cluster_data cath::clust::parse_new_membership(const string          &prm_input,             ///< The string to parse from
+                                                   id_of_str_bidirnl     &prm_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &prm_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
-	istringstream in_ss{ arg_input };
-	return parse_new_membership( in_ss, arg_id_of_str_bidirnl, arg_ostream_ref_opt );
+	istringstream in_ss{ prm_input };
+	return parse_new_membership( in_ss, prm_id_of_str_bidirnl, prm_ostream_ref_opt );
 }
 
 /// \brief Parse the data for new "to" clusters from a cluster membership istream
-new_cluster_data cath::clust::parse_new_membership(const path            &arg_input,             ///< The file to parse from
-                                                   id_of_str_bidirnl     &arg_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
-                                                   const ostream_ref_opt &arg_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+new_cluster_data cath::clust::parse_new_membership(const path            &prm_input,             ///< The file to parse from
+                                                   id_of_str_bidirnl     &prm_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
+                                                   const ostream_ref_opt &prm_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
 	ifstream in_stream;
-	open_ifstream( in_stream, arg_input );
-	return parse_new_membership( in_stream, arg_id_of_str_bidirnl, arg_ostream_ref_opt );
+	open_ifstream( in_stream, prm_input );
+	return parse_new_membership( in_stream, prm_id_of_str_bidirnl, prm_ostream_ref_opt );
 }

@@ -82,46 +82,46 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline auto scan_index_vector_store<Key, Cell>::find_or_create_cell(const Key &arg_key ///< TODOCUMENT
+			inline auto scan_index_vector_store<Key, Cell>::find_or_create_cell(const Key &prm_key ///< TODOCUMENT
 			                                                                    ) -> Cell & {
 				const auto cell_itr = boost::range::lower_bound(
 					the_store,
-					arg_key,
+					prm_key,
 					[] (const std::pair<Key, Cell> &x, const Key &y) {/* TD< decltype( x ) > fred; */return x.first < y; }
 				);
-				if ( cell_itr != common::cend( the_store ) && cell_itr->first == arg_key ) {
+				if ( cell_itr != common::cend( the_store ) && cell_itr->first == prm_key ) {
 					return cell_itr->second;
 				}
-				return the_store.insert( cell_itr, make_pair( arg_key, Cell{} ) )->second;
+				return the_store.insert( cell_itr, make_pair( prm_key, Cell{} ) )->second;
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline void scan_index_vector_store<Key, Cell>::push_back_entry_to_cell(const Key     &arg_key, ///< TODOCUMENT
-			                                                                        const value_t &arg_data ///< TODOCUMENT
+			inline void scan_index_vector_store<Key, Cell>::push_back_entry_to_cell(const Key     &prm_key, ///< TODOCUMENT
+			                                                                        const value_t &prm_data ///< TODOCUMENT
 			                                                                        ) {
-				find_or_create_cell( arg_key ).push_back( arg_data );
+				find_or_create_cell( prm_key ).push_back( prm_data );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			template <typename... Ts>
-			inline void scan_index_vector_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    arg_key, ///< TODOCUMENT
-			                                                                           Ts        &&... arg_data ///< TODOCUMENT
+			inline void scan_index_vector_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    prm_key, ///< TODOCUMENT
+			                                                                           Ts        &&... prm_data ///< TODOCUMENT
 			                                                                           ) {
-				find_or_create_cell( arg_key ).emplace_back( std::forward<Ts>( arg_data )... );
+				find_or_create_cell( prm_key ).emplace_back( std::forward<Ts>( prm_data )... );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline auto scan_index_vector_store<Key, Cell>::find_matches(const Key &arg_key ///< TODOCUMENT
+			inline auto scan_index_vector_store<Key, Cell>::find_matches(const Key &prm_key ///< TODOCUMENT
 			                                                             ) const -> const Cell & {
 				const auto cell_itr = boost::range::lower_bound(
 					the_store,
-					arg_key,
+					prm_key,
 					[] (const std::pair<Key, Cell> &x, const Key &y) { return x.first < y; }
 				);
-				return ( cell_itr == common::cend( the_store ) || cell_itr->first != arg_key ) ? empty_cell
+				return ( cell_itr == common::cend( the_store ) || cell_itr->first != prm_key ) ? empty_cell
 				                                                                               : cell_itr->second;
 			}
 

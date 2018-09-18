@@ -47,17 +47,17 @@ static_assert( arrow_after_res( 10 ) + 5 == arrow_after_res( 15 ), "" );
 /// \brief Generate a string describing the specified seq_arrow
 ///
 /// \relates seq_arrow
-string cath::seq::to_string(const seq_arrow &arg_res_arrow ///< The seq_arrow to describe
+string cath::seq::to_string(const seq_arrow &prm_res_arrow ///< The seq_arrow to describe
                             ) {
-	return "seq_arrow[before residue " + std::to_string( arg_res_arrow.res_after() ) + "]";
+	return "seq_arrow[before residue " + std::to_string( prm_res_arrow.res_after() ) + "]";
 }
 
 /// \brief Insert a description of the specified seq_arrow into the specified ostream
 ///
 /// \relates seq_arrow
-ostream & cath::seq::operator<<(ostream         &arg_os,       ///< The ostream into which the description should be inserted
-                                const seq_arrow &arg_res_arrow ///< The seq_arrow to describe
+ostream & cath::seq::operator<<(ostream         &prm_os,       ///< The ostream into which the description should be inserted
+                                const seq_arrow &prm_res_arrow ///< The seq_arrow to describe
                                 ) {
-	arg_os << to_string( arg_res_arrow );
-	return arg_os;
+	prm_os << to_string( prm_res_arrow );
+	return prm_os;
 }

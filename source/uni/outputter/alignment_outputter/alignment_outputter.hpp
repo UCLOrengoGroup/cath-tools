@@ -73,9 +73,9 @@ namespace cath {
 		///
 		/// \returns A raw pointer to a new copy of the alignment_outputter argument, with the same dynamic type.
 		///          The caller is responsible for deleting this new object.
-		inline alignment_outputter * new_clone(const alignment_outputter &arg_alignment_outputter ///< The alignment_outputter to clone
+		inline alignment_outputter * new_clone(const alignment_outputter &prm_alignment_outputter ///< The alignment_outputter to clone
 		                                       ) {
-			return arg_alignment_outputter.clone().release();
+			return prm_alignment_outputter.clone().release();
 		}
 	} // namespace opts
 } // namespace cath

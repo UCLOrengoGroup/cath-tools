@@ -42,7 +42,7 @@ using boost::adaptors::filtered;
 using boost::irange;
 
 /// \brief TODOCUMENT
-size_vec cath::align::get_alignment_breaks(const alignment &arg_alignment ///< TODOCUMENT
+size_vec cath::align::get_alignment_breaks(const alignment &prm_alignment ///< TODOCUMENT
                                            ) {
 	// For each alignment index *after* zero, check whether there's any overlap
 	// between the entries that are present at the previous index and the entries that are
@@ -52,14 +52,14 @@ size_vec cath::align::get_alignment_breaks(const alignment &arg_alignment ///< T
 	// it doesn't do what's required here: it always lets the first pair through,
 	// even if they fail the predicate.
 	return copy_build<size_vec>(
-		irange( 1_z, arg_alignment.length() )
+		irange( 1_z, prm_alignment.length() )
 			| filtered (
 				[&] (const size_t &curr_idx) {
 					// Return whether the set of present entries for the previous index
 					// is disjoint with the set of present entries for this index
 					return sets_are_disjoint(
-						entries_present_at_index( arg_alignment, curr_idx - 1 ),
-						entries_present_at_index( arg_alignment, curr_idx     )
+						entries_present_at_index( prm_alignment, curr_idx - 1 ),
+						entries_present_at_index( prm_alignment, curr_idx     )
 					);
 				}
 			)
@@ -67,9 +67,9 @@ size_vec cath::align::get_alignment_breaks(const alignment &arg_alignment ///< T
 }
 
 /// \brief TODOCUMENT
-break_pair_validity_and_future cath::align::detail::check_pair(const alignment &arg_alignment, ///< TODOCUMENT
-                                                               const size_t    &arg_break_one, ///< TODOCUMENT
-                                                               const size_t    &arg_break_two  ///< TODOCUMENT
+break_pair_validity_and_future cath::align::detail::check_pair(const alignment &prm_alignment, ///< TODOCUMENT
+                                                               const size_t    &prm_break_one, ///< TODOCUMENT
+                                                               const size_t    &prm_break_two  ///< TODOCUMENT
                                                                ) {
 	// LM LR MR
 	//  0  0  0  ok; can extend either way
@@ -81,14 +81,14 @@ break_pair_validity_and_future cath::align::detail::check_pair(const alignment &
 	/// 1  1  0  no; cannot extend
 	/// 1  1  1  no; cannot extend
 
-	const size_vec lefts  = entries_present_at_index( arg_alignment, arg_break_one - 1 );
-	const size_vec rights = entries_present_at_index( arg_alignment, arg_break_two     );
+	const size_vec lefts  = entries_present_at_index( prm_alignment, prm_break_one - 1 );
+	const size_vec rights = entries_present_at_index( prm_alignment, prm_break_two     );
 	if ( ! sets_are_disjoint( lefts, rights ) ) {
 		return { break_pair_validity::BAD, break_pair_future::NEVER_AGAIN };
 	}
 
-	const bool left_and_right_are_all = ( lefts.size() + rights.size() == arg_alignment.num_entries() );
-	const bool middle_is_empty        = ( arg_break_one == arg_break_two );
+	const bool left_and_right_are_all = ( lefts.size() + rights.size() == prm_alignment.num_entries() );
+	const bool middle_is_empty        = ( prm_break_one == prm_break_two );
 	if ( middle_is_empty ) {
 		const auto the_future = ( left_and_right_are_all ? break_pair_future::NEVER_AGAIN : break_pair_future::MAYBE_LATER );
 		return { break_pair_validity::GOOD, the_future };
@@ -97,14 +97,14 @@ break_pair_validity_and_future cath::align::detail::check_pair(const alignment &
 		return { break_pair_validity::BAD, break_pair_future::NEVER_AGAIN };
 	}
 
-	const size_vec middles = entries_present_in_index_range( arg_alignment, arg_break_one, arg_break_two );
+	const size_vec middles = entries_present_in_index_range( prm_alignment, prm_break_one, prm_break_two );
 	assert( ! middles.empty() );
 	if ( ! sets_are_disjoint( lefts, middles ) ) {
 		return { break_pair_validity::BAD, break_pair_future::NEVER_AGAIN };
 	}
 	const auto lefts_and_rights         = set_union_build<size_vec>( lefts,   rights           );
 	const auto lefts_middles_and_rights = set_union_build<size_vec>( middles, lefts_and_rights );
-	const bool lmr_are_all              = lefts_middles_and_rights.size() == arg_alignment.num_entries();
+	const bool lmr_are_all              = lefts_middles_and_rights.size() == prm_alignment.num_entries();
 	const bool middle_conflicts_right = ! sets_are_disjoint( middles, rights );
 	return {
 		( middle_conflicts_right ? break_pair_validity::BAD       : break_pair_validity::GOOD      ),
@@ -113,9 +113,9 @@ break_pair_validity_and_future cath::align::detail::check_pair(const alignment &
 }
 
 /// \brief TODOCUMENT
-size_size_pair_vec cath::align::get_alignment_break_pairs(const alignment &arg_alignment ///< TODOCUMENT
+size_size_pair_vec cath::align::get_alignment_break_pairs(const alignment &prm_alignment ///< TODOCUMENT
                                                           ) {
-	const auto alignment_breaks     = get_alignment_breaks( arg_alignment );
+	const auto alignment_breaks     = get_alignment_breaks( prm_alignment );
 	const auto num_alignment_breaks = alignment_breaks.size();
 
 	size_size_pair_vec break_pairs;
@@ -126,7 +126,7 @@ size_size_pair_vec cath::align::get_alignment_break_pairs(const alignment &arg_a
 			const size_t &break_one = alignment_breaks[ idx_one ];
 			const size_t &break_two = alignment_breaks[ idx_two ];
 
-			const auto pair_result = check_pair( arg_alignment, break_one, break_two );
+			const auto pair_result = check_pair( prm_alignment, break_one, break_two );
 			if ( pair_result.first  == break_pair_validity::GOOD ) {
 				break_pairs.emplace_back( break_one, break_two );
 			}

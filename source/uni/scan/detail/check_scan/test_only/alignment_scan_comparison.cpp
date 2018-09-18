@@ -44,28 +44,28 @@ using boost::adaptors::map_keys;
 using boost::algorithm::join;
 
 /// \brief TODOCUMENT
-alignment_scan_comparison & alignment_scan_comparison::operator+=(const pair<quad_and_rep_criteria_result, double> &arg_result_and_score ///< TODOCUMENT
+alignment_scan_comparison & alignment_scan_comparison::operator+=(const pair<quad_and_rep_criteria_result, double> &prm_result_and_score ///< TODOCUMENT
                                                                   ) {
-	const auto find_itr = score_by_result.find( arg_result_and_score.first );
+	const auto find_itr = score_by_result.find( prm_result_and_score.first );
 	if ( find_itr == common::cend( score_by_result ) ) {
-		score_by_result.insert( arg_result_and_score );
+		score_by_result.insert( prm_result_and_score );
 	}
 	else {
-		find_itr->second += arg_result_and_score.second;
+		find_itr->second += prm_result_and_score.second;
 	}
 	return *this;
 }
 
 /// \brief TODOCUMENT
-bool alignment_scan_comparison::has_score_of_criteria_result(const quad_and_rep_criteria_result &arg_comp ///< TODOCUMENT
+bool alignment_scan_comparison::has_score_of_criteria_result(const quad_and_rep_criteria_result &prm_comp ///< TODOCUMENT
                                                              ) const {
-	return contains( score_by_result, arg_comp );
+	return contains( score_by_result, prm_comp );
 }
 
 /// \brief TODOCUMENT
-double alignment_scan_comparison::get_score_of_criteria_result(const quad_and_rep_criteria_result &arg_comp ///< TODOCUMENT
+double alignment_scan_comparison::get_score_of_criteria_result(const quad_and_rep_criteria_result &prm_comp ///< TODOCUMENT
                                                                ) const {
-	return score_by_result.at( arg_comp );
+	return score_by_result.at( prm_comp );
 }
 
 /// \brief TODOCUMENT
@@ -81,20 +81,20 @@ auto alignment_scan_comparison::end() const -> const_iterator {
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_scan_comparison
-vector<quad_and_rep_criteria_result> cath::scan::detail::get_criteria_results(const alignment_scan_comparison &arg_comp ///< TODOCUMENT
+vector<quad_and_rep_criteria_result> cath::scan::detail::get_criteria_results(const alignment_scan_comparison &prm_comp ///< TODOCUMENT
                                                                               ) {
-	return copy_build<vector<quad_and_rep_criteria_result>>( arg_comp | map_keys );
+	return copy_build<vector<quad_and_rep_criteria_result>>( prm_comp | map_keys );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_scan_comparison
-vector<quad_and_rep_criteria_result> cath::scan::detail::get_criteria_results_sorted_by_score_desc(const alignment_scan_comparison &arg_comp ///< TODOCUMENT
+vector<quad_and_rep_criteria_result> cath::scan::detail::get_criteria_results_sorted_by_score_desc(const alignment_scan_comparison &prm_comp ///< TODOCUMENT
                                                                                                    ) {
 	return sort_copy(
-		get_criteria_results( arg_comp ),
+		get_criteria_results( prm_comp ),
 		[&] (const quad_and_rep_criteria_result &x, const quad_and_rep_criteria_result &y) {
-			return arg_comp.get_score_of_criteria_result( x ) > arg_comp.get_score_of_criteria_result( y );
+			return prm_comp.get_score_of_criteria_result( x ) > prm_comp.get_score_of_criteria_result( y );
 		}
 	);
 }
@@ -102,24 +102,24 @@ vector<quad_and_rep_criteria_result> cath::scan::detail::get_criteria_results_so
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_scan_comparison
-ostream & cath::scan::detail::operator<<(ostream                         &arg_os,  ///< TODOCUMENT
-                                         const alignment_scan_comparison &arg_comp ///< TODOCUMENT
+ostream & cath::scan::detail::operator<<(ostream                         &prm_os,  ///< TODOCUMENT
+                                         const alignment_scan_comparison &prm_comp ///< TODOCUMENT
                                          ) {
-	const auto crit_results = get_criteria_results_sorted_by_score_desc( arg_comp );
+	const auto crit_results = get_criteria_results_sorted_by_score_desc( prm_comp );
 	const auto the_strings = transform_build<str_vec>(
 		crit_results,
 		[&] (const quad_and_rep_criteria_result &crit_result) {
 			return to_string( crit_result )
 			       + " -> "
-			       + std::to_string( arg_comp.get_score_of_criteria_result( crit_result ) );
+			       + std::to_string( prm_comp.get_score_of_criteria_result( crit_result ) );
 		}
 	);
-	arg_os << (
+	prm_os << (
 		string( "alignment_scan_comparison[\n\t" )
 		+
 		join( the_strings, "\n\t" )
 		+
 		"\n]"
 	);
-	return arg_os;
+	return prm_os;
 }

@@ -48,8 +48,8 @@ namespace cath {
 		///
 		/// \todo Consider adding an iterator version
 		template <typename RNG1, typename RNG2>
-		bool sets_are_disjoint(const RNG1 &arg_range_1, ///< TODOCUMENT
-		                       const RNG2 &arg_range_2  ///< TODOCUMENT
+		bool sets_are_disjoint(const RNG1 &prm_range_1, ///< TODOCUMENT
+		                       const RNG2 &prm_range_2  ///< TODOCUMENT
 		                       ) {
 			// Grab the two ranges' value types
 			using value_type1 = range_value_t<RNG1>;
@@ -64,8 +64,8 @@ namespace cath {
 			/// \todo Write a set_intersection_build() and use it here
 			std::vector<value_type1> the_intersection;
 			boost::range::set_intersection(
-				arg_range_1,
-				arg_range_2,
+				prm_range_1,
+				prm_range_2,
 				back_inserter( the_intersection )
 			);
 

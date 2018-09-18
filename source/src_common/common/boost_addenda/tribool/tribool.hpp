@@ -29,41 +29,41 @@ namespace cath {
 		/// \brief Return whether the specified tribool is true
 		///
 		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
-		inline bool is_true(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		inline bool is_true(const boost::logic::tribool &prm_tribool ///< The tribool to query
 		                    ) {
-			return static_cast<bool>(   arg_tribool );
+			return static_cast<bool>(   prm_tribool );
 		}
 
 		/// \brief Return whether the specified tribool is false
 		///
 		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
-		inline bool is_false(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		inline bool is_false(const boost::logic::tribool &prm_tribool ///< The tribool to query
 		                     ) {
-			return static_cast<bool>( ! arg_tribool );
+			return static_cast<bool>( ! prm_tribool );
 		}
 
 		/// \brief Return whether the specified tribool is not true
 		///
 		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
-		inline bool is_not_true(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		inline bool is_not_true(const boost::logic::tribool &prm_tribool ///< The tribool to query
 		                        ) {
-			return ! is_true( arg_tribool );
+			return ! is_true( prm_tribool );
 		}
 
 		/// \brief Return whether the specified tribool is not false
 		///
 		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
-		inline bool is_not_false(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		inline bool is_not_false(const boost::logic::tribool &prm_tribool ///< The tribool to query
 		                         ) {
-			return ! is_false( arg_tribool );
+			return ! is_false( prm_tribool );
 		}
 
 		/// \brief Return whether the specified tribool is not indeterminate
 		///
 		/// \TODO Come Boost >= 1.58.0 (even on Travis-CI), make this constexpr
-		inline bool is_not_indeterminate(const boost::logic::tribool &arg_tribool ///< The tribool to query
+		inline bool is_not_indeterminate(const boost::logic::tribool &prm_tribool ///< The tribool to query
 		                                 ) {
-			return ! boost::logic::indeterminate( arg_tribool );
+			return ! boost::logic::indeterminate( prm_tribool );
 		}
 
 	} // namespace common

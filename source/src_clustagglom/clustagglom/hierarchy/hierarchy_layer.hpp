@@ -60,13 +60,13 @@ namespace cath {
 		};
 
 		/// \brief Construct from a count of hierarchy_groups to default-insert
-		inline hierarchy_layer::hierarchy_layer(const size_t &arg_count ///< The number of hierarchy_groups to default insert
-		                                        ) : groups( arg_count ) {
+		inline hierarchy_layer::hierarchy_layer(const size_t &prm_count ///< The number of hierarchy_groups to default insert
+		                                        ) : groups( prm_count ) {
 		}
 
 		/// \brief Construct from a vector of hierarchy_group values
-		inline hierarchy_layer::hierarchy_layer(hierarchy_group_vec arg_hierarchy_group_vec ///< The vector of hierarchy_group values from which this should be constructed
-		                                        ) : groups{ std::move( arg_hierarchy_group_vec ) } {
+		inline hierarchy_layer::hierarchy_layer(hierarchy_group_vec prm_hierarchy_group_vec ///< The vector of hierarchy_group values from which this should be constructed
+		                                        ) : groups{ std::move( prm_hierarchy_group_vec ) } {
 		}
 
 		/// \brief Return whether this is empty
@@ -80,15 +80,15 @@ namespace cath {
 		}
 
 		/// \brief Get the hierarchy_group associated with the sequence with the specified index
-		inline hierarchy_group & hierarchy_layer::operator[](const size_t &arg_index ///< The index of the hierarchy_group to retrieve
+		inline hierarchy_group & hierarchy_layer::operator[](const size_t &prm_index ///< The index of the hierarchy_group to retrieve
 		                                                     ) {
-			return groups[ arg_index ];
+			return groups[ prm_index ];
 		}
 
 		/// \brief Get the hierarchy_group associated with the sequence with the specified index
-		inline const hierarchy_group & hierarchy_layer::operator[](const size_t &arg_index ///< The index of the hierarchy_group to retrieve
+		inline const hierarchy_group & hierarchy_layer::operator[](const size_t &prm_index ///< The index of the hierarchy_group to retrieve
 		                                                           ) const {
-			return groups[ arg_index ];
+			return groups[ prm_index ];
 		}
 
 		/// \brief Emplace a hierarchy_group to be constructed with the specified arguments

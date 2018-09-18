@@ -32,17 +32,17 @@ constexpr size_t entry_querier::INTEGER_SCALING;
 /// \brief TODOCUMENT
 ///
 /// \relates entry_querier
-string cath::get_plural_name(const entry_querier &arg_entry_querier ///< The entry_querier to query either residues or secondary structures
+string cath::get_plural_name(const entry_querier &prm_entry_querier ///< The entry_querier to query either residues or secondary structures
                              ) {
-	return arg_entry_querier.get_entry_name() + "s";
+	return prm_entry_querier.get_entry_name() + "s";
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates entry_querier
-double cath::get_gap_penalty(const entry_querier &arg_entry_querier ///< The entry_querier to query either residues or secondary structures
+double cath::get_gap_penalty(const entry_querier &prm_entry_querier ///< The entry_querier to query either residues or secondary structures
                              ) {
-	return ( arg_entry_querier.get_gap_penalty_ratio() * arg_entry_querier.optimum_single_score() );
+	return ( prm_entry_querier.get_gap_penalty_ratio() * prm_entry_querier.optimum_single_score() );
 }
 
 /// \brief Whether a pair would avoid being excluded under an entry_querier's num_excluded_on_either_size()
@@ -50,11 +50,11 @@ double cath::get_gap_penalty(const entry_querier &arg_entry_querier ///< The ent
 /// \relates entry_querier
 ///
 /// This operation should be symmetric.
-bool cath::pair_is_not_excluded(const entry_querier &arg_entry_querier, ///< The entry_querier defining the num_excluded_on_either_size()
-                                const size_t        &arg_index1,        ///< One of the indices
-                                const size_t        &arg_index2         ///< The other one of the indices
+bool cath::pair_is_not_excluded(const entry_querier &prm_entry_querier, ///< The entry_querier defining the num_excluded_on_either_size()
+                                const size_t        &prm_index1,        ///< One of the indices
+                                const size_t        &prm_index2         ///< The other one of the indices
                                 ) {
-	return pair_is_not_excluded( arg_entry_querier.num_excluded_on_either_size(), arg_index1, arg_index2 );
+	return pair_is_not_excluded( prm_entry_querier.num_excluded_on_either_size(), prm_index1, prm_index2 );
 }
 
 /// \brief Whether a pair would avoid being excluded under an entry_querier's num_excluded_on_either_size()
@@ -63,41 +63,41 @@ bool cath::pair_is_not_excluded(const entry_querier &arg_entry_querier, ///< The
 ///
 /// This operation should be symmetric.
 bool cath::pair_is_not_excluded(const size_t &num_excluded_on_either_size, ///< The number excluded on either size
-                                const size_t &arg_index1,                  ///< One of the indices
-                                const size_t &arg_index2                   ///< The other one of the indices
+                                const size_t &prm_index1,                  ///< One of the indices
+                                const size_t &prm_index2                   ///< The other one of the indices
                                 ) {
-	const size_t max_index      = max(arg_index1, arg_index2);
-	const size_t min_index      = min(arg_index1, arg_index2);
+	const size_t max_index      = max(prm_index1, prm_index2);
+	const size_t min_index      = min(prm_index1, prm_index2);
 	const size_t abs_index_diff = max_index - min_index;
 	return ( abs_index_diff > num_excluded_on_either_size );
 }
 
 /// \brief Return the maximum number of comparable pairs there could be in two structures of length
-///        arg_length that use arg_entry_querier's num_excluded_on_either_side policy.
+///        prm_length that use prm_entry_querier's num_excluded_on_either_side policy.
 ///
 /// \relates entry_querier
 ///
-/// This just grabs the num_excluded_on_either_size() value from arg_entry_querier
+/// This just grabs the num_excluded_on_either_size() value from prm_entry_querier
 /// and then passes the values on to _num_comparable_impl() to do the calculation.
 /// See the documentation for _num_comparable_impl() for more information.
-size_t cath::num_comparable(const entry_querier &arg_entry_querier, ///< The entry_querier, which is used to provide the num_excluded_on_either_size()
-                            const size_t        &arg_length         ///< The length of the structure
+size_t cath::num_comparable(const entry_querier &prm_entry_querier, ///< The entry_querier, which is used to provide the num_excluded_on_either_size()
+                            const size_t        &prm_length         ///< The length of the structure
                             ) {
 	return _num_comparable_impl(
-		arg_entry_querier.num_excluded_on_either_size(),
-		arg_length
+		prm_entry_querier.num_excluded_on_either_size(),
+		prm_length
 	);
 }
 
 /// \brief Implementation for calculating the maximum number of comparable pairs there could be
-///        in two structures of length arg_length when excluding arg_num_excluded on either side.
+///        in two structures of length prm_length when excluding prm_num_excluded on either side.
 ///
 /// \relates entry_querier
 ///
-/// The question is: if two structures of length arg_length were compared, what is the maximum
+/// The question is: if two structures of length prm_length were compared, what is the maximum
 /// number of compared pairs that would be used in SSAP scoring an alignment?
 ///
-/// If it weren't for exclusions, this would just be arg_length * arg_length because: the alignment would
+/// If it weren't for exclusions, this would just be prm_length * prm_length because: the alignment would
 /// just be the canonical 1-1 alignment and then, for each position in the alignment, the views would
 /// be considered from the two aligned residues and the scores would be summed to each of the positions in the
 /// alignment.
@@ -151,16 +151,16 @@ size_t cath::num_comparable(const entry_querier &arg_entry_querier, ///< The ent
 /// Using the standard equation \f$ 1 + 2 + \ldots + k = \frac{k(k+1)}{2} \f$, and defining \f$ l \f$ as the length
 /// and \f$ n \f$ ad the number excluded on each side, the total is: \f$ 2 * \frac{ (l - n -1)(l - n - 1 + 1) } { 2 } \f$
 /// which equals \f$ (l - n) * (l - n - 1) \f$.
-size_t cath::_num_comparable_impl(const size_t &arg_num_excluded, ///< The number of residues that are excluded on either side of each residue
-                                  const size_t &arg_length        ///< The length of the structure
+size_t cath::_num_comparable_impl(const size_t &prm_num_excluded, ///< The number of residues that are excluded on either side of each residue
+                                  const size_t &prm_length        ///< The length of the structure
                                   ) {
 	// If the length is too short to accommodate any comparable pairs, just return 0
 	// (which avoids strange behaviour on size_ts becoming negative)
-	if (arg_length <= arg_num_excluded + 1) {
+	if (prm_length <= prm_num_excluded + 1) {
 		return 0;
 	}
 
 	// Return the result of the calculation, documented above
-	return (arg_length - arg_num_excluded) * (arg_length - arg_num_excluded - 1);
+	return (prm_length - prm_num_excluded) * (prm_length - prm_num_excluded - 1);
 }
 

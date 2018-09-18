@@ -34,10 +34,10 @@ namespace cath {
     	///
     	/// That problem doesn't even necessarily get picked up by the compiler. Hence this is a better approach.
     	template <typename T>
-    	T difference(const T &arg_value_a, ///< The first value to be compared
-    	             const T &arg_value_b  ///< The second value to be compared
+    	T difference(const T &prm_value_a, ///< The first value to be compared
+    	             const T &prm_value_b  ///< The second value to be compared
     	             ) {
-    		return std::max( arg_value_a, arg_value_b ) - std::min( arg_value_a, arg_value_b );
+    		return std::max( prm_value_a, prm_value_b ) - std::min( prm_value_a, prm_value_b );
     	}
 
 	} // namespace common

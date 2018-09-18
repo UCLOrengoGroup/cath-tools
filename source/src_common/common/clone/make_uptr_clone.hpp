@@ -34,9 +34,9 @@ namespace cath {
 		/// return { make_uptr_clone( *this ) };
 		/// ~~~~~
 		template <typename T>
-		inline auto make_uptr_clone(const T &arg_clonee ///< The object to be cloned (via its copy-ctor) into a unique_ptr
-		                            )->decltype( make_unique< T >( arg_clonee) ) {
-			return make_unique<T>( arg_clonee );
+		inline auto make_uptr_clone(const T &prm_clonee ///< The object to be cloned (via its copy-ctor) into a unique_ptr
+		                            )->decltype( make_unique< T >( prm_clonee) ) {
+			return make_unique<T>( prm_clonee );
 		}
 
 	} // namespace common

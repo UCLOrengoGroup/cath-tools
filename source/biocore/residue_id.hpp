@@ -48,10 +48,10 @@ namespace cath {
 	};
 
 	/// \brief Ctor for residue_id
-	inline residue_id::residue_id(const chain_label &arg_chain,   ///< The chain on which the residue belongs
-	                              residue_name       arg_res_name ///< The residue_name in the PDB
-	                              ) : chain   { arg_chain                 },
-	                                  res_name{ std::move( arg_res_name ) } {
+	inline residue_id::residue_id(const chain_label &prm_chain,   ///< The chain on which the residue belongs
+	                              residue_name       prm_res_name ///< The residue_name in the PDB
+	                              ) : chain   { prm_chain                 },
+	                                  res_name{ std::move( prm_res_name ) } {
 	}
 
 	/// \brief Getter for the chain on which the residue belongs
@@ -65,49 +65,49 @@ namespace cath {
 	}
 
 	/// \brief Whether this is a null residue_id
-	inline bool is_null(const residue_id &arg_residue_id ///< The residue_id to query
+	inline bool is_null(const residue_id &prm_residue_id ///< The residue_id to query
 	                    ) {
-		return arg_residue_id.get_residue_name().is_null();
+		return prm_residue_id.get_residue_name().is_null();
 	}
 
 	/// \brief Return whether the two specified residue_ids are identical
 	///
 	/// \relates residue_id
-	inline bool operator==(const residue_id &arg_residue_id_a, ///< The first  residue_id to compare
-	                       const residue_id &arg_residue_id_b  ///< The second residue_id to compare
+	inline bool operator==(const residue_id &prm_residue_id_a, ///< The first  residue_id to compare
+	                       const residue_id &prm_residue_id_b  ///< The second residue_id to compare
 	                       ) {
 		return (
-			arg_residue_id_a.get_chain_label()  == arg_residue_id_b.get_chain_label()
+			prm_residue_id_a.get_chain_label()  == prm_residue_id_b.get_chain_label()
 			&&
-			arg_residue_id_a.get_residue_name() == arg_residue_id_b.get_residue_name()
+			prm_residue_id_a.get_residue_name() == prm_residue_id_b.get_residue_name()
 		);
 	}
 
 	/// \brief Make a residue_id from the chain code
 	///
 	/// \relates residue_id
-	inline residue_id make_residue_id(const char &arg_chain_char ///< The chain code
+	inline residue_id make_residue_id(const char &prm_chain_char ///< The chain code
 	                                  ) {
-		return { chain_label{ arg_chain_char }, residue_name{} };
+		return { chain_label{ prm_chain_char }, residue_name{} };
 	}
 
 	/// \brief Make a residue_id from the chain code and residue number
 	///
 	/// \relates residue_id
-	inline residue_id make_residue_id(const char &arg_chain_char,    ///< The chain code
-	                                  const int  &arg_residue_number ///< The residue number
+	inline residue_id make_residue_id(const char &prm_chain_char,    ///< The chain code
+	                                  const int  &prm_residue_number ///< The residue number
 	                                  ) {
-		return { chain_label{ arg_chain_char }, residue_name{ arg_residue_number } };
+		return { chain_label{ prm_chain_char }, residue_name{ prm_residue_number } };
 	}
 
 	/// \brief Make a residue_id from the chain code, residue number and insert code
 	///
 	/// \relates residue_id
-	inline residue_id make_residue_id(const char &arg_chain_char,     ///< The chain code
-	                                  const int  &arg_residue_number, ///< The residue number
-	                                  const char &arg_insert_code     ///< The insert code
+	inline residue_id make_residue_id(const char &prm_chain_char,     ///< The chain code
+	                                  const int  &prm_residue_number, ///< The residue number
+	                                  const char &prm_insert_code     ///< The insert code
 	                                  ) {
-		return { chain_label{ arg_chain_char }, residue_name{ arg_residue_number, arg_insert_code } };
+		return { chain_label{ prm_chain_char }, residue_name{ prm_residue_number, prm_insert_code } };
 	}
 
 	std::string to_string(const residue_id &);

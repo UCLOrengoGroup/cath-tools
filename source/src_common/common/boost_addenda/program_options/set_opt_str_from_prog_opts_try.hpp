@@ -34,26 +34,26 @@ namespace cath {
 		/// This is a helpful way to provide a consistent approach to different Boost Program Options calls that
 		/// may throw an exception to indicate a parsing error
 		template <typename Func>
-		void set_opt_str_from_prog_opts_try(str_opt           &arg_error_string,  ///< The optional string to update with a description of any errors that occur
-		                                    Func             &&arg_function,      ///< The function to perform
-		                                    const std::string &arg_prefix_string, ///< The string with which to prefix any error descriptions
-		                                    const std::string &arg_suffix_string  ///< The string with which to suffix any error descriptions
+		void set_opt_str_from_prog_opts_try(str_opt           &prm_error_string,  ///< The optional string to update with a description of any errors that occur
+		                                    Func             &&prm_function,      ///< The function to perform
+		                                    const std::string &prm_prefix_string, ///< The string with which to prefix any error descriptions
+		                                    const std::string &prm_suffix_string  ///< The string with which to suffix any error descriptions
 		                                    ) {
-			if ( ! arg_error_string ) {
+			if ( ! prm_error_string ) {
 				try {
-					std::forward<Func>( arg_function )();
+					std::forward<Func>( prm_function )();
 				}
 				catch (std::exception& e) {
-					arg_error_string =
-						  arg_prefix_string
+					prm_error_string =
+						  prm_prefix_string
 						+ e.what()
-						+ arg_suffix_string;
+						+ prm_suffix_string;
 				}
 				catch (...) {
-					arg_error_string =
-						  arg_prefix_string
+					prm_error_string =
+						  prm_prefix_string
 						+ "Caught an unrecognised exception whilst parsing program options."
-						+ arg_suffix_string;
+						+ prm_suffix_string;
 				}
 			}
 		}

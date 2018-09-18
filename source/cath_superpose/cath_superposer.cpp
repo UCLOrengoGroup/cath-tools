@@ -56,32 +56,32 @@ using boost::filesystem::path;
 ///
 /// The input and output stream parameters default to cin and cout respectively but are configurable,
 /// primarily for testing purposes
-void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose_options, ///< The details of the cath_superpose job to perform
-                                istream                      &arg_istream,                ///< The istream from which any stdin-like input should be read
-                                ostream                      &arg_stdout,                 ///< The ostream to which any stdout-like output should be written
-                                ostream                      &arg_stderr                  ///< The ostream to which any stderr-like output should be written
+void cath_superposer::superpose(const cath_superpose_options &prm_cath_superpose_options, ///< The details of the cath_superpose job to perform
+                                istream                      &prm_istream,                ///< The istream from which any stdin-like input should be read
+                                ostream                      &prm_stdout,                 ///< The ostream to which any stdout-like output should be written
+                                ostream                      &prm_stderr                  ///< The ostream to which any stderr-like output should be written
                                 ) {
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto &error_or_help_string = arg_cath_superpose_options.get_error_or_help_string();
+	const auto &error_or_help_string = prm_cath_superpose_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
-		arg_stdout << *error_or_help_string;
+		prm_stdout << *error_or_help_string;
 		return;
 	}
 
 	// Get the superposition (and context) as specified by the cath_superpose_options
-	const superposition_context the_sup_context = get_superposition_context( arg_cath_superpose_options, arg_istream, arg_stderr );
+	const superposition_context the_sup_context = get_superposition_context( prm_cath_superpose_options, prm_istream, prm_stderr );
 
 	// TODO: Populate this name summarising the overall group so it can be used, eg in superposition scripts
 	const string overall_name{};
 
 	// If there is an alignment, then for each of the alignment_outputters specified by the cath_superpose_options, output it
-	const auto aln_outputters = arg_cath_superpose_options.get_alignment_outputters();
+	const auto aln_outputters = prm_cath_superpose_options.get_alignment_outputters();
 	if ( the_sup_context.has_alignment() ) {
 		use_all_alignment_outputters(
 			aln_outputters,
 			make_restricted_alignment_context( the_sup_context ),
-			arg_stdout,
-			arg_stderr
+			prm_stdout,
+			prm_stderr
 		);
 	}
 	else {
@@ -91,10 +91,10 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
 	}
 
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
-	const superposition_outputter_list outputters = arg_cath_superpose_options.get_superposition_outputters(
+	const superposition_outputter_list outputters = prm_cath_superpose_options.get_superposition_outputters(
 		aln_outputters.empty() ? default_supn_outputter::PYMOL : default_supn_outputter::NONE
 	);
-	use_all_superposition_outputters( outputters, the_sup_context, arg_stdout, arg_stderr, overall_name );
+	use_all_superposition_outputters( outputters, the_sup_context, prm_stdout, prm_stderr, overall_name );
 }
 
 /// \brief TODOCUMENT
@@ -103,14 +103,14 @@ void cath_superposer::superpose(const cath_superpose_options &arg_cath_superpose
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than ostream
 ///       (fix all errors, *then* provide default of boost::none)
-superposition_context cath_superposer::get_superposition_context(const cath_superpose_options &arg_cath_sup_opts, ///< TODOCUMENT
-                                                                 istream                      &arg_istream,       ///< TODOCUMENT
-                                                                 ostream                      &arg_stderr         ///< TODOCUMENT
+superposition_context cath_superposer::get_superposition_context(const cath_superpose_options &prm_cath_sup_opts, ///< TODOCUMENT
+                                                                 istream                      &prm_istream,       ///< TODOCUMENT
+                                                                 ostream                      &prm_stderr         ///< TODOCUMENT
                                                                  ) {
-	arg_cath_sup_opts.check_ok_to_use();
+	prm_cath_sup_opts.check_ok_to_use();
 
 	// Grab the PDBs and their IDs
-	const strucs_context  context  = get_pdbs_and_names( arg_cath_sup_opts, arg_istream, false );
+	const strucs_context  context  = get_pdbs_and_names( prm_cath_sup_opts, prm_istream, false );
 
 	if ( context.get_pdbs().empty() ) {
 		logger::log_and_exit(
@@ -120,7 +120,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	}
 
 	// If a JSON superposition file has been specified, return that
-	const path_opt &json_sup_infile = arg_cath_sup_opts.get_json_sup_infile();
+	const path_opt &json_sup_infile = prm_cath_sup_opts.get_json_sup_infile();
 	if ( json_sup_infile ) {
 		return set_pdbs_copy(
 			read_from_json_file<superposition_context>( *json_sup_infile ),
@@ -132,10 +132,10 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 	const auto aln_and_spn_tree = [&] {
 		try {
 			return get_alignment_and_spanning_tree(
-				arg_cath_sup_opts,
+				prm_cath_sup_opts,
 				restrict_pdbs_copy( context ),
-				get_align_refining( arg_cath_sup_opts )
-				// ref( arg_stderr )
+				get_align_refining( prm_cath_sup_opts )
+				// ref( prm_stderr )
 			);
 		}
 		catch (const std::exception &e) {
@@ -154,7 +154,7 @@ superposition_context cath_superposer::get_superposition_context(const cath_supe
 		the_alignment,
 		spanning_tree,
 		context,
-		arg_cath_sup_opts.get_selection_policy_acquirer()
+		prm_cath_sup_opts.get_selection_policy_acquirer()
 	);
-	return aln_based_sup_acq.get_superposition( arg_stderr );
+	return aln_based_sup_acq.get_superposition( prm_stderr );
 }

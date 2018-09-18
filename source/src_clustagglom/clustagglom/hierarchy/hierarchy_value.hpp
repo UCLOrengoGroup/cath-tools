@@ -56,10 +56,10 @@ namespace cath {
 		};
 
 		/// \brief Ctor from the type and index
-		inline constexpr hierarchy_value::hierarchy_value(const hierarchy_ref &arg_type, ///< Whether this is an entry (ie leaf node) or a cluster from the next deepest layer of the hierarchy
-		                                                  const item_idx      &arg_index ///< The index of the entry (leaf node) or the index of the group in the next deepest layer
-		                                                  ) noexcept : type { arg_type  },
-		                                                               index{ arg_index } {
+		inline constexpr hierarchy_value::hierarchy_value(const hierarchy_ref &prm_type, ///< Whether this is an entry (ie leaf node) or a cluster from the next deepest layer of the hierarchy
+		                                                  const item_idx      &prm_index ///< The index of the entry (leaf node) or the index of the group in the next deepest layer
+		                                                  ) noexcept : type { prm_type  },
+		                                                               index{ prm_index } {
 		}
 
 		/// \brief Getter for whether this is an entry (ie leaf node) or a cluster from the next deepest layer of the hierarchy
@@ -73,16 +73,16 @@ namespace cath {
 		}
 
 		/// \brief Setter for whether this is an entry (ie leaf node) or a cluster from the next deepest layer of the hierarchy
-		inline hierarchy_value & hierarchy_value::set_type(const hierarchy_ref &arg_type ///< Whether this is an entry (ie leaf node) or a cluster from the next deepest layer of the hierarchy
+		inline hierarchy_value & hierarchy_value::set_type(const hierarchy_ref &prm_type ///< Whether this is an entry (ie leaf node) or a cluster from the next deepest layer of the hierarchy
 		                                                   ) {
-			type = arg_type;
+			type = prm_type;
 			return *this;
 		}
 
 		/// \brief Setter for the index of the entry (leaf node) or the index of the group in the next deepest layer
-		inline hierarchy_value & hierarchy_value::set_index(const item_idx &arg_index ///< The index of the entry (leaf node) or the index of the group in the next deepest layer
+		inline hierarchy_value & hierarchy_value::set_index(const item_idx &prm_index ///< The index of the entry (leaf node) or the index of the group in the next deepest layer
 		                                                    ) {
-			index = arg_index;
+			index = prm_index;
 			return *this;
 		}
 

@@ -43,9 +43,9 @@ using namespace std;
 //);
 
 /// \brief TODOCUMENT
-void sec_struc::check_planar_angles_index_is_valid(const size_t &arg_index ///< TODOCUMENT
+void sec_struc::check_planar_angles_index_is_valid(const size_t &prm_index ///< TODOCUMENT
                                                    ) const {
-	if (arg_index >= get_num_planar_angles()) {
+	if (prm_index >= get_num_planar_angles()) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Pair details index is out of range"));
 	}
 }
@@ -58,24 +58,24 @@ void sec_struc::check_sec_struc_type() const {
 }
 
 /// \brief TODOCUMENT
-sec_struc::sec_struc(const size_t         &arg_start_residue_num, ///< TODOCUMENT
-                     const size_t         &arg_stop_residue_num,  ///< TODOCUMENT
-                     const sec_struc_type &arg_sec_struc_type,    ///< TODOCUMENT
-                     coord                 arg_midpoint,          ///< TODOCUMENT
-                     coord                 arg_unit_dirn          ///< TODOCUMENT
-                     ) : start_residue_num ( arg_start_residue_num      ),
-                         stop_residue_num  ( arg_stop_residue_num       ),
-                         type              ( arg_sec_struc_type         ),
-                         midpoint          ( std::move( arg_midpoint  ) ),
-                         unit_dirn         ( std::move( arg_unit_dirn ) ) {
+sec_struc::sec_struc(const size_t         &prm_start_residue_num, ///< TODOCUMENT
+                     const size_t         &prm_stop_residue_num,  ///< TODOCUMENT
+                     const sec_struc_type &prm_sec_struc_type,    ///< TODOCUMENT
+                     coord                 prm_midpoint,          ///< TODOCUMENT
+                     coord                 prm_unit_dirn          ///< TODOCUMENT
+                     ) : start_residue_num ( prm_start_residue_num      ),
+                         stop_residue_num  ( prm_stop_residue_num       ),
+                         type              ( prm_sec_struc_type         ),
+                         midpoint          ( std::move( prm_midpoint  ) ),
+                         unit_dirn         ( std::move( prm_unit_dirn ) ) {
 	check_sec_struc_type();
 }
 
 /// \brief TODOCUMENT
-void sec_struc::set_planar_angles(const sec_struc_planar_angles_vec &arg_planar_angles ///< TODOCUMENT
+void sec_struc::set_planar_angles(const sec_struc_planar_angles_vec &prm_planar_angles ///< TODOCUMENT
                                   ) {
-	planar_angles.reserve(arg_planar_angles.size());
-	planar_angles = arg_planar_angles;
+	planar_angles.reserve(prm_planar_angles.size());
+	planar_angles = prm_planar_angles;
 }
 
 /// \brief TODOCUMENT
@@ -104,10 +104,10 @@ coord sec_struc::get_unit_dirn() const {
 }
 
 /// \brief TODOCUMENT
-const sec_struc_planar_angles & sec_struc::get_planar_angles_of_index(const size_t &arg_index ///< TODOCUMENT
+const sec_struc_planar_angles & sec_struc::get_planar_angles_of_index(const size_t &prm_index ///< TODOCUMENT
                                                                       ) const {
-	check_planar_angles_index_is_valid(arg_index);
-	return planar_angles[arg_index];
+	check_planar_angles_index_is_valid(prm_index);
+	return planar_angles[prm_index];
 }
 
 size_t sec_struc::get_num_planar_angles() const {
@@ -117,18 +117,18 @@ size_t sec_struc::get_num_planar_angles() const {
 /// \brief TODOCUMENT
 ///
 /// \relates sec_struc
-coord cath::calculate_inter_sec_struc_vector(const sec_struc &arg_src_sec_struc,   ///< The source secondary structure
-                                             const sec_struc &arg_dest_sec_struc,  ///< The destination secondary structure
-                                             const sec_struc &arg_anchor_sec_struc ///< The anchor secondary structure
+coord cath::calculate_inter_sec_struc_vector(const sec_struc &prm_src_sec_struc,   ///< The source secondary structure
+                                             const sec_struc &prm_dest_sec_struc,  ///< The destination secondary structure
+                                             const sec_struc &prm_anchor_sec_struc ///< The anchor secondary structure
                                              ) {
 	// Calculate scalar/vector distances between secondary structures
 	const rotation &anchor_frame = rotation_to_x_axis_and_x_y_plane(
-		arg_src_sec_struc.get_unit_dirn(),
-		arg_anchor_sec_struc.get_midpoint() - arg_src_sec_struc.get_midpoint()
+		prm_src_sec_struc.get_unit_dirn(),
+		prm_anchor_sec_struc.get_midpoint() - prm_src_sec_struc.get_midpoint()
 	);
 	return rotate_copy(
 		anchor_frame,
-		arg_dest_sec_struc.get_midpoint()   - arg_src_sec_struc.get_midpoint()
+		prm_dest_sec_struc.get_midpoint()   - prm_src_sec_struc.get_midpoint()
 	);
 }
 

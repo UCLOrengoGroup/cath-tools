@@ -29,14 +29,14 @@ using namespace cath::common;
 using namespace std;
 
 /// \brief TODOCUMENT
-size_vec common_residue_select_all_policy::do_select_common_residues(const alignment                    &/*arg_alignment*/, ///< TODOCUMENT
-                                                                     const vector<alignment::size_type> &arg_indices,       ///< TODOCUMENT
-                                                                     const alignment::size_type         &/*arg_entry_a*/,   ///< TODOCUMENT
-                                                                     const alignment::size_type         &/*arg_entry_b*/    ///< TODOCUMENT
+size_vec common_residue_select_all_policy::do_select_common_residues(const alignment                    &/*prm_alignment*/, ///< TODOCUMENT
+                                                                     const vector<alignment::size_type> &prm_indices,       ///< TODOCUMENT
+                                                                     const alignment::size_type         &/*prm_entry_a*/,   ///< TODOCUMENT
+                                                                     const alignment::size_type         &/*prm_entry_b*/    ///< TODOCUMENT
                                                                      ) const {
 	size_vec index_indices;
-	index_indices.reserve(arg_indices.size());
-	for (const size_t &index_ctr : indices( arg_indices.size() ) ) {
+	index_indices.reserve(prm_indices.size());
+	for (const size_t &index_ctr : indices( prm_indices.size() ) ) {
 		index_indices.push_back(index_ctr);
 	}
 	return index_indices;
@@ -52,7 +52,7 @@ unique_ptr<common_residue_selection_policy> common_residue_select_all_policy::do
 }
 
 /// \brief TODOCUMENT
-bool common_residue_select_all_policy::do_less_than_with_same_dynamic_type(const common_residue_selection_policy &/*arg_common_residue_selection_policy*/ ///< TODOCUMENT
+bool common_residue_select_all_policy::do_less_than_with_same_dynamic_type(const common_residue_selection_policy &/*prm_common_residue_selection_policy*/ ///< TODOCUMENT
                                                                            ) const {
 	return false;
 }

@@ -41,11 +41,11 @@ const string options_block_tester::TEST_HELP_1  ( "This is the first piece of he
 const string options_block_tester::TEST_HELP_2  ( "This is the second piece of help" );
 
 /// \brief Simple implementation function to return the specified list of parameters but with a dummy program name prepended
-str_vec options_block_tester::prepend_dummy_program_name_copy(const str_vec &arg_params
+str_vec options_block_tester::prepend_dummy_program_name_copy(const str_vec &prm_params
                                                               ) {
 	str_vec new_params( 1, "dummy_program_name" );
-	new_params.reserve( arg_params.size() + 1 );
-	for (const string &param : arg_params) {
+	new_params.reserve( prm_params.size() + 1 );
+	for (const string &param : prm_params) {
 		new_params.push_back( param );
 	}
 	return new_params;
@@ -58,9 +58,9 @@ str_vec options_block_tester::prepend_dummy_program_name_copy(const str_vec &arg
 ///
 /// \todo Consider adding optional testing of positional parameters
 void options_block_tester::parse_into_options_block(options_block &the_options_block, ///< The options_block to have options parsed into it
-                                                    const str_vec &arg_options        ///< A vector of options strings to parse into the options_block (without the program name at the start - a dummy program name will be added)
+                                                    const str_vec &prm_options        ///< A vector of options strings to parse into the options_block (without the program name at the start - a dummy program name will be added)
 	                                                ) {
-	const str_vec opts_with_dummy_progname = prepend_dummy_program_name_copy( arg_options );
+	const str_vec opts_with_dummy_progname = prepend_dummy_program_name_copy( prm_options );
 	options_description  po_desc           = the_options_block.get_all_options_description( 100 );
 	argc_argv_faker      faked_arguments( opts_with_dummy_progname );
 

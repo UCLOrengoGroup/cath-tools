@@ -51,16 +51,16 @@ void sec_file_record::check_sec_struc_type() const {
 }
 
 /// \brief Ctor that directly populates all the fields with arguments
-sec_file_record::sec_file_record(const size_t         &arg_start_residue_num, ///< The start residue of the secondary structure
-                                 const size_t         &arg_stop_residue_num,  ///< The stop residue of the secondary structure
-                                 const sec_struc_type &arg_sec_struc_type,    ///< The type of secondary structure: sec_struc_type::ALPHA_HELIX or sec_struc_type::BETA_STRAND
-                                 coord                 arg_midpoint,          ///< The coordinates of the secondary structure's midpoint
-                                 coord                 arg_unit_dirn          ///< A unit vector along the secondary structure
-                                 ) : start_residue_num { arg_start_residue_num      },
-                                     stop_residue_num  { arg_stop_residue_num       },
-                                     type              { arg_sec_struc_type         },
-                                     midpoint          { std::move( arg_midpoint  ) },
-                                     unit_dirn         { std::move( arg_unit_dirn ) } {
+sec_file_record::sec_file_record(const size_t         &prm_start_residue_num, ///< The start residue of the secondary structure
+                                 const size_t         &prm_stop_residue_num,  ///< The stop residue of the secondary structure
+                                 const sec_struc_type &prm_sec_struc_type,    ///< The type of secondary structure: sec_struc_type::ALPHA_HELIX or sec_struc_type::BETA_STRAND
+                                 coord                 prm_midpoint,          ///< The coordinates of the secondary structure's midpoint
+                                 coord                 prm_unit_dirn          ///< A unit vector along the secondary structure
+                                 ) : start_residue_num { prm_start_residue_num      },
+                                     stop_residue_num  { prm_stop_residue_num       },
+                                     type              { prm_sec_struc_type         },
+                                     midpoint          { std::move( prm_midpoint  ) },
+                                     unit_dirn         { std::move( prm_unit_dirn ) } {
 	check_sec_struc_type();
 	unit_dirn = normalise_copy( unit_dirn );
 }
@@ -93,61 +93,61 @@ coord sec_file_record::get_unit_dirn() const {
 /// \brief Return whether the two specified sec_file_records are identical
 ///
 /// \relates sec_file_record
-bool cath::file::operator==(const sec_file_record &arg_lhs, ///< The first  sec_file_record to compare
-                            const sec_file_record &arg_rhs  ///< The second sec_file_record to compare
+bool cath::file::operator==(const sec_file_record &prm_lhs, ///< The first  sec_file_record to compare
+                            const sec_file_record &prm_rhs  ///< The second sec_file_record to compare
                             ) {
 	return (
-		arg_lhs.get_start_residue_num() == arg_rhs.get_start_residue_num()
+		prm_lhs.get_start_residue_num() == prm_rhs.get_start_residue_num()
 		&&
-		arg_lhs.get_stop_residue_num()  == arg_rhs.get_stop_residue_num()
+		prm_lhs.get_stop_residue_num()  == prm_rhs.get_stop_residue_num()
 		&&
-		arg_lhs.get_type()              == arg_rhs.get_type()
+		prm_lhs.get_type()              == prm_rhs.get_type()
 		&&
-		arg_lhs.get_midpoint()          == arg_rhs.get_midpoint()
+		prm_lhs.get_midpoint()          == prm_rhs.get_midpoint()
 		&&
-		arg_lhs.get_unit_dirn()         == arg_rhs.get_unit_dirn()
+		prm_lhs.get_unit_dirn()         == prm_rhs.get_unit_dirn()
 	);
 }
 
 /// \brief Generate a string describing the specified sec_file_record
 ///
 /// \relates sec_file_record
-string cath::file::to_string(const sec_file_record &arg_sec_file_record ///< The sec_file_record to describe
+string cath::file::to_string(const sec_file_record &prm_sec_file_record ///< The sec_file_record to describe
                              ) {
 	return
 		  "sec_file_record["
-		+ std::to_string( arg_sec_file_record.get_start_residue_num() )
+		+ std::to_string( prm_sec_file_record.get_start_residue_num() )
 		+ ", "
-		+ std::to_string( arg_sec_file_record.get_stop_residue_num()  )
+		+ std::to_string( prm_sec_file_record.get_stop_residue_num()  )
 		+ ", "
-		+ to_string     ( arg_sec_file_record.get_type()              )
+		+ to_string     ( prm_sec_file_record.get_type()              )
 		+ ", "
-		+ to_string     ( arg_sec_file_record.get_midpoint()          )
+		+ to_string     ( prm_sec_file_record.get_midpoint()          )
 		+ ", "
-		+ to_string     ( arg_sec_file_record.get_unit_dirn()         )
+		+ to_string     ( prm_sec_file_record.get_unit_dirn()         )
 		+ "]";
 }
 
 /// \brief Insert a description of the specified sec_file_record into the specified ostream
 ///
 /// \relates sec_file_record
-ostream & cath::file::operator<<(ostream               &arg_os,             ///< The ostream into which the description should be inserted
-                                 const sec_file_record &arg_sec_file_record ///< The sec_file_record to describe
+ostream & cath::file::operator<<(ostream               &prm_os,             ///< The ostream into which the description should be inserted
+                                 const sec_file_record &prm_sec_file_record ///< The sec_file_record to describe
                                  ) {
-	arg_os << to_string( arg_sec_file_record );
-	return arg_os;
+	prm_os << to_string( prm_sec_file_record );
+	return prm_os;
 }
 
 /// \brief Convert a sec_file_record to a sec_struc
 ///
 /// \relates sec_file_record
-sec_struc cath::file::make_sec_struc(const sec_file_record &arg_sec_file_record ///< The sec_file_record to be converted
+sec_struc cath::file::make_sec_struc(const sec_file_record &prm_sec_file_record ///< The sec_file_record to be converted
                                      ) {
 	return sec_struc(
-		arg_sec_file_record.get_start_residue_num(),
-		arg_sec_file_record.get_stop_residue_num(),
-		arg_sec_file_record.get_type(),
-		arg_sec_file_record.get_midpoint(),
-		arg_sec_file_record.get_unit_dirn()
+		prm_sec_file_record.get_start_residue_num(),
+		prm_sec_file_record.get_stop_residue_num(),
+		prm_sec_file_record.get_type(),
+		prm_sec_file_record.get_midpoint(),
+		prm_sec_file_record.get_unit_dirn()
 	);
 }

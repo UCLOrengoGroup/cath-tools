@@ -39,11 +39,11 @@ unique_ptr<sym_protein_only_length_getter> geometric_mean_length_getter::do_sym_
 }
 
 /// \brief TODOCUMENT
-size_t geometric_mean_length_getter::do_get_length(const protein   &arg_protein_a,     ///< TODOCUMENT
-                                                   const protein   &arg_protein_b      ///< TODOCUMENT
+size_t geometric_mean_length_getter::do_get_length(const protein   &prm_protein_a,     ///< TODOCUMENT
+                                                   const protein   &prm_protein_b      ///< TODOCUMENT
                                                    ) const {
-	const size_t length_a       = arg_protein_a.get_length();
-	const size_t length_b       = arg_protein_b.get_length();
+	const size_t length_a       = prm_protein_a.get_length();
+	const size_t length_b       = prm_protein_b.get_length();
 	const double geom_mean_doub = sqrt( numeric_cast<double>( length_a * length_b ) );
 	return numeric_cast<size_t>( round( geom_mean_doub ) );
 }
@@ -59,7 +59,7 @@ string geometric_mean_length_getter::do_get_choice_adjective() const {
 }
 
 /// \brief TODOCUMENT
-bool geometric_mean_length_getter::do_less_than_with_same_dynamic_type(const length_getter &/*arg_length_getter*/ ///< TODOCUMENT
+bool geometric_mean_length_getter::do_less_than_with_same_dynamic_type(const length_getter &/*prm_length_getter*/ ///< TODOCUMENT
                                                                        ) const {
 	return false;
 }

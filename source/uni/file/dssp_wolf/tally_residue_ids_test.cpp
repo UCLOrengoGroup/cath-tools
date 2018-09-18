@@ -34,12 +34,12 @@ using namespace std;
 
 //namespace std {
 //	/// \brief Naughty addition of an insertion operator into std:: to get Boost.Test to output size_size_pairs
-//	ostream & operator<<(ostream              &arg_os,            ///< ostream to which to output the size_size_pair
-//	                     const size_size_pair &arg_size_size_pair ///< size_size_pair to output
+//	ostream & operator<<(ostream              &prm_os,            ///< ostream to which to output the size_size_pair
+//	                     const size_size_pair &prm_size_size_pair ///< size_size_pair to output
 //	                     ) {
-//		arg_os << "pair[" << arg_size_size_pair.first  << ", ";
-//		arg_os            << arg_size_size_pair.second << "]";
-//		return arg_os;
+//		prm_os << "pair[" << prm_size_size_pair.first  << ", ";
+//		prm_os            << prm_size_size_pair.second << "]";
+//		return prm_os;
 //	}
 //}
 
@@ -77,23 +77,23 @@ namespace cath {
 		constexpr chain_label tally_residue_ids_test_suite_fixture::CHAIN_LABEL;
 		constexpr char        tally_residue_ids_test_suite_fixture::CHAIN_LABEL_CHAR;
 
-		/// \brief Overload that converts the arg_dssp_or_wolf_residue_ids from strings to residue_ids
-		size_size_pair_vec tally_residue_ids_test_suite_fixture::tally_residue_ids_str(const residue_id_vec &arg_pdb_residue_ids,                       ///< A list of residue_ids parsed from the PDB file
-		                                                                               const chain_label    &arg_chain_label,                           ///< A chain_label to combine with the strings to make residue_ids
-		                                                                               const str_vec        &arg_dssp_or_wolf_residue_id_strings,       ///< A list of strings containing the residue names parsed from the DSSP/WOLF file (with a null residue represented with an empty string)
-		                                                                               const bool           &arg_permit_breaks_without_null_residues,   ///< (true for WOLF files and false for DSSP files (at least >= v2.0)
-		                                                                               const bool           &arg_permit_tail_break_without_null_residue ///< (true even for DSSP v2.0.4: file for chain A of 1bvs stops with neither residue 203 or null residue (verbose message: "ignoring incomplete residue ARG  (203)")
+		/// \brief Overload that converts the prm_dssp_or_wolf_residue_ids from strings to residue_ids
+		size_size_pair_vec tally_residue_ids_test_suite_fixture::tally_residue_ids_str(const residue_id_vec &prm_pdb_residue_ids,                       ///< A list of residue_ids parsed from the PDB file
+		                                                                               const chain_label    &prm_chain_label,                           ///< A chain_label to combine with the strings to make residue_ids
+		                                                                               const str_vec        &prm_dssp_or_wolf_residue_id_strings,       ///< A list of strings containing the residue names parsed from the DSSP/WOLF file (with a null residue represented with an empty string)
+		                                                                               const bool           &prm_permit_breaks_without_null_residues,   ///< (true for WOLF files and false for DSSP files (at least >= v2.0)
+		                                                                               const bool           &prm_permit_tail_break_without_null_residue ///< (true even for DSSP v2.0.4: file for chain A of 1bvs stops with neither residue 203 or null residue (verbose message: "ignoring incomplete residue ARG  (203)")
 		                                                                               ) {
 			residue_id_vec dssp_or_wolf_residue_ids;
-			dssp_or_wolf_residue_ids.reserve( arg_dssp_or_wolf_residue_id_strings.size()  );
-			for (const string &dssp_or_wolf_residue_id_string : arg_dssp_or_wolf_residue_id_strings) {
-				dssp_or_wolf_residue_ids.emplace_back( arg_chain_label, make_residue_name( dssp_or_wolf_residue_id_string ) );
+			dssp_or_wolf_residue_ids.reserve( prm_dssp_or_wolf_residue_id_strings.size()  );
+			for (const string &dssp_or_wolf_residue_id_string : prm_dssp_or_wolf_residue_id_strings) {
+				dssp_or_wolf_residue_ids.emplace_back( prm_chain_label, make_residue_name( dssp_or_wolf_residue_id_string ) );
 			}
 			return tally_residue_ids(
-				arg_pdb_residue_ids,
+				prm_pdb_residue_ids,
 				dssp_or_wolf_residue_ids,
-				arg_permit_breaks_without_null_residues,
-				arg_permit_tail_break_without_null_residue
+				prm_permit_breaks_without_null_residues,
+				prm_permit_tail_break_without_null_residue
 			);
 		}
 
@@ -148,16 +148,16 @@ BOOST_AUTO_TEST_CASE(throws_on_DSSP_list_contains_consecutive_duplicate_empty) {
 
 
 
-/// \brief Check that tally_residue_ids() throws on completely mismatching lists, with arg_permit_breaks_without_null_residues off or on
+/// \brief Check that tally_residue_ids() throws on completely mismatching lists, with prm_permit_breaks_without_null_residues off or on
 BOOST_AUTO_TEST_CASE(throws_on_bad_mismatch) {
-	for (const bool &arg_permit : { false, true }) {
-		BOOST_CHECK_THROW(tally_residue_ids(STANDARD_RES_IDS, MISMATCH_RES_IDS, arg_permit), invalid_argument_exception);
+	for (const bool &prm_permit : { false, true }) {
+		BOOST_CHECK_THROW(tally_residue_ids(STANDARD_RES_IDS, MISMATCH_RES_IDS, prm_permit), invalid_argument_exception);
 	}
 }
 
 
 
-/// \brief Check that tally_residue_ids() with arg_permit_breaks_without_null_residues off throws on a DSSP gap at the start
+/// \brief Check that tally_residue_ids() with prm_permit_breaks_without_null_residues off throws on a DSSP gap at the start
 BOOST_AUTO_TEST_CASE(throws_if_not_permit_dssp_gap_at_start) {
 	BOOST_CHECK_THROW(tally_residue_ids(
 		STANDARD_RES_IDS,
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE(throws_if_not_permit_dssp_gap_at_start) {
 	));
 }
 
-/// \brief Check that tally_residue_ids() with arg_permit_breaks_without_null_residues off throws on a DSSP gap at the middle
+/// \brief Check that tally_residue_ids() with prm_permit_breaks_without_null_residues off throws on a DSSP gap at the middle
 BOOST_AUTO_TEST_CASE(throw_if_not_permit_dssp_gap_at_middle) {
 	BOOST_CHECK_THROW(tally_residue_ids(
 		STANDARD_RES_IDS,
@@ -186,7 +186,7 @@ BOOST_AUTO_TEST_CASE(throw_if_not_permit_dssp_gap_at_middle) {
 	), invalid_argument_exception);
 }
 
-/// \brief Check that tally_residue_ids() with arg_permit_tail_break_without_null_residue off throws on a DSSP gap at the end
+/// \brief Check that tally_residue_ids() with prm_permit_tail_break_without_null_residue off throws on a DSSP gap at the end
 BOOST_AUTO_TEST_CASE(throw_if_not_permit_dssp_gap_at_end) {
 	BOOST_CHECK_THROW(tally_residue_ids(
 		STANDARD_RES_IDS,
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE(throw_if_not_permit_dssp_gap_at_end) {
 
 
 
-/// \brief Check that tally_residue_ids() with arg_permit_breaks_without_null_residues on allows a gap at the start
+/// \brief Check that tally_residue_ids() with prm_permit_breaks_without_null_residues on allows a gap at the start
 BOOST_AUTO_TEST_CASE(works_if_permit_dssp_gap_at_start) {
 	const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, {      "3", "4" }, true);
 	const size_size_pair_vec expected = { { 1, 0 },
@@ -207,7 +207,7 @@ BOOST_AUTO_TEST_CASE(works_if_permit_dssp_gap_at_start) {
 	BOOST_CHECK_EQUAL_RANGES( expected, got );
 }
 
-/// \brief Check that tally_residue_ids() with arg_permit_breaks_without_null_residues on allows a gap at the middle
+/// \brief Check that tally_residue_ids() with prm_permit_breaks_without_null_residues on allows a gap at the middle
 BOOST_AUTO_TEST_CASE(works_if_permit_dssp_gap_at_middle) {
 	const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2",      "4" }, true);
 	const size_size_pair_vec expected = { { 0, 0 },
@@ -215,7 +215,7 @@ BOOST_AUTO_TEST_CASE(works_if_permit_dssp_gap_at_middle) {
 	BOOST_CHECK_EQUAL_RANGES( expected, got );
 }
 
-/// \brief Check that tally_residue_ids() with arg_permit_breaks_without_null_residues on allows a gap at the end
+/// \brief Check that tally_residue_ids() with prm_permit_breaks_without_null_residues on allows a gap at the end
 BOOST_AUTO_TEST_CASE(works_if_permit_dssp_gap_at_end) {
 	const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2", "3"      }, true);
 	const size_size_pair_vec expected = { { 0, 0 },
@@ -225,30 +225,30 @@ BOOST_AUTO_TEST_CASE(works_if_permit_dssp_gap_at_end) {
 
 
 
-/// \brief Check that tally_residue_ids() works with a DSSP null matching a residue at the start, with arg_permit_breaks_without_null_residues off or on
+/// \brief Check that tally_residue_ids() works with a DSSP null matching a residue at the start, with prm_permit_breaks_without_null_residues off or on
 BOOST_AUTO_TEST_CASE(works_with_null_match_at_start) {
-	for (const bool &arg_permit : { false, true }) {
-		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, {  "", "3", "4" }, arg_permit);
+	for (const bool &prm_permit : { false, true }) {
+		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, {  "", "3", "4" }, prm_permit);
 		const size_size_pair_vec expected = { { 1, 1 },
 		                                      { 2, 2 } };
 		BOOST_CHECK_EQUAL_RANGES( expected, got );
 	}
 }
 
-/// \brief Check that tally_residue_ids() works with a DSSP null matching a residue at the middle, with arg_permit_breaks_without_null_residues off or on
+/// \brief Check that tally_residue_ids() works with a DSSP null matching a residue at the middle, with prm_permit_breaks_without_null_residues off or on
 BOOST_AUTO_TEST_CASE(works_with_null_match_at_middle) {
-	for (const bool &arg_permit : { false, true }) {
-		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2",  "", "4" }, arg_permit);
+	for (const bool &prm_permit : { false, true }) {
+		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2",  "", "4" }, prm_permit);
 		const size_size_pair_vec expected = { { 0, 0 },
 		                                      { 2, 2 } };
 		BOOST_CHECK_EQUAL_RANGES( expected, got );
 	}
 }
 
-/// \brief Check that tally_residue_ids() works with a DSSP null matching a residue at the end, with arg_permit_breaks_without_null_residues off or on
+/// \brief Check that tally_residue_ids() works with a DSSP null matching a residue at the end, with prm_permit_breaks_without_null_residues off or on
 BOOST_AUTO_TEST_CASE(works_with_null_match_at_end) {
-	for (const bool &arg_permit : { false, true }) {
-		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2", "3",  "" }, arg_permit);
+	for (const bool &prm_permit : { false, true }) {
+		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2", "3",  "" }, prm_permit);
 		const size_size_pair_vec expected = { { 0, 0 },
 		                                      { 1, 1 } };
 		BOOST_CHECK_EQUAL_RANGES( expected, got );
@@ -257,10 +257,10 @@ BOOST_AUTO_TEST_CASE(works_with_null_match_at_end) {
 
 
 
-/// \brief Check that tally_residue_ids() works with a DSSP null inserted at the start, with arg_permit_breaks_without_null_residues off or on
+/// \brief Check that tally_residue_ids() works with a DSSP null inserted at the start, with prm_permit_breaks_without_null_residues off or on
 BOOST_AUTO_TEST_CASE(works_with_null_insert_at_start) {
-	for (const bool &arg_permit : { false, true }) {
-		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, {  "", "2", "3", "4" }, arg_permit);
+	for (const bool &prm_permit : { false, true }) {
+		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, {  "", "2", "3", "4" }, prm_permit);
 		const size_size_pair_vec expected = { { 0, 1 },
 		                                      { 1, 2 },
 		                                      { 2, 3 } };
@@ -268,10 +268,10 @@ BOOST_AUTO_TEST_CASE(works_with_null_insert_at_start) {
 	}
 }
 
-/// \brief Check that tally_residue_ids() works with a DSSP null inserted at the middle, with arg_permit_breaks_without_null_residues off or on
+/// \brief Check that tally_residue_ids() works with a DSSP null inserted at the middle, with prm_permit_breaks_without_null_residues off or on
 BOOST_AUTO_TEST_CASE(works_with_null_insert_at_middle) {
-	for (const bool &arg_permit : { false, true }) {
-		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2",  "", "3", "4" }, arg_permit);
+	for (const bool &prm_permit : { false, true }) {
+		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2",  "", "3", "4" }, prm_permit);
 		const size_size_pair_vec expected = { { 0, 0 },
 		                                      { 1, 2 },
 		                                      { 2, 3 } };
@@ -279,10 +279,10 @@ BOOST_AUTO_TEST_CASE(works_with_null_insert_at_middle) {
 	}
 }
 
-/// \brief Check that tally_residue_ids() works with a DSSP null inserted at the end, with arg_permit_breaks_without_null_residues off or on
+/// \brief Check that tally_residue_ids() works with a DSSP null inserted at the end, with prm_permit_breaks_without_null_residues off or on
 BOOST_AUTO_TEST_CASE(works_with_null_insert_at_end) {
-	for (const bool &arg_permit : { false, true }) {
-		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2", "3", "4",  "" }, arg_permit);
+	for (const bool &prm_permit : { false, true }) {
+		const size_size_pair_vec got      = tally_residue_ids_str(STANDARD_RES_IDS, CHAIN_LABEL, { "2", "3", "4",  "" }, prm_permit);
 		const size_size_pair_vec expected = { { 0, 0 },
 		                                      { 1, 1 },
 		                                      { 2, 2 } };

@@ -69,28 +69,28 @@ namespace cath {
 			};
 
 			/// \brief Ctor from the number of items
-			inline clust_id_pot::clust_id_pot(const size_t &arg_num_indices ///< The number of items with which to initialise
-			                                  ) : jumbled_values( common::copy_build<item_vec    >( common::indices( arg_num_indices ) ) ),
-			                                      indices       ( common::copy_build<size_opt_vec>( common::indices( arg_num_indices ) ) ) {
+			inline clust_id_pot::clust_id_pot(const size_t &prm_num_indices ///< The number of items with which to initialise
+			                                  ) : jumbled_values( common::copy_build<item_vec    >( common::indices( prm_num_indices ) ) ),
+			                                      indices       ( common::copy_build<size_opt_vec>( common::indices( prm_num_indices ) ) ) {
 			}
 
 			/// \brief get the n-th index for some ordering, which is arbitrary
 			///           but consistent across calls to const methods
-			inline const item_idx & clust_id_pot::get_jumbled_nth_index(const size_t &arg_index ///< The index of the index to get under some arbitrary ordering
+			inline const item_idx & clust_id_pot::get_jumbled_nth_index(const size_t &prm_index ///< The index of the index to get under some arbitrary ordering
 			                                                            ) const {
-				return jumbled_values[ arg_index ];
+				return jumbled_values[ prm_index ];
 			}
 
 			/// \brief Return whether the specified index is still present in the pot
-			inline bool clust_id_pot::has_index(const item_idx &arg_index ///< The index to query
+			inline bool clust_id_pot::has_index(const item_idx &prm_index ///< The index to query
 			                                    ) const {
-				return static_cast<bool>( indices[ arg_index ] );
+				return static_cast<bool>( indices[ prm_index ] );
 			}
 
 			/// \brief Remove the specified index
-			inline clust_id_pot & clust_id_pot::remove_index(const item_idx &arg_index ///< The index to remove
+			inline clust_id_pot & clust_id_pot::remove_index(const item_idx &prm_index ///< The index to remove
 			                                                 ) {
-				const auto x_index = *indices[ arg_index ];
+				const auto x_index = *indices[ prm_index ];
 				if ( x_index + 1 < jumbled_values.size() ) {
 					std::swap( jumbled_values[ x_index ], jumbled_values.back() );
 					indices[ jumbled_values[ x_index ] ] = x_index;
@@ -112,15 +112,15 @@ namespace cath {
 			/// \TODO Come some version of Boost for which filtered doesn't require a copy constructible function object, do:
 			///     return *min_element( jumbled_values
 			///     	| boost::adaptors::filtered( [&] (const item_idx &x) {
-			///     		return ( x != arg_item );
+			///     		return ( x != prm_item );
 			///     	} )
 			///     );
-			inline item_idx clust_id_pot::get_min_value_excluding_spec(const item_idx &arg_item ///< The index to exclude
+			inline item_idx clust_id_pot::get_min_value_excluding_spec(const item_idx &prm_item ///< The index to exclude
 			                                                           ) const {
 				item_idx min_value = 0;
 				bool found_any = false;
 				for (const item_idx &x: jumbled_values) {
-					if ( x != arg_item ) {
+					if ( x != prm_item ) {
 						if ( ! found_any || x < min_value ) {
 							found_any = true;
 							min_value = x;

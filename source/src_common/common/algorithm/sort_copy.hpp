@@ -28,19 +28,19 @@ namespace cath {
 
 		/// \brief Convenience function for making a sorted copy of a range
 		template <typename R>
-		R sort_copy(R arg_range ///< The range on which the sorted copy should be based
+		R sort_copy(R prm_range ///< The range on which the sorted copy should be based
 		            ) {
-			boost::range::sort( arg_range );
-			return arg_range;
+			boost::range::sort( prm_range );
+			return prm_range;
 		}
 
 		/// \overload
 		template <typename R, typename P>
-		R sort_copy(R arg_range,   ///< The range on which the sorted copy should be based
-		            P arg_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+		R sort_copy(R prm_range,   ///< The range on which the sorted copy should be based
+		            P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		            ) {
-			boost::range::sort( arg_range, arg_bin_pred );
-			return arg_range;
+			boost::range::sort( prm_range, prm_bin_pred );
+			return prm_range;
 		}
 
 	} // namespace common

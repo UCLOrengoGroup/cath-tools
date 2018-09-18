@@ -43,11 +43,11 @@ unique_ptr<hits_processor> write_html_hits_processor::do_clone() const {
 /// \brief Process the specified data
 ///
 /// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-void write_html_hits_processor::do_process_hits_for_query(const string           &arg_query_id,     ///< The query_protein_id string
-                                                          const crh_filter_spec  &arg_filter_spec,  ///< The filter_spec to apply to the hits
-                                                          const crh_score_spec   &arg_score_spec,   ///< The score spec to apply to the hits
-                                                          const crh_segment_spec &arg_segment_spec, ///< The segment spec to apply to the hits
-                                                          const calc_hit_list    &arg_calc_hits     ///< The hits to process
+void write_html_hits_processor::do_process_hits_for_query(const string           &prm_query_id,     ///< The query_protein_id string
+                                                          const crh_filter_spec  &prm_filter_spec,  ///< The filter_spec to apply to the hits
+                                                          const crh_score_spec   &prm_score_spec,   ///< The score spec to apply to the hits
+                                                          const crh_segment_spec &prm_segment_spec, ///< The segment spec to apply to the hits
+                                                          const calc_hit_list    &prm_calc_hits     ///< The hits to process
                                                           ) {
 	// If the prefix hasn't already been printed, then do so and record
 	if ( ! printed_prefix ) {
@@ -62,13 +62,13 @@ void write_html_hits_processor::do_process_hits_for_query(const string          
 	// Output the HTML for this query and its hits
 	for (const ostream_ref &ostream_ref : get_ostreams() ) {
 		ostream_ref.get() << resolve_hits_html_outputter::output_html(
-			arg_query_id,
-			arg_calc_hits,
-			arg_score_spec,
-			arg_segment_spec,
+			prm_query_id,
+			prm_calc_hits,
+			prm_score_spec,
+			prm_segment_spec,
 			html_spec,
 			false,
-			arg_filter_spec,
+			prm_filter_spec,
 			batch_counter
 		);
 	}
@@ -98,8 +98,8 @@ bool write_html_hits_processor::do_requires_strictly_worse_hits() const {
 }
 
 /// \brief Ctor for the write_html_hits_processor
-write_html_hits_processor::write_html_hits_processor(ref_vec<ostream> arg_ostreams,  ///< The ostream to which the results should be written
-                                                     crh_html_spec    arg_html_spec ///< The specification for how to render the HTML
-                                                     ) noexcept : super    { move( arg_ostreams  ) },
-                                                                  html_spec{ move( arg_html_spec ) } {
+write_html_hits_processor::write_html_hits_processor(ref_vec<ostream> prm_ostreams,  ///< The ostream to which the results should be written
+                                                     crh_html_spec    prm_html_spec ///< The specification for how to render the HTML
+                                                     ) noexcept : super    { move( prm_ostreams  ) },
+                                                                  html_spec{ move( prm_html_spec ) } {
 }

@@ -86,13 +86,13 @@ namespace cath {
 			~score_classn_value_results_set_test_suite_fixture() noexcept = default;
 
 			/// \brief TODOCUMENT
-			static bool is_positive(const string &arg_string ///< TODOCUMENT
+			static bool is_positive(const string &prm_string ///< TODOCUMENT
 			                        ) {
 				static str_vec positives;
 				if ( positives.empty() ) {
 					positives = sort_copy( read_file<string>( "/cath/homes2/ucbctnl/ssap_invest_over_subset_data/random_pairs_subset.positives.txt" ) );
 				}
-				return contains( positives, arg_string );
+				return contains( positives, prm_string );
 			}
 
 			/// \brief TODOCUMENT
@@ -113,38 +113,38 @@ namespace cath {
 				return refined_som2_scores;
 			}
 
-			void plot_both(const score_classn_value_list_vec    &arg_results,        ///< TODOCUMENT
-			               const string                         &arg_file_stem_stem, ///< TODOCUMENT
-			               const vector<pair<string, str_opt>>  &arg_series_to_plot  ///< TODOCUMENT
+			void plot_both(const score_classn_value_list_vec    &prm_results,        ///< TODOCUMENT
+			               const string                         &prm_file_stem_stem, ///< TODOCUMENT
+			               const vector<pair<string, str_opt>>  &prm_series_to_plot  ///< TODOCUMENT
 			               ) {
 				plot_roc(
 					classn_stat_plotter(),
-					path( arg_file_stem_stem + ".roc" ),
-					arg_results,
-					make_standard_score_roc_plotter_spec( arg_series_to_plot )
+					path( prm_file_stem_stem + ".roc" ),
+					prm_results,
+					make_standard_score_roc_plotter_spec( prm_series_to_plot )
 				);
 
 				plot_precision_recall(
 					classn_stat_plotter(),
-					path( arg_file_stem_stem + ".precision_recall" ),
-					arg_results,
-					make_standard_score_precision_recall_plotter_spec( arg_series_to_plot )
+					path( prm_file_stem_stem + ".precision_recall" ),
+					prm_results,
+					make_standard_score_precision_recall_plotter_spec( prm_series_to_plot )
 				);
 			}
 
 			/// \brief TODOCUMENT
 			class select_file {
 			public:
-				optional<pair<bool, string>> operator()(const path &arg_file) const {
-//					optional<pair<bool, string>> select_file(const path &arg_file) {
+				optional<pair<bool, string>> operator()(const path &prm_file) const {
+//					optional<pair<bool, string>> select_file(const path &prm_file) {
 					using bool_str_pair_opt = optional<pair<bool, string>>;
-					if ( file_size( arg_file ) < 100
-							|| icontains( arg_file.string(), "stderr" )
-							|| icontains( arg_file.string(), "svmlight_data" ) ) {
+					if ( file_size( prm_file ) < 100
+							|| icontains( prm_file.string(), "stderr" )
+							|| icontains( prm_file.string(), "svmlight_data" ) ) {
 						return bool_str_pair_opt( none );
 					}
 
-					const auto file_stem = arg_file.stem().string();
+					const auto file_stem = prm_file.stem().string();
 					return bool_str_pair_opt{ make_pair(
 						score_classn_value_results_set_test_suite_fixture::is_positive( file_stem ),
 						file_stem
@@ -194,10 +194,10 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			static str_vec_vec parse_multi_struc_scores(const path &arg_filename ///< TODOCUMENT
+			static str_vec_vec parse_multi_struc_scores(const path &prm_filename ///< TODOCUMENT
 			                                            ) {
 				ifstream input_stream;
-				common::open_ifstream( input_stream, arg_filename );
+				common::open_ifstream( input_stream, prm_filename );
 				string line_string;
 				str_vec_vec results;
 				while ( getline( input_stream, line_string ) ) {
@@ -212,108 +212,108 @@ namespace cath {
 			/// \brief TODOCUMENT
 			///
 			/// \todo Ideally, make this a variadic template
-			static score_classn_value_list_vec join_value_lists(const score_classn_value_list_vec &arg_list_a, ///< TODOCUMENT
-			                                                    const score_classn_value_list_vec &arg_list_b  ///< TODOCUMENT
+			static score_classn_value_list_vec join_value_lists(const score_classn_value_list_vec &prm_list_a, ///< TODOCUMENT
+			                                                    const score_classn_value_list_vec &prm_list_b  ///< TODOCUMENT
 			                                                    ) {
 				score_classn_value_list_vec results;
-				results.reserve( arg_list_a.size() + arg_list_b.size() );
-				copy( arg_list_a, back_inserter( results ) );
-				copy( arg_list_b, back_inserter( results ) );
+				results.reserve( prm_list_a.size() + prm_list_b.size() );
+				copy( prm_list_a, back_inserter( results ) );
+				copy( prm_list_b, back_inserter( results ) );
 				return results;
 			}
 
 			/// \brief TODOCUMENT
 			template <typename... Ts>
-			static score_classn_value_list_vec join_value_lists(const score_classn_value_list_vec &arg_list_a, ///< TODOCUMENT
-			                                                    const score_classn_value_list_vec &arg_list_b, ///< TODOCUMENT
-			                                                    const Ts &...                      arg_lists   ///< TODOCUMENT
+			static score_classn_value_list_vec join_value_lists(const score_classn_value_list_vec &prm_list_a, ///< TODOCUMENT
+			                                                    const score_classn_value_list_vec &prm_list_b, ///< TODOCUMENT
+			                                                    const Ts &...                      prm_lists   ///< TODOCUMENT
 			                                                    ) {
-				return join_value_lists( join_value_lists( arg_list_a, arg_list_b ), arg_lists... );
+				return join_value_lists( join_value_lists( prm_list_a, prm_list_b ), prm_lists... );
 			}
 
 			/// \brief TODOCUMENT
-			static score_classn_value_list_vec get_multi_ssap_data(const ssap_scores_entry_vec  &arg_ssap_data, ///< TODOCUMENT
-			                                                       const label_pair_is_positive &arg_is_pos     ///< TODOCUMENT
+			static score_classn_value_list_vec get_multi_ssap_data(const ssap_scores_entry_vec  &prm_ssap_data, ///< TODOCUMENT
+			                                                       const label_pair_is_positive &prm_is_pos     ///< TODOCUMENT
 			                                                       ) {
 //				const auto name_getter = [] (const ssap_scores_entry &x) { return make_pair( x.get_name_1(), x.get_name_2() ); };
 				const auto name_getter = normal_label_getter();
 				return {
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.length1"    , [] (const ssap_scores_entry  &x) { return x.get_length_1  ();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.length2"    , [] (const ssap_scores_entry  &x) { return x.get_length_2  ();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.ssap_score" , [] (const ssap_scores_entry  &x) { return x.get_ssap_score();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.num_equivs" , [] (const ssap_scores_entry  &x) { return x.get_num_equivs();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.overlap_pc" , [] (const ssap_scores_entry  &x) { return x.get_overlap_pc();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, true,  "ssap.seq_id_pc"  , [] (const ssap_scores_entry  &x) { return x.get_seq_id_pc ();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data, arg_is_pos, false, "ssap.rmsd"       , [] (const ssap_scores_entry  &x) { return x.get_rmsd      ();      }, name_getter )
+					make_val_list_of_scores_entries( prm_ssap_data, prm_is_pos, true,  "ssap.length1"    , [] (const ssap_scores_entry  &x) { return x.get_length_1  ();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data, prm_is_pos, true,  "ssap.length2"    , [] (const ssap_scores_entry  &x) { return x.get_length_2  ();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data, prm_is_pos, true,  "ssap.ssap_score" , [] (const ssap_scores_entry  &x) { return x.get_ssap_score();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data, prm_is_pos, true,  "ssap.num_equivs" , [] (const ssap_scores_entry  &x) { return x.get_num_equivs();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data, prm_is_pos, true,  "ssap.overlap_pc" , [] (const ssap_scores_entry  &x) { return x.get_overlap_pc();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data, prm_is_pos, true,  "ssap.seq_id_pc"  , [] (const ssap_scores_entry  &x) { return x.get_seq_id_pc ();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data, prm_is_pos, false, "ssap.rmsd"       , [] (const ssap_scores_entry  &x) { return x.get_rmsd      ();      }, name_getter )
 				};
 			}
 
 			/// \brief TODOCUMENT
-			static score_classn_value_list_vec value_lists_of_ssap_data(const ssap_scores_entry_vec  &arg_ssap_data, ///< TODOCUMENT
-			                                                            const label_pair_is_positive &arg_is_pos     ///< TODOCUMENT
+			static score_classn_value_list_vec value_lists_of_ssap_data(const ssap_scores_entry_vec  &prm_ssap_data, ///< TODOCUMENT
+			                                                            const label_pair_is_positive &prm_is_pos     ///< TODOCUMENT
 			                                                            ) {
 //				const auto name_getter = [] (const ssap_scores_entry &x) { return make_pair( x.get_name_1(), x.get_name_2() ); };
 				const auto name_getter = normal_label_getter();
 				return {
-//					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.length1"    , [] (const ssap_scores_entry  &x) { return x.get_length_1  ();      }, name_getter ),
-//					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.length2"    , [] (const ssap_scores_entry  &x) { return x.get_length_2  ();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.ssap_score" , [] (const ssap_scores_entry  &x) { return x.get_ssap_score();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.num_equivs" , [] (const ssap_scores_entry  &x) { return x.get_num_equivs();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.overlap_pc" , [] (const ssap_scores_entry  &x) { return x.get_overlap_pc();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, true,  "ssap.seq_id_pc"  , [] (const ssap_scores_entry  &x) { return x.get_seq_id_pc ();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_ssap_data,  arg_is_pos, false, "ssap.rmsd"       , [] (const ssap_scores_entry  &x) { return x.get_rmsd      ();      }, name_getter )
+//					make_val_list_of_scores_entries( prm_ssap_data,  prm_is_pos, true,  "ssap.length1"    , [] (const ssap_scores_entry  &x) { return x.get_length_1  ();      }, name_getter ),
+//					make_val_list_of_scores_entries( prm_ssap_data,  prm_is_pos, true,  "ssap.length2"    , [] (const ssap_scores_entry  &x) { return x.get_length_2  ();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data,  prm_is_pos, true,  "ssap.ssap_score" , [] (const ssap_scores_entry  &x) { return x.get_ssap_score();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data,  prm_is_pos, true,  "ssap.num_equivs" , [] (const ssap_scores_entry  &x) { return x.get_num_equivs();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data,  prm_is_pos, true,  "ssap.overlap_pc" , [] (const ssap_scores_entry  &x) { return x.get_overlap_pc();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data,  prm_is_pos, true,  "ssap.seq_id_pc"  , [] (const ssap_scores_entry  &x) { return x.get_seq_id_pc ();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_ssap_data,  prm_is_pos, false, "ssap.rmsd"       , [] (const ssap_scores_entry  &x) { return x.get_rmsd      ();      }, name_getter )
 				};
 			}
 
 			/// \brief TODOCUMENT
-			static score_classn_value_list_vec value_lists_of_prc_data(const prc_scores_entry_vec   &arg_prc_data, ///< TODOCUMENT
-			                                                           const label_pair_is_positive &arg_is_pos    ///< TODOCUMENT
+			static score_classn_value_list_vec value_lists_of_prc_data(const prc_scores_entry_vec   &prm_prc_data, ///< TODOCUMENT
+			                                                           const label_pair_is_positive &prm_is_pos    ///< TODOCUMENT
 			                                                           ) {
 //				const auto name_getter = [] (const prc_scores_entry &x) { return make_pair( x.get_name_1(), x.get_name_2() ); };
 				const auto name_getter = normal_label_getter();
 				return {
-//					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, true,  "prc.length1"     , [] (const prc_scores_entry   &x) { return        x.get_length_1(); }, name_getter ),
-//					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, true,  "prc.length2"     , [] (const prc_scores_entry   &x) { return        x.get_length_2(); }, name_getter ),
-					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, false, "prc.evalue"      , [] (const prc_scores_entry   &x) { return log10( x.get_evalue() ); }, name_getter ),
-					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, true,  "prc.simple"      , [] (const prc_scores_entry   &x) { return        x.get_simple();   }, name_getter ),
-					make_val_list_of_scores_entries( arg_prc_data,   arg_is_pos, true,  "prc.reverse"     , [] (const prc_scores_entry   &x) { return        x.get_reverse();  }, name_getter )
+//					make_val_list_of_scores_entries( prm_prc_data,   prm_is_pos, true,  "prc.length1"     , [] (const prc_scores_entry   &x) { return        x.get_length_1(); }, name_getter ),
+//					make_val_list_of_scores_entries( prm_prc_data,   prm_is_pos, true,  "prc.length2"     , [] (const prc_scores_entry   &x) { return        x.get_length_2(); }, name_getter ),
+					make_val_list_of_scores_entries( prm_prc_data,   prm_is_pos, false, "prc.evalue"      , [] (const prc_scores_entry   &x) { return log10( x.get_evalue() ); }, name_getter ),
+					make_val_list_of_scores_entries( prm_prc_data,   prm_is_pos, true,  "prc.simple"      , [] (const prc_scores_entry   &x) { return        x.get_simple();   }, name_getter ),
+					make_val_list_of_scores_entries( prm_prc_data,   prm_is_pos, true,  "prc.reverse"     , [] (const prc_scores_entry   &x) { return        x.get_reverse();  }, name_getter )
 
 				};
 			}
 
 			/// \brief TODOCUMENT
-			static score_classn_value_list_vec value_lists_of_hmmer_data(const hmmer_scores_entry_vec &arg_hmmer_data, ///< TODOCUMENT
-			                                                             const label_pair_is_positive &arg_is_pos      ///< TODOCUMENT
+			static score_classn_value_list_vec value_lists_of_hmmer_data(const hmmer_scores_entry_vec &prm_hmmer_data, ///< TODOCUMENT
+			                                                             const label_pair_is_positive &prm_is_pos      ///< TODOCUMENT
 			                                                             ) {
 				const auto name_getter = normal_label_getter();
 				return {
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, false, "hmmer.full_sequence_evalue", [] (const hmmer_scores_entry &x) { return log10( x.get_full_sequence_evalue() ); }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.full_sequence_score",  [] (const hmmer_scores_entry &x) { return        x.get_full_sequence_score();    }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.full_sequence_bias",   [] (const hmmer_scores_entry &x) { return        x.get_full_sequence_bias();     }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, false, "hmmer.best_1_domain_evalue", [] (const hmmer_scores_entry &x) { return log10( x.get_best_1_domain_evalue() ); }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.best_1_domain_score",  [] (const hmmer_scores_entry &x) { return        x.get_best_1_domain_score();    }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.best_1_domain_bias",   [] (const hmmer_scores_entry &x) { return        x.get_best_1_domain_bias();     }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.expected_num_doms",    [] (const hmmer_scores_entry &x) { return        x.get_expected_num_doms();      }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.reg",                  [] (const hmmer_scores_entry &x) { return        x.get_reg();                    }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.clu",                  [] (const hmmer_scores_entry &x) { return        x.get_clu();                    }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.ov",                   [] (const hmmer_scores_entry &x) { return        x.get_ov();                     }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.env",                  [] (const hmmer_scores_entry &x) { return        x.get_env();                    }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.dom",                  [] (const hmmer_scores_entry &x) { return        x.get_dom();                    }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.rep",                  [] (const hmmer_scores_entry &x) { return        x.get_rep();                    }, name_getter ),
-					make_val_list_of_scores_entries( arg_hmmer_data, arg_is_pos, true,  "hmmer.inc",                  [] (const hmmer_scores_entry &x) { return        x.get_inc();                    }, name_getter )
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, false, "hmmer.full_sequence_evalue", [] (const hmmer_scores_entry &x) { return log10( x.get_full_sequence_evalue() ); }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.full_sequence_score",  [] (const hmmer_scores_entry &x) { return        x.get_full_sequence_score();    }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.full_sequence_bias",   [] (const hmmer_scores_entry &x) { return        x.get_full_sequence_bias();     }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, false, "hmmer.best_1_domain_evalue", [] (const hmmer_scores_entry &x) { return log10( x.get_best_1_domain_evalue() ); }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.best_1_domain_score",  [] (const hmmer_scores_entry &x) { return        x.get_best_1_domain_score();    }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.best_1_domain_bias",   [] (const hmmer_scores_entry &x) { return        x.get_best_1_domain_bias();     }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.expected_num_doms",    [] (const hmmer_scores_entry &x) { return        x.get_expected_num_doms();      }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.reg",                  [] (const hmmer_scores_entry &x) { return        x.get_reg();                    }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.clu",                  [] (const hmmer_scores_entry &x) { return        x.get_clu();                    }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.ov",                   [] (const hmmer_scores_entry &x) { return        x.get_ov();                     }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.env",                  [] (const hmmer_scores_entry &x) { return        x.get_env();                    }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.dom",                  [] (const hmmer_scores_entry &x) { return        x.get_dom();                    }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.rep",                  [] (const hmmer_scores_entry &x) { return        x.get_rep();                    }, name_getter ),
+					make_val_list_of_scores_entries( prm_hmmer_data, prm_is_pos, true,  "hmmer.inc",                  [] (const hmmer_scores_entry &x) { return        x.get_inc();                    }, name_getter )
 				};
 			}
 
 			/// \brief TODOCUMENT
-			static score_classn_value_list_vec value_lists_of_multi_data(const str_vec_vec            &arg_multi_data, ///< TODOCUMENT
-																	     const label_pair_is_positive &arg_is_pos      ///< TODOCUMENT
+			static score_classn_value_list_vec value_lists_of_multi_data(const str_vec_vec            &prm_multi_data, ///< TODOCUMENT
+																	     const label_pair_is_positive &prm_is_pos      ///< TODOCUMENT
 																	     ) {
 				return transform_build<score_classn_value_list_vec>(
-					irange( 2_z, arg_multi_data.front().size() ), // Start from 2 to skip the two IDs
+					irange( 2_z, prm_multi_data.front().size() ), // Start from 2 to skip the two IDs
 					[&] (const size_t &idx) {
 						return make_val_list_of_scores_entries(
-							arg_multi_data,
-							arg_is_pos,
+							prm_multi_data,
+							prm_is_pos,
 							true,
 							"multi_struc_score_" + to_string( idx - 1 ),
 							[&] (const str_vec &row) { return stod( row[ idx ] ); },
@@ -324,26 +324,26 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			static score_classn_value_list_vec magic_function_data(const ssap_scores_entry_vec  &arg_ssap_data, ///< TODOCUMENT,
-			                                                       const prc_scores_entry_vec   &arg_prc_data,  ///< TODOCUMENT
-			                                                       const label_pair_is_positive &arg_is_pos     ///< TODOCUMENT
+			static score_classn_value_list_vec magic_function_data(const ssap_scores_entry_vec  &prm_ssap_data, ///< TODOCUMENT,
+			                                                       const prc_scores_entry_vec   &prm_prc_data,  ///< TODOCUMENT
+			                                                       const label_pair_is_positive &prm_is_pos     ///< TODOCUMENT
 			                                                       ) {
 //				map<str_str_pair, reference_wrapper<const ssap_scores_entry>> ssaps_by_label;
-//				for (const auto &x : arg_ssap_data) {
+//				for (const auto &x : prm_ssap_data) {
 //					ssaps_by_label.emplace( make_pair( x.get_name_1(), x.get_name_2() ), std::cref( x ) );
 //				}
 //				map<str_str_pair, reference_wrapper<const prc_scores_entry>> prcs_by_label;
-//				for (const auto &x : arg_prc_data) {
+//				for (const auto &x : prm_prc_data) {
 //					prcs_by_label.emplace( make_pair( x.get_name_1(), x.get_name_2() ), std::cref( x ) );
 //				}
 				const auto ssaps_by_label = transform_build<map<str_str_pair, reference_wrapper<const ssap_scores_entry>>>(
-					arg_ssap_data,
+					prm_ssap_data,
 					[] (const ssap_scores_entry &x) {
 						return make_pair( make_pair( x.get_name_1(), x.get_name_2() ), std::cref( x ) );
 					}
 				);
 				const auto prcs_by_label = transform_build<map<str_str_pair, reference_wrapper<const prc_scores_entry>>>(
-					arg_prc_data,
+					prm_prc_data,
 					[] (const prc_scores_entry &x) {
 						return make_pair( make_pair( x.get_name_1(), x.get_name_2() ), std::cref( x ) );
 					}
@@ -354,7 +354,7 @@ namespace cath {
 				);
 				const auto magic_function_results = make_val_list_of_scores_entries(
 					labels,
-					arg_is_pos,
+					prm_is_pos,
 					true,
 					"magic.function",
 					[&] (const str_str_pair &x) {
@@ -377,44 +377,44 @@ namespace cath {
 			/// \brief TODOCUMENT
 			///
 			/// \todo Ideally, make this a variadic template
-			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &arg_list_a, ///< TODOCUMENT
-			                                                       const vector<pair<string, str_opt>> &arg_list_b  ///< TODOCUMENT
+			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &prm_list_a, ///< TODOCUMENT
+			                                                       const vector<pair<string, str_opt>> &prm_list_b  ///< TODOCUMENT
 			                                                       ) {
 				vector<pair<string, str_opt>> results;
-				results.reserve( arg_list_a.size() + arg_list_b.size() );
-				copy( arg_list_a, back_inserter( results ) );
-				copy( arg_list_b, back_inserter( results ) );
+				results.reserve( prm_list_a.size() + prm_list_b.size() );
+				copy( prm_list_a, back_inserter( results ) );
+				copy( prm_list_b, back_inserter( results ) );
 				return results;
 			}
 
 			/// \brief TODOCUMENT
 			template <typename... Ts>
-			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &arg_list_a, ///< TODOCUMENT
-			                                                       const vector<pair<string, str_opt>> &arg_list_b, ///< TODOCUMENT
-			                                                       const Ts &...                        arg_lists   ///< TODOCUMENT
+			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &prm_list_a, ///< TODOCUMENT
+			                                                       const vector<pair<string, str_opt>> &prm_list_b, ///< TODOCUMENT
+			                                                       const Ts &...                        prm_lists   ///< TODOCUMENT
 			                                                       ) {
-				return join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_lists... );
+				return join_series_lists( join_series_lists( prm_list_a, prm_list_b ), prm_lists... );
 			}
 
 //			/// \brief TODOCUMENT
 //			///
 //			/// \todo Ideally, make this a variadic template
-//			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &arg_list_a, ///< TODOCUMENT
-//			                                                       const vector<pair<string, str_opt>> &arg_list_b, ///< TODOCUMENT
-//			                                                       const vector<pair<string, str_opt>> &arg_list_c  ///< TODOCUMENT
+//			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &prm_list_a, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &prm_list_b, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &prm_list_c  ///< TODOCUMENT
 //			                                                       ) {
-//				return join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_list_c );
+//				return join_series_lists( join_series_lists( prm_list_a, prm_list_b ), prm_list_c );
 //			}
 //
 //			/// \brief TODOCUMENT
 //			///
 //			/// \todo Ideally, make this a variadic template
-//			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &arg_list_a, ///< TODOCUMENT
-//			                                                       const vector<pair<string, str_opt>> &arg_list_b, ///< TODOCUMENT
-//			                                                       const vector<pair<string, str_opt>> &arg_list_c, ///< TODOCUMENT
-//			                                                       const vector<pair<string, str_opt>> &arg_list_d  ///< TODOCUMENT
+//			static vector<pair<string, str_opt>> join_series_lists(const vector<pair<string, str_opt>> &prm_list_a, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &prm_list_b, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &prm_list_c, ///< TODOCUMENT
+//			                                                       const vector<pair<string, str_opt>> &prm_list_d  ///< TODOCUMENT
 //			                                                       ) {
-//				return join_series_lists( join_series_lists( join_series_lists( arg_list_a, arg_list_b ), arg_list_c ), arg_list_d );
+//				return join_series_lists( join_series_lists( join_series_lists( prm_list_a, prm_list_b ), prm_list_c ), prm_list_d );
 //			}
 
 			// "black"   linewidth 3
@@ -493,18 +493,18 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			static vector<pair<string, str_opt>> make_svm_series_list(const string &arg_name_stem,   ///< TODOCUMENT
-			                                                          const string &arg_spec_string, ///< TODOCUMENT
-			                                                          const size_t &arg_num          ///< TODOCUMENT
+			static vector<pair<string, str_opt>> make_svm_series_list(const string &prm_name_stem,   ///< TODOCUMENT
+			                                                          const string &prm_spec_string, ///< TODOCUMENT
+			                                                          const size_t &prm_num          ///< TODOCUMENT
 			                                                          ) {
 				return transform_build<vector<pair<string, str_opt>>>(
-					indices( arg_num ),
+					indices( prm_num ),
 					[&] (const size_t &x) {
 						const string title_string = x == 0 ? string{ ""          }
 						                                   : string{ " notitle " };
 						return make_pair(
-							arg_name_stem + to_string( x + 1 ),
-							make_optional( R"( linetype 1 linewidth 1 )" + arg_spec_string + title_string )
+							prm_name_stem + to_string( x + 1 ),
+							make_optional( R"( linetype 1 linewidth 1 )" + prm_spec_string + title_string )
 						);
 					}
 				);
@@ -1393,13 +1393,13 @@ BOOST_AUTO_TEST_SUITE_END()
 //////		path( "/export/people/ucbctnl/many_scores" ),
 //////		path( "/export/people/ucbctnl/full_scores" ),
 ////		path( "/export/people/ucbctnl/som2_scores" ),
-////		[&] (const path &arg_file) {
+////		[&] (const path &prm_file) {
 ////			using bool_str_pair_opt = optional<pair<bool, string>>;
-////			if ( file_size( arg_file ) < 100 || icontains( arg_file.string(), "stderr" ) ) {
+////			if ( file_size( prm_file ) < 100 || icontains( prm_file.string(), "stderr" ) ) {
 ////				return bool_str_pair_opt( none );
 ////			}
 ////
-////			const auto file_stem = arg_file.stem().string();
+////			const auto file_stem = prm_file.stem().string();
 ////			return bool_str_pair_opt{ make_pair(
 ////				is_positive( file_stem ),
 ////				file_stem

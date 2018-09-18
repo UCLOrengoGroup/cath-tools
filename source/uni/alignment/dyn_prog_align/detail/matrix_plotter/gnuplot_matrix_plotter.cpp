@@ -36,72 +36,72 @@ using boost::filesystem::path;
 using boost::numeric_cast;
 
 /// \brief TODOCUMENT
-void gnuplot_matrix_plotter::do_plot_scores(doub_vec_vec &arg_scores,        ///< TODOCUMENT
-                                            const double &/*arg_min_score*/, ///< TODOCUMENT
-                                            const double &/*arg_max_score*/  ///< TODOCUMENT
+void gnuplot_matrix_plotter::do_plot_scores(doub_vec_vec &prm_scores,        ///< TODOCUMENT
+                                            const double &/*prm_min_score*/, ///< TODOCUMENT
+                                            const double &/*prm_max_score*/  ///< TODOCUMENT
                                             ) {
-	scores = arg_scores;
+	scores = prm_scores;
 }
 
 /// \brief TODOCUMENT
-void gnuplot_matrix_plotter::do_plot_minor_corner_arrow(const size_t &arg_from_x, ///< TODOCUMENT
-                                                        const size_t &arg_from_y, ///< TODOCUMENT
-                                                        const size_t &arg_to_x,   ///< TODOCUMENT
-                                                        const size_t &arg_to_y    ///< TODOCUMENT
+void gnuplot_matrix_plotter::do_plot_minor_corner_arrow(const size_t &prm_from_x, ///< TODOCUMENT
+                                                        const size_t &prm_from_y, ///< TODOCUMENT
+                                                        const size_t &prm_to_x,   ///< TODOCUMENT
+                                                        const size_t &prm_to_y    ///< TODOCUMENT
                                                         ) {
 	const size_t max_length = max( get_length_a(), get_length_b() );
 	preplot_commands << "set   arrow from ";
-	preplot_commands << numeric_cast<double>( arg_from_x ) - 0.5;
+	preplot_commands << numeric_cast<double>( prm_from_x ) - 0.5;
 	preplot_commands << ", ";
-	preplot_commands << numeric_cast<double>( arg_from_y ) - 0.5;
+	preplot_commands << numeric_cast<double>( prm_from_y ) - 0.5;
 	preplot_commands << " to ";
-	preplot_commands << numeric_cast<double>( arg_to_x   ) - 0.5;
+	preplot_commands << numeric_cast<double>( prm_to_x   ) - 0.5;
 	preplot_commands << ", ";
-	preplot_commands << numeric_cast<double>( arg_to_y   ) - 0.5;
+	preplot_commands << numeric_cast<double>( prm_to_y   ) - 0.5;
 //	preplot_commands << " front head filled\n";
 	preplot_commands << " size 0.20, 15 front head filled linewidth " << 10.0 / numeric_cast<double>( max_length + 1) << "\n";
 }
 
 /// \brief TODOCUMENT
-void gnuplot_matrix_plotter::do_write_centre_score(const size_t &arg_x,    ///< TODOCUMENT
-                                                   const size_t &arg_y,    ///< TODOCUMENT
-                                                   const double &arg_score ///< TODOCUMENT
+void gnuplot_matrix_plotter::do_write_centre_score(const size_t &prm_x,    ///< TODOCUMENT
+                                                   const size_t &prm_y,    ///< TODOCUMENT
+                                                   const double &prm_score ///< TODOCUMENT
                                                    ) {
 	const size_t max_length = max( get_length_a(), get_length_b() );
 	preplot_commands << "set label ";
 	preplot_commands << counter++;
 	preplot_commands << " \"";
-	preplot_commands << arg_score;
+	preplot_commands << prm_score;
 	preplot_commands << "\" at first ";
-	preplot_commands << numeric_cast<double>( arg_x );
+	preplot_commands << numeric_cast<double>( prm_x );
 	preplot_commands << ", ";
-	preplot_commands << numeric_cast<double>( arg_y );
+	preplot_commands << numeric_cast<double>( prm_y );
 	preplot_commands << " centre front textcolor rgbcolor \"black\" nopoint font \", " << 50.0 / numeric_cast<double>( max_length + 1 ) << "\"\n";
 }
 
 /// \brief TODOCUMENT
-void gnuplot_matrix_plotter::do_write_corner_score(const size_t &arg_x,    ///< TODOCUMENT
-                                                   const size_t &arg_y,    ///< TODOCUMENT
-                                                   const double &arg_score ///< TODOCUMENT
+void gnuplot_matrix_plotter::do_write_corner_score(const size_t &prm_x,    ///< TODOCUMENT
+                                                   const size_t &prm_y,    ///< TODOCUMENT
+                                                   const double &prm_score ///< TODOCUMENT
                                                    ) {
 	const size_t max_length = max( get_length_a(), get_length_b() );
 	preplot_commands << "set label ";
 	preplot_commands << counter++;
 	preplot_commands << " \"";
-	preplot_commands << arg_score;
+	preplot_commands << prm_score;
 	preplot_commands << "\" at first ";
-	preplot_commands << numeric_cast<double>( arg_x ) - 0.5;
+	preplot_commands << numeric_cast<double>( prm_x ) - 0.5;
 	preplot_commands << ", ";
-	preplot_commands << numeric_cast<double>( arg_y ) - 0.5;
+	preplot_commands << numeric_cast<double>( prm_y ) - 0.5;
 	preplot_commands << " centre front textcolor rgbcolor \"black\" nopoint offset first 0.200, -0.085 font \", " << 50.0 / numeric_cast<double>( max_length + 1 ) << "\"\n";
 }
 
 /// \brief TODOCUMENT
-void gnuplot_matrix_plotter::do_finish(const path &arg_output_stem ///< TODOCUMENT
+void gnuplot_matrix_plotter::do_finish(const path &prm_output_stem ///< TODOCUMENT
                                        ) const {
-	const path gnuplot_file  = replace_extension_copy( arg_output_stem, ".gnuplot"  );
-	const path eps_file      = replace_extension_copy( arg_output_stem, ".eps"      );
-	const path the_data_file = replace_extension_copy( arg_output_stem, ".data.txt" );
+	const path gnuplot_file  = replace_extension_copy( prm_output_stem, ".gnuplot"  );
+	const path eps_file      = replace_extension_copy( prm_output_stem, ".eps"      );
+	const path the_data_file = replace_extension_copy( prm_output_stem, ".data.txt" );
 	Gnuplot gp("tee " + gnuplot_file.string() + " | gnuplot"); // Write to an intermediate gnuplot file
 
 	const size_t lcl_length_a   = get_length_a();
@@ -135,14 +135,14 @@ void gnuplot_matrix_plotter::do_finish(const path &arg_output_stem ///< TODOCUME
 }
 
 /// \brief Ctor for gnuplot_matrix_plotter
-gnuplot_matrix_plotter::gnuplot_matrix_plotter(const size_t &arg_length_a,    ///< TODOCUMENT
-                                               const size_t &arg_length_b,    ///< TODOCUMENT
-                                               const size_t &arg_window_width ///< TODOCUMENT
-                                               ) : matrix_plotter( arg_length_a, arg_length_b, arg_window_width ) {
+gnuplot_matrix_plotter::gnuplot_matrix_plotter(const size_t &prm_length_a,    ///< TODOCUMENT
+                                               const size_t &prm_length_b,    ///< TODOCUMENT
+                                               const size_t &prm_window_width ///< TODOCUMENT
+                                               ) : matrix_plotter( prm_length_a, prm_length_b, prm_window_width ) {
 }
 
 /// \brief Ctor for gnuplot_matrix_plotter
-gnuplot_matrix_plotter::gnuplot_matrix_plotter(const size_t &arg_length_a,    ///< TODOCUMENT
-                                               const size_t &arg_length_b     ///< TODOCUMENT
-                                               ) : matrix_plotter( arg_length_a, arg_length_b ) {
+gnuplot_matrix_plotter::gnuplot_matrix_plotter(const size_t &prm_length_a,    ///< TODOCUMENT
+                                               const size_t &prm_length_b     ///< TODOCUMENT
+                                               ) : matrix_plotter( prm_length_a, prm_length_b ) {
 }

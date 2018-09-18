@@ -51,16 +51,16 @@ using std::string;
 /// \brief Build a strucs_context from the specified one that contains the backbone-complete subsets of the PDBs
 ///
 /// \relates strucs_context
-strucs_context cath::file::strucs_context_of_backbone_complete_subset_pdbs(const strucs_context  &arg_strucs_context, ///< The strucs_context to use as a source
-                                                                           const ostream_ref_opt &arg_ostream         ///< An optional reference to an ostream to which any logging should be sent
+strucs_context cath::file::strucs_context_of_backbone_complete_subset_pdbs(const strucs_context  &prm_strucs_context, ///< The strucs_context to use as a source
+                                                                           const ostream_ref_opt &prm_ostream         ///< An optional reference to an ostream to which any logging should be sent
                                                                            ) {
 	return {
 		pdb_list_of_backbone_complete_subset_pdbs(
-			arg_strucs_context.get_pdbs(),
-			arg_ostream
+			prm_strucs_context.get_pdbs(),
+			prm_ostream
 		),
-		arg_strucs_context.get_name_sets(),
-		arg_strucs_context.get_regions()
+		prm_strucs_context.get_name_sets(),
+		prm_strucs_context.get_regions()
 	};
 }
 
@@ -68,44 +68,44 @@ strucs_context cath::file::strucs_context_of_backbone_complete_subset_pdbs(const
 ///        and is restricted to the regions specified in the strucs_context
 ///
 /// \relates strucs_context
-strucs_context cath::file::strucs_context_of_backbone_complete_region_limited_subset_pdbs(const strucs_context     &arg_strucs_context, ///< The strucs_context to use as a source
-                                                                                          const ostream_ref_opt    &arg_ostream         ///< An optional reference to an ostream to which any logging should be sent
+strucs_context cath::file::strucs_context_of_backbone_complete_region_limited_subset_pdbs(const strucs_context     &prm_strucs_context, ///< The strucs_context to use as a source
+                                                                                          const ostream_ref_opt    &prm_ostream         ///< An optional reference to an ostream to which any logging should be sent
                                                                                           ) {
 	return {
 		pdb_list_of_backbone_complete_region_limited_subset_pdbs(
-			arg_strucs_context.get_pdbs(),
-			arg_strucs_context.get_regions(),
-			arg_ostream
+			prm_strucs_context.get_pdbs(),
+			prm_strucs_context.get_regions(),
+			prm_ostream
 		),
-		arg_strucs_context.get_name_sets(),
-		arg_strucs_context.get_regions()
+		prm_strucs_context.get_name_sets(),
+		prm_strucs_context.get_regions()
 	};
 }
 
 /// \brief Restrict the PDBs in the specified strucs_context according to its regions
 ///
 /// \relates strucs_context
-void cath::file::restrict_pdbs(strucs_context &arg_strucs_context ///< The strucs_context to modify
+void cath::file::restrict_pdbs(strucs_context &prm_strucs_context ///< The strucs_context to modify
                                ) {
-	arg_strucs_context.set_pdbs( get_restricted_pdbs( arg_strucs_context ) );
+	prm_strucs_context.set_pdbs( get_restricted_pdbs( prm_strucs_context ) );
 }
 
 /// \brief Make a copy of the specified strucs_context in which the PDBs are restricted according to its regions
 ///
 /// \relates strucs_context
-strucs_context cath::file::restrict_pdbs_copy(strucs_context arg_strucs_context ///< The source strucs_context
+strucs_context cath::file::restrict_pdbs_copy(strucs_context prm_strucs_context ///< The source strucs_context
                                               ) {
-	restrict_pdbs( arg_strucs_context );
-	return arg_strucs_context;
+	restrict_pdbs( prm_strucs_context );
+	return prm_strucs_context;
 }
 
 /// \brief Get the number of entries in the specified strucs_context with regions specified
 ///
 /// \relates strucs_context
-size_t cath::file::get_num_regions_set(const strucs_context &arg_strucs_context ///< The strucs_context to query
+size_t cath::file::get_num_regions_set(const strucs_context &prm_strucs_context ///< The strucs_context to query
                                        ) {
 	return debug_numeric_cast<size_t>( count_if(
-		arg_strucs_context.get_regions(),
+		prm_strucs_context.get_regions(),
 		[] (const region_vec_opt &x) { return static_cast<bool>( x ); }
 	) );
 }
@@ -113,16 +113,16 @@ size_t cath::file::get_num_regions_set(const strucs_context &arg_strucs_context 
 /// \brief Generate a string describing the specified strucs_context
 ///
 /// \relates strucs_context
-string cath::file::to_string(const strucs_context &arg_strucs_context ///< The strucs_context to describe
+string cath::file::to_string(const strucs_context &prm_strucs_context ///< The strucs_context to describe
                              ) {
 	return "strucs_context[" + join(
-		indices( size( arg_strucs_context ) )
+		indices( size( prm_strucs_context ) )
 			| transformed( [&] (const size_t &struc_context_idx) {
 				using std::to_string;
 
-				const pdb            &the_pdb         = arg_strucs_context.get_pdbs      () [ struc_context_idx ];
-				const name_set       &the_name_set    = arg_strucs_context.get_name_sets () [ struc_context_idx ];
-				const region_vec_opt &the_regions_opt = arg_strucs_context.get_regions   () [ struc_context_idx ];
+				const pdb            &the_pdb         = prm_strucs_context.get_pdbs      () [ struc_context_idx ];
+				const name_set       &the_name_set    = prm_strucs_context.get_name_sets () [ struc_context_idx ];
+				const region_vec_opt &the_regions_opt = prm_strucs_context.get_regions   () [ struc_context_idx ];
 				return "pdb["
 					+ to_string( the_pdb.get_num_residues() )
 					+ " residues]+"
@@ -146,13 +146,13 @@ string cath::file::to_string(const strucs_context &arg_strucs_context ///< The s
 /// \brief Get a copy of the PDBs in the specified strucs_context, restricted to its regions
 ///
 /// \relates strucs_context
-pdb_list cath::file::get_restricted_pdbs(const strucs_context &arg_strucs_context ///< The strucs_context to query
+pdb_list cath::file::get_restricted_pdbs(const strucs_context &prm_strucs_context ///< The strucs_context to query
                                          ) {
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return pdb_list{
 		transform_build<pdb_vec>(
-			arg_strucs_context.get_pdbs(),
-			arg_strucs_context.get_regions(),
+			prm_strucs_context.get_pdbs(),
+			prm_strucs_context.get_regions(),
 			[] (const pdb &the_pdb, const region_vec_opt &the_regions) {
 				return get_regions_limited_pdb( the_regions, the_pdb );
 			}
@@ -163,24 +163,24 @@ pdb_list cath::file::get_restricted_pdbs(const strucs_context &arg_strucs_contex
 /// \brief Make a protein list from the PDBs and names in the specified strucs_context
 ///
 /// \relates strucs_context
-protein_list cath::file::build_protein_list(const strucs_context &arg_strucs_context ///< The strucs_context from which to build the protein_list
+protein_list cath::file::build_protein_list(const strucs_context &prm_strucs_context ///< The strucs_context from which to build the protein_list
                                             ) {
 	return build_protein_list_of_pdb_list_and_names(
-		arg_strucs_context.get_pdbs(),
-		arg_strucs_context.get_name_sets()
+		prm_strucs_context.get_pdbs(),
+		prm_strucs_context.get_name_sets()
 	);
 }
 
 /// \brief Get the domain corresponding to the specified index in the specified strucs_context
 ///
-/// \pre `arg_index < size( arg_strucs_context )`
+/// \pre `prm_index < size( prm_strucs_context )`
 ///
 /// \relates strucs_context
-domain_opt cath::file::get_domain_opt_of_index(const strucs_context &arg_strucs_context, ///< The strucs_context to query
-                                               const size_t         &arg_index           ///< The index of the entry to query
+domain_opt cath::file::get_domain_opt_of_index(const strucs_context &prm_strucs_context, ///< The strucs_context to query
+                                               const size_t         &prm_index           ///< The index of the entry to query
                                                ) {
-	const auto &name_set = arg_strucs_context.get_name_sets()[ arg_index ];
-	const auto &regions  = arg_strucs_context.get_regions  ()[ arg_index ];
+	const auto &name_set = prm_strucs_context.get_name_sets()[ prm_index ];
+	const auto &regions  = prm_strucs_context.get_regions  ()[ prm_index ];
 
 	return make_optional_if_fn(
 		static_cast<bool>( regions ),
@@ -197,29 +197,29 @@ domain_opt cath::file::get_domain_opt_of_index(const strucs_context &arg_strucs_
 /// \brief Hash the details of the specified strucs_context into the specified seed value
 ///
 /// \relates strucs_context
-void cath::file::non_crypto_hash(size_t               &arg_init_hash_value, ///< The initial hash seed
-                                 const strucs_context &arg_strucs_context   /// The strucs_context to include in the hash
+void cath::file::non_crypto_hash(size_t               &prm_init_hash_value, ///< The initial hash seed
+                                 const strucs_context &prm_strucs_context   /// The strucs_context to include in the hash
                                  ) {
-	for (const size_t &index : indices( size( arg_strucs_context ) ) ) {
-		const pdb                &pdb      = arg_strucs_context.get_pdbs     ()[ index ];
-		const name_set           &name_set = arg_strucs_context.get_name_sets()[ index ];
-		const region_vec_opt     &regions  = arg_strucs_context.get_regions  ()[ index ];
+	for (const size_t &index : indices( size( prm_strucs_context ) ) ) {
+		const pdb                &pdb      = prm_strucs_context.get_pdbs     ()[ index ];
+		const name_set           &name_set = prm_strucs_context.get_name_sets()[ index ];
+		const region_vec_opt     &regions  = prm_strucs_context.get_regions  ()[ index ];
 
 		// Follow libstdc++'s lead of attempting to make the value used for none/nullopt an "unusual" value
 		static constexpr size_t NULL_HASH_VAL = static_cast<size_t>( -3333 );
 
-		non_crypto_hash   ( arg_init_hash_value, name_set );
-		hash_value_combine( arg_init_hash_value, regions ? hash<string>{}( to_string( *regions )  ) : NULL_HASH_VAL );
-		hash_value_combine( arg_init_hash_value,           hash<size_t>{}( pdb.get_num_residues() )                 );
+		non_crypto_hash   ( prm_init_hash_value, name_set );
+		hash_value_combine( prm_init_hash_value, regions ? hash<string>{}( to_string( *regions )  ) : NULL_HASH_VAL );
+		hash_value_combine( prm_init_hash_value,           hash<size_t>{}( pdb.get_num_residues() )                 );
 	}
 }
 
 /// \brief Hash the details of the specified strucs_context into the specified seed value
 ///
 /// \relates strucs_context
-size_t cath::file::non_crypto_hash_copy(size_t                arg_init_hash_value, ///< The initial hash seed
-                                        const strucs_context &arg_strucs_context   ///< The strucs_context to include in the hash
+size_t cath::file::non_crypto_hash_copy(size_t                prm_init_hash_value, ///< The initial hash seed
+                                        const strucs_context &prm_strucs_context   ///< The strucs_context to include in the hash
                                         ) {
-	non_crypto_hash( arg_init_hash_value, arg_strucs_context );
-	return arg_init_hash_value;
+	non_crypto_hash( prm_init_hash_value, prm_strucs_context );
+	return prm_init_hash_value;
 }

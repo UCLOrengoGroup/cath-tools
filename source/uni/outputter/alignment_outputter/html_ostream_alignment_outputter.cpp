@@ -48,10 +48,10 @@ unique_ptr<alignment_outputter> html_ostream_alignment_outputter::do_clone() con
 }
 
 /// \brief TODOCUMENT
-void html_ostream_alignment_outputter::do_output_alignment(const alignment_context &arg_alignment_context, ///< TODOCUMENT
-                                                           ostream                 &arg_ostream            ///< TODOCUMENT
+void html_ostream_alignment_outputter::do_output_alignment(const alignment_context &prm_alignment_context, ///< TODOCUMENT
+                                                           ostream                 &prm_ostream            ///< TODOCUMENT
                                                            ) const {
-	arg_ostream << make_html_align_outputter( arg_alignment_context, *colourer_ptr ) << flush;
+	prm_ostream << make_html_align_outputter( prm_alignment_context, *colourer_ptr ) << flush;
 }
 
 /// \brief TODOCUMENT
@@ -60,14 +60,14 @@ bool html_ostream_alignment_outputter::do_involves_display_spec() const {
 }
 
 /// \brief Ctor for html_ostream_alignment_outputter
-html_ostream_alignment_outputter::html_ostream_alignment_outputter(const display_colourer &arg_colourer ///< TODOCUMENT
-                                                                   ) : colourer_ptr( arg_colourer.clone() ) {
+html_ostream_alignment_outputter::html_ostream_alignment_outputter(const display_colourer &prm_colourer ///< TODOCUMENT
+                                                                   ) : colourer_ptr( prm_colourer.clone() ) {
 }
 
 /// \brief TODOCUMENT
-html_ostream_alignment_outputter cath::opts::make_html_ostream_alignment_outputter(const display_spec &arg_display_spec ///< TODOCUMENT
+html_ostream_alignment_outputter cath::opts::make_html_ostream_alignment_outputter(const display_spec &prm_display_spec ///< TODOCUMENT
                                                                                    ) {
-	return html_ostream_alignment_outputter( *get_display_colourer( arg_display_spec, make_default_light_colour_gradient() ) );
+	return html_ostream_alignment_outputter( *get_display_colourer( prm_display_spec, make_default_light_colour_gradient() ) );
 }
 
 /// \brief Get a name for this alignment_outputter

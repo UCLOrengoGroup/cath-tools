@@ -45,26 +45,26 @@ namespace cath {
 }  // namespace cath
 
 /// \brief A method to test that argc_argv_faker does what it should for a given list of arguments
-void cath::test::argc_argv_faker_test_suite_fixture::test_args(const str_vec &arg_args ///< The vector of arguments to be tested
+void cath::test::argc_argv_faker_test_suite_fixture::test_args(const str_vec &prm_args ///< The vector of arguments to be tested
                                                                ) const {
 	// Grab the number of arguments
-	const auto num_args = arg_args.size();
+	const auto num_args = prm_args.size();
 
 	// If there are no arguments then check that an attempt to construct a argc_argv_faker
 	// throws an invalid_argument_exception.
 	if (num_args == 0) {
-		BOOST_CHECK_THROW(argc_argv_faker my_argc_argv_faker(arg_args), invalid_argument_exception);
+		BOOST_CHECK_THROW(argc_argv_faker my_argc_argv_faker(prm_args), invalid_argument_exception);
 		return;
 	}
 
-	// Construct a  argc_argv_faker from the arg_args
-	argc_argv_faker my_argc_argv_faker(arg_args);
+	// Construct a  argc_argv_faker from the prm_args
+	argc_argv_faker my_argc_argv_faker(prm_args);
 
 	// Check the argc_argv_faker gives the correct result for get_argc() and get_argv()
 	BOOST_CHECK_EQUAL(num_args, my_argc_argv_faker.get_argc());
 	char * * args_ptr = my_argc_argv_faker.get_argv();
-	for (const size_t &arg_ctr : indices( num_args ) ) {
-		BOOST_CHECK_EQUAL( arg_args[ arg_ctr ], args_ptr[ arg_ctr ] );
+	for (const size_t &prm_ctr : indices( num_args ) ) {
+		BOOST_CHECK_EQUAL( prm_args[ prm_ctr ], args_ptr[ prm_ctr ] );
 	}
 	BOOST_CHECK_EQUAL(args_ptr[num_args], static_cast<char *>( nullptr ));
 }

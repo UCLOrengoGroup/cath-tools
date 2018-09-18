@@ -43,8 +43,8 @@ namespace cath {
 			friend class boost::serialization::access;
 
 			/// \brief Friend, non-member operator<() that uses dynamic type first, and then T's equal_with_same_dynamic_type()
-			friend bool operator==(const T &arg_object1, ///< The first T to compare
-			                       const T &arg_object2  ///< The first T to compare
+			friend bool operator==(const T &prm_object1, ///< The first T to compare
+			                       const T &prm_object2  ///< The first T to compare
 			                       ) {
 				// Make the compiler output sensible errors on any attempt to instantiate polymorphic_equality_comparable<>
 				// on a type that doesn't provide a const `equal_with_same_dynamic_type(const T &)` method returning a bool-convertible type.
@@ -52,7 +52,7 @@ namespace cath {
 
 				// Perform a spaceship-style less-than comparison on the dynamic types of the two objects
 				// which returns a tribool (true, false or indeterminate)
-				const boost::logic::tribool dyn_type_cmp = detail::dynamic_type_spaceship::compare_lt( arg_object1, arg_object2 );
+				const boost::logic::tribool dyn_type_cmp = detail::dynamic_type_spaceship::compare_lt( prm_object1, prm_object2 );
 
 				// * If the result is either true (first object's dynamic type compares strictly less-than) or false (strictly greater-than), then
 				//    * return false;
@@ -60,7 +60,7 @@ namespace cath {
 				//    * return the result of calling equal_with_same_dynamic_type().
 				return ! boost::logic::indeterminate( dyn_type_cmp  )
 					? false
-					: arg_object1.equal_with_same_dynamic_type( arg_object2 );
+					: prm_object1.equal_with_same_dynamic_type( prm_object2 );
 			}
 
 			template<class archive> void serialize(archive &/*ar*/,

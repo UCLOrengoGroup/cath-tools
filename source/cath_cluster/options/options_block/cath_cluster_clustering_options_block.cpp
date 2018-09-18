@@ -49,14 +49,14 @@ string cath_cluster_clustering_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void cath_cluster_clustering_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                                  const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void cath_cluster_clustering_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                                  const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                                   ) {
 	const string levels_varname { "<levels>" };
 
 	const auto levels_notifier = [&] (const clustering_levels &x) { the_spec.set_levels( x.levels ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_LEVELS.c_str(),
 			value<clustering_levels>()
@@ -71,7 +71,7 @@ void cath_cluster_clustering_options_block::do_add_visible_options_to_descriptio
 
 /// \brief Generate a description of any problem that makes the specified cath_cluster_clustering_options_block invalid
 ///        or none otherwise
-str_opt cath_cluster_clustering_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt cath_cluster_clustering_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                                  ) const {
 	return none;
 }

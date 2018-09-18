@@ -28,8 +28,8 @@ using namespace cath::score;
 using namespace std;
 
 /// \brief Ctor for that allows the user to specify higher_is_better
-score_classn_value_better_value::score_classn_value_better_value(const bool &arg_higher_is_better ///< Whether a higher score_value is "better" and should be treated as less-than
-                                                                 ) : higher_is_better( arg_higher_is_better ) {
+score_classn_value_better_value::score_classn_value_better_value(const bool &prm_higher_is_better ///< Whether a higher score_value is "better" and should be treated as less-than
+                                                                 ) : higher_is_better( prm_higher_is_better ) {
 }
 
 /// \brief Getter for higher_is_better (whether a higher score_value is "better" and should be treated as less-than)
@@ -38,12 +38,12 @@ const bool & score_classn_value_better_value::get_higher_is_better() const {
 }
 
 /// \brief Function operator to return whether the first score_classn_value has a "better" score_value than the second
-bool score_classn_value_better_value::operator()(const score_classn_value &arg_score_classn_value_a, ///< The first  score_classn_value to compare
-                                                 const score_classn_value &arg_score_classn_value_b  ///< The second score_classn_value to compare
+bool score_classn_value_better_value::operator()(const score_classn_value &prm_score_classn_value_a, ///< The first  score_classn_value to compare
+                                                 const score_classn_value &prm_score_classn_value_b  ///< The second score_classn_value to compare
                                                  ) {
 	// Grab const-references to the two score values
-	const double &score_value_a = arg_score_classn_value_a.get_score_value();
-	const double &score_value_b = arg_score_classn_value_b.get_score_value();
+	const double &score_value_a = prm_score_classn_value_a.get_score_value();
+	const double &score_value_b = prm_score_classn_value_b.get_score_value();
 
 	// Return whether the first score_value_a is better than the first
 	return get_higher_is_better() ? ( score_value_a > score_value_b)
@@ -51,14 +51,14 @@ bool score_classn_value_better_value::operator()(const score_classn_value &arg_s
 }
 
 /// \brief TODOCUMENT
-double cath::score::get_worst_possible_score(const score_classn_value_better_value &arg_score_classn_value_better_value ///< TODOCUMENT
+double cath::score::get_worst_possible_score(const score_classn_value_better_value &prm_score_classn_value_better_value ///< TODOCUMENT
                                              ) {
-	return get_worst_possible_score( arg_score_classn_value_better_value.get_higher_is_better() );
+	return get_worst_possible_score( prm_score_classn_value_better_value.get_higher_is_better() );
 }
 
 /// \brief TODOCUMENT
-double cath::score::get_worst_possible_score(const bool &arg_higher_is_better ///< TODOCUMENT
+double cath::score::get_worst_possible_score(const bool &prm_higher_is_better ///< TODOCUMENT
                                              ) {
-	return arg_higher_is_better ? numeric_limits<double>::lowest()
+	return prm_higher_is_better ? numeric_limits<double>::lowest()
 	                            : numeric_limits<double>::max();
 }

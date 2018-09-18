@@ -29,17 +29,17 @@
 namespace cath {
 	namespace common {
 
-			/// \brief Build a container of indices [0, arg_size), sorted by the specified less-than function
+			/// \brief Build a container of indices [0, prm_size), sorted by the specified less-than function
 			///
-			/// \pre arg_size > 0
+			/// \pre prm_size > 0
 			template <typename Cont = std::vector<size_t>, typename Fn>
-			Cont sorted_indices(const size_t  &arg_size,    ///< The number of consecutive indices (starting from 0) to sort
-			                    Fn           &&arg_less_fn  ///< The less-than function with which to sort the indices
+			Cont sorted_indices(const size_t  &prm_size,    ///< The number of consecutive indices (starting from 0) to sort
+			                    Fn           &&prm_less_fn  ///< The less-than function with which to sort the indices
 			                    ) {
-				auto sorting_indices = common::copy_build<Cont>( common::indices( arg_size ) );
+				auto sorting_indices = common::copy_build<Cont>( common::indices( prm_size ) );
 				boost::range::sort(
 					sorting_indices,
-					std::forward<Fn>( arg_less_fn )
+					std::forward<Fn>( prm_less_fn )
 				);
 				return sorting_indices;
 			}

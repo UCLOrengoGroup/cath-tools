@@ -59,13 +59,13 @@ namespace cath {
 		};
 
 		/// \brief Ctor from vector of name_sets
-		inline name_set_list::name_set_list(name_set_vec arg_name_sets ///< The vector of name_sets from which to construct this name_set_list
-		                                    ) : name_sets{ std::move( arg_name_sets ) } {
+		inline name_set_list::name_set_list(name_set_vec prm_name_sets ///< The vector of name_sets from which to construct this name_set_list
+		                                    ) : name_sets{ std::move( prm_name_sets ) } {
 		}
 
 		/// \brief Ctor from a number of empty name_sets to create
-		inline name_set_list::name_set_list(const size_t &arg_size
-		                                    ) : name_sets{ name_set_vec( arg_size ) } {
+		inline name_set_list::name_set_list(const size_t &prm_size
+		                                    ) : name_sets{ name_set_vec( prm_size ) } {
 		}
 
 		/// \brief Return whether this is empty
@@ -79,15 +79,15 @@ namespace cath {
 		}
 
 		/// \brief Return the name_set stored at the specified index
-		inline name_set & name_set_list::operator[](const size_t &arg_index ///< The index of the name_set to return
+		inline name_set & name_set_list::operator[](const size_t &prm_index ///< The index of the name_set to return
 		                                            ) {
-			return name_sets[ arg_index ];
+			return name_sets[ prm_index ];
 		}
 
 		/// \brief Return the name_set stored at the specified index
-		inline const name_set & name_set_list::operator[](const size_t &arg_index ///< The index of the name_set to return
+		inline const name_set & name_set_list::operator[](const size_t &prm_index ///< The index of the name_set to return
 		                                                  ) const {
-			return name_sets[ arg_index ];
+			return name_sets[ prm_index ];
 		}
 
 		/// \brief Standard begin() method, as part of making this into a range over the name_sets

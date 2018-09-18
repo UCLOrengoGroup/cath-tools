@@ -75,8 +75,8 @@ string crh_output_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_output_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                     const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_output_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                     const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                      ) {
 	const string file_varname   { "<file>" };
 
@@ -88,7 +88,7 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 	const auto json_output_files_notifier   = [&] (const path_vec &x) { the_spec.set_json_output_files   ( x           ); };
 	const auto export_css_file_notifier     = [&] (const path     &x) { the_spec.set_export_css_file     ( x           ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_HITS_TEXT_TO_FILE.c_str(),
 			value<path_vec>()
@@ -149,15 +149,15 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 }
 
 /// \brief Add any hidden options to the provided options_description
-void crh_output_options_block::do_add_hidden_options_to_description(options_description &arg_desc,       ///< The options_description to which the options are added
-                                                                    const size_t        &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_output_options_block::do_add_hidden_options_to_description(options_description &prm_desc,       ///< The options_description to which the options are added
+                                                                    const size_t        &prm_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	const auto output_hmmer_aln_notifier = [&] (const bool &x) { the_spec.set_output_hmmer_aln( x ); };
 
-	deprecated_single_output_ob.add_hidden_options_to_description ( arg_desc, arg_line_length );
-	deprecated_single_output_ob.add_visible_options_to_description( arg_desc, arg_line_length );
+	deprecated_single_output_ob.add_hidden_options_to_description ( prm_desc, prm_line_length );
+	deprecated_single_output_ob.add_visible_options_to_description( prm_desc, prm_line_length );
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_OUTPUT_HMMER_ALN.c_str(),
 			bool_switch()
@@ -172,15 +172,15 @@ void crh_output_options_block::do_add_hidden_options_to_description(options_desc
 
 /// \brief Generate a description of any problem that makes the specified crh_output_options_block invalid
 ///        or none otherwise
-str_opt crh_output_options_block::do_invalid_string(const variables_map &arg_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt crh_output_options_block::do_invalid_string(const variables_map &prm_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                     ) const {
-	const str_opt deprecated_invalid_str = deprecated_single_output_ob.invalid_string( arg_variables_map );
+	const str_opt deprecated_invalid_str = deprecated_single_output_ob.invalid_string( prm_variables_map );
 	if ( deprecated_invalid_str ) {
 		return deprecated_invalid_str;
 	}
 
-	const str_vec specified_new  = specified_options           ( arg_variables_map, get_all_non_deprecated_option_names_that_clash_with_deprecated() );
-	const str_vec specified_old  = specified_options_from_block( arg_variables_map, deprecated_single_output_ob                                      );
+	const str_vec specified_new  = specified_options           ( prm_variables_map, get_all_non_deprecated_option_names_that_clash_with_deprecated() );
+	const str_vec specified_old  = specified_options_from_block( prm_variables_map, deprecated_single_output_ob                                      );
 
 	if ( ! specified_old.empty() ) {
 		if ( ! specified_new.empty() ) {
@@ -264,19 +264,19 @@ const crh_single_output_options_block & crh_output_options_block::get_deprecated
 /// \brief Get the deprecated crh_single_output_spec associated with the specified crh_output_options_block 
 ///
 /// \relates crh_output_options_block
-const crh_single_output_spec & cath::rslv::get_deprecated_single_output_spec(const crh_output_options_block &arg_crh_output_options_block ///< The crh_output_options_block to query
+const crh_single_output_spec & cath::rslv::get_deprecated_single_output_spec(const crh_output_options_block &prm_crh_output_options_block ///< The crh_output_options_block to query
                                                                              ) {
-	return arg_crh_output_options_block.get_deprecated_single_output_options_block().get_crh_single_output_spec();
+	return prm_crh_output_options_block.get_deprecated_single_output_options_block().get_crh_single_output_spec();
 }
 
 /// \brief Return whether the specified crh_output_options_block implies any HTML output
 ///
 /// \relates crh_output_options_block
-bool cath::rslv::has_any_html_output(const crh_output_options_block &arg_crh_output_options_block ///< The crh_output_options_block to query
+bool cath::rslv::has_any_html_output(const crh_output_options_block &prm_crh_output_options_block ///< The crh_output_options_block to query
                                      ) {
 	return (
-		cath::rslv::has_html_output( arg_crh_output_options_block.get_crh_output_spec() )
+		cath::rslv::has_html_output( prm_crh_output_options_block.get_crh_output_spec() )
 		||
-		get_out_format( arg_crh_output_options_block.get_deprecated_single_output_options_block() ) == crh_out_format::HTML
+		get_out_format( prm_crh_output_options_block.get_deprecated_single_output_options_block() ) == crh_out_format::HTML
 	);
 }

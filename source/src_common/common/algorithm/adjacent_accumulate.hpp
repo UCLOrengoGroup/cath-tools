@@ -35,16 +35,16 @@ namespace cath {
 		template <typename SinglePassItr,
 		          typename Value,
 		          typename BinaryOperation>
-		inline Value adjacent_accumulate(SinglePassItr        arg_begin, ///< Iterator to the beginning of a single-pass input range
-		                                 const SinglePassItr &arg_end,   ///< Iterator to the end of a single-pass input range
-		                                 Value                arg_init,  ///< An initial value
-		                                 BinaryOperation      arg_fun    ///< A binary function to execute on the adjacent pairs of elements of the range
+		inline Value adjacent_accumulate(SinglePassItr        prm_begin, ///< Iterator to the beginning of a single-pass input range
+		                                 const SinglePassItr &prm_end,   ///< Iterator to the end of a single-pass input range
+		                                 Value                prm_init,  ///< An initial value
+		                                 BinaryOperation      prm_fun    ///< A binary function to execute on the adjacent pairs of elements of the range
 		                                 ) {
-			while ( std::next( arg_begin ) != arg_end ) {
-				arg_init += arg_fun( *arg_begin, *std::next( arg_begin ) );
-				++arg_begin;
+			while ( std::next( prm_begin ) != prm_end ) {
+				prm_init += prm_fun( *prm_begin, *std::next( prm_begin ) );
+				++prm_begin;
 			}
-			return arg_init;
+			return prm_init;
 		}
 
 		/// \brief Accumulate the results of executing a binary function on the pairs of adjacent values in a range
@@ -60,17 +60,17 @@ namespace cath {
 		template <typename SinglePassRange,
 		          typename Value,
 		          typename BinaryOperation>
-		inline Value adjacent_accumulate(const SinglePassRange &arg_rng, ///< A single-pass input range
-		                                 Value                  arg_init, ///< An initial value
+		inline Value adjacent_accumulate(const SinglePassRange &prm_rng, ///< A single-pass input range
+		                                 Value                  prm_init, ///< An initial value
 		                                 BinaryOperation        fun       ///< A binary function to execute on the adjacent pairs of elements of the range
 		                                 ) {
 			// Check that SinglePassRange is a SinglePassRangeConcept
 			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const SinglePassRange > ));
 
 			return adjacent_accumulate(
-				common::cbegin( arg_rng ),
-				common::cend  ( arg_rng ),
-				std::move( arg_init ),
+				common::cbegin( prm_rng ),
+				common::cend  ( prm_rng ),
+				std::move( prm_init ),
 				fun
 			);
 		}

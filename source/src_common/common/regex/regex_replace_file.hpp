@@ -32,16 +32,16 @@ namespace cath {
 	namespace common {
 
 		/// \brief Perform an in-place find/replace on the specified file
-		inline void regex_replace_file(const boost::filesystem::path &arg_file,  ///< The file to modify
-		                               const std::regex              &arg_regex, ///< The find regex, to be passed to std::regex_replace()
-		                               const std::string             &arg_string ///< The replace string, to be passed to std::regex_replace()
+		inline void regex_replace_file(const boost::filesystem::path &prm_file,  ///< The file to modify
+		                               const std::regex              &prm_regex, ///< The find regex, to be passed to std::regex_replace()
+		                               const std::string             &prm_string ///< The replace string, to be passed to std::regex_replace()
 		                               ) {
 			spew(
-				arg_file,
+				prm_file,
 				std::regex_replace(
-					slurp( arg_file ),
-					arg_regex,
-					arg_string
+					slurp( prm_file ),
+					prm_regex,
+					prm_string
 				)
 			);
 		}

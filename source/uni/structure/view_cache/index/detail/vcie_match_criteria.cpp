@@ -41,23 +41,23 @@ using boost::algorithm::is_any_of;
 using boost::numeric_cast;
 
 /// \brief Ctor to fully populate a vcie_match_criteria
-vcie_match_criteria::vcie_match_criteria(const bool            &arg_require_matching_directions,    ///< Whether the two vcies are required to have matching directions
-                                         const index_type      &arg_minimum_index_distance,         ///< The minimum distance required between each vcie's from_index and its to_index
-                                         const view_base_type  &arg_maximum_squared_distance,       ///< The maximum squared distance permissible between the two vcies' views
-                                         const angle_type      &arg_maximum_frame_angle_difference, ///< The maximum angle permissible between the two vcies' frames
-                                         angle_type             arg_maximum_phi_angle_difference,   ///< The maximum angle permissible between the two vcies' phi angles
-                                         angle_type             arg_maximum_psi_angle_difference    ///< The maximum angle permissible between the two vcies' psi angles
-                                         ) : require_matching_directions    ( arg_require_matching_directions               ),
-                                             minimum_index_distance         ( arg_minimum_index_distance                    ),
-                                             maximum_squared_distance       ( arg_maximum_squared_distance                  ),
+vcie_match_criteria::vcie_match_criteria(const bool            &prm_require_matching_directions,    ///< Whether the two vcies are required to have matching directions
+                                         const index_type      &prm_minimum_index_distance,         ///< The minimum distance required between each vcie's from_index and its to_index
+                                         const view_base_type  &prm_maximum_squared_distance,       ///< The maximum squared distance permissible between the two vcies' views
+                                         const angle_type      &prm_maximum_frame_angle_difference, ///< The maximum angle permissible between the two vcies' frames
+                                         angle_type             prm_maximum_phi_angle_difference,   ///< The maximum angle permissible between the two vcies' phi angles
+                                         angle_type             prm_maximum_psi_angle_difference    ///< The maximum angle permissible between the two vcies' psi angles
+                                         ) : require_matching_directions    ( prm_require_matching_directions               ),
+                                             minimum_index_distance         ( prm_minimum_index_distance                    ),
+                                             maximum_squared_distance       ( prm_maximum_squared_distance                  ),
                                              maximum_frame_angle_distance_1 (
                                              	distance_1_of_angle<frame_quat_rot_type>(
-                                             		arg_maximum_frame_angle_difference
+                                             		prm_maximum_frame_angle_difference
                                              	)
                                              ),
-                                             maximum_frame_angle_difference ( arg_maximum_frame_angle_difference            ),
-                                             maximum_phi_angle_difference   ( std::move( arg_maximum_phi_angle_difference ) ),
-                                             maximum_psi_angle_difference   ( std::move( arg_maximum_psi_angle_difference ) ) {
+                                             maximum_frame_angle_difference ( prm_maximum_frame_angle_difference            ),
+                                             maximum_phi_angle_difference   ( std::move( prm_maximum_phi_angle_difference ) ),
+                                             maximum_psi_angle_difference   ( std::move( prm_maximum_psi_angle_difference ) ) {
 }
 
 /// \brief Factory function to construct the default vcie_match_criteria
@@ -76,10 +76,10 @@ vcie_match_criteria cath::index::detail::make_default_vcie_match_criteria() {
 ///
 /// \pre The string must be of format like:
 ///   `"dist_co=12,dirn_co=0,index_dist_co=-11,frame_ang_co=22.5, phi_ang_co=22.5,psi_ang_co=22.5"`
-vcie_match_criteria cath::index::detail::parse_vcie_match_criteria(const string &arg_string ///< The string to specify the properties of the vcie_match_criteria to be built
+vcie_match_criteria cath::index::detail::parse_vcie_match_criteria(const string &prm_string ///< The string to specify the properties of the vcie_match_criteria to be built
                                                                    ) {
 	// Build a map of field name to value (represented as double)
-	const string  spaces_stripped_string = erase_all_copy( arg_string, " " );
+	const string  spaces_stripped_string = erase_all_copy( prm_string, " " );
 	const str_vec parts = split_build<str_vec>( spaces_stripped_string, is_any_of( "," ) );
 	str_doub_map values;
 	for (const string &part : parts) {
@@ -268,17 +268,17 @@ vcie_match_criteria_vec cath::index::detail::get_standard_vcie_match_criterias()
 /// \brief Simple insertion operator for vcie_match_criteria
 ///
 /// \relates vcie_match_criteria
-ostream & cath::index::detail::operator<<(ostream                   &arg_os,                 ///< The ostream to which the vcie_match_criteria should be output
-                                          const vcie_match_criteria &arg_vcie_match_criteria ///< The vcie_match_criteria to output
+ostream & cath::index::detail::operator<<(ostream                   &prm_os,                 ///< The ostream to which the vcie_match_criteria should be output
+                                          const vcie_match_criteria &prm_vcie_match_criteria ///< The vcie_match_criteria to output
                                           ) {
-	arg_os << "vcie_match_criteria_vec[";
-	arg_os << "require_matching_directions:"    << boolalpha << arg_vcie_match_criteria.get_require_matching_directions();
-	arg_os << ",minimum_index_distance:"                     << arg_vcie_match_criteria.get_minimum_index_distance();
-	arg_os << ",maximum_squared_distance:"                   << arg_vcie_match_criteria.get_maximum_squared_distance();
-	arg_os << ",maximum_frame_angle_difference:"             << arg_vcie_match_criteria.get_maximum_frame_angle_difference();
-	arg_os << ",maximum_phi_angle_difference:"               << arg_vcie_match_criteria.get_maximum_phi_angle_difference();
-	arg_os << ",maximum_psi_angle_difference:"               << arg_vcie_match_criteria.get_maximum_psi_angle_difference();
-	arg_os << "]";
-	return arg_os;
+	prm_os << "vcie_match_criteria_vec[";
+	prm_os << "require_matching_directions:"    << boolalpha << prm_vcie_match_criteria.get_require_matching_directions();
+	prm_os << ",minimum_index_distance:"                     << prm_vcie_match_criteria.get_minimum_index_distance();
+	prm_os << ",maximum_squared_distance:"                   << prm_vcie_match_criteria.get_maximum_squared_distance();
+	prm_os << ",maximum_frame_angle_difference:"             << prm_vcie_match_criteria.get_maximum_frame_angle_difference();
+	prm_os << ",maximum_phi_angle_difference:"               << prm_vcie_match_criteria.get_maximum_phi_angle_difference();
+	prm_os << ",maximum_psi_angle_difference:"               << prm_vcie_match_criteria.get_maximum_psi_angle_difference();
+	prm_os << "]";
+	return prm_os;
 }
 

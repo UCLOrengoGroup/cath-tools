@@ -39,10 +39,10 @@ namespace cath {
 		};
 
 		/// \brief Construct from an index and a dissimilarity
-		inline link::link(const item_idx &arg_node,  ///< The index of the item linked to
-		                  const strength &arg_dissim ///< The degree of dissimilarity between the two items
-		                  ) : node   { arg_node   },
-		                      dissim { arg_dissim } {
+		inline link::link(const item_idx &prm_node,  ///< The index of the item linked to
+		                  const strength &prm_dissim ///< The degree of dissimilarity between the two items
+		                  ) : node   { prm_node   },
+		                      dissim { prm_dissim } {
 		}
 
 	} // namespace clust

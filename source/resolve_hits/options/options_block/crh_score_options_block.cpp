@@ -62,8 +62,8 @@ string crh_score_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_score_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                    const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_score_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                    const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	const string val_varname { "<val>" };
 
@@ -72,7 +72,7 @@ void crh_score_options_block::do_add_visible_options_to_description(options_desc
 	const auto apply_cath_rules_notifier        = [&] (const bool     &x) { the_spec.set_apply_cath_rules        ( x ); };
 	const auto naive_greedy_notifier            = [&] (const bool     &x) { the_spec.set_naive_greedy            ( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			( PO_LONG_DOMAINS_PREFERENCE ).c_str(),
 			value< prog_opt_num_range<resscr_t, -100, 100 > >()
@@ -117,7 +117,7 @@ void crh_score_options_block::do_add_visible_options_to_description(options_desc
 
 /// \brief Generate a description of any problem that makes the specified crh_score_options_block invalid
 ///        or none otherwise
-str_opt crh_score_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt crh_score_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 	return none;
 }

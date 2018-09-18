@@ -85,7 +85,7 @@ tribool aligned_pair_score::higher_is_better() const {
 /// \brief An NVI pass-through to the concrete class's do_calculate() which defines the method of calculating a score for
 ///        a pair alignment and two associated proteins.
 ///
-/// \pre Alignment must be a pair alignment (ie arg_alignment.num_entries is alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT (2) )
+/// \pre Alignment must be a pair alignment (ie prm_alignment.num_entries is alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT (2) )
 ///      else an invalid_argument_exception will be thrown.
 ///
 /// \pre The alignment must contain at least one position for each protein
@@ -93,28 +93,28 @@ tribool aligned_pair_score::higher_is_better() const {
 ///
 /// \pre The alignment must not overrun the end of the two associated proteins
 ///      else an invalid_argument_exception will be thrown.
-score_value aligned_pair_score::calculate(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                          const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                          const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+score_value aligned_pair_score::calculate(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                          const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                          const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                           ) const {
 	// Sanity check that the input alignment has two entries
-	if ( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT != arg_alignment.num_entries() ) {
+	if ( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT != prm_alignment.num_entries() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Alignment passed to aligned_pair_score but be a pair alignment"));
 	}
 
-	// Sanity check that the first half of the alignment doesn't overrun arg_protein_a
+	// Sanity check that the first half of the alignment doesn't overrun prm_protein_a
 	// (implicitly checks that the alignment contains at least one position for the first half)
-	if ( get_last_present_a_position(arg_alignment) >= arg_protein_a.get_length() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("First half of alignment passed to aligned_pair_score overruns arg_protein_a"));
+	if ( get_last_present_a_position(prm_alignment) >= prm_protein_a.get_length() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("First half of alignment passed to aligned_pair_score overruns prm_protein_a"));
 	}
-	// Sanity check that the second half of the alignment doesn't overrun arg_protein_b
+	// Sanity check that the second half of the alignment doesn't overrun prm_protein_b
 	// (implicitly checks that the alignment contains at least one position for the second half)
-	if ( get_last_present_b_position(arg_alignment) >= arg_protein_b.get_length() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Second half of alignment passed to aligned_pair_score overruns arg_protein_b"));
+	if ( get_last_present_b_position(prm_alignment) >= prm_protein_b.get_length() ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Second half of alignment passed to aligned_pair_score overruns prm_protein_b"));
 	}
 
 	// Return the result of the concrete score's calculation
-	return do_calculate( arg_alignment, arg_protein_a, arg_protein_b );
+	return do_calculate( prm_alignment, prm_protein_a, prm_protein_b );
 }
 
 /// \brief An NVI pass-through to the concrete class's do_long_name() which defines a free text description, describing the score.
@@ -163,27 +163,27 @@ string aligned_pair_score::reference() const {
 
 ///// \brief An NVI pass-through to the concrete class's do_build_from_short_name_spec() which defines how to build an aligned_pair_score
 /////        of the concrete type from a short_name_spec string
-//unique_ptr<aligned_pair_score> aligned_pair_score::build_from_short_name_spec(const string &arg_short_name_spec ///< TODOCUMENT
+//unique_ptr<aligned_pair_score> aligned_pair_score::build_from_short_name_spec(const string &prm_short_name_spec ///< TODOCUMENT
 //                                                                              ) const {
-//	return do_build_from_short_name_spec( arg_short_name_spec );
+//	return do_build_from_short_name_spec( prm_short_name_spec );
 //}
 
 /// \brief An NVI pass-through to the concrete class's do_less_than_with_same_dynamic_type(),
 ///        which defines the less-than operator when the argument's known to have the same dynamic type
-bool aligned_pair_score::less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool aligned_pair_score::less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                           ) const {
-	assert( typeid( *this ) == typeid( arg_aligned_pair_score ) );
-	return do_less_than_with_same_dynamic_type( arg_aligned_pair_score );
+	assert( typeid( *this ) == typeid( prm_aligned_pair_score ) );
+	return do_less_than_with_same_dynamic_type( prm_aligned_pair_score );
 }
 
 ///// \brief Build an aligned_pair_score from the short name it produces
 /////
 ///// \relates aligned_pair_score
-//unique_ptr<aligned_pair_score> cath::score::make_aligned_pair_score_from_full_short_name(const string &arg_short_name ///< The human_friendly_short_name that specifies which aligned_pair_score to build
+//unique_ptr<aligned_pair_score> cath::score::make_aligned_pair_score_from_full_short_name(const string &prm_short_name ///< The human_friendly_short_name that specifies which aligned_pair_score to build
 //                                                                                         ) {
-//	// Create a string containing the start of arg_short_name up to the first full-stop
-//	const auto first_full_stop_itr = find( arg_short_name, '.' );
-//	const auto the_id_name         = string( common::cbegin( arg_short_name ), first_full_stop_itr );
+//	// Create a string containing the start of prm_short_name up to the first full-stop
+//	const auto first_full_stop_itr = find( prm_short_name, '.' );
+//	const auto the_id_name         = string( common::cbegin( prm_short_name ), first_full_stop_itr );
 //
 //	// Grab all concrete types of aligned_pair_score by their id_name and throw if the_id_name isn't in it
 //	const auto aligned_pair_score_of_id_name = detail::get_aligned_pair_score_of_id_name();
@@ -195,8 +195,8 @@ bool aligned_pair_score::less_than_with_same_dynamic_type(const aligned_pair_sco
 //	const auto &the_score = aligned_pair_score_of_id_name.at( the_id_name );
 //
 //	// Grab any further characters if a full-stop was found or an empty string otherwise
-//	const bool has_more_chars  = ( first_full_stop_itr != common::cend( arg_short_name ) );
-//	const auto short_name_spec = has_more_chars ? string( next( first_full_stop_itr ), common::cend( arg_short_name ) )
+//	const bool has_more_chars  = ( first_full_stop_itr != common::cend( prm_short_name ) );
+//	const auto short_name_spec = has_more_chars ? string( next( first_full_stop_itr ), common::cend( prm_short_name ) )
 //	                                            : string();
 //
 //	// Return the result of getting the concrete type to build from the remainder of the string
@@ -206,9 +206,9 @@ bool aligned_pair_score::less_than_with_same_dynamic_type(const aligned_pair_sco
 /// \brief Simple insertion operator for aligned_pair_score
 ///
 /// \relates aligned_pair_score
-ostream & cath::score::operator<<(ostream                  &arg_os,                ///< The ostream to which the aligned_pair_score should be output
-                                  const aligned_pair_score &arg_aligned_pair_score ///< The aligned_pair_score to output
+ostream & cath::score::operator<<(ostream                  &prm_os,                ///< The ostream to which the aligned_pair_score should be output
+                                  const aligned_pair_score &prm_aligned_pair_score ///< The aligned_pair_score to output
                                   ) {
-	arg_os << ( "aligned_pair_score[" + arg_aligned_pair_score.human_friendly_short_name() + "]" );
-	return arg_os;
+	prm_os << ( "aligned_pair_score[" + prm_aligned_pair_score.human_friendly_short_name() + "]" );
+	return prm_os;
 }

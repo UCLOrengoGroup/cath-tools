@@ -160,23 +160,23 @@ namespace cath {
 		                          const pdb_residue &);
 
 		//// \brief Get the core_atom_indices index corresponding to the specified coarse_element_type
-		inline constexpr size_t pdb_residue::get_core_atom_index_ref_index(const coarse_element_type &arg_element_type ///< The coarse_element_type to be accessed in core_atom_indices
+		inline constexpr size_t pdb_residue::get_core_atom_index_ref_index(const coarse_element_type &prm_element_type ///< The coarse_element_type to be accessed in core_atom_indices
 		                                                                   ) {
 			return
-				( arg_element_type == coarse_element_type::NITROGEN     ) ? 0_z :
-				( arg_element_type == coarse_element_type::CARBON_ALPHA ) ? 1_z :
-				( arg_element_type == coarse_element_type::CARBON       ) ? 2_z :
-				( arg_element_type == coarse_element_type::CARBON_BETA  ) ? 3_z :
-				( arg_element_type == coarse_element_type::OXYGEN       ) ? 4_z :
+				( prm_element_type == coarse_element_type::NITROGEN     ) ? 0_z :
+				( prm_element_type == coarse_element_type::CARBON_ALPHA ) ? 1_z :
+				( prm_element_type == coarse_element_type::CARBON       ) ? 2_z :
+				( prm_element_type == coarse_element_type::CARBON_BETA  ) ? 3_z :
+				( prm_element_type == coarse_element_type::OXYGEN       ) ? 4_z :
 					throw std::invalid_argument("Cannot get_core_atom_index_ref() for non-core element type");
 		}
 
 		/// \brief Get a const reference to the core atom index corresponding to the specified coarse_element_type
 		///
 		/// The returned value is the index within atoms of the relevant atom or none if no such is present
-		inline const boost::optional<size_t> & pdb_residue::get_core_atom_index_ref(const coarse_element_type &arg_element_type ///< The coarse_element_type to be accessed in core_atom_indices
+		inline const boost::optional<size_t> & pdb_residue::get_core_atom_index_ref(const coarse_element_type &prm_element_type ///< The coarse_element_type to be accessed in core_atom_indices
 		                                                                            ) const {
-			return core_atom_indices.at( get_core_atom_index_ref_index( arg_element_type ) );
+			return core_atom_indices.at( get_core_atom_index_ref_index( prm_element_type ) );
 		}
 
 		/// \brief Make an array of the core element atoms' indices within the specified pdb_atoms
@@ -189,16 +189,16 @@ namespace cath {
 		///
 		///  * Prefer an atom that meets alt_locn_is_dssp_accepted() (ie altlocn of ' ' or 'A'), then
 		///  * Prefer an atom nearer the back
-		inline std::array<boost::optional<size_t>, 5> pdb_residue::make_core_atom_indices(const pdb_atom_vec &arg_pdb_atoms ///< The list of atoms to index
+		inline std::array<boost::optional<size_t>, 5> pdb_residue::make_core_atom_indices(const pdb_atom_vec &prm_pdb_atoms ///< The list of atoms to index
 		                                                                                  ) {
 			std::array<boost::optional<size_t>, 5> results;
-			for (const size_t &atom_ctr : common::indices( arg_pdb_atoms.size() ) ) {
+			for (const size_t &atom_ctr : common::indices( prm_pdb_atoms.size() ) ) {
 
-				const pdb_atom            &the_atom = arg_pdb_atoms[ atom_ctr ];
+				const pdb_atom            &the_atom = prm_pdb_atoms[ atom_ctr ];
 				const coarse_element_type &element  = get_coarse_element_type( the_atom );
 				if ( element != coarse_element_type::NON_CORE ) {
 					boost::optional<size_t>   &result   = results.at( get_core_atom_index_ref_index( element ) );
-					if ( ! result || alt_locn_is_dssp_accepted( the_atom ) || ! alt_locn_is_dssp_accepted( arg_pdb_atoms[ *result ] ) ) {
+					if ( ! result || alt_locn_is_dssp_accepted( the_atom ) || ! alt_locn_is_dssp_accepted( prm_pdb_atoms[ *result ] ) ) {
 						result = atom_ctr;
 					}
 				}
@@ -208,10 +208,10 @@ namespace cath {
 
 		/// \brief Ctor for pdb_residue
 		///
-		inline pdb_residue::pdb_residue(residue_id   arg_residue_id, ///< The name of the residue
-		                                pdb_atom_vec arg_atoms       ///< The pdb_atoms making up this residue
-		                                ) : the_residue_id   { std::move( arg_residue_id     ) },
-		                                    atoms            { std::move( arg_atoms          ) },
+		inline pdb_residue::pdb_residue(residue_id   prm_residue_id, ///< The name of the residue
+		                                pdb_atom_vec prm_atoms       ///< The pdb_atoms making up this residue
+		                                ) : the_residue_id   { std::move( prm_residue_id     ) },
+		                                    atoms            { std::move( prm_atoms          ) },
 		                                    core_atom_indices( make_core_atom_indices( atoms ) ) //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
 		                                    {
 		}
@@ -232,9 +232,9 @@ namespace cath {
 		}
 
 		/// \brief Get the pdb_atom for the specified index
-		inline const pdb_atom & pdb_residue::get_atom_cref_of_index(const size_t &arg_index ///< The index of the pbd_atom to return
+		inline const pdb_atom & pdb_residue::get_atom_cref_of_index(const size_t &prm_index ///< The index of the pbd_atom to return
 		                                                            ) const {
-			return atoms[ arg_index ];
+			return atoms[ prm_index ];
 		}
 
 		/// \brief Get whether this has a nitrogen atom
@@ -325,35 +325,35 @@ namespace cath {
 		}
 
 		/// \brief Setter for the chain label
-		inline pdb_residue & pdb_residue::set_chain_label(const chain_label &arg_chain_label ///< The new chain label to set
+		inline pdb_residue & pdb_residue::set_chain_label(const chain_label &prm_chain_label ///< The new chain label to set
 		                                                  ) {
-			the_residue_id = residue_id{ arg_chain_label, get_residue_name( *this ) };
+			the_residue_id = residue_id{ prm_chain_label, get_residue_name( *this ) };
 			return *this;
 		}
 
 		/// \brief Rotate each of the atoms in this residue by the specified rotation
-		inline pdb_residue & pdb_residue::rotate(const geom::rotation &arg_rotation ///< The rotation to apply to each of the atoms in this residue
+		inline pdb_residue & pdb_residue::rotate(const geom::rotation &prm_rotation ///< The rotation to apply to each of the atoms in this residue
 		                                         ) {
 			for (pdb_atom &my_pdb_atom : atoms) {
-				my_pdb_atom.rotate( arg_rotation );
+				my_pdb_atom.rotate( prm_rotation );
 			}
 			return *this;
 		}
 
 		/// \brief Add the specified coord from each of the atoms in this residue
-		inline pdb_residue & pdb_residue::operator+=(const geom::coord &arg_coord ///< The coord to add to each of the atoms in this residue
+		inline pdb_residue & pdb_residue::operator+=(const geom::coord &prm_coord ///< The coord to add to each of the atoms in this residue
 		                                             ) {
 			for (pdb_atom &my_pdb_atom : atoms) {
-				my_pdb_atom += arg_coord;
+				my_pdb_atom += prm_coord;
 			}
 			return *this;
 		}
 
 		/// \brief Subtract the specified coord from each of the atoms in this residue
-		inline pdb_residue & pdb_residue::operator-=(const geom::coord &arg_coord ///< The coord to subtract from each of the atoms in this residue
+		inline pdb_residue & pdb_residue::operator-=(const geom::coord &prm_coord ///< The coord to subtract from each of the atoms in this residue
 		                                             ) {
 			for (pdb_atom &my_pdb_atom : atoms) {
-				my_pdb_atom -= arg_coord;
+				my_pdb_atom -= prm_coord;
 			}
 			return *this;
 		}
@@ -369,45 +369,45 @@ namespace cath {
 		}
 
 		/// \brief Get the chain_label from the specified pdb_residue
-		inline const chain_label & get_chain_label(const pdb_residue &arg_pdb_residue ///< The residue to query
+		inline const chain_label & get_chain_label(const pdb_residue &prm_pdb_residue ///< The residue to query
 		                                           ) {
-			return arg_pdb_residue.get_residue_id().get_chain_label();
+			return prm_pdb_residue.get_residue_id().get_chain_label();
 		}
 
 		/// \brief Get the residue_name from the specified pdb_residue
-		inline const residue_name & get_residue_name(const pdb_residue &arg_pdb_residue ///< The residue to query
+		inline const residue_name & get_residue_name(const pdb_residue &prm_pdb_residue ///< The residue to query
 		                                             ) {
-			return arg_pdb_residue.get_residue_id().get_residue_name();
+			return prm_pdb_residue.get_residue_id().get_residue_name();
 		}
 
 		/// \brief Get the coord for the specified residue's nitrogen atom
-		inline const geom::coord & get_nitrogen_coord(const pdb_residue &arg_pdb_residue ///< The residue to query
+		inline const geom::coord & get_nitrogen_coord(const pdb_residue &prm_pdb_residue ///< The residue to query
 		                                              ) {
-			return arg_pdb_residue.get_nitrogen().get_coord();
+			return prm_pdb_residue.get_nitrogen().get_coord();
 		}
 
 		/// \brief Get the coord for the specified residue's carbon_alpha atom
-		inline const geom::coord & get_carbon_alpha_coord(const pdb_residue &arg_pdb_residue ///< The residue to query
+		inline const geom::coord & get_carbon_alpha_coord(const pdb_residue &prm_pdb_residue ///< The residue to query
 		                                                  ) {
-			return arg_pdb_residue.get_carbon_alpha().get_coord();
+			return prm_pdb_residue.get_carbon_alpha().get_coord();
 		}
 
 		/// \brief Get the coord for the specified residue's carbon atom
-		inline const geom::coord & get_carbon_coord(const pdb_residue &arg_pdb_residue ///< The residue to query
+		inline const geom::coord & get_carbon_coord(const pdb_residue &prm_pdb_residue ///< The residue to query
 		                                            ) {
-			return arg_pdb_residue.get_carbon().get_coord();
+			return prm_pdb_residue.get_carbon().get_coord();
 		}
 
 		/// \brief Get the coord for the specified residue's carbon_beta atom
-		inline const geom::coord & get_carbon_beta_coord(const pdb_residue &arg_pdb_residue ///< The residue to query
+		inline const geom::coord & get_carbon_beta_coord(const pdb_residue &prm_pdb_residue ///< The residue to query
 		                                                 ) {
-			return arg_pdb_residue.get_carbon_beta().get_coord();
+			return prm_pdb_residue.get_carbon_beta().get_coord();
 		}
 
 		/// \brief Get the coord for the specified residue's oxygen atom
-		inline const geom::coord & get_oxygen_coord(const pdb_residue &arg_pdb_residue ///< The residue to query
+		inline const geom::coord & get_oxygen_coord(const pdb_residue &prm_pdb_residue ///< The residue to query
 		                                            ) {
-			return arg_pdb_residue.get_oxygen().get_coord();
+			return prm_pdb_residue.get_oxygen().get_coord();
 		}
 
 		// /// \brief Get an atom of the specified type from the specified residue
@@ -419,13 +419,13 @@ namespace cath {
 		// ///  * Prefer an atom nearer the back
 		// ///
 		// /// \relates pdb_residue
-		// inline const geom::coord & get_atom_of_id_of_residue(const pdb_residue         &arg_pdb_residue, ///< The residue from which to extract the atom coordinates
-		//                                                      const coarse_element_type &arg_element      ///< The type of atom to retrieve
+		// inline const geom::coord & get_atom_of_id_of_residue(const pdb_residue         &prm_pdb_residue, ///< The residue from which to extract the atom coordinates
+		//                                                      const coarse_element_type &prm_element      ///< The type of atom to retrieve
 		//                                                      ) {
 		// 	size_opt best_seen_atom_ctr;
-		// 	for (const size_t &atom_ctr : common::indices( arg_pdb_residue.get_num_atoms() ) | boost::adaptors::reversed) {
-		// 		const pdb_atom &the_atom = arg_pdb_residue.get_atom_cref_of_index( atom_ctr );
-		// 		if ( get_coarse_element_type( the_atom ) == arg_element ) {
+		// 	for (const size_t &atom_ctr : common::indices( prm_pdb_residue.get_num_atoms() ) | boost::adaptors::reversed) {
+		// 		const pdb_atom &the_atom = prm_pdb_residue.get_atom_cref_of_index( atom_ctr );
+		// 		if ( get_coarse_element_type( the_atom ) == prm_element ) {
 		// 			if ( alt_locn_is_dssp_accepted( the_atom ) ) {
 		// 				return the_atom.get_coord();
 		// 			}
@@ -435,15 +435,15 @@ namespace cath {
 		// 		}
 		// 	}
 		// 	if ( best_seen_atom_ctr ) {
-		// 		return arg_pdb_residue.get_atom_cref_of_index( *best_seen_atom_ctr ).get_coord();
+		// 		return prm_pdb_residue.get_atom_cref_of_index( *best_seen_atom_ctr ).get_coord();
 		// 	}
 		// 	BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 		// 		"Cannot find atom of type "
-		// 		+ to_string( arg_element )
+		// 		+ to_string( prm_element )
 		// 		+ " within the "
-		// 		+ boost::lexical_cast<std::string>( arg_pdb_residue.get_num_atoms() )
+		// 		+ boost::lexical_cast<std::string>( prm_pdb_residue.get_num_atoms() )
 		// 		+ " atom(s) of residue "
-		// 		+ boost::lexical_cast<std::string>( arg_pdb_residue.get_residue_name() )
+		// 		+ boost::lexical_cast<std::string>( prm_pdb_residue.get_residue_name() )
 		// 	));
 		// 	return geom::coord::ORIGIN_COORD; // To appease Eclipse's syntax parser
 		// }

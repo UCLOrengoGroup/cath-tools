@@ -33,18 +33,18 @@ using boost::filesystem::path;
 /// \todo Come C++11 and GCC v5.0, make this a proper ifstream factory function
 ///       (not currently possible because ifstream should be movable in C++11 but this
 ///        isn't implemented in GCC v4.9)
-void cath::common::open_ifstream(ifstream                 &arg_ifstream, ///< TODOCUMENT
-                                 const path               &arg_filename, ///< TODOCUMENT
-                                 const ios_base::openmode &arg_mode      ///< TODOCUMENT
+void cath::common::open_ifstream(ifstream                 &prm_ifstream, ///< TODOCUMENT
+                                 const path               &prm_filename, ///< TODOCUMENT
+                                 const ios_base::openmode &prm_mode      ///< TODOCUMENT
                                  ) {
-	if ( ! exists( arg_filename ) ) {
+	if ( ! exists( prm_filename ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
-			"Cannot open file \"" + arg_filename.string() + "\" for reading because it doesn't exist"
+			"Cannot open file \"" + prm_filename.string() + "\" for reading because it doesn't exist"
 		));
 	}
 
-	open_fstream_impl( arg_ifstream, arg_filename, arg_mode, fstream_type::READING );
-	arg_ifstream.exceptions( ios::badbit );
+	open_fstream_impl( prm_ifstream, prm_filename, prm_mode, fstream_type::READING );
+	prm_ifstream.exceptions( ios::badbit );
 }
 
 /// \brief Open an ofstream with a path, throwing runtime_error_exception on error, and leave exceptions set to throw on badbit or failbit
@@ -52,9 +52,9 @@ void cath::common::open_ifstream(ifstream                 &arg_ifstream, ///< TO
 /// \todo Come C++11 and GCC v5.0, make this a proper ofstream factory function
 ///       (not currently possible because ofstream should be movable in C++11 but this
 ///        isn't implemented in GCC v4.9)
-void cath::common::open_ofstream(ofstream                 &arg_ofstream, ///< TODOCUMENT
-                                 const path               &arg_filename, ///< TODOCUMENT
-                                 const ios_base::openmode &arg_mode      ///< TODOCUMENT
+void cath::common::open_ofstream(ofstream                 &prm_ofstream, ///< TODOCUMENT
+                                 const path               &prm_filename, ///< TODOCUMENT
+                                 const ios_base::openmode &prm_mode      ///< TODOCUMENT
                                  ) {
-	return open_fstream_impl( arg_ofstream, arg_filename, arg_mode, fstream_type::WRITING );
+	return open_fstream_impl( prm_ofstream, prm_filename, prm_mode, fstream_type::WRITING );
 }

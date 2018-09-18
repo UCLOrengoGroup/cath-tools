@@ -41,13 +41,13 @@ static_assert( std::is_nothrow_move_constructible<hit_arch>::value, "" );
 ///        the hits in the specified hit_arch
 ///
 /// \relates hit_arch
-full_hit_list cath::rslv::get_full_hits_of_hit_arch(const hit_arch      &arg_hit_arch, ///< The hit_arch whose full hits should be extracted
-                                                    const full_hit_list &arg_full_hits ///< The full_hit_list associated with the hit_arch, from which the full_hits should be extracted
+full_hit_list cath::rslv::get_full_hits_of_hit_arch(const hit_arch      &prm_hit_arch, ///< The hit_arch whose full hits should be extracted
+                                                    const full_hit_list &prm_full_hits ///< The full_hit_list associated with the hit_arch, from which the full_hits should be extracted
                                                     ) {
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return full_hit_list{ transform_build<full_hit_vec>(
-		arg_hit_arch,
-		[&] (const calc_hit &x) { return arg_full_hits[ x.get_label_idx() ]; }
+		prm_hit_arch,
+		[&] (const calc_hit &x) { return prm_full_hits[ x.get_label_idx() ]; }
 	) };
 }
 
@@ -58,19 +58,19 @@ full_hit_list cath::rslv::get_full_hits_of_hit_arch(const hit_arch      &arg_hit
 /// passes the crh_score_spec, crh_segment_spec, hits_boundary_output)
 ///
 /// \relates hit_arch
-string cath::rslv::to_output_string(const hit_arch            &arg_hit_arch,         ///< The hit_arch to describe
-                                    const full_hit_list       &arg_full_hits,        ///< The list of labels corresponding to the hit
-                                    const crh_segment_spec    &arg_crh_segment_spec, ///< The crh_segment_spec specifying any trimming that should be performed on the output segments
-                                    const hit_output_format   &arg_format,           ///< The format in which the hit_arch should be described
-                                    const string              &arg_prefix,           ///< Any prefix that should come before the hit in hit_output_format::JON
-                                    const hit_boundary_output &arg_boundary_output   ///< Whether to output the trimmed or original boundaries
+string cath::rslv::to_output_string(const hit_arch            &prm_hit_arch,         ///< The hit_arch to describe
+                                    const full_hit_list       &prm_full_hits,        ///< The list of labels corresponding to the hit
+                                    const crh_segment_spec    &prm_crh_segment_spec, ///< The crh_segment_spec specifying any trimming that should be performed on the output segments
+                                    const hit_output_format   &prm_format,           ///< The format in which the hit_arch should be described
+                                    const string              &prm_prefix,           ///< Any prefix that should come before the hit in hit_output_format::JON
+                                    const hit_boundary_output &prm_boundary_output   ///< Whether to output the trimmed or original boundaries
                                     ) {
 	return to_output_string(
-		get_full_hits_of_hit_arch( arg_hit_arch, arg_full_hits ),
-		arg_crh_segment_spec,
-		arg_format,
-		arg_prefix,
-		arg_boundary_output
+		get_full_hits_of_hit_arch( prm_hit_arch, prm_full_hits ),
+		prm_crh_segment_spec,
+		prm_format,
+		prm_prefix,
+		prm_boundary_output
 	);
 }
 

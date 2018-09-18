@@ -83,12 +83,12 @@ namespace cath {
 		///
 		/// This uses the score_common_coord_handler (and hence its policies)
 		template <overlap_type OL>
-		score_value overlap_score<OL>::do_calculate(const align::alignment &arg_alignment, ///< The pair alignment to be scored
-		                                            const protein          &arg_protein_a, ///< The protein associated with the first  half of the alignment
-		                                            const protein          &arg_protein_b  ///< The protein associated with the second half of the alignment
+		score_value overlap_score<OL>::do_calculate(const align::alignment &prm_alignment, ///< The pair alignment to be scored
+		                                            const protein          &prm_protein_a, ///< The protein associated with the first  half of the alignment
+		                                            const protein          &prm_protein_b  ///< The protein associated with the second half of the alignment
 		                                            ) const {
-			const size_t numerator_value   = numerator_type  ().get_length( arg_alignment, arg_protein_a, arg_protein_b );
-			const size_t denominator_value = denominator_type().get_length( arg_alignment, arg_protein_a, arg_protein_b );
+			const size_t numerator_value   = numerator_type  ().get_length( prm_alignment, prm_protein_a, prm_protein_b );
+			const size_t denominator_value = denominator_type().get_length( prm_alignment, prm_protein_a, prm_protein_b );
 			return 100.0 * boost::numeric_cast<score_value>( numerator_value ) / boost::numeric_cast<score_value>( denominator_value );
 		}
 
@@ -139,9 +139,9 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <overlap_type OL>
-		bool overlap_score<OL>::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+		bool overlap_score<OL>::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
 		                                                        ) const {
-			const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+			const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 			return ( *this < casted_aligned_pair_score );
 		}
 
@@ -149,8 +149,8 @@ namespace cath {
 		///
 		/// \relates overlap_score
 		template <overlap_type OL>
-		bool operator<(const overlap_score<OL> &/*arg_overlap_score_a*/, ///< TODOCUMENT
-		               const overlap_score<OL> &/*arg_overlap_score_b*/  ///< TODOCUMENT
+		bool operator<(const overlap_score<OL> &/*prm_overlap_score_a*/, ///< TODOCUMENT
+		               const overlap_score<OL> &/*prm_overlap_score_b*/  ///< TODOCUMENT
 		               ) {
 			return false;
 		}

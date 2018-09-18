@@ -32,21 +32,21 @@ using namespace cath::score;
 using namespace std;
 
 /// \brief Ctor for true_false_pos_neg from the numbers of true/false positives/negatives
-true_false_pos_neg::true_false_pos_neg(const size_t &arg_num_true_positives,  ///< The number of true  positives
-                                       const size_t &arg_num_true_negatives,  ///< The number of true  negatives
-                                       const size_t &arg_num_false_positives, ///< The number of false positives
-                                       const size_t &arg_num_false_negatives  ///< The number of false negatives
-                                       ) : num_true_positives ( arg_num_true_positives  ),
-                                           num_true_negatives ( arg_num_true_negatives  ),
-                                           num_false_positives( arg_num_false_positives ),
-                                           num_false_negatives( arg_num_false_negatives ) {
+true_false_pos_neg::true_false_pos_neg(const size_t &prm_num_true_positives,  ///< The number of true  positives
+                                       const size_t &prm_num_true_negatives,  ///< The number of true  negatives
+                                       const size_t &prm_num_false_positives, ///< The number of false positives
+                                       const size_t &prm_num_false_negatives  ///< The number of false negatives
+                                       ) : num_true_positives ( prm_num_true_positives  ),
+                                           num_true_negatives ( prm_num_true_negatives  ),
+                                           num_false_positives( prm_num_false_positives ),
+                                           num_false_negatives( prm_num_false_negatives ) {
 
 }
 
 /// \brief Incrementer for the specified classn_outcome
-true_false_pos_neg & true_false_pos_neg::operator+=(const classn_outcome &arg_outcome ///< The outcome for which the number should be incremented
+true_false_pos_neg & true_false_pos_neg::operator+=(const classn_outcome &prm_outcome ///< The outcome for which the number should be incremented
                                                     ) {
-	switch ( arg_outcome ) {
+	switch ( prm_outcome ) {
 		case ( classn_outcome::TRUE_POSITIVE  ) : { increment_num< classn_outcome::TRUE_POSITIVE  >( *this ); break; }
 		case ( classn_outcome::TRUE_NEGATIVE  ) : { increment_num< classn_outcome::TRUE_NEGATIVE  >( *this ); break; }
 		case ( classn_outcome::FALSE_POSITIVE ) : { increment_num< classn_outcome::FALSE_POSITIVE >( *this ); break; }
@@ -58,69 +58,69 @@ true_false_pos_neg & true_false_pos_neg::operator+=(const classn_outcome &arg_ou
 /// \brief Getter for the number of true positives in a true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-const size_t & cath::score::get_num_true_positives(const true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to query
+const size_t & cath::score::get_num_true_positives(const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to query
                                                    ) {
-	return arg_true_false_pos_neg.get_num<classn_outcome::TRUE_POSITIVE>();
+	return prm_true_false_pos_neg.get_num<classn_outcome::TRUE_POSITIVE>();
 }
 
 /// \brief Getter for the number of true negatives in a true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-const size_t & cath::score::get_num_true_negatives(const true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to query
+const size_t & cath::score::get_num_true_negatives(const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to query
                                                    ) {
-	return arg_true_false_pos_neg.get_num<classn_outcome::TRUE_NEGATIVE>();
+	return prm_true_false_pos_neg.get_num<classn_outcome::TRUE_NEGATIVE>();
 }
 
 /// \brief Getter for the number of false positives in a true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-const size_t & cath::score::get_num_false_positives(const true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to query
+const size_t & cath::score::get_num_false_positives(const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to query
                                                     ) {
-	return arg_true_false_pos_neg.get_num<classn_outcome::FALSE_POSITIVE>();
+	return prm_true_false_pos_neg.get_num<classn_outcome::FALSE_POSITIVE>();
 }
 
 /// \brief Getter for the number of false negatives in a true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-const size_t & cath::score::get_num_false_negatives(const true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to query
+const size_t & cath::score::get_num_false_negatives(const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to query
                                                     ) {
-	return arg_true_false_pos_neg.get_num<classn_outcome::FALSE_NEGATIVE>();
+	return prm_true_false_pos_neg.get_num<classn_outcome::FALSE_NEGATIVE>();
 }
 
 /// \brief Setter for the number of true positives in the specified true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-void cath::score::set_num_true_positives(true_false_pos_neg &arg_true_false_pos_neg, ///< The true_false_pos_neg to update
-                                         const size_t       &arg_number              ///< The value to which to the number of true positives should be set
+void cath::score::set_num_true_positives(true_false_pos_neg &prm_true_false_pos_neg, ///< The true_false_pos_neg to update
+                                         const size_t       &prm_number              ///< The value to which to the number of true positives should be set
                                          ) {
-	arg_true_false_pos_neg.set_num<classn_outcome::TRUE_POSITIVE>( arg_number );
+	prm_true_false_pos_neg.set_num<classn_outcome::TRUE_POSITIVE>( prm_number );
 }
 
 /// \brief Setter for the number of true negatives in the specified true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-void cath::score::set_num_true_negatives(true_false_pos_neg &arg_true_false_pos_neg, ///< The true_false_pos_neg to update
-                                         const size_t       &arg_number              ///< The value to which to the number of true negatives should be set
+void cath::score::set_num_true_negatives(true_false_pos_neg &prm_true_false_pos_neg, ///< The true_false_pos_neg to update
+                                         const size_t       &prm_number              ///< The value to which to the number of true negatives should be set
                                          ) {
-	arg_true_false_pos_neg.set_num<classn_outcome::TRUE_NEGATIVE>( arg_number );
+	prm_true_false_pos_neg.set_num<classn_outcome::TRUE_NEGATIVE>( prm_number );
 }
 
 /// \brief Setter for the number of false positives in the specified true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-void cath::score::set_num_false_positives(true_false_pos_neg &arg_true_false_pos_neg, ///< The true_false_pos_neg to update
-                                          const size_t       &arg_number              ///< The value to which to the number of false positives should be set
+void cath::score::set_num_false_positives(true_false_pos_neg &prm_true_false_pos_neg, ///< The true_false_pos_neg to update
+                                          const size_t       &prm_number              ///< The value to which to the number of false positives should be set
                                           ) {
-	arg_true_false_pos_neg.set_num<classn_outcome::FALSE_POSITIVE>( arg_number );
+	prm_true_false_pos_neg.set_num<classn_outcome::FALSE_POSITIVE>( prm_number );
 }
 
 /// \brief Setter for the number of false negatives in the specified true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-void cath::score::set_num_false_negatives(true_false_pos_neg &arg_true_false_pos_neg, ///< The true_false_pos_neg to update
-                                          const size_t       &arg_number              ///< The value to which to the number of false negatives should be set
+void cath::score::set_num_false_negatives(true_false_pos_neg &prm_true_false_pos_neg, ///< The true_false_pos_neg to update
+                                          const size_t       &prm_number              ///< The value to which to the number of false negatives should be set
                                           ) {
-	arg_true_false_pos_neg.set_num<classn_outcome::FALSE_NEGATIVE>( arg_number );
+	prm_true_false_pos_neg.set_num<classn_outcome::FALSE_NEGATIVE>( prm_number );
 }
 
 
@@ -128,81 +128,81 @@ void cath::score::set_num_false_negatives(true_false_pos_neg &arg_true_false_pos
 /// \brief Incrementer for the number of true positives in the specified true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-void cath::score::increment_num_true_positives(true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to update
+void cath::score::increment_num_true_positives(true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to update
                                                ) {
-	return increment_num<classn_outcome::TRUE_POSITIVE>( arg_true_false_pos_neg );
+	return increment_num<classn_outcome::TRUE_POSITIVE>( prm_true_false_pos_neg );
 }
 
 /// \brief Incrementer for the number of true negatives in the specified true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-void cath::score::increment_num_true_negatives(true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to update
+void cath::score::increment_num_true_negatives(true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to update
                                                ) {
-	return increment_num<classn_outcome::TRUE_NEGATIVE>( arg_true_false_pos_neg );
+	return increment_num<classn_outcome::TRUE_NEGATIVE>( prm_true_false_pos_neg );
 }
 
 /// \brief Incrementer for the number of false positives in the specified true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-void cath::score::increment_num_false_positives(true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to update
+void cath::score::increment_num_false_positives(true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to update
                                                 ) {
-	return increment_num<classn_outcome::FALSE_POSITIVE>( arg_true_false_pos_neg );
+	return increment_num<classn_outcome::FALSE_POSITIVE>( prm_true_false_pos_neg );
 }
 
 /// \brief Incrementer for the number of false positives in the specified true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-void cath::score::increment_num_false_negatives(true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to update
+void cath::score::increment_num_false_negatives(true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to update
                                                 ) {
-	return increment_num<classn_outcome::FALSE_NEGATIVE>( arg_true_false_pos_neg );
+	return increment_num<classn_outcome::FALSE_NEGATIVE>( prm_true_false_pos_neg );
 }
 
 /// \brief Update a true_false_pos_neg to reflect a switch in some predictions from negative to positive
 ///
 /// In other words, this updates the numbers to reflect moving:
-///  * arg_num_positives from false_negatives to true_positives
-///  * arg_num_negatives from true_negatives  to false_positives
+///  * prm_num_positives from false_negatives to true_positives
+///  * prm_num_negatives from true_negatives  to false_positives
 ///
 /// \relates true_false_pos_neg
-void cath::score::update_with_predicted_positives(true_false_pos_neg &arg_true_false_pos_neg, ///< The true_false_pos_neg to update
-                                                  const size_t       &arg_num_positives,      ///< The number of positive cases that were previously predicted as negatives but are now predicted as positives
-                                                  const size_t       &arg_num_negatives       ///< The number of negative cases that were previously predicted as negatives but are now predicted as positives
+void cath::score::update_with_predicted_positives(true_false_pos_neg &prm_true_false_pos_neg, ///< The true_false_pos_neg to update
+                                                  const size_t       &prm_num_positives,      ///< The number of positive cases that were previously predicted as negatives but are now predicted as positives
+                                                  const size_t       &prm_num_negatives       ///< The number of negative cases that were previously predicted as negatives but are now predicted as positives
                                                   ) {
-	const size_t &num_true_positives  = arg_true_false_pos_neg.get_num< classn_outcome::TRUE_POSITIVE  >();
-	const size_t &num_true_negatives  = arg_true_false_pos_neg.get_num< classn_outcome::TRUE_NEGATIVE  >();
-	const size_t &num_false_positives = arg_true_false_pos_neg.get_num< classn_outcome::FALSE_POSITIVE >();
-	const size_t &num_false_negatives = arg_true_false_pos_neg.get_num< classn_outcome::FALSE_NEGATIVE >();
+	const size_t &num_true_positives  = prm_true_false_pos_neg.get_num< classn_outcome::TRUE_POSITIVE  >();
+	const size_t &num_true_negatives  = prm_true_false_pos_neg.get_num< classn_outcome::TRUE_NEGATIVE  >();
+	const size_t &num_false_positives = prm_true_false_pos_neg.get_num< classn_outcome::FALSE_POSITIVE >();
+	const size_t &num_false_negatives = prm_true_false_pos_neg.get_num< classn_outcome::FALSE_NEGATIVE >();
 
-	if ( arg_num_positives > num_false_negatives ) {
+	if ( prm_num_positives > num_false_negatives ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot move more positive cases out of being predicted negative than there are false_negatives"));
 	}
-	if ( arg_num_negatives > num_true_negatives  ) {
+	if ( prm_num_negatives > num_true_negatives  ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot move more negative cases out of being predicted negative than there are true_negatives"));
 	}
 
-	arg_true_false_pos_neg.set_num< classn_outcome::TRUE_POSITIVE  >( num_true_positives  + arg_num_positives );
-	arg_true_false_pos_neg.set_num< classn_outcome::TRUE_NEGATIVE  >( num_true_negatives  - arg_num_negatives );
-	arg_true_false_pos_neg.set_num< classn_outcome::FALSE_POSITIVE >( num_false_positives + arg_num_negatives );
-	arg_true_false_pos_neg.set_num< classn_outcome::FALSE_NEGATIVE >( num_false_negatives - arg_num_positives );
+	prm_true_false_pos_neg.set_num< classn_outcome::TRUE_POSITIVE  >( num_true_positives  + prm_num_positives );
+	prm_true_false_pos_neg.set_num< classn_outcome::TRUE_NEGATIVE  >( num_true_negatives  - prm_num_negatives );
+	prm_true_false_pos_neg.set_num< classn_outcome::FALSE_POSITIVE >( num_false_positives + prm_num_negatives );
+	prm_true_false_pos_neg.set_num< classn_outcome::FALSE_NEGATIVE >( num_false_negatives - prm_num_positives );
 }
 
 /// \brief Simple insertion operator for true_false_pos_neg
 ///
 /// \relates true_false_pos_neg
-ostream & cath::score::operator<<(ostream                  &arg_os,                ///< The ostream to which the true_false_pos_neg should be output
-                                  const true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to output
+ostream & cath::score::operator<<(ostream                  &prm_os,                ///< The ostream to which the true_false_pos_neg should be output
+                                  const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to output
                                   ) {
 	ostringstream temp_ss;
 	temp_ss << "true_false_pos_neg[TP:";
-	temp_ss << right << setw( 4 ) << arg_true_false_pos_neg.get_num<classn_outcome::TRUE_POSITIVE>();
+	temp_ss << right << setw( 4 ) << prm_true_false_pos_neg.get_num<classn_outcome::TRUE_POSITIVE>();
 	temp_ss << "; TN: ";
-	temp_ss << right << setw( 4 ) << arg_true_false_pos_neg.get_num<classn_outcome::TRUE_NEGATIVE>();
+	temp_ss << right << setw( 4 ) << prm_true_false_pos_neg.get_num<classn_outcome::TRUE_NEGATIVE>();
 	temp_ss << "; FP: ";
-	temp_ss << right << setw( 4 ) << arg_true_false_pos_neg.get_num<classn_outcome::FALSE_POSITIVE>();
+	temp_ss << right << setw( 4 ) << prm_true_false_pos_neg.get_num<classn_outcome::FALSE_POSITIVE>();
 	temp_ss << "; FN: ";
-	temp_ss << right << setw( 4 ) << arg_true_false_pos_neg.get_num<classn_outcome::FALSE_NEGATIVE>();
+	temp_ss << right << setw( 4 ) << prm_true_false_pos_neg.get_num<classn_outcome::FALSE_NEGATIVE>();
 	temp_ss << "]";
-	arg_os << temp_ss.str();
-	return arg_os;
+	prm_os << temp_ss.str();
+	return prm_os;
 }
 

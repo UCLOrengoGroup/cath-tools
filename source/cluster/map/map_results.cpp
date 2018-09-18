@@ -65,14 +65,14 @@ using std::string;
 /// \brief Get the name of the new, unmapped cluster of the specified index
 ///        based on the specified last preceding index (or 0 if not mapping from
 ///        or none if mapping from clusters that don't all have numeric names)
-string cath::clust::detail::get_name_of_new_unmapped_cluster_of_index(const boost::optional<ptrdiff_t> &arg_last_preceding_index, ///< The last preceding index (or 0 if not mapping from or none if mapping from clusters that don't all have numeric names)
-                                                                      const size_t                     &arg_index                 ///< The index of the new, unmapped cluster
+string cath::clust::detail::get_name_of_new_unmapped_cluster_of_index(const boost::optional<ptrdiff_t> &prm_last_preceding_index, ///< The last preceding index (or 0 if not mapping from or none if mapping from clusters that don't all have numeric names)
+                                                                      const size_t                     &prm_index                 ///< The index of the new, unmapped cluster
                                                                       ) {
 	using std::to_string;
-	if ( arg_last_preceding_index ) {
-		return to_string( *arg_last_preceding_index + 1l + debug_numeric_cast<ptrdiff_t>( arg_index ) );
+	if ( prm_last_preceding_index ) {
+		return to_string( *prm_last_preceding_index + 1l + debug_numeric_cast<ptrdiff_t>( prm_index ) );
 	}
-	return "new_cmc_cluster_" + to_string( arg_index + 1 ) ;
+	return "new_cmc_cluster_" + to_string( prm_index + 1 ) ;
 }
 
 /// \brief Get the number of mapped entries implied by the specified map_results
@@ -81,10 +81,10 @@ string cath::clust::detail::get_name_of_new_unmapped_cluster_of_index(const boos
 ///      else an invalid_argument_exception will be thrown
 ///
 /// \relates map_results
-size_t cath::clust::get_num_mapped_entries(const map_results &arg_map_results ///< The map_results to query
+size_t cath::clust::get_num_mapped_entries(const map_results &prm_map_results ///< The map_results to query
                                            ) {
-	const size_t num_mapped_olds = boost::accumulate( arg_map_results.num_mapped_by_old_cluster, 0_z );
-	const size_t num_mapped_news = boost::accumulate( arg_map_results.num_mapped_by_new_cluster, 0_z );
+	const size_t num_mapped_olds = boost::accumulate( prm_map_results.num_mapped_by_old_cluster, 0_z );
+	const size_t num_mapped_news = boost::accumulate( prm_map_results.num_mapped_by_new_cluster, 0_z );
 
 	if ( num_mapped_olds != num_mapped_news ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot retrieve the number of mapped entries if the answer is inconsistent for old/new"));
@@ -95,29 +95,29 @@ size_t cath::clust::get_num_mapped_entries(const map_results &arg_map_results //
 /// \brief Generate a string describing the specified map_results
 ///
 /// \relates map_results
-string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,   ///< The old clusters
-                                   const new_cluster_data     &arg_new_clusters,   ///< The new clusters
-                                   const map_results          &arg_map_results,    ///< The map_results
-                                   const str_opt              &arg_batch_id,       ///< An optional identifier for the mapped batch
-                                   const bool                 &arg_include_headers ///< Whether to include the headers for the columns
+string cath::clust::results_string(const old_cluster_data_opt &prm_old_clusters,   ///< The old clusters
+                                   const new_cluster_data     &prm_new_clusters,   ///< The new clusters
+                                   const map_results          &prm_map_results,    ///< The map_results
+                                   const str_opt              &prm_batch_id,       ///< An optional identifier for the mapped batch
+                                   const bool                 &prm_include_headers ///< Whether to include the headers for the columns
                                    ) {
-	const auto &chosen_maps                  = arg_map_results.chosen_maps;
-	const auto &other_maps                   = arg_map_results.other_maps;
-	const auto &unmapped_new_cluster_indices = arg_map_results.unmapped_new_cluster_indices;
+	const auto &chosen_maps                  = prm_map_results.chosen_maps;
+	const auto &other_maps                   = prm_map_results.other_maps;
+	const auto &unmapped_new_cluster_indices = prm_map_results.unmapped_new_cluster_indices;
 
 	// If not mapping, start from 1
 	// If mapping and numeric, start from last + 1
 	// If mapping and not numeric
-	const auto precede_index = largest_number_if_names_all_numeric_integers_of_val_if_none( arg_old_clusters, 0 );
+	const auto precede_index = largest_number_if_names_all_numeric_integers_of_val_if_none( prm_old_clusters, 0 );
 
-	if ( ! arg_old_clusters && ( ! chosen_maps.empty() || ! other_maps.empty() ) ) {
+	if ( ! prm_old_clusters && ( ! chosen_maps.empty() || ! other_maps.empty() ) ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Argh"));
 	}
 
 	return (
-			arg_include_headers
+			prm_include_headers
 				? "# cluster-id suggested-name"
-					+ ( arg_batch_id ? " batch-id"s : ""s )
+					+ ( prm_batch_id ? " batch-id"s : ""s )
 					+ "\n"
 				: ""
 		)
@@ -125,10 +125,10 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 			chosen_maps
 				| transformed( [&] (const potential_map &the_map) {
 					return
-						  get_name_of_cluster_of_id(  arg_new_clusters, the_map.new_cluster_idx )
+						  get_name_of_cluster_of_id(  prm_new_clusters, the_map.new_cluster_idx )
 						+ " "
-						+ get_name_of_cluster_of_id( *arg_old_clusters, the_map.old_cluster_idx )
-						+ ( arg_batch_id ? ( " " + *arg_batch_id ) : "" )
+						+ get_name_of_cluster_of_id( *prm_old_clusters, the_map.old_cluster_idx )
+						+ ( prm_batch_id ? ( " " + *prm_batch_id ) : "" )
 						+ "\n";
 				} ),
 			""
@@ -137,10 +137,10 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 		// 	other_maps
 		// 		| transformed( [&] (const potential_map &the_map) {
 		// 			return
-		// 				  get_name_of_cluster_of_id(  arg_new_clusters, the_map.new_cluster_idx )
+		// 				  get_name_of_cluster_of_id(  prm_new_clusters, the_map.new_cluster_idx )
 		// 				+ " "
-		// 				+ get_name_of_cluster_of_id( *arg_old_clusters, the_map.old_cluster_idx )
-		// 				+ ( arg_batch_id ? ( " " + *arg_batch_id ) : "" )
+		// 				+ get_name_of_cluster_of_id( *prm_old_clusters, the_map.old_cluster_idx )
+		// 				+ ( prm_batch_id ? ( " " + *prm_batch_id ) : "" )
 		// 				+ " other\n";
 		// 		} ),
 		// 	""
@@ -150,10 +150,10 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 				| transformed( [&] (const size_t &new_cluster_index_index) {
 					const size_t &new_cluster_index = unmapped_new_cluster_indices[ new_cluster_index_index ];
 					return
-						  get_name_of_cluster_of_id( arg_new_clusters,  new_cluster_index )
+						  get_name_of_cluster_of_id( prm_new_clusters,  new_cluster_index )
 						+ " "
 						+ detail::get_name_of_new_unmapped_cluster_of_index( precede_index, new_cluster_index_index )
-						+ ( arg_batch_id ? ( " " + *arg_batch_id ) : "" )
+						+ ( prm_batch_id ? ( " " + *prm_batch_id ) : "" )
 						+ "\n";
 				} ),
 			""
@@ -163,23 +163,23 @@ string cath::clust::results_string(const old_cluster_data_opt &arg_old_clusters,
 /// \brief Generate a string describing the specified map_results
 ///
 /// \relates map_results
-string cath::clust::longer_results_string(const old_cluster_data_opt &arg_old_clusters, ///< The old clusters
-                                          const new_cluster_data     &arg_new_clusters, ///< The new clusters
-                                          const map_results          &arg_map_results,  ///< The map_results
-                                          const str_opt              &arg_batch_id      ///< An optional identifier for the mapped batch
+string cath::clust::longer_results_string(const old_cluster_data_opt &prm_old_clusters, ///< The old clusters
+                                          const new_cluster_data     &prm_new_clusters, ///< The new clusters
+                                          const map_results          &prm_map_results,  ///< The map_results
+                                          const str_opt              &prm_batch_id      ///< An optional identifier for the mapped batch
                                           ) {
-	const auto &chosen_maps                  = arg_map_results.chosen_maps;
-	const auto &other_maps                   = arg_map_results.other_maps;
-	const auto &num_mapped_by_new_cluster    = arg_map_results.num_mapped_by_new_cluster;
-	const auto &num_mapped_by_old_cluster    = arg_map_results.num_mapped_by_old_cluster;
-	const auto &unmapped_new_cluster_indices = arg_map_results.unmapped_new_cluster_indices;
+	const auto &chosen_maps                  = prm_map_results.chosen_maps;
+	const auto &other_maps                   = prm_map_results.other_maps;
+	const auto &num_mapped_by_new_cluster    = prm_map_results.num_mapped_by_new_cluster;
+	const auto &num_mapped_by_old_cluster    = prm_map_results.num_mapped_by_old_cluster;
+	const auto &unmapped_new_cluster_indices = prm_map_results.unmapped_new_cluster_indices;
 
 	// If not mapping, start from 1
 	// If mapping and numeric, start from last + 1
 	// If mapping and not numeric
-	const auto precede_index = largest_number_if_names_all_numeric_integers_of_val_if_none( arg_old_clusters, 0 );
+	const auto precede_index = largest_number_if_names_all_numeric_integers_of_val_if_none( prm_old_clusters, 0 );
 
-	if ( ! arg_old_clusters && ( ! chosen_maps.empty() || ! other_maps.empty() ) ) {
+	if ( ! prm_old_clusters && ( ! chosen_maps.empty() || ! other_maps.empty() ) ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Argh"));
 	}
 
@@ -187,13 +187,13 @@ string cath::clust::longer_results_string(const old_cluster_data_opt &arg_old_cl
 		const size_t &old_cluster_idx   = the_map.old_cluster_idx;
 		const size_t &new_cluster_idx   = the_map.new_cluster_idx;
 		const size_t &num_mapped        = the_map.num_mapped;
-		const size_t &num_in_new        = get_size_of_cluster_of_id( arg_new_clusters, new_cluster_idx );
-		const size_t &num_in_old        = num_entries( ( *arg_old_clusters ) [ old_cluster_idx ] );
+		const size_t &num_in_new        = get_size_of_cluster_of_id( prm_new_clusters, new_cluster_idx );
+		const size_t &num_in_old        = num_entries( ( *prm_old_clusters ) [ old_cluster_idx ] );
 		const size_t &num_mapped_in_new = num_mapped_by_new_cluster[ new_cluster_idx ];
 		const size_t &num_mapped_in_old = num_mapped_by_old_cluster[ old_cluster_idx ];
 
-		const string new_name = ( format( "%3d" ) % get_name_of_cluster_of_id(  arg_new_clusters, new_cluster_idx ) ).str();
-		const string old_name = ( format( "%3d" ) % get_name_of_cluster_of_id( *arg_old_clusters, old_cluster_idx ) ).str();
+		const string new_name = ( format( "%3d" ) % get_name_of_cluster_of_id(  prm_new_clusters, new_cluster_idx ) ).str();
+		const string old_name = ( format( "%3d" ) % get_name_of_cluster_of_id( *prm_old_clusters, old_cluster_idx ) ).str();
 
 		return
 			  new_name
@@ -228,7 +228,7 @@ string cath::clust::longer_results_string(const old_cluster_data_opt &arg_old_cl
 		join(
 			chosen_maps
 				| transformed( [&] (const potential_map &the_map) {
-					return "RENAME      " + ( arg_batch_id ? *arg_batch_id : "" ) + map_summary_fn( the_map );
+					return "RENAME      " + ( prm_batch_id ? *prm_batch_id : "" ) + map_summary_fn( the_map );
 				} ),
 			"\n"
 		)
@@ -239,8 +239,8 @@ string cath::clust::longer_results_string(const old_cluster_data_opt &arg_old_cl
 					const size_t &new_cluster_index = unmapped_new_cluster_indices[ new_cluster_index_index ];
 					return
 						  "RENAME      "
-						+ ( arg_batch_id ? " " +*arg_batch_id : "" )
-						+ get_name_of_cluster_of_id( arg_new_clusters,  new_cluster_index )
+						+ ( prm_batch_id ? " " +*prm_batch_id : "" )
+						+ get_name_of_cluster_of_id( prm_new_clusters,  new_cluster_index )
 						+ " to "
 						+ detail::get_name_of_new_unmapped_cluster_of_index( precede_index, new_cluster_index_index );
 				} ),
@@ -260,33 +260,33 @@ string cath::clust::longer_results_string(const old_cluster_data_opt &arg_old_cl
 /// \brief Generate a Markdown summary of the specified map_results
 ///
 /// \relates map_results
-string cath::clust::markdown_summary_string(const old_cluster_data_opt &arg_old_clusters, ///< The old clusters
-                                            const new_cluster_data     &arg_new_clusters, ///< The new clusters
-                                            const map_results          &arg_map_results   ///< The map_results to summarise
+string cath::clust::markdown_summary_string(const old_cluster_data_opt &prm_old_clusters, ///< The old clusters
+                                            const new_cluster_data     &prm_new_clusters, ///< The new clusters
+                                            const map_results          &prm_map_results   ///< The map_results to summarise
                                              ) {
 	using std::to_string;
 
-	if ( ! arg_old_clusters ) {
+	if ( ! prm_old_clusters ) {
 		return "Mapping was not performed\n";
 	}
 
 	return markdown_summary_string( make_aggregate_map_results(
-		arg_map_results,
-		*arg_old_clusters,
-		arg_new_clusters
+		prm_map_results,
+		*prm_old_clusters,
+		prm_new_clusters
 	) );
 }
 
 /// \brief Write a Markdown summary of the specified map_results to the specified file
 ///
 /// \relates map_results
-void cath::clust::write_markdown_summary_string_to_file(const path                 &arg_output_file,  ///< The file to which the Markdown summary should be written
-                                                        const old_cluster_data_opt &arg_old_clusters, ///< The old clusters
-                                                        const new_cluster_data     &arg_new_clusters, ///< The new clusters
-                                                        const map_results          &arg_map_results   ///< The map_results to summarise
+void cath::clust::write_markdown_summary_string_to_file(const path                 &prm_output_file,  ///< The file to which the Markdown summary should be written
+                                                        const old_cluster_data_opt &prm_old_clusters, ///< The old clusters
+                                                        const new_cluster_data     &prm_new_clusters, ///< The new clusters
+                                                        const map_results          &prm_map_results   ///< The map_results to summarise
                                                         ) {
 	ofstream md_ostream;
-	open_ofstream( md_ostream, arg_output_file );
-	md_ostream << markdown_summary_string( arg_old_clusters, arg_new_clusters, arg_map_results );
+	open_ofstream( md_ostream, prm_output_file );
+	md_ostream << markdown_summary_string( prm_old_clusters, prm_new_clusters, prm_map_results );
 	md_ostream.close();
 }

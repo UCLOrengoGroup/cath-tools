@@ -50,7 +50,7 @@ using std::move;
 ///        boundaries of the each of the regions up to (and equal to) each of the successively
 ///        looser cutoffs.
 ///
-/// This starts at begin( arg_merges ) and then has one iterator for each cutoff after that.
+/// This starts at begin( prm_merges ) and then has one iterator for each cutoff after that.
 /// (No end is require because merges after the last cutoff aren't considered)
 ///
 /// Merges that have a dissimilarity exactly equalling a cutoff will be included in the region before
@@ -58,17 +58,17 @@ using std::move;
 ///
 /// '''upper_bound'''
 ///
-/// \pre `is_sorted( arg_cutoffs );`
-merge_vec_citr_vec cath::clust::detail::calc_merge_cutoff_boundaries(const merge_vec    &arg_merges, ///< The ordered list of merges to determine the clusters
-                                                                     const strength_vec &arg_cutoffs ///< The cutoffs at which the clusters should be drawn, in ascending order
+/// \pre `is_sorted( prm_cutoffs );`
+merge_vec_citr_vec cath::clust::detail::calc_merge_cutoff_boundaries(const merge_vec    &prm_merges, ///< The ordered list of merges to determine the clusters
+                                                                     const strength_vec &prm_cutoffs ///< The cutoffs at which the clusters should be drawn, in ascending order
                                                                      ) {
 	merge_vec_citr_vec merge_cutoff_boundaries;
-	merge_cutoff_boundaries.reserve  ( arg_cutoffs.size() + 1       );
-	merge_cutoff_boundaries.push_back( common::cbegin( arg_merges ) );
-	for (const strength &cutoff : arg_cutoffs) {
+	merge_cutoff_boundaries.reserve  ( prm_cutoffs.size() + 1       );
+	merge_cutoff_boundaries.push_back( common::cbegin( prm_merges ) );
+	for (const strength &cutoff : prm_cutoffs) {
 		merge_cutoff_boundaries.push_back( upper_bound(
 			merge_cutoff_boundaries.back(),
-			common::cend( arg_merges ),
+			common::cend( prm_merges ),
 			cutoff,
 			[] (const strength &x, const merge &y) { return x < y.dissim; }
 		) );
@@ -81,25 +81,25 @@ merge_vec_citr_vec cath::clust::detail::calc_merge_cutoff_boundaries(const merge
 ///        the specified merges over the specified number of items
 ///
 /// The merge_vec must follow the following rules:
-///  * the indices of leaf nodes are all less than arg_num_entities
-///  * the indices of all non-leaf nodes are all >= arg_num_entities and < 2*arg_num_entities
+///  * the indices of leaf nodes are all less than prm_num_entities
+///  * the indices of all non-leaf nodes are all >= prm_num_entities and < 2*prm_num_entities
 ///  * the index of a parent node is > than both indices of the children nodes
 ///
-/// \pre `is_sorted( arg_cutoffs )`
-hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &arg_merges,       ///< The ordered list of merges to determine the clusters
-                                                 const item_idx     &arg_num_entities, ///< The number of items being clustered
-                                                 const strength_vec &arg_cutoffs       ///< The cutoffs at which the clusters should be drawn, in ascending order
+/// \pre `is_sorted( prm_cutoffs )`
+hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &prm_merges,       ///< The ordered list of merges to determine the clusters
+                                                 const item_idx     &prm_num_entities, ///< The number of items being clustered
+                                                 const strength_vec &prm_cutoffs       ///< The cutoffs at which the clusters should be drawn, in ascending order
                                                  ) {
 	using std::to_string;
 
 	// The layers that will be populated
 	hierarchy_layer_vec hier_layers;
-	const size_t &num_merges   = arg_merges.size();
-	const size_t  num_entities = arg_num_entities;
+	const size_t &num_merges   = prm_merges.size();
+	const size_t  num_entities = prm_num_entities;
 	item_opt_vec root_parent_of_node( num_entities + max( num_entities, num_merges ) );
 
 	{
-		const auto merge_cutoff_boundaries = calc_merge_cutoff_boundaries( arg_merges, arg_cutoffs );
+		const auto merge_cutoff_boundaries = calc_merge_cutoff_boundaries( prm_merges, prm_cutoffs );
 
 		// Prepare root_parent_of_node for calculation
 		node_info_opt_vec info_of_cutoff_root( num_entities + max( num_entities, num_merges ) );
@@ -107,7 +107,7 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &arg_merges,
 		item_vec          unused_prev_clust_indices;
 
 		// Loop over each over the regions before each of the cutoffs
-		for (const size_t &cutoff_layer_ctr : indices( arg_cutoffs.size() ) ) {
+		for (const size_t &cutoff_layer_ctr : indices( prm_cutoffs.size() ) ) {
 
 			// Prepare a sub_range for this region of the merges
 			const sub_range<const merge_vec> cutoff_subrange_of_merges{
@@ -159,7 +159,7 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &arg_merges,
 					const node_info_opt &child_info_opt = info_of_cutoff_root[ child_node ];
 
 					// If this child-node is a leaf node add an entry for it in the group
-					if ( child_node < arg_num_entities ) {
+					if ( child_node < prm_num_entities ) {
 						layer[ group_index ].emplace_back( hierarchy_ref::ENTRY,   child_node );
 					}
 					// Else if it's a root node of the previous cutoff region...
@@ -219,7 +219,7 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &arg_merges,
 	// Return the result of adding a root layer, reversing and using to construct a hierarchy
 	return make_hierarchy_from_reversed_without_root_layer(
 		hier_layers,
-		indices( static_cast<size_t>( arg_num_entities ) )
+		indices( static_cast<size_t>( prm_num_entities ) )
 			| filtered( [&] (const size_t &x) { return ! root_parent_of_node[ x ]; } )
 	);
 }
@@ -227,18 +227,18 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &arg_merges,
 /// \brief Make clusters (represented in a hierarchy object) at the specified cutoffs from
 ///        the specified merges and then sort it based on the specified sorting indices for the items
 ///
-/// \pre `is_sorted( arg_cutoffs )`
-hierarchy cath::clust::make_clusters_from_merges_and_sort(const merge_vec    &arg_merges,          ///< The ordered list of merges to determine the clusters
-                                                          const size_vec     &arg_sorting_indices, ///< Values corresponding to each of the entries such that one value is less than another if the corresponding entry should be sorted before the other
-                                                          const strength_vec &arg_cutoffs          ///< The cutoffs at which the clusters should be drawn, in ascending order
+/// \pre `is_sorted( prm_cutoffs )`
+hierarchy cath::clust::make_clusters_from_merges_and_sort(const merge_vec    &prm_merges,          ///< The ordered list of merges to determine the clusters
+                                                          const size_vec     &prm_sorting_indices, ///< Values corresponding to each of the entries such that one value is less than another if the corresponding entry should be sorted before the other
+                                                          const strength_vec &prm_cutoffs          ///< The cutoffs at which the clusters should be drawn, in ascending order
                                                           ) {
 	return sort_hierarchy_copy(
 		make_clusters_from_merges(
-			arg_merges,
-			debug_numeric_cast<item_idx>( arg_sorting_indices.size() ),
-			arg_cutoffs
+			prm_merges,
+			debug_numeric_cast<item_idx>( prm_sorting_indices.size() ),
+			prm_cutoffs
 		),
-		arg_sorting_indices
+		prm_sorting_indices
 	);
 
 }

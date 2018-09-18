@@ -34,15 +34,15 @@ namespace cath {
 		///        which is tied to the specified calc_hits_list with the specified index 
 		///
 		/// \relates scored_arch_proxy
-		bool overlaps_with(const scored_arch_proxy &arg_scored_arch_proxy, ///< The scored_arch_proxy to look for overlaps with
-		                   const calc_hit          &arg_hit,               ///< The hit to look for overlaps with
-		                   const calc_hit_list     &arg_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
+		bool overlaps_with(const scored_arch_proxy &prm_scored_arch_proxy, ///< The scored_arch_proxy to look for overlaps with
+		                   const calc_hit          &prm_hit,               ///< The hit to look for overlaps with
+		                   const calc_hit_list     &prm_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
 		                   ) {
 			return boost::algorithm::any_of(
-				arg_scored_arch_proxy
-					| boost::adaptors::transformed( [&] (const hitidx_t &x) { return arg_calc_hit_list[ x ]; } ),
+				prm_scored_arch_proxy
+					| boost::adaptors::transformed( [&] (const hitidx_t &x) { return prm_calc_hit_list[ x ]; } ),
 				[&] (const calc_hit &x) {
-					return are_overlapping( x, arg_hit );
+					return are_overlapping( x, prm_hit );
 				}
 			);
 		}
@@ -51,14 +51,14 @@ namespace cath {
 		///        which is tied to the specified calc_hits_list with the specified index
 		///
 		/// \relates scored_arch_proxy
-		bool overlaps_with(const scored_arch_proxy &arg_scored_arch_proxy, ///< The scored_arch_proxy to look for overlaps with
-		                   const hitidx_t          &arg_hit_index,         ///< The index of the hit to look for overlaps with
-		                   const calc_hit_list     &arg_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
+		bool overlaps_with(const scored_arch_proxy &prm_scored_arch_proxy, ///< The scored_arch_proxy to look for overlaps with
+		                   const hitidx_t          &prm_hit_index,         ///< The index of the hit to look for overlaps with
+		                   const calc_hit_list     &prm_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
 		                   ) {
 			return overlaps_with(
-				arg_scored_arch_proxy,
-				arg_calc_hit_list[ arg_hit_index ],
-				arg_calc_hit_list
+				prm_scored_arch_proxy,
+				prm_calc_hit_list[ prm_hit_index ],
+				prm_calc_hit_list
 			);
 		}
 
@@ -67,13 +67,13 @@ namespace cath {
 		///        and if not, add the hit to the proxy
 		///
 		/// \relates scored_arch_proxy
-		inline void add_hit_if_does_not_overlap(scored_arch_proxy   &arg_scored_arch_proxy, ///< The scored_arch_proxy to which the hit should potentially be added
-		                                        const resscr_t      &arg_score,             ///< The score associated with the hit to add
-		                                        const hitidx_t      &arg_hit_index,         ///< The index of the hit to add
-		                                        const calc_hit_list &arg_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
+		inline void add_hit_if_does_not_overlap(scored_arch_proxy   &prm_scored_arch_proxy, ///< The scored_arch_proxy to which the hit should potentially be added
+		                                        const resscr_t      &prm_score,             ///< The score associated with the hit to add
+		                                        const hitidx_t      &prm_hit_index,         ///< The index of the hit to add
+		                                        const calc_hit_list &prm_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
 		                                        ) {
-			if ( ! overlaps_with( arg_scored_arch_proxy, arg_hit_index, arg_calc_hit_list ) ) {
-				arg_scored_arch_proxy.add_hit( arg_score, arg_hit_index );
+			if ( ! overlaps_with( prm_scored_arch_proxy, prm_hit_index, prm_calc_hit_list ) ) {
+				prm_scored_arch_proxy.add_hit( prm_score, prm_hit_index );
 			}
 		}
 

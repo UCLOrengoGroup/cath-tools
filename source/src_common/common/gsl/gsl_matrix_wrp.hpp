@@ -40,9 +40,9 @@ namespace cath {
 				gsl_matrix_wrp() = delete;
 
 				/// \brief Ctor that wraps call to gsl_matrix_alloc()
-				gsl_matrix_wrp(const size_t &arg_n1, ///< The first  dimension of the matrix
-				               const size_t &arg_n2  ///< The second dimension of the matrix
-				               ) : ptr{ gsl_matrix_alloc( arg_n1, arg_n2 ) } {
+				gsl_matrix_wrp(const size_t &prm_n1, ///< The first  dimension of the matrix
+				               const size_t &prm_n2  ///< The second dimension of the matrix
+				               ) : ptr{ gsl_matrix_alloc( prm_n1, prm_n2 ) } {
 					if ( ptr == nullptr ) {
 						BOOST_THROW_EXCEPTION(common::runtime_error_exception("Was unable to allocate gsl_matrix"));
 					}
@@ -62,19 +62,19 @@ namespace cath {
 				gsl_matrix_wrp(const gsl_matrix_wrp &) = delete; ///< Make move-only
 
 				/// \brief Move ctor that sets RHS's ptr to null after the move
-				gsl_matrix_wrp(gsl_matrix_wrp &&arg_rhs ///< The gsl_matrix_wrp to move into this
-				               ) : ptr { std::move( arg_rhs.ptr ) } {
-					arg_rhs.ptr = nullptr;
+				gsl_matrix_wrp(gsl_matrix_wrp &&prm_rhs ///< The gsl_matrix_wrp to move into this
+				               ) : ptr { std::move( prm_rhs.ptr ) } {
+					prm_rhs.ptr = nullptr;
 				}
 
 				gsl_matrix_wrp & operator=(const gsl_matrix_wrp &) = delete; ///< Make move-only
 
 				/// \brief Move assignment operator that sets RHS's ptr to null after the move
-				gsl_matrix_wrp & operator=(gsl_matrix_wrp &&arg_rhs ///< The gsl_matrix_wrp to move into this
+				gsl_matrix_wrp & operator=(gsl_matrix_wrp &&prm_rhs ///< The gsl_matrix_wrp to move into this
 				                           ) {
-					if ( this != &arg_rhs ) {
-						ptr = std::move( arg_rhs.ptr );
-						arg_rhs.ptr = nullptr;
+					if ( this != &prm_rhs ) {
+						ptr = std::move( prm_rhs.ptr );
+						prm_rhs.ptr = nullptr;
 					}
 					return *this;
 				}
@@ -103,41 +103,41 @@ namespace cath {
 			/// \brief Generate a string describing the specified gsl_matrix_wrp
 			///
 			/// \relates to_string
-			inline std::string to_string(const gsl_matrix_wrp &arg_matrix_wrap ///< The gsl_matrix_wrp to describe
+			inline std::string to_string(const gsl_matrix_wrp &prm_matrix_wrap ///< The gsl_matrix_wrp to describe
 			                             ) {
 				using std::to_string;
 				return "gsl_matrix_wrp["
-					       + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 0, 0 ) )
-					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 0, 1 ) )
-					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 0, 2 ) )
+					       + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 0, 0 ) )
+					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 0, 1 ) )
+					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 0, 2 ) )
 
-					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 1, 0 ) )
-					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 1, 1 ) )
-					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 1, 2 ) )
+					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 1, 0 ) )
+					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 1, 1 ) )
+					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 1, 2 ) )
 
-					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 2, 0 ) )
-					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 2, 1 ) )
-					+ ", " + to_string( gsl_matrix_get( arg_matrix_wrap.get_ptr(), 2, 2 ) )
+					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 2, 0 ) )
+					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 2, 1 ) )
+					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 2, 2 ) )
 					+ "]";
 			}
 
 			/// \brief Increment the specified cell of the specified gsl_matrix_wrp by the specified amount
 			///
 			/// \relates gsl_matrix_wrp
-			inline void gsl_matrix_wrp_increment(gsl_matrix_wrp &arg_matrix_wrap, ///< The gsl_matrix_wrp to modify
-			                                     const size_t   &arg_row_index,   ///< The row_index of the cell to modify
-			                                     const size_t   &arg_col_index,   ///< The column index of the cell to modify
-			                                     const double   &arg_addend       ///< The amount to add to the cell
+			inline void gsl_matrix_wrp_increment(gsl_matrix_wrp &prm_matrix_wrap, ///< The gsl_matrix_wrp to modify
+			                                     const size_t   &prm_row_index,   ///< The row_index of the cell to modify
+			                                     const size_t   &prm_col_index,   ///< The column index of the cell to modify
+			                                     const double   &prm_addend       ///< The amount to add to the cell
 			                                     ) {
 				gsl_matrix_set(
-					arg_matrix_wrap.get_ptr(),
-					arg_row_index,
-					arg_col_index,
+					prm_matrix_wrap.get_ptr(),
+					prm_row_index,
+					prm_col_index,
 					gsl_matrix_get(
-						arg_matrix_wrap.get_ptr(),
-						arg_row_index,
-						arg_col_index
-					) + arg_addend
+						prm_matrix_wrap.get_ptr(),
+						prm_row_index,
+						prm_col_index
+					) + prm_addend
 				);
 			}
 

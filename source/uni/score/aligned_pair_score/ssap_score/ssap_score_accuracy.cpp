@@ -36,9 +36,9 @@ map<ssap_score_accuracy, string> name_of_ssap_score_accuracy::get() {
 /// \brief TODOCUMENT
 ///
 /// \relates ssap_score_accuracy
-std::ostream & cath::score::operator<<(ostream                   &arg_os,                 ///< TODOCUMENT
-                                       const ssap_score_accuracy &arg_ssap_score_accuracy ///< TODOCUMENT
+std::ostream & cath::score::operator<<(ostream                   &prm_os,                 ///< TODOCUMENT
+                                       const ssap_score_accuracy &prm_ssap_score_accuracy ///< TODOCUMENT
                                        ) {
-	arg_os << name_of_ssap_score_accuracy::get().at( arg_ssap_score_accuracy );
-	return arg_os;
+	prm_os << name_of_ssap_score_accuracy::get().at( prm_ssap_score_accuracy );
+	return prm_os;
 }

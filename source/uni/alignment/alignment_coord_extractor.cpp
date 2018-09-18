@@ -44,23 +44,23 @@ using namespace std;
 
 using std::cref;
 
-alignment_coord_extractor::residue_cref_residue_cref_pair_vec alignment_coord_extractor::get_common_residues(const alignment                       &arg_alignment,        ///< The alignment to determine which residues should be as close as possible to which
-                                                                                                             const protein                         &arg_protein_a,        ///< Coordinates for first structure
-                                                                                                             const protein                         &arg_protein_b,        ///< Coordinates for second structure
-                                                                                                             const common_residue_selection_policy &arg_res_seln_policy,  ///< TODOCUMENT
-                                                                                                             const alignment::size_type            &arg_entry_index_a,    ///< TODOCUMENT
-                                                                                                             const alignment::size_type            &arg_entry_index_b     ///< TODOCUMENT
+alignment_coord_extractor::residue_cref_residue_cref_pair_vec alignment_coord_extractor::get_common_residues(const alignment                       &prm_alignment,        ///< The alignment to determine which residues should be as close as possible to which
+                                                                                                             const protein                         &prm_protein_a,        ///< Coordinates for first structure
+                                                                                                             const protein                         &prm_protein_b,        ///< Coordinates for second structure
+                                                                                                             const common_residue_selection_policy &prm_res_seln_policy,  ///< TODOCUMENT
+                                                                                                             const alignment::size_type            &prm_entry_index_a,    ///< TODOCUMENT
+                                                                                                             const alignment::size_type            &prm_entry_index_b     ///< TODOCUMENT
                                                                                                              ) {
 	using aln_size_type = alignment::size_type;
-//	const aln_size_type alignment_length = arg_alignment.length();
+//	const aln_size_type alignment_length = prm_alignment.length();
 
 	// Use the common_residue_selection_policy to determine which indices to grab
-	const vector<aln_size_type> selection_aln_indices = arg_res_seln_policy.select_common_residues(arg_alignment, arg_entry_index_a, arg_entry_index_b);
+	const vector<aln_size_type> selection_aln_indices = prm_res_seln_policy.select_common_residues(prm_alignment, prm_entry_index_a, prm_entry_index_b);
 
 	// TODOCUMENT
 	for (const aln_size_type &alignment_index : selection_aln_indices) {
-		const bool aln_has_posn_for_first_entry(  has_position_of_entry_of_index( arg_alignment, arg_entry_index_a, alignment_index) );
-		const bool aln_has_posn_for_second_entry( has_position_of_entry_of_index( arg_alignment, arg_entry_index_b, alignment_index) );
+		const bool aln_has_posn_for_first_entry(  has_position_of_entry_of_index( prm_alignment, prm_entry_index_a, alignment_index) );
+		const bool aln_has_posn_for_second_entry( has_position_of_entry_of_index( prm_alignment, prm_entry_index_b, alignment_index) );
 		if ( ! aln_has_posn_for_first_entry || ! aln_has_posn_for_second_entry ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to retrieve both entries for alignment index selected by common_residue_selection_policy"));
 		}
@@ -69,10 +69,10 @@ alignment_coord_extractor::residue_cref_residue_cref_pair_vec alignment_coord_ex
 	// Fill array with coordinates
 	residue_cref_residue_cref_pair_vec residues;
 	for (const aln_size_type &alignment_index : selection_aln_indices) {
-		const aln_posn_type a_position = get_position_of_entry_of_index( arg_alignment, arg_entry_index_a, alignment_index );
-		const aln_posn_type b_position = get_position_of_entry_of_index( arg_alignment, arg_entry_index_b, alignment_index );
-		const residue      &residue_a  = arg_protein_a.get_residue_ref_of_index( a_position );
-		const residue      &residue_b  = arg_protein_b.get_residue_ref_of_index( b_position );
+		const aln_posn_type a_position = get_position_of_entry_of_index( prm_alignment, prm_entry_index_a, alignment_index );
+		const aln_posn_type b_position = get_position_of_entry_of_index( prm_alignment, prm_entry_index_b, alignment_index );
+		const residue      &residue_a  = prm_protein_a.get_residue_ref_of_index( a_position );
+		const residue      &residue_b  = prm_protein_b.get_residue_ref_of_index( b_position );
 
 //		if ( ! residue_a.get_pdb_name_number() &&  ! residue_b.get_pdb_name_number() ) {
 //			BOOST_THROW_EXCEPTION(runtime_error_exception(
@@ -94,33 +94,33 @@ alignment_coord_extractor::residue_cref_residue_cref_pair_vec alignment_coord_ex
 /// \brief A static method to get the common coordinates, as defined by an alignment, from two protein objects.
 ///
 /// See alignment_coord_extractor for more information.
-pair<coord_list_vec, coord_list_vec> alignment_coord_extractor::get_common_coords_by_residue(const alignment                       &arg_alignment,        ///< The alignment to determine which residues should be as close as possible to which
-                                                                                             const protein                         &arg_protein_a,        ///< Coordinates for first structure
-                                                                                             const protein                         &arg_protein_b,        ///< Coordinates for second structure
-                                                                                             const common_residue_selection_policy &arg_res_seln_policy,  ///< TODOCUMENT
-                                                                                             const common_atom_selection_policy    &arg_atom_seln_policy, ///< TODOCUMENT
-                                                                                             const alignment::size_type            &arg_entry_index_a,    ///< TODOCUMENT
-                                                                                             const alignment::size_type            &arg_entry_index_b     ///< TODOCUMENT
+pair<coord_list_vec, coord_list_vec> alignment_coord_extractor::get_common_coords_by_residue(const alignment                       &prm_alignment,        ///< The alignment to determine which residues should be as close as possible to which
+                                                                                             const protein                         &prm_protein_a,        ///< Coordinates for first structure
+                                                                                             const protein                         &prm_protein_b,        ///< Coordinates for second structure
+                                                                                             const common_residue_selection_policy &prm_res_seln_policy,  ///< TODOCUMENT
+                                                                                             const common_atom_selection_policy    &prm_atom_seln_policy, ///< TODOCUMENT
+                                                                                             const alignment::size_type            &prm_entry_index_a,    ///< TODOCUMENT
+                                                                                             const alignment::size_type            &prm_entry_index_b     ///< TODOCUMENT
                                                                                              ) {
 	const residue_cref_residue_cref_pair_vec residues = get_common_residues(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b,
-		arg_res_seln_policy,
-		arg_entry_index_a,
-		arg_entry_index_b
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b,
+		prm_res_seln_policy,
+		prm_entry_index_a,
+		prm_entry_index_b
 	);
 
 	// Declare 2 vectors of coordinates
 	pair<coord_list_vec, coord_list_vec> coord_lists;
-	coord_lists.first.reserve(  arg_alignment.length() );
-	coord_lists.second.reserve( arg_alignment.length() );
+	coord_lists.first.reserve(  prm_alignment.length() );
+	coord_lists.second.reserve( prm_alignment.length() );
 
 	// Fill array with coordinates
 	for (const residue_cref_residue_cref_pair &residue_pair : residues) {
 		// Use the common_atom_selection_policy to perform the common atom selections
 		const pair<coord_list, coord_list> new_residue_coord_lists = select_common_atoms(
-			arg_atom_seln_policy,
+			prm_atom_seln_policy,
 			residue_pair.first.get(),
 			residue_pair.second.get()
 		);
@@ -134,32 +134,32 @@ pair<coord_list_vec, coord_list_vec> alignment_coord_extractor::get_common_coord
 /// \brief A static method to get the common coordinates, as defined by an alignment, from two protein objects.
 ///
 /// See alignment_coord_extractor for more information.
-pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const alignment                       &arg_alignment,        ///< The alignment to determine which residues should be as close as possible to which
-                                                                          const protein                         &arg_protein_a,        ///< Coordinates for first structure
-                                                                          const protein                         &arg_protein_b,        ///< Coordinates for second structure
-                                                                          const common_residue_selection_policy &arg_res_seln_policy,  ///< TODOCUMENT
-                                                                          const common_atom_selection_policy    &arg_atom_seln_policy, ///< TODOCUMENT
-                                                                          const alignment::size_type            &arg_entry_index_a,    ///< TODOCUMENT
-                                                                          const alignment::size_type            &arg_entry_index_b     ///< TODOCUMENT
+pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const alignment                       &prm_alignment,        ///< The alignment to determine which residues should be as close as possible to which
+                                                                          const protein                         &prm_protein_a,        ///< Coordinates for first structure
+                                                                          const protein                         &prm_protein_b,        ///< Coordinates for second structure
+                                                                          const common_residue_selection_policy &prm_res_seln_policy,  ///< TODOCUMENT
+                                                                          const common_atom_selection_policy    &prm_atom_seln_policy, ///< TODOCUMENT
+                                                                          const alignment::size_type            &prm_entry_index_a,    ///< TODOCUMENT
+                                                                          const alignment::size_type            &prm_entry_index_b     ///< TODOCUMENT
                                                                           ) {
 	const residue_cref_residue_cref_pair_vec residues = get_common_residues(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b,
-		arg_res_seln_policy,
-		arg_entry_index_a,
-		arg_entry_index_b
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b,
+		prm_res_seln_policy,
+		prm_entry_index_a,
+		prm_entry_index_b
 	);
 
 	// Declare 2 vectors of coordinates
 	pair<coord_list, coord_list> coord_lists;
-	coord_lists.first.reserve(  arg_alignment.length() );
-	coord_lists.second.reserve( arg_alignment.length() );
+	coord_lists.first.reserve(  prm_alignment.length() );
+	coord_lists.second.reserve( prm_alignment.length() );
 
 	// Fill array with coordinates
 	for (const residue_cref_residue_cref_pair &residue_pair : residues) {
 		// Use the common_atom_selection_policy to perform the common atom selections
-		arg_atom_seln_policy.append_common_atoms_to_coord_lists( coord_lists, residue_pair.first.get(), residue_pair.second.get() );
+		prm_atom_seln_policy.append_common_atoms_to_coord_lists( coord_lists, residue_pair.first.get(), residue_pair.second.get() );
 	}
 
 	return coord_lists;
@@ -171,21 +171,21 @@ pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const 
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
 ///       (fix all errors, *then* provide default of boost::none)
-pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const alignment                       &arg_alignment,        ///< The alignment to determine which residues should be as close as possible to which
-                                                                          const pdb                             &arg_pdb_a,            ///< Coordinates for first structure
-                                                                          const pdb                             &arg_pdb_b,            ///< Coordinates for second structure
-                                                                          const common_residue_selection_policy &arg_res_seln_policy,  ///< TODOCUMENT
-                                                                          const common_atom_selection_policy    &arg_atom_seln_policy, ///< TODOCUMENT
-                                                                          const alignment::size_type            &arg_entry_index_a,    ///< TODOCUMENT
-                                                                          const alignment::size_type            &arg_entry_index_b     ///< TODOCUMENT
+pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const alignment                       &prm_alignment,        ///< The alignment to determine which residues should be as close as possible to which
+                                                                          const pdb                             &prm_pdb_a,            ///< Coordinates for first structure
+                                                                          const pdb                             &prm_pdb_b,            ///< Coordinates for second structure
+                                                                          const common_residue_selection_policy &prm_res_seln_policy,  ///< TODOCUMENT
+                                                                          const common_atom_selection_policy    &prm_atom_seln_policy, ///< TODOCUMENT
+                                                                          const alignment::size_type            &prm_entry_index_a,    ///< TODOCUMENT
+                                                                          const alignment::size_type            &prm_entry_index_b     ///< TODOCUMENT
                                                                           ) {
 	return get_common_coords(
-		arg_alignment,
-		build_protein_of_pdb( arg_pdb_a, ref( cerr ) ).first,
-		build_protein_of_pdb( arg_pdb_b, ref( cerr ) ).first,
-		arg_res_seln_policy,
-		arg_atom_seln_policy,
-		arg_entry_index_a,
-		arg_entry_index_b
+		prm_alignment,
+		build_protein_of_pdb( prm_pdb_a, ref( cerr ) ).first,
+		build_protein_of_pdb( prm_pdb_b, ref( cerr ) ).first,
+		prm_res_seln_policy,
+		prm_atom_seln_policy,
+		prm_entry_index_a,
+		prm_entry_index_b
 	);
 }

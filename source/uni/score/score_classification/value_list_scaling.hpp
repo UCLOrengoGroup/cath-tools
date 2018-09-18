@@ -47,10 +47,10 @@ namespace cath {
 		};
 
 		/// \brief Ctor from the multiplier (m) and constant (c)
-		inline constexpr value_list_scaling::value_list_scaling(const double &arg_multiplier, ///< The multiplier by which values should be multiplied
-		                                                        const double &arg_constant    ///< The constant by which the multiplied values should be increased
-		                                                        ) : multiplier ( arg_multiplier ),
-		                                                            constant   ( arg_constant   ) {
+		inline constexpr value_list_scaling::value_list_scaling(const double &prm_multiplier, ///< The multiplier by which values should be multiplied
+		                                                        const double &prm_constant    ///< The constant by which the multiplied values should be increased
+		                                                        ) : multiplier ( prm_multiplier ),
+		                                                            constant   ( prm_constant   ) {
 		}
 
 		/// \brief Getter for the multiplier

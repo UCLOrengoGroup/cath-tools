@@ -39,9 +39,9 @@ using std::ostream;
 using std::string;
 
 /// \brief TODOCUMENT
-void superposition_outputter_list::push_back(const superposition_outputter &arg_outputter ///< TODOCUMENT
+void superposition_outputter_list::push_back(const superposition_outputter &prm_outputter ///< TODOCUMENT
                                              ) {
-	cath::common::push_back( outputters, arg_outputter.clone() );
+	cath::common::push_back( outputters, prm_outputter.clone() );
 }
 
 /// \brief Return the number of outputters currently in the list
@@ -67,11 +67,11 @@ superposition_outputter_list::const_iterator superposition_outputter_list::end()
 /// \brief Generate a string describing the specified superposition_outputter_list
 ///
 /// \relates superposition_outputter_list
-string cath::opts::to_string(const superposition_outputter_list &arg_superposition_outputters ///< Generate a string describing the specified superposition_outputter_list
+string cath::opts::to_string(const superposition_outputter_list &prm_superposition_outputters ///< Generate a string describing the specified superposition_outputter_list
                              ) {
 	return "superposition_outputter_list[ "
 		+ join(
-			arg_superposition_outputters
+			prm_superposition_outputters
 				| transformed( [] (const superposition_outputter &x) {
 					return x.get_name();
 				} ),
@@ -83,32 +83,32 @@ string cath::opts::to_string(const superposition_outputter_list &arg_superpositi
 /// \brief Insert a description of the specified superposition_outputter_list into the specified ostream
 ///
 /// \relates superposition_outputter_list
-ostream & cath::opts::operator<<(ostream                            &arg_os,                      ///< The ostream into which the description should be inserted
-                                 const superposition_outputter_list &arg_superposition_outputters ///< Generate a string describing the specified superposition_outputter_list
+ostream & cath::opts::operator<<(ostream                            &prm_os,                      ///< The ostream into which the description should be inserted
+                                 const superposition_outputter_list &prm_superposition_outputters ///< Generate a string describing the specified superposition_outputter_list
                                  ) {
-	arg_os << to_string( arg_superposition_outputters );
-	return arg_os;
+	prm_os << to_string( prm_superposition_outputters );
+	return prm_os;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition_outputter_list
-void cath::opts::use_all_superposition_outputters(const superposition_outputter_list &arg_superposition_outputters, ///< TODOCUMENT
-                                                  const superposition_context        &arg_superposition_context,    ///< TODOCUMENT
-                                                  ostream                            &arg_stdout,                   ///< TODOCUMENT
-                                                  ostream                            &/*arg_stderr*/,               ///< TODOCUMENT
-                                                  const string_ref                   &arg_name                      ///< A name for the superposition (so users of the superposition know what it represents)
+void cath::opts::use_all_superposition_outputters(const superposition_outputter_list &prm_superposition_outputters, ///< TODOCUMENT
+                                                  const superposition_context        &prm_superposition_context,    ///< TODOCUMENT
+                                                  ostream                            &prm_stdout,                   ///< TODOCUMENT
+                                                  ostream                            &/*prm_stderr*/,               ///< TODOCUMENT
+                                                  const string_ref                   &prm_name                      ///< A name for the superposition (so users of the superposition know what it represents)
                                                   ) {
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
-	for (const superposition_outputter &outputter : arg_superposition_outputters) {
-		outputter.output_superposition( arg_superposition_context, arg_stdout, arg_name );
+	for (const superposition_outputter &outputter : prm_superposition_outputters) {
+		outputter.output_superposition( prm_superposition_context, prm_stdout, prm_name );
 	}
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates superposition_outputter_list
-bool cath::opts::any_superposition_outputters_involve_display_spec(const superposition_outputter_list &arg_superposition_outputters ///< TODOCUMENT
+bool cath::opts::any_superposition_outputters_involve_display_spec(const superposition_outputter_list &prm_superposition_outputters ///< TODOCUMENT
                                                                    ) {
-	return any_of( arg_superposition_outputters, [] (const superposition_outputter &x) { return x.involves_display_spec(); } );
+	return any_of( prm_superposition_outputters, [] (const superposition_outputter &x) { return x.involves_display_spec(); } );
 }

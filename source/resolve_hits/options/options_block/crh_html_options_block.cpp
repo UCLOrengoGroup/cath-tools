@@ -62,8 +62,8 @@ string crh_html_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void crh_html_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                   const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void crh_html_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                   const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	const string num_varname { "<num>" };
 
@@ -71,7 +71,7 @@ void crh_html_options_block::do_add_visible_options_to_description(options_descr
 	const auto max_num_non_soln_hits_notifier         = [&] (const size_t &x) { the_spec.set_max_num_non_soln_hits    ( x ); };
 	const auto exclude_rejected_hits_notifier         = [&] (const bool   &x) { the_spec.set_exclude_rejected_hits    ( x ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			( PO_RESTRICT_HTML_WITHIN_BODY ).c_str(),
 			bool_switch()
@@ -104,7 +104,7 @@ void crh_html_options_block::do_add_visible_options_to_description(options_descr
 
 /// \brief Generate a description of any problem that makes the specified crh_html_options_block invalid
 ///        or none otherwise
-str_opt crh_html_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt crh_html_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                   ) const {
 	return none;
 }

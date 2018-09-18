@@ -37,19 +37,19 @@ namespace cath {
 				/// \brief Hash class that uses the standard hash for non-tuple types
 				template <typename T>
 				struct hash {
-					size_t operator()(const T &arg_value
+					size_t operator()(const T &prm_value
 					                  ) const {
-						return std::hash<T>()( arg_value );
+						return std::hash<T>()( prm_value );
 					}
 				};
 
 				/// \brief Hash class for res_pair_dirn
 				template <>
 				struct hash<res_pair_dirn> {
-					size_t operator()(const res_pair_dirn &arg_value ///< The res_pair_dirn value
+					size_t operator()(const res_pair_dirn &prm_value ///< The res_pair_dirn value
 					                  ) const {
 						using res_pair_dirn_ut = typename std::underlying_type<res_pair_dirn>::type;
-						return std::hash<res_pair_dirn_ut>()( static_cast<res_pair_dirn_ut>( arg_value ) );
+						return std::hash<res_pair_dirn_ut>()( static_cast<res_pair_dirn_ut>( prm_value ) );
 					}
 				};
 
@@ -58,10 +58,10 @@ namespace cath {
 					/// \brief Method of hashing a new value into existing seed
 					///        (using hash_tuple::hash which uses std::hash<>)
 					template <class T>
-					inline void hash_combine(std::size_t &arg_seed, ///< The seed to update to reflect the addition of arg_value
-					                         const T     &arg_value ///< The new value
+					inline void hash_combine(std::size_t &prm_seed, ///< The seed to update to reflect the addition of prm_value
+					                         const T     &prm_value ///< The new value
 					                         ) {
-						common::hash_value_combine( arg_seed, hash_tuple::hash<T>()( arg_value ) );
+						common::hash_value_combine( prm_seed, hash_tuple::hash<T>()( prm_value ) );
 					}
 
 					/// \brief Recursive template for hashing tuples
@@ -70,10 +70,10 @@ namespace cath {
 
 						/// \brief Apply the hash method to the existing seed and remaining value
 						static void apply(size_t      &seed,
-						                  const Tuple &arg_value ///< The new value
+						                  const Tuple &prm_value ///< The new value
 						                  ) {
-							HashValueImpl<Tuple, Index - 1>::apply( seed, arg_value );
-							hash_combine( seed, std::get<Index>( arg_value ) );
+							HashValueImpl<Tuple, Index - 1>::apply( seed, prm_value );
+							hash_combine( seed, std::get<Index>( prm_value ) );
 						}
 					};
 
@@ -83,9 +83,9 @@ namespace cath {
 
 						/// \brief Apply the has method to the existing seed and the single remaining value of the tuple
 						static void apply(size_t      &seed,
-						                  const Tuple &arg_value ///< The new value
+						                  const Tuple &prm_value ///< The new value
 						                  ) {
-							hash_combine( seed, std::get<0>( arg_value ) );
+							hash_combine( seed, std::get<0>( prm_value ) );
 						}
 					};
 				} // namespace detail
@@ -95,10 +95,10 @@ namespace cath {
 				struct hash<std::tuple<T...>> {
 
 					/// \brief Hash function that uses the above detail::HashValueImpl code
-					size_t operator()(const std::tuple<T...> &arg_value ///< The value to hash
+					size_t operator()(const std::tuple<T...> &prm_value ///< The value to hash
 					                  ) const {
 						size_t seed = 0;
-						detail::HashValueImpl<std::tuple<T...> >::apply( seed, arg_value );
+						detail::HashValueImpl<std::tuple<T...> >::apply( seed, prm_value );
 						return seed;
 					}
 				};

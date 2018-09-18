@@ -27,10 +27,10 @@ namespace cath {
 	namespace common {
 
 		/// \brief Add a new hash value into an existing hash seed
-		inline void hash_value_combine(size_t       &arg_seed,      ///< The seed into which the hash value should be incorporated
-		                               const size_t &arg_hash_value ///< The new hash value
+		inline void hash_value_combine(size_t       &prm_seed,      ///< The seed into which the hash value should be incorporated
+		                               const size_t &prm_hash_value ///< The new hash value
 		                               ) {
-			arg_seed ^= arg_hash_value + 0x9e3779b9 + ( arg_seed << 6 ) + ( arg_seed >> 2 );
+			prm_seed ^= prm_hash_value + 0x9e3779b9 + ( prm_seed << 6 ) + ( prm_seed >> 2 );
 		}
 
 	} // namespace common

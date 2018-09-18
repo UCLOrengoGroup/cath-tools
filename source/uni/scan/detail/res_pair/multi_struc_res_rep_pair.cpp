@@ -24,17 +24,17 @@ using namespace cath::scan::detail;
 using namespace std;
 
 /// \brief TODOCUMENT
-ostream & cath::scan::detail::operator<<(ostream                &arg_os,      ///< TODOCUMENT
-                                         const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
+ostream & cath::scan::detail::operator<<(ostream                &prm_os,      ///< TODOCUMENT
+                                         const multi_struc_res_rep_pair &prm_res_pair ///< TODOCUMENT
                                          ) {
-	arg_os << "res_pair[struc: ";
-	arg_os << arg_res_pair.get_structure_index();
-	arg_os << "; from_rep: ";
-	arg_os << arg_res_pair.get_from_res_rep_index();
-	arg_os << "; to_rep: ";
-	arg_os << arg_res_pair.get_to_res_rep_index();
-	arg_os << "; ";
-	arg_os << arg_res_pair.get_res_pair_core();
-	arg_os << "]";
-	return arg_os;
+	prm_os << "res_pair[struc: ";
+	prm_os << prm_res_pair.get_structure_index();
+	prm_os << "; from_rep: ";
+	prm_os << prm_res_pair.get_from_res_rep_index();
+	prm_os << "; to_rep: ";
+	prm_os << prm_res_pair.get_to_res_rep_index();
+	prm_os << "; ";
+	prm_os << prm_res_pair.get_res_pair_core();
+	prm_os << "]";
+	return prm_os;
 }

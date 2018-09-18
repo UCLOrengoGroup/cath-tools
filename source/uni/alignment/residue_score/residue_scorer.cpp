@@ -45,12 +45,12 @@ using boost::filesystem::path;
 using boost::range::set_intersection;
 
 /// \brief TODOCUMENT
-alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alignment    &arg_alignment, ///< TODOCUMENT
-                                                                      const protein_list &arg_proteins   ///< TODOCUMENT
+alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alignment    &prm_alignment, ///< TODOCUMENT
+                                                                      const protein_list &prm_proteins   ///< TODOCUMENT
                                                                       ) const {
 	// Grab the num_entries and length of the alignment and sanity check that there are at least two entries
-	const size_t num_entries = arg_alignment.num_entries();
-	const size_t length      = arg_alignment.length();
+	const size_t num_entries = prm_alignment.num_entries();
+	const size_t length      = prm_alignment.length();
 	if ( num_entries <= 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot score alignment with fewer than two entries"));
 	}
@@ -59,17 +59,17 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 	float_score_vec_vec denominators( num_entries, float_score_vec( length, 0.0 ) );
 
 //	cerr << "Attempting to residue score : " << endl;
-//	cerr << horiz_align_outputter( arg_alignment ) << endl;
+//	cerr << horiz_align_outputter( prm_alignment ) << endl;
 
 	/// Loop down the length of the alignment
 	for (const size_t &from_index : indices( length ) ) {
-		const size_vec from_entries = entries_present_at_index( arg_alignment, from_index );
+		const size_vec from_entries = entries_present_at_index( prm_alignment, from_index );
 		if ( from_entries.size() <= 1 ) {
 			continue;
 		}
 
 		for (const size_t &to_index : indices( length ) ) {
-			const size_vec to_entries = entries_present_at_index( arg_alignment, to_index );
+			const size_vec to_entries = entries_present_at_index( prm_alignment, to_index );
 			if ( to_entries.size() <= 1 ) {
 				continue;
 			}
@@ -120,14 +120,14 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 
 //						cerr << "\t\tEntry\t" << common_entry_a << " and\t" << common_entry_b << endl;
 
-						const protein       &protein_a   = arg_proteins[ common_entry_a ];
-						const protein       &protein_b   = arg_proteins[ common_entry_b ];
+						const protein       &protein_a   = prm_proteins[ common_entry_a ];
+						const protein       &protein_b   = prm_proteins[ common_entry_b ];
 
-						const aln_posn_type  posn_a_from = get_position_of_entry_of_index( arg_alignment, common_entry_a, from_index );
-						const aln_posn_type  posn_b_from = get_position_of_entry_of_index( arg_alignment, common_entry_b, from_index );
+						const aln_posn_type  posn_a_from = get_position_of_entry_of_index( prm_alignment, common_entry_a, from_index );
+						const aln_posn_type  posn_b_from = get_position_of_entry_of_index( prm_alignment, common_entry_b, from_index );
 
-						const aln_posn_type  posn_a_to   = get_position_of_entry_of_index( arg_alignment, common_entry_a, to_index   );
-						const aln_posn_type  posn_b_to   = get_position_of_entry_of_index( arg_alignment, common_entry_b, to_index   );
+						const aln_posn_type  posn_a_to   = get_position_of_entry_of_index( prm_alignment, common_entry_a, to_index   );
+						const aln_posn_type  posn_b_to   = get_position_of_entry_of_index( prm_alignment, common_entry_b, to_index   );
 
 						const residue       &res_a_from  = protein_a.get_residue_ref_of_index( posn_a_from );
 						const residue       &res_b_from  = protein_b.get_residue_ref_of_index( posn_b_from );
@@ -159,7 +159,7 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 	score_opt_vec_vec scores( num_entries, score_opt_vec( length ) );
 	for (const size_t &index_ctr : indices( length ) ) {
 		for (const size_t &entry_ctr : indices( num_entries ) ) {
-			if ( has_position_of_entry_of_index( arg_alignment, entry_ctr, index_ctr ) ) {
+			if ( has_position_of_entry_of_index( prm_alignment, entry_ctr, index_ctr ) ) {
 				const float_score_type &numerator   = numerators  [ entry_ctr ][ index_ctr ];
 				const float_score_type &denominator = denominators[ entry_ctr ][ index_ctr ];
 				scores[ entry_ctr ][ index_ctr ] = ( denominator != 0.0 ) ? ( numerator / denominator ) : 0.0;
@@ -167,50 +167,50 @@ alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alig
 		}
 	}
 
-	return make_alignment_residue_scores( arg_alignment, scores );
+	return make_alignment_residue_scores( prm_alignment, scores );
 }
 
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_scorer
-void cath::align::score_alignment(const residue_scorer &arg_residue_scorer, ///< TODOCUMENT
-                                  alignment            &arg_alignment,      ///< TODOCUMENT
-                                  const protein_list   &arg_proteins        ///< TODOCUMENT
+void cath::align::score_alignment(const residue_scorer &prm_residue_scorer, ///< TODOCUMENT
+                                  alignment            &prm_alignment,      ///< TODOCUMENT
+                                  const protein_list   &prm_proteins        ///< TODOCUMENT
                                   ) {
-	const alignment_residue_scores the_scores = arg_residue_scorer.get_alignment_residue_scores(
-		arg_alignment,
-		arg_proteins
+	const alignment_residue_scores the_scores = prm_residue_scorer.get_alignment_residue_scores(
+		prm_alignment,
+		prm_proteins
 	);
-	arg_alignment.set_scores( the_scores );
+	prm_alignment.set_scores( the_scores );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_scorer
-alignment cath::align::score_alignment_copy(const residue_scorer &arg_residue_scorer, ///< TODOCUMENT
-                                            alignment             arg_alignment,      ///< TODOCUMENT
-                                            const protein_list   &arg_proteins        ///< TODOCUMENT
+alignment cath::align::score_alignment_copy(const residue_scorer &prm_residue_scorer, ///< TODOCUMENT
+                                            alignment             prm_alignment,      ///< TODOCUMENT
+                                            const protein_list   &prm_proteins        ///< TODOCUMENT
                                             ) {
-	score_alignment( arg_residue_scorer, arg_alignment, arg_proteins );
-	return arg_alignment;
+	score_alignment( prm_residue_scorer, prm_alignment, prm_proteins );
+	return prm_alignment;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates residue_scorer
-alignment cath::align::read_and_rescore_fasta_alignment(const path           &arg_fasta_aln_file, ///< TODOCUMENT
-                                                        const protein_list   &arg_proteins,       ///< TODOCUMENT
-                                                        const residue_scorer &arg_residue_scorer, ///< TODOCUMENT
-                                                        ostream              &arg_stderr          ///< TODOCUMENT
+alignment cath::align::read_and_rescore_fasta_alignment(const path           &prm_fasta_aln_file, ///< TODOCUMENT
+                                                        const protein_list   &prm_proteins,       ///< TODOCUMENT
+                                                        const residue_scorer &prm_residue_scorer, ///< TODOCUMENT
+                                                        ostream              &prm_stderr          ///< TODOCUMENT
                                                         ) {
 	return score_alignment_copy(
-		arg_residue_scorer,
+		prm_residue_scorer,
 		read_alignment_from_fasta_file(
-			arg_fasta_aln_file,
-			arg_proteins,
-			arg_stderr
+			prm_fasta_aln_file,
+			prm_proteins,
+			prm_stderr
 		),
-		arg_proteins
+		prm_proteins
 	);
 }

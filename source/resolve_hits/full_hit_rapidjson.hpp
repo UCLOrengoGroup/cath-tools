@@ -33,52 +33,52 @@ namespace cath {
 
 		/// \brief Write the specified full_hit to the specified rapidjson_writer
 		template <common::json_style Style>
-		void write_to_rapidjson(common::rapidjson_writer<Style> &arg_writer,                     ///< The rapidjson_writer to which the full_hit should be written
-		                        const full_hit                  &arg_full_hit,                   ///< The full_hit to write
-		                        const crh_segment_spec_opt      &arg_segment_spec = boost::none, ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
-		                        const full_hit_list_opt         &arg_hits         = boost::none  ///< An optional full_hit_list (from which the specified full_hit is drawn), which can be used for including the full_hit's resolved boundaries
+		void write_to_rapidjson(common::rapidjson_writer<Style> &prm_writer,                     ///< The rapidjson_writer to which the full_hit should be written
+		                        const full_hit                  &prm_full_hit,                   ///< The full_hit to write
+		                        const crh_segment_spec_opt      &prm_segment_spec = boost::none, ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
+		                        const full_hit_list_opt         &prm_hits         = boost::none  ///< An optional full_hit_list (from which the specified full_hit is drawn), which can be used for including the full_hit's resolved boundaries
 		                        ) {
-			arg_writer.start_object();
-			arg_writer.write_key_value( full_hit::get_label_name(),       arg_full_hit.get_label()                   );
-			arg_writer.write_key_value( full_hit::get_score_name(),       arg_full_hit.get_score()                   );
-			arg_writer.write_key_value( full_hit::get_score_type_name(),  to_string( arg_full_hit.get_score_type() ) );
-			arg_writer.write_key( full_hit::get_segments_name()   );
-			write_to_rapidjson( arg_writer, arg_full_hit.get_segments() );
-			if ( arg_segment_spec ) {
-				arg_writer.write_key( full_hit::get_trimmed_name() );
-				write_to_rapidjson( arg_writer, get_segments( arg_full_hit, arg_segment_spec->get_overlap_trim_spec() ) );
-				if ( arg_hits ) {
-					arg_writer.write_key( full_hit::get_resolved_name() );
-					write_to_rapidjson( arg_writer, get_present_segments( resolve_all_boundaries( arg_full_hit, *arg_hits, *arg_segment_spec ) ) );
+			prm_writer.start_object();
+			prm_writer.write_key_value( full_hit::get_label_name(),       prm_full_hit.get_label()                   );
+			prm_writer.write_key_value( full_hit::get_score_name(),       prm_full_hit.get_score()                   );
+			prm_writer.write_key_value( full_hit::get_score_type_name(),  to_string( prm_full_hit.get_score_type() ) );
+			prm_writer.write_key( full_hit::get_segments_name()   );
+			write_to_rapidjson( prm_writer, prm_full_hit.get_segments() );
+			if ( prm_segment_spec ) {
+				prm_writer.write_key( full_hit::get_trimmed_name() );
+				write_to_rapidjson( prm_writer, get_segments( prm_full_hit, prm_segment_spec->get_overlap_trim_spec() ) );
+				if ( prm_hits ) {
+					prm_writer.write_key( full_hit::get_resolved_name() );
+					write_to_rapidjson( prm_writer, get_present_segments( resolve_all_boundaries( prm_full_hit, *prm_hits, *prm_segment_spec ) ) );
 				}
 			}
-			const auto extras_store = arg_full_hit.get_extras_store();
+			const auto extras_store = prm_full_hit.get_extras_store();
 			for (const auto &extra_info_pair : extras_store) {
-				arg_writer.write_key( to_string( extra_info_pair.first ) );
-				invoke_for_hit_extra_info( [&] (const auto &x) { arg_writer.write_value( x ); }, extra_info_pair );
+				prm_writer.write_key( to_string( extra_info_pair.first ) );
+				invoke_for_hit_extra_info( [&] (const auto &x) { prm_writer.write_value( x ); }, extra_info_pair );
 			}
-			arg_writer.end_object();
+			prm_writer.end_object();
 		}
 
 
 		/// \brief Write the specified full_hit_list to the specified rapidjson_writer
 		template <common::json_style Style>
-		void write_to_rapidjson_with_compact_fullhits(common::rapidjson_writer<Style> &arg_writer,        ///< The rapidjson_writer to which the full_hit_list should be written
-		                                              const full_hit_list             &arg_full_hit_list, ///< The full_hit_list to write
-		                                              const crh_segment_spec_opt      &arg_segment_spec   ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
+		void write_to_rapidjson_with_compact_fullhits(common::rapidjson_writer<Style> &prm_writer,        ///< The rapidjson_writer to which the full_hit_list should be written
+		                                              const full_hit_list             &prm_full_hit_list, ///< The full_hit_list to write
+		                                              const crh_segment_spec_opt      &prm_segment_spec   ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
 		                                              ) {
-			arg_writer.start_array();
-			for (const auto &the_full_hit : arg_full_hit_list) {
-				arg_writer.write_raw_string(
+			prm_writer.start_array();
+			for (const auto &the_full_hit : prm_full_hit_list) {
+				prm_writer.write_raw_string(
 					common::to_rapidjson_string<common::json_style::COMPACT>(
 						the_full_hit,
 						0,
-						arg_segment_spec,
-						boost::make_optional( arg_full_hit_list )
+						prm_segment_spec,
+						boost::make_optional( prm_full_hit_list )
 					)
 				);
 			}
-			arg_writer.end_array();
+			prm_writer.end_array();
 		}
 
 	} // namespace rslv

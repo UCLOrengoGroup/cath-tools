@@ -139,9 +139,9 @@ namespace cath {
  	///
  	/// \returns A raw pointer to a new copy of the protein_source_file_set argument, with the same dynamic type.
  	///          The caller is responsible for deleting this new object.
- 	inline protein_source_file_set * new_clone(const protein_source_file_set &arg_protein_source_file_set ///< The protein_source_file_set to clone
+ 	inline protein_source_file_set * new_clone(const protein_source_file_set &prm_protein_source_file_set ///< The protein_source_file_set to clone
  	                                           ) {
- 	        return arg_protein_source_file_set.clone().release();
+ 	        return prm_protein_source_file_set.clone().release();
  	}
 } // namespace cath
 

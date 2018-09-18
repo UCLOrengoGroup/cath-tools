@@ -35,11 +35,11 @@ namespace cath {
 
 			/// \brief Two+ argument implementation for and-ing together all arguments
 			template <typename T, typename U, typename... Vs>
-			constexpr bool variadic_and_impl(const T  &arg_1,  ///< The first argument to and together
-			                                 const U  &arg_2,  ///< The second argument to and together
+			constexpr bool variadic_and_impl(const T  &prm_1,  ///< The first argument to and together
+			                                 const U  &prm_2,  ///< The second argument to and together
 			                                 const Vs &...args ///< Any remaining arguments to and together
 			                                 ) {
-				return arg_1 && variadic_and_impl( arg_2, args... );
+				return prm_1 && variadic_and_impl( prm_2, args... );
 			}
 
 			/// \brief Function object to logically "and" all the arguments

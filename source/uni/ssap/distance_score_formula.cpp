@@ -37,9 +37,9 @@ map<distance_score_formula, string> name_of_distance_score_formula::get() {
 /// \brief TODOCUMENT
 ///
 /// \relates distance_score_formula
-ostream & cath::operator<<(ostream                      &arg_os,                    ///< TODOCUMENT
-                           const distance_score_formula &arg_distance_score_formula ///< TODOCUMENT
+ostream & cath::operator<<(ostream                      &prm_os,                    ///< TODOCUMENT
+                           const distance_score_formula &prm_distance_score_formula ///< TODOCUMENT
 						   ) {
-	arg_os << name_of_distance_score_formula::get().at( arg_distance_score_formula );
-	return arg_os;
+	prm_os << name_of_distance_score_formula::get().at( prm_distance_score_formula );
+	return prm_os;
 }

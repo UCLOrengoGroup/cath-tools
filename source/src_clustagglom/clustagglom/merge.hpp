@@ -55,14 +55,14 @@ namespace cath {
 		};
 
 		/// \brief Ctor like aggregate-initialization
-		inline merge::merge(const item_idx &arg_node_a,     ///< The index of the first item to merge
-		                    const item_idx &arg_node_b,     ///< The index of the second item to merge
-		                    const item_idx &arg_merge_node, ///< The new number assigned for the newly created merge
-		                    const strength &arg_dissim      ///< The dissimilarity associated with this
-		                    ) : node_a    { arg_node_a     },
-		                        node_b    { arg_node_b     },
-		                        merge_node{ arg_merge_node },
-		                        dissim    { arg_dissim     } {
+		inline merge::merge(const item_idx &prm_node_a,     ///< The index of the first item to merge
+		                    const item_idx &prm_node_b,     ///< The index of the second item to merge
+		                    const item_idx &prm_merge_node, ///< The new number assigned for the newly created merge
+		                    const strength &prm_dissim      ///< The dissimilarity associated with this
+		                    ) : node_a    { prm_node_a     },
+		                        node_b    { prm_node_b     },
+		                        merge_node{ prm_merge_node },
+		                        dissim    { prm_dissim     } {
 		}
 
 		/// \brief Standard equality operator for merge
@@ -71,17 +71,17 @@ namespace cath {
 		///
 		/// Note that this requires the merge_node to be the same but it may be
 		/// worth having some operation that ignores that one field
-		inline bool operator==(const merge &arg_lhs, ///< The first  merge to compare
-		                       const merge &arg_rhs  ///< The second merge to compare
+		inline bool operator==(const merge &prm_lhs, ///< The first  merge to compare
+		                       const merge &prm_rhs  ///< The second merge to compare
 		                       ) {
 			return (
-				arg_lhs.node_a     == arg_rhs.node_a
+				prm_lhs.node_a     == prm_rhs.node_a
 				&&
-				arg_lhs.node_b     == arg_rhs.node_b
+				prm_lhs.node_b     == prm_rhs.node_b
 				&&
-				arg_lhs.merge_node == arg_rhs.merge_node
+				prm_lhs.merge_node == prm_rhs.merge_node
 				&&
-				arg_lhs.dissim     == arg_rhs.dissim
+				prm_lhs.dissim     == prm_rhs.dissim
 			);
 		}
 

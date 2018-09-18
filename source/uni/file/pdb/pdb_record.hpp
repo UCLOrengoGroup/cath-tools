@@ -42,26 +42,26 @@ namespace cath {
 
 		/// \brief Return the pdb_record corresponding to the specified substring
 		///
-		/// \pre arg_substring must refer to a string "ATOM  ", "ATOM" or "HETATM" else
+		/// \pre prm_substring must refer to a string "ATOM  ", "ATOM" or "HETATM" else
 		///      an invalid_argument_exception will be thrown
 		///
 		/// \todo Come C++17, convert this to use string_view rather than sub_range<const string>
-		inline pdb_record pdb_rec_of_substring(const boost::sub_range<const std::string> &arg_substring ///< The substring to examine
+		inline pdb_record pdb_rec_of_substring(const boost::sub_range<const std::string> &prm_substring ///< The substring to examine
 		                                       ) {
 			constexpr auto atom_6_str   = make_char_arr( "ATOM  " );
 			constexpr auto atom_4_str   = make_char_arr( "ATOM"   );
 			constexpr auto hetatm_6_str = make_char_arr( "HETATM" );
-			if ( boost::range::equal( arg_substring, atom_6_str ) || boost::range::equal( arg_substring, atom_4_str ) ) {
+			if ( boost::range::equal( prm_substring, atom_6_str ) || boost::range::equal( prm_substring, atom_4_str ) ) {
 				return pdb_record::ATOM;
 			}
-			if ( boost::range::equal( arg_substring, hetatm_6_str ) ) {
+			if ( boost::range::equal( prm_substring, hetatm_6_str ) ) {
 				return pdb_record::HETATM;
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 				"Unable to recognise pdb_record type "
 				+ std::string{
-					common::cbegin( arg_substring ),
-					common::cend  ( arg_substring )
+					common::cbegin( prm_substring ),
+					common::cend  ( prm_substring )
 				}
 			));
 		}
@@ -71,16 +71,16 @@ namespace cath {
 		///
 		/// \pre The six chars must be "ATOM  " or "HETATM" else
 		///      an invalid_argument_exception will be thrown
-		inline pdb_record pdb_rec_of_six_chars_in_string(const std::string &arg_string,   ///< The string in which the substring of six chars appears
-		                                                 const size_t      &arg_start = 0 ///< The index of the first char of the substring within the string
+		inline pdb_record pdb_rec_of_six_chars_in_string(const std::string &prm_string,   ///< The string in which the substring of six chars appears
+		                                                 const size_t      &prm_start = 0 ///< The index of the first char of the substring within the string
 		                                                 ) {
 			constexpr size_t NUM_CHARS = 6;
-			if ( arg_start + NUM_CHARS > arg_string.length() ) {
+			if ( prm_start + NUM_CHARS > prm_string.length() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 					"Cannot determine pdb_rec_of_six_chars_in_string() of a string that isn't long enough for six characters after the specified start"
 				));
 			}
-			const auto begin_itr = std::next( arg_string.begin(), cath::debug_numeric_cast<ptrdiff_t>( arg_start ) );
+			const auto begin_itr = std::next( prm_string.begin(), cath::debug_numeric_cast<ptrdiff_t>( prm_start ) );
 			const auto end_itr   = std::next( begin_itr,          NUM_CHARS                                        );
 			return pdb_rec_of_substring( boost::sub_range<const std::string>{ begin_itr, end_itr } );
 		}
@@ -89,13 +89,13 @@ namespace cath {
 		///
 		/// \pre The string must contain exactly six chars and must be "ATOM  " or "HETATM" else
 		///      an invalid_argument_exception will be thrown
-		inline pdb_record pdb_rec_of_str(const std::string &arg_string ///< TODOCUMENT
+		inline pdb_record pdb_rec_of_str(const std::string &prm_string ///< TODOCUMENT
 		                                 ) {
 			constexpr size_t NUM_CHARS = 6;
-			if ( arg_string.length() != NUM_CHARS ) {
+			if ( prm_string.length() != NUM_CHARS ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot convert a string to a pdb_record if it doesn't have 6 characters"));
 			}
-			return pdb_rec_of_six_chars_in_string( arg_string );
+			return pdb_rec_of_six_chars_in_string( prm_string );
 		}
 
 		std::istream & operator>>(std::istream &,

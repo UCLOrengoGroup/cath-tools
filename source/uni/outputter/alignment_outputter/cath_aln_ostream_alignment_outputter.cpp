@@ -51,14 +51,14 @@ unique_ptr<alignment_outputter> cath_aln_ostream_alignment_outputter::do_clone()
 }
 
 /// \brief TODOCUMENT
-void cath_aln_ostream_alignment_outputter::do_output_alignment(const alignment_context &arg_alignment_context, ///< TODOCUMENT
-                                                               ostream                 &arg_ostream            ///< TODOCUMENT
+void cath_aln_ostream_alignment_outputter::do_output_alignment(const alignment_context &prm_alignment_context, ///< TODOCUMENT
+                                                               ostream                 &prm_ostream            ///< TODOCUMENT
                                                                ) const {
-	check_alignment_is_a_pair( arg_alignment_context.get_alignment() );
+	check_alignment_is_a_pair( prm_alignment_context.get_alignment() );
 
-	const alignment     &the_alignment = arg_alignment_context.get_alignment();
-	const name_set_list &name_sets     = get_name_sets( arg_alignment_context );
-	const pdb_list      &pdbs          = get_pdbs     ( arg_alignment_context );
+	const alignment     &the_alignment = prm_alignment_context.get_alignment();
+	const name_set_list &name_sets     = get_name_sets( prm_alignment_context );
+	const pdb_list      &pdbs          = get_pdbs     ( prm_alignment_context );
 	const protein_list   proteins      = build_protein_list_of_pdb_list_and_names( pdbs, name_sets );
 	const alignment      scored_aln    = score_alignment_copy( residue_scorer(), the_alignment, proteins );
 
@@ -78,7 +78,7 @@ void cath_aln_ostream_alignment_outputter::do_output_alignment(const alignment_c
 		protein_a,
 		protein_b
 	);
-	arg_ostream << score_value_list_json_outputter( the_scores_and_values );
+	prm_ostream << score_value_list_json_outputter( the_scores_and_values );
 }
 
 /// \brief TODOCUMENT

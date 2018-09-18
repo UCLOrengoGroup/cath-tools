@@ -168,12 +168,12 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		quat_rot_vec<T> orientation_covering_impl<T>::orientations_from_file(const boost::filesystem::path &arg_filename ///< TODOCUMENT
+		quat_rot_vec<T> orientation_covering_impl<T>::orientations_from_file(const boost::filesystem::path &prm_filename ///< TODOCUMENT
 		                                                                     ) {
 			// Open an ifstream for the file
 			std::ifstream orentation_ifstream;
-			std::cerr << "About to attempt to open file " << arg_filename.string() << std::endl;
-			common::open_ifstream( orentation_ifstream, arg_filename );
+			std::cerr << "About to attempt to open file " << prm_filename.string() << std::endl;
+			common::open_ifstream( orentation_ifstream, prm_filename );
 
 			/// Populate the orientations, one per line
 			quat_rot_vec<T> orientations;
@@ -207,7 +207,7 @@ namespace cath {
 					constexpr size_t ERROR_LINE_LENGTH = 1000;
 					BOOST_THROW_EXCEPTION(common::runtime_error_exception(
 						"Whilst attempting to read orientation covering file "
-						+ arg_filename.string()
+						+ prm_filename.string()
 						+ ", unable to parse five parts from line: \""
 						+ line_string.substr( 0, ERROR_LINE_LENGTH - 1 ) + ( line_string.length() > ERROR_LINE_LENGTH ? "[...]" : "" )
 						+ "\""
@@ -259,9 +259,9 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		const quat_rot_impl<T> & orientation_covering_impl<T>::operator[](const size_t &arg_index ///< TODOCUMENT
+		const quat_rot_impl<T> & orientation_covering_impl<T>::operator[](const size_t &prm_index ///< TODOCUMENT
 		                                                                  ) const {
-			return orientations[ arg_index ];
+			return orientations[ prm_index ];
 		}
 
 		/// \brief TODOCUMENT
@@ -283,7 +283,7 @@ namespace cath {
 		///
 		/// This is made trickier (than for, eg, the 3d grid for the view) because:
 		///  * different pairs of cells may have different distances (ie angles) between their cell-centres
-		///  * a pair of cells that do contain points within arg_radius of each other might have a third
+		///  * a pair of cells that do contain points within prm_radius of each other might have a third
 		///    cell directly in between their mid-points.
 		///
 		///
@@ -306,16 +306,16 @@ namespace cath {
 		///
 		/// \todo Test this by scanning the all-against-all anchor pairs and then for each, check:
 		///        * the half-way quaternion is the same angle to both of the pair
-		///        * the pair's in neighbours iff the half-way quaternion is within arg_search_radius of both
+		///        * the pair's in neighbours iff the half-way quaternion is within prm_search_radius of both
 		///
 		/// \todo Once the above tests are in place, try changing the code to calculate the
-		///       distance_1_of_angle(2.0 * arg_search_radius) at the start and then compare
+		///       distance_1_of_angle(2.0 * prm_search_radius) at the start and then compare
 		///       the distance_1_of_quat_rot( query_orientn, match_orientn ) to that value
 		template <typename T, typename A>
-		size_vec_vec calc_neighbours(const orientation_covering_impl<T> &arg_orientations, ///< TODOCUMENT
-		                             const geom::angle<A>               &arg_search_radius ///< TODOCUMENT
+		size_vec_vec calc_neighbours(const orientation_covering_impl<T> &prm_orientations, ///< TODOCUMENT
+		                             const geom::angle<A>               &prm_search_radius ///< TODOCUMENT
 		                             ) {
-			const auto orientation_index_range = common::indices( arg_orientations.size() );
+			const auto orientation_index_range = common::indices( prm_orientations.size() );
 
 			return common::transform_build<size_vec_vec>(
 				orientation_index_range,
@@ -324,20 +324,20 @@ namespace cath {
 						orientation_index_range
 						| boost::adaptors::filtered(
 							[&] (const size_t &match_orientn_idx) {
-								const auto &query_orientn   = arg_orientations[ query_orientn_idx ];
-								const auto &match_orientn   = arg_orientations[ match_orientn_idx ];
+								const auto &query_orientn   = prm_orientations[ query_orientn_idx ];
+								const auto &match_orientn   = prm_orientations[ match_orientn_idx ];
 								const auto  angle_between   = angle_between_quat_rots( query_orientn, match_orientn );
-								if ( angle_between <= arg_search_radius ) {
+								if ( angle_between <= prm_search_radius ) {
 									return true;
 								}
 								const auto  half_between    = angle_between     / 2.0;
-								const auto  half_radius     = arg_search_radius / 2.0;
+								const auto  half_radius     = prm_search_radius / 2.0;
 								const auto  first_angle     = half_between - half_radius;
 								const auto  second_angle    = half_between + half_radius;;
 								const auto  first_point     = from_first_toward_second_at_angle( query_orientn, match_orientn, first_angle  );
 								const auto  second_point    = from_first_toward_second_at_angle( query_orientn, match_orientn, second_angle );
-								const bool  first_point_in  = get_closest_neighbour( arg_orientations, first_point  ) == query_orientn_idx;
-								const bool  second_point_in = get_closest_neighbour( arg_orientations, second_point ) == match_orientn_idx;
+								const bool  first_point_in  = get_closest_neighbour( prm_orientations, first_point  ) == query_orientn_idx;
+								const bool  second_point_in = get_closest_neighbour( prm_orientations, second_point ) == match_orientn_idx;
 								return ( first_point_in && second_point_in );
 							}
 						)
@@ -348,39 +348,39 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T, typename A>
-		auto get_closest_neighbours(const orientation_covering_impl<T> &arg_orientations, ///< TODOCUMENT
-		                            const quat_rot_impl<T>             &arg_orientation,  ///< TODOCUMENT
-		                            const size_vec_vec                 &arg_neighbours,   ///< TODOCUMENT
-		                            const geom::angle<A>               &arg_search_radius ///< TODOCUMENT
+		auto get_closest_neighbours(const orientation_covering_impl<T> &prm_orientations, ///< TODOCUMENT
+		                            const quat_rot_impl<T>             &prm_orientation,  ///< TODOCUMENT
+		                            const size_vec_vec                 &prm_neighbours,   ///< TODOCUMENT
+		                            const geom::angle<A>               &prm_search_radius ///< TODOCUMENT
 		                            ) {
-			const size_t  closest_neighbour_idx = get_closest_neighbour( arg_orientations, arg_orientation );
-			const auto   &closest_neighbour     = arg_orientations[ closest_neighbour_idx ];
-//			std::cerr << "The original number of neighbours is " << arg_neighbours[ closest_neighbour_idx ].size() << "\n";
+			const size_t  closest_neighbour_idx = get_closest_neighbour( prm_orientations, prm_orientation );
+			const auto   &closest_neighbour     = prm_orientations[ closest_neighbour_idx ];
+//			std::cerr << "The original number of neighbours is " << prm_neighbours[ closest_neighbour_idx ].size() << "\n";
 			return common::copy_build<size_vec>(
-				arg_neighbours[ closest_neighbour_idx ]
+				prm_neighbours[ closest_neighbour_idx ]
 					| boost::adaptors::filtered(
 						[&] (const size_t &x) {
 							if ( x == closest_neighbour_idx ) {
 								return true;
 							}
-							const auto &neighbour = arg_orientations[ x ];
+							const auto &neighbour = prm_orientations[ x ];
 //							std::cerr << "considering " << neighbour;
-							if ( angle_between_quat_rots( arg_orientation, neighbour ) <= arg_search_radius ) {
+							if ( angle_between_quat_rots( prm_orientation, neighbour ) <= prm_search_radius ) {
 //								std::cerr << " - accepted immediately\n";
 								return true;
 							}
-							const auto point1 = from_first_toward_second_at_angle( arg_orientation, neighbour, arg_search_radius );
+							const auto point1 = from_first_toward_second_at_angle( prm_orientation, neighbour, prm_search_radius );
 							const bool result = ( distance_1_between_quat_rots( point1, neighbour ) < distance_1_between_quat_rots( point1, closest_neighbour ) );
-//							std::cerr << " - considering " << point << ", which is " << angle_between_quat_rots( point, arg_orientation ) << " from target - result" << std::boolalpha << result << "\n";
+//							std::cerr << " - considering " << point << ", which is " << angle_between_quat_rots( point, prm_orientation ) << " from target - result" << std::boolalpha << result << "\n";
 							if ( result ) {
 								return true;
 							}
 //							return ( distance_1_between_quat_rots( point, neighbour ) < distance_1_between_quat_rots( point, closest_neighbour ) );
 
-							const auto last_ditch_angle = std::min( arg_search_radius, angle_between_quat_rots(  closest_neighbour, neighbour ) );
+							const auto last_ditch_angle = std::min( prm_search_radius, angle_between_quat_rots(  closest_neighbour, neighbour ) );
 							const auto A_to_B_by_r      = from_first_toward_second_at_angle(  closest_neighbour, neighbour, last_ditch_angle );
 							const auto dirn_A_to_b_by_r = rotation_between_rotations( closest_neighbour, A_to_B_by_r );
-							const auto point2           = quat_rot_impl<T>{ dirn_A_to_b_by_r * arg_orientation };
+							const auto point2           = quat_rot_impl<T>{ dirn_A_to_b_by_r * prm_orientation };
 							return ( distance_1_between_quat_rots( point2, neighbour ) < distance_1_between_quat_rots( point2, closest_neighbour ) );
 						}
 					)
@@ -392,28 +392,28 @@ namespace cath {
 		/// This could likely be made more efficient, particularly if a particular quaterion
 		/// covering is settled on.
 		template <typename T>
-		size_t get_closest_neighbour(const orientation_covering_impl<T> &arg_orientations, ///< TODOCUMENT
-		                             const quat_rot_impl<T>             &arg_orientation   ///< TODOCUMENT
+		size_t get_closest_neighbour(const orientation_covering_impl<T> &prm_orientations, ///< TODOCUMENT
+		                             const quat_rot_impl<T>             &prm_orientation   ///< TODOCUMENT
 		                             ) {
 			// Check that the orientations aren't empty
-			if ( arg_orientations.empty() ) {
+			if ( prm_orientations.empty() ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to get closest neighbour from empty orientation covering"));
 			}
 
-			// Search for the orientation_covering entry closest to arg_orientation
+			// Search for the orientation_covering entry closest to prm_orientation
 			const auto min_itr = boost::range::min_element(
-				arg_orientations,
+				prm_orientations,
 				[&] (const quat_rot_impl<T> &x, const quat_rot_impl<T> &y) {
-					return ( distance_1_between_quat_rots( x, arg_orientation ) < distance_1_between_quat_rots( y, arg_orientation ) );
+					return ( distance_1_between_quat_rots( x, prm_orientation ) < distance_1_between_quat_rots( y, prm_orientation ) );
 				}
 			);
 //			std::cerr << "Found " << *min_itr << "\n";
 			
 			// Check that some entry was chosen
-			assert( min_itr != common::cend( arg_orientations ) );
+			assert( min_itr != common::cend( prm_orientations ) );
 
 			// Return the index of the element found
-			return debug_numeric_cast<size_t>( distance( common::cbegin( arg_orientations ), min_itr ) );
+			return debug_numeric_cast<size_t>( distance( common::cbegin( prm_orientations ), min_itr ) );
 		}
 
 		

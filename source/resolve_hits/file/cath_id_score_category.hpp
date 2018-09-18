@@ -41,22 +41,22 @@ namespace cath {
 		                          const cath_id_score_category &);
 
 		/// \brief Return whether the specified HMMER evalues are suspicious under the CATH-Gene3D rules
-		inline constexpr bool hmmer_evalues_are_suspicious(const double &arg_cond_evalue, ///< The HMMER conditional evalue
-		                                                   const double &arg_indp_evalue  ///< The HMMER independent evalue
+		inline constexpr bool hmmer_evalues_are_suspicious(const double &prm_cond_evalue, ///< The HMMER conditional evalue
+		                                                   const double &prm_indp_evalue  ///< The HMMER independent evalue
 		                                                   ) {
 			// constexpr double EVALUE_CUTOFF = 0.001; //< Not permitted by GCC 4.9.2
 			return (
-				arg_cond_evalue <= 0.001
+				prm_cond_evalue <= 0.001
 				&&
-				arg_indp_evalue >  0.001
+				prm_indp_evalue >  0.001
 			);
 		}
 
 		/// \brief Return the value by which the bitscore should be divided under the CATH-Gene3D rules
-		inline constexpr double bitscore_divisor(const bool                   &arg_apply_cath_policies, ///< Whether the CATH-Gene3D rules are to be applied (if not, then this will return 1.0 )
-		                                         const bool                   &arg_evalues_are_susp     ///< Whether the HMMER evalues were deemed suspicious
+		inline constexpr double bitscore_divisor(const bool                   &prm_apply_cath_policies, ///< Whether the CATH-Gene3D rules are to be applied (if not, then this will return 1.0 )
+		                                         const bool                   &prm_evalues_are_susp     ///< Whether the HMMER evalues were deemed suspicious
 		                                         ) {
-			return ( arg_apply_cath_policies && arg_evalues_are_susp ) ? 4.0 : 1.0;
+			return ( prm_apply_cath_policies && prm_evalues_are_susp ) ? 4.0 : 1.0;
 		}
 
 	} // namespace rslv

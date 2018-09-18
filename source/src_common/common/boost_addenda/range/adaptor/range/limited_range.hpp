@@ -50,11 +50,11 @@ namespace cath {
 
 		/// \brief Ctor from a range
 		template <typename RNG>
-		limited_range<RNG>::limited_range(const RNG    &arg_range,           ///< The range over which to apply this limited_range
-		                                  const size_t &arg_max_num_elements ///< The maximum number of elements
+		limited_range<RNG>::limited_range(const RNG    &prm_range,           ///< The range over which to apply this limited_range
+		                                  const size_t &prm_max_num_elements ///< The maximum number of elements
 		                                  ) : super(
-		                                      	limited_iterator( cath::common::cbegin( arg_range ), cath::common::cend  ( arg_range ), arg_max_num_elements ),
-		                                      	limited_iterator( cath::common::cend  ( arg_range ), cath::common::cend  ( arg_range ), arg_max_num_elements )
+		                                      	limited_iterator( cath::common::cbegin( prm_range ), cath::common::cend  ( prm_range ), prm_max_num_elements ),
+		                                      	limited_iterator( cath::common::cend  ( prm_range ), cath::common::cend  ( prm_range ), prm_max_num_elements )
 		                                      ) {
 		}
 

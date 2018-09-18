@@ -35,21 +35,21 @@ using namespace std;
 
 using boost::numeric_cast;
 
-/// \brief Randomly split the integers [ 0 .. arg_num_instances ) into two vectors, with arg_fraction_in_first (eg 0.5) of them in the first
-size_vec_size_vec_pair cath::common::random_split(mt19937       &arg_rng,              ///< TODOCUMENT
-                                                  const size_t  &arg_num_instances,    ///< TODOCUMENT
-                                                  const double  &arg_fraction_in_first ///< TODOCUMENT
+/// \brief Randomly split the integers [ 0 .. prm_num_instances ) into two vectors, with prm_fraction_in_first (eg 0.5) of them in the first
+size_vec_size_vec_pair cath::common::random_split(mt19937       &prm_rng,              ///< TODOCUMENT
+                                                  const size_t  &prm_num_instances,    ///< TODOCUMENT
+                                                  const double  &prm_fraction_in_first ///< TODOCUMENT
                                                   ) {
-	if ( arg_fraction_in_first < 0.0 || arg_fraction_in_first > 1.0 ) {
+	if ( prm_fraction_in_first < 0.0 || prm_fraction_in_first > 1.0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot create random split with fraction in first outside range [0, 1]"));
 	}
 
-	auto the_indices = copy_build<size_vec>( indices( arg_num_instances ) );
+	auto the_indices = copy_build<size_vec>( indices( prm_num_instances ) );
 
-//	random_shuffle( the_indices, arg_rng );
-	shuffle( begin( the_indices ), end( the_indices ), arg_rng );
+//	random_shuffle( the_indices, prm_rng );
+	shuffle( begin( the_indices ), end( the_indices ), prm_rng );
 
-	const auto num_in_first  = numeric_cast<size_t>( round( arg_fraction_in_first * numeric_cast<double>( arg_num_instances ) ) );
+	const auto num_in_first  = numeric_cast<size_t>( round( prm_fraction_in_first * numeric_cast<double>( prm_num_instances ) ) );
 	const auto cut_point_itr = next( cath::common::cbegin( the_indices ), numeric_cast<ptrdiff_t>( num_in_first ) );
 
 	return make_pair(

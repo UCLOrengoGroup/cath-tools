@@ -38,10 +38,10 @@ namespace cath {
 		// ///
 		// /// Might relate to this: https://bugzilla.redhat.com/show_bug.cgi?id=837650 ?
 		// template <typename T, typename F>
-		// T lexical_cast_stringstream(const F &arg_from ///< TODOCUMENT
+		// T lexical_cast_stringstream(const F &prm_from ///< TODOCUMENT
 		//                             ) {
 		// 	std::stringstream the_ss;
-		// 	the_ss << arg_from;
+		// 	the_ss << prm_from;
 		// 	T result;
 		// 	the_ss >> result;
 		// 	return result;

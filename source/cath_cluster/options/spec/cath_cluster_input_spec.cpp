@@ -50,33 +50,33 @@ const path_opt & cath_cluster_input_spec::get_names_infile() const {
 }
 
 /// \brief Setter for an optional file from which links should be read
-cath_cluster_input_spec & cath_cluster_input_spec::set_links_infile(const path_opt &arg_links_infile ///< An optional file from which links should be read
+cath_cluster_input_spec & cath_cluster_input_spec::set_links_infile(const path_opt &prm_links_infile ///< An optional file from which links should be read
                                                                     ) {
-	links_infile = arg_links_infile;
+	links_infile = prm_links_infile;
 	return *this;
 }
 
 /// \brief Setter for the direction of links in the input
-cath_cluster_input_spec & cath_cluster_input_spec::set_link_dirn(const link_dirn &arg_the_link_dirn ///< The direction of links in the input
+cath_cluster_input_spec & cath_cluster_input_spec::set_link_dirn(const link_dirn &prm_the_link_dirn ///< The direction of links in the input
                                                                  ) {
-	the_link_dirn = arg_the_link_dirn;
+	the_link_dirn = prm_the_link_dirn;
 	return *this;
 }
 
 /// \brief Setter for the index of the column from which the link values are to be read
-cath_cluster_input_spec & cath_cluster_input_spec::set_column_idx(const size_t &arg_column_idx ///< The index of the column from which the link values are to be read
+cath_cluster_input_spec & cath_cluster_input_spec::set_column_idx(const size_t &prm_column_idx ///< The index of the column from which the link values are to be read
                                                                   ) {
-	if ( arg_column_idx < 2 ) {
+	if ( prm_column_idx < 2 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot specify a clustering column index of 0 or 1"));
 	}
-	column_idx = arg_column_idx;
+	column_idx = prm_column_idx;
 	return *this;
 }
 
 /// \brief Setter for an optional file from which names should be read
-cath_cluster_input_spec & cath_cluster_input_spec::set_names_infile(const path_opt &arg_names_infile ///< An optional file from which names should be read
+cath_cluster_input_spec & cath_cluster_input_spec::set_names_infile(const path_opt &prm_names_infile ///< An optional file from which names should be read
                                                                     ) {
-	names_infile = arg_names_infile;
+	names_infile = prm_names_infile;
 	return *this;
 }
 
@@ -84,9 +84,9 @@ cath_cluster_input_spec & cath_cluster_input_spec::set_names_infile(const path_o
 ///        or none otherwise
 ///
 /// \relates cath_cluster_input_spec
-str_opt cath::clust::get_invalid_description(const cath_cluster_input_spec &arg_input_spec ///< The cath_cluster_input_spec to query
+str_opt cath::clust::get_invalid_description(const cath_cluster_input_spec &prm_input_spec ///< The cath_cluster_input_spec to query
                                              ) {
-	if ( ! arg_input_spec.get_links_infile() ) {
+	if ( ! prm_input_spec.get_links_infile() ) {
 		return "An input file of links must be specified"s;
 	}
 

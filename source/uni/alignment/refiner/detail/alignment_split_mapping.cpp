@@ -50,16 +50,16 @@ using boost::range::lower_bound;
 /// \brief Ctor for alignment_split_mapping
 ///
 /// \todo Consider splitting part of this out into a function that creates a copy of the alignment with any missing residues reinserted
-alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,      ///< TODOCUMENT
-                                                 const size_set  &arg_entries,        ///< TODOCUMENT
-                                                 const size_vec  &arg_correct_lengths ///< TODOCUMENT
-                                                 ) : orig_length           ( arg_alignment.length()                                     ),
-                                                     orig_num_entries      ( arg_alignment.num_entries()                                ),
+alignment_split_mapping::alignment_split_mapping(const alignment &prm_alignment,      ///< TODOCUMENT
+                                                 const size_set  &prm_entries,        ///< TODOCUMENT
+                                                 const size_vec  &prm_correct_lengths ///< TODOCUMENT
+                                                 ) : orig_length           ( prm_alignment.length()                                     ),
+                                                     orig_num_entries      ( prm_alignment.num_entries()                                ),
                                                      did_insert_entries    ( false                                                      ),
-                                                     local_aln             ( arg_entries.size()                                         ),
+                                                     local_aln             ( prm_entries.size()                                         ),
                                                      idx_of_orig_aln_idx   ( orig_length                                                ),
-                                                     orig_aln_entries      ( common::cbegin( arg_entries ), common::cend( arg_entries ) ),
-                                                     index_of_pdb_res_index( arg_alignment.num_entries()                                ) {
+                                                     orig_aln_entries      ( common::cbegin( prm_entries ), common::cend( prm_entries ) ),
+                                                     index_of_pdb_res_index( prm_alignment.num_entries()                                ) {
 	// Sanity check the input list of entries
 	if ( orig_aln_entries.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("List of entries is empty"));
@@ -71,7 +71,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 	// Loop along the length of the original alignment
 	for (const size_t &orig_aln_index : indices( orig_length ) ) {
 
-		const alignment_row local_row = get_row_of_entries_of_alignment( arg_alignment, orig_aln_entries, orig_aln_index );
+		const alignment_row local_row = get_row_of_entries_of_alignment( prm_alignment, orig_aln_entries, orig_aln_index );
 
 		// Only do anything if at least one of the specified entries is present at this index
 		if ( any_entries_present( local_row ) ) {
@@ -85,7 +85,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 				//  * the position for this index/entry in the original alignment
 				size_vec          &pdb_res_indices = index_of_pdb_res_index[ entry ];
 				const size_t      &orig_aln_entry  = orig_aln_entries      [ entry ];
-				const aln_posn_opt position        = arg_alignment.position_of_entry_of_index( orig_aln_entry, orig_aln_index );
+				const aln_posn_opt position        = prm_alignment.position_of_entry_of_index( orig_aln_entry, orig_aln_index );
 
 				// If there is something present here in the original alignment then add any missing residues
 				if ( position ) {
@@ -107,7 +107,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 				//  * the position for this index/entry in the original alignment
 				size_vec          &pdb_res_indices = index_of_pdb_res_index[ entry ];
 				const size_t      &orig_aln_entry  = orig_aln_entries      [ entry ];
-				const aln_posn_opt position        = arg_alignment.position_of_entry_of_index( orig_aln_entry, orig_aln_index );
+				const aln_posn_opt position        = prm_alignment.position_of_entry_of_index( orig_aln_entry, orig_aln_index );
 
 				// If there is something present here in the original alignment then store the residue for this index will go
 				if ( position ) {
@@ -130,7 +130,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &arg_alignment,
 		//  * the correct length for this entry
 		size_vec          &pdb_res_indices = index_of_pdb_res_index[ entry ];
 		const size_t      &orig_aln_entry  = orig_aln_entries      [ entry ];
-		const size_t      &correct_length  = arg_correct_lengths   [ orig_aln_entry ];
+		const size_t      &correct_length  = prm_correct_lengths   [ orig_aln_entry ];
 
 		// Add any missing residues...
 		while ( pdb_res_indices.size() < correct_length ) {
@@ -172,16 +172,16 @@ size_t alignment_split_mapping::num_entries() const {
 }
 
 /// \brief TODOCUMENT
-size_opt alignment_split_mapping::index_of_orig_aln_index(const size_t &arg_orig_aln_index ///< TODOCUMENT
+size_opt alignment_split_mapping::index_of_orig_aln_index(const size_t &prm_orig_aln_index ///< TODOCUMENT
                                                           ) const {
-	if ( arg_orig_aln_index >= orig_aln_length() ) {
+	if ( prm_orig_aln_index >= orig_aln_length() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Index is too large for the original alignment"));
 	}
-	return idx_of_orig_aln_idx[ arg_orig_aln_index ];
+	return idx_of_orig_aln_idx[ prm_orig_aln_index ];
 //	if ( ! index ) {
 //		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 //			"Index "
-//			+ lexical_cast<string>( arg_orig_aln_index )
+//			+ lexical_cast<string>( prm_orig_aln_index )
 //			+ " in original alignment doesn't appear in this alignment_split_mapping"
 //		));
 //	}
@@ -189,17 +189,17 @@ size_opt alignment_split_mapping::index_of_orig_aln_index(const size_t &arg_orig
 }
 
 /// \brief TODOCUMENT
-size_opt alignment_split_mapping::entry_of_orig_aln_entry(const size_t &arg_orig_aln_entry ///< TODOCUMENT
+size_opt alignment_split_mapping::entry_of_orig_aln_entry(const size_t &prm_orig_aln_entry ///< TODOCUMENT
                                                           ) const {
 
-	if ( arg_orig_aln_entry >= orig_aln_num_entries() ) {
+	if ( prm_orig_aln_entry >= orig_aln_num_entries() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Entry is too large for the original alignment"));
 	}
 	const auto find_itr = lower_bound(
 		orig_aln_entries,
-		arg_orig_aln_entry
+		prm_orig_aln_entry
 	);
-	if ( find_itr == common::cend( orig_aln_entries ) || *find_itr != arg_orig_aln_entry ) {
+	if ( find_itr == common::cend( orig_aln_entries ) || *find_itr != prm_orig_aln_entry ) {
 		return none;
 //		BOOST_THROW_EXCEPTION(invalid_argument_exception("Entry in original alignment doesn't appear in this alignment_split_mapping"));
 	}
@@ -207,29 +207,29 @@ size_opt alignment_split_mapping::entry_of_orig_aln_entry(const size_t &arg_orig
 }
 
 /// \brief TODOCUMENT
-size_t alignment_split_mapping::orig_aln_entry_of_entry(const size_t &arg_orig_aln_entry ///< TODOCUMENT
+size_t alignment_split_mapping::orig_aln_entry_of_entry(const size_t &prm_orig_aln_entry ///< TODOCUMENT
                                                         ) const {
-	if ( arg_orig_aln_entry > orig_aln_entries.size() ) {
+	if ( prm_orig_aln_entry > orig_aln_entries.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Entry is out of range"));
 	}
-	return orig_aln_entries[ arg_orig_aln_entry ];
+	return orig_aln_entries[ prm_orig_aln_entry ];
 }
 
 /// \brief TODOCUMENT
-aln_posn_opt alignment_split_mapping::position_of_entry_of_index(const size_t &arg_entry, ///< TODOCUMENT
-                                                                 const size_t &arg_index  ///< TODOCUMENT
+aln_posn_opt alignment_split_mapping::position_of_entry_of_index(const size_t &prm_entry, ///< TODOCUMENT
+                                                                 const size_t &prm_index  ///< TODOCUMENT
                                                                  ) const {
-	return local_aln.position_of_entry_of_index( arg_entry, arg_index );
+	return local_aln.position_of_entry_of_index( prm_entry, prm_index );
 }
 
 ///// \brief TODOCUMENT
 /////
 ///// \relates alignment_split_mapping
-//ostream & cath::align::detail::operator<<(ostream                       &arg_os,     ///< TODOCUMENT
-//                                          const alignment_split_mapping &arg_mapping ///< TODOCUMENT
+//ostream & cath::align::detail::operator<<(ostream                       &prm_os,     ///< TODOCUMENT
+//                                          const alignment_split_mapping &prm_mapping ///< TODOCUMENT
 //                                          ) {
-//	arg_os << "alignment_split_mapping[";
-//	arg_os << orig_aln_length() const;
+//	prm_os << "alignment_split_mapping[";
+//	prm_os << orig_aln_length() const;
 //	size_t orig_aln_num_entries() const;
 //	bool inserted_entries() const;
 //
@@ -245,20 +245,20 @@ aln_posn_opt alignment_split_mapping::position_of_entry_of_index(const size_t &a
 //
 //	size_t index_of_protein_index(const size_t &,
 //	                              const size_t &) const;
-//	arg_os << "]";
-//	return arg_os;
+//	prm_os << "]";
+//	return prm_os;
 //}
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_split_mapping
-size_vec cath::align::detail::get_orig_entries(const alignment_split_mapping &arg_aln_mapping ///< TODOCUMENT
+size_vec cath::align::detail::get_orig_entries(const alignment_split_mapping &prm_aln_mapping ///< TODOCUMENT
                                                ) {
-	const size_t num_entries = arg_aln_mapping.num_entries();
+	const size_t num_entries = prm_aln_mapping.num_entries();
 	size_vec orig_entries;
 	orig_entries.reserve( num_entries );
 	for (const size_t &entry : indices( num_entries ) ) {
-		orig_entries.push_back( arg_aln_mapping.orig_aln_entry_of_entry( entry ) );
+		orig_entries.push_back( prm_aln_mapping.orig_aln_entry_of_entry( entry ) );
 	}
 	return orig_entries;
 }
@@ -266,14 +266,14 @@ size_vec cath::align::detail::get_orig_entries(const alignment_split_mapping &ar
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_split_mapping
-alignment_row cath::align::detail::get_row_of_alignment(const alignment_split_mapping &arg_aln_mapping, ///< TODOCUMENT
-                                                        const size_t                  &arg_index        ///< TODOCUMENT
+alignment_row cath::align::detail::get_row_of_alignment(const alignment_split_mapping &prm_aln_mapping, ///< TODOCUMENT
+                                                        const size_t                  &prm_index        ///< TODOCUMENT
                                                         ) {
-	const size_t num_entries = arg_aln_mapping.num_entries();
+	const size_t num_entries = prm_aln_mapping.num_entries();
 	aln_posn_opt_vec positions;
 	positions.reserve( num_entries );
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		const aln_posn_opt position = arg_aln_mapping.position_of_entry_of_index( entry_ctr, arg_index );
+		const aln_posn_opt position = prm_aln_mapping.position_of_entry_of_index( entry_ctr, prm_index );
 		positions.push_back( position );
 	}
 	return alignment_row( positions );
@@ -282,46 +282,46 @@ alignment_row cath::align::detail::get_row_of_alignment(const alignment_split_ma
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_split_mapping
-bool cath::align::detail::has_position_of_entry_of_index(const alignment_split_mapping &arg_aln_mapping, ///< TODOCUMENT
-                                                         const size_t                  &arg_entry,       ///< TODOCUMENT
-                                                         const size_t                  &arg_index        ///< TODOCUMENT
+bool cath::align::detail::has_position_of_entry_of_index(const alignment_split_mapping &prm_aln_mapping, ///< TODOCUMENT
+                                                         const size_t                  &prm_entry,       ///< TODOCUMENT
+                                                         const size_t                  &prm_index        ///< TODOCUMENT
                                                          ) {
-	return static_cast<bool>( arg_aln_mapping.position_of_entry_of_index( arg_entry, arg_index ) );
+	return static_cast<bool>( prm_aln_mapping.position_of_entry_of_index( prm_entry, prm_index ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_split_mapping
-size_t cath::align::detail::get_position_of_entry_of_index(const alignment_split_mapping &arg_aln_mapping, ///< TODOCUMENT
-                                                           const size_t                  &arg_entry,       ///< TODOCUMENT
-                                                           const size_t                  &arg_index        ///< TODOCUMENT
+size_t cath::align::detail::get_position_of_entry_of_index(const alignment_split_mapping &prm_aln_mapping, ///< TODOCUMENT
+                                                           const size_t                  &prm_entry,       ///< TODOCUMENT
+                                                           const size_t                  &prm_index        ///< TODOCUMENT
                                                            ) {
-	return *arg_aln_mapping.position_of_entry_of_index( arg_entry, arg_index );
+	return *prm_aln_mapping.position_of_entry_of_index( prm_entry, prm_index );
 }
 
 ///// \brief TODOCUMENT
 /////
 ///// \relates alignment_split_mapping
 //
-//size_vec cath::align::detail::present_orig_aln_entries_of_orig_aln_index(const alignment_split_mapping &arg_aln_mapping,   ///< TODOCUMENT
-//                                                                         const size_t                  &arg_orig_aln_index ///< TODOCUMENT
+//size_vec cath::align::detail::present_orig_aln_entries_of_orig_aln_index(const alignment_split_mapping &prm_aln_mapping,   ///< TODOCUMENT
+//                                                                         const size_t                  &prm_orig_aln_index ///< TODOCUMENT
 //                                                                         ) {
-//	const size_opt index = arg_aln_mapping.index_of_orig_aln_index( arg_orig_aln_index );
-//	return index ? present_orig_aln_entries_of_index( arg_aln_mapping, *index )
+//	const size_opt index = prm_aln_mapping.index_of_orig_aln_index( prm_orig_aln_index );
+//	return index ? present_orig_aln_entries_of_index( prm_aln_mapping, *index )
 //	             : size_vec();
 //}
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_split_mapping
-size_vec cath::align::detail::present_orig_aln_entries_of_index(const alignment_split_mapping &arg_aln_mapping, ///< TODOCUMENT
-                                                                const size_t                  &arg_index        ///< TODOCUMENT
+size_vec cath::align::detail::present_orig_aln_entries_of_index(const alignment_split_mapping &prm_aln_mapping, ///< TODOCUMENT
+                                                                const size_t                  &prm_index        ///< TODOCUMENT
                                                                 ) {
-	const size_t orig_aln_num_entries = arg_aln_mapping.orig_aln_num_entries();
+	const size_t orig_aln_num_entries = prm_aln_mapping.orig_aln_num_entries();
 	size_vec present_positions;
 	for (const size_t &orig_aln_entry_ctr : indices( orig_aln_num_entries ) ) {
-		const size_opt entry = arg_aln_mapping.entry_of_orig_aln_entry( orig_aln_entry_ctr );
-		if ( entry && has_position_of_entry_of_index( arg_aln_mapping, *entry, arg_index ) ) {
+		const size_opt entry = prm_aln_mapping.entry_of_orig_aln_entry( orig_aln_entry_ctr );
+		if ( entry && has_position_of_entry_of_index( prm_aln_mapping, *entry, prm_index ) ) {
 			present_positions.push_back( orig_aln_entry_ctr );
 		}
 	}
@@ -331,46 +331,46 @@ size_vec cath::align::detail::present_orig_aln_entries_of_index(const alignment_
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_split_mapping
-alignment_split_mapping cath::align::detail::make_alignment_split_mapping(const alignment            &arg_alignment,            ///< TODOCUMENT
-                                                                          const alignment_split      &arg_alignment_split,      ///< TODOCUMENT
-                                                                          const alignment_split_half &arg_alignment_split_half, ///< TODOCUMENT
-                                                                          const size_vec             &arg_correct_lengths       ///< TODOCUMENT
+alignment_split_mapping cath::align::detail::make_alignment_split_mapping(const alignment            &prm_alignment,            ///< TODOCUMENT
+                                                                          const alignment_split      &prm_alignment_split,      ///< TODOCUMENT
+                                                                          const alignment_split_half &prm_alignment_split_half, ///< TODOCUMENT
+                                                                          const size_vec             &prm_correct_lengths       ///< TODOCUMENT
                                                                           ) {
 	return alignment_split_mapping(
-		arg_alignment,
-		entries_of_alignment_split_half( arg_alignment_split, arg_alignment_split_half ),
-		arg_correct_lengths
+		prm_alignment,
+		entries_of_alignment_split_half( prm_alignment_split, prm_alignment_split_half ),
+		prm_correct_lengths
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_split_mapping
-alignment cath::align::detail::build_alignment(const alignment               &arg_inter_mapping_alignment, ///< TODOCUMENT
-                                               const alignment_split_mapping &arg_mapping_a,               ///< TODOCUMENT
-                                               const alignment_split_mapping &arg_mapping_b                ///< TODOCUMENT
+alignment cath::align::detail::build_alignment(const alignment               &prm_inter_mapping_alignment, ///< TODOCUMENT
+                                               const alignment_split_mapping &prm_mapping_a,               ///< TODOCUMENT
+                                               const alignment_split_mapping &prm_mapping_b                ///< TODOCUMENT
                                                ) {
-	check_alignment_is_a_pair( arg_inter_mapping_alignment );
+	check_alignment_is_a_pair( prm_inter_mapping_alignment );
 
-	const size_t inter_mapping_aln_length = arg_inter_mapping_alignment.length();
+	const size_t inter_mapping_aln_length = prm_inter_mapping_alignment.length();
 
-	const size_vec entries_a     = get_orig_entries( arg_mapping_a );
-	const size_vec entries_b     = get_orig_entries( arg_mapping_b );
-	const size_t   num_entries_a = arg_mapping_a.num_entries();
-	const size_t   num_entries_b = arg_mapping_b.num_entries();
+	const size_vec entries_a     = get_orig_entries( prm_mapping_a );
+	const size_vec entries_b     = get_orig_entries( prm_mapping_b );
+	const size_t   num_entries_a = prm_mapping_a.num_entries();
+	const size_t   num_entries_b = prm_mapping_b.num_entries();
 
 	alignment new_alignment( num_entries_a + num_entries_b );
 	new_alignment.reserve( inter_mapping_aln_length );
 
 	for (const size_t &inter_mapping_index : indices( inter_mapping_aln_length ) ) {
-		const aln_posn_opt a_position = a_position_of_index( arg_inter_mapping_alignment, inter_mapping_index );
-		const aln_posn_opt b_position = b_position_of_index( arg_inter_mapping_alignment, inter_mapping_index );
+		const aln_posn_opt a_position = a_position_of_index( prm_inter_mapping_alignment, inter_mapping_index );
+		const aln_posn_opt b_position = b_position_of_index( prm_inter_mapping_alignment, inter_mapping_index );
 		if ( ! a_position && ! b_position) {
 			BOOST_THROW_EXCEPTION(out_of_range("Inter-mapping alignment has an empty row"));
 		}
-		const alignment_row aln_row_a = a_position ? get_row_of_alignment( arg_mapping_a, *a_position )
+		const alignment_row aln_row_a = a_position ? get_row_of_alignment( prm_mapping_a, *a_position )
 		                                           : make_empty_aln_row( num_entries_a );
-		const alignment_row aln_row_b = b_position ? get_row_of_alignment( arg_mapping_b, *b_position )
+		const alignment_row aln_row_b = b_position ? get_row_of_alignment( prm_mapping_b, *b_position )
 		                                           : make_empty_aln_row( num_entries_b );
 
 		append_row( new_alignment, weave( aln_row_a, entries_a, aln_row_b, entries_b ) );

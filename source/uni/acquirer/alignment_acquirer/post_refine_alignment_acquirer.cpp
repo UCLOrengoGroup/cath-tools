@@ -40,25 +40,25 @@ using namespace cath::file;
 using std::pair;
 
 /// \brief Get the concrete alignment_acquirer to acquire an alignment and then refine and rescore it
-pair<alignment, size_size_pair_vec> post_refine_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context, ///< The structures corresponding to the alignment
-                                                                                                       const align_refining &arg_align_refining  ///< How much refining should be done to the alignment
+pair<alignment, size_size_pair_vec> post_refine_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< The structures corresponding to the alignment
+                                                                                                       const align_refining &prm_align_refining  ///< How much refining should be done to the alignment
                                                                                                        ) const {
-	const auto unrefined_aln_n_spntree = do_get_alignment_and_spanning_tree( arg_strucs_context );
+	const auto unrefined_aln_n_spntree = do_get_alignment_and_spanning_tree( prm_strucs_context );
 
 	// If no refinement is required, return the result
-	if ( arg_align_refining == align_refining::NO ) {
+	if ( prm_align_refining == align_refining::NO ) {
 		return unrefined_aln_n_spntree;
 	}
 
 	// Or if only light refinement is required and this has three or more entries, warn and then return the result
-	if ( arg_align_refining == align_refining::LIGHT && unrefined_aln_n_spntree.first.num_entries() > 3 ) {
+	if ( prm_align_refining == align_refining::LIGHT && unrefined_aln_n_spntree.first.num_entries() > 3 ) {
 		BOOST_LOG_TRIVIAL( warning ) << "";
 		return unrefined_aln_n_spntree;
 	}
 
 	// Otherwise, refine...
 	const auto backbone_complete_strucs_context = strucs_context_of_backbone_complete_region_limited_subset_pdbs(
-		arg_strucs_context
+		prm_strucs_context
 	);
 	const protein_list proteins                 = build_protein_list( backbone_complete_strucs_context );
 	const alignment    refined_alignment        = alignment_refiner().iterate( unrefined_aln_n_spntree.first, proteins, gap_penalty( 50, 0 ) );

@@ -69,42 +69,42 @@ using std::make_pair;
 using std::string;
 using std::tie;
 
-string upper_first_lower_rest(const string &arg_string
+string upper_first_lower_rest(const string &prm_string
                               ) {
-	return arg_string.empty()
-		? arg_string
+	return prm_string.empty()
+		? prm_string
 		: (
-			to_upper_copy( string{ arg_string.front() } )
+			to_upper_copy( string{ prm_string.front() } )
 			+ to_lower_copy( string{
-				std::next( common::cbegin( arg_string ) ),
-				           common::cend  ( arg_string )
+				std::next( common::cbegin( prm_string ) ),
+				           common::cend  ( prm_string )
 			} )
 		);
 }
 
 /// \brief Perform a dumb HTML escaping on the specified string
-void dumb_html_escape(string &arg_string ///< The string to escape
+void dumb_html_escape(string &prm_string ///< The string to escape
                       ) {
-	replace_all( arg_string, R"(&)", "&amp;"  );
-	replace_all( arg_string, R"(")", "&quot;" );
-	replace_all( arg_string, R"(')", "&apos;" );
-	replace_all( arg_string, R"(<)", "&lt;"   );
-	replace_all( arg_string, R"(>)", "&gt;"   );
+	replace_all( prm_string, R"(&)", "&amp;"  );
+	replace_all( prm_string, R"(")", "&quot;" );
+	replace_all( prm_string, R"(')", "&apos;" );
+	replace_all( prm_string, R"(<)", "&lt;"   );
+	replace_all( prm_string, R"(>)", "&gt;"   );
 }
 
 /// \brief Perform a dumb HTML escaping on a copy of the specified string
-string dumb_html_escape_copy(string arg_string ///< The source string to copy
+string dumb_html_escape_copy(string prm_string ///< The source string to copy
                              ) {
-	dumb_html_escape( arg_string );
-	return arg_string;
+	dumb_html_escape( prm_string );
+	return prm_string;
 }
 
 /// \brief Get the row CSS class of the specified hit_row_context
 ///
 /// \relates hit_row_context
-string cath::rslv::row_css_class_and_data_of_hit_row_context(const hit_row_context &arg_row_context ///< The hit_row_context for which to return the appropriate row CSS class
+string cath::rslv::row_css_class_and_data_of_hit_row_context(const hit_row_context &prm_row_context ///< The hit_row_context for which to return the appropriate row CSS class
                                                              ) {
-	switch ( arg_row_context ) {
+	switch ( prm_row_context ) {
 		case ( hit_row_context::HIGHLIGHT   ) : { return R"(class="crh-row-input" data-crh-row-input-type="highlight")" ; }
 		case ( hit_row_context::NORMAL      ) : { return R"(class="crh-row-input" data-crh-row-input-type="normal")"    ; }
 		case ( hit_row_context::RESULT      ) : { return R"(class="crh-row-result")"                                    ; }
@@ -116,21 +116,21 @@ string cath::rslv::row_css_class_and_data_of_hit_row_context(const hit_row_conte
 /// \brief Get the first cell CSS class of the specified hit_row_context
 ///
 /// \relates hit_row_context
-string cath::rslv::first_cell_css_class_of_hit_row_context(const hit_row_context &arg_row_context ///< The hit_row_context for which to return the appropriate first cell CSS class
+string cath::rslv::first_cell_css_class_of_hit_row_context(const hit_row_context &prm_row_context ///< The hit_row_context for which to return the appropriate first cell CSS class
                                                            ) {
-	return ( arg_row_context == hit_row_context::RESULT || arg_row_context == hit_row_context::HIGHLIGHT )
+	return ( prm_row_context == hit_row_context::RESULT || prm_row_context == hit_row_context::HIGHLIGHT )
 		? "crh-cell-first-highlight"s
 		: "crh-cell-first-norm"s;
 }
 
 /// \brief Generate the HTML string for the total-score row of the table
-string resolve_hits_html_outputter::total_score_row(const resscr_t &arg_total_score ///< The total score
+string resolve_hits_html_outputter::total_score_row(const resscr_t &prm_total_score ///< The total score
                                                     ) {
 	return R"(<tr class="crh-row-result">
 	<td class="crh-cell crh-cell-data crh-cell-first-norm"></td>
 	<td class="crh-cell crh-cell-data"></td>
 	<td class="crh-cell crh-cell-data"><strong>= )"
-	+ ( format("%.4g") % arg_total_score ).str()
+	+ ( format("%.4g") % prm_total_score ).str()
 	+ R"(</strong></td>
 	<td class="crh-cell crh-cell-data"></td>
 	<td class="crh-cell crh-cell-data"></td>
@@ -139,20 +139,20 @@ string resolve_hits_html_outputter::total_score_row(const resscr_t &arg_total_sc
 }
 
 /// \brief Generate the HTML string for the markers row (ie the residue numbers)
-string resolve_hits_html_outputter::markers_row(const size_t          &arg_sequence_length,  ///< The length of the full sequence on which this full_hit appears
-                                                const str_opt         &arg_score_header_lbl, ///< The string for the score header or none if headers shouldn't be used
-                                                const table_section   &arg_table_section     ///< TODOCUMENT
+string resolve_hits_html_outputter::markers_row(const size_t          &prm_sequence_length,  ///< The length of the full sequence on which this full_hit appears
+                                                const str_opt         &prm_score_header_lbl, ///< The string for the score header or none if headers shouldn't be used
+                                                const table_section   &prm_table_section     ///< TODOCUMENT
                                                 ) {
-	const double length_mult  = 100.0 / debug_numeric_cast<double>( arg_sequence_length );
+	const double length_mult  = 100.0 / debug_numeric_cast<double>( prm_sequence_length );
 	return R"(<tr class="crh-row-colhead" data-crh-row-colhead-type=")"
-	+ ( arg_table_section == table_section::INPUTS ? "inputs"s : "results"s )
+	+ ( prm_table_section == table_section::INPUTS ? "inputs"s : "results"s )
 	+ R"(">
-	<td class="crh-cell crh-cell-first-norm">)" + ( arg_score_header_lbl ? "ID"s : ""s ) + R"(</td>
+	<td class="crh-cell crh-cell-first-norm">)" + ( prm_score_header_lbl ? "ID"s : ""s ) + R"(</td>
 	<td class="crh-cell crh-cell-colhead-figure">
 		<div class="crh-figure-div-empty">
 )"
 	+ join(
-		irange( 0_z, arg_sequence_length + 1, step_for_length( arg_sequence_length ) )
+		irange( 0_z, prm_sequence_length + 1, step_for_length( prm_sequence_length ) )
 			| transformed( [&] (const size_t &x) {
 				const auto left_str = ::std::to_string( length_mult * debug_numeric_cast<double>( x ) );
 				// 10000000 8 digits -> -20px;
@@ -176,37 +176,37 @@ string resolve_hits_html_outputter::markers_row(const size_t          &arg_seque
 	)
 	+ R"(		</div>
 	</td>
-	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Calc Score"s : ""s )   + R"(</td>
-	<td class="crh-cell">)" + ( arg_score_header_lbl.value_or(         ""s ) ) + R"(</td>
-	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Regions"s    : ""s )   + R"(</td>
-	<td class="crh-cell">)" + ( arg_score_header_lbl ? "Length"s     : ""s )   + R"(</td>
+	<td class="crh-cell">)" + ( prm_score_header_lbl ? "Calc Score"s : ""s )   + R"(</td>
+	<td class="crh-cell">)" + ( prm_score_header_lbl.value_or(         ""s ) ) + R"(</td>
+	<td class="crh-cell">)" + ( prm_score_header_lbl ? "Regions"s    : ""s )   + R"(</td>
+	<td class="crh-cell">)" + ( prm_score_header_lbl ? "Length"s     : ""s )   + R"(</td>
 </tr>)";
 }
 
 /// \brief Merge the original segment boundaries with an optional set of resolved
 ///        boundaries, replacing originals with resolveds if they exist
-seq_seg_opt_vec merge_opt_resolved_boundaries(const seq_seg_vec               &arg_segs,              ///< The original boundaries
-                                              const seg_boundary_pair_vec_opt &arg_result_boundaries, ///< The optional resolved boundaries, where that has been required
-                                              const crh_segment_spec          &arg_segment_spec       ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+seq_seg_opt_vec merge_opt_resolved_boundaries(const seq_seg_vec               &prm_segs,              ///< The original boundaries
+                                              const seg_boundary_pair_vec_opt &prm_result_boundaries, ///< The optional resolved boundaries, where that has been required
+                                              const crh_segment_spec          &prm_segment_spec       ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
                                               ) {
-	return arg_result_boundaries
-		? merge_boundaries( arg_segs, *arg_result_boundaries, arg_segment_spec )
+	return prm_result_boundaries
+		? merge_boundaries( prm_segs, *prm_result_boundaries, prm_segment_spec )
 		: transform_build<seq_seg_opt_vec>(
-			arg_segs,
+			prm_segs,
 			[] (const seq_seg &x) { return make_optional( x ); }
 		);
 }
 
 /// \brief Generate a HTML to describe the specified full_hit
-string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hit,        ///< The hit to render in HTML
-                                             const crh_segment_spec &arg_segment_spec,    ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
-                                             const size_t           &arg_sequence_length, ///< The length of the full sequence on which this full_hit appears
-                                             const hit_row_context  &arg_row_context      ///< The context of the hits
+string resolve_hits_html_outputter::hit_html(const html_hit         &prm_html_hit,        ///< The hit to render in HTML
+                                             const crh_segment_spec &prm_segment_spec,    ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                             const size_t           &prm_sequence_length, ///< The length of the full sequence on which this full_hit appears
+                                             const hit_row_context  &prm_row_context      ///< The context of the hits
                                              ) {
-	const full_hit                  &the_full_hit          = arg_html_hit.hit_ref.get();
-	const seg_boundary_pair_vec_opt &the_result_boundaries = arg_html_hit.result_boundaries;
+	const full_hit                  &the_full_hit          = prm_html_hit.hit_ref.get();
+	const seg_boundary_pair_vec_opt &the_result_boundaries = prm_html_hit.result_boundaries;
 
-	const auto resolved_boundaries = merge_opt_resolved_boundaries( the_full_hit.get_segments(), the_result_boundaries, arg_segment_spec );
+	const auto resolved_boundaries = merge_opt_resolved_boundaries( the_full_hit.get_segments(), the_result_boundaries, prm_segment_spec );
 	const auto boundaries_strs     = transform_build<str_vec>(
 		resolved_boundaries
 			| filtered( [] (const seq_seg_opt &x) { return static_cast<bool>( x ); } ),
@@ -220,11 +220,11 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hi
 
 				// Grab the result of applying the crh_segment_spec to the segment
 				// (which may be boost::none if the segment is shorter than min-seg-length)
-				const seq_seg_opt trimmed_seg_opt = apply_spec_to_seg_copy( x, arg_segment_spec );
+				const seq_seg_opt trimmed_seg_opt = apply_spec_to_seg_copy( x, prm_segment_spec );
 
 				// Prepare batch index and hit index strings
-				const string      batch_idx_str   = ::std::to_string( arg_html_hit.batch_idx + 1 );
-				const string      hit_idx_str     = ::std::to_string( arg_html_hit.hit_idx   + 1 );
+				const string      batch_idx_str   = ::std::to_string( prm_html_hit.batch_idx + 1 );
+				const string      hit_idx_str     = ::std::to_string( prm_html_hit.hit_idx   + 1 );
 
 				return "\t\t"
 					+ join(
@@ -235,7 +235,7 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hi
 							x.get_stop_arrow (),
 							( the_result_boundaries ? ( *the_result_boundaries )[ x_idx ].first  : none ),
 							( the_result_boundaries ? ( *the_result_boundaries )[ x_idx ].second : none ),
-							arg_html_hit.colour,
+							prm_html_hit.colour,
 							// data fields, should allow something like:
 							//
 							//     $(".crh-hit-ill-core").each(function(n) {
@@ -252,8 +252,8 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hi
 								make_pair( "crh-seg-num"s,                                ::std::to_string( x_idx + 1 ) ),
 								make_pair( "crh-seg-boundaries"s,                         to_simple_string( resolved_boundaries[ x_idx ] ) ),
 							},
-							arg_sequence_length
-						}.get_all_span_html_strs( arg_row_context != hit_row_context::RESULT_FULL ),
+							prm_sequence_length
+						}.get_all_span_html_strs( prm_row_context != hit_row_context::RESULT_FULL ),
 						"\n\t\t"
 					)
 					+ "\n";
@@ -263,47 +263,47 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &arg_html_hi
 }
 
 /// \brief Generate an HTML fragment to describe the specified full_hit with the specified crh_segment_spec applied
-string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_full_hits_data,    ///< The detail of the hit(s) to render in the row (maybe more than one if the row is combining all result hits)
-                                                  const crh_segment_spec &arg_segment_spec,      ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
-                                                  const crh_score_spec   &arg_score_spec,        ///< The crh_score_spec to use to calculate the crh-score
-                                                  const size_t           &arg_sequence_length,   ///< The length of the full sequence on which this full_hit appears
-                                                  const hit_row_context  &arg_row_context        ///< The context of the hits
+string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &prm_full_hits_data,    ///< The detail of the hit(s) to render in the row (maybe more than one if the row is combining all result hits)
+                                                  const crh_segment_spec &prm_segment_spec,      ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                  const crh_score_spec   &prm_score_spec,        ///< The crh_score_spec to use to calculate the crh-score
+                                                  const size_t           &prm_sequence_length,   ///< The length of the full sequence on which this full_hit appears
+                                                  const hit_row_context  &prm_row_context        ///< The context of the hits
                                                   ) {
-	if ( arg_full_hits_data.empty() ) {
+	if ( prm_full_hits_data.empty() ) {
 		return "";
 	}
 
-	const double    length_mult             = 100.0 / debug_numeric_cast<double>( arg_sequence_length );
-	const bool      isnt_full_result        = arg_row_context != hit_row_context::RESULT_FULL;
-	const full_hit &first_hit               = arg_full_hits_data.front().hit_ref.get();
-	const auto     &first_result_boundaries = arg_full_hits_data.front().result_boundaries;
+	const double    length_mult             = 100.0 / debug_numeric_cast<double>( prm_sequence_length );
+	const bool      isnt_full_result        = prm_row_context != hit_row_context::RESULT_FULL;
+	const full_hit &first_hit               = prm_full_hits_data.front().hit_ref.get();
+	const auto     &first_result_boundaries = prm_full_hits_data.front().result_boundaries;
 	const str_vec   boundaries_strs         = (
 		isnt_full_result
 			? transform_build<str_vec>(
 				merge_opt_resolved_boundaries(
 					first_hit.get_segments(),
 					first_result_boundaries,
-					arg_segment_spec
+					prm_segment_spec
 				) | filtered( [] (const seq_seg_opt &x) { return static_cast<bool>( x ); } ),
 				[] (const seq_seg_opt &x) { return to_simple_string( x ); }
 			)
 			: str_vec{}
 	);
 
-	if ( isnt_full_result && arg_full_hits_data.size() != 1 ) {
+	if ( isnt_full_result && prm_full_hits_data.size() != 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot generate an HTML row of hits data for multiple hits when not generating a full result"));
 	}
 
 	// For strictly-worse rows, can set: background-color: #ddd; color: #999;
-	return R"(<tr )" + row_css_class_and_data_of_hit_row_context( arg_row_context ) + R"(>
-	<td class="crh-cell crh-cell-data )" + first_cell_css_class_of_hit_row_context( arg_row_context ) + R"(">
+	return R"(<tr )" + row_css_class_and_data_of_hit_row_context( prm_row_context ) + R"(>
+	<td class="crh-cell crh-cell-data )" + first_cell_css_class_of_hit_row_context( prm_row_context ) + R"(">
 		)" + ( isnt_full_result ? dumb_html_escape_copy( first_hit.get_label() ) : "&nbsp;"s ) + R"(
 	</td>
 	<td class="crh-cell crh-cell-data">
 		<div class="crh-figure-div-line">
 )"
 		+ join(
-			irange( 0_z, arg_sequence_length + 1, step_for_length( arg_sequence_length ) )
+			irange( 0_z, prm_sequence_length + 1, step_for_length( prm_sequence_length ) )
 				| transformed( [&] (const size_t &x) {
 					return R"(		<span class="crh-figure-tick" style="left: )"
 						+ ::std::to_string( length_mult * debug_numeric_cast<double>( x ) )
@@ -312,13 +312,13 @@ string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_fu
 			""
 		)
 		+ join(
-			arg_full_hits_data
+			prm_full_hits_data
 				| transformed( [&] (const html_hit &x) {
 					return hit_html(
 						x,
-						arg_segment_spec,
-						arg_sequence_length,
-						arg_row_context
+						prm_segment_spec,
+						prm_sequence_length,
+						prm_row_context
 					);
 				} ),
 			""
@@ -327,7 +327,7 @@ string resolve_hits_html_outputter::hits_row_html(const html_hit_vec     &arg_fu
 	</td>
 	<td class="crh-cell crh-cell-data">)"
 		+ ( isnt_full_result && first_result_boundaries ? "+ "s : ""s )
-		+ ( isnt_full_result ? ( format("%.3g") % get_crh_score( first_hit, arg_score_spec ) ).str() : ""s )
+		+ ( isnt_full_result ? ( format("%.3g") % get_crh_score( first_hit, prm_score_spec ) ).str() : ""s )
 		+ R"(</td>
 	<td class="crh-cell crh-cell-data">)"
 		+ ( isnt_full_result ? get_score_string( first_hit, 4 ) : ""s )
@@ -763,17 +763,17 @@ body.crh-body table {
 ///  * choose one of a few simple multipliers (1, 2, 5) for that order of magnitude that multiplies up to
 ///    less than or equal to the original naive answer
 ///  * return the order of magnitude multiplied by that multiplier
-size_t resolve_hits_html_outputter::step_for_length(const size_t &arg_sequence_length ///< The length of the sequence for which the markers' step-size should be calculated
+size_t resolve_hits_html_outputter::step_for_length(const size_t &prm_sequence_length ///< The length of the sequence for which the markers' step-size should be calculated
                                                     ) {
 	constexpr size_t aim_min_num_steps = 4;
-	if ( arg_sequence_length <= 0 ) {
+	if ( prm_sequence_length <= 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to calculate step length for sequence of 0 length"));
 	}
-	if ( arg_sequence_length < aim_min_num_steps ) {
+	if ( prm_sequence_length < aim_min_num_steps ) {
 		return 1;
 	}
 
-	const double naive_guess    = debug_numeric_cast<double>( arg_sequence_length ) / debug_numeric_cast<double>( aim_min_num_steps );
+	const double naive_guess    = debug_numeric_cast<double>( prm_sequence_length ) / debug_numeric_cast<double>( aim_min_num_steps );
 	const size_t order_of_mgntd = debug_numeric_cast<size_t>( pow( 10, floor( log10( naive_guess ) ) ) );
 	const double naive_mantissa = naive_guess / debug_numeric_cast<double>( order_of_mgntd );
 	const size_t mult           = (
@@ -786,62 +786,62 @@ size_t resolve_hits_html_outputter::step_for_length(const size_t &arg_sequence_l
 }
 
 /// \brief Generate HTML to describe the specified full_hit_list with the specified specs applied 
-string resolve_hits_html_outputter::output_html(const string            &arg_query_id,         ///< The query ID
-                                                full_hit_list          &&arg_full_hit_list,    ///< The full_hit_list to describe
-                                                const crh_score_spec    &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
-                                                const crh_segment_spec  &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
-                                                const crh_html_spec     &arg_html_spec,        ///< The specification for how to render the HTML
-                                                const bool              &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
-                                                const crh_filter_spec   &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
-                                                const size_t            &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
+string resolve_hits_html_outputter::output_html(const string            &prm_query_id,         ///< The query ID
+                                                full_hit_list          &&prm_full_hit_list,    ///< The full_hit_list to describe
+                                                const crh_score_spec    &prm_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
+                                                const crh_segment_spec  &prm_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                const crh_html_spec     &prm_html_spec,        ///< The specification for how to render the HTML
+                                                const bool              &prm_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
+                                                const crh_filter_spec   &prm_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const size_t            &prm_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
                                                 ) {
 	return output_html(
-		arg_query_id,
-		calc_hit_list{ std::move( arg_full_hit_list ), arg_score_spec, arg_segment_spec, arg_filter_spec },
-		arg_score_spec,
-		arg_segment_spec,
-		arg_html_spec,
-		arg_output_head_tail,
-		arg_filter_spec,
-		arg_batch_index
+		prm_query_id,
+		calc_hit_list{ std::move( prm_full_hit_list ), prm_score_spec, prm_segment_spec, prm_filter_spec },
+		prm_score_spec,
+		prm_segment_spec,
+		prm_html_spec,
+		prm_output_head_tail,
+		prm_filter_spec,
+		prm_batch_index
 	);
 }
 
 /// \brief Generate HTML to describe the specified full_hit_list with the specified trim_spec applied
-string resolve_hits_html_outputter::output_html(const string           &arg_query_id,         ///< The query ID
-                                                const full_hit_list    &arg_full_hit_list,    ///< The full_hit_list to describe
-                                                const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
-                                                const crh_segment_spec &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
-                                                const crh_html_spec    &arg_html_spec,        ///< The specification for how to render the HTML
-                                                const bool             &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
-                                                const crh_filter_spec  &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
-                                                const size_t           &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
+string resolve_hits_html_outputter::output_html(const string           &prm_query_id,         ///< The query ID
+                                                const full_hit_list    &prm_full_hit_list,    ///< The full_hit_list to describe
+                                                const crh_score_spec   &prm_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
+                                                const crh_segment_spec &prm_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                const crh_html_spec    &prm_html_spec,        ///< The specification for how to render the HTML
+                                                const bool             &prm_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
+                                                const crh_filter_spec  &prm_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const size_t           &prm_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
                                                 ) {
 	return output_html(
-		arg_query_id,
-		calc_hit_list{ arg_full_hit_list, arg_score_spec, arg_segment_spec, arg_filter_spec },
-		arg_score_spec,
-		arg_segment_spec,
-		arg_html_spec,
-		arg_output_head_tail,
-		arg_filter_spec,
-		arg_batch_index
+		prm_query_id,
+		calc_hit_list{ prm_full_hit_list, prm_score_spec, prm_segment_spec, prm_filter_spec },
+		prm_score_spec,
+		prm_segment_spec,
+		prm_html_spec,
+		prm_output_head_tail,
+		prm_filter_spec,
+		prm_batch_index
 	);
 }
 
 /// \brief Generate HTML to describe the specified full_hit_list with the specified trim_spec applied
-string resolve_hits_html_outputter::output_html(const string           &arg_query_id,         ///< The query ID
-                                                const calc_hit_list    &arg_calc_hit_list,    ///< The calc_hit_list to describe
-                                                const crh_score_spec   &arg_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
-                                                const crh_segment_spec &arg_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
-                                                const crh_html_spec    &arg_html_spec,        ///< The specification for how to render the HTML
-                                                const bool             &arg_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
-                                                const crh_filter_spec  &arg_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
-                                                const size_t           &arg_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
+string resolve_hits_html_outputter::output_html(const string           &prm_query_id,         ///< The query ID
+                                                const calc_hit_list    &prm_calc_hit_list,    ///< The calc_hit_list to describe
+                                                const crh_score_spec   &prm_score_spec,       ///< The crh_score_spec to use to calculate the crh-score
+                                                const crh_segment_spec &prm_segment_spec,     ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                const crh_html_spec    &prm_html_spec,        ///< The specification for how to render the HTML
+                                                const bool             &prm_output_head_tail, ///< Whether to include the head and tail (ie prefix and suffix) in the output
+                                                const crh_filter_spec  &prm_filter_spec,      ///< The crh_filter_spec defining which input hits will be skipped by the algorithm
+                                                const size_t           &prm_batch_index       ///< The index of the batch of hits being output (used to allow hits' HTML to have unique data attributes)
                                                 ) {
 	const auto  filtered_grey     = display_colour{ 0.666, 0.666, 0.666 };
-	const auto &the_full_hit_list = arg_calc_hit_list.get_full_hits();
-	const auto  best_result       = resolve_hits( arg_calc_hit_list, arg_score_spec.get_naive_greedy() );
+	const auto &the_full_hit_list = prm_calc_hit_list.get_full_hits();
+	const auto  best_result       = resolve_hits( prm_calc_hit_list, prm_score_spec.get_naive_greedy() );
 	const auto  chosen_full_hits  = full_hit_list{ transform_build<full_hit_vec>(
 		best_result.get_arch(),
 		[&] (const calc_hit &x) {
@@ -851,8 +851,8 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	const auto sorted_indices = sort_build<size_vec>(
 		indices( the_full_hit_list.size() ),
 		[&] (const size_t &x, const size_t &y) {
-			const auto neg_x_score = -get_crh_score( the_full_hit_list[ x ], arg_score_spec );
-			const auto neg_y_score = -get_crh_score( the_full_hit_list[ y ], arg_score_spec );
+			const auto neg_x_score = -get_crh_score( the_full_hit_list[ x ], prm_score_spec );
+			const auto neg_y_score = -get_crh_score( the_full_hit_list[ y ], prm_score_spec );
 			return
 				tie( neg_x_score, x )
 				<
@@ -868,7 +868,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 		},
 		255
 	};
-	const auto   best_crh_score = get_best_crh_score( the_full_hit_list, arg_score_spec );
+	const auto   best_crh_score = get_best_crh_score( the_full_hit_list, prm_score_spec );
 	const auto   max_stop       = get_max_stop      ( the_full_hit_list );
 	const size_t seq_length     = max_stop.value_or( 0_z );
 	const auto   orig_score_str = the_full_hit_list.empty() ? "Score"s
@@ -878,7 +878,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	size_set non_soln_hit_indices;
 	size_set excluded_non_soln_hit_indices;
 
-	const string main_return_string = ( arg_output_head_tail ? html_prefix() : string{} ) + R"(
+	const string main_return_string = ( prm_output_head_tail ? html_prefix() : string{} ) + R"(
 <br /> <!-- This is required before the wrapper for providing a break after the expand/collapse link -->
 <div class="crh-results-wrapper">
 
@@ -889,7 +889,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 	</span>
 </div>
 
-<h3 class="crh-query-header">)" + dumb_html_escape_copy( arg_query_id ) + R"(</h3>
+<h3 class="crh-query-header">)" + dumb_html_escape_copy( prm_query_id ) + R"(</h3>
 <table class="crh-table">
 
 <tr class="crh-row-subheading">
@@ -911,24 +911,24 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 				const auto &the_full_hit = the_full_hit_list[ the_index ];
 				return html_hit{
 					the_full_hit,
-					arg_batch_index,
+					prm_batch_index,
 					the_index,
-					score_passes_filter( arg_filter_spec, the_full_hit.get_score(), the_full_hit.get_score_type() )
+					score_passes_filter( prm_filter_spec, the_full_hit.get_score(), the_full_hit.get_score_type() )
 						? get_colour_of_fraction(
 							gradient,
-							get_crh_score( the_full_hit, arg_score_spec ) / *best_crh_score
+							get_crh_score( the_full_hit, prm_score_spec ) / *best_crh_score
 						)
 						: filtered_grey,
 					make_optional( resolved_boundaries(
 						the_full_hit,
 						chosen_full_hits,
-						arg_segment_spec
+						prm_segment_spec
 					) )
 				};
 			}
 		),
-		arg_segment_spec,
-		arg_score_spec,
+		prm_segment_spec,
+		prm_score_spec,
 		seq_length,
 		hit_row_context::RESULT_FULL
 	)
@@ -953,22 +953,22 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 				return hits_row_html(
 					{ html_hit{
 						the_full_hit,
-						arg_batch_index,
+						prm_batch_index,
 						the_index,
-						score_passes_filter( arg_filter_spec, the_full_hit.get_score(), the_full_hit.get_score_type() )
+						score_passes_filter( prm_filter_spec, the_full_hit.get_score(), the_full_hit.get_score_type() )
 							? get_colour_of_fraction(
 								gradient,
-								get_crh_score( the_full_hit, arg_score_spec ) / *best_crh_score
+								get_crh_score( the_full_hit, prm_score_spec ) / *best_crh_score
 							)
 							: filtered_grey,
 						make_optional( resolved_boundaries(
 							the_full_hit,
 							chosen_full_hits,
-							arg_segment_spec
+							prm_segment_spec
 						) )
 					} },
-					arg_segment_spec,
-					arg_score_spec,
+					prm_segment_spec,
+					prm_score_spec,
 					seq_length,
 					hit_row_context::RESULT
 				);
@@ -1004,14 +1004,14 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 				const bool             in_result = any_of( best_result.get_arch(), [&] (const calc_hit &y) { return y.get_label_idx() == x; } );
 				const hit_row_context  context   = in_result ? hit_row_context::HIGHLIGHT
 				                                             : hit_row_context::NORMAL;
-				const bool             rejected  = ! score_passes_filter( arg_filter_spec, hit_x.get_score(), hit_x.get_score_type() );
+				const bool             rejected  = ! score_passes_filter( prm_filter_spec, hit_x.get_score(), hit_x.get_score_type() );
 
-				if ( rejected && arg_html_spec.get_exclude_rejected_hits() ) {
+				if ( rejected && prm_html_spec.get_exclude_rejected_hits() ) {
 					return ""s;
 				}
 				if ( ! in_result ) {
 					if ( ! contains( non_soln_hit_indices, x ) ) {
-						if ( non_soln_hit_indices.size() >= arg_html_spec.get_max_num_non_soln_hits() ) {
+						if ( non_soln_hit_indices.size() >= prm_html_spec.get_max_num_non_soln_hits() ) {
 							excluded_non_soln_hit_indices.insert( x );
 							return ""s;
 						}
@@ -1021,18 +1021,18 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 				return hits_row_html(
 					{ html_hit{
 						hit_x,
-						arg_batch_index,
+						prm_batch_index,
 						x,
 						rejected
 							? filtered_grey
 							: get_colour_of_fraction(
 								gradient,
-								get_crh_score( hit_x, arg_score_spec ) / *best_crh_score
+								get_crh_score( hit_x, prm_score_spec ) / *best_crh_score
 							),
 						none
 					} },
-					arg_segment_spec,
-					arg_score_spec,
+					prm_segment_spec,
+					prm_score_spec,
 					seq_length,
 					context
 				);
@@ -1056,7 +1056,7 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 					R"(<div class="crh-exclusion-note">...hiding another )"
 					+ std::to_string( excluded_non_soln_hit_indices.size() )
 					+ R"( non-solution results (current limit is )"
-					+ std::to_string( arg_html_spec.get_max_num_non_soln_hits() )
+					+ std::to_string( prm_html_spec.get_max_num_non_soln_hits() )
 					+ R"(; use <code>--)"
 					+ crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS
 					+ R"(</code> to change)</div>)"
@@ -1065,5 +1065,5 @@ string resolve_hits_html_outputter::output_html(const string           &arg_quer
 		+ R"(
 </div>
 )"
-		+ ( arg_output_head_tail ? html_suffix() : string{} );
+		+ ( prm_output_head_tail ? html_suffix() : string{} );
 }

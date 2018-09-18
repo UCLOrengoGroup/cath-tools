@@ -29,16 +29,16 @@ using namespace cath::rslv;
 /// \brief Make a scored_hit_arch from a scored_arch_proxy and calc_hit_list
 ///
 /// \relates scored_hit_arch
-scored_hit_arch cath::rslv::make_scored_hit_arch(const scored_arch_proxy &arg_scored_arch_proxy, ///< The scored_arch_proxy which the scored_hit_arch should copy
-                                                 const calc_hit_list     &arg_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy refers
+scored_hit_arch cath::rslv::make_scored_hit_arch(const scored_arch_proxy &prm_scored_arch_proxy, ///< The scored_arch_proxy which the scored_hit_arch should copy
+                                                 const calc_hit_list     &prm_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy refers
                                                  ) {
 	return {
-		arg_scored_arch_proxy.get_score(),
+		prm_scored_arch_proxy.get_score(),
 		hit_arch{
 			transform_build<calc_hit_vec>(
-				arg_scored_arch_proxy,
+				prm_scored_arch_proxy,
 				[&] (const hitidx_t &x) {
-					return arg_calc_hit_list[ x ];
+					return prm_calc_hit_list[ x ];
 				}
 			)
 		}
@@ -49,8 +49,8 @@ scored_hit_arch cath::rslv::make_scored_hit_arch(const scored_arch_proxy &arg_sc
 ///        the hits in the specified scored_hit_arch
 ///
 /// \relates scored_hit_arch
-full_hit_list cath::rslv::get_full_hits_of_hit_arch(const scored_hit_arch &arg_scored_hit_arch, ///< The scored_hit_arch whose full hits should be extracted
-                                                    const full_hit_list   &arg_full_hits        ///< The full_hit_list associated with the scored_hit_arch, from which the full_hits should be extracted
+full_hit_list cath::rslv::get_full_hits_of_hit_arch(const scored_hit_arch &prm_scored_hit_arch, ///< The scored_hit_arch whose full hits should be extracted
+                                                    const full_hit_list   &prm_full_hits        ///< The full_hit_list associated with the scored_hit_arch, from which the full_hits should be extracted
                                                     ) {
-	return get_full_hits_of_hit_arch( arg_scored_hit_arch.get_arch(), arg_full_hits );
+	return get_full_hits_of_hit_arch( prm_scored_hit_arch.get_arch(), prm_full_hits );
 }

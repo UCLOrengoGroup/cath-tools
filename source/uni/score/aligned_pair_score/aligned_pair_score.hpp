@@ -133,9 +133,9 @@ namespace cath {
 		///
 		/// \returns A raw pointer to a new copy of the aligned_pair_score argument, with the same dynamic type.
 		///          The caller is responsible for deleting this new object.
-		inline aligned_pair_score * new_clone(const aligned_pair_score &arg_aligned_pair_score ///< The aligned_pair_score to clone
+		inline aligned_pair_score * new_clone(const aligned_pair_score &prm_aligned_pair_score ///< The aligned_pair_score to clone
 		                                      ) {
-			return arg_aligned_pair_score.clone().release();
+			return prm_aligned_pair_score.clone().release();
 		}
 	} // namespace score
 } // namespace cath

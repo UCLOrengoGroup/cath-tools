@@ -33,9 +33,9 @@ namespace cath {
 		/// \brief Convert the specified bool output-trimmed-hits to the equivalent hit_boundary_output
 		///
 		/// \relates hit_boundary_output
-		inline constexpr hit_boundary_output hit_boundary_output_of_output_trimmed_hits(const bool &arg_output_trimmed_hits ///< Whether the output of the hits' boundaries should have them trimmed
+		inline constexpr hit_boundary_output hit_boundary_output_of_output_trimmed_hits(const bool &prm_output_trimmed_hits ///< Whether the output of the hits' boundaries should have them trimmed
 		                                                                                ) {
-			return arg_output_trimmed_hits ? hit_boundary_output::TRIMMED
+			return prm_output_trimmed_hits ? hit_boundary_output::TRIMMED
 			                               : hit_boundary_output::ORIG;
 		}
 
@@ -43,9 +43,9 @@ namespace cath {
 		///        whether the output of the hits' boundaries should have them trimmed
 		///
 		/// \relates hit_boundary_output
-		inline constexpr bool means_output_trimmed_hits(const hit_boundary_output &arg_hit_boundary_output ///< The hit_boundary_output to query
+		inline constexpr bool means_output_trimmed_hits(const hit_boundary_output &prm_hit_boundary_output ///< The hit_boundary_output to query
 		                                                ) {
-			return ( arg_hit_boundary_output == hit_boundary_output::TRIMMED );
+			return ( prm_hit_boundary_output == hit_boundary_output::TRIMMED );
 		}
 
 	} // namespace rslv

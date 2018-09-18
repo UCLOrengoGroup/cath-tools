@@ -89,9 +89,9 @@ namespace cath {
 		///
 		/// \returns A raw pointer to a new copy of the protein_only_length_getter argument, with the same dynamic type.
 		///          The caller is responsible for deleting this new object.
-		inline protein_only_length_getter * new_clone(const protein_only_length_getter &arg_protein_only_length_getter ///< The protein_only_length_getter to clone
+		inline protein_only_length_getter * new_clone(const protein_only_length_getter &prm_protein_only_length_getter ///< The protein_only_length_getter to clone
 		                                              ) {
-			return arg_protein_only_length_getter.protein_only_clone().release();
+			return prm_protein_only_length_getter.protein_only_clone().release();
 		}
 	} // namespace score
 } // namespace cath

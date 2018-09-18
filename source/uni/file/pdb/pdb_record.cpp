@@ -31,24 +31,24 @@ using namespace std;
 /// \brief Simple extraction operator for pdb_record
 ///
 /// \relates pdb_record
-istream & cath::file::operator>>(istream    &arg_is,        ///< The istream from which to extract the pdb_record
-                                 pdb_record &arg_pdb_record ///< The pdb_record to populate
+istream & cath::file::operator>>(istream    &prm_is,        ///< The istream from which to extract the pdb_record
+                                 pdb_record &prm_pdb_record ///< The pdb_record to populate
                                  ) {
 	string input_string;
-	arg_is >> input_string;
-	arg_pdb_record = pdb_rec_of_str( input_string );
-	return arg_is;
+	prm_is >> input_string;
+	prm_pdb_record = pdb_rec_of_str( input_string );
+	return prm_is;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_record
-ostream & cath::file::operator<<(ostream          &arg_os,        ///< TODOCUMENT
-	                             const pdb_record &arg_pdb_record ///< TODOCUMENT
+ostream & cath::file::operator<<(ostream          &prm_os,        ///< TODOCUMENT
+	                             const pdb_record &prm_pdb_record ///< TODOCUMENT
 	                             ) {
-	switch ( arg_pdb_record ) {
-		case ( pdb_record::ATOM   ) : { arg_os << "ATOM"   ; return arg_os ; }
-		case ( pdb_record::HETATM ) : { arg_os << "HETATM" ; return arg_os ; }
+	switch ( prm_pdb_record ) {
+		case ( pdb_record::ATOM   ) : { prm_os << "ATOM"   ; return prm_os ; }
+		case ( pdb_record::HETATM ) : { prm_os << "HETATM" ; return prm_os ; }
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of pdb_record not recognised whilst inserting into an ostream"));
 }

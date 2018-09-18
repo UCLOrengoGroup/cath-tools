@@ -147,11 +147,11 @@ namespace cath {
 //			using view_type           = geom::coord;
 			using view_type           = boost::geometry::model::point<view_base_type, 3, boost::geometry::cs::cartesian>;
 
-			inline view_type operator-(view_type        arg_view_a,
-			                           const view_type &arg_view_b
+			inline view_type operator-(view_type        prm_view_a,
+			                           const view_type &prm_view_b
 			                           ) {
-				boost::geometry::subtract_point( arg_view_a, arg_view_b );
-				return arg_view_a;
+				boost::geometry::subtract_point( prm_view_a, prm_view_b );
+				return prm_view_a;
 			}
 
 			/// \brief The type for a vector of view_types

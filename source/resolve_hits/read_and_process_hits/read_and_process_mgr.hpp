@@ -188,36 +188,36 @@ namespace cath {
 		/// \brief Process the specified data
 		///
 		/// This is called directly in process_all_outstanding() and through async in trigger_async_process_query_id()
-		inline void read_and_process_mgr::process_query_id(detail::hits_processor_list    &arg_processors,  ///< The hits_processors to use to process the hits
-		                                                   const std::string              &arg_query_id,    ///< The query ID
-		                                                   const crh_filter_spec          &arg_filter_spec, ///< The filter spec to define how to filter the hits
-		                                                   detail::full_hit_prune_builder &arg_hit_builder  ///< The hits to process
+		inline void read_and_process_mgr::process_query_id(detail::hits_processor_list    &prm_processors,  ///< The hits_processors to use to process the hits
+		                                                   const std::string              &prm_query_id,    ///< The query ID
+		                                                   const crh_filter_spec          &prm_filter_spec, ///< The filter spec to define how to filter the hits
+		                                                   detail::full_hit_prune_builder &prm_hit_builder  ///< The hits to process
 		                                                   ) {
-			arg_processors.process_hits_for_query(
-				arg_query_id,
-				arg_filter_spec,
-				arg_hit_builder.get_built_hits()
+			prm_processors.process_hits_for_query(
+				prm_query_id,
+				prm_filter_spec,
+				prm_hit_builder.get_built_hits()
 			);
 		}
 
 		/// \brief Trigger asynchronous processing of the data corresponding to the specified protein_query_id
-		inline void read_and_process_mgr::trigger_async_process_query_id(const std::string &arg_query_id ///< The protein_query_id
+		inline void read_and_process_mgr::trigger_async_process_query_id(const std::string &prm_query_id ///< The protein_query_id
 		                                                                 ) {
 			// Wait until any previously triggered asynchronous processing is complete
 			wait_for_any_active_work();
 
 			// Mark to_be_erased_query_id with this query ID so it's possible to detect if there's any
 			// attempt to modify the data for this query ID while it's being processed
-			to_be_erased_query_id = arg_query_id;
+			to_be_erased_query_id = prm_query_id;
 
 			// Start asynchronous processing of the work to process these hits and output the results
 			resolve_future = async(
 				std::launch::async,
 				process_query_id,
 				std::ref( processors ),
-				arg_query_id,
+				prm_query_id,
 				the_filter_spec,
-				std::ref( hit_builder_by_query_id.find( arg_query_id )->second )
+				std::ref( hit_builder_by_query_id.find( prm_query_id )->second )
 			);
 		}
 
@@ -229,34 +229,34 @@ namespace cath {
 		}
 
 		/// \brief Ctor from the ostream to which the results should be written
-		inline read_and_process_mgr::read_and_process_mgr(const detail::hits_processor_list &arg_hits_processors,        ///< The hits_processor to use to process the hits
-		                                                  crh_filter_spec                    arg_filter_spec,           ///< The filter spec to define how to filter the hits
-		                                                  const bool                        &arg_input_hits_are_grouped ///< Whether the input hits are guaranteed to be presorted
-		                                                  ) : processors             { arg_hits_processors          },
-		                                                      the_filter_spec        { std::move( arg_filter_spec ) },
-		                                                      input_hits_are_grouped { arg_input_hits_are_grouped   } {
+		inline read_and_process_mgr::read_and_process_mgr(const detail::hits_processor_list &prm_hits_processors,        ///< The hits_processor to use to process the hits
+		                                                  crh_filter_spec                    prm_filter_spec,           ///< The filter spec to define how to filter the hits
+		                                                  const bool                        &prm_input_hits_are_grouped ///< Whether the input hits are guaranteed to be presorted
+		                                                  ) : processors             { prm_hits_processors          },
+		                                                      the_filter_spec        { std::move( prm_filter_spec ) },
+		                                                      input_hits_are_grouped { prm_input_hits_are_grouped   } {
 		}
 
 		/// \brief Add a new hit for the current query_id
 		///
 		/// \pre `is_active()` else an invalid_argument_exception will be thrown
-		inline void read_and_process_mgr::add_hit(const boost::string_ref &arg_query_id,   ///< A string_ref of the query_id
-		                                          seq::seq_seg_vec         arg_segments,   ///< Any fragments of the new hit
-		                                          std::string              arg_label,      ///< The label associated with the new hit
-		                                          const double            &arg_score,      ///< The score associated with the new hit
-		                                          const hit_score_type    &arg_score_type, ///< The type of the score
-		                                          hit_extras_store         arg_hit_extras  ///< Any HMMER aligned regions or else none
+		inline void read_and_process_mgr::add_hit(const boost::string_ref &prm_query_id,   ///< A string_ref of the query_id
+		                                          seq::seq_seg_vec         prm_segments,   ///< Any fragments of the new hit
+		                                          std::string              prm_label,      ///< The label associated with the new hit
+		                                          const double            &prm_score,      ///< The score associated with the new hit
+		                                          const hit_score_type    &prm_score_type, ///< The type of the score
+		                                          hit_extras_store         prm_hit_extras  ///< Any HMMER aligned regions or else none
 		                                          ) {
 			// If this hit's score doesn't meet the filter and such hits don't need to be kept, then skip it
 			if ( ! processors.wants_hits_that_fail_score_filter() ) {
-				if ( ! score_passes_filter( the_filter_spec, arg_score, arg_score_type ) ) {
+				if ( ! score_passes_filter( the_filter_spec, prm_score, prm_score_type ) ) {
 					return;
 				}
 			}
 
 			// Store the query_id in a local string temp_hashable_query_id, which can then be
 			// used for hashing
-			temp_hashable_query_id.assign( arg_query_id.data(), arg_query_id.length() );
+			temp_hashable_query_id.assign( prm_query_id.data(), prm_query_id.length() );
 
 			// If input_hits_are_grouped and previous hits had a different query_id, trigger an async worker thread to
 			// process the hits associated with that previous query_id
@@ -297,15 +297,15 @@ namespace cath {
 			auto &the_builder = prev_query_id_and_hits_builder_ref ? prev_query_id_and_hits_builder_ref->second
 			                                                       : get_or_add_builder_fn( temp_hashable_query_id );
 
-			// std::cerr << "arg_segments size is : " << arg_segments.size() << "\n";
+			// std::cerr << "prm_segments size is : " << prm_segments.size() << "\n";
 
 			// Add the new hit to the query's hits data
 			the_builder.add_hit( full_hit{
-				std::move( arg_segments ),
-				std::move( arg_label ),
-				arg_score,
-				arg_score_type,
-				std::move( arg_hit_extras )
+				std::move( prm_segments ),
+				std::move( prm_label ),
+				prm_score,
+				prm_score_type,
+				std::move( prm_hit_extras )
 			} );
 
 			// If the input hits are presorted then ensure prev_query_id_and_hits_builder_ref is up-to-date
@@ -360,36 +360,36 @@ namespace cath {
 		/// \brief Get the filter query IDs from the crh_filter_spec in the specified read_and_process_mgr
 		///
 		/// \relates read_and_process_mgr
-		inline const str_vec & get_filter_query_ids(const read_and_process_mgr &arg_read_and_process_mgr ///< The read_and_process_mgr to query
+		inline const str_vec & get_filter_query_ids(const read_and_process_mgr &prm_read_and_process_mgr ///< The read_and_process_mgr to query
 		                                            ) {
-			return arg_read_and_process_mgr.get_filter_spec().get_filter_query_ids();
+			return prm_read_and_process_mgr.get_filter_spec().get_filter_query_ids();
 		}
 
 		/// \brief Whether the specified query ID should be skipped according to the crh_filter_spec in the specified read_and_process_mgr
 		///
 		/// \relates read_and_process_mgr
-		inline bool should_skip_query(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
-		                              const std::string          &arg_query_id,             ///< The query ID to test
-		                              const query_id_recorder    &arg_seen_queries          ///< The query IDs that have already been seen
+		inline bool should_skip_query(const read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to query
+		                              const std::string          &prm_query_id,             ///< The query ID to test
+		                              const query_id_recorder    &prm_seen_queries          ///< The query IDs that have already been seen
 		                              ) {
 			return should_skip_query(
-				arg_read_and_process_mgr.get_filter_spec(),
-				arg_query_id,
-				arg_seen_queries
+				prm_read_and_process_mgr.get_filter_spec(),
+				prm_query_id,
+				prm_seen_queries
 			);
 		}
 
 		/// \brief Whether the specified query ID should be skipped according to the crh_filter_spec in the specified read_and_process_mgr
 		///
 		/// \relates read_and_process_mgr
-		inline bool should_skip_query(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
-		                              const boost::string_ref    &arg_query_id,             ///< The query ID to test
-		                              const query_id_recorder    &arg_seen_queries          ///< The query IDs that have already been seen
+		inline bool should_skip_query(const read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to query
+		                              const boost::string_ref    &prm_query_id,             ///< The query ID to test
+		                              const query_id_recorder    &prm_seen_queries          ///< The query IDs that have already been seen
 		                              ) {
 			return should_skip_query(
-				arg_read_and_process_mgr.get_filter_spec(),
-				arg_query_id,
-				arg_seen_queries
+				prm_read_and_process_mgr.get_filter_spec(),
+				prm_query_id,
+				prm_seen_queries
 			);
 		}
 
@@ -397,14 +397,14 @@ namespace cath {
 		///        and, if appropriate, update the specified list of seen query IDs
 		///
 		/// \relates read_and_process_mgr
-		inline bool should_skip_query_and_update(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
-		                                         const std::string          &arg_query_id,             ///< The query ID to test
-		                                         query_id_recorder          &arg_seen_queries          ///< The query IDs that have already been seen
+		inline bool should_skip_query_and_update(const read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to query
+		                                         const std::string          &prm_query_id,             ///< The query ID to test
+		                                         query_id_recorder          &prm_seen_queries          ///< The query IDs that have already been seen
 		                                         ) {
 			return should_skip_query_and_update(
-				arg_read_and_process_mgr.get_filter_spec(),
-				arg_query_id,
-				arg_seen_queries
+				prm_read_and_process_mgr.get_filter_spec(),
+				prm_query_id,
+				prm_seen_queries
 			);
 		}
 
@@ -412,14 +412,14 @@ namespace cath {
 		///        and, if appropriate, update the specified list of seen query IDs
 		///
 		/// \relates read_and_process_mgr
-		inline bool should_skip_query_and_update(const read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to query
-		                                         const boost::string_ref    &arg_query_id,             ///< The query ID to test
-		                                         query_id_recorder          &arg_seen_queries          ///< The query IDs that have already been seen
+		inline bool should_skip_query_and_update(const read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to query
+		                                         const boost::string_ref    &prm_query_id,             ///< The query ID to test
+		                                         query_id_recorder          &prm_seen_queries          ///< The query IDs that have already been seen
 		                                         ) {
 			return should_skip_query_and_update(
-				arg_read_and_process_mgr.get_filter_spec(),
-				arg_query_id,
-				arg_seen_queries
+				prm_read_and_process_mgr.get_filter_spec(),
+				prm_query_id,
+				prm_seen_queries
 			);
 		}
 

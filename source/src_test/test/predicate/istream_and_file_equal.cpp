@@ -38,37 +38,37 @@ using std::string;
 using boost::filesystem::path;
 
 /// \brief Ctor for istream_and_file_equal
-istream_and_file_equal::istream_and_file_equal(const bootstrap_mode &arg_bootstrapping,  ///< TODOCUMENT
-                                               const str_size_type  &arg_diff_half_width ///< TODOCUMENT
-                                               ) : bootstrapping   { arg_bootstrapping   },
-                                                   diff_half_width { arg_diff_half_width } {
+istream_and_file_equal::istream_and_file_equal(const bootstrap_mode &prm_bootstrapping,  ///< TODOCUMENT
+                                               const str_size_type  &prm_diff_half_width ///< TODOCUMENT
+                                               ) : bootstrapping   { prm_bootstrapping   },
+                                                   diff_half_width { prm_diff_half_width } {
 }
 
 /// \brief Ctor for istream_and_file_equal
-istream_and_file_equal::istream_and_file_equal(const str_size_type &arg_diff_half_width ///< TODOCUMENT
-                                               ) : diff_half_width{ arg_diff_half_width } {
+istream_and_file_equal::istream_and_file_equal(const str_size_type &prm_diff_half_width ///< TODOCUMENT
+                                               ) : diff_half_width{ prm_diff_half_width } {
 }
 
 /// \brief TODOCUMENT
-predicate_result istream_and_file_equal::operator()(istream      &arg_istream, ///< TODOCUMENT
-                                                    const string &arg_name,    ///< TODOCUMENT
-                                                    const path   &arg_filename ///< TODOCUMENT
+predicate_result istream_and_file_equal::operator()(istream      &prm_istream, ///< TODOCUMENT
+                                                    const string &prm_name,    ///< TODOCUMENT
+                                                    const path   &prm_filename ///< TODOCUMENT
                                                     ) const {
 	ifstream file_ifstream;
-	open_ifstream(file_ifstream, arg_filename);
+	open_ifstream(file_ifstream, prm_filename);
 
 	istreams_equal the_istreams_equal(diff_half_width);
 	const predicate_result the_result = the_istreams_equal(
-		arg_istream,
-		arg_name,
+		prm_istream,
+		prm_name,
 		file_ifstream,
-		files_equal::FILENAME_NAME_PREFIX + arg_filename.string()
+		files_equal::FILENAME_NAME_PREFIX + prm_filename.string()
 	);
 
 	// If `should_overwrite( bootstrapping )` and the result is negative,
-	// overwrite the expected (arg_filename) with the got (arg_istream)
+	// overwrite the expected (prm_filename) with the got (prm_istream)
 	if ( ! the_result && should_overwrite( bootstrapping ) ) {
-		spew( arg_filename, arg_istream );
+		spew( prm_filename, prm_istream );
 	}
 
 	return the_result;

@@ -38,24 +38,24 @@ using namespace cath::scan;
 //using namespace std;
 
 /// \brief TODOCUMENT
-const durn_mem_pair & scan_metrics::get_build_durn_and_size(const scan_build_type &arg_scan_build_type ///< TODOCUMENT
+const durn_mem_pair & scan_metrics::get_build_durn_and_size(const scan_build_type &prm_scan_build_type ///< TODOCUMENT
                                                             ) const {
-	return build_durns_and_sizes.at( arg_scan_build_type );
+	return build_durns_and_sizes.at( prm_scan_build_type );
 }
 
 /// \brief TODOCUMENT
-scan_metrics::scan_metrics(const durn_mem_pair &arg_build_query_strucs_metrics, ///< TODOCUMENT
-                           const durn_mem_pair &arg_build_query_store_metrics,  ///< TODOCUMENT
-                           const durn_mem_pair &arg_build_index_strucs_metrics, ///< TODOCUMENT
-                           const durn_mem_pair &arg_build_index_store_metrics,  ///< TODOCUMENT
-                           const hrc_duration  &arg_scan_durn                   ///< TODOCUMENT
+scan_metrics::scan_metrics(const durn_mem_pair &prm_build_query_strucs_metrics, ///< TODOCUMENT
+                           const durn_mem_pair &prm_build_query_store_metrics,  ///< TODOCUMENT
+                           const durn_mem_pair &prm_build_index_strucs_metrics, ///< TODOCUMENT
+                           const durn_mem_pair &prm_build_index_store_metrics,  ///< TODOCUMENT
+                           const hrc_duration  &prm_scan_durn                   ///< TODOCUMENT
                            ) : build_durns_and_sizes{ {
-                               	{ scan_build_type::QUERY_STRUCS, arg_build_query_strucs_metrics },
-                               	{ scan_build_type::QUERY_INDEX,  arg_build_query_store_metrics  },
-                               	{ scan_build_type::INDEX_STRUCS, arg_build_index_strucs_metrics },
-                               	{ scan_build_type::INDEX_INDEX,  arg_build_index_store_metrics  },
+                               	{ scan_build_type::QUERY_STRUCS, prm_build_query_strucs_metrics },
+                               	{ scan_build_type::QUERY_INDEX,  prm_build_query_store_metrics  },
+                               	{ scan_build_type::INDEX_STRUCS, prm_build_index_strucs_metrics },
+                               	{ scan_build_type::INDEX_INDEX,  prm_build_index_store_metrics  },
                                } },
-                               scan_durn      ( arg_scan_durn       ) {
+                               scan_durn      ( prm_scan_durn       ) {
 }
 
 /// \brief TODOCUMENT

@@ -42,10 +42,10 @@ namespace cath {
 			};
 
 			/// \brief Standard ctor like aggregate initialisation
-			inline constexpr node_info::node_info(const size_t &arg_locn, ///< The location of the cluster (ie the index under which it's being accessed)
-			                                      const size_t &arg_layer ///< The layer of the cluster
-			                                      ) noexcept : locn  { arg_locn  },
-			                                                   layer { arg_layer } {
+			inline constexpr node_info::node_info(const size_t &prm_locn, ///< The location of the cluster (ie the index under which it's being accessed)
+			                                      const size_t &prm_layer ///< The layer of the cluster
+			                                      ) noexcept : locn  { prm_locn  },
+			                                                   layer { prm_layer } {
 			}
 
 			/// \brief Type alias for an optional node_info

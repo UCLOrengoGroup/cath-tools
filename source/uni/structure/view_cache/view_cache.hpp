@@ -46,10 +46,10 @@ namespace cath {
 		};
 
 		/// \brief Getter for the view from residue with the specified from-index to the residue with the specified to-index
-		inline const geom::coord & view_cache::get_view(const size_t &arg_from_index, ///< The index of the from-residue of the view to be retrieved
-		                                                const size_t &arg_to_index    ///< The index of the to-residue   of the view to be retrieved
+		inline const geom::coord & view_cache::get_view(const size_t &prm_from_index, ///< The index of the from-residue of the view to be retrieved
+		                                                const size_t &prm_to_index    ///< The index of the to-residue   of the view to be retrieved
 		                                                ) const {
-			return views[ arg_from_index ][ arg_to_index   ];
+			return views[ prm_from_index ][ prm_to_index   ];
 		}
 
 	} // namespace index

@@ -42,12 +42,12 @@ using std::string;
 using std::unique_ptr;
 
 /// \brief hits_processor_list ctor from crh_score_spec and crh_segment_spec
-hits_processor_list::hits_processor_list(const crh_score_spec                   &arg_crh_score_spec,   ///< The crh_segment_spec with which to construct this hits_processor_list
-                                         const crh_segment_spec                 &arg_crh_segment_spec, ///< The crh_segment_spec with which to construct this hits_processor_list
-                                         initializer_list<hits_processor_clptr>  arg_hits_processors   ///< Any hits_processor_clprts with which this hits_processor_list should be initialized
-                                         ) : processors          { arg_hits_processors  },
-                                             the_score_spec      { arg_crh_score_spec   },
-                                             the_segment_spec    { arg_crh_segment_spec } {
+hits_processor_list::hits_processor_list(const crh_score_spec                   &prm_crh_score_spec,   ///< The crh_segment_spec with which to construct this hits_processor_list
+                                         const crh_segment_spec                 &prm_crh_segment_spec, ///< The crh_segment_spec with which to construct this hits_processor_list
+                                         initializer_list<hits_processor_clptr>  prm_hits_processors   ///< Any hits_processor_clprts with which this hits_processor_list should be initialized
+                                         ) : processors          { prm_hits_processors  },
+                                             the_score_spec      { prm_crh_score_spec   },
+                                             the_segment_spec    { prm_crh_segment_spec } {
 }
 
 /// \brief Getter for the score spec to apply to incoming hits
@@ -61,23 +61,23 @@ const crh_segment_spec & hits_processor_list::get_segment_spec() const {
 }
 
 /// \brief Add a processor to the list
-hits_processor_list & hits_processor_list::add_processor(const hits_processor &arg_hits_processor ///< The processor to add
+hits_processor_list & hits_processor_list::add_processor(const hits_processor &prm_hits_processor ///< The processor to add
                                                          ) {
-	processors.push_back( arg_hits_processor.clone() );
+	processors.push_back( prm_hits_processor.clone() );
 	return *this;
 }
 
 /// \brief Add a processor to the list
-hits_processor_list & hits_processor_list::add_processor(hits_processor_uptr arg_hits_processor_uptr ///< (A pointer to) the processor to add
+hits_processor_list & hits_processor_list::add_processor(hits_processor_uptr prm_hits_processor_uptr ///< (A pointer to) the processor to add
                                                          ) {
-	processors.push_back( std::move( arg_hits_processor_uptr ) );
+	processors.push_back( std::move( prm_hits_processor_uptr ) );
 	return *this;
 }
 
 /// \brief Add a processor to the list
-hits_processor_list & hits_processor_list::add_processor(hits_processor_clptr arg_hits_processor_uptr ///< (A pointer to) the processor to add
+hits_processor_list & hits_processor_list::add_processor(hits_processor_clptr prm_hits_processor_uptr ///< (A pointer to) the processor to add
                                                          ) {
-	processors.push_back( std::move( arg_hits_processor_uptr ) );
+	processors.push_back( std::move( prm_hits_processor_uptr ) );
 	return *this;
 }
 
@@ -94,9 +94,9 @@ size_t hits_processor_list::size() const {
 /// \brief Access the hits_processor at the specified index
 ///
 /// This isn't bounds-checked (unless in a build with a bounds-checked STL)
-const hits_processor & hits_processor_list::operator[](const size_t &arg_index ///< The index of the hits_processor to access
+const hits_processor & hits_processor_list::operator[](const size_t &prm_index ///< The index of the hits_processor to access
                                                        ) const {
-	return *( processors[ arg_index ] );
+	return *( processors[ prm_index ] );
 }
 
 /// \brief Return whether any of the hits_processors in the list want to hear about hits that fail the score_filter
@@ -129,21 +129,21 @@ auto hits_processor_list::end() const -> const_iterator {
 /// \brief Make the hits_processor implied by the specified spec object and the specified ostream
 ///
 /// \relates hits_processor_list
-hits_processor_list cath::rslv::detail::make_hits_processors(ofstream_list                &arg_ofstreams,          ///< The ofstream_list to which the hits_processors should write
-                                                             const crh_single_output_spec &arg_single_output_spec, ///< The crh_single_output_spec defining the type of hits_processor to make
-                                                             const crh_output_spec        &arg_output_spec,        ///< The crh_output_spec defining the type of hits_processor to make
-                                                             const crh_score_spec         &arg_score_spec,         ///< The crh_score_spec how to handle scores
-                                                             const crh_segment_spec       &arg_segment_spec,       ///< The crh_segment_spec how to handle segments
-                                                             const crh_html_spec          &arg_html_spec           ///< The crh_html_spec defining how to render any HTML
+hits_processor_list cath::rslv::detail::make_hits_processors(ofstream_list                &prm_ofstreams,          ///< The ofstream_list to which the hits_processors should write
+                                                             const crh_single_output_spec &prm_single_output_spec, ///< The crh_single_output_spec defining the type of hits_processor to make
+                                                             const crh_output_spec        &prm_output_spec,        ///< The crh_output_spec defining the type of hits_processor to make
+                                                             const crh_score_spec         &prm_score_spec,         ///< The crh_score_spec how to handle scores
+                                                             const crh_segment_spec       &prm_segment_spec,       ///< The crh_segment_spec how to handle segments
+                                                             const crh_html_spec          &prm_html_spec           ///< The crh_html_spec defining how to render any HTML
                                                              ) {
-	const auto &bound_out = arg_output_spec.get_boundary_output();
-	hits_processor_list the_list{ arg_score_spec, arg_segment_spec };
-	if ( ! is_default( arg_single_output_spec ) ) {
+	const auto &bound_out = prm_output_spec.get_boundary_output();
+	hits_processor_list the_list{ prm_score_spec, prm_segment_spec };
+	if ( ! is_default( prm_single_output_spec ) ) {
 		the_list.add_processor( [&] () -> unique_ptr<hits_processor> {
-			const path_opt output_file_opt = arg_single_output_spec.get_output_file();
-			const auto     ostream_refs    = arg_ofstreams.open_ofstreams( { output_file_opt.value_or( arg_ofstreams.get_flag() ) } );
-			switch ( get_out_format( arg_single_output_spec ) ) {
-				case ( crh_out_format::HTML     ) : { return make_unique< write_html_hits_processor    >( ostream_refs, arg_html_spec ); }
+			const path_opt output_file_opt = prm_single_output_spec.get_output_file();
+			const auto     ostream_refs    = prm_ofstreams.open_ofstreams( { output_file_opt.value_or( prm_ofstreams.get_flag() ) } );
+			switch ( get_out_format( prm_single_output_spec ) ) {
+				case ( crh_out_format::HTML     ) : { return make_unique< write_html_hits_processor    >( ostream_refs, prm_html_spec ); }
 				case ( crh_out_format::SUMMARY  ) : { return make_unique< summarise_hits_processor     >( ostream_refs                ); }
 				case ( crh_out_format::STANDARD ) : { return make_unique< write_results_hits_processor >( ostream_refs, bound_out     ); }
 				case ( crh_out_format::JSON     ) : { return make_unique< write_json_hits_processor    >( ostream_refs                ); }
@@ -152,28 +152,28 @@ hits_processor_list cath::rslv::detail::make_hits_processors(ofstream_list      
 		} () );
 	}
 	else {
-		const path_vec &summarise_files   = arg_output_spec.get_summarise_files();
-		const path_vec &html_output_files = arg_output_spec.get_html_output_files();
-		const path_vec &json_output_files = arg_output_spec.get_json_output_files();
+		const path_vec &summarise_files   = prm_output_spec.get_summarise_files();
+		const path_vec &html_output_files = prm_output_spec.get_html_output_files();
+		const path_vec &json_output_files = prm_output_spec.get_json_output_files();
 		const path_vec  hits_text_files   = [&] {
-			path_vec temp_hits_text_files = arg_output_spec.get_hits_text_files();
-			if ( ! arg_output_spec.get_quiet() && ! has_any_out_files_matching( arg_output_spec, arg_ofstreams.get_flag() ) ) {
-				temp_hits_text_files.push_back( arg_ofstreams.get_flag() );
+			path_vec temp_hits_text_files = prm_output_spec.get_hits_text_files();
+			if ( ! prm_output_spec.get_quiet() && ! has_any_out_files_matching( prm_output_spec, prm_ofstreams.get_flag() ) ) {
+				temp_hits_text_files.push_back( prm_ofstreams.get_flag() );
 			}
 			return temp_hits_text_files;
 		} ();
 
 		if ( ! html_output_files.empty() ) {
-			the_list.add_processor( make_unique< write_html_hits_processor    >( arg_ofstreams.open_ofstreams( html_output_files ), arg_html_spec ) );
+			the_list.add_processor( make_unique< write_html_hits_processor    >( prm_ofstreams.open_ofstreams( html_output_files ), prm_html_spec ) );
 		}
 		if ( ! summarise_files.empty()   ) {
-			the_list.add_processor( make_unique< summarise_hits_processor     >( arg_ofstreams.open_ofstreams( summarise_files   )                ) );
+			the_list.add_processor( make_unique< summarise_hits_processor     >( prm_ofstreams.open_ofstreams( summarise_files   )                ) );
 		}
 		if ( ! hits_text_files.empty() ) {
-			the_list.add_processor( make_unique< write_results_hits_processor >( arg_ofstreams.open_ofstreams( hits_text_files   ), bound_out     ) );
+			the_list.add_processor( make_unique< write_results_hits_processor >( prm_ofstreams.open_ofstreams( hits_text_files   ), bound_out     ) );
 		}
 		if ( ! json_output_files.empty() ) {
-			the_list.add_processor( make_unique< write_json_hits_processor    >( arg_ofstreams.open_ofstreams( json_output_files )                ) );
+			the_list.add_processor( make_unique< write_json_hits_processor    >( prm_ofstreams.open_ofstreams( json_output_files )                ) );
 		}
 	}
 	return the_list;

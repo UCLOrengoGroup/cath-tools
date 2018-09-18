@@ -37,13 +37,13 @@ namespace cath {
 
 				/// \brief Function for implementation of tuple_lattice_index
 				template <typename Tpl>
-				static constexpr auto fn(const Tpl &arg_indices, ///< The indices of the cell
-				                         const Tpl &arg_sizes    ///< The dimensions of the lattice
+				static constexpr auto fn(const Tpl &prm_indices, ///< The indices of the cell
+				                         const Tpl &prm_sizes    ///< The dimensions of the lattice
 				                         ) {
 					return
-						tuple_lattice_index_impl<Idx - 1>::fn( arg_indices, arg_sizes )
-						* std::get<Idx>( arg_sizes   )
-						+ std::get<Idx>( arg_indices );
+						tuple_lattice_index_impl<Idx - 1>::fn( prm_indices, prm_sizes )
+						* std::get<Idx>( prm_sizes   )
+						+ std::get<Idx>( prm_indices );
 				}
 			};
 
@@ -53,10 +53,10 @@ namespace cath {
 
 				/// \brief Function for specialisation of implementation of tuple_lattice_index
 				template <typename Tpl>
-				static constexpr auto fn(const Tpl &arg_indices,  ///< The indices of the cell
-				                         const Tpl &/*arg_sizes*/ ///< The dimensions of the lattice
+				static constexpr auto fn(const Tpl &prm_indices,  ///< The indices of the cell
+				                         const Tpl &/*prm_sizes*/ ///< The dimensions of the lattice
 				                         ) {
-					return std::get<0>( arg_indices );
+					return std::get<0>( prm_indices );
 				}
 			};
 
@@ -67,13 +67,13 @@ namespace cath {
 				/// \brief Find the overall index of the cell with the specified indices
 				///        in a lattice of the specified dimensions
 				template <typename Tpl, typename = std::enable_if< is_tuple< Tpl >::value > >
-				constexpr auto operator()(const Tpl &arg_indices, ///< The indices of the cell
-				                          const Tpl &arg_sizes    ///< The dimensions of the lattice
+				constexpr auto operator()(const Tpl &prm_indices, ///< The indices of the cell
+				                          const Tpl &prm_sizes    ///< The dimensions of the lattice
 				                          ) const {
 					static_assert( std::tuple_size< std::decay_t< Tpl > >::value > 0, "Can't use tuple_lattice_index on tuple with no elements" );
 					return tuple_lattice_index_impl<std::tuple_size< std::decay_t< Tpl > >::value - 1>::fn(
-						arg_indices,
-						arg_sizes
+						prm_indices,
+						prm_sizes
 					);
 				}
 

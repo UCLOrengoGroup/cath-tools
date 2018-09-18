@@ -48,14 +48,14 @@ string superposition_input_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void superposition_input_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                              const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void superposition_input_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                              const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                               ) {
 	const string file_varname { "<file>" };
 
 	const auto json_sup_infile_notifier = [&] (const path &x) { json_sup_infile = x; };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_JSON_SUP_INFILE.c_str(),
 			value<path>()
@@ -66,7 +66,7 @@ void superposition_input_options_block::do_add_visible_options_to_description(op
 }
 
 /// \brief Return a string describing any problems with the current configuration of the block
-str_opt superposition_input_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt superposition_input_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                              ) const {
 	return none;
 }

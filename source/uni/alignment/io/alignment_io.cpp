@@ -105,18 +105,18 @@ const double MIN_FRAC_OF_PDB_RESIDUES_IN_SEQ( 0.7 );
 /// \relatesalso protein
 ///
 /// The proteins are used for extracting the lists of residues, which are used for finding the indices of residues.
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(const path            &arg_alignment_file, ///< TODOCUMENT
-                                                                   const protein         &arg_protein_a,      ///< TODOCUMENT
-                                                                   const protein         &arg_protein_b,      ///< TODOCUMENT
-                                                                   const ostream_ref_opt &arg_ostream         ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(const path            &prm_alignment_file, ///< TODOCUMENT
+                                                                   const protein         &prm_protein_a,      ///< TODOCUMENT
+                                                                   const protein         &prm_protein_b,      ///< TODOCUMENT
+                                                                   const ostream_ref_opt &prm_ostream         ///< TODOCUMENT
                                                                    ) {
 	ifstream alignment_ifstream;
-	open_ifstream( alignment_ifstream, arg_alignment_file );
+	open_ifstream( alignment_ifstream, prm_alignment_file );
 	const alignment new_alignment = read_alignment_from_cath_ssap_legacy_format(
 		alignment_ifstream,
-		arg_protein_a,
-		arg_protein_b,
-		arg_ostream
+		prm_protein_a,
+		prm_protein_b,
+		prm_ostream
 	);
 	alignment_ifstream.close();
 	return new_alignment;
@@ -128,16 +128,16 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(const path   
 /// \relatesalso protein
 ///
 /// The proteins are used for extracting the lists of residues, which are used for finding the indices of residues.
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &arg_istream,   ///< TODOCUMENT
-                                                                   const protein         &arg_protein_a, ///< TODOCUMENT
-                                                                   const protein         &arg_protein_b, ///< TODOCUMENT
-                                                                   const ostream_ref_opt &arg_ostream    ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &prm_istream,   ///< TODOCUMENT
+                                                                   const protein         &prm_protein_a, ///< TODOCUMENT
+                                                                   const protein         &prm_protein_b, ///< TODOCUMENT
+                                                                   const ostream_ref_opt &prm_ostream    ///< TODOCUMENT
                                                                    ) {
 	return read_alignment_from_cath_ssap_legacy_format(
-		arg_istream,
-		get_residue_ids( arg_protein_a ),
-		get_residue_ids( arg_protein_b ),
-		arg_ostream
+		prm_istream,
+		get_residue_ids( prm_protein_a ),
+		get_residue_ids( prm_protein_b ),
+		prm_ostream
 	);
 }
 
@@ -147,16 +147,16 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 /// \relatesalso pdb
 ///
 /// The pdbs are used for extracting the lists of residues, which are used for finding the indices of residues.
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &arg_istream, ///< TODOCUMENT
-                                                                   const pdb             &arg_pdb_a,   ///< TODOCUMENT
-                                                                   const pdb             &arg_pdb_b,   ///< TODOCUMENT
-                                                                   const ostream_ref_opt &arg_ostream   ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &prm_istream, ///< TODOCUMENT
+                                                                   const pdb             &prm_pdb_a,   ///< TODOCUMENT
+                                                                   const pdb             &prm_pdb_b,   ///< TODOCUMENT
+                                                                   const ostream_ref_opt &prm_ostream   ///< TODOCUMENT
                                                                    ) {
 	return read_alignment_from_cath_ssap_legacy_format(
-		arg_istream,
-		arg_pdb_a.get_residue_ids_of_first_chain__backbone_unchecked(),
-		arg_pdb_b.get_residue_ids_of_first_chain__backbone_unchecked(),
-		arg_ostream
+		prm_istream,
+		prm_pdb_a.get_residue_ids_of_first_chain__backbone_unchecked(),
+		prm_pdb_b.get_residue_ids_of_first_chain__backbone_unchecked(),
+		prm_ostream
 	);
 }
 
@@ -169,14 +169,14 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 /// Should this parse based on:
 ///  - exact column positions (hence breaking if an extra space is added) or
 ///  - whitespace splitting (hence breaking if a column is missing, eg with an insert as a space rather than a 0)
-alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &arg_istream,   ///< TODOCUMENT
-                                                                   const residue_id_vec  &arg_res_ids_a, ///< TODOCUMENT
-                                                                   const residue_id_vec  &arg_res_ids_b, ///< TODOCUMENT
-                                                                   const ostream_ref_opt &arg_ostream    ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream               &prm_istream,   ///< TODOCUMENT
+                                                                   const residue_id_vec  &prm_res_ids_a, ///< TODOCUMENT
+                                                                   const residue_id_vec  &prm_res_ids_b, ///< TODOCUMENT
+                                                                   const ostream_ref_opt &prm_ostream    ///< TODOCUMENT
                                                                    ) {
-	arg_istream.exceptions( ios::badbit );
+	prm_istream.exceptions( ios::badbit );
 
-	if ( ! have_consistent_chain_labels( arg_res_ids_a ) || ! have_consistent_chain_labels( arg_res_ids_b ) ) {
+	if ( ! have_consistent_chain_labels( prm_res_ids_a ) || ! have_consistent_chain_labels( prm_res_ids_b ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Cannot reliably search for SSAP alignment residues in residue IDs spanning multiple chains because the SSAP alignment format doesn't record chain labels"));
 	}
 
@@ -186,7 +186,7 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 	size_t pos_a(0);
 	size_t pos_b(0);
 	score_opt_vec scores;
-	while ( getline(arg_istream, line_string ) ) {
+	while ( getline(prm_istream, line_string ) ) {
 		const int             res_num_a = lexical_cast<int>(    trim_copy( line_string.substr(  0, 4 ))); // Column 1: Protein 1 PDB residue number (excluding insert character)
 //		const char          sec_struc_a =                                  line_string.at(      5    )  ; // Column 2: Protein 1 Secondary structure character
 		const char             insert_a =                                  line_string.at(      7    )  ; // Column 3: Protein 1 PDB residue insert character
@@ -200,8 +200,8 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 		// For each side, move the PDB position forward if necessary
 		const residue_name res_name_a    = make_residue_name_with_non_insert_char( res_num_a, insert_a, '0');
 		const residue_name res_name_b    = make_residue_name_with_non_insert_char( res_num_b, insert_b, '0' );
-		const size_opt     find_a_result = search_for_residue_in_residue_ids( pos_a, arg_res_ids_a, amino_acid_a, res_name_a, arg_ostream );
-		const size_opt     find_b_result = search_for_residue_in_residue_ids( pos_b, arg_res_ids_b, amino_acid_b, res_name_b, arg_ostream );
+		const size_opt     find_a_result = search_for_residue_in_residue_ids( pos_a, prm_res_ids_a, amino_acid_a, res_name_a, prm_ostream );
+		const size_opt     find_b_result = search_for_residue_in_residue_ids( pos_b, prm_res_ids_b, amino_acid_b, res_name_b, prm_ostream );
 		pos_a = find_a_result.value_or( pos_a );
 		pos_b = find_b_result.value_or( pos_b );
 
@@ -282,45 +282,45 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 ///   - Last Column-2: No. of alpha residues at this position (dddd)
 ///   - Last Column-1: No. of beta  residues at this position (dddd)
 ///   - Last Column: Structural Conservation Score (dd)
-alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream               &arg_istream, ///< TODOCUMENT
-                                                                   const pdb_list        &arg_pdbs,    ///< TODOCUMENT
-                                                                   const ostream_ref_opt &arg_ostream  ///< TODOCUMENT
+alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream               &prm_istream, ///< TODOCUMENT
+                                                                   const pdb_list        &prm_pdbs,    ///< TODOCUMENT
+                                                                   const ostream_ref_opt &prm_ostream  ///< TODOCUMENT
                                                                    ) {
 	constexpr size_t CHARS_IN_MAIN_DATA_LINE_START = 14;
 	constexpr size_t CHARS_IN_MAIN_DATA_LINE_PROT  = 11;
 	constexpr size_t CHARS_IN_MAIN_DATA_LINE_END   = 18;
 
-	if (arg_pdbs.empty()) {
+	if (prm_pdbs.empty()) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot load a CORA legacy alignment with 0 PDB entries"));
 	}
 
-	arg_istream.exceptions(ios::badbit);
+	prm_istream.exceptions(ios::badbit);
 	try {
 		residue_id_vec_vec residue_ids_of_first_chains;
-		for (const pdb &arg_pdb : arg_pdbs) {
-			residue_ids_of_first_chains.push_back( arg_pdb.get_residue_ids_of_first_chain__backbone_unchecked() );
+		for (const pdb &prm_pdb : prm_pdbs) {
+			residue_ids_of_first_chains.push_back( prm_pdb.get_residue_ids_of_first_chain__backbone_unchecked() );
 		}
 
 		// Check the first line is the file format line
 		string line_string;
-		getline(arg_istream, line_string);
+		getline(prm_istream, line_string);
 		if (!starts_with(line_string, "#FM CORA_FORMAT ")) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("No CORA header file format line"));
 		}
 
 		// Skip any comment lines
-		while ( getline( arg_istream, line_string ) && starts_with( line_string, "#" ) ) {
+		while ( getline( prm_istream, line_string ) && starts_with( line_string, "#" ) ) {
 		}
 
 		// Grab the number of proteins and ensure the alignment matches
 		const size_t num_proteins = lexical_cast<size_t>( line_string );
-		if (num_proteins != arg_pdbs.size()) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of PDBs in CORA file is " + lexical_cast<string>(num_proteins) + ", which does not match " + lexical_cast<string>(arg_pdbs.size())));
+		if (num_proteins != prm_pdbs.size()) {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of PDBs in CORA file is " + lexical_cast<string>(num_proteins) + ", which does not match " + lexical_cast<string>(prm_pdbs.size())));
 		}
 		const size_t num_chars_in_main_data_line = CHARS_IN_MAIN_DATA_LINE_START + (num_proteins * CHARS_IN_MAIN_DATA_LINE_PROT) + CHARS_IN_MAIN_DATA_LINE_END;
 
 		// Grab the protein names
-		getline( arg_istream, line_string );
+		getline( prm_istream, line_string );
 		trim( line_string );
 		const str_vec names = split_build<str_vec>( line_string, is_space() );
 		if ( names.size() != num_proteins ) {
@@ -328,7 +328,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 		}
 
 		// Grab the total number of alignment positions
-		getline(arg_istream, line_string);
+		getline(prm_istream, line_string);
 		const size_t num_positions = lexical_cast<size_t>(line_string);
 
 		// Prepare the data structures to populate
@@ -340,7 +340,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 			data_col.reserve( num_positions );
 		}
 		// Loop over the main data section
-		while (getline(arg_istream, line_string)) {
+		while (getline(prm_istream, line_string)) {
 			// Check the line is of the correct length
 			if (line_string.length() != num_chars_in_main_data_line) {
 				BOOST_THROW_EXCEPTION(runtime_error_exception("Number of characters in main data line does not equal " + lexical_cast<string>(num_chars_in_main_data_line)));
@@ -384,7 +384,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 					residues_ids,
 					amino_acid,
 					res_name,
-					arg_ostream
+					prm_ostream
 				);
 				data_col.push_back( find_result ? aln_posn_opt( ( *find_result ) + 1 ) : aln_posn_opt( none ) );
 				if ( find_result ) {
@@ -453,14 +453,14 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 }
 
 /// \brief Parse a FASTA format input into a vector of pairs of strings (one for id, one for sequence)
-str_str_pair_vec cath::align::read_ids_and_sequences_from_fasta(istream &arg_istream ///< The istream from which to read the FASTA input for parsing
+str_str_pair_vec cath::align::read_ids_and_sequences_from_fasta(istream &prm_istream ///< The istream from which to read the FASTA input for parsing
                                                                 ) {
-	arg_istream.exceptions( ios::badbit );
+	prm_istream.exceptions( ios::badbit );
 	str_str_pair_vec sequence_of_id;
 
 	// Loop over the lines in the input
 	string line_string;
-	while ( getline( arg_istream, line_string ) ) {
+	while ( getline( prm_istream, line_string ) ) {
 		// If there are any non-printing characters, throw an exception
 		if ( ! all( line_string, is_print() ) ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Line in FASTA input contains non-printing characters"));
@@ -512,18 +512,18 @@ str_str_pair_vec cath::align::read_ids_and_sequences_from_fasta(istream &arg_ist
 ///
 /// \returns A vector of aln_posn_opts corresponding to the letters of the sequence. Each is:
 ///           * none if the entry is a '-' character
-///           * the index of the corresponding residue in arg_pdb otherwise
-aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string         &arg_sequence_string, ///< The raw sequence string (no headers; no whitespace) to be aligned
-                                                            const amino_acid_vec &arg_amino_acids,     ///< The PDB against which the sequence is to be aligned
-                                                            const string         &arg_name,            ///< The name of the entry to use in warnings / errors
-                                                            ostream              &/*arg_stderr*/       ///< The ostream to which warnings should be output
+///           * the index of the corresponding residue in prm_pdb otherwise
+aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string         &prm_sequence_string, ///< The raw sequence string (no headers; no whitespace) to be aligned
+                                                            const amino_acid_vec &prm_amino_acids,     ///< The PDB against which the sequence is to be aligned
+                                                            const string         &prm_name,            ///< The name of the entry to use in warnings / errors
+                                                            ostream              &/*prm_stderr*/       ///< The ostream to which warnings should be output
                                                             ) {
 	using std::to_string;
 
 	constexpr size_t ERR_MSG_SEQ_RADIUS = 10;
 
-	const size_t sequence_length = arg_sequence_string.length();
-	const size_t num_amino_acids = arg_amino_acids.size();
+	const size_t sequence_length = prm_sequence_string.length();
+	const size_t num_amino_acids = prm_amino_acids.size();
 
 	// Prepare the variables to be populated when looping through the sequence
 	str_vec skipped_residues;
@@ -533,7 +533,7 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 
 	// Loop along the sequence
 	for (const size_t &seq_str_ctr : indices( sequence_length ) ) {
-		const char &sequence_char = arg_sequence_string[ seq_str_ctr ];
+		const char &sequence_char = prm_sequence_string[ seq_str_ctr ];
 
 		// If this is a '-' character then add none to the back of new_posns
 		if ( sequence_char == '-' ) {
@@ -543,7 +543,7 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 		// Otherwise, it's an amino-acid letter
 		else {
 			// Continue searching aa_ctr through the PDB until it matches this letter
-			while ( aa_ctr < num_amino_acids && sequence_char != arg_amino_acids[ aa_ctr ].get_letter_tolerantly() ) {
+			while ( aa_ctr < num_amino_acids && sequence_char != prm_amino_acids[ aa_ctr ].get_letter_tolerantly() ) {
 				skipped_residues.push_back( lexical_cast<string>( aa_ctr ) );
 
 				// Increment aa_ctr
@@ -559,20 +559,20 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 				BOOST_THROW_EXCEPTION(runtime_error_exception(
 					  R"(Whilst aligning a sequence string to a list of amino acids)"
 					+ (
-						arg_name.empty()
+						prm_name.empty()
 						? ""s
-						: (  R"( (for ")" + arg_name + R"("))" )
+						: (  R"( (for ")" + prm_name + R"("))" )
 					)
 					+ ", could not find match for '"
 					+ sequence_char
 					+ "' at character "
 					+ to_string( seq_str_ctr + 1 )
 					+ R"( in sequence (context in sequence: ")"
-					+ arg_sequence_string.substr( lhs_window_start, seq_str_ctr - lhs_window_start )
+					+ prm_sequence_string.substr( lhs_window_start, seq_str_ctr - lhs_window_start )
 					+ "*"
 					+ sequence_char
 					+ "*"
-					+ arg_sequence_string.substr( rhs_window_start, ERR_MSG_SEQ_RADIUS             )
+					+ prm_sequence_string.substr( rhs_window_start, ERR_MSG_SEQ_RADIUS             )
 					+ R"("))"
 				));
 			}
@@ -597,7 +597,7 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 	if ( fraction_pdb_residues_found < MIN_FRAC_OF_PDB_RESIDUES_IN_SEQ ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			"When aligning a sequence to a PDB for "
-			+ arg_name
+			+ prm_name
 			+ ", only found matches for "
 			+ lexical_cast<string>( num_posns_found )
 			+ " of the "
@@ -608,7 +608,7 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 	// If not all residues were found, then output a warning about
 	if ( num_posns_found < num_amino_acids ) {
 		BOOST_LOG_TRIVIAL( warning ) << "When aligning a sequence to a PDB for \""
-		                             << arg_name
+		                             << prm_name
 		                             << "\", "
 		                             << lexical_cast<string>( num_amino_acids - num_posns_found )
 		                             << " of the PDB's "
@@ -631,11 +631,11 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 /// so it is less safe than the other version.
 ///
 /// \relates alignment
-alignment cath::align::read_alignment_from_fasta_file(const path     &arg_fasta_file, ///< The file from which to read the FASTA input for parsing
-                                                      const pdb_list &arg_pdbs,       ///< The PDBs that TODOCUMENT
-                                                      ostream        &arg_stderr      ///< An ostream to which any warnings should be output (currently unused)
+alignment cath::align::read_alignment_from_fasta_file(const path     &prm_fasta_file, ///< The file from which to read the FASTA input for parsing
+                                                      const pdb_list &prm_pdbs,       ///< The PDBs that TODOCUMENT
+                                                      ostream        &prm_stderr      ///< An ostream to which any warnings should be output (currently unused)
                                                       ) {
-	return read_alignment_from_fasta_file( arg_fasta_file, arg_pdbs, str_vec( arg_pdbs.size() ), arg_stderr );
+	return read_alignment_from_fasta_file( prm_fasta_file, prm_pdbs, str_vec( prm_pdbs.size() ), prm_stderr );
 }
 
 /// \brief Parse a FASTA format input into an alignment
@@ -644,21 +644,21 @@ alignment cath::align::read_alignment_from_fasta_file(const path     &arg_fasta_
 /// (but could be extended to take a parameter to specify that)
 ///
 /// \relates alignment
-alignment cath::align::read_alignment_from_fasta_file(const path     &arg_fasta_file, ///< The file from which to read the FASTA input for parsing
-                                                      const pdb_list &arg_pdbs,       ///< The PDBs that TODOCUMENT
-                                                      const str_vec  &arg_names,      ///< A vector of names, each of which should be found within the corresponding sequence's ID
-                                                      ostream        &arg_stderr      ///< An ostream to which any warnings should be output (currently unused)
+alignment cath::align::read_alignment_from_fasta_file(const path     &prm_fasta_file, ///< The file from which to read the FASTA input for parsing
+                                                      const pdb_list &prm_pdbs,       ///< The PDBs that TODOCUMENT
+                                                      const str_vec  &prm_names,      ///< A vector of names, each of which should be found within the corresponding sequence's ID
+                                                      ostream        &prm_stderr      ///< An ostream to which any warnings should be output (currently unused)
                                                       ) {
 	// Construct an alignment from the FASTA alignment file
 	ifstream my_aln_stream;
-	open_ifstream( my_aln_stream, arg_fasta_file );
-	const auto      backbone_complete_indices_list = get_backbone_complete_indices( arg_pdbs );
+	open_ifstream( my_aln_stream, prm_fasta_file );
+	const auto      backbone_complete_indices_list = get_backbone_complete_indices( prm_pdbs );
 	const alignment all_residue_alignment          = convert_to_backbone_complete_indices_copy(
 		read_alignment_from_fasta(
 			my_aln_stream,
-			get_amino_acid_lists( arg_pdbs ),
-			arg_names,
-			arg_stderr
+			get_amino_acid_lists( prm_pdbs ),
+			prm_names,
+			prm_stderr
 		),
 		backbone_complete_indices_list
 	);
@@ -672,15 +672,15 @@ alignment cath::align::read_alignment_from_fasta_file(const path     &arg_fasta_
 /// so it is less safe than the other version.
 ///
 /// \relates alignment
-alignment cath::align::read_alignment_from_fasta(istream        &arg_istream, ///< The istream from which to read the FASTA input for parsing
-                                                 const pdb_list &arg_pdbs,    ///< The PDBs that TODOCUMENT
-                                                 ostream        &arg_stderr   ///< An ostream to which any warnings should be output (currently unused)
+alignment cath::align::read_alignment_from_fasta(istream        &prm_istream, ///< The istream from which to read the FASTA input for parsing
+                                                 const pdb_list &prm_pdbs,    ///< The PDBs that TODOCUMENT
+                                                 ostream        &prm_stderr   ///< An ostream to which any warnings should be output (currently unused)
                                                  ) {
 	return read_alignment_from_fasta(
-		arg_istream,
-		get_amino_acid_lists( arg_pdbs ),
-		str_vec( arg_pdbs.size() ),
-		arg_stderr
+		prm_istream,
+		get_amino_acid_lists( prm_pdbs ),
+		str_vec( prm_pdbs.size() ),
+		prm_stderr
 	);
 }
 
@@ -690,25 +690,25 @@ alignment cath::align::read_alignment_from_fasta(istream        &arg_istream, //
 /// so it is less safe than the other version.
 ///
 /// \relates alignment
-alignment cath::align::read_alignment_from_fasta_file(const path         &arg_fasta_file, ///< The file from which to read the FASTA input for parsing
-                                                      const protein_list &arg_proteins,   ///< TODOCUMENT
-                                                      ostream            &arg_stderr      ///< An ostream to which any warnings should be output (currently unused)
+alignment cath::align::read_alignment_from_fasta_file(const path         &prm_fasta_file, ///< The file from which to read the FASTA input for parsing
+                                                      const protein_list &prm_proteins,   ///< TODOCUMENT
+                                                      ostream            &prm_stderr      ///< An ostream to which any warnings should be output (currently unused)
                                                       ) {
-	return read_alignment_from_fasta_file( arg_fasta_file, arg_proteins, str_vec( arg_proteins.size() ), arg_stderr );
+	return read_alignment_from_fasta_file( prm_fasta_file, prm_proteins, str_vec( prm_proteins.size() ), prm_stderr );
 }
 
 /// \brief Parse a FASTA format input into an alignment
 ///
 /// \relates alignment
-alignment cath::align::read_alignment_from_fasta_file(const path         &arg_fasta_file, ///< The file from which to read the FASTA input for parsing
-                                                      const protein_list &arg_proteins,   ///< TODOCUMENT
-                                                      const str_vec      &arg_names,      ///< A vector of names, each of which should be found within the corresponding sequence's ID
-                                                      ostream            &arg_stderr      ///< An ostream to which any warnings should be output (currently unused)
+alignment cath::align::read_alignment_from_fasta_file(const path         &prm_fasta_file, ///< The file from which to read the FASTA input for parsing
+                                                      const protein_list &prm_proteins,   ///< TODOCUMENT
+                                                      const str_vec      &prm_names,      ///< A vector of names, each of which should be found within the corresponding sequence's ID
+                                                      ostream            &prm_stderr      ///< An ostream to which any warnings should be output (currently unused)
                                                       ) {
 	// Construct an alignment from the FASTA alignment file
 	ifstream my_aln_stream;
-	open_ifstream( my_aln_stream, arg_fasta_file );
-	const alignment new_alignment = read_alignment_from_fasta( my_aln_stream, get_amino_acid_lists( arg_proteins ), arg_names, arg_stderr );
+	open_ifstream( my_aln_stream, prm_fasta_file );
+	const alignment new_alignment = read_alignment_from_fasta( my_aln_stream, get_amino_acid_lists( prm_proteins ), prm_names, prm_stderr );
 	my_aln_stream.close();
 	return new_alignment;
 }
@@ -719,11 +719,11 @@ alignment cath::align::read_alignment_from_fasta_file(const path         &arg_fa
 /// so it is less safe than the other version.
 ///
 /// \relates alignment
-alignment cath::align::read_alignment_from_fasta(istream            &arg_istream,  ///< The istream from which to read the FASTA input for parsing
-                                                 const protein_list &arg_proteins, ///< TODOCUMENT
-                                                 ostream            &arg_stderr    ///< An ostream to which any warnings should be output (currently unused)
+alignment cath::align::read_alignment_from_fasta(istream            &prm_istream,  ///< The istream from which to read the FASTA input for parsing
+                                                 const protein_list &prm_proteins, ///< TODOCUMENT
+                                                 ostream            &prm_stderr    ///< An ostream to which any warnings should be output (currently unused)
                                                  ) {
-	return read_alignment_from_fasta( arg_istream, get_amino_acid_lists( arg_proteins ), str_vec( arg_proteins.size() ), arg_stderr );
+	return read_alignment_from_fasta( prm_istream, get_amino_acid_lists( prm_proteins ), str_vec( prm_proteins.size() ), prm_stderr );
 }
 
 /// \brief Parse a FASTA format input into an alignment
@@ -743,23 +743,23 @@ alignment cath::align::read_alignment_from_fasta(istream            &arg_istream
 /// It will fail if the percentage is too low.
 ///
 /// \relates alignment
-alignment cath::align::read_alignment_from_fasta(istream                  &arg_istream,          ///< The istream from which to read the FASTA input for parsing
-                                                 const amino_acid_vec_vec &arg_amino_acid_lists, ///< TODOCUMENT
-                                                 const str_vec            &arg_names,            ///< A vector of names, each of which should be found within the corresponding sequence's ID
-                                                 ostream                  &arg_stderr            ///< An ostream to which any warnings should be output (currently unused)
+alignment cath::align::read_alignment_from_fasta(istream                  &prm_istream,          ///< The istream from which to read the FASTA input for parsing
+                                                 const amino_acid_vec_vec &prm_amino_acid_lists, ///< TODOCUMENT
+                                                 const str_vec            &prm_names,            ///< A vector of names, each of which should be found within the corresponding sequence's ID
+                                                 ostream                  &prm_stderr            ///< An ostream to which any warnings should be output (currently unused)
                                                  ) {
-	if ( arg_amino_acid_lists.empty() ) {
+	if ( prm_amino_acid_lists.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot load a FASTA alignment with 0 PDB entries"));
 	}
-	const size_t num_entries = arg_amino_acid_lists.size();
-	if ( arg_names.size() != num_entries ) {
+	const size_t num_entries = prm_amino_acid_lists.size();
+	if ( prm_names.size() != num_entries ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot load a FASTA alignment with a different number of names and PDB entries"));
 	}
 
-	arg_istream.exceptions( ios::badbit );
+	prm_istream.exceptions( ios::badbit );
 
 	try {
-		const str_str_pair_vec sequence_of_id = read_ids_and_sequences_from_fasta( arg_istream );
+		const str_str_pair_vec sequence_of_id = read_ids_and_sequences_from_fasta( prm_istream );
 		const size_t num_sequences = sequence_of_id.size();
 		if ( num_entries != num_sequences ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
@@ -776,8 +776,8 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 		aln_posn_opt_vec_vec positions;
 		positions.reserve( num_entries );
 		for (const size_t &entry_ctr : indices( num_entries ) ) {
-			const amino_acid_vec &amino_acids     = arg_amino_acid_lists      [ entry_ctr ];
-			const string         &name            = arg_names     [ entry_ctr ];
+			const amino_acid_vec &amino_acids     = prm_amino_acid_lists      [ entry_ctr ];
+			const string         &name            = prm_names     [ entry_ctr ];
 			const str_str_pair   &id_and_sequence = sequence_of_id[ entry_ctr ];
 			const string         &id              = id_and_sequence.first;
 			const string         &sequence        = id_and_sequence.second;
@@ -806,7 +806,7 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 				));
 			}
 
-			positions.push_back( align_sequence_to_amino_acids( sequence, amino_acids, name, arg_stderr ) );
+			positions.push_back( align_sequence_to_amino_acids( sequence, amino_acids, name, prm_stderr ) );
 		}
 
 		return alignment( positions );
@@ -822,54 +822,54 @@ alignment cath::align::read_alignment_from_fasta(istream                  &arg_i
 }
 
 /// \brief Convenience function for read_alignment_from_cath_ssap_legacy_format() to use
-aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t          &arg_pos,          ///< TODOCUMENT
-                                                            const residue_id_vec  &arg_residue_ids,  ///< TODOCUMENT
-                                                            const char            &arg_amino_acid,   ///< TODOCUMENT
-                                                            const residue_name    &arg_residue_name, ///< TODOCUMENT
-                                                            const ostream_ref_opt &arg_ostream        ///< TODOCUMENT
+aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t          &prm_pos,          ///< TODOCUMENT
+                                                            const residue_id_vec  &prm_residue_ids,  ///< TODOCUMENT
+                                                            const char            &prm_amino_acid,   ///< TODOCUMENT
+                                                            const residue_name    &prm_residue_name, ///< TODOCUMENT
+                                                            const ostream_ref_opt &prm_ostream        ///< TODOCUMENT
                                                             ) {
-	if ( ! have_consistent_chain_labels( arg_residue_ids ) ) {
+	if ( ! have_consistent_chain_labels( prm_residue_ids ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			"Cannot reliably search for residue "
-			+ to_string( arg_residue_name )
+			+ to_string( prm_residue_name )
 			+ " with no chain label within a list of residue IDs that span multiple chains"));
 	}
-	const bool residue_is_present = ( arg_amino_acid != '0' );
+	const bool residue_is_present = ( prm_amino_acid != '0' );
 	if ( residue_is_present ) {
-		if (arg_pos >= arg_residue_ids.size()) {
+		if (prm_pos >= prm_residue_ids.size()) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Counter has gone past end of list of residues whilst loading alignment"));
 		}
 		const auto res_itr = find_if(
-			common::cbegin( arg_residue_ids ) + numeric_cast<ptrdiff_t>( arg_pos ),
-			common::cend  ( arg_residue_ids ),
-			[&] (const residue_id &x) { return x.get_residue_name() == arg_residue_name; }
+			common::cbegin( prm_residue_ids ) + numeric_cast<ptrdiff_t>( prm_pos ),
+			common::cend  ( prm_residue_ids ),
+			[&] (const residue_id &x) { return x.get_residue_name() == prm_residue_name; }
 		);
-		if ( res_itr == common::cend( arg_residue_ids ) ) {
+		if ( res_itr == common::cend( prm_residue_ids ) ) {
 			cerr << "Residue names being searched:\n\n";
-			for (const residue_id &the_res_name : arg_residue_ids) {
+			for (const residue_id &the_res_name : prm_residue_ids) {
 				cerr << " " << the_res_name;
 			}
 			cerr << "\n" << endl;
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
 				"Unable to find residue "
-				+ to_string( arg_residue_name )
+				+ to_string( prm_residue_name )
 				+ " from alignment in list of residues, starting from position "
-				+ ::std::to_string( arg_pos )
+				+ ::std::to_string( prm_pos )
 			));
 		}
 
-		const size_t new_pos = numeric_cast<size_t>( distance( common::cbegin( arg_residue_ids ), res_itr ) );
-		if ( new_pos != arg_pos + 1 && ( new_pos != 0 || arg_pos != 0 ) && arg_ostream ) {
-			const size_t jump = new_pos - (arg_pos + 1);
-			const log_to_ostream_guard ostream_log_guard{ arg_ostream.get().get() };
+		const size_t new_pos = numeric_cast<size_t>( distance( common::cbegin( prm_residue_ids ), res_itr ) );
+		if ( new_pos != prm_pos + 1 && ( new_pos != 0 || prm_pos != 0 ) && prm_ostream ) {
+			const size_t jump = new_pos - (prm_pos + 1);
+			const log_to_ostream_guard ostream_log_guard{ prm_ostream.get().get() };
 			BOOST_LOG_TRIVIAL( warning ) << "Missing some residues whilst loading alignment: jumped "
 			                             << jump
 			                             << " position(s) from residue "
-			                             << arg_residue_ids[arg_pos]
+			                             << prm_residue_ids[prm_pos]
 			                             << " (in position "
-			                             << arg_pos
+			                             << prm_pos
 			                             << ") to residue "
-			                             << arg_residue_ids[new_pos]
+			                             << prm_residue_ids[new_pos]
 			                             << " (in position "
 			                             << new_pos
 			                             << ")";
@@ -883,25 +883,25 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 /// \brief Prints residue numbers in alignment
 ///
 /// \relates alignment
-void cath::align::write_alignment_as_cath_ssap_legacy_format(const path           &arg_output_file, ///< TODOCUMENT
-                                                             const alignment      &arg_alignment,   ///< TODOCUMENT
-                                                             const protein        &arg_seq_a,       ///< TODOCUMENT
-                                                             const protein        &arg_seq_b,       ///< TODOCUMENT
-                                                             const region_vec_opt &arg_regions_a,   ///< TODOCUMENT
-                                                             const region_vec_opt &arg_regions_b    ///< TODOCUMENT
+void cath::align::write_alignment_as_cath_ssap_legacy_format(const path           &prm_output_file, ///< TODOCUMENT
+                                                             const alignment      &prm_alignment,   ///< TODOCUMENT
+                                                             const protein        &prm_seq_a,       ///< TODOCUMENT
+                                                             const protein        &prm_seq_b,       ///< TODOCUMENT
+                                                             const region_vec_opt &prm_regions_a,   ///< TODOCUMENT
+                                                             const region_vec_opt &prm_regions_b    ///< TODOCUMENT
                                                              ) {
 	ofstream aln_out_stream;
 	try {
-		open_ofstream( aln_out_stream, arg_output_file );
+		open_ofstream( aln_out_stream, prm_output_file );
 	}
 	catch (const runtime_error_exception &ex) {
-		const path alt_output_path = temp_directory_path() / arg_output_file.filename();
-		if ( alt_output_path == arg_output_file ) {
+		const path alt_output_path = temp_directory_path() / prm_output_file.filename();
+		if ( alt_output_path == prm_output_file ) {
 			throw;
 		}
 		BOOST_LOG_TRIVIAL( warning )
 			<< "Was unable to write alignment to file "
-			<< arg_output_file
+			<< prm_output_file
 			<< " ("
 			<< ex.what()
 			<< ") - will try writing to "
@@ -918,11 +918,11 @@ void cath::align::write_alignment_as_cath_ssap_legacy_format(const path         
 	try {
 		output_alignment_to_cath_ssap_legacy_format(
 			aln_out_stream,
-			arg_alignment,
-			arg_seq_a,
-			arg_seq_b,
-			arg_regions_a,
-			arg_regions_b
+			prm_alignment,
+			prm_seq_a,
+			prm_seq_b,
+			prm_regions_a,
+			prm_regions_b
 		);
 
 		// Close the file
@@ -937,7 +937,7 @@ void cath::align::write_alignment_as_cath_ssap_legacy_format(const path         
 	catch (const std::exception &ex) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			  "Cannot output alignment to file \""
-			+ arg_output_file.string()
+			+ prm_output_file.string()
 			+ "\" ["
 			+ ex.what()
 			+ "] : "
@@ -949,51 +949,51 @@ void cath::align::write_alignment_as_cath_ssap_legacy_format(const path         
 /// \brief Outputs an alignment in the legacy CATH format for SSAP
 ///
 /// \relates alignment
-ostream & cath::align::output_alignment_to_cath_ssap_legacy_format(ostream              &arg_os,        ///< The ostream to which the data should be output
-                                                                   const alignment      &arg_alignment, ///< The alignment to output
-                                                                   const protein        &arg_seq_a,     ///< The first protein in the alignment
-                                                                   const protein        &arg_seq_b,     ///< The second protein in the alignment
-                                                                   const region_vec_opt &arg_regions_a, ///< TODOCUMENT
-                                                                   const region_vec_opt &arg_regions_b  ///< TODOCUMENT
+ostream & cath::align::output_alignment_to_cath_ssap_legacy_format(ostream              &prm_os,        ///< The ostream to which the data should be output
+                                                                   const alignment      &prm_alignment, ///< The alignment to output
+                                                                   const protein        &prm_seq_a,     ///< The first protein in the alignment
+                                                                   const protein        &prm_seq_b,     ///< The second protein in the alignment
+                                                                   const region_vec_opt &prm_regions_a, ///< TODOCUMENT
+                                                                   const region_vec_opt &prm_regions_b  ///< TODOCUMENT
                                                                    ) {
-	arg_os << to_cath_ssap_legacy_format_alignment_string(
-		arg_alignment,
-		arg_seq_a,
-		arg_seq_b,
-		arg_regions_a,
-		arg_regions_b
+	prm_os << to_cath_ssap_legacy_format_alignment_string(
+		prm_alignment,
+		prm_seq_a,
+		prm_seq_b,
+		prm_regions_a,
+		prm_regions_b
 	);
 
-	return arg_os;
+	return prm_os;
 }
 
 /// \brief Generate a string representing the specified alignment in the legacy CATH format for SSAP
 ///
 /// \relates alignment
-string cath::align::to_cath_ssap_legacy_format_alignment_string(const alignment      &arg_alignment, ///< The alignment to output
-                                                                const protein        &arg_seq_a,     ///< The first protein in the alignment
-                                                                const protein        &arg_seq_b,     ///< The second protein in the alignment
-                                                                const region_vec_opt &arg_regions_a, ///< TODOCUMENT
-                                                                const region_vec_opt &arg_regions_b  ///< TODOCUMENT
+string cath::align::to_cath_ssap_legacy_format_alignment_string(const alignment      &prm_alignment, ///< The alignment to output
+                                                                const protein        &prm_seq_a,     ///< The first protein in the alignment
+                                                                const protein        &prm_seq_b,     ///< The second protein in the alignment
+                                                                const region_vec_opt &prm_regions_a, ///< TODOCUMENT
+                                                                const region_vec_opt &prm_regions_b  ///< TODOCUMENT
                                                                 ) {
-	const auto region_res_indices_a = get_indices_of_residues_within_regions( arg_seq_a, arg_regions_a );
-	const auto region_res_indices_b = get_indices_of_residues_within_regions( arg_seq_b, arg_regions_b );
+	const auto region_res_indices_a = get_indices_of_residues_within_regions( prm_seq_a, prm_regions_a );
+	const auto region_res_indices_b = get_indices_of_residues_within_regions( prm_seq_b, prm_regions_b );
 
-	if ( ! arg_alignment.is_scored() ) {
+	if ( ! prm_alignment.is_scored() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot output legacy format for alignment that has not been scored"));
 	}
 
 	constexpr int NO_SCORE = 0;
 
 	return join(
-		indices( arg_alignment.length() )
+		indices( prm_alignment.length() )
 			| transformed( [&] (const size_t &alignment_ctr) {
-				const bool has_posn_a = has_a_position_of_index( arg_alignment, alignment_ctr );
-				const bool has_posn_b = has_b_position_of_index( arg_alignment, alignment_ctr );
+				const bool has_posn_a = has_a_position_of_index( prm_alignment, alignment_ctr );
+				const bool has_posn_b = has_b_position_of_index( prm_alignment, alignment_ctr );
 
 				// Grab the score if both sides of the alignment are present or 0 otherwise
 				const int score = ( has_posn_a && has_posn_b )
-				                  ? numeric_cast<int>( get_mean_score_of_index( arg_alignment, alignment_ctr ) )
+				                  ? numeric_cast<int>( get_mean_score_of_index( prm_alignment, alignment_ctr ) )
 				                  : NO_SCORE;
 
 				// Build a string for the line
@@ -1001,8 +1001,8 @@ string cath::align::to_cath_ssap_legacy_format_alignment_string(const alignment 
 					(
 						has_posn_a
 						? ssap_legacy_alignment_left_side_string(
-							arg_seq_a.get_residue_ref_of_index(
-								region_res_indices_a[ get_a_position_of_index( arg_alignment, alignment_ctr ) ]
+							prm_seq_a.get_residue_ref_of_index(
+								region_res_indices_a[ get_a_position_of_index( prm_alignment, alignment_ctr ) ]
 							)
 						)
 						: ssap_legacy_alignment_left_side_gap_string()
@@ -1013,8 +1013,8 @@ string cath::align::to_cath_ssap_legacy_format_alignment_string(const alignment 
 					+ (
 						has_posn_b
 						? ssap_legacy_alignment_right_side_string(
-							arg_seq_b.get_residue_ref_of_index(
-								region_res_indices_b[ get_b_position_of_index( arg_alignment, alignment_ctr ) ]
+							prm_seq_b.get_residue_ref_of_index(
+								region_res_indices_b[ get_b_position_of_index( prm_alignment, alignment_ctr ) ]
 							)
 						)
 						: ssap_legacy_alignment_right_side_gap_string()
@@ -1028,32 +1028,32 @@ string cath::align::to_cath_ssap_legacy_format_alignment_string(const alignment 
 /// \brief Output an alignment in FASTA format
 ///
 /// \relates alignment
-void cath::align::write_alignment_as_fasta_alignment(const path         &arg_output_file, ///< TODOCUMENT
-                                                     const alignment    &arg_alignment,   ///< TODOCUMENT
-                                                     const protein_list &arg_proteins     ///< TODOCUMENT
+void cath::align::write_alignment_as_fasta_alignment(const path         &prm_output_file, ///< TODOCUMENT
+                                                     const alignment    &prm_alignment,   ///< TODOCUMENT
+                                                     const protein_list &prm_proteins     ///< TODOCUMENT
                                                      ) {
 	ofstream out_stream;
-	open_ofstream(out_stream, arg_output_file);
-	write_alignment_as_fasta_alignment( out_stream, arg_alignment, arg_proteins );
+	open_ofstream(out_stream, prm_output_file);
+	write_alignment_as_fasta_alignment( out_stream, prm_alignment, prm_proteins );
 	out_stream.close();
 }
 
 /// \brief Outputs an alignment in FASTA format
 ///
 /// \relates alignment
-ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &arg_os,        ///< TODOCUMENT
-                                                          const alignment    &arg_alignment, ///< TODOCUMENT
-                                                          const protein_list &arg_proteins   ///< TODOCUMENT
+ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &prm_os,        ///< TODOCUMENT
+                                                          const alignment    &prm_alignment, ///< TODOCUMENT
+                                                          const protein_list &prm_proteins   ///< TODOCUMENT
                                                           ) {
 	// Grab the number of entries in the alignment and sanity-check that the
 	// number of names matches
 	using size_type = alignment::size_type;
-	const size_type num_entries = arg_alignment.num_entries();
-	const size_type length      = arg_alignment.length();
-	if ( num_entries != arg_proteins.size() ) {
+	const size_type num_entries = prm_alignment.num_entries();
+	const size_type length      = prm_alignment.length();
+	if ( num_entries != prm_proteins.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Unable to output alignment in FASTA format because the number of proteins ("
-			+ lexical_cast<string>( arg_proteins.size() )
+			+ lexical_cast<string>( prm_proteins.size() )
 			+ ") doesn't match the number of entries in the alignment ("
 			+ lexical_cast<string>( num_entries )
 			+ ")"
@@ -1062,72 +1062,72 @@ ostream & cath::align::write_alignment_as_fasta_alignment(ostream            &ar
 
 	// Loop over the entries in the alignment
 	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		const protein &the_protein = arg_proteins[ entry_ctr ];
+		const protein &the_protein = prm_proteins[ entry_ctr ];
 
 		// Output the title (ie name of this protein)
-		arg_os << ">" << get_domain_or_specified_or_name_from_acq( the_protein ) << "\n";
+		prm_os << ">" << get_domain_or_specified_or_name_from_acq( the_protein ) << "\n";
 
 		// Loop over the indices of the alignment
 		for (const size_t &aln_index : indices( length ) ) {
 			// If this entry has no position at this index, output a '-' character
 			// otherwise, use the position at this index to output the amino acid letter
-			const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry_ctr, aln_index );
-			arg_os << ( position ? get_amino_acid_letter_of_index_tolerantly( the_protein, *position )
+			const aln_posn_opt position = prm_alignment.position_of_entry_of_index( entry_ctr, aln_index );
+			prm_os << ( position ? get_amino_acid_letter_of_index_tolerantly( the_protein, *position )
 			                     : '-' );
 		}
-		arg_os << "\n";
+		prm_os << "\n";
 	}
-	arg_os << flush;
+	prm_os << flush;
 
 	// Return a non-const reference to the ostream
 	// (to make this interface a bit like a standard insertion operator)
-	return arg_os;
+	return prm_os;
 }
 
 /// \brief Output an alignment in FASTA format
 ///
 /// \relates alignment
-ostream & cath::align::write_alignment_as_fasta_alignment(ostream             &arg_os,        ///< TODOCUMENT
-                                                          const alignment     &arg_alignment, ///< TODOCUMENT
-                                                          const pdb_list      &arg_pdbs,      ///< TODOCUMENT
-                                                          const name_set_list &arg_names      ///< TODOCUMENT
+ostream & cath::align::write_alignment_as_fasta_alignment(ostream             &prm_os,        ///< TODOCUMENT
+                                                          const alignment     &prm_alignment, ///< TODOCUMENT
+                                                          const pdb_list      &prm_pdbs,      ///< TODOCUMENT
+                                                          const name_set_list &prm_names      ///< TODOCUMENT
                                                           ) {
 	return write_alignment_as_fasta_alignment(
-		arg_os,
-		arg_alignment,
-		build_protein_list_of_pdb_list_and_names( arg_pdbs, arg_names )
+		prm_os,
+		prm_alignment,
+		build_protein_list_of_pdb_list_and_names( prm_pdbs, prm_names )
 	);
 }
 
 /// \brief Output an alignment in FASTA format
 ///
 /// \relates alignment
-string cath::align::alignment_as_fasta_string(const alignment    &arg_alignment, ///< The alignment to represent in FASTA format
-                                              const protein_list &arg_proteins   ///< The proteins corresponding to the entries in the alignment
+string cath::align::alignment_as_fasta_string(const alignment    &prm_alignment, ///< The alignment to represent in FASTA format
+                                              const protein_list &prm_proteins   ///< The proteins corresponding to the entries in the alignment
                                               ) {
 	ostringstream the_out_ss;
-	write_alignment_as_fasta_alignment( the_out_ss, arg_alignment, arg_proteins);
+	write_alignment_as_fasta_alignment( the_out_ss, prm_alignment, prm_proteins);
 	return the_out_ss.str();
 }
 
 /// \brief Output an alignment in FASTA format
 ///
 /// \relates alignment
-string cath::align::alignment_as_fasta_string(const alignment     &arg_alignment, ///< The alignment to represent in FASTA format
-                                              const pdb_list      &arg_pdbs,      ///< The PDBs corresponding to the entries in the alignment
-                                              const name_set_list &arg_names      ///< The names corresponding to the entries in the alignment
+string cath::align::alignment_as_fasta_string(const alignment     &prm_alignment, ///< The alignment to represent in FASTA format
+                                              const pdb_list      &prm_pdbs,      ///< The PDBs corresponding to the entries in the alignment
+                                              const name_set_list &prm_names      ///< The names corresponding to the entries in the alignment
                                               ) {
 	ostringstream the_out_ss;
-	write_alignment_as_fasta_alignment( the_out_ss, arg_alignment, arg_pdbs, arg_names );
+	write_alignment_as_fasta_alignment( the_out_ss, prm_alignment, prm_pdbs, prm_names );
 	return the_out_ss.str();
 }
 
 /// \brief Output an alignment in FASTA format
 ///
 /// \relates alignment
-std::string cath::align::alignment_as_fasta_string(const alignment &arg_alignment, ///< The alignment to represent in FASTA format
-                                                   const pdb_list  &arg_pdbs,      ///< The PDBs corresponding to the entries in the alignment
-                                                   const str_vec   &arg_names      ///< The names corresponding to the entries in the alignment
+std::string cath::align::alignment_as_fasta_string(const alignment &prm_alignment, ///< The alignment to represent in FASTA format
+                                                   const pdb_list  &prm_pdbs,      ///< The PDBs corresponding to the entries in the alignment
+                                                   const str_vec   &prm_names      ///< The names corresponding to the entries in the alignment
                                                    ) {
-	return alignment_as_fasta_string( arg_alignment, arg_pdbs, build_name_set_list( arg_names ) );
+	return alignment_as_fasta_string( prm_alignment, prm_pdbs, build_name_set_list( prm_names ) );
 }

@@ -43,9 +43,9 @@ namespace cath {
 		};
 
 		/// \brief TODOCUMENT
-		inline std::string to_string(const sod &arg_sod ///< TODOCUMENT
+		inline std::string to_string(const sod &prm_sod ///< TODOCUMENT
 		                             ) {
-			switch ( arg_sod ) {
+			switch ( prm_sod ) {
 				case ( sod::SPARSE ) : { return "sparse"s; }
 				case ( sod::DENSE  ) : { return "dense"s;  }
 			}
@@ -61,9 +61,9 @@ namespace cath {
 				template <typename Rng,
 				          typename Keyer,
 				          typename Crit>
-				Store operator()(const Rng   &/*arg_rng*/,   ///< TODOCUMENT
-				                 const Keyer &/*arg_keyer*/, ///< TODOCUMENT
-				                 const Crit  &/*arg_crit*/   ///< TODOCUMENT
+				Store operator()(const Rng   &/*prm_rng*/,   ///< TODOCUMENT
+				                 const Keyer &/*prm_keyer*/, ///< TODOCUMENT
+				                 const Crit  &/*prm_crit*/   ///< TODOCUMENT
 				                 ) {
 					return Store{};
 				}
@@ -79,19 +79,19 @@ namespace cath {
 				template <typename Rng,
 				          typename Keyer,
 				          typename Crit>
-				auto operator()(const Rng   &arg_rng,     ///< TODOCUMENT
-				                const Keyer &arg_keyer,   ///< TODOCUMENT
-				                const Crit  &/*arg_crit*/ ///< TODOCUMENT
+				auto operator()(const Rng   &prm_rng,     ///< TODOCUMENT
+				                const Keyer &prm_keyer,   ///< TODOCUMENT
+				                const Crit  &/*prm_crit*/ ///< TODOCUMENT
 				                ) {
 					using value_t = common::range_value_t< Rng >;
 
-					if ( boost::empty( arg_rng ) ) {
+					if ( boost::empty( prm_rng ) ) {
 						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot make a scan_index_store for an empty range"));
 					}
 
 					const auto mins_maxs = common::tuple_mins_maxs_element(
-						arg_rng
-							| boost::adaptors::transformed( [&] (const value_t &value) { return arg_keyer.make_key( value ); } )
+						prm_rng
+							| boost::adaptors::transformed( [&] (const value_t &value) { return prm_keyer.make_key( value ); } )
 					);
 
 					// TD< value_t > value_t_obj;
@@ -112,21 +112,21 @@ namespace cath {
 				template <typename Rng,
 				          typename Keyer,
 				          typename Crit>
-				auto operator()(const Rng   &arg_rng,   ///< TODOCUMENT
-				                const Keyer &arg_keyer, ///< TODOCUMENT
-				                const Crit  &arg_crit   ///< TODOCUMENT
+				auto operator()(const Rng   &prm_rng,   ///< TODOCUMENT
+				                const Keyer &prm_keyer, ///< TODOCUMENT
+				                const Crit  &prm_crit   ///< TODOCUMENT
 				                ) {
 					using value_t = common::range_value_t< Rng >;
 
-					if ( boost::empty( arg_rng ) ) {
+					if ( boost::empty( prm_rng ) ) {
 						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot make a scan_index_store for an empty range"));
 					}
 					const auto mins_maxs = common::mins_maxs_tuple_pair_mins_maxs_element(
-						arg_rng
+						prm_rng
 							| boost::adaptors::transformed( [&] (const value_t &value) {
 								return std::make_pair(
-									arg_keyer.make_min_close_key( value, arg_crit ),
-									arg_keyer.make_max_close_key( value, arg_crit )
+									prm_keyer.make_min_close_key( value, prm_crit ),
+									prm_keyer.make_max_close_key( value, prm_crit )
 								);
 							} )
 					);
@@ -153,15 +153,15 @@ namespace cath {
 				          typename Keyer,
 				          typename Crit>
 				/// \brief TODOCUMENT
-				auto operator()(const Rng   &arg_rng,   ///< TODOCUMENT
-				                const Keyer &arg_keyer, ///< TODOCUMENT
-				                const Crit  &arg_crit   ///< TODOCUMENT
+				auto operator()(const Rng   &prm_rng,   ///< TODOCUMENT
+				                const Keyer &prm_keyer, ///< TODOCUMENT
+				                const Crit  &prm_crit   ///< TODOCUMENT
 				                ) {
-					Store the_store = empty_store_maker<sod::SPARSE, Store>{}( arg_rng, arg_keyer, arg_crit );
-					for (const auto &data : arg_rng) {
-						arg_keyer.store_emplace_value(
+					Store the_store = empty_store_maker<sod::SPARSE, Store>{}( prm_rng, prm_keyer, prm_crit );
+					for (const auto &data : prm_rng) {
+						prm_keyer.store_emplace_value(
 							the_store,
-							arg_keyer.make_key( data ),
+							prm_keyer.make_key( data ),
 							data
 						);
 					}
@@ -177,15 +177,15 @@ namespace cath {
 				template <typename Rng,
 				          typename Keyer,
 				          typename Crit>
-				auto operator()(const Rng   &arg_rng,   ///< TODOCUMENT
-				                const Keyer &arg_keyer, ///< TODOCUMENT
-				                const Crit  &arg_crit   ///< TODOCUMENT
+				auto operator()(const Rng   &prm_rng,   ///< TODOCUMENT
+				                const Keyer &prm_keyer, ///< TODOCUMENT
+				                const Crit  &prm_crit   ///< TODOCUMENT
 				                ) {
-					Store the_store = empty_store_maker<sod::DENSE, Store>{}( arg_rng, arg_keyer, arg_crit );
-					for (const auto &data : arg_rng) {
-						const auto close_keys = arg_keyer.make_close_keys( data, arg_crit );
+					Store the_store = empty_store_maker<sod::DENSE, Store>{}( prm_rng, prm_keyer, prm_crit );
+					for (const auto &data : prm_rng) {
+						const auto close_keys = prm_keyer.make_close_keys( data, prm_crit );
 						for (const auto &the_key : common::cross( close_keys ) ) {
-							arg_keyer.store_emplace_value(
+							prm_keyer.store_emplace_value(
 								the_store,
 								the_key,
 								data
@@ -200,16 +200,16 @@ namespace cath {
 			///
 			/// \todo Eliminate redundancy between add_structure_to_store() and dense_add_structure_to_store()
 			template <typename T, typename... KPs>
-			void add_structure_to_store(T                         &arg_store,           ///< TODOCUMENT
-			                            const index_type          &arg_structure_index, ///< TODOCUMENT
-			                            const protein             &arg_protein,         ///< TODOCUMENT
-			                            const scan_policy<KPs...> &arg_scan_policy,     ///< TODOCUMENT
-			                            const scan_role           &arg_scan_role        ///< TODOCUMENT
+			void add_structure_to_store(T                         &prm_store,           ///< TODOCUMENT
+			                            const index_type          &prm_structure_index, ///< TODOCUMENT
+			                            const protein             &prm_protein,         ///< TODOCUMENT
+			                            const scan_policy<KPs...> &prm_scan_policy,     ///< TODOCUMENT
+			                            const scan_role           &prm_scan_role        ///< TODOCUMENT
 			                            ) {
-				const auto &the_keyer        = arg_scan_policy.get_keyer();
+				const auto &the_keyer        = prm_scan_policy.get_keyer();
 //				BOOST_LOG_TRIVIAL( warning ) << "Keyer is : " << the_keyer;
-				const auto  roled_stride     = roled_scan_stride{ arg_scan_role, arg_scan_policy.get_scan_stride() };
-				const auto  num_residues     = debug_unwarned_numeric_cast<index_type>( arg_protein.get_length() );
+				const auto  roled_stride     = roled_scan_stride{ prm_scan_role, prm_scan_policy.get_scan_stride() };
+				const auto  num_residues     = debug_unwarned_numeric_cast<index_type>( prm_protein.get_length() );
 				const auto  from_rep_strider = get_this_from_strider( roled_stride );
 				const auto  to_rep_strider   = get_this_to_strider  ( roled_stride );
 				for (const auto &from_rep_index : get_rep_indices_range( from_rep_strider, num_residues ) ) {
@@ -218,14 +218,14 @@ namespace cath {
 
 						if ( from_rep_index != to_rep_index ) {
 							const auto the_res_pair = make_multi_struc_res_rep_pair(
-								arg_protein.get_residue_ref_of_index( get_index_of_rep_index( from_rep_strider, from_rep_index ) ),
-								arg_protein.get_residue_ref_of_index( get_index_of_rep_index( to_rep_strider,   to_rep_index   ) ),
-								arg_structure_index,
+								prm_protein.get_residue_ref_of_index( get_index_of_rep_index( from_rep_strider, from_rep_index ) ),
+								prm_protein.get_residue_ref_of_index( get_index_of_rep_index( to_rep_strider,   to_rep_index   ) ),
+								prm_structure_index,
 								from_rep_index,
 								to_rep_index
 							);
 //							BOOST_LOG_TRIVIAL( warning ) << "\t\tTo rep " << to_rep_index << " - the rep : " << the_res_pair;
-							arg_store.push_back_entry_to_cell( the_keyer.make_key( the_res_pair ), the_res_pair );
+							prm_store.push_back_entry_to_cell( the_keyer.make_key( the_res_pair ), the_res_pair );
 						}
 					}
 				}
@@ -235,17 +235,17 @@ namespace cath {
 			///
 			/// \todo Eliminate redundancy between add_structure_to_store() and dense_add_structure_to_store()
 			template <typename T, typename... KPs>
-			void dense_add_structure_to_store(T                         &arg_store,           ///< TODOCUMENT
-			                                  const index_type          &arg_structure_index, ///< TODOCUMENT
-			                                  const protein             &arg_protein,         ///< TODOCUMENT
-			                                  const scan_policy<KPs...> &arg_scan_policy,     ///< TODOCUMENT
-			                                  const scan_role           &arg_scan_role        ///< TODOCUMENT
+			void dense_add_structure_to_store(T                         &prm_store,           ///< TODOCUMENT
+			                                  const index_type          &prm_structure_index, ///< TODOCUMENT
+			                                  const protein             &prm_protein,         ///< TODOCUMENT
+			                                  const scan_policy<KPs...> &prm_scan_policy,     ///< TODOCUMENT
+			                                  const scan_role           &prm_scan_role        ///< TODOCUMENT
 			                                  ) {
-				const auto &the_criteria     = arg_scan_policy.get_criteria();
-				const auto &the_keyer        = arg_scan_policy.get_keyer();
+				const auto &the_criteria     = prm_scan_policy.get_criteria();
+				const auto &the_keyer        = prm_scan_policy.get_keyer();
 //				BOOST_LOG_TRIVIAL( warning ) << "Keyer is : " << the_keyer;
-				const auto  roled_stride     = roled_scan_stride{ arg_scan_role, arg_scan_policy.get_scan_stride() };
-				const auto  num_residues     = debug_unwarned_numeric_cast<index_type>( arg_protein.get_length() );
+				const auto  roled_stride     = roled_scan_stride{ prm_scan_role, prm_scan_policy.get_scan_stride() };
+				const auto  num_residues     = debug_unwarned_numeric_cast<index_type>( prm_protein.get_length() );
 				const auto  from_rep_strider = get_this_from_strider( roled_stride );
 				const auto  to_rep_strider   = get_this_to_strider  ( roled_stride );
 				for (const auto &from_rep_index : get_rep_indices_range( from_rep_strider, num_residues ) ) {
@@ -254,9 +254,9 @@ namespace cath {
 //						BOOST_LOG_TRIVIAL( warning ) << "\t\tTo rep " << to_rep_index;
 						if ( from_rep_index != to_rep_index ) {
 							const auto the_res_pair = make_multi_struc_res_rep_pair(
-								arg_protein.get_residue_ref_of_index( get_index_of_rep_index( from_rep_strider, from_rep_index ) ),
-								arg_protein.get_residue_ref_of_index( get_index_of_rep_index( to_rep_strider, to_rep_index )   ),
-								arg_structure_index,
+								prm_protein.get_residue_ref_of_index( get_index_of_rep_index( from_rep_strider, from_rep_index ) ),
+								prm_protein.get_residue_ref_of_index( get_index_of_rep_index( to_rep_strider, to_rep_index )   ),
+								prm_structure_index,
 								from_rep_index,
 								to_rep_index
 							);
@@ -373,13 +373,13 @@ namespace cath {
 //								if ( ! contains_key ) {
 //									BOOST_LOG_TRIVIAL( warning ) << "\t\t\t\t[" << counter << "] : Adding entry for close key " << output_key( x );
 //								}
-								arg_store.push_back_entry_to_cell( x, the_res_pair );
+								prm_store.push_back_entry_to_cell( x, the_res_pair );
 //								++counter;
 							}
 						}
 					}
 				}
-				arg_store.summarize();
+				prm_store.summarize();
 			}
 
 		} // namespace detail

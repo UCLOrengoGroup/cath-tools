@@ -34,21 +34,21 @@ using std::min;
 using std::string;
 
 /// \brief TODOCUMENT
-size_t cath::test::detail::index_of_first_difference(const string &arg_string1, ///< TODOCUMENT
-                                                     const string &arg_string2  ///< TODOCUMENT
+size_t cath::test::detail::index_of_first_difference(const string &prm_string1, ///< TODOCUMENT
+                                                     const string &prm_string2  ///< TODOCUMENT
                                                      ) {
 	// Step through the characters up to the end of the shorter string
 	// and return the index of the first difference found, if any
-	const size_t min_length = min( arg_string1.length(), arg_string2.length() );
+	const size_t min_length = min( prm_string1.length(), prm_string2.length() );
 	for (const size_t &char_ctr : indices( min_length ) ) {
-		if ( arg_string1[ char_ctr ] != arg_string2[ char_ctr ] ) {
+		if ( prm_string1[ char_ctr ] != prm_string2[ char_ctr ] ) {
 			return char_ctr;
 		}
 	}
 
 	// No difference has been found up to the length of the shorter string,
 	// so if the longer string is the same length, throw an error
-	if ( arg_string1.length() == arg_string2.length() ) {
+	if ( prm_string1.length() == prm_string2.length() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot find any differences in index_of_first_difference"));
 	}
 
@@ -59,29 +59,29 @@ size_t cath::test::detail::index_of_first_difference(const string &arg_string1, 
 
 
 /// \brief TODOCUMENT
-predicate_result cath::test::detail::strings_equal(const string &arg_string1,        ///< TODOCUMENT
-                                                   const string &arg_name1,          ///< TODOCUMENT
-                                                   const string &arg_string2,        ///< TODOCUMENT
-                                                   const string &arg_name2,          ///< TODOCUMENT
-                                                   const size_t &arg_diff_half_width ///< TODOCUMENT
+predicate_result cath::test::detail::strings_equal(const string &prm_string1,        ///< TODOCUMENT
+                                                   const string &prm_name1,          ///< TODOCUMENT
+                                                   const string &prm_string2,        ///< TODOCUMENT
+                                                   const string &prm_name2,          ///< TODOCUMENT
+                                                   const size_t &prm_diff_half_width ///< TODOCUMENT
                                                    ) {
 	// If the two strings are equal, return a predicate_result of true
-	if ( arg_string1 == arg_string2 ) {
+	if ( prm_string1 == prm_string2 ) {
 		return { true };
 	}
 	// Otherwise, attempt to output some diagnostic information about the differences
 	predicate_result result{ false };
-	result.message() << arg_name1 << " and " << arg_name2 << " differ:\n";
+	result.message() << prm_name1 << " and " << prm_name2 << " differ:\n";
 
-	const size_t first_diff_idx  = index_of_first_difference( arg_string1, arg_string2 );
-	const size_t start_of_window =   (  first_diff_idx > arg_diff_half_width )
-	                               ? (  first_diff_idx - arg_diff_half_width )
+	const size_t first_diff_idx  = index_of_first_difference( prm_string1, prm_string2 );
+	const size_t start_of_window =   (  first_diff_idx > prm_diff_half_width )
+	                               ? (  first_diff_idx - prm_diff_half_width )
 	                               : 0;
-	const auto string_refs = { cref( arg_string1 ),
-	                           cref( arg_string2 ) };
+	const auto string_refs = { cref( prm_string1 ),
+	                           cref( prm_string2 ) };
 	for (const auto &string_ref : string_refs) {
 		const size_t string_length  = string_ref.get().length();
-		const size_t end_of_window  = min( first_diff_idx + arg_diff_half_width, string_length );
+		const size_t end_of_window  = min( first_diff_idx + prm_diff_half_width, string_length );
 		result.message() << "\"" << (start_of_window > 0 ? "[...]" : "");
 		for (const size_t &char_ctr : irange( start_of_window, end_of_window ) ) {
 			result.message() << string_ref.get()[ char_ctr ];

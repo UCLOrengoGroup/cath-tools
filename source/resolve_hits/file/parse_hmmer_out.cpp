@@ -40,39 +40,39 @@ using std::ifstream;
 using std::istream;
 
 /// \brief Parse HMMER output data from the specified file and pass the hits to the specified read_and_process_mgr
-void cath::rslv::parse_hmmer_out_file(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing
-                                      const path           &arg_hmmer_out_file,       ///< The file from which the HMMER domain hits table data should be parsed
-                                      const hmmer_format   &arg_hmmer_format,         ///< The HMMER format to parse
-                                      const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-specific policies
-                                      const residx_t       &arg_min_gap_length,       ///< The minimum length that an alignment gap can have to be considered a gap
-                                      const bool           &arg_output_hmmer_aln      ///< Whether to parse/output HMMER output alignment information
+void cath::rslv::parse_hmmer_out_file(read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing
+                                      const path           &prm_hmmer_out_file,       ///< The file from which the HMMER domain hits table data should be parsed
+                                      const hmmer_format   &prm_hmmer_format,         ///< The HMMER format to parse
+                                      const bool           &prm_apply_cath_policies,  ///< Whether to apply CATH-specific policies
+                                      const residx_t       &prm_min_gap_length,       ///< The minimum length that an alignment gap can have to be considered a gap
+                                      const bool           &prm_output_hmmer_aln      ///< Whether to parse/output HMMER output alignment information
                                       ) {
 	ifstream the_ifstream;
-	open_ifstream( the_ifstream, arg_hmmer_out_file );
+	open_ifstream( the_ifstream, prm_hmmer_out_file );
 
 	parse_hmmer_out(
-		arg_read_and_process_mgr,
+		prm_read_and_process_mgr,
 		the_ifstream,
-		arg_hmmer_format,
-		arg_apply_cath_policies,
-		arg_min_gap_length,
-		arg_output_hmmer_aln
+		prm_hmmer_format,
+		prm_apply_cath_policies,
+		prm_min_gap_length,
+		prm_output_hmmer_aln
 	);
 
 	the_ifstream.close();
 }
 
 /// \brief Parse HMMER output data from the specified input stream and pass the hits to the specified read_and_process_mgr
-void cath::rslv::parse_hmmer_out(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing
-                                 istream              &arg_input_stream,         ///< The istream from which the HMMER domain hits table data should be parsed
-                                 const hmmer_format   &arg_hmmer_format,         ///< The HMMER format to parse
-                                 const bool           &arg_apply_cath_policies,  ///< Whether to apply CATH-specific policies
-                                 const residx_t       &arg_min_gap_length,       ///< The minimum length that an alignment gap can have to be considered a gap
-                                 const bool           &arg_parse_hmmer_aln       ///< Whether to parse/output HMMER output alignment information
+void cath::rslv::parse_hmmer_out(read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing
+                                 istream              &prm_input_stream,         ///< The istream from which the HMMER domain hits table data should be parsed
+                                 const hmmer_format   &prm_hmmer_format,         ///< The HMMER format to parse
+                                 const bool           &prm_apply_cath_policies,  ///< Whether to apply CATH-specific policies
+                                 const residx_t       &prm_min_gap_length,       ///< The minimum length that an alignment gap can have to be considered a gap
+                                 const bool           &prm_parse_hmmer_aln       ///< Whether to parse/output HMMER output alignment information
                                  ) {
-	hmmer_parser parser{ arg_hmmer_format, arg_input_stream };
+	hmmer_parser parser{ prm_hmmer_format, prm_input_stream };
 
-	arg_read_and_process_mgr.process_all_outstanding();
+	prm_read_and_process_mgr.process_all_outstanding();
 
 	// Store the query IDs seen so far if the crh_filter_spec specifies a limit on the number of queries
 	query_id_recorder seen_query_ids;
@@ -88,14 +88,14 @@ void cath::rslv::parse_hmmer_out(read_and_process_mgr &arg_read_and_process_mgr,
 
 		// If this query ID should be skipped, then skip this entry.
 		// The function also updates seen_query_ids if not skipping this query ID
-		if ( should_skip_query_and_update( arg_read_and_process_mgr, parser.get_query_id(), seen_query_ids ) ) {
+		if ( should_skip_query_and_update( prm_read_and_process_mgr, parser.get_query_id(), seen_query_ids ) ) {
 			continue;
 		}
 
 		if ( parser.line_is_summary_header() ) {
 			parser.parse_summary_from_header(
-				arg_apply_cath_policies,
-				arg_read_and_process_mgr.get_filter_spec()
+				prm_apply_cath_policies,
+				prm_read_and_process_mgr.get_filter_spec()
 			);
 			parser.advance_line_until_next_aln();
 
@@ -103,10 +103,10 @@ void cath::rslv::parse_hmmer_out(read_and_process_mgr &arg_read_and_process_mgr,
 				if ( parser.line_is_at_aln() ) {
 					if ( ! parser.alignment_is_empty() ) {
 						parser.finish_alignment(
-							arg_read_and_process_mgr,
-							arg_apply_cath_policies,
-							arg_min_gap_length,
-							arg_parse_hmmer_aln
+							prm_read_and_process_mgr,
+							prm_apply_cath_policies,
+							prm_min_gap_length,
+							prm_parse_hmmer_aln
 						);
 					}
 					parser.advance_line();
@@ -115,24 +115,24 @@ void cath::rslv::parse_hmmer_out(read_and_process_mgr &arg_read_and_process_mgr,
 			}
 			if ( ! parser.alignment_is_empty() ) {
 				parser.finish_alignment(
-					arg_read_and_process_mgr,
-					arg_apply_cath_policies,
-					arg_min_gap_length,
-					arg_parse_hmmer_aln
+					prm_read_and_process_mgr,
+					prm_apply_cath_policies,
+					prm_min_gap_length,
+					prm_parse_hmmer_aln
 				);
 			}
 		}
 	}
 
-	arg_read_and_process_mgr.process_all_outstanding();
+	prm_read_and_process_mgr.process_all_outstanding();
 }
 
 /// \brief Parse HMMER output data from the specified file and pass the hits to the specified read_and_process_mgr
-str_calc_hit_list_pair_vec cath::rslv::parse_hmmer_out_file(const path         &arg_hmmer_out_file,      ///< The file from which the HMMER domain hits table data should be parsed
-                                                            const hmmer_format &arg_hmmer_format,        ///< The HMMER format to parse
-                                                            const bool         &arg_apply_cath_policies, ///< Whether to apply CATH-specific policies
-                                                            const residx_t     &arg_min_gap_length,      ///< The minimum length that an alignment gap can have to be considered a gap
-                                                            const bool         &arg_output_hmmer_aln     ///< Whether to parse/output HMMER output alignment information
+str_calc_hit_list_pair_vec cath::rslv::parse_hmmer_out_file(const path         &prm_hmmer_out_file,      ///< The file from which the HMMER domain hits table data should be parsed
+                                                            const hmmer_format &prm_hmmer_format,        ///< The HMMER format to parse
+                                                            const bool         &prm_apply_cath_policies, ///< Whether to apply CATH-specific policies
+                                                            const residx_t     &prm_min_gap_length,      ///< The minimum length that an alignment gap can have to be considered a gap
+                                                            const bool         &prm_output_hmmer_aln     ///< Whether to parse/output HMMER output alignment information
                                                             ) {
 	// gather_hits_processor the_processor;
 	str_calc_hit_list_pair_vec results;
@@ -144,11 +144,11 @@ str_calc_hit_list_pair_vec cath::rslv::parse_hmmer_out_file(const path         &
 	};
 	parse_hmmer_out_file(
 		the_read_and_process_mgr,
-		arg_hmmer_out_file,
-		arg_hmmer_format,
-		arg_apply_cath_policies,
-		arg_min_gap_length,
-		arg_output_hmmer_aln
+		prm_hmmer_out_file,
+		prm_hmmer_format,
+		prm_apply_cath_policies,
+		prm_min_gap_length,
+		prm_output_hmmer_aln
 	);
 	return results;
 }

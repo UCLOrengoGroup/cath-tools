@@ -67,28 +67,28 @@ namespace cath {
 		               const cluster_info &);
 
 		/// \brief Update the cluster to account for a new entry with the specified name and (optional) segments
-		inline cluster_info & cluster_info::add_entry(const boost::string_ref    &arg_name,    ///< The name of the new entry
-		                                              const seq::seq_seg_run_opt &arg_segments ///< The (optional) segments of the new entry
+		inline cluster_info & cluster_info::add_entry(const boost::string_ref    &prm_name,    ///< The name of the new entry
+		                                              const seq::seq_seg_run_opt &prm_segments ///< The (optional) segments of the new entry
 		                                              ) {
 			if ( size == 0 ) {
-				lowest_domain_id = arg_name.to_string();
-				if ( arg_segments ) {
+				lowest_domain_id = prm_name.to_string();
+				if ( prm_segments ) {
 					total_sqrt_length     = 0.0;
 					total_mid_point_index = 0_z;
 				}
 			}
 			else {
-				if ( static_cast<bool>( arg_segments) != static_cast<bool>( total_sqrt_length ) ) {
+				if ( static_cast<bool>( prm_segments) != static_cast<bool>( total_sqrt_length ) ) {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot mix specifying domain regions within a cluster"));
 				}
 			}
 			++size;
-			if ( arg_name < lowest_domain_id ) {
-				lowest_domain_id = arg_name.to_string();
+			if ( prm_name < lowest_domain_id ) {
+				lowest_domain_id = prm_name.to_string();
 			}
-			if ( arg_segments ) {
-				*total_sqrt_length     += sqrt( static_cast<double>( get_total_length( *arg_segments ) ) );
-				*total_mid_point_index += middle_index( *arg_segments );
+			if ( prm_segments ) {
+				*total_sqrt_length     += sqrt( static_cast<double>( get_total_length( *prm_segments ) ) );
+				*total_mid_point_index += middle_index( *prm_segments );
 			}
 			return *this;
 		}
@@ -129,17 +129,17 @@ namespace cath {
 		}
 
 		/// \brief Get the average mid point index of the specified cluster
-		inline doub_opt get_average_mid_point_index(const cluster_info &arg_cluster_info ///< The cluster_info to query
+		inline doub_opt get_average_mid_point_index(const cluster_info &prm_cluster_info ///< The cluster_info to query
 		                                            ) {
 			return common::make_optional_if_fn(
-				arg_cluster_info.get_total_sqrt_length()
+				prm_cluster_info.get_total_sqrt_length()
 				&&
-				arg_cluster_info.get_total_mid_point_index(),
+				prm_cluster_info.get_total_mid_point_index(),
 				[&] {
 					return (
-						static_cast<double>( *arg_cluster_info.get_total_mid_point_index() )
+						static_cast<double>( *prm_cluster_info.get_total_mid_point_index() )
 						/
-						static_cast<double>(  arg_cluster_info.get_size                 () )
+						static_cast<double>(  prm_cluster_info.get_size                 () )
 					);
 				}
 			);
@@ -152,24 +152,24 @@ namespace cath {
 		///  * descending on number of sequences
 		///  * ascending on average mid-point index
 		///  * ascending on first domain ID
-		inline bool operator<(const cluster_info &arg_lhs, ///< The first  cluster to compare
-		                      const cluster_info &arg_rhs  ///< The second cluster to compare
+		inline bool operator<(const cluster_info &prm_lhs, ///< The first  cluster to compare
+		                      const cluster_info &prm_rhs  ///< The second cluster to compare
 		                      ) {
-			const auto average_mid_point_index_lhs = get_average_mid_point_index( arg_lhs );
-			const auto average_mid_point_index_rhs = get_average_mid_point_index( arg_rhs );
+			const auto average_mid_point_index_lhs = get_average_mid_point_index( prm_lhs );
+			const auto average_mid_point_index_rhs = get_average_mid_point_index( prm_rhs );
 			return (
 				std::tie(
-					arg_rhs.get_total_sqrt_length(),
-					arg_rhs.get_size(),
+					prm_rhs.get_total_sqrt_length(),
+					prm_rhs.get_size(),
 					average_mid_point_index_lhs,
-					arg_lhs.get_lowest_domain_id()
+					prm_lhs.get_lowest_domain_id()
 				)
 				<
 				std::tie(
-					arg_lhs.get_total_sqrt_length(),
-					arg_lhs.get_size(),
+					prm_lhs.get_total_sqrt_length(),
+					prm_lhs.get_size(),
 					average_mid_point_index_rhs,
-					arg_rhs.get_lowest_domain_id()
+					prm_rhs.get_lowest_domain_id()
 				)
 			);
 		}

@@ -38,13 +38,13 @@ namespace cath {
 		namespace detail {
 
 			/// \brief Compute ten to the specified power in a constexpr way
-			constexpr size_t power_of_ten(const size_t &arg_expt,        ///< The exponent to which ten should be raised
-			                              const size_t &arg_result = 1_z ///< Implementation value used in recursive calls
+			constexpr size_t power_of_ten(const size_t &prm_expt,        ///< The exponent to which ten should be raised
+			                              const size_t &prm_result = 1_z ///< Implementation value used in recursive calls
 			                              ) {
 				return (
-					( arg_expt == 0 )
-					? arg_result
-					: power_of_ten( arg_expt - 1, 10_z * arg_result )
+					( prm_expt == 0 )
+					? prm_result
+					: power_of_ten( prm_expt - 1, 10_z * prm_result )
 				);
 			}
 		} // namespace detail
@@ -142,27 +142,27 @@ namespace cath {
 
 
 		/// \brief Get the overlap fraction corresponding to the bin of the specified index
-		inline constexpr double overlap_frac_distn::get_fraction_of_index(const size_t &arg_index ///< The index of the bin of interest
+		inline constexpr double overlap_frac_distn::get_fraction_of_index(const size_t &prm_index ///< The index of the bin of interest
 		                                                                  ) {
-			return static_cast<double>( arg_index ) / static_cast<double>( num_gaps );
+			return static_cast<double>( prm_index ) / static_cast<double>( num_gaps );
 		}
 
 		/// \brief Get the overlap percentage corresponding to the bin of the specified index
-		inline constexpr double overlap_frac_distn::get_percentage_of_index(const size_t &arg_index ///< The index of the bin of interest
+		inline constexpr double overlap_frac_distn::get_percentage_of_index(const size_t &prm_index ///< The index of the bin of interest
 		                                                                    ) {
-			return 100.0 * get_fraction_of_index( arg_index );
+			return 100.0 * get_fraction_of_index( prm_index );
 		}
 
 		/// \brief Get the bin index associated with the specified overlap fraction
-		inline constexpr double overlap_frac_distn::get_index_of_fraction(const double &arg_fraction ///< The overlap fraction to look for
+		inline constexpr double overlap_frac_distn::get_index_of_fraction(const double &prm_fraction ///< The overlap fraction to look for
 		                                                                  ) {
-			return static_cast<double>( arg_fraction ) * static_cast<double>( num_gaps );
+			return static_cast<double>( prm_fraction ) * static_cast<double>( num_gaps );
 		}
 
 		/// \brief Get the bin index associated with the specified overlap percentage
-		inline constexpr double overlap_frac_distn::get_index_of_percentage(const double &arg_percentage ///< The overlap percentage to look for
+		inline constexpr double overlap_frac_distn::get_index_of_percentage(const double &prm_percentage ///< The overlap percentage to look for
 		                                                                    ) {
-			return get_index_of_fraction( arg_percentage / 100.0 );
+			return get_index_of_fraction( prm_percentage / 100.0 );
 		}
 
 		/// \brief The number of overlap fractions
@@ -190,32 +190,32 @@ namespace cath {
 		}
 
 		/// \brief Add an overlap fraction to the overlap_frac_distn
-		inline overlap_frac_distn & overlap_frac_distn::add_overlap_fraction(const double &arg_overlap_fraction, ///< The overlap fraction to add
-		                                                                     const size_t &arg_count             ///< The number of instances of this fraction to add (default 1)
+		inline overlap_frac_distn & overlap_frac_distn::add_overlap_fraction(const double &prm_overlap_fraction, ///< The overlap fraction to add
+		                                                                     const size_t &prm_count             ///< The number of instances of this fraction to add (default 1)
 		                                                                     ) {
 			using std::to_string;
-			if ( ! ::boost::math::isfinite( arg_overlap_fraction ) || arg_overlap_fraction < 0.0 || arg_overlap_fraction > 1.0 ) {
+			if ( ! ::boost::math::isfinite( prm_overlap_fraction ) || prm_overlap_fraction < 0.0 || prm_overlap_fraction > 1.0 ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 					"Unable to add invalid overlap fraction "
-					+ to_string( arg_overlap_fraction )
+					+ to_string( prm_overlap_fraction )
 					+ " to overlap_frac_distn"
 				));
 			}
 
-			const auto index = static_cast<size_t>( round( static_cast<double>( num_gaps ) * arg_overlap_fraction ) );
-			( fraction_counts[ index ] ) += arg_count;
-			num_counts += arg_count;
+			const auto index = static_cast<size_t>( round( static_cast<double>( num_gaps ) * prm_overlap_fraction ) );
+			( fraction_counts[ index ] ) += prm_count;
+			num_counts += prm_count;
 
 			return *this;
 		}
 
 		/// \brief Add all the overlap fractions from another overlap_frac_distn into this one
-		inline overlap_frac_distn & overlap_frac_distn::operator+=(const overlap_frac_distn &arg_distn ///< The overlap_frac_distn to add
+		inline overlap_frac_distn & overlap_frac_distn::operator+=(const overlap_frac_distn &prm_distn ///< The overlap_frac_distn to add
 		                                                           ) {
-			for (boost::tuple<size_t &, const size_t &> &&x : boost::range::combine( fraction_counts, arg_distn ) ) {
+			for (boost::tuple<size_t &, const size_t &> &&x : boost::range::combine( fraction_counts, prm_distn ) ) {
 				x.get<0>() += x.get<1>();
 			}
-			num_counts += arg_distn.size();
+			num_counts += prm_distn.size();
 			return *this;
 		}
 

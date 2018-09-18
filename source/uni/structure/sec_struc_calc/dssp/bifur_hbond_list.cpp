@@ -37,14 +37,14 @@ using std::string;
 /// \brief Generate a string describing the specified hbond_half_opt
 ///
 /// \relates hbond_half_opt
-string cath::sec::to_string(const hbond_half_opt &arg_hbond_half_opt ///< The hbond_half_opt to describe
+string cath::sec::to_string(const hbond_half_opt &prm_hbond_half_opt ///< The hbond_half_opt to describe
                             ) {
-	return arg_hbond_half_opt
+	return prm_hbond_half_opt
 		? (
 			  "("
-			+ ( format( "%5g" ) % arg_hbond_half_opt->index ).str()
+			+ ( format( "%5g" ) % prm_hbond_half_opt->index ).str()
 			+ ", "
-			+ ( format( "%3.3f" ) % arg_hbond_half_opt->energy ).str()
+			+ ( format( "%3.3f" ) % prm_hbond_half_opt->energy ).str()
 			+ ")"
 		)
 		: "(             )";
@@ -53,39 +53,39 @@ string cath::sec::to_string(const hbond_half_opt &arg_hbond_half_opt ///< The hb
 /// \brief Generate a string describing the specified bifur_hbond
 ///
 /// \relates bifur_hbond
-string cath::sec::to_string(const bifur_hbond &arg_bifur_hbond ///< The bifur_hbond to describe
+string cath::sec::to_string(const bifur_hbond &prm_bifur_hbond ///< The bifur_hbond to describe
                             ) {
 	return
 		"bifur_hbond[nh_1st:"
-		+ to_string( arg_bifur_hbond.get_bound_pair_for_this_nh().first  )
+		+ to_string( prm_bifur_hbond.get_bound_pair_for_this_nh().first  )
 		+ ", nh_2nd"
-		+ to_string( arg_bifur_hbond.get_bound_pair_for_this_nh().second )
+		+ to_string( prm_bifur_hbond.get_bound_pair_for_this_nh().second )
 		+ ", co_1st:"
-		+ to_string( arg_bifur_hbond.get_bound_pair_for_this_co().first  )
+		+ to_string( prm_bifur_hbond.get_bound_pair_for_this_co().first  )
 		+ ", co_2nd:"
-		+ to_string( arg_bifur_hbond.get_bound_pair_for_this_co().second )
+		+ to_string( prm_bifur_hbond.get_bound_pair_for_this_co().second )
 		+ "]";
 }
 
 /// \brief Insert a description of the specified bifur_hbond into the specified ostream
 ///
 /// \relates bifur_hbond
-ostream & cath::sec::operator<<(ostream           &arg_os,         ///< The ostream into which the description should be inserted
-                                const bifur_hbond &arg_bifur_hbond ///< The bifur_hbond to describe
+ostream & cath::sec::operator<<(ostream           &prm_os,         ///< The ostream into which the description should be inserted
+                                const bifur_hbond &prm_bifur_hbond ///< The bifur_hbond to describe
                                 ) {
-	arg_os << to_string( arg_bifur_hbond );
-	return arg_os;
+	prm_os << to_string( prm_bifur_hbond );
+	return prm_os;
 }
 
 /// \brief Generate a string describing the specified bifur_hbond_list
 ///
 /// \relates bifur_hbond_list
-string cath::sec::to_string(const bifur_hbond_list &arg_bifur_hbond_list ///< The bifur_hbond_list to describe
+string cath::sec::to_string(const bifur_hbond_list &prm_bifur_hbond_list ///< The bifur_hbond_list to describe
                             ) {
 	return
 		"bifur_hbond_list[\n\t"
 		+ join(
-			arg_bifur_hbond_list
+			prm_bifur_hbond_list
 				| transformed( [] (const bifur_hbond &x) { return to_string( x ); } ),
 			"\n\t"
 		)
@@ -95,9 +95,9 @@ string cath::sec::to_string(const bifur_hbond_list &arg_bifur_hbond_list ///< Th
 /// \brief Insert a description of the specified bifur_hbond_list into the specified ostream
 ///
 /// \relates bifur_hbond_list
-std::ostream & cath::sec::operator<<(ostream                &arg_os,              ///< The ostream into which the description should be inserted
-                                     const bifur_hbond_list &arg_bifur_hbond_list ///< The bifur_hbond_list to describe
+std::ostream & cath::sec::operator<<(ostream                &prm_os,              ///< The ostream into which the description should be inserted
+                                     const bifur_hbond_list &prm_bifur_hbond_list ///< The bifur_hbond_list to describe
                                      ) {
-	arg_os << to_string( arg_bifur_hbond_list );
-	return arg_os;
+	prm_os << to_string( prm_bifur_hbond_list );
+	return prm_os;
 }

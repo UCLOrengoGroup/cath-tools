@@ -55,8 +55,8 @@ string clust_mapping_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void clust_mapping_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                        const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void clust_mapping_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                        const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                         ) {
 	using std::to_string;
 	const string percent_varname   { "<percent>" };
@@ -64,7 +64,7 @@ void clust_mapping_options_block::do_add_visible_options_to_description(options_
 	const auto min_equiv_dom_ol_notifier   = [&] (const double &x) { the_spec.set_min_equiv_dom_ol  ( x / 100.0 ); };
 	const auto min_equiv_clust_ol_notifier = [&] (const double &x) { the_spec.set_min_equiv_clust_ol( x / 100.0 ); };
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_MIN_EQUIV_DOM_OL.c_str(),
 			value<double>()
@@ -103,7 +103,7 @@ void clust_mapping_options_block::do_add_visible_options_to_description(options_
 
 /// \brief Generate a description of any problem that makes the specified clust_mapping_options_block invalid
 ///        or none otherwise
-str_opt clust_mapping_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt clust_mapping_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                        ) const {
 	return none;
 }
@@ -134,7 +134,7 @@ str_vec cath::clust::clust_thresh_option_names() {
 /// \brief Return whether the any of the threshold options have been specified in the specified variables_map
 ///
 /// \relates clust_mapping_options_block
-bool cath::clust::specified_clust_thresh_options(const variables_map &arg_vm ///< The variables_map to examine
+bool cath::clust::specified_clust_thresh_options(const variables_map &prm_vm ///< The variables_map to examine
                                                  ) {
-	return specifies_any_of_options( arg_vm, clust_thresh_option_names() );
+	return specifies_any_of_options( prm_vm, clust_thresh_option_names() );
 }

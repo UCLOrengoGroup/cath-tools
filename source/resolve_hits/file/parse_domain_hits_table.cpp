@@ -43,17 +43,17 @@ using std::string;
 
 /// \brief Parse a HMMER domain hits table file (as produced by the --domtblout option to a HMMER program)
 ///        from the specified file and pass them to the specified read_and_process_mgr
-void cath::rslv::parse_domain_hits_table_file(read_and_process_mgr &arg_read_and_process_mgr,   ///< The read_and_process_mgr to which the hits should be passed for processing
-                                              const path           &arg_domain_hits_table_file, ///< The file from which the HMMER domain hits table data should be parsed
-                                              const bool           &arg_apply_cath_policies     ///< Whether to apply CATH-specific policies
+void cath::rslv::parse_domain_hits_table_file(read_and_process_mgr &prm_read_and_process_mgr,   ///< The read_and_process_mgr to which the hits should be passed for processing
+                                              const path           &prm_domain_hits_table_file, ///< The file from which the HMMER domain hits table data should be parsed
+                                              const bool           &prm_apply_cath_policies     ///< Whether to apply CATH-specific policies
                                               ) {
 	ifstream the_ifstream;
-	open_ifstream( the_ifstream, arg_domain_hits_table_file );
+	open_ifstream( the_ifstream, prm_domain_hits_table_file );
 
 	parse_domain_hits_table(
-		arg_read_and_process_mgr,
+		prm_read_and_process_mgr,
 		the_ifstream,
-		arg_apply_cath_policies
+		prm_apply_cath_policies
 	);
 
 	the_ifstream.close();
@@ -67,19 +67,19 @@ void cath::rslv::parse_domain_hits_table_file(read_and_process_mgr &arg_read_and
 
 /// \brief Parse HMMER domain hits table data (as produced by the --domtblout option to a HMMER program)
 ///        from the specified istream and pass them to the specified read_and_process_mgr
-void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing
-                                         istream              &arg_input_stream,         ///< The istream from which the HMMER domain hits table data should be parsed
-                                         const bool           &arg_apply_cath_policies   ///< Whether to apply CATH-specific policies
+void cath::rslv::parse_domain_hits_table(read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing
+                                         istream              &prm_input_stream,         ///< The istream from which the HMMER domain hits table data should be parsed
+                                         const bool           &prm_apply_cath_policies   ///< Whether to apply CATH-specific policies
                                          ) {
 	string line_string;
 	bool skipped_for_negtv_bitscore = false;
 
-	arg_read_and_process_mgr.process_all_outstanding();
+	prm_read_and_process_mgr.process_all_outstanding();
 
 	// Store the query IDs seen so far if the crh_filter_spec specifies a limit on the number of queries
 	query_id_recorder seen_query_ids;
 
-	while ( getline( arg_input_stream, line_string ) ) {
+	while ( getline( prm_input_stream, line_string ) ) {
 		// Skip comment lines
 		if ( line_string.front() == '#' ) {
 			continue;
@@ -100,14 +100,14 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 
 		// If this query ID should be skipped, then skip this entry.
 		// The function also updates seen_query_ids if not skipping this query ID
-		if ( should_skip_query_and_update( arg_read_and_process_mgr, target_id_str_ref, seen_query_ids) ) {
+		if ( should_skip_query_and_update( prm_read_and_process_mgr, target_id_str_ref, seen_query_ids) ) {
 			continue;
 		}
 
 		const auto     query_field_itrs       = find_field_itrs( line_string, QUERY_FIELD_IDX,       1 + TARGET_FIELD_IDX,      target_field_itrs.second      );
 		const auto     query_id_str_ref       = make_string_ref( query_field_itrs.first,  query_field_itrs.second  );
 
-		const auto     id_score_cat           = cath_score_category_of_id( query_id_str_ref, arg_apply_cath_policies );
+		const auto     id_score_cat           = cath_score_category_of_id( query_id_str_ref, prm_apply_cath_policies );
 		const bool     apply_dc_cat           = ( id_score_cat == cath_id_score_category::DC_TYPE );
 
 		const size_t   start_field_idx        = apply_dc_cat ? ALI_START_RES_FIELD_IDX : ENV_START_RES_FIELD_IDX;
@@ -148,15 +148,15 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &arg_read_and_proc
 		extras_store.push_back< hit_extra_cat::COND_EVAL >( cond_evalue );
 		extras_store.push_back< hit_extra_cat::INDP_EVAL >( indp_evalue );
 
-		arg_read_and_process_mgr.add_hit(
+		prm_read_and_process_mgr.add_hit(
 			target_id_str_ref,
 			{ { seq_seg{ arrow_before_res( start ), arrow_after_res ( stop  ) } } },
 			string{ query_field_itrs.first, query_field_itrs.second },
-			bitscore / bitscore_divisor( arg_apply_cath_policies, evalues_are_susp ),
+			bitscore / bitscore_divisor( prm_apply_cath_policies, evalues_are_susp ),
 			hit_score_type::BITSCORE,
 			std::move( extras_store )
 		);
 	}
 
-	arg_read_and_process_mgr.process_all_outstanding();
+	prm_read_and_process_mgr.process_all_outstanding();
 }

@@ -77,9 +77,9 @@ namespace cath {
 			rapidjson_writer_list() = default;
 
 			/// \brief Reserve space for the specified number of rapidjson_writers
-			inline void reserve(const size_t &arg_size ///< The number of rapidjson_writers for which space should be reserved
+			inline void reserve(const size_t &prm_size ///< The number of rapidjson_writers for which space should be reserved
 			                    ) {
-				return rapidjson_writers.reserve( arg_size );
+				return rapidjson_writers.reserve( prm_size );
 			}
 
 			/// \brief Get the number of rapidjson_writers currently stored
@@ -131,57 +131,57 @@ namespace cath {
 
 			/// \brief Explicit ctor for when 1 or more arguments are specified, perfect-forwards all parameters to the outstream ctor
 			template <typename T>
-			explicit rapidjson_writer_list(const std::vector<T> &arg_values ///< The values with which to build a list of corresponding rapidjson_writers
+			explicit rapidjson_writer_list(const std::vector<T> &prm_values ///< The values with which to build a list of corresponding rapidjson_writers
 			                               ) {
-				rapidjson_writers.reserve( arg_values.size() );
-				for (const T &value : arg_values) {
+				rapidjson_writers.reserve( prm_values.size() );
+				for (const T &value : prm_values) {
 					emplace_back( value );
 				}
 			}
 
 			/// \brief Write a raw string in the JSON
 			template <typename... Ts>
-			rapidjson_writer_list & write_raw_string(const std::string &arg_string ///< The string to write to the rapidjson_writers
+			rapidjson_writer_list & write_raw_string(const std::string &prm_string ///< The string to write to the rapidjson_writers
 			                                         ) {
 				for (auto &writer : *this) {
-					writer.write_raw_string( arg_string );
+					writer.write_raw_string( prm_string );
 				}
 				return *this;
 			}
 
 			/// \brief Write a key to the JSON
-			rapidjson_writer_list & write_key(const std::string &arg_key ///< The key string
+			rapidjson_writer_list & write_key(const std::string &prm_key ///< The key string
 			                                  ) {
 				for (auto &writer : *this) {
-					writer.write_key( arg_key );
+					writer.write_key( prm_key );
 				}
 				return *this;
 			}
 
 			/// \brief Write a key to the JSON
-			rapidjson_writer_list & write_key(const char * const arg_key ///< The key string (can be std::string or char *)
+			rapidjson_writer_list & write_key(const char * const prm_key ///< The key string (can be std::string or char *)
 			                                  ) {
 				for (auto &writer : *this) {
-					writer.write_key( arg_key );
+					writer.write_key( prm_key );
 				}
 				return *this;
 			}
 
 			/// \brief Write a string value to the JSON
-			rapidjson_writer_list & write_value(const char * const arg_value ///< The string value (can be std::string or char *)
+			rapidjson_writer_list & write_value(const char * const prm_value ///< The string value (can be std::string or char *)
 			                                    ) {
 				for (auto &writer : *this) {
-					writer.write_value( arg_value );
+					writer.write_value( prm_value );
 				}
 				return *this;
 			}
 
 			/// \brief Write a bool value to the JSON
 			template <typename T>
-			rapidjson_writer_list & write_value(const T &arg_value ///< The bool value to write to the JSON
+			rapidjson_writer_list & write_value(const T &prm_value ///< The bool value to write to the JSON
 			                                    ) {
 				for (auto &writer : *this) {
-					writer.write_value( arg_value );
+					writer.write_value( prm_value );
 				}
 				return *this;
 			}
@@ -227,15 +227,15 @@ namespace cath {
 			}
 
 			/// \brief Get a C-style string of the JSON
-			const char * get_c_string(const size_t &arg_index ///< The index of the writer from which to grab the string
+			const char * get_c_string(const size_t &prm_index ///< The index of the writer from which to grab the string
 			                          ) const {
-				return rapidjson_writers[ arg_index ]->get_c_string();
+				return rapidjson_writers[ prm_index ]->get_c_string();
 			}
 
 			/// \brief Get a std::string of the JSON
-			std::string get_cpp_string(const size_t &arg_index ///< The index of the writer from which to grab the string
+			std::string get_cpp_string(const size_t &prm_index ///< The index of the writer from which to grab the string
 			                           ) const {
-				return rapidjson_writers[ arg_index ]->get_cpp_string();
+				return rapidjson_writers[ prm_index ]->get_cpp_string();
 			}
 
 			/// \brief Get whether the JSON is complete (ie finished the initial array/object/value)
@@ -251,11 +251,11 @@ namespace cath {
 
 		/// \brief Write a key and a value
 		template <typename T, json_style Style, typename OStrm>
-		rapidjson_writer_list<Style, OStrm> & write_key_value(rapidjson_writer_list<Style, OStrm> &arg_writer_list, ///< The rapidjson_writer_list to which they key and value should be written
-		                                                      const std::string                   &arg_key,         ///< The key to write
-		                                                      const T                             &arg_value        ///< The value to write
+		rapidjson_writer_list<Style, OStrm> & write_key_value(rapidjson_writer_list<Style, OStrm> &prm_writer_list, ///< The rapidjson_writer_list to which they key and value should be written
+		                                                      const std::string                   &prm_key,         ///< The key to write
+		                                                      const T                             &prm_value        ///< The value to write
 		                                                      ) {
-			return arg_writer_list.write_key( arg_key ).write_value( arg_value );
+			return prm_writer_list.write_key( prm_key ).write_value( prm_value );
 		}
 
 	} // namespace common

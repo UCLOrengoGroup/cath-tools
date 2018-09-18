@@ -107,15 +107,15 @@ namespace cath {
 			/// \brief Process the specified full_hit_list for the specified query using the specified crh_filter_spec
 			///
 			/// This builds a calc_hit_list from the specified full_hit_list once and then passes it to each of the hits_processors
-			inline void hits_processor_list::process_hits_for_query(const std::string     &arg_query_id,    ///< The query_protein_id string
-			                                                        const crh_filter_spec &arg_filter_spec, ///< The filter spec to apply to hits
-			                                                        full_hit_list          arg_full_hits    ///< The full hits to be processed
+			inline void hits_processor_list::process_hits_for_query(const std::string     &prm_query_id,    ///< The query_protein_id string
+			                                                        const crh_filter_spec &prm_filter_spec, ///< The filter spec to apply to hits
+			                                                        full_hit_list          prm_full_hits    ///< The full hits to be processed
 			                                                        ) {
 				const calc_hit_list the_calc_hit_list{
-					std::move( arg_full_hits ),
+					std::move( prm_full_hits ),
 					get_score_spec(),
 					get_segment_spec(),
-					arg_filter_spec,
+					prm_filter_spec,
 					(
 						// If strictly worse hits were required in the full_hits, then it's worth pruning them out now,
 						// otherwise don't (because that'd just be wasted effort)
@@ -124,13 +124,13 @@ namespace cath {
 							: seg_dupl_hit_policy::PRESERVE
 					)
 				};
-				arg_full_hits = full_hit_list{};
+				prm_full_hits = full_hit_list{};
 				boost::for_each(
 					processors,
 					[&] (common::clone_ptr<hits_processor> &x) {
 						x->process_hits_for_query(
-							arg_query_id,
-							arg_filter_spec,
+							prm_query_id,
+							prm_filter_spec,
 							get_score_spec(),
 							get_segment_spec(),
 							the_calc_hit_list

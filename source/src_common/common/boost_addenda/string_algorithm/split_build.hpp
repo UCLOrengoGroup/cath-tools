@@ -30,16 +30,16 @@ namespace cath {
 		template <typename OutputContainer,
 		          typename RangeT,
 		          typename PredicateT>
-		inline OutputContainer split_build(const RangeT                               &arg_input,                                          ///< TODOCUMENT
-		                                   PredicateT                                  arg_pred,                                           ///< TODOCUMENT
-		                                   boost::algorithm::token_compress_mode_type  arg_compress = boost::algorithm::token_compress_off ///< TODOCUMENT
+		inline OutputContainer split_build(const RangeT                               &prm_input,                                          ///< TODOCUMENT
+		                                   PredicateT                                  prm_pred,                                           ///< TODOCUMENT
+		                                   boost::algorithm::token_compress_mode_type  prm_compress = boost::algorithm::token_compress_off ///< TODOCUMENT
 		                                   ) {
 			OutputContainer output_container;
 			boost::algorithm::split(
 				output_container,
-				arg_input,
-				arg_pred,
-				arg_compress
+				prm_input,
+				prm_pred,
+				prm_compress
 			);
 			return output_container;
 		}

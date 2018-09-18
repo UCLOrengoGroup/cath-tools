@@ -94,15 +94,15 @@ BOOST_AUTO_TEST_CASE(parses_whole_chain_region) {
 /// \todo Include functionality to specify an "all" domain
 
 template <typename Fmt>
-string parse_and_write_segment(const string_ref &arg_orig_str) {
+string parse_and_write_segment(const string_ref &prm_orig_str) {
 	const Fmt format{};
-	return format.write_region( format.parse_segment( arg_orig_str ) );
+	return format.write_region( format.parse_segment( prm_orig_str ) );
 }
 
 template <typename Fmt>
-string parse_and_write_domain(const string &arg_orig_str) {
+string parse_and_write_domain(const string &prm_orig_str) {
 	const Fmt format{};
-	return format.write_domain( format.parse_domain( arg_orig_str ) );
+	return format.write_domain( format.parse_domain( prm_orig_str ) );
 }
 
 BOOST_AUTO_TEST_CASE(parsed_and_writes_back_to_orig) {

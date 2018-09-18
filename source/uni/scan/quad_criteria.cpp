@@ -42,23 +42,23 @@ using boost::algorithm::is_any_of;
 using boost::numeric_cast;
 
 /// \brief Ctor to fully populate a quad_criteria
-quad_criteria::quad_criteria(const res_pair_index_dirn_criterion &arg_index_direction_criterion,      ///< Whether the two res_pairs are required to have matching directions
-                             const index_type                    &arg_minimum_index_distance,         ///< The minimum distance required between each res_pair's from_index and its to_index
-                             const view_base_type                &arg_maximum_squared_distance,       ///< The maximum squared distance permissible between the two res_pairs' views
-                             const angle_type                    &arg_maximum_frame_angle_difference, ///< The maximum angle permissible between the two res_pairs' frames
-                             angle_type                           arg_maximum_phi_angle_difference,   ///< The maximum angle permissible between the two res_pairs' phi angles
-                             angle_type                           arg_maximum_psi_angle_difference    ///< The maximum angle permissible between the two res_pairs' psi angles
-                             ) : index_direction_criterion      { arg_index_direction_criterion                 },
-                                 minimum_index_distance         { arg_minimum_index_distance                    },
-                                 maximum_squared_distance       { arg_maximum_squared_distance                  },
+quad_criteria::quad_criteria(const res_pair_index_dirn_criterion &prm_index_direction_criterion,      ///< Whether the two res_pairs are required to have matching directions
+                             const index_type                    &prm_minimum_index_distance,         ///< The minimum distance required between each res_pair's from_index and its to_index
+                             const view_base_type                &prm_maximum_squared_distance,       ///< The maximum squared distance permissible between the two res_pairs' views
+                             const angle_type                    &prm_maximum_frame_angle_difference, ///< The maximum angle permissible between the two res_pairs' frames
+                             angle_type                           prm_maximum_phi_angle_difference,   ///< The maximum angle permissible between the two res_pairs' phi angles
+                             angle_type                           prm_maximum_psi_angle_difference    ///< The maximum angle permissible between the two res_pairs' psi angles
+                             ) : index_direction_criterion      { prm_index_direction_criterion                 },
+                                 minimum_index_distance         { prm_minimum_index_distance                    },
+                                 maximum_squared_distance       { prm_maximum_squared_distance                  },
                                  maximum_frame_angle_distance_1 {
                                  	distance_1_of_angle<frame_quat_rot_type>(
-                                 		arg_maximum_frame_angle_difference
+                                 		prm_maximum_frame_angle_difference
                                  	)
                                  },
-                                 maximum_frame_angle_difference { arg_maximum_frame_angle_difference            },
-                                 maximum_phi_angle_difference   { std::move( arg_maximum_phi_angle_difference ) },
-                                 maximum_psi_angle_difference   { std::move( arg_maximum_psi_angle_difference ) } {
+                                 maximum_frame_angle_difference { prm_maximum_frame_angle_difference            },
+                                 maximum_phi_angle_difference   { std::move( prm_maximum_phi_angle_difference ) },
+                                 maximum_psi_angle_difference   { std::move( prm_maximum_psi_angle_difference ) } {
 }
 
 /// \brief Factory function to construct the default quad_criteria
@@ -79,10 +79,10 @@ quad_criteria cath::scan::make_default_quad_criteria() {
 ///
 /// \pre The string must be of format like:
 ///   `"dist_co=12,dirn_co=0,index_dist_co=-11,frame_ang_co=22.5, phi_ang_co=22.5,psi_ang_co=22.5"`
-quad_criteria cath::scan::parse_quad_criteria(const string &arg_string ///< The string to specify the properties of the quad_criteria to be built
+quad_criteria cath::scan::parse_quad_criteria(const string &prm_string ///< The string to specify the properties of the quad_criteria to be built
                                               ) {
 	// Build a map of field name to value (represented as double)
-	const string  spaces_stripped_string = erase_all_copy( arg_string, " " );
+	const string  spaces_stripped_string = erase_all_copy( prm_string, " " );
 	const str_vec parts = split_build<str_vec>( spaces_stripped_string, is_any_of( "," ) );
 	str_doub_map values;
 	for (const string &part : parts) {
@@ -271,17 +271,17 @@ quad_criteria_vec cath::scan::get_standard_quad_criterias() {
 /// \brief Simple insertion operator for quad_criteria
 ///
 /// \relates quad_criteria
-ostream & cath::scan::operator<<(ostream             &arg_os,           ///< The ostream to which the quad_criteria should be output
-                                 const quad_criteria &arg_quad_criteria ///< The quad_criteria to output
+ostream & cath::scan::operator<<(ostream             &prm_os,           ///< The ostream to which the quad_criteria should be output
+                                 const quad_criteria &prm_quad_criteria ///< The quad_criteria to output
                                  ) {
-	arg_os << "quad_criteria_vec[";
-	arg_os << "require_matching_directions:"     << arg_quad_criteria.get_index_direction_criterion();
-	arg_os << ",minimum_index_distance:"         << arg_quad_criteria.get_minimum_index_distance();
-	arg_os << ",maximum_squared_distance:"       << arg_quad_criteria.get_maximum_squared_distance();
-	arg_os << ",maximum_frame_angle_difference:" << arg_quad_criteria.get_maximum_frame_angle_difference();
-	arg_os << ",maximum_phi_angle_difference:"   << arg_quad_criteria.get_maximum_phi_angle_difference();
-	arg_os << ",maximum_psi_angle_difference:"   << arg_quad_criteria.get_maximum_psi_angle_difference();
-	arg_os << "]";
-	return arg_os;
+	prm_os << "quad_criteria_vec[";
+	prm_os << "require_matching_directions:"     << prm_quad_criteria.get_index_direction_criterion();
+	prm_os << ",minimum_index_distance:"         << prm_quad_criteria.get_minimum_index_distance();
+	prm_os << ",maximum_squared_distance:"       << prm_quad_criteria.get_maximum_squared_distance();
+	prm_os << ",maximum_frame_angle_difference:" << prm_quad_criteria.get_maximum_frame_angle_difference();
+	prm_os << ",maximum_phi_angle_difference:"   << prm_quad_criteria.get_maximum_phi_angle_difference();
+	prm_os << ",maximum_psi_angle_difference:"   << prm_quad_criteria.get_maximum_psi_angle_difference();
+	prm_os << "]";
+	return prm_os;
 }
 

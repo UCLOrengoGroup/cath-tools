@@ -122,10 +122,10 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <class RNG>
-		void limit_itr<RNG>::advance(const difference_type &arg_offset ///< TODOCUMENT
+		void limit_itr<RNG>::advance(const difference_type &prm_offset ///< TODOCUMENT
 		                             ) {
-			( this->base_reference() ) += arg_offset;
-			offset += arg_offset;
+			( this->base_reference() ) += prm_offset;
+			offset += prm_offset;
 		}
 
 		/// \brief TODOCUMENT
@@ -163,13 +163,13 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <class RNG>
 		template <typename OTHER_RNG>
-		bool limit_itr<RNG>::equal(const limit_itr<OTHER_RNG> &arg_limit_itr ///< TODOCUMENT
+		bool limit_itr<RNG>::equal(const limit_itr<OTHER_RNG> &prm_limit_itr ///< TODOCUMENT
 		                           ) const {
-			if ( end_itr == arg_limit_itr.end_itr && is_at_end() && arg_limit_itr.is_at_end() ) {
+			if ( end_itr == prm_limit_itr.end_itr && is_at_end() && prm_limit_itr.is_at_end() ) {
 				return true;
 			}
-			if ( ! is_at_end() && ! arg_limit_itr.is_at_end() ) {
-				if ( this->base() == arg_limit_itr.base() ) {
+			if ( ! is_at_end() && ! prm_limit_itr.is_at_end() ) {
+				if ( this->base() == prm_limit_itr.base() ) {
 					return true;
 				}
 			}
@@ -179,37 +179,37 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <class RNG>
 		template <class OTHER_RNG>
-		typename limit_itr<RNG>::difference_type limit_itr<RNG>::distance_to(const limit_itr<OTHER_RNG> &arg_other_itr ///< TODOCUMENT
+		typename limit_itr<RNG>::difference_type limit_itr<RNG>::distance_to(const limit_itr<OTHER_RNG> &prm_other_itr ///< TODOCUMENT
 		                                                                     ) const {
-			if ( is_at_end() || arg_other_itr.is_at_end() ) {
-				if ( is_at_end() && arg_other_itr.is_at_end() ) {
+			if ( is_at_end() || prm_other_itr.is_at_end() ) {
+				if ( is_at_end() && prm_other_itr.is_at_end() ) {
 					return 0;
 				}
-				return arg_other_itr.is_at_end() ? distance_to_end()
-				                                 : - arg_other_itr.distance_to_end();
+				return prm_other_itr.is_at_end() ? distance_to_end()
+				                                 : - prm_other_itr.distance_to_end();
 			}
-			return ( arg_other_itr.base() - this->base() );
+			return ( prm_other_itr.base() - this->base() );
 		}
 
 
 		/// \brief Ctor from iterators
 		template <class RNG>
-		limit_itr<RNG>::limit_itr(const base_iterator_type &arg_begin,           ///< Begin iterator for the original range
-		                          const base_iterator_type &arg_end,             ///< End   iterator for the original range
-		                          const size_t             &arg_max_num_elements ///< TODOCUMENT
-		                          ) : super           ( arg_begin           ),
-		                              end_itr         ( arg_end             ),
-		                              max_num_elements( boost::numeric_cast<difference_type>( arg_max_num_elements ) ) {
+		limit_itr<RNG>::limit_itr(const base_iterator_type &prm_begin,           ///< Begin iterator for the original range
+		                          const base_iterator_type &prm_end,             ///< End   iterator for the original range
+		                          const size_t             &prm_max_num_elements ///< TODOCUMENT
+		                          ) : super           ( prm_begin           ),
+		                              end_itr         ( prm_end             ),
+		                              max_num_elements( boost::numeric_cast<difference_type>( prm_max_num_elements ) ) {
 		}
 
 		/// \brief Ctor from a range
 		template <class RNG>
-		limit_itr<RNG>::limit_itr(RNG          &arg_range,           ///< The range over which this limit_itr should act
-		                          const size_t &arg_max_num_elements ///< TODOCUMENT
+		limit_itr<RNG>::limit_itr(RNG          &prm_range,           ///< The range over which this limit_itr should act
+		                          const size_t &prm_max_num_elements ///< TODOCUMENT
 		                          ) : limit_itr(
-		                              	std::begin( arg_range ),
-		                              	std::end  ( arg_range ),
-		                              	arg_max_num_elements
+		                              	std::begin( prm_range ),
+		                              	std::end  ( prm_range ),
+		                              	prm_max_num_elements
 		                              ) {
 		}
 

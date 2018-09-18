@@ -31,9 +31,9 @@ using namespace cath::common;
 using std::string;
 
 /// \brief TODOCUMENT
-region std_region_reader::do_read_region(const string &arg_region_string ///< TODOCUMENT
+region std_region_reader::do_read_region(const string &prm_region_string ///< TODOCUMENT
                                          ) const {
-	std::cerr << "arg_region_string is " << arg_region_string << "\n";
+	std::cerr << "prm_region_string is " << prm_region_string << "\n";
 
 	BOOST_THROW_EXCEPTION(not_implemented_exception("std_region_reader::do_read_region()"));
 
@@ -41,7 +41,7 @@ region std_region_reader::do_read_region(const string &arg_region_string ///< TO
 }
 
 /// \brief Ctor for std_region_reader
-std_region_reader::std_region_reader(std_region_io_spec arg_std_region_io_spec ///< TODOCUMENT
-                                     ) : region_io_spec{ std::move( arg_std_region_io_spec ) } {
+std_region_reader::std_region_reader(std_region_io_spec prm_std_region_io_spec ///< TODOCUMENT
+                                     ) : region_io_spec{ std::move( prm_std_region_io_spec ) } {
 
 }

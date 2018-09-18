@@ -59,24 +59,24 @@ string ids_options_block::do_get_block_name() const {
 /// \brief Add the block's non-hidden options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void ids_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                              const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void ids_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                              const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                               ) {
-	arg_desc.add_options()
+	prm_desc.add_options()
 		( PO_ID.c_str(), value<str_vec>( &ids ), "Structure ids" );
 }
 
 ///// \brief Add any hidden options to the provided options_description
-//void ids_options_block::do_add_hidden_options_to_description(options_description &/*arg_desc*/ ///< The options_description to which the options are added
+//void ids_options_block::do_add_hidden_options_to_description(options_description &/*prm_desc*/ ///< The options_description to which the options are added
 //                                                                  ) {
-////	arg_desc.add_options()
+////	prm_desc.add_options()
 ////		( PO_ID.c_str(), value<str_vec>( &ids ), "Structure ids" );
 //}
 
 /// \brief Identify any conflicts that make the currently stored options invalid
 ///
 /// \returns A string describing the conflict in the options or an empty string if there's none
-str_opt ids_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt ids_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                              ) const {
 	return none;
 }
@@ -94,9 +94,9 @@ str_vec ids_options_block::do_get_all_options_names() const {
 // }
 
 // /// \brief TODOCUMENT
-// string ids_options_block::get_id_of_index(const size_t &arg_index ///< TODOCUMENT
+// string ids_options_block::get_id_of_index(const size_t &prm_index ///< TODOCUMENT
 //                                                ) const {
-// 	return ids[ arg_index ];
+// 	return ids[ prm_index ];
 // }
 
 /// \brief TODOCUMENT
@@ -105,40 +105,40 @@ const str_vec & ids_options_block::get_ids() const {
 }
 
 // /// \brief TODOCUMENT
-// str_vec cath::opts::get_all_ids(const ids_options_block &arg_block ///< TODOCUMENT
+// str_vec cath::opts::get_all_ids(const ids_options_block &prm_block ///< TODOCUMENT
 //                                 ) {
-// 	const size_t num_ids = arg_block.num_ids_specified();
+// 	const size_t num_ids = prm_block.num_ids_specified();
 
 // 	str_vec all_ids;
 // 	all_ids.reserve( num_ids );
 // 	for (const size_t &id_ctr : indices( num_ids ) ) {
-// 		all_ids.push_back( arg_block.get_id_of_index( id_ctr ) );
+// 		all_ids.push_back( prm_block.get_id_of_index( id_ctr ) );
 // 	}
 
 // 	return all_ids;
 // }
 
 /// \brief TODOCUMENT
-bool cath::opts::ids_specified(const ids_options_block &arg_block ///< TODOCUMENT
+bool cath::opts::ids_specified(const ids_options_block &prm_block ///< TODOCUMENT
                                ) {
-	return ( ! arg_block.get_ids().empty() );
+	return ( ! prm_block.get_ids().empty() );
 }
 
 /// \brief Getter for the name of the first protein structure to be compared
-string cath::opts::get_id_a(const ids_options_block &arg_block ///< TODOCUMENT
+string cath::opts::get_id_a(const ids_options_block &prm_block ///< TODOCUMENT
                             ) {
-	if ( arg_block.get_ids().size() != 2 ) {
+	if ( prm_block.get_ids().size() != 2 ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot get protein name a because two names have not (yet) been specified"));
 	}
-	return arg_block.get_ids()[ 0 ];
+	return prm_block.get_ids()[ 0 ];
 }
 
 /// \brief Getter for the name of the second protein structure to be compared
-string cath::opts::get_id_b(const ids_options_block &arg_block ///< TODOCUMENT
+string cath::opts::get_id_b(const ids_options_block &prm_block ///< TODOCUMENT
                             ) {
-	if ( arg_block.get_ids().size() != 2 ) {
+	if ( prm_block.get_ids().size() != 2 ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot get protein name b because two names have not (yet) been specified"));
 	}
-	return arg_block.get_ids()[ 1 ];
+	return prm_block.get_ids()[ 1 ];
 }
 

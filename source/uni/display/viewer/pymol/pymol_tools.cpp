@@ -54,29 +54,29 @@ using ::std::vector;
 /// c =         (x_1.y_1 - x_2.y_2) / (y_2 - y_1)
 ///
 /// k = y_1.y_2.(x_1     - x_2    ) / (y_2 - y_1)
-double pymol_tools::pymol_size(const size_t &arg_x_1, ///< TODOCUMENT
-                               const double &arg_y_1, ///< TODOCUMENT
-                               const size_t &arg_x_2, ///< TODOCUMENT
-                               const double &arg_y_2, ///< TODOCUMENT
-                               const size_t &arg_x    ///< TODOCUMENT
+double pymol_tools::pymol_size(const size_t &prm_x_1, ///< TODOCUMENT
+                               const double &prm_y_1, ///< TODOCUMENT
+                               const size_t &prm_x_2, ///< TODOCUMENT
+                               const double &prm_y_2, ///< TODOCUMENT
+                               const size_t &prm_x    ///< TODOCUMENT
                                ) {
 	// Sanity check the inputs
 	using boost::math::isfinite;
-	if (!isfinite(arg_y_1) || !isfinite(arg_y_2)) {
+	if (!isfinite(prm_y_1) || !isfinite(prm_y_2)) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Both y values must be finite numbers"));
 	}
-	if (arg_y_1 == arg_y_2) {
+	if (prm_y_1 == prm_y_2) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("The two y values must be distinct"));
 	}
 
 	// Convert the unsigned ints to doubles
-	const double x_1(numeric_cast<double>(arg_x_1));
-	const double x_2(numeric_cast<double>(arg_x_2));
-	const double   x(numeric_cast<double>(arg_x));
+	const double x_1(numeric_cast<double>(prm_x_1));
+	const double x_2(numeric_cast<double>(prm_x_2));
+	const double   x(numeric_cast<double>(prm_x));
 
 	// Calculate the constants and the new value of y
-	const double   c(                     (x_1 * arg_y_1 - x_2 * arg_y_2) / (arg_y_2 - arg_y_1) );
-	const double   k( arg_y_1 * arg_y_2 * (x_1           - x_2          ) / (arg_y_2 - arg_y_1) );
+	const double   c(                     (x_1 * prm_y_1 - x_2 * prm_y_2) / (prm_y_2 - prm_y_1) );
+	const double   k( prm_y_1 * prm_y_2 * (x_1           - x_2          ) / (prm_y_2 - prm_y_1) );
 	const double   y(k / (x + c));
 
 	// Return the result
@@ -84,17 +84,17 @@ double pymol_tools::pymol_size(const size_t &arg_x_1, ///< TODOCUMENT
 }
 
 /// \brief Escape a residue name string for use in PyMOL
-string pymol_tools::parse_residue_name_for_pymol(const residue_name &arg_residue_name ///< The residue name string to escape
+string pymol_tools::parse_residue_name_for_pymol(const residue_name &prm_residue_name ///< The residue name string to escape
                                                  ) {
-	return replace_all_copy( to_string( arg_residue_name ), "-", "\\-" );
+	return replace_all_copy( to_string( prm_residue_name ), "-", "\\-" );
 }
 
 /// \brief Escape residue name strings for use in PyMOL
-str_vec pymol_tools::parse_residue_names_for_pymol(const residue_name_vec &arg_residue_names ///< The residue name strings to escape
+str_vec pymol_tools::parse_residue_names_for_pymol(const residue_name_vec &prm_residue_names ///< The residue name strings to escape
                                                    ) {
 	str_vec new_residue_names;
-	new_residue_names.reserve( arg_residue_names.size() );
-	for (const residue_name &the_residue_name : arg_residue_names) {
+	new_residue_names.reserve( prm_residue_names.size() );
+	for (const residue_name &the_residue_name : prm_residue_names) {
 		new_residue_names.push_back( parse_residue_name_for_pymol( the_residue_name ) );
 	}
 	return new_residue_names;
@@ -104,36 +104,36 @@ str_vec pymol_tools::parse_residue_names_for_pymol(const residue_name_vec &arg_r
 ///
 /// Examples to keep in mind:
 ///  * 1al2 has a chain 0
-string pymol_tools::pymol_res_seln_str(const string         &arg_name,    ///< The object in which to select residues/atoms
-                                       const residue_id_vec &arg_res_ids, ///< The names of the residue(s) to select
-                                       const str_opt        &arg_atom     ///< (optional) The name of the atom type to select (eg "CA")
+string pymol_tools::pymol_res_seln_str(const string         &prm_name,    ///< The object in which to select residues/atoms
+                                       const residue_id_vec &prm_res_ids, ///< The names of the residue(s) to select
+                                       const str_opt        &prm_atom     ///< (optional) The name of the atom type to select (eg "CA")
                                        ) {
-	const chain_label_opt the_chain_label_opt = consistent_chain_label( arg_res_ids );
+	const chain_label_opt the_chain_label_opt = consistent_chain_label( prm_res_ids );
 	if ( ! the_chain_label_opt ) {
-		const auto res_ids_by_chain_label = get_residue_id_by_chain_label( arg_res_ids );
+		const auto res_ids_by_chain_label = get_residue_id_by_chain_label( prm_res_ids );
 		return "("
 			+ join(
 				res_ids_by_chain_label
 					| map_values
 					| transformed( [&] (const vector<residue_id> &res_ids_on_same_chain) {
-						return pymol_res_seln_str( arg_name, res_ids_on_same_chain, arg_atom );
+						return pymol_res_seln_str( prm_name, res_ids_on_same_chain, prm_atom );
 					} ),
 				" OR "
 			)
 			+ ")";
 	}
 	return R"(/")"
-		+ arg_name
+		+ prm_name
 		+ R"("//)"
 		+ ( ( *the_chain_label_opt == chain_label( ' ' ) ) ? ""s : the_chain_label_opt->to_string() )
 		+ "/"
 		+ (
-			has_any_strictly_negative_residue_numbers( arg_res_ids )
+			has_any_strictly_negative_residue_numbers( prm_res_ids )
 			? "`"
 			: ""
 		)
 		+ join(
-			arg_res_ids
+			prm_res_ids
 				| filtered( [&] (const residue_id &x) {
 					return ! is_null( x );
 				} )
@@ -143,5 +143,5 @@ string pymol_tools::pymol_res_seln_str(const string         &arg_name,    ///< T
 			"+"
 		)
 		+ "/"
-		+ arg_atom.value_or( ""s );
+		+ prm_atom.value_or( ""s );
 }

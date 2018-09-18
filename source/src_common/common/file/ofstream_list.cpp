@@ -34,17 +34,17 @@ using std::ofstream;
 using std::ostream;
 
 /// \brief Ctor from a special ostream and a flag to be used to indicate when output should be sent to that ostream
-ofstream_list::ofstream_list(ostream    &arg_standard_outstream,     ///< A special ostream (often stdout) to which output can be sent
-                             const path &arg_standard_outstream_flag ///< A flag to be used to indicate when output should be sent to the special ostream
-                             ) : standard_outstream     { arg_standard_outstream      },
-                                 standard_outstream_flag{ arg_standard_outstream_flag } {
+ofstream_list::ofstream_list(ostream    &prm_standard_outstream,     ///< A special ostream (often stdout) to which output can be sent
+                             const path &prm_standard_outstream_flag ///< A flag to be used to indicate when output should be sent to the special ostream
+                             ) : standard_outstream     { prm_standard_outstream      },
+                                 standard_outstream_flag{ prm_standard_outstream_flag } {
 }
 
 /// \brief Open the specified list of paths and add them to the outputs
-ostream_ref_vec ofstream_list::open_ofstreams(const path_vec &arg_paths ///< The paths to open
+ostream_ref_vec ofstream_list::open_ofstreams(const path_vec &prm_paths ///< The paths to open
                                               ) {
 	return transform_build<ostream_ref_vec>(
-		arg_paths,
+		prm_paths,
 		[&] (const path &the_path) -> ostream_ref {
 			if ( the_path == standard_outstream_flag && standard_outstream ) {
 				return *standard_outstream;
@@ -73,10 +73,10 @@ void ofstream_list::close_all() {
 /// \brief Open a single path and add it to the outputs in the specified ofstream_list
 ///
 /// \relates ofstream_list
-ostream_ref cath::common::open_ofstream(ofstream_list &arg_ofstreams, ///< The ofstream_list in which to open the path
-                                        const path    &arg_path       ///< The path to open
+ostream_ref cath::common::open_ofstream(ofstream_list &prm_ofstreams, ///< The ofstream_list in which to open the path
+                                        const path    &prm_path       ///< The path to open
                                         ) {
-	ostream_ref_vec ostream_refs = arg_ofstreams.open_ofstreams( { arg_path } );
+	ostream_ref_vec ostream_refs = prm_ofstreams.open_ofstreams( { prm_path } );
 	if ( ostream_refs.size() != 1 ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Did not get back one ostream from opening one file"));
 	}

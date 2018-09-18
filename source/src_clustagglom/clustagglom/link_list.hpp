@@ -96,8 +96,8 @@ namespace cath {
 		};
 
 		/// \brief Ctor from a vector of links
-		inline link_list::link_list(link_vec arg_links ///< The links from which to build this link_list
-		                            ) : links{ arg_links } {
+		inline link_list::link_list(link_vec prm_links ///< The links from which to build this link_list
+		                            ) : links{ prm_links } {
 		}
 
 		/// \brief Return whether this is empty
@@ -111,9 +111,9 @@ namespace cath {
 		}
 
 		/// \brief Get the link associated with the sequence with the specified index
-		inline const link & link_list::operator[](const size_t &arg_index ///< The index of the link to access
+		inline const link & link_list::operator[](const size_t &prm_index ///< The index of the link to access
 		                                          ) const {
-			return links[ arg_index ];
+			return links[ prm_index ];
 		}
 
 		/// \brief Emplace a link to be constructed with the specified arguments

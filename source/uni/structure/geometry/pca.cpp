@@ -42,38 +42,38 @@ using namespace cath::geom::detail;
 /// \brief Build a matrix of the specified points, offset by subtracting their specified centre-of-gravity
 ///
 /// This is for use in line_of_best_fit
-doub_vec cath::geom::detail::build_matrix_of_coords(const coord_list &arg_coords, ///< The points for which to build a matrix
-                                                    const coord      &arg_cog     ///< The centre-of-gravity of the points
+doub_vec cath::geom::detail::build_matrix_of_coords(const coord_list &prm_coords, ///< The points for which to build a matrix
+                                                    const coord      &prm_cog     ///< The centre-of-gravity of the points
                                                     ) {
 	doub_vec matrix;
-	matrix.reserve( 3 * arg_coords.size() );
-	for (const coord &the_coord : arg_coords) {
-		matrix.push_back( the_coord.get_x() - arg_cog.get_x() );
-		matrix.push_back( the_coord.get_y() - arg_cog.get_y() );
-		matrix.push_back( the_coord.get_z() - arg_cog.get_z() );
+	matrix.reserve( 3 * prm_coords.size() );
+	for (const coord &the_coord : prm_coords) {
+		matrix.push_back( the_coord.get_x() - prm_cog.get_x() );
+		matrix.push_back( the_coord.get_y() - prm_cog.get_y() );
+		matrix.push_back( the_coord.get_z() - prm_cog.get_z() );
 	}
 	return matrix;
 }
 
 /// \brief Get a line-of-best-fit through the specified points
-line cath::geom::line_of_best_fit(const coord_list &arg_coords ///< The list of points through which to put a line-of-best-fit
+line cath::geom::line_of_best_fit(const coord_list &prm_coords ///< The list of points through which to put a line-of-best-fit
                                   ) {
-	if ( arg_coords.size() <= 1 ) {
+	if ( prm_coords.size() <= 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get line of best fit through 0/1 coord"));
 	}
 	// Grab the centre-of-gravity
-	const auto cog = centre_of_gravity( arg_coords );
+	const auto cog = centre_of_gravity( prm_coords );
 
 	// If there are only two points, then just return the simple line through them
-	if ( arg_coords.size() == 2 ) {
+	if ( prm_coords.size() == 2 ) {
 		return {
 			cog,
-			back( arg_coords ) - front( arg_coords )
+			back( prm_coords ) - front( prm_coords )
 		};
 	}
 
-	doub_vec        matrix = build_matrix_of_coords( arg_coords, cog );
-	gsl_matrix_view A      = gsl_matrix_view_array ( &matrix.front(), arg_coords.size(), 3 );
+	doub_vec        matrix = build_matrix_of_coords( prm_coords, cog );
+	gsl_matrix_view A      = gsl_matrix_view_array ( &matrix.front(), prm_coords.size(), 3 );
 
 	gsl_matrix_wrp  V    { 3, 3 };
 	gsl_vector_wrp  S    { 3    };

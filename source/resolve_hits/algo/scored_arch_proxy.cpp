@@ -35,19 +35,19 @@ using std::string;
 /// \brief Generate a string describing the specified scored_arch_proxy
 ///
 /// \relates scored_arch_proxy
-string cath::rslv::to_string(const scored_arch_proxy &arg_scored_arch_proxy ///< The scored_arch_proxy to describe
+string cath::rslv::to_string(const scored_arch_proxy &prm_scored_arch_proxy ///< The scored_arch_proxy to describe
                              ) {
 	return "scored_arch_proxy[hit indices: "
-		+ join( arg_scored_arch_proxy | lexical_casted<string>(), ", " )
+		+ join( prm_scored_arch_proxy | lexical_casted<string>(), ", " )
 		+ "]";
 }
 
 /// \brief Insert a description of the specified scored_arch_proxy into the specified ostream
 ///
 /// \relates scored_arch_proxy
-ostream & cath::rslv::operator<<(ostream                 &arg_os,               ///< The ostream into which the description should be inserted
-                                 const scored_arch_proxy &arg_scored_arch_proxy ///< The scored_arch_proxy to describe
+ostream & cath::rslv::operator<<(ostream                 &prm_os,               ///< The ostream into which the description should be inserted
+                                 const scored_arch_proxy &prm_scored_arch_proxy ///< The scored_arch_proxy to describe
                                  ) {
-	arg_os << to_string( arg_scored_arch_proxy );
-	return arg_os;
+	prm_os << to_string( prm_scored_arch_proxy );
+	return prm_os;
 }

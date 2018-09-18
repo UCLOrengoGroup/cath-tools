@@ -105,10 +105,10 @@ using ::std::vector;
 const string pdb::PDB_RECORD_STRING_TER ( "TER   " );
 
 /// \brief TODOCUMENT
-void pdb::read_file(const path &arg_filename ///< TODOCUMENT
+void pdb::read_file(const path &prm_filename ///< TODOCUMENT
                     ) {
 	ifstream pdb_istream;
-	open_ifstream(pdb_istream, arg_filename);
+	open_ifstream(pdb_istream, prm_filename);
 
 	// Try here to catch any I/O exceptions
 	try {
@@ -126,7 +126,7 @@ void pdb::read_file(const path &arg_filename ///< TODOCUMENT
 	catch (const std::exception &ex) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			  "Cannot read PDB file \""
-			+ arg_filename.string()
+			+ prm_filename.string()
 			+ "\" ["
 			+ ex.what()
 			+ "] : "
@@ -136,10 +136,10 @@ void pdb::read_file(const path &arg_filename ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-void pdb::append_to_file(const path &arg_filename ///< TODOCUMENT
+void pdb::append_to_file(const path &prm_filename ///< TODOCUMENT
                          ) const {
 	ofstream pdb_appstream;
-	open_ofstream(pdb_appstream, arg_filename);
+	open_ofstream(pdb_appstream, prm_filename);
 
 	// Try here to catch any I/O exceptions
 	try {
@@ -157,7 +157,7 @@ void pdb::append_to_file(const path &arg_filename ///< TODOCUMENT
 	catch (const std::exception &ex) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			  "Cannot append to PDB file \""
-			+ arg_filename.string()
+			+ prm_filename.string()
 			+ "\" ["
 			+ ex.what()
 			+ "] : "
@@ -167,10 +167,10 @@ void pdb::append_to_file(const path &arg_filename ///< TODOCUMENT
 }
 
 /// \brief TODOCUMENT
-pdb & pdb::set_chain_label(const chain_label &arg_chain_label ///< TODOCUMENT
+pdb & pdb::set_chain_label(const chain_label &prm_chain_label ///< TODOCUMENT
                            ) {
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
-		my_pdb_residue.set_chain_label( arg_chain_label );
+		my_pdb_residue.set_chain_label( prm_chain_label );
 	}
 	return *this;
 }
@@ -181,9 +181,9 @@ residue_id_vec pdb::get_residue_ids_of_first_chain__backbone_unchecked() const {
 }
 
 /// \brief TODOCUMENT
-coord pdb::get_residue_ca_coord_of_index__backbone_unchecked(const size_t &arg_index ///< TODOCUMENT
+coord pdb::get_residue_ca_coord_of_index__backbone_unchecked(const size_t &prm_index ///< TODOCUMENT
                                                              ) const {
-	return get_carbon_alpha_coord( get_residue_of_index__backbone_unchecked( arg_index ) );
+	return get_carbon_alpha_coord( get_residue_of_index__backbone_unchecked( prm_index ) );
 }
 
 /// \brief TODOCUMENT
@@ -196,52 +196,52 @@ size_t pdb::get_num_atoms() const {
 }
 
 /// \brief TODOCUMENT
-pdb & pdb::rotate(const rotation &arg_rotation ///< TODOCUMENT
+pdb & pdb::rotate(const rotation &prm_rotation ///< TODOCUMENT
                   ) {
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
-		my_pdb_residue.rotate( arg_rotation );
+		my_pdb_residue.rotate( prm_rotation );
 	}
 	for (pdb_residue &my_pdb_residue : post_ter_residues) {
-		my_pdb_residue.rotate( arg_rotation );
+		my_pdb_residue.rotate( prm_rotation );
 	}
 	return *this;
 }
 
 /// \brief TODOCUMENT
-pdb & pdb::operator+=(const coord &arg_coord ///< TODOCUMENT
+pdb & pdb::operator+=(const coord &prm_coord ///< TODOCUMENT
                       ) {
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
-		my_pdb_residue += arg_coord;
+		my_pdb_residue += prm_coord;
 	}
 	for (pdb_residue &my_pdb_residue : post_ter_residues) {
-		my_pdb_residue += arg_coord;
+		my_pdb_residue += prm_coord;
 	}
 	return *this;
 }
 
 /// \brief TODOCUMENT
-pdb & pdb::operator-=(const coord &arg_coord ///< TODOCUMENT
+pdb & pdb::operator-=(const coord &prm_coord ///< TODOCUMENT
                       ) {
 	for (pdb_residue &my_pdb_residue : pdb_residues) {
-		my_pdb_residue -= arg_coord;
+		my_pdb_residue -= prm_coord;
 	}
 	for (pdb_residue &my_pdb_residue : post_ter_residues) {
-		my_pdb_residue -= arg_coord;
+		my_pdb_residue -= prm_coord;
 	}
 	return *this;
 }
 
 /// \brief TODOCUMENT
-pdb & pdb::set_residues(pdb_residue_vec arg_pdb_residues ///< TODOCUMENT
+pdb & pdb::set_residues(pdb_residue_vec prm_pdb_residues ///< TODOCUMENT
                        ) {
-	pdb_residues = std::move( arg_pdb_residues );
+	pdb_residues = std::move( prm_pdb_residues );
 	return *this;
 }
 
 /// \brief Rvalue-reference setter for the residues that appear after a TER record in their respective chains
-pdb & pdb::set_post_ter_residues(pdb_residue_vec arg_post_ter_residues ///< The residues that appear after a TER record in their respective chains
+pdb & pdb::set_post_ter_residues(pdb_residue_vec prm_post_ter_residues ///< The residues that appear after a TER record in their respective chains
                                 ) {
-	post_ter_residues = std::move( arg_post_ter_residues );
+	post_ter_residues = std::move( prm_post_ter_residues );
 	return *this;
 }
 
@@ -257,13 +257,13 @@ const pdb_residue_vec & pdb::get_post_ter_residues() const {
 /// \relates pdb
 ///
 /// \relatesalso backbone_complete_indices
-backbone_complete_indices cath::file::get_backbone_complete_indices(const pdb &arg_pdb ///< The pdb to query
+backbone_complete_indices cath::file::get_backbone_complete_indices(const pdb &prm_pdb ///< The pdb to query
                                                                     ) {
 	return backbone_complete_indices{
 		copy_build<size_vec>(
-			indices( arg_pdb.get_num_residues() )
+			indices( prm_pdb.get_num_residues() )
 				| filtered( [&] (const size_t &x) {
-					return is_backbone_complete( arg_pdb.get_residue_of_index__backbone_unchecked( x ) );
+					return is_backbone_complete( prm_pdb.get_residue_of_index__backbone_unchecked( x ) );
 				} )
 		)
 	};
@@ -272,10 +272,10 @@ backbone_complete_indices cath::file::get_backbone_complete_indices(const pdb &a
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-size_t cath::file::get_num_backbone_complete_residues(const pdb &arg_pdb ///< The pdb to query
+size_t cath::file::get_num_backbone_complete_residues(const pdb &prm_pdb ///< The pdb to query
                                                       ) {
 	return numeric_cast<size_t>( count_if(
-		arg_pdb,
+		prm_pdb,
 		[] (const pdb_residue &x) { return is_backbone_complete( x ); }
 	) );
 }
@@ -283,19 +283,19 @@ size_t cath::file::get_num_backbone_complete_residues(const pdb &arg_pdb ///< Th
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-size_t cath::file::get_index_of_backbone_complete_index(const pdb    &arg_pdb,  ///< The pdb to query
-                                                        const size_t &arg_index ///< The index of the required residue
+size_t cath::file::get_index_of_backbone_complete_index(const pdb    &prm_pdb,  ///< The pdb to query
+                                                        const size_t &prm_index ///< The index of the required residue
                                                         ) {
 	using std::to_string;
 
-	if ( arg_index >= arg_pdb.get_num_residues() ) {
+	if ( prm_index >= prm_pdb.get_num_residues() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get_residue_ca_coord_of_backbone_complete_index() for index >= number of residues"));
 	}
 	size_t count = 0;
-	for (const size_t &index : indices( arg_pdb.get_num_residues() ) ) {
-		const pdb_residue &the_res = arg_pdb.get_residue_of_index__backbone_unchecked( index );
+	for (const size_t &index : indices( prm_pdb.get_num_residues() ) ) {
+		const pdb_residue &the_res = prm_pdb.get_residue_of_index__backbone_unchecked( index );
 		if ( is_backbone_complete( the_res ) ) {
-			if ( count == arg_index ) {
+			if ( count == prm_index ) {
 				return index;
 			}
 			++count;
@@ -303,7 +303,7 @@ size_t cath::file::get_index_of_backbone_complete_index(const pdb    &arg_pdb,  
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception(
 		"Cannot find enough backbone_complete residues to reach backbone_complete_index "
-		+ to_string( arg_index )
+		+ to_string( prm_index )
 	));
 	return 0; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
 }
@@ -311,13 +311,13 @@ size_t cath::file::get_index_of_backbone_complete_index(const pdb    &arg_pdb,  
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-const pdb_residue & cath::file::get_residue_of_backbone_complete_index(const pdb    &arg_pdb,  ///< The pdb to query
-                                                                       const size_t &arg_index ///< The index of the required residue
+const pdb_residue & cath::file::get_residue_of_backbone_complete_index(const pdb    &prm_pdb,  ///< The pdb to query
+                                                                       const size_t &prm_index ///< The index of the required residue
                                                                        ) {
-	return arg_pdb.get_residue_of_index__backbone_unchecked(
+	return prm_pdb.get_residue_of_index__backbone_unchecked(
 		get_index_of_backbone_complete_index(
-			arg_pdb,
-			arg_index
+			prm_pdb,
+			prm_index
 		)
 	);
 }
@@ -325,23 +325,23 @@ const pdb_residue & cath::file::get_residue_of_backbone_complete_index(const pdb
 /// \brief Get the residue that's the i-th backbone-complete residue in the specified PDB
 ///
 /// \relates pdb
-const pdb_residue & cath::file::get_residue_of_backbone_complete_index(const pdb                       &arg_pdb,              ///< The pdb to query
-                                                                       const backbone_complete_indices &arg_bb_compl_indices, ///< The backbone_complete_indices corresponding to the PDB
-                                                                       const size_t                    &arg_index             ///< The backbone-complete index of the required residue
+const pdb_residue & cath::file::get_residue_of_backbone_complete_index(const pdb                       &prm_pdb,              ///< The pdb to query
+                                                                       const backbone_complete_indices &prm_bb_compl_indices, ///< The backbone_complete_indices corresponding to the PDB
+                                                                       const size_t                    &prm_index             ///< The backbone-complete index of the required residue
                                                                        ) {
-	return arg_pdb.get_residue_of_index__backbone_unchecked( get_index_of_backbone_complete_index( arg_bb_compl_indices, arg_index ) );
+	return prm_pdb.get_residue_of_index__backbone_unchecked( get_index_of_backbone_complete_index( prm_bb_compl_indices, prm_index ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-coord cath::file::get_residue_ca_coord_of_backbone_complete_index(const pdb    &arg_pdb,  ///< The pdb to query
-                                                                  const size_t &arg_index ///< The index of the required residue
+coord cath::file::get_residue_ca_coord_of_backbone_complete_index(const pdb    &prm_pdb,  ///< The pdb to query
+                                                                  const size_t &prm_index ///< The index of the required residue
                                                                   ) {
-	return arg_pdb.get_residue_ca_coord_of_index__backbone_unchecked(
+	return prm_pdb.get_residue_ca_coord_of_index__backbone_unchecked(
 		get_index_of_backbone_complete_index(
-			arg_pdb,
-			arg_index
+			prm_pdb,
+			prm_index
 		)
 	);
 }
@@ -349,22 +349,22 @@ coord cath::file::get_residue_ca_coord_of_backbone_complete_index(const pdb    &
 /// \brief Get the CA-coord of the residue that's the i-th backbone-complete residue in the specified PDB
 ///
 /// \relates pdb
-coord cath::file::get_residue_ca_coord_of_backbone_complete_index(const pdb                       &arg_pdb,              ///< The pdb to query
-                                                                  const backbone_complete_indices &arg_bb_compl_indices, ///< The backbone_complete_indices corresponding to the PDB
-                                                                  const size_t                    &arg_index             ///< The backbone-complete index of the required residue
+coord cath::file::get_residue_ca_coord_of_backbone_complete_index(const pdb                       &prm_pdb,              ///< The pdb to query
+                                                                  const backbone_complete_indices &prm_bb_compl_indices, ///< The backbone_complete_indices corresponding to the PDB
+                                                                  const size_t                    &prm_index             ///< The backbone-complete index of the required residue
                                                                   ) {
-	return arg_pdb.get_residue_ca_coord_of_index__backbone_unchecked( get_index_of_backbone_complete_index( arg_bb_compl_indices, arg_index ) );
+	return prm_pdb.get_residue_ca_coord_of_index__backbone_unchecked( get_index_of_backbone_complete_index( prm_bb_compl_indices, prm_index ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-size_t cath::file::get_num_region_limited_backbone_complete_residues(const pdb             &arg_pdb,    ///< The pdb to query
-                                                                     const region_vec_opt  &arg_regions ///< The regions within which the count applies
+size_t cath::file::get_num_region_limited_backbone_complete_residues(const pdb             &prm_pdb,    ///< The pdb to query
+                                                                     const region_vec_opt  &prm_regions ///< The regions within which the count applies
                                                                      ) {
-	regions_limiter limiter{ arg_regions };
+	regions_limiter limiter{ prm_regions };
 	size_t count = 0;
-	for (const pdb_residue &the_res : arg_pdb) {
+	for (const pdb_residue &the_res : prm_pdb) {
 		if ( limiter.update_residue_is_included( the_res.get_residue_id() ) && is_backbone_complete( the_res ) ) {
 			++count;
 		}
@@ -375,23 +375,23 @@ size_t cath::file::get_num_region_limited_backbone_complete_residues(const pdb  
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-size_t cath::file::get_index_of_region_limited_backbone_complete_index(const pdb             &arg_pdb,    ///< The pdb to query
-                                                                       const size_t          &arg_index,  ///< The index of the required residue
-                                                                       const region_vec_opt  &arg_regions ///< The regions within which the index applies
+size_t cath::file::get_index_of_region_limited_backbone_complete_index(const pdb             &prm_pdb,    ///< The pdb to query
+                                                                       const size_t          &prm_index,  ///< The index of the required residue
+                                                                       const region_vec_opt  &prm_regions ///< The regions within which the index applies
                                                                        ) {
 	using std::to_string;
 
-	if ( arg_index >= arg_pdb.get_num_residues() ) {
+	if ( prm_index >= prm_pdb.get_num_residues() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get_index_of_region_limited_backbone_complete_index() for index >= number of residues"));
 	}
 
-	regions_limiter limiter{ arg_regions };
+	regions_limiter limiter{ prm_regions };
 
 	size_t count = 0;
-	for (const size_t &index : indices( arg_pdb.get_num_residues() ) ) {
-		const pdb_residue &the_res = arg_pdb.get_residue_of_index__backbone_unchecked( index );
+	for (const size_t &index : indices( prm_pdb.get_num_residues() ) ) {
+		const pdb_residue &the_res = prm_pdb.get_residue_of_index__backbone_unchecked( index );
 		if ( limiter.update_residue_is_included( the_res.get_residue_id() ) && is_backbone_complete( the_res ) ) {
-			if ( count == arg_index ) {
+			if ( count == prm_index ) {
 				return index;
 			}
 			++count;
@@ -399,7 +399,7 @@ size_t cath::file::get_index_of_region_limited_backbone_complete_index(const pdb
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception(
 		"Cannot find enough backbone_complete residues to reach region_limited_backbone_complete_index "
-		+ to_string( arg_index )
+		+ to_string( prm_index )
 	));
 	return 0; // Superfluous, post-throw return statement to appease Eclipse's syntax highlighter
 }
@@ -407,15 +407,15 @@ size_t cath::file::get_index_of_region_limited_backbone_complete_index(const pdb
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-const pdb_residue & cath::file::get_residue_of_region_limited_backbone_complete_index(const pdb             &arg_pdb,    ///< The pdb to query
-                                                                                      const size_t          &arg_index,  ///< The index of the required residue
-                                                                                      const region_vec_opt  &arg_regions ///< The regions within which the index applies
+const pdb_residue & cath::file::get_residue_of_region_limited_backbone_complete_index(const pdb             &prm_pdb,    ///< The pdb to query
+                                                                                      const size_t          &prm_index,  ///< The index of the required residue
+                                                                                      const region_vec_opt  &prm_regions ///< The regions within which the index applies
                                                                                       ) {
-	return arg_pdb.get_residue_of_index__backbone_unchecked(
+	return prm_pdb.get_residue_of_index__backbone_unchecked(
 		get_index_of_region_limited_backbone_complete_index(
-			arg_pdb,
-			arg_index,
-			arg_regions
+			prm_pdb,
+			prm_index,
+			prm_regions
 		)
 	);
 }
@@ -423,15 +423,15 @@ const pdb_residue & cath::file::get_residue_of_region_limited_backbone_complete_
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-coord cath::file::get_residue_ca_coord_of_region_limited_backbone_complete_index(const pdb             &arg_pdb,    ///< The pdb to query
-                                                                                 const size_t          &arg_index,  ///< The index of the required residue
-                                                                                 const region_vec_opt  &arg_regions ///< The regions within which the index applies
+coord cath::file::get_residue_ca_coord_of_region_limited_backbone_complete_index(const pdb             &prm_pdb,    ///< The pdb to query
+                                                                                 const size_t          &prm_index,  ///< The index of the required residue
+                                                                                 const region_vec_opt  &prm_regions ///< The regions within which the index applies
                                                                                  ) {
-	return arg_pdb.get_residue_ca_coord_of_index__backbone_unchecked(
+	return prm_pdb.get_residue_ca_coord_of_index__backbone_unchecked(
 		get_index_of_region_limited_backbone_complete_index(
-			arg_pdb,
-			arg_index,
-			arg_regions
+			prm_pdb,
+			prm_index,
+			prm_regions
 		)
 	);
 }
@@ -441,21 +441,21 @@ coord cath::file::get_residue_ca_coord_of_region_limited_backbone_complete_index
 /// \TODO This should probably also remove residues with duplicate residue IDs
 ///
 /// \relates pdb
-residue_id_vec cath::file::get_backbone_complete_residue_ids_of_first_chain(const pdb  &arg_pdb,                   ///< The PDB to query
-                                                                            const bool &arg_complete_backbone_only ///< Whether to restrict to the backbone-complete residues
+residue_id_vec cath::file::get_backbone_complete_residue_ids_of_first_chain(const pdb  &prm_pdb,                   ///< The PDB to query
+                                                                            const bool &prm_complete_backbone_only ///< Whether to restrict to the backbone-complete residues
                                                                             ) {
-	if ( arg_pdb.empty() ) {
+	if ( prm_pdb.empty() ) {
 		return {};
 	}
 
-	const chain_label first_chain_label = get_chain_label( front( arg_pdb ) );
+	const chain_label first_chain_label = get_chain_label( front( prm_pdb ) );
 	return transform_build<residue_id_vec>(
-		arg_pdb
+		prm_pdb
 			| filtered( [&] (const pdb_residue &x) {
 				return (
 					( get_chain_label( x ) == first_chain_label )
 					&&
-					( ! arg_complete_backbone_only || is_backbone_complete( x ) )
+					( ! prm_complete_backbone_only || is_backbone_complete( x ) )
 				);
 			} ),
 		[] (const pdb_residue &x) { return x.get_residue_id(); }
@@ -467,11 +467,11 @@ residue_id_vec cath::file::get_backbone_complete_residue_ids_of_first_chain(cons
 /// This also remove residues with duplicate residue IDs
 ///
 /// \relates pdb
-residue_id_vec cath::file::get_backbone_complete_residue_ids(const pdb &arg_pdb ///< The PDB to query
+residue_id_vec cath::file::get_backbone_complete_residue_ids(const pdb &prm_pdb ///< The PDB to query
                                                              ) {
 	residue_id_vec results;
 	vector<residue_id> seen_res_ids;
-	for (const pdb_residue &the_res : arg_pdb) {
+	for (const pdb_residue &the_res : prm_pdb) {
 		if ( is_backbone_complete( the_res ) ) {
 			const residue_id the_res_id = the_res.get_residue_id();
 			if ( ! cath::common::contains( seen_res_ids, the_res_id ) ) {
@@ -486,20 +486,20 @@ residue_id_vec cath::file::get_backbone_complete_residue_ids(const pdb &arg_pdb 
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-pdb cath::file::read_pdb_file(const path &arg_pdb_filename ///< TODOCUMENT
+pdb cath::file::read_pdb_file(const path &prm_pdb_filename ///< TODOCUMENT
                               ) {
 	pdb new_pdb;
-	new_pdb.read_file( arg_pdb_filename );
+	new_pdb.read_file( prm_pdb_filename );
 	return new_pdb;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-pdb cath::file::read_pdb_file(istream &arg_input_stream ///< TODOCUMENT
+pdb cath::file::read_pdb_file(istream &prm_input_stream ///< TODOCUMENT
                               ) {
 	pdb new_pdb;
-	read_pdb_file( arg_input_stream, new_pdb );
+	read_pdb_file( prm_input_stream, new_pdb );
 	return new_pdb;
 }
 
@@ -507,7 +507,7 @@ pdb cath::file::read_pdb_file(istream &arg_input_stream ///< TODOCUMENT
 ///
 /// \relates pdb
 istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
-                                    pdb     &arg_pdb       ///< TODOCUMENT
+                                    pdb     &prm_pdb       ///< TODOCUMENT
                                     ) {
 	// Variables to store the details of parsed atoms
 	pdb_residue_vec  residues;
@@ -633,8 +633,8 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 		add_atoms_and_reset_fn( prev_res_id.get_chain_label() );
 	}
 
-	arg_pdb.set_residues         ( std::move( residues          ) );
-	arg_pdb.set_post_ter_residues( std::move( post_ter_residues ) );
+	prm_pdb.set_residues         ( std::move( residues          ) );
+	prm_pdb.set_post_ter_residues( std::move( post_ter_residues ) );
 
 	return input_stream;
 }
@@ -642,21 +642,21 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 /// \brief Parse a pdb from the specified string
 ///
 /// \relates pdb
-pdb cath::file::read_pdb(const string &arg_string ///< The string containing the PDB data
+pdb cath::file::read_pdb(const string &prm_string ///< The string containing the PDB data
                          ) {
-	istringstream in_ss{ arg_string };
+	istringstream in_ss{ prm_string };
 	return read_pdb_file( in_ss );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-pdb_list cath::file::read_end_separated_pdb_files(istream &arg_in_stream ///< TODOCUMENT
+pdb_list cath::file::read_end_separated_pdb_files(istream &prm_in_stream ///< TODOCUMENT
                                                   ) {
 	pdb_list pdbs;
 	stringstream pdb_file_stream;
 	string line_str;
-	while (getline(arg_in_stream, line_str)) {
+	while (getline(prm_in_stream, line_str)) {
 		// If this line begins with end, then add any PDB that's been accumulated in pdb_file_stream
 		// and reset the pdb_file_stream
 		if (starts_with(line_str, "END")) {
@@ -690,16 +690,16 @@ pdb_list cath::file::read_end_separated_pdb_files(istream &arg_in_stream ///< TO
 ///        restricted to the specified regions and written in the specified mode
 ///
 /// \relates pdb
-string cath::file::to_pdb_file_string(const pdb            &arg_pdb,           ///< The pdb to describe
-                                      const region_vec_opt &arg_regions,       ///< Optional specification of regions to which the written records should be restricted
-                                      const pdb_write_mode &arg_pdb_write_mode ///< Whether this is the only/last part of the PDB file
+string cath::file::to_pdb_file_string(const pdb            &prm_pdb,           ///< The pdb to describe
+                                      const region_vec_opt &prm_regions,       ///< Optional specification of regions to which the written records should be restricted
+                                      const pdb_write_mode &prm_pdb_write_mode ///< Whether this is the only/last part of the PDB file
                                       ) {
 	ostringstream output_ss;
 	write_pdb_file(
 		output_ss,
-		arg_pdb,
-		arg_regions,
-		arg_pdb_write_mode
+		prm_pdb,
+		prm_regions,
+		prm_pdb_write_mode
 	);
 	return output_ss.str();
 }
@@ -708,13 +708,13 @@ string cath::file::to_pdb_file_string(const pdb            &arg_pdb,           /
 ///        restricted to the specified regions and written in the specified mode
 ///
 /// \relates pdb
-ostream & cath::file::write_pdb_file(ostream              &arg_os,            ///< The ostream into which the PDB file should be inserted
-                                     const pdb            &arg_pdb,           ///< The pdb to describe
-                                     const region_vec_opt &arg_regions,       ///< Optional specification of regions to which the written records should be restricted
-                                     const pdb_write_mode &arg_pdb_write_mode ///< Whether this is the only/last part of the PDB file
+ostream & cath::file::write_pdb_file(ostream              &prm_os,            ///< The ostream into which the PDB file should be inserted
+                                     const pdb            &prm_pdb,           ///< The pdb to describe
+                                     const region_vec_opt &prm_regions,       ///< Optional specification of regions to which the written records should be restricted
+                                     const pdb_write_mode &prm_pdb_write_mode ///< Whether this is the only/last part of the PDB file
                                      ) {
 	// Use a regions_limiter for extracting the correct regions
-	regions_limiter the_regions_limiter{ arg_regions };
+	regions_limiter the_regions_limiter{ prm_regions };
 
 	// Prepare a vector of the pdb_atoms to output (each stored alongside its residue_id)
 	//
@@ -723,8 +723,8 @@ ostream & cath::file::write_pdb_file(ostream              &arg_os,            //
 		res_id_pdb_atom_pair_vec the_atoms;
 
 		// Loop over the residues
-		for (const size_t &residue_ctr : indices( arg_pdb.get_num_residues() ) ) {
-			const pdb_residue &the_residue = arg_pdb.get_residue_of_index__backbone_unchecked( residue_ctr );
+		for (const size_t &residue_ctr : indices( prm_pdb.get_num_residues() ) ) {
+			const pdb_residue &the_residue = prm_pdb.get_residue_of_index__backbone_unchecked( residue_ctr );
 			const residue_id  &the_res_id  = the_residue.get_residue_id();
 
 			// If the residue is included, copy over its atoms
@@ -754,8 +754,8 @@ ostream & cath::file::write_pdb_file(ostream              &arg_os,            //
 
 	// Write all these pre-TER atom records
 	for (const res_id_pdb_atom_pair &main_atom : main_atoms) {
-		write_pdb_file_entry( arg_os, main_atom.first, main_atom.second );
-		arg_os << "\n";
+		write_pdb_file_entry( prm_os, main_atom.first, main_atom.second );
+		prm_os << "\n";
 	}
 
 	// Write out the TER record
@@ -763,7 +763,7 @@ ostream & cath::file::write_pdb_file(ostream              &arg_os,            //
 	const string residue_name_with_insert_or_space = make_residue_name_string_with_insert_or_space(
 		get<0>( *last_atom_details ).get_residue_name()
 	);
-	arg_os << pdb::PDB_RECORD_STRING_TER
+	prm_os << pdb::PDB_RECORD_STRING_TER
 		<< right
 		<< setw( 5 ) << ( get<1>( *last_atom_details ) + 1 )
 		<< "      "
@@ -774,13 +774,13 @@ ostream & cath::file::write_pdb_file(ostream              &arg_os,            //
 		<< "                                                     \n";
 
 	// Write out any post-TER records
-	for (const pdb_residue &the_residue : arg_pdb.get_post_ter_residues() ) {
-		write_pdb_file_entry( arg_os, the_residue );
+	for (const pdb_residue &the_residue : prm_pdb.get_post_ter_residues() ) {
+		write_pdb_file_entry( prm_os, the_residue );
 	}
 
 	// If this is the only or last PDB then "END   " the file
-	if ( arg_pdb_write_mode == pdb_write_mode::ONLY_OR_LAST_PDB ) {
-		arg_os << "END   \n";
+	if ( prm_pdb_write_mode == pdb_write_mode::ONLY_OR_LAST_PDB ) {
+		prm_os << "END   \n";
 	}
 
 	// Warn if the regions_limiter didn't see all the regions it hoped to
@@ -790,25 +790,25 @@ ostream & cath::file::write_pdb_file(ostream              &arg_os,            //
 	}
 
 	// Return the ostream
-	return arg_os;
+	return prm_os;
 }
 
 /// \brief Write a PDB file of the specified pdb to the specified file,
 ///        restricted to the specified regions and written in the specified mode
 ///
 /// \relates pdb
-void cath::file::write_pdb_file(const path           &arg_filename,      ///< The file to which the PDB file should be written
-                                const pdb            &arg_pdb,           ///< The pdb to describe
-                                const region_vec_opt &arg_regions,       ///< Optional specification of regions to which the written records should be restricted
-                                const pdb_write_mode &arg_pdb_write_mode ///< Whether this is the only/last part of the PDB file
+void cath::file::write_pdb_file(const path           &prm_filename,      ///< The file to which the PDB file should be written
+                                const pdb            &prm_pdb,           ///< The pdb to describe
+                                const region_vec_opt &prm_regions,       ///< Optional specification of regions to which the written records should be restricted
+                                const pdb_write_mode &prm_pdb_write_mode ///< Whether this is the only/last part of the PDB file
                                 ) {
 	ofstream out_ofstream;
-	open_ofstream( out_ofstream, arg_filename );
+	open_ofstream( out_ofstream, prm_filename );
 	write_pdb_file(
 		out_ofstream,
-		arg_pdb,
-		arg_regions,
-		arg_pdb_write_mode
+		prm_pdb,
+		prm_regions,
+		prm_pdb_write_mode
 	);
 	out_ofstream.close();
 }
@@ -816,16 +816,16 @@ void cath::file::write_pdb_file(const path           &arg_filename,      ///< Th
 /// \brief Write the specified PDB to a string
 ///
 /// \relates pdb
-string cath::file::pdb_file_to_string(const pdb            &arg_pdb,           ///< The pdb to describe
-                                      const region_vec_opt &arg_regions,       ///< Optional specification of regions to which the written records should be restricted
-                                      const pdb_write_mode &arg_pdb_write_mode ///< Whether this is the only/last part of the PDB file
+string cath::file::pdb_file_to_string(const pdb            &prm_pdb,           ///< The pdb to describe
+                                      const region_vec_opt &prm_regions,       ///< Optional specification of regions to which the written records should be restricted
+                                      const pdb_write_mode &prm_pdb_write_mode ///< Whether this is the only/last part of the PDB file
                                       ) {
 	ostringstream out_ss;
 	write_pdb_file(
 		out_ss,
-		arg_pdb,
-		arg_regions,
-		arg_pdb_write_mode
+		prm_pdb,
+		prm_regions,
+		prm_pdb_write_mode
 	);
 	return out_ss.str();
 }
@@ -833,11 +833,11 @@ string cath::file::pdb_file_to_string(const pdb            &arg_pdb,           /
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-amino_acid_vec cath::file::get_amino_acid_list(const pdb &arg_pdb ///< TODOCUMENT
+amino_acid_vec cath::file::get_amino_acid_list(const pdb &prm_pdb ///< TODOCUMENT
                                                ) {
 	amino_acid_vec amino_acids;
-	amino_acids.reserve( arg_pdb.get_num_residues() );
-	for (const pdb_residue &the_pdb_residue : arg_pdb) {
+	amino_acids.reserve( prm_pdb.get_num_residues() );
+	for (const pdb_residue &the_pdb_residue : prm_pdb) {
 		amino_acids.push_back( the_pdb_residue.get_amino_acid() );
 	}
 	return amino_acids;
@@ -846,20 +846,20 @@ amino_acid_vec cath::file::get_amino_acid_list(const pdb &arg_pdb ///< TODOCUMEN
 /// \brief Calculate the (ascending) list of indices of the residues that follow a chain break in the specified PDB
 ///
 /// \relates pdb
-size_vec cath::file::indices_of_residues_following_chain_breaks(const pdb &arg_pdb /// The PDB to query
+size_vec cath::file::indices_of_residues_following_chain_breaks(const pdb &prm_pdb /// The PDB to query
                                                                 ) {
 	// The gap between consecutive residues' carbon and nitrogen atoms respectively,
 	// above which the residues are not treated as neighbours
 	constexpr double INTER_C_TO_N_DIST_FOR_NEIGHBOURS = 2.5;
 
 	return copy_build<size_vec>(
-		indices( arg_pdb.get_num_residues() )
+		indices( prm_pdb.get_num_residues() )
 			| filtered( [&] (const size_t &x) {
 				if ( x == 0 ) {
 					return false;
 				}
-				const auto &prev_res = arg_pdb.get_residue_of_index__backbone_unchecked( x - 1 );
-				const auto &this_res = arg_pdb.get_residue_of_index__backbone_unchecked( x     );
+				const auto &prev_res = prm_pdb.get_residue_of_index__backbone_unchecked( x - 1 );
+				const auto &this_res = prm_pdb.get_residue_of_index__backbone_unchecked( x     );
 				return (
 					( get_chain_label( prev_res ) != get_chain_label( this_res ) )
 					||
@@ -876,17 +876,17 @@ size_vec cath::file::indices_of_residues_following_chain_breaks(const pdb &arg_p
 /// \brief Return whether the specified PDB has multiple distinct chain_labels
 ///
 /// \relates pdb
-bool cath::file::has_multiple_chain_labels(const pdb &arg_pdb ///< The PDB to query
+bool cath::file::has_multiple_chain_labels(const pdb &prm_pdb ///< The PDB to query
                                            ) {
 	// If the PDB's empty then return false
-	if ( arg_pdb.empty() ) {
+	if ( prm_pdb.empty() ) {
 		return false;
 	}
 	
 	// Otherwise return whether there are any residues with a chain code differing from the first
-	const chain_label &first_chain_code = get_chain_label( front( arg_pdb ) );
+	const chain_label &first_chain_code = get_chain_label( front( prm_pdb ) );
 	return any_of(
-		arg_pdb,
+		prm_pdb,
 		[&] (const pdb_residue &x) { return get_chain_label( x ) != first_chain_code; }
 	);
 }
@@ -894,28 +894,28 @@ bool cath::file::has_multiple_chain_labels(const pdb &arg_pdb ///< The PDB to qu
 /// \brief TODOCUMENT
 ///
 /// \relates pdb
-ostream & cath::file::operator<<(ostream   &arg_os,         ///< TODOCUMENT
-                                 const pdb &arg_pdb_residue ///< TODOCUMENT
+ostream & cath::file::operator<<(ostream   &prm_os,         ///< TODOCUMENT
+                                 const pdb &prm_pdb_residue ///< TODOCUMENT
                                  ) {
-	arg_os << "PDB[";
+	prm_os << "PDB[";
 
-	const size_t num_residues = arg_pdb_residue.get_num_residues();
+	const size_t num_residues = prm_pdb_residue.get_num_residues();
 	for (const size_t &residue_ctr : indices( num_residues ) ) {
-		arg_os << arg_pdb_residue.get_residue_of_index__backbone_unchecked(residue_ctr);
+		prm_os << prm_pdb_residue.get_residue_of_index__backbone_unchecked(residue_ctr);
 	}
-	return arg_os;
+	return prm_os;
 }
 
 ///// \brief TODOCUMENT
 /////
 ///// \relates pdb
-//const pdb_residue & cath::get_residue_ref_of_index__offset_1(const pdb          &arg_pdb,  ///< TODOCUMENT
-//                                                                   const size_t &arg_index ///< TODOCUMENT
+//const pdb_residue & cath::get_residue_ref_of_index__offset_1(const pdb          &prm_pdb,  ///< TODOCUMENT
+//                                                                   const size_t &prm_index ///< TODOCUMENT
 //                                                                   ) {
-//	if (arg_index <= 0) {
+//	if (prm_index <= 0) {
 //		BOOST_THROW_EXCEPTION(invalid_argument_exception("An index that uses offset 1 must be 1 or greater"));
 //	}
-//	return arg_pdb.get_residue_of_index__backbone_unchecked(arg_index - 1);
+//	return prm_pdb.get_residue_of_index__backbone_unchecked(prm_index - 1);
 //}
 
 /// \brief Get the list of phi/psi angle pairs for each residue, in radians within (0, 2 * pi]
@@ -950,9 +950,9 @@ ostream & cath::file::operator<<(ostream   &arg_os,         ///< TODOCUMENT
 /// \relates pdb
 ///
 /// \relates protein
-doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb                      &arg_pdb,                ///< TODOCUMENT
-                                                                  // const size_vec                 &/*arg_skip_indices*/,   ///< Indices of residues in the pdb that were preceded by residues that have been skipped due to being backbone complete. This may include an index on greater than the index of the last residue in the pdb to indicate that there were residues skipped after the last residue. Phi/psi angles are not set over these skip breaks.
-                                                                  const dssp_skip_angle_skipping &arg_dssp_angle_skipping ///< TODOCUMENT
+doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb                      &prm_pdb,                ///< TODOCUMENT
+                                                                  // const size_vec                 &/*prm_skip_indices*/,   ///< Indices of residues in the pdb that were preceded by residues that have been skipped due to being backbone complete. This may include an index on greater than the index of the last residue in the pdb to indicate that there were residues skipped after the last residue. Phi/psi angles are not set over these skip breaks.
+                                                                  const dssp_skip_angle_skipping &prm_dssp_angle_skipping ///< TODOCUMENT
                                                                   ) {
 	// The gap between consecutive residues' carbon and nitrogen atoms respectively,
 	// above which the residues are not treated as neighbours
@@ -960,7 +960,7 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 	
 	const     auto   DEFAULT_PHI_PSI              = residue::DEFAULT_PHI_PSI();
 	const     auto   DEFAULT_PHI_PSI_PAIR         = make_pair( DEFAULT_PHI_PSI, DEFAULT_PHI_PSI );
-	const     size_t num_residues                 = arg_pdb.get_num_residues();
+	const     size_t num_residues                 = prm_pdb.get_num_residues();
 
 	// Build a range of indices of the residues to be considered
 	//
@@ -970,9 +970,9 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 	const auto non_skipped_residues_indices = indices( num_residues )
 		| filtered( [&] (const size_t &x) {
 			return (
-				( arg_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
+				( prm_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
 				||
-				! dssp_will_skip_residue( arg_pdb.get_residue_of_index__backbone_unchecked( x ) )
+				! dssp_will_skip_residue( prm_pdb.get_residue_of_index__backbone_unchecked( x ) )
 			);
 		} );
 
@@ -983,8 +983,8 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 	for (const size_size_pair &adj_indices : non_skipped_residues_indices | adjacented) {
 
 		// Grab this residue and the next non-skipped one
-		const pdb_residue &this_pdb_residue = arg_pdb.get_residue_of_index__backbone_unchecked( adj_indices.first  );
-		const pdb_residue &next_pdb_residue = arg_pdb.get_residue_of_index__backbone_unchecked( adj_indices.second );
+		const pdb_residue &this_pdb_residue = prm_pdb.get_residue_of_index__backbone_unchecked( adj_indices.first  );
+		const pdb_residue &next_pdb_residue = prm_pdb.get_residue_of_index__backbone_unchecked( adj_indices.second );
 
 		// If these consecutive residues are on the same chain...
 		if ( get_chain_label( this_pdb_residue ) == get_chain_label( next_pdb_residue ) ) {
@@ -1001,9 +1001,9 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 			//  * they're not to be skipped due to either being residues DSSP would skip
 			const bool close_enough           = inter_c_to_n_dist <= INTER_C_TO_N_DIST_FOR_NEIGHBOURS;
 
-			// const bool not_straddling_skipped = ! binary_search( arg_skip_indices, residue_ctr + 1 );
+			// const bool not_straddling_skipped = ! binary_search( prm_skip_indices, residue_ctr + 1 );
 			// const bool not_dssp_skip          = (
-			// 	( arg_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
+			// 	( prm_dssp_angle_skipping == dssp_skip_angle_skipping::DONT_BREAK_ANGLES )
 			// 	||
 			// 	! ( dssp_will_skip_residue( this_pdb_residue ) || dssp_will_skip_residue( next_pdb_residue ) )
 			// );
@@ -1030,12 +1030,12 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 /// This information is useful to return so it can be used to prevent phi/psi angles being set over these skip breaks.
 ///
 /// \relates pdb
-pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb                    &arg_pdb,             ///< TODOCUMENT
-                                                              const ostream_ref_opt        &arg_ostream_ref_opt, ///< An optional reference to an ostream to which any logging should be sent
-                                                              const dssp_skip_res_skipping &arg_skip_like_dssp   ///< TODOCUMENT
+pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb                    &prm_pdb,             ///< TODOCUMENT
+                                                              const ostream_ref_opt        &prm_ostream_ref_opt, ///< An optional reference to an ostream to which any logging should be sent
+                                                              const dssp_skip_res_skipping &prm_skip_like_dssp   ///< TODOCUMENT
                                                               ) {
 	// Grab the number of residues
-	const size_t num_residues = arg_pdb.get_num_residues();
+	const size_t num_residues = prm_pdb.get_num_residues();
 
 	vector<residue_id> seen_residue_ids;
 
@@ -1048,14 +1048,14 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 
 	// Loop over the residues in the input pdb
 	for (const size_t &residue_ctr : indices( num_residues ) ) {
-		const pdb_residue &the_residue = arg_pdb.get_residue_of_index__backbone_unchecked( residue_ctr );
+		const pdb_residue &the_residue = prm_pdb.get_residue_of_index__backbone_unchecked( residue_ctr );
 		const bool seen_res_id = common::contains( seen_residue_ids, the_residue.get_residue_id() );
 		if ( ! seen_res_id ) {
 			seen_residue_ids.push_back( the_residue.get_residue_id() );
 		}
 
 		// If the residue is backbone_complete,then add it to new_pdb_residues
-		const bool ok_to_process = ( arg_skip_like_dssp == dssp_skip_res_skipping::SKIP )
+		const bool ok_to_process = ( prm_skip_like_dssp == dssp_skip_res_skipping::SKIP )
 			? ! dssp_will_skip_residue( the_residue )
 			:   is_backbone_complete  ( the_residue );
 		if ( ok_to_process && ! seen_res_id ) {
@@ -1063,7 +1063,7 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 		}
 		// Else if this is a proper amino acid (not just a bunch of HETATMs), record it
 		else if ( get_letter_if_amino_acid( the_residue ) ) {
-			if ( arg_ostream_ref_opt ) {
+			if ( prm_ostream_ref_opt ) {
 				backbone_skipped_residues.push_back( the_residue.get_residue_id() );
 			}
 			if ( indices_in_new_of_skips.empty() || indices_in_new_of_skips.back() != new_pdb_residues.size() ) {
@@ -1072,9 +1072,9 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 		}
 	}
 
-	if ( ! backbone_skipped_residues.empty() && arg_ostream_ref_opt ) {
+	if ( ! backbone_skipped_residues.empty() && prm_ostream_ref_opt ) {
 		const bool multiple_skippeds = ( backbone_skipped_residues.size() > 1 );
-		const log_to_ostream_guard ostream_log_guard{ arg_ostream_ref_opt.get().get() };
+		const log_to_ostream_guard ostream_log_guard{ prm_ostream_ref_opt.get().get() };
 
 		BOOST_LOG_TRIVIAL( warning ) << "Ignoring residue"
 		                             << ( multiple_skippeds ? "s"s : ""s )
@@ -1100,20 +1100,20 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 /// \relates pdb
 ///
 /// \relates protein
-pair<protein, protein_info> cath::file::build_protein_of_pdb(const pdb              &arg_pdb,        ///< TODOCUMENT
-                                                             const ostream_ref_opt  &arg_ostream,    ///< An optional reference to an ostream to which any logging should be sent
-                                                             const dssp_skip_policy &arg_skip_policy ///< TODOCUMENT
+pair<protein, protein_info> cath::file::build_protein_of_pdb(const pdb              &prm_pdb,        ///< TODOCUMENT
+                                                             const ostream_ref_opt  &prm_ostream,    ///< An optional reference to an ostream to which any logging should be sent
+                                                             const dssp_skip_policy &prm_skip_policy ///< TODOCUMENT
                                                              ) {
 	constexpr size_t DEFAULT_ACCESSIBILITY = 0;
 
-	const auto     backbone_complete_data       = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream, res_skipping_of_dssp_skip_policy( arg_skip_policy ) );
+	const auto     backbone_complete_data       = backbone_complete_subset_of_pdb( prm_pdb, prm_ostream, res_skipping_of_dssp_skip_policy( prm_skip_policy ) );
 	const pdb      backbone_complete_pdb_subset = backbone_complete_data.first;
 	// const size_vec indices_of_skips             = backbone_complete_data.second;
 	const size_t   num_residues                 = backbone_complete_pdb_subset.get_num_residues();
 	const auto     phi_and_psi_angles           = get_phi_and_psi_angles(
 		backbone_complete_pdb_subset,
 		// indices_of_skips,
-		angle_skipping_of_dssp_skip_policy( arg_skip_policy )
+		angle_skipping_of_dssp_skip_policy( prm_skip_policy )
 	);
 
 	return {
@@ -1147,12 +1147,12 @@ pair<protein, protein_info> cath::file::build_protein_of_pdb(const pdb          
 /// \relates pdb
 ///
 /// \relates protein
-protein cath::file::build_protein_of_pdb_and_name(const pdb             &arg_pdb,    ///< TODOCUMENT
-                                                  const name_set        &arg_name,   ///< TODOCUMENT
-                                                  const ostream_ref_opt &arg_ostream ///< An optional reference to an ostream to which any logging should be sent
+protein cath::file::build_protein_of_pdb_and_name(const pdb             &prm_pdb,    ///< TODOCUMENT
+                                                  const name_set        &prm_name,   ///< TODOCUMENT
+                                                  const ostream_ref_opt &prm_ostream ///< An optional reference to an ostream to which any logging should be sent
                                                   ) {
-	protein new_protein = build_protein_of_pdb( arg_pdb, arg_ostream ).first;
-	new_protein.set_name_set( arg_name );
+	protein new_protein = build_protein_of_pdb( prm_pdb, prm_ostream ).first;
+	new_protein.set_name_set( prm_name );
 	return new_protein;
 }
 
@@ -1160,10 +1160,10 @@ protein cath::file::build_protein_of_pdb_and_name(const pdb             &arg_pdb
 ///        that DSSP might be expected to skip
 ///
 /// \relates pdb
-size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb             &arg_pdb,    ///< The PDB to query
-                                                                  const ostream_ref_opt &arg_ostream ///< An ostream to which any status messages might be sent
+size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb             &prm_pdb,    ///< The PDB to query
+                                                                  const ostream_ref_opt &prm_ostream ///< An ostream to which any status messages might be sent
                                                                   ) {
-	const pdb    backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( arg_pdb, arg_ostream ).first;
+	const pdb    backbone_complete_pdb_subset = backbone_complete_subset_of_pdb( prm_pdb, prm_ostream ).first;
 	const size_t num_residues                 = backbone_complete_pdb_subset.get_num_residues();
 
 	// Return the indices corresponding to residues with any atoms with non-standard alt_locn values
@@ -1183,18 +1183,18 @@ size_set cath::file::get_protein_res_indices_that_dssp_might_skip(const pdb     
 /// superposition_content_spec parameter.
 ///
 /// \relates pdb
-pdb cath::file::get_regions_limited_pdb(const region_vec_opt &arg_regions, ///< The regions to which the resulting PDB should be restricted
-                                        const pdb            &arg_pdb      ///< The source PDB
+pdb cath::file::get_regions_limited_pdb(const region_vec_opt &prm_regions, ///< The regions to which the resulting PDB should be restricted
+                                        const pdb            &prm_pdb      ///< The source PDB
                                         ) {
-	if ( ! arg_regions ) {
-		return arg_pdb;
+	if ( ! prm_regions ) {
+		return prm_pdb;
 	}
 
-	// *arg_regions is guaranteed to outlive this regions_limiter
-	regions_limiter the_limiter{ *arg_regions };
+	// *prm_regions is guaranteed to outlive this regions_limiter
+	regions_limiter the_limiter{ *prm_regions };
 	pdb_residue_vec residues;
-	residues.reserve( arg_pdb.get_num_residues() );
-	for (const pdb_residue &the_residue : arg_pdb) {
+	residues.reserve( prm_pdb.get_num_residues() );
+	for (const pdb_residue &the_residue : prm_pdb) {
 		if ( the_limiter.update_residue_is_included( the_residue.get_residue_id() ) ) {
 			residues.push_back( the_residue );
 		}
@@ -1215,15 +1215,15 @@ pdb cath::file::get_regions_limited_pdb(const region_vec_opt &arg_regions, ///< 
 /// for regions that start/stop on backbone-incomplete residues.
 ///
 /// \relates pdb
-pdb cath::file::backbone_complete_region_limited_subset_of_pdb(const pdb             &arg_pdb,     ///< TODOCUMENT
-                                                               const region_vec_opt  &arg_regions, ///< TODOCUMENT
-                                                               const ostream_ref_opt &arg_ostream  ///< An optional reference to an ostream to which any logging should be sent
+pdb cath::file::backbone_complete_region_limited_subset_of_pdb(const pdb             &prm_pdb,     ///< TODOCUMENT
+                                                               const region_vec_opt  &prm_regions, ///< TODOCUMENT
+                                                               const ostream_ref_opt &prm_ostream  ///< An optional reference to an ostream to which any logging should be sent
                                                                ) {
 	return backbone_complete_subset_of_pdb(
 		get_regions_limited_pdb(
-			arg_regions,
-			arg_pdb
+			prm_regions,
+			prm_pdb
 		),
-		arg_ostream
+		prm_ostream
 	).first;
 }

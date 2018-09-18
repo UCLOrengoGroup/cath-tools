@@ -79,26 +79,26 @@ string pseudo_string_score::do_reference() const {
 }
 
 /// \brief TODOCUMENT
-bool pseudo_string_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &arg_aligned_pair_score ///< TODOCUMENT
+bool pseudo_string_score::do_less_than_with_same_dynamic_type(const aligned_pair_score &prm_aligned_pair_score ///< TODOCUMENT
                                                      ) const {
-	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( arg_aligned_pair_score );
+	const auto &casted_aligned_pair_score = dynamic_cast< decltype( *this ) >( prm_aligned_pair_score );
 	return ( *this < casted_aligned_pair_score );
 }
 
 /// \brief Ctor for pseudo_string_score that uses the defaults for score_common_coord_handler (selecting CA atoms for all aligned residues)
-pseudo_string_score::pseudo_string_score(string  arg_score_name,      ///< TODOCUMENT
-                                         tribool arg_higher_is_better ///< TODOCUMENT
-                                         ) : score_name             { std::move( arg_score_name       ) },
-                                             higher_is_better_value { std::move( arg_higher_is_better ) } {
+pseudo_string_score::pseudo_string_score(string  prm_score_name,      ///< TODOCUMENT
+                                         tribool prm_higher_is_better ///< TODOCUMENT
+                                         ) : score_name             { std::move( prm_score_name       ) },
+                                             higher_is_better_value { std::move( prm_higher_is_better ) } {
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates pseudo_string_score
-bool cath::score::operator<(const pseudo_string_score &arg_pseudo_string_score_a, ///< TODOCUMENT
-                            const pseudo_string_score &arg_pseudo_string_score_b  ///< TODOCUMENT
+bool cath::score::operator<(const pseudo_string_score &prm_pseudo_string_score_a, ///< TODOCUMENT
+                            const pseudo_string_score &prm_pseudo_string_score_b  ///< TODOCUMENT
                             ) {
-	auto the_helper = make_less_than_helper( arg_pseudo_string_score_a, arg_pseudo_string_score_b );
+	auto the_helper = make_less_than_helper( prm_pseudo_string_score_a, prm_pseudo_string_score_b );
 	the_helper.register_comparison_field( &pseudo_string_score::id_name          );
 	the_helper.register_comparison_field( [] (const pseudo_string_score &x) { return static_cast<bool>( x.higher_is_better() ); } );
 	the_helper.register_comparison_field( [] (const pseudo_string_score &x) { return indeterminate    ( x.higher_is_better() ); } );

@@ -70,8 +70,8 @@ string display_colour_list::COLOURS_SEPARATOR(":");
 string display_colour_list::DEFAULT_COLOURS_STRING(join(DEFAULT_COLOURS_STRING_PARTS, COLOURS_SEPARATOR));
 
 /// \brief Ctor for display_colour_list
-display_colour_list::display_colour_list(display_colour_vec arg_colours ///< TODOCUMENT
-                                         ) : colours { std::move( arg_colours ) } {
+display_colour_list::display_colour_list(display_colour_vec prm_colours ///< TODOCUMENT
+                                         ) : colours { std::move( prm_colours ) } {
 }
 
 /// \brief TODOCUMENT
@@ -80,27 +80,27 @@ size_t display_colour_list::size() const {
 }
 
 /// \brief TODOCUMENT
-const display_colour & display_colour_list::colour_of_index(const size_t &arg_index ///< TODOCUMENT
+const display_colour & display_colour_list::colour_of_index(const size_t &prm_index ///< TODOCUMENT
                                                             ) const {
-	return colours[arg_index];
+	return colours[prm_index];
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour_list
-const display_colour & cath::colour_of_mod_index(const display_colour_list &arg_display_colour_list, ///< TODOCUMENT
-                                                 const size_t              &arg_index                ///< TODOCUMENT
+const display_colour & cath::colour_of_mod_index(const display_colour_list &prm_display_colour_list, ///< TODOCUMENT
+                                                 const size_t              &prm_index                ///< TODOCUMENT
                                                  ) {
-	const size_t num_colours = arg_display_colour_list.size();
-	return arg_display_colour_list.colour_of_index( arg_index % num_colours );
+	const size_t num_colours = prm_display_colour_list.size();
+	return prm_display_colour_list.colour_of_index( prm_index % num_colours );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour_list
-display_colour_list cath::make_display_colour_list_from_string(const string &arg_colours_string ///< TODOCUMENT
+display_colour_list cath::make_display_colour_list_from_string(const string &prm_colours_string ///< TODOCUMENT
                                                                ) {
-	const str_vec colour_strings = split_build<str_vec>( arg_colours_string, is_any_of( display_colour_list::COLOURS_SEPARATOR ) );
+	const str_vec colour_strings = split_build<str_vec>( prm_colours_string, is_any_of( display_colour_list::COLOURS_SEPARATOR ) );
 	display_colour_list result( transform_build<display_colour_vec>(
 		colour_strings,
 		[] (const string &x) { return display_colour_from_string( x ); }

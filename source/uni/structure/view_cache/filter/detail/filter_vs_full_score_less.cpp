@@ -25,10 +25,10 @@
 using namespace cath::index::filter::detail;
 
 /// \brief A less-than operator for filter_vs_full_scores that uses the filter_score
-bool filter_score_less::operator()(const filter_vs_full_score &arg_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare
-                                   const filter_vs_full_score &arg_filter_vs_full_score_rhs  ///< The second filter_vs_full_score to compare
+bool filter_score_less::operator()(const filter_vs_full_score &prm_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare
+                                   const filter_vs_full_score &prm_filter_vs_full_score_rhs  ///< The second filter_vs_full_score to compare
                                    ) const {
-	return ( arg_filter_vs_full_score_lhs.get_filter_score() < arg_filter_vs_full_score_rhs.get_filter_score() );
+	return ( prm_filter_vs_full_score_lhs.get_filter_score() < prm_filter_vs_full_score_rhs.get_filter_score() );
 }
 
 /// \brief A less-than operator for filter_vs_full_score that compares the filter_vs_full_score's
@@ -36,17 +36,17 @@ bool filter_score_less::operator()(const filter_vs_full_score &arg_filter_vs_ful
 ///
 /// This can be useful for, say, using lower_bound to find the position for a filter value in a
 /// filter-value-sorted range of filter_vs_full_scores
-bool filter_score_less::operator()(const filter_vs_full_score &arg_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare
-                                   const double               &arg_filter_score_rhs          ///< The explicit filter value against which to compare
+bool filter_score_less::operator()(const filter_vs_full_score &prm_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare
+                                   const double               &prm_filter_score_rhs          ///< The explicit filter value against which to compare
                                    ) const {
-	return ( arg_filter_vs_full_score_lhs.get_filter_score() < arg_filter_score_rhs );
+	return ( prm_filter_vs_full_score_lhs.get_filter_score() < prm_filter_score_rhs );
 }
 
 /// \brief A less-than operator for filter_vs_full_scores that uses the full score
-bool full_score_less::operator()(const filter_vs_full_score &arg_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare
-                                 const filter_vs_full_score &arg_filter_vs_full_score_rhs  ///< The second filter_vs_full_score to compare
+bool full_score_less::operator()(const filter_vs_full_score &prm_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare
+                                 const filter_vs_full_score &prm_filter_vs_full_score_rhs  ///< The second filter_vs_full_score to compare
                                  ) const {
-return ( arg_filter_vs_full_score_lhs.get_full_score() < arg_filter_vs_full_score_rhs.get_full_score() );
+return ( prm_filter_vs_full_score_lhs.get_full_score() < prm_filter_vs_full_score_rhs.get_full_score() );
 }
 
 /// \brief A less-than operator for filter_vs_full_score that compares the filter_vs_full_score's
@@ -54,8 +54,8 @@ return ( arg_filter_vs_full_score_lhs.get_full_score() < arg_filter_vs_full_scor
 ///
 /// This can be useful for, say, using lower_bound to find the position for a full value in a
 /// full-value-sorted range of filter_vs_full_scores
-bool full_score_less::operator()(const filter_vs_full_score &arg_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare
-                                 const double               &arg_full_score_rhs            ///< The explicit full value against which to compare
+bool full_score_less::operator()(const filter_vs_full_score &prm_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare
+                                 const double               &prm_full_score_rhs            ///< The explicit full value against which to compare
                                  ) const {
-return ( arg_filter_vs_full_score_lhs.get_full_score() < arg_full_score_rhs );
+return ( prm_filter_vs_full_score_lhs.get_full_score() < prm_full_score_rhs );
 }

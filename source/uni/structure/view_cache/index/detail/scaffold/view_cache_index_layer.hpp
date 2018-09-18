@@ -96,8 +96,8 @@ namespace cath {
 
 			/// \brief Ctor to build a layer from a DIM 
 			template <typename DIM, typename T>
-			view_cache_index_layer<DIM, T>::view_cache_index_layer(const DIM &arg_dim ///< The DIM to use to index values in this layer
-			                                                       ) : the_dimension( arg_dim ) {
+			view_cache_index_layer<DIM, T>::view_cache_index_layer(const DIM &prm_dim ///< The DIM to use to index values in this layer
+			                                                       ) : the_dimension( prm_dim ) {
 			}
 
 			// /// \brief TODOCUMENT
@@ -120,60 +120,60 @@ namespace cath {
 	
 			// /// \brief TODOCUMENT
 			// template <typename DIM, typename T>
-			// const T & view_cache_index_layer<DIM, T>::get_cell_entry(const size_t &arg_index ///< TODOCUMENT
+			// const T & view_cache_index_layer<DIM, T>::get_cell_entry(const size_t &prm_index ///< TODOCUMENT
 			//                                                        ) const {
-			// 	return cells[ arg_index ];
+			// 	return cells[ prm_index ];
 			// }
 	
 			// /// \brief TODOCUMENT
 			// template <typename DIM, typename T>
-			// bool view_cache_index_layer<DIM, T>::has_cell_at_value(const double &arg_value ///< TODOCUMENT
+			// bool view_cache_index_layer<DIM, T>::has_cell_at_value(const double &prm_value ///< TODOCUMENT
 			//                                                      ) const {
-			// 	return the_dimension.has_cell_at_value( arg_value );
+			// 	return the_dimension.has_cell_at_value( prm_value );
 			// }
 	
 			// /// \brief TODOCUMENT
 			// template <typename DIM, typename T>
-			// T & view_cache_index_layer<DIM, T>::cell_at_value(const double &arg_value ///< TODOCUMENT
+			// T & view_cache_index_layer<DIM, T>::cell_at_value(const double &prm_value ///< TODOCUMENT
 			//                                                 ) {
-			// 	return the_dimension.cell_at_value( cells, arg_value );
+			// 	return the_dimension.cell_at_value( cells, prm_value );
 			// }
 	
 			// /// \brief TODOCUMENT
 			// template <typename DIM, typename T>
-			// const T & view_cache_index_layer<DIM, T>::cell_at_value(const double &arg_value ///< TODOCUMENT
+			// const T & view_cache_index_layer<DIM, T>::cell_at_value(const double &prm_value ///< TODOCUMENT
 			//                                                       ) const {
-			// 	return the_dimension.cell_at_value( cells, arg_value );
+			// 	return the_dimension.cell_at_value( cells, prm_value );
 			// }
 
 
 			/// \brief Store a view_cache_index_entry in this layer, using 
 			template <typename DIM, typename T>
 			template <typename DEFAULTS>
-			void view_cache_index_layer<DIM, T>::store(const view_cache_index_entry &arg_entry,   ///< TODOCUMENT
-			                                           const DEFAULTS               &arg_defaults ///< TODOCUMENT
+			void view_cache_index_layer<DIM, T>::store(const view_cache_index_entry &prm_entry,   ///< TODOCUMENT
+			                                           const DEFAULTS               &prm_defaults ///< TODOCUMENT
 			                                           ) {
-				the_dimension.store( arg_entry, cells, arg_defaults );
+				the_dimension.store( prm_entry, cells, prm_defaults );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename DIM, typename T>
 			template <typename ACTN>
-			void view_cache_index_layer<DIM, T>::perform_action_on_matches(const view_cache_index_entry &arg_entry,    ///< TODOCUMENT
-			                                                               const vcie_match_criteria    &arg_criteria, ///< TODOCUMENT
-			                                                               ACTN                         &arg_action    ///< TODOCUMENT
+			void view_cache_index_layer<DIM, T>::perform_action_on_matches(const view_cache_index_entry &prm_entry,    ///< TODOCUMENT
+			                                                               const vcie_match_criteria    &prm_criteria, ///< TODOCUMENT
+			                                                               ACTN                         &prm_action    ///< TODOCUMENT
 			                                                               ) const {
-				the_dimension.perform_action_on_matches( arg_entry, cells, arg_criteria, arg_action );
+				the_dimension.perform_action_on_matches( prm_entry, cells, prm_criteria, prm_action );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename DIM, typename T>
 			template <typename ACTN>
-			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_leaves(ACTN &arg_action ///< TODOCUMENT
+			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_leaves(ACTN &prm_action ///< TODOCUMENT
 			                                                                           ) const {
 				BOOST_LOG_TRIVIAL( trace ) << ::boost::core::demangle( typeid( *this ).name() ) << " : " << cells.size();
 				for (const T &cell : cells) {
-					cell.perform_action_on_all_match_at_leaves( arg_action );
+					cell.perform_action_on_all_match_at_leaves( prm_action );
 				}
 			}
 
@@ -181,16 +181,16 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <typename DIM, typename T>
 			template <typename ACTN>
-			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_nodes(const view_cache_index_layer<DIM, T> &arg_match_layer, ///< TODOCUMENT
-			                                                                          const vcie_match_criteria            &arg_criteria,    ///< TODOCUMENT
-			                                                                          ACTN                                 &arg_action       ///< TODOCUMENT
+			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_nodes(const view_cache_index_layer<DIM, T> &prm_match_layer, ///< TODOCUMENT
+			                                                                          const vcie_match_criteria            &prm_criteria,    ///< TODOCUMENT
+			                                                                          ACTN                                 &prm_action       ///< TODOCUMENT
 			                                                                          ) const {
 				the_dimension.perform_action_on_all_match_at_nodes(
 					cells,
-					arg_match_layer.the_dimension,
-					arg_match_layer.cells,
-					arg_criteria,
-					arg_action
+					prm_match_layer.the_dimension,
+					prm_match_layer.cells,
+					prm_criteria,
+					prm_action
 				);
 			}
 

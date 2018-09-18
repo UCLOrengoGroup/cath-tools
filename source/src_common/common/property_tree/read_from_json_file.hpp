@@ -37,9 +37,9 @@ namespace cath {
 		///
 		/// Requires that there is specialisation of read_from_ptree<> for T
 		template <typename T>
-		T read_from_json_file(const boost::filesystem::path &arg_json_file ///< The JSON file to read
+		T read_from_json_file(const boost::filesystem::path &prm_json_file ///< The JSON file to read
 		                      ) {
-			return from_json_string<T>( read_string_from_file( arg_json_file ) );
+			return from_json_string<T>( read_string_from_file( prm_json_file ) );
 		}
 
 	} // namespace common

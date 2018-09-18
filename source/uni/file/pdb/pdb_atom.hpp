@@ -135,26 +135,26 @@ namespace cath {
 		boost::string_ref get_charge_str_ref(const pdb_atom &);
 
 		/// \brief Ctor for pdb_atom
-		inline pdb_atom::pdb_atom(const pdb_record &arg_record_type,    ///< TODOCUMENT
-		                          const uint       &arg_atom_serial,    ///< TODOCUMENT
-		                          const char_4_arr &arg_element_type,   ///< TODOCUMENT
-		                          const char       &arg_alt_locn,       ///< TODOCUMENT
-		                          amino_acid        arg_amino_acid,     ///< TODOCUMENT
-		                          geom::coord       arg_coord,          ///< TODOCUMENT
-		                          const float      &arg_occupancy,      ///< TODOCUMENT
-		                          const float      &arg_temp_factor,    ///< TODOCUMENT
-		                          char_2_arr        arg_element_symbol, ///< TODOCUMENT
-		                          char_2_arr        arg_charge          ///< TODOCUMENT
-		                          ) : atom_coord       { std::move( arg_coord )          },
-		                              the_amino_acid   { std::move( arg_amino_acid )     },
-		                              the_element_type { arg_element_type                },
-		                              record_type      { arg_record_type                 },
-		                              alt_locn         { arg_alt_locn                    },
-		                              atom_serial      { arg_atom_serial                 },
-		                              occupancy        { arg_occupancy                   },
-		                              temp_factor      { arg_temp_factor                 },
-		                              element_symbol   ( std::move( arg_element_symbol ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
-		                              charge           ( std::move( arg_charge )         )  //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
+		inline pdb_atom::pdb_atom(const pdb_record &prm_record_type,    ///< TODOCUMENT
+		                          const uint       &prm_atom_serial,    ///< TODOCUMENT
+		                          const char_4_arr &prm_element_type,   ///< TODOCUMENT
+		                          const char       &prm_alt_locn,       ///< TODOCUMENT
+		                          amino_acid        prm_amino_acid,     ///< TODOCUMENT
+		                          geom::coord       prm_coord,          ///< TODOCUMENT
+		                          const float      &prm_occupancy,      ///< TODOCUMENT
+		                          const float      &prm_temp_factor,    ///< TODOCUMENT
+		                          char_2_arr        prm_element_symbol, ///< TODOCUMENT
+		                          char_2_arr        prm_charge          ///< TODOCUMENT
+		                          ) : atom_coord       { std::move( prm_coord )          },
+		                              the_amino_acid   { std::move( prm_amino_acid )     },
+		                              the_element_type { prm_element_type                },
+		                              record_type      { prm_record_type                 },
+		                              alt_locn         { prm_alt_locn                    },
+		                              atom_serial      { prm_atom_serial                 },
+		                              occupancy        { prm_occupancy                   },
+		                              temp_factor      { prm_temp_factor                 },
+		                              element_symbol   ( std::move( prm_element_symbol ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
+		                              charge           ( std::move( prm_charge )         )  //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
 		                              {
 			if ( ! boost::math::isfinite( occupancy ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Argument occupancy must be a normal, finite floating-point number"));
@@ -220,30 +220,30 @@ namespace cath {
 		}
 
 		/// \brief Get a string_ref for the untrimmed element type of the specified pdb_atom
-		inline boost::string_ref get_element_type_untrimmed_str_ref(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		inline boost::string_ref get_element_type_untrimmed_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
 		                                                            ) {
-			return common::string_ref_of_char_arr( arg_pdb_atom.get_element_type_untrimmed() );
+			return common::string_ref_of_char_arr( prm_pdb_atom.get_element_type_untrimmed() );
 		}
 
 		/// \brief Get the coarse_element_type corresponding to the specified pdb_atom
-		inline coarse_element_type get_coarse_element_type(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		inline coarse_element_type get_coarse_element_type(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
 		                                                   ) {
-			return get_coarse_element_type( arg_pdb_atom.get_element_type() );
+			return get_coarse_element_type( prm_pdb_atom.get_element_type() );
 		}
 
 		/// \brief Return whether this line purports to be an record of the specified pdb_record
 		///
 		/// Note: This does NOT check whether the line is a valid record;
 		///       Use atom_record_parse_problem() for that.
-		inline bool is_pdb_record_of_type(const std::string &arg_pdb_record_string, ///< The string to check
-		                                  const pdb_record  &arg_record_type        ///< TODOCUMENT
+		inline bool is_pdb_record_of_type(const std::string &prm_pdb_record_string, ///< The string to check
+		                                  const pdb_record  &prm_record_type        ///< TODOCUMENT
 		                                  ) {
-			if ( arg_pdb_record_string.empty() ) {
+			if ( prm_pdb_record_string.empty() ) {
 				return false;
 			}
-			switch ( arg_record_type ) {
-				case ( pdb_record::ATOM   ) : { return boost::algorithm::starts_with( arg_pdb_record_string, "ATOM  " ); }
-				case ( pdb_record::HETATM ) : { return boost::algorithm::starts_with( arg_pdb_record_string, "HETATM" ); }
+			switch ( prm_record_type ) {
+				case ( pdb_record::ATOM   ) : { return boost::algorithm::starts_with( prm_pdb_record_string, "ATOM  " ); }
+				case ( pdb_record::HETATM ) : { return boost::algorithm::starts_with( prm_pdb_record_string, "HETATM" ); }
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of pdb_record not recognised whilst checking is_pdb_record_of_type()"));
 		}
@@ -251,9 +251,9 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates pdb_atom
-		inline bool alt_locn_is_dssp_accepted(const pdb_atom &arg_pdb_atom ///< TODOCUMENT
+		inline bool alt_locn_is_dssp_accepted(const pdb_atom &prm_pdb_atom ///< TODOCUMENT
 		                                      ) {
-			return arg_pdb_atom.get_alt_locn() == ' ' || arg_pdb_atom.get_alt_locn() == 'A';;
+			return prm_pdb_atom.get_alt_locn() == ' ' || prm_pdb_atom.get_alt_locn() == 'A';;
 		}
 
 		/// \brief Convert the specified three-letter string and pdb_record to an amino_acid
@@ -262,14 +262,14 @@ namespace cath {
 		/// to be accepted for decay to UNK/X. See function body for the accepted combinations.
 		///
 		/// \relates pdb_atom
-		inline amino_acid get_amino_acid_of_string_and_record(const std::string &arg_aa_string,  ///< The three-letter amino acid string (eg "SER")
-		                                                      const pdb_record  &arg_record_type ///< Whether this is an ATOM or HETATM record
+		inline amino_acid get_amino_acid_of_string_and_record(const std::string &prm_aa_string,  ///< The three-letter amino acid string (eg "SER")
+		                                                      const pdb_record  &prm_record_type ///< Whether this is an ATOM or HETATM record
 		                                                      ) {
-			if ( arg_aa_string.length() != 3 ) {
+			if ( prm_aa_string.length() != 3 ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Amino acid string must contain three characters"));
 			}
 			try {
-				return { arg_aa_string, arg_record_type };
+				return { prm_aa_string, prm_record_type };
 			}
 			catch (...) {
 				const std::set<std::pair<std::string, pdb_record>> pdb_aa_entries_allowed_to_decay_to_unk = {
@@ -277,8 +277,8 @@ namespace cath {
 					{ "MSE", pdb_record::ATOM   },
 					{ "MSE", pdb_record::HETATM },
 				};
-				if ( common::contains( pdb_aa_entries_allowed_to_decay_to_unk, std::make_pair( arg_aa_string, arg_record_type ) ) ) {
-					return { "UNK", arg_record_type };
+				if ( common::contains( pdb_aa_entries_allowed_to_decay_to_unk, std::make_pair( prm_aa_string, prm_record_type ) ) ) {
+					return { "UNK", prm_record_type };
 				}
 				throw;
 			}
@@ -290,10 +290,10 @@ namespace cath {
 		/// See the body of get_amino_acid_of_string_and_record() for the accepted combinations.
 		///
 		/// \relates pdb_atom
-		inline amino_acid parse_amino_acid_from_pdb_atom_record(const std::string &arg_pdb_atom_record_string ///< TODOCUMENT
+		inline amino_acid parse_amino_acid_from_pdb_atom_record(const std::string &prm_pdb_atom_record_string ///< TODOCUMENT
 		                                                        ) {
-			const pdb_record  record_type = pdb_rec_of_six_chars_in_string( arg_pdb_atom_record_string                ); //  1 -  6        Record name   "ATOM  "
-			const std::string the_a_a     =                                 arg_pdb_atom_record_string.substr( 17, 3  ); // 18 - 20        Residue name  resName      Residue name.
+			const pdb_record  record_type = pdb_rec_of_six_chars_in_string( prm_pdb_atom_record_string                ); //  1 -  6        Record name   "ATOM  "
+			const std::string the_a_a     =                                 prm_pdb_atom_record_string.substr( 17, 3  ); // 18 - 20        Residue name  resName      Residue name.
 			return get_amino_acid_of_string_and_record(
 				the_a_a,
 				record_type
@@ -309,44 +309,44 @@ namespace cath {
 		///
 		/// \todo Come C++17 (or whenever the explicit on std::tuple's ctor is made dependent on whether any of the tuple's types are explicit),
 		///       remove the leading status_string_aa_tuple from all the return expressions.
-		inline status_string_aa_tuple pdb_record_parse_problem(const std::string &arg_pdb_atom_record_string ///< The string to check
+		inline status_string_aa_tuple pdb_record_parse_problem(const std::string &prm_pdb_atom_record_string ///< The string to check
 		                                                       ) {
 			amino_acid the_aa{ 'X' };
-			if ( ! is_pdb_record_of_type( arg_pdb_atom_record_string, pdb_record::ATOM ) && ! is_pdb_record_of_type( arg_pdb_atom_record_string, pdb_record::HETATM ) ) {
+			if ( ! is_pdb_record_of_type( prm_pdb_atom_record_string, pdb_record::ATOM ) && ! is_pdb_record_of_type( prm_pdb_atom_record_string, pdb_record::HETATM ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot check for atom record parse problems because string is not an ATOM record"));
 			}
-			if ( arg_pdb_atom_record_string.length() < pdb_atom::MIN_NUM_PDB_COLS ) {
+			if ( prm_pdb_atom_record_string.length() < pdb_atom::MIN_NUM_PDB_COLS ) {
 				return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Is too long", the_aa };
 			}
-			if ( arg_pdb_atom_record_string.length() > pdb_atom::MAX_NUM_PDB_COLS ) {
+			if ( prm_pdb_atom_record_string.length() > pdb_atom::MAX_NUM_PDB_COLS ) {
 				return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Is too long", the_aa };
 			}
-			if ( arg_pdb_atom_record_string.at( 11 ) != ' '   ) {
+			if ( prm_pdb_atom_record_string.at( 11 ) != ' '   ) {
 				return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Does not contain a space at column 12", the_aa };
 			}
-			if ( arg_pdb_atom_record_string.at( 20 ) != ' '   ) {
+			if ( prm_pdb_atom_record_string.at( 20 ) != ' '   ) {
 				return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Does not contain a space at column 21", the_aa };
 			}
-			if ( arg_pdb_atom_record_string.at( 27 ) != ' ' || arg_pdb_atom_record_string.at( 28 ) != ' ' || arg_pdb_atom_record_string.at( 29 ) != ' ' ) {
+			if ( prm_pdb_atom_record_string.at( 27 ) != ' ' || prm_pdb_atom_record_string.at( 28 ) != ' ' || prm_pdb_atom_record_string.at( 29 ) != ' ' ) {
 				return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Does not contain spaces at columns 28-30", the_aa };
 			}
-		//	if ( arg_pdb_atom_record_string.at( 16 ) != ' ' && arg_pdb_atom_record_string.at( 16 ) != 'A' ) {
+		//	if ( prm_pdb_atom_record_string.at( 16 ) != ' ' && prm_pdb_atom_record_string.at( 16 ) != 'A' ) {
 		//		return status_string_aa_tuple{ pdb_atom_parse_status::SKIP, "Has alternate location indicator other than 'A' or' '", the_aa };
 		//	}
 			try {
-				the_aa = parse_amino_acid_from_pdb_atom_record( arg_pdb_atom_record_string );
+				the_aa = parse_amino_acid_from_pdb_atom_record( prm_pdb_atom_record_string );
 			}
 			catch (const boost::exception &e) {
 				return status_string_aa_tuple{
 					pdb_atom_parse_status::SKIP,
-					"Do not recognise amino acid entry: \"" + arg_pdb_atom_record_string.substr( 17, 3 ) + "\" - " + diagnostic_information( e ),
+					"Do not recognise amino acid entry: \"" + prm_pdb_atom_record_string.substr( 17, 3 ) + "\" - " + diagnostic_information( e ),
 					the_aa
 				};
 			}
 			catch (...) {
 				return status_string_aa_tuple{
 					pdb_atom_parse_status::SKIP,
-					"Do not recognise amino acid entry: " + arg_pdb_atom_record_string.substr( 17, 3 ),
+					"Do not recognise amino acid entry: " + prm_pdb_atom_record_string.substr( 17, 3 ),
 					the_aa
 				};
 			}
@@ -356,31 +356,31 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates pdb_atom
-		inline resid_atom_pair parse_pdb_atom_record(const std::string &arg_pdb_atom_record_string, ///< TODOCUMENT
-		                                             const amino_acid  &arg_amino_acid
+		inline resid_atom_pair parse_pdb_atom_record(const std::string &prm_pdb_atom_record_string, ///< TODOCUMENT
+		                                             const amino_acid  &prm_amino_acid
 		                                             ) {
-			if ( isspace( arg_pdb_atom_record_string.at( 25 ) ) != 0 ) {
+			if ( isspace( prm_pdb_atom_record_string.at( 25 ) ) != 0 ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("PDB ATOM/HETATOM record malformed: space found in column 26 which should contain the end of a right justified residue number"));
 			}
 
 			try {
 				                                                                                                                       // Comments with PDB format documentation
 				                                                                                                                       // (http://www.wwpdb.org/documentation/format33/sect9.html#ATOM)
-				const pdb_record       record_type =       pdb_rec_of_six_chars_in_string( arg_pdb_atom_record_string                ); //  1 -  6        Record name   "ATOM  "
-				const uint             serial      =    common::parse_uint_from_substring( arg_pdb_atom_record_string,         6, 5  ); //  7 - 11        Integer       serial       Atom  serial number.
-				const char_4_arr       element     = common::get_char_arr_of_substring<4>( arg_pdb_atom_record_string,        12     ); // 13 - 16        Atom          name         Atom name.
-				const char            &alt_locn    =                                       arg_pdb_atom_record_string.at(     16     ); // 17             Character     altLoc       Alternate location indicator.
-		//		const std::string      the_a_a     =                                       arg_pdb_atom_record_string.substr( 17, 3  ); // 18 - 20        Residue name  resName      Residue name.
-				const char            &chain_char  =                                       arg_pdb_atom_record_string.at(     21     ); // 22             Character     chainID      Chain identifier.
-				const int              res_num     =     common::parse_int_from_substring( arg_pdb_atom_record_string,        22, 4  ); // 23 - 26        Integer       resSeq       Residue sequence number.
-				const char            &insert_code =                                       arg_pdb_atom_record_string.at    ( 26     ); // 27             AChar         iCode        Code for insertion of residues.
-				const double           coord_x     =  common::parse_double_from_substring( arg_pdb_atom_record_string,        30, 8  ); // 31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
-				const double           coord_y     =  common::parse_double_from_substring( arg_pdb_atom_record_string,        38, 8  ); // 39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
-				const double           coord_z     =  common::parse_double_from_substring( arg_pdb_atom_record_string,        46, 8  ); // 47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
-				const float            occupancy   =  common::parse_float_from_substring ( arg_pdb_atom_record_string,        54, 6  ); // 55 - 60        Real(6.2)     occupancy    Occupancy.
-				const float            temp_factor =  common::parse_float_from_substring ( arg_pdb_atom_record_string,        60, 6  ); // 61 - 66        Real(6.2)     tempFactor   Temperature  factor.
-				const char_2_arr       element_sym = common::get_char_arr_of_substring<2>( arg_pdb_atom_record_string,        76     ); // 77 - 78        LString(2)    element      Element symbol, right-justified.
-				const char_2_arr       charge      = common::get_char_arr_of_substring<2>( arg_pdb_atom_record_string,        78     ); // 79 - 80        LString(2)    charge       Charge  on the atom.
+				const pdb_record       record_type =       pdb_rec_of_six_chars_in_string( prm_pdb_atom_record_string                ); //  1 -  6        Record name   "ATOM  "
+				const uint             serial      =    common::parse_uint_from_substring( prm_pdb_atom_record_string,         6, 5  ); //  7 - 11        Integer       serial       Atom  serial number.
+				const char_4_arr       element     = common::get_char_arr_of_substring<4>( prm_pdb_atom_record_string,        12     ); // 13 - 16        Atom          name         Atom name.
+				const char            &alt_locn    =                                       prm_pdb_atom_record_string.at(     16     ); // 17             Character     altLoc       Alternate location indicator.
+		//		const std::string      the_a_a     =                                       prm_pdb_atom_record_string.substr( 17, 3  ); // 18 - 20        Residue name  resName      Residue name.
+				const char            &chain_char  =                                       prm_pdb_atom_record_string.at(     21     ); // 22             Character     chainID      Chain identifier.
+				const int              res_num     =     common::parse_int_from_substring( prm_pdb_atom_record_string,        22, 4  ); // 23 - 26        Integer       resSeq       Residue sequence number.
+				const char            &insert_code =                                       prm_pdb_atom_record_string.at    ( 26     ); // 27             AChar         iCode        Code for insertion of residues.
+				const double           coord_x     =  common::parse_double_from_substring( prm_pdb_atom_record_string,        30, 8  ); // 31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
+				const double           coord_y     =  common::parse_double_from_substring( prm_pdb_atom_record_string,        38, 8  ); // 39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
+				const double           coord_z     =  common::parse_double_from_substring( prm_pdb_atom_record_string,        46, 8  ); // 47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
+				const float            occupancy   =  common::parse_float_from_substring ( prm_pdb_atom_record_string,        54, 6  ); // 55 - 60        Real(6.2)     occupancy    Occupancy.
+				const float            temp_factor =  common::parse_float_from_substring ( prm_pdb_atom_record_string,        60, 6  ); // 61 - 66        Real(6.2)     tempFactor   Temperature  factor.
+				const char_2_arr       element_sym = common::get_char_arr_of_substring<2>( prm_pdb_atom_record_string,        76     ); // 77 - 78        LString(2)    element      Element symbol, right-justified.
+				const char_2_arr       charge      = common::get_char_arr_of_substring<2>( prm_pdb_atom_record_string,        78     ); // 79 - 80        LString(2)    charge       Charge  on the atom.
 
 				return {
 					residue_id{
@@ -392,7 +392,7 @@ namespace cath {
 						serial,
 						element,
 						alt_locn,
-						arg_amino_acid,
+						prm_amino_acid,
 						geom::coord{ coord_x, coord_y, coord_z },
 						occupancy,
 						temp_factor,
@@ -402,49 +402,49 @@ namespace cath {
 				};
 			}
 			catch (const boost::bad_lexical_cast &) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to cast a column whilst parsing a PDB ATOM record, which probably means it's malformed.\nRecord was \"" + arg_pdb_atom_record_string + "\""));
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to cast a column whilst parsing a PDB ATOM record, which probably means it's malformed.\nRecord was \"" + prm_pdb_atom_record_string + "\""));
 			}
 			catch (const std::invalid_argument &) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to cast a column whilst parsing a PDB ATOM record, which probably means it's malformed.\nRecord was \"" + arg_pdb_atom_record_string + "\""));
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to cast a column whilst parsing a PDB ATOM record, which probably means it's malformed.\nRecord was \"" + prm_pdb_atom_record_string + "\""));
 			}
 			catch (const std::out_of_range &) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Casted column out of range whilst parsing a PDB ATOM record, which probably means it's malformed.\nRecord was \"" + arg_pdb_atom_record_string + "\""));
+				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Casted column out of range whilst parsing a PDB ATOM record, which probably means it's malformed.\nRecord was \"" + prm_pdb_atom_record_string + "\""));
 			}
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates pdb_atom
-		inline resid_atom_pair parse_pdb_atom_record(const std::string &arg_pdb_atom_record_string ///< TODOCUMENT
+		inline resid_atom_pair parse_pdb_atom_record(const std::string &prm_pdb_atom_record_string ///< TODOCUMENT
 		                                             ) {
 			return parse_pdb_atom_record(
-				arg_pdb_atom_record_string,
-				parse_amino_acid_from_pdb_atom_record( arg_pdb_atom_record_string )
+				prm_pdb_atom_record_string,
+				parse_amino_acid_from_pdb_atom_record( prm_pdb_atom_record_string )
 			);
 		}
 
 		/// \brief Get a string_ref to (the non-null part of) the specified pdb_atom's element_symbol string
 		///
 		/// \relates pdb_atom
-		inline boost::string_ref get_element_symbol_str_ref(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		inline boost::string_ref get_element_symbol_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
 		                                                    ) {
-			return common::string_ref_of_null_term_char_arr( arg_pdb_atom.get_element_symbol() );
+			return common::string_ref_of_null_term_char_arr( prm_pdb_atom.get_element_symbol() );
 		}
 
 		/// \brief Get a string_ref to (the non-null part of) the specified pdb_atom's charge string
 		///
 		/// \relates pdb_atom
-		inline boost::string_ref get_charge_str_ref(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		inline boost::string_ref get_charge_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
 		                                            ) {
-			return common::string_ref_of_null_term_char_arr( arg_pdb_atom.get_charge() );
+			return common::string_ref_of_null_term_char_arr( prm_pdb_atom.get_charge() );
 		}
 
 		/// \brief Return whether the specified pdb_atom's amino_acid is for water (HOH)
 		///
 		/// \relates pdb_atom
-		inline bool is_water(const pdb_atom &arg_pdb_atom ///< The pdb_atom to query
+		inline bool is_water(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
 		                     ) {
-			return is_water( arg_pdb_atom.get_amino_acid() );
+			return is_water( prm_pdb_atom.get_amino_acid() );
 		}
 
 	} // namespace file

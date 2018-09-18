@@ -80,9 +80,9 @@ namespace cath {
 		///
 		/// \returns A raw pointer to a new copy of the superposition_outputter argument, with the same dynamic type.
 		///          The caller is responsible for deleting this new object.
-		inline superposition_outputter * new_clone(const superposition_outputter &arg_superposition_outputter ///< The superposition_outputter to clone
+		inline superposition_outputter * new_clone(const superposition_outputter &prm_superposition_outputter ///< The superposition_outputter to clone
 		                                           ) {
-			return arg_superposition_outputter.clone().release();
+			return prm_superposition_outputter.clone().release();
 		}
 	} // namespace opts
 } // namespace cath

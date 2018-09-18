@@ -41,8 +41,8 @@ using std::ofstream;
 using std::string;
 
 /// \brief Ctor from a clust_mapping_spec under which the mappings have been / will be performed
-aggregate_map_results::aggregate_map_results(const clust_mapping_spec &arg_clust_mapping_spec ///< The clust_mapping_spec under which the mappings have been / will be performed
-                                             ) noexcept : the_spec { arg_clust_mapping_spec } {
+aggregate_map_results::aggregate_map_results(const clust_mapping_spec &prm_clust_mapping_spec ///< The clust_mapping_spec under which the mappings have been / will be performed
+                                             ) noexcept : the_spec { prm_clust_mapping_spec } {
 }
 
 /// \brief Getter for whether this has had results added to it
@@ -102,20 +102,20 @@ const clust_mapping_spec & aggregate_map_results::get_clust_mapping_spec() const
 }
 
 /// \brief Add the results from a new mapping
-aggregate_map_results & aggregate_map_results::add_map_results(const map_results      &arg_map_results,  ///< The results to add
-                                                               const old_cluster_data &arg_old_clusters, ///< The old clusters that were mapped from
-                                                               const new_cluster_data &arg_new_clusters  ///< The new clusters that were mapped to
+aggregate_map_results & aggregate_map_results::add_map_results(const map_results      &prm_map_results,  ///< The results to add
+                                                               const old_cluster_data &prm_old_clusters, ///< The old clusters that were mapped from
+                                                               const new_cluster_data &prm_new_clusters  ///< The new clusters that were mapped to
                                                                ) {
-	if ( arg_map_results.the_spec != the_spec ) {
+	if ( prm_map_results.the_spec != the_spec ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot add map_results that were performed under a different clust_mapping_spec to an aggregate_map_results"));
 	}
 
-	const size_t  curr_num_mapped_clusters = arg_map_results.chosen_maps.size();
-	const size_t  curr_num_old_clusters    = get_num_clusters      ( arg_old_clusters );
-	const size_t  curr_num_new_clusters    = get_num_clusters      ( arg_new_clusters );
-	const size_t  curr_num_old_entries     = get_num_entries       ( arg_old_clusters );
-	const size_t  curr_num_new_entries     = get_num_entries       ( arg_new_clusters );
-	const size_t  curr_num_mapped_entries  = ::cath::clust::get_num_mapped_entries( arg_map_results  );
+	const size_t  curr_num_mapped_clusters = prm_map_results.chosen_maps.size();
+	const size_t  curr_num_old_clusters    = get_num_clusters      ( prm_old_clusters );
+	const size_t  curr_num_new_clusters    = get_num_clusters      ( prm_new_clusters );
+	const size_t  curr_num_old_entries     = get_num_entries       ( prm_old_clusters );
+	const size_t  curr_num_new_entries     = get_num_entries       ( prm_new_clusters );
+	const size_t  curr_num_mapped_entries  = ::cath::clust::get_num_mapped_entries( prm_map_results  );
 
 	if ( curr_num_mapped_clusters > curr_num_old_clusters || curr_num_mapped_clusters > curr_num_new_clusters ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Cannot have mapped more clusters than there are old/new clusters"));
@@ -127,10 +127,10 @@ aggregate_map_results & aggregate_map_results::add_map_results(const map_results
 	num_old_entries                     += curr_num_old_entries;
 	num_new_entries                     += curr_num_new_entries;
 	num_mapped_entries                  += curr_num_mapped_entries;
-	num_with_nothing_on_parent          += arg_map_results.num_with_nothing_on_parent;
+	num_with_nothing_on_parent          += prm_map_results.num_with_nothing_on_parent;
 
-	highest_old_dom_overlap_fractions   += arg_map_results.highest_old_dom_overlap_fractions;
-	highest_old_clust_overlap_fractions += arg_map_results.highest_old_clust_overlap_fractions;
+	highest_old_dom_overlap_fractions   += prm_map_results.highest_old_dom_overlap_fractions;
+	highest_old_clust_overlap_fractions += prm_map_results.highest_old_clust_overlap_fractions;
 
 	added_to                             = true;
 
@@ -140,38 +140,38 @@ aggregate_map_results & aggregate_map_results::add_map_results(const map_results
 /// \brief Make a aggregate_map_results containing one entry, the mapping between the specified clusters with the specified results
 ///
 /// \relates aggregate_map_results
-aggregate_map_results cath::clust::make_aggregate_map_results(const map_results      &arg_map_results,      ///< The results with which the aggregate_map_results should be initialised
-                                                              const old_cluster_data &arg_old_cluster_data, ///< The old clusters that were mapped from
-                                                              const new_cluster_data &arg_new_cluster_data  ///< The new clusters that were mapped to
+aggregate_map_results cath::clust::make_aggregate_map_results(const map_results      &prm_map_results,      ///< The results with which the aggregate_map_results should be initialised
+                                                              const old_cluster_data &prm_old_cluster_data, ///< The old clusters that were mapped from
+                                                              const new_cluster_data &prm_new_cluster_data  ///< The new clusters that were mapped to
                                                               ) {
-	aggregate_map_results result{ arg_map_results.the_spec };
-	result.add_map_results( arg_map_results, arg_old_cluster_data, arg_new_cluster_data );
+	aggregate_map_results result{ prm_map_results.the_spec };
+	result.add_map_results( prm_map_results, prm_old_cluster_data, prm_new_cluster_data );
 	return result;
 }
 
 /// \brief Generate a Markdown summary of the specified map_results
 ///
 /// \relates aggregate_map_results
-string cath::clust::markdown_summary_string(const aggregate_map_results &arg_aggregate_map_results ///< The map_results to summarise
+string cath::clust::markdown_summary_string(const aggregate_map_results &prm_aggregate_map_results ///< The map_results to summarise
                                             ) {
-	if ( ! arg_aggregate_map_results.get_added_to() ) {
+	if ( ! prm_aggregate_map_results.get_added_to() ) {
 		return "No mapping was performed";
 	}
 
 	const doub_vec percentile_list = { 25.0, 50.0, 75.0, 90.0, 95.0, 98.0, 99.0, 100.0 };
 
-	const auto   &highest_old_dom_ol_fracs  = arg_aggregate_map_results.get_highest_old_dom_overlap_fractions();
-	const auto   &highest_old_clst_ol_fracs = arg_aggregate_map_results.get_highest_old_clust_overlap_fractions();
+	const auto   &highest_old_dom_ol_fracs  = prm_aggregate_map_results.get_highest_old_dom_overlap_fractions();
+	const auto   &highest_old_clst_ol_fracs = prm_aggregate_map_results.get_highest_old_clust_overlap_fractions();
 
-	const size_t &num_old_clusters          = arg_aggregate_map_results.get_num_old_clusters();
-	const size_t &num_new_clusters          = arg_aggregate_map_results.get_num_new_clusters();
-	const size_t &num_mapped_clusters       = arg_aggregate_map_results.get_num_mapped_clusters();
+	const size_t &num_old_clusters          = prm_aggregate_map_results.get_num_old_clusters();
+	const size_t &num_new_clusters          = prm_aggregate_map_results.get_num_new_clusters();
+	const size_t &num_mapped_clusters       = prm_aggregate_map_results.get_num_mapped_clusters();
 	const size_t  num_unmapped_old_clusters = num_old_clusters - num_mapped_clusters;
 	const size_t  num_unmapped_new_clusters = num_new_clusters - num_mapped_clusters;
 
-	const size_t &num_old_entries           = arg_aggregate_map_results.get_num_old_entries();
-	const size_t &num_new_entries           = arg_aggregate_map_results.get_num_new_entries();
-	const size_t &num_mapped_entries        = arg_aggregate_map_results.get_num_mapped_entries();
+	const size_t &num_old_entries           = prm_aggregate_map_results.get_num_old_entries();
+	const size_t &num_new_entries           = prm_aggregate_map_results.get_num_new_entries();
+	const size_t &num_mapped_entries        = prm_aggregate_map_results.get_num_mapped_entries();
 	const size_t  num_unmapped_old_entries  = num_old_entries - num_mapped_entries;
 	const size_t  num_unmapped_new_entries  = num_new_entries - num_mapped_entries;
 
@@ -186,8 +186,8 @@ string cath::clust::markdown_summary_string(const aggregate_map_results &arg_agg
 	const double  pc_old_entries_unmapped   = 100.0 * numeric_cast<double>( num_unmapped_old_entries  ) / numeric_cast<double>( num_old_entries  );
 	const double  pc_new_entries_unmapped   = 100.0 * numeric_cast<double>( num_unmapped_new_entries  ) / numeric_cast<double>( num_new_entries  );
 
-	const double  min_equiv_dom_ol_pc       = 100.0 * arg_aggregate_map_results.get_clust_mapping_spec().get_min_equiv_dom_ol();
-	const double  min_equiv_clust_ol_pc     = 100.0 * arg_aggregate_map_results.get_clust_mapping_spec().get_min_equiv_clust_ol();
+	const double  min_equiv_dom_ol_pc       = 100.0 * prm_aggregate_map_results.get_clust_mapping_spec().get_min_equiv_dom_ol();
+	const double  min_equiv_clust_ol_pc     = 100.0 * prm_aggregate_map_results.get_clust_mapping_spec().get_min_equiv_clust_ol();
 
 	const string  dom_pc_str                = ( format( "%.1f" ) % min_equiv_dom_ol_pc ).str();
 
@@ -253,7 +253,7 @@ Histogram of domain mapping percentages
 		"Domain overlap",
 		"Number of map-from domains",
 		"Percentage of map-from domains",
-		arg_aggregate_map_results.get_num_with_nothing_on_parent()
+		prm_aggregate_map_results.get_num_with_nothing_on_parent()
 	)
 	+ R"(
 
@@ -330,11 +330,11 @@ Excluding completely-unmapped clusters:
 /// \brief Write a Markdown summary of the specified aggregate_map_results to the specified file
 ///
 /// \relates aggregate_map_results
-void cath::clust::write_markdown_summary_string_to_file(const path                  &arg_output_file,          ///< The file to which the Markdown summary should be written
-                                                        const aggregate_map_results &arg_aggregate_map_results ///< The aggregate_map_results to summarise
+void cath::clust::write_markdown_summary_string_to_file(const path                  &prm_output_file,          ///< The file to which the Markdown summary should be written
+                                                        const aggregate_map_results &prm_aggregate_map_results ///< The aggregate_map_results to summarise
                                                         ) {
 	ofstream md_ostream;
-	open_ofstream( md_ostream, arg_output_file );
-	md_ostream << markdown_summary_string( arg_aggregate_map_results );
+	open_ofstream( md_ostream, prm_output_file );
+	md_ostream << markdown_summary_string( prm_aggregate_map_results );
 	md_ostream.close();
 }

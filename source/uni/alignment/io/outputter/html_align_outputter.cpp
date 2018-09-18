@@ -48,12 +48,12 @@ using namespace cath::sup;
 using namespace std;
 
 /// \brief Ctor for html_align_outputter
-html_align_outputter::html_align_outputter(const alignment          &arg_alignment, ///< The alignment to be output
-                                           const strucs_context     &arg_context,   ///< TODOCUMENT
-                                           const display_colourer   &arg_colourer   ///< TODOCUMENT
-                                           ) : the_alignment { arg_alignment },
-                                               context       { arg_context   },
-                                               colourer      { arg_colourer  } {
+html_align_outputter::html_align_outputter(const alignment          &prm_alignment, ///< The alignment to be output
+                                           const strucs_context     &prm_context,   ///< TODOCUMENT
+                                           const display_colourer   &prm_colourer   ///< TODOCUMENT
+                                           ) : the_alignment { prm_alignment },
+                                               context       { prm_context   },
+                                               colourer      { prm_colourer  } {
 }
 
 /// \brief Getter for the const reference to the alignment
@@ -72,33 +72,33 @@ const display_colourer & html_align_outputter::get_display_colourer() const {
 }
 
 /// \brief TODOCUMENT
-const pdb_list & cath::align::get_pdbs(const html_align_outputter &arg_html_align_outputter ///< TODOCUMENT
+const pdb_list & cath::align::get_pdbs(const html_align_outputter &prm_html_align_outputter ///< TODOCUMENT
                                        ) {
-	return arg_html_align_outputter.get_strucs_context().get_pdbs();
+	return prm_html_align_outputter.get_strucs_context().get_pdbs();
 }
 
 /// \brief TODOCUMENT
-const name_set_list & cath::align::get_name_sets(const html_align_outputter &arg_html_align_outputter ///< TODOCUMENT
+const name_set_list & cath::align::get_name_sets(const html_align_outputter &prm_html_align_outputter ///< TODOCUMENT
                                                  ) {
-	return arg_html_align_outputter.get_strucs_context().get_name_sets();
+	return prm_html_align_outputter.get_strucs_context().get_name_sets();
 }
 
 /// \brief The specification of the regions of the PDBs to which the alignment refers
-const region_vec_opt_vec & cath::align::get_regions(const html_align_outputter &arg_html_align_outputter ///< TODOCUMENT
+const region_vec_opt_vec & cath::align::get_regions(const html_align_outputter &prm_html_align_outputter ///< TODOCUMENT
                                                     ) {
-	return arg_html_align_outputter.get_strucs_context().get_regions();
+	return prm_html_align_outputter.get_strucs_context().get_regions();
 }
 
 /// \brief Make an html_align_outputter from the specified alignment_context and display_colourer
 ///
 /// \relates html_align_outputter
-html_align_outputter cath::align::make_html_align_outputter(const alignment_context &arg_alignment_context, ///< The alignment_context from which to build the html_align_outputter
-                                                            const display_colourer  &arg_display_colourer   ///< The display_colourer from which to build the html_align_outputter
+html_align_outputter cath::align::make_html_align_outputter(const alignment_context &prm_alignment_context, ///< The alignment_context from which to build the html_align_outputter
+                                                            const display_colourer  &prm_display_colourer   ///< The display_colourer from which to build the html_align_outputter
                                                             ) {
 	return {
-		arg_alignment_context.get_alignment(),
-		arg_alignment_context.get_strucs_context(),
-		arg_display_colourer
+		prm_alignment_context.get_alignment(),
+		prm_alignment_context.get_strucs_context(),
+		prm_display_colourer
 	};
 }
 
@@ -111,19 +111,19 @@ html_align_outputter cath::align::make_html_align_outputter(const alignment_cont
 /// position number.
 ///
 /// \relates html_align_outputter
-ostream & cath::align::operator<<(ostream                    &arg_os,                  ///< The ostream to which the alignment should be output
-                                  const html_align_outputter &arg_html_align_outputter ///< A html_align_outputter that wraps the alignment to be output
+ostream & cath::align::operator<<(ostream                    &prm_os,                  ///< The ostream to which the alignment should be output
+                                  const html_align_outputter &prm_html_align_outputter ///< A html_align_outputter that wraps the alignment to be output
                                   ) {
 	// Grab alignment and then some basic information from it
-	const alignment           &the_alignment   = arg_html_align_outputter.get_alignment();
-	const pdb_list            &pdbs            = get_pdbs     ( arg_html_align_outputter );
-	const region_vec_opt_vec  &regions         = get_regions  ( arg_html_align_outputter );
-	const name_set_list       &name_sets       = get_name_sets( arg_html_align_outputter );
+	const alignment           &the_alignment   = prm_html_align_outputter.get_alignment();
+	const pdb_list            &pdbs            = get_pdbs     ( prm_html_align_outputter );
+	const region_vec_opt_vec  &regions         = get_regions  ( prm_html_align_outputter );
+	const name_set_list       &name_sets       = get_name_sets( prm_html_align_outputter );
 	const str_vec             &names           = get_alignment_html_names( name_sets );
-	const display_colourer    &colourer        = arg_html_align_outputter.get_display_colourer();
+	const display_colourer    &colourer        = prm_html_align_outputter.get_display_colourer();
 	const alignment::size_type length          = the_alignment.length();
 	const alignment::size_type num_entries     = the_alignment.num_entries();
-	const display_colour_spec  colour_spec     = get_colour_spec( colourer, arg_html_align_outputter.get_strucs_context(), the_alignment );
+	const display_colour_spec  colour_spec     = get_colour_spec( colourer, prm_html_align_outputter.get_strucs_context(), the_alignment );
 	const display_colour_vec   colours         = get_all_colours( colour_spec );
 	const size_t               num_colours     = colours.size();
 	const str_vec              colour_names    = generate_colour_names( num_colours, colour_category::STRUC_OR_RES );
@@ -131,10 +131,10 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 	const size_display_colour_map      &colour_of_pdb_map         = get_clr_of_pdb( colour_spec );
 	const size_size_display_colour_map &colour_of_pdb_and_res_map = colour_spec.get_clr_of_pdb_and_res();
 
-	arg_os << "<html>\n";
+	prm_os << "<html>\n";
 
 	if ( false ) {
-		arg_os << R"(
+		prm_os << R"(
 <html>
 
 <head>
@@ -176,7 +176,7 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 )";
 	}
 
-	arg_os << R"(
+	prm_os << R"(
 <style>
 #aln_container {
 	font-family : "Liberation Mono", courier, monospace;
@@ -203,10 +203,10 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 		const display_colour &colour      = colours      [ colour_ctr ];
 		const string         &colour_name = colour_names [ colour_ctr ];
 		const string         &colour_hex  = hex_string_of_colour( colour );
-		arg_os << "span." << colour_name << " {background: #" << colour_hex << "}\n";
+		prm_os << "span." << colour_name << " {background: #" << colour_hex << "}\n";
 		colour_name_of_hex_string[ colour_hex ] = colour_name;
 	}
-	arg_os << R"(span.gap {
+	prm_os << R"(span.gap {
 	background  : white;
 	color       : white;
 }
@@ -220,9 +220,9 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 		const pdb    &the_pdb     = pdbs [ entry_ctr ];
 		const string &name        = names[ entry_ctr ];
 		const auto   &pdb_regions = regions[ entry_ctr ];
-		arg_os << "<div class=\"seq\">";
-		arg_os << "<div class=\"seq-name\">&gt;" << name << "</div>";
-		arg_os << "<div class=\"seq-res\">";
+		prm_os << "<div class=\"seq\">";
+		prm_os << "<div class=\"seq-name\">&gt;" << name << "</div>";
+		prm_os << "<div class=\"seq-res\">";
 		for (const alignment::size_type &index_ctr : indices( length ) ) {
 			const aln_posn_opt position = the_alignment.position_of_entry_of_index( entry_ctr, index_ctr );
 			if ( position ) {
@@ -234,18 +234,18 @@ ostream & cath::align::operator<<(ostream                    &arg_os,           
 				const string         the_colour_hex     = hex_string_of_colour( the_colour );
 				const string         the_colour_name    = colour_name_of_hex_string.at( the_colour_hex );
 
-				arg_os << "<span class=" << the_colour_name << ">" << amino_acid_letter << "</span>";
+				prm_os << "<span class=" << the_colour_name << ">" << amino_acid_letter << "</span>";
 			}
 			else {
-				arg_os << "<span class=gap>-</span>";
+				prm_os << "<span class=gap>-</span>";
 			}
 		}
-		arg_os << "</div></div>\n";
+		prm_os << "</div></div>\n";
 	}
-	arg_os << "</div>";
-	arg_os << "</body>";
-	arg_os << "</html>";
+	prm_os << "</div>";
+	prm_os << "</body>";
+	prm_os << "</html>";
 
 	// Return the specified ostream
-	return arg_os;
+	return prm_os;
 }

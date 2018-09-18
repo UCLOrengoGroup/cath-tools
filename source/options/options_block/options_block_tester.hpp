@@ -63,11 +63,11 @@ namespace cath {
 
 		/// \brief For a concrete options_block, parse the specified options into a copy of the specified block
 		template <typename OB>
-		OB options_block_tester::parse_into_options_block_copy(OB             arg_options_block, ///< The options_block from which a copy should be taken that then has the options parsed into it
-		                                                       const str_vec &arg_options        ///< A vector of options strings to parse into the options_block (without the program name at the start - a dummy program name will be added)
+		OB options_block_tester::parse_into_options_block_copy(OB             prm_options_block, ///< The options_block from which a copy should be taken that then has the options parsed into it
+		                                                       const str_vec &prm_options        ///< A vector of options strings to parse into the options_block (without the program name at the start - a dummy program name will be added)
 		                                                       ) {
-			parse_into_options_block( arg_options_block, arg_options );
-			return arg_options_block;
+			parse_into_options_block( prm_options_block, prm_options );
+			return prm_options_block;
 		}
 
 	} // namespace opts

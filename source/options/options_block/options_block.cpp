@@ -49,8 +49,8 @@ const string options_block::SUB_DESC_SEPARATOR = "\n   ";
 const string options_block::SUB_DESC_PAIR_SEPARATOR = " - ";
 
 /// \brief TODOCUMENT
-void options_block::do_add_hidden_options_to_description(options_description &/*arg_desc*/,       ///< TODOCUMENT
-                                                         const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void options_block::do_add_hidden_options_to_description(options_description &/*prm_desc*/,       ///< TODOCUMENT
+                                                         const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                          ) {
 }
 
@@ -60,26 +60,26 @@ unique_ptr<options_block> options_block::clone() const {
 }
 
 /// \brief Add all this block's visible options to the specified options_description
-void options_block::add_visible_options_to_description(options_description &arg_desc, ///< The options_description to which the block's hidden options should be added
-                                                       const size_t &arg_line_length  ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void options_block::add_visible_options_to_description(options_description &prm_desc, ///< The options_description to which the block's hidden options should be added
+                                                       const size_t &prm_line_length  ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                        ) {
-	do_add_visible_options_to_description( arg_desc, arg_line_length );
+	do_add_visible_options_to_description( prm_desc, prm_line_length );
 }
 
 /// \brief Add all this block's hidden options to the specified options_description
-void options_block::add_hidden_options_to_description(options_description &arg_desc, ///< The options_description to which the block's hidden options should be added
-                                                      const size_t &arg_line_length  ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void options_block::add_hidden_options_to_description(options_description &prm_desc, ///< The options_description to which the block's hidden options should be added
+                                                      const size_t &prm_line_length  ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                       ) {
-	do_add_hidden_options_to_description( arg_desc, arg_line_length );
+	do_add_hidden_options_to_description( prm_desc, prm_line_length );
 }
 
 /// \brief A method that uses the concrete class's methods to construct an options description
 ///        (using the specified line_length) of the hidden options
-options_description options_block::get_all_options_description(const size_t &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+options_description options_block::get_all_options_description(const size_t &prm_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                ) {
-	options_description desc{ do_get_block_name(), numeric_cast<unsigned int>( arg_line_length ) };
-	do_add_visible_options_to_description( desc, arg_line_length );
-	add_hidden_options_to_description ( desc, arg_line_length );
+	options_description desc{ do_get_block_name(), numeric_cast<unsigned int>( prm_line_length ) };
+	do_add_visible_options_to_description( desc, prm_line_length );
+	add_hidden_options_to_description ( desc, prm_line_length );
 	return desc;
 }
 
@@ -88,11 +88,11 @@ options_description options_block::get_all_options_description(const size_t &arg
 ///
 /// The Boost program_options documentation seems to be a bit out of sync with the actual code.
 /// In particular, line_length isn't (well) documented.
-options_description options_block::get_visible_options_description(const size_t &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+options_description options_block::get_visible_options_description(const size_t &prm_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	const string block_name = do_get_block_name();
-	options_description desc( block_name, numeric_cast<unsigned int>( arg_line_length ) );
-	do_add_visible_options_to_description( desc, arg_line_length );
+	options_description desc( block_name, numeric_cast<unsigned int>( prm_line_length ) );
+	do_add_visible_options_to_description( desc, prm_line_length );
 	return desc;
 }
 
@@ -101,18 +101,18 @@ options_description options_block::get_visible_options_description(const size_t 
 ///
 /// The Boost program_options documentation seems to be a bit out of sync with the actual code.
 /// In particular, line_length isn't (well) documented.
-options_description options_block::get_hidden_options_description(const size_t &arg_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+options_description options_block::get_hidden_options_description(const size_t &prm_line_length ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                   ) {
 	const string block_name = do_get_block_name();
-	options_description desc( block_name + " [hidden options]", numeric_cast<unsigned int>( arg_line_length )  );
-	add_hidden_options_to_description( desc, arg_line_length );
+	options_description desc( block_name + " [hidden options]", numeric_cast<unsigned int>( prm_line_length )  );
+	add_hidden_options_to_description( desc, prm_line_length );
 	return desc;
 }
 
 /// \brief An NVI pass-through to a method that returns a string describing any problems or "" if none
-str_opt options_block::invalid_string(const variables_map &arg_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt options_block::invalid_string(const variables_map &prm_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                       ) const {
-	return do_invalid_string( arg_variables_map );
+	return do_invalid_string( prm_variables_map );
 }
 
 /// \brief An NVI pass-through to a method that returns the options_block's full list of options names
@@ -121,54 +121,54 @@ str_vec options_block::get_all_options_names() const {
 }
 
 /// \brief TODOCUMENT
-bool options_block::is_acceptable_output_file(const path &arg_output_file ///< TODOCUMENT
+bool options_block::is_acceptable_output_file(const path &prm_output_file ///< TODOCUMENT
                                               ) {
-	if (exists(arg_output_file) && !is_regular_file(arg_output_file)) {
+	if (exists(prm_output_file) && !is_regular_file(prm_output_file)) {
 		return false;
 	}
-	if (arg_output_file.has_parent_path() && !is_directory(arg_output_file.parent_path())) {
+	if (prm_output_file.has_parent_path() && !is_directory(prm_output_file.parent_path())) {
 		return false;
 	}
 	return true;
 }
 
 /// \brief TODOCUMENT
-bool options_block::is_acceptable_input_file(const path &arg_output_file, ///< TODOCUMENT
-                                             const bool &arg_allow_empty  ///< TODOCUMENT
+bool options_block::is_acceptable_input_file(const path &prm_output_file, ///< TODOCUMENT
+                                             const bool &prm_allow_empty  ///< TODOCUMENT
                                              ) {
 	using boost::filesystem::is_empty;
 
-	if (!exists(arg_output_file)) {
+	if (!exists(prm_output_file)) {
 		return false;
 	}
-	if (!arg_allow_empty && is_empty(arg_output_file)) {
+	if (!prm_allow_empty && is_empty(prm_output_file)) {
 		return false;
 	}
 	return true;
 }
 
 /// \brief TODOCUMENT
-bool options_block::is_acceptable_output_dir(const path &arg_output_dir ///< TODOCUMENT
+bool options_block::is_acceptable_output_dir(const path &prm_output_dir ///< TODOCUMENT
                                              ) {
-	return ( exists( arg_output_dir ) && is_directory( arg_output_dir ) );
+	return ( exists( prm_output_dir ) && is_directory( prm_output_dir ) );
 }
 
 /// \brief TODOCUMENT
-bool options_block::is_acceptable_input_dir(const path &arg_input_dir ///< TODOCUMENT
+bool options_block::is_acceptable_input_dir(const path &prm_input_dir ///< TODOCUMENT
                                             ) {
-	return ( exists( arg_input_dir ) && is_directory( arg_input_dir ) );
+	return ( exists( prm_input_dir ) && is_directory( prm_input_dir ) );
 }
 
 /// \brief TODOCUMENT
-bool options_block::is_acceptable_executable(const path &arg_output_file ///< TODOCUMENT
+bool options_block::is_acceptable_executable(const path &prm_output_file ///< TODOCUMENT
                                              ) {
-	if (arg_output_file.filename() == ".." || arg_output_file.filename() == ".") {
+	if (prm_output_file.filename() == ".." || prm_output_file.filename() == ".") {
 //		cerr << "Here0" << endl;
 		return false;
 	}
-	if (arg_output_file.has_root_directory() || arg_output_file.has_root_name()) {
+	if (prm_output_file.has_root_directory() || prm_output_file.has_root_name()) {
 //		cerr << "Here1" << endl;
-		if (!exists(arg_output_file) && !is_regular_file(arg_output_file)) {
+		if (!exists(prm_output_file) && !is_regular_file(prm_output_file)) {
 //			cerr << "Here2" << endl;
 			return false;
 		}
@@ -179,54 +179,54 @@ bool options_block::is_acceptable_executable(const path &arg_output_file ///< TO
 /// \brief Return whether the specified variables_map has specified the option with the specified name
 ///
 /// \relates options_block
-bool cath::opts::specifies_option(const variables_map &arg_vm,      ///< The variables_map to examine
-                                  const string        &arg_opt_name ///< The name of the option of interest
+bool cath::opts::specifies_option(const variables_map &prm_vm,      ///< The variables_map to examine
+                                  const string        &prm_opt_name ///< The name of the option of interest
                                   ) {
 	return (
-		contains( arg_vm, arg_opt_name )
+		contains( prm_vm, prm_opt_name )
 		&&
-		! arg_vm[ arg_opt_name ].defaulted()
+		! prm_vm[ prm_opt_name ].defaulted()
 	);
 }
 
 /// \brief Return the names of any of the "specified" options that have been specified in the "specified" variables_map
 ///
 /// \relates options_block
-str_vec cath::opts::specified_options(const variables_map &arg_vm,        ///< The variables_map to examine,
-                                      const str_vec       &arg_opts_names ///< The names of the options of interest
+str_vec cath::opts::specified_options(const variables_map &prm_vm,        ///< The variables_map to examine,
+                                      const str_vec       &prm_opts_names ///< The names of the options of interest
                                       ) {
 	return copy_build<str_vec>(
-		arg_opts_names
-			| filtered( [&] (const string &x) { return specifies_option( arg_vm, x ); } )
+		prm_opts_names
+			| filtered( [&] (const string &x) { return specifies_option( prm_vm, x ); } )
 	);
 }
 
 /// \brief Return the names of any of the options in the "specified" options_block that have been specified in the "specified" variables_map
 ///
 /// \relates options_block
-str_vec cath::opts::specified_options_from_block(const variables_map &arg_vm,           ///< The variables_map to examine,
-                                                 const options_block &arg_options_block ///< The options block
+str_vec cath::opts::specified_options_from_block(const variables_map &prm_vm,           ///< The variables_map to examine,
+                                                 const options_block &prm_options_block ///< The options block
                                                  ) {
-	return specified_options( arg_vm, arg_options_block.get_all_options_names() );
+	return specified_options( prm_vm, prm_options_block.get_all_options_names() );
 }
 
 /// \brief Return whether the specified variables_map has specified any options with any of the specified names
 ///
 /// \relates options_block
-bool cath::opts::specifies_any_of_options(const variables_map &arg_vm,        ///< The variables_map to examine
-                                          const str_vec       &arg_opts_names ///< The names of the options of interest
+bool cath::opts::specifies_any_of_options(const variables_map &prm_vm,        ///< The variables_map to examine
+                                          const str_vec       &prm_opts_names ///< The names of the options of interest
                                           ) {
 	return any_of(
-		arg_opts_names,
-		[&] (const string &x) { return specifies_option( arg_vm, x ); }
+		prm_opts_names,
+		[&] (const string &x) { return specifies_option( prm_vm, x ); }
 	);
 }
 
 /// \brief Return whether the specified variables_map has specified any of the options in this block
 ///
 /// \relates options_block
-bool cath::opts::specifies_options_from_block(const variables_map &arg_vm,           ///< The variables_map to examine
-                                              const options_block &arg_options_block ///< The options block
+bool cath::opts::specifies_options_from_block(const variables_map &prm_vm,           ///< The variables_map to examine
+                                              const options_block &prm_options_block ///< The options block
                                               ) {
-	return specifies_any_of_options( arg_vm, arg_options_block.get_all_options_names() );
+	return specifies_any_of_options( prm_vm, prm_options_block.get_all_options_names() );
 }

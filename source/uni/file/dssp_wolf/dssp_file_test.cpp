@@ -87,34 +87,34 @@ namespace cath {
 }  // namespace cath
 
 /// \brief TODOCUMENT
-const path cath::test::dssp_wolf_file_test_suite_fixture::wolf_file_of_example_id(const string &arg_example_id ///< TODOCUMENT
+const path cath::test::dssp_wolf_file_test_suite_fixture::wolf_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
                                                                                   ) {
-	return TEST_RESIDUE_IDS_DATA_DIR() / (arg_example_id + EXAMPLE_WOLF_FILE_SUFFIX);
+	return TEST_RESIDUE_IDS_DATA_DIR() / (prm_example_id + EXAMPLE_WOLF_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
-const path cath::test::dssp_wolf_file_test_suite_fixture::dssp_file_of_example_id(const string &arg_example_id ///< TODOCUMENT
+const path cath::test::dssp_wolf_file_test_suite_fixture::dssp_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
                                                                                   ) {
-	return TEST_RESIDUE_IDS_DATA_DIR() / (arg_example_id + EXAMPLE_DSSP_FILE_SUFFIX);
+	return TEST_RESIDUE_IDS_DATA_DIR() / (prm_example_id + EXAMPLE_DSSP_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
-const path cath::test::dssp_wolf_file_test_suite_fixture::pdb_file_of_example_id(const string &arg_example_id ///< TODOCUMENT
+const path cath::test::dssp_wolf_file_test_suite_fixture::pdb_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
                                                                                  ) {
-	return TEST_RESIDUE_IDS_DATA_DIR() / (arg_example_id + EXAMPLE_PDB_FILE_SUFFIX);
+	return TEST_RESIDUE_IDS_DATA_DIR() / (prm_example_id + EXAMPLE_PDB_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
-const path cath::test::dssp_wolf_file_test_suite_fixture::expected_wolf_phi_psi_of_example_id(const string &arg_example_id ///< TODOCUMENT
+const path cath::test::dssp_wolf_file_test_suite_fixture::expected_wolf_phi_psi_of_example_id(const string &prm_example_id ///< TODOCUMENT
                                                                                               ) {
-	return TEST_RESIDUE_IDS_DATA_DIR() / (arg_example_id + EXPECTED_WOLF_PHI_PSI_SUFFIX);
+	return TEST_RESIDUE_IDS_DATA_DIR() / (prm_example_id + EXPECTED_WOLF_PHI_PSI_SUFFIX);
 }
 
 /// \brief TODOCUMENT
-void cath::test::dssp_wolf_file_test_suite_fixture::check_phi_psi_from_wolf_against_expected(const string &arg_example_id ///< TODOCUMENT
+void cath::test::dssp_wolf_file_test_suite_fixture::check_phi_psi_from_wolf_against_expected(const string &prm_example_id ///< TODOCUMENT
                                                                                              ) {
 	// Get the phi and psi angles from the wolf file
-	const protein     wolf_protein = protein_from_wolf( read_wolf( wolf_file_of_example_id(arg_example_id) ) );
+	const protein     wolf_protein = protein_from_wolf( read_wolf( wolf_file_of_example_id(prm_example_id) ) );
 	doub_vec got_wolf_phi_psi_values;
 	for (const residue &the_residue : wolf_protein) {
 		got_wolf_phi_psi_values.push_back( round( angle_in_degrees( the_residue.get_phi_angle() ) ) );
@@ -124,12 +124,12 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_phi_psi_from_wolf_agai
 //	// To update file, uncomment this, run all tests, then execute:
 //	//    mv build-test-data/residue_ids/id.new_got_wolf_phi_psi build-test-data/residue_ids/id.expected_wolf_phi_psi
 //	write_file(
-//		TEST_RESIDUE_IDS_DATA_DIR() / ( arg_example_id + ".new_got_wolf_phi_psi"),
+//		TEST_RESIDUE_IDS_DATA_DIR() / ( prm_example_id + ".new_got_wolf_phi_psi"),
 //		got_wolf_phi_psi_values
 //	);
 
 	// Load the expected phi and psi angles and compare them to what we actually got
-	const doub_vec expected_wolf_phi_psi_values = read_file<double>( expected_wolf_phi_psi_of_example_id( arg_example_id ) );
+	const doub_vec expected_wolf_phi_psi_values = read_file<double>( expected_wolf_phi_psi_of_example_id( prm_example_id ) );
 	BOOST_CHECK_EQUAL_RANGES( expected_wolf_phi_psi_values, got_wolf_phi_psi_values );
 }
 
@@ -138,12 +138,12 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_phi_psi_from_wolf_agai
 /// The NULL records in the DSSP files make this a bit trickier.
 /// Should ideally do an NW over the residue names here but the
 /// NW code isn't in shape for that use yet so this is a bit hackier.
-void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_dssp(const string &arg_example_id ///< TODOCUMENT
+void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_dssp(const string &prm_example_id ///< TODOCUMENT
                                                                                      ) {
 	ostringstream build_prot_warn_stream;
 
-	const auto the_pdb_file      = read_pdb_file(   pdb_file_of_example_id( arg_example_id ) );
-	const auto the_dssp_file     = read_dssp_file( dssp_file_of_example_id( arg_example_id ) );
+	const auto the_pdb_file      = read_pdb_file(   pdb_file_of_example_id( prm_example_id ) );
+	const auto the_dssp_file     = read_dssp_file( dssp_file_of_example_id( prm_example_id ) );
 	const auto pdb_prot          = build_protein_of_pdb( the_pdb_file, ostream_ref{ build_prot_warn_stream } ).first;
 	const auto num_dssp_residues = the_dssp_file.get_num_residues();
 	const auto num_pdb_residues  = pdb_prot.get_length();
@@ -190,11 +190,11 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_
 }
 
 /// \brief TODOCUMENT
-void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_protein(const string &arg_example_id ///< TODOCUMENT
+void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_protein(const string &prm_example_id ///< TODOCUMENT
                                                                                      ) {
 	ostringstream build_prot_warn_stream;
-	const auto the_pdb_file               = read_pdb_file (  pdb_file_of_example_id( arg_example_id ) );
-	const auto the_dssp_file              = read_dssp_file( dssp_file_of_example_id( arg_example_id ) );
+	const auto the_pdb_file               = read_pdb_file (  pdb_file_of_example_id( prm_example_id ) );
+	const auto the_dssp_file              = read_dssp_file( dssp_file_of_example_id( prm_example_id ) );
 	const auto pdb_prot                   = build_protein_of_pdb( the_pdb_file, ostream_ref{ build_prot_warn_stream } ).first;
 	const auto num_non_null_dssp_residues = get_num_non_null_residues( the_dssp_file );
 	const auto num_pdb_residues           = pdb_prot.get_length();
@@ -240,11 +240,11 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 }
 
 /// \brief TODOCUMENT
-void cath::test::dssp_wolf_file_test_suite_fixture::compare_residue_frames_from_pdb_vs_wolf(const string &arg_example_id ///< TODOCUMENT
+void cath::test::dssp_wolf_file_test_suite_fixture::compare_residue_frames_from_pdb_vs_wolf(const string &prm_example_id ///< TODOCUMENT
                                                                                             ) {
 	ostringstream build_prot_warn_stream;
-	const wolf_file            the_wolf_file     = read_wolf(     wolf_file_of_example_id( arg_example_id ) );
-	const pdb                  the_pdb_file      = read_pdb_file(  pdb_file_of_example_id( arg_example_id ) );
+	const wolf_file            the_wolf_file     = read_wolf(     wolf_file_of_example_id( prm_example_id ) );
+	const pdb                  the_pdb_file      = read_pdb_file(  pdb_file_of_example_id( prm_example_id ) );
 	const protein              pdb_prot          = build_protein_of_pdb( the_pdb_file, ostream_ref{ build_prot_warn_stream }).first;
 	const wolf_file::size_type num_wolf_residues = the_wolf_file.get_num_residues();
 	const size_t   num_pdb_residues  = pdb_prot.get_length();

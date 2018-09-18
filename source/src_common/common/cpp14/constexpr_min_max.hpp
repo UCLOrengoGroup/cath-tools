@@ -33,10 +33,10 @@ namespace cath {
 	/// \todo Come GCC 5.0 (or whenever libstdc++'s std::min() is constexpr) and come all Clang >= 3.5,
 	///       remove this and replace all calls with calls to std::min()
 	template <typename T>
-	inline constexpr const T & constexpr_min(const T &arg_lhs, ///< The left-hand-side  argument
-	                                         const T &arg_rhs  ///< The right-hand-side argument
+	inline constexpr const T & constexpr_min(const T &prm_lhs, ///< The left-hand-side  argument
+	                                         const T &prm_rhs  ///< The right-hand-side argument
 	                                         ) {
-		return ( arg_rhs < arg_lhs ) ? arg_rhs : arg_lhs;
+		return ( prm_rhs < prm_lhs ) ? prm_rhs : prm_lhs;
 	}
 
 	/// \brief Simple constexpr max() function as workaround for GCC's max() not yet being constexpr
@@ -46,10 +46,10 @@ namespace cath {
 	/// \todo Come GCC 5.0 (or whenever libstdc++'s std::min() is constexpr) and come all Clang >= 3.5,
 	///       remove this and replace all calls with calls to std::min()
 	template <typename T>
-	inline constexpr const T & constexpr_max(const T &arg_lhs, ///< The left-hand-side  argument
-	                                         const T &arg_rhs  ///< The right-hand-side argument
+	inline constexpr const T & constexpr_max(const T &prm_lhs, ///< The left-hand-side  argument
+	                                         const T &prm_rhs  ///< The right-hand-side argument
 	                                         ) {
-		return ( arg_lhs < arg_rhs ) ? arg_rhs : arg_lhs;
+		return ( prm_lhs < prm_rhs ) ? prm_rhs : prm_lhs;
 	}
 
 } // namespace common

@@ -71,12 +71,12 @@ namespace cath {
 }  // namespace cath
 
 /// \brief TODOCUMENT
-void cath::test::common_residue_selection_policy_test_suite_fixture::check_policy_on_score_aln(const common_residue_selection_policy &arg_policy,          ///< TODOCUMENT
-                                                                                               const size_vec                        &arg_expected_indices ///< TODOCUMENT
+void cath::test::common_residue_selection_policy_test_suite_fixture::check_policy_on_score_aln(const common_residue_selection_policy &prm_policy,          ///< TODOCUMENT
+                                                                                               const size_vec                        &prm_expected_indices ///< TODOCUMENT
                                                                                                ) const {
 	const alignment &aln_const_ref(scored_aln);
-	const size_vec   got_indices = select_common_residues_of_pair_alignment( arg_policy, aln_const_ref );
-	BOOST_CHECK_EQUAL_RANGES( arg_expected_indices, got_indices );
+	const size_vec   got_indices = select_common_residues_of_pair_alignment( prm_policy, aln_const_ref );
+	BOOST_CHECK_EQUAL_RANGES( prm_expected_indices, got_indices );
 }
 
 BOOST_FIXTURE_TEST_SUITE(common_residue_selection_policy_test_suite, cath::test::common_residue_selection_policy_test_suite_fixture)

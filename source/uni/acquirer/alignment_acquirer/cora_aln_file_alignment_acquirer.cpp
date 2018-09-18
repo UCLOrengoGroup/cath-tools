@@ -60,17 +60,17 @@ bool cora_aln_file_alignment_acquirer::do_requires_backbone_complete_input() con
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context ///< TODOCUMENT
                                                                                                          ) const {
 	// Construct an alignment from the CORA alignment file
-	const auto   &the_pdbs = arg_strucs_context.get_pdbs();
+	const auto   &the_pdbs = prm_strucs_context.get_pdbs();
 	const size_t  num_pdbs = the_pdbs.size();
 	ifstream my_aln_stream;
 	open_ifstream(my_aln_stream, get_cora_alignment_file());
 	const alignment     new_alignment = read_alignment_from_cath_cora_legacy_format( my_aln_stream, the_pdbs, ostream_ref{ cerr } );
 	my_aln_stream.close();
 
-	const protein_list proteins_of_pdbs = build_protein_list( arg_strucs_context );
+	const protein_list proteins_of_pdbs = build_protein_list( prm_strucs_context );
 	const alignment scored_new_alignment = score_alignment_copy( residue_scorer(), new_alignment, proteins_of_pdbs );
 
 	// Return the results with a simple spanning tree that will connect the entries
@@ -81,8 +81,8 @@ pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_ali
 }
 
 /// \brief Ctor for cora_aln_file_alignment_acquirer
-cora_aln_file_alignment_acquirer::cora_aln_file_alignment_acquirer(const path     &arg_cora_alignment_file ///< TODOCUMENT
-                                                                   ) : cora_alignment_file(arg_cora_alignment_file) {
+cora_aln_file_alignment_acquirer::cora_aln_file_alignment_acquirer(const path     &prm_cora_alignment_file ///< TODOCUMENT
+                                                                   ) : cora_alignment_file(prm_cora_alignment_file) {
 }
 
 /// \brief TODOCUMENT

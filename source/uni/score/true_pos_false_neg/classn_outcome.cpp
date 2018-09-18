@@ -30,24 +30,24 @@ using namespace std;
 ///
 /// The result is "TRUE"     if the decision matches the answer, "FALSE" otherwise
 /// The result is "POSITIVE" if the decision is true,            "FALSE" otherwise
-classn_outcome cath::score::outcome_of_correct_and_decision(const bool &arg_correct_answer, ///< The correct answer for some boolean classification
-                                                            const bool &arg_decision        ///< The decision of some boolean classification method
+classn_outcome cath::score::outcome_of_correct_and_decision(const bool &prm_correct_answer, ///< The correct answer for some boolean classification
+                                                            const bool &prm_decision        ///< The decision of some boolean classification method
                                                             ) {
-	return arg_correct_answer ? (arg_decision ? classn_outcome::TRUE_POSITIVE  : classn_outcome::FALSE_NEGATIVE )
-	                          : (arg_decision ? classn_outcome::FALSE_POSITIVE : classn_outcome::TRUE_NEGATIVE  );
+	return prm_correct_answer ? (prm_decision ? classn_outcome::TRUE_POSITIVE  : classn_outcome::FALSE_NEGATIVE )
+	                          : (prm_decision ? classn_outcome::FALSE_POSITIVE : classn_outcome::TRUE_NEGATIVE  );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates classn_outcome
-ostream & cath::score::operator<<(ostream              &arg_os,            ///< TODOCUMENT
-                                  const classn_outcome &arg_classn_outcome ///< TODOCUMENT
+ostream & cath::score::operator<<(ostream              &prm_os,            ///< TODOCUMENT
+                                  const classn_outcome &prm_classn_outcome ///< TODOCUMENT
                                   ) {
-	switch ( arg_classn_outcome ) {
-		case ( classn_outcome::TRUE_POSITIVE  ) : { arg_os << "TRUE_POSITIVE"  ; return arg_os ; }
-		case ( classn_outcome::TRUE_NEGATIVE  ) : { arg_os << "TRUE_NEGATIVE"  ; return arg_os ; }
-		case ( classn_outcome::FALSE_NEGATIVE ) : { arg_os << "FALSE_NEGATIVE" ; return arg_os ; }
-		case ( classn_outcome::FALSE_POSITIVE ) : { arg_os << "FALSE_POSITIVE" ; return arg_os ; }
+	switch ( prm_classn_outcome ) {
+		case ( classn_outcome::TRUE_POSITIVE  ) : { prm_os << "TRUE_POSITIVE"  ; return prm_os ; }
+		case ( classn_outcome::TRUE_NEGATIVE  ) : { prm_os << "TRUE_NEGATIVE"  ; return prm_os ; }
+		case ( classn_outcome::FALSE_NEGATIVE ) : { prm_os << "FALSE_NEGATIVE" ; return prm_os ; }
+		case ( classn_outcome::FALSE_POSITIVE ) : { prm_os << "FALSE_POSITIVE" ; return prm_os ; }
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("protein_file_combn is not recognised"));
 }

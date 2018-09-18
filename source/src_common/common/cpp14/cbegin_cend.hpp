@@ -30,54 +30,54 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto cbegin(const T &arg_range
-		                   )->decltype( std::begin( arg_range ) ) {
-			return std::begin( arg_range );
+		inline auto cbegin(const T &prm_range
+		                   )->decltype( std::begin( prm_range ) ) {
+			return std::begin( prm_range );
 		}
 
 		/// \brief Temporary replacement for C++14's std::cend()
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto cend(const T &arg_range
-		                 )->decltype( std::end( arg_range ) ) {
-			return std::end( arg_range );
+		inline auto cend(const T &prm_range
+		                 )->decltype( std::end( prm_range ) ) {
+			return std::end( prm_range );
 		}
 
 		/// \brief Temporary replacement for C++14's non-const overload of std::rbegin()
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto rbegin(T& arg_range
-		                   ) -> decltype( arg_range.rbegin() ) {
-			return arg_range.rbegin();
+		inline auto rbegin(T& prm_range
+		                   ) -> decltype( prm_range.rbegin() ) {
+			return prm_range.rbegin();
 		}
 
 		/// \brief Temporary replacement for C++14's const overload of std::rbegin()
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto rbegin(const T& arg_range
-		                   ) -> decltype( arg_range.rbegin() ) {
-			return arg_range.rbegin();
+		inline auto rbegin(const T& prm_range
+		                   ) -> decltype( prm_range.rbegin() ) {
+			return prm_range.rbegin();
 		}
 
 		/// \brief Temporary replacement for C++14's non-const overload of std::rend()
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto rend(T& arg_range
-		                 ) -> decltype( arg_range.rend() ) {
-			return arg_range.rend();
+		inline auto rend(T& prm_range
+		                 ) -> decltype( prm_range.rend() ) {
+			return prm_range.rend();
 		}
 
 		/// \brief Temporary replacement for C++14's const overload of std::rend()
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto rend(const T &arg_range
-		                 ) -> decltype( arg_range.rend() ) {
-			return arg_range.rend();
+		inline auto rend(const T &prm_range
+		                 ) -> decltype( prm_range.rend() ) {
+			return prm_range.rend();
 		}
 
 
@@ -85,15 +85,15 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto crbegin(const T &arg_range
-		                    ) -> decltype( ::cath::common::rbegin( arg_range ) ) {
-			return ::cath::common::rbegin( arg_range );
+		inline auto crbegin(const T &prm_range
+		                    ) -> decltype( ::cath::common::rbegin( prm_range ) ) {
+			return ::cath::common::rbegin( prm_range );
 		}
 
 		template <typename T>
-		inline auto crend(const T& arg_range
-		                  ) -> decltype( ::cath::common::rend( arg_range ) ) {
-			return ::cath::common::rend( arg_range );
+		inline auto crend(const T& prm_range
+		                  ) -> decltype( ::cath::common::rend( prm_range ) ) {
+			return ::cath::common::rend( prm_range );
 		}
 
 	} // namespace common

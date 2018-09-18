@@ -58,18 +58,18 @@ using boost::none;
 /// Where there are choices about which entry's position to add first:
 ///  - add the longest entry's position first (helps to give consistent answers for testing)
 ///  - add the first entry's position first
-alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &arg_residue_lists ///< TODOCUMENT
+alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &prm_residue_lists ///< TODOCUMENT
                                                    ) {
 	// Check that there is at least one list
-	const str_vec_vec::size_type num_lists = arg_residue_lists.size();
+	const str_vec_vec::size_type num_lists = prm_residue_lists.size();
 	if (num_lists < 1) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot residue_name_align() zero residue lists"));
 	}
 	// Check that at least one of the lists is not empty
 	// \todo Change this to use C++11 any_of() and use a lambda to check for not empty
 	bool found_non_empty = false;
-	for (const residue_name_vec &arg_residue_list : arg_residue_lists) {
-		if ( ! arg_residue_list.empty() ) {
+	for (const residue_name_vec &prm_residue_list : prm_residue_lists) {
+		if ( ! prm_residue_list.empty() ) {
 			found_non_empty = true;
 		}
 	}
@@ -77,10 +77,10 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot residue_name_align() residue lists that are all empty"));
 	}
 
-	// Build a vector of residue_name_align_map objects, one for each arg_residue_list
+	// Build a vector of residue_name_align_map objects, one for each prm_residue_list
 	vector<residue_name_align_map> maps;
 	maps.reserve(num_lists);
-	for (const residue_name_vec &residue_list : arg_residue_lists) {
+	for (const residue_name_vec &residue_list : prm_residue_lists) {
 		maps.push_back( make_residue_name_align_map( residue_list ) );
 	}
 
@@ -104,15 +104,15 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 			// otherwise, grab the next residue string for this entry
 			// and record that there's more_to_do
 			const size_t &next_index_to_add = next_index_to_add_for_lists[entry_ctr];
-			if ( next_index_to_add >= arg_residue_lists[ entry_ctr ].size() ) {
+			if ( next_index_to_add >= prm_residue_lists[ entry_ctr ].size() ) {
 				continue;
 			}
-			const residue_name &the_res_name = arg_residue_lists[entry_ctr][next_index_to_add];
+			const residue_name &the_res_name = prm_residue_lists[entry_ctr][next_index_to_add];
 			more_to_do = true;
 
 			// If a better or equal non-skipping has already been found (ie for an entry that's at least as long as this one)
 			// then no point considering this one so continue to next pass of loop
-			if (found_non_skipping && arg_residue_lists[entry_of_non_skipping].size() >= arg_residue_lists[entry_ctr].size()) {
+			if (found_non_skipping && prm_residue_lists[entry_of_non_skipping].size() >= prm_residue_lists[entry_ctr].size()) {
 				continue;
 			}
 
@@ -158,7 +158,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 
 		// If this entry is ready to be inserted, then proceed and break out of this loop
 		if ( found_non_skipping ) {
-			const residue_name &the_res_name = arg_residue_lists[entry_of_non_skipping][next_index_to_add_for_lists[entry_of_non_skipping]];
+			const residue_name &the_res_name = prm_residue_lists[entry_of_non_skipping][next_index_to_add_for_lists[entry_of_non_skipping]];
 
 			// Find which entries have equivalent residues
 			bool_deq equivalent_presences;
@@ -188,21 +188,21 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &a
 }
 
 /// \brief TODOCUMENT
-alignment cath::align::residue_name_align_and_residue_score(const residue_name_vec_vec &arg_residue_lists,  ///< TODOCUMENT
-                                                            const residue_scorer       &arg_residue_scorer, ///< TODOCUMENT
-                                                            const protein_list         &arg_proteins        ///< TODOCUMENT
+alignment cath::align::residue_name_align_and_residue_score(const residue_name_vec_vec &prm_residue_lists,  ///< TODOCUMENT
+                                                            const residue_scorer       &prm_residue_scorer, ///< TODOCUMENT
+                                                            const protein_list         &prm_proteins        ///< TODOCUMENT
                                                             ) {
-	alignment new_alignment = residue_name_aligner::residue_name_align( arg_residue_lists );
-	score_alignment( arg_residue_scorer, new_alignment, arg_proteins );
+	alignment new_alignment = residue_name_aligner::residue_name_align( prm_residue_lists );
+	score_alignment( prm_residue_scorer, new_alignment, prm_proteins );
 	return new_alignment;
 }
 
 /// \brief TODOCUMENT
-alignment cath::align::residue_name_align_and_residue_score_if_multi(const residue_name_vec_vec &arg_residue_lists,  ///< TODOCUMENT
-                                                                     const residue_scorer       &arg_residue_scorer, ///< TODOCUMENT
-                                                                     const protein_list         &arg_proteins        ///< TODOCUMENT
+alignment cath::align::residue_name_align_and_residue_score_if_multi(const residue_name_vec_vec &prm_residue_lists,  ///< TODOCUMENT
+                                                                     const residue_scorer       &prm_residue_scorer, ///< TODOCUMENT
+                                                                     const protein_list         &prm_proteins        ///< TODOCUMENT
                                                                      ) {
-	const size_t num_proteins = arg_proteins.size();
-	return (num_proteins > 1) ? residue_name_align_and_residue_score( arg_residue_lists, arg_residue_scorer, arg_proteins )
-	                          : residue_name_aligner::residue_name_align( arg_residue_lists );
+	const size_t num_proteins = prm_proteins.size();
+	return (num_proteins > 1) ? residue_name_align_and_residue_score( prm_residue_lists, prm_residue_scorer, prm_proteins )
+	                          : residue_name_aligner::residue_name_align( prm_residue_lists );
 }

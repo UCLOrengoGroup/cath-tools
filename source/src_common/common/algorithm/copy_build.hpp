@@ -34,8 +34,8 @@ namespace cath {
 		/// \tparam ITER      is TODOCUMENT
 		template <typename Container,
 		          typename ITER>
-		inline Container copy_build(const ITER &arg_begin_itr, ///< TODOCUMENT
-		                            const ITER &arg_end_itr    ///< TODOCUMENT
+		inline Container copy_build(const ITER &prm_begin_itr, ///< TODOCUMENT
+		                            const ITER &prm_end_itr    ///< TODOCUMENT
 		                            ) {
 			// Static-check that Container is a Mutable_Container
 			BOOST_CONCEPT_ASSERT(( boost::Mutable_Container< Container > ));
@@ -45,8 +45,8 @@ namespace cath {
 
 			// Call the normal std::copy
 			std::copy(
-				arg_begin_itr,
-				arg_end_itr,
+				prm_begin_itr,
+				prm_end_itr,
 				inserter( container, std::end( container ) )
 			);
 

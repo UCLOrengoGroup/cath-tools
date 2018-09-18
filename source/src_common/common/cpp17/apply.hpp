@@ -36,14 +36,14 @@ namespace cath {
 
 			/// \brief Implementation function for apply
 			template <typename Fn, typename Tuple, std::size_t... Index>
-			constexpr void apply_stepwise_impl(Fn    &&arg_fn,               ///< The function to apply to each of the tuple's elements
-			                                   Tuple &&arg_tuple,            ///< The tuple of values to which the function should be applied
+			constexpr void apply_stepwise_impl(Fn    &&prm_fn,               ///< The function to apply to each of the tuple's elements
+			                                   Tuple &&prm_tuple,            ///< The tuple of values to which the function should be applied
 			                                   std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 			                                   ) {
 				auto dummy_list = {
 					apply_fn_and_return_dummy_value(
-						std::get<Index> ( std::forward<Tuple>( arg_tuple ) ),
-						std::forward<Fn>( arg_fn )
+						std::get<Index> ( std::forward<Tuple>( prm_tuple ) ),
+						std::forward<Fn>( prm_fn )
 					)...
 				};
 				boost::ignore_unused( dummy_list );
@@ -53,12 +53,12 @@ namespace cath {
 			///
 			/// \todo Come C++17, remove this and switch all uses to std::apply
 			template <typename Fn, typename Tpl, size_t... Index>
-			constexpr decltype(auto) apply_impl(Fn  &&arg_fn,                 ///< The function to apply to the tuple's elements
-			                                    Tpl &&arg_tuple,              ///< The tuple of values to which the function should be applied
+			constexpr decltype(auto) apply_impl(Fn  &&prm_fn,                 ///< The function to apply to the tuple's elements
+			                                    Tpl &&prm_tuple,              ///< The tuple of values to which the function should be applied
 			                                    std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 			                                    ) {
-				return std::forward< Fn >( arg_fn )(
-					std::get< Index >( std::forward< Tpl >( arg_tuple ) )...
+				return std::forward< Fn >( prm_fn )(
+					std::get< Index >( std::forward< Tpl >( prm_tuple ) )...
 				);
 			}
 
@@ -66,12 +66,12 @@ namespace cath {
 
 		/// \brief Apply the function to each of the members of the tuple in order
 		template <typename Fn, typename Tpl>
-		constexpr void apply_stepwise(Fn  &&arg_fn,   ///< The function to apply to each of the elements
-		                              Tpl &&arg_tuple ///< The tuple of values to which the function should be applied
+		constexpr void apply_stepwise(Fn  &&prm_fn,   ///< The function to apply to each of the elements
+		                              Tpl &&prm_tuple ///< The tuple of values to which the function should be applied
 		                              ) {
 			detail::apply_stepwise_impl(
-				std::forward< Fn  >( arg_fn    ),
-				std::forward< Tpl >( arg_tuple ),
+				std::forward< Fn  >( prm_fn    ),
+				std::forward< Tpl >( prm_tuple ),
 				detail::tuple_index_sequence<Tpl>{}
 			);
 		}
@@ -81,12 +81,12 @@ namespace cath {
 		///
 		/// \todo Come C++17, remove this and switch all uses to std::apply
 		template <typename Fn, typename Tpl>
-		constexpr decltype(auto) apply(Fn  &&arg_fn,   ///< The function to apply to the tuple's elements
-		                               Tpl &&arg_tuple ///< The tuple of values to which the function should be applied
+		constexpr decltype(auto) apply(Fn  &&prm_fn,   ///< The function to apply to the tuple's elements
+		                               Tpl &&prm_tuple ///< The tuple of values to which the function should be applied
 		                               )  {
 			return detail::apply_impl(
-				std::forward< Fn  >( arg_fn    ),
-				std::forward< Tpl >( arg_tuple ),
+				std::forward< Fn  >( prm_fn    ),
+				std::forward< Tpl >( prm_tuple ),
 				detail::tuple_index_sequence<Tpl>{}
 			);
 		}

@@ -27,21 +27,21 @@ using boost::none;
 using std::istream;
 
 /// \brief Ctor from a special istream and a flag to be used to indicate when input should be read from that istream
-path_or_istream::path_or_istream(istream    &arg_istream,               ///< A special istream (often stdin) from which input can be read
-                                 const path &arg_standard_instream_flag ///< A flag to be used to indicate when input should be read from the special istream
-                                 ) : standard_instream      { arg_istream                },
-                                     standard_instream_flag { arg_standard_instream_flag } {
+path_or_istream::path_or_istream(istream    &prm_istream,               ///< A special istream (often stdin) from which input can be read
+                                 const path &prm_standard_instream_flag ///< A flag to be used to indicate when input should be read from the special istream
+                                 ) : standard_instream      { prm_istream                },
+                                     standard_instream_flag { prm_standard_instream_flag } {
 }
 
 /// \brief Open the specified list of paths and add them to the inputs
-path_or_istream & path_or_istream::set_path(const path &arg_file ///< The path to open
+path_or_istream & path_or_istream::set_path(const path &prm_file ///< The path to open
                                             ) {
 	if ( input_file_stream ) {
 		input_file_stream->close();
 	}
-	if ( arg_file != get_flag() || ! standard_instream ) {
+	if ( prm_file != get_flag() || ! standard_instream ) {
 		input_file_stream.emplace();
-		open_ifstream( *input_file_stream, arg_file );
+		open_ifstream( *input_file_stream, prm_file );
 	}
 	return *this;
 }
@@ -70,12 +70,12 @@ istream & path_or_istream::get_istream() {
 ///        path_or_istream (ie is not the special flag) but is missing
 ///
 /// \relates path_or_istream
-bool cath::common::file_is_missing(const path_or_istream &arg_path_or_istream, ///< The path_or_istream containing the special flag to indicate whether the input should be read from an istream rather than a file
-                                   const path            &arg_file             ///< The file in question
+bool cath::common::file_is_missing(const path_or_istream &prm_path_or_istream, ///< The path_or_istream containing the special flag to indicate whether the input should be read from an istream rather than a file
+                                   const path            &prm_file             ///< The file in question
                                    ) {
 	return (
-		arg_file != arg_path_or_istream.get_flag()
+		prm_file != prm_path_or_istream.get_flag()
 		&&
-		! exists( arg_file )
+		! exists( prm_file )
 	);
 }

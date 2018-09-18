@@ -128,9 +128,9 @@ namespace cath {
 
 		/// \brief Ctor for angle
 		template <typename T>
-		inline angle<T>::angle(const angle_type &arg_angle_value ///< TODOCUMENT
-		                       ) : angle_value( arg_angle_value ) {
-			if ( ! ::boost::math::isfinite( arg_angle_value ) ) {
+		inline angle<T>::angle(const angle_type &prm_angle_value ///< TODOCUMENT
+		                       ) : angle_value( prm_angle_value ) {
+			if ( ! ::boost::math::isfinite( prm_angle_value ) ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Angle value must be finite"));
 			}
 		}
@@ -149,33 +149,33 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline angle<T> & angle<T>::operator-=(const angle<T> &arg_angle ///< TODOCUMENT
+		inline angle<T> & angle<T>::operator-=(const angle<T> &prm_angle ///< TODOCUMENT
 		                                       ) {
-			get_angle() -= arg_angle.get_angle();
+			get_angle() -= prm_angle.get_angle();
 			return *this;
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline angle<T> & angle<T>::operator+=(const angle<T> &arg_angle ///< TODOCUMENT
+		inline angle<T> & angle<T>::operator+=(const angle<T> &prm_angle ///< TODOCUMENT
 		                                       ) {
-			get_angle() += arg_angle.get_angle();
+			get_angle() += prm_angle.get_angle();
 			return *this;
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline angle<T> & angle<T>::operator*=(const T &arg_angle ///< TODOCUMENT
+		inline angle<T> & angle<T>::operator*=(const T &prm_angle ///< TODOCUMENT
 		                                       ) {
-			get_angle() *= arg_angle;
+			get_angle() *= prm_angle;
 			return *this;
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline angle<T> & angle<T>::operator/=(const T &arg_angle ///< TODOCUMENT
+		inline angle<T> & angle<T>::operator/=(const T &prm_angle ///< TODOCUMENT
 		                                       ) {
-			get_angle() /= arg_angle;
+			get_angle() /= prm_angle;
 			return *this;
 		}
 
@@ -194,13 +194,13 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline angle<T> & angle<T>::shift(const angle<T>           &arg_lower_angle_of_range, ///< TODOCUMENT
-		                                  const angle_endpoint_loc &arg_endpoint_loc          ///< TODOCUMENT
+		inline angle<T> & angle<T>::shift(const angle<T>           &prm_lower_angle_of_range, ///< TODOCUMENT
+		                                  const angle_endpoint_loc &prm_endpoint_loc          ///< TODOCUMENT
 		                                  ) {
 			// Grab some basics
 			const angle  endpoint_tolerance         = make_angle_from_degrees<T>( static_cast<T>( 0.0000000001 ) );
-			const angle &lower                      = arg_lower_angle_of_range;
-			const angle  upper                      = arg_lower_angle_of_range + one_revolution<T>();
+			const angle &lower                      = prm_lower_angle_of_range;
+			const angle  upper                      = prm_lower_angle_of_range + one_revolution<T>();
 			const angle  lower_less_one_rev         = lower - one_revolution<T>();
 			const angle  upper_plus_one_rev         = upper + one_revolution<T>();
 			const T      lower_less_one_rev_in_rads = angle_in_radians( lower_less_one_rev );
@@ -220,10 +220,10 @@ namespace cath {
 
 			// Perform any necessary fine-tuning
 			// This is more careful than the above code about how it handles the end-points
-			while ( *this > upper || ( arg_endpoint_loc == angle_endpoint_loc::USE_LOWER && common::difference( *this, upper ) < endpoint_tolerance ) ) {
+			while ( *this > upper || ( prm_endpoint_loc == angle_endpoint_loc::USE_LOWER && common::difference( *this, upper ) < endpoint_tolerance ) ) {
 				( *this ) -= one_revolution<T>();
 			}
-			while ( *this < lower || ( arg_endpoint_loc == angle_endpoint_loc::USE_UPPER && common::difference( *this, lower ) < endpoint_tolerance ) ) {
+			while ( *this < lower || ( prm_endpoint_loc == angle_endpoint_loc::USE_UPPER && common::difference( *this, lower ) < endpoint_tolerance ) ) {
 				( *this ) += one_revolution<T>();
 			}
 			return *this;
@@ -233,53 +233,53 @@ namespace cath {
 		///
 		/// \relates angle
 		template <typename T>
-		angle<T> operator-(const angle<T> &arg_angle ///< TODOCUMENT
+		angle<T> operator-(const angle<T> &prm_angle ///< TODOCUMENT
 		                   ) {
-			return ( zero_angle<T>() - arg_angle );
+			return ( zero_angle<T>() - prm_angle );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		T operator/(const angle<T> &arg_angle_a, ///< TODOCUMENT
-		            const angle<T> &arg_angle_b  ///< TODOCUMENT
+		T operator/(const angle<T> &prm_angle_a, ///< TODOCUMENT
+		            const angle<T> &prm_angle_b  ///< TODOCUMENT
 		            ) {
-			return ( arg_angle_a.get_angle() / arg_angle_b.get_angle() );
+			return ( prm_angle_a.get_angle() / prm_angle_b.get_angle() );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		bool operator<(const angle<T> &arg_angle_a, ///< TODOCUMENT
-		               const angle<T> &arg_angle_b  ///< TODOCUMENT
+		bool operator<(const angle<T> &prm_angle_a, ///< TODOCUMENT
+		               const angle<T> &prm_angle_b  ///< TODOCUMENT
 		               ) {
-			return ( arg_angle_a.get_angle() < arg_angle_b.get_angle() );
+			return ( prm_angle_a.get_angle() < prm_angle_b.get_angle() );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		bool operator==(const angle<T> &arg_angle_a, ///< TODOCUMENT
-		                const angle<T> &arg_angle_b  ///< TODOCUMENT
+		bool operator==(const angle<T> &prm_angle_a, ///< TODOCUMENT
+		                const angle<T> &prm_angle_b  ///< TODOCUMENT
 		                ) {
-			return ( arg_angle_a.get_angle() == arg_angle_b.get_angle() );
+			return ( prm_angle_a.get_angle() == prm_angle_b.get_angle() );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		std::ostream & operator<<(std::ostream   &arg_os,   ///< TODOCUMENT
-		                          const angle<T> &arg_angle ///< TODOCUMENT
+		std::ostream & operator<<(std::ostream   &prm_os,   ///< TODOCUMENT
+		                          const angle<T> &prm_angle ///< TODOCUMENT
 		                          ) {
 			// Splurge the whole thing out in one insertion operations
 			// ( so the output can be positioned nicely with setw() )
 			// (lexical_cast<string() was tried but it can result in excess precision)
-			arg_os << ( std::to_string( angle_in_degrees( arg_angle ) ) + "°" ); // The degree symbol is ASCII character 176 (hex B0)
-			return arg_os;
+			prm_os << ( std::to_string( angle_in_degrees( prm_angle ) ) + "°" ); // The degree symbol is ASCII character 176 (hex B0)
+			return prm_os;
 		}
 
 		/// \brief Return the smallest difference between two angles when allowing for wrapping
@@ -290,14 +290,14 @@ namespace cath {
 		///
 		/// \relates angle
 		template <typename T>
-		inline angle<T> unshifted_wrapped_difference(const angle<T> &arg_angle_a, ///< The first angle to compare
-		                                             const angle<T> &arg_angle_b  ///< The second angle to compare
+		inline angle<T> unshifted_wrapped_difference(const angle<T> &prm_angle_a, ///< The first angle to compare
+		                                             const angle<T> &prm_angle_b  ///< The second angle to compare
 		                                             ) {
-			const auto min_angle              = std::min( arg_angle_a, arg_angle_b );
-			const auto max_angle              = std::max( arg_angle_a, arg_angle_b );
+			const auto min_angle              = std::min( prm_angle_a, prm_angle_b );
+			const auto max_angle              = std::max( prm_angle_a, prm_angle_b );
 			const auto min_angle_plus_one_rev = min_angle + one_revolution<T>();
 			return std::min(
-				common::difference( arg_angle_a,            arg_angle_b ),
+				common::difference( prm_angle_a,            prm_angle_b ),
 				common::difference( min_angle_plus_one_rev, max_angle   )
 			);
 		}
@@ -306,35 +306,35 @@ namespace cath {
 		///
 		/// \relates angle
 		template <typename T>
-		inline angle<T> wrapped_difference(angle<T> arg_angle_a, ///< The first angle to compare
-		                                   angle<T> arg_angle_b  ///< The second angle to compare
+		inline angle<T> wrapped_difference(angle<T> prm_angle_a, ///< The first angle to compare
+		                                   angle<T> prm_angle_b  ///< The second angle to compare
 		                                   ) {
-			arg_angle_a.shift();
-			arg_angle_b.shift();
-			return unshifted_wrapped_difference( arg_angle_a, arg_angle_b );
+			prm_angle_a.shift();
+			prm_angle_b.shift();
+			return unshifted_wrapped_difference( prm_angle_a, prm_angle_b );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		angle<T> shift_copy(angle<T>                  arg_angle,                ///< TODOCUMENT
-		                    const angle<T>           &arg_lower_angle_of_range, ///< TODOCUMENT
-		                    const angle_endpoint_loc &arg_endpoint_loc          ///< TODOCUMENT
+		angle<T> shift_copy(angle<T>                  prm_angle,                ///< TODOCUMENT
+		                    const angle<T>           &prm_lower_angle_of_range, ///< TODOCUMENT
+		                    const angle_endpoint_loc &prm_endpoint_loc          ///< TODOCUMENT
 		                    ) {
-			arg_angle.shift( arg_lower_angle_of_range, arg_endpoint_loc );
-			return arg_angle;
+			prm_angle.shift( prm_lower_angle_of_range, prm_endpoint_loc );
+			return prm_angle;
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		inline angle<T> make_angle_from_degrees(const double &arg_degrees ///< TODOCUMENT
+		inline angle<T> make_angle_from_degrees(const double &prm_degrees ///< TODOCUMENT
 		                                        ) {
-		//	return angle( quantity<plane_angle>( arg_degrees * degree ) );
+		//	return angle( quantity<plane_angle>( prm_degrees * degree ) );
 			return angle<T>{ boost::numeric_cast<T>(
-				( boost::math::constants::pi<double>() / 180.0 ) * arg_degrees
+				( boost::math::constants::pi<double>() / 180.0 ) * prm_degrees
 			) };
 		}
 
@@ -342,50 +342,50 @@ namespace cath {
 		///
 		/// \relates angle
 		template <typename T>
-		inline angle<T> make_angle_from_radians(const double &arg_radians ///< TODOCUMENT
+		inline angle<T> make_angle_from_radians(const double &prm_radians ///< TODOCUMENT
 		                                        ) {
-		//	return angle( quantity<plane_angle>( arg_radians * radian ) );
-			return angle<T>{ boost::numeric_cast<T>( arg_radians ) };
+		//	return angle( quantity<plane_angle>( prm_radians * radian ) );
+			return angle<T>{ boost::numeric_cast<T>( prm_radians ) };
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		inline angle<T> make_angle_from_revolutions(const double &arg_revs ///< TODOCUMENT
+		inline angle<T> make_angle_from_revolutions(const double &prm_revs ///< TODOCUMENT
 		                                            ) {
-		//	return angle( quantity<plane_angle>( arg_revs * revolution ) );
-			return angle<T>{ boost::numeric_cast<T>( 2.0 * boost::math::constants::pi<double>() * arg_revs ) };
+		//	return angle( quantity<plane_angle>( prm_revs * revolution ) );
+			return angle<T>{ boost::numeric_cast<T>( 2.0 * boost::math::constants::pi<double>() * prm_revs ) };
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		T angle_in_degrees(const angle<T> &arg_angle ///< TODOCUMENT
+		T angle_in_degrees(const angle<T> &prm_angle ///< TODOCUMENT
 		                   ) {
-		//	return quantity<units::degree::plane_angle>( arg_angle.get_angle() ).value();
-			return static_cast<T>( 180.0 / boost::math::constants::pi<double>() ) * arg_angle.get_angle();
+		//	return quantity<units::degree::plane_angle>( prm_angle.get_angle() ).value();
+			return static_cast<T>( 180.0 / boost::math::constants::pi<double>() ) * prm_angle.get_angle();
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		T angle_in_radians(const angle<T> &arg_angle ///< TODOCUMENT
+		T angle_in_radians(const angle<T> &prm_angle ///< TODOCUMENT
 		                   ) {
-		//	return arg_angle.get_angle().value();
-			return arg_angle.get_angle();
+		//	return prm_angle.get_angle().value();
+			return prm_angle.get_angle();
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates angle
 		template <typename T>
-		T angle_in_revolutions(const angle<T> &arg_angle ///< TODOCUMENT
+		T angle_in_revolutions(const angle<T> &prm_angle ///< TODOCUMENT
 		                       ) {
-		//	return quantity<units::revolution::plane_angle>( arg_angle.get_angle() ).value();
-			return ( arg_angle.get_angle() / ( 2.0 * boost::math::constants::pi<double>() ) );
+		//	return quantity<units::revolution::plane_angle>( prm_angle.get_angle() ).value();
+			return ( prm_angle.get_angle() / ( 2.0 * boost::math::constants::pi<double>() ) );
 		}
 
 		/// \brief TODOCUMENT
@@ -416,9 +416,9 @@ namespace cath {
 		///
 		/// \relates angle
 		template <typename T, typename U>
-		angle<T> convert_angle_type(const angle<U> &arg_angle
+		angle<T> convert_angle_type(const angle<U> &prm_angle
 		                            ) {
-			return make_angle_from_radians<T>( angle_in_radians( arg_angle ) );
+			return make_angle_from_radians<T>( angle_in_radians( prm_angle ) );
 		}
 
 		/// \brief TODOCUMENT

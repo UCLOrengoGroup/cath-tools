@@ -31,12 +31,12 @@ using namespace std;
 /// \brief TODOCUMENT
 ///
 /// \relates res_pair_index_dirn_criterion
-ostream & cath::scan::operator<<(ostream                             &arg_os,                           ///< TODOCUMENT
-                                 const res_pair_index_dirn_criterion &arg_res_pair_index_dirn_criterion ///< TODOCUMENT
+ostream & cath::scan::operator<<(ostream                             &prm_os,                           ///< TODOCUMENT
+                                 const res_pair_index_dirn_criterion &prm_res_pair_index_dirn_criterion ///< TODOCUMENT
                                  ) {
-	switch ( arg_res_pair_index_dirn_criterion ) {
-		case ( res_pair_index_dirn_criterion::MUST_MATCH     ) : { arg_os << "MUST_MATCH"     ; return arg_os ; }
-		case ( res_pair_index_dirn_criterion::NEED_NOT_MATCH ) : { arg_os << "NEED_NOT_MATCH" ; return arg_os ; }
+	switch ( prm_res_pair_index_dirn_criterion ) {
+		case ( res_pair_index_dirn_criterion::MUST_MATCH     ) : { prm_os << "MUST_MATCH"     ; return prm_os ; }
+		case ( res_pair_index_dirn_criterion::NEED_NOT_MATCH ) : { prm_os << "NEED_NOT_MATCH" ; return prm_os ; }
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of res_pair_index_dirn_criterion not recognised whilst inserting into an ostream"));
 	

@@ -37,12 +37,12 @@ using namespace cath::align;
 using namespace std;
 
 /// \brief Ctor for score_colour_handler
-score_colour_handler::score_colour_handler(const bool &arg_show_scores_if_present, ///< TODOCUMENT
-                                           const bool &arg_scores_to_equivs,       ///< TODOCUMENT
-                                           const bool &arg_normalise_scores        ///< TODOCUMENT
-                                           ) : show_scores_if_present ( arg_show_scores_if_present ),
-                                               scores_to_equivs       ( arg_scores_to_equivs       ),
-                                               normalise_scores       ( arg_normalise_scores       ) {
+score_colour_handler::score_colour_handler(const bool &prm_show_scores_if_present, ///< TODOCUMENT
+                                           const bool &prm_scores_to_equivs,       ///< TODOCUMENT
+                                           const bool &prm_normalise_scores        ///< TODOCUMENT
+                                           ) : show_scores_if_present ( prm_show_scores_if_present ),
+                                               scores_to_equivs       ( prm_scores_to_equivs       ),
+                                               normalise_scores       ( prm_normalise_scores       ) {
 }
 
 /// \brief TODOCUMENT
@@ -61,72 +61,72 @@ bool score_colour_handler::get_normalise_scores() const {
 }
 
 /// \brief TODOCUMENT
-float_score_type score_colour_handler::get_score_of_position(const alignment &arg_alignment, ///< TODOCUMENT
-                                                             const size_t    &arg_entry,     ///< TODOCUMENT
-                                                             const size_t    &arg_index      ///< TODOCUMENT
+float_score_type score_colour_handler::get_score_of_position(const alignment &prm_alignment, ///< TODOCUMENT
+                                                             const size_t    &prm_entry,     ///< TODOCUMENT
+                                                             const size_t    &prm_index      ///< TODOCUMENT
                                                              ) const {
-	const bool using_scores     = show_scores_if_present && arg_alignment.is_scored();
-	const bool using_this_score = using_scores && has_score( arg_alignment.get_alignment_residue_scores(), arg_entry, arg_index );
-	return using_this_score ? get_score( arg_alignment.get_alignment_residue_scores(), arg_entry, arg_index, ! scores_to_equivs, normalise_scores )
+	const bool using_scores     = show_scores_if_present && prm_alignment.is_scored();
+	const bool using_this_score = using_scores && has_score( prm_alignment.get_alignment_residue_scores(), prm_entry, prm_index );
+	return using_this_score ? get_score( prm_alignment.get_alignment_residue_scores(), prm_entry, prm_index, ! scores_to_equivs, normalise_scores )
 	                        : 1.0;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates score_colour_handler
-void cath::detail::score_colour(const score_colour_handler &arg_score_colour_handler, ///< TODOCUMENT
-                                const alignment            &arg_alignment,            ///< TODOCUMENT
-                                const size_t               &arg_entry,                ///< TODOCUMENT
-                                const size_t               &arg_index,                ///< TODOCUMENT
-                                display_colour             &arg_colour                ///< TODOCUMENT
+void cath::detail::score_colour(const score_colour_handler &prm_score_colour_handler, ///< TODOCUMENT
+                                const alignment            &prm_alignment,            ///< TODOCUMENT
+                                const size_t               &prm_entry,                ///< TODOCUMENT
+                                const size_t               &prm_index,                ///< TODOCUMENT
+                                display_colour             &prm_colour                ///< TODOCUMENT
                                 ) {
-	const float_score_type score = arg_score_colour_handler.get_score_of_position( arg_alignment, arg_entry, arg_index );
-	arg_colour = rgb_mid_point( display_colour::WHITE, arg_colour, score );
+	const float_score_type score = prm_score_colour_handler.get_score_of_position( prm_alignment, prm_entry, prm_index );
+	prm_colour = rgb_mid_point( display_colour::WHITE, prm_colour, score );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates score_colour_handler
-display_colour cath::detail::score_colour_copy(const score_colour_handler &arg_score_colour_handler, ///< TODOCUMENT
-                                               const alignment            &arg_alignment,            ///< TODOCUMENT
-                                               const size_t               &arg_entry,                ///< TODOCUMENT
-                                               const size_t               &arg_index,                ///< TODOCUMENT
-                                               display_colour              arg_colour                ///< TODOCUMENT
+display_colour cath::detail::score_colour_copy(const score_colour_handler &prm_score_colour_handler, ///< TODOCUMENT
+                                               const alignment            &prm_alignment,            ///< TODOCUMENT
+                                               const size_t               &prm_entry,                ///< TODOCUMENT
+                                               const size_t               &prm_index,                ///< TODOCUMENT
+                                               display_colour              prm_colour                ///< TODOCUMENT
                                                ) {
 	score_colour(
-		arg_score_colour_handler,
-		arg_alignment,
-		arg_entry,
-		arg_index,
-		arg_colour
+		prm_score_colour_handler,
+		prm_alignment,
+		prm_entry,
+		prm_index,
+		prm_colour
 	);
-	return arg_colour;
+	return prm_colour;
 }
 
 /// \brief Adjust an existing display_colour_spec,
 ///        based on the specified score_colour_handler and alignment
 ///
 /// \relates score_colour_handler
-void cath::detail::adjust_display_colour_spec(display_colour_spec        &arg_colour_spec,          ///< The display_colour_spec to alter
-                                              const score_colour_handler &arg_score_colour_handler, ///< The specification for how to adjust the colours
-                                              const alignment            &arg_alignment             ///< The alignment to use to adjust the colours
+void cath::detail::adjust_display_colour_spec(display_colour_spec        &prm_colour_spec,          ///< The display_colour_spec to alter
+                                              const score_colour_handler &prm_score_colour_handler, ///< The specification for how to adjust the colours
+                                              const alignment            &prm_alignment             ///< The alignment to use to adjust the colours
                                               ) {
-	const alignment::size_type num_entries   = arg_alignment.num_entries();
-	const alignment::size_type aln_length    = arg_alignment.length();
+	const alignment::size_type num_entries   = prm_alignment.num_entries();
+	const alignment::size_type aln_length    = prm_alignment.length();
 
-	if ( arg_score_colour_handler.get_show_scores_if_present() ) {
+	if ( prm_score_colour_handler.get_show_scores_if_present() ) {
 		for (const alignment::size_type &entry : indices( num_entries ) ) {
 			for (const size_t &index : indices( aln_length ) ) {
-				const aln_posn_opt position = arg_alignment.position_of_entry_of_index( entry, index );
+				const aln_posn_opt position = prm_alignment.position_of_entry_of_index( entry, index );
 				if ( position ) {
-					const display_colour_opt &base_col = get_base_clr( arg_colour_spec );
-					const display_colour_opt  pdb_col  = get_clr_of_pdb_index          ( arg_colour_spec, entry            );
-					const display_colour_opt  res_col  = get_clr_of_pdb_and_res_indices( arg_colour_spec, entry, *position );
+					const display_colour_opt &base_col = get_base_clr( prm_colour_spec );
+					const display_colour_opt  pdb_col  = get_clr_of_pdb_index          ( prm_colour_spec, entry            );
+					const display_colour_opt  res_col  = get_clr_of_pdb_and_res_indices( prm_colour_spec, entry, *position );
 					const display_colour best_colour = res_col  ? ( *res_col  ) :
 					                                   pdb_col  ? ( *pdb_col  ) :
 					                                   base_col ? ( *base_col ) : display_colour::BLACK;
-					const display_colour the_colour = score_colour_copy( arg_score_colour_handler, arg_alignment, entry, index, best_colour );
-					arg_colour_spec.colour_pdb_residue(
+					const display_colour the_colour = score_colour_copy( prm_score_colour_handler, prm_alignment, entry, index, best_colour );
+					prm_colour_spec.colour_pdb_residue(
 						entry,
 						*position,
 						the_colour,
@@ -142,10 +142,10 @@ void cath::detail::adjust_display_colour_spec(display_colour_spec        &arg_co
 ///        based on the specified score_colour_handler and alignment
 ///
 /// \relates score_colour_handler
-display_colour_spec cath::detail::adjust_display_colour_spec_copy(display_colour_spec         arg_colour_spec,          ///< The display_colour_spec from which a copy should be taken and altered
-                                                                  const score_colour_handler &arg_score_colour_handler, ///< The specification for how to adjust the colours
-                                                                  const alignment            &arg_alignment             ///< The alignment to use to adjust the colours
+display_colour_spec cath::detail::adjust_display_colour_spec_copy(display_colour_spec         prm_colour_spec,          ///< The display_colour_spec from which a copy should be taken and altered
+                                                                  const score_colour_handler &prm_score_colour_handler, ///< The specification for how to adjust the colours
+                                                                  const alignment            &prm_alignment             ///< The alignment to use to adjust the colours
                                                                   ) {
-	adjust_display_colour_spec( arg_colour_spec, arg_score_colour_handler, arg_alignment );
-	return arg_colour_spec;
+	adjust_display_colour_spec( prm_colour_spec, prm_score_colour_handler, prm_alignment );
+	return prm_colour_spec;
 }

@@ -36,19 +36,19 @@ using std::make_pair;
 using std::pair;
 
 /// \brief TODOCUMENT
-pair<path, pdb> cath::file::read_domain_from_pdb(const domain_definition &arg_read_domain_def_from_pdb, ///< TODOCUMENT
-                                                 const data_dirs_spec    &arg_data_dirs_spec            ///< TODOCUMENT
+pair<path, pdb> cath::file::read_domain_from_pdb(const domain_definition &prm_read_domain_def_from_pdb, ///< TODOCUMENT
+                                                 const data_dirs_spec    &prm_data_dirs_spec            ///< TODOCUMENT
                                                  ) {
 	const path pdb_file = find_file(
-		arg_data_dirs_spec,
+		prm_data_dirs_spec,
 		data_file::PDB,
-		arg_read_domain_def_from_pdb.get_pdb_name()
+		prm_read_domain_def_from_pdb.get_pdb_name()
 	);
 	return make_pair(
 		pdb_file,
 		read_domain_from_pdb_file(
 			pdb_file,
-			arg_read_domain_def_from_pdb.get_domain()
+			prm_read_domain_def_from_pdb.get_domain()
 		)
 	);
 }
@@ -58,11 +58,11 @@ pair<path, pdb> cath::file::read_domain_from_pdb(const domain_definition &arg_re
 /// \relates pdb
 ///
 /// \relatesalso domain
-pdb cath::file::read_domain_from_pdb_file(const path   &arg_pdb_filename, ///< TODOCUMENT
-                                          const domain &/*arg_domain*/    ///< TODOCUMENT
+pdb cath::file::read_domain_from_pdb_file(const path   &prm_pdb_filename, ///< TODOCUMENT
+                                          const domain &/*prm_domain*/    ///< TODOCUMENT
                                           ) {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("This is not implemented this here"));
 	pdb new_pdb;
-	new_pdb.read_file( arg_pdb_filename );
+	new_pdb.read_file( prm_pdb_filename );
 	return new_pdb;
 }

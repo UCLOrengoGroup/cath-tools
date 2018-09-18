@@ -101,25 +101,25 @@ const extract_pdb_options_block & cath_extract_pdb_options::get_extract_pdb_opti
 /// \brief TODOCUMENT
 ///
 /// \relates cath_extract_pdb_options
-const path & cath::opts::get_input_pdb_file(const cath_extract_pdb_options &arg_options ///< TODOCUMENT
+const path & cath::opts::get_input_pdb_file(const cath_extract_pdb_options &prm_options ///< TODOCUMENT
                                             ) {
-	return arg_options.get_extract_pdb_options_block().get_input_pdb_file();
+	return prm_options.get_extract_pdb_options_block().get_input_pdb_file();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates cath_extract_pdb_options
-const path_opt & cath::opts::get_output_pdb_file(const cath_extract_pdb_options &arg_options ///< TODOCUMENT
+const path_opt & cath::opts::get_output_pdb_file(const cath_extract_pdb_options &prm_options ///< TODOCUMENT
                                                  ) {
-	return arg_options.get_extract_pdb_options_block().get_output_pdb_file();
+	return prm_options.get_extract_pdb_options_block().get_output_pdb_file();
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates cath_extract_pdb_options
-const domain_opt & cath::opts::get_regions(const cath_extract_pdb_options &arg_options ///< TODOCUMENT
+const domain_opt & cath::opts::get_regions(const cath_extract_pdb_options &prm_options ///< TODOCUMENT
                                            ) {
-	return arg_options.get_extract_pdb_options_block().get_regions();
+	return prm_options.get_extract_pdb_options_block().get_regions();
 }
 
 

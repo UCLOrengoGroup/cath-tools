@@ -50,36 +50,36 @@ using std::string;
 
 /// \brief Calculate the starts and indices of the discontiguous domains in the specified calc_hit_list,
 ///        ordered by their starts
-res_arr_idx_pair_vec discont_hits_index_by_start::calc_disconts(const calc_hit_list &arg_calc_hit_list ///< The calc_hit_list to index
+res_arr_idx_pair_vec discont_hits_index_by_start::calc_disconts(const calc_hit_list &prm_calc_hit_list ///< The calc_hit_list to index
                                                                 ) {
 	return sort_copy(
 		copy_build<res_arr_idx_pair_vec>(
-			indices( arg_calc_hit_list.size() )
+			indices( prm_calc_hit_list.size() )
 				| filtered   ( [&] (const size_t &x) {
-					return is_discontig( arg_calc_hit_list[ x ] );
+					return is_discontig( prm_calc_hit_list[ x ] );
 				} )
 				| transformed( [&] (const size_t &x) {
-					return make_pair( get_start_arrow( arg_calc_hit_list[ x ] ), numeric_cast<hitidx_t>( x ) );
+					return make_pair( get_start_arrow( prm_calc_hit_list[ x ] ), numeric_cast<hitidx_t>( x ) );
 				} )
 		)
 	);
 }
 
 /// \brief Ctor from a calc_hit_list
-discont_hits_index_by_start::discont_hits_index_by_start(const calc_hit_list &arg_calc_hit_list ///< The calc_hit_list to index
-                                                         ) : the_hits ( arg_calc_hit_list                   ),
-                                                             disconts ( calc_disconts ( arg_calc_hit_list ) ) {
+discont_hits_index_by_start::discont_hits_index_by_start(const calc_hit_list &prm_calc_hit_list ///< The calc_hit_list to index
+                                                         ) : the_hits ( prm_calc_hit_list                   ),
+                                                             disconts ( calc_disconts ( prm_calc_hit_list ) ) {
 }
 
 /// \brief Get this index's internal indices for any discontiguous domains that start
 ///        within the specified region (inclusive)
 ///
 /// The only way these indices should be used is as arguments to get_discont_hit_of_index_index()
-integer_range<size_t> discont_hits_index_by_start::get_index_indices_of_disconts_in_range(const seq_arrow &arg_start, ///< The start of the region of interest
-                                                                                          const seq_arrow &arg_stop   ///< The end of the region of interest
+integer_range<size_t> discont_hits_index_by_start::get_index_indices_of_disconts_in_range(const seq_arrow &prm_start, ///< The start of the region of interest
+                                                                                          const seq_arrow &prm_stop   ///< The end of the region of interest
                                                                                           ) const {
-	const auto begin_itr = lower_bound( disconts, arg_start, [] (const res_arr_idx_pair &p, const seq_arrow &a) { return p.first < a; } );
-	const auto end_itr   = upper_bound( disconts, arg_stop,  [] (const seq_arrow &a, const res_arr_idx_pair &p) { return a < p.first; } );
+	const auto begin_itr = lower_bound( disconts, prm_start, [] (const res_arr_idx_pair &p, const seq_arrow &a) { return p.first < a; } );
+	const auto end_itr   = upper_bound( disconts, prm_stop,  [] (const seq_arrow &a, const res_arr_idx_pair &p) { return a < p.first; } );
 	return irange(
 		numeric_cast<size_t>( distance( common::cbegin( disconts ), begin_itr ) ),
 		numeric_cast<size_t>( distance( common::cbegin( disconts ), end_itr   ) )
@@ -94,21 +94,21 @@ size_t discont_hits_index_by_start::size() const {
 /// \brief Return a reference to the calc_hit associated with an index
 ///
 /// The only source of sensible arguments to this method is get_index_indices_of_disconts_in_range()
-const calc_hit & discont_hits_index_by_start::get_discont_hit_of_index_index(const size_t &arg_index_index ///< The index (in this discont_hits_index_by_start) of the calc_hit to return
+const calc_hit & discont_hits_index_by_start::get_discont_hit_of_index_index(const size_t &prm_index_index ///< The index (in this discont_hits_index_by_start) of the calc_hit to return
                                                                              ) const {
-	return the_hits.get()[ disconts[ arg_index_index ].second ];
+	return the_hits.get()[ disconts[ prm_index_index ].second ];
 }
 
 /// \brief Generate a string describing the specified discont_hits_index_by_start
 ///
 /// \relates discont_hits_index_by_start
-string cath::rslv::detail::to_string(const discont_hits_index_by_start &arg_dhibs ///< The discont_hits_index_by_start to describe
+string cath::rslv::detail::to_string(const discont_hits_index_by_start &prm_dhibs ///< The discont_hits_index_by_start to describe
                                      ) {
 	return 
 		"discont_hits_index_by_start[ "
 		+ join(
-			indices( arg_dhibs.size() )
-				| transformed( [&] (const size_t &x) { return to_string( arg_dhibs.get_discont_hit_of_index_index( x ) ); } ),
+			indices( prm_dhibs.size() )
+				| transformed( [&] (const size_t &x) { return to_string( prm_dhibs.get_discont_hit_of_index_index( x ) ); } ),
 			", "
 		)
 		+ " ]";

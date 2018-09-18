@@ -67,37 +67,37 @@ namespace cath {
 			using element_type = cloneable_pointee_type;
 
 			/// \brief Pass through to unique_ptr's ctor from a pointer
-			explicit clone_ptr(cloneable_pointee_type * arg_pointer = nullptr ///< TODOCUMENT
-			                   ) : ptr( arg_pointer ) {
+			explicit clone_ptr(cloneable_pointee_type * prm_pointer = nullptr ///< TODOCUMENT
+			                   ) : ptr( prm_pointer ) {
 			}
 
 			/// \brief A copy constructor which uses the clone method of cloneable_pointee_type
-			clone_ptr(const clone_ptr &arg_clone_ptr ///< TODOCUMENT
-			          ) : ptr( detail::make_clone( *arg_clone_ptr ) ) {
-				assert( typeid( *ptr.get() ) == typeid( *arg_clone_ptr.get() ) ); // Check the dynamic type returned by clone()
+			clone_ptr(const clone_ptr &prm_clone_ptr ///< TODOCUMENT
+			          ) : ptr( detail::make_clone( *prm_clone_ptr ) ) {
+				assert( typeid( *ptr.get() ) == typeid( *prm_clone_ptr.get() ) ); // Check the dynamic type returned by clone()
 			}
 
 			/// \brief A move-ctor that uses the default behaviour (ie the move-ctor of unique_ptr)
 			clone_ptr(clone_ptr &&) noexcept = default;
 
 			/// \brief Ctor from a unique_ptr const lvalue reference, which takes a clone from it
-			clone_ptr(const std::unique_ptr<cloneable_pointee_type> &arg_unique_ptr ///< TODOCUMENT
-			          ) : ptr( detail::make_clone( *arg_unique_ptr ) ) {
+			clone_ptr(const std::unique_ptr<cloneable_pointee_type> &prm_unique_ptr ///< TODOCUMENT
+			          ) : ptr( detail::make_clone( *prm_unique_ptr ) ) {
 			}
 
 			/// \brief Ctor from a unique_ptr rvalue reference, which moves it
-			clone_ptr(std::unique_ptr<cloneable_pointee_type> &&arg_unique_ptr ///< TODOCUMENT
-			          ) noexcept : ptr( std::move( arg_unique_ptr ) ) {
+			clone_ptr(std::unique_ptr<cloneable_pointee_type> &&prm_unique_ptr ///< TODOCUMENT
+			          ) noexcept : ptr( std::move( prm_unique_ptr ) ) {
 			}
 
 			/// \brief An assignment operator which uses the clone method of cloneable_pointee_type
-			clone_ptr & operator=(const clone_ptr &arg_clone_ptr ///< TODOCUMENT
+			clone_ptr & operator=(const clone_ptr &prm_clone_ptr ///< TODOCUMENT
 			                      ) {
 				// Check for self-assignment
-				if ( this != &arg_clone_ptr ) {
-					std::unique_ptr<cloneable_pointee_type> temp_ptr( arg_clone_ptr->clone() );
+				if ( this != &prm_clone_ptr ) {
+					std::unique_ptr<cloneable_pointee_type> temp_ptr( prm_clone_ptr->clone() );
 					*this = temp_ptr;
-					assert( typeid( *ptr.get() ) == typeid( *arg_clone_ptr.get() ) ); // Check the dynamic type returned by clone()
+					assert( typeid( *ptr.get() ) == typeid( *prm_clone_ptr.get() ) ); // Check the dynamic type returned by clone()
 				}
 				return *this;
 			}
@@ -106,27 +106,27 @@ namespace cath {
 			clone_ptr & operator=(clone_ptr &&) noexcept = default;
 
 			/// \brief A copy assignment operator from a unique_ptr lvalue reference
-			clone_ptr & operator=(const std::unique_ptr<cloneable_pointee_type> &arg_unique_ptr ///< TODOCUMENT
+			clone_ptr & operator=(const std::unique_ptr<cloneable_pointee_type> &prm_unique_ptr ///< TODOCUMENT
 			                      ) {
 				// Check for self-assignment
-				if ( &ptr != &arg_unique_ptr ) {
-					ptr = arg_unique_ptr->clone();
-					assert( typeid( *ptr ) == typeid( *arg_unique_ptr ) ); // Check the dynamic type returned by clone()
+				if ( &ptr != &prm_unique_ptr ) {
+					ptr = prm_unique_ptr->clone();
+					assert( typeid( *ptr ) == typeid( *prm_unique_ptr ) ); // Check the dynamic type returned by clone()
 				}
 				return *this;
 			}
 
 			/// \brief A move assignment operator from a unique_ptr rvalue reference
-			clone_ptr & operator=(std::unique_ptr<cloneable_pointee_type> &&arg_unique_ptr ///< TODOCUMENT
+			clone_ptr & operator=(std::unique_ptr<cloneable_pointee_type> &&prm_unique_ptr ///< TODOCUMENT
 			                      ) noexcept {
-				ptr = std::move( arg_unique_ptr );
+				ptr = std::move( prm_unique_ptr );
 				return *this;
 			}
 
 			/// \brief Pass through to std::unique_ptr's reset method
-			void reset(cloneable_pointee_type *arg_pointer = nullptr ///< TODOCUMENT
+			void reset(cloneable_pointee_type *prm_pointer = nullptr ///< TODOCUMENT
 			           ) {
-				ptr.reset(arg_pointer);
+				ptr.reset(prm_pointer);
 			}
 			/// \brief Pass through to std::unique_ptr's operator* method
 			cloneable_pointee_type & operator*() const {
@@ -145,17 +145,17 @@ namespace cath {
 				return static_cast<bool>( ptr );
 			}
 			/// \brief Pass through to std::unique_ptr's swap method
-			void swap(clone_ptr &arg_clone_ptr ///< TODOCUMENT
+			void swap(clone_ptr &prm_clone_ptr ///< TODOCUMENT
 			          ) {
-				ptr.swap(arg_clone_ptr.ptr);
+				ptr.swap(prm_clone_ptr.ptr);
 			}
 		};
 
 		template <typename T, typename U>
-		inline bool operator==(const clone_ptr<T> &arg_clone_ptr_a, ///< TODOCUMENT
-		                       const clone_ptr<T> &arg_clone_ptr_b  ///< TODOCUMENT
+		inline bool operator==(const clone_ptr<T> &prm_clone_ptr_a, ///< TODOCUMENT
+		                       const clone_ptr<T> &prm_clone_ptr_b  ///< TODOCUMENT
 		                       ) {
-			return arg_clone_ptr_a.get() == arg_clone_ptr_b.get();
+			return prm_clone_ptr_a.get() == prm_clone_ptr_b.get();
 		}
 	} // namespace common
 } // namespace cath

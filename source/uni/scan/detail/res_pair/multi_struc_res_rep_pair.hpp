@@ -73,14 +73,14 @@ namespace cath {
 			const view_base_type & get_view_z(const multi_struc_res_rep_pair &);
 
 			/// \brief Ctor from a res_pair_core, the index of the structure and the indices of the from/to residue reps
-			inline multi_struc_res_rep_pair::multi_struc_res_rep_pair(res_pair_core             arg_core,               ///< The core properties of the res_pair
-			                                                          const index_type         &arg_structure_index,    ///< The index of the structure in the scan_multi_structure_data (name?)
-			                                                          const res_rep_index_type &arg_from_res_rep_index, ///< The rep index of the from rep-residue
-			                                                          const res_rep_index_type &arg_to_res_rep_index    ///< The rep index of the to   rep-residue
-			                                                          ) : the_core           { std::move( arg_core )  },
-			                                                              structure_index    { arg_structure_index    },
-			                                                              from_res_rep_index { arg_from_res_rep_index },
-			                                                              to_res_rep_index   { arg_to_res_rep_index   } {
+			inline multi_struc_res_rep_pair::multi_struc_res_rep_pair(res_pair_core             prm_core,               ///< The core properties of the res_pair
+			                                                          const index_type         &prm_structure_index,    ///< The index of the structure in the scan_multi_structure_data (name?)
+			                                                          const res_rep_index_type &prm_from_res_rep_index, ///< The rep index of the from rep-residue
+			                                                          const res_rep_index_type &prm_to_res_rep_index    ///< The rep index of the to   rep-residue
+			                                                          ) : the_core           { std::move( prm_core )  },
+			                                                              structure_index    { prm_structure_index    },
+			                                                              from_res_rep_index { prm_from_res_rep_index },
+			                                                              to_res_rep_index   { prm_to_res_rep_index   } {
 			}
 
 			/// \brief TODOCUMENT
@@ -106,14 +106,14 @@ namespace cath {
 			/// \brief Whether a res_pair's from-residue comes before (INCREASE) or after (DECREASE) its to-residue
 			///
 			/// \relates multi_struc_res_rep_pair
-			inline res_pair_dirn direction(const multi_struc_res_rep_pair &arg_res_pair ///< The single_struc_res_pair to query
+			inline res_pair_dirn direction(const multi_struc_res_rep_pair &prm_res_pair ///< The single_struc_res_pair to query
 			                               ) {
 #ifndef NDEBUG
-				if ( arg_res_pair.get_from_res_rep_index() == arg_res_pair.get_to_res_rep_index() ) {
+				if ( prm_res_pair.get_from_res_rep_index() == prm_res_pair.get_to_res_rep_index() ) {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("direction() cannot process res_pairs with matching to/from rep residues"));
 				}
 #endif
-				return ( arg_res_pair.get_from_res_rep_index() < arg_res_pair.get_to_res_rep_index() ) ? res_pair_dirn::INCREASE
+				return ( prm_res_pair.get_from_res_rep_index() < prm_res_pair.get_to_res_rep_index() ) ? res_pair_dirn::INCREASE
 				                                                                                       : res_pair_dirn::DECREASE;
 			}
 
@@ -121,10 +121,10 @@ namespace cath {
 			///        (ie both have from-residue before to-residue or both have from-residue after to-residue)
 			///
 			/// \relates multi_struc_res_rep_pair
-			inline bool same_direction(const multi_struc_res_rep_pair &arg_res_pair_a, ///< The first  res_pair to compare
-			                           const multi_struc_res_rep_pair &arg_res_pair_b  ///< The second res_pair to compare
+			inline bool same_direction(const multi_struc_res_rep_pair &prm_res_pair_a, ///< The first  res_pair to compare
+			                           const multi_struc_res_rep_pair &prm_res_pair_b  ///< The second res_pair to compare
 			                           ) {
-				return direction( arg_res_pair_a ) == direction( arg_res_pair_b );
+				return direction( prm_res_pair_a ) == direction( prm_res_pair_b );
 			}
 
 			/// \brief TODOCUMENT
@@ -132,36 +132,36 @@ namespace cath {
 			/// \todo Add a version that takes a protein, a structure index, a pair of striders and a pair of indices
 			///
 			/// \relates multi_struc_res_rep_pair
-			inline multi_struc_res_rep_pair make_multi_struc_res_rep_pair(const residue            &arg_from_residue,       ///< TODOCUMENT
-			                                                              const residue            &arg_to_residue,         ///< TODOCUMENT
-			                                                              const index_type         &arg_structure_index,    ///< TODOCUMENT
-			                                                              const res_rep_index_type &arg_from_res_rep_index, ///< TODOCUMENT
-			                                                              const res_rep_index_type &arg_to_res_rep_index    ///< TODOCUMENT
+			inline multi_struc_res_rep_pair make_multi_struc_res_rep_pair(const residue            &prm_from_residue,       ///< TODOCUMENT
+			                                                              const residue            &prm_to_residue,         ///< TODOCUMENT
+			                                                              const index_type         &prm_structure_index,    ///< TODOCUMENT
+			                                                              const res_rep_index_type &prm_from_res_rep_index, ///< TODOCUMENT
+			                                                              const res_rep_index_type &prm_to_res_rep_index    ///< TODOCUMENT
 			                                                              ) {
 				return {
-					make_res_pair_core( arg_from_residue, arg_to_residue ),
-					arg_structure_index,
-					arg_from_res_rep_index,
-					arg_to_res_rep_index
+					make_res_pair_core( prm_from_residue, prm_to_residue ),
+					prm_structure_index,
+					prm_from_res_rep_index,
+					prm_to_res_rep_index
 				};
 			}
 
 			/// \brief TODOCUMENT
-			inline const view_base_type & get_view_x(const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
+			inline const view_base_type & get_view_x(const multi_struc_res_rep_pair &prm_res_pair ///< TODOCUMENT
 			                                         ) {
-				return get_view_x( arg_res_pair.get_res_pair_core() );
+				return get_view_x( prm_res_pair.get_res_pair_core() );
 			}
 
 			/// \brief TODOCUMENT
-			inline const view_base_type & get_view_y(const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
+			inline const view_base_type & get_view_y(const multi_struc_res_rep_pair &prm_res_pair ///< TODOCUMENT
 			                                         ) {
-				return get_view_y( arg_res_pair.get_res_pair_core() );
+				return get_view_y( prm_res_pair.get_res_pair_core() );
 			}
 
 			/// \brief TODOCUMENT
-			inline const view_base_type & get_view_z(const multi_struc_res_rep_pair &arg_res_pair ///< TODOCUMENT
+			inline const view_base_type & get_view_z(const multi_struc_res_rep_pair &prm_res_pair ///< TODOCUMENT
 			                                         ) {
-				return get_view_z( arg_res_pair.get_res_pair_core() );
+				return get_view_z( prm_res_pair.get_res_pair_core() );
 			}
 
 			std::ostream & operator<<(std::ostream &,

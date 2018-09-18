@@ -69,10 +69,10 @@ string superposition_output_options_block::do_get_block_name() const {
 }
 
 /// \brief Add this block's options to the provided options_description
-void superposition_output_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                               const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void superposition_output_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                               const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                                ) {
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(PO_SUP_FILE.c_str(),          value<path>(&sup_to_pdb_file),                                     "Write the superposed structures to a single PDB file arg, separated using faked chain codes"  )
 		(PO_SUP_FILES_DIR.c_str(),     value<path>(&sup_to_pdb_files_dir),                                "Write the superposed structures to separate PDB files in directory arg"                       )
 		(PO_SUP_TO_STDOUT.c_str(),     bool_switch(&sup_to_stdout)->default_value(false),                 "Print the superposed structures to stdout, separated using faked chain codes"                 )
@@ -82,7 +82,7 @@ void superposition_output_options_block::do_add_visible_options_to_description(o
 		(PO_SUP_TO_JSON_FILE.c_str(),  value<path>(&json_file),                                           "Write the superposition to JSON superposition file\n(Recommended filename extension: .sup_json)"        );
 }
 
-str_opt superposition_output_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt superposition_output_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                               ) const {
 	if (!get_sup_to_pdb_file().empty() && !is_acceptable_output_file(get_sup_to_pdb_file())) {
 		return "Not a valid superposition pdb output file :\"" + get_sup_to_pdb_file().string() + "\"";
@@ -155,25 +155,25 @@ path superposition_output_options_block::get_json_file() const {
 }
 
 /// Get a list of superposition_outputter_list that will perform the outputs specified in this options_block
-superposition_outputter_list superposition_output_options_block::get_superposition_outputters(const display_spec               &arg_display_spec,          ///< The specification of how to display (colour) the structures
-                                                                                              const superposition_content_spec &arg_content_spec,          ///< The specification of what should be included in the superposition
-                                                                                              const default_supn_outputter     &arg_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
+superposition_outputter_list superposition_output_options_block::get_superposition_outputters(const display_spec               &prm_display_spec,          ///< The specification of how to display (colour) the structures
+                                                                                              const superposition_content_spec &prm_content_spec,          ///< The specification of what should be included in the superposition
+                                                                                              const default_supn_outputter     &prm_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
                                                                                               ) const {
 	superposition_outputter_list superposition_outputters;
 	if ( ! get_sup_to_pdb_file().empty() ) {
-		superposition_outputters.push_back( pdb_file_superposition_outputter   { get_sup_to_pdb_file(),                        arg_content_spec } );
+		superposition_outputters.push_back( pdb_file_superposition_outputter   { get_sup_to_pdb_file(),                        prm_content_spec } );
 	}
 	if ( ! get_sup_to_pdb_files_dir().empty() ) {
-		superposition_outputters.push_back( pdb_files_superposition_outputter  { get_sup_to_pdb_files_dir(),                   arg_content_spec } );
+		superposition_outputters.push_back( pdb_files_superposition_outputter  { get_sup_to_pdb_files_dir(),                   prm_content_spec } );
 	}
 	if ( get_sup_to_stdout() ) {
-		superposition_outputters.push_back( ostream_superposition_outputter    {                                               arg_content_spec } );
+		superposition_outputters.push_back( ostream_superposition_outputter    {                                               prm_content_spec } );
 	}
 	if ( get_sup_to_pymol() ) {
-		superposition_outputters.push_back( pymol_view_superposition_outputter { get_pymol_program(),        arg_display_spec, arg_content_spec } );
+		superposition_outputters.push_back( pymol_view_superposition_outputter { get_pymol_program(),        prm_display_spec, prm_content_spec } );
 	}
 	if ( ! get_sup_to_pymol_file().empty() ) {
-		superposition_outputters.push_back( pymol_file_superposition_outputter { get_sup_to_pymol_file(),    arg_display_spec, arg_content_spec } );
+		superposition_outputters.push_back( pymol_file_superposition_outputter { get_sup_to_pymol_file(),    prm_display_spec, prm_content_spec } );
 	}
 	if ( ! get_json_file().empty() ) {
 		superposition_outputters.push_back( json_file_superposition_outputter  { get_json_file()                                                } );
@@ -182,9 +182,9 @@ superposition_outputter_list superposition_output_options_block::get_superpositi
 	// If there no superposition outputters have been specified,
 	// add any defaults as requested
 	if ( superposition_outputters.empty() ) {
-		switch ( arg_default_supn_outputter ) {
+		switch ( prm_default_supn_outputter ) {
 			case ( default_supn_outputter::PYMOL ) : {
-				superposition_outputters.push_back( pymol_view_superposition_outputter { get_pymol_program(), arg_display_spec, arg_content_spec } );
+				superposition_outputters.push_back( pymol_view_superposition_outputter { get_pymol_program(), prm_display_spec, prm_content_spec } );
 			}
 			case ( default_supn_outputter::NONE  ) : {}
 		}

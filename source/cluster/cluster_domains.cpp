@@ -36,10 +36,10 @@ using std::string;
 /// \brief Get the number of entries in the specified cluster_domains
 ///
 /// \relates cluster_domains
-size_t cath::clust::num_entries(const cluster_domains &arg_cluster_domains ///< The cluster_domains to query
+size_t cath::clust::num_entries(const cluster_domains &prm_cluster_domains ///< The cluster_domains to query
                                 ) {
 	return accumulate(
-		arg_cluster_domains
+		prm_cluster_domains
 			| transformed( [] (const seq_id_and_domain_cluster_ids_pair &x) {
 				return x.dom_cluster_ids.size();
 			} ),
@@ -50,16 +50,16 @@ size_t cath::clust::num_entries(const cluster_domains &arg_cluster_domains ///< 
 /// \brief Generate a string describing the specified cluster_domains
 ///
 /// \relates cluster_domains
-string cath::clust::to_string(const cluster_domains   &arg_cluster_domains, ///< The cluster_domains to describe
-                              const id_of_str_bidirnl &arg_ider             ///< The id_of_str_bidirnl that mapped from seq name to ID
+string cath::clust::to_string(const cluster_domains   &prm_cluster_domains, ///< The cluster_domains to describe
+                              const id_of_str_bidirnl &prm_ider             ///< The id_of_str_bidirnl that mapped from seq name to ID
                               ) {
 	return join(
-		arg_cluster_domains.sorted_seq_ids()
+		prm_cluster_domains.sorted_seq_ids()
 			| transformed( [&] (const cluster_id_t &seq_id) {
 				return
-					  arg_ider.get_name_of_id( seq_id )
+					  prm_ider.get_name_of_id( seq_id )
 					+ "("
-					+ to_string( arg_cluster_domains.domain_cluster_ids_of_seq_id( seq_id ), false )
+					+ to_string( prm_cluster_domains.domain_cluster_ids_of_seq_id( seq_id ), false )
 					+ ")";
 			} ),
 		", "

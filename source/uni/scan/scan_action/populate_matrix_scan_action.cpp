@@ -36,14 +36,14 @@ using boost::filesystem::path;
 using boost::numeric_cast;
 
 /// \brief TODOCUMENT
-populate_matrix_scan_action::populate_matrix_scan_action(const index_type &arg_num_residues_a, ///< TODOCUMENT
-                                                         const index_type &arg_num_residues_b, ///< TODOCUMENT
-                                                         const index_type &arg_structure_a,    ///< TODOCUMENT
-                                                         const index_type &arg_structure_b     ///< TODOCUMENT
-                                                         ) : the_matrix  ( arg_num_residues_a, doub_vec( arg_num_residues_b, 0.0 ) ),
-                                                             structure_a ( arg_structure_a ),
-                                                             structure_b ( arg_structure_b ) {
-	if ( arg_num_residues_a == 0 && arg_num_residues_b == 0 ) {
+populate_matrix_scan_action::populate_matrix_scan_action(const index_type &prm_num_residues_a, ///< TODOCUMENT
+                                                         const index_type &prm_num_residues_b, ///< TODOCUMENT
+                                                         const index_type &prm_structure_a,    ///< TODOCUMENT
+                                                         const index_type &prm_structure_b     ///< TODOCUMENT
+                                                         ) : the_matrix  ( prm_num_residues_a, doub_vec( prm_num_residues_b, 0.0 ) ),
+                                                             structure_a ( prm_structure_a ),
+                                                             structure_b ( prm_structure_b ) {
+	if ( prm_num_residues_a == 0 && prm_num_residues_b == 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to create populate_matrix_scan_action with 0 residues in either dimension"));
 	}
 }
@@ -51,12 +51,12 @@ populate_matrix_scan_action::populate_matrix_scan_action(const index_type &arg_n
 //new_matrix_dyn_prog_score_source
 
 /// \brief TODOCUMENT
-void populate_matrix_scan_action::plot_to_file(const path     &arg_out_filename, ///< TODOCUMENT
-                                               matrix_plotter &arg_plotter       ///< TODOCUMENT
+void populate_matrix_scan_action::plot_to_file(const path     &prm_out_filename, ///< TODOCUMENT
+                                               matrix_plotter &prm_plotter       ///< TODOCUMENT
                                                ) const {
 	new_matrix_dyn_prog_score_source the_source{ the_matrix, get_length_a(), get_length_b() };
-	arg_plotter.plot_scores( the_source );
-	arg_plotter.finish( arg_out_filename );
+	prm_plotter.plot_scores( the_source );
+	prm_plotter.finish( prm_out_filename );
 //	return ;
 }
 
@@ -73,15 +73,15 @@ index_type populate_matrix_scan_action::get_length_b() const {
 //			new_matrix_dyn_prog_score_source
 
 /// \brief TODOCUMENT
-void cath::scan::gnuplot_to_file(const populate_matrix_scan_action &arg_action,      ///< TODOCUMENT
-                                 const path                        &arg_out_filename ///< TODOCUMENT
+void cath::scan::gnuplot_to_file(const populate_matrix_scan_action &prm_action,      ///< TODOCUMENT
+                                 const path                        &prm_out_filename ///< TODOCUMENT
                                  ) {
 	gnuplot_matrix_plotter the_plotter{
-		arg_action.get_length_a(),
-		arg_action.get_length_b()
+		prm_action.get_length_a(),
+		prm_action.get_length_b()
 	};
-	arg_action.plot_to_file(
-		arg_out_filename,
+	prm_action.plot_to_file(
+		prm_out_filename,
 		the_plotter
 	);
 }

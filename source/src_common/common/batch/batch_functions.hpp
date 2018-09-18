@@ -71,20 +71,20 @@ namespace cath {
 		///
 		/// \tparam Rng must be a random-access range
 		template <typename Rng>
-		boost::sub_range<Rng> batch_subrange(Rng                    &arg_rng,             ///< The range to batch up
-		                                     const size_t           &arg_batch_size,      ///< The size of the batch
-		                                     const size_t           &arg_batch_index,     ///< The index of the batch to return
-		                                     const broken_batch_tol &arg_broken_batch_tol ///< Whether to tolerate a broken batch at the end
+		boost::sub_range<Rng> batch_subrange(Rng                    &prm_rng,             ///< The range to batch up
+		                                     const size_t           &prm_batch_size,      ///< The size of the batch
+		                                     const size_t           &prm_batch_index,     ///< The index of the batch to return
+		                                     const broken_batch_tol &prm_broken_batch_tol ///< Whether to tolerate a broken batch at the end
 		                                     ) {
 			const auto begin_and_end = batch_begin_and_end(
-				boost::size( arg_rng ),
-				arg_batch_size,
-				arg_batch_index,
-				arg_broken_batch_tol
+				boost::size( prm_rng ),
+				prm_batch_size,
+				prm_batch_index,
+				prm_broken_batch_tol
 			);
 			return {
-				std::begin( arg_rng ) + static_cast<ptrdiff_t>( begin_and_end.first  ),
-				std::begin( arg_rng ) + static_cast<ptrdiff_t>( begin_and_end.second )
+				std::begin( prm_rng ) + static_cast<ptrdiff_t>( begin_and_end.first  ),
+				std::begin( prm_rng ) + static_cast<ptrdiff_t>( begin_and_end.second )
 			};
 		}
 

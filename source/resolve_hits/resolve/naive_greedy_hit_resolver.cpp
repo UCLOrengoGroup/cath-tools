@@ -31,25 +31,25 @@ using namespace cath::rslv;
 using namespace cath::rslv::detail;
 
 /// \brief Naively, greedily resolve hits
-scored_hit_arch cath::rslv::naive_greedy_resolve_hits(const calc_hit_list &arg_hits ///< The hits to resolve
+scored_hit_arch cath::rslv::naive_greedy_resolve_hits(const calc_hit_list &prm_hits ///< The hits to resolve
                                                       ) {
 	scored_arch_proxy results;
 
 	// Get a vector of the indices of the hits in descending order of score
 	const auto hit_indices_best_to_worst = sort_build<hitidx_vec>(
-		indices( arg_hits.size() ),
+		indices( prm_hits.size() ),
 		[&] (const hitidx_t &x, const hitidx_t &y) {
-			return ( arg_hits[ y ].get_score() < arg_hits[ x ].get_score() );
+			return ( prm_hits[ y ].get_score() < prm_hits[ x ].get_score() );
 		}
 	);
 
 	// Work through the hit indices and add any that don't clash with those already added
 	for (const hitidx_t &hit_index : hit_indices_best_to_worst) {
-		const calc_hit &the_hit = arg_hits[ hit_index ];
+		const calc_hit &the_hit = prm_hits[ hit_index ];
 		const resscr_t &score   = the_hit.get_score();
-		add_hit_if_does_not_overlap( results, score, hit_index, arg_hits );
+		add_hit_if_does_not_overlap( results, score, hit_index, prm_hits );
 	}
 
 	// Build a scored_hit_arch of the results
-	return make_scored_hit_arch( results, arg_hits );
+	return make_scored_hit_arch( results, prm_hits );
 }

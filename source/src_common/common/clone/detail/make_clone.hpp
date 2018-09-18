@@ -32,9 +32,9 @@ namespace cath {
 			/// This allows specialisation for types that need to use a method name other than "clone",
 			/// if clone() has already been used for producing a clone at an earlier level in the hierarchy.
 			template <typename T>
-			std::unique_ptr<T> make_clone(const T &arg_value ///< TODOCUMENT
+			std::unique_ptr<T> make_clone(const T &prm_value ///< TODOCUMENT
 			                              ) {
-				return arg_value.clone();
+				return prm_value.clone();
 			}
 		} // namespace detail
 	} // namespace common

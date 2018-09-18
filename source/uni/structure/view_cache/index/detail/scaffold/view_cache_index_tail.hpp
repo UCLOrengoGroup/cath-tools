@@ -71,16 +71,16 @@ namespace cath {
 			};
 
 			/// \brief TODOCUMENT
-			inline void view_cache_index_tail::store(const view_cache_index_entry &arg_entry ///< TODOCUMENT
+			inline void view_cache_index_tail::store(const view_cache_index_entry &prm_entry ///< TODOCUMENT
 			                                         ) {
-				entries.push_back( arg_entry );
+				entries.push_back( prm_entry );
 			}
 
 			/// \brief TODOCUMENT
-			inline void view_cache_index_tail::store(const view_cache_index_entry   &arg_entry,  ///< TODOCUMENT
-			                                         const boost::tuples::null_type &/*arg_dfs*/ ///< TODOCUMENT
+			inline void view_cache_index_tail::store(const view_cache_index_entry   &prm_entry,  ///< TODOCUMENT
+			                                         const boost::tuples::null_type &/*prm_dfs*/ ///< TODOCUMENT
 			                                         ) {
-				store( arg_entry );
+				store( prm_entry );
 			}
 
 			/// \brief TODOCUMENT
@@ -95,52 +95,52 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename ACTN>
-			void view_cache_index_tail::perform_action_on_all_match_at_leaves(ACTN &arg_action ///< TODOCUMENT
+			void view_cache_index_tail::perform_action_on_all_match_at_leaves(ACTN &prm_action ///< TODOCUMENT
 			                                                                  ) const {
 				for (const view_cache_index_entry &entry : entries) {
-					arg_action( entry );
+					prm_action( entry );
 				}
 			}
 
 			template <typename ACTN>
-			void view_cache_index_tail::perform_action_on_matches(const view_cache_index_entry &arg_entry,    ///< TODOCUMENT
-			                                                      const vcie_match_criteria    &arg_criteria, ///< TODOCUMENT
-			                                                      ACTN                         &arg_action    ///< TODOCUMENT
+			void view_cache_index_tail::perform_action_on_matches(const view_cache_index_entry &prm_entry,    ///< TODOCUMENT
+			                                                      const vcie_match_criteria    &prm_criteria, ///< TODOCUMENT
+			                                                      ACTN                         &prm_action    ///< TODOCUMENT
 			                                                      ) const {
 				for (const view_cache_index_entry &entry : entries) {
-					if ( arg_criteria( arg_entry, entry ) ) {
-						// const double sq_dist = squared_distance( arg_entry, entry );
+					if ( prm_criteria( prm_entry, entry ) ) {
+						// const double sq_dist = squared_distance( prm_entry, entry );
 						// const double score   = ( 10.0 / ( sq_dist + 10.0 ) );
 	
 						// std::cerr << "index_match ";
-						// std::cerr << std::right << std::setw( 4 ) << arg_entry.get_from_index();
+						// std::cerr << std::right << std::setw( 4 ) << prm_entry.get_from_index();
 						// std::cerr << "";
-						// std::cerr << std::right << std::setw( 4 ) << arg_entry.get_to_index();
+						// std::cerr << std::right << std::setw( 4 ) << prm_entry.get_to_index();
 						// std::cerr << " ";
 						// std::cerr << std::right << std::setw( 4 ) << entry.get_from_index();
 						// std::cerr << " ";
 						// std::cerr << std::right << std::setw( 4 ) << entry.get_to_index();
 						// std::cerr << " " << score;
 						// std::cerr << std::endl;
-						arg_action( arg_entry, entry );
+						prm_action( prm_entry, entry );
 					}
 				}
 			}
 
 			/// \brief TODOCUMENT
 			template <typename ACTN>
-			void view_cache_index_tail::perform_action_on_all_match_at_nodes(const view_cache_index_tail &arg_match_tail, ///< TODOCUMENT
-			                                                                 const vcie_match_criteria   &arg_criteria,   ///< TODOCUMENT
-			                                                                 ACTN                        &arg_action      ///< TODOCUMENT
+			void view_cache_index_tail::perform_action_on_all_match_at_nodes(const view_cache_index_tail &prm_match_tail, ///< TODOCUMENT
+			                                                                 const vcie_match_criteria   &prm_criteria,   ///< TODOCUMENT
+			                                                                 ACTN                        &prm_action      ///< TODOCUMENT
 			                                                                 ) const {
 				// std::cerr << "Comparing "           << entries.size()
-				//           << " query entries with " << arg_match_tail.entries.size()
+				//           << " query entries with " << prm_match_tail.entries.size()
 				//           << " match entries"       << "\n";
 
 				for (const view_cache_index_entry &x : entries) {
-					for (const view_cache_index_entry &y : arg_match_tail.entries) {
-						if ( arg_criteria( x, y ) ) {
-							arg_action( x, y );
+					for (const view_cache_index_entry &y : prm_match_tail.entries) {
+						if ( prm_criteria( x, y ) ) {
+							prm_action( x, y );
 						}
 					}
 				}

@@ -36,17 +36,17 @@ namespace cath {
 		///       provides the line numbers and variable names from the caller's context
 		///       rather than from here?
 		template <typename RNG1, typename RNG2>
-		void BOOST_CHECK_EQUAL_RANGES(const RNG1 &arg_rng_1, ///< TODOCUMENT
-		                              const RNG2 &arg_rng_2  ///< TODOCUMENT
+		void BOOST_CHECK_EQUAL_RANGES(const RNG1 &prm_rng_1, ///< TODOCUMENT
+		                              const RNG2 &prm_rng_2  ///< TODOCUMENT
 		                              ) {
 			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const RNG1 > ));
 			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const RNG2 > ));
 
 			BOOST_CHECK_EQUAL_COLLECTIONS(
-				common::cbegin( arg_rng_1 ),
-				common::cend  ( arg_rng_1 ),
-				common::cbegin( arg_rng_2 ),
-				common::cend  ( arg_rng_2 )
+				common::cbegin( prm_rng_1 ),
+				common::cend  ( prm_rng_1 ),
+				common::cbegin( prm_rng_2 ),
+				common::cend  ( prm_rng_2 )
 			);
 		}
 

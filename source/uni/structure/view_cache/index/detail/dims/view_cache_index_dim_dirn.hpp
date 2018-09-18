@@ -47,21 +47,21 @@ namespace cath {
 				/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
 				/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
 				template <typename CELLS, typename DimDirn>
-				static auto cell_at_value_impl(DimDirn      &/*arg_dim_dirn*/, ///< TODOCUMENT
-				                               CELLS        &arg_cells,        ///< TODOCUMENT
-				                               const bool   &arg_increases     ///< TODOCUMENT
+				static auto cell_at_value_impl(DimDirn      &/*prm_dim_dirn*/, ///< TODOCUMENT
+				                               CELLS        &prm_cells,        ///< TODOCUMENT
+				                               const bool   &prm_increases     ///< TODOCUMENT
 				                               ) -> std::conditional_t<
 				                                    	std::is_const< DimDirn >::value,
 				                                    	const typename CELLS::value_type &,
 				                                    	typename CELLS::value_type &
 				                                    > {
 #ifndef NDEBUG
-					if ( arg_cells.empty() ) {
+					if ( prm_cells.empty() ) {
 						BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot get entry at_value() with no populated cells"));
 					}
 #endif
-					return arg_increases ? arg_cells.back()
-					                     : arg_cells.front();
+					return prm_increases ? prm_cells.back()
+					                     : prm_cells.front();
 				}
 
 				template <typename CELLS>
@@ -97,11 +97,11 @@ namespace cath {
 			///
 			/// \pre The view_cache_index_entry's from_index must not equal its to_index
 			///      else an invalid_argument_exception will be thrown (unless NDEBUG is set)
-			inline bool view_cache_index_dim_dirn::get_increases(const view_cache_index_entry &arg_entry ///< TODOCUMENT
+			inline bool view_cache_index_dim_dirn::get_increases(const view_cache_index_entry &prm_entry ///< TODOCUMENT
 			                                                     ) {
 				// Grab the from_index and to_index from the view_cache_index_entry
-				const size_t &from_index = arg_entry.get_from_index();
-				const size_t &to_index   = arg_entry.get_to_index();
+				const size_t &from_index = prm_entry.get_from_index();
+				const size_t &to_index   = prm_entry.get_to_index();
 #ifndef NDEBUG
 				// If in debug mode, check that the from index and to index aren't equal
 				if ( from_index == to_index ) {
@@ -116,74 +116,74 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename CELLS>
-			inline typename CELLS::value_type & view_cache_index_dim_dirn::cell_at_value(CELLS                            &arg_cells,        ///< TODOCUMENT
-			                                                                             const typename CELLS::value_type &arg_default_cell, ///< TODOCUMENT
-			                                                                             const bool                       &arg_increases     ///< TODOCUMENT
+			inline typename CELLS::value_type & view_cache_index_dim_dirn::cell_at_value(CELLS                            &prm_cells,        ///< TODOCUMENT
+			                                                                             const typename CELLS::value_type &prm_default_cell, ///< TODOCUMENT
+			                                                                             const bool                       &prm_increases     ///< TODOCUMENT
 			                                                                             ) {
 				// If the cells haven't already been initialised, then create two cells
 				// (one for entries with increasing indices; one for entries with decreasing indices)
-				if ( arg_cells.empty() ) {
-					arg_cells.assign( 2, arg_default_cell );
+				if ( prm_cells.empty() ) {
+					prm_cells.assign( 2, prm_default_cell );
 				}
 
-				return cell_at_value_impl( *this, arg_cells, arg_increases );
+				return cell_at_value_impl( *this, prm_cells, prm_increases );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS>
-			inline const typename CELLS::value_type & view_cache_index_dim_dirn::cell_at_value(const CELLS  &arg_cells,    ///< TODOCUMENT
-			                                                                                   const bool   &arg_increases ///< TODOCUMENT
+			inline const typename CELLS::value_type & view_cache_index_dim_dirn::cell_at_value(const CELLS  &prm_cells,    ///< TODOCUMENT
+			                                                                                   const bool   &prm_increases ///< TODOCUMENT
 			                                                                                   ) const {
-				return cell_at_value_impl( *this, arg_cells, arg_increases );
+				return cell_at_value_impl( *this, prm_cells, prm_increases );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS, typename DEFAULTS>
-			inline void view_cache_index_dim_dirn::store(const view_cache_index_entry &arg_entry,   ///< TODOCUMENT
-			                                             CELLS                        &arg_cells,   ///< TODOCUMENT
-			                                             const DEFAULTS               &arg_defaults ///< TODOCUMENT
+			inline void view_cache_index_dim_dirn::store(const view_cache_index_entry &prm_entry,   ///< TODOCUMENT
+			                                             CELLS                        &prm_cells,   ///< TODOCUMENT
+			                                             const DEFAULTS               &prm_defaults ///< TODOCUMENT
 			                                             ) {
-				const bool increases = get_increases( arg_entry );
-				cell_at_value( arg_cells, typename CELLS::value_type{ arg_defaults.get_head() }, increases ).store(
-					arg_entry,
-					arg_defaults.get_tail()
+				const bool increases = get_increases( prm_entry );
+				cell_at_value( prm_cells, typename CELLS::value_type{ prm_defaults.get_head() }, increases ).store(
+					prm_entry,
+					prm_defaults.get_tail()
 				);
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS, typename ACTN>
-			inline void view_cache_index_dim_dirn::perform_action_on_matches(const view_cache_index_entry      &arg_entry,    ///< TODOCUMENT
-			                                                                 const CELLS                       &arg_cells,    ///< TODOCUMENT
-			                                                                 const detail::vcie_match_criteria &arg_criteria, ///< TODOCUMENT
-			                                                                 ACTN                              &arg_action    ///< TODOCUMENT
+			inline void view_cache_index_dim_dirn::perform_action_on_matches(const view_cache_index_entry      &prm_entry,    ///< TODOCUMENT
+			                                                                 const CELLS                       &prm_cells,    ///< TODOCUMENT
+			                                                                 const detail::vcie_match_criteria &prm_criteria, ///< TODOCUMENT
+			                                                                 ACTN                              &prm_action    ///< TODOCUMENT
 			                                                                 ) const {
-				const bool increases = get_increases( arg_entry );
-				cell_at_value( arg_cells, increases ).perform_action_on_matches( arg_entry, arg_criteria, arg_action );
-				if ( ! arg_criteria.get_require_matching_directions() ) {
+				const bool increases = get_increases( prm_entry );
+				cell_at_value( prm_cells, increases ).perform_action_on_matches( prm_entry, prm_criteria, prm_action );
+				if ( ! prm_criteria.get_require_matching_directions() ) {
 					const bool decreases = ! increases;
-					cell_at_value( arg_cells, decreases ).perform_action_on_matches( arg_entry, arg_criteria, arg_action );
+					cell_at_value( prm_cells, decreases ).perform_action_on_matches( prm_entry, prm_criteria, prm_action );
 				}
 			}
 
 			/// \brief TODOCUMENT
 			template <typename CELLS, typename ACTN>
-			inline void view_cache_index_dim_dirn::perform_action_on_all_match_at_nodes(const CELLS                       &arg_query_cells, ///< TODOCUMENT
-			                                                                            const view_cache_index_dim_dirn   &arg_query_dim,   ///< TODOCUMENT
-			                                                                            const CELLS                       &arg_match_cells, ///< TODOCUMENT
-			                                                                            const detail::vcie_match_criteria &arg_criteria,    ///< TODOCUMENT
-			                                                                            ACTN                              &arg_action       ///< TODOCUMENT
+			inline void view_cache_index_dim_dirn::perform_action_on_all_match_at_nodes(const CELLS                       &prm_query_cells, ///< TODOCUMENT
+			                                                                            const view_cache_index_dim_dirn   &prm_query_dim,   ///< TODOCUMENT
+			                                                                            const CELLS                       &prm_match_cells, ///< TODOCUMENT
+			                                                                            const detail::vcie_match_criteria &prm_criteria,    ///< TODOCUMENT
+			                                                                            ACTN                              &prm_action       ///< TODOCUMENT
 			                                                                            ) const {
-				if ( ! arg_query_cells.empty() && ! arg_match_cells.empty() ) {
+				if ( ! prm_query_cells.empty() && ! prm_match_cells.empty() ) {
 					for (const bool &increases : { false, true } ) {
-						const typename CELLS::value_type &query_cell =               cell_at_value( arg_query_cells, increases );
-						const typename CELLS::value_type &match_cell = arg_query_dim.cell_at_value( arg_match_cells, increases );
+						const typename CELLS::value_type &query_cell =               cell_at_value( prm_query_cells, increases );
+						const typename CELLS::value_type &match_cell = prm_query_dim.cell_at_value( prm_match_cells, increases );
 						if ( ! query_cell.empty() && !match_cell.empty() ) {
 							std::cerr << "In dimension dirn, scanning for "
 							          << ( increases ? "increases" : "decreases" )
 							          << ". query_cell.size_" << query_cell.get_num_cells()
 							          << ", match_cell.size_" << match_cell.get_num_cells()
 							          << "\n";
-							query_cell.perform_action_on_all_match_at_nodes( match_cell, arg_criteria, arg_action );
+							query_cell.perform_action_on_all_match_at_nodes( match_cell, prm_criteria, prm_action );
 						}
 					}
 				}

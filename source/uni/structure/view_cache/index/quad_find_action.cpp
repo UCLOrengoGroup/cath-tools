@@ -24,10 +24,10 @@ using namespace cath::index;
 // using namespace std;
 
 /// \brief Ctor for quad_find_action
-quad_find_action::quad_find_action(const protein &arg_protein_a, ///< The first  protein being compared
-                                   const protein &arg_protein_b  ///< The second protein being compared
-                                   ) : protein_a  ( arg_protein_a ),
-                                       protein_b  ( arg_protein_b ) {
+quad_find_action::quad_find_action(const protein &prm_protein_a, ///< The first  protein being compared
+                                   const protein &prm_protein_b  ///< The second protein being compared
+                                   ) : protein_a  ( prm_protein_a ),
+                                       protein_b  ( prm_protein_b ) {
 }
 
 /// \brief Getter for the total score

@@ -42,8 +42,8 @@ namespace std {
 	///
 	/// \TODO Move this into a module for test code - this shouldn't be included with any non-test code
 	template <typename T, typename U>
-	ostream & operator<<(ostream          &arg_os,
-	                     const pair<T, U> &arg_pair
+	ostream & operator<<(ostream          &prm_os,
+	                     const pair<T, U> &prm_pair
 	                     ) {
 		ostringstream temp_ss;
 		temp_ss << "pair<";
@@ -51,12 +51,12 @@ namespace std {
 		temp_ss << ", ";
 		temp_ss << ::boost::core::demangle( typeid( U ).name() );
 		temp_ss << ">(";
-		temp_ss << std::right << std::setw( 7 ) << arg_pair.first;
+		temp_ss << std::right << std::setw( 7 ) << prm_pair.first;
 		temp_ss << ",";
-		temp_ss << std::right << std::setw( 7 ) << arg_pair.second;
+		temp_ss << std::right << std::setw( 7 ) << prm_pair.second;
 		temp_ss << " )";
-		arg_os << temp_ss.str();
-		return arg_os;
+		prm_os << temp_ss.str();
+		return prm_os;
 	}
 } // namespace std
 

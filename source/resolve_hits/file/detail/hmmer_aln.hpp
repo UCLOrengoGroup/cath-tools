@@ -145,7 +145,7 @@ namespace cath {
 			};
 
 			/// \brief Update the segments based on the parsed information
-			inline void hmmer_aln::update_segments(const seq::residx_t &arg_min_gap_length ///< The minimum length for a missing stretch to be considered a gap
+			inline void hmmer_aln::update_segments(const seq::residx_t &prm_min_gap_length ///< The minimum length for a missing stretch to be considered a gap
 			                                       ) {
 				segments.clear();
 				seq::seq_arrow arrow_b = seq::arrow_before_res( *start_b );
@@ -158,7 +158,7 @@ namespace cath {
 						arrow_b += length;
 						const seq::seq_arrow &stop  = arrow_b;
 
-						if ( presence == aln_presence::BOTH || length < arg_min_gap_length ) {
+						if ( presence == aln_presence::BOTH || length < prm_min_gap_length ) {
 							if ( segments.empty() || segments.back().get_stop_arrow() != start ) {
 								segments.emplace_back( start, stop );
 							}
@@ -171,10 +171,10 @@ namespace cath {
 			}
 
 			/// \brief Update the aligned regions based on the parsed information
-			inline void hmmer_aln::update_aligned_regions(const bool &arg_parse_hmmer_aln ///< Whether to actually bother parsing this HMMER alignment information
+			inline void hmmer_aln::update_aligned_regions(const bool &prm_parse_hmmer_aln ///< Whether to actually bother parsing this HMMER alignment information
 			                                              ) {
 				aligned_regions.clear();
-				if ( arg_parse_hmmer_aln ) {
+				if ( prm_parse_hmmer_aln ) {
 					seq::seq_arrow arrow_a = seq::arrow_before_res( *start_a );
 					seq::seq_arrow arrow_b = seq::arrow_before_res( *start_b );
 					for (const aln_stretch &stretch : stretches) {
@@ -209,11 +209,11 @@ namespace cath {
 			/// \brief Add the data from a first alignment line
 			///
 			/// This should always be called before add_b() and after reset() or add_b() 
-			inline void hmmer_aln::add_a(const std::string &arg_line ///< The first alignment line (eg "                   1aqkL01_round_1   3 ppsvsvspgesvtlsCtasssnigssyylhWyqqkpgqapklliysasnrasgvpdrfsgsksgtsatLtisslqae 79 ")
+			inline void hmmer_aln::add_a(const std::string &prm_line ///< The first alignment line (eg "                   1aqkL01_round_1   3 ppsvsvspgesvtlsCtasssnigssyylhWyqqkpgqapklliysasnrasgvpdrfsgsksgtsatLtisslqae 79 ")
 			                             ) {
-				const auto id_itrs    = common::find_field_itrs( arg_line, LINE_ID_OFFSET                                              );
-				const auto start_itrs = common::find_field_itrs( arg_line, LINE_START_OFFSET, 1 + LINE_ID_OFFSET,    id_itrs.second    );
-				const auto aln_itrs   = common::find_field_itrs( arg_line, LINE_ALN_OFFSET,   1 + LINE_START_OFFSET, start_itrs.second );
+				const auto id_itrs    = common::find_field_itrs( prm_line, LINE_ID_OFFSET                                              );
+				const auto start_itrs = common::find_field_itrs( prm_line, LINE_START_OFFSET, 1 + LINE_ID_OFFSET,    id_itrs.second    );
+				const auto aln_itrs   = common::find_field_itrs( prm_line, LINE_ALN_OFFSET,   1 + LINE_START_OFFSET, start_itrs.second );
 
 				if ( id_a.empty() ) {
 					id_a.assign( id_itrs.first, id_itrs.second );
@@ -227,14 +227,14 @@ namespace cath {
 			/// \brief Add the data from a second alignment line
 			///
 			/// This should always be called after add_a() and before add_a() or process_aln()
-			inline void hmmer_aln::add_b(const std::string &arg_line ///< The second alignment line (eg "  404421f6d00e5b5f33713585fb60b9bf 811 SRSVMVKKGDTALLQCAVSGDK---PINIVWMRSGKNTLN-----PSTNYKISVK--QEATPDGVSAELQIRTVDAT 877")
+			inline void hmmer_aln::add_b(const std::string &prm_line ///< The second alignment line (eg "  404421f6d00e5b5f33713585fb60b9bf 811 SRSVMVKKGDTALLQCAVSGDK---PINIVWMRSGKNTLN-----PSTNYKISVK--QEATPDGVSAELQIRTVDAT 877")
 			                             ) {
 				constexpr char GAP_CHAR_A = '.';
 				constexpr char GAP_CHAR_B = '-';
 
-				const auto id_itrs    = common::find_field_itrs( arg_line, LINE_ID_OFFSET                                              );
-				const auto start_itrs = common::find_field_itrs( arg_line, LINE_START_OFFSET, 1 + LINE_ID_OFFSET,    id_itrs.second    );
-				const auto aln_itrs   = common::find_field_itrs( arg_line, LINE_ALN_OFFSET,   1 + LINE_START_OFFSET, start_itrs.second );
+				const auto id_itrs    = common::find_field_itrs( prm_line, LINE_ID_OFFSET                                              );
+				const auto start_itrs = common::find_field_itrs( prm_line, LINE_START_OFFSET, 1 + LINE_ID_OFFSET,    id_itrs.second    );
+				const auto aln_itrs   = common::find_field_itrs( prm_line, LINE_ALN_OFFSET,   1 + LINE_START_OFFSET, start_itrs.second );
 
 				if ( id_b.empty() ) {
 					id_b.assign( id_itrs.first, id_itrs.second );
@@ -270,11 +270,11 @@ namespace cath {
 			/// \brief Process the alignment that has been loaded into this hmmer_aln
 			///
 			/// This should always be called after add_b()
-			inline std::tuple<std::string &, seq::seq_seg_vec &, alnd_rgn_vec &> hmmer_aln::process_aln(const seq::residx_t &arg_min_gap_length, ///< The minimum length for a gap to be considered a gap
-			                                                                                            const bool          &arg_parse_hmmer_aln ///< Whether to parse the HMMER alignment information for outputting later
+			inline std::tuple<std::string &, seq::seq_seg_vec &, alnd_rgn_vec &> hmmer_aln::process_aln(const seq::residx_t &prm_min_gap_length, ///< The minimum length for a gap to be considered a gap
+			                                                                                            const bool          &prm_parse_hmmer_aln ///< Whether to parse the HMMER alignment information for outputting later
 			                                                                                            ) {
-				update_segments       ( arg_min_gap_length      );
-				update_aligned_regions( arg_parse_hmmer_aln );
+				update_segments       ( prm_min_gap_length      );
+				update_aligned_regions( prm_parse_hmmer_aln );
 				return std::tie( id_a, segments, aligned_regions );
 			}
 

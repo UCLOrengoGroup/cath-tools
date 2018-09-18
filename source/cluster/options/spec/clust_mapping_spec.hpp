@@ -81,19 +81,19 @@ namespace cath {
 
 		/// \brief Check a fraction is within [0, 1] and is strictly greater than the specified minimum.
 		///        Throw if not or return the value otherwise
-		inline constexpr double clust_mapping_spec::check_frac_against_strict_min_and_return(const double &arg_frac, ///< The fraction to check
-		                                                                                     const double &arg_min   ///< The strict minimum to compare the fraction against
+		inline constexpr double clust_mapping_spec::check_frac_against_strict_min_and_return(const double &prm_frac, ///< The fraction to check
+		                                                                                     const double &prm_min   ///< The strict minimum to compare the fraction against
 		                                                                                     ) {
-			return ( arg_frac >= 0.0 && arg_frac <= 1.0 && arg_frac >= arg_min )
-				? arg_frac
+			return ( prm_frac >= 0.0 && prm_frac <= 1.0 && prm_frac >= prm_min )
+				? prm_frac
 				: throw std::invalid_argument("The specified cluster mapping fraction is out of range");
 		}
 
 		/// \brief Ctor from the domain and cluster overlap fractions
-		inline constexpr clust_mapping_spec::clust_mapping_spec(const double &arg_min_equiv_dom_ol,  ///< The fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
-		                                                        const double &arg_min_equiv_clust_ol ///< The fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
-		                                                        ) : min_equiv_dom_ol   { check_frac_against_strict_min_and_return( arg_min_equiv_dom_ol,   MIN_MIN_EQUIV_DOM_OL   ) },
-		                                                            min_equiv_clust_ol { check_frac_against_strict_min_and_return( arg_min_equiv_clust_ol, MIN_MIN_EQUIV_CLUST_OL ) } {
+		inline constexpr clust_mapping_spec::clust_mapping_spec(const double &prm_min_equiv_dom_ol,  ///< The fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
+		                                                        const double &prm_min_equiv_clust_ol ///< The fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
+		                                                        ) : min_equiv_dom_ol   { check_frac_against_strict_min_and_return( prm_min_equiv_dom_ol,   MIN_MIN_EQUIV_DOM_OL   ) },
+		                                                            min_equiv_clust_ol { check_frac_against_strict_min_and_return( prm_min_equiv_clust_ol, MIN_MIN_EQUIV_CLUST_OL ) } {
 		}
 
 		/// \brief Getter for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
@@ -107,29 +107,29 @@ namespace cath {
 		}
 
 		/// \brief Setter for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
-		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_dom_ol(const double &arg_min_equiv_dom_ol ///< The fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
+		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_dom_ol(const double &prm_min_equiv_dom_ol ///< The fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
 		                                                                     ) {
-			min_equiv_dom_ol = check_frac_against_strict_min_and_return( arg_min_equiv_dom_ol, MIN_MIN_EQUIV_DOM_OL );
+			min_equiv_dom_ol = check_frac_against_strict_min_and_return( prm_min_equiv_dom_ol, MIN_MIN_EQUIV_DOM_OL );
 			return *this;
 		}
 
 		/// \brief Setter for the fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
-		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_clust_ol(const double &arg_min_equiv_clust_ol ///< The fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
+		inline clust_mapping_spec & clust_mapping_spec::set_min_equiv_clust_ol(const double &prm_min_equiv_clust_ol ///< The fraction of the old cluster's entries that must map to a new cluster for them to be considered equivalent
 		                                                                       ) {
-			min_equiv_clust_ol = check_frac_against_strict_min_and_return( arg_min_equiv_clust_ol, MIN_MIN_EQUIV_CLUST_OL );
+			min_equiv_clust_ol = check_frac_against_strict_min_and_return( prm_min_equiv_clust_ol, MIN_MIN_EQUIV_CLUST_OL );
 			return *this;
 		}
 
 		/// \brief Return whether the two specified clust_mapping_specs are identical
 		///
 		/// \relates clust_mapping_spec
-		inline constexpr bool operator==(const clust_mapping_spec &arg_lhs, ///< The first  clust_mapping_spec to compare
-		                                 const clust_mapping_spec &arg_rhs  ///< The second clust_mapping_spec to compare
+		inline constexpr bool operator==(const clust_mapping_spec &prm_lhs, ///< The first  clust_mapping_spec to compare
+		                                 const clust_mapping_spec &prm_rhs  ///< The second clust_mapping_spec to compare
 		                                 ) {
 			return (
-				arg_lhs.get_min_equiv_dom_ol()   == arg_rhs.get_min_equiv_dom_ol()
+				prm_lhs.get_min_equiv_dom_ol()   == prm_rhs.get_min_equiv_dom_ol()
 				&&
-				arg_lhs.get_min_equiv_clust_ol() == arg_rhs.get_min_equiv_clust_ol()
+				prm_lhs.get_min_equiv_clust_ol() == prm_rhs.get_min_equiv_clust_ol()
 			);
 		}
 

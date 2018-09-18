@@ -40,12 +40,12 @@ using std::istream;
 using std::string;
 
 /// \brief Ctor
-mapping_job::mapping_job(const str_opt  &arg_batch_id,                    ///< An optional identifier of the batch
-                         const path     &arg_new_cluster_membership_file, ///< The file describing the cluster membership of the clusters to be mapped/renumbered
-                         const path_opt &arg_old_cluster_membership_file  ///< An optional file describing map-from cluster membership
-                         ) : batch_id                   { arg_batch_id                    },
-                             new_cluster_membership_file{ arg_new_cluster_membership_file },
-                             old_cluster_membership_file{ arg_old_cluster_membership_file } {
+mapping_job::mapping_job(const str_opt  &prm_batch_id,                    ///< An optional identifier of the batch
+                         const path     &prm_new_cluster_membership_file, ///< The file describing the cluster membership of the clusters to be mapped/renumbered
+                         const path_opt &prm_old_cluster_membership_file  ///< An optional file describing map-from cluster membership
+                         ) : batch_id                   { prm_batch_id                    },
+                             new_cluster_membership_file{ prm_new_cluster_membership_file },
+                             old_cluster_membership_file{ prm_old_cluster_membership_file } {
 }
 
 /// \brief Getter for an optional identifier of the batch
@@ -66,11 +66,11 @@ const path_opt & mapping_job::get_old_cluster_membership_file() const {
 /// \brief Read a batch of mapping jobs from the specified istream
 ///
 /// \brief relates mapping_job
-mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &arg_istream ///< The istream from which to read the mapping jobs
+mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &prm_istream ///< The istream from which to read the mapping jobs
                                                              ) {
 	mapping_job_vec results;
 	string line;
-	while ( getline( arg_istream, line ) ) {
+	while ( getline( prm_istream, line ) ) {
 		const auto parts = split_build<str_vec>( line, is_any_of( " \t" ), token_compress_on );
 		if ( parts.size() < 2 ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("There should be at least two columns (batch_id working_clust_memb_file) in batch specification input lines"));
@@ -98,10 +98,10 @@ mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &arg_istrea
 /// \brief Read a batch of mapping jobs from the specified file
 ///
 /// \brief relates mapping_job
-mapping_job_vec cath::clust::detail::read_batch_mapping_file(const path &arg_file ///< The file from which to read the mapping jobs
+mapping_job_vec cath::clust::detail::read_batch_mapping_file(const path &prm_file ///< The file from which to read the mapping jobs
                                                              ) {
 	ifstream mapping_istream;
-	open_ifstream( mapping_istream, arg_file );
+	open_ifstream( mapping_istream, prm_file );
 	mapping_job_vec results = read_batch_mapping_file( mapping_istream );
 	mapping_istream.close();
 	return results;

@@ -129,24 +129,24 @@ string resolve_hits_fixture::output_version_blankstr() {
 /// \brief Blank out the version in the standard CRH output in the specified string
 ///
 /// \returns The string in which the version has been blanked out
-string resolve_hits_fixture::blank_vrsn(const string &arg_string ///< The string in which the CRH version should be blanked out
+string resolve_hits_fixture::blank_vrsn(const string &prm_string ///< The string in which the CRH version should be blanked out
                                         ) {
-	return regex_replace( arg_string, output_version_regex(), output_version_blankstr() );
+	return regex_replace( prm_string, output_version_regex(), output_version_blankstr() );
 }
 
 /// \brief Blank out the version in the standard CRH output in the specified ostringstream
 ///
 /// \returns The ostringstream in which the version has been blanked out
-string resolve_hits_fixture::blank_vrsn(const ostringstream &arg_stream ///< The ostringstream in which the CRH version should be blanked out
+string resolve_hits_fixture::blank_vrsn(const ostringstream &prm_stream ///< The ostringstream in which the CRH version should be blanked out
                                         ) {
-	return blank_vrsn( arg_stream.str() );
+	return blank_vrsn( prm_stream.str() );
 }
 
 /// \brief Blank out the version in the standard CRH output in the specified file
 ///
 /// \returns The file in which the version has been blanked out
-path resolve_hits_fixture::blank_vrsn(const path &arg_file ///< The file in which the CRH version should be blanked out
+path resolve_hits_fixture::blank_vrsn(const path &prm_file ///< The file in which the CRH version should be blanked out
                                       ) {
-	regex_replace_file( arg_file, output_version_regex(), output_version_blankstr() );
-	return arg_file;
+	regex_replace_file( prm_file, output_version_regex(), output_version_blankstr() );
+	return prm_file;
 }

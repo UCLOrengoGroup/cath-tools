@@ -30,11 +30,11 @@ using namespace std;
 using boost::rational_cast;
 
 /// \brief NVI wrapper to the pure-virtual do_calculate with some post-processing
-size_rational classn_stat::calculate(const true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg from which the statistic should be calculated
+size_rational classn_stat::calculate(const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg from which the statistic should be calculated
                                      ) const {
 	// Call the pure-virtual do_calculate to get rational and
 	// check the denominator isn't zero (else throw) before returning it
-	const size_rational ratio = do_calculate( arg_true_false_pos_neg );
+	const size_rational ratio = do_calculate( prm_true_false_pos_neg );
 	if ( ratio.denominator() == 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot calculate classn_stat of true_false_pos_neg for which the denominator is zero"));
 	}
@@ -47,8 +47,8 @@ string classn_stat::get_name() const {
 }
 
 /// \brief TODOCUMENT
-double cath::score::calculate_and_convert(const classn_stat        &arg_classn_stat, ///< TODOCUMENT
-                                          const true_false_pos_neg &arg_tfpn         ///< TODOCUMENT
+double cath::score::calculate_and_convert(const classn_stat        &prm_classn_stat, ///< TODOCUMENT
+                                          const true_false_pos_neg &prm_tfpn         ///< TODOCUMENT
                                           ) {
-	return rational_cast<double>( arg_classn_stat.calculate( arg_tfpn ) );
+	return rational_cast<double>( prm_classn_stat.calculate( prm_tfpn ) );
 }

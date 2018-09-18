@@ -39,9 +39,9 @@ namespace cath {
 
 			/// \brief Function operator to lexical_cast from type F to type F
 			template <typename F, typename T>
-			T lexical_cast_value<F, T>::operator()(const F &arg_value ///< The value to lexical_cast
+			T lexical_cast_value<F, T>::operator()(const F &prm_value ///< The value to lexical_cast
 			                                       ) const {
-				return boost::lexical_cast<T>( arg_value );
+				return boost::lexical_cast<T>( prm_value );
 			}
 		} // namespace detail
 

@@ -49,8 +49,8 @@ namespace cath {
 		/// \todo Change read_hit_list_from_istream() in calc_hit_list.cpp to use this
 		template <typename BegItr,
 		          typename EndItr>
-		inline seq_seg_run seq_seg_run_parser::parse(const BegItr &arg_begin_itr, ///< The begin of the char range from which to parse the segments
-		                                             const EndItr &arg_end_itr    ///< The end   of the char range from which to parse the segments
+		inline seq_seg_run seq_seg_run_parser::parse(const BegItr &prm_begin_itr, ///< The begin of the char range from which to parse the segments
+		                                             const EndItr &prm_end_itr    ///< The end   of the char range from which to parse the segments
 		                                             ) {
 			// Clear any previous entries in bounds
 			bounds.clear();
@@ -59,10 +59,10 @@ namespace cath {
 			const auto bounds_pusher = [&] (const residx_t &x) { bounds.push_back( x ); };
 
 			// Parse the text
-			auto parse_itr = arg_begin_itr;
+			auto parse_itr = prm_begin_itr;
 			const bool ok = boost::spirit::qi::parse(
 				parse_itr,
-				arg_end_itr,
+				prm_end_itr,
 				   boost::spirit::uint_   [ bounds_pusher ]
 				>> boost::spirit::qi::omit[ '-'           ]
 				>> boost::spirit::uint_   [ bounds_pusher ]
@@ -75,8 +75,8 @@ namespace cath {
 			);
 
 			// Check for problems
-			if ( ! ok || parse_itr != arg_end_itr ) {
-				BOOST_THROW_EXCEPTION(common::runtime_error_exception( "Error on attempt to parse line : " + std::string{ arg_begin_itr, arg_end_itr } ));
+			if ( ! ok || parse_itr != prm_end_itr ) {
+				BOOST_THROW_EXCEPTION(common::runtime_error_exception( "Error on attempt to parse line : " + std::string{ prm_begin_itr, prm_end_itr } ));
 			}
 			if ( bounds.empty() ) {
 				BOOST_THROW_EXCEPTION(common::runtime_error_exception( "No bounds" ));

@@ -27,15 +27,15 @@ using namespace cath::scan::detail;
 constexpr index_type single_struc_res_pair::DUMMY_INDEX_VALUE;
 
 /// \brief TODOCUMENT
-std::ostream & cath::scan::detail::operator<<(std::ostream                &arg_os,      ///< TODOCUMENT
-                                              const single_struc_res_pair &arg_res_pair ///< TODOCUMENT
+std::ostream & cath::scan::detail::operator<<(std::ostream                &prm_os,      ///< TODOCUMENT
+                                              const single_struc_res_pair &prm_res_pair ///< TODOCUMENT
                                               ) {
-	arg_os << "res_pair[from: ";
-	arg_os << arg_res_pair.get_from_res_idx();
-	arg_os << "; to: ";
-	arg_os << arg_res_pair.get_to_res_idx();
-	arg_os << "; ";
-	arg_os << arg_res_pair.get_res_pair_core();
-	arg_os << "]";
-	return arg_os;
+	prm_os << "res_pair[from: ";
+	prm_os << prm_res_pair.get_from_res_idx();
+	prm_os << "; to: ";
+	prm_os << prm_res_pair.get_to_res_idx();
+	prm_os << "; ";
+	prm_os << prm_res_pair.get_res_pair_core();
+	prm_os << "]";
+	return prm_os;
 }

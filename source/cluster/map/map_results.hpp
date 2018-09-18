@@ -49,12 +49,12 @@ namespace cath {
 			size_t num_mapped;
 
 			/// \brief Natural ctor to populate each element
-			potential_map(const size_t &arg_old_cluster_idx, ///< The index of the old, map-from cluster
-			              const size_t &arg_new_cluster_idx, ///< The index of the new, map-to cluster
-			              const size_t &arg_num_mapped       ///< The number of entries that map between the two clusters
-			              ) : old_cluster_idx { arg_old_cluster_idx },
-			                  new_cluster_idx { arg_new_cluster_idx },
-			                  num_mapped      { arg_num_mapped      } {
+			potential_map(const size_t &prm_old_cluster_idx, ///< The index of the old, map-from cluster
+			              const size_t &prm_new_cluster_idx, ///< The index of the new, map-to cluster
+			              const size_t &prm_num_mapped       ///< The number of entries that map between the two clusters
+			              ) : old_cluster_idx { prm_old_cluster_idx },
+			                  new_cluster_idx { prm_new_cluster_idx },
+			                  num_mapped      { prm_num_mapped      } {
 			}
 		};
 

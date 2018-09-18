@@ -41,22 +41,22 @@ using std::string;
 constexpr str_size_type istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 
 /// \brief Ctor for istreams_equal
-istreams_equal::istreams_equal(const str_size_type &arg_diff_half_width ///< TODOCUMENT
-                               ) : diff_half_width(arg_diff_half_width) {
+istreams_equal::istreams_equal(const str_size_type &prm_diff_half_width ///< TODOCUMENT
+                               ) : diff_half_width(prm_diff_half_width) {
 }
 
 /// \brief TODOCUMENT
-predicate_result istreams_equal::operator()(istream       &arg_istream1, ///< TODOCUMENT
-                                            const string  &arg_name1,    ///< TODOCUMENT
-                                            istream       &arg_istream2, ///< TODOCUMENT
-                                            const string  &arg_name2     ///< TODOCUMENT
+predicate_result istreams_equal::operator()(istream       &prm_istream1, ///< TODOCUMENT
+                                            const string  &prm_name1,    ///< TODOCUMENT
+                                            istream       &prm_istream2, ///< TODOCUMENT
+                                            const string  &prm_name2     ///< TODOCUMENT
                                             ) const {
 	// Suck the two istreams into strings
 	return test::detail::strings_equal(
-		string{ ( istreambuf_iterator<char>( arg_istream1 ) ), istreambuf_iterator<char>() },
-		arg_name1,
-		string{ ( istreambuf_iterator<char>( arg_istream2 ) ), istreambuf_iterator<char>() },
-		arg_name2,
+		string{ ( istreambuf_iterator<char>( prm_istream1 ) ), istreambuf_iterator<char>() },
+		prm_name1,
+		string{ ( istreambuf_iterator<char>( prm_istream2 ) ), istreambuf_iterator<char>() },
+		prm_name2,
 		diff_half_width
 	);
 }

@@ -75,14 +75,14 @@ bool viewer::do_accepts_multiple_colourings() const {
 }
 
 /// \brief Default to writing no commands to the specified ostream when beginning a colouring with the specified colourer
-void viewer::do_begin_colouring(ostream                &/*arg_ostream*/, ///< The ostream to which the PyMOL commands should be written
-                                const display_colourer &/*arg_colourer*/ ///< The display_colourer to be used for the colouring that is beginning
+void viewer::do_begin_colouring(ostream                &/*prm_ostream*/, ///< The ostream to which the PyMOL commands should be written
+                                const display_colourer &/*prm_colourer*/ ///< The display_colourer to be used for the colouring that is beginning
                                 ) {
 }
 
 /// \brief Default to writing no commands to the specified ostream when ending a colouring with the specified colourer
-void viewer::do_end_colouring(ostream                &/*arg_ostream*/, ///< The ostream to which the PyMOL commands should be written
-                              const display_colourer &/*arg_colourer*/ ///< The display_colourer to be used for the colouring that is ending
+void viewer::do_end_colouring(ostream                &/*prm_ostream*/, ///< The ostream to which the PyMOL commands should be written
+                              const display_colourer &/*prm_colourer*/ ///< The display_colourer to be used for the colouring that is ending
                               ) {
 }
 
@@ -97,69 +97,69 @@ string viewer::default_file_extension() const {
 }
 
 /// \brief TODOCUMENT
-void viewer::write_start(ostream &arg_ostream ///< TODOCUMENT
+void viewer::write_start(ostream &prm_ostream ///< TODOCUMENT
                          ) const {
-	do_write_start(arg_ostream);
+	do_write_start(prm_ostream);
 }
 
 /// \brief TODOCUMENT
-void viewer::write_load_pdbs(ostream             &arg_ostream,       ///< TODOCUMENT
-                             const superposition &arg_superposition, ///< TODOCUMENT
-                             const pdb_list      &arg_pdbs,          ///< TODOCUMENT
-                             const str_vec       &arg_names          ///< TODOCUMENT
+void viewer::write_load_pdbs(ostream             &prm_ostream,       ///< TODOCUMENT
+                             const superposition &prm_superposition, ///< TODOCUMENT
+                             const pdb_list      &prm_pdbs,          ///< TODOCUMENT
+                             const str_vec       &prm_names          ///< TODOCUMENT
                              ) const {
 	return do_write_load_pdbs(
-		arg_ostream,
-		arg_superposition,
-		arg_pdbs,
-		arg_names
+		prm_ostream,
+		prm_superposition,
+		prm_pdbs,
+		prm_names
 	);
 }
 
 /// \brief TODOCUMENT
-void viewer::define_colour(ostream              &arg_ostream,    ///< TODOCUMENT
-                           const display_colour &arg_colour,     ///< TODOCUMENT
-                           const string         &arg_colour_name ///< TODOCUMENT
+void viewer::define_colour(ostream              &prm_ostream,    ///< TODOCUMENT
+                           const display_colour &prm_colour,     ///< TODOCUMENT
+                           const string         &prm_colour_name ///< TODOCUMENT
                            ) const {
-	do_define_colour( arg_ostream, arg_colour, arg_colour_name );
+	do_define_colour( prm_ostream, prm_colour, prm_colour_name );
 }
 
 /// \brief Get a string for colouring the base (ie everything) in the colour that has previously been defined with the specified name
-string viewer::get_colour_base_str(const string &arg_colour_name ///< The previously-defined colour with which to colour the base
+string viewer::get_colour_base_str(const string &prm_colour_name ///< The previously-defined colour with which to colour the base
                                    ) const {
-	return do_get_colour_base_str( arg_colour_name );
+	return do_get_colour_base_str( prm_colour_name );
 }
 
 /// \brief TODOCUMENT
-string viewer::get_colour_pdb_str(const string &arg_colour_name, ///< TODOCUMENT
-                                  const string &arg_pdb_name     ///< TODOCUMENT
+string viewer::get_colour_pdb_str(const string &prm_colour_name, ///< TODOCUMENT
+                                  const string &prm_pdb_name     ///< TODOCUMENT
                                   ) const {
-	return do_get_colour_pdb_str( arg_colour_name, arg_pdb_name );
+	return do_get_colour_pdb_str( prm_colour_name, prm_pdb_name );
 }
 
 /// \brief TODOCUMENT
-string viewer::get_colour_pdb_residues_str(const string         &arg_colour_name, ///< TODOCUMENT
-                                           const string         &arg_pdb_name,    ///< TODOCUMENT
-                                           const residue_id_vec &arg_residues     ///< TODOCUMENT
+string viewer::get_colour_pdb_residues_str(const string         &prm_colour_name, ///< TODOCUMENT
+                                           const string         &prm_pdb_name,    ///< TODOCUMENT
+                                           const residue_id_vec &prm_residues     ///< TODOCUMENT
                                            ) const {
-	return do_get_colour_pdb_residues_str( arg_colour_name, arg_pdb_name, arg_residues );
+	return do_get_colour_pdb_residues_str( prm_colour_name, prm_pdb_name, prm_residues );
 }
 
 /// \brief TODOCUMENT
-void viewer::write_alignment_extras(ostream                     &arg_ostream,              ///< TODOCUMENT
-                                    const superposition_context &arg_superposition_context ///< TODOCUMENT
+void viewer::write_alignment_extras(ostream                     &prm_ostream,              ///< TODOCUMENT
+                                    const superposition_context &prm_superposition_context ///< TODOCUMENT
                                     ) const {
-	if ( ! arg_superposition_context.has_alignment() ) {
+	if ( ! prm_superposition_context.has_alignment() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot write alignment extras for superposition_context that doesn't contain an alignment"));
 	}
-	return do_write_alignment_extras( arg_ostream, arg_superposition_context );
+	return do_write_alignment_extras( prm_ostream, prm_superposition_context );
 }
 
 /// \brief TODOCUMENT
-void viewer::write_end(ostream          &arg_os,  ///< TODOCUMENT
-                       const string_ref &arg_name ///< TODOCUMENT
+void viewer::write_end(ostream          &prm_os,  ///< TODOCUMENT
+                       const string_ref &prm_name ///< TODOCUMENT
                        ) const {
-	do_write_end( arg_os, arg_name );
+	do_write_end( prm_os, prm_name );
 }
 
 /// \brief Strip
@@ -173,11 +173,11 @@ void viewer::write_end(ostream          &arg_os,  ///< TODOCUMENT
 ///
 /// \todo Find a better way to do this. It doesn't seem immediately obvious that replace_all()
 ///       in Boost string algorithm will do the trick. Does it require regexps?
-string cath::clean_name_for_viewer(const string &arg_name
+string cath::clean_name_for_viewer(const string &prm_name
                                    ) {
 	string new_name;
-	new_name.reserve(arg_name.size());
-	for (const char &name_char : arg_name) {
+	new_name.reserve(prm_name.size());
+	for (const char &name_char : prm_name) {
 		if (is_alnum()(name_char)) {
 			new_name.push_back(name_char);
 		}
@@ -191,11 +191,11 @@ string cath::clean_name_for_viewer(const string &arg_name
 /// \brief TODOCUMENT
 ///
 /// \relates viewer
-str_vec cath::clean_names_for_viewer(const str_vec &arg_names
+str_vec cath::clean_names_for_viewer(const str_vec &prm_names
                                      ) {
 	str_vec new_names;
-	new_names.reserve(arg_names.size());
-	for (const string &name : arg_names) {
+	new_names.reserve(prm_names.size());
+	for (const string &name : prm_names) {
 		new_names.push_back(clean_name_for_viewer(name));
 	}
 	return new_names;
@@ -204,113 +204,113 @@ str_vec cath::clean_names_for_viewer(const str_vec &arg_names
 /// \brief TODOCUMENT
 ///
 /// \relates viewer
-str_vec cath::clean_names_for_viewer(const superposition_context &arg_superposition_context ///< TODOCUMENT
+str_vec cath::clean_names_for_viewer(const superposition_context &prm_superposition_context ///< TODOCUMENT
                                      ) {
-	return clean_names_for_viewer( get_viewer_names( get_name_sets( arg_superposition_context ) ) );
+	return clean_names_for_viewer( get_viewer_names( get_name_sets( prm_superposition_context ) ) );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates viewer
-str_vec cath::clean_names_for_viewer(const alignment_context &arg_alignment_context ///< TODOCUMENT
+str_vec cath::clean_names_for_viewer(const alignment_context &prm_alignment_context ///< TODOCUMENT
                                      ) {
-	return clean_names_for_viewer( get_viewer_names( get_name_sets( arg_alignment_context ) ) );
+	return clean_names_for_viewer( get_viewer_names( get_name_sets( prm_alignment_context ) ) );
 }
 
 /// \brief Output instructions from the specified viewer for the specified superposition_context to
 ///        the specified ostream, using the specified display_spec and only_warn flat
 ///
 /// \relates viewer
-void cath::output_superposition_to_viewer(ostream                          &arg_ostream,                 ///< The ostream to which the data should be written
-                                          viewer                           &arg_viewer,                  ///< The viewer defining the instructions to be written
-                                          const display_spec               &arg_display_spec,            ///< The specification for how to display the superposition
-                                          const superposition_context      &arg_superposition_context,   ///< The superposition_context to output
-                                          const superposition_content_spec &arg_content_spec,            ///< The specification of what should be included in the superposition
-                                          const missing_aln_policy         &arg_missing_aln_policy,      ///< Whether to warn or throw if no alignment is present
-                                          const string_ref                 &arg_name                     ///< A name for the superposition (to write out so users of the viewer know what they're looking at)
+void cath::output_superposition_to_viewer(ostream                          &prm_ostream,                 ///< The ostream to which the data should be written
+                                          viewer                           &prm_viewer,                  ///< The viewer defining the instructions to be written
+                                          const display_spec               &prm_display_spec,            ///< The specification for how to display the superposition
+                                          const superposition_context      &prm_superposition_context,   ///< The superposition_context to output
+                                          const superposition_content_spec &prm_content_spec,            ///< The specification of what should be included in the superposition
+                                          const missing_aln_policy         &prm_missing_aln_policy,      ///< Whether to warn or throw if no alignment is present
+                                          const string_ref                 &prm_name                     ///< A name for the superposition (to write out so users of the viewer know what they're looking at)
                                           ) {
 	// Write the start of the viewer output
-	arg_viewer.write_start(arg_ostream);
+	prm_viewer.write_start(prm_ostream);
 
 	// Write the text to load the PDBs
-	arg_viewer.write_load_pdbs(
-		arg_ostream,
-		arg_superposition_context.get_superposition(),
-		get_supn_content_pdbs( arg_superposition_context, arg_content_spec ),
-		clean_names_for_viewer( arg_superposition_context )
+	prm_viewer.write_load_pdbs(
+		prm_ostream,
+		prm_superposition_context.get_superposition(),
+		get_supn_content_pdbs( prm_superposition_context, prm_content_spec ),
+		clean_names_for_viewer( prm_superposition_context )
 	);
 
-	const bool spec_is_consecutive            = is_consecutive( arg_display_spec );
-	const bool spec_requires_alignment        = requires_alignment( arg_display_spec );
-	const bool supn_has_alignment             = arg_superposition_context.has_alignment();
+	const bool spec_is_consecutive            = is_consecutive( prm_display_spec );
+	const bool spec_requires_alignment        = requires_alignment( prm_display_spec );
+	const bool supn_has_alignment             = prm_superposition_context.has_alignment();
 	const bool missing_wanted_alignment       = spec_requires_alignment && ! supn_has_alignment;
-	const bool would_accept_extra_consecutive = arg_viewer.accepts_multiple_colourings() && ! spec_is_consecutive;
+	const bool would_accept_extra_consecutive = prm_viewer.accepts_multiple_colourings() && ! spec_is_consecutive;
 
 	if ( missing_wanted_alignment || would_accept_extra_consecutive) {
 		if ( missing_wanted_alignment ) {
 			const auto message = "Unable to apply an alignment-based colouring scheme to the superposition because it doesn't contain an alignment";
-			if ( arg_missing_aln_policy == missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY ) {
+			if ( prm_missing_aln_policy == missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY ) {
 				BOOST_LOG_TRIVIAL( warning ) << message;
 			}
 			else {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(message));
 			}
 		}
-		const display_colourer_consecutive the_colourer{ get_colour_list( arg_display_spec ) };
+		const display_colourer_consecutive the_colourer{ get_colour_list( prm_display_spec ) };
 
 		colour_viewer(
 			the_colourer,
-			arg_ostream,
-			arg_viewer,
-			get_pdbs              ( arg_superposition_context ),
-			clean_names_for_viewer( arg_superposition_context ),
-			get_regions           ( arg_superposition_context )
+			prm_ostream,
+			prm_viewer,
+			get_pdbs              ( prm_superposition_context ),
+			clean_names_for_viewer( prm_superposition_context ),
+			get_regions           ( prm_superposition_context )
 		);
 	}
 
-	if ( arg_superposition_context.has_alignment() ) {
+	if ( prm_superposition_context.has_alignment() ) {
 		// Apply the colour
-		const unique_ptr<const display_colourer> display_colourer_ptr = get_display_colourer( arg_display_spec );
+		const unique_ptr<const display_colourer> display_colourer_ptr = get_display_colourer( prm_display_spec );
 
 		colour_viewer(
 			*display_colourer_ptr,
-			arg_ostream,
-			arg_viewer,
-			make_restricted_alignment_context( arg_superposition_context )
+			prm_ostream,
+			prm_viewer,
+			make_restricted_alignment_context( prm_superposition_context )
 		);
 
 		// If there is an alignment then do magic with it
-		// if ( arg_superposition_context.has_alignment() ) {
-		arg_viewer.write_alignment_extras( arg_ostream, arg_superposition_context );
+		// if ( prm_superposition_context.has_alignment() ) {
+		prm_viewer.write_alignment_extras( prm_ostream, prm_superposition_context );
 	}
 
 	// Write the start of the viewer output
-	arg_viewer.write_end( arg_ostream, arg_name );
+	prm_viewer.write_end( prm_ostream, prm_name );
 }
 
 /// \brief Output instructions from the specified viewer for the specified superposition_context to
 ///        the specified file, using the specified display_spec and only_warn flat
 ///
 /// \relates viewer
-void cath::output_superposition_to_viewer_file(const path                       &arg_out_file,                ///< The ostream to which the data should be written
-                                               viewer                           &arg_viewer,                  ///< The viewer defining the instructions to be written
-                                               const display_spec               &arg_display_spec,            ///< The specification for how to display the superposition
-                                               const superposition_context      &arg_superposition_context,   ///< The superposition_context to output
-                                               const superposition_content_spec &arg_content_spec,            ///< The specification of what should be included in the superposition
-                                               const missing_aln_policy         &arg_missing_aln_policy,      ///< Whether to warn or throw if no alignment is present
-                                               const string_ref                 &arg_name                     ///< A name for the superposition (to write out so users of the viewer know what they're looking at)
+void cath::output_superposition_to_viewer_file(const path                       &prm_out_file,                ///< The ostream to which the data should be written
+                                               viewer                           &prm_viewer,                  ///< The viewer defining the instructions to be written
+                                               const display_spec               &prm_display_spec,            ///< The specification for how to display the superposition
+                                               const superposition_context      &prm_superposition_context,   ///< The superposition_context to output
+                                               const superposition_content_spec &prm_content_spec,            ///< The specification of what should be included in the superposition
+                                               const missing_aln_policy         &prm_missing_aln_policy,      ///< Whether to warn or throw if no alignment is present
+                                               const string_ref                 &prm_name                     ///< A name for the superposition (to write out so users of the viewer know what they're looking at)
                                                ) {
 	ofstream pymol_file_ostream;
-	open_ofstream( pymol_file_ostream, arg_out_file );
+	open_ofstream( pymol_file_ostream, prm_out_file );
 
 	output_superposition_to_viewer(
 		pymol_file_ostream,
-		arg_viewer,
-		arg_display_spec,
-		arg_superposition_context,
-		arg_content_spec,
-		arg_missing_aln_policy,
-		arg_name
+		prm_viewer,
+		prm_display_spec,
+		prm_superposition_context,
+		prm_content_spec,
+		prm_missing_aln_policy,
+		prm_name
 	);
 	pymol_file_ostream << flush;
 	pymol_file_ostream.close();
@@ -324,29 +324,29 @@ string cath::base_colour_name() {
 
 /// \brief Generate a name to use in the viewer for the specified colour index
 ///        in the specified number of colours
-string cath::generate_colour_name(const size_t          &arg_colour_index,   ///< The index of the colour to name
-                                  const size_t          &arg_num_colours,    ///< The total number of colours
-                                  const colour_category &arg_colour_category ///< The category of colouring (structure-only or structure-or-residue)
+string cath::generate_colour_name(const size_t          &prm_colour_index,   ///< The index of the colour to name
+                                  const size_t          &prm_num_colours,    ///< The total number of colours
+                                  const colour_category &prm_colour_category ///< The category of colouring (structure-only or structure-or-residue)
                                   ) {
-	const size_t num_width  = lexical_cast<string>( max( static_cast<size_t>( 1_z ), arg_num_colours ) - 1 ).length();
+	const size_t num_width  = lexical_cast<string>( max( static_cast<size_t>( 1_z ), prm_num_colours ) - 1 ).length();
 	const string format_str = R"(%0)" + ::std::to_string( num_width ) + "d";
 
 	return "ct_"
-		+ ( arg_colour_category == colour_category::STRUC_ONLY ? "strc"s : "strc_or_res"s )
+		+ ( prm_colour_category == colour_category::STRUC_ONLY ? "strc"s : "strc_or_res"s )
 		+ "_colr_"
-		+ ( format( format_str ) % arg_colour_index ).str();
+		+ ( format( format_str ) % prm_colour_index ).str();
 }
 
 /// \brief Generate names to use in the viewer for the specified number of colours
-str_vec cath::generate_colour_names(const size_t          &arg_num_colours,    ///< The total number of colours
-                                    const colour_category &arg_colour_category ///< The category of colouring (structure-only or structure-or-residue)
+str_vec cath::generate_colour_names(const size_t          &prm_num_colours,    ///< The total number of colours
+                                    const colour_category &prm_colour_category ///< The category of colouring (structure-only or structure-or-residue)
                                     ) {
 	return transform_build<str_vec>(
-		indices( arg_num_colours ),
+		indices( prm_num_colours ),
 		[&] (const size_t &x) { return generate_colour_name(
 			x,
-			arg_num_colours,
-			arg_colour_category
+			prm_num_colours,
+			prm_colour_category
 		); }
 	);
 }

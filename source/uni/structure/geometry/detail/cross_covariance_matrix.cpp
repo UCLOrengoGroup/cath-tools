@@ -34,14 +34,14 @@ using boost::range::combine;
 ///
 /// For speeding up, could try using a std:array<double, 9> and a gsl_matrix_view of it
 /// (but then don't use a subroutine for the array, else it'll get destroyed on return)
-gsl_matrix_wrp cath::geom::detail::cross_covariance_matrix(const coord_list &arg_coords_a, ///< The first  list of coords to superpose
-                                                           const coord_list &arg_coords_b  ///< The second list of coords to superpose
+gsl_matrix_wrp cath::geom::detail::cross_covariance_matrix(const coord_list &prm_coords_a, ///< The first  list of coords to superpose
+                                                           const coord_list &prm_coords_b  ///< The second list of coords to superpose
                                                            ) {
 	gsl_matrix_wrp result{ 3, 3 };
 	gsl_matrix_set_zero( result.get_ptr() );
 
 	/// \TODO Come C++17 and structure bindings, use here
-	for (const auto &coord_pair : combine( arg_coords_a, arg_coords_b ) ) {
+	for (const auto &coord_pair : combine( prm_coords_a, prm_coords_b ) ) {
 		const coord &coord_a = coord_pair.get<0>();
 		const coord &coord_b = coord_pair.get<1>();
 

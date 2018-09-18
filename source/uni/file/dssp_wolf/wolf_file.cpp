@@ -32,8 +32,8 @@ using namespace cath::file;
 using namespace std;
 
 /// \brief Ctor for wolf_file
-wolf_file::wolf_file(residue_vec arg_wolf_residues
-                     ) : wolf_residues{ std::move( arg_wolf_residues ) } {
+wolf_file::wolf_file(residue_vec prm_wolf_residues
+                     ) : wolf_residues{ std::move( prm_wolf_residues ) } {
 }
 
 /// \brief Return the number of residues
@@ -42,9 +42,9 @@ wolf_file::size_type wolf_file::get_num_residues() const {
 }
 
 /// \brief Return the residue at the specified index
-const residue & wolf_file::get_residue_of_index(const size_type &arg_index ///< The index of the residue to return
+const residue & wolf_file::get_residue_of_index(const size_type &prm_index ///< The index of the residue to return
                                                 ) const {
-	return wolf_residues[arg_index];
+	return wolf_residues[prm_index];
 }
 
 /// \brief Convert a wolf_file to a protein
@@ -52,14 +52,14 @@ const residue & wolf_file::get_residue_of_index(const size_type &arg_index ///< 
 /// \relates wolf_file
 ///
 /// \relates protein
-protein cath::file::protein_from_wolf(const wolf_file &arg_wolf_file ///< The wolf_file object for a given structure
+protein cath::file::protein_from_wolf(const wolf_file &prm_wolf_file ///< The wolf_file object for a given structure
 	                                  ) {
 	// Copy the residues from the wolf_file
-	const wolf_file::size_type num_wolf_residues = arg_wolf_file.get_num_residues();
+	const wolf_file::size_type num_wolf_residues = prm_wolf_file.get_num_residues();
 	residue_vec wolf_residues;
 	wolf_residues.reserve(num_wolf_residues);
 	for (const wolf_file::size_type &wolf_residue_ctr : indices( num_wolf_residues ) ) {
-		wolf_residues.push_back(arg_wolf_file.get_residue_of_index(wolf_residue_ctr));
+		wolf_residues.push_back(prm_wolf_file.get_residue_of_index(wolf_residue_ctr));
 	}
 
 	// Put the residues in a new protein object and return it

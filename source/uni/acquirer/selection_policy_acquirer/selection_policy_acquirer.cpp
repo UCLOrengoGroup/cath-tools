@@ -48,28 +48,28 @@ const common_atom_selection_policy & selection_policy_acquirer::get_comm_atom_se
 }
 
 /// \brief Ctor for selection_policy_acquirer
-selection_policy_acquirer::selection_policy_acquirer(const common_residue_selection_policy &arg_comm_res_seln_pol, ///< TODOCUMENT
-                                                     const common_atom_selection_policy    &arg_comm_atom_seln_pol ///< TODOCUMENT
-                                                     ) : comm_res_seln_pol_ptr(   arg_comm_res_seln_pol.clone() ),
-                                                         comm_atom_seln_pol_ptr( arg_comm_atom_seln_pol.clone() ) {
+selection_policy_acquirer::selection_policy_acquirer(const common_residue_selection_policy &prm_comm_res_seln_pol, ///< TODOCUMENT
+                                                     const common_atom_selection_policy    &prm_comm_atom_seln_pol ///< TODOCUMENT
+                                                     ) : comm_res_seln_pol_ptr(   prm_comm_res_seln_pol.clone() ),
+                                                         comm_atom_seln_pol_ptr( prm_comm_atom_seln_pol.clone() ) {
 }
 
 /// \brief TODOCUMENT
-pair<coord_list, coord_list> selection_policy_acquirer::get_common_coords(const alignment &arg_alignment,   ///< TODOCUMENT
-                                                                          const pdb       &arg_pdb_1,       ///< TODOCUMENT
-                                                                          const pdb       &arg_pdb_2,       ///< TODOCUMENT
-//                                                                          const str_vec              &/*arg_names*/, ///< TODOCUMENT
-                                                                          const size_t    &arg_index_1,     ///< TODOCUMENT
-                                                                          const size_t    &arg_index_2      ///< TODOCUMENT
+pair<coord_list, coord_list> selection_policy_acquirer::get_common_coords(const alignment &prm_alignment,   ///< TODOCUMENT
+                                                                          const pdb       &prm_pdb_1,       ///< TODOCUMENT
+                                                                          const pdb       &prm_pdb_2,       ///< TODOCUMENT
+//                                                                          const str_vec              &/*prm_names*/, ///< TODOCUMENT
+                                                                          const size_t    &prm_index_1,     ///< TODOCUMENT
+                                                                          const size_t    &prm_index_2      ///< TODOCUMENT
                                                                           ) const {
 	return alignment_coord_extractor::get_common_coords(
-		arg_alignment,
-		arg_pdb_1,
-		arg_pdb_2,
+		prm_alignment,
+		prm_pdb_1,
+		prm_pdb_2,
 		get_comm_res_seln_pol_ptr_cref(),
 		get_comm_atom_seln_pol_ptr_cref(),
-		arg_index_1,
-		arg_index_2
+		prm_index_1,
+		prm_index_2
 	);
 }
 
@@ -85,28 +85,28 @@ string selection_policy_acquirer::get_descriptive_name() const {
 /// \relates alignment_input_spec
 ///
 /// \relatesalso selection_policy_acquirer
-selection_policy_acquirer cath::opts::get_selection_policy_acquirer(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
+selection_policy_acquirer cath::opts::get_selection_policy_acquirer(const alignment_input_spec &prm_alignment_input_spec ///< The alignment_input_spec to query
                                                                     ) {
-	if ( arg_alignment_input_spec.get_residue_name_align() ) {
+	if ( prm_alignment_input_spec.get_residue_name_align() ) {
 		return { common_residue_select_all_policy(),                common_atom_select_ca_policy() };
 	}
 	return { common_residue_select_best_score_percent_policy(), common_atom_select_ca_policy() };
 }
 
 /// \brief TODOCUMENT
-coord_list_coord_list_pair cath::opts::get_common_coords(const selection_policy_acquirer &arg_seln_pol_acq, ///< TODOCUMENT
-                                                         const alignment                 &arg_alignment,    ///< TODOCUMENT
-                                                         const pdb_list                  &arg_pdbs,         ///< TODOCUMENT
-                                                         // const str_vec S                  &arg_names,        ///< TODOCUMENT
-                                                         const size_t                    &arg_index_1,      ///< TODOCUMENT
-                                                         const size_t                    &arg_index_2       ///< TODOCUMENT
+coord_list_coord_list_pair cath::opts::get_common_coords(const selection_policy_acquirer &prm_seln_pol_acq, ///< TODOCUMENT
+                                                         const alignment                 &prm_alignment,    ///< TODOCUMENT
+                                                         const pdb_list                  &prm_pdbs,         ///< TODOCUMENT
+                                                         // const str_vec S                  &prm_names,        ///< TODOCUMENT
+                                                         const size_t                    &prm_index_1,      ///< TODOCUMENT
+                                                         const size_t                    &prm_index_2       ///< TODOCUMENT
                                                          ) {
-	return arg_seln_pol_acq.get_common_coords(
-		arg_alignment,
-		arg_pdbs[ arg_index_1 ],
-		arg_pdbs[ arg_index_2 ],
-		arg_index_1,
-		arg_index_2
+	return prm_seln_pol_acq.get_common_coords(
+		prm_alignment,
+		prm_pdbs[ prm_index_1 ],
+		prm_pdbs[ prm_index_2 ],
+		prm_index_1,
+		prm_index_2
 	);
 }
 

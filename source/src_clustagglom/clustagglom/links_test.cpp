@@ -57,19 +57,19 @@ namespace cath {
 
 			/// \brief Test that making clusters from the data in the specified names/merges files at
 			///        the specified cutoffs generates data matching that in the specified expected file
-			void test_clusters_of_merges(const path         &arg_names_file,   ///< The file containing the names data
-			                             const path         &arg_links_file,   ///< The file containing the links data
-			                             const path         &arg_expected_file ///< The expected file to compare against
+			void test_clusters_of_merges(const path         &prm_names_file,   ///< The file containing the names data
+			                             const path         &prm_links_file,   ///< The file containing the links data
+			                             const path         &prm_expected_file ///< The expected file to compare against
 			                             ) const {
 				id_of_str_bidirnl id_namer;
 
-				const doub_vec props        = parse_names( arg_names_file, id_namer );
-				auto           the_links    = parse_dissimilarities( arg_links_file, id_namer, link_dirn::STRENGTH );
+				const doub_vec props        = parse_names( prm_names_file, id_namer );
+				auto           the_links    = parse_dissimilarities( prm_links_file, id_namer, link_dirn::STRENGTH );
 				const size_vec sort_indices = get_sorting_scores( id_namer, props );
 
 				write_ordered_links( temp_links_file, the_links, id_namer, sort_indices );
 
-				BOOST_CHECK_FILES_EQUAL( temp_links_file, arg_expected_file );
+				BOOST_CHECK_FILES_EQUAL( temp_links_file, prm_expected_file );
 			}
 		};
 	}

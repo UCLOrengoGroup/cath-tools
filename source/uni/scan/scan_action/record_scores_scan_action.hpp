@@ -47,11 +47,11 @@ namespace cath {
 			/// See GSL rule: Pro.Type.3: Don't use const_cast to cast away const (i.e., at all)
 			/// (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast)
 			template <typename Action>
-			static auto get_entry_impl(Action       &arg_action,      ///< TODOCUMENT
-			                           const size_t &arg_query_index, ///< TODOCUMENT
-			                           const size_t &arg_match_index  ///< TODOCUMENT
-			                           ) -> decltype( arg_action.get_entry( arg_query_index, arg_match_index ) ) {
-				return arg_action.scores[ arg_query_index * arg_action.num_matches + arg_match_index ];
+			static auto get_entry_impl(Action       &prm_action,      ///< TODOCUMENT
+			                           const size_t &prm_query_index, ///< TODOCUMENT
+			                           const size_t &prm_match_index  ///< TODOCUMENT
+			                           ) -> decltype( prm_action.get_entry( prm_query_index, prm_match_index ) ) {
+				return prm_action.scores[ prm_query_index * prm_action.num_matches + prm_match_index ];
 			}
 
 			double & get_entry(const size_t &,
@@ -73,52 +73,52 @@ namespace cath {
 		};
 
 		/// \brief TODOCUMENT
-		inline double & record_scores_scan_action::get_entry(const size_t &arg_query_index, ///< TODOCUMENT
-		                                                     const size_t &arg_match_index  ///< TODOCUMENT
+		inline double & record_scores_scan_action::get_entry(const size_t &prm_query_index, ///< TODOCUMENT
+		                                                     const size_t &prm_match_index  ///< TODOCUMENT
 		                                                     ) {
-			return get_entry_impl( *this, arg_query_index, arg_match_index );
+			return get_entry_impl( *this, prm_query_index, prm_match_index );
 		}
 
 		/// \brief TODOCUMENT
-		inline const double & record_scores_scan_action::get_entry(const size_t &arg_query_index, ///< TODOCUMENT
-		                                                           const size_t &arg_match_index  ///< TODOCUMENT
+		inline const double & record_scores_scan_action::get_entry(const size_t &prm_query_index, ///< TODOCUMENT
+		                                                           const size_t &prm_match_index  ///< TODOCUMENT
 		                                                           ) const {
-			return get_entry_impl( *this, arg_query_index, arg_match_index );
+			return get_entry_impl( *this, prm_query_index, prm_match_index );
 		}
 
 		/// \brief TODOCUMENT
-		inline record_scores_scan_action::record_scores_scan_action(const size_t &arg_num_queries, ///< TODOCUMENT
-		                                                            const size_t &arg_num_matches  ///< TODOCUMENT
-		                                                            ) : num_queries ( arg_num_queries ),
-		                                                                num_matches ( arg_num_matches ),
+		inline record_scores_scan_action::record_scores_scan_action(const size_t &prm_num_queries, ///< TODOCUMENT
+		                                                            const size_t &prm_num_matches  ///< TODOCUMENT
+		                                                            ) : num_queries ( prm_num_queries ),
+		                                                                num_matches ( prm_num_matches ),
 		                                                                scores      ( num_queries * num_matches, 0.0 ) {
 		}
 
 		/// \brief TODOCUMENT
-		inline void record_scores_scan_action::operator()(const detail::single_struc_res_pair &arg_res_pair_a,  ///< TODOCUMENT
-		                                                  const detail::single_struc_res_pair &arg_res_pair_b,  ///< TODOCUMENT
-		                                                  const index_type                    &arg_structure_a, ///< TODOCUMENT
-		                                                  const index_type                    &arg_structure_b  ///< TODOCUMENT
+		inline void record_scores_scan_action::operator()(const detail::single_struc_res_pair &prm_res_pair_a,  ///< TODOCUMENT
+		                                                  const detail::single_struc_res_pair &prm_res_pair_b,  ///< TODOCUMENT
+		                                                  const index_type                    &prm_structure_a, ///< TODOCUMENT
+		                                                  const index_type                    &prm_structure_b  ///< TODOCUMENT
 		                                                  ) {
-			const auto distance = sqrt( detail::squared_distance( arg_res_pair_a, arg_res_pair_b ) );
-			get_entry( arg_structure_a, arg_structure_b ) += 1.0 - ( distance / 7.0 );
+			const auto distance = sqrt( detail::squared_distance( prm_res_pair_a, prm_res_pair_b ) );
+			get_entry( prm_structure_a, prm_structure_b ) += 1.0 - ( distance / 7.0 );
 		}
 
 		/// \brief TODOCUMENT
-		inline const double & record_scores_scan_action::get_score(const size_t &arg_query_index, ///< TODOCUMENT
-		                                                           const size_t &arg_match_index  ///< TODOCUMENT
+		inline const double & record_scores_scan_action::get_score(const size_t &prm_query_index, ///< TODOCUMENT
+		                                                           const size_t &prm_match_index  ///< TODOCUMENT
 		                                                           ) const {
-			return get_entry( arg_query_index, arg_match_index );
+			return get_entry( prm_query_index, prm_match_index );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>
-		record_scores_scan_action make_record_scores_scan_action(const scan_query_set<KPs...> &arg_query_set, ///< TODOCUMENT
-		                                                         const scan_index<KPs...>     &arg_index      ///< TODOCUMENT
+		record_scores_scan_action make_record_scores_scan_action(const scan_query_set<KPs...> &prm_query_set, ///< TODOCUMENT
+		                                                         const scan_index<KPs...>     &prm_index      ///< TODOCUMENT
 		                                                         ) {
 			return {
-				arg_query_set.get_num_structures(),
-				arg_index.get_num_structures()
+				prm_query_set.get_num_structures(),
+				prm_index.get_num_structures()
 			};
 		}
 	} // namespace scan

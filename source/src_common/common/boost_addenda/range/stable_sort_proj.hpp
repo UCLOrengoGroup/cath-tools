@@ -36,21 +36,21 @@ namespace cath {
 		template <typename Rng,
 		          typename Pred = std::less<>,
 		          typename Proj = ident>
-		inline auto stable_sort_proj(Rng  &&arg_range,          ///< The range to stable_sort
-		                             Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
-		                             Proj &&arg_proj  = Proj{}  ///< The projection function
+		inline auto stable_sort_proj(Rng  &&prm_range,          ///< The range to stable_sort
+		                             Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+		                             Proj &&prm_proj  = Proj{}  ///< The projection function
 		                             ) {
 			return boost::range::stable_sort(
-				arg_range,
+				prm_range,
 				[&] (const auto &x, const auto &y) {
 					return common::invoke(
-						std::forward<Pred>( arg_pred ),
+						std::forward<Pred>( prm_pred ),
 						common::invoke(
-							std::forward< Proj >( arg_proj ),
+							std::forward< Proj >( prm_proj ),
 							x
 						),
 						common::invoke(
-							std::forward< Proj >( arg_proj ),
+							std::forward< Proj >( prm_proj ),
 							y
 						)
 					);
@@ -64,16 +64,16 @@ namespace cath {
 		template <typename Rng,
 		          typename Pred = std::less<>,
 		          typename Proj = ident>
-		inline auto stable_sort_proj_copy(Rng    arg_range,          ///< The range to stable_sort
-		                                  Pred &&arg_pred  = Pred{}, ///< The less-than predicate function
-		                                  Proj &&arg_proj  = Proj{}  ///< The projection function
+		inline auto stable_sort_proj_copy(Rng    prm_range,          ///< The range to stable_sort
+		                                  Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+		                                  Proj &&prm_proj  = Proj{}  ///< The projection function
 		                                  ) {
 			stable_sort_proj(
-				arg_range,
-				std::forward<Pred>( arg_pred ),
-				std::forward<Proj>( arg_proj )
+				prm_range,
+				std::forward<Pred>( prm_pred ),
+				std::forward<Proj>( prm_proj )
 			);
-			return arg_range;
+			return prm_range;
 		}
 
 	} // namespace common

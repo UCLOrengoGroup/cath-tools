@@ -40,32 +40,32 @@ namespace cath {
 
 			public:
 				/// \brief Ctor from a reference
-				ref_wrap_uom_wrap(T &arg_value ///< The value from which to construct
-				                  ) : value{ arg_value } {
+				ref_wrap_uom_wrap(T &prm_value ///< The value from which to construct
+				                  ) : value{ prm_value } {
 				}
 
 				/// \brief Prevent construction from an rvalue
 				ref_wrap_uom_wrap(T&& x ) = delete;
 
 				/// \brief Ctor from a reference_wrapper<T>
-				ref_wrap_uom_wrap(const std::reference_wrapper<T> &arg_value ///< The reference_wrapper<T> from which this should be constructed
-				                  ) : value{ arg_value } {
+				ref_wrap_uom_wrap(const std::reference_wrapper<T> &prm_value ///< The reference_wrapper<T> from which this should be constructed
+				                  ) : value{ prm_value } {
 				}
 				/// \brief Copy ctor
-				ref_wrap_uom_wrap(const ref_wrap_uom_wrap<T> &arg_value ///< The ref_wrap_uom_wrap from which this should be constructed
-				                  ) : value{ arg_value.get_ref_wrap() } {
+				ref_wrap_uom_wrap(const ref_wrap_uom_wrap<T> &prm_value ///< The ref_wrap_uom_wrap from which this should be constructed
+				                  ) : value{ prm_value.get_ref_wrap() } {
 				}
 
 				/// \brief Assignment from a reference_wrapper<T>
-				ref_wrap_uom_wrap & operator=(const std::reference_wrapper<T> &arg_rhs ///< The reference_wrapper<T> to assign
+				ref_wrap_uom_wrap & operator=(const std::reference_wrapper<T> &prm_rhs ///< The reference_wrapper<T> to assign
 				                              ) {
-					value = arg_rhs;
+					value = prm_rhs;
 					return *this;
 				}
 				/// \brief Copy assignment operator
-				ref_wrap_uom_wrap & operator=(const ref_wrap_uom_wrap<T> &arg_rhs ///< The ref_wrap_uom_wrap to assign
+				ref_wrap_uom_wrap & operator=(const ref_wrap_uom_wrap<T> &prm_rhs ///< The ref_wrap_uom_wrap to assign
 				                              ) {
-					value = arg_rhs.get_ref_wrap();
+					value = prm_rhs.get_ref_wrap();
 					return *this;
 				}
 
@@ -94,10 +94,10 @@ namespace cath {
 
 			/// \brief Equality operator for ref_wrap_uom_wrap
 			template <typename T>
-			inline bool operator==(const ref_wrap_uom_wrap<T> &arg_lhs, ///< The first  ref_wrap_uom_wrap to compare
-			                       const ref_wrap_uom_wrap<T> &arg_rhs  ///< The second ref_wrap_uom_wrap to compare
+			inline bool operator==(const ref_wrap_uom_wrap<T> &prm_lhs, ///< The first  ref_wrap_uom_wrap to compare
+			                       const ref_wrap_uom_wrap<T> &prm_rhs  ///< The second ref_wrap_uom_wrap to compare
 			                       ) {
-				return ( arg_lhs.get() == arg_rhs.get() );
+				return ( prm_lhs.get() == prm_rhs.get() );
 			}
 		} // namespace detail
 	} // namespace common

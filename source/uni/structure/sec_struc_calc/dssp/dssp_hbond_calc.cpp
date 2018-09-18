@@ -37,13 +37,13 @@ using namespace cath::sec;
 /// This calls backbone_complete_subset_of_pdb() on the PDB. If the results are being generated
 /// in a context where that is required for other tasks, it's better to call backbone_complete_subset_of_pdb()
 /// outside and then use calc_bifur_hbonds_of_backbone_complete_pdb() instead.
-bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_residues(const pdb             &arg_pdb,            ///< The PDB to query
-                                                                                     const ostream_ref_opt &arg_ostream_ref_opt ///< An optional reference to an ostream to which any logging should be sent
+bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_residues(const pdb             &prm_pdb,            ///< The PDB to query
+                                                                                     const ostream_ref_opt &prm_ostream_ref_opt ///< An optional reference to an ostream to which any logging should be sent
                                                                                      ) {
 	return calc_bifur_hbonds_of_backbone_complete_pdb(
 		backbone_complete_subset_of_pdb(
-			arg_pdb,
-			arg_ostream_ref_opt,
+			prm_pdb,
+			prm_ostream_ref_opt,
 			dssp_skip_res_skipping::SKIP
 		).first
 	);
@@ -56,7 +56,7 @@ bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_pdb__recalc_backbone_resi
 ///
 /// For simplicity, calc_bifur_hbonds_of_pdb__recalc_backbone_residues() can be used
 /// with a non backbone-complete PDB
-bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb(const pdb &arg_pdb ///< The PDB to query
+bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb(const pdb &prm_pdb ///< The PDB to query
                                                                              ) {
 	// Note that this is set a little bit higher because sometimes float rounding
 	// errors take the answer over the cutoff. This can be fixed using doubles
@@ -66,22 +66,22 @@ bifur_hbond_list dssp_hbond_calc::calc_bifur_hbonds_of_backbone_complete_pdb(con
 	// MIN_NO_HBOND_CA_DIST in has_hbond_energy()
 	constexpr float MAX_DIST  =  9.03125; // 9 + 1/32
 	constexpr float CELL_SIZE = 18.0;
-	const size_t num_pdb_residues = arg_pdb.get_num_residues();
+	const size_t num_pdb_residues = prm_pdb.get_num_residues();
 
 	bifur_hbond_list results{ num_pdb_residues };
 
 	if ( num_pdb_residues > 0 ) {
-		const auto lattice = make_sparse_lattice( arg_pdb, CELL_SIZE, MAX_DIST );
+		const auto lattice = make_sparse_lattice( prm_pdb, CELL_SIZE, MAX_DIST );
 
 		scan_sparse_lattice(
 			lattice,
-			arg_pdb,
+			prm_pdb,
 			CELL_SIZE,
 			MAX_DIST,
 			[&] (const simple_locn_index &x, const simple_locn_index &y) {
 				if ( x.index != y.index ) {
-					if ( dssp_hbond_calc::has_hbond_energy_asymm( arg_pdb, x.index, y.index ) ) {
-						const auto energy = dssp_hbond_calc::get_hbond_energy_asymm( arg_pdb, x.index, y.index );
+					if ( dssp_hbond_calc::has_hbond_energy_asymm( prm_pdb, x.index, y.index ) ) {
+						const auto energy = dssp_hbond_calc::get_hbond_energy_asymm( prm_pdb, x.index, y.index );
 						if ( energy < 0.0 ) {
 							results.update_with_nh_idx_co_idx_energy(
 								x.index,

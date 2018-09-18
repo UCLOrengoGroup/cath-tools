@@ -75,34 +75,34 @@ namespace cath {
 			}
 
 			/// \brief Ctor from a res_pair_core and the indices of the from/to residues
-			inline single_struc_res_pair::single_struc_res_pair(res_pair_core     arg_res_pair_core, ///< The core properties of the res_pair
-			                                                    const index_type &arg_from_res_idx,  ///< The from-residue index
-			                                                    const index_type &arg_to_res_idx     ///< The to-residue   index
-			                                                    ) : the_core     { std::move( arg_res_pair_core ) },
-			                                                        from_res_idx { arg_from_res_idx               },
-			                                                        to_res_idx   { arg_to_res_idx                 } {
+			inline single_struc_res_pair::single_struc_res_pair(res_pair_core     prm_res_pair_core, ///< The core properties of the res_pair
+			                                                    const index_type &prm_from_res_idx,  ///< The from-residue index
+			                                                    const index_type &prm_to_res_idx     ///< The to-residue   index
+			                                                    ) : the_core     { std::move( prm_res_pair_core ) },
+			                                                        from_res_idx { prm_from_res_idx               },
+			                                                        to_res_idx   { prm_to_res_idx                 } {
 			}
 
 			/// \brief Ctor from all the parts
-			inline single_struc_res_pair::single_struc_res_pair(const view_type      &arg_view,           ///< The view of the to_residue from the from_residue
-			                                                    const frame_quat_rot &arg_frame,          ///< The coordinate frame of the from_residue, as determined by its core atoms
-			                                                    const angle_type     &arg_from_phi_angle, ///< The phi angle of the from_residue
-			                                                    const angle_type     &arg_from_psi_angle, ///< The psi angle of the from_residue
-			                                                    const angle_type     &arg_to_phi_angle,   ///< The phi angle of the to_residue
-			                                                    const angle_type     &arg_to_psi_angle,   ///< The psi angle of the to_residue
-			                                                    const index_type     &arg_from_res_idx,   ///< The from-residue index
-			                                                    const index_type     &arg_to_res_idx      ///< The to-residue   index
+			inline single_struc_res_pair::single_struc_res_pair(const view_type      &prm_view,           ///< The view of the to_residue from the from_residue
+			                                                    const frame_quat_rot &prm_frame,          ///< The coordinate frame of the from_residue, as determined by its core atoms
+			                                                    const angle_type     &prm_from_phi_angle, ///< The phi angle of the from_residue
+			                                                    const angle_type     &prm_from_psi_angle, ///< The psi angle of the from_residue
+			                                                    const angle_type     &prm_to_phi_angle,   ///< The phi angle of the to_residue
+			                                                    const angle_type     &prm_to_psi_angle,   ///< The psi angle of the to_residue
+			                                                    const index_type     &prm_from_res_idx,   ///< The from-residue index
+			                                                    const index_type     &prm_to_res_idx      ///< The to-residue   index
 			                                                    ) : single_struc_res_pair(
 			                                                        	res_pair_core(
-			                                                        		arg_view,
-			                                                        		arg_frame,
-			                                                        		arg_from_phi_angle,
-			                                                        		arg_from_psi_angle,
-			                                                        		arg_to_phi_angle,
-			                                                        		arg_to_psi_angle
+			                                                        		prm_view,
+			                                                        		prm_frame,
+			                                                        		prm_from_phi_angle,
+			                                                        		prm_from_psi_angle,
+			                                                        		prm_to_phi_angle,
+			                                                        		prm_to_psi_angle
 			                                                        	),
-			                                                        	arg_from_res_idx,
-			                                                        	arg_to_res_idx
+			                                                        	prm_from_res_idx,
+			                                                        	prm_to_res_idx
 			                                                        ) {
 			}
 
@@ -124,14 +124,14 @@ namespace cath {
 			/// \brief Whether a res_pair's from-residue comes before (INCREASE) or after (DECREASE) its to-residue
 			///
 			/// \relates single_struc_res_pair
-			inline res_pair_dirn direction(const single_struc_res_pair &arg_res_pair ///< The single_struc_res_pair to query
+			inline res_pair_dirn direction(const single_struc_res_pair &prm_res_pair ///< The single_struc_res_pair to query
 			                               ) {
 #ifndef NDEBUG
-				if ( arg_res_pair.get_from_res_idx() == arg_res_pair.get_to_res_idx() ) {
+				if ( prm_res_pair.get_from_res_idx() == prm_res_pair.get_to_res_idx() ) {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("direction() cannot process res_pairs with matching to/from residues"));
 				}
 #endif
-				return ( arg_res_pair.get_from_res_idx() < arg_res_pair.get_to_res_idx() ) ? res_pair_dirn::INCREASE
+				return ( prm_res_pair.get_from_res_idx() < prm_res_pair.get_to_res_idx() ) ? res_pair_dirn::INCREASE
 				                                                                           : res_pair_dirn::DECREASE;
 			}
 
@@ -139,51 +139,51 @@ namespace cath {
 			///        (ie both have from-residue before to-residue or both have from-residue after to-residue)
 			///
 			/// \relates single_struc_res_pair
-			inline bool same_direction(const single_struc_res_pair &arg_res_pair_a, ///< The first  res_pair to compare
-			                           const single_struc_res_pair &arg_res_pair_b  ///< The second res_pair to compare
+			inline bool same_direction(const single_struc_res_pair &prm_res_pair_a, ///< The first  res_pair to compare
+			                           const single_struc_res_pair &prm_res_pair_b  ///< The second res_pair to compare
 			                           ) {
-				return direction( arg_res_pair_a ) == direction( arg_res_pair_b );
+				return direction( prm_res_pair_a ) == direction( prm_res_pair_b );
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates single_struc_res_pair
-			inline bool is_dummy(const single_struc_res_pair &arg_res_pair ///< TODOCUMENT
+			inline bool is_dummy(const single_struc_res_pair &prm_res_pair ///< TODOCUMENT
 			                     ) {
 				return (
-					arg_res_pair.get_from_res_idx() == single_struc_res_pair::DUMMY_INDEX_VALUE
+					prm_res_pair.get_from_res_idx() == single_struc_res_pair::DUMMY_INDEX_VALUE
 					&&
-					arg_res_pair.get_to_res_idx()   == single_struc_res_pair::DUMMY_INDEX_VALUE
+					prm_res_pair.get_to_res_idx()   == single_struc_res_pair::DUMMY_INDEX_VALUE
 				);
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates single_struc_res_pair
-			inline single_struc_res_pair make_single_res_pair(const residue    &arg_from_residue, ///< TODOCUMENT
-			                                                  const residue    &arg_to_residue,   ///< TODOCUMENT
-			                                                  const index_type &arg_from_index,   ///< TODOCUMENT
-			                                                  const index_type &arg_to_index      ///< TODOCUMENT
+			inline single_struc_res_pair make_single_res_pair(const residue    &prm_from_residue, ///< TODOCUMENT
+			                                                  const residue    &prm_to_residue,   ///< TODOCUMENT
+			                                                  const index_type &prm_from_index,   ///< TODOCUMENT
+			                                                  const index_type &prm_to_index      ///< TODOCUMENT
 			                                                  ) {
 				return {
-					make_res_pair_core( arg_from_residue, arg_to_residue ),
-					arg_from_index,
-					arg_to_index
+					make_res_pair_core( prm_from_residue, prm_to_residue ),
+					prm_from_index,
+					prm_to_index
 				};
 			}
 
 			/// \brief TODOCUMENT
 			///
 			/// \relates single_struc_res_pair
-			inline single_struc_res_pair make_single_res_pair(const protein    &arg_protein,    ///< TODOCUMENT
-			                                                  const index_type &arg_from_index, ///< TODOCUMENT
-			                                                  const index_type &arg_to_index    ///< TODOCUMENT
+			inline single_struc_res_pair make_single_res_pair(const protein    &prm_protein,    ///< TODOCUMENT
+			                                                  const index_type &prm_from_index, ///< TODOCUMENT
+			                                                  const index_type &prm_to_index    ///< TODOCUMENT
 			                                                  ) {
 				return make_single_res_pair(
-					arg_protein.get_residue_ref_of_index( arg_from_index ),
-					arg_protein.get_residue_ref_of_index( arg_to_index   ),
-					arg_from_index,
-					arg_to_index
+					prm_protein.get_residue_ref_of_index( prm_from_index ),
+					prm_protein.get_residue_ref_of_index( prm_to_index   ),
+					prm_from_index,
+					prm_to_index
 				);
 			}
 
@@ -193,12 +193,12 @@ namespace cath {
 			/// the coordinate frame of the from_residue
 			///
 			/// \relates single_struc_res_pair
-			inline double squared_distance(const single_struc_res_pair &arg_res_pair_a, ///< The first  res_pair
-			                               const single_struc_res_pair &arg_res_pair_b  ///< The second res_pair
+			inline double squared_distance(const single_struc_res_pair &prm_res_pair_a, ///< The first  res_pair
+			                               const single_struc_res_pair &prm_res_pair_b  ///< The second res_pair
 			                               ) {
 				return squared_distance(
-					arg_res_pair_a.get_res_pair_core(),
-					arg_res_pair_b.get_res_pair_core()
+					prm_res_pair_a.get_res_pair_core(),
+					prm_res_pair_b.get_res_pair_core()
 				);
 			}
 

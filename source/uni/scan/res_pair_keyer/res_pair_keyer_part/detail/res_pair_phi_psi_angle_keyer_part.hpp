@@ -57,8 +57,8 @@ namespace cath {
 
 			public:
 				/// \brief Ctor from cell_width
-				explicit res_pair_phi_psi_angle_keyer_part(const value_t &arg_cell_width ///< The cell width to use in keying this part
-				                                           ) : cell_width( F::sanity_check_cell_width( arg_cell_width ) ) {
+				explicit res_pair_phi_psi_angle_keyer_part(const value_t &prm_cell_width ///< The cell width to use in keying this part
+				                                           ) : cell_width( F::sanity_check_cell_width( prm_cell_width ) ) {
 				}
 
 				/// \brief Get a short name that describes this key part
@@ -67,35 +67,35 @@ namespace cath {
 				}
 
 				/// \brief Extract the relevant value from the specified res_pair
-				value_t get_value(const multi_struc_res_rep_pair &arg_res_pair ///< The res_pair from which the relevant value should be extracted
+				value_t get_value(const multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
 				                     ) const {
-					return F::get_value( arg_res_pair );
+					return F::get_value( prm_res_pair );
 				}
 
 				/// \brief Extract the search radius from the specified quad_criteria
-				search_radius_t get_search_radius(const quad_criteria &arg_criteria   ///< The criteria defining what is considered a match
+				search_radius_t get_search_radius(const quad_criteria &prm_criteria   ///< The criteria defining what is considered a match
 				                                  ) const {
-					return F::get_search_radius( arg_criteria  );
+					return F::get_search_radius( prm_criteria  );
 				}
 
 				/// \brief Generate the key part for the specified value
-				cell_index_t key_part(const value_t &arg_value ///< The value for which the key_part should be extracted
+				cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
 				                      ) const {
-					return static_cast<cell_index_t>( std::floor( arg_value / cell_width ) );
+					return static_cast<cell_index_t>( std::floor( prm_value / cell_width ) );
 				}
 
 				/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified value
 				///        within the specified search radius
-				cell_index_list_t close_key_parts(const value_t         &arg_value,        ///< The res_pair whose matches' key parts should be generated
-				                                  const search_radius_t &arg_search_radius ///< The search radius defining what is considered a match
+				cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The res_pair whose matches' key parts should be generated
+				                                  const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 				                                  ) const {
 #ifndef NDEBUG
 					// In debug mode, sanity check the inputs
 					/// \todo Create a `bool is_shifted(const angle &, ...)` helper function for angle and use it here
-					if ( arg_value < geom::zero_angle<angle_base_type>() || arg_value >= geom::one_revolution<angle_base_type>() ) {
+					if ( prm_value < geom::zero_angle<angle_base_type>() || prm_value >= geom::one_revolution<angle_base_type>() ) {
 						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot extract key_part for a value that isn't in ( 0, 2pi ]"));
 					}
-					if ( arg_search_radius <= geom::zero_angle<angle_base_type>() || arg_search_radius >= geom::half_revolution<angle_base_type>() ) {
+					if ( prm_search_radius <= geom::zero_angle<angle_base_type>() || prm_search_radius >= geom::half_revolution<angle_base_type>() ) {
 						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot search with an angle radius that isn't in ( 0, pi )"));
 					}
 #endif
@@ -103,8 +103,8 @@ namespace cath {
 					//  * the shifted start and stop
 					//  * whether this start and stop imply a wrap past 0 degrees
 					//  * the begin and one-past-the-end indices
-					const auto start           = ( arg_value - arg_search_radius ).quick_shift();
-					const auto stop            = ( arg_value + arg_search_radius ).quick_shift();
+					const auto start           = ( prm_value - prm_search_radius ).quick_shift();
+					const auto stop            = ( prm_value + prm_search_radius ).quick_shift();
 					const auto wraps           = ( start > stop );
 					const cell_index_t begin   = key_part( start );
 					const cell_index_t end     = static_cast<cell_index_t>( key_part( stop  ) + 1 );

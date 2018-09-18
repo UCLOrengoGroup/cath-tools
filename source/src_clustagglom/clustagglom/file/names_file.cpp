@@ -40,8 +40,8 @@ using std::pair;
 using std::string;
 
 /// \brief Parse the cluster item names from the specified istream, populating the specified name_ider in the process
-doub_vec cath::clust::parse_names(istream           &arg_input,    ///< The istream from which to parse the names
-                                  id_of_str_bidirnl &arg_name_ider ///< The name_ider to populate from the names data
+doub_vec cath::clust::parse_names(istream           &prm_input,    ///< The istream from which to parse the names
+                                  id_of_str_bidirnl &prm_name_ider ///< The name_ider to populate from the names data
                                   ) {
 	doub_vec result;
 	string line;
@@ -49,12 +49,12 @@ doub_vec cath::clust::parse_names(istream           &arg_input,    ///< The istr
 	static constexpr size_t ID_OFFSET   = 0;
 	static constexpr size_t PROP_OFFSET = 1;
 
-	while ( getline( arg_input, line ) ) {
+	while ( getline( prm_input, line ) ) {
 		const auto   id_itrs   = find_field_itrs( line, ID_OFFSET                                  );
 		const auto   prop_itrs = find_field_itrs( line, PROP_OFFSET, 1 + ID_OFFSET, id_itrs.second );
 		const auto   id        = make_string_ref        ( id_itrs.first,   id_itrs.second   );
 		const auto   props     = parse_double_from_field( prop_itrs.first, prop_itrs.second );
-		const size_t id_id     = arg_name_ider.add_name( id );
+		const size_t id_id     = prm_name_ider.add_name( id );
 		if ( result.size() < id_id + 1 ) {
 			result.resize( id_id + 1 );
 		}
@@ -65,44 +65,44 @@ doub_vec cath::clust::parse_names(istream           &arg_input,    ///< The istr
 }
 
 /// \brief Parse the cluster item names from the specified string, populating the specified name_ider in the process
-doub_vec cath::clust::parse_names(const string      &arg_input,    ///< The string from which to parse the names
-                                  id_of_str_bidirnl &arg_name_ider ///< The name_ider to populate from the names data
+doub_vec cath::clust::parse_names(const string      &prm_input,    ///< The string from which to parse the names
+                                  id_of_str_bidirnl &prm_name_ider ///< The name_ider to populate from the names data
                                   ) {
-	istringstream in_ss{ arg_input };
-	return parse_names( in_ss, arg_name_ider );
+	istringstream in_ss{ prm_input };
+	return parse_names( in_ss, prm_name_ider );
 }
 
 /// \brief Parse the cluster item names from the specified file, populating the specified name_ider in the process
-doub_vec cath::clust::parse_names(const path        &arg_input,    ///< The file from which to parse the names
-                                  id_of_str_bidirnl &arg_name_ider ///< The name_ider to populate from the names data
+doub_vec cath::clust::parse_names(const path        &prm_input,    ///< The file from which to parse the names
+                                  id_of_str_bidirnl &prm_name_ider ///< The name_ider to populate from the names data
                                   ) {
 	ifstream in_stream;
-	open_ifstream( in_stream, arg_input );
-	doub_vec dissims = parse_names( in_stream, arg_name_ider );
+	open_ifstream( in_stream, prm_input );
+	doub_vec dissims = parse_names( in_stream, prm_name_ider );
 	in_stream.close();
 	return dissims;
 }
 
 /// \brief Parse the cluster item names from the specified istream and return the values and the name_ider
-pair<doub_vec, id_of_str_bidirnl> cath::clust::parse_names(istream &arg_input ///< The istream from which to parse the names
+pair<doub_vec, id_of_str_bidirnl> cath::clust::parse_names(istream &prm_input ///< The istream from which to parse the names
                                                            ) {
 	id_of_str_bidirnl the_id_of_str_bidirnl;
-	auto names = parse_names( arg_input, the_id_of_str_bidirnl );
+	auto names = parse_names( prm_input, the_id_of_str_bidirnl );
 	return make_pair( std::move( names ), std::move( the_id_of_str_bidirnl ) );
 }
 
 /// \brief Parse the cluster item names from the specified string and return the values and the name_ider
-pair<doub_vec, id_of_str_bidirnl> cath::clust::parse_names(const string &arg_input ///< The string from which to parse the names
+pair<doub_vec, id_of_str_bidirnl> cath::clust::parse_names(const string &prm_input ///< The string from which to parse the names
                                                            ) {
 	id_of_str_bidirnl the_id_of_str_bidirnl;
-	auto names = parse_names( arg_input, the_id_of_str_bidirnl );
+	auto names = parse_names( prm_input, the_id_of_str_bidirnl );
 	return make_pair( std::move( names ), std::move( the_id_of_str_bidirnl ) );
 }
 
 /// \brief Parse the cluster item names from the specified file and return the values and the name_ider
-pair<doub_vec, id_of_str_bidirnl> cath::clust::parse_names(const path &arg_input ///< The file from which to parse the names
+pair<doub_vec, id_of_str_bidirnl> cath::clust::parse_names(const path &prm_input ///< The file from which to parse the names
                                                            ) {
 	id_of_str_bidirnl the_id_of_str_bidirnl;
-	auto names = parse_names( arg_input, the_id_of_str_bidirnl );
+	auto names = parse_names( prm_input, the_id_of_str_bidirnl );
 	return make_pair( std::move( names ), std::move( the_id_of_str_bidirnl ) );
 }

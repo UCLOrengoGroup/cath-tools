@@ -78,18 +78,18 @@ void filter_vs_full_score_list::sort_filter_vs_full_scores() {
 ///
 /// The vector specified in the argument does not need to be pre-sorted;
 /// once this ctor has made the local copy, it will sort that copy
-filter_vs_full_score_list::filter_vs_full_score_list(filter_vs_full_score_vec arg_filter_vs_full_scores ///< The vector of filter_vs_full_score objects from which to construct this filter_vs_full_score_list
-                                                     ) : filter_vs_full_scores( std::move( arg_filter_vs_full_scores ) ) {
+filter_vs_full_score_list::filter_vs_full_score_list(filter_vs_full_score_vec prm_filter_vs_full_scores ///< The vector of filter_vs_full_score objects from which to construct this filter_vs_full_score_list
+                                                     ) : filter_vs_full_scores( std::move( prm_filter_vs_full_scores ) ) {
 	sort_filter_vs_full_scores();
 }
 
 /// \brief Add a filter_vs_full_score to the list
 ///
 /// This will resort the filter_vs_full_score objects once the new one has been added
-void filter_vs_full_score_list::add_filter_vs_full_score(const filter_vs_full_score &arg_filter_vs_full_score ///< The filter_vs_full_score to be added to the list
+void filter_vs_full_score_list::add_filter_vs_full_score(const filter_vs_full_score &prm_filter_vs_full_score ///< The filter_vs_full_score to be added to the list
                                                          ) {
 	// Insert into the correct place in the sorted vector
-	sorted_insert( filter_vs_full_scores, arg_filter_vs_full_score, full_score_less() );
+	sorted_insert( filter_vs_full_scores, prm_filter_vs_full_score, full_score_less() );
 
 	/// \todo Write some decent unit tests for sorted_insert and then remove this check
 #ifndef NDEBUG
@@ -105,9 +105,9 @@ size_t filter_vs_full_score_list::size() const {
 }
 
 /// \brief Standard subscript operator
-const filter_vs_full_score & filter_vs_full_score_list::operator[](const size_t &arg_index ///< The index of the filter_vs_full_score to access
+const filter_vs_full_score & filter_vs_full_score_list::operator[](const size_t &prm_index ///< The index of the filter_vs_full_score to access
                                                                    ) const {
-	return filter_vs_full_scores[ arg_index ];
+	return filter_vs_full_scores[ prm_index ];
 }
 
 /// \brief Standard const begin() method as part of making filter_vs_full_score_list into a (const) range
@@ -125,27 +125,27 @@ filter_vs_full_score_list::const_iterator filter_vs_full_score_list::end() const
 /// \relates filter_vs_full_score_list
 ///
 /// \todo Test that the resulting score does indeed achieve the requested sensitivity
-double cath::index::filter::filter_score_full_score_with_sensitivity(const filter_vs_full_score_list &arg_filter_vs_full_score_list, ///< The real scores to be assessed
-                                                                     const double                    &arg_full_score,                ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
-                                                                     const double                    &arg_sensitivity_fraction       ///< The required sensitivity that the filter score must achieve
+double cath::index::filter::filter_score_full_score_with_sensitivity(const filter_vs_full_score_list &prm_filter_vs_full_score_list, ///< The real scores to be assessed
+                                                                     const double                    &prm_full_score,                ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
+                                                                     const double                    &prm_sensitivity_fraction       ///< The required sensitivity that the filter score must achieve
                                                                      ) {
 	// Find an iterator to the first entry with a full_score >= the specified full score in the filter_vs_full_score_list
 	// (which is already sorted by full_score)
 	const filter_vs_full_score_list_citr begin_of_wanted = lower_bound(
-		arg_filter_vs_full_score_list,
-		arg_full_score,
+		prm_filter_vs_full_score_list,
+		prm_full_score,
 		full_score_less()
 	);
 
 	// Construct a sub_range for the values after that point (ie all those with a full_score >= the specified full score),
 	// grab the number of such "wanted" elements and throw if it's zero
-	const sub_range<filter_vs_full_score_list> wanted_range( begin_of_wanted, common::cend( arg_filter_vs_full_score_list ) );
+	const sub_range<filter_vs_full_score_list> wanted_range( begin_of_wanted, common::cend( prm_filter_vs_full_score_list ) );
 	const size_t num_wanted = numeric_cast<size_t>( distance( wanted_range ) );
 	if ( num_wanted == 0 ) {
-		cerr << "Last entry is : " << *prev( end(arg_filter_vs_full_score_list ) ) << endl;
+		cerr << "Last entry is : " << *prev( end(prm_filter_vs_full_score_list ) ) << endl;
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Cannot find filter_score_full_score_with_sensitivity because no filter_vs_full_scores match specified full_score "
-			+ to_string( arg_full_score )
+			+ to_string( prm_full_score )
 		));
 	}
 
@@ -155,11 +155,11 @@ double cath::index::filter::filter_score_full_score_with_sensitivity(const filte
 		[] (const filter_vs_full_score &x) { return x.get_filter_score(); }
 	);
 
-	// Aim is to find the filter value that at least arg_sensitivity_fraction of the "wanted" filter values
+	// Aim is to find the filter value that at least prm_sensitivity_fraction of the "wanted" filter values
 	// are greater than equal to
 	//
 	// Start by calculating the maximum number of "wanted" elements that can be less than the final value
-	const double miss_rate       = 1.0 - arg_sensitivity_fraction;
+	const double miss_rate       = 1.0 - prm_sensitivity_fraction;
 	const size_t fraction_offset = numeric_cast<size_t>( floor( miss_rate * numeric_cast<double>( num_wanted ) ) );
 
 	// Use nth_element to find the filter score associated with the
@@ -181,17 +181,17 @@ double cath::index::filter::filter_score_full_score_with_sensitivity(const filte
 /// \relates filter_vs_full_score_list
 ///
 /// \todo Test that the resulting score does indeed achieve the requested sensitivity
-filter_vs_full_score cath::index::filter::filter_attempt_full_score_with_sensitivity(const filter_vs_full_score_list &arg_filter_vs_full_score_list, ///< The real scores to be assessed
-                                                                                     const double                    &arg_full_score,                ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
-                                                                                     const double                    &arg_sensitivity_fraction       ///< The required sensitivity that the filter score must achieve
+filter_vs_full_score cath::index::filter::filter_attempt_full_score_with_sensitivity(const filter_vs_full_score_list &prm_filter_vs_full_score_list, ///< The real scores to be assessed
+                                                                                     const double                    &prm_full_score,                ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
+                                                                                     const double                    &prm_sensitivity_fraction       ///< The required sensitivity that the filter score must achieve
                                                                                      ) {
 	return filter_vs_full_score(
 		filter_score_full_score_with_sensitivity(
-			arg_filter_vs_full_score_list,
-			arg_full_score,
-			arg_sensitivity_fraction
+			prm_filter_vs_full_score_list,
+			prm_full_score,
+			prm_sensitivity_fraction
 		),
-		arg_full_score
+		prm_full_score
 	);
 }
 
@@ -204,30 +204,30 @@ filter_vs_full_score cath::index::filter::filter_attempt_full_score_with_sensiti
 /// \relates filter_vs_full_score_list
 ///
 /// \todo Test that the resulting score does indeed achieve the requested sensitivity
-true_false_pos_neg cath::index::filter::filter_result_full_score_with_sensitivity(const filter_vs_full_score_list &arg_filter_vs_full_score_list, ///< The real scores to be assessed
-                                                                                  const double                    &arg_full_score,                ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
-                                                                                  const double                    &arg_sensitivity_fraction       ///< The required sensitivity that the filter score must achieve
+true_false_pos_neg cath::index::filter::filter_result_full_score_with_sensitivity(const filter_vs_full_score_list &prm_filter_vs_full_score_list, ///< The real scores to be assessed
+                                                                                  const double                    &prm_full_score,                ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
+                                                                                  const double                    &prm_sensitivity_fraction       ///< The required sensitivity that the filter score must achieve
                                                                                   ) {
 	const true_false_pos_neg results = assess_results_on_filter_attempt(
-		arg_filter_vs_full_score_list,
+		prm_filter_vs_full_score_list,
 		filter_attempt_full_score_with_sensitivity(
-			arg_filter_vs_full_score_list,
-			arg_full_score,
-			arg_sensitivity_fraction
+			prm_filter_vs_full_score_list,
+			prm_full_score,
+			prm_sensitivity_fraction
 		)
 	);
 	const double the_sensitivity = rational_cast<double>( sensitivity().calculate( results ) );
-	if ( the_sensitivity < arg_sensitivity_fraction ) {
+	if ( the_sensitivity < prm_sensitivity_fraction ) {
 
 		cerr <<
 			"Attempt to calculate filter for sensitivity of "
-			<< to_string( arg_sensitivity_fraction )
+			<< to_string( prm_sensitivity_fraction )
 			<< " resulted in an inadequate sensitivity of "
 			<< to_string( the_sensitivity ) << endl;
 //		));
 //		BOOST_THROW_EXCEPTION(out_of_range_exception(
 //			"Attempt to calculate filter for sensitivity of "
-//			+ to_string( arg_sensitivity_fraction )
+//			+ to_string( prm_sensitivity_fraction )
 //			+ " resulted in an inadequate sensitivity of "
 //			+ to_string( the_sensitivity )
 //		));
@@ -238,18 +238,18 @@ true_false_pos_neg cath::index::filter::filter_result_full_score_with_sensitivit
 /// \brief TODOCUMENT
 ///
 /// \relates filter_vs_full_score_list
-filter_vs_full_score_vec cath::index::filter::filter_attempts_with_sensitivity(const filter_vs_full_score_list &arg_filter_vs_full_score_list, ///< The real scores to be assessed
-                                                                               const double                    &arg_sensitivity_fraction       ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
+filter_vs_full_score_vec cath::index::filter::filter_attempts_with_sensitivity(const filter_vs_full_score_list &prm_filter_vs_full_score_list, ///< The real scores to be assessed
+                                                                               const double                    &prm_sensitivity_fraction       ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
                                                                                ) {
 	filter_vs_full_score_vec results;
-	for (const filter_vs_full_score &real_score : arg_filter_vs_full_score_list) {
+	for (const filter_vs_full_score &real_score : prm_filter_vs_full_score_list) {
 		const double &full_score = real_score.get_full_score();
 		if ( results.empty() || results.back().get_full_score() != full_score ) {
 			// Calculate the result for full_score
 			const filter_vs_full_score result = filter_attempt_full_score_with_sensitivity(
-				arg_filter_vs_full_score_list,
+				prm_filter_vs_full_score_list,
 				full_score,
-				arg_sensitivity_fraction
+				prm_sensitivity_fraction
 			);
 
 			// Add the result to results
@@ -263,20 +263,20 @@ filter_vs_full_score_vec cath::index::filter::filter_attempts_with_sensitivity(c
 ///        for each of the full_scores in the filter_vs_full_score_list
 ///
 /// \relates filter_vs_full_score_list
-doub_true_false_pos_neg_pair_vec cath::index::filter::filter_results_with_sensitivity(const filter_vs_full_score_list &arg_filter_vs_full_score_list, ///< The real scores to be assessed
-                                                                                      const double                    &arg_sensitivity_fraction       ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
+doub_true_false_pos_neg_pair_vec cath::index::filter::filter_results_with_sensitivity(const filter_vs_full_score_list &prm_filter_vs_full_score_list, ///< The real scores to be assessed
+                                                                                      const double                    &prm_sensitivity_fraction       ///< The score that defines which filter_vs_full_scores are "wanted" (those which have a full_score >= this score)
                                                                                       ) {
 	const filter_vs_full_score_vec filter_attempts = filter_attempts_with_sensitivity(
-		arg_filter_vs_full_score_list,
-		arg_sensitivity_fraction
+		prm_filter_vs_full_score_list,
+		prm_sensitivity_fraction
 	);
 
 	doub_true_false_pos_neg_pair_vec results;
-	results.reserve( arg_filter_vs_full_score_list.size() );
+	results.reserve( prm_filter_vs_full_score_list.size() );
 	for (const filter_vs_full_score &filter_attempt : filter_attempts) {
 		const double             &full_score = filter_attempt.get_full_score();
 		const true_false_pos_neg  result     = assess_results_on_filter_attempt(
-			arg_filter_vs_full_score_list,
+			prm_filter_vs_full_score_list,
 			filter_attempt
 		);
 
@@ -292,15 +292,15 @@ doub_true_false_pos_neg_pair_vec cath::index::filter::filter_results_with_sensit
 ///        selecting all filter scores >= some value)
 ///
 /// \relates filter_vs_full_score_list
-true_false_pos_neg cath::index::filter::assess_results_on_filter_attempt(const filter_vs_full_score_list &arg_filter_vs_full_score_list, ///< The real scores to be assessed
-                                                                         const filter_vs_full_score      &arg_filter_attempt             ///< The filter attempt (interpretation: this attempts to identify all entries with full score >= filter_vs_full_score's full score by selecting all entries with filter score >= filter_vs_full_score's filter score)
+true_false_pos_neg cath::index::filter::assess_results_on_filter_attempt(const filter_vs_full_score_list &prm_filter_vs_full_score_list, ///< The real scores to be assessed
+                                                                         const filter_vs_full_score      &prm_filter_attempt             ///< The filter attempt (interpretation: this attempts to identify all entries with full score >= filter_vs_full_score's full score by selecting all entries with filter score >= filter_vs_full_score's filter score)
                                                                          ) {
 	/// \todo Come C++14 (GCC >= 4.9), change the lambda to use [] (const auto &x) { ... }
 	return accumulate(
-		arg_filter_vs_full_score_list,
+		prm_filter_vs_full_score_list,
 		true_false_pos_neg(),
 		[&] (const true_false_pos_neg &x, const filter_vs_full_score &y) {
-			return x + assess_real_scores_on_filter_attempt( y, arg_filter_attempt );
+			return x + assess_real_scores_on_filter_attempt( y, prm_filter_attempt );
 		}
 	);
 }
@@ -308,14 +308,14 @@ true_false_pos_neg cath::index::filter::assess_results_on_filter_attempt(const f
 /// \brief TODOCUMENT
 ///
 /// \relates filter_vs_full_score_list
-void cath::index::filter::gnuplot_data(const filter_vs_full_score_list &arg_filter_vs_full_score_list, ///< The real scores to be assessed
-                                       const path                      &arg_output_stem,               ///< The stem of the file to generate (ie without the ".gnuplot" or ".eps" suffix)
-                                       const filter_vs_full_score_list &arg_filter_attempts            ///< The filter policy to be plotted
+void cath::index::filter::gnuplot_data(const filter_vs_full_score_list &prm_filter_vs_full_score_list, ///< The real scores to be assessed
+                                       const path                      &prm_output_stem,               ///< The stem of the file to generate (ie without the ".gnuplot" or ".eps" suffix)
+                                       const filter_vs_full_score_list &prm_filter_attempts            ///< The filter policy to be plotted
                                        ) {
-	const path gnuplot_file     = replace_extension_copy( arg_output_stem, ".gnuplot"         );
-	const path eps_file         = replace_extension_copy( arg_output_stem, ".eps"             );
-	const path the_data_file    = replace_extension_copy( arg_output_stem, ".data.txt"        );
-	const path filter_data_file = replace_extension_copy( arg_output_stem, ".filter_data.txt" );
+	const path gnuplot_file     = replace_extension_copy( prm_output_stem, ".gnuplot"         );
+	const path eps_file         = replace_extension_copy( prm_output_stem, ".eps"             );
+	const path the_data_file    = replace_extension_copy( prm_output_stem, ".data.txt"        );
+	const path filter_data_file = replace_extension_copy( prm_output_stem, ".filter_data.txt" );
 	Gnuplot gp("tee " + gnuplot_file.string() + " | gnuplot"); // Write to an intermediate gnuplot file
 
 	gp << "set   terminal postscript color\n";
@@ -338,13 +338,13 @@ void cath::index::filter::gnuplot_data(const filter_vs_full_score_list &arg_filt
 	gp << "set   ylabel \"Filter score\"\n";
 
 	const auto values = transform_build<doub_doub_pair_vec>(
-		arg_filter_vs_full_score_list,
+		prm_filter_vs_full_score_list,
 		[] (const filter_vs_full_score &x) {
 			return make_pair( x.get_full_score(), x.get_filter_score() );
 		}
 	);
 	const auto filters = transform_build<doub_doub_pair_vec>(
-		arg_filter_attempts,
+		prm_filter_attempts,
 		[] (const filter_vs_full_score &x) {
 			return make_pair( x.get_full_score(), x.get_filter_score() );
 		}
@@ -360,25 +360,25 @@ void cath::index::filter::gnuplot_data(const filter_vs_full_score_list &arg_filt
 /// \brief TODOCUMENT
 ///
 /// \relates filter_vs_full_score_list
-void cath::index::filter::gnuplot_classsn_stat_for_recall(const filter_vs_full_score_list &arg_data,        ///< TODOCUMENT
-                                                          const path                      &arg_output_stem, ///< TODOCUMENT
-                                                          const classn_stat               &arg_classn_stat, ///< TODOCUMENT
-                                                          const double                    &arg_recall       ///< TODOCUMENT
+void cath::index::filter::gnuplot_classsn_stat_for_recall(const filter_vs_full_score_list &prm_data,        ///< TODOCUMENT
+                                                          const path                      &prm_output_stem, ///< TODOCUMENT
+                                                          const classn_stat               &prm_classn_stat, ///< TODOCUMENT
+                                                          const double                    &prm_recall       ///< TODOCUMENT
                                                           ) {
-	const doub_true_false_pos_neg_pair_vec results = filter_results_with_sensitivity( arg_data, arg_recall);
-	gnuplot_classsn_stat_for_recall( results, arg_output_stem, arg_classn_stat );
+	const doub_true_false_pos_neg_pair_vec results = filter_results_with_sensitivity( prm_data, prm_recall);
+	gnuplot_classsn_stat_for_recall( results, prm_output_stem, prm_classn_stat );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates filter_vs_full_score_list
-void cath::index::filter::gnuplot_classsn_stat_for_recall(const doub_true_false_pos_neg_pair_vec &arg_data,        ///< TODOCUMENT
-                                                          const path                             &arg_output_stem, ///< TODOCUMENT
-                                                          const classn_stat                      &arg_classn_stat  ///< TODOCUMENT
+void cath::index::filter::gnuplot_classsn_stat_for_recall(const doub_true_false_pos_neg_pair_vec &prm_data,        ///< TODOCUMENT
+                                                          const path                             &prm_output_stem, ///< TODOCUMENT
+                                                          const classn_stat                      &prm_classn_stat  ///< TODOCUMENT
                                                           ) {
-	const path gnuplot_file  = replace_extension_copy( arg_output_stem, ".gnuplot"  );
-	const path eps_file      = replace_extension_copy( arg_output_stem, ".eps"      );
-	const path the_data_file = replace_extension_copy( arg_output_stem, ".data.txt" );
+	const path gnuplot_file  = replace_extension_copy( prm_output_stem, ".gnuplot"  );
+	const path eps_file      = replace_extension_copy( prm_output_stem, ".eps"      );
+	const path the_data_file = replace_extension_copy( prm_output_stem, ".data.txt" );
 	Gnuplot gp("tee " + gnuplot_file.string() + " | gnuplot"); // Write to an intermediate gnuplot file
 
 	gp << "set   terminal postscript color\n";
@@ -401,11 +401,11 @@ void cath::index::filter::gnuplot_classsn_stat_for_recall(const doub_true_false_
 	gp << "set   ylabel \"Statistic\"\n";
 
 	const auto values = transform_build<doub_doub_pair_vec>(
-		arg_data,
+		prm_data,
 		[&] (const doub_true_false_pos_neg_pair &x) {
 			return make_pair(
 				x.first,
-				rational_cast<double>( arg_classn_stat.calculate( x.second ) )
+				rational_cast<double>( prm_classn_stat.calculate( x.second ) )
 			);
 		}
 	);

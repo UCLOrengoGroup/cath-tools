@@ -48,10 +48,10 @@ namespace cath {
 
 			/// \brief Ctor from a range
 			template <typename T, typename RNG>
-			lexical_casted_range<T, RNG>::lexical_casted_range(const RNG &arg_range ///< The range over which to apply this lexical_casted_range
+			lexical_casted_range<T, RNG>::lexical_casted_range(const RNG &prm_range ///< The range over which to apply this lexical_casted_range
 			                                                   ) : super(
-			                                                       	lex_casted_iterator( std::begin( arg_range ) ),
-			                                                       	lex_casted_iterator( std::end  ( arg_range ) )
+			                                                       	lex_casted_iterator( std::begin( prm_range ) ),
+			                                                       	lex_casted_iterator( std::end  ( prm_range ) )
 			                                                       ) {
 			}
 		} // namespace detail

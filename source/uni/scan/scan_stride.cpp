@@ -27,30 +27,30 @@ using namespace cath::scan::detail;
 /// \brief TODOCUMENT
 ///
 /// \relates scan_stride
-rep_rep_pair_opt cath::scan::detail::get_from_rep_of_indices(const scan_stride &arg_scan_stride,      ///< TODOCUMENT
-                                                             const index_type  &arg_query_from_index, ///< TODOCUMENT
-                                                             const index_type  &arg_index_from_index  ///< TODOCUMENT
+rep_rep_pair_opt cath::scan::detail::get_from_rep_of_indices(const scan_stride &prm_scan_stride,      ///< TODOCUMENT
+                                                             const index_type  &prm_query_from_index, ///< TODOCUMENT
+                                                             const index_type  &prm_index_from_index  ///< TODOCUMENT
                                                              ) {
 	return get_rep_of_indices(
-		arg_scan_stride.get_query_from_strider(),
-		arg_query_from_index,
-		arg_scan_stride.get_index_from_strider(),
-		arg_index_from_index
+		prm_scan_stride.get_query_from_strider(),
+		prm_query_from_index,
+		prm_scan_stride.get_index_from_strider(),
+		prm_index_from_index
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates scan_stride
-rep_rep_pair_opt cath::scan::detail::get_to_rep_of_indices(const scan_stride &arg_scan_stride,    ///< TODOCUMENT
-                                                           const index_type  &arg_query_to_index, ///< TODOCUMENT
-                                                           const index_type  &arg_index_to_index  ///< TODOCUMENT
+rep_rep_pair_opt cath::scan::detail::get_to_rep_of_indices(const scan_stride &prm_scan_stride,    ///< TODOCUMENT
+                                                           const index_type  &prm_query_to_index, ///< TODOCUMENT
+                                                           const index_type  &prm_index_to_index  ///< TODOCUMENT
                                                            ) {
 	return get_rep_of_indices(
-		arg_scan_stride.get_query_to_strider(),
-		arg_query_to_index,
-		arg_scan_stride.get_index_to_strider(),
-		arg_index_to_index
+		prm_scan_stride.get_query_to_strider(),
+		prm_query_to_index,
+		prm_scan_stride.get_index_to_strider(),
+		prm_index_to_index
 	);
 }
 

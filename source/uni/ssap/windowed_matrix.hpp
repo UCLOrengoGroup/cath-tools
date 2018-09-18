@@ -176,44 +176,44 @@ namespace cath {
 	/// \brief TODOCUMENT
 	///
 	/// \relates windowed_matrix
-	inline void check_indices_are_within_window(const windowed_matrix::size_type &arg_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                            const windowed_matrix::size_type &arg_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
-	                                            const windowed_matrix::size_type &arg_requested_window, ///< The requested width (or equivalently, height) of the window
-	                                            const windowed_matrix::size_type &arg_index_a,          ///< TODOCUMENT
-	                                            const windowed_matrix::size_type &arg_index_b           ///< TODOCUMENT
+	inline void check_indices_are_within_window(const windowed_matrix::size_type &prm_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                            const windowed_matrix::size_type &prm_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
+	                                            const windowed_matrix::size_type &prm_requested_window, ///< The requested width (or equivalently, height) of the window
+	                                            const windowed_matrix::size_type &prm_index_a,          ///< TODOCUMENT
+	                                            const windowed_matrix::size_type &prm_index_b           ///< TODOCUMENT
 	                                            ) {
 #ifndef NDEBUG
 		check_lengths_and_window_size_are_valid(
-			arg_length_a,
-			arg_length_b,
-			arg_requested_window
+			prm_length_a,
+			prm_length_b,
+			prm_requested_window
 		);
 		const size_t window_start_a = get_window_start_a_for_b__offset_1(
-			arg_length_a,
-			arg_length_b,
-			arg_requested_window,
-			arg_index_b + 1
+			prm_length_a,
+			prm_length_b,
+			prm_requested_window,
+			prm_index_b + 1
 		) - 1;
 		const size_t window_stop_a  = get_window_stop_a_for_b__offset_1(
-			arg_length_a,
-			arg_length_b,
-			arg_requested_window,
-			arg_index_b + 1
+			prm_length_a,
+			prm_length_b,
+			prm_requested_window,
+			prm_index_b + 1
 		) - 1;
-		if (arg_index_a < window_start_a || arg_index_a > window_stop_a) {
+		if (prm_index_a < window_start_a || prm_index_a > window_stop_a) {
 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
 				"Indices "
-				+ boost::lexical_cast<std::string>(arg_index_a)
+				+ boost::lexical_cast<std::string>(prm_index_a)
 				+ ", "
-				+ boost::lexical_cast<std::string>(arg_index_b)
+				+ boost::lexical_cast<std::string>(prm_index_b)
 				+ " are not valid in a matrix of size "
-				+ boost::lexical_cast<std::string>(arg_length_a)
+				+ boost::lexical_cast<std::string>(prm_length_a)
 				+ ", "
-				+ boost::lexical_cast<std::string>(arg_length_b)
+				+ boost::lexical_cast<std::string>(prm_length_b)
 				+ " with a window width of "
-				+ boost::lexical_cast<std::string>(arg_requested_window)
+				+ boost::lexical_cast<std::string>(prm_requested_window)
 				+ " (window for a at b-index of "
-				+ boost::lexical_cast<std::string>(arg_index_b)
+				+ boost::lexical_cast<std::string>(prm_index_b)
 				+ " is [ "
 				+ boost::lexical_cast<std::string>(window_start_a)
 				+ ", "
@@ -222,42 +222,42 @@ namespace cath {
 			));
 		}
 #else
-		boost::ignore_unused( arg_length_a         );
-		boost::ignore_unused( arg_length_b         );
-		boost::ignore_unused( arg_requested_window );
-		boost::ignore_unused( arg_index_a         );
-		boost::ignore_unused( arg_index_b         );
+		boost::ignore_unused( prm_length_a         );
+		boost::ignore_unused( prm_length_b         );
+		boost::ignore_unused( prm_requested_window );
+		boost::ignore_unused( prm_index_a         );
+		boost::ignore_unused( prm_index_b         );
 #endif
 	}
 
 	/// \brief TODOCUMENT
 	///
 	/// \relates windowed_matrix
-	inline void check_lengths_and_window_size_are_valid(const windowed_matrix::size_type &arg_length_a,        ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                                    const windowed_matrix::size_type &arg_length_b,        ///< The length of the second entry (or the number of columns in the matrix)
-	                                                    const windowed_matrix::size_type &arg_requested_window ///< The requested width (or equivalently, height) of the window
+	inline void check_lengths_and_window_size_are_valid(const windowed_matrix::size_type &prm_length_a,        ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                                    const windowed_matrix::size_type &prm_length_b,        ///< The length of the second entry (or the number of columns in the matrix)
+	                                                    const windowed_matrix::size_type &prm_requested_window ///< The requested width (or equivalently, height) of the window
 	                                                    ) {
 //#ifndef NDEBUG
 		// Calculate the length difference and check that the window size is large enough to handle the length difference
-		const windowed_matrix::difference_type diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>( arg_length_a );
-		const windowed_matrix::difference_type diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>( arg_length_b );
+		const windowed_matrix::difference_type diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>( prm_length_a );
+		const windowed_matrix::difference_type diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>( prm_length_b );
 		const windowed_matrix::difference_type length_difference = diff_t_length_a - diff_t_length_b;
-		if ( arg_requested_window < 1 + debug_numeric_cast<windowed_matrix::size_type>( labs( length_difference ) ) ) {
+		if ( prm_requested_window < 1 + debug_numeric_cast<windowed_matrix::size_type>( labs( length_difference ) ) ) {
 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
 				"The window size is "
-				+ boost::lexical_cast<std::string>( arg_requested_window )
+				+ boost::lexical_cast<std::string>( prm_requested_window )
 				+ " but it should be at least as large as the magnitude of the difference in lengths (the lengths are "
-				+ boost::lexical_cast<std::string>( arg_length_a )
+				+ boost::lexical_cast<std::string>( prm_length_a )
 				+ " and "
-				+ boost::lexical_cast<std::string>( arg_length_b )
+				+ boost::lexical_cast<std::string>( prm_length_b )
 				+ " so their difference is "
 				+ boost::lexical_cast<std::string>( labs( length_difference ) )
 				+ ")"));
 		}
 //#else
-//		boost::ignore_unused( arg_length_a         );
-//		boost::ignore_unused( arg_length_b         );
-//		boost::ignore_unused( arg_requested_window );
+//		boost::ignore_unused( prm_length_a         );
+//		boost::ignore_unused( prm_length_b         );
+//		boost::ignore_unused( prm_requested_window );
 //#endif
 	}
 
@@ -265,14 +265,14 @@ namespace cath {
 	///
 	/// \relates windowed_matrix
 	///
-	/// Where arg_length_a is less than arg_length_b, the lower part will be less than the upper part:
+	/// Where prm_length_a is less than prm_length_b, the lower part will be less than the upper part:
 	///
 	///     *  +  +  +  .  .
 	///     +  *  +  +  +  .
 	///     .  +  *  +  +  +
 	///     .  .  +  *  +  +
 	///
-	/// Where arg_length_a is greater than arg_length_b, the lower part will be greater than the upper part:
+	/// Where prm_length_a is greater than prm_length_b, the lower part will be greater than the upper part:
 	///
 	///     *  +  .  .
 	///     +  *  +  .
@@ -280,24 +280,24 @@ namespace cath {
 	///     +  +  +  *
 	///     .  +  +  +
 	///     .  .  +  +
-	inline size_size_pair get_window_upper_and_lower_part_widths(const windowed_matrix::size_type &arg_length_a,        ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                                             const windowed_matrix::size_type &arg_length_b,        ///< The length of the second entry (or the number of columns in the matrix)
-	                                                             const windowed_matrix::size_type &arg_requested_window ///< The requested width (or equivalently, height) of the window
+	inline size_size_pair get_window_upper_and_lower_part_widths(const windowed_matrix::size_type &prm_length_a,        ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                                             const windowed_matrix::size_type &prm_length_b,        ///< The length of the second entry (or the number of columns in the matrix)
+	                                                             const windowed_matrix::size_type &prm_requested_window ///< The requested width (or equivalently, height) of the window
 	                                                             ) {
-		check_lengths_and_window_size_are_valid(arg_length_a, arg_length_b, arg_requested_window);
+		check_lengths_and_window_size_are_valid(prm_length_a, prm_length_b, prm_requested_window);
 
 		// Calculate the length difference
-		const windowed_matrix::difference_type diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>(arg_length_a);
-		const windowed_matrix::difference_type diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>(arg_length_b);
+		const windowed_matrix::difference_type diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>(prm_length_a);
+		const windowed_matrix::difference_type diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>(prm_length_b);
 		const windowed_matrix::difference_type length_difference = diff_t_length_a - diff_t_length_b;
 
 		// Divide the window size less one (for the leading diagonal itself) between the two parts,
 		// ensuring that the correct part is length_difference greater than the other
-		const size_t upper_width = debug_numeric_cast<size_t>( ( debug_numeric_cast<int>(arg_requested_window - 1 ) - length_difference) / 2 );
-		const size_t lower_width = debug_numeric_cast<size_t>( ( debug_numeric_cast<int>(arg_requested_window - 1 ) + length_difference) / 2 );
+		const size_t upper_width = debug_numeric_cast<size_t>( ( debug_numeric_cast<int>(prm_requested_window - 1 ) - length_difference) / 2 );
+		const size_t lower_width = debug_numeric_cast<size_t>( ( debug_numeric_cast<int>(prm_requested_window - 1 ) + length_difference) / 2 );
 
 		// Depending on rounding, the extra value may have meant that the resulting window is too small, so calculate any necessary increments
-		const bool   is_too_narrow   = upper_width + lower_width + 1 < arg_requested_window;
+		const bool   is_too_narrow   = upper_width + lower_width + 1 < prm_requested_window;
 		const size_t upper_increment = is_too_narrow && (upper_width <= lower_width) ? 1 : 0;
 		const size_t lower_increment = is_too_narrow && (upper_width >= lower_width) ? 1 : 0;
 
@@ -312,22 +312,22 @@ namespace cath {
 	///
 	/// \relates windowed_matrix
 	///
-	/// At present this is offset_1: the arg_index_b is in [1, arg_length_b],
-	/// the maximum return value is arg_length_a and, for a square matrix, the minimum return value is 1
+	/// At present this is offset_1: the prm_index_b is in [1, prm_length_b],
+	/// the maximum return value is prm_length_a and, for a square matrix, the minimum return value is 1
 	///
 	/// \todo Eradicate this function and move its functionality into a private method of windowed_matrix
 	///       In particular, used naively, this would cause indexing trouble around the very ends of the diagonal.
-	inline int get_window_indexing_offset_for_b__offset_1(const windowed_matrix::size_type &arg_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                                      const windowed_matrix::size_type &arg_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
-	                                                      const windowed_matrix::size_type &arg_requested_window, ///< The requested width (or equivalently, height) of the window
-	                                                      const windowed_matrix::size_type &arg_index_b           ///< TODOCUMENT
+	inline int get_window_indexing_offset_for_b__offset_1(const windowed_matrix::size_type &prm_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                                      const windowed_matrix::size_type &prm_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
+	                                                      const windowed_matrix::size_type &prm_requested_window, ///< The requested width (or equivalently, height) of the window
+	                                                      const windowed_matrix::size_type &prm_index_b           ///< TODOCUMENT
 	                                                      ) {
 		const size_size_pair window_upper_and_lower_part_widths = get_window_upper_and_lower_part_widths(
-			arg_length_a,
-			arg_length_b,
-			arg_requested_window
+			prm_length_a,
+			prm_length_b,
+			prm_requested_window
 		);
-		const int &leading_diagonal_index  = debug_numeric_cast<int>( arg_index_b );
+		const int &leading_diagonal_index  = debug_numeric_cast<int>( prm_index_b );
 		const int &window_upper_part_width = debug_numeric_cast<int>( window_upper_and_lower_part_widths.first );
 		return window_upper_part_width - leading_diagonal_index;
 	}
@@ -337,75 +337,75 @@ namespace cath {
 	/// \relates windowed_matrix
 	///
 	/// \todo Eradicate this function and move its functionality into a private method of windowed_matrix
-	inline int get_window_matrix_a_index(const windowed_matrix::size_type &arg_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                     const windowed_matrix::size_type &arg_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
-	                                     const windowed_matrix::size_type &arg_requested_window, ///< The requested width (or equivalently, height) of the window
-	                                     const windowed_matrix::size_type &arg_index_a,          ///< TODOCUMENT
-	                                     const windowed_matrix::size_type &arg_index_b           ///< TODOCUMENT
+	inline int get_window_matrix_a_index(const windowed_matrix::size_type &prm_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                     const windowed_matrix::size_type &prm_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
+	                                     const windowed_matrix::size_type &prm_requested_window, ///< The requested width (or equivalently, height) of the window
+	                                     const windowed_matrix::size_type &prm_index_a,          ///< TODOCUMENT
+	                                     const windowed_matrix::size_type &prm_index_b           ///< TODOCUMENT
 	                                     ) {
 		const int offset = get_window_indexing_offset_for_b__offset_1(
-			arg_length_a,
-			arg_length_b,
-			arg_requested_window,
-			arg_index_b + 1
+			prm_length_a,
+			prm_length_b,
+			prm_requested_window,
+			prm_index_b + 1
 		);
-		const int index_a = debug_numeric_cast<int>(arg_index_a);
+		const int index_a = debug_numeric_cast<int>(prm_index_a);
 		return index_a + offset;
 	}
 
 	/// \brief [Temporary] offset_1 wrapper to get_window_matrix_a_index()
 	///
 	/// Currently just replicating existing behaviour but this involves sometimes producing answers
-	/// outside the range [1, arg_length_a] (including negative numbers)
-	inline int get_window_matrix_a_index__offset_1(const windowed_matrix::size_type &arg_length_a,          ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                               const windowed_matrix::size_type &arg_length_b,          ///< The length of the second entry (or the number of columns in the matrix)
-	                                               const windowed_matrix::size_type &arg_requested_window,  ///< The requested width (or equivalently, height) of the window
-	                                               const windowed_matrix::size_type &arg_index_a__offset_1, ///< TODOCUMENT
-	                                               const windowed_matrix::size_type &arg_index_b__offset_1  ///< TODOCUMENT
+	/// outside the range [1, prm_length_a] (including negative numbers)
+	inline int get_window_matrix_a_index__offset_1(const windowed_matrix::size_type &prm_length_a,          ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                               const windowed_matrix::size_type &prm_length_b,          ///< The length of the second entry (or the number of columns in the matrix)
+	                                               const windowed_matrix::size_type &prm_requested_window,  ///< The requested width (or equivalently, height) of the window
+	                                               const windowed_matrix::size_type &prm_index_a__offset_1, ///< TODOCUMENT
+	                                               const windowed_matrix::size_type &prm_index_b__offset_1  ///< TODOCUMENT
 	                                               ) {
-		check_offset_1( arg_index_a__offset_1 );
-		check_offset_1( arg_index_b__offset_1 );
+		check_offset_1( prm_index_a__offset_1 );
+		check_offset_1( prm_index_b__offset_1 );
 		return get_window_matrix_a_index(
-			arg_length_a,
-			arg_length_b,
-			arg_requested_window,
-			arg_index_a__offset_1 - 1,
-			arg_index_b__offset_1 - 1
+			prm_length_a,
+			prm_length_b,
+			prm_requested_window,
+			prm_index_a__offset_1 - 1,
+			prm_index_b__offset_1 - 1
 		) + 1;
 	}
 
 	/// \brief Calculate the index of the start of the window in a particular column
 	///
-	/// At present this is offset_1: the arg_index_b  is in [1, arg_length_b],
-	///                              the return value is in [1, arg_length_a]
+	/// At present this is offset_1: the prm_index_b  is in [1, prm_length_b],
+	///                              the return value is in [1, prm_length_a]
 	///
 	/// The code guarantees that swapping the lengths should give the transpose so this
 	/// can be used to get the index of the start of the window in a particular row.
 	///
 	/// \relates windowed_matrix
-	inline size_t get_window_start_a_for_b__offset_1(const windowed_matrix::size_type &arg_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                                 const windowed_matrix::size_type &arg_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
-	                                                 const windowed_matrix::size_type &arg_requested_window, ///< The requested width (or equivalently, height) of the window
-	                                                 const windowed_matrix::size_type &arg_index_b           ///< TODOCUMENT
+	inline size_t get_window_start_a_for_b__offset_1(const windowed_matrix::size_type &prm_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                                 const windowed_matrix::size_type &prm_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
+	                                                 const windowed_matrix::size_type &prm_requested_window, ///< The requested width (or equivalently, height) of the window
+	                                                 const windowed_matrix::size_type &prm_index_b           ///< TODOCUMENT
 	                                                 ) {
 	#ifndef NDEBUG
-		if (arg_index_b < 1 || arg_index_b > arg_length_b) {
+		if (prm_index_b < 1 || prm_index_b > prm_length_b) {
 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index for B is out of range"));
 		}
 	#endif
 		const size_size_pair window_upper_and_lower_part_widths = get_window_upper_and_lower_part_widths(
-			arg_length_a,
-			arg_length_b,
-			arg_requested_window
+			prm_length_a,
+			prm_length_b,
+			prm_requested_window
 		);
 		const int    window_upper_part_width = debug_numeric_cast<int>( window_upper_and_lower_part_widths.first );
-		const int    leading_diagonal_index  = debug_numeric_cast<int>( arg_index_b );
+		const int    leading_diagonal_index  = debug_numeric_cast<int>( prm_index_b );
 		const int    window_start_unclamped  = leading_diagonal_index - window_upper_part_width;
-		const size_t window_start            = debug_numeric_cast<size_t>( boost::algorithm::clamp( window_start_unclamped, 1, debug_numeric_cast<int>( arg_length_a ) ) );
-	//	cerr << "arg_length_a            : " << arg_length_a            << endl;
-	//	cerr << "arg_length_b            : " << arg_length_b            << endl;
-	//	cerr << "arg_requested_window    : " << arg_requested_window    << endl;
-	//	cerr << "arg_index_b             : " << arg_index_b             << endl;
+		const size_t window_start            = debug_numeric_cast<size_t>( boost::algorithm::clamp( window_start_unclamped, 1, debug_numeric_cast<int>( prm_length_a ) ) );
+	//	cerr << "prm_length_a            : " << prm_length_a            << endl;
+	//	cerr << "prm_length_b            : " << prm_length_b            << endl;
+	//	cerr << "prm_requested_window    : " << prm_requested_window    << endl;
+	//	cerr << "prm_index_b             : " << prm_index_b             << endl;
 	//	cerr << "window_upper_part_width : " << window_upper_part_width << endl;
 	//	cerr << "leading_diagonal_index  : " << leading_diagonal_index  << endl;
 	//	cerr << "window_start            : " << window_start            << endl;
@@ -414,8 +414,8 @@ namespace cath {
 
 	/// \brief Calculate the index of the stop of the window in a particular column
 	///
-	/// At present this is offset_1: the arg_index_b  is in [1, arg_length_b],
-	///                              the return value is in [1, arg_length_a]
+	/// At present this is offset_1: the prm_index_b  is in [1, prm_length_b],
+	///                              the return value is in [1, prm_length_a]
 	///
 	/// The code guarantees that swapping the lengths should give the transpose so this
 	/// can be used to get the index of the stop of the window in a particular row.
@@ -424,30 +424,30 @@ namespace cath {
 	/// one-past-the-end).
 	///
 	/// \relates windowed_matrix
-	inline size_t get_window_stop_a_for_b__offset_1(const windowed_matrix::size_type &arg_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                                const windowed_matrix::size_type &arg_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
-	                                                const windowed_matrix::size_type &arg_requested_window, ///< The requested width (or equivalently, height) of the window
-	                                                const windowed_matrix::size_type &arg_index_b           ///< TODOCUMENT
+	inline size_t get_window_stop_a_for_b__offset_1(const windowed_matrix::size_type &prm_length_a,         ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                                const windowed_matrix::size_type &prm_length_b,         ///< The length of the second entry (or the number of columns in the matrix)
+	                                                const windowed_matrix::size_type &prm_requested_window, ///< The requested width (or equivalently, height) of the window
+	                                                const windowed_matrix::size_type &prm_index_b           ///< TODOCUMENT
 	                                                ) {
 	#ifndef NDEBUG
-		if (arg_index_b < 1 || arg_index_b > arg_length_b) {
+		if (prm_index_b < 1 || prm_index_b > prm_length_b) {
 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index for B is out of range"));
 		}
 	#endif
 
 		const size_size_pair window_upper_and_lower_part_widths = get_window_upper_and_lower_part_widths(
-			arg_length_a,
-			arg_length_b,
-			arg_requested_window
+			prm_length_a,
+			prm_length_b,
+			prm_requested_window
 		);
 		const size_t &window_lower_part_width = window_upper_and_lower_part_widths.second;
-		const size_t &leading_diagonal_index  = arg_index_b;
+		const size_t &leading_diagonal_index  = prm_index_b;
 		const size_t  window_stop_unclamped   = leading_diagonal_index + window_lower_part_width;
-		const size_t  window_stop             = boost::algorithm::clamp(window_stop_unclamped, 1_z, arg_length_a);
-	//	cerr << "arg_length_a            : " << arg_length_a            << endl;
-	//	cerr << "arg_length_b            : " << arg_length_b            << endl;
-	//	cerr << "arg_requested_window    : " << arg_requested_window    << endl;
-	//	cerr << "arg_index_b             : " << arg_index_b             << endl;
+		const size_t  window_stop             = boost::algorithm::clamp(window_stop_unclamped, 1_z, prm_length_a);
+	//	cerr << "prm_length_a            : " << prm_length_a            << endl;
+	//	cerr << "prm_length_b            : " << prm_length_b            << endl;
+	//	cerr << "prm_requested_window    : " << prm_requested_window    << endl;
+	//	cerr << "prm_index_b             : " << prm_index_b             << endl;
 	//	cerr << "window_lower_part_width : " << window_lower_part_width << endl;
 	//	cerr << "leading_diagonal_index  : " << leading_diagonal_index  << endl;
 	//	cerr << "window_stop             : " << window_stop             << endl;
@@ -457,10 +457,10 @@ namespace cath {
 	/// \brief Return a window size that will ensure a full matrix is used for the specified matrix dimensions
 	///
 	/// \relates windowed_matrix
-	inline size_t get_window_width_for_full_matrix(const windowed_matrix::size_type &arg_length_a, ///< The length of the first  entry (or the number of rows    in     matrix)
-	                                               const windowed_matrix::size_type &arg_length_b  ///< The length of the second entry (or the number of columns in the matrix)
+	inline size_t get_window_width_for_full_matrix(const windowed_matrix::size_type &prm_length_a, ///< The length of the first  entry (or the number of rows    in     matrix)
+	                                               const windowed_matrix::size_type &prm_length_b  ///< The length of the second entry (or the number of columns in the matrix)
 	                                               ) {
-		return arg_length_a + arg_length_b;
+		return prm_length_a + prm_length_b;
 	}
 
 } // namespace cath

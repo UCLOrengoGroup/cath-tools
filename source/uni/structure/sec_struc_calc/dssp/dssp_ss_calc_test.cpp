@@ -59,11 +59,11 @@ namespace cath {
 			const path ALIGN_PAIR_SCORE_TEST_DIR{ global_test_constants::TEST_SOURCE_DATA_DIR() / "aligned_pair_score" };
 
 			/// \brief Check the DSSP SS calculations against those in the specified files
-			void check_dssp_ss_against_file(const path &arg_dssp_file, ///< The DSSP file to compare against
-			                                const path &arg_pdb_file   ///< The PDB file to check
+			void check_dssp_ss_against_file(const path &prm_dssp_file, ///< The DSSP file to compare against
+			                                const path &prm_pdb_file   ///< The PDB file to check
 			                                ) {
-				const auto parsed_pdb   = read_pdb_file( arg_pdb_file );
-				const auto the_protein  = protein_from_dssp_and_pdb( read_dssp_file( arg_dssp_file ), parsed_pdb, dssp_skip_policy::SKIP__BREAK_ANGLES );
+				const auto parsed_pdb   = read_pdb_file( prm_pdb_file );
+				const auto the_protein  = protein_from_dssp_and_pdb( read_dssp_file( prm_dssp_file ), parsed_pdb, dssp_skip_policy::SKIP__BREAK_ANGLES );
 				const auto expected_sss = get_sec_strucs( the_protein );
 
 				const auto got_sss      = calc_sec_strucs_of_pdb__recalc_backbone_residues( parsed_pdb );
@@ -73,23 +73,23 @@ namespace cath {
 
 			/// \brief Check the DSSP SS calculations against those in the specified file
 			///        (assuming the PDB filename is the same as the DSSP's but with the extension stripped off)
-			void check_dssp_ss_against_file(const path &arg_dssp_file ///< The DSSP file to compare against
+			void check_dssp_ss_against_file(const path &prm_dssp_file ///< The DSSP file to compare against
 			                                ) {
-				check_dssp_ss_against_file( arg_dssp_file, replace_extension_copy( arg_dssp_file ) );
+				check_dssp_ss_against_file( prm_dssp_file, replace_extension_copy( prm_dssp_file ) );
 			}
 
 			/// \brief Use the specified directory of DSSP files to check the DSSP SS calculations on the corresponding PDB files
 			///        in the specified directory (where the DSSP files are assumed to end ".dssp" and the corresponding PDB files
 			///        are assumed to have the same filename but with the extension stripped off)
-			void use_dir_of_dssp_files_to_check_hbonds_calcs(const path &arg_dssp_dir, ///< The directory of DSSP files to compare against
-			                                                 const path &arg_pdb_dir   ///< The directory of PDB files to check
+			void use_dir_of_dssp_files_to_check_hbonds_calcs(const path &prm_dssp_dir, ///< The directory of DSSP files to compare against
+			                                                 const path &prm_pdb_dir   ///< The directory of PDB files to check
 			                                                 ) {
-				BOOST_REQUIRE( is_directory( arg_dssp_dir ) );
-				BOOST_REQUIRE( is_directory( arg_pdb_dir  ) );
+				BOOST_REQUIRE( is_directory( prm_dssp_dir ) );
+				BOOST_REQUIRE( is_directory( prm_pdb_dir  ) );
 
 				const path_vec sorted_dssp_files = [&] {
 					path_vec results;
-					for (const directory_entry &dssp_entry : directory_iterator( arg_dssp_dir ) ) {
+					for (const directory_entry &dssp_entry : directory_iterator( prm_dssp_dir ) ) {
 						const path &dssp_file = dssp_entry.path();
 						if ( boost::ends_with( dssp_file.string(), ".dssp" ) ) {
 							results.push_back( dssp_file );
@@ -101,7 +101,7 @@ namespace cath {
 
 				for (const path &dssp_file : sorted_dssp_files ) {
 					// std::cerr << dssp_file << "\n";
-					const path pdb_file = replace_extension_copy( arg_pdb_dir / dssp_file.filename() );
+					const path pdb_file = replace_extension_copy( prm_pdb_dir / dssp_file.filename() );
 					check_dssp_ss_against_file( dssp_file, pdb_file );
 				}
 			}

@@ -29,14 +29,14 @@ using namespace std;
 using boost::null_deleter;
 
 /// \brief Ctor for log_to_ostream_guard
-log_to_ostream_guard::log_to_ostream_guard(ostream &arg_ostream ///< TODOCUMENT
+log_to_ostream_guard::log_to_ostream_guard(ostream &prm_ostream ///< TODOCUMENT
                                            ) {
-	if ( &arg_ostream != &cerr ) {
+	if ( &prm_ostream != &cerr ) {
 		// Construct a sink
 		boost_log_sink_bsptr = boost::make_shared<sink_t>();
 
 		// Get a (non-deleting) shared_ptr to the ostream and add it to the sink
-		boost::shared_ptr<ostream> stream_bsptr( &arg_ostream, null_deleter() );
+		boost::shared_ptr<ostream> stream_bsptr( &prm_ostream, null_deleter() );
 		boost_log_sink_bsptr->locked_backend()->add_stream( stream_bsptr );
 
 		// Register the sink in the logging core

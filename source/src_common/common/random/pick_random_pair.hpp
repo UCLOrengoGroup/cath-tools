@@ -38,16 +38,16 @@ namespace cath {
 		///  * add a version that takes a range and returns a vector of
 		///    (references to?) values in the range
 		template <typename T>
-		inline std::pair<T, T> pick_random_pair(const T      &arg_min, ///< TODOCUMENT
-		                                        const T      &arg_max, ///< TODOCUMENT
-		                                        std::mt19937 &arg_rng  ///< TODOCUMENT
+		inline std::pair<T, T> pick_random_pair(const T      &prm_min, ///< TODOCUMENT
+		                                        const T      &prm_max, ///< TODOCUMENT
+		                                        std::mt19937 &prm_rng  ///< TODOCUMENT
 		                                        ) {
-			if ( ! ( arg_max > arg_min ) ) {
+			if ( ! ( prm_max > prm_min ) ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot pick random pair if the max isn't greater than the min"));
 			}
 
-			const T value_a = std::uniform_int_distribution<T>{ arg_min, arg_max     }( arg_rng );
-			const T raw_b   = std::uniform_int_distribution<T>{ arg_min, arg_max - 1 }( arg_rng );
+			const T value_a = std::uniform_int_distribution<T>{ prm_min, prm_max     }( prm_rng );
+			const T raw_b   = std::uniform_int_distribution<T>{ prm_min, prm_max - 1 }( prm_rng );
 			const T value_b = ( raw_b >= value_a ) ? raw_b + 1 : raw_b;
 
 			return {

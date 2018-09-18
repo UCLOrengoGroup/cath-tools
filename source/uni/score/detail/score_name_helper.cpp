@@ -37,23 +37,23 @@ using boost::algorithm::is_space;
 using boost::algorithm::join;
 
 /// \brief TODOCUMENT
-string score_name_helper::build_short_name(const string  &arg_id_name, ///< TODOCUMENT
-                                           const str_vec &arg_suffixes ///< TODOCUMENT
+string score_name_helper::build_short_name(const string  &prm_id_name, ///< TODOCUMENT
+                                           const str_vec &prm_suffixes ///< TODOCUMENT
                                            ) {
 	// Sanity check that the id_name isn't empty
-	if ( arg_id_name.empty() ) {
+	if ( prm_id_name.empty() ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("A score's id_name must not be empty"));
 	}
 	// Sanity check that the id_name contains no space characters
-	if ( ! all( arg_id_name, ! is_space() ) ) {
+	if ( ! all( prm_id_name, ! is_space() ) ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
 			"A score's id_name mustn't contain any space characters (name was \""
-			+ arg_id_name
+			+ prm_id_name
 			+ "\""
 		));
 	}
 	// Sanity check that the suffixes contain no space characters
-	for (const string &suffix : arg_suffixes) {
+	for (const string &suffix : prm_suffixes) {
 		if ( ! all( suffix, ! is_space() ) ) {
 			BOOST_THROW_EXCEPTION(out_of_range_exception(
 				"A score's short name suffix mustn't contain any space characters (name was \""
@@ -64,35 +64,35 @@ string score_name_helper::build_short_name(const string  &arg_id_name, ///< TODO
 	}
 
 	// Return the id_name plus any suffixes separated by full stops
-	const auto suffix_string = arg_suffixes.empty() ? string()
-	                                                : ( "." + join( arg_suffixes, "." ) );
-	return arg_id_name + suffix_string;
+	const auto suffix_string = prm_suffixes.empty() ? string()
+	                                                : ( "." + join( prm_suffixes, "." ) );
+	return prm_id_name + suffix_string;
 }
 
 /// \brief TODOCUMENT
 ///
 /// \post The returned string will be non-empty and will contain no spaces
 ///       (else an out_of_range_exception will be thrown)
-string score_name_helper::human_friendly_short_name(const string            &arg_id_name, ///< TODOCUMENT
-                                                    const str_bool_pair_vec &arg_suffixes ///< TODOCUMENT
+string score_name_helper::human_friendly_short_name(const string            &prm_id_name, ///< TODOCUMENT
+                                                    const str_bool_pair_vec &prm_suffixes ///< TODOCUMENT
                                                     ) {
 	const auto fitered_suffixes = transform_build<str_vec>(
-		arg_suffixes | filtered( [] (const str_bool_pair &x) { return x.second; } ),
+		prm_suffixes | filtered( [] (const str_bool_pair &x) { return x.second; } ),
 		[] (const str_bool_pair &x) { return x.first; }
 	);
-	return build_short_name( arg_id_name, fitered_suffixes );
+	return build_short_name( prm_id_name, fitered_suffixes );
 }
 
 /// \brief TODOCUMENT
 ///
 /// \post The returned string will be non-empty and will contain no spaces
 ///       (else an out_of_range_exception will be thrown)
-string score_name_helper::full_short_name(const string            &arg_id_name, ///< TODOCUMENT
-                                          const str_bool_pair_vec &arg_suffixes ///< TODOCUMENT
+string score_name_helper::full_short_name(const string            &prm_id_name, ///< TODOCUMENT
+                                          const str_bool_pair_vec &prm_suffixes ///< TODOCUMENT
                                           ) {
 	const auto all_suffixes = transform_build<str_vec>(
-		arg_suffixes,
+		prm_suffixes,
 		[] (const str_bool_pair &x) { return x.first; }
 	);
-	return build_short_name( arg_id_name, all_suffixes );
+	return build_short_name( prm_id_name, all_suffixes );
 }

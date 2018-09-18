@@ -93,52 +93,52 @@ namespace cath {
 	};
 
 	/// \brief TODOCUMENT
-	inline void protein::check_residue_index_is_valid(const size_t &arg_index ///< TODOCUMENT
+	inline void protein::check_residue_index_is_valid(const size_t &prm_index ///< TODOCUMENT
 	                                                  ) const {
 #ifndef NDEBUG
-		if ( arg_index >= get_length() ) {
+		if ( prm_index >= get_length() ) {
 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
 				"Residue index "
-				+ boost::lexical_cast<std::string>( arg_index    )
+				+ boost::lexical_cast<std::string>( prm_index    )
 				+ " is out of range in protein of length "
 				+ boost::lexical_cast<std::string>( get_length() )
 			));
 		}
 #else
-		boost::ignore_unused( arg_index );
+		boost::ignore_unused( prm_index );
 #endif
 	}
 
 	/// \brief TODOCUMENT
-	inline void protein::check_sec_struc_is_valid(const size_t &arg_index ///< TODOCUMENT
+	inline void protein::check_sec_struc_is_valid(const size_t &prm_index ///< TODOCUMENT
 	                                              ) const {
 #ifndef NDEBUG
-		if (arg_index >= get_num_sec_strucs()) {
+		if (prm_index >= get_num_sec_strucs()) {
 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
 				"Secondary structure index "
-				+ boost::lexical_cast<std::string>( arg_index            )
+				+ boost::lexical_cast<std::string>( prm_index            )
 				+ " is out of range in protein with "
 				+ boost::lexical_cast<std::string>( get_num_sec_strucs() )
 				+ " secondary structures"
 			));
 		}
 #else
-		boost::ignore_unused( arg_index );
+		boost::ignore_unused( prm_index );
 #endif
 	}
 
 	/// \brief TODOCUMENT
-	inline residue & protein::get_residue_ref_of_index(const size_t &arg_index ///< TODOCUMENT
+	inline residue & protein::get_residue_ref_of_index(const size_t &prm_index ///< TODOCUMENT
 	                                                   ) {
-		check_residue_index_is_valid(arg_index);
-		return residues[arg_index];
+		check_residue_index_is_valid(prm_index);
+		return residues[prm_index];
 	}
 
 	/// \brief TODOCUMENT
-	inline const residue & protein::get_residue_ref_of_index(const size_t &arg_index ///< TODOCUMENT
+	inline const residue & protein::get_residue_ref_of_index(const size_t &prm_index ///< TODOCUMENT
 	                                                         ) const {
-		check_residue_index_is_valid(arg_index);
-		return residues[arg_index];
+		check_residue_index_is_valid(prm_index);
+		return residues[prm_index];
 	}
 
 	/// \brief TODOCUMENT
@@ -214,11 +214,11 @@ namespace cath {
 	/// This is a temporary function during the transition away from using offsets of 1
 	///
 	/// \relates protein
-	inline residue & get_residue_ref_of_index__offset_1(protein      &arg_protein,       ///< The protein to query
-	                                                    const size_t &arg_index_offset_1 ///< The index (offset 1)
+	inline residue & get_residue_ref_of_index__offset_1(protein      &prm_protein,       ///< The protein to query
+	                                                    const size_t &prm_index_offset_1 ///< The index (offset 1)
 	                                                    ) {
-		check_offset_1( arg_index_offset_1 );
-		return arg_protein.get_residue_ref_of_index(arg_index_offset_1 - 1);
+		check_offset_1( prm_index_offset_1 );
+		return prm_protein.get_residue_ref_of_index(prm_index_offset_1 - 1);
 	}
 
 	/// \brief TODOCUMENT
@@ -226,11 +226,11 @@ namespace cath {
 	/// This is a temporary function during the transition away from using offsets of 1
 	///
 	/// \relates protein
-	inline const residue & get_residue_ref_of_index__offset_1(const protein &arg_protein,       ///< The protein to query
-	                                                          const size_t  &arg_index_offset_1 ///< The index (offset 1)
+	inline const residue & get_residue_ref_of_index__offset_1(const protein &prm_protein,       ///< The protein to query
+	                                                          const size_t  &prm_index_offset_1 ///< The index (offset 1)
 	                                                          ) {
-		check_offset_1( arg_index_offset_1 );
-		return arg_protein.get_residue_ref_of_index(arg_index_offset_1 - 1);
+		check_offset_1( prm_index_offset_1 );
+		return prm_protein.get_residue_ref_of_index(prm_index_offset_1 - 1);
 	}
 
 } // namespace cath

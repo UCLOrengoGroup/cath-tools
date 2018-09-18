@@ -34,23 +34,23 @@ namespace cath {
 
 			/// \brief Non-const range overload of operator| for limited range adaptor
 			template <typename RNG>
-			inline limited_range<RNG> operator|(RNG                  &arg_range, ///< The range to which the limited adaptor should be applied
-			                                    const limited_holder &arg_holder ///< An limited_holder parameter for holding the parameters (and for determining which adaptor should be applied)
+			inline limited_range<RNG> operator|(RNG                  &prm_range, ///< The range to which the limited adaptor should be applied
+			                                    const limited_holder &prm_holder ///< An limited_holder parameter for holding the parameters (and for determining which adaptor should be applied)
 			                                    ) {
 				return {
-					arg_range,
-					arg_holder.get_max_num_elements()
+					prm_range,
+					prm_holder.get_max_num_elements()
 				};
 			}
 
 			/// \brief Const range overload of operator| for limited range adaptor
 			template <typename RNG>
-			inline limited_range<const RNG> operator|(const RNG            &arg_range, ///< The range to which the limited adaptor should be applied
-			                                          const limited_holder &arg_holder ///< An limited_holder parameter for holding the parameters (and for determining which adaptor should be applied)
+			inline limited_range<const RNG> operator|(const RNG            &prm_range, ///< The range to which the limited adaptor should be applied
+			                                          const limited_holder &prm_holder ///< An limited_holder parameter for holding the parameters (and for determining which adaptor should be applied)
 			                                          ) {
 				return {
-					arg_range,
-					arg_holder.get_max_num_elements()
+					prm_range,
+					prm_holder.get_max_num_elements()
 				};
 			}
 		} // namespace detail

@@ -60,9 +60,9 @@ namespace cath {
 		///
 		/// }
 		///
-		/// bool my_class::less_than_with_same_dynamic_type(const my_class &arg_other_object
+		/// bool my_class::less_than_with_same_dynamic_type(const my_class &prm_other_object
 		///                                                 ) const {
-		///   return do_less_than_with_same_dynamic_type(arg_other_object);
+		///   return do_less_than_with_same_dynamic_type(prm_other_object);
 		/// }
 		/// \endcode
 		///
@@ -101,8 +101,8 @@ namespace cath {
 			friend class boost::serialization::access;
 
 			/// \brief Friend, non-member operator<() that uses dynamic type first, and then T's less_than_with_same_dynamic_type()
-			friend bool operator<(const T &arg_object1, ///< The first T to compare
-			                      const T &arg_object2  ///< The first T to compare
+			friend bool operator<(const T &prm_object1, ///< The first T to compare
+			                      const T &prm_object2  ///< The first T to compare
 			                      ) {
 				// Make the compiler output sensible errors on any attempt to instantiate polymorphic_less_than_comparable<>
 				// on a type that doesn't provide a const `less_than_with_same_dynamic_type(const T &)` method returning a bool-convertible type.
@@ -110,7 +110,7 @@ namespace cath {
 
 				// Perform a spaceship-style less-than comparison on the dynamic types of the two objects
 				// which returns a tribool (true, false or indeterminate)
-				const boost::logic::tribool dyn_type_cmp = detail::dynamic_type_spaceship::compare_lt( arg_object1, arg_object2 );
+				const boost::logic::tribool dyn_type_cmp = detail::dynamic_type_spaceship::compare_lt( prm_object1, prm_object2 );
 
 
 
@@ -118,7 +118,7 @@ namespace cath {
 				// then just (the bool equivalent of) that value; otherwise, return the result of calling less_than_with_same_dynamic_type().
 				return ! boost::logic::indeterminate( dyn_type_cmp )
 					? static_cast<bool>( dyn_type_cmp )
-					: arg_object1.less_than_with_same_dynamic_type( arg_object2 );
+					: prm_object1.less_than_with_same_dynamic_type( prm_object2 );
 			}
 
 			template<class archive> void serialize(archive &/*ar*/,

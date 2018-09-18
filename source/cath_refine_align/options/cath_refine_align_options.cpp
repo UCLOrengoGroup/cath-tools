@@ -195,13 +195,13 @@ alignment_outputter_list cath_refine_align_options::get_alignment_outputters() c
 }
 
 /// \brief TODOCUMENT
-superposition_outputter_list cath_refine_align_options::get_superposition_outputters(const default_supn_outputter &arg_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
+superposition_outputter_list cath_refine_align_options::get_superposition_outputters(const default_supn_outputter &prm_default_supn_outputter ///< What superposition outputter (if any) should be provided if none is explicitly specified
                                                                                      ) const {
 	check_ok_to_use();
 	return the_superposition_output_options_block.get_superposition_outputters(
 		the_display_options_block.get_display_spec(),
 		the_content_spec,
-		arg_default_supn_outputter
+		prm_default_supn_outputter
 	);
 }
 
@@ -220,34 +220,34 @@ const domain_vec & cath_refine_align_options::get_domains() const {
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
 /// \relates cath_refine_align_options
-unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const cath_refine_align_options &arg_cath_refine_align_options ///< The cath_refine_align_options to query
+unique_ptr<const alignment_acquirer> cath::opts::get_alignment_acquirer(const cath_refine_align_options &prm_cath_refine_align_options ///< The cath_refine_align_options to query
                                                                         ) {
-	return align::get_alignment_acquirer( arg_cath_refine_align_options.get_alignment_input_spec() );
+	return align::get_alignment_acquirer( prm_cath_refine_align_options.get_alignment_input_spec() );
 }
 
 /// \brief Get align_refining as implied by the specified cath_refine_align_options
 ///
 /// \relates cath_refine_align_options
-align_refining cath::opts::get_align_refining(const cath_refine_align_options &arg_cath_refine_align_options ///< The cath_refine_align_options to query
+align_refining cath::opts::get_align_refining(const cath_refine_align_options &prm_cath_refine_align_options ///< The cath_refine_align_options to query
                                               ) {
-	return arg_cath_refine_align_options.get_alignment_input_spec().get_refining();
+	return prm_cath_refine_align_options.get_alignment_input_spec().get_refining();
 }
 
 /// \brief Get the single pdbs_acquirer implied by the specified cath_refine_align_options
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
 /// \relates cath_refine_align_options
-unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_refine_align_options &arg_cath_refine_align_options ///< The cath_refine_align_options to query
+unique_ptr<const pdbs_acquirer> cath::opts::get_pdbs_acquirer(const cath_refine_align_options &prm_cath_refine_align_options ///< The cath_refine_align_options to query
                                                               ) {
-	return get_pdbs_acquirer( arg_cath_refine_align_options.get_pdb_input_spec() );
+	return get_pdbs_acquirer( prm_cath_refine_align_options.get_pdb_input_spec() );
 }
 
 /// \brief Get the selection_policy_acquirer implied by the specified cath_refine_align_options
 ///
 /// \relates cath_refine_align_options
-selection_policy_acquirer cath::opts::get_selection_policy_acquirer(const cath_refine_align_options &arg_cath_refine_align_options ///< The cath_refine_align_options to query
+selection_policy_acquirer cath::opts::get_selection_policy_acquirer(const cath_refine_align_options &prm_cath_refine_align_options ///< The cath_refine_align_options to query
                                                                     ) {
-	return get_selection_policy_acquirer( arg_cath_refine_align_options.get_alignment_input_spec() );
+	return get_selection_policy_acquirer( prm_cath_refine_align_options.get_alignment_input_spec() );
 }
 
 /// \brief Get PDBs and names as implied by the specified cath_refine_align_options
@@ -255,15 +255,15 @@ selection_policy_acquirer cath::opts::get_selection_policy_acquirer(const cath_r
 /// throw an invalid_argument_exception if the cath_refine_align_options isn't configured to read PDBs
 ///
 /// \relates cath_refine_align_options
-strucs_context cath::opts::get_pdbs_and_names(const cath_refine_align_options &arg_cath_ref_opts,          ///< The options to specify how to get the PDBs and names
-                                              istream                         &arg_istream,                ///< The istream, which may contain PDB data
-                                              const bool                      &arg_remove_partial_residues ///< Whether to remove partial residues from the PDB data
+strucs_context cath::opts::get_pdbs_and_names(const cath_refine_align_options &prm_cath_ref_opts,          ///< The options to specify how to get the PDBs and names
+                                              istream                         &prm_istream,                ///< The istream, which may contain PDB data
+                                              const bool                      &prm_remove_partial_residues ///< Whether to remove partial residues from the PDB data
                                               ) {
 	return get_strucs_context(
-		*get_pdbs_acquirer( arg_cath_ref_opts ),
-		arg_istream,
-		arg_remove_partial_residues,
-		arg_cath_ref_opts.get_ids(),
-		arg_cath_ref_opts.get_domains()
+		*get_pdbs_acquirer( prm_cath_ref_opts ),
+		prm_istream,
+		prm_remove_partial_residues,
+		prm_cath_ref_opts.get_ids(),
+		prm_cath_ref_opts.get_domains()
 	);
 }

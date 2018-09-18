@@ -50,16 +50,16 @@ namespace std {
 	/// It'd make more sense to use BOOST_TEST_DONT_PRINT_LOG_VALUE() but
 	/// that doesn't seem to work with BOOST_CHECK_EQUAL_COLLECTIONS (or BOOST_CHECK_EQUAL_RANGES)
 	template <typename T>
-	ostream & operator<<(ostream         &arg_os, ///< TODOCUMENT
-	                     const vector<T> &arg_vec ///< TODOCUMENT
+	ostream & operator<<(ostream         &prm_os, ///< TODOCUMENT
+	                     const vector<T> &prm_vec ///< TODOCUMENT
 	                     ) {
 		ostringstream temp_ss;
-		arg_os << "[";
-		for (const auto &entry : arg_vec) {
-			arg_os << " " << entry;
+		prm_os << "[";
+		for (const auto &entry : prm_vec) {
+			prm_os << " " << entry;
 		}
-		arg_os << " ]";
-		return arg_os;
+		prm_os << " ]";
+		return prm_os;
 	}
 } // namespace std
 

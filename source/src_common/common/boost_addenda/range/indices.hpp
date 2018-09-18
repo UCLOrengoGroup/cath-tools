@@ -31,9 +31,9 @@ namespace cath {
 
 		/// \brief Return an integer_range between zero and the specified value
 		template <typename T>
-		::boost::integer_range<T> indices(const T &arg_n ///< The (one-past-the) end value
+		::boost::integer_range<T> indices(const T &prm_n ///< The (one-past-the) end value
 		                                  ) {
-			return ::boost::irange( static_cast<T>( 0 ), arg_n );
+			return ::boost::irange( static_cast<T>( 0 ), prm_n );
 		}
 
 	}

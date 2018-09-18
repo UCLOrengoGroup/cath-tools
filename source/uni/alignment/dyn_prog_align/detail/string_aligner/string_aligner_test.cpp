@@ -74,13 +74,13 @@ namespace cath {
 }  // namespace cath
 
 /// \brief TODOCUMENT
-string cath::test::string_aligner_fixture::make_random_sequence(const size_t &arg_min_length, ///< TODOCUMENT
-                                                                const size_t &arg_max_length  ///< TODOCUMENT
+string cath::test::string_aligner_fixture::make_random_sequence(const size_t &prm_min_length, ///< TODOCUMENT
+                                                                const size_t &prm_max_length  ///< TODOCUMENT
                                                                 ) const {
-	BOOST_REQUIRE_GE(arg_max_length, arg_min_length);
+	BOOST_REQUIRE_GE(prm_max_length, prm_min_length);
 
 	auto       rng    = default_random_engine{ random_device{}() };
-	const auto length = uniform_int_distribution<size_t>{ arg_min_length, arg_max_length }( rng );
+	const auto length = uniform_int_distribution<size_t>{ prm_min_length, prm_max_length }( rng );
 
 	string new_sequence;
 	new_sequence.reserve(length);
@@ -95,21 +95,21 @@ string cath::test::string_aligner_fixture::make_random_sequence(const size_t &ar
 }
 
 /// \brief TODOCUMENT
-void cath::test::string_aligner_fixture::check_second_no_better(const str_str_score_tpl &arg_align_result_a, ///< TODOCUMENT
-                                                                const str_str_score_tpl &arg_align_result_b, ///< TODOCUMENT
-                                                                const gap_penalty       &arg_gap_penalty     ///< TODOCUMENT
+void cath::test::string_aligner_fixture::check_second_no_better(const str_str_score_tpl &prm_align_result_a, ///< TODOCUMENT
+                                                                const str_str_score_tpl &prm_align_result_b, ///< TODOCUMENT
+                                                                const gap_penalty       &prm_gap_penalty     ///< TODOCUMENT
                                                                 ) {
 	const score_type rescore_a = get_score_of_aligned_sequence_strings(
-		get<0>( arg_align_result_a ),
-		get<1>( arg_align_result_a ),
-		arg_gap_penalty
+		get<0>( prm_align_result_a ),
+		get<1>( prm_align_result_a ),
+		prm_gap_penalty
 	);
 	const score_type rescore_b = get_score_of_aligned_sequence_strings(
-		get<0>( arg_align_result_b ),
-		get<1>( arg_align_result_b ),
-		arg_gap_penalty
+		get<0>( prm_align_result_b ),
+		get<1>( prm_align_result_b ),
+		prm_gap_penalty
 	);
-	BOOST_REQUIRE_EQUAL( rescore_a, get<2>( arg_align_result_a ) );
+	BOOST_REQUIRE_EQUAL( rescore_a, get<2>( prm_align_result_a ) );
 	BOOST_CHECK_LE(      rescore_b, rescore_a );
 }
 

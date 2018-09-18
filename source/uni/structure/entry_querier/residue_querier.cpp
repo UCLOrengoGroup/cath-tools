@@ -36,9 +36,9 @@ constexpr float_score_type residue_querier::RESIDUE_MIN_SCORE_CUTOFF;
 constexpr float_score_type residue_querier::RESIDUE_MAX_DIST_SQ_CUTOFF;
 
 /// \brief TODOCUMENT
-size_t residue_querier::do_get_length(const protein &arg_protein ///< TODOCUMENT
+size_t residue_querier::do_get_length(const protein &prm_protein ///< TODOCUMENT
                                       ) const {
-	return arg_protein.get_length();
+	return prm_protein.get_length();
 }
 
 /// \brief TODOCUMENT
@@ -64,17 +64,17 @@ string residue_querier::do_get_entry_name() const {
 /// \brief TODOCUMENT
 ///
 /// TEMPORARILY DEBUGGING
-score_type residue_querier::do_distance_score__offset_1(const protein &arg_protein_a,                   ///< TODOCUMENT
-                                                        const protein &arg_protein_b,                   ///< TODOCUMENT
-                                                        const size_t  &arg_a_view_from_index__offset_1, ///< TODOCUMENT
-                                                        const size_t  &arg_b_view_from_index__offset_1, ///< TODOCUMENT
-                                                        const size_t  &arg_a_dest_to_index__offset_1,   ///< TODOCUMENT
-                                                        const size_t  &arg_b_dest_to_index__offset_1    ///< TODOCUMENT
+score_type residue_querier::do_distance_score__offset_1(const protein &prm_protein_a,                   ///< TODOCUMENT
+                                                        const protein &prm_protein_b,                   ///< TODOCUMENT
+                                                        const size_t  &prm_a_view_from_index__offset_1, ///< TODOCUMENT
+                                                        const size_t  &prm_b_view_from_index__offset_1, ///< TODOCUMENT
+                                                        const size_t  &prm_a_dest_to_index__offset_1,   ///< TODOCUMENT
+                                                        const size_t  &prm_b_dest_to_index__offset_1    ///< TODOCUMENT
                                                         ) const {
-	const residue &residue_a_view_from = get_residue_ref_of_index__offset_1( arg_protein_a, arg_a_view_from_index__offset_1 );
-	const residue &residue_b_view_from = get_residue_ref_of_index__offset_1( arg_protein_b, arg_b_view_from_index__offset_1 );
-	const residue &residue_a_dest_to   = get_residue_ref_of_index__offset_1( arg_protein_a, arg_a_dest_to_index__offset_1   );
-	const residue &residue_b_dest_to   = get_residue_ref_of_index__offset_1( arg_protein_b, arg_b_dest_to_index__offset_1   );
+	const residue &residue_a_view_from = get_residue_ref_of_index__offset_1( prm_protein_a, prm_a_view_from_index__offset_1 );
+	const residue &residue_b_view_from = get_residue_ref_of_index__offset_1( prm_protein_b, prm_b_view_from_index__offset_1 );
+	const residue &residue_a_dest_to   = get_residue_ref_of_index__offset_1( prm_protein_a, prm_a_dest_to_index__offset_1   );
+	const residue &residue_b_dest_to   = get_residue_ref_of_index__offset_1( prm_protein_b, prm_b_dest_to_index__offset_1   );
 	return debug_numeric_cast<score_type>(
 		context_res<true>(
 			residue_a_view_from, residue_b_view_from,
@@ -84,24 +84,24 @@ score_type residue_querier::do_distance_score__offset_1(const protein &arg_prote
 }
 
 /// \brief TODOCUMENT
-bool residue_querier::do_are_comparable__offset_1(const protein &/*arg_protein_a*/,                   ///< TODOCUMENT
-                                                  const protein &/*arg_protein_b*/,                   ///< TODOCUMENT
-                                                  const size_t  &/*arg_a_view_from_index__offset_1*/, ///< TODOCUMENT
-                                                  const size_t  &/*arg_b_view_from_index__offset_1*/, ///< TODOCUMENT
-                                                  const size_t  &/*arg_a_dest_to_index__offset_1*/,   ///< TODOCUMENT
-                                                  const size_t  &/*arg_b_dest_to_index__offset_1*/    ///< TODOCUMENT
+bool residue_querier::do_are_comparable__offset_1(const protein &/*prm_protein_a*/,                   ///< TODOCUMENT
+                                                  const protein &/*prm_protein_b*/,                   ///< TODOCUMENT
+                                                  const size_t  &/*prm_a_view_from_index__offset_1*/, ///< TODOCUMENT
+                                                  const size_t  &/*prm_b_view_from_index__offset_1*/, ///< TODOCUMENT
+                                                  const size_t  &/*prm_a_dest_to_index__offset_1*/,   ///< TODOCUMENT
+                                                  const size_t  &/*prm_b_dest_to_index__offset_1*/    ///< TODOCUMENT
                                                   ) const {
 	return true;
 }
 
 /// \brief TODOCUMENT
-bool residue_querier::do_are_similar__offset_1(const protein &arg_protein_a,         ///< TODOCUMENT
-                                               const protein &arg_protein_b,         ///< TODOCUMENT
-                                               const size_t  &arg_index_a__offset_1, ///< TODOCUMENT
-                                               const size_t  &arg_index_b__offset_1  ///< TODOCUMENT
+bool residue_querier::do_are_similar__offset_1(const protein &prm_protein_a,         ///< TODOCUMENT
+                                               const protein &prm_protein_b,         ///< TODOCUMENT
+                                               const size_t  &prm_index_a__offset_1, ///< TODOCUMENT
+                                               const size_t  &prm_index_b__offset_1  ///< TODOCUMENT
                                                ) const {
-	const residue &residue_a = get_residue_ref_of_index__offset_1( arg_protein_a, arg_index_a__offset_1 );
-	const residue &residue_b = get_residue_ref_of_index__offset_1( arg_protein_b, arg_index_b__offset_1 );
+	const residue &residue_a = get_residue_ref_of_index__offset_1( prm_protein_a, prm_index_a__offset_1 );
+	const residue &residue_b = get_residue_ref_of_index__offset_1( prm_protein_b, prm_index_b__offset_1 );
 	return residues_have_similar_area_angle_props(residue_a, residue_b);
 }
 

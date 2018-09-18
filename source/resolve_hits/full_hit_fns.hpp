@@ -51,26 +51,26 @@ namespace cath {
 		                      const hit_boundary_output & = hit_boundary_output::ORIG);
 
 		/// \brief Get the crh-score associated with the specified hit, calculated according to the specified crh_score_spec
-		inline resscr_t get_crh_score(const full_hit       &arg_full_hit,  ///< The full_hit to query
-		                              const crh_score_spec &arg_score_spec ///< The crh_score_spec to use in any score calculations that are required
+		inline resscr_t get_crh_score(const full_hit       &prm_full_hit,  ///< The full_hit to query
+		                              const crh_score_spec &prm_score_spec ///< The crh_score_spec to use in any score calculations that are required
 		                              ) {
-			switch ( arg_full_hit.get_score_type() ) {
+			switch ( prm_full_hit.get_score_type() ) {
 				case( hit_score_type::FULL_EVALUE ) : {
 					return crh_score_of_evalue(
-						arg_full_hit.get_score(),
-						get_total_length( arg_full_hit ),
-						arg_score_spec
+						prm_full_hit.get_score(),
+						get_total_length( prm_full_hit ),
+						prm_score_spec
 					);
 				}
 				case( hit_score_type::BITSCORE    ) : {
 					return crh_score_of_pseudo_bitscore(
-						arg_full_hit.get_score(),
-						get_total_length( arg_full_hit ),
-						arg_score_spec
+						prm_full_hit.get_score(),
+						get_total_length( prm_full_hit ),
+						prm_score_spec
 					);
 				}
 				case( hit_score_type::CRH_SCORE   ) : {
-					return debug_numeric_cast<resscr_t>( arg_full_hit.get_score() );
+					return debug_numeric_cast<resscr_t>( prm_full_hit.get_score() );
 				}
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst getting crh_score from full_hit"));

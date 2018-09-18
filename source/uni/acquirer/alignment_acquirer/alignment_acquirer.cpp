@@ -63,24 +63,24 @@ unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {
 ///
 /// The order of the edges in the spanning tree doesn't matter and the scores are discarded
 /// because none of that matters for superposing
-pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const strucs_context &arg_strucs_context, ///< The structures to which the alignment should correspond
-                                                                                        const align_refining &arg_align_refining  ///< How much refining should be done to the alignment
+pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< The structures to which the alignment should correspond
+                                                                                        const align_refining &prm_align_refining  ///< How much refining should be done to the alignment
                                                                                         ) const {
 	using std::to_string;
 
 	// Call the concrete class's implementation of do_get_alignment_and_orderer() and grab the resulting alignment and spanning_tree
 	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree(
 		do_requires_backbone_complete_input()
-			? strucs_context_of_backbone_complete_subset_pdbs( arg_strucs_context )
-			: arg_strucs_context,
-		arg_align_refining
+			? strucs_context_of_backbone_complete_subset_pdbs( prm_strucs_context )
+			: prm_strucs_context,
+		prm_align_refining
 	);
 
 	const size_t num_alignment_entries = alignment_and_orderer.first.num_entries();
 	const size_t num_span_tree_entries = alignment_and_orderer.second.size();
 
 	// Check that both are of the correct size
-	const size_t num_pdbs = size( arg_strucs_context );
+	const size_t num_pdbs = size( prm_strucs_context );
 	if ( num_alignment_entries != num_pdbs ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception(
 			"Number of entries in alignment ("
@@ -111,7 +111,7 @@ pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanni
 /// NOTE: Keep this code in sync with get_num_acquirers()
 ///
 /// \relates alignment_input_spec
-uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
+uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignment_input_spec &prm_alignment_input_spec ///< The alignment_input_spec to query
                                                                   ) {
 	using std::to_string;
 	uptr_vec<alignment_acquirer> alignment_acquirers;
@@ -121,29 +121,29 @@ uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignmen
 	// If the alignment is to be created by reading a FASTA alignment file,       do that
 	// If the alignment is to be created by reading a legacy SSAP alignment file, do that
 	// If the alignment is to be created by reading a list of SSAP scores,        do that
-	if ( ! arg_alignment_input_spec.get_cora_alignment_file().empty()  ) {
-		alignment_acquirers.push_back( make_unique< cora_aln_file_alignment_acquirer    >( arg_alignment_input_spec.get_cora_alignment_file()  ) );
+	if ( ! prm_alignment_input_spec.get_cora_alignment_file().empty()  ) {
+		alignment_acquirers.push_back( make_unique< cora_aln_file_alignment_acquirer    >( prm_alignment_input_spec.get_cora_alignment_file()  ) );
 	}
-	if (   arg_alignment_input_spec.get_residue_name_align()           ) {
+	if (   prm_alignment_input_spec.get_residue_name_align()           ) {
 		alignment_acquirers.push_back( make_unique< residue_name_alignment_acquirer     >(                                                     ) );
 	}
-	if ( ! arg_alignment_input_spec.get_fasta_alignment_file().empty() ) {
-		alignment_acquirers.push_back( make_unique< fasta_aln_file_alignment_acquirer   >( arg_alignment_input_spec.get_fasta_alignment_file() ) );
+	if ( ! prm_alignment_input_spec.get_fasta_alignment_file().empty() ) {
+		alignment_acquirers.push_back( make_unique< fasta_aln_file_alignment_acquirer   >( prm_alignment_input_spec.get_fasta_alignment_file() ) );
 	}
-	if ( ! arg_alignment_input_spec.get_ssap_alignment_file().empty()  ) {
-		alignment_acquirers.push_back( make_unique< ssap_aln_file_alignment_acquirer    >( arg_alignment_input_spec.get_ssap_alignment_file()  ) );
+	if ( ! prm_alignment_input_spec.get_ssap_alignment_file().empty()  ) {
+		alignment_acquirers.push_back( make_unique< ssap_aln_file_alignment_acquirer    >( prm_alignment_input_spec.get_ssap_alignment_file()  ) );
 	}
-	if ( ! arg_alignment_input_spec.get_ssap_scores_file().empty()     ) {
-		alignment_acquirers.push_back( make_unique< ssap_scores_file_alignment_acquirer >( arg_alignment_input_spec.get_ssap_scores_file()     ) );
+	if ( ! prm_alignment_input_spec.get_ssap_scores_file().empty()     ) {
+		alignment_acquirers.push_back( make_unique< ssap_scores_file_alignment_acquirer >( prm_alignment_input_spec.get_ssap_scores_file()     ) );
 	}
-	if ( arg_alignment_input_spec.get_do_the_ssaps_dir() ) {
-		alignment_acquirers.push_back( make_unique< do_the_ssaps_alignment_acquirer     >( *arg_alignment_input_spec.get_do_the_ssaps_dir()    ) );
+	if ( prm_alignment_input_spec.get_do_the_ssaps_dir() ) {
+		alignment_acquirers.push_back( make_unique< do_the_ssaps_alignment_acquirer     >( *prm_alignment_input_spec.get_do_the_ssaps_dir()    ) );
 	}
 
-	if ( alignment_acquirers.size() != get_num_acquirers( arg_alignment_input_spec ) ) {
+	if ( alignment_acquirers.size() != get_num_acquirers( prm_alignment_input_spec ) ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
 			"The number of alignment acquirers "     + to_string( alignment_acquirers.size() )
-			+ " doesn't match the expected number (" + to_string( get_num_acquirers( arg_alignment_input_spec ) ) + ")"
+			+ " doesn't match the expected number (" + to_string( get_num_acquirers( prm_alignment_input_spec ) ) + ")"
 		));
 	}
 
@@ -153,18 +153,18 @@ uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignmen
 /// \brief Construct suitable alignment_acquirer objects implied by the specified alignment_input_options_block
 ///
 /// \relates alignment_input_options_block
-uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignment_input_options_block &arg_alignment_input_options_block ///< The alignment_input_options_block to query
+uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignment_input_options_block &prm_alignment_input_options_block ///< The alignment_input_options_block to query
                                                                   ) {
-	return get_alignment_acquirers( arg_alignment_input_options_block.get_alignment_input_spec() );
+	return get_alignment_acquirers( prm_alignment_input_options_block.get_alignment_input_spec() );
 }
 
 /// \brief Construct the single alignment_acquirer implied by the specified alignment_input_spec
 ///        (or throw an invalid_argument_exception if fewer/more are implied)
 ///
 /// \relates alignment_input_spec
-unique_ptr<alignment_acquirer> cath::align::get_alignment_acquirer(const alignment_input_spec &arg_alignment_input_spec ///< The alignment_input_spec to query
+unique_ptr<alignment_acquirer> cath::align::get_alignment_acquirer(const alignment_input_spec &prm_alignment_input_spec ///< The alignment_input_spec to query
                                                                    ) {
-	const auto alignment_acquirers = get_alignment_acquirers( arg_alignment_input_spec );
+	const auto alignment_acquirers = get_alignment_acquirers( prm_alignment_input_spec );
 
 	// If no alignment_acquirer has been specified then use a do_the_ssaps_alignment_acquirer
 	if ( alignment_acquirers.empty() ) {

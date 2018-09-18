@@ -33,12 +33,12 @@ using boost::adaptors::transformed;
 using std::string;
 
 /// \brief Ctor from start on each sequence and length
-alnd_rgn::alnd_rgn(seq_arrow       arg_start_res_a, ///< The start of the aligned region in the first  sequence
-                   seq_arrow       arg_start_res_b, ///< The start of the aligned region in the second sequence
-                   const residx_t &arg_length       ///< The length of the aligned region
-                   ) noexcept : start_res_a( std::move( arg_start_res_a ) ),
-                                start_res_b( std::move( arg_start_res_b ) ),
-                                length     ( arg_length                   ) {
+alnd_rgn::alnd_rgn(seq_arrow       prm_start_res_a, ///< The start of the aligned region in the first  sequence
+                   seq_arrow       prm_start_res_b, ///< The start of the aligned region in the second sequence
+                   const residx_t &prm_length       ///< The length of the aligned region
+                   ) noexcept : start_res_a( std::move( prm_start_res_a ) ),
+                                start_res_b( std::move( prm_start_res_b ) ),
+                                length     ( prm_length                   ) {
 }
 
 /// \brief Getter for the start of the aligned region in the first  sequence
@@ -59,26 +59,26 @@ const residx_t & alnd_rgn::get_length() const {
 /// \brief Generate a string describing the specified alnd_rgn
 ///
 /// \relates alnd_rgn
-string cath::rslv::to_string(const alnd_rgn &arg_alnd_rgn ///< The alnd_rgn to describe
+string cath::rslv::to_string(const alnd_rgn &prm_alnd_rgn ///< The alnd_rgn to describe
 	                         ) {
 	return to_simple_seg_string(
-			arg_alnd_rgn.get_start_res_a(),
-			arg_alnd_rgn.get_start_res_a() + arg_alnd_rgn.get_length()
+			prm_alnd_rgn.get_start_res_a(),
+			prm_alnd_rgn.get_start_res_a() + prm_alnd_rgn.get_length()
 		)
 		+ ","
 		+ to_simple_seg_string(
-			arg_alnd_rgn.get_start_res_b(),
-			arg_alnd_rgn.get_start_res_b() + arg_alnd_rgn.get_length()
+			prm_alnd_rgn.get_start_res_b(),
+			prm_alnd_rgn.get_start_res_b() + prm_alnd_rgn.get_length()
 		);
 }
 
 /// \brief Generate a string describing the specified alnd_rgns
 ///
 /// \relates alnd_rgn
-string cath::rslv::to_string(const alnd_rgn_vec &arg_alnd_rgns ///< The alnd_rgns to describe
+string cath::rslv::to_string(const alnd_rgn_vec &prm_alnd_rgns ///< The alnd_rgns to describe
 	                         ) {
 	return join(
-		arg_alnd_rgns
+		prm_alnd_rgns
 			| transformed( [] (const alnd_rgn &x) { return to_string( x ); } ),
 		";"
 	);

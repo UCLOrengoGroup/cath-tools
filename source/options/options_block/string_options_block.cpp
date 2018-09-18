@@ -54,15 +54,15 @@ string string_options_block::do_get_block_name() const {
 /// This string_options_block  nothing
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void string_options_block::do_add_visible_options_to_description(options_description &/*arg_desc*/,       ///< The options_description to which the options are added
-                                                                 const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void string_options_block::do_add_visible_options_to_description(options_description &/*prm_desc*/,       ///< The options_description to which the options are added
+                                                                 const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                  ) {
 }
 
 /// \brief Identify any conflicts that make the currently stored options invalid
 ///
 /// \returns A string describing the conflict in the options or an empty string if there's none
-str_opt string_options_block::do_invalid_string(const variables_map &/*arg_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt string_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                 ) const {
 	return none;
 }
@@ -75,8 +75,8 @@ str_vec string_options_block::do_get_all_options_names() const {
 }
 
 /// \brief Ctor from the string that this options block should put in the options usage text
-string_options_block::string_options_block(string arg_string ///< The string that this options block should put in the options usage text
-                                           ) : the_string{ std::move( arg_string ) } {
+string_options_block::string_options_block(string prm_string ///< The string that this options block should put in the options usage text
+                                           ) : the_string{ std::move( prm_string ) } {
 }
 
 /// \brief Getter for the string that this options block should put in the options usage text

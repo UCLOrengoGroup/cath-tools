@@ -66,54 +66,54 @@ namespace cath {
 			};
 
 			/// \brief Implementation method to advance to the specified iterator location with the specified best architecture seen so far
-			inline void masked_bests_cacher::advance_to_itr_with_best_so_far(const const_iterator    &arg_itr,        ///< The iterator location to which to advance
-			                                                                 const scored_arch_proxy &arg_best_so_far ///< The best architecture (scored_arch_proxy) seen so far
+			inline void masked_bests_cacher::advance_to_itr_with_best_so_far(const const_iterator    &prm_itr,        ///< The iterator location to which to advance
+			                                                                 const scored_arch_proxy &prm_best_so_far ///< The best architecture (scored_arch_proxy) seen so far
 			                                                                 ) {
-				for (const seq::seq_arrow &the_arrow : boost::sub_range<const seq::res_arrow_vec>( current_itr, arg_itr ) ) {
+				for (const seq::seq_arrow &the_arrow : boost::sub_range<const seq::res_arrow_vec>( current_itr, prm_itr ) ) {
 					store_best_for_masks_up_to_arrow(
 						cache_ref.get(),
-						arg_best_so_far,
+						prm_best_so_far,
 						masks_ref.get(),
 						the_arrow
 					);
 				}
-				current_itr = arg_itr;
+				current_itr = prm_itr;
 			}
 
 			/// \brief Ctor from the cache, masks and cache-points
 			///
-			/// \pre `is_sorted( arg_arrows )`
-			inline masked_bests_cacher::masked_bests_cacher(masked_bests_cache  &arg_masked_bests_cache, ///< The cache to which the cacher should store
-			                                                const calc_hit_vec  &arg_masks,              ///< The currently-active masks that will define the unmasked-region signatures
-			                                                seq::res_arrow_vec   arg_arrows              ///< The points at which to store results in the cache
-			                                                ) : cache_ref       ( arg_masked_bests_cache            ),
-			                                                    masks_ref       ( arg_masks                         ),
-			                                                    arrows_to_store ( std::move( arg_arrows           ) ),
+			/// \pre `is_sorted( prm_arrows )`
+			inline masked_bests_cacher::masked_bests_cacher(masked_bests_cache  &prm_masked_bests_cache, ///< The cache to which the cacher should store
+			                                                const calc_hit_vec  &prm_masks,              ///< The currently-active masks that will define the unmasked-region signatures
+			                                                seq::res_arrow_vec   prm_arrows              ///< The points at which to store results in the cache
+			                                                ) : cache_ref       ( prm_masked_bests_cache            ),
+			                                                    masks_ref       ( prm_masks                         ),
+			                                                    arrows_to_store ( std::move( prm_arrows           ) ),
 			                                                    current_itr     ( common::cbegin( arrows_to_store ) ) {
 			}
 
 			/// \brief Advance to the specified position with the specified best architecture (scored_arch_proxy)
 			///        performing any cache-stores as appropriate
-			inline void masked_bests_cacher::advance_to_pos_with_best_so_far(const seq::seq_arrow    &arg_new_position, ///< The position to which to advance
-			                                                                 const scored_arch_proxy &arg_best_so_far   ///< The best architecture (scored_arch_proxy) seen thus far
+			inline void masked_bests_cacher::advance_to_pos_with_best_so_far(const seq::seq_arrow    &prm_new_position, ///< The position to which to advance
+			                                                                 const scored_arch_proxy &prm_best_so_far   ///< The best architecture (scored_arch_proxy) seen thus far
 			                                                                 ) {
 				advance_to_itr_with_best_so_far(
 					std::find_if(
 						current_itr,
 						common::cend( arrows_to_store ),
-						[&] (const seq::seq_arrow &x) { return x >= arg_new_position; }
+						[&] (const seq::seq_arrow &x) { return x >= prm_new_position; }
 					),
-					arg_best_so_far
+					prm_best_so_far
 				);
 			}
 
 			/// \brief Advance to the end of the region with the specified best architecture (scored_arch_proxy)
 			///        performing any cache-stores as appropriate
-			inline void masked_bests_cacher::advance_to_end_with_best_so_far(const scored_arch_proxy &arg_best_so_far ///< The best architecture (scored_arch_proxy) seen thus far
+			inline void masked_bests_cacher::advance_to_end_with_best_so_far(const scored_arch_proxy &prm_best_so_far ///< The best architecture (scored_arch_proxy) seen thus far
 			                                                                 ) {
 				advance_to_itr_with_best_so_far(
 					common::cend( arrows_to_store ),
-					arg_best_so_far
+					prm_best_so_far
 				);
 			}
 

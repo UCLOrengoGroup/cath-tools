@@ -90,32 +90,32 @@ const display_colour display_colour::MAGENTA      ( 1.00, 0.00, 1.00 );
 const display_colour display_colour::DARK_MAGENTA ( 0.70, 0.00, 0.70 );
 
 /// \brief TODOCUMENT
-void display_colour::check_component_value(const double &arg_component_value ///< TODOCUMENT
+void display_colour::check_component_value(const double &prm_component_value ///< TODOCUMENT
                                            ) {
 	using boost::math::isfinite;
-	if ( ! isfinite( arg_component_value ) ) {
+	if ( ! isfinite( prm_component_value ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Viewer colour component value "
-			+ lexical_cast<string>(arg_component_value)
+			+ lexical_cast<string>(prm_component_value)
 			+ " is not a finite number"
 		));
 	}
-	if ( arg_component_value < 0.0 || arg_component_value > 1.0 ) {
+	if ( prm_component_value < 0.0 || prm_component_value > 1.0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Viewer colour component value "
-			+ lexical_cast<string>( arg_component_value )
+			+ lexical_cast<string>( prm_component_value )
 			+ " is not between 0 and 1"
 		));
 	}
 }
 
 /// \brief Ctor for display_colour
-display_colour::display_colour(const double &arg_r, ///< TODOCUMENT
-                               const double &arg_g, ///< TODOCUMENT
-                               const double &arg_b  ///< TODOCUMENT
-                               ) : r ( arg_r ),
-                                   g ( arg_g ),
-                                   b ( arg_b ) {
+display_colour::display_colour(const double &prm_r, ///< TODOCUMENT
+                               const double &prm_g, ///< TODOCUMENT
+                               const double &prm_b  ///< TODOCUMENT
+                               ) : r ( prm_r ),
+                                   g ( prm_g ),
+                                   b ( prm_b ) {
 	check_component_value( r );
 	check_component_value( g );
 	check_component_value( b );
@@ -139,19 +139,19 @@ const double & display_colour::get_b() const {
 /// \brief Return a copy of the specified colour that has been lightened by the specified fraction
 ///
 /// \relates display_colour
-display_colour cath::lighten_by_fraction(const display_colour &arg_colour,  ///< The colour from which to start
-                                         const double         &arg_fraction ///< The fraction change (0.0 gives the original colour; 1.0 gives white)
+display_colour cath::lighten_by_fraction(const display_colour &prm_colour,  ///< The colour from which to start
+                                         const double         &prm_fraction ///< The fraction change (0.0 gives the original colour; 1.0 gives white)
                                          ) {
-	return rgb_mid_point( arg_colour, display_colour::WHITE, arg_fraction );
+	return rgb_mid_point( prm_colour, display_colour::WHITE, prm_fraction );
 }
 
 /// \brief Return a copy of the specified colour that has been darkened by the specified fraction
 ///
 /// \relates display_colour
-display_colour cath::darken_by_fraction(const display_colour &arg_colour,  ///< The colour from which to start
-                                        const double         &arg_fraction ///< The fraction change (0.0 gives the original colour; 1.0 gives black)
+display_colour cath::darken_by_fraction(const display_colour &prm_colour,  ///< The colour from which to start
+                                        const double         &prm_fraction ///< The fraction change (0.0 gives the original colour; 1.0 gives black)
                                         ) {
-	return rgb_mid_point( arg_colour, display_colour::BLACK, arg_fraction );
+	return rgb_mid_point( prm_colour, display_colour::BLACK, prm_fraction );
 }
 
 /// \brief Return whether the first colour is less than the second
@@ -161,22 +161,22 @@ display_colour cath::darken_by_fraction(const display_colour &arg_colour,  ///< 
 /// \todo Is this actually useful? If so, document the context; if not, consider removing.
 ///
 /// \relates display_colour
-bool cath::operator<(const display_colour &arg_lhs, ///< The first  display_colour to compare
-                     const display_colour &arg_rhs  ///< The second display_colour to compare
+bool cath::operator<(const display_colour &prm_lhs, ///< The first  display_colour to compare
+                     const display_colour &prm_rhs  ///< The second display_colour to compare
                      ) {
 	return (
-		tie( arg_lhs.get_r(), arg_lhs.get_g(), arg_lhs.get_b() )
+		tie( prm_lhs.get_r(), prm_lhs.get_g(), prm_lhs.get_b() )
 		<
-		tie( arg_rhs.get_r(), arg_rhs.get_g(), arg_rhs.get_b() )
+		tie( prm_rhs.get_r(), prm_rhs.get_g(), prm_rhs.get_b() )
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour
-display_colour cath::display_colour_from_string(const string &arg_colour ///< TODOCUMENT
+display_colour cath::display_colour_from_string(const string &prm_colour ///< TODOCUMENT
                                                 ) {
-	const str_vec component_strings = split_build<str_vec>( arg_colour, is_any_of( display_colour::COMPONENT_SEPARATOR ) );
+	const str_vec component_strings = split_build<str_vec>( prm_colour, is_any_of( display_colour::COMPONENT_SEPARATOR ) );
 	doub_vec component_numbers;
 
 	component_numbers.reserve( component_strings.size() );
@@ -198,27 +198,27 @@ display_colour cath::display_colour_from_string(const string &arg_colour ///< TO
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour
-display_colour cath::display_colour_from_components(const doub_vec &arg_components ///< TODOCUMENT
+display_colour cath::display_colour_from_components(const doub_vec &prm_components ///< TODOCUMENT
                                                     ) {
-	if (arg_components.size() != 3) {
+	if (prm_components.size() != 3) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot construct viewer colour from component values because there aren't three of them"));
 	}
 	return display_colour(
-		arg_components[ 0 ],
-		arg_components[ 1 ],
-		arg_components[ 2 ]
+		prm_components[ 0 ],
+		prm_components[ 1 ],
+		prm_components[ 2 ]
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour
-string cath::hex_string_of_colour(const display_colour &arg_display_colour ///< TODOCUMENT
+string cath::hex_string_of_colour(const display_colour &prm_display_colour ///< TODOCUMENT
                                   ) {
 	ostringstream output_ss;
-	const doub_vec comps = { arg_display_colour.get_r(),
-	                         arg_display_colour.get_g(),
-	                         arg_display_colour.get_b() };
+	const doub_vec comps = { prm_display_colour.get_r(),
+	                         prm_display_colour.get_g(),
+	                         prm_display_colour.get_b() };
 	for (const double &comp : comps) {
 		output_ss << hex << setfill('0') << setw(2) << numeric_cast<size_t>( 255 * comp );
 	}
@@ -228,12 +228,12 @@ string cath::hex_string_of_colour(const display_colour &arg_display_colour ///< 
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour
-string cath::comma_separated_string_of_display_colour(const display_colour &arg_display_colour ///< TODOCUMENT
+string cath::comma_separated_string_of_display_colour(const display_colour &prm_display_colour ///< TODOCUMENT
                                                       ) {
 	const str_vec component_strings = {
-		lexical_cast<string>( arg_display_colour.get_r() ),
-		lexical_cast<string>( arg_display_colour.get_g() ),
-		lexical_cast<string>( arg_display_colour.get_b() )
+		lexical_cast<string>( prm_display_colour.get_r() ),
+		lexical_cast<string>( prm_display_colour.get_g() ),
+		lexical_cast<string>( prm_display_colour.get_b() )
 	};
 	return join( component_strings, display_colour::COMPONENT_SEPARATOR );
 }
@@ -241,33 +241,33 @@ string cath::comma_separated_string_of_display_colour(const display_colour &arg_
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour
-display_colour cath::rgb_mid_point(const display_colour &arg_colour1,      ///< TODOCUMENT
-                                   const display_colour &arg_colour2,      ///< TODOCUMENT
-                                   const double         &arg_fraction_thru ///< TODOCUMENT
+display_colour cath::rgb_mid_point(const display_colour &prm_colour1,      ///< TODOCUMENT
+                                   const display_colour &prm_colour2,      ///< TODOCUMENT
+                                   const double         &prm_fraction_thru ///< TODOCUMENT
                                    ) {
 	using boost::math::isfinite;
-	if ( ! isfinite( arg_fraction_thru ) || arg_fraction_thru < 0.0 || arg_fraction_thru > 1.0 ) {
+	if ( ! isfinite( prm_fraction_thru ) || prm_fraction_thru < 0.0 || prm_fraction_thru > 1.0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Fraction through must be a finite number between 0 and 1"));
 	}
 
-	const double fraction_from = 1.0 - arg_fraction_thru;
+	const double fraction_from = 1.0 - prm_fraction_thru;
 	return display_colour(
-		fraction_from * arg_colour1.get_r() + arg_fraction_thru * arg_colour2.get_r(),
-		fraction_from * arg_colour1.get_g() + arg_fraction_thru * arg_colour2.get_g(),
-		fraction_from * arg_colour1.get_b() + arg_fraction_thru * arg_colour2.get_b()
+		fraction_from * prm_colour1.get_r() + prm_fraction_thru * prm_colour2.get_r(),
+		fraction_from * prm_colour1.get_g() + prm_fraction_thru * prm_colour2.get_g(),
+		fraction_from * prm_colour1.get_b() + prm_fraction_thru * prm_colour2.get_b()
 	);
 }
 
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour
-ostream & cath::operator<<(ostream              &arg_ostream,      ///< TODOCUMENT
-                           const display_colour &arg_display_colour ///< TODOCUMENT
+ostream & cath::operator<<(ostream              &prm_ostream,      ///< TODOCUMENT
+                           const display_colour &prm_display_colour ///< TODOCUMENT
                            ) {
-	arg_ostream << "display_colour[" << arg_display_colour.get_r();
-	arg_ostream << ", "              << arg_display_colour.get_g();
-	arg_ostream << ", "              << arg_display_colour.get_b();
-	arg_ostream << "]";
-	return arg_ostream;
+	prm_ostream << "display_colour[" << prm_display_colour.get_r();
+	prm_ostream << ", "              << prm_display_colour.get_g();
+	prm_ostream << ", "              << prm_display_colour.get_b();
+	prm_ostream << "]";
+	return prm_ostream;
 }
 

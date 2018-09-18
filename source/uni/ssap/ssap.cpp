@@ -309,9 +309,9 @@ void cath::reset_ssap_global_variables() {
 ///        correctly calling reset_ssap_global_variables().
 ///
 /// \todo Eradicate these global variables and then remove this function
-void cath::temp_set_global_run_counter(const ptrdiff_t &arg_global_run_counter ///< Value to which global_run_counter should be set
+void cath::temp_set_global_run_counter(const ptrdiff_t &prm_global_run_counter ///< Value to which global_run_counter should be set
                                        ) {
-	global_run_counter = arg_global_run_counter;
+	global_run_counter = prm_global_run_counter;
 }
 
 /// \brief Temporary getter for global_run_counter to allow tests to check their fixtures are
@@ -324,49 +324,49 @@ ptrdiff_t cath::temp_get_global_run_counter() {
 	return global_run_counter;
 }
 
-/// \brief Read a pair of proteins following the specification in arg_cath_ssap_options
-prot_prot_pair cath::read_protein_pair(const cath_ssap_options &arg_cath_ssap_options, ///< The cath_ssap options
-                                       ostream                 &arg_stderr             ///< TODOCUMENT
+/// \brief Read a pair of proteins following the specification in prm_cath_ssap_options
+prot_prot_pair cath::read_protein_pair(const cath_ssap_options &prm_cath_ssap_options, ///< The cath_ssap options
+                                       ostream                 &prm_stderr             ///< TODOCUMENT
                                        ) {
-	const auto &the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
-	const auto &the_domains      = arg_cath_ssap_options.get_domains();
+	const auto &the_ssap_options = prm_cath_ssap_options.get_old_ssap_options();
+	const auto &the_domains      = prm_cath_ssap_options.get_domains();
 	return read_protein_pair(
 		the_ssap_options.get_protein_name_a(),
 		make_optional_if_fn( the_domains.size() > 0, [&] { return the_domains[ 0 ]; } ),
 		the_ssap_options.get_protein_name_b(),
 		make_optional_if_fn( the_domains.size() > 1, [&] { return the_domains[ 1 ]; } ),
-		arg_cath_ssap_options.get_data_dirs_spec(),
+		prm_cath_ssap_options.get_data_dirs_spec(),
 		*the_ssap_options.get_protein_source_files(),
 		the_ssap_options.get_opt_domin_file(),
-		arg_stderr
+		prm_stderr
 	);
 }
 
-/// \brief Read a pair of proteins following the specification in arg_ssap_options
-prot_prot_pair cath::read_protein_pair(const string                  &arg_protein_name_a,          ///< TODOCUMENT
-                                       const domain_opt              &arg_domain_a,                ///< TODOCUMENT
-                                       const string                  &arg_protein_name_b,          ///< TODOCUMENT
-                                       const domain_opt              &arg_domain_b,                ///< TODOCUMENT
-                                       const data_dirs_spec          &arg_data_dirs_spec,          ///< TODOCUMENT
-                                       const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
-                                       const path_opt                &arg_domin_file,              ///< TODOCUMENT
-                                       ostream                       &arg_stderr                   ///< TODOCUMENT
+/// \brief Read a pair of proteins following the specification in prm_ssap_options
+prot_prot_pair cath::read_protein_pair(const string                  &prm_protein_name_a,          ///< TODOCUMENT
+                                       const domain_opt              &prm_domain_a,                ///< TODOCUMENT
+                                       const string                  &prm_protein_name_b,          ///< TODOCUMENT
+                                       const domain_opt              &prm_domain_b,                ///< TODOCUMENT
+                                       const data_dirs_spec          &prm_data_dirs_spec,          ///< TODOCUMENT
+                                       const protein_source_file_set &prm_protein_source_file_set, ///< TODOCUMENT
+                                       const path_opt                &prm_domin_file,              ///< TODOCUMENT
+                                       ostream                       &prm_stderr                   ///< TODOCUMENT
                                        ) {
 	const protein protein_a = read_protein_data_from_ssap_options_files(
-		arg_data_dirs_spec,
-		arg_protein_name_a,
-		arg_protein_source_file_set,
-		arg_domin_file,
-		arg_domain_a,
-		arg_stderr
+		prm_data_dirs_spec,
+		prm_protein_name_a,
+		prm_protein_source_file_set,
+		prm_domin_file,
+		prm_domain_a,
+		prm_stderr
 	);
 	const protein protein_b = read_protein_data_from_ssap_options_files(
-		arg_data_dirs_spec,
-		arg_protein_name_b,
-		arg_protein_source_file_set,
+		prm_data_dirs_spec,
+		prm_protein_name_b,
+		prm_protein_source_file_set,
 		none,
-		arg_domain_b,
-		arg_stderr
+		prm_domain_b,
+		prm_stderr
 	);
 	return make_pair(protein_a, protein_b);
 }
@@ -375,26 +375,26 @@ prot_prot_pair cath::read_protein_pair(const string                  &arg_protei
 ///
 /// \TODO Aim to improve the interface for calls from other parts of the code
 ///       (eg do_the_ssaps_alignment_acquirer)
-void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cath_ssap options
-                    ostream                 &arg_stdout,            ///< The ostream to which any stdout-like output should be written
-                    ostream                 &arg_stderr,            ///< The ostream to which any stdout-like output should be written
-                    const ostream_ref_opt   &arg_scores_stream      ///< The ostream to which any stdout-like output should be written
+void cath::run_ssap(const cath_ssap_options &prm_cath_ssap_options, ///< The cath_ssap options
+                    ostream                 &prm_stdout,            ///< The ostream to which any stdout-like output should be written
+                    ostream                 &prm_stderr,            ///< The ostream to which any stdout-like output should be written
+                    const ostream_ref_opt   &prm_scores_stream      ///< The ostream to which any stdout-like output should be written
                     ) {
 	// Start be resetting the SSAP global variables
 	reset_ssap_global_variables();
 
 	// If the options are invalid or specify to do_nothing, then just return
-	const auto &error_or_help_string = arg_cath_ssap_options.get_error_or_help_string();
+	const auto &error_or_help_string = prm_cath_ssap_options.get_error_or_help_string();
 	if ( error_or_help_string ) {
 		logger::log_and_exit(
 			logger::return_code::GENERIC_FAILURE_RETURN_CODE,
 			*error_or_help_string,
-			ref( arg_stdout )
+			ref( prm_stdout )
 		);
 	}
 
-	global_debug = arg_cath_ssap_options.get_old_ssap_options().get_debug();
-	const prot_prot_pair proteins = read_protein_pair( arg_cath_ssap_options, arg_stderr );
+	global_debug = prm_cath_ssap_options.get_old_ssap_options().get_debug();
+	const prot_prot_pair proteins = read_protein_pair( prm_cath_ssap_options, prm_stderr );
 
 	global_run_counter = 0;
 
@@ -463,8 +463,8 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 //		}
 //	}
 
-	const old_ssap_options_block &the_ssap_options = arg_cath_ssap_options.get_old_ssap_options();
-	const data_dirs_spec         &the_data_dirs    = arg_cath_ssap_options.get_data_dirs_spec();
+	const old_ssap_options_block &the_ssap_options = prm_cath_ssap_options.get_old_ssap_options();
+	const data_dirs_spec         &the_data_dirs    = prm_cath_ssap_options.get_data_dirs_spec();
 
 	// Choose the stream to which to output the results
 	//
@@ -474,13 +474,13 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 	//     the ostream/ofstream must be returned by ostream reference (or pointer) to avoid slicing, which means the
 	//     old_ssap_options_block must own the ofstream but that makes old_ssap_options_block non-copyable, which prevents an option-parsing
 	//     function from returning a old_ssap_options_block object (although this would presumably be fine come C++11's move operators).
-	ostream_ref_opt scores_stream = arg_scores_stream;
+	ostream_ref_opt scores_stream = prm_scores_stream;
 	if ( ! scores_stream ) {
 		ofstream file_out_stream;
 		if (the_ssap_options.get_output_to_file()) {
 			open_ofstream(file_out_stream, the_ssap_options.get_output_filename());
 		}
-		scores_stream = the_ssap_options.get_output_to_file() ? file_out_stream : arg_stdout;
+		scores_stream = the_ssap_options.get_output_to_file() ? file_out_stream : prm_stdout;
 	}
 
 	if ( proteins.first.get_length() == 0 || proteins.second.get_length() == 0 ) {
@@ -513,10 +513,10 @@ void cath::run_ssap(const cath_ssap_options &arg_cath_ssap_options, ///< The cat
 /// JEB v1.12 12.09.2002
 /// Rewrote this function to separate out running FAST SSAP and SLOW SSAP
 /// FAST SSAP performs a comparison of secondary structures first
-void cath::align_proteins(const protein                 &arg_protein_a,    ///< The first protein
-                          const protein                 &arg_protein_b,    ///< The second protein
-                          const old_ssap_options_block  &arg_ssap_options, ///< The old_ssap_options_block to specify how things should be done
-                          const data_dirs_spec          &arg_data_dirs     ///< The data directories from which data should be read
+void cath::align_proteins(const protein                 &prm_protein_a,    ///< The first protein
+                          const protein                 &prm_protein_b,    ///< The second protein
+                          const old_ssap_options_block  &prm_ssap_options, ///< The old_ssap_options_block to specify how things should be done
+                          const data_dirs_spec          &prm_data_dirs     ///< The data directories from which data should be read
                           ) {
 	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq";
 
@@ -524,16 +524,16 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 	global_res_score   = false;
 	global_align_pass  = false;
 	global_gap_penalty =     5;
-	global_window      = max( arg_protein_a.get_num_sec_strucs(), arg_protein_b.get_num_sec_strucs() );
+	global_window      = max( prm_protein_a.get_num_sec_strucs(), prm_protein_b.get_num_sec_strucs() );
 
-	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  seqa->nsec=" << arg_protein_a.get_num_sec_strucs();
-	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  seqb->nsec=" << arg_protein_b.get_num_sec_strucs();
+	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  seqa->nsec=" << prm_protein_a.get_num_sec_strucs();
+	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  seqb->nsec=" << prm_protein_b.get_num_sec_strucs();
 
 	ssap_scores fast_ssap_scores;
-	if ( !arg_ssap_options.get_slow_ssap_only() ) {
+	if ( !prm_ssap_options.get_slow_ssap_only() ) {
 		// Check for minimum number of secondary structures
-		if (arg_protein_a.get_num_sec_strucs() > 1 && arg_protein_b.get_num_sec_strucs() > 1) {
-			fast_ssap_scores         = fast_ssap(arg_protein_a, arg_protein_b, arg_ssap_options, arg_data_dirs);
+		if (prm_protein_a.get_num_sec_strucs() > 1 && prm_protein_b.get_num_sec_strucs() > 1) {
+			fast_ssap_scores         = fast_ssap(prm_protein_a, prm_protein_b, prm_ssap_options, prm_data_dirs);
 			const double first_score = fast_ssap_scores.get_ssap_score_over_larger();
 
 //			if (DEBUG) {
@@ -543,8 +543,8 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 //			}
 
 			// Re-run with increased window and torsional angle cutoffs, if not a great alignment
-			if ( first_score < arg_ssap_options.get_max_score_to_fast_ssap_rerun() && ! has_clique_file( arg_ssap_options ) ) {
-				BOOST_LOG_TRIVIAL( debug ) << "Dist is: " << arg_ssap_options.get_max_score_to_fast_ssap_rerun() << " Removing cutoffs....";
+			if ( first_score < prm_ssap_options.get_max_score_to_fast_ssap_rerun() && ! has_clique_file( prm_ssap_options ) ) {
+				BOOST_LOG_TRIVIAL( debug ) << "Dist is: " << prm_ssap_options.get_max_score_to_fast_ssap_rerun() << " Removing cutoffs....";
 
 				--global_run_counter;
 
@@ -555,9 +555,9 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 				global_gap_penalty    =     5;
 				global_res_sim_cutoff =  1000;
 				global_window_add     =  1000;
-				global_window         = max( arg_protein_a.get_num_sec_strucs(), arg_protein_b.get_num_sec_strucs() );
+				global_window         = max( prm_protein_a.get_num_sec_strucs(), prm_protein_b.get_num_sec_strucs() );
 
-				fast_ssap_scores          = fast_ssap(arg_protein_a, arg_protein_b, arg_ssap_options, arg_data_dirs);
+				fast_ssap_scores          = fast_ssap(prm_protein_a, prm_protein_b, prm_ssap_options, prm_data_dirs);
 				const double second_score = fast_ssap_scores.get_ssap_score_over_larger();
 
 				// Re-run original alignment if it doesn't give a better score
@@ -574,9 +574,9 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 					global_gap_penalty    =     5;
 					global_res_sim_cutoff =   150;
 					global_window_add     =    70;
-					global_window         = max( arg_protein_a.get_num_sec_strucs(), arg_protein_b.get_num_sec_strucs() );
+					global_window         = max( prm_protein_a.get_num_sec_strucs(), prm_protein_b.get_num_sec_strucs() );
 
-					fast_ssap_scores = fast_ssap(arg_protein_a, arg_protein_b, arg_ssap_options, arg_data_dirs);
+					fast_ssap_scores = fast_ssap(prm_protein_a, prm_protein_b, prm_ssap_options, prm_data_dirs);
 				}
 			}
 		}
@@ -584,12 +584,12 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 	// RUN FAST SSAP - END
 
 	// Check whether the previous fast SSAP result was good
-	const bool fast_ssap_result_is_close = ( fast_ssap_scores.get_ssap_score_over_larger() > arg_ssap_options.get_max_score_to_slow_ssap_rerun() );
+	const bool fast_ssap_result_is_close = ( fast_ssap_scores.get_ssap_score_over_larger() > prm_ssap_options.get_max_score_to_slow_ssap_rerun() );
 
 	// Don't run slow ssap if clique information is used
-	const bool run_slow_ssap = ( ! has_clique_file( arg_ssap_options ) && ! fast_ssap_result_is_close );
+	const bool run_slow_ssap = ( ! has_clique_file( prm_ssap_options ) && ! fast_ssap_result_is_close );
 	if ( fast_ssap_result_is_close ) {
-		BOOST_LOG_TRIVIAL( debug ) << "Not running slow SSAP. Cutoff: " << arg_ssap_options.get_max_score_to_slow_ssap_rerun()
+		BOOST_LOG_TRIVIAL( debug ) << "Not running slow SSAP. Cutoff: " << prm_ssap_options.get_max_score_to_slow_ssap_rerun()
 		                          << " Score: " << fast_ssap_scores.get_ssap_score_over_smaller();
 	}
 
@@ -600,8 +600,8 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 		// v1.14 JEB
 		++global_run_counter;
 
-		const size_t max_protein_length = max( arg_protein_a.get_length(), arg_protein_b.get_length() );
-		const size_t min_protein_length = min( arg_protein_a.get_length(), arg_protein_b.get_length() );
+		const size_t max_protein_length = max( prm_protein_a.get_length(), prm_protein_b.get_length() );
+		const size_t min_protein_length = min( prm_protein_a.get_length(), prm_protein_b.get_length() );
 
 		// Set variables for SLOW SSAP
 		// \todo These shouldn't be global variables, they should be parameters to compare()
@@ -619,7 +619,7 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 
 			global_align_pass = ( pass_ctr > 1 );
 			if (pass_ctr == 1 || (pass_ctr == 2 && global_res_score))  {
-				compare( arg_protein_a, arg_protein_b, pass_ctr, residue_querier(), arg_ssap_options, arg_data_dirs, none );
+				compare( prm_protein_a, prm_protein_b, pass_ctr, residue_querier(), prm_ssap_options, prm_data_dirs, none );
 			}
 		}
 	}
@@ -630,10 +630,10 @@ void cath::align_proteins(const protein                 &arg_protein_a,    ///< 
 
 
 /// \brief Function to run fast SSAP
-ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///< The first protein
-                            const protein                 &arg_protein_b,    ///< The second protein
-                            const old_ssap_options_block  &arg_ssap_options, ///< The old_ssap_options_block to specify how things should be done
-                            const data_dirs_spec          &arg_data_dirs     ///< The data directories from which data should be read
+ssap_scores cath::fast_ssap(const protein                 &prm_protein_a,    ///< The first protein
+                            const protein                 &prm_protein_b,    ///< The second protein
+                            const old_ssap_options_block  &prm_ssap_options, ///< The old_ssap_options_block to specify how things should be done
+                            const data_dirs_spec          &prm_data_dirs     ///< The data directories from which data should be read
                             ) {
 	ssap_scores new_ssap_scores;
 
@@ -642,14 +642,14 @@ ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///
 
 	// Perform secondary structure alignment
 	++global_run_counter;
-	const pair<ssap_scores, alignment> scores_and_alignment = compare( arg_protein_a, arg_protein_b, 1, sec_struc_querier(), arg_ssap_options, arg_data_dirs, none );
+	const pair<ssap_scores, alignment> scores_and_alignment = compare( prm_protein_a, prm_protein_b, 1, sec_struc_querier(), prm_ssap_options, prm_data_dirs, none );
 	new_ssap_scores = scores_and_alignment.first;
 	const alignment &sec_struc_alignment = scores_and_alignment.second;
 	fflush(stdout);
 
 	// Check window setting
-	const size_t max_protein_length = max( arg_protein_a.get_length(), arg_protein_b.get_length() );
-	const size_t min_protein_length = min( arg_protein_a.get_length(), arg_protein_b.get_length() );
+	const size_t max_protein_length = max( prm_protein_a.get_length(), prm_protein_b.get_length() );
+	const size_t min_protein_length = min( prm_protein_a.get_length(), prm_protein_b.get_length() );
 
 	// Align structures using subsets of residue comparisons
 	// Set variables for FAST SSAP
@@ -664,7 +664,7 @@ ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///
 		BOOST_LOG_TRIVIAL( debug ) << "Function: fast_ssap:  pass=" << pass_ctr;
 		global_align_pass = ( pass_ctr > 1 );
 		if ( pass_ctr == 1 || ( pass_ctr == 2 && global_res_score ) ) {
-			const pair<ssap_scores, alignment> tmp_scores_and_aln = compare( arg_protein_a, arg_protein_b, pass_ctr, residue_querier(), arg_ssap_options, arg_data_dirs, sec_struc_alignment );
+			const pair<ssap_scores, alignment> tmp_scores_and_aln = compare( prm_protein_a, prm_protein_b, pass_ctr, residue_querier(), prm_ssap_options, prm_data_dirs, sec_struc_alignment );
 			new_ssap_scores = tmp_scores_and_aln.first;
 		}
 	}
@@ -674,19 +674,19 @@ ssap_scores cath::fast_ssap(const protein                 &arg_protein_a,    ///
 
 
 /// \brief Compare structures
-pair<ssap_scores, alignment> cath::compare(const protein                 &arg_protein_a,            ///< The first protein
-                                           const protein                 &arg_protein_b,            ///< The second protein
-                                           const size_t                  &arg_pass_ctr,             ///< The pass of this comparison (where the second typically refines the alignment generated by the first)
-                                           const entry_querier           &arg_entry_querier,        ///< The entry_querier to query either residues or secondary structures
-                                           const old_ssap_options_block  &arg_ssap_options,         ///< The old_ssap_options_block to specify how things should be done
-                                           const data_dirs_spec          &arg_data_dirs,            ///< The data directories from which data should be read
-                                           const alignment_opt           &arg_previous_ss_alignment ///< An optional parameter specifying a previous secondary structure alignment
+pair<ssap_scores, alignment> cath::compare(const protein                 &prm_protein_a,            ///< The first protein
+                                           const protein                 &prm_protein_b,            ///< The second protein
+                                           const size_t                  &prm_pass_ctr,             ///< The pass of this comparison (where the second typically refines the alignment generated by the first)
+                                           const entry_querier           &prm_entry_querier,        ///< The entry_querier to query either residues or secondary structures
+                                           const old_ssap_options_block  &prm_ssap_options,         ///< The old_ssap_options_block to specify how things should be done
+                                           const data_dirs_spec          &prm_data_dirs,            ///< The data directories from which data should be read
+                                           const alignment_opt           &prm_previous_ss_alignment ///< An optional parameter specifying a previous secondary structure alignment
                                            ) {
-	const bool   res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
-	const string entry_plural_name = get_plural_name(arg_entry_querier);
+	const bool   res_not_ss__hacky = prm_entry_querier.temp_hacky_is_residue();
+	const string entry_plural_name = get_plural_name(prm_entry_querier);
 
-	const size_t length_a = arg_entry_querier.get_length(arg_protein_a);
-	const size_t length_b = arg_entry_querier.get_length(arg_protein_b);
+	const size_t length_a = prm_entry_querier.get_length(prm_protein_a);
+	const size_t length_b = prm_entry_querier.get_length(prm_protein_b);
 
 	// Each of these matrices is currently indexed with offset-1
 	//
@@ -699,9 +699,9 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 
 	BOOST_LOG_TRIVIAL( debug ) << "Function: compare";
 	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "]";
-	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: pass=" << arg_pass_ctr;
+	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: pass=" << prm_pass_ctr;
 
-	if ( ! res_not_ss__hacky || arg_pass_ctr == 1 ) {
+	if ( ! res_not_ss__hacky || prm_pass_ctr == 1 ) {
 		BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
 		// Each of these matrices is currently indexed with offset-1
 		//
@@ -712,17 +712,17 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	}
 
 	// Select allowed pairs
-	const path_opt clique_file = arg_ssap_options.get_opt_clique_file();
-	if ( res_not_ss__hacky && arg_pass_ctr == 1 ) {
+	const path_opt clique_file = prm_ssap_options.get_opt_clique_file();
+	if ( res_not_ss__hacky && prm_pass_ctr == 1 ) {
 		set_mask_matrix(
-			arg_protein_a,
-			arg_protein_b,
-			arg_previous_ss_alignment,
-			arg_ssap_options.get_opt_clique_file()
+			prm_protein_a,
+			prm_protein_b,
+			prm_previous_ss_alignment,
+			prm_ssap_options.get_opt_clique_file()
 		);
 	}
 
-	select_pairs(arg_protein_a, arg_protein_b, arg_pass_ctr, arg_entry_querier);
+	select_pairs(prm_protein_a, prm_protein_b, prm_pass_ctr, prm_entry_querier);
 
 	// Initialise score matrix to zeros
 	//
@@ -737,14 +737,14 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "] score_matrix twice";
 
 	// Call score_matrix() to populate
-	populate_upper_score_matrix(arg_protein_a, arg_protein_b, arg_entry_querier, global_align_pass);
+	populate_upper_score_matrix(prm_protein_a, prm_protein_b, prm_entry_querier, global_align_pass);
 
 	// Construct a source of scores to be used for aligning using dynamic-programming
 	// based on the global_upper_score_matrix
 	const old_matrix_dyn_prog_score_source upper_score_matrix_score_source(
 		global_upper_score_matrix,
-		arg_entry_querier.get_length(arg_protein_a),
-		arg_entry_querier.get_length(arg_protein_b),
+		prm_entry_querier.get_length(prm_protein_a),
+		prm_entry_querier.get_length(prm_protein_b),
 		global_window
 	);
 
@@ -778,13 +778,13 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 	ssap_scores new_ssap_scores;
 	if ( score != 0 ) {
 		new_ssap_scores = plot_aln(
-			arg_protein_a,
-			arg_protein_b,
-			arg_pass_ctr,
-			arg_entry_querier,
+			prm_protein_a,
+			prm_protein_b,
+			prm_pass_ctr,
+			prm_entry_querier,
 			new_alignment,
-			arg_ssap_options,
-			arg_data_dirs
+			prm_ssap_options,
+			prm_data_dirs
 		);
 	}
 
@@ -800,7 +800,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 			//                                 " please consider raising a new issue at https://github.com/UCLOrengoGroup/cath-tools/issues";
 
 			// v1.14 JEB - Save zero scores
-			save_zero_scores( arg_protein_a, arg_protein_b, global_run_counter );
+			save_zero_scores( prm_protein_a, prm_protein_b, global_run_counter );
 			global_res_score = false;
 		}
 	}
@@ -809,18 +809,18 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &arg_pr
 }
 
 /// \brief Read data for a protein based on its name and a old_ssap_options_block object
-protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec          &arg_data_dirs,               ///< The old_ssap_options_block to specify how things should be done
-                                                        const string                  &arg_protein_name,            ///< The name of the protein that is to be read from files
-                                                        const protein_source_file_set &arg_protein_source_file_set, ///< TODOCUMENT
-                                                        const path_opt                &arg_domin_file,              ///< Optional domin file
-                                                        const domain_opt              &arg_domain,                  ///< The domain to which the resulting protein should be restricted
-                                                        ostream                       &arg_stderr                   ///< TODOCUMENT
+protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec          &prm_data_dirs,               ///< The old_ssap_options_block to specify how things should be done
+                                                        const string                  &prm_protein_name,            ///< The name of the protein that is to be read from files
+                                                        const protein_source_file_set &prm_protein_source_file_set, ///< TODOCUMENT
+                                                        const path_opt                &prm_domin_file,              ///< Optional domin file
+                                                        const domain_opt              &prm_domain,                  ///< The domain to which the resulting protein should be restricted
+                                                        ostream                       &prm_stderr                   ///< TODOCUMENT
                                                         ) {
 	// Report which files are being used
 	const data_file_path_map filename_of_data_file = get_filename_of_data_file(
-		arg_protein_source_file_set,
-		arg_data_dirs,
-		arg_protein_name
+		prm_protein_source_file_set,
+		prm_data_dirs,
+		prm_protein_name
 	);
 	for (const data_file_path_pair &filename_and_data_file : filename_of_data_file) {
 		const string file_str              = to_lower_copy( lexical_cast<string>( filename_and_data_file.first ) );
@@ -830,25 +830,25 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 
 	// Create a protein object from the name, wolf file and sec file
 	protein new_protein_to_populate = read_protein_from_files(
-		arg_protein_source_file_set,
-		arg_data_dirs,
-		arg_protein_name,
-		arg_domain,
-		arg_stderr
+		prm_protein_source_file_set,
+		prm_data_dirs,
+		prm_protein_name,
+		prm_domain,
+		prm_stderr
 	);
 
 	// Re-calculate if there is a domin file
-	if ( arg_domin_file ) {
-		remove_domin_res( new_protein_to_populate, *arg_domin_file, ref( arg_stderr ) );
+	if ( prm_domin_file ) {
+		remove_domin_res( new_protein_to_populate, *prm_domin_file, ref( prm_stderr ) );
 	}
 
 	if ( new_protein_to_populate.get_length() == 0 ) {
 		BOOST_LOG_TRIVIAL( warning )
 			<< "After reading protein "
-			<< arg_protein_name
+			<< prm_protein_name
 			<< (
-				arg_domain
-				? ( " (" + to_string( *arg_domain ) + ")" )
+				prm_domain
+				? ( " (" + to_string( *prm_domain ) + ")" )
 				: string{}
 			)
 			<< " from file(s), got no residues";
@@ -859,14 +859,14 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 }
 
 /// \brief Read Clique file
-clique cath::read_clique_file(const path &arg_filename ///< The clique file to read
+clique cath::read_clique_file(const path &prm_filename ///< The clique file to read
                               ) {
 	constexpr size_t MAX_CLIQUE_FILE_BUFFER_LENGTH = 10000;
 	char_vec buffer(MAX_CLIQUE_FILE_BUFFER_LENGTH, 0);
 
 	FILE *in;
-	if ( ( in = fopen( arg_filename.string().c_str(),"r" ) ) == nullptr ) {
-		BOOST_LOG_TRIVIAL( error ) << "Clique file (" << arg_filename << ") not found!";
+	if ( ( in = fopen( prm_filename.string().c_str(),"r" ) ) == nullptr ) {
+		BOOST_LOG_TRIVIAL( error ) << "Clique file (" << prm_filename << ") not found!";
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("**** TEMPORARY ***** TEMPORARY ***** TEMPORARY ***** TEMPORARY *****"));
 		exit(1);
 	}
@@ -909,13 +909,13 @@ clique cath::read_clique_file(const path &arg_filename ///< The clique file to r
 ///
 /// This currently only gets called from one location, which is when performing the first
 /// pass of a residue comparison
-void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The first protein
-                           const protein       &arg_protein_b,        ///< The second protein
-                           const alignment_opt &arg_opt_ss_alignment, ///< A secondary structure alignment that is required in some modes so that it can be transferred to a residue mask matrix
-                           const path_opt      &arg_clique_file       ///< An optional clique file to use
+void cath::set_mask_matrix(const protein       &prm_protein_a,        ///< The first protein
+                           const protein       &prm_protein_b,        ///< The second protein
+                           const alignment_opt &prm_opt_ss_alignment, ///< A secondary structure alignment that is required in some modes so that it can be transferred to a residue mask matrix
+                           const path_opt      &prm_clique_file       ///< An optional clique file to use
                            ) {
-	const size_t length_a = arg_protein_a.get_length();
-	const size_t length_b = arg_protein_b.get_length();
+	const size_t length_a = prm_protein_a.get_length();
+	const size_t length_b = prm_protein_b.get_length();
 
 	// Initialise arrays
 	// (are the `+ 1`s deliberate? necessary?)
@@ -928,9 +928,9 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 	}
 
 	// If using clique file
-	if ( arg_clique_file ) {
+	if ( prm_clique_file ) {
 		// Read clique file
-		const clique clique_data = read_clique_file( *arg_clique_file );
+		const clique clique_data = read_clique_file( *prm_clique_file );
 		const size_t clique_size = clique_data.equivs.size();
 
 		// Ollie's variables
@@ -940,8 +940,8 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 		for (const size_t &ctr_b : indices( length_b ) | reversed ) {
 			for (const size_t &ctr_a : indices( length_a ) | reversed ) {
 
-				const residue &residue_a       = arg_protein_a.get_residue_ref_of_index( ctr_a );
-				const residue &residue_b       = arg_protein_b.get_residue_ref_of_index( ctr_b );
+				const residue &residue_a       = prm_protein_a.get_residue_ref_of_index( ctr_a );
+				const residue &residue_b       = prm_protein_b.get_residue_ref_of_index( ctr_b );
 				const size_t   ctr_a__offset_1 = ctr_a + 1;
 				const size_t   ctr_b__offset_1 = ctr_b + 1;
 
@@ -986,8 +986,8 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 		// Set equivalent pairs at beginning and end of alignment
 		for (const size_t &ctr_b : indices( length_b ) | reversed ) {
 			for (const size_t &ctr_a : indices( length_a ) | reversed ) {
-				const residue &residue_a       = arg_protein_a.get_residue_ref_of_index( ctr_a );
-				const residue &residue_b       = arg_protein_b.get_residue_ref_of_index( ctr_b );
+				const residue &residue_a       = prm_protein_a.get_residue_ref_of_index( ctr_a );
+				const residue &residue_b       = prm_protein_b.get_residue_ref_of_index( ctr_b );
 				const size_t   ctr_a__offset_1 = ctr_a + 1;
 				const size_t   ctr_b__offset_1 = ctr_b + 1;
 
@@ -1010,21 +1010,21 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 	// return actually a reference to a bool. However none of that matters here, so
 	// it's OK to use vector<bool>
 	bool_vec_of_vec sec_struc_match_matrix;
-	if ( arg_opt_ss_alignment ) {
-		const auto last_present_a_opt = get_last_present_a_position( *arg_opt_ss_alignment );
-		const auto last_present_b_opt = get_last_present_b_position( *arg_opt_ss_alignment );
+	if ( prm_opt_ss_alignment ) {
+		const auto last_present_a_opt = get_last_present_a_position( *prm_opt_ss_alignment );
+		const auto last_present_b_opt = get_last_present_b_position( *prm_opt_ss_alignment );
 		if ( last_present_a_opt && last_present_b_opt ) {
 			sec_struc_match_matrix.assign(
 				*last_present_b_opt + 2, // ( + 1 to go from position to size and +1 because it will be indexed offset_1)
 				*last_present_a_opt + 2, // ( + 1 to go from position to size and +1 because it will be indexed offset_1)
 				false
 			);
-			BOOST_LOG_TRIVIAL( trace ) << "Setting secondary structure alignment : " << *arg_opt_ss_alignment;;
-			for (const size_t &alignment_ctr : indices( arg_opt_ss_alignment->length() ) ) {
-				if ( has_both_positions_of_index( *arg_opt_ss_alignment, alignment_ctr ) ) {
+			BOOST_LOG_TRIVIAL( trace ) << "Setting secondary structure alignment : " << *prm_opt_ss_alignment;;
+			for (const size_t &alignment_ctr : indices( prm_opt_ss_alignment->length() ) ) {
+				if ( has_both_positions_of_index( *prm_opt_ss_alignment, alignment_ctr ) ) {
 					sec_struc_match_matrix.set(
-						get_b_offset_1_position_of_index( *arg_opt_ss_alignment, alignment_ctr ),
-						get_a_offset_1_position_of_index( *arg_opt_ss_alignment, alignment_ctr ),
+						get_b_offset_1_position_of_index( *prm_opt_ss_alignment, alignment_ctr ),
+						get_a_offset_1_position_of_index( *prm_opt_ss_alignment, alignment_ctr ),
 						true
 					);
 				}
@@ -1037,13 +1037,13 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 	size_t num_residues_selected         = 0;
 	for (const size_t &residue_ctr_b : indices( length_b ) | reversed ) {
 		const size_t   residue_ctr_b__offset_1 = residue_ctr_b + 1;
-		const residue &residue_b               = arg_protein_b.get_residue_ref_of_index( residue_ctr_b );
+		const residue &residue_b               = prm_protein_b.get_residue_ref_of_index( residue_ctr_b );
 		const size_t   window_start_offset_1   = get_window_start_a_for_b__offset_1( length_a, length_b, global_window, residue_ctr_b__offset_1 );
 		const size_t   window_stop_offset_1    = get_window_stop_a_for_b__offset_1 ( length_a, length_b, global_window, residue_ctr_b__offset_1 );
 
 		for (const size_t &residue_ctr_a : irange( window_start_offset_1 - 1, window_stop_offset_1 ) | reversed ) {
 			const size_t   residue_ctr_a__offset_1 = residue_ctr_a + 1;
-			const residue &residue_a               = arg_protein_a.get_residue_ref_of_index( residue_ctr_a );
+			const residue &residue_a               = prm_protein_a.get_residue_ref_of_index( residue_ctr_a );
 			const int      a_matrix_idx__offset_1  = get_window_matrix_a_index__offset_1(
 				length_a,
 				length_b,
@@ -1057,7 +1057,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 			// IF USING SEC STR. ALIGNMENT TO GUIDE RESIDUE SELECTION
 			if ( global_doing_fast_ssap ) {
 				// Use clique method
-				if ( arg_clique_file ) {
+				if ( prm_clique_file ) {
 					if ( global_lower_mask_matrix.get( residue_ctr_b__offset_1, residue_ctr_a__offset_1 ) && residues_have_similar_area_angle_props( residue_a, residue_b ) ) {
 						++num_residues_selected;
 						global_upper_res_mask_matrix.set( residue_ctr_b__offset_1, numeric_cast<size_t>( a_matrix_idx__offset_1 ), true );
@@ -1066,7 +1066,7 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 				// If no clique data is present, use built-in secondary structure method
 				else if ( ( residue_a.get_sec_struc_number() != 0u )
 				         && ( residue_b.get_sec_struc_number() != 0u )
-				         && arg_opt_ss_alignment
+				         && prm_opt_ss_alignment
 				         && sec_struc_match_matrix.get( residue_b.get_sec_struc_number(), residue_a.get_sec_struc_number() )
 				         && residues_have_similar_area_angle_props(residue_a, residue_b) ) {
 					++num_residues_selected;
@@ -1088,13 +1088,13 @@ void cath::set_mask_matrix(const protein       &arg_protein_a,        ///< The f
 /// \brief Selects residue pairs in similar structural locations or secondary structures of same type
 ///
 /// This sets global_lower_mask_matrix and possibly global_upper_ss_mask_matrix with the selections
-void cath::select_pairs(const protein       &arg_protein_a,    ///< The first protein
-                        const protein       &arg_protein_b,    ///< The second protein
-                        const size_t        &arg_pass,         ///< The pass of this comparison (where the second typically refines the alignment generated by the first)
-                        const entry_querier &arg_entry_querier ///< The entry_querier to query either residues or secondary structures
+void cath::select_pairs(const protein       &prm_protein_a,    ///< The first protein
+                        const protein       &prm_protein_b,    ///< The second protein
+                        const size_t        &prm_pass,         ///< The pass of this comparison (where the second typically refines the alignment generated by the first)
+                        const entry_querier &prm_entry_querier ///< The entry_querier to query either residues or secondary structures
                         ) {
-	const size_t length_a = arg_entry_querier.get_length(arg_protein_a);
-	const size_t length_b = arg_entry_querier.get_length(arg_protein_b);
+	const size_t length_a = prm_entry_querier.get_length(prm_protein_a);
+	const size_t length_b = prm_entry_querier.get_length(prm_protein_b);
 
 	deque<selected_pair> selected_pairs;
 
@@ -1116,8 +1116,8 @@ void cath::select_pairs(const protein       &arg_protein_a,    ///< The first pr
 			// First pass:
 			//   for residues:             select if areas/angles similar
 			//   for secondary structures: select if both are of same type
-			if ( arg_pass == 1 ) {
-				if ( arg_entry_querier.are_similar__offset_1( arg_protein_a, arg_protein_b, ctr_a__offset_1, ctr_b__offset_1 ) ) {
+			if ( prm_pass == 1 ) {
+				if ( prm_entry_querier.are_similar__offset_1( prm_protein_a, prm_protein_b, ctr_a__offset_1, ctr_b__offset_1 ) ) {
 					++num_entries_selected;
 					global_lower_mask_matrix.set   ( ctr_b__offset_1, ctr_a__offset_1, true );
 					global_upper_ss_mask_matrix.set( ctr_b__offset_1, ctr_a__offset_1, true );
@@ -1137,7 +1137,7 @@ void cath::select_pairs(const protein       &arg_protein_a,    ///< The first pr
 	}
 
 	// For second pass and residue comparisons, copy selected residues into select structure
-	if ( global_align_pass && arg_entry_querier.temp_hacky_is_residue() ) {
+	if ( global_align_pass && prm_entry_querier.temp_hacky_is_residue() ) {
 		global_selections.assign( NUM_SELECTIONS_TO_SAVE + 1, make_pair( 0_z, 0_z ) );
 		for (const size_t &selected_ctr : indices( selected_pairs.size() ) ) {
 			// Index is calculated to put the selection at the end of the positions with indices 1..NUM_TO_SAVE
@@ -1151,10 +1151,10 @@ void cath::select_pairs(const protein       &arg_protein_a,    ///< The first pr
 	}
 
 	// Calculate fraction of total residue pairs selected
-	if ( arg_pass > 1 ) {
+	if ( prm_pass > 1 ) {
 		num_entries_selected = NUM_SELECTIONS_TO_SAVE;
 	}
-	if ( global_align_pass && arg_entry_querier.temp_hacky_is_residue()) {
+	if ( global_align_pass && prm_entry_querier.temp_hacky_is_residue()) {
 		global_frac_selected = numeric_cast<double>( num_entries_selected ) / numeric_cast<double>( total_num_entries_considered );
 	}
 }
@@ -1164,30 +1164,30 @@ void cath::select_pairs(const protein       &arg_protein_a,    ///< The first pr
 ///        (ie replace the worst if the list's already full or just add otherwise)
 ///
 /// \todo Move the lines that set global_lower_mask_matrix out of this subroutine
-void cath::update_best_pair_selections(deque<selected_pair> &arg_selected_pairs,    ///< The best scoring pairs so far, in ascending order by score
-                                       const selected_pair  &arg_potential_pair,    ///< A potential new pair
-                                       const size_t         &arg_max_num_selections ///< The maximum number of selections to store
+void cath::update_best_pair_selections(deque<selected_pair> &prm_selected_pairs,    ///< The best scoring pairs so far, in ascending order by score
+                                       const selected_pair  &prm_potential_pair,    ///< A potential new pair
+                                       const size_t         &prm_max_num_selections ///< The maximum number of selections to store
                                        ) {
-	const size_t index_a = arg_potential_pair.get_index_a();
-	const size_t index_b = arg_potential_pair.get_index_b();
+	const size_t index_a = prm_potential_pair.get_index_a();
+	const size_t index_b = prm_potential_pair.get_index_b();
 	global_lower_mask_matrix.set( index_b, index_a, false );
 
-	// If arg_selected_pairs isn't yet full or if the new score is better than the lowest score
-	// (which comes first because arg_selected_pairs is sorted) then...
-	const bool full            =  arg_selected_pairs.size()  >= arg_max_num_selections;
-	const bool new_beats_first = !arg_selected_pairs.empty() && (arg_potential_pair.get_score() > arg_selected_pairs.front().get_score());
+	// If prm_selected_pairs isn't yet full or if the new score is better than the lowest score
+	// (which comes first because prm_selected_pairs is sorted) then...
+	const bool full            =  prm_selected_pairs.size()  >= prm_max_num_selections;
+	const bool new_beats_first = !prm_selected_pairs.empty() && (prm_potential_pair.get_score() > prm_selected_pairs.front().get_score());
 	if (!full || new_beats_first) {
 		// Add the new entry to the front and then re-sort
-		arg_selected_pairs.push_front( arg_potential_pair );
-		stable_sort( arg_selected_pairs );
+		prm_selected_pairs.push_front( prm_potential_pair );
+		stable_sort( prm_selected_pairs );
 
-		// If arg_max_num_selections was already full, remove the first entry
+		// If prm_max_num_selections was already full, remove the first entry
 		if (full) {
-			const size_t first_index_a = arg_selected_pairs.front().get_index_a();
-			const size_t first_index_b = arg_selected_pairs.front().get_index_b();
+			const size_t first_index_a = prm_selected_pairs.front().get_index_a();
+			const size_t first_index_b = prm_selected_pairs.front().get_index_b();
 			global_lower_mask_matrix.set( first_index_b, first_index_a, false );
 
-			arg_selected_pairs.pop_front();
+			prm_selected_pairs.pop_front();
 		}
 
 		global_lower_mask_matrix.set( index_b, index_a, true );
@@ -1209,34 +1209,34 @@ void cath::update_best_pair_selections(deque<selected_pair> &arg_selected_pairs,
 ///       -# the code doesn't allow for wrapping of phi and psi angles
 ///       -# the code doesn't do anything to handle undetermined phi/psi angles at breaks in the chain
 ///          (which, at present, get set to 360.0)
-bool cath::residues_have_similar_area_angle_props(const residue &arg_residue_i, ///< The first  residue to compare
-                                                  const residue &arg_residue_j  ///< The second residue to compare
+bool cath::residues_have_similar_area_angle_props(const residue &prm_residue_i, ///< The first  residue to compare
+                                                  const residue &prm_residue_j  ///< The second residue to compare
                                                   ) {
-	const int    buried_i                   = get_accessi_of_residue( arg_residue_i );
-	const int    buried_j                   = get_accessi_of_residue( arg_residue_j );
+	const int    buried_i                   = get_accessi_of_residue( prm_residue_i );
+	const int    buried_j                   = get_accessi_of_residue( prm_residue_j );
 	const size_t buried_difference          = numeric_cast<size_t>( difference( buried_i, buried_j ) );
 	const size_t phi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference(
-		angle_in_degrees( arg_residue_i.get_phi_angle() ),
-		angle_in_degrees( arg_residue_j.get_phi_angle() )
+		angle_in_degrees( prm_residue_i.get_phi_angle() ),
+		angle_in_degrees( prm_residue_j.get_phi_angle() )
 	) ) );
 	const size_t psi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference(
-		angle_in_degrees( arg_residue_i.get_psi_angle() ),
-		angle_in_degrees( arg_residue_j.get_psi_angle() )
+		angle_in_degrees( prm_residue_i.get_psi_angle() ),
+		angle_in_degrees( prm_residue_j.get_psi_angle() )
 	) ) );
 
 	const size_t mean_angle_diff_in_degrees = ( phi_angle_diff_in_degrees + psi_angle_diff_in_degrees ) / 2;
-	const size_t accessibility_sum          = arg_residue_i.get_access() + arg_residue_j.get_access();
-//	const size_t accessibility_difference   = difference( arg_residue_i.get_access(), arg_residue_j.get_access() );
+	const size_t accessibility_sum          = prm_residue_i.get_access() + prm_residue_j.get_access();
+//	const size_t accessibility_difference   = difference( prm_residue_i.get_access(), prm_residue_j.get_access() );
 
-//	cerr << "Phi     a                  : " << arg_residue_i.get_phi_angle()               << endl;
-//	cerr << "Phi     b                  : " << arg_residue_j.get_phi_angle()               << endl;
-//	cerr << "Psi     a                  : " << arg_residue_i.get_psi_angle()               << endl;
-//	cerr << "Psi     b                  : " << arg_residue_j.get_psi_angle()               << endl;
+//	cerr << "Phi     a                  : " << prm_residue_i.get_phi_angle()               << endl;
+//	cerr << "Phi     b                  : " << prm_residue_j.get_phi_angle()               << endl;
+//	cerr << "Psi     a                  : " << prm_residue_i.get_psi_angle()               << endl;
+//	cerr << "Psi     b                  : " << prm_residue_j.get_psi_angle()               << endl;
 //	cerr << "Average phi/psi difference : " << mean_angle_diff_in_degrees                  << endl;
-//	cerr << "Access  a                  : " << arg_residue_i.get_access()                  << endl;
-//	cerr << "Access  b                  : " << arg_residue_j.get_access()                  << endl;
-//	cerr << "Residue a                  : " << arg_residue_i.get_amino_acid().get_letter() << endl;
-//	cerr << "Residue b                  : " << arg_residue_j.get_amino_acid().get_letter() << endl;
+//	cerr << "Access  a                  : " << prm_residue_i.get_access()                  << endl;
+//	cerr << "Access  b                  : " << prm_residue_j.get_access()                  << endl;
+//	cerr << "Residue a                  : " << prm_residue_i.get_amino_acid().get_letter() << endl;
+//	cerr << "Residue b                  : " << prm_residue_j.get_amino_acid().get_letter() << endl;
 //	cerr << "Buried  a                  : " << buried_i                                    << endl;
 //	cerr << "Buried  b                  : " << buried_j                                    << endl;
 //	cerr << "Buried difference          : " << buried_difference                           << endl;
@@ -1274,20 +1274,20 @@ bool cath::residues_have_similar_area_angle_props(const residue &arg_residue_i, 
 ///       by the dynamic-programming code in score_matrix().
 ///
 /// \todo For this function, ensure that the particular masking behaviour is also dependency-injected
-void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     ///< The first protein
-                                       const protein       &arg_protein_b,     ///< The second protein
-                                       const entry_querier &arg_entry_querier, ///< The entry_querier to query either residues or secondary structures
-                                       const bool          &arg_align_pass     ///< Whether this is a later, alignment-refining pass
+void cath::populate_upper_score_matrix(const protein       &prm_protein_a,     ///< The first protein
+                                       const protein       &prm_protein_b,     ///< The second protein
+                                       const entry_querier &prm_entry_querier, ///< The entry_querier to query either residues or secondary structures
+                                       const bool          &prm_align_pass     ///< Whether this is a later, alignment-refining pass
                                        ) {
 	// If this is a later, alignment-refining pass of residue this use the selected
 	// set of top-scoring residue pairs
-	const bool res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
-	const bool using_selections  = (res_not_ss__hacky && arg_align_pass);
+	const bool res_not_ss__hacky = prm_entry_querier.temp_hacky_is_residue();
+	const bool using_selections  = (res_not_ss__hacky && prm_align_pass);
 
 	// Set number of elements in protein A and B to compare
 
-	const size_t full_length_a = arg_entry_querier.get_length(arg_protein_a);
-	const size_t full_length_b = arg_entry_querier.get_length(arg_protein_b);
+	const size_t full_length_a = prm_entry_querier.get_length(prm_protein_a);
+	const size_t full_length_b = prm_entry_querier.get_length(prm_protein_b);
 	const size_t length_a      =                                            full_length_a;
 	const size_t length_b      = using_selections ? global_num_selections : full_length_b;
 
@@ -1304,11 +1304,11 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 	bool   found_non_zero_cell            = false;
 	bool   found_threshold_cell           = false;
 
-	// Reverse-iterate over the elements in arg_protein_b
+	// Reverse-iterate over the elements in prm_protein_b
 	// (or over the selections if using them)
 	for (const size_t &ctr_b : indices( length_b ) | reversed ) {
 		const size_t ctr_b__offset_1 = ctr_b + 1;
-		// Calculate the arg_protein_a window start/stop for this arg_protein_b entry
+		// Calculate the prm_protein_a window start/stop for this prm_protein_b entry
 		// (or just set them both from the selected pair if using selections)
 		const size_t window_start__offset_1 = using_selections ? global_selections[ctr_b__offset_1].first
 		                                                       : get_window_start_a_for_b__offset_1( length_a, length_b, global_window, ctr_b__offset_1 );
@@ -1340,11 +1340,11 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 			if ( should_compare_pair ) {
 				++num_actual_upper_cell_comps;
 				const auto compare_result = compare_upper_cell(
-					arg_protein_a,
-					arg_protein_b,
+					prm_protein_a,
+					prm_protein_b,
 					ctr_a__offset_1,
 					jval,
-					arg_entry_querier,
+					prm_entry_querier,
 					normalisation
 				);
 				found_non_zero_cell  = found_non_zero_cell  || ( compare_result != compare_upper_cell_result::ZERO   );
@@ -1355,16 +1355,16 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 
 
 	const string msg_context_prfx = "When populating upper_score_matrix ("
-	                                + arg_entry_querier.get_entry_name()
+	                                + prm_entry_querier.get_entry_name()
 	                                + "; pass "
-	                                + booled_to_string( arg_align_pass )
+	                                + booled_to_string( prm_align_pass )
 	                                + "), ";
 	BOOST_LOG_TRIVIAL( trace ) << msg_context_prfx
 	                           << "compared "
 	                           << num_actual_upper_cell_comps
 	                           << " residue pairs out of a possible "
 	                           << num_potential_upper_cell_comps;
-	if ( res_not_ss__hacky && ! arg_align_pass ) {
+	if ( res_not_ss__hacky && ! prm_align_pass ) {
 		if ( num_actual_upper_cell_comps == 0 ) {
 			BOOST_LOG_TRIVIAL( warning ) << msg_context_prfx
 			                             << "chose no residue pairs out of a possible "
@@ -1396,28 +1396,28 @@ void cath::populate_upper_score_matrix(const protein       &arg_protein_a,     /
 ///        adds alignment path to upper level matrix
 ///
 /// \todo Figure out what's going on
-compare_upper_cell_result cath::compare_upper_cell(const protein       &arg_protein_a,                   ///< The first  protein
-                                                   const protein       &arg_protein_b,                   ///< The second protein
-                                                   const size_t        &arg_a_view_from_index__offset_1, ///< The index of the residue/secondary-structure in the first  protein on which this should be performed
-                                                   const size_t        &arg_b_view_from_index__offset_1, ///< The index of the residue/secondary-structure in the second protein on which this should be performed
-                                                   const entry_querier &arg_entry_querier,               ///< The entry_querier to query either residues or secondary structures
-                                                   const double        &arg_normalisation                ///< The value that should be used to normalise the score for residues before comparison against MIN_LOWER_MAT_RES_SCORE
+compare_upper_cell_result cath::compare_upper_cell(const protein       &prm_protein_a,                   ///< The first  protein
+                                                   const protein       &prm_protein_b,                   ///< The second protein
+                                                   const size_t        &prm_a_view_from_index__offset_1, ///< The index of the residue/secondary-structure in the first  protein on which this should be performed
+                                                   const size_t        &prm_b_view_from_index__offset_1, ///< The index of the residue/secondary-structure in the second protein on which this should be performed
+                                                   const entry_querier &prm_entry_querier,               ///< The entry_querier to query either residues or secondary structures
+                                                   const double        &prm_normalisation                ///< The value that should be used to normalise the score for residues before comparison against MIN_LOWER_MAT_RES_SCORE
                                                    ) {
-	const bool   res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
-	const size_t length_a          = arg_entry_querier.get_length(arg_protein_a);
-	const size_t length_b          = arg_entry_querier.get_length(arg_protein_b);
+	const bool   res_not_ss__hacky = prm_entry_querier.temp_hacky_is_residue();
+	const size_t length_a          = prm_entry_querier.get_length(prm_protein_a);
+	const size_t length_b          = prm_entry_querier.get_length(prm_protein_b);
 
 	// Construct two sources of scores to be used for aligning using dynamic-programming:
-	//  * the first just uses arg_entry_querier, arg_a_view_from_index and arg_b_view_from_index
+	//  * the first just uses prm_entry_querier, prm_a_view_from_index and prm_b_view_from_index
 	//  * the second is a masked version of the first, using global_lower_mask_matrix
-	check_offset_1(arg_a_view_from_index__offset_1);
-	check_offset_1(arg_b_view_from_index__offset_1);
+	check_offset_1(prm_a_view_from_index__offset_1);
+	check_offset_1(prm_b_view_from_index__offset_1);
 	const entry_querier_dyn_prog_score_source entry_querier_score_source(
-		arg_entry_querier,
-		arg_protein_a,
-		arg_protein_b,
-		arg_a_view_from_index__offset_1 - 1,
-		arg_b_view_from_index__offset_1 - 1
+		prm_entry_querier,
+		prm_protein_a,
+		prm_protein_b,
+		prm_a_view_from_index__offset_1 - 1,
+		prm_b_view_from_index__offset_1 - 1
 	);
 	const mask_dyn_prog_score_source mask_score_source(
 		global_lower_mask_matrix,
@@ -1439,13 +1439,13 @@ compare_upper_cell_result cath::compare_upper_cell(const protein       &arg_prot
 	score_type       score        = score_and_alignment.first;
 	const alignment &my_alignment = score_and_alignment.second;
 
-//	cerr << "Comparing\t" << arg_a_view_from_index << "\t" << arg_b_view_from_index << "\t" << arg_entry_querier.get_entry_name();
+//	cerr << "Comparing\t" << prm_a_view_from_index << "\t" << prm_b_view_from_index << "\t" << prm_entry_querier.get_entry_name();
 //	cerr << "\tscore is " << score << "\twith alignment length " << my_alignment.length() << endl;
 
 	// Check whether normalised score is above threshold
 	if ( res_not_ss__hacky ) {
-		if ( arg_normalisation != 0.0 ) {
-			score = numeric_cast<score_type>( numeric_cast<double>( score ) / arg_normalisation );
+		if ( prm_normalisation != 0.0 ) {
+			score = numeric_cast<score_type>( numeric_cast<double>( score ) / prm_normalisation );
 		}
 		else {
 			score = 0;
@@ -1465,19 +1465,19 @@ compare_upper_cell_result cath::compare_upper_cell(const protein       &arg_prot
 			const aln_posn_type a_dest_to_index__offset_1 = get_a_offset_1_position_of_index( my_alignment, alignment_ctr );
 			const aln_posn_type b_dest_to_index__offset_1 = get_b_offset_1_position_of_index( my_alignment, alignment_ctr );
 			const int           a_matrix_idx__offset_1    = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, a_dest_to_index__offset_1, b_dest_to_index__offset_1);
-			const score_type    score_addend              = arg_entry_querier.distance_score__offset_1(
-				arg_protein_a,                   arg_protein_b,
-				arg_a_view_from_index__offset_1, arg_b_view_from_index__offset_1,
+			const score_type    score_addend              = prm_entry_querier.distance_score__offset_1(
+				prm_protein_a,                   prm_protein_b,
+				prm_a_view_from_index__offset_1, prm_b_view_from_index__offset_1,
 				a_dest_to_index__offset_1,       b_dest_to_index__offset_1
 			);
 			global_upper_score_matrix.get( b_dest_to_index__offset_1, numeric_cast<size_t>( a_matrix_idx__offset_1 ) ) += score_addend;
-//			cerr << "At\t" << ( arg_a_view_from_index__offset_1 - 1 );
-//			cerr << "\t"   << ( arg_b_view_from_index__offset_1 - 1 );
+//			cerr << "At\t" << ( prm_a_view_from_index__offset_1 - 1 );
+//			cerr << "\t"   << ( prm_b_view_from_index__offset_1 - 1 );
 //			cerr << "\t"   << ( a_dest_to_index__offset_1       - 1 );
 //			cerr << "\t"   << ( b_dest_to_index__offset_1       - 1 );
 //			cerr << "\tadding score:\t" << score_addend;
 //			cerr << "\tto get:\t" << global_upper_score_matrix[b_dest_to_index__offset_1][ numeric_cast<size_t>( a_matrix_idx__offset_1 ) ];
-//			cerr <<"\t["   << get_plural_name(arg_entry_querier) << "]" << endl;
+//			cerr <<"\t["   << get_plural_name(prm_entry_querier) << "]" << endl;
 		}
 	}
 	return compare_upper_cell_result::SCORED;
@@ -1486,27 +1486,27 @@ compare_upper_cell_result cath::compare_upper_cell(const protein       &arg_prot
 
 
 /// \brief Compares vectors/scalars/overlap/packing between secondary structures in two proteins
-score_type cath::context_sec(const protein &arg_protein_a,         ///< The first  protein
-                             const protein &arg_protein_b,         ///< The second protein
-                             const size_t  &arg_a_view_from_index, ///< The "from" secondary structure in the first  protein
-                             const size_t  &arg_b_view_from_index, ///< The "from" secondary structure in the second protein
-                             const size_t  &arg_to_ss_index_a,     ///< The index of the "to" secondary structure in the first  protein
-                             const size_t  &arg_to_ss_index_b      ///< The index of the "to" secondary structure in the second protein
+score_type cath::context_sec(const protein &prm_protein_a,         ///< The first  protein
+                             const protein &prm_protein_b,         ///< The second protein
+                             const size_t  &prm_a_view_from_index, ///< The "from" secondary structure in the first  protein
+                             const size_t  &prm_b_view_from_index, ///< The "from" secondary structure in the second protein
+                             const size_t  &prm_to_ss_index_a,     ///< The index of the "to" secondary structure in the first  protein
+                             const size_t  &prm_to_ss_index_b      ///< The index of the "to" secondary structure in the second protein
                              ) {
-	const sec_struc               &from_sec_struc_a = arg_protein_a.get_sec_struc_ref_of_index( arg_a_view_from_index );
-	const sec_struc               &from_sec_struc_b = arg_protein_b.get_sec_struc_ref_of_index( arg_b_view_from_index );
-	const sec_struc               &to_sec_struc_a   = arg_protein_a.get_sec_struc_ref_of_index( arg_to_ss_index_a     );
-	const sec_struc               &to_sec_struc_b   = arg_protein_b.get_sec_struc_ref_of_index( arg_to_ss_index_b     );
-	const sec_struc_planar_angles &planar_angles_a  = from_sec_struc_a.get_planar_angles_of_index( arg_to_ss_index_a );
-	const sec_struc_planar_angles &planar_angles_b  = from_sec_struc_b.get_planar_angles_of_index( arg_to_ss_index_b );
+	const sec_struc               &from_sec_struc_a = prm_protein_a.get_sec_struc_ref_of_index( prm_a_view_from_index );
+	const sec_struc               &from_sec_struc_b = prm_protein_b.get_sec_struc_ref_of_index( prm_b_view_from_index );
+	const sec_struc               &to_sec_struc_a   = prm_protein_a.get_sec_struc_ref_of_index( prm_to_ss_index_a     );
+	const sec_struc               &to_sec_struc_b   = prm_protein_b.get_sec_struc_ref_of_index( prm_to_ss_index_b     );
+	const sec_struc_planar_angles &planar_angles_a  = from_sec_struc_a.get_planar_angles_of_index( prm_to_ss_index_a );
+	const sec_struc_planar_angles &planar_angles_b  = from_sec_struc_b.get_planar_angles_of_index( prm_to_ss_index_b );
 
 	// If types of beta strands are different, return
 	if (from_sec_struc_a.get_type() != from_sec_struc_b.get_type() || to_sec_struc_a.get_type() != to_sec_struc_b.get_type() ) {
 		return 0;
 	}
 
-	const coord orig_from_to_vec_a       = calculate_inter_sec_struc_vector( arg_protein_a, arg_a_view_from_index, arg_to_ss_index_a );
-	const coord orig_from_to_vec_b       = calculate_inter_sec_struc_vector( arg_protein_b, arg_b_view_from_index, arg_to_ss_index_b );
+	const coord orig_from_to_vec_a       = calculate_inter_sec_struc_vector( prm_protein_a, prm_a_view_from_index, prm_to_ss_index_a );
+	const coord orig_from_to_vec_b       = calculate_inter_sec_struc_vector( prm_protein_b, prm_b_view_from_index, prm_to_ss_index_b );
 	const coord scaled_from_to_vec_a     = numeric_cast<double>(entry_querier::INTEGER_SCALING) * orig_from_to_vec_a;
 	const coord scaled_from_to_vec_b     = numeric_cast<double>(entry_querier::INTEGER_SCALING) * orig_from_to_vec_b;
 	const coord int_scaled_from_to_vec_a = int_cast_copy( scaled_from_to_vec_a );
@@ -1586,13 +1586,13 @@ score_type cath::context_sec(const protein &arg_protein_a,         ///< The firs
 ///       small and that alignments are unaffected.
 ///       Once final scoring is done with doubles, it should be relatively easy to check
 ///       that making the alignment algorithm use doubles (or maybe floats) only improves final scores.
-ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///< The alignment to score
-                                      const protein       &arg_protein_a,    ///< The first protein
-                                      const protein       &arg_protein_b,    ///< The second protein
-                                      const entry_querier &arg_entry_querier ///< The entry_querier to query either residues or secondary structures
+ssap_scores cath::calculate_log_score(const alignment     &prm_alignment,    ///< The alignment to score
+                                      const protein       &prm_protein_a,    ///< The first protein
+                                      const protein       &prm_protein_b,    ///< The second protein
+                                      const entry_querier &prm_entry_querier ///< The entry_querier to query either residues or secondary structures
                                       ) {
-	const size_t length_a = arg_entry_querier.get_length(arg_protein_a);
-	const size_t length_b = arg_entry_querier.get_length(arg_protein_b);
+	const size_t length_a = prm_entry_querier.get_length(prm_protein_a);
+	const size_t length_b = prm_entry_querier.get_length(prm_protein_b);
 	size_t       count    = 0;
 
 	// Matrix in which to do the final score calculations, initialised to zeroes
@@ -1600,19 +1600,19 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 	vector<vector<score_type> > final_score_matrix( max_alignment_length, vector<score_type>( max_alignment_length , 0 ) );
 
 	// FOR EACH CELL ALONG FINAL PATH COMPARE VECTORS TO OTHER RESIDUES ON PATH
-	for (const size_t &alignment_ctr_i : indices( arg_alignment.length() ) ) {
-		const bool i_has_both_posns = has_both_positions_of_index( arg_alignment, alignment_ctr_i );
+	for (const size_t &alignment_ctr_i : indices( prm_alignment.length() ) ) {
+		const bool i_has_both_posns = has_both_positions_of_index( prm_alignment, alignment_ctr_i );
 
 		if (i_has_both_posns) {
-			const aln_posn_type i_posn_a = get_a_offset_1_position_of_index( arg_alignment, alignment_ctr_i );
-			const aln_posn_type i_posn_b = get_b_offset_1_position_of_index( arg_alignment, alignment_ctr_i );
+			const aln_posn_type i_posn_a = get_a_offset_1_position_of_index( prm_alignment, alignment_ctr_i );
+			const aln_posn_type i_posn_b = get_b_offset_1_position_of_index( prm_alignment, alignment_ctr_i );
 
-			for (const size_t &alignment_ctr_j : indices( arg_alignment.length() ) ) {
-				const bool j_has_both_posns = has_both_positions_of_index( arg_alignment, alignment_ctr_j );
+			for (const size_t &alignment_ctr_j : indices( prm_alignment.length() ) ) {
+				const bool j_has_both_posns = has_both_positions_of_index( prm_alignment, alignment_ctr_j );
 
 				if (j_has_both_posns) {
-					const aln_posn_type j_posn_a = get_a_offset_1_position_of_index( arg_alignment, alignment_ctr_j );
-					const aln_posn_type j_posn_b = get_b_offset_1_position_of_index( arg_alignment, alignment_ctr_j );
+					const aln_posn_type j_posn_a = get_a_offset_1_position_of_index( prm_alignment, alignment_ctr_j );
+					const aln_posn_type j_posn_b = get_b_offset_1_position_of_index( prm_alignment, alignment_ctr_j );
 
 					// Score of distance from (
 					//   j_posn_a seen from residue_i_a view
@@ -1620,15 +1620,15 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 					//   j_posn_b seen from residue_i_b view
 					// )
 
-					const bool are_comparable = arg_entry_querier.are_comparable__offset_1(
-						arg_protein_a, arg_protein_b,
+					const bool are_comparable = prm_entry_querier.are_comparable__offset_1(
+						prm_protein_a, prm_protein_b,
 							 i_posn_a,      i_posn_b,
 							 j_posn_a,      j_posn_b
 					);
 					if ( are_comparable ) {
 						++count;
-						const score_type pair_score = arg_entry_querier.distance_score__offset_1(
-							arg_protein_a, arg_protein_b,
+						const score_type pair_score = prm_entry_querier.distance_score__offset_1(
+							prm_protein_a, prm_protein_b,
 								 i_posn_a,      i_posn_b,
 								 j_posn_a,      j_posn_b
 						);
@@ -1650,17 +1650,17 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 
 //	cerr << "maxscore at start is            : " << maxscore << endl;
 
-	for (const size_t &alignment_ctr : indices( arg_alignment.length() ) ) {
-		const bool has_both_posns = has_both_positions_of_index( arg_alignment, alignment_ctr );
+	for (const size_t &alignment_ctr : indices( prm_alignment.length() ) ) {
+		const bool has_both_posns = has_both_positions_of_index( prm_alignment, alignment_ctr );
 
 		if ( has_both_posns ) {
-			const aln_posn_type a_position = get_a_offset_1_position_of_index( arg_alignment, alignment_ctr );
-			const aln_posn_type b_position = get_b_offset_1_position_of_index( arg_alignment, alignment_ctr );
+			const aln_posn_type a_position = get_a_offset_1_position_of_index( prm_alignment, alignment_ctr );
+			const aln_posn_type b_position = get_b_offset_1_position_of_index( prm_alignment, alignment_ctr );
 
 			score_type gap = 0;
 			if ( ! is_first_with_both_posns ) {
 				if ( ! prev_had_both_posns || ( a_position != prev_a_position + 1 ) || ( b_position != prev_b_position + 1 ) ) {
-					gap = numeric_cast<score_type>( get_gap_penalty( arg_entry_querier ) );
+					gap = numeric_cast<score_type>( get_gap_penalty( prm_entry_querier ) );
 				}
 			}
 			maxscore += final_score_matrix[b_position][a_position] - gap;
@@ -1671,8 +1671,8 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 
 		prev_had_both_posns = has_both_posns;
 		if ( prev_had_both_posns ) {
-			prev_a_position = get_a_offset_1_position_of_index( arg_alignment, alignment_ctr );
-			prev_b_position = get_b_offset_1_position_of_index( arg_alignment, alignment_ctr );
+			prev_a_position = get_a_offset_1_position_of_index( prm_alignment, alignment_ctr );
+			prev_b_position = get_b_offset_1_position_of_index( prm_alignment, alignment_ctr );
 		}
 	}
 
@@ -1686,7 +1686,7 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 	const double final_score_scaling  = 1000.0;
 
 	// (note that log() is base-e not base-10 (which is implemented through log10()))
-	const double optimum_single_score = arg_entry_querier.optimum_single_score();
+	const double optimum_single_score = prm_entry_querier.optimum_single_score();
 	const double max_log              = std::log( optimum_single_score * final_score_scaling );
 
 	ssap_scores local_ssap_scores;
@@ -1717,7 +1717,7 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 
 	// CALCULATE GLOBAL SCORE 1 (this is normalised over the smallest protein)
 	const size_t min_length              = min(length_a, length_b);
-	const size_t num_comparable_over_min = num_comparable(arg_entry_querier, min_length);
+	const size_t num_comparable_over_min = num_comparable(prm_entry_querier, min_length);
 	if ( ( maxscore != 0 ) && num_comparable_over_min > 0 ) {
 		const double scaled_avg_single_score   = numeric_cast<double>(maxscore) * final_score_scaling / numeric_cast<double>(num_comparable_over_min);
 		const double final_score_over_compared = 100.0 * std::log(scaled_avg_single_score) / max_log;
@@ -1726,14 +1726,14 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 
 	// CALCULATE GLOBAL SCORE 2 (this is normalised over the largest protein)
 	const size_t max_length              = max(length_a, length_b);
-	const size_t num_comparable_over_max = num_comparable(arg_entry_querier, max_length);
+	const size_t num_comparable_over_max = num_comparable(prm_entry_querier, max_length);
 	if ( ( maxscore != 0 ) && num_comparable_over_max > 0 ) {
 		const double scaled_avg_single_score   = numeric_cast<double>(maxscore) * final_score_scaling / numeric_cast<double>(num_comparable_over_max);
 		const double final_score_over_compared = 100.0 * std::log(scaled_avg_single_score) / max_log;
 		local_ssap_scores.set_ssap_score_over_larger(final_score_over_compared);
 	}
 
-	if ( arg_entry_querier.temp_hacky_is_residue() ) {
+	if ( prm_entry_querier.temp_hacky_is_residue() ) {
 		if ( num_aligned_pairs > 0 && ( max_length != 0u ) ) {
 			local_ssap_scores.set_percentage_aligned_pairs_over_larger(
 				( 100.0 * numeric_cast<double>( num_aligned_pairs ) ) / numeric_cast<double>(max_length)
@@ -1743,14 +1743,14 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 	}
 
 	// If considering residues, calculate the sequence identity and store it the ssap_scores object
-	if ( arg_entry_querier.temp_hacky_is_residue() ) {
-		local_ssap_scores.set_seq_id(calculate_sequence_identity(arg_alignment, arg_protein_a, arg_protein_b));
+	if ( prm_entry_querier.temp_hacky_is_residue() ) {
+		local_ssap_scores.set_seq_id(calculate_sequence_identity(prm_alignment, prm_protein_a, prm_protein_b));
 	}
 
 //	cerr << "***************: Scores are\t"    << local_ssap_scores.get_ssap_score_over_larger();
 //	cerr << "\t"              << local_ssap_scores.get_ssap_score_over_smaller();
 //	cerr << "\t"              << local_ssap_scores.get_ssap_score_over_compared();
-//	cerr << " for alignment " << arg_alignment;
+//	cerr << " for alignment " << prm_alignment;
 //	cerr << endl;
 
 	return local_ssap_scores;
@@ -1768,16 +1768,16 @@ ssap_scores cath::calculate_log_score(const alignment     &arg_alignment,    ///
 ///         - the wrong alignment was output for the SSAP score that was chosen or
 ///         - the alignment is the correct one for the SSAP score and it's
 ///           just the sequence identity and overlap that are wrong.
-double cath::calculate_sequence_identity(const alignment &arg_alignment, ///< The alignment from which the sequence identity should be calculated
-                                         const protein   &arg_protein_a, ///< The first  protein involved in the alignment
-                                         const protein   &arg_protein_b  ///< The second protein involved in the alignment
+double cath::calculate_sequence_identity(const alignment &prm_alignment, ///< The alignment from which the sequence identity should be calculated
+                                         const protein   &prm_protein_a, ///< The first  protein involved in the alignment
+                                         const protein   &prm_protein_b  ///< The second protein involved in the alignment
                                          ) {
 	// For each residue pair in the alignment, increment num_amino_acid_matches if the amino acids match
 	size_t num_amino_acid_matches = 0;
-	for (const size_t &alignment_ctr : indices( arg_alignment.length() ) ) {
-		if (has_both_positions_of_index(arg_alignment, alignment_ctr)) {
-			const residue &residue_a = get_a_residue_cref_of_index(arg_alignment, arg_protein_a, alignment_ctr);
-			const residue &residue_b = get_b_residue_cref_of_index(arg_alignment, arg_protein_b, alignment_ctr);
+	for (const size_t &alignment_ctr : indices( prm_alignment.length() ) ) {
+		if (has_both_positions_of_index(prm_alignment, alignment_ctr)) {
+			const residue &residue_a = get_a_residue_cref_of_index(prm_alignment, prm_protein_a, alignment_ctr);
+			const residue &residue_b = get_b_residue_cref_of_index(prm_alignment, prm_protein_b, alignment_ctr);
 			if (residue_a.get_amino_acid() == residue_b.get_amino_acid()) {
 				++num_amino_acid_matches;
 			}
@@ -1785,35 +1785,35 @@ double cath::calculate_sequence_identity(const alignment &arg_alignment, ///< Th
 	}
 
 	// Return the count of equal amino acid types as a percentage of the shorter length
-	const double min_length = numeric_cast<double>( min( arg_protein_a.get_length(), arg_protein_b.get_length() ) );
+	const double min_length = numeric_cast<double>( min( prm_protein_a.get_length(), prm_protein_b.get_length() ) );
 	return 100.0 * numeric_cast<double>( num_amino_acid_matches ) / min_length;
 }
 
 
 /// \brief TODOCUMENT
-bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///< The alignment for which scores should be output
-                            const protein                 &arg_protein_a,    ///< The first protein
-                            const protein                 &arg_protein_b,    ///< The second protein
-                            const ssap_scores             &arg_ssap_scores,  ///< The scores to be output
-                            const old_ssap_options_block  &arg_ssap_options, ///< The old_ssap_options_block to specify how things should be done
-                            const data_dirs_spec          &arg_data_dirs     ///< The data directories from which data should be read
+bool cath::save_ssap_scores(const alignment               &prm_alignment,    ///< The alignment for which scores should be output
+                            const protein                 &prm_protein_a,    ///< The first protein
+                            const protein                 &prm_protein_b,    ///< The second protein
+                            const ssap_scores             &prm_ssap_scores,  ///< The scores to be output
+                            const old_ssap_options_block  &prm_ssap_options, ///< The old_ssap_options_block to specify how things should be done
+                            const data_dirs_spec          &prm_data_dirs     ///< The data directories from which data should be read
                             ) {
 	BOOST_LOG_TRIVIAL( debug ) << "Function: save_ssap_scores";
 	
 	// Select get_ssap_score_over_smaller if a local score is needed, or get_ssap_score_over_larger otherwise
-	const double select_score = arg_ssap_options.get_use_local_ssap_score() ? arg_ssap_scores.get_ssap_score_over_smaller()
-	                                                             : arg_ssap_scores.get_ssap_score_over_larger();
+	const double select_score = prm_ssap_options.get_use_local_ssap_score() ? prm_ssap_scores.get_ssap_score_over_smaller()
+	                                                             : prm_ssap_scores.get_ssap_score_over_larger();
 	
 	// Do not output files if score is not high enough
-	const bool score_is_high_enough = (select_score >= arg_ssap_options.get_min_score_for_writing_files());
+	const bool score_is_high_enough = (select_score >= prm_ssap_options.get_min_score_for_writing_files());
 	
 	// Get RMSD value
 	const pair<size_t, double> num_superposed_and_rmsd = superpose(
-		arg_protein_a,
-		arg_protein_b,
-		arg_alignment,
-		arg_ssap_options,
-		arg_data_dirs,
+		prm_protein_a,
+		prm_protein_b,
+		prm_alignment,
+		prm_ssap_options,
+		prm_data_dirs,
 		score_is_high_enough
 	);
 	const size_t &num_superposed = num_superposed_and_rmsd.first;
@@ -1825,19 +1825,19 @@ bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///
 			global_ssap_line1,
 			SSAP_LINE_LENGTH - 1,
 			"%6s  %6s %4zu %4zu %6.2f %4zu %4zu %4zu %6.2f",
-			get_domain_or_specified_or_name_from_acq( arg_protein_a ).c_str(),
-			get_domain_or_specified_or_name_from_acq( arg_protein_b ).c_str(),
-			arg_protein_a.get_length(),
-			arg_protein_b.get_length(),
+			get_domain_or_specified_or_name_from_acq( prm_protein_a ).c_str(),
+			get_domain_or_specified_or_name_from_acq( prm_protein_b ).c_str(),
+			prm_protein_a.get_length(),
+			prm_protein_b.get_length(),
 			select_score,
-			arg_ssap_scores.get_num_aligned_pairs(),
-			numeric_cast<size_t>( arg_ssap_scores.get_percentage_aligned_pairs_over_larger() ),
-			numeric_cast<size_t>( arg_ssap_scores.get_seq_id() ),
+			prm_ssap_scores.get_num_aligned_pairs(),
+			numeric_cast<size_t>( prm_ssap_scores.get_percentage_aligned_pairs_over_larger() ),
+			numeric_cast<size_t>( prm_ssap_scores.get_seq_id() ),
 			rmsd
 		);
 		// If the cutoff for superposition was above the default, then output the number of aligned residue pairs
 		// used in the superposition
-		if (arg_ssap_options.get_min_score_for_superposition() > common_residue_select_min_score_policy::MIN_CUTOFF) {
+		if (prm_ssap_options.get_min_score_for_superposition() > common_residue_select_min_score_policy::MIN_CUTOFF) {
 			const string temp_prev_global_ssap_line1(global_ssap_line1);
 			snprintf( global_ssap_line1, SSAP_LINE_LENGTH - 1, "%s %4zu", temp_prev_global_ssap_line1.c_str(), num_superposed );
 		}
@@ -1850,19 +1850,19 @@ bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///
 			global_ssap_line2,
 			SSAP_LINE_LENGTH - 1,
 			"%6s  %6s %4zu %4zu %6.2f %4zu %4zu %4zu %6.2f",
-			get_domain_or_specified_or_name_from_acq( arg_protein_a ).c_str(),
-			get_domain_or_specified_or_name_from_acq( arg_protein_b ).c_str(),
-			arg_protein_a.get_length(),
-			arg_protein_b.get_length(),
+			get_domain_or_specified_or_name_from_acq( prm_protein_a ).c_str(),
+			get_domain_or_specified_or_name_from_acq( prm_protein_b ).c_str(),
+			prm_protein_a.get_length(),
+			prm_protein_b.get_length(),
 			select_score,
-			arg_ssap_scores.get_num_aligned_pairs(),
-			numeric_cast<size_t>( arg_ssap_scores.get_percentage_aligned_pairs_over_larger() ),
-			numeric_cast<size_t>( arg_ssap_scores.get_seq_id() ),
+			prm_ssap_scores.get_num_aligned_pairs(),
+			numeric_cast<size_t>( prm_ssap_scores.get_percentage_aligned_pairs_over_larger() ),
+			numeric_cast<size_t>( prm_ssap_scores.get_seq_id() ),
 			rmsd
 		);
 		// If the cutoff for superposition was above the default, then output the number of aligned residue pairs
 		// used in the superposition
-		if (arg_ssap_options.get_min_score_for_superposition() > common_residue_select_min_score_policy::MIN_CUTOFF) {
+		if (prm_ssap_options.get_min_score_for_superposition() > common_residue_select_min_score_policy::MIN_CUTOFF) {
 			const string temp_prev_global_ssap_line2(global_ssap_line2);
 			snprintf( global_ssap_line2, SSAP_LINE_LENGTH - 1, "%s %4zu", temp_prev_global_ssap_line2.c_str(), num_superposed );
 		}
@@ -1875,21 +1875,21 @@ bool cath::save_ssap_scores(const alignment               &arg_alignment,    ///
 
 
 /// \brief TODOCUMENT
-void cath::save_zero_scores(const protein   &arg_protein_a,  ///< The first protein
-                            const protein   &arg_protein_b,  ///< The second protein
-                            const ptrdiff_t &arg_run_counter ///< The run counter
+void cath::save_zero_scores(const protein   &prm_protein_a,  ///< The first protein
+                            const protein   &prm_protein_b,  ///< The second protein
+                            const ptrdiff_t &prm_run_counter ///< The run counter
                             ) {
 	BOOST_LOG_TRIVIAL( debug ) << "Function: save_zero_scores()";
 
-	if ( arg_run_counter == 1 ) {
+	if ( prm_run_counter == 1 ) {
 		snprintf(
 			global_ssap_line1,
 			SSAP_LINE_LENGTH - 1,
 			"%6s  %6s %4zu %4zu %6.2f %4zu %4zu %4zu %6.2f",
-			get_domain_or_specified_or_name_from_acq( arg_protein_a ).c_str(),
-			get_domain_or_specified_or_name_from_acq( arg_protein_b ).c_str(),
-			arg_protein_a.get_length(),
-			arg_protein_b.get_length(),
+			get_domain_or_specified_or_name_from_acq( prm_protein_a ).c_str(),
+			get_domain_or_specified_or_name_from_acq( prm_protein_b ).c_str(),
+			prm_protein_a.get_length(),
+			prm_protein_b.get_length(),
 			0.0,
 			0ul,
 			0ul,
@@ -1899,15 +1899,15 @@ void cath::save_zero_scores(const protein   &arg_protein_a,  ///< The first prot
 		
 		global_ssap_score1 = 0.0;
 	}
-	else if ( arg_run_counter == 2 ) {
+	else if ( prm_run_counter == 2 ) {
 		snprintf(
 			global_ssap_line2,
 			SSAP_LINE_LENGTH - 1,
 			"%6s  %6s %4zu %4zu %6.2f %4zu %4zu %4zu %6.2f %6.2f",
-			get_domain_or_specified_or_name_from_acq( arg_protein_a ).c_str(),
-			get_domain_or_specified_or_name_from_acq( arg_protein_b ).c_str(),
-			arg_protein_a.get_length(),
-			arg_protein_b.get_length(),
+			get_domain_or_specified_or_name_from_acq( prm_protein_a ).c_str(),
+			get_domain_or_specified_or_name_from_acq( prm_protein_b ).c_str(),
+			prm_protein_a.get_length(),
+			prm_protein_b.get_length(),
 			0.0,
 			0ul,
 			0ul,
@@ -1922,25 +1922,25 @@ void cath::save_zero_scores(const protein   &arg_protein_a,  ///< The first prot
 
 
 /// \brief TODOCUMENT
-void cath::print_ssap_scores(ostream            &arg_os,              ///< TODOCUMENT
-                             const double       &arg_ssap_score_1,    ///< TODOCUMENT
-                             const double       &arg_ssap_score_2,    ///< TODOCUMENT
-                             const string       &arg_ssap_line1,      ///< TODOCUMENT
-                             const string       &arg_ssap_line2,      ///< TODOCUMENT
-                             const ptrdiff_t    &arg_run_counter,     ///< TODOCUMENT
-                             const bool         &arg_write_all_scores ///< TODOCUMENT
+void cath::print_ssap_scores(ostream            &prm_os,              ///< TODOCUMENT
+                             const double       &prm_ssap_score_1,    ///< TODOCUMENT
+                             const double       &prm_ssap_score_2,    ///< TODOCUMENT
+                             const string       &prm_ssap_line1,      ///< TODOCUMENT
+                             const string       &prm_ssap_line2,      ///< TODOCUMENT
+                             const ptrdiff_t    &prm_run_counter,     ///< TODOCUMENT
+                             const bool         &prm_write_all_scores ///< TODOCUMENT
                              ) {
-	if (arg_run_counter == 1) {
-		arg_os << arg_ssap_line1 << "\n";
+	if (prm_run_counter == 1) {
+		prm_os << prm_ssap_line1 << "\n";
 	}
-	else if (arg_run_counter == 2) {
-		if (arg_write_all_scores) {
-			arg_os << arg_ssap_line1 << "\n";
-			arg_os << arg_ssap_line2 << "\n";
+	else if (prm_run_counter == 2) {
+		if (prm_write_all_scores) {
+			prm_os << prm_ssap_line1 << "\n";
+			prm_os << prm_ssap_line2 << "\n";
 		}
 		else {
-			const string best_line = (arg_ssap_score_2 >= arg_ssap_score_1) ? arg_ssap_line2 : arg_ssap_line1;
-			arg_os << best_line << "\n";
+			const string best_line = (prm_ssap_score_2 >= prm_ssap_score_1) ? prm_ssap_line2 : prm_ssap_line1;
+			prm_os << best_line << "\n";
 		}
 	}
 	else {
@@ -1955,18 +1955,18 @@ void cath::print_ssap_scores(ostream            &arg_os,              ///< TODOC
 ///  - global_upper_score_matrix
 ///  - global_window
 /// but is otherwise local.
-size_doub_pair cath::superpose(const protein                 &arg_protein_a,           ///< Coordinates for first structure
-                               const protein                 &arg_protein_b,           ///< Coordinates for second structure
-                               const alignment               &arg_alignment,           ///< The alignment to determine which residues should be as close as possible to which
-                               const old_ssap_options_block  &arg_ssap_options,        ///< The old_ssap_options_block to specify how things should be done
-                               const data_dirs_spec          &arg_data_dirs,           ///< The data directories from which data should be read
-                               const bool                    &arg_score_is_high_enough ///< Whether the score is high enough to justify outputting files
+size_doub_pair cath::superpose(const protein                 &prm_protein_a,           ///< Coordinates for first structure
+                               const protein                 &prm_protein_b,           ///< Coordinates for second structure
+                               const alignment               &prm_alignment,           ///< The alignment to determine which residues should be as close as possible to which
+                               const old_ssap_options_block  &prm_ssap_options,        ///< The old_ssap_options_block to specify how things should be done
+                               const data_dirs_spec          &prm_data_dirs,           ///< The data directories from which data should be read
+                               const bool                    &prm_score_is_high_enough ///< Whether the score is high enough to justify outputting files
                                ) {
 	const auto common_coords = alignment_coord_extractor::get_common_coords(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b,
-		common_residue_select_min_score_policy( arg_ssap_options.get_min_score_for_superposition() )
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b,
+		common_residue_select_min_score_policy( prm_ssap_options.get_min_score_for_superposition() )
 	);
 	const auto &coord_list_1         = common_coords.first;
 	const auto &coord_list_2         = common_coords.second;
@@ -1978,17 +1978,17 @@ size_doub_pair cath::superpose(const protein                 &arg_protein_a,    
 	const auto rmsd             = calc_pairwise_superposition_rmsd( coord_list_1, coord_list_2 );
 
 	// If an XML superposition file has been requested, write one
-	if ( arg_score_is_high_enough && arg_ssap_options.get_write_xml_sup() ) {
+	if ( prm_score_is_high_enough && prm_ssap_options.get_write_xml_sup() ) {
 		const auto xml_outname =
-			  get_domain_or_specified_or_name_from_acq( arg_protein_a )
-			+ get_domain_or_specified_or_name_from_acq( arg_protein_b )
+			  get_domain_or_specified_or_name_from_acq( prm_protein_a )
+			+ get_domain_or_specified_or_name_from_acq( prm_protein_b )
 			+ ".superpose.xml";
 		write_xml_sup_filename(
 			my_superposition,
 			xml_outname,
 			{
-				get_domain_or_specified_or_name_from_acq( arg_protein_a ),
-				get_domain_or_specified_or_name_from_acq( arg_protein_b )
+				get_domain_or_specified_or_name_from_acq( prm_protein_a ),
+				get_domain_or_specified_or_name_from_acq( prm_protein_b )
 			}
 		);
 	}
@@ -2001,23 +2001,23 @@ size_doub_pair cath::superpose(const protein                 &arg_protein_a,    
 	};
 
 	// If a sup file has been requested, write one
-	if ( arg_score_is_high_enough && has_superposition_dir( arg_ssap_options ) ) {
-		const auto pdb1_filename   = find_file( arg_data_dirs, data_file::PDB,  arg_protein_a.get_name_set() );
-		const auto pdb2_filename   = find_file( arg_data_dirs, data_file::PDB,  arg_protein_b.get_name_set() );
-		const auto sup_file_suffix = sup_file_extension_fn( arg_ssap_options.get_write_rasmol_script() );
+	if ( prm_score_is_high_enough && has_superposition_dir( prm_ssap_options ) ) {
+		const auto pdb1_filename   = find_file( prm_data_dirs, data_file::PDB,  prm_protein_a.get_name_set() );
+		const auto pdb2_filename   = find_file( prm_data_dirs, data_file::PDB,  prm_protein_b.get_name_set() );
+		const auto sup_file_suffix = sup_file_extension_fn( prm_ssap_options.get_write_rasmol_script() );
 		const auto basename        = (
-			  get_domain_or_specified_or_name_from_acq( arg_protein_a )
-			+ get_domain_or_specified_or_name_from_acq( arg_protein_b )
+			  get_domain_or_specified_or_name_from_acq( prm_protein_a )
+			+ get_domain_or_specified_or_name_from_acq( prm_protein_b )
 			+ sup_file_suffix
 		);
-		const auto outname         = get_superposition_dir( arg_ssap_options ) / basename;
+		const auto outname         = get_superposition_dir( prm_ssap_options ) / basename;
 
 		// Write the superposed PDB file
 		write_superposed_pdb_from_files(
 			my_superposition,
 			outname,
 			{ pdb1_filename, pdb2_filename },
-			arg_ssap_options.get_write_rasmol_script(),
+			prm_ssap_options.get_write_rasmol_script(),
 			chain_relabel_policy::RELABEL
 		);
 	}
@@ -2032,24 +2032,24 @@ size_doub_pair cath::superpose(const protein                 &arg_protein_a,    
 /// A fairly messy subroutine that appears to have quite a lot of interaction with various global variables.
 ///
 /// At some point it decides whether an alignment should be printed and if so does it by calling print_aln().
-ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///< The first protein
-                           const protein                 &arg_protein_b,     ///< The second protein
-                           const size_t                  &arg_pass,          ///< The pass of this comparison (where the second typically refines the alignment generated by the first)
-                           const entry_querier           &arg_entry_querier, ///< The entry_querier to query either residues or secondary structures
-                           const alignment               &arg_alignment,     ///< The alignment to plot
-                           const old_ssap_options_block  &arg_ssap_options,  ///< The old_ssap_options_block to specify how things should be done
-                           const data_dirs_spec          &arg_data_dirs      ///< The data directories from which data should be read
+ssap_scores cath::plot_aln(const protein                 &prm_protein_a,     ///< The first protein
+                           const protein                 &prm_protein_b,     ///< The second protein
+                           const size_t                  &prm_pass,          ///< The pass of this comparison (where the second typically refines the alignment generated by the first)
+                           const entry_querier           &prm_entry_querier, ///< The entry_querier to query either residues or secondary structures
+                           const alignment               &prm_alignment,     ///< The alignment to plot
+                           const old_ssap_options_block  &prm_ssap_options,  ///< The old_ssap_options_block to specify how things should be done
+                           const data_dirs_spec          &prm_data_dirs      ///< The data directories from which data should be read
                            ) {
-	const bool res_not_ss__hacky = arg_entry_querier.temp_hacky_is_residue();
-	if (res_not_ss__hacky && arg_pass != 2) {
+	const bool res_not_ss__hacky = prm_entry_querier.temp_hacky_is_residue();
+	if (res_not_ss__hacky && prm_pass != 2) {
 		return ssap_scores();
 	}
 
 	const ssap_scores local_ssap_scores = calculate_log_score(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b,
-		arg_entry_querier
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b,
+		prm_entry_querier
 	);
 
 	// Score secondary structure alignment
@@ -2061,12 +2061,12 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
 	global_res_score = true;
 
 	// Select global1 if a local score is required
-	const double select_score = arg_ssap_options.get_use_local_ssap_score()
+	const double select_score = prm_ssap_options.get_use_local_ssap_score()
 	                            ? local_ssap_scores.get_ssap_score_over_smaller()
 	                            : local_ssap_scores.get_ssap_score_over_larger();
 
 	// Changed print_ssap_scores to save_ssap_scores (v1.14 JEB)
-	const bool score_is_high_enough = save_ssap_scores(arg_alignment, arg_protein_a, arg_protein_b, local_ssap_scores, arg_ssap_options, arg_data_dirs);
+	const bool score_is_high_enough = save_ssap_scores(prm_alignment, prm_protein_a, prm_protein_b, local_ssap_scores, prm_ssap_options, prm_data_dirs);
 
 	// global_score_run1 & global_score_run2 are used to determine whether second alignment should be written out (JEB 12.09.2002 v1.10)
 	if (global_doing_fast_ssap) {
@@ -2099,27 +2099,27 @@ ssap_scores cath::plot_aln(const protein                 &arg_protein_a,     ///
 			BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln: printing alignment (r_fast == 1) || (!r_fast && score_run2 > score_run1)";
 
 			// Prevent writing if score isn't high enough
-			if (score_is_high_enough != (out_score >= arg_ssap_options.get_min_score_for_writing_files())) {
+			if (score_is_high_enough != (out_score >= prm_ssap_options.get_min_score_for_writing_files())) {
 				BOOST_THROW_EXCEPTION(out_of_range_exception("Code is inconsistent about what score is high enough"));
 			}
 
 			if (score_is_high_enough) {
 				BOOST_LOG_TRIVIAL( debug ) << "Function: print_aln"
 					<< " "
-					<< to_string( arg_protein_a.get_name_set() )
+					<< to_string( prm_protein_a.get_name_set() )
 					<< " "
-					<< to_string( arg_protein_b.get_name_set() )
+					<< to_string( prm_protein_b.get_name_set() )
 					;
-				const path alignment_out_file = arg_ssap_options.get_alignment_dir() / (
-					  get_domain_or_specified_or_name_from_acq( arg_protein_a )
-					+ get_domain_or_specified_or_name_from_acq( arg_protein_b )
+				const path alignment_out_file = prm_ssap_options.get_alignment_dir() / (
+					  get_domain_or_specified_or_name_from_acq( prm_protein_a )
+					+ get_domain_or_specified_or_name_from_acq( prm_protein_b )
 					+ ".list"
 				);
 				write_alignment_as_cath_ssap_legacy_format(
 					alignment_out_file,
-					arg_alignment,
-					arg_protein_a,
-					arg_protein_b
+					prm_alignment,
+					prm_protein_a,
+					prm_protein_b
 				);
 			}
 		}

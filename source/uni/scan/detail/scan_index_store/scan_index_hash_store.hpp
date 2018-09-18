@@ -108,28 +108,28 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			template <typename T>
-			inline void scan_index_hash_store<Key, Cell>::push_back_entry_to_cell(const Key  &arg_key, ///< TODOCUMENT
-			                                                                      T         &&arg_data ///< TODOCUMENT
+			inline void scan_index_hash_store<Key, Cell>::push_back_entry_to_cell(const Key  &prm_key, ///< TODOCUMENT
+			                                                                      T         &&prm_data ///< TODOCUMENT
 			                                                                      ) {
-				the_store[ arg_key ].push_back( std::forward<T>( arg_data ) );
+				the_store[ prm_key ].push_back( std::forward<T>( prm_data ) );
 				++num_adds;
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			template <typename... Ts>
-			inline void scan_index_hash_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    arg_key, ///< TODOCUMENT
-			                                                                         Ts        &&... arg_data ///< TODOCUMENT
+			inline void scan_index_hash_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    prm_key, ///< TODOCUMENT
+			                                                                         Ts        &&... prm_data ///< TODOCUMENT
 			                                                                         ) {
-				the_store[ arg_key ].emplace_back( std::forward<Ts>( arg_data )... );
+				the_store[ prm_key ].emplace_back( std::forward<Ts>( prm_data )... );
 				++num_adds;
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
-			inline const Cell & scan_index_hash_store<Key, Cell>::find_matches(const Key &arg_key ///< TODOCUMENT
+			inline const Cell & scan_index_hash_store<Key, Cell>::find_matches(const Key &prm_key ///< TODOCUMENT
 			                                                                   ) const {
-				const auto &cell_itr = the_store.find( arg_key );
+				const auto &cell_itr = the_store.find( prm_key );
 				return ( cell_itr == common::cend( the_store ) ) ? empty_cell : cell_itr->second;
 			}
 

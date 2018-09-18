@@ -74,21 +74,21 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline domain chopping_format::parse_domain(const std::string &arg_domain_chopping_string ///< TODOCUMENT
+		inline domain chopping_format::parse_domain(const std::string &prm_domain_chopping_string ///< TODOCUMENT
 		                                            ) const {
-			return do_parse_domain( arg_domain_chopping_string );
+			return do_parse_domain( prm_domain_chopping_string );
 		}
 
 		/// \brief Write the specified region to a string
-		inline std::string chopping_format::write_region(const region &arg_region ///< The region to write to a string
+		inline std::string chopping_format::write_region(const region &prm_region ///< The region to write to a string
 		                                                 ) const {
-			return do_write_region( arg_region );
+			return do_write_region( prm_region );
 		}
 
 		/// \brief Write the specified domain to a string
-		inline std::string chopping_format::write_domain(const domain &arg_domain ///< The domain to write to a string
+		inline std::string chopping_format::write_domain(const domain &prm_domain ///< The domain to write to a string
 		                                                 ) const {
-			return do_write_domain( arg_domain );
+			return do_write_domain( prm_domain );
 		}
 
 		/// \brief Standard approach to achieving a virtual copy-ctor

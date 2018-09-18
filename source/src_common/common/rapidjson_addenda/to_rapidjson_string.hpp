@@ -37,19 +37,19 @@ namespace cath {
 
 			/// \brief Implementation of to_rapidjson_string
 			template <json_style Style, typename T, typename... As>
-			std::string to_rapidjson_string_impl(const T       &   arg_value,       ///< The value to write
-			                                     const size_t  &   arg_extra_depth, ///< The number of levels of depth
-			                                     As           &&...arg_args         ///< Any further arguments
+			std::string to_rapidjson_string_impl(const T       &   prm_value,       ///< The value to write
+			                                     const size_t  &   prm_extra_depth, ///< The number of levels of depth
+			                                     As           &&...prm_args         ///< Any further arguments
 			                                     ) {
 				return string_of_rapidjson_write<Style>(
 					[&] (rapidjson_writer<Style> &the_writer) {
 						write_to_rapidjson(
 							the_writer,
-							arg_value,
-							std::forward< As >( arg_args )...
+							prm_value,
+							std::forward< As >( prm_args )...
 						);
 					},
-					arg_extra_depth
+					prm_extra_depth
 				);
 			}
 
@@ -73,16 +73,16 @@ namespace cath {
 
 		/// \brief Write the specified value to a string using a rapidjson Writer corresponding to json_style Style
 		///
-		/// This overload is for providing a default arg_extra_depth when no extra arguments are specified
+		/// This overload is for providing a default prm_extra_depth when no extra arguments are specified
 		///
 		/// \tparam T must be a type for which a write_to_rapidjson has been partially specialised
 		template <json_style Style, typename T>
-		std::string to_rapidjson_string(const T       &arg_value,          ///< The value to write
-		                                const size_t  &arg_extra_depth = 0 ///< The number of levels of depth
+		std::string to_rapidjson_string(const T       &prm_value,          ///< The value to write
+		                                const size_t  &prm_extra_depth = 0 ///< The number of levels of depth
 		                                ) {
 			return detail::to_rapidjson_string_impl<Style>(
-				arg_value,
-				arg_extra_depth
+				prm_value,
+				prm_extra_depth
 			);
 		}
 
@@ -92,16 +92,16 @@ namespace cath {
 		///
 		/// \tparam T must be a type for which a write_to_rapidjson has been partially specialised
 		template <json_style Style, typename T, typename A, typename... As>
-		std::string to_rapidjson_string(const T       &   arg_value,       ///< The value to write
-		                                const size_t  &   arg_extra_depth, ///< The number of levels of depth
-		                                A            &&   arg_arg,         ///< The first extra argument
-		                                As           &&...arg_args         ///< Any further extra arguments
+		std::string to_rapidjson_string(const T       &   prm_value,       ///< The value to write
+		                                const size_t  &   prm_extra_depth, ///< The number of levels of depth
+		                                A            &&   prm_arg,         ///< The first extra argument
+		                                As           &&...prm_args         ///< Any further extra arguments
 		                                ) {
 			return detail::to_rapidjson_string_impl<Style>(
-				arg_value,
-				arg_extra_depth,
-				std::forward< A  >( arg_arg ),
-				std::forward< As >( arg_args )...
+				prm_value,
+				prm_extra_depth,
+				std::forward< A  >( prm_arg ),
+				std::forward< As >( prm_args )...
 			);
 		}
 

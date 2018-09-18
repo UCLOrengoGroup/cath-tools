@@ -50,9 +50,9 @@ namespace cath {
 			/// \brief TODOCUMENT
 			struct dereferencer final {
 				template <typename... Is>
-				constexpr auto operator()(const Is &... arg_iters
+				constexpr auto operator()(const Is &... prm_iters
 				                          ) {
-					return std::tuple<iterator_reference_t<Is>... >( ( *arg_iters )... );
+					return std::tuple<iterator_reference_t<Is>... >( ( *prm_iters )... );
 				}
 			};
 
@@ -60,19 +60,19 @@ namespace cath {
 			///
 			/// \returns Whether this iterator was incremented rather than wrapped
 			template <typename I>
-			inline bool increment_or_wrap(I       &arg_itr,       ///< TODOCUMENT
-			                              const I &arg_begin_itr, ///< TODOCUMENT
-			                              const I &arg_end_itr    ///< TODOCUMENT
+			inline bool increment_or_wrap(I       &prm_itr,       ///< TODOCUMENT
+			                              const I &prm_begin_itr, ///< TODOCUMENT
+			                              const I &prm_end_itr    ///< TODOCUMENT
 			                              ) {
 #ifndef NDEBUG
-				if ( arg_begin_itr == arg_end_itr ) {
+				if ( prm_begin_itr == prm_end_itr ) {
 					BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to do performed cross iteration over ranges including an empty range"));
 				}
 #endif
-				++arg_itr;
-				const bool wrapped = ( arg_itr == arg_end_itr );
+				++prm_itr;
+				const bool wrapped = ( prm_itr == prm_end_itr );
 				if ( wrapped ) {
-					arg_itr = arg_begin_itr;
+					prm_itr = prm_begin_itr;
 				}
 				return ! wrapped;
 			}
@@ -80,37 +80,37 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <size_t N, typename... Is>
 			struct increment_impl final {
-				static inline void increment(std::tuple<Is...> &arg_iters,       ///< TODOCUMENT
-				                             std::tuple<Is...> &arg_begin_iters, ///< TODOCUMENT
-				                             std::tuple<Is...> &arg_end_iters,   ///< TODOCUMENT
-				                             const bool        &arg_complete
+				static inline void increment(std::tuple<Is...> &prm_iters,       ///< TODOCUMENT
+				                             std::tuple<Is...> &prm_begin_iters, ///< TODOCUMENT
+				                             std::tuple<Is...> &prm_end_iters,   ///< TODOCUMENT
+				                             const bool        &prm_complete
 				                             ) {
-					const bool is_complete = arg_complete ? true
+					const bool is_complete = prm_complete ? true
 					                                      : increment_or_wrap(
-					                                        	std::get<N>( arg_iters       ),
-					                                        	std::get<N>( arg_begin_iters ),
-					                                        	std::get<N>( arg_end_iters   )
+					                                        	std::get<N>( prm_iters       ),
+					                                        	std::get<N>( prm_begin_iters ),
+					                                        	std::get<N>( prm_end_iters   )
 					                                        );
-					increment_impl< N - 1, Is...>::increment( arg_iters, arg_begin_iters, arg_end_iters, is_complete );
+					increment_impl< N - 1, Is...>::increment( prm_iters, prm_begin_iters, prm_end_iters, is_complete );
 				}
 			};
 
 			/// \brief TODOCUMENT
 			template <typename... Is>
 			struct increment_impl<0, Is...> final {
-				static inline void increment(std::tuple<Is...> &arg_iters,       ///< TODOCUMENT
-				                             std::tuple<Is...> &arg_begin_iters, ///< TODOCUMENT
-				                             std::tuple<Is...> &arg_end_iters,   ///< TODOCUMENT
-				                             const bool        &arg_complete     ///< TODOCUMENT
+				static inline void increment(std::tuple<Is...> &prm_iters,       ///< TODOCUMENT
+				                             std::tuple<Is...> &prm_begin_iters, ///< TODOCUMENT
+				                             std::tuple<Is...> &prm_end_iters,   ///< TODOCUMENT
+				                             const bool        &prm_complete     ///< TODOCUMENT
 				                             ) {
-					if ( ! arg_complete ) {
+					if ( ! prm_complete ) {
 						const bool complete = increment_or_wrap(
-							std::get<0>( arg_iters       ),
-							std::get<0>( arg_begin_iters ),
-							std::get<0>( arg_end_iters   )
+							std::get<0>( prm_iters       ),
+							std::get<0>( prm_begin_iters ),
+							std::get<0>( prm_end_iters   )
 						);
 						if ( ! complete ) {
-							arg_iters = arg_end_iters;
+							prm_iters = prm_end_iters;
 						}
 					}
 				}
@@ -118,12 +118,12 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename... Is>
-			void increment(std::tuple<Is...> &arg_iters,       ///< TODOCUMENT
-			               std::tuple<Is...> &arg_begin_iters, ///< TODOCUMENT
-			               std::tuple<Is...> &arg_end_iters    ///< TODOCUMENT
+			void increment(std::tuple<Is...> &prm_iters,       ///< TODOCUMENT
+			               std::tuple<Is...> &prm_begin_iters, ///< TODOCUMENT
+			               std::tuple<Is...> &prm_end_iters    ///< TODOCUMENT
 			               ) {
 				if ( sizeof...( Is ) > 0 ) {
-					increment_impl< sizeof...( Is ) - 1, Is... >::increment( arg_iters, arg_begin_iters, arg_end_iters, false );
+					increment_impl< sizeof...( Is ) - 1, Is... >::increment( prm_iters, prm_begin_iters, prm_end_iters, false );
 				}
 			}
 
@@ -185,9 +185,9 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename... RNGs>
 		template <typename... OTHER_RNGs>
-		bool cross_itr<RNGs...>::equal(const cross_itr<OTHER_RNGs...> &arg_cross_itr ///< TODOCUMENT
+		bool cross_itr<RNGs...>::equal(const cross_itr<OTHER_RNGs...> &prm_cross_itr ///< TODOCUMENT
 		                               ) const {
-			return ( the_iterators == arg_cross_itr.the_iterators );
+			return ( the_iterators == prm_cross_itr.the_iterators );
 		}
 
 		/// \brief Ctor of singular iterator
@@ -197,39 +197,39 @@ namespace cath {
 
 		/// \brief Ctor from iterators
 		template <typename... RNGs>
-		cross_itr<RNGs...>::cross_itr(const iterator_type &arg_begin, ///< Begin iterator for the original range
-		                              const iterator_type &arg_end    ///< End   iterator for the original range
-		                              ) : the_iterators      ( arg_begin ),
-		                                  the_begin_iterators( arg_begin ),
-		                                  the_end_iterators  ( arg_end   ) {
+		cross_itr<RNGs...>::cross_itr(const iterator_type &prm_begin, ///< Begin iterator for the original range
+		                              const iterator_type &prm_end    ///< End   iterator for the original range
+		                              ) : the_iterators      ( prm_begin ),
+		                                  the_begin_iterators( prm_begin ),
+		                                  the_end_iterators  ( prm_end   ) {
 		}
 
 		/// \brief Ctor from ranges
 		template <typename... RNGs>
-		cross_itr<RNGs...>::cross_itr(RNGs &... arg_ranges ///< The ranges over which this cross_itr should act
+		cross_itr<RNGs...>::cross_itr(RNGs &... prm_ranges ///< The ranges over which this cross_itr should act
 		                              ) : cross_itr(
-		                                  	make_tuple( std::begin( arg_ranges )... ),
-		                                  	make_tuple( std::end  ( arg_ranges )... )
+		                                  	make_tuple( std::begin( prm_ranges )... ),
+		                                  	make_tuple( std::end  ( prm_ranges )... )
 		                                  ) {
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... RNGs>
-		cross_itr<RNGs...> make_cross_itr(RNGs &... arg_ranges ///< The ranges over which this cross_itr should act
+		cross_itr<RNGs...> make_cross_itr(RNGs &... prm_ranges ///< The ranges over which this cross_itr should act
 		                                  ) {
 			return cross_itr<RNGs...>(
-				std::make_tuple( std::begin( arg_ranges )... ),
-				std::make_tuple( std::end  ( arg_ranges )... )
+				std::make_tuple( std::begin( prm_ranges )... ),
+				std::make_tuple( std::end  ( prm_ranges )... )
 			);
 		}
 
 		/// \brief TODOCUMENT
 		template <typename... RNGs>
-		cross_itr<RNGs...> make_end_cross_itr(RNGs &... arg_ranges ///< The ranges over which this cross_itr should act
+		cross_itr<RNGs...> make_end_cross_itr(RNGs &... prm_ranges ///< The ranges over which this cross_itr should act
 		                                      ) {
 			return cross_itr<RNGs...>(
-				std::make_tuple( std::end( arg_ranges )... ),
-				std::make_tuple( std::end( arg_ranges )... )
+				std::make_tuple( std::end( prm_ranges )... ),
+				std::make_tuple( std::end( prm_ranges )... )
 			);
 		}
 
@@ -238,18 +238,18 @@ namespace cath {
 			/// \brief TODOCUMENT
 			struct cross_itr_maker final {
 				template <typename... RNGs>
-				auto operator()(RNGs &... arg_ranges
+				auto operator()(RNGs &... prm_ranges
 				                ) {
-					return make_cross_itr<std::remove_reference_t<RNGs>...>( arg_ranges... );
+					return make_cross_itr<std::remove_reference_t<RNGs>...>( prm_ranges... );
 				}
 			};
 
 			/// \brief TODOCUMENT
 			struct end_cross_itr_maker final {
 				template <typename... RNGs>
-				auto operator()(RNGs &... arg_ranges
+				auto operator()(RNGs &... prm_ranges
 				                ) {
-					return make_end_cross_itr<std::remove_reference_t<RNGs>...>( arg_ranges... );
+					return make_end_cross_itr<std::remove_reference_t<RNGs>...>( prm_ranges... );
 				}
 			};
 
@@ -257,18 +257,18 @@ namespace cath {
 			/// \brief TODOCUMENT
 			struct const_cross_itr_maker final {
 				template <typename... RNGs>
-				auto operator()(RNGs &... arg_ranges
+				auto operator()(RNGs &... prm_ranges
 				                ) {
-					return make_cross_itr<const std::remove_reference_t<RNGs>...>( arg_ranges... );
+					return make_cross_itr<const std::remove_reference_t<RNGs>...>( prm_ranges... );
 				}
 			};
 
 			/// \brief TODOCUMENT
 			struct end_const_cross_itr_maker final {
 				template <typename... RNGs>
-				auto operator()(RNGs &... arg_ranges
+				auto operator()(RNGs &... prm_ranges
 				                ) {
-					return make_end_cross_itr<const std::remove_reference_t<RNGs>...>( arg_ranges... );
+					return make_end_cross_itr<const std::remove_reference_t<RNGs>...>( prm_ranges... );
 				}
 			};
 
@@ -276,44 +276,44 @@ namespace cath {
 
 		/// \brief Ctor from a tuple of ranges
 		template <typename... RNGs>
-		cross_itr<std::remove_reference_t<RNGs>...> make_cross_itr(std::tuple<RNGs ...> &arg_tuple ///< The ranges over which this cross_itr should act
+		cross_itr<std::remove_reference_t<RNGs>...> make_cross_itr(std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 		                                                           ) {
-			return apply( detail::cross_itr_maker(), arg_tuple );
+			return apply( detail::cross_itr_maker(), prm_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
 		template <typename... RNGs>
-		cross_itr<std::remove_reference_t<RNGs>...> make_end_cross_itr(std::tuple<RNGs ...> &arg_tuple ///< The ranges over which this cross_itr should act
+		cross_itr<std::remove_reference_t<RNGs>...> make_end_cross_itr(std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 		                                                               ) {
-			return apply( detail::end_cross_itr_maker(), arg_tuple );
+			return apply( detail::end_cross_itr_maker(), prm_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
 		///
 		/// \todo See notes for cross(const tuple &)
 		template <typename... RNGs>
-		cross_itr<const std::remove_reference_t<RNGs>...> make_cross_itr(const std::tuple<RNGs ...> &arg_tuple ///< The ranges over which this cross_itr should act
+		cross_itr<const std::remove_reference_t<RNGs>...> make_cross_itr(const std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 		                                                                 ) {
 //			// If RNGs contains non-const references, they shouldn't all be made into const references
 //			// just because calling get<>( ) on the const tuple returns a const reference.
 //			//
 //			// So make a local, non-const tuple of references and build from that instead
-//			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( arg_tuple );
-			return apply( detail::const_cross_itr_maker(), arg_tuple );
+//			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( prm_tuple );
+			return apply( detail::const_cross_itr_maker(), prm_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
 		///
 		/// \todo See notes for cross(const tuple &)
 		template <typename... RNGs>
-		cross_itr<const std::remove_reference_t<RNGs>...> make_end_cross_itr(const std::tuple<RNGs ...> &arg_tuple ///< The ranges over which this cross_itr should act
+		cross_itr<const std::remove_reference_t<RNGs>...> make_end_cross_itr(const std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 		                                                                     ) {
 //			// If RNGs contains non-const references, they shouldn't all be made into const references
 //			// just because calling get<>( ) on the const tuple returns a const reference.
 //			//
 //			// So make a local, non-const tuple of references and build from that instead
-//			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( arg_tuple );
-			return apply( detail::end_const_cross_itr_maker(), arg_tuple );
+//			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( prm_tuple );
+			return apply( detail::end_const_cross_itr_maker(), prm_tuple );
 		}
 
 		template <typename... Ts>
@@ -321,35 +321,35 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename... RNGs>
-		cross_range<RNGs...> cross(RNGs &... arg_ranges ///< The ranges over which this cross_itr should act
+		cross_range<RNGs...> cross(RNGs &... prm_ranges ///< The ranges over which this cross_itr should act
 		                           ) {
 			return {
-				make_cross_itr    ( arg_ranges... ),
-				make_end_cross_itr( arg_ranges... ),
+				make_cross_itr    ( prm_ranges... ),
+				make_end_cross_itr( prm_ranges... ),
 			};
 		}
 
 		/// \brief Ctor from a tuple of ranges
 		template <typename... RNGs>
-		cross_range<std::remove_reference_t<RNGs>...> cross(std::tuple<RNGs ...> &arg_tuple ///< The ranges over which this cross_itr should act
+		cross_range<std::remove_reference_t<RNGs>...> cross(std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 		                                                    ) {
 			return {
-				make_cross_itr    ( arg_tuple ),
-				make_end_cross_itr( arg_tuple ),
+				make_cross_itr    ( prm_tuple ),
+				make_end_cross_itr( prm_tuple ),
 			};
 		}
 
 		/// \brief Ctor from a tuple of ranges
 		///
 		/// \todo This should be able to take non-const reference types for some (or all) of the RNGs and create a cross_range
-		///       that allows non-const iteration over those types' ranges. That won't happen if arg_tuple is used directly
+		///       that allows non-const iteration over those types' ranges. That won't happen if prm_tuple is used directly
 		///       because the get<>( ) call on the const tuple will return a *const* reference. This can be solved by taking a
-		///       non-const copy of arg_tuple and using that instead. However it's important that this copy not involve
+		///       non-const copy of prm_tuple and using that instead. However it's important that this copy not involve
 		///       taking local copies of any non-reference types in RNGs (because that would create a cross_range over
-		///       a soon-to-die temporary). It would be a really nice solution to copy arg_tuple to a non-const tuple
+		///       a soon-to-die temporary). It would be a really nice solution to copy prm_tuple to a non-const tuple
 		///       of references to ranges:
 		///       ~~~~~.cpp
-		///       std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( arg_tuple );
+		///       std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( prm_tuple );
 		///       ~~~~~
 		///       which would avoid adding spurious consts to non-const RNGs and would avoid copying non-reference RNGs.
 		///       Unfortunately, this doesn't work because the tuple constructor won't allow it. It appears that there
@@ -360,16 +360,16 @@ namespace cath {
 		/// For now, if you want to use this for anything other than non-const RNGs, use the version above that
 		/// takes a non-const reference to a tuple
 		template <typename... RNGs>
-		cross_range<const std::remove_reference_t<RNGs>...> cross(const std::tuple<RNGs ...> &arg_tuple ///< The ranges over which this cross_itr should act
+		cross_range<const std::remove_reference_t<RNGs>...> cross(const std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 		                                                          ) {
 //			// If RNGs contains non-const references, they shouldn't all be made into const references
 //			// just because calling get<>( ) on the const tuple returns a const reference.
 //			//
 //			// So make a local, non-const tuple of references and build from that instead
-//			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( arg_tuple );
+//			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( prm_tuple );
 			return {
-				make_cross_itr    ( arg_tuple ),
-				make_end_cross_itr( arg_tuple ),
+				make_cross_itr    ( prm_tuple ),
+				make_end_cross_itr( prm_tuple ),
 			};
 		}
 

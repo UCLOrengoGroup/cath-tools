@@ -74,13 +74,13 @@ namespace cath {
 
 		/// \brief Setter for the number of some classn_outcome in a true_false_pos_neg
 		template <classn_outcome CLN>
-		inline void true_false_pos_neg::set_num(const size_t &arg_number ///< The value to which to the number should be set
+		inline void true_false_pos_neg::set_num(const size_t &prm_number ///< The value to which to the number should be set
 		                                        ) {
 			switch ( CLN ) {
-				case ( classn_outcome::TRUE_POSITIVE  ) : { num_true_positives  = arg_number; break; }
-				case ( classn_outcome::TRUE_NEGATIVE  ) : { num_true_negatives  = arg_number; break; }
-				case ( classn_outcome::FALSE_POSITIVE ) : { num_false_positives = arg_number; break; }
-				case ( classn_outcome::FALSE_NEGATIVE ) : { num_false_negatives = arg_number; break; }
+				case ( classn_outcome::TRUE_POSITIVE  ) : { num_true_positives  = prm_number; break; }
+				case ( classn_outcome::TRUE_NEGATIVE  ) : { num_true_negatives  = prm_number; break; }
+				case ( classn_outcome::FALSE_POSITIVE ) : { num_false_positives = prm_number; break; }
+				case ( classn_outcome::FALSE_NEGATIVE ) : { num_false_negatives = prm_number; break; }
 			}
 		}
 
@@ -88,10 +88,10 @@ namespace cath {
 		///
 		/// \relates true_false_pos_neg
 		template <classn_outcome CLN>
-		inline void increment_num(true_false_pos_neg &arg_true_false_pos_neg ///< The true_false_pos_neg to be updated
+		inline void increment_num(true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg to be updated
 		                          ) {
-			arg_true_false_pos_neg.set_num<CLN>(
-				1 + arg_true_false_pos_neg.get_num<CLN>()
+			prm_true_false_pos_neg.set_num<CLN>(
+				1 + prm_true_false_pos_neg.get_num<CLN>()
 			);
 		}
 

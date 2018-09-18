@@ -37,10 +37,10 @@ namespace cath {
 		///
 		/// \pre ForwardItr is a model of the Forward Iterator Concept
 		template<typename ForwardItr>
-		inline bool is_uniq(const ForwardItr &arg_begin, ///< TODOCUMENT
-		                    const ForwardItr &arg_end    ///< TODOCUMENT
+		inline bool is_uniq(const ForwardItr &prm_begin, ///< TODOCUMENT
+		                    const ForwardItr &prm_end    ///< TODOCUMENT
 		                    ) {
-			return ( std::adjacent_find( arg_begin, arg_end ) == arg_end );
+			return ( std::adjacent_find( prm_begin, prm_end ) == prm_end );
 		}
 
 		/// \brief Template function is_uniq()
@@ -49,12 +49,12 @@ namespace cath {
 		///
 		/// \pre ForwardRange is a model of the ForwardRangeConcept
 		template <typename ForwardRange>
-		inline bool is_uniq(const ForwardRange &arg_rng ///< A single-pass input range
+		inline bool is_uniq(const ForwardRange &prm_rng ///< A single-pass input range
 		                    ) {
 			BOOST_RANGE_CONCEPT_ASSERT((boost::ForwardRangeConcept<ForwardRange>));
 			return is_uniq(
-				common::cbegin( arg_rng ),
-				common::cend  ( arg_rng )
+				common::cbegin( prm_rng ),
+				common::cend  ( prm_rng )
 			);
 		}
 

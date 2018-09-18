@@ -29,15 +29,15 @@ namespace cath {
 	namespace common {
 
 		/// \brief Return the number of matches to the specified regex in the specified string
-		size_t regex_count(const std::string &arg_string, ///< The string to search
-		                   const std::regex  &arg_regex   ///< The regex to count matches for
+		size_t regex_count(const std::string &prm_string, ///< The string to search
+		                   const std::regex  &prm_regex   ///< The regex to count matches for
 		                   ) {
 			return static_cast<size_t>(
 				std::distance(
 					std::sregex_iterator{
-						::cath::common::cbegin( arg_string ),
-						::cath::common::cend  ( arg_string ),
-						arg_regex
+						::cath::common::cbegin( prm_string ),
+						::cath::common::cend  ( prm_string ),
+						prm_regex
 					},
 					std::sregex_iterator{}
 				)

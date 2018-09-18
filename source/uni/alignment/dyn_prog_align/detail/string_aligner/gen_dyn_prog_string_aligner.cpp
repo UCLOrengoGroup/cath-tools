@@ -59,21 +59,21 @@ const dyn_prog_aligner & gen_dyn_prog_string_aligner::get_dyn_prog_aligner() con
 }
 
 /// \brief Concrete definition of do_align() that uses the held dyn_prog_aligner to perform a generic alignment on the two sequences
-str_str_pair gen_dyn_prog_string_aligner::do_align(const string      &arg_string_a,   ///< The first  string to be aligned
-                                                   const string      &arg_string_b,   ///< The second string to be aligned
-                                                   const gap_penalty &arg_gap_penalty ///< The gap penalty to be applied for each gap step (ie for opening OR extending a gap)
+str_str_pair gen_dyn_prog_string_aligner::do_align(const string      &prm_string_a,   ///< The first  string to be aligned
+                                                   const string      &prm_string_b,   ///< The second string to be aligned
+                                                   const gap_penalty &prm_gap_penalty ///< The gap penalty to be applied for each gap step (ie for opening OR extending a gap)
                                                    ) const {
 	// Check that there is dyn_prog_aligner stored in dyn_prog_aligner_ptr
 	check_dyn_prog_aligner_ptr();
 
 	// Align the pair of strings (with the specified gap penalty) using the dyn_prog_aligner_ptr
-	const string::size_type max_length = max( arg_string_a.length(), arg_string_b.length() );
+	const string::size_type max_length = max( prm_string_a.length(), prm_string_b.length() );
 	const score_alignment_pair score_and_alignment = get_dyn_prog_aligner().align(
 		sequence_string_dyn_prog_score_source(
-			arg_string_a,
-			arg_string_b
+			prm_string_a,
+			prm_string_b
 		),
-		arg_gap_penalty,
+		prm_gap_penalty,
 		max_length
 	);
 
@@ -81,8 +81,8 @@ str_str_pair gen_dyn_prog_string_aligner::do_align(const string      &arg_string
 	const alignment    &the_alignment   = score_and_alignment.second;
 	const str_str_pair  aligned_strings = format_alignment_strings(
 		the_alignment,
-		arg_string_a,
-		arg_string_b
+		prm_string_a,
+		prm_string_b
 	);
 
 	// If running in debug mode, check that the score is the same as a freshly calculated one
@@ -91,7 +91,7 @@ str_str_pair gen_dyn_prog_string_aligner::do_align(const string      &arg_string
 	const score_type  recalculated_score = get_score_of_aligned_sequence_strings(
 		aligned_strings.first,
 		aligned_strings.second,
-		arg_gap_penalty
+		prm_gap_penalty
 	);
 	if ( score != recalculated_score ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
@@ -111,7 +111,7 @@ str_str_pair gen_dyn_prog_string_aligner::do_align(const string      &arg_string
 }
 
 /// \brief Ctor for gen_dyn_prog_string_aligner
-gen_dyn_prog_string_aligner::gen_dyn_prog_string_aligner(const dyn_prog_aligner &arg_dyn_prog_aligner ///< The dyn_prog_aligner that should be used to perform the alignments
-                                                         ) : dyn_prog_aligner_ptr(arg_dyn_prog_aligner.clone()) {
+gen_dyn_prog_string_aligner::gen_dyn_prog_string_aligner(const dyn_prog_aligner &prm_dyn_prog_aligner ///< The dyn_prog_aligner that should be used to perform the alignments
+                                                         ) : dyn_prog_aligner_ptr(prm_dyn_prog_aligner.clone()) {
 }
 

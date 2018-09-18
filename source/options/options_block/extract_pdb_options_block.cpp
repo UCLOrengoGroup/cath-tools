@@ -61,8 +61,8 @@ string extract_pdb_options_block::do_get_block_name() const {
 /// \brief Add this block's options to the provided options_description
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
-void extract_pdb_options_block::do_add_visible_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                      const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void extract_pdb_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                      const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                       ) {
 	const auto out_pdb_notifier = [&] (const path   &x) { output_pdb_file = x; };
 	const auto regions_notifier = [&] (const domain &x) { regions         = x; };
@@ -70,7 +70,7 @@ void extract_pdb_options_block::do_add_visible_options_to_description(options_de
 	const string file_varname    = "<file>";
 	const string regions_varname = "<regions>";
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_OUTPUT_PDB_FILE.c_str(),
 			value<path>()
@@ -91,12 +91,12 @@ void extract_pdb_options_block::do_add_visible_options_to_description(options_de
 }
 
 /// \brief Add this block's hidden options to the provided options_description
-void extract_pdb_options_block::do_add_hidden_options_to_description(options_description &arg_desc,           ///< The options_description to which the options are added
-                                                                     const size_t        &/*arg_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
+void extract_pdb_options_block::do_add_hidden_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
+                                                                     const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                      ) {
 	const string file_varname = "<file>";
 
-	arg_desc.add_options()
+	prm_desc.add_options()
 		(
 			PO_INPUT_PDB_FILE.c_str(),
 			value<path>( &input_pdb_file)
@@ -111,14 +111,14 @@ void extract_pdb_options_block::do_add_hidden_options_to_description(options_des
 /// This is a concrete definition of a virtual method that's pure in options_block
 ///
 /// At present, this always accepts all options
-str_opt extract_pdb_options_block::do_invalid_string(const variables_map &arg_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
+str_opt extract_pdb_options_block::do_invalid_string(const variables_map &prm_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                      ) const {
 	// If there is no PDB file to extract then grumble
 	//
 	// (Best done here rather than via boost::program_options::typed_value::required() because
 	//  that leads to an error message that's unclear for users that don't know about positional options
 	//  being implemented via hidden options)
-	if ( ! specifies_option( arg_variables_map, PO_INPUT_PDB_FILE ) ) {
+	if ( ! specifies_option( prm_variables_map, PO_INPUT_PDB_FILE ) ) {
 		return "Must specify an input PDB file to extract."s;
 	}
 

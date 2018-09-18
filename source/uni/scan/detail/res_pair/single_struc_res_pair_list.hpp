@@ -63,14 +63,14 @@ namespace cath {
 			};
 
 			/// \brief Ctor from a vector of single_struc_res_pair objects
-			inline single_struc_res_pair_list::single_struc_res_pair_list(single_struc_res_pair_vec arg_single_struc_res_pairs ///< TODOCUMENT
-			                                                              ) : single_struc_res_pairs { std::move( arg_single_struc_res_pairs ) } {
+			inline single_struc_res_pair_list::single_struc_res_pair_list(single_struc_res_pair_vec prm_single_struc_res_pairs ///< TODOCUMENT
+			                                                              ) : single_struc_res_pairs { std::move( prm_single_struc_res_pairs ) } {
 			}
 
 			/// \brief Return whether this single_struc_res_pair_list is empty
-			inline void single_struc_res_pair_list::reserve(const size_t &arg_size ///< TODOCUMENT
+			inline void single_struc_res_pair_list::reserve(const size_t &prm_size ///< TODOCUMENT
 			                                                ) {
-				single_struc_res_pairs.reserve( arg_size );
+				single_struc_res_pairs.reserve( prm_size );
 			}
 
 			/// \brief Return whether this single_struc_res_pair_list is empty
@@ -84,22 +84,22 @@ namespace cath {
 			}
 
 			/// \brief Standard subscript operator
-			inline const single_struc_res_pair & single_struc_res_pair_list::operator[](const size_t &arg_index ///< The index of the entry to be queried
+			inline const single_struc_res_pair & single_struc_res_pair_list::operator[](const size_t &prm_index ///< The index of the entry to be queried
 			                                                                            ) const {
-				return single_struc_res_pairs[ arg_index ];
+				return single_struc_res_pairs[ prm_index ];
 			}
 
 			/// \brief TODOCUMENT
 			template <class... Ts>
-			inline void single_struc_res_pair_list::emplace_back(Ts&& ...arg_values ///< TODOCUMENT
+			inline void single_struc_res_pair_list::emplace_back(Ts&& ...prm_values ///< TODOCUMENT
 			                                                     ) {
-				single_struc_res_pairs.emplace_back( std::forward<Ts>( arg_values ) ... );
+				single_struc_res_pairs.emplace_back( std::forward<Ts>( prm_values ) ... );
 			}
 
 			/// \brief TODOCUMENT
-			inline void single_struc_res_pair_list::push_back(const single_struc_res_pair &arg_res_pair ///< TODOCUMENT
+			inline void single_struc_res_pair_list::push_back(const single_struc_res_pair &prm_res_pair ///< TODOCUMENT
 			                                                  ) {
-				single_struc_res_pairs.push_back( arg_res_pair );
+				single_struc_res_pairs.push_back( prm_res_pair );
 			}
 
 			/// \brief Standard const begin() method
@@ -112,44 +112,44 @@ namespace cath {
 				return common::cend  ( single_struc_res_pairs );
 			}
 
-			/// \brief Perform action on the corresponding pairwise entries in two single_struc_res_pair_lists that meet arg_criteria
+			/// \brief Perform action on the corresponding pairwise entries in two single_struc_res_pair_lists that meet prm_criteria
 			///
-			/// \pre arg_list_a and arg_list_b should be of matching lengths (checked by an assert statement in debug build)
+			/// \pre prm_list_a and prm_list_b should be of matching lengths (checked by an assert statement in debug build)
 			///
-			/// \pre All single_struc_res_pairs in arg_list_a and arg_list_b should pass are_not_violated_by( arg_criteria, x )
+			/// \pre All single_struc_res_pairs in prm_list_a and prm_list_b should pass are_not_violated_by( prm_criteria, x )
 			///      for the specified quad_criteria (because this isn't checked)
 			///
-			/// \pre (implicit) arg_list_a and arg_list_b should be sorted to have equivalent entries in equivalent positions
+			/// \pre (implicit) prm_list_a and prm_list_b should be sorted to have equivalent entries in equivalent positions
 			///
 			/// Note that single_struc_res_pair_lists may contain dummy entries so this checks each entry is not
 			/// a dummy before proceeding further
 			///
 			/// \relates single_struc_res_pair_list
 			template <typename FN>
-			inline void act_on_single_matches(const single_struc_res_pair_list &arg_list_a,      ///< TODOCUMENT
-			                                  const single_struc_res_pair_list &arg_list_b,      ///< TODOCUMENT
-			                                  const index_type                 &arg_structure_a, ///< TODOCUMENT
-			                                  const index_type                 &arg_structure_b, ///< TODOCUMENT
-			                                  const quad_criteria              &arg_criteria,    ///< TODOCUMENT
-			                                  FN                               &arg_function     ///< TODOCUMENT
+			inline void act_on_single_matches(const single_struc_res_pair_list &prm_list_a,      ///< TODOCUMENT
+			                                  const single_struc_res_pair_list &prm_list_b,      ///< TODOCUMENT
+			                                  const index_type                 &prm_structure_a, ///< TODOCUMENT
+			                                  const index_type                 &prm_structure_b, ///< TODOCUMENT
+			                                  const quad_criteria              &prm_criteria,    ///< TODOCUMENT
+			                                  FN                               &prm_function     ///< TODOCUMENT
 			                                  ) {
-				assert( arg_list_a.size() == arg_list_b.size() );
+				assert( prm_list_a.size() == prm_list_b.size() );
 				boost::range::for_each(
-					arg_list_a,
-					arg_list_b,
+					prm_list_a,
+					prm_list_b,
 					[&] (const single_struc_res_pair &x, const single_struc_res_pair &y) {
 						if ( ! is_dummy( x ) && ! is_dummy( y ) ) {
 							/// \todo Consider moving these are_not_violated_by(const single_struc_res_pair &) tests
 							///       into the building so that single_struc_res_pair entries that fail are never built int
 							///       the scan_structure_data. This has the disadvantage of preventing
-							if ( are_not_violated_by( arg_criteria, x ) && are_not_violated_by( arg_criteria, y ) ) {
-								if ( are_met_by( arg_criteria, x, y ) ) {
+							if ( are_not_violated_by( prm_criteria, x ) && are_not_violated_by( prm_criteria, y ) ) {
+								if ( are_met_by( prm_criteria, x, y ) ) {
 //							std::cerr << "**** MATCHED : " << x
 //							          << "(dummy:"         << std::right << std::setw( 5 ) << std::boolalpha << is_dummy( x ) << std::noboolalpha
 //							          << ") vs "           << y
 //							          << "(dummy:"         << std::right << std::setw( 5 ) << std::boolalpha << is_dummy( y ) << std::noboolalpha
 //							          << ")\n";
-									arg_function( x, y, arg_structure_a, arg_structure_b );
+									prm_function( x, y, prm_structure_a, prm_structure_b );
 								}
 							}
 						}

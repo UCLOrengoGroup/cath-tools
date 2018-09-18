@@ -40,42 +40,42 @@ namespace common {
 		///
 		/// \todo If ptr_map gets fixed then change the key argument to a const reference
 		template <typename K, typename V>
-		void insert(boost::ptr_map<K, V>  &arg_ptr_map,  ///< The ptr_map into which the key/value should be inserted
-		            K                      arg_key,      ///< The key to insert
-		            std::unique_ptr<V>   &&arg_ptr_value ///< The associated value to insert, held by unique_ptr
+		void insert(boost::ptr_map<K, V>  &prm_ptr_map,  ///< The ptr_map into which the key/value should be inserted
+		            K                      prm_key,      ///< The key to insert
+		            std::unique_ptr<V>   &&prm_ptr_value ///< The associated value to insert, held by unique_ptr
 		            ) {
-			arg_ptr_map.insert( arg_key, arg_ptr_value.release() );
+			prm_ptr_map.insert( prm_key, prm_ptr_value.release() );
 		}
 
 		/// \brief Provide a common way to insert a unique_ptr into a ptr_set
 		///
 		/// This is required because ptr_container doesn't yet support unique_ptr.
 		template <typename T>
-		void insert(boost::ptr_set<T>   &arg_ptr_set,  ///< The ptr_set into which the value should be inserted
-		            std::unique_ptr<T> &&arg_ptr_value ///< The associated value to insert, held by unique_ptr
+		void insert(boost::ptr_set<T>   &prm_ptr_set,  ///< The ptr_set into which the value should be inserted
+		            std::unique_ptr<T> &&prm_ptr_value ///< The associated value to insert, held by unique_ptr
 		            ) {
-			arg_ptr_set.insert( arg_ptr_value.release() );
+			prm_ptr_set.insert( prm_ptr_value.release() );
 		}
 
 		/// \brief Provide a common way to push a unique_ptr onto the back of a ptr_vector
 		///
 		/// This is required because ptr_container doesn't yet support unique_ptr.
 		template <typename T>
-		void push_back(boost::ptr_vector<T>  &arg_ptr_vector, ///< The ptr_vector onto which the value should be pushed
-		               std::unique_ptr<T>   &&arg_ptr_value   ///< The value to push_back, held by unique_ptr
+		void push_back(boost::ptr_vector<T>  &prm_ptr_vector, ///< The ptr_vector onto which the value should be pushed
+		               std::unique_ptr<T>   &&prm_ptr_value   ///< The value to push_back, held by unique_ptr
 		               ) {
-			arg_ptr_vector.push_back( arg_ptr_value.release() );
+			prm_ptr_vector.push_back( prm_ptr_value.release() );
 		}
 
 		/// \brief Provide a common way to replace a value in a ptr_vector from a unique_ptr
 		///
 		/// This is required because ptr_container doesn't yet support unique_ptr.
 		template <typename T>
-		void replace(boost::ptr_vector<T>  &arg_ptr_vector, ///< The ptr_vector onto which the value should be pushed
+		void replace(boost::ptr_vector<T>  &prm_ptr_vector, ///< The ptr_vector onto which the value should be pushed
 		             const size_t          &idx,            ///< The index specifying the position to be replaced
-					 std::unique_ptr<T>   &&arg_ptr_value   ///< The value to push_back, held by unique_ptr
+					 std::unique_ptr<T>   &&prm_ptr_value   ///< The value to push_back, held by unique_ptr
 					 ) {
-			arg_ptr_vector.replace( idx, arg_ptr_value.release() );
+			prm_ptr_vector.replace( idx, prm_ptr_value.release() );
 		}
 
 	} // namespace common

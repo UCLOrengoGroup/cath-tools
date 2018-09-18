@@ -60,10 +60,10 @@ str_str_pair score_common_coord_handler::get_policy_description_strings() const 
 }
 
 /// \brief Ctor for score_common_coord_handler that allows the caller to specify the common_residue_selection_policy to be used
-score_common_coord_handler::score_common_coord_handler(const common_residue_selection_policy &arg_comm_res_seln_pol, ///< The policy to use for selecting common residues
-                                                       const common_atom_selection_policy    &arg_atom_seln_pol      ///< The policy to use for selecting common atoms
-                                                       ) : comm_res_seln_pol_ptr  ( arg_comm_res_seln_pol.clone() ),
-                                                           comm_atom_seln_pol_ptr ( arg_atom_seln_pol.clone()     ) {
+score_common_coord_handler::score_common_coord_handler(const common_residue_selection_policy &prm_comm_res_seln_pol, ///< The policy to use for selecting common residues
+                                                       const common_atom_selection_policy    &prm_atom_seln_pol      ///< The policy to use for selecting common atoms
+                                                       ) : comm_res_seln_pol_ptr  ( prm_comm_res_seln_pol.clone() ),
+                                                           comm_atom_seln_pol_ptr ( prm_atom_seln_pol.clone()     ) {
 }
 
 /// \brief Return a string to append to the end of short names to provide more detail on how the common
@@ -112,15 +112,15 @@ str_bool_pair_vec score_common_coord_handler::short_name_suffixes() const {
 ///       else out_of_range_exception will be thrown
 ///
 /// Note that this may contain more than one coordinate pair per residue, depending on the common atom policy
-coord_list_coord_list_pair score_common_coord_handler::get_common_coords(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                                                         const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                                                         const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+coord_list_coord_list_pair score_common_coord_handler::get_common_coords(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                                                         const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                                                         const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                                                          ) const {
 	// Extract the common coordinates to be chosen
 	const pair<coord_list, coord_list> common_coords = alignment_coord_extractor::get_common_coords(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b,
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b,
 		get_comm_res_seln_pol(),
 		get_comm_atom_seln_pol()
 	);
@@ -140,15 +140,15 @@ coord_list_coord_list_pair score_common_coord_handler::get_common_coords(const a
 ///       else out_of_range_exception will be thrown
 ///
 /// Note that this may contain more than one coordinate pair per residue, depending on the common atom policy
-pair<coord_list_vec, coord_list_vec> score_common_coord_handler::get_common_coords_by_residue(const alignment &arg_alignment, ///< The pair alignment to be scored
-                                                                                              const protein   &arg_protein_a, ///< The protein associated with the first  half of the alignment
-                                                                                              const protein   &arg_protein_b  ///< The protein associated with the second half of the alignment
+pair<coord_list_vec, coord_list_vec> score_common_coord_handler::get_common_coords_by_residue(const alignment &prm_alignment, ///< The pair alignment to be scored
+                                                                                              const protein   &prm_protein_a, ///< The protein associated with the first  half of the alignment
+                                                                                              const protein   &prm_protein_b  ///< The protein associated with the second half of the alignment
                                                                                               ) const {
 	// Extract the common coordinates to be chosen
 	const pair<coord_list_vec, coord_list_vec> common_coords = alignment_coord_extractor::get_common_coords_by_residue(
-		arg_alignment,
-		arg_protein_a,
-		arg_protein_b,
+		prm_alignment,
+		prm_protein_a,
+		prm_protein_b,
 		get_comm_res_seln_pol(),
 		get_comm_atom_seln_pol()
 	);
@@ -189,10 +189,10 @@ score_common_coord_handler_vec cath::score::detail::get_all_score_common_coord_h
 /// \brief Less-than operator for score_common_coord_handler
 ///
 /// \relates score_common_coord_handler
-bool cath::score::detail::operator<(const score_common_coord_handler &arg_score_common_coord_handler_a, ///< The first  score_common_coord_handler to compare
-                                    const score_common_coord_handler &arg_score_common_coord_handler_b  ///< The second score_common_coord_handler to compare
+bool cath::score::detail::operator<(const score_common_coord_handler &prm_score_common_coord_handler_a, ///< The first  score_common_coord_handler to compare
+                                    const score_common_coord_handler &prm_score_common_coord_handler_b  ///< The second score_common_coord_handler to compare
                                     ) {
-	auto the_helper = make_less_than_helper( arg_score_common_coord_handler_a, arg_score_common_coord_handler_b );
+	auto the_helper = make_less_than_helper( prm_score_common_coord_handler_a, prm_score_common_coord_handler_b );
 	the_helper.register_comparison_field( &score_common_coord_handler::get_comm_res_seln_pol  );
 	the_helper.register_comparison_field( &score_common_coord_handler::get_comm_atom_seln_pol );
 	return final_less_than_result( the_helper );
@@ -201,10 +201,10 @@ bool cath::score::detail::operator<(const score_common_coord_handler &arg_score_
 /// \brief Simple insertion operator for score_common_coord_handler
 ///
 /// \relates score_common_coord_handler
-ostream & cath::score::detail::operator<<(ostream                          &arg_os,                        ///< The ostream to which the score_common_coord_handler should be output
-                                          const score_common_coord_handler &arg_score_common_coord_handler ///< The score_common_coord_handler to output
+ostream & cath::score::detail::operator<<(ostream                          &prm_os,                        ///< The ostream to which the score_common_coord_handler should be output
+                                          const score_common_coord_handler &prm_score_common_coord_handler ///< The score_common_coord_handler to output
                                           ) {
-	arg_os << ( "score_common_coord_handler[" + arg_score_common_coord_handler.short_suffix_string() + "]" );
-	return arg_os;
+	prm_os << ( "score_common_coord_handler[" + prm_score_common_coord_handler.short_suffix_string() + "]" );
+	return prm_os;
 }
 

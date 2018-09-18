@@ -37,10 +37,10 @@ namespace cath {
 			struct seq_seg_vec_hasher final {
 
 				/// \brief Hash function for seq_seg_vec
-				size_t operator()(const seq::seq_seg_vec &arg_seq_seg_vec ///< The seq_seg_vec to hash
+				size_t operator()(const seq::seq_seg_vec &prm_seq_seg_vec ///< The seq_seg_vec to hash
 				                  ) const {
 					size_t seed = 0;
-					for (const seq::seq_seg &the_hit : arg_seq_seg_vec) {
+					for (const seq::seq_seg &the_hit : prm_seq_seg_vec) {
 						for (const auto &index : { the_hit.get_start_arrow().get_index(),
 						                           the_hit.get_stop_arrow ().get_index(), } ) {
 							using index_type = std::decay_t< decltype( index ) >;
@@ -58,11 +58,11 @@ namespace cath {
 			///
 			/// Note: this excludes any zero-length regions left by the mask, which means that
 			///       it can give identical results for different hit_vecs
-			inline seq::seq_seg_vec get_unmasked_regions_before_arrow(const calc_hit_vec   &arg_hits, ///< The hits defining the mask. These must be non-overlapping but may be unsorted.
-			                                                          const seq::seq_arrow &arg_arrow ///< The point at which to stop
+			inline seq::seq_seg_vec get_unmasked_regions_before_arrow(const calc_hit_vec   &prm_hits, ///< The hits defining the mask. These must be non-overlapping but may be unsorted.
+			                                                          const seq::seq_arrow &prm_arrow ///< The point at which to stop
 			                                                          ) {
-				// Get a sorted copy of arg_hits's segments
-				const auto seq_segs = get_start_sorted_seq_segs( arg_hits );
+				// Get a sorted copy of prm_hits's segments
+				const auto seq_segs = get_start_sorted_seq_segs( prm_hits );
 
 				// Prepare the working data: a seq_seg_vec to populate and a seq_arrow at the end of the most-recently-handled seq_seg
 				seq::seq_seg_vec results;
@@ -72,7 +72,7 @@ namespace cath {
 				for (const seq::seq_seg &the_seq_seg : seq_segs) {
 
 					// If this mask segment starts after the stop arrow, then break out of the loop
-					if ( the_seq_seg.get_start_arrow() >= arg_arrow ) {
+					if ( the_seq_seg.get_start_arrow() >= prm_arrow ) {
 						break;
 					}
 					// Else if this mask segment starts *strictly* after the previous stop, add a record for the gap
@@ -84,9 +84,9 @@ namespace cath {
 				}
 
 				// If the stop point is *strictly* after the previously handled segment's stop, add a record for the gap
-				// (this happens in all cases except those where there is a mask segment stopping-at or straddling arg_arrow)
-				if ( arg_arrow > prev_stop ) {
-					results.emplace_back( prev_stop, arg_arrow );
+				// (this happens in all cases except those where there is a mask segment stopping-at or straddling prm_arrow)
+				if ( prm_arrow > prev_stop ) {
+					results.emplace_back( prev_stop, prm_arrow );
 				}
 
 				return results;
@@ -106,18 +106,18 @@ namespace cath {
 		};
 
 		/// \brief Get the optimum architecture (scored_arch_proxy) for the specified signature of unmasked regions
-		inline const scored_arch_proxy & masked_bests_cache::get_best_for_unmasked(const seq::seq_seg_vec &arg_unmasked ///< The set of unmasked regions for which the optimum architecture is required
+		inline const scored_arch_proxy & masked_bests_cache::get_best_for_unmasked(const seq::seq_seg_vec &prm_unmasked ///< The set of unmasked regions for which the optimum architecture is required
 		                                                                           ) const {
-			return store.at( arg_unmasked );
+			return store.at( prm_unmasked );
 		}
 
 		/// \brief Store the optimum architecture for a signature of unmasked regions
-		inline void masked_bests_cache::store_best_for_unmasked(seq::seq_seg_vec        &&arg_unmasked,              ///< The set of unmasked regions for which the optimum architecture is to be stored
-		                                                        const scored_arch_proxy  &arg_best_scored_arch_proxy ///< The optimum architecture (scored_arch_proxy) to store
+		inline void masked_bests_cache::store_best_for_unmasked(seq::seq_seg_vec        &&prm_unmasked,              ///< The set of unmasked regions for which the optimum architecture is to be stored
+		                                                        const scored_arch_proxy  &prm_best_scored_arch_proxy ///< The optimum architecture (scored_arch_proxy) to store
 		                                                        ) {
 			store.emplace(
-				std::move( arg_unmasked ),
-				arg_best_scored_arch_proxy
+				std::move( prm_unmasked ),
+				prm_best_scored_arch_proxy
 			);
 		}
 
@@ -125,12 +125,12 @@ namespace cath {
 		///        for the signature of regions unmasked by the specified mask up to the specified point
 		///
 		/// \relates masked_bests_cache
-		inline const scored_arch_proxy & get_best_for_masks_up_to_arrow(const masked_bests_cache &arg_masked_bests_cache, ///< The masked_bests_cache to query
-		                                                                const calc_hit_vec       &arg_mask_hits,          ///< The mask that defines the unmasked regions for which the architecture is optimal
-		                                                                const seq::seq_arrow     &arg_stop_arrow          ///< The stop boundary at which the signature of unmasked regions should stop
+		inline const scored_arch_proxy & get_best_for_masks_up_to_arrow(const masked_bests_cache &prm_masked_bests_cache, ///< The masked_bests_cache to query
+		                                                                const calc_hit_vec       &prm_mask_hits,          ///< The mask that defines the unmasked regions for which the architecture is optimal
+		                                                                const seq::seq_arrow     &prm_stop_arrow          ///< The stop boundary at which the signature of unmasked regions should stop
 		                                                                ) {
-			return arg_masked_bests_cache.get_best_for_unmasked(
-				detail::get_unmasked_regions_before_arrow( arg_mask_hits, arg_stop_arrow )
+			return prm_masked_bests_cache.get_best_for_unmasked(
+				detail::get_unmasked_regions_before_arrow( prm_mask_hits, prm_stop_arrow )
 			);
 		}
 
@@ -141,14 +141,14 @@ namespace cath {
 		///
 		///     Check       : nothing in arch - discontigs should overrun current_arrow
 		///     Check       : nothing previously stored there
-		inline void store_best_for_masks_up_to_arrow(masked_bests_cache      &arg_masked_bests_cache,     ///< The masked_bests_cache in which to store the optimum architecture
-		                                             const scored_arch_proxy &arg_best_scored_arch_proxy, ///< The optimum architecture for the unmasked regions implied by the other arguments
-		                                             const calc_hit_vec      &arg_mask_hits,              ///< The mask that defines the unmasked regions for which the architecture is optimal
-		                                             const seq::seq_arrow    &arg_stop_arrow              ///< The stop boundary at which the signature of unmasked regions should stop
+		inline void store_best_for_masks_up_to_arrow(masked_bests_cache      &prm_masked_bests_cache,     ///< The masked_bests_cache in which to store the optimum architecture
+		                                             const scored_arch_proxy &prm_best_scored_arch_proxy, ///< The optimum architecture for the unmasked regions implied by the other arguments
+		                                             const calc_hit_vec      &prm_mask_hits,              ///< The mask that defines the unmasked regions for which the architecture is optimal
+		                                             const seq::seq_arrow    &prm_stop_arrow              ///< The stop boundary at which the signature of unmasked regions should stop
 		                                             ) {
-			arg_masked_bests_cache.store_best_for_unmasked(
-				detail::get_unmasked_regions_before_arrow( arg_mask_hits, arg_stop_arrow ),
-				arg_best_scored_arch_proxy
+			prm_masked_bests_cache.store_best_for_unmasked(
+				detail::get_unmasked_regions_before_arrow( prm_mask_hits, prm_stop_arrow ),
+				prm_best_scored_arch_proxy
 			);
 		}
 
