@@ -173,7 +173,8 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename... RNGs>
 		auto cross_itr<RNGs...>::dereference() const -> reference_type {
-			return apply( detail::dereferencer(), the_iterators );
+			/// \TODO Come C++17, use ::std::apply
+			return ::cath::common::apply( detail::dereferencer(), the_iterators );
 		}
 
 		/// \brief TODOCUMENT
@@ -278,14 +279,17 @@ namespace cath {
 		template <typename... RNGs>
 		cross_itr<std::remove_reference_t<RNGs>...> make_cross_itr(std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 		                                                           ) {
-			return apply( detail::cross_itr_maker(), prm_tuple );
+
+			/// \TODO Come C++17, use ::std::apply
+			return ::cath::common::apply( detail::cross_itr_maker(), prm_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
 		template <typename... RNGs>
 		cross_itr<std::remove_reference_t<RNGs>...> make_end_cross_itr(std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 		                                                               ) {
-			return apply( detail::end_cross_itr_maker(), prm_tuple );
+			/// \TODO Come C++17, use ::std::apply
+			return ::cath::common::apply( detail::end_cross_itr_maker(), prm_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
@@ -299,7 +303,9 @@ namespace cath {
 //			//
 //			// So make a local, non-const tuple of references and build from that instead
 //			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( prm_tuple );
-			return apply( detail::const_cross_itr_maker(), prm_tuple );
+
+			/// \TODO Come C++17, use ::std::apply
+			return ::cath::common::apply( detail::const_cross_itr_maker(), prm_tuple );
 		}
 
 		/// \brief Ctor from a tuple of ranges
@@ -313,7 +319,9 @@ namespace cath {
 //			//
 //			// So make a local, non-const tuple of references and build from that instead
 //			std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( prm_tuple );
-			return apply( detail::end_const_cross_itr_maker(), prm_tuple );
+
+			/// \TODO Come C++17, use ::std::apply
+			return ::cath::common::apply( detail::end_const_cross_itr_maker(), prm_tuple );
 		}
 
 		template <typename... Ts>

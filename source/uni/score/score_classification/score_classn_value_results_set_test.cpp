@@ -60,22 +60,30 @@
 #include <cmath>
 #include <functional>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::score;
 
-using boost::adaptors::map_keys;
-using boost::algorithm::icontains;
-using boost::filesystem::path;
-using boost::irange;
-using boost::is_space;
-using boost::make_optional;
-using boost::none;
-using boost::optional;
-using boost::range::copy;
-using boost::token_compress_on;
+using ::boost::adaptors::map_keys;
+using ::boost::algorithm::icontains;
+using ::boost::filesystem::path;
+using ::boost::irange;
+using ::boost::is_space;
+using ::boost::make_optional;
+using ::boost::none;
+using ::boost::optional;
+using ::boost::range::copy;
+using ::boost::token_compress_on;
+using ::std::ifstream;
+using ::std::map;
+using ::std::numeric_limits;
+using ::std::pair;
+using ::std::reference_wrapper;
+using ::std::set;
+using ::std::string;
+using ::std::to_string;
+using ::std::vector;
 
 namespace cath {
 	namespace test {
@@ -504,7 +512,7 @@ namespace cath {
 						                                   : string{ " notitle " };
 						return make_pair(
 							prm_name_stem + to_string( x + 1 ),
-							make_optional( R"( linetype 1 linewidth 1 )" + prm_spec_string + title_string )
+							::boost::make_optional( R"( linetype 1 linewidth 1 )" + prm_spec_string + title_string )
 						);
 					}
 				);

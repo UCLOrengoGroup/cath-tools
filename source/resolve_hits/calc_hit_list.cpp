@@ -107,7 +107,7 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 		indices( prm_full_hit_list.size() )
 			| filtered( [&] (const size_t &x) {
 				const full_hit &full_hit_x = prm_full_hit_list[ x ];
-				if ( empty( full_hit_x.get_segments() | filtered( seg_long_enough_fn ) ) ) {
+				if ( ::boost::empty( full_hit_x.get_segments() | filtered( seg_long_enough_fn ) ) ) {
 					if ( ! hit_failed_seg_length ) {
 						BOOST_LOG_TRIVIAL( warning )
 							<< "At least one hit (with match ID "
@@ -179,7 +179,7 @@ calc_hit_vec cath::rslv::make_sorted_pruned_calc_hit_vec(const full_hit_list    
 			trimmed_segs.push_back( trim_seq_seg_copy( the_seg, overlap_trim_spec ) );
 		}
 
-		if ( empty( trimmed_segs ) ) {
+		if ( ::boost::empty( trimmed_segs ) ) {
 			if ( ! failed_seg_length ) {
 				BOOST_LOG_TRIVIAL( warning )
 					<< "At least one hit (with match ID "

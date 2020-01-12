@@ -44,6 +44,7 @@
 
 #include <fstream>
 
+using namespace cath;
 using namespace cath::common;
 using namespace cath::file;
 using namespace cath::homcheck;
@@ -64,7 +65,7 @@ using boost::make_optional;
 
 // \todo Substantially tidy up the code in this file
 
-namespace cath {
+namespace {
 
 	/// \brief Parse a file with each line containing two, whitespace-separated entries: the SSAP and PRC files
 	vector<pair<path, path> > parse_ssap_and_prc_files_data(const path &prm_filename ///< The file to parse
@@ -88,8 +89,8 @@ namespace cath {
 	str_opt query_id_of_either(const ssap_scores_entry_vec &prm_ssaps, ///< The possibly-empty SSAP results
 	                           const prc_scores_entry_vec  &prm_prcs   ///< The possibly-empty PRC  results
 	                           ) {
-		return ( ! prm_prcs.empty()                   ) ? make_optional( prm_prcs.front().get_name_1()  ) :
-		       ( ! prm_ssaps.empty()                  ) ? make_optional( prm_ssaps.front().get_name_1() ) :
+		return ( ! prm_prcs.empty()                   ) ? ::boost::make_optional( prm_prcs.front().get_name_1()  ) :
+		       ( ! prm_ssaps.empty()                  ) ? ::boost::make_optional( prm_ssaps.front().get_name_1() ) :
 		                                                  boost::none;
 	}
 
@@ -98,8 +99,8 @@ namespace cath {
 	size_opt query_length_of_either(const ssap_scores_entry_vec &prm_ssaps, ///< The possibly-empty SSAP results
 	                                const prc_scores_entry_vec  &prm_prcs   ///< The possibly-empty PRC  results
 	                                ) {
-		return ( ! prm_prcs.empty()                   ) ? make_optional( prm_prcs.front().get_length_1()  ) :
-		       ( ! prm_ssaps.empty()                  ) ? make_optional( prm_ssaps.front().get_length_1() ) :
+		return ( ! prm_prcs.empty()                   ) ? ::boost::make_optional( prm_prcs.front().get_length_1()  ) :
+		       ( ! prm_ssaps.empty()                  ) ? ::boost::make_optional( prm_ssaps.front().get_length_1() ) :
 		                                                  boost::none;
 	}
 
@@ -406,11 +407,11 @@ namespace cath {
 			write_file( "new_fold_info.trac_wiki", new_fold_strings );
 		}
 	};
-} // namespace cath
+} // namespace
 
 /// \brief A main function for cath_assign_domains that just calls run_program() on a cath_assign_domains_program_exception_wrapper
 int main(int argc, char * argv[] ) {
-	return cath::cath_assign_domains_program_exception_wrapper().run_program( argc, argv );
+	return cath_assign_domains_program_exception_wrapper().run_program( argc, argv );
 }
 
 

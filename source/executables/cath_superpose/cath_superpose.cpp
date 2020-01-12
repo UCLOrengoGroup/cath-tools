@@ -25,6 +25,7 @@
 #include "chopping/domain/domain.hpp"
 #include "common/program_exception_wrapper.hpp"
 
+using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
@@ -32,7 +33,7 @@ using namespace std;
 using boost::log::trivial::info;
 using boost::log::trivial::severity;
 
-namespace cath {
+namespace {
 
 	/// \brief A concrete program_exception_wrapper that implements do_run_program() to parse the options and then pass them to cath_superposer::superpose()
 	///
@@ -49,9 +50,10 @@ namespace cath {
 			cath_superposer::superpose(the_cath_superpose_options);
 		}
 	};
-} // namespace cath
+
+} // namespace
 
 /// \brief A main function for cath_superpose that just calls run_program() on a cath_superpose_program_exception_wrapper
 int main(int argc, char * argv[] ) {
-	return cath::cath_superpose_program_exception_wrapper().run_program( argc, argv );
+	return cath_superpose_program_exception_wrapper().run_program( argc, argv );
 }

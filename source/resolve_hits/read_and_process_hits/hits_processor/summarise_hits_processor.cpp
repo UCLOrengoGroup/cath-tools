@@ -79,8 +79,8 @@ void summarise_hits_processor::do_process_hits_for_query(const string           
 /// \brief Calculate the median of an unsorted bunch of size_t values
 ///
 /// \TODO Move this into common/
-double median(size_vec &args ///< The bunch of unsorted size_t values for which to calculate the median
-              ) {
+static double median(size_vec &args ///< The bunch of unsorted size_t values for which to calculate the median
+                     ) {
 	const size_t size      = args.size();
 	const size_t half_size = size / 2;
 	std::nth_element(

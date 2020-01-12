@@ -74,12 +74,12 @@ regions_limiter::regions_limiter(const region_vec &prm_regions ///< The regions 
 regions_limiter::regions_limiter(const region_vec_opt &prm_regions
                                  ) : regions{
                                      	prm_regions
-                                     	? make_optional( std::cref( *prm_regions ) )
+                                     	? ::boost::make_optional( std::cref( *prm_regions ) )
                                      	: none
                                      },
                                      regions_seen{
                                      	prm_regions
-                                     	? make_optional( region_seen_vec( prm_regions->size(), region_seen::NO ) )
+                                     	? ::boost::make_optional( region_seen_vec( prm_regions->size(), region_seen::NO ) )
                                      	: none
                                      } {
 	sanity_check();

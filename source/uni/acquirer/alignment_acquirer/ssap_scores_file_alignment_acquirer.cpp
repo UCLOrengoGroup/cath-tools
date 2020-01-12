@@ -71,8 +71,8 @@ bool ssap_scores_file_alignment_acquirer::do_requires_backbone_complete_input() 
 }
 
 /// \brief Get the aln_glue_style that should be used to implement the specified align_refining
-inline constexpr aln_glue_style aln_glue_style_of_align_refining(const align_refining &prm_align_refining ///< How much refining should be done to the alignment
-                                                                 ) {
+static inline constexpr aln_glue_style aln_glue_style_of_align_refining(const align_refining &prm_align_refining ///< How much refining should be done to the alignment
+                                                                        ) {
 	return
 		( prm_align_refining == align_refining::NO    ) ? aln_glue_style::SIMPLY                           :
 		( prm_align_refining == align_refining::LIGHT ) ? aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING :
@@ -96,7 +96,7 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 	const auto     &scores           = ssap_scores_data.second;
 
 	if ( names.size() != num_pdbs ) {
-		if ( names.size() != 0 && num_pdbs != 1 ) {
+		if ( !names.empty() && num_pdbs != 1 ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
 				"The number of PDBs is "
 				+ ::std::to_string( num_pdbs         )

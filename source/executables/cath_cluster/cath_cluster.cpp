@@ -28,7 +28,7 @@ using namespace ::cath::opts;
 
 using ::std::string;
 
-namespace cath {
+namespace {
 
 	/// \brief A concrete program_exception_wrapper that implements do_run_program() to parse the options and then pass them to cath_hits_resolver::resolve()
 	///
@@ -45,9 +45,10 @@ namespace cath {
 			);
 		}
 	};
-} // namespace cath
+
+} // namespace
 
 /// \brief A main function for cath_cluster that just calls run_program() on a cath_cluster_program_exception_wrapper
 int main(int argc, char * argv[] ) {
-	return cath::cath_cluster_program_exception_wrapper().run_program( argc, argv );
+	return cath_cluster_program_exception_wrapper().run_program( argc, argv );
 }

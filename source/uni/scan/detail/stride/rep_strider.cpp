@@ -23,13 +23,13 @@
 #include "common/algorithm/constexpr_modulo_fns.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::scan;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
 
-using boost::none;
-using boost::optional;
+using ::boost::none;
+using ::boost::optional;
+using ::std::make_pair;
 
 /// \brief TODOCUMENT
 ///

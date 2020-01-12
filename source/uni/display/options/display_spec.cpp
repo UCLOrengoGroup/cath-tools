@@ -62,7 +62,7 @@ display_spec::display_spec(string      prm_display_colours_string,    ///< TODOC
 
 /// \brief TODOCUMENT
 str_opt display_spec::get_display_colours_string() const {
-	return ( display_colours_string != COLOURS_UNSPECIFIED ) ? make_optional( display_colours_string )
+	return ( display_colours_string != COLOURS_UNSPECIFIED ) ? ::boost::make_optional( display_colours_string )
 	                                                         : none;
 }
 

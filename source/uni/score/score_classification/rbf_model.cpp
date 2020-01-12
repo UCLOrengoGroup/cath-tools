@@ -41,23 +41,30 @@
 #include <cmath>
 #include <fstream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::homcheck;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::homcheck;
+using namespace ::cath::score;
 
-using boost::accumulate;
-using boost::algorithm::is_any_of;
-using boost::algorithm::is_space;
-using boost::algorithm::token_compress_on;
-using boost::contains;
-using boost::filesystem::path;
-using boost::icontains;
-using boost::irange;
-using boost::numeric_cast;
-using boost::optional;
+using ::boost::accumulate;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::token_compress_on;
+using ::boost::contains;
+using ::boost::filesystem::path;
+using ::boost::icontains;
+using ::boost::irange;
+using ::boost::numeric_cast;
+using ::boost::optional;
+using ::std::get;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::make_tuple;
+using ::std::pair;
+using ::std::string;
+using ::std::tuple;
+using ::std::vector;
 
 constexpr value_list_scaling rbf_model::PRC_EVALUE_SCALING;
 constexpr value_list_scaling rbf_model::PRC_REVERSE_SCALING;

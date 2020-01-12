@@ -69,10 +69,10 @@ auto hit_resolver::get_hit_stops_differ_fn(const calc_hit_list &prm_calc_hit_lis
 ///
 /// \todo Consider dropping this check it doesn't fire when
 ///       run under debug mode over some large data set
-inline void sanity_check(const scored_arch_proxy &prm_scored_arch_proxy, ///< The architecture (scored_arch_proxy) to check
-                         const calc_hit_list     &prm_hits,              ///< The list of hits to which the scored_arch_proxy corresponds
-                         const calc_hit_vec      &prm_mask               ///< The mask with which to check for conflicts
-                         ) {
+static inline void sanity_check(const scored_arch_proxy &prm_scored_arch_proxy, ///< The architecture (scored_arch_proxy) to check
+                                const calc_hit_list     &prm_hits,              ///< The list of hits to which the scored_arch_proxy corresponds
+                                const calc_hit_vec      &prm_mask               ///< The mask with which to check for conflicts
+                                ) {
 	ignore_unused( prm_scored_arch_proxy, prm_hits, prm_mask );
 #ifndef NDEBUG
 	for (const auto &arch_hit_idx : prm_scored_arch_proxy) {

@@ -25,6 +25,7 @@
 #include "ssap/options/cath_ssap_options.hpp"
 #include "ssap/ssap.hpp"
 
+using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
@@ -33,7 +34,7 @@ using boost::log::trivial::info;
 using boost::log::trivial::severity;
 using boost::log::trivial::trace;
 
-namespace cath {
+namespace {
 
 	/// \brief A concrete program_exception_wrapper that implements do_run_program() to parse the options and then pass them to call_ssap()
 	///
@@ -59,9 +60,10 @@ namespace cath {
 			run_ssap( the_cath_ssap_options );
 		}
 	};
-} // namespace cath
+
+} // namespace
 
 /// \brief A main function for SSAP that just calls run_program() on a ssap_program_exception_wrapper
 int main(int argc, char * argv[]) {
-	return cath::ssap_program_exception_wrapper().run_program( argc, argv );
+	return ssap_program_exception_wrapper().run_program( argc, argv );
 }

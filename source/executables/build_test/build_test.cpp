@@ -23,8 +23,8 @@
 
 #include <boost/exception/diagnostic_information.hpp>
 #include <boost/log/core.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_monitor.hpp>
 
@@ -34,6 +34,7 @@
 #include <iostream>
 
 using namespace cath::common;
+using namespace cath::test;
 
 using boost::log::trivial::info;
 using boost::log::trivial::severity;
@@ -41,63 +42,66 @@ using boost::unit_test::unit_test_monitor;
 using std::cerr;
 using std::endl;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief TODOCUMENT
-		void boost_exception_translator(const boost::exception &prm_excptn ///< TODOCUMENT
-		                                ) {
-			cerr << "The execution_monitor caught a boost::exception and passed it to the boost_exception_translator :\n"
-			     << diagnostic_information( prm_excptn ) << "\n"
-			     << endl;
-			throw;
-		}
+	/// \brief TODOCUMENT
+	void boost_exception_translator(const boost::exception &prm_excptn ///< TODOCUMENT
+									) {
+		cerr << "The execution_monitor caught a boost::exception and passed it to the boost_exception_translator :\n"
+				<< diagnostic_information( prm_excptn ) << "\n"
+				<< endl;
+		throw;
+	}
 
-		/// \brief TODOCUMENT
-		class prepare_for_test_global_fixture final {
-		public:
-			prepare_for_test_global_fixture();
-			~prepare_for_test_global_fixture();
+	/// \brief TODOCUMENT
+	class prepare_for_test_global_fixture final {
+	public:
+		prepare_for_test_global_fixture();
+		~prepare_for_test_global_fixture();
 
-			static void warn_if_bootstrapping();
-		};
+		prepare_for_test_global_fixture( const prepare_for_test_global_fixture & ) = delete;
+		prepare_for_test_global_fixture( prepare_for_test_global_fixture && ) noexcept = delete;
+		prepare_for_test_global_fixture & operator=( const prepare_for_test_global_fixture & ) = delete;
+		prepare_for_test_global_fixture & operator=( prepare_for_test_global_fixture && ) noexcept = delete;
 
-		/// \brief TODOCUMENT
-		prepare_for_test_global_fixture::prepare_for_test_global_fixture() {
-			boost::log::core::get()->set_filter(
-				severity >= info
+		static void warn_if_bootstrapping();
+	};
+
+	/// \brief TODOCUMENT
+	prepare_for_test_global_fixture::prepare_for_test_global_fixture() {
+		boost::log::core::get()->set_filter(
+			severity >= info
 //				severity >= trace
-			);
-			unit_test_monitor.register_exception_translator<boost::exception>( &boost_exception_translator );
+		);
+		unit_test_monitor.register_exception_translator<boost::exception>( &boost_exception_translator );
 
-			// Try to warn if in bootstrapping mode
+		// Try to warn if in bootstrapping mode
+		warn_if_bootstrapping();
+
+		// Record that this is running in test mode
+		run_mode_flag::value = run_mode::TEST;
+	}
+
+	/// \brief In the dtor, try to warn if in bootstrapping mode
+	prepare_for_test_global_fixture::~prepare_for_test_global_fixture() {
+		try {
 			warn_if_bootstrapping();
-
-			// Record that this is running in test mode
-			run_mode_flag::value = run_mode::TEST;
 		}
-
-		/// \brief In the dtor, try to warn if in bootstrapping mode
-		prepare_for_test_global_fixture::~prepare_for_test_global_fixture() {
-			try {
-				warn_if_bootstrapping();
-			}
-			catch (...) {
-			}
+		catch (...) {
 		}
+	}
 
-		/// \brief Print a conspicuous warning if bootstrapping is turned on
-		void prepare_for_test_global_fixture::warn_if_bootstrapping() {
-			if ( bootstrap_env_var_is_set() ) {
-				BOOST_LOG_TRIVIAL( warning )
-					<< "\033[1m Environment variable "
-					<< get_bootstrap_env_var()
-					<<" is set, so test files are being bootstrapped\033[0m";
-			}
+	/// \brief Print a conspicuous warning if bootstrapping is turned on
+	void prepare_for_test_global_fixture::warn_if_bootstrapping() {
+		if ( bootstrap_env_var_is_set() ) {
+			BOOST_LOG_TRIVIAL( warning )
+				<< "\033[1m Environment variable "
+				<< get_bootstrap_env_var()
+				<<" is set, so test files are being bootstrapped\033[0m";
 		}
+	}
 
-		/// \brief TODOCUMENT
-		BOOST_GLOBAL_FIXTURE( prepare_for_test_global_fixture );
+} // namespace
 
-	}  // namespace test
-}  // namespace cath
+/// \brief TODOCUMENT
+BOOST_GLOBAL_FIXTURE( prepare_for_test_global_fixture );

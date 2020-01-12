@@ -169,10 +169,10 @@ str_opt cath::sec::difference_string(const dssp_dupl_res &prm_dssp_dupl_res,    
 		+ ::std::to_string( res_idx )
 		+ ")";
 	return
-		nh_1st ? make_optional( *nh_1st + suffix_string ):
-		nh_2nd ? make_optional( *nh_2nd + suffix_string ):
-		co_1st ? make_optional( *co_1st + suffix_string ):
-		co_2nd ? make_optional( *co_2nd + suffix_string ):
+		nh_1st ? ::boost::make_optional( *nh_1st + suffix_string ):
+		nh_2nd ? ::boost::make_optional( *nh_2nd + suffix_string ):
+		co_1st ? ::boost::make_optional( *co_1st + suffix_string ):
+		co_2nd ? ::boost::make_optional( *co_2nd + suffix_string ):
 		         none;
 }
 
@@ -197,7 +197,7 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &prm_dssp_dupl_res_
 
 	const size_t num_non_null_residues = dssp_non_null_indices.size();
 
-	const str_opt num_prob = make_optional(
+	const str_opt num_prob = ::boost::make_optional(
 		( num_non_null_residues != prm_bifur_hbonds ),
 		"Number of (non-null) DSSP hbond residues ("
 			+ ::std::to_string( num_non_null_residues )
@@ -222,7 +222,7 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &prm_dssp_dupl_res_
 	}
 
 	return num_prob
-		? make_optional( *num_prob + " No differences spotted until the end of the shortest" )
+		? ::boost::make_optional( *num_prob + " No differences spotted until the end of the shortest" )
 		: none;
 }
 

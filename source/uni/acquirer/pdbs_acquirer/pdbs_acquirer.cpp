@@ -141,8 +141,8 @@ unique_ptr<pdbs_acquirer> cath::opts::get_pdbs_acquirer(const pdb_input_spec &pr
 ///        making some attempt to avoid unnecessary allocations
 ///
 /// There currently allocates the region_vec. More could be done to improve efficiency given motivation.
-pair<str_opt_vec, region_vec_opt_vec> strip_domain_vec(domain_vec prm_domains ///< The domain_vec to strip
-                                                       ) {
+static pair<str_opt_vec, region_vec_opt_vec> strip_domain_vec(domain_vec prm_domains ///< The domain_vec to strip
+                                                              ) {
 	pair<str_opt_vec, region_vec_opt_vec> result;
 	result.first .reserve( prm_domains.size() );
 	result.second.reserve( prm_domains.size() );

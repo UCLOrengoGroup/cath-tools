@@ -232,43 +232,43 @@ constexpr size_t     SEC_STRUC_PLANAR_C_ANGLE =  10;
 //       which should be encapsulated.
 
 /// \brief Matrix of upper scores
-score_vec_of_vec global_upper_score_matrix;
+static score_vec_of_vec   global_upper_score_matrix;
 
 /// \brief Matrix to mask out comparisons that should be skipped whilst performing upper-matrix residue comparisons
-bool_vec_of_vec  global_upper_res_mask_matrix;
+static bool_vec_of_vec    global_upper_res_mask_matrix;
 
 /// \brief Matrix to mask out comparisons that should be skipped whilst performing upper-matrix, secondary-structure comparisons
-bool_vec_of_vec  global_upper_ss_mask_matrix;
+static bool_vec_of_vec    global_upper_ss_mask_matrix;
 
 /// \brief Matrix to mask out comparisons that should be skipped whilst performing lower-matrix (residue or secondary structure) comparisons
-bool_vec_of_vec  global_lower_mask_matrix;
+static bool_vec_of_vec    global_lower_mask_matrix;
 
-size_size_pair_vec global_selections;              ///< Selected region within matrix
+static size_size_pair_vec global_selections;              ///< Selected region within matrix
 
-size_t             global_num_selections  =     0; ///< The number of selected top-scoring residue pairs
-size_t             global_window          =     0; ///< The size of the window to
-size_t             global_window_add      =    70; ///< The amount that should be added to the difference in lengths to calculate window size
-size_t             global_res_sim_cutoff  =   150; ///<
+static size_t             global_num_selections  =     0; ///< The number of selected top-scoring residue pairs
+static size_t             global_window          =     0; ///< The size of the window to
+static size_t             global_window_add      =    70; ///< The amount that should be added to the difference in lengths to calculate window size
+static size_t             global_res_sim_cutoff  =   150; ///<
 
-ptrdiff_t          global_run_counter     =     0; ///<
+static ptrdiff_t          global_run_counter     =     0; ///<
 
-score_type         global_gap_penalty     =    50; ///< The gap penalty to be used in dynamic programming
+static score_type         global_gap_penalty     =    50; ///< The gap penalty to be used in dynamic programming
 
-bool               global_debug           = false; ///< Whether to output debug messages
-bool               global_align_pass      = false; ///< Whether the pass is a later, refining alignment pass
-bool               global_supaln          =  true; ///<
-bool               global_doing_fast_ssap =  true; ///< Whether currently performing a fast SSAP
-bool               global_res_score       = false; ///<
+static bool               global_debug           = false; ///< Whether to output debug messages
+static bool               global_align_pass      = false; ///< Whether the pass is a later, refining alignment pass
+static bool               global_supaln          =  true; ///<
+static bool               global_doing_fast_ssap =  true; ///< Whether currently performing a fast SSAP
+static bool               global_res_score       = false; ///<
 
-double             global_frac_selected   =   0.0; ///<
+static double             global_frac_selected   =   0.0; ///<
 
-double             global_score_run1      =   0.0; ///<
-double             global_score_run2      =   0.0; ///<
-double             global_ssap_score1     =   0.0; ///<
-double             global_ssap_score2     =   0.0; ///<
+static double             global_score_run1      =   0.0; ///<
+static double             global_score_run2      =   0.0; ///<
+static double             global_ssap_score1     =   0.0; ///<
+static double             global_ssap_score2     =   0.0; ///<
 
-char               global_ssap_line1[SSAP_LINE_LENGTH]; ///<
-char               global_ssap_line2[SSAP_LINE_LENGTH]; ///<
+static char               global_ssap_line1[SSAP_LINE_LENGTH]; ///<
+static char               global_ssap_line2[SSAP_LINE_LENGTH]; ///<
 
 /// \brief Reset all the global variable that are used by SSAP
 ///

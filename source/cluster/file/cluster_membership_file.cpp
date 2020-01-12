@@ -55,13 +55,13 @@ static constexpr size_t CLUSTER_ID_OFFSET = 0;
 static constexpr size_t DOMAIN_ID_OFFSET  = 1;
 
 /// \brief Print any warnings to the specified (optional) ostream arising from the interaction (if any) of the new entry
-inline void warn_if_neccessary(const clust_entry_problem &prm_problem,                 ///< The type of problem encountered when reading the new entry
-                               const ostream_ref_opt     &prm_ostream_ref_opt,         ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
-                               const string_ref          &prm_cluster_name,            ///< A string_ref to the name of the cluster
-                               const string_ref          &prm_entry_name,              ///< A string_ref to the name of the entry
-                               bool                      &prm_warned_duplicate,        ///< Whether a warning about duplicates has already been given
-                               const str_opt             &prm_extra_info = boost::none ///< An optional string containing extra information about the problem (if any)
-                               ) {
+static inline void warn_if_neccessary(const clust_entry_problem &prm_problem,                 ///< The type of problem encountered when reading the new entry
+                                      const ostream_ref_opt     &prm_ostream_ref_opt,         ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+                                      const string_ref          &prm_cluster_name,            ///< A string_ref to the name of the cluster
+                                      const string_ref          &prm_entry_name,              ///< A string_ref to the name of the entry
+                                      bool                      &prm_warned_duplicate,        ///< Whether a warning about duplicates has already been given
+                                      const str_opt             &prm_extra_info = boost::none ///< An optional string containing extra information about the problem (if any)
+                                      ) {
 	if ( prm_problem != clust_entry_problem::NONE && prm_ostream_ref_opt ) {
 		const log_to_ostream_guard ostream_log_guard{ prm_ostream_ref_opt.get().get() };
 

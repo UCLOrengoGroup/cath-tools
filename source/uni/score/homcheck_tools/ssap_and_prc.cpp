@@ -30,13 +30,15 @@
 #include <cmath>
 #include <string>
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::homcheck;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::homcheck;
+using namespace ::cath::score;
 
-using boost::optional;
-using cath::score::rbf_model;
+using ::boost::optional;
+using ::std::ostream;
+using ::std::ostringstream;
+using ::std::string;
 
 /// \brief Ctor from a ssap_scores_entry and a prc_scores_entry
 ///

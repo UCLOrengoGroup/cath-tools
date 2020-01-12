@@ -113,6 +113,7 @@ namespace cath {
 			}
 		} // namespace detail
 
+		/// \TODO Come C++17, remove this and replace all calls with calls to ::std::invoke
 		template< class F, class... ArgTypes >
 		auto invoke(F&& f, ArgTypes&&... args)
 		    // exception specification for QoI

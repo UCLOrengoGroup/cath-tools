@@ -101,9 +101,9 @@ resscr_opt cath::rslv::get_best_crh_score(const full_hit_list  &prm_full_hit_lis
 ///        differ from the specified hit
 ///
 /// \relates full_hit_list
-seq_seg_vec get_other_hits_segments(const full_hit      &prm_full_hit, ///< The hit whose segments should be excluded from the list
-                                    const full_hit_list &prm_full_hits ///< The list of hits from which the segments should be drawn
-                                    ) {
+static seq_seg_vec get_other_hits_segments(const full_hit      &prm_full_hit, ///< The hit whose segments should be excluded from the list
+                                           const full_hit_list &prm_full_hits ///< The list of hits from which the segments should be drawn
+                                           ) {
 	seq_seg_vec results;
 	for (const full_hit &the_full_hit : prm_full_hits) {
 		if ( the_full_hit != prm_full_hit ) {

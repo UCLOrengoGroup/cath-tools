@@ -34,13 +34,13 @@
 using namespace cath;
 using namespace cath::align;
 using namespace cath::common;
-using namespace std;
 
-using boost::algorithm::is_any_of;
-using boost::algorithm::is_space;
-using boost::join;
-using boost::make_optional;
-using boost::none;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::is_space;
+using ::boost::join;
+using ::boost::make_optional;
+using ::boost::none;
+using ::std::string;
 
 /// \brief Generate data for an alignment entry from a scaffold string
 ///

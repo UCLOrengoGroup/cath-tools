@@ -4,6 +4,8 @@ cmake_minimum_required (VERSION 3.2)
 
 MESSAGE( STATUS "Running under CMake v" ${CMAKE_VERSION} )
 
+project( cath-tools CXX )
+
 # Set the default GSL library to be static, If on Linux, get the release codename
 SET(USE_STATIC_GSL TRUE CACHE BOOL "Build with the static Gnu Scientific Library")
 

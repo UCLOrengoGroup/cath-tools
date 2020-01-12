@@ -22,11 +22,12 @@
 #include "cath_score_align/options/cath_score_align_options.hpp"
 #include "common/program_exception_wrapper.hpp"
 
+using namespace cath;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace std;
 
-namespace cath {
+namespace {
 
 	/// \brief A concrete program_exception_wrapper that implements do_run_program() to parse the options and then pass them to cath_align_scorer::score()
 	///
@@ -42,9 +43,9 @@ namespace cath {
 			cath_align_scorer::score(the_cath_score_align_options);
 		}
 	};
-} // namespace cath
+} // namespace
 
 /// \brief A main function for cath_score_align that just calls run_program() on a cath_score_align_program_exception_wrapper
 int main(int argc, char * argv[] ) {
-	return cath::cath_score_align_program_exception_wrapper().run_program( argc, argv );
+	return cath_score_align_program_exception_wrapper().run_program( argc, argv );
 }

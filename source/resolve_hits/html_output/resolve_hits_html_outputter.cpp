@@ -69,8 +69,8 @@ using std::make_pair;
 using std::string;
 using std::tie;
 
-string upper_first_lower_rest(const string &prm_string
-                              ) {
+static string upper_first_lower_rest(const string &prm_string
+                                     ) {
 	return prm_string.empty()
 		? prm_string
 		: (
@@ -83,8 +83,8 @@ string upper_first_lower_rest(const string &prm_string
 }
 
 /// \brief Perform a dumb HTML escaping on the specified string
-void dumb_html_escape(string &prm_string ///< The string to escape
-                      ) {
+static void dumb_html_escape(string &prm_string ///< The string to escape
+                             ) {
 	replace_all( prm_string, R"(&)", "&amp;"  );
 	replace_all( prm_string, R"(")", "&quot;" );
 	replace_all( prm_string, R"(')", "&apos;" );
@@ -93,8 +93,8 @@ void dumb_html_escape(string &prm_string ///< The string to escape
 }
 
 /// \brief Perform a dumb HTML escaping on a copy of the specified string
-string dumb_html_escape_copy(string prm_string ///< The source string to copy
-                             ) {
+static string dumb_html_escape_copy(string prm_string ///< The source string to copy
+                                    ) {
 	dumb_html_escape( prm_string );
 	return prm_string;
 }
@@ -185,10 +185,10 @@ string resolve_hits_html_outputter::markers_row(const size_t          &prm_seque
 
 /// \brief Merge the original segment boundaries with an optional set of resolved
 ///        boundaries, replacing originals with resolveds if they exist
-seq_seg_opt_vec merge_opt_resolved_boundaries(const seq_seg_vec               &prm_segs,              ///< The original boundaries
-                                              const seg_boundary_pair_vec_opt &prm_result_boundaries, ///< The optional resolved boundaries, where that has been required
-                                              const crh_segment_spec          &prm_segment_spec       ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
-                                              ) {
+static seq_seg_opt_vec merge_opt_resolved_boundaries(const seq_seg_vec               &prm_segs,              ///< The original boundaries
+                                                     const seg_boundary_pair_vec_opt &prm_result_boundaries, ///< The optional resolved boundaries, where that has been required
+                                                     const crh_segment_spec          &prm_segment_spec       ///< The crh_segment_spec defining how the segments will be handled (eg trimmed) by the algorithm
+                                                     ) {
 	return prm_result_boundaries
 		? merge_boundaries( prm_segs, *prm_result_boundaries, prm_segment_spec )
 		: transform_build<seq_seg_opt_vec>(
@@ -919,7 +919,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 							get_crh_score( the_full_hit, prm_score_spec ) / *best_crh_score
 						)
 						: filtered_grey,
-					make_optional( resolved_boundaries(
+					boost::make_optional( resolved_boundaries(
 						the_full_hit,
 						chosen_full_hits,
 						prm_segment_spec
@@ -961,7 +961,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 								get_crh_score( the_full_hit, prm_score_spec ) / *best_crh_score
 							)
 							: filtered_grey,
-						make_optional( resolved_boundaries(
+						boost::make_optional( resolved_boundaries(
 							the_full_hit,
 							chosen_full_hits,
 							prm_segment_spec
@@ -995,7 +995,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 </tr>
 
 )"
-	+ markers_row( seq_length, make_optional( orig_score_str ), table_section::INPUTS )
+	+ markers_row( seq_length, boost::make_optional( orig_score_str ), table_section::INPUTS )
 	+ "\n\n"
 	+ join(
 		sorted_indices

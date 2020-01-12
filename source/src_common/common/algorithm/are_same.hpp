@@ -44,9 +44,11 @@ namespace cath {
 		                  Proj     &&prm_proj  = Proj{} ///< The function to use to project the elements
 		                  ) {
 			if ( prm_begin_itr != prm_end_itr ) {
-				const auto &first = invoke( prm_proj, *prm_begin_itr );
+				/// \TODO Come C++17, use ::std::invoke
+				const auto &first = ::cath::common::invoke( prm_proj, *prm_begin_itr );
 				for (auto start_itr = prm_begin_itr; start_itr != prm_end_itr; ++start_itr) {
-					if ( ! invoke( prm_equal, first, invoke( prm_proj, *start_itr ) ) ) {
+					/// \TODO Come C++17, use ::std::invoke
+					if ( ! ::cath::common::invoke( prm_equal, first, ::cath::common::invoke( prm_proj, *start_itr ) ) ) {
 						return false;
 					}
 				}

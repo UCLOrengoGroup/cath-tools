@@ -120,7 +120,8 @@ namespace cath {
 				static std::tuple<Ts...> read_line(std::istream &prm_is ///< The istream containing the line to be read
 				                                   ) {
 					std::tuple<Ts...> new_tuple;
-					apply( tuple_parts_istreamer( prm_is ), new_tuple );
+					/// \TODO Come C++17, use ::std::apply
+					::cath::common::apply( tuple_parts_istreamer( prm_is ), new_tuple );
 					return new_tuple;
 				}
 			};
@@ -231,7 +232,8 @@ namespace cath {
 				void write_part(std::ostream            &prm_os,   ///< TODOCUMENT
 				                const std::tuple<Ts...> &prm_value ///< TODOCUMENT
 				                ) const {
-					apply( tuple_parts_ostreamer( prm_os ), prm_value );
+					/// \TODO Come C++17, use ::std::apply
+					::cath::common::apply( tuple_parts_ostreamer( prm_os ), prm_value );
 				}
 
 			public:

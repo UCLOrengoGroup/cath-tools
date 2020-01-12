@@ -134,38 +134,42 @@ display_colour_spec cath::get_colour_spec(const display_colourer &prm_display_co
 	return prm_display_colourer.get_colour_spec( alignment_context{ prm_alignment, prm_strucs_context } );
 }
 
-/// \brier Helper guard to notify a viewer at the start and end of a colouring with a display_colourer
-class viewer_colour_notifier_guard final {
-private:
-	/// \brier Const-reference to the display_colourer that will be colouring the viewer
-	reference_wrapper<const display_colourer> the_colourer;
+namespace {
 
-	/// \brier Reference to the stream to which the viewer data is to be written
-	ostream_ref the_os;
+	/// \brief Helper guard to notify a viewer at the start and end of a colouring with a display_colourer
+	class viewer_colour_notifier_guard final {
+	private:
+		/// \brief Const-reference to the display_colourer that will be colouring the viewer
+		reference_wrapper<const display_colourer> the_colourer;
 
-	/// \brier Reference to the viewer to notify
-	reference_wrapper<viewer> the_viewer;
+		/// \brief Reference to the stream to which the viewer data is to be written
+		ostream_ref the_os;
 
-public:
-	/// \brief Ctor, which calls begin_colouring() on the viewer
-	viewer_colour_notifier_guard(const display_colourer &prm_display_colourer, ///< The display_colourer that will be colouring the viewer
-	                             ostream                &prm_os,               ///< The stream to which the viewer data is to be written
-	                             viewer                 &prm_viewer            ///< The viewer to notify
-	                             ) : the_colourer{ prm_display_colourer },
-	                                 the_os      { prm_os               },
-	                                 the_viewer  { prm_viewer           } {
-		the_viewer.get().begin_colouring( the_os.get(), the_colourer.get() );
-	}
+		/// \brief Reference to the viewer to notify
+		reference_wrapper<viewer> the_viewer;
 
-	/// \brief Dtor, which calls end_colouring() on the viewer
-	~viewer_colour_notifier_guard() {
-		try {
-			the_viewer.get().end_colouring( the_os.get(), the_colourer.get() );
+	public:
+		/// \brief Ctor, which calls begin_colouring() on the viewer
+		viewer_colour_notifier_guard(const display_colourer &prm_display_colourer, ///< The display_colourer that will be colouring the viewer
+		                             ostream                &prm_os,               ///< The stream to which the viewer data is to be written
+		                             viewer                 &prm_viewer            ///< The viewer to notify
+		                             ) : the_colourer{ prm_display_colourer },
+		                                 the_os      { prm_os               },
+		                                 the_viewer  { prm_viewer           } {
+			the_viewer.get().begin_colouring( the_os.get(), the_colourer.get() );
 		}
-		catch (...) {
+
+		/// \brief Dtor, which calls end_colouring() on the viewer
+		~viewer_colour_notifier_guard() {
+			try {
+				the_viewer.get().end_colouring( the_os.get(), the_colourer.get() );
+			}
+			catch (...) {
+			}
 		}
-	}
-};
+	};
+
+} // namespace
 
 /// \brief Write instructions for the specified viewer to the specified ostream
 ///        to represent the specified display_colourer in the context of the specified alignment_context

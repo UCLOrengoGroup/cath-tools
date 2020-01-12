@@ -217,8 +217,8 @@ doub_vec cath::sec::calc_accessibilities(const pdb    &prm_pdb,   ///< The PDB i
 // };
 
 /// \brief Make a vector of all simple_locn_index values corresponding to the specified PDB
-vector<simple_locn_index> make_all_atom_entries(const pdb &prm_pdb ///< The PDB to query
-                                                ) {
+static vector<simple_locn_index> make_all_atom_entries(const pdb &prm_pdb ///< The PDB to query
+                                                       ) {
 	vector<simple_locn_index> results;
 	for (const pdb_residue &the_residue : prm_pdb) {
 		for (const pdb_atom &the_atom : the_residue) {
@@ -235,10 +235,10 @@ vector<simple_locn_index> make_all_atom_entries(const pdb &prm_pdb ///< The PDB 
 
 /// \brief Build a lattice of the specified PDB's atoms using the specified cell size and maximum distance
 template <sod Sod>
-auto make_access_atom_lattice(const pdb   &prm_pdb,       ///< The PDB for which the atom should be indesxed
-                              const float &prm_cell_size, ///< The cell size of the lattice
-                              const float &prm_max_dist   ///< The maximum distance between points that lattic should be used to find
-                              ) {
+static auto make_access_atom_lattice(const pdb   &prm_pdb,       ///< The PDB for which the atom should be indexed
+                                     const float &prm_cell_size, ///< The cell size of the lattice
+                                     const float &prm_max_dist   ///< The maximum distance between points that lattic should be used to find
+                                     ) {
 	const auto keyer = make_res_pair_keyer(
 		simple_locn_x_keyer_part{ prm_cell_size },
 		simple_locn_y_keyer_part{ prm_cell_size },

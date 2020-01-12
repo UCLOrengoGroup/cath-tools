@@ -41,7 +41,7 @@ namespace cath {
 			/// \totest apply_stepwise
 
 			static_assert(
-				apply( fn_a, make_tuple( 1, 2.0 ) ) == 3,
+				::cath::common::apply( fn_a, make_tuple( 1, 2.0 ) ) == 3,
 				"Failure in static_assert test of tuple apply()"
 			);
 

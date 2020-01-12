@@ -27,12 +27,14 @@
 
 using namespace cath;
 using namespace cath::common;
-using namespace std;
 
-using boost::algorithm::is_alnum;
-using boost::algorithm::is_digit;
-using boost::lexical_cast;
-using boost::optional;
+using ::boost::algorithm::is_alnum;
+using ::boost::algorithm::is_digit;
+using ::boost::lexical_cast;
+using ::boost::optional;
+using ::std::istream;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Throw if insert code is invalid
 void residue_name::sanity_check() const {

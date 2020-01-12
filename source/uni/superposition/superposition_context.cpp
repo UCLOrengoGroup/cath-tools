@@ -45,26 +45,26 @@
 #include "superposition/io/superposition_io.hpp"
 #include "superposition/superposition_content_spec.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::opts;
-using namespace cath::sup;
-using namespace cath::sup::detail;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
+using namespace ::cath::sup::detail;
 
-using boost::adaptors::map_values;
-using boost::adaptors::transformed;
-using boost::algorithm::any_of;
-using boost::log::trivial::severity_level;
-using boost::make_optional;
-using boost::none;
-using boost::property_tree::ptree;
-using boost::range::for_each;
-using std::pair;
-using std::string;
+using ::boost::adaptors::map_values;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::any_of;
+using ::boost::log::trivial::severity_level;
+using ::boost::make_optional;
+using ::boost::none;
+using ::boost::property_tree::ptree;
+using ::boost::range::for_each;
+using ::std::pair;
+using ::std::string;
 
 /// \brief Ctor for superposition_context
 superposition_context::superposition_context(superposition  prm_superposition, ///< TODOCUMENT
@@ -248,7 +248,7 @@ pdb cath::sup::get_supn_content_pdb(const pdb                        &prm_pdb,  
 	// Form a list of regions that includes the originals,
 	// plus any DNA chains that have been found nearby
 	const region_vec_opt all_regions = expanded_regions
-		? make_optional( append_copy(
+		? ::boost::make_optional( append_copy(
 			*expanded_regions,
 			transform_build<region_vec>(
 				nearby_dna_chains,

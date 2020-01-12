@@ -39,39 +39,35 @@ using namespace cath::scan::detail;
 using boost::adaptors::transformed;
 using std::vector;
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace  {
 
-			/// \brief TODOCUMENT
-			template <sod Sod, typename Cell>
-			struct simple_spatial_lattice_store_maker final {
+	/// \brief TODOCUMENT
+	template <sod Sod, typename Cell>
+	struct simple_spatial_lattice_store_maker final {
 
-				/// \brief TODOCUMENT
-				template <typename Rng>
-				auto operator()(const Rng   &prm_rng,       ///< TODOCUMENT
-				                const float &prm_cell_size, ///< TODOCUMENT
-				                const float &prm_max_dist   ///< TODOCUMENT
-				                ) {
-					const auto keyer = make_res_pair_keyer(
-						simple_locn_x_keyer_part{ prm_cell_size },
-						simple_locn_y_keyer_part{ prm_cell_size },
-						simple_locn_z_keyer_part{ prm_cell_size },
-						res_pair_from_to_index_keyer_part{}
-					);
+		/// \brief TODOCUMENT
+		template <typename Rng>
+		auto operator()(const Rng   &prm_rng,       ///< TODOCUMENT
+		                const float &prm_cell_size, ///< TODOCUMENT
+		                const float &prm_max_dist   ///< TODOCUMENT
+		                ) {
+			const auto keyer = make_res_pair_keyer(
+				simple_locn_x_keyer_part{ prm_cell_size },
+				simple_locn_y_keyer_part{ prm_cell_size },
+				simple_locn_z_keyer_part{ prm_cell_size },
+				res_pair_from_to_index_keyer_part{}
+			);
 
-					using store_type = scan_index_lattice_store<decltype( keyer )::key_index_tuple_type, Cell>;
-					return store_maker<Sod, store_type>{}(
-						prm_rng,
-						keyer,
-						simple_locn_crit{ prm_max_dist * prm_max_dist }
-					);
-				}
-			};
+			using store_type = scan_index_lattice_store<decltype( keyer )::key_index_tuple_type, Cell>;
+			return store_maker<Sod, store_type>{}(
+				prm_rng,
+				keyer,
+				simple_locn_crit{ prm_max_dist * prm_max_dist }
+			);
+		}
+	};
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+} // namespace
 
 
 static_assert( std::is_copy_assignable<cath::scan::simple_locn_index>::value, "" );

@@ -83,166 +83,169 @@ using combined_list = combine_params_lists_with_template_list_t< cell_type_list,
 constexpr float indexed_refiner_constants::MAX_DIST;
 constexpr float indexed_refiner_constants::MAX_SQ_DIST;
 
-inline void simplify_name(std::string &arg) {
-	erase_all  ( arg, "cath::align::"            );
-	erase_all  ( arg, "cath::scan::"             );
-	erase_all  ( arg, "boost::container::"       );
-	erase_all  ( arg, "std::"                    );
-	erase_all  ( arg, "_refine_index"            );
-	replace_all( arg, "simple_locn_index", "SLI" );
-	erase_all  ( arg, ", new_allocator<SLI> "    );
-	erase_all  ( arg, ", allocator<SLI>"         );
-	replace_all( arg, "ul>>", ">>"               );
-	erase_all  ( arg, " "                        );
-	
-	// erase_all  ( arg, ", allocator<simple_locn_index>" );
-}
+namespace {
 
-inline std::string simplify_name_copy(std::string arg
-                                      ) {
-	simplify_name( arg );
-	return arg;
-}
+	inline void simplify_name(std::string &arg) {
+		erase_all  ( arg, "cath::align::"            );
+		erase_all  ( arg, "cath::scan::"             );
+		erase_all  ( arg, "boost::container::"       );
+		erase_all  ( arg, "std::"                    );
+		erase_all  ( arg, "_refine_index"            );
+		replace_all( arg, "simple_locn_index", "SLI" );
+		erase_all  ( arg, ", new_allocator<SLI> "    );
+		erase_all  ( arg, ", allocator<SLI>"         );
+		replace_all( arg, "ul>>", ">>"               );
+		erase_all  ( arg, " "                        );
 
-template <typename Fn, typename... Ts>
-hrc_duration time_execution(Fn &&prm_fn,
-                            Ts &&...prm_vars
-                            ) {
-	const auto start_time = high_resolution_clock::now();
-	invoke( prm_fn, std::forward< Ts >( prm_vars )... );
-	return high_resolution_clock::now() - start_time;
-}
+		// erase_all  ( arg, ", allocator<simple_locn_index>" );
+	}
 
-template <typename T>
-class index_type_pair_processor final {};
+	inline std::string simplify_name_copy(std::string arg
+	                                      ) {
+		simplify_name( arg );
+		return arg;
+	}
 
-template <typename... Ts>
-class index_type_pair_processor< tuple< Ts... > > final {
-private:
-	template <sod Sod,
-	          typename T,
-	          typename U>
-	void process_index_type_pair_sod(vector<pair<string, doub_doub_pair_vec>> &prm_data,
-	                                 const protein                            &prm_protein_a,    ///< TODOCUMENT
-	                                 const protein                            &prm_protein_b,    ///< TODOCUMENT
-	                                 const alignment                          &prm_alignment ///< TODOCUMENT
-	                                 ) {
-		// std::cerr << "Emplacing back " << demangle( typeid( T ).name() ) << " and " << demangle( typeid( U ).name() ) << "\n";
+	template <typename Fn, typename... Ts>
+	hrc_duration time_execution(Fn &&prm_fn,
+	                            Ts &&...prm_vars
+	                            ) {
+		const auto start_time = high_resolution_clock::now();
+		invoke( prm_fn, std::forward< Ts >( prm_vars )... );
+		return high_resolution_clock::now() - start_time;
+	}
 
-		// const auto keyer = make_res_pair_keyer(
-		// 	simple_locn_x_keyer_part{ prm_cell_size },
-		// 	simple_locn_y_keyer_part{ prm_cell_size },
-		// 	simple_locn_z_keyer_part{ prm_cell_size }
-		// );
+	template <typename T>
+	class index_type_pair_processor final {};
 
-		// return make_pair(
-		// 	store_maker<sod::DENSE, T>{}(
-		// 	prm_rng,
-		// 	keyer,
-		// 	simple_locn_crit{ prm_max_dist * prm_max_dist }
-		// );
+	template <typename... Ts>
+	class index_type_pair_processor< tuple< Ts... > > final {
+	private:
+		template <sod Sod,
+		          typename T,
+		          typename U>
+		void process_index_type_pair_sod(vector<pair<string, doub_doub_pair_vec>> &prm_data,
+		                                 const protein                            &prm_protein_a,    ///< TODOCUMENT
+		                                 const protein                            &prm_protein_b,    ///< TODOCUMENT
+		                                 const alignment                          &prm_alignment ///< TODOCUMENT
+		                                 ) {
+			// std::cerr << "Emplacing back " << demangle( typeid( T ).name() ) << " and " << demangle( typeid( U ).name() ) << "\n";
 
-		// store_maker<sod::DENSE, T>{}(
+			// const auto keyer = make_res_pair_keyer(
+			// 	simple_locn_x_keyer_part{ prm_cell_size },
+			// 	simple_locn_y_keyer_part{ prm_cell_size },
+			// 	simple_locn_z_keyer_part{ prm_cell_size }
+			// );
 
-		// );
+			// return make_pair(
+			// 	store_maker<sod::DENSE, T>{}(
+			// 	prm_rng,
+			// 	keyer,
+			// 	simple_locn_crit{ prm_max_dist * prm_max_dist }
+			// );
 
-		doub_doub_pair_vec series_data;
+			// store_maker<sod::DENSE, T>{}(
 
-		std::cerr << ( to_string( Sod )
-				+ ":"
-				+ simplify_name_copy( common::type_to_string<T>() ) ) << std::endl;
+			// );
 
-		// ** \todo ENSURE THE READING VARIES WITH SOD **
+			doub_doub_pair_vec series_data;
 
-		constexpr size_t start_offset = ( Sod == sod::DENSE ? 3_z : 3_z );
+			std::cerr << ( to_string( Sod )
+					+ ":"
+					+ simplify_name_copy( common::type_to_string<T>() ) ) << std::endl;
 
-		for (const size_t &cell_size_index : irange( start_offset, 12_z ) ) {
-		// for (const size_t &cell_size_index : irange( 5_z, 6_z ) ) {
+			// ** \todo ENSURE THE READING VARIES WITH SOD **
 
-			const float cell_size = static_cast<float>( cell_size_index ) * 4.0f;
-			std::cerr << "\t" << cell_size << std::endl;
-			info_quantity memory_usage;
-			const auto build_durn = time_execution(
-				[&] {
-					const T store_wrapper_a{
-						std::integral_constant< sod, Sod >{},
-						prm_protein_a,
-						fot::FROM,
-						cell_size
-					};
-					const T store_wrapper_b{
-						std::integral_constant< sod, Sod >{},
-						prm_protein_b,
-						fot::FROM,
-						cell_size
-					};
-					memory_usage = store_wrapper_a.get_info_size() + store_wrapper_b.get_info_size();
+			constexpr size_t start_offset = ( Sod == sod::DENSE ? 3_z : 3_z );
+
+			for (const size_t &cell_size_index : irange( start_offset, 12_z ) ) {
+			// for (const size_t &cell_size_index : irange( 5_z, 6_z ) ) {
+
+				const float cell_size = static_cast<float>( cell_size_index ) * 4.0f;
+				std::cerr << "\t" << cell_size << std::endl;
+				info_quantity memory_usage;
+				const auto build_durn = time_execution(
+					[&] {
+						const T store_wrapper_a{
+							std::integral_constant< sod, Sod >{},
+							prm_protein_a,
+							fot::FROM,
+							cell_size
+						};
+						const T store_wrapper_b{
+							std::integral_constant< sod, Sod >{},
+							prm_protein_b,
+							fot::FROM,
+							cell_size
+						};
+						memory_usage = store_wrapper_a.get_info_size() + store_wrapper_b.get_info_size();
 
 
 
-					for (const auto &aln_index : indices( prm_alignment.length() ) ) {
-						if ( has_both_positions_of_index( prm_alignment, aln_index ) ) {
-							const auto &a_posn = get_a_position_of_index( prm_alignment, aln_index );
-							const auto &b_posn = get_b_position_of_index( prm_alignment, aln_index );
-							const auto &cells_a = store_wrapper_a.the_store[ a_posn ];
-							const auto &cells_b = store_wrapper_b.the_store[ b_posn ];
+						for (const auto &aln_index : indices( prm_alignment.length() ) ) {
+							if ( has_both_positions_of_index( prm_alignment, aln_index ) ) {
+								const auto &a_posn = get_a_position_of_index( prm_alignment, aln_index );
+								const auto &b_posn = get_b_position_of_index( prm_alignment, aln_index );
+								const auto &cells_a = store_wrapper_a.the_store[ a_posn ];
+								const auto &cells_b = store_wrapper_b.the_store[ b_posn ];
 
-							for (const auto &the_cell_a : cells_a ) {
-								for (const simple_locn_index &the_entry_a : the_cell_a.second ) {
-									for (const simple_locn_index &candidate_b : cells_b.find_matches( store_wrapper_a.the_keyer.make_key( the_entry_a ) ) ) {
-										if ( get_squared_distance( candidate_b, the_entry_a ) < indexed_refiner_constants::MAX_SQ_DIST ) {
-											std::cerr << to_string( the_entry_a ) << ", " << to_string( candidate_b ) << "\n";
+								for (const auto &the_cell_a : cells_a ) {
+									for (const simple_locn_index &the_entry_a : the_cell_a.second ) {
+										for (const simple_locn_index &candidate_b : cells_b.find_matches( store_wrapper_a.the_keyer.make_key( the_entry_a ) ) ) {
+											if ( get_squared_distance( candidate_b, the_entry_a ) < indexed_refiner_constants::MAX_SQ_DIST ) {
+												std::cerr << to_string( the_entry_a ) << ", " << to_string( candidate_b ) << "\n";
+											}
 										}
 									}
 								}
 							}
 						}
 					}
-				}
-			);
+				);
 
-			// std::cerr << series_name << "\t" << cell_size << "\t" << durn_to_seconds_string( build_durn ) << "\n";
+				// std::cerr << series_name << "\t" << cell_size << "\t" << durn_to_seconds_string( build_durn ) << "\n";
 
-			series_data.emplace_back(
-				cell_size,
-				durn_to_seconds_double( build_durn )
+				series_data.emplace_back(
+					cell_size,
+					durn_to_seconds_double( build_durn )
+				);
+				// "size "s + std::to_string( memory_usage.value() ) + "b"
+				// "build durn : " + durn_to_seconds_string( build_durn ) + " size "s + boost::lexical_cast<string>( memory_usage.value() ) + "b"
+			}
+
+			prm_data.emplace_back(
+				to_string( Sod )
+					+ ":"
+					+ simplify_name_copy( common::type_to_string<T>() ),
+				series_data
 			);
-			// "size "s + std::to_string( memory_usage.value() ) + "b"
-			// "build durn : " + durn_to_seconds_string( build_durn ) + " size "s + boost::lexical_cast<string>( memory_usage.value() ) + "b"
 		}
 
-		prm_data.emplace_back(
-			to_string( Sod )
-				+ ":"
-				+ simplify_name_copy( common::type_to_string<T>() ),
-			series_data
-		);
-	}
+		template <typename T,
+		          typename U>
+		int process_index_type_pair(vector<pair<string, doub_doub_pair_vec>> &prm_data,      ///< TODOCUMENT
+		                            const protein                            &prm_protein_a, ///< TODOCUMENT
+		                            const protein                            &prm_protein_b, ///< TODOCUMENT
+		                            const alignment                          &prm_alignment  ///< TODOCUMENT
+		                            ) {
+			process_index_type_pair_sod< sod::SPARSE, T, U >( prm_data, prm_protein_a, prm_protein_b, prm_alignment );
+			process_index_type_pair_sod< sod::DENSE,  T, U >( prm_data, prm_protein_a, prm_protein_b, prm_alignment );
+			return 0;
+		}
 
-	template <typename T,
-	          typename U>
-	int process_index_type_pair(vector<pair<string, doub_doub_pair_vec>> &prm_data,      ///< TODOCUMENT
-	                            const protein                            &prm_protein_a, ///< TODOCUMENT
-	                            const protein                            &prm_protein_b, ///< TODOCUMENT
-	                            const alignment                          &prm_alignment  ///< TODOCUMENT
-	                            ) {
-		process_index_type_pair_sod< sod::SPARSE, T, U >( prm_data, prm_protein_a, prm_protein_b, prm_alignment );
-		process_index_type_pair_sod< sod::DENSE,  T, U >( prm_data, prm_protein_a, prm_protein_b, prm_alignment );
-		return 0;
-	}
-
-public:
-	/// \brief TODOCUMENT
-	vector<pair<string, doub_doub_pair_vec>> operator()(const protein   &prm_protein_a, ///< TODOCUMENT
-	                                                    const protein   &prm_protein_b, ///< TODOCUMENT
-	                                                    const alignment &prm_alignment  ///< TODOCUMENT
-	                                                    ) {
-		vector<pair<string, doub_doub_pair_vec>> data;
-		const std::initializer_list<int> dummy_list = { process_index_type_pair< Ts, Ts >( data, prm_protein_a, prm_protein_b, prm_alignment )... };
-		boost::ignore_unused( dummy_list );
-		return data;
-	}
-};
+	public:
+		/// \brief TODOCUMENT
+		vector<pair<string, doub_doub_pair_vec>> operator()(const protein   &prm_protein_a, ///< TODOCUMENT
+		                                                    const protein   &prm_protein_b, ///< TODOCUMENT
+		                                                    const alignment &prm_alignment  ///< TODOCUMENT
+		                                                    ) {
+			vector<pair<string, doub_doub_pair_vec>> data;
+			const std::initializer_list<int> dummy_list = { process_index_type_pair< Ts, Ts >( data, prm_protein_a, prm_protein_b, prm_alignment )... };
+			boost::ignore_unused( dummy_list );
+			return data;
+		}
+	};
+} // namespace
 
 void cath::align::do_some_gubbins(const protein   &prm_protein_a, ///< TODOCUMENT
                                   const protein   &prm_protein_b, ///< TODOCUMENT

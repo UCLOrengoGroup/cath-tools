@@ -40,8 +40,9 @@ namespace cath {
 				/// \todo Tidy up the enable_if / decltype()
 				template <typename Tpl, typename = std::enable_if< is_tuple< Tpl >::value > >
 				constexpr auto operator()(const Tpl &prm_tuple ///< The tuple from which a copy should be taken, its members multiply_argsed and returned
-				                          ) const -> decltype( apply( multiply_args, prm_tuple ) ) {
-					return apply( multiply_args, prm_tuple );
+				                          ) const -> decltype( ::cath::common::apply( multiply_args, prm_tuple ) ) {
+					/// \TODO Come C++17, use ::std::apply
+					return ::cath::common::apply( multiply_args, prm_tuple );
 				}
 
 				tuple_multiply_args_fn()                           = delete;

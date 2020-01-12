@@ -144,8 +144,8 @@ path_vec cath::clust::get_all_output_paths(const cath_cluster_output_spec &prm_o
 /// \relates cath_cluster_output_spec
 str_opt cath::clust::has_output_requiring_single_level_clustering(const cath_cluster_output_spec &prm_output_spec ///< The cath_cluster_output_spec to query
                                                                   ) {
-	return prm_output_spec.get_clust_spans_to_file() ? make_optional( cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE ) :
-	       prm_output_spec.get_reps_to_file()        ? make_optional( cath_cluster_output_options_block::PO_REPS_TO_FILE        ) :
+	return prm_output_spec.get_clust_spans_to_file() ? ::boost::make_optional( cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE ) :
+	       prm_output_spec.get_reps_to_file()        ? ::boost::make_optional( cath_cluster_output_options_block::PO_REPS_TO_FILE        ) :
 	                                                   none;
 }
 
