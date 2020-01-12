@@ -445,7 +445,7 @@ namespace cath {
 		// 		+ " atom(s) of residue "
 		// 		+ boost::lexical_cast<std::string>( prm_pdb_residue.get_residue_name() )
 		// 	));
-		// 	return geom::coord::ORIGIN_COORD; // To appease Eclipse's syntax parser
+		// 	return geom::ORIGIN_COORD; // To appease Eclipse's syntax parser
 		// }
 
 	} // namespace file

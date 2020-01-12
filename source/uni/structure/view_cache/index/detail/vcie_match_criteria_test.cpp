@@ -69,8 +69,8 @@ BOOST_AUTO_TEST_CASE(get_standard_works) {
 /// \brief Check that the vcie_match_criteria function operator for a single view_cache_index_entry works as expected
 BOOST_AUTO_TEST_CASE(singe_view_cache_index_entry_check_works) {
 	const auto default_vcie_match_criteria = make_default_vcie_match_criteria();
-	BOOST_CHECK_EQUAL( default_vcie_match_criteria( view_cache_index_entry( 10, 20, coord::ORIGIN_COORD, rotation::IDENTITY_ROTATION(), the_zero_angle, the_zero_angle, the_zero_angle, the_zero_angle ) ), false );
-	BOOST_CHECK_EQUAL( default_vcie_match_criteria( view_cache_index_entry( 10, 21, coord::ORIGIN_COORD, rotation::IDENTITY_ROTATION(), the_zero_angle, the_zero_angle, the_zero_angle, the_zero_angle ) ), true  );
+	BOOST_CHECK_EQUAL( default_vcie_match_criteria( view_cache_index_entry( 10, 20, ORIGIN_COORD, rotation::IDENTITY_ROTATION(), the_zero_angle, the_zero_angle, the_zero_angle, the_zero_angle ) ), false );
+	BOOST_CHECK_EQUAL( default_vcie_match_criteria( view_cache_index_entry( 10, 21, ORIGIN_COORD, rotation::IDENTITY_ROTATION(), the_zero_angle, the_zero_angle, the_zero_angle, the_zero_angle ) ), true  );
 }
 
 /// \todo Test the vcie_match_criteria function operator that tests pairs of view_cache_index_entries

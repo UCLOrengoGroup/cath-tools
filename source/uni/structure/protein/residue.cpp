@@ -109,8 +109,8 @@ const map<char, int> ACCESSI = {
 const residue residue::NULL_RESIDUE(
 	residue_id{},
 	amino_acid  ( 'X' ),
-	coord::ORIGIN_COORD,
-	coord::ORIGIN_COORD,
+	ORIGIN_COORD,
+	ORIGIN_COORD,
 	0, // Secondary structure number
 	sec_struc_type::COIL,
 	rotation::IDENTITY_ROTATION(),

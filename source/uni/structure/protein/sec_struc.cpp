@@ -38,8 +38,8 @@ using namespace std;
 //	0,
 //	0,
 //	sec_struc_type::ALPHA_HELIX,
-//	coord::ORIGIN_COORD,
-//	coord::ORIGIN_COORD
+//	ORIGIN_COORD,
+//	ORIGIN_COORD
 //);
 
 /// \brief TODOCUMENT

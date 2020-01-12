@@ -433,7 +433,7 @@ coord cath::calculate_inter_sec_struc_vector(const protein            &prm_prote
 
 	// If the source and destination sec_struc indices are equal, then just return vector (0, 0, 0)
 	if (prm_src_sec_struc_index == prm_dest_sec_struc_index) {
-		return coord::ORIGIN_COORD;
+		return ORIGIN_COORD;
 	}
 
 	// Grab the two sec_strucs along with a third, anchor sec_struc

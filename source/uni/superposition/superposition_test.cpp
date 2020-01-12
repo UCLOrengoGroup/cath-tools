@@ -83,9 +83,9 @@ namespace cath {
 				constexpr size_t IDX = 0;
 				const superposition orig_supn{ { prm_orig_supn_transltn }, { prm_orig_supn_rottn } };
 				const superposition ptar_supn = post_translate_and_rotate_copy( orig_supn, prm_translation, prm_rotation );
-				for (const coord &x : {  coord::ORIGIN_COORD,
-				                         coord::UNIT_X,  coord::UNIT_Y,  coord::UNIT_Z,
-				                        -coord::UNIT_X, -coord::UNIT_Y, -coord::UNIT_Z } ) {
+				for (const coord &x : {  ORIGIN_COORD,
+				                         UNIT_X_COORD,  UNIT_Y_COORD,  UNIT_Z_COORD,
+				                        -UNIT_X_COORD, -UNIT_Y_COORD, -UNIT_Z_COORD } ) {
 					BOOST_CHECK_EQUAL(
 						transform_copy( ptar_supn, IDX, x ),
 						rotate_copy(

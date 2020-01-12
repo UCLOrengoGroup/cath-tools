@@ -220,35 +220,35 @@ BOOST_AUTO_TEST_CASE(planar_angles) {
 BOOST_AUTO_TEST_SUITE(json)
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_origin) {
-	BOOST_CHECK_EQUAL( to_json_string( coord::ORIGIN_COORD, json_style::COMPACT ), R"({"x":"0","y":"0","z":"0"})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( ORIGIN_COORD, json_style::COMPACT ), R"({"x":"0","y":"0","z":"0"})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_unit_x) {
-	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_X,       json_style::COMPACT ), R"({"x":"1","y":"0","z":"0"})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( UNIT_X_COORD,       json_style::COMPACT ), R"({"x":"1","y":"0","z":"0"})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_unit_y) {
-	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_Y,       json_style::COMPACT ), R"({"x":"0","y":"1","z":"0"})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( UNIT_Y_COORD,       json_style::COMPACT ), R"({"x":"0","y":"1","z":"0"})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_unit_z) {
-	BOOST_CHECK_EQUAL( to_json_string( coord::UNIT_Z,       json_style::COMPACT ), R"({"x":"0","y":"0","z":"1"})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( UNIT_Z_COORD,       json_style::COMPACT ), R"({"x":"0","y":"0","z":"1"})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_origin) {
-	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"0","z":"0"})" ), coord::ORIGIN_COORD );
+	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"0","z":"0"})" ), ORIGIN_COORD );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_unit_x) {
-	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"1","y":"0","z":"0"})" ), coord::UNIT_X       );
+	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"1","y":"0","z":"0"})" ), UNIT_X_COORD       );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_unit_y) {
-	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"1","z":"0"})" ), coord::UNIT_Y       );
+	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"1","z":"0"})" ), UNIT_Y_COORD       );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_unit_z) {
-	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"0","z":"1"})" ), coord::UNIT_Z       );
+	BOOST_CHECK_EQUAL( from_json_string<coord>( R"({"x":"0","y":"0","z":"1"})" ), UNIT_Z_COORD       );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

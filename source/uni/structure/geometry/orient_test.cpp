@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(x_and_y_of_later_weighted_cog_works_if_some_different) {
 	const auto got = x_and_y_of_later_weighted_cog( coord_list{ coord_vec{ {
 		the_coord,
 		the_coord,
-		coord::ORIGIN_COORD
+		ORIGIN_COORD
 	} } } );
 	BOOST_TEST( got.first  == the_coord.get_x() / 2.0 );
 	BOOST_TEST( got.second == the_coord.get_y() / 2.0 );

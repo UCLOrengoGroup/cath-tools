@@ -58,18 +58,6 @@ namespace cath {
 
 		public:
 			/// \brief TODOCUMENT
-			static const coord  ORIGIN_COORD;
-
-			/// \brief TODOCUMENT
-			static const coord  UNIT_X;
-
-			/// \brief TODOCUMENT
-			static const coord  UNIT_Y;
-
-			/// \brief TODOCUMENT
-			static const coord  UNIT_Z;
-
-			/// \brief TODOCUMENT
 			static constexpr size_t NUM_DIMS = 3;
 
 			/// \brief TODOCUMENT
@@ -185,6 +173,19 @@ namespace cath {
 	#endif
 			return operator*=( 1.0 / prm_factor );
 		}
+
+		/// \brief TODOCUMENT
+		constexpr coord  ORIGIN_COORD { 0.0, 0.0, 0.0 };
+
+		/// \brief TODOCUMENT
+		constexpr coord  UNIT_X_COORD { 1.0, 0.0, 0.0 };
+
+		/// \brief TODOCUMENT
+		constexpr coord  UNIT_Y_COORD { 0.0, 1.0, 0.0 };
+
+		/// \brief TODOCUMENT
+		constexpr coord  UNIT_Z_COORD { 0.0, 0.0, 1.0 };
+
 
 		/// \brief TODOCUMENT
 		///
@@ -404,7 +405,7 @@ namespace cath {
 		/// \relates coord
 		inline coord operator-(const coord &prm_coord ///< TODOCUMENT
 		                       ) {
-			return ( coord::ORIGIN_COORD - prm_coord );
+			return ( ORIGIN_COORD - prm_coord );
 		}
 
 		/// \brief TODOCUMENT

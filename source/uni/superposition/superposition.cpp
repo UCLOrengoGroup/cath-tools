@@ -146,7 +146,7 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &prm_ind
 
 //	rmsds.assign(num_entries - 1, INVALID_RMSD);
 
-	translations.assign( num_entries, coord::ORIGIN_COORD           );
+	translations.assign( num_entries, ORIGIN_COORD                  );
 	rotations.assign   ( num_entries, rotation::IDENTITY_ROTATION() );
 	translations[ prm_base_index ] = prm_base_translation;
 	rotations   [ prm_base_index ] = prm_base_rotation;
@@ -627,7 +627,7 @@ void cath::sup::check_superposition_is_pairwise(const superposition &prm_superpo
 superposition cath::sup::make_identity_superposition(const size_t &prm_num_entries ///< The number of entries to be superposed
                                                      ) {
 	return {
-		coord_vec   ( prm_num_entries, coord::ORIGIN_COORD           ),
+		coord_vec   ( prm_num_entries, ORIGIN_COORD           ),
 		rotation_vec( prm_num_entries, rotation::IDENTITY_ROTATION() )
 	};
 }

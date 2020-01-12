@@ -134,7 +134,7 @@ coord cath::geom::sum(const coord_list &prm_coord_list ///< The list of coords t
 	if ( prm_coord_list.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot calculate centre of gravity for empty coord_list"));
 	}
-	return accumulate( prm_coord_list, coord::ORIGIN_COORD );
+	return accumulate( prm_coord_list, ORIGIN_COORD );
 }
 
 /// \brief Grab the number of coords in each coord_list and throw if they're zero or not equal

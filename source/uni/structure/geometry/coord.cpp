@@ -41,10 +41,6 @@ using boost::format;
 using boost::property_tree::ptree;
 
 //const double LENGTH_CHECK_PRECISION_PERCENTAGE_TOLERANCE( 1E-10 );
-constexpr coord  coord::ORIGIN_COORD { 0.0, 0.0, 0.0 };
-constexpr coord  coord::UNIT_X       { 1.0, 0.0, 0.0 };
-constexpr coord  coord::UNIT_Y       { 0.0, 1.0, 0.0 };
-constexpr coord  coord::UNIT_Z       { 0.0, 0.0, 1.0 };
 constexpr size_t coord::NUM_DIMS;
 constexpr double coord::TOLERANCE_FOR_COORD_CLOSENESS_CHECKS;
 

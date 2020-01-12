@@ -219,7 +219,7 @@ size_residue_pair cath::file::parse_dssp_residue_line(const string &prm_dssp_res
 				res_id,
 				amino_acid{ amino_acid_letter },
 				coord( carbon_a_x, carbon_a_y, carbon_a_z ),
-				coord::ORIGIN_COORD,
+				ORIGIN_COORD,
 				0,
 				sec_struc,
 				rotation::IDENTITY_ROTATION(),

@@ -53,7 +53,7 @@ doub_doub_pair cath::geom::detail::x_and_y_of_later_weighted_cog(const coord_lis
 	const double factor = 2.0 / ( static_cast<double>( prm_coords.size() ) * static_cast<double>( prm_coords.size() + 1 ) );
 	const coord the_coord = accumulate(
 		indices( prm_coords.size() ),
-		coord::ORIGIN_COORD,
+		ORIGIN_COORD,
 		[&] (const coord &x, const size_t &y) {
 			return x + ( static_cast<double>( y + 1_z ) * factor * prm_coords[ y ] );
 		}

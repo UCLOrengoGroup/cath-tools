@@ -255,35 +255,35 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotation_between_quat_rots, quat_rot_type, all_qua
 
 				cerr << "\n";
 
-				cerr << "Rot eg first       : " <<                                              rotate_copy( get<0>( x ), coord::UNIT_X )       << "\t"
-				                                <<                                              rotate_copy( get<0>( x ), coord::UNIT_Y )       << "\t"
-				                                <<                                              rotate_copy( get<0>( x ), coord::UNIT_Z )       << "\n";
+				cerr << "Rot eg first       : " <<                                              rotate_copy( get<0>( x ), UNIT_X_COORD )       << "\t"
+				                                <<                                              rotate_copy( get<0>( x ), UNIT_Y_COORD )       << "\t"
+				                                <<                                              rotate_copy( get<0>( x ), UNIT_Z_COORD )       << "\n";
 
-				cerr << "Rot eg second      : " <<                                              rotate_copy( get<1>( x ), coord::UNIT_X )       << "\t"
-				                                <<                                              rotate_copy( get<1>( x ), coord::UNIT_Y )       << "\t"
-				                                <<                                              rotate_copy( get<1>( x ), coord::UNIT_Z )       << "\n";
+				cerr << "Rot eg second      : " <<                                              rotate_copy( get<1>( x ), UNIT_X_COORD )       << "\t"
+				                                <<                                              rotate_copy( get<1>( x ), UNIT_Y_COORD )       << "\t"
+				                                <<                                              rotate_copy( get<1>( x ), UNIT_Z_COORD )       << "\n";
 
-				cerr << "Rot answer direct  : " <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_X )   )   << "\t"
-				                                <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_Y )   )   << "\t"
-				                                <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), coord::UNIT_Z )   )   << "\n";
+				cerr << "Rot answer direct  : " <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), UNIT_X_COORD )   )   << "\t"
+				                                <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), UNIT_Y_COORD )   )   << "\t"
+				                                <<        rotate_copy( rotn_answer,             rotate_copy( get<0>( x ), UNIT_Z_COORD )   )   << "\n";
 
-				cerr << "Rotn answer        : " << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_X ) ) ) } << "\t"
-				                                << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Y ) ) ) } << "\t"
-				                                << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Z ) ) ) } << "\n";
+				cerr << "Rotn answer        : " << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), UNIT_X_COORD ) ) ) } << "\t"
+				                                << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), UNIT_Y_COORD ) ) ) } << "\t"
+				                                << coord{ rotate_copy( rotq_answer, point_type( rotate_copy( get<0>( x ), UNIT_Z_COORD ) ) ) } << "\n";
 
 				cerr << "\n";
 
-				cerr << "Rot eg first       : " <<                                              rotate_copy( get<0>( x ), coord::UNIT_X )       << "\t"
-				                                <<                                              rotate_copy( get<0>( x ), coord::UNIT_Y )       << "\t"
-				                                <<                                              rotate_copy( get<0>( x ), coord::UNIT_Z )       << "\n";
+				cerr << "Rot eg first       : " <<                                              rotate_copy( get<0>( x ), UNIT_X_COORD )       << "\t"
+				                                <<                                              rotate_copy( get<0>( x ), UNIT_Y_COORD )       << "\t"
+				                                <<                                              rotate_copy( get<0>( x ), UNIT_Z_COORD )       << "\n";
 
-				cerr << "Rot eg second      : " <<                                              rotate_copy( get<1>( x ), coord::UNIT_X )       << "\t"
-				                                <<                                              rotate_copy( get<1>( x ), coord::UNIT_Y )       << "\t"
-				                                <<                                              rotate_copy( get<1>( x ), coord::UNIT_Z )       << "\n";
+				cerr << "Rot eg second      : " <<                                              rotate_copy( get<1>( x ), UNIT_X_COORD )       << "\t"
+				                                <<                                              rotate_copy( get<1>( x ), UNIT_Y_COORD )       << "\t"
+				                                <<                                              rotate_copy( get<1>( x ), UNIT_Z_COORD )       << "\n";
 
-				cerr << "Quat answer        : " << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_X ) ) ) } << "\t"
-				                                << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Y ) ) ) } << "\t"
-				                                << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), coord::UNIT_Z ) ) ) } << "\n";
+				cerr << "Quat answer        : " << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), UNIT_X_COORD ) ) ) } << "\t"
+				                                << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), UNIT_Y_COORD ) ) ) } << "\t"
+				                                << coord{ rotate_copy( quat_answer, point_type( rotate_copy( get<0>( x ), UNIT_Z_COORD ) ) ) } << "\n";
 
 				cerr << "Distance           : " << distance << "\n";
 				cerr << "\n";

@@ -64,7 +64,7 @@ namespace cath {
 
 			explicit superposition(const std::vector<indices_and_coord_lists_type> &,
 			                       const size_t         & = 0,
-			                       const geom::coord    & = geom::coord::ORIGIN_COORD,
+			                       const geom::coord    & = geom::ORIGIN_COORD,
 			                       const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
 			superposition(geom::coord_vec,
 			              geom::rotation_vec);
@@ -147,7 +147,7 @@ namespace cath {
 		superposition create_pairwise_superposition(const geom::coord_list &,
 		                                            const geom::coord_list &,
 		                                            const bool           & = true,
-		                                            const geom::coord    & = geom::coord::ORIGIN_COORD,
+		                                            const geom::coord    & = geom::ORIGIN_COORD,
 		                                            const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
 
 		void superpose_second_coords_to_first(const geom::coord_list &,
