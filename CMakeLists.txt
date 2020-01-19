@@ -67,6 +67,8 @@ IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 	find_library( RT_LIBRARY rt )
 ENDIF()
 
+set( Boost_NO_BOOST_CMAKE 1 )
+
 # For useful information on getting CMake to work with Boost, type the following command: `cmake --help-module FindBoost`
 # or add `SET( Boost_DEBUG "ON" )` to this file to get helpful debug information when running CMake
 find_package( Boost 1.60 REQUIRED filesystem iostreams log program_options serialization timer unit_test_framework )
