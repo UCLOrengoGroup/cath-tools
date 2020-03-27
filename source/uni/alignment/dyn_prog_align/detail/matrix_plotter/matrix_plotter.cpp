@@ -20,6 +20,9 @@
 
 #include "matrix_plotter.hpp"
 
+#include <algorithm>
+#include <limits>
+
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "alignment/dyn_prog_align/detail/return_path_matrix.hpp"
@@ -31,15 +34,19 @@
 #include "common/exception/invalid_argument_exception.hpp"
 #include "ssap/windowed_matrix.hpp"
 
-#include <limits>
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
 
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace std;
-
-using boost::filesystem::path;
-using boost::irange;
-using boost::numeric_cast;
+using ::boost::filesystem::path;
+using ::boost::irange;
+using ::boost::numeric_cast;
+using ::std::get;
+using ::std::max;
+using ::std::max_element;
+using ::std::min;
+using ::std::min_element;
+using ::std::numeric_limits;
+using ::std::tuple;
 
 /// \brief TODOCUMENT
 void matrix_plotter::check_lengths_match(const size_t &prm_length_a, ///< TODOCUMENT
@@ -116,19 +123,25 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &prm_scorer ///< Th
 		const auto index_range_a     = indices( lcl_length_a );
 		const auto index_range_b     = indices( lcl_length_b );
 		const auto index_range_cross = cross( index_range_a, index_range_b );
-		const auto the_minmax = minmax_element(
-			common::cbegin( index_range_cross ),
-			common::cend  ( index_range_cross ),
-			[&] (const tuple<size_t, size_t> &x, const tuple<size_t, size_t> &y) {
-				return score_of_idx_tpl( x ) < score_of_idx_tpl( y );
-			}
-		);
 
-		if ( the_minmax.first == common::cend  ( index_range_cross ) || the_minmax.second == common::cend  ( index_range_cross ) ) {
+		// In principle this can use minmax_element, but Clang 10 with libc++ rejects it because
+		// cross_itr isn't a forward iterator because it's uses a proxy for its reference type
+		auto min_itr = common::cend( index_range_cross );
+		auto max_itr = common::cend( index_range_cross );
+		for (auto itr = common::cbegin( index_range_cross ); itr != common::cend( index_range_cross ); ++itr) {
+			if ( min_itr == common::cend( index_range_cross ) || score_of_idx_tpl( *itr ) < score_of_idx_tpl( *min_itr ) ) {
+				min_itr = itr;
+			}
+			if ( max_itr == common::cend( index_range_cross ) || score_of_idx_tpl( *itr ) > score_of_idx_tpl( *max_itr ) ) {
+				max_itr = itr;
+			}
+		}
+
+		if ( min_itr == common::cend( index_range_cross ) || max_itr == common::cend( index_range_cross ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find min/max score in elements"));
 		}
-		const auto min_score         = score_of_idx_tpl( *the_minmax.first  );
-		const auto max_score         = score_of_idx_tpl( *the_minmax.second );
+		const auto min_score = score_of_idx_tpl( *min_itr );
+		const auto max_score = score_of_idx_tpl( *max_itr );
 
 		// Copy scores over
 		for (const auto &x : index_range_cross) {
