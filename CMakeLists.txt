@@ -45,9 +45,9 @@ list                  ( GET GSL_LIBRARIES 0 FIRST_GSL_LIBRARY                 )
 get_filename_component( FIRST_GSL_LIBDIR ${FIRST_GSL_LIBRARY} PATH            )
 set                   ( GSL_STATIC_LIB      ${FIRST_GSL_LIBDIR}/libgsl.a      )
 set                   ( GSLCBLAS_STATIC_LIB ${FIRST_GSL_LIBDIR}/libgslcblas.a )
-foreach (loop_var RANGE ${GSL_LIBRARIES})
+foreach( loop_var ${GSL_LIBRARIES} )
   list(APPEND GSL_DYN_LINK_FLAGS "-l${loop_var}")
-endforeach(loop_var)
+endforeach()
 
 if( BUILD_SHARED_LIBS )
 	add_definitions( -DBOOST_ALL_DYN_LINK )
@@ -66,20 +66,6 @@ endif()
 IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 	find_library( RT_LIBRARY rt )
 ENDIF()
-
-# As of Boost 1.70, the finding becomes something of a mess with tangled
-# conflicts between the find module file and the config file, eg see:
-#
-# https://github.com/boostorg/boost_install/issues/12
-#
-# This caused the Travis Mac build to start failing with problems like those described here:
-#
-# https://gitlab.kitware.com/cmake/cmake/issues/19714
-#
-# So the following line disables the config file mode and reverts behaviour to as before.
-#
-# TODO: This sort of stuff should be in toolchain files, not in the CMakeLists.txt
-set( Boost_NO_BOOST_CMAKE 1 )
 
 # For useful information on getting CMake to work with Boost, type the following command: `cmake --help-module FindBoost`
 # or add `SET( Boost_DEBUG "ON" )` to this file to get helpful debug information when running CMake
@@ -113,13 +99,6 @@ add_compile_options(
 	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,7.0.0>>:-Wrestrict>
 	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,8.0.0>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,9.0.0>>:-Wno-maybe-uninitialized>
 )
-
-# Append _GLIBCXX_DEBUG to GCC debug build to enable the debug mode of libstdc++
-#
-# ("By default, error messages are formatted to fit on lines of about 78 characters.
-#   The environment variable GLIBCXX_DEBUG_MESSAGE_LENGTH can be used to request a different length."
-#  Could consider ~150)
-add_compile_options( $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-D_GLIBCXX_DEBUG> )
 
 # *** TEMPORARY *** Prevent clang v3.6.0 from failing on Boost Concept checks due to unused local typedefs
 add_compile_options($<$<AND:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_VERSION:3.6.0>>:-Wno-unused-local-typedef>)
