@@ -103,11 +103,6 @@ add_compile_options(
 # *** TEMPORARY *** Prevent clang v3.6.0 from failing on Boost Concept checks due to unused local typedefs
 add_compile_options($<$<AND:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_VERSION:3.6.0>>:-Wno-unused-local-typedef>)
 
-# Add colour diagnostics when using Clang with Ninja
-if ( CMAKE_GENERATOR STREQUAL "Ninja" )
-	add_compile_options( $<$<CXX_COMPILER_ID:Clang>:-fcolor-diagnostics> )
-endif()
-
 # Add handling of includes and library links
 # 'SYSTEM' tells the compiler it's a system include directory so warnings should be suppressed
 include_directories( SYSTEM ${Boost_INCLUDE_DIR} )
