@@ -20,7 +20,7 @@
 
 #include <boost/mpl/vector.hpp>
 #include <boost/range/irange.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/string/booled_to_string.hpp"
 

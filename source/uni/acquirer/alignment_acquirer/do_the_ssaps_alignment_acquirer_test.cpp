@@ -20,7 +20,7 @@
 
 #include "acquirer/alignment_acquirer/do_the_ssaps_alignment_acquirer.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(do_the_ssaps_alignment_acquirer_test_suite)
 

@@ -20,7 +20,7 @@
 
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "alignment/align_type_aliases.hpp"
 #include "alignment/alignment.hpp"

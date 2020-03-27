@@ -20,7 +20,7 @@
 
 #include "dssp_accessibility.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/math/constants/constants.hpp>
 
 #include "common/algorithm/transform_build.hpp"

@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/lexical_cast.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "score/aligned_pair_score/ssap_score/ssap_score_post_processing.hpp"
 

@@ -20,7 +20,7 @@
 
 #include <boost/lexical_cast.hpp>
 #include <boost/math/constants/constants.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/exception/runtime_error_exception.hpp"

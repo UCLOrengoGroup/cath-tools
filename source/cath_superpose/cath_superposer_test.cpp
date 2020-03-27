@@ -21,7 +21,7 @@
 #include "cath_superposer.hpp"
 
 #include <boost/log/trivial.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cath_superpose/options/cath_superpose_options.hpp"
 #include "chopping/domain/domain.hpp"

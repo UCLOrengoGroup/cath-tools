@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/lexical_cast.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "ssap/distance_score_formula.hpp"
 

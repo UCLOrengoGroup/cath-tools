@@ -20,7 +20,7 @@
 
 #include <boost/algorithm/cxx11/is_sorted.hpp>
 #include <boost/optional/optional_io.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cluster/cluster_info.hpp"
 

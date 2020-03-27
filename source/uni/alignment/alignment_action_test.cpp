@@ -20,7 +20,7 @@
 
 #include "alignment_action.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "alignment/alignment.hpp"
 #include "alignment/io/alignment_io.hpp"

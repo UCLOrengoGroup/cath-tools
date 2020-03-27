@@ -20,7 +20,7 @@
 
 #include "string_of_rapidjson_write.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 using namespace cath::common;
 

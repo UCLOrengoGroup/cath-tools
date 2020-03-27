@@ -20,7 +20,7 @@
 
 #include "score/true_pos_false_neg/true_false_pos_neg.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 using namespace cath;
 

@@ -20,8 +20,8 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional/optional_io.hpp>
-#include <boost/test/auto_unit_test.hpp>
-#include <boost/test/output_test_stream.hpp>
+#include <boost/test/unit_test.hpp>
+#include <boost/test/tools/output_test_stream.hpp>
 
 #include "alignment/io/align_scaffold.hpp"
 #include "alignment/pair_alignment.hpp"

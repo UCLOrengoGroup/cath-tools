@@ -20,7 +20,7 @@
 
 #include "rapidjson_writer.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <cmath>
 #include <string>

@@ -20,7 +20,7 @@
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/algorithm/find_if.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/size_t_literal.hpp"
 #include "common/type_aliases.hpp"

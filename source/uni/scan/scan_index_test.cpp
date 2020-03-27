@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/chrono/duration_to_seconds_string.hpp"
 #include "scan/res_pair_keyer/res_pair_keyer_part/res_pair_from_phi_keyer_part.hpp"

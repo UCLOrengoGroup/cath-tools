@@ -30,7 +30,7 @@
 #include <boost/range/algorithm_ext/insert.hpp>
 #include <boost/range/combine.hpp>
 #include <boost/range/irange.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/copy_build.hpp"

@@ -21,7 +21,7 @@
 //#include <boost/algorithm/string/predicate.hpp> /// ***** TEMPORARY *****
 //#include <boost/filesystem.hpp> /// ***** TEMPORARY *****
 //#include <boost/log/trivial.hpp> /// ***** TEMPORARY *****
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "file/prc_scores_file/prc_scores_entry.hpp"
 #include "file/prc_scores_file/prc_scores_file.hpp"

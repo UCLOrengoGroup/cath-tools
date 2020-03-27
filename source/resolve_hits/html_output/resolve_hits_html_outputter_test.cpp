@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/exception/invalid_argument_exception.hpp"
 #include "resolve_hits/full_hit.hpp"

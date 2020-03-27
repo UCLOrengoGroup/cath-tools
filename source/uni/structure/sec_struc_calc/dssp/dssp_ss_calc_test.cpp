@@ -22,7 +22,7 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "file/dssp_wolf/dssp_file.hpp"

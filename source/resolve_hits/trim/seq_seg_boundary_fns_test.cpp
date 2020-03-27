@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/optional/optional_io.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "resolve_hits/trim/seq_seg_boundary_fns.hpp"
 #include "resolve_hits/trim/trim_spec.hpp"

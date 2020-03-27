@@ -20,7 +20,7 @@
 
 #include "temp_check_offset_1.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/exception/invalid_argument_exception.hpp"
 #include "test/boost_addenda/boost_check_no_throw_diag.hpp"

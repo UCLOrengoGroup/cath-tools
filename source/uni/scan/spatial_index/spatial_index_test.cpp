@@ -20,7 +20,7 @@
 
 #include "spatial_index.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "test/global_test_constants.hpp"
 

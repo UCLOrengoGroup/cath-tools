@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <boost/algorithm/string/predicate.hpp>
 //#include <boost/scoped_array.hpp>
-#include <boost/test/output_test_stream.hpp>
+#include <boost/test/tools/output_test_stream.hpp>
 
 #include "common/argc_argv_faker.hpp"
 #include "common/exception/invalid_argument_exception.hpp"

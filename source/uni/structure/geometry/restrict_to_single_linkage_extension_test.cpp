@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/range/adaptor/transformed.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/algorithm/sort_uniq_build.hpp"
 #include "structure/geometry/coord.hpp"

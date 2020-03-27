@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/range/join.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cluster/cath_cluster_mapper.hpp"
 #include "cluster/options/options_block/clust_mapping_options_block.hpp"

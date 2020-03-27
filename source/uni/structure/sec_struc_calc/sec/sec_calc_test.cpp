@@ -21,7 +21,7 @@
 #include "sec_calc.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/boost_addenda/range/front.hpp"
 #include "common/pair_insertion_operator.hpp"

@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/mpl/list.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "alignment/alignment.hpp"
 #include "alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"

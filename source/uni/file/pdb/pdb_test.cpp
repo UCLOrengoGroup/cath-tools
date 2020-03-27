@@ -20,7 +20,7 @@
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "chopping/region/region.hpp"
 #include "common/boost_addenda/log/stringstream_log_sink.hpp"

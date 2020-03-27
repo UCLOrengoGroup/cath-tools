@@ -21,7 +21,7 @@
 #include "align_refining.hpp"
 
 #include <boost/lexical_cast.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 using namespace cath::align;
 

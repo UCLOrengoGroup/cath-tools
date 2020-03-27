@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/lexical_cast.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "score/true_pos_false_neg/classn_outcome.hpp"
 #include "structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"

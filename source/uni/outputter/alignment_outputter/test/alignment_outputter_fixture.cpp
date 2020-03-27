@@ -20,7 +20,7 @@
 
 #include "alignment_outputter_fixture.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "acquirer/alignment_acquirer/ssap_aln_file_alignment_acquirer.hpp"
 #include "acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"

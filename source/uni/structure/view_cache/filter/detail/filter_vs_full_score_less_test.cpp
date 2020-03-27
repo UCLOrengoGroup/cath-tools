@@ -20,7 +20,7 @@
 
 #include "structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 using namespace cath::index::filter::detail;
 

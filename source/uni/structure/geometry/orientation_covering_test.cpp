@@ -20,7 +20,7 @@
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/boost_addenda/range/adaptor/limited.hpp"

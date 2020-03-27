@@ -29,7 +29,7 @@
 /// There is no testcase specifically for get() but it is used throughout the testcases
 /// so a failure should show up somewhere
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <boost/serialization/export.hpp>
 

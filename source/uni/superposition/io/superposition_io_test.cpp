@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/filesystem/path.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "chopping/region/region.hpp"
 #include "common/boost_addenda/log/stringstream_log_sink.hpp"

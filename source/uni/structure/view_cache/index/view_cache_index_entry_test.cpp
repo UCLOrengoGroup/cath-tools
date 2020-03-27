@@ -22,7 +22,7 @@
 #include <boost/core/ignore_unused.hpp>
 #include <boost/range/combine.hpp>
 #include <boost/range/numeric.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "alignment/pair_alignment.hpp"
 #include "common/algorithm/generate_n_build.hpp"

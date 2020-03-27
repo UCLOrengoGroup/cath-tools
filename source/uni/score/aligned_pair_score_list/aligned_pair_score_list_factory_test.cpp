@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "score/aligned_pair_score/aligned_pair_score.hpp"
 #include "score/aligned_pair_score_list/aligned_pair_score_list.hpp"

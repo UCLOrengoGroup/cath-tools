@@ -21,7 +21,7 @@
 //#include <boost/log/trivial.hpp> // ***** TEMPORARY *****
 #include <boost/range/combine.hpp>
 #include <boost/range/irange.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/algorithm/cxx11/none_of.hpp>
 
 #include "common/algorithm/constexpr_modulo_fns.hpp"

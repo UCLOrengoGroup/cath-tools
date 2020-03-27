@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/optional/optional_io.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cluster/file/cluster_membership_file.hpp"
 #include "cluster/map/map_clusters.hpp"

@@ -20,7 +20,7 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/range/join.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/algorithm/copy_build.hpp"
 #include "common/boost_addenda/log/stringstream_log_sink.hpp"

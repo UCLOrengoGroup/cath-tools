@@ -20,7 +20,7 @@
 
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 
 #include "common/algorithm/copy_build.hpp"

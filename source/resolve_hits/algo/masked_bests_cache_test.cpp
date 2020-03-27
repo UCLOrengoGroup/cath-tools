@@ -19,7 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/lexical_cast.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "resolve_hits/algo/discont_hits_index_by_start.hpp"
 #include "resolve_hits/algo/masked_bests_cache.hpp"

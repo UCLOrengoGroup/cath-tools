@@ -21,7 +21,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/cxx11/one_of.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "common/exception/invalid_argument_exception.hpp"

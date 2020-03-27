@@ -20,7 +20,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/test/auto_unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common/algorithm/contains.hpp"
 #include "common/algorithm/transform_build.hpp"
