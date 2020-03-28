@@ -82,9 +82,9 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -q                               ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libboost1.60-all-dev            ; fi
   - mkdir -p "release_build"
-	- echo "$TRAVIS_BUILD_DIR/cath-tools"
-	- ls -Al "$TRAVIS_BUILD_DIR"
-	- ls -Al "$TRAVIS_BUILD_DIR/cath-tools"
+  - echo "$TRAVIS_BUILD_DIR/cath-tools"
+  - ls -Al "$TRAVIS_BUILD_DIR"
+  - ls -Al "$TRAVIS_BUILD_DIR/cath-tools"
   - pwd
   - cmake -GNinja "-Brelease_build" "-H." "-DCMAKE_TOOLCHAIN_FILE=travis-toolchain.cmake" -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
 
