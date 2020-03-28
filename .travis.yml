@@ -82,8 +82,7 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -q                               ; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libboost1.60-all-dev            ; fi
   - mkdir -p "$TRAVIS_BUILD_DIR/release_build"
-  # Seems to have some trouble with explicit use of $TRAVIS_BUILD_DIR
-  - cmake -GNinja "-Brelease_build" "-H." "-DCMAKE_TOOLCHAIN_FILE=travis-toolchain.cmake" -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
+  - cmake -GNinja "-B$TRAVIS_BUILD_DIR/release_build" "-H$TRAVIS_BUILD_DIR" "-DCMAKE_TOOLCHAIN_FILE=travis-toolchain.cmake" -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}"
 
 script:
 - ninja -j 2 -k 0 -C "$TRAVIS_BUILD_DIR/release_build"
