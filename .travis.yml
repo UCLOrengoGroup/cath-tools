@@ -83,11 +83,12 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libboost1.60-all-dev            ; fi
   - mkdir -p "$TRAVIS_BUILD_DIR/release_build"
   - cmake -GNinja "-B$TRAVIS_BUILD_DIR/release_build" "-H$TRAVIS_BUILD_DIR" "-DCMAKE_TOOLCHAIN_FILE=$TRAVIS_BUILD_DIR/travis-toolchain.cmake" -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
+  - cd "$TRAVIS_BUILD_DIR"
 
 script:
 - ninja -j 2 -k 0 -C "$TRAVIS_BUILD_DIR/release_build"
-- "$TRAVIS_BUILD_DIR/release_build/build-test" --build_info=yes --log_level=message --report_level=short --show_progress=yes
-- "$TRAVIS_BUILD_DIR/release_build/cath-superpose" --version
+- release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
+- release_build/cath-superpose --version
 - mv "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains" "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains.$BUILD_FILE_SUFFIX"
 - mv "$TRAVIS_BUILD_DIR/release_build/cath-cluster"        "$TRAVIS_BUILD_DIR/release_build/cath-cluster.$BUILD_FILE_SUFFIX"
 - mv "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters"   "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters.$BUILD_FILE_SUFFIX"
@@ -108,7 +109,6 @@ deploy:
     - "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX"
     - "$TRAVIS_BUILD_DIR/release_build/cath-ssap.$BUILD_FILE_SUFFIX"
     - "$TRAVIS_BUILD_DIR/release_build/cath-superpose.$BUILD_FILE_SUFFIX"
-  skip_cleanup: true
   on:
     condition: "$BUILDTYPE == RELEASE && $CC =~ ^gcc"
     repo: UCLOrengoGroup/cath-tools
