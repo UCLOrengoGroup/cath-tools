@@ -85,16 +85,16 @@ before_script:
   - cmake -GNinja "-B$TRAVIS_BUILD_DIR/release_build" "-H$TRAVIS_BUILD_DIR" "-DCMAKE_TOOLCHAIN_FILE=$TRAVIS_BUILD_DIR/travis-toolchain.cmake" -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}" ..
 
 script:
-  - ninja -j 2 -k 0 -C "$TRAVIS_BUILD_DIR/release_build"
-  - "$TRAVIS_BUILD_DIR/release_build/build-test" --build_info=yes --log_level=message --report_level=short --show_progress=yes
-  - "$TRAVIS_BUILD_DIR/release_build/cath-superpose" --version
-  - mv "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains" "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains.$BUILD_FILE_SUFFIX"
-  - mv "$TRAVIS_BUILD_DIR/release_build/cath-cluster"        "$TRAVIS_BUILD_DIR/release_build/cath-cluster.$BUILD_FILE_SUFFIX"
-  - mv "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters"   "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters.$BUILD_FILE_SUFFIX"
-  - mv "$TRAVIS_BUILD_DIR/release_build/cath-refine-align"   "$TRAVIS_BUILD_DIR/release_build/cath-refine-align.$BUILD_FILE_SUFFIX"
-  - mv "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits"   "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX"
-  - mv "$TRAVIS_BUILD_DIR/release_build/cath-ssap"           "$TRAVIS_BUILD_DIR/release_build/cath-ssap.$BUILD_FILE_SUFFIX"
-  - mv "$TRAVIS_BUILD_DIR/release_build/cath-superpose"      "$TRAVIS_BUILD_DIR/release_build/cath-superpose.$BUILD_FILE_SUFFIX"
+- ninja -j 2 -k 0 -C "$TRAVIS_BUILD_DIR/release_build"
+- "$TRAVIS_BUILD_DIR/release_build/build-test" --build_info=yes --log_level=message --report_level=short --show_progress=yes
+- "$TRAVIS_BUILD_DIR/release_build/cath-superpose" --version
+- mv "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains" "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/cath-cluster"        "$TRAVIS_BUILD_DIR/release_build/cath-cluster.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters"   "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/cath-refine-align"   "$TRAVIS_BUILD_DIR/release_build/cath-refine-align.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits"   "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/cath-ssap"           "$TRAVIS_BUILD_DIR/release_build/cath-ssap.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/cath-superpose"      "$TRAVIS_BUILD_DIR/release_build/cath-superpose.$BUILD_FILE_SUFFIX"
 
 deploy:
   provider: releases
