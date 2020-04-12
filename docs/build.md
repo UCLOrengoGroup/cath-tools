@@ -6,7 +6,6 @@ Do you really need to build cath-tools, or can you just use the 64-bit Linux exe
 
 ## Requirements
 
-
 You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: `sudo apt-get install g++`). The code is currently being developed against GCC v4.9.2 and Clang v3.6.0.
 
 ~~~no-highlight
@@ -19,23 +18,26 @@ There are three further dependencies/prerequisites...
 
 This is used heavily throughout the code. Both headers and compiled library files are needed.
 
-~~~no-highlight
-[Ubuntu]
-$ sudo apt-get install libboost-all-dev
+For Ubuntu:
+
+~~~sh
+sudo apt-get install libboost-all-dev
 ~~~
 
 ### CMake ( &ge; v3.2 )
 
 This is used to build the software.
 
-~~~no-highlight
+For Ubuntu:
+
+~~~sh
 [Ubuntu]
 $ sudo apt-get install cmake
 ~~~
 
 Downloading and running a recent CMake can sometimes be as simple as:
 
-~~~
+~~~sh
 wget "https://cmake.org/files/v3.9/cmake-3.9.4-Linux-x86_64.tar.gz"
 tar -zxvf cmake-3.9.4-Linux-x86_64.tar.gz cmake-3.9.4-Linux-x86_64/bin/cmake
 tar -zxvf cmake-3.9.4-Linux-x86_64.tar.gz cmake-3.9.4-Linux-x86_64/share/cmake-3.9/Modules
@@ -54,31 +56,33 @@ You probably mixing local/network binaries and libraries so try explicitly runni
 
 The [GNU Scientific Library](https://www.gnu.org/software/gsl/) is used for its Singular Value Decomposition function (`gsl_linalg_SV_decomp()`).
 
-`apt-get install gsl-bin libgsl2:amd64 libgsl-dbg:amd64 libgsl-dev`
+~~~sh
+apt-get install gsl-bin libgsl2:amd64 libgsl-dbg:amd64 libgsl-dev
+~~~
 
-Building the Code
------------------
+## Building the Code
 
 Once the dependencies are in place, the code can be built with:
 
-~~~no-highlight
-$ cmake -DCMAKE_BUILD_TYPE=RELEASE .
-$ make
+~~~sh
+cmake -DCMAKE_BUILD_TYPE=RELEASE .
+make
 ~~~
 
 NOTE:
- * If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
- * If your system does not have the Gnu Scientific Library available as a static library on Linux, you should pass `-D USE_STATIC_GSL:BOOL=FALSE` to cmake.
+
+* If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
+* If your system does not have the Gnu Scientific Library available as a static library on Linux, you should pass `-D USE_STATIC_GSL:BOOL=FALSE` to cmake.
 
 With default Ubuntu config, this will build with GCC against GCC's standard library (libstdc++). If you instead want to build with Clang against Clang's standard C++ library (libc++), you'll need a version of Boost built with Clang and libc++. If you have one, then you can build with Clang by adding `-DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++` to the CMake command and build against libc++ by adding `-DBOOST_ROOT=ROOT_DIR_OF_YOUR_CLANG_BUILD_OF_BOOST` and `-DCMAKE_CXX_FLAGS="-stdlib=libc++"`.
 
 To build against Clang's C++ library (libc++) rather than GCC's (libstdc++), you'll need a version of Boost built with Clang and libc++. If you have one, you can use a cmake command like:
 
-~~~no-highlight
-$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
+~~~sh
+cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
 ~~~
 
-# Running the Build Tests
+## Running the Build Tests
 
 Once you've built the binaries, run the build tests to sanity check the build. From the root directory of the project, run `build-test` and confirm that all tests pass.
 
@@ -86,21 +90,21 @@ Once you've built the binaries, run the build tests to sanity check the build. F
 
 If your machine has Perl, you can also try running the Perl tests (which includes a run of `build-test` as one of the tests):
 
- * Set the environment variable `CATH_TOOLS_BIN_DIR` to the location of the built binaries
- * Make sure your Perl has access to the required dependencies (if you have [cpanm](https://metacpan.org/pod/distribution/Menlo/script/cpanm-menlo) installed then try `cpanm --installdeps ./perl`)
- * From the root directory of the project, run `prove -l -v perl/t`
+* Set the environment variable `CATH_TOOLS_BIN_DIR` to the location of the built binaries
+* Make sure your Perl has access to the required dependencies (if you have [cpanm](https://metacpan.org/pod/distribution/Menlo/script/cpanm-menlo) installed then try `cpanm --installdeps ./perl`)
+* From the root directory of the project, run `prove -l -v perl/t`
 
 Assuming you have already built the binaries (in the project root):
 
-```no-highlight
-$ CATH_TOOLS_BIN_DIR=. prove -l -v ./perl/t
-```
+~~~no-highlight
+CATH_TOOLS_BIN_DIR=. prove -l -v ./perl/t
+~~~
 
-# Building on CentOS 6
+## Building on CentOS 6
 
 Install these packages as root:
 
-~~~no-highlight
+~~~sh
 yum install bzip2-devel cmake git
 yum install centos-release-scl-rh
 yum install devtoolset-3-gcc devtoolset-3-gcc-c++
@@ -110,14 +114,14 @@ Then ssh to the build machine as yourself, find some working directory with at l
 
 Setup:
 
-~~~no-highlight
+~~~sh
 scl enable devtoolset-3 bash
 export BUILD_ROOT_DIR=WHATEVER_YOU_HAVE_CHOSEN_AS_YOUR_BUILD_ROOT_DIRECTORY
 ~~~
 
 Build Boost:
 
-~~~no-highlight
+~~~sh
 mkdir -p ${BUILD_ROOT_DIR}/boost_1_60_0_build/{include,lib}
 cd ${BUILD_ROOT_DIR}/
 wget "http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.tar.gz"
@@ -130,7 +134,7 @@ cd ${BUILD_ROOT_DIR}/boost_1_60_0/
 
 Build cath-tools:
 
-~~~no-highlight
+~~~sh
 cd ${BUILD_ROOT_DIR}/
 git clone https://github.com/UCLOrengoGroup/cath-tools.git
 
@@ -142,7 +146,7 @@ make -C gcc_relwithdebinfo -k -j2
 ls -l ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
 ~~~
 
-# Building for CentOS 5
+## Building for CentOS 5
 
 It's non-trivial got get a modern enough C++ compiler on CentOS 5. The standard downloads of Clang 3.6.2 don't work and it's likely that older versions won't compile the cath-tools code. (Though, for reference, CMake 3.6.3 seems to work cleanly on CentOS 5 from the download.)
 
@@ -182,6 +186,6 @@ if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
        SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 ~~~
 
-...and manually repeating the link commands with all `-Wl,-Bdynamic` flags removed.
+&hellip;and manually repeating the link commands with all `-Wl,-Bdynamic` flags removed.
 
 This process can doubtless be improved with a bit of work.
