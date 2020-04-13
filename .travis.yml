@@ -111,6 +111,8 @@ deploy:
     - "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX"
     - "$TRAVIS_BUILD_DIR/release_build/cath-ssap.$BUILD_FILE_SUFFIX"
     - "$TRAVIS_BUILD_DIR/release_build/cath-superpose.$BUILD_FILE_SUFFIX"
+  # Do not just remove `skip_cleanup: true` (because you see that Travis says it's deprecated); that will break the deploys.
+  # Read the Travis notes carefully (eg about what dpl v2 is).
   skip_cleanup: true
   on:
     condition: "$BUILDTYPE == RELEASE && $CC =~ ^gcc"
