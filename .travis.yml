@@ -13,7 +13,8 @@ language: cpp
 sudo: required
 
 notifications:
-  slack: cathupdate:9wDvWdLmrVhxI4JcsOFlkxir
+  slack:
+    secure: T92PB260kaaeyDStOy/Awnto9COiMWcWYUpZmUitd4Bi7cXNzr/Nv1rIdyvto1rNDwJF3wfestQV6heRfiIO96T58LB82dTKxxc49i2CCeBIPF6a7KlFzbTBIeHnhtQAnRRP0nHg6rhR7vG2m+Uuje/Kn3UWO4SOez/n1isRvHKSJEgOXY9KfS3xXf8w1xULOymT78tJ8zbZn5ZCH9a5N3Oz3dQG4JH5MdGfavuviliRTlMWdSj70IVpu5yjfB8j2Cv8DvlaDHXyFSJosZLrEkd/Yn45a1pwunLy/SYbNhpOKRj/nBu9ccOmwWF5WiOOUiCjBOQOuxZkduBHIIrq0RJsVXGv9gOCOOd/qbL/eh5RBQxvraVT9XkC4AfapxcJQEeDBWDrnSoF2lCRxiP/ZkUx2j2lGze3cU4GL1nE/dlBJmnvs9wIqHfFA3j8lX5lBW9GPylo+u+KBoy5v68yFc26DkFg13bEllH0X9XGsmwX5bxcUDGBVkYj5O8G0XxhwJHBb8EQKkGyHkJOzBF9OX/8heiL607ES3+m66JqAdxpzyQV7AoQvI0EhZsCdNPAqT5X2eWKH0NeHa6IG1Cdjd7neqfjOwPAgDUGa3Z5AvK1Xp+LJsB2XfB4881X6uW+ZbmIpXi9DbuvO+OOW0sDr52d2Ofxw9feHboq6tDymg4=
   email:
     recipients:
       - i.sillitoe@ucl.ac.uk
