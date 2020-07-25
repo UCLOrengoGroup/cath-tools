@@ -21,12 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_CONSTEXPR_FIND_HPP
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_CONSTEXPR_FIND_HPP
 
-#include "common/cpp14/constexpr_min_max.hpp"
-
 #include <array>
 #include <cstddef>
+#include <stdexcept>
 #include <tuple>
 #include <utility>
+
+#include "common/cpp14/constexpr_min_max.hpp"
 
 namespace cath {
 	namespace common {

@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_CONSTEXPR_IS_UNIQ_HPP
 
 #include <array>
+#include <cstddef>
 
 namespace cath {
 	namespace common {

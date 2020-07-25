@@ -23,6 +23,7 @@
 
 #include "common/detail/make_static_const.hpp"
 
+#include <cstddef>
 #include <tuple>
 #include <type_traits>
 

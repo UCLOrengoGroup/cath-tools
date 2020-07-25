@@ -25,6 +25,7 @@
 #include "common/detail/tuple_index_sequence.hpp"
 #include "common/type_traits/is_tuple.hpp"
 
+#include <cstddef>
 #include <tuple>
 
 namespace cath {

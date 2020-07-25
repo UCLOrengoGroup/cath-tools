@@ -21,10 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_FILE_DATA_FILE_HPP
 #define _CATH_TOOLS_SOURCE_UNI_FILE_DATA_FILE_HPP
 
+#include <array>
+#include <string>
+
 #include "common/algorithm/constexpr_is_uniq.hpp"
 #include "common/cpp20/make_array.hpp"
-
-#include <array>
 
 namespace cath {
 	namespace file {

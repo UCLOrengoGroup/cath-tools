@@ -21,11 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_TUPLE_TUPLE_WITHIN_RANGE_HPP
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_TUPLE_TUPLE_WITHIN_RANGE_HPP
 
+#include <tuple>
+#include <cstddef>
+
 #include "common/algorithm/variadic_and.hpp"
 #include "common/detail/make_static_const.hpp"
 #include "common/detail/tuple_index_sequence.hpp"
-
-#include <tuple>
 
 namespace cath {
 	namespace common {

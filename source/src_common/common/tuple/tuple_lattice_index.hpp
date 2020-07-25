@@ -21,11 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_TUPLE_TUPLE_LATTICE_INDEX_HPP
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_TUPLE_TUPLE_LATTICE_INDEX_HPP
 
+#include <cstddef>
+#include <tuple>
+
 #include "common/detail/make_static_const.hpp"
 #include "common/detail/tuple_index_sequence.hpp"
 #include "common/type_traits/is_tuple.hpp"
-
-#include <tuple>
 
 namespace cath {
 	namespace common {
