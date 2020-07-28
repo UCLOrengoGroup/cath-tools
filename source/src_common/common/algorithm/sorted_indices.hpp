@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_SORTED_INDICES_H
 #define _CATH_TOOLS_SOURCE_COMMON_ALGORITHM_SORTED_INDICES_H
 
+#include <vector>
+
 #include <boost/range/algorithm/sort.hpp>
 
 #include "common/algorithm/copy_build.hpp"
