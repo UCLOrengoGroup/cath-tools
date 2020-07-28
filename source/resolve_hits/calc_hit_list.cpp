@@ -90,6 +90,33 @@ using std::pair;
 using std::string;
 using std::vector;
 
+// Temporarily suppress a GCC compiler warning:
+//
+//     ../source/resolve_hits/calc_hit_list.cpp: In function ‘cath::rslv::calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const cath::rslv::full_hit_list&, const cath::rslv::crh_score_spec&, const cath::rslv::crh_segment_spec&, const cath::rslv::crh_filter_spec&)’:
+//     ../source/resolve_hits/calc_hit_list.cpp:103:93: error: ‘*((void*)(& it)+16).cath::rslv::make_hit_list_from_full_hit_list(const cath::rslv::full_hit_list&, const cath::rslv::crh_score_spec&, const cath::rslv::crh_segment_spec&, const cath::rslv::crh_filter_spec&)::<lambda(const cath::seq::seq_seg&)>::<min_seg_length capture>’ may be used uninitialised in this function [-Werror=maybe-uninitialized]
+//       103 |  const auto       seg_long_enough_fn = [&] (const seq_seg &x) { return ( get_length( x ) >= min_seg_length ); };
+//           |                                                                                             ^~~~~~~~~~~~~~
+//
+// I've made some effort to reduce this down to a testcase for GCC but abandoning because:
+//  * there are already a lot of "spurious maybe-uninitialized warning" bugs open against GCC ( https://gcc.gnu.org/bugzilla/buglist.cgi?quicksearch=maybe-uninitialized )
+//  * reducing (with creduce) this testcase is really hard and time-consuming and it can easily lose some key aspect of the testcase
+//
+// If anyone _does_ decide to pursue this again, I recommend ensuring the interestingness test at least includes checks for:
+//
+// * Compiles cleanly with 'g++ -Wmaybe-uninitialized -Werror -c <source> -o <temp_output>'
+// * Ideally, compiles cleanly with 'clang++ -Wmaybe-uninitialized -Werror -c <source> -o <temp_output>'
+// * Fails with 'g++ -O1 -Wmaybe-uninitialized -Werror -c <source> -o <temp_output>' with an error that includes all of:
+//   * 'may be used uninitialised in this function'
+//   * 'troublesome_var capture'
+//   * '*((void*)(& it)+16)''
+//                                                                                [Tony Lewis, July 2020]
+#ifdef  __GNUC__
+#ifndef __clang__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
+#endif
+
 /// \brief Make a calc_hit_list from a full_hit_list
 ///
 /// \relates calc_hit_list
@@ -141,6 +168,13 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 		}
 	);
 }
+
+// Stop suppressing the GCC warning again
+#ifdef  __GNUC__
+#ifndef __clang__
+#pragma GCC diagnostic pop
+#endif
+#endif
 
 /// \brief Make a vector of calc_hits from the specified full_hit_list that's both sorted
 ///        and pruned of any hits that are redundant (because there's at least one other
