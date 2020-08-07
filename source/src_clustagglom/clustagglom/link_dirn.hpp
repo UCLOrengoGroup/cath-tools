@@ -25,6 +25,7 @@
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
 #include "common/cpp20/make_array.hpp"
+#include "common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "common/type_aliases.hpp"
 
 namespace cath {
@@ -47,6 +48,7 @@ namespace cath {
 
 		/// \brief Store a constexpr record of the number of link_dirns
 		static constexpr size_t num_link_dirns = std::tuple_size< decltype( all_link_dirns ) >::value;
+		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_link_dirns )
 
 		namespace detail {
 

@@ -23,6 +23,7 @@
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
 #include "common/cpp20/make_array.hpp"
+#include "common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 
 #include <array>
 #include <iosfwd>
@@ -48,6 +49,7 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	static constexpr size_t num_distance_score_formulae = std::tuple_size< decltype( all_distance_score_formulae ) >::value;
+	MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_distance_score_formulae )
 
 	/// \brief TODOCUMENT
 	struct name_of_distance_score_formula final {

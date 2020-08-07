@@ -23,6 +23,7 @@
 
 #include <boost/optional/optional_fwd.hpp>
 
+#include "common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "common/type_aliases.hpp"
 #include "seq/seq_type_aliases.hpp"
 
@@ -137,6 +138,7 @@ namespace cath {
 
 		/// \brief The initial score before any hits have been added
 		constexpr resscr_t INIT_SCORE = 0.0;
+		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( INIT_SCORE )
 
 		namespace detail {
 

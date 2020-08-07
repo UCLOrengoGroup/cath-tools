@@ -23,9 +23,10 @@
 
 #include <boost/any.hpp>
 
-#include "common/type_aliases.hpp"
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/algorithm/constexpr_is_uniq.hpp"
+#include "common/detail/maybe_unused_namespace_scope_constexpr.hpp"
+#include "common/type_aliases.hpp"
 
 namespace cath { namespace sup { class superposition_content_spec; } }
 
@@ -51,6 +52,7 @@ namespace cath {
 
 		/// \brief Store a constexpr record of the number of supn_regions_contexts
 		static constexpr size_t num_supn_regions_contexts = std::tuple_size< decltype( all_supn_regions_contexts ) >::value;
+		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_supn_regions_contexts )
 
 		namespace detail {
 

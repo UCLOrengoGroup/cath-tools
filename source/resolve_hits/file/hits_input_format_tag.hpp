@@ -24,6 +24,7 @@
 #include <boost/any.hpp>
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
+#include "common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "common/type_aliases.hpp"
 
 #include <array>
@@ -58,6 +59,7 @@ namespace cath {
 
 		/// \brief Store a constexpr record of the number of hits_input_format_tags
 		static constexpr size_t num_hits_input_format_tags = std::tuple_size< decltype( all_hits_input_format_tags ) >::value;
+		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_hits_input_format_tags )
 
 		namespace detail {
 

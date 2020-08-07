@@ -23,6 +23,7 @@
 
 #include "common/algorithm/constexpr_is_uniq.hpp"
 #include "common/cpp20/make_array.hpp"
+#include "common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 
 #include <array>
 #include <iosfwd>
@@ -57,6 +58,7 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		static constexpr size_t num_ssap_score_post_processings = std::tuple_size< decltype( all_ssap_score_post_processings ) >::value;
+		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_ssap_score_post_processings )
 
 		/// \brief TODOCUMENT
 		struct name_of_ssap_score_post_processing final {

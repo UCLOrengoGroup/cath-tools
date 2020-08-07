@@ -24,6 +24,7 @@
 #include <boost/any.hpp>
 
 #include "common/cpp20/make_array.hpp"
+#include "common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "common/type_aliases.hpp"
 
 #include <array>
@@ -46,6 +47,7 @@ namespace cath {
 			align_refining::LIGHT,
 			align_refining::HEAVY
 		);
+		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( all_align_refinings )
 
 		std::string to_string(const align_refining &);
 

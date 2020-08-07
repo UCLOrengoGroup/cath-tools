@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_DETAIL_MAKE_STATIC_CONST_HPP
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_DETAIL_MAKE_STATIC_CONST_HPP
 
+#include "common/detail/maybe_unused_namespace_scope_constexpr.hpp"
+
 namespace cath {
 	namespace detail {
 
@@ -39,6 +41,10 @@ namespace cath {
 	} // namespace detail
 } // namespace cath
 
-#define MAKE_STATIC_CONST( type, name ) inline namespace { constexpr auto const &name = cath::detail::make_static_const<type>::value; }
+#define MAKE_STATIC_CONST( type, name )                                          \
+   inline namespace {                                                            \
+      constexpr auto const &name = cath::detail::make_static_const<type>::value; \
+   }                                                                            \
+   MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( name )
 
 #endif
