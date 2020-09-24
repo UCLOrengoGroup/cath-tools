@@ -1,10 +1,10 @@
-# CATH Tools [![Build Status](https://travis-ci.org/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.org/UCLOrengoGroup/cath-tools) [![Documentation Status](https://readthedocs.org/projects/cath-tools/badge/?version=latest)](https://readthedocs.org/projects/cath-tools/?badge=latest)
+# CATH Tools [![Build Status](https://travis-ci.com/UCLOrengoGroup/cath-tools.svg?branch=master)](https://travis-ci.com/UCLOrengoGroup/cath-tools) [![Documentation Status](https://readthedocs.org/projects/cath-tools/badge/?version=latest)](https://readthedocs.org/projects/cath-tools/?badge=latest)
 
 Protein structure comparison tools such as SSAP, as used by the [Orengo Group](https://www.ucl.ac.uk/orengo-group "Orengo Group website") in curating [CATH](http://www.cathdb.info/ "CATH website").
 
 | | | | | |
 |:-- |:-- |:-- |:-- |:-- |
-| [**Executable DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "Downloads for the latest CATH Tools release") <br> <sup> (for Linux/Mac; chmod them to be executable)</sup> | [**Docs**](http://cath-tools.readthedocs.io/en/latest/ "CATH Tools user documentation at Read the Docs") <br> <sup> &nbsp; </sup> | [**Code**](https://github.com/UCLOrengoGroup/cath-tools "CATH Tools GitHub repository") <br> <sup> &nbsp; </sup> | [Builds](https://travis-ci.org/UCLOrengoGroup/cath-tools "CATH Tools Travis-CI builds") <br> <sup> &nbsp; </sup> | [Extras repo](https://github.com/UCLOrengoGroup/cath-tools-supplementary "CATH Tools Supplementary GitHub repository") <br> <sup> &nbsp; </sup> |
+| [**Executable DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "Downloads for the latest CATH Tools release") <br> <sup> (for Linux/Mac; chmod them to be executable)</sup> | [**Docs**](http://cath-tools.readthedocs.io/en/latest/ "CATH Tools user documentation at Read the Docs") <br> <sup> &nbsp; </sup> | [**Code**](https://github.com/UCLOrengoGroup/cath-tools "CATH Tools GitHub repository") <br> <sup> &nbsp; </sup> | [Builds](https://travis-ci.com/UCLOrengoGroup/cath-tools "CATH Tools Travis-CI builds") <br> <sup> &nbsp; </sup> | [Extras repo](https://github.com/UCLOrengoGroup/cath-tools-supplementary "CATH Tools Supplementary GitHub repository") <br> <sup> &nbsp; </sup> |
 
 
 ### Tools
