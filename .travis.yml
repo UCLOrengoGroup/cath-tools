@@ -1,16 +1,5 @@
-# It's better that these Travis files explicitly specify:
-# sudo:false
-# which then allows them to be run in a Docker-style container
-# but this file currently having to use sudo to get a recent Boost (1.60.0) because
-# the white-listed boost-latest ppa repository:
-# https://launchpad.net/~boost-latest/+archive/ubuntu/ppa
-# currently only offers Boost <= v1.55.0.
-# If/when Boost >= v1.60.0 gets added to boost-latest, then
-# use that instead of the sudo commands and then uncomment sudo: false
-#sudo: false
-dist: trusty
+dist: bionic
 language: cpp
-sudo: required
 
 notifications:
   slack:
@@ -37,7 +26,7 @@ env:
 # - BUILDTYPE=UBSAN   # Undefined-behaviour sanitizer (commented out due to failures in boost: /usr/include/boost/serialization/singleton.hpp:132:13: runtime error: reference binding to null pointer of type 'const boost::serialization::extended_type_info_typeid<cath::score::aligned_pair_score>')
 # - BUILDTYPE="ANALYZE" # Use scan_build, which builds with Clang's static analyzer
 
-matrix:
+jobs:
   fast_finish: true
   allow_failures:
     - compiler: gcc
@@ -48,9 +37,8 @@ before_install:
   - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then brew install gsl                                                                                  ; fi
   - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then brew install ninja                                                                                ; fi
 # - if [[ $TRAVIS_OS_NAME == osx                                                    ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden"       ; fi # This was an attempt to remove warnings like: "direct access in [...] to global weak symbol [...] means the weak symbol cannot be overridden at runtime" but none of "-fvisibility=default", "-fvisibility=hidden" or "-fvisibility=hidden -fvisibility-inlines-hidden" worked
-  - if [[ $TRAVIS_OS_NAME == linux                                                  ]]; then export BUILD_FILE_SUFFIX="ubuntu14.04"; else export BUILD_FILE_SUFFIX="macos"                     ; fi
+  - if [[ $TRAVIS_OS_NAME == linux                                                  ]]; then export BUILD_FILE_SUFFIX="ubuntu18.04"; else export BUILD_FILE_SUFFIX="macos"                     ; fi
   - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang                           ]]; then export CXX="clang++" CC="clang"                                                                   ; fi
-  - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^gcc                             ]]; then export CXX="g++-4.9" CC="gcc-4.9"                                                                 ; fi
 # - if [[ $TRAVIS_OS_NAME == osx   ]] && [[ $CC =~ ^gcc                             ]]; then export CXX="g++-4.8" CC="gcc-4.8"                                                                 ; fi # Default gcc on osx is just a front-end for LLVM so should be able to use this to explicitly request the real GCC 4.8. It isn't working right now - maybe just needs a more recent osx_image (https://docs.travis-ci.com/user/reference/osx/#OS-X-Version) ? Not worth spending more time on now.
   - if [[ $BUILDTYPE =~ SAN$                                                        ]]; then export CMAKE_BUILD_TYPE="RELEASE"                                                                 ; fi
   - if [[ $BUILDTYPE == ASAN                                                        ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer"            ; fi
@@ -65,23 +53,12 @@ before_install:
 # - if [[                                   $CC =~ ^clang                           ]]; then export CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -stdlib=libc++ " ; fi
 
 install:
-  - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang ]]; then sudo apt-get update  -qq                                  ; fi
-  - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang ]]; then sudo apt-get install -qq libc++-dev libc++1 libc++abi-dev ; fi
+  - if [[ $TRAVIS_OS_NAME == linux                        ]]; then sudo apt-get update -qq                                      ; fi
+  - if [[ $TRAVIS_OS_NAME == linux ]] && [[ $CC =~ ^clang ]]; then sudo apt-get install -qq libc++-dev libc++1 libc++abi-dev    ; fi
+  - if [[ $TRAVIS_OS_NAME == linux                        ]]; then sudo apt-get install libboost-all-dev libgsl-dev ninja-build ; fi
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.9
-    - gcc-4.9
-    - libgsl0-dev
-    - ninja-build
 
 before_script:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:samuel-bachmann/boost -y ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -q                               ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libboost1.60-all-dev            ; fi
   - mkdir -p "$TRAVIS_BUILD_DIR/release_build"
   - cmake -GNinja "-B$TRAVIS_BUILD_DIR/release_build" "-H$TRAVIS_BUILD_DIR" "-DCMAKE_TOOLCHAIN_FILE=travis-toolchain.cmake" -DCMAKE_BUILD_TYPE=RELEASE "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}"
 
