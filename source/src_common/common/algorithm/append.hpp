@@ -21,9 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_APPEND_HPP
 #define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_ALGORITHM_APPEND_HPP
 
-#include <boost/range/algorithm/copy.hpp>
-
 #include <iterator>
+#include <utility>
+
+#include <boost/range/algorithm/copy.hpp>
 
 namespace cath {
 	namespace common {
@@ -32,23 +33,22 @@ namespace cath {
 		///
 		/// Note: previously used insert from boost/range/algorithm_ext/insert.hpp but
 		/// that appeared to sometimes cause problems detected by Clang Asan.
+		///
+		/// \param prm_container The container to which the range should be appended
+		/// \param prm_suffix    The range to append to the container
 		template <typename Cont, typename Rng>
-		inline Cont & append(Cont      &prm_container, ///< The container to which the range should be appended
-		                     const Rng &prm_suffix     ///< The range to append to the container
-		                     ) {
-			boost::range::copy(
-				prm_suffix,
-				std::back_inserter( prm_container )
-			);
+		inline Cont &append( Cont &prm_container, Rng &&prm_suffix ) {
+			::boost::range::copy( ::std::forward<Rng>( prm_suffix ), ::std::back_inserter( prm_container ) );
 			return prm_container;
 		}
 
 		/// \brief Append the specified range to a copy of the specified container
+		///
+		/// \param prm_container The container to which the range should be appended
+		/// \param prm_suffix    The range to append to the container
 		template <typename Cont, typename Rng>
-		inline Cont append_copy(Cont       prm_container, ///< The container to which the range should be appended
-		                        const Rng &prm_suffix     ///< The range to append to the container
-		                        ) {
-			append( prm_container, prm_suffix );
+		inline Cont append_copy( Cont prm_container, Rng &&prm_suffix ) {
+			append( prm_container, ::std::forward<Rng>( prm_suffix ) );
 			return prm_container;
 		}
 
