@@ -225,7 +225,7 @@ IF ( BUILD_EXTRA_CATH_TESTS )
 	target_link_libraries( mod-test-options             PUBLIC ct_options             ct_uni ct_test )
 	target_link_libraries( mod-test-resolve-hits        PUBLIC ct_resolve_hits               ct_test )
 	target_link_libraries( mod-test-seq                 PUBLIC ct_seq                        ct_test )
-	target_link_libraries( mod-test-src-test            PUBLIC ct_src_test                   ct_test )
+	target_link_libraries( mod-test-src-test            PUBLIC                               ct_test )
 	target_link_libraries( mod-test-uni                 PUBLIC ct_uni                        ct_test )
 
 	add_test             ( NAME mod-test-biocore             COMMAND mod-test-biocore             )
