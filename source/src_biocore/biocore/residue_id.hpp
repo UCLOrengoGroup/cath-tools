@@ -30,6 +30,8 @@ namespace cath {
 	/// \brief A PDB residue identifier, bundling the chain_label and residue_name
 	///
 	/// Converted to a string, this might look like "A:324C"
+	///
+	/// TODO: Come C++17, make this constexpr
 	class residue_id final : private boost::equality_comparable<residue_id> {
 	private:
 		/// \brief The chain on which the residue belongs

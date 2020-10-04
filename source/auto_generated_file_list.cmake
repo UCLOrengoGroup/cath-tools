@@ -1,52 +1,6 @@
 ##### DON'T EDIT THIS FILE - IT'S AUTO-GENERATED #####
 
 set(
-	NORMSOURCES_BIOCORE
-		biocore/chain_label.cpp
-		biocore/residue_id.cpp
-		biocore/residue_name.cpp
-)
-
-set(
-	NORMSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS
-		cath_assign_domains/options/cath_assign_domains_options.cpp
-		cath_assign_domains/options/cath_assign_domains_options_block.cpp
-)
-
-set(
-	NORMSOURCES_CATH_ASSIGN_DOMAINS
-		${NORMSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS}
-)
-
-set(
-	NORMSOURCES_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK
-		cath_cluster/options/options_block/cath_cluster_clustering_options_block.cpp
-		cath_cluster/options/options_block/cath_cluster_input_options_block.cpp
-		cath_cluster/options/options_block/cath_cluster_output_options_block.cpp
-)
-
-set(
-	NORMSOURCES_CATH_CLUSTER_OPTIONS_SPEC
-		cath_cluster/options/spec/cath_cluster_clustering_spec.cpp
-		cath_cluster/options/spec/cath_cluster_input_spec.cpp
-		cath_cluster/options/spec/cath_cluster_output_spec.cpp
-		cath_cluster/options/spec/clustering_levels.cpp
-)
-
-set(
-	NORMSOURCES_CATH_CLUSTER_OPTIONS
-		cath_cluster/options/cath_cluster_options.cpp
-		${NORMSOURCES_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK}
-		${NORMSOURCES_CATH_CLUSTER_OPTIONS_SPEC}
-)
-
-set(
-	NORMSOURCES_CATH_CLUSTER
-		cath_cluster/cath_clusterer.cpp
-		${NORMSOURCES_CATH_CLUSTER_OPTIONS}
-)
-
-set(
 	NORMSOURCES_CATH_REFINE_ALIGN_OPTIONS
 		cath_refine_align/options/cath_refine_align_options.cpp
 )
@@ -55,17 +9,6 @@ set(
 	NORMSOURCES_CATH_REFINE_ALIGN
 		cath_refine_align/cath_align_refiner.cpp
 		${NORMSOURCES_CATH_REFINE_ALIGN_OPTIONS}
-)
-
-set(
-	NORMSOURCES_CATH_SCORE_ALIGN_OPTIONS
-		cath_score_align/options/cath_score_align_options.cpp
-)
-
-set(
-	NORMSOURCES_CATH_SCORE_ALIGN
-		cath_score_align/cath_align_scorer.cpp
-		${NORMSOURCES_CATH_SCORE_ALIGN_OPTIONS}
 )
 
 set(
@@ -139,58 +82,6 @@ set(
 		${NORMSOURCES_CHOPPING_DOMAIN}
 		${NORMSOURCES_CHOPPING_REGION}
 		${NORMSOURCES_CHOPPING_RESIDUE_LOCATION}
-)
-
-set(
-	NORMSOURCES_CLUSTER_DETAIL
-		cluster/detail/mapping_job.cpp
-)
-
-set(
-	NORMSOURCES_CLUSTER_FILE
-		cluster/file/cluster_membership_file.cpp
-)
-
-set(
-	NORMSOURCES_CLUSTER_MAP
-		cluster/map/aggregate_map_results.cpp
-		cluster/map/map_clusters.cpp
-		cluster/map/map_results.cpp
-		cluster/map/overlap_frac_distn.cpp
-)
-
-set(
-	NORMSOURCES_CLUSTER_OPTIONS_OPTIONS_BLOCK
-		cluster/options/options_block/clust_mapping_options_block.cpp
-		cluster/options/options_block/clustmap_input_options_block.cpp
-		cluster/options/options_block/clustmap_output_options_block.cpp
-)
-
-set(
-	NORMSOURCES_CLUSTER_OPTIONS_SPEC
-		cluster/options/spec/clust_mapping_spec.cpp
-		cluster/options/spec/clustmap_input_spec.cpp
-		cluster/options/spec/clustmap_output_spec.cpp
-)
-
-set(
-	NORMSOURCES_CLUSTER_OPTIONS
-		${NORMSOURCES_CLUSTER_OPTIONS_OPTIONS_BLOCK}
-		${NORMSOURCES_CLUSTER_OPTIONS_SPEC}
-)
-
-set(
-	NORMSOURCES_CLUSTER
-		cluster/cath_cluster_mapper.cpp
-		cluster/cluster_domains.cpp
-		cluster/clustmap_options.cpp
-		${NORMSOURCES_CLUSTER_DETAIL}
-		cluster/domain_cluster_ids.cpp
-		${NORMSOURCES_CLUSTER_FILE}
-		${NORMSOURCES_CLUSTER_MAP}
-		cluster/new_cluster_data.cpp
-		cluster/old_cluster_data.cpp
-		${NORMSOURCES_CLUSTER_OPTIONS}
 )
 
 set(
@@ -271,159 +162,80 @@ set(
 )
 
 set(
-	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS
-		options/executable/cath_check_pdb_options/cath_check_pdb_options.cpp
+	NORMSOURCES_SRC_BIOCORE_BIOCORE
+		src_biocore/biocore/chain_label.cpp
+		src_biocore/biocore/residue_id.cpp
+		src_biocore/biocore/residue_name.cpp
 )
 
 set(
-	NORMSOURCES_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS
-		options/executable/cath_extract_pdb_options/cath_extract_pdb_options.cpp
+	NORMSOURCES_SRC_BIOCORE
+		${NORMSOURCES_SRC_BIOCORE_BIOCORE}
 )
 
 set(
-	NORMSOURCES_OPTIONS_EXECUTABLE
-		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS}
-		${NORMSOURCES_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS}
-		options/executable/env_var_option_name_handler.cpp
-		options/executable/executable_options.cpp
+	NORMSOURCES_SRC_CATH_ASSIGN_DOMAINS_CATH_ASSIGN_DOMAINS_OPTIONS
+		src_cath_assign_domains/cath_assign_domains/options/cath_assign_domains_options.cpp
+		src_cath_assign_domains/cath_assign_domains/options/cath_assign_domains_options_block.cpp
 )
 
 set(
-	NORMSOURCES_OPTIONS_OPTIONS_BLOCK
-		options/options_block/check_pdb_options_block.cpp
-		options/options_block/detail_help_options_block.cpp
-		options/options_block/extract_pdb_options_block.cpp
-		options/options_block/ids_options_block.cpp
-		options/options_block/misc_help_version_options_block.cpp
-		options/options_block/options_block.cpp
-		options/options_block/options_block_tester.cpp
-		options/options_block/pdb_input_options_block.cpp
-		options/options_block/pdb_input_spec.cpp
-		options/options_block/string_options_block.cpp
-		options/options_block/superposition_input_options_block.cpp
+	NORMSOURCES_SRC_CATH_ASSIGN_DOMAINS_CATH_ASSIGN_DOMAINS
+		${NORMSOURCES_SRC_CATH_ASSIGN_DOMAINS_CATH_ASSIGN_DOMAINS_OPTIONS}
 )
 
 set(
-	NORMSOURCES_OPTIONS
-		${NORMSOURCES_OPTIONS_EXECUTABLE}
-		${NORMSOURCES_OPTIONS_OPTIONS_BLOCK}
+	NORMSOURCES_SRC_CATH_ASSIGN_DOMAINS
+		${NORMSOURCES_SRC_CATH_ASSIGN_DOMAINS_CATH_ASSIGN_DOMAINS}
 )
 
 set(
-	NORMSOURCES_RESOLVE_HITS_ALGO
-		resolve_hits/algo/discont_hits_index_by_start.cpp
-		resolve_hits/algo/masked_bests_cacher.cpp
-		resolve_hits/algo/scored_arch_proxy.cpp
+	NORMSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK
+		src_cath_cluster/cath_cluster/options/options_block/cath_cluster_clustering_options_block.cpp
+		src_cath_cluster/cath_cluster/options/options_block/cath_cluster_input_options_block.cpp
+		src_cath_cluster/cath_cluster/options/options_block/cath_cluster_output_options_block.cpp
 )
 
 set(
-	NORMSOURCES_RESOLVE_HITS_FILE_DETAIL
-		resolve_hits/file/detail/hmmer_aln.cpp
-		resolve_hits/file/detail/hmmer_parser.cpp
+	NORMSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC
+		src_cath_cluster/cath_cluster/options/spec/cath_cluster_clustering_spec.cpp
+		src_cath_cluster/cath_cluster/options/spec/cath_cluster_input_spec.cpp
+		src_cath_cluster/cath_cluster/options/spec/cath_cluster_output_spec.cpp
+		src_cath_cluster/cath_cluster/options/spec/clustering_levels.cpp
 )
 
 set(
-	NORMSOURCES_RESOLVE_HITS_FILE
-		resolve_hits/file/alnd_rgn.cpp
-		resolve_hits/file/cath_id_score_category.cpp
-		${NORMSOURCES_RESOLVE_HITS_FILE_DETAIL}
-		resolve_hits/file/hits_input_format_tag.cpp
-		resolve_hits/file/parse_domain_hits_table.cpp
-		resolve_hits/file/parse_hmmer_out.cpp
+	NORMSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS
+		src_cath_cluster/cath_cluster/options/cath_cluster_options.cpp
+		${NORMSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK}
+		${NORMSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC}
 )
 
 set(
-	NORMSOURCES_RESOLVE_HITS_HTML_OUTPUT
-		resolve_hits/html_output/html_segment.cpp
-		resolve_hits/html_output/resolve_hits_html_outputter.cpp
+	NORMSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER
+		src_cath_cluster/cath_cluster/cath_clusterer.cpp
+		${NORMSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS}
 )
 
 set(
-	NORMSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK
-		resolve_hits/options/options_block/crh_filter_options_block.cpp
-		resolve_hits/options/options_block/crh_html_options_block.cpp
-		resolve_hits/options/options_block/crh_input_options_block.cpp
-		resolve_hits/options/options_block/crh_output_options_block.cpp
-		resolve_hits/options/options_block/crh_score_options_block.cpp
-		resolve_hits/options/options_block/crh_segment_options_block.cpp
-		resolve_hits/options/options_block/crh_single_output_options_block.cpp
+	NORMSOURCES_SRC_CATH_CLUSTER
+		${NORMSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER}
 )
 
 set(
-	NORMSOURCES_RESOLVE_HITS_OPTIONS_SPEC
-		resolve_hits/options/spec/crh_filter_spec.cpp
-		resolve_hits/options/spec/crh_html_spec.cpp
-		resolve_hits/options/spec/crh_input_spec.cpp
-		resolve_hits/options/spec/crh_output_spec.cpp
-		resolve_hits/options/spec/crh_score_spec.cpp
-		resolve_hits/options/spec/crh_segment_spec.cpp
-		resolve_hits/options/spec/crh_single_output_spec.cpp
-		resolve_hits/options/spec/crh_spec.cpp
-		resolve_hits/options/spec/hit_boundary_output.cpp
+	NORMSOURCES_SRC_CATH_SCORE_ALIGN_CATH_SCORE_ALIGN_OPTIONS
+		src_cath_score_align/cath_score_align/options/cath_score_align_options.cpp
 )
 
 set(
-	NORMSOURCES_RESOLVE_HITS_OPTIONS
-		resolve_hits/options/crh_options.cpp
-		${NORMSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK}
-		${NORMSOURCES_RESOLVE_HITS_OPTIONS_SPEC}
+	NORMSOURCES_SRC_CATH_SCORE_ALIGN_CATH_SCORE_ALIGN
+		src_cath_score_align/cath_score_align/cath_align_scorer.cpp
+		${NORMSOURCES_SRC_CATH_SCORE_ALIGN_CATH_SCORE_ALIGN_OPTIONS}
 )
 
 set(
-	NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
-		resolve_hits/read_and_process_hits/hits_processor/gather_hits_processor.cpp
-		resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.cpp
-		resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.cpp
-		resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.cpp
-		resolve_hits/read_and_process_hits/hits_processor/write_json_hits_processor.cpp
-		resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.cpp
-)
-
-set(
-	NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS
-		${NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR}
-		resolve_hits/read_and_process_hits/read_and_process_mgr.cpp
-)
-
-set(
-	NORMSOURCES_RESOLVE_HITS_RESOLVE
-		resolve_hits/resolve/hit_resolver.cpp
-		resolve_hits/resolve/naive_greedy_hit_resolver.cpp
-)
-
-set(
-	NORMSOURCES_RESOLVE_HITS_TRIM
-		resolve_hits/trim/seq_seg_boundary_fns.cpp
-		resolve_hits/trim/trim_spec.cpp
-)
-
-set(
-	NORMSOURCES_RESOLVE_HITS
-		${NORMSOURCES_RESOLVE_HITS_ALGO}
-		resolve_hits/calc_hit.cpp
-		resolve_hits/calc_hit_list.cpp
-		resolve_hits/cath_hit_resolver.cpp
-		${NORMSOURCES_RESOLVE_HITS_FILE}
-		resolve_hits/full_hit.cpp
-		resolve_hits/full_hit_fns.cpp
-		resolve_hits/full_hit_list.cpp
-		resolve_hits/full_hit_list_fns.cpp
-		resolve_hits/hit_arch.cpp
-		resolve_hits/hit_extras.cpp
-		resolve_hits/hit_score_type.cpp
-		${NORMSOURCES_RESOLVE_HITS_HTML_OUTPUT}
-		${NORMSOURCES_RESOLVE_HITS_OPTIONS}
-		${NORMSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS}
-		${NORMSOURCES_RESOLVE_HITS_RESOLVE}
-		resolve_hits/scored_hit_arch.cpp
-		${NORMSOURCES_RESOLVE_HITS_TRIM}
-)
-
-set(
-	NORMSOURCES_SEQ
-		seq/seq_arrow.cpp
-		seq/seq_seg.cpp
-		seq/seq_seg_run.cpp
+	NORMSOURCES_SRC_CATH_SCORE_ALIGN
+		${NORMSOURCES_SRC_CATH_SCORE_ALIGN_CATH_SCORE_ALIGN}
 )
 
 set(
@@ -457,6 +269,63 @@ set(
 set(
 	NORMSOURCES_SRC_CLUSTAGGLOM
 		${NORMSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM}
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTER_CLUSTER_DETAIL
+		src_cluster/cluster/detail/mapping_job.cpp
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTER_CLUSTER_FILE
+		src_cluster/cluster/file/cluster_membership_file.cpp
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTER_CLUSTER_MAP
+		src_cluster/cluster/map/aggregate_map_results.cpp
+		src_cluster/cluster/map/map_clusters.cpp
+		src_cluster/cluster/map/map_results.cpp
+		src_cluster/cluster/map/overlap_frac_distn.cpp
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS_OPTIONS_BLOCK
+		src_cluster/cluster/options/options_block/clust_mapping_options_block.cpp
+		src_cluster/cluster/options/options_block/clustmap_input_options_block.cpp
+		src_cluster/cluster/options/options_block/clustmap_output_options_block.cpp
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS_SPEC
+		src_cluster/cluster/options/spec/clust_mapping_spec.cpp
+		src_cluster/cluster/options/spec/clustmap_input_spec.cpp
+		src_cluster/cluster/options/spec/clustmap_output_spec.cpp
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS
+		${NORMSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS_OPTIONS_BLOCK}
+		${NORMSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS_SPEC}
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTER_CLUSTER
+		src_cluster/cluster/cath_cluster_mapper.cpp
+		src_cluster/cluster/cluster_domains.cpp
+		src_cluster/cluster/clustmap_options.cpp
+		${NORMSOURCES_SRC_CLUSTER_CLUSTER_DETAIL}
+		src_cluster/cluster/domain_cluster_ids.cpp
+		${NORMSOURCES_SRC_CLUSTER_CLUSTER_FILE}
+		${NORMSOURCES_SRC_CLUSTER_CLUSTER_MAP}
+		src_cluster/cluster/new_cluster_data.cpp
+		src_cluster/cluster/old_cluster_data.cpp
+		${NORMSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS}
+)
+
+set(
+	NORMSOURCES_SRC_CLUSTER
+		${NORMSOURCES_SRC_CLUSTER_CLUSTER}
 )
 
 set(
@@ -520,6 +389,177 @@ set(
 set(
 	NORMSOURCES_SRC_COMMON
 		${NORMSOURCES_SRC_COMMON_COMMON}
+)
+
+set(
+	NORMSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS
+		src_options/options/executable/cath_check_pdb_options/cath_check_pdb_options.cpp
+)
+
+set(
+	NORMSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS
+		src_options/options/executable/cath_extract_pdb_options/cath_extract_pdb_options.cpp
+)
+
+set(
+	NORMSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE
+		${NORMSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS}
+		${NORMSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS}
+		src_options/options/executable/env_var_option_name_handler.cpp
+		src_options/options/executable/executable_options.cpp
+)
+
+set(
+	NORMSOURCES_SRC_OPTIONS_OPTIONS_OPTIONS_BLOCK
+		src_options/options/options_block/check_pdb_options_block.cpp
+		src_options/options/options_block/detail_help_options_block.cpp
+		src_options/options/options_block/extract_pdb_options_block.cpp
+		src_options/options/options_block/ids_options_block.cpp
+		src_options/options/options_block/misc_help_version_options_block.cpp
+		src_options/options/options_block/options_block.cpp
+		src_options/options/options_block/options_block_tester.cpp
+		src_options/options/options_block/pdb_input_options_block.cpp
+		src_options/options/options_block/pdb_input_spec.cpp
+		src_options/options/options_block/string_options_block.cpp
+		src_options/options/options_block/superposition_input_options_block.cpp
+)
+
+set(
+	NORMSOURCES_SRC_OPTIONS_OPTIONS
+		${NORMSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE}
+		${NORMSOURCES_SRC_OPTIONS_OPTIONS_OPTIONS_BLOCK}
+)
+
+set(
+	NORMSOURCES_SRC_OPTIONS
+		${NORMSOURCES_SRC_OPTIONS_OPTIONS}
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_ALGO
+		src_resolve_hits/resolve_hits/algo/discont_hits_index_by_start.cpp
+		src_resolve_hits/resolve_hits/algo/masked_bests_cacher.cpp
+		src_resolve_hits/resolve_hits/algo/scored_arch_proxy.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_FILE_DETAIL
+		src_resolve_hits/resolve_hits/file/detail/hmmer_aln.cpp
+		src_resolve_hits/resolve_hits/file/detail/hmmer_parser.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_FILE
+		src_resolve_hits/resolve_hits/file/alnd_rgn.cpp
+		src_resolve_hits/resolve_hits/file/cath_id_score_category.cpp
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_FILE_DETAIL}
+		src_resolve_hits/resolve_hits/file/hits_input_format_tag.cpp
+		src_resolve_hits/resolve_hits/file/parse_domain_hits_table.cpp
+		src_resolve_hits/resolve_hits/file/parse_hmmer_out.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_HTML_OUTPUT
+		src_resolve_hits/resolve_hits/html_output/html_segment.cpp
+		src_resolve_hits/resolve_hits/html_output/resolve_hits_html_outputter.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK
+		src_resolve_hits/resolve_hits/options/options_block/crh_filter_options_block.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_html_options_block.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_input_options_block.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_output_options_block.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_score_options_block.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_segment_options_block.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_single_output_options_block.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS_SPEC
+		src_resolve_hits/resolve_hits/options/spec/crh_filter_spec.cpp
+		src_resolve_hits/resolve_hits/options/spec/crh_html_spec.cpp
+		src_resolve_hits/resolve_hits/options/spec/crh_input_spec.cpp
+		src_resolve_hits/resolve_hits/options/spec/crh_output_spec.cpp
+		src_resolve_hits/resolve_hits/options/spec/crh_score_spec.cpp
+		src_resolve_hits/resolve_hits/options/spec/crh_segment_spec.cpp
+		src_resolve_hits/resolve_hits/options/spec/crh_single_output_spec.cpp
+		src_resolve_hits/resolve_hits/options/spec/crh_spec.cpp
+		src_resolve_hits/resolve_hits/options/spec/hit_boundary_output.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS
+		src_resolve_hits/resolve_hits/options/crh_options.cpp
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK}
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS_SPEC}
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
+		src_resolve_hits/resolve_hits/read_and_process_hits/hits_processor/gather_hits_processor.cpp
+		src_resolve_hits/resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.cpp
+		src_resolve_hits/resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.cpp
+		src_resolve_hits/resolve_hits/read_and_process_hits/hits_processor/write_html_hits_processor.cpp
+		src_resolve_hits/resolve_hits/read_and_process_hits/hits_processor/write_json_hits_processor.cpp
+		src_resolve_hits/resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_READ_AND_PROCESS_HITS
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR}
+		src_resolve_hits/resolve_hits/read_and_process_hits/read_and_process_mgr.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_RESOLVE
+		src_resolve_hits/resolve_hits/resolve/hit_resolver.cpp
+		src_resolve_hits/resolve_hits/resolve/naive_greedy_hit_resolver.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_TRIM
+		src_resolve_hits/resolve_hits/trim/seq_seg_boundary_fns.cpp
+		src_resolve_hits/resolve_hits/trim/trim_spec.cpp
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_ALGO}
+		src_resolve_hits/resolve_hits/calc_hit.cpp
+		src_resolve_hits/resolve_hits/calc_hit_list.cpp
+		src_resolve_hits/resolve_hits/cath_hit_resolver.cpp
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_FILE}
+		src_resolve_hits/resolve_hits/full_hit.cpp
+		src_resolve_hits/resolve_hits/full_hit_fns.cpp
+		src_resolve_hits/resolve_hits/full_hit_list.cpp
+		src_resolve_hits/resolve_hits/full_hit_list_fns.cpp
+		src_resolve_hits/resolve_hits/hit_arch.cpp
+		src_resolve_hits/resolve_hits/hit_extras.cpp
+		src_resolve_hits/resolve_hits/hit_score_type.cpp
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_HTML_OUTPUT}
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS}
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_READ_AND_PROCESS_HITS}
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_RESOLVE}
+		src_resolve_hits/resolve_hits/scored_hit_arch.cpp
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_TRIM}
+)
+
+set(
+	NORMSOURCES_SRC_RESOLVE_HITS
+		${NORMSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS}
+)
+
+set(
+	NORMSOURCES_SRC_SEQ_SEQ
+		src_seq/seq/seq_arrow.cpp
+		src_seq/seq/seq_seg.cpp
+		src_seq/seq/seq_seg_run.cpp
+)
+
+set(
+	NORMSOURCES_SRC_SEQ
+		${NORMSOURCES_SRC_SEQ_SEQ}
 )
 
 set(
@@ -1305,65 +1345,23 @@ set(
 
 set(
 	NORMSOURCES
-		${NORMSOURCES_BIOCORE}
-		${NORMSOURCES_CATH_ASSIGN_DOMAINS}
-		${NORMSOURCES_CATH_CLUSTER}
 		${NORMSOURCES_CATH_REFINE_ALIGN}
-		${NORMSOURCES_CATH_SCORE_ALIGN}
 		${NORMSOURCES_CATH_SUPERPOSE}
 		${NORMSOURCES_CHOPPING}
-		${NORMSOURCES_CLUSTER}
 		${NORMSOURCES_DISPLAY_COLOUR}
 		${NORMSOURCES_EXECUTABLES}
-		${NORMSOURCES_OPTIONS}
-		${NORMSOURCES_RESOLVE_HITS}
-		${NORMSOURCES_SEQ}
+		${NORMSOURCES_SRC_BIOCORE}
+		${NORMSOURCES_SRC_CATH_ASSIGN_DOMAINS}
+		${NORMSOURCES_SRC_CATH_CLUSTER}
+		${NORMSOURCES_SRC_CATH_SCORE_ALIGN}
 		${NORMSOURCES_SRC_CLUSTAGGLOM}
+		${NORMSOURCES_SRC_CLUSTER}
 		${NORMSOURCES_SRC_COMMON}
+		${NORMSOURCES_SRC_OPTIONS}
+		${NORMSOURCES_SRC_RESOLVE_HITS}
+		${NORMSOURCES_SRC_SEQ}
 		${NORMSOURCES_SRC_TEST}
 		${NORMSOURCES_UNI}
-)
-
-set(
-	TESTSOURCES_BIOCORE
-		biocore/chain_label_test.cpp
-		biocore/residue_id_test.cpp
-		biocore/residue_name_test.cpp
-)
-
-set(
-	TESTSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS
-		cath_assign_domains/options/cath_assign_domains_options_test.cpp
-)
-
-set(
-	TESTSOURCES_CATH_ASSIGN_DOMAINS
-		${TESTSOURCES_CATH_ASSIGN_DOMAINS_OPTIONS}
-)
-
-set(
-	TESTSOURCES_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK
-		cath_cluster/options/options_block/cath_cluster_clustering_options_block_test.cpp
-		cath_cluster/options/options_block/cath_cluster_input_options_block_test.cpp
-		cath_cluster/options/options_block/cath_cluster_output_options_block_test.cpp
-)
-
-set(
-	TESTSOURCES_CATH_CLUSTER_OPTIONS_SPEC
-		cath_cluster/options/spec/cath_cluster_clustering_spec_test.cpp
-)
-
-set(
-	TESTSOURCES_CATH_CLUSTER_OPTIONS
-		cath_cluster/options/cath_cluster_options_test.cpp
-		${TESTSOURCES_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK}
-		${TESTSOURCES_CATH_CLUSTER_OPTIONS_SPEC}
-)
-
-set(
-	TESTSOURCES_CATH_CLUSTER
-		cath_cluster/cath_clusterer_test.cpp
-		${TESTSOURCES_CATH_CLUSTER_OPTIONS}
 )
 
 set(
@@ -1375,17 +1373,6 @@ set(
 	TESTSOURCES_CATH_REFINE_ALIGN
 		cath_refine_align/cath_align_refiner_test.cpp
 		${TESTSOURCES_CATH_REFINE_ALIGN_OPTIONS}
-)
-
-set(
-	TESTSOURCES_CATH_SCORE_ALIGN_OPTIONS
-		cath_score_align/options/cath_score_align_options_test.cpp
-)
-
-set(
-	TESTSOURCES_CATH_SCORE_ALIGN
-		cath_score_align/cath_align_scorer_test.cpp
-		${TESTSOURCES_CATH_SCORE_ALIGN_OPTIONS}
 )
 
 set(
@@ -1426,59 +1413,6 @@ set(
 )
 
 set(
-	TESTSOURCES_CLUSTER_DETAIL
-		cluster/detail/mapping_job_test.cpp
-)
-
-set(
-	TESTSOURCES_CLUSTER_FILE
-		cluster/file/cluster_membership_file_test.cpp
-)
-
-set(
-	TESTSOURCES_CLUSTER_MAP
-		cluster/map/aggregate_map_results_test.cpp
-		cluster/map/map_results_test.cpp
-		cluster/map/overlap_frac_distn_test.cpp
-)
-
-set(
-	TESTSOURCES_CLUSTER_OPTIONS_OPTIONS_BLOCK
-		cluster/options/options_block/clust_mapping_options_block_test.cpp
-		cluster/options/options_block/clustmap_input_options_block_test.cpp
-		cluster/options/options_block/clustmap_output_options_block_test.cpp
-)
-
-set(
-	TESTSOURCES_CLUSTER_OPTIONS
-		${TESTSOURCES_CLUSTER_OPTIONS_OPTIONS_BLOCK}
-)
-
-set(
-	TESTSOURCES_CLUSTER_TEST
-		cluster/test/map_clusters_fixture.cpp
-)
-
-set(
-	TESTSOURCES_CLUSTER
-		cluster/cath_cluster_mapper_test.cpp
-		cluster/cluster_entry_test.cpp
-		cluster/cluster_info_test.cpp
-		cluster/clusters_info_test.cpp
-		cluster/clustmap_options_test.cpp
-		${TESTSOURCES_CLUSTER_DETAIL}
-		cluster/domain_cluster_ids_by_seq_test.cpp
-		cluster/domain_cluster_ids_test.cpp
-		${TESTSOURCES_CLUSTER_FILE}
-		${TESTSOURCES_CLUSTER_MAP}
-		cluster/mapping_tool_test.cpp
-		cluster/new_cluster_data_test.cpp
-		cluster/old_cluster_data_test.cpp
-		${TESTSOURCES_CLUSTER_OPTIONS}
-		${TESTSOURCES_CLUSTER_TEST}
-)
-
-set(
 	TESTSOURCES_DISPLAY_COLOUR
 		display_colour/display_colour_gradient_test.cpp
 		display_colour/display_colour_list_test.cpp
@@ -1496,124 +1430,76 @@ set(
 )
 
 set(
-	TESTSOURCES_OPTIONS_EXECUTABLE
-		options/executable/env_var_option_name_handler_test.cpp
-		options/executable/executable_options_test.cpp
+	TESTSOURCES_SRC_BIOCORE_BIOCORE
+		src_biocore/biocore/chain_label_test.cpp
+		src_biocore/biocore/residue_id_test.cpp
+		src_biocore/biocore/residue_name_test.cpp
 )
 
 set(
-	TESTSOURCES_OPTIONS_OPTIONS_BLOCK
-		options/options_block/check_pdb_options_block_test.cpp
-		options/options_block/detail_help_options_block_test.cpp
-		options/options_block/extract_pdb_options_block_test.cpp
-		options/options_block/misc_help_version_options_block_test.cpp
-		options/options_block/options_block_test.cpp
-		options/options_block/pdb_input_options_block_test.cpp
-		options/options_block/superposition_input_options_block_test.cpp
+	TESTSOURCES_SRC_BIOCORE
+		${TESTSOURCES_SRC_BIOCORE_BIOCORE}
 )
 
 set(
-	TESTSOURCES_OPTIONS
-		${TESTSOURCES_OPTIONS_EXECUTABLE}
-		${TESTSOURCES_OPTIONS_OPTIONS_BLOCK}
+	TESTSOURCES_SRC_CATH_ASSIGN_DOMAINS_CATH_ASSIGN_DOMAINS_OPTIONS
+		src_cath_assign_domains/cath_assign_domains/options/cath_assign_domains_options_test.cpp
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_ALGO
-		resolve_hits/algo/masked_bests_cache_test.cpp
+	TESTSOURCES_SRC_CATH_ASSIGN_DOMAINS_CATH_ASSIGN_DOMAINS
+		${TESTSOURCES_SRC_CATH_ASSIGN_DOMAINS_CATH_ASSIGN_DOMAINS_OPTIONS}
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_FILE_DETAIL
-		resolve_hits/file/detail/hmmer_parser_test.cpp
+	TESTSOURCES_SRC_CATH_ASSIGN_DOMAINS
+		${TESTSOURCES_SRC_CATH_ASSIGN_DOMAINS_CATH_ASSIGN_DOMAINS}
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_FILE
-		resolve_hits/file/cath_id_score_category_test.cpp
-		${TESTSOURCES_RESOLVE_HITS_FILE_DETAIL}
+	TESTSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK
+		src_cath_cluster/cath_cluster/options/options_block/cath_cluster_clustering_options_block_test.cpp
+		src_cath_cluster/cath_cluster/options/options_block/cath_cluster_input_options_block_test.cpp
+		src_cath_cluster/cath_cluster/options/options_block/cath_cluster_output_options_block_test.cpp
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_HTML_OUTPUT
-		resolve_hits/html_output/resolve_hits_html_outputter_test.cpp
+	TESTSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC
+		src_cath_cluster/cath_cluster/options/spec/cath_cluster_clustering_spec_test.cpp
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK
-		resolve_hits/options/options_block/crh_filter_options_block_test.cpp
-		resolve_hits/options/options_block/crh_html_options_block_test.cpp
-		resolve_hits/options/options_block/crh_input_options_block_test.cpp
-		resolve_hits/options/options_block/crh_output_options_block_test.cpp
-		resolve_hits/options/options_block/crh_score_options_block_test.cpp
-		resolve_hits/options/options_block/crh_segment_options_block_test.cpp
-		resolve_hits/options/options_block/crh_single_output_options_block_test.cpp
+	TESTSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS
+		src_cath_cluster/cath_cluster/options/cath_cluster_options_test.cpp
+		${TESTSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK}
+		${TESTSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC}
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_OPTIONS_SPEC
-		resolve_hits/options/spec/crh_filter_spec_test.cpp
-		resolve_hits/options/spec/crh_single_output_spec_test.cpp
+	TESTSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER
+		src_cath_cluster/cath_cluster/cath_clusterer_test.cpp
+		${TESTSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER_OPTIONS}
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_OPTIONS
-		resolve_hits/options/crh_options_test.cpp
-		${TESTSOURCES_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK}
-		${TESTSOURCES_RESOLVE_HITS_OPTIONS_SPEC}
+	TESTSOURCES_SRC_CATH_CLUSTER
+		${TESTSOURCES_SRC_CATH_CLUSTER_CATH_CLUSTER}
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
-		resolve_hits/read_and_process_hits/hits_processor/hits_processor_list_test.cpp
-		resolve_hits/read_and_process_hits/hits_processor/hits_processor_test.cpp
+	TESTSOURCES_SRC_CATH_SCORE_ALIGN_CATH_SCORE_ALIGN_OPTIONS
+		src_cath_score_align/cath_score_align/options/cath_score_align_options_test.cpp
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS
-		${TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR}
+	TESTSOURCES_SRC_CATH_SCORE_ALIGN_CATH_SCORE_ALIGN
+		src_cath_score_align/cath_score_align/cath_align_scorer_test.cpp
+		${TESTSOURCES_SRC_CATH_SCORE_ALIGN_CATH_SCORE_ALIGN_OPTIONS}
 )
 
 set(
-	TESTSOURCES_RESOLVE_HITS_RESOLVE
-		resolve_hits/resolve/hit_resolver_test.cpp
-)
-
-set(
-	TESTSOURCES_RESOLVE_HITS_TEST
-		resolve_hits/test/resolve_hits_fixture.cpp
-)
-
-set(
-	TESTSOURCES_RESOLVE_HITS_TRIM
-		resolve_hits/trim/resolve_boundary_test.cpp
-		resolve_hits/trim/seq_seg_boundary_fns_test.cpp
-		resolve_hits/trim/trim_spec_test.cpp
-)
-
-set(
-	TESTSOURCES_RESOLVE_HITS
-		${TESTSOURCES_RESOLVE_HITS_ALGO}
-		resolve_hits/calc_hit_list_test.cpp
-		resolve_hits/cath_hit_resolver_test.cpp
-		${TESTSOURCES_RESOLVE_HITS_FILE}
-		resolve_hits/first_hit_is_better_test.cpp
-		resolve_hits/full_hit_list_test.cpp
-		resolve_hits/full_hit_test.cpp
-		resolve_hits/hit_extras_test.cpp
-		resolve_hits/hit_test.cpp
-		${TESTSOURCES_RESOLVE_HITS_HTML_OUTPUT}
-		${TESTSOURCES_RESOLVE_HITS_OPTIONS}
-		${TESTSOURCES_RESOLVE_HITS_READ_AND_PROCESS_HITS}
-		${TESTSOURCES_RESOLVE_HITS_RESOLVE}
-		${TESTSOURCES_RESOLVE_HITS_TEST}
-		${TESTSOURCES_RESOLVE_HITS_TRIM}
-)
-
-set(
-	TESTSOURCES_SEQ
-		seq/seq_seg_run_test.cpp
-		seq/seq_seg_test.cpp
+	TESTSOURCES_SRC_CATH_SCORE_ALIGN
+		${TESTSOURCES_SRC_CATH_SCORE_ALIGN_CATH_SCORE_ALIGN}
 )
 
 set(
@@ -1652,6 +1538,64 @@ set(
 set(
 	TESTSOURCES_SRC_CLUSTAGGLOM
 		${TESTSOURCES_SRC_CLUSTAGGLOM_CLUSTAGGLOM}
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTER_CLUSTER_DETAIL
+		src_cluster/cluster/detail/mapping_job_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTER_CLUSTER_FILE
+		src_cluster/cluster/file/cluster_membership_file_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTER_CLUSTER_MAP
+		src_cluster/cluster/map/aggregate_map_results_test.cpp
+		src_cluster/cluster/map/map_results_test.cpp
+		src_cluster/cluster/map/overlap_frac_distn_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS_OPTIONS_BLOCK
+		src_cluster/cluster/options/options_block/clust_mapping_options_block_test.cpp
+		src_cluster/cluster/options/options_block/clustmap_input_options_block_test.cpp
+		src_cluster/cluster/options/options_block/clustmap_output_options_block_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS
+		${TESTSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS_OPTIONS_BLOCK}
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTER_CLUSTER_TEST
+		src_cluster/cluster/test/map_clusters_fixture.cpp
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTER_CLUSTER
+		src_cluster/cluster/cath_cluster_mapper_test.cpp
+		src_cluster/cluster/cluster_entry_test.cpp
+		src_cluster/cluster/cluster_info_test.cpp
+		src_cluster/cluster/clusters_info_test.cpp
+		src_cluster/cluster/clustmap_options_test.cpp
+		${TESTSOURCES_SRC_CLUSTER_CLUSTER_DETAIL}
+		src_cluster/cluster/domain_cluster_ids_by_seq_test.cpp
+		src_cluster/cluster/domain_cluster_ids_test.cpp
+		${TESTSOURCES_SRC_CLUSTER_CLUSTER_FILE}
+		${TESTSOURCES_SRC_CLUSTER_CLUSTER_MAP}
+		src_cluster/cluster/mapping_tool_test.cpp
+		src_cluster/cluster/new_cluster_data_test.cpp
+		src_cluster/cluster/old_cluster_data_test.cpp
+		${TESTSOURCES_SRC_CLUSTER_CLUSTER_OPTIONS}
+		${TESTSOURCES_SRC_CLUSTER_CLUSTER_TEST}
+)
+
+set(
+	TESTSOURCES_SRC_CLUSTER
+		${TESTSOURCES_SRC_CLUSTER_CLUSTER}
 )
 
 set(
@@ -1827,6 +1771,142 @@ set(
 set(
 	TESTSOURCES_SRC_COMMON
 		${TESTSOURCES_SRC_COMMON_COMMON}
+)
+
+set(
+	TESTSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE
+		src_options/options/executable/env_var_option_name_handler_test.cpp
+		src_options/options/executable/executable_options_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_OPTIONS_OPTIONS_OPTIONS_BLOCK
+		src_options/options/options_block/check_pdb_options_block_test.cpp
+		src_options/options/options_block/detail_help_options_block_test.cpp
+		src_options/options/options_block/extract_pdb_options_block_test.cpp
+		src_options/options/options_block/misc_help_version_options_block_test.cpp
+		src_options/options/options_block/options_block_test.cpp
+		src_options/options/options_block/pdb_input_options_block_test.cpp
+		src_options/options/options_block/superposition_input_options_block_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_OPTIONS_OPTIONS
+		${TESTSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE}
+		${TESTSOURCES_SRC_OPTIONS_OPTIONS_OPTIONS_BLOCK}
+)
+
+set(
+	TESTSOURCES_SRC_OPTIONS
+		${TESTSOURCES_SRC_OPTIONS_OPTIONS}
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_ALGO
+		src_resolve_hits/resolve_hits/algo/masked_bests_cache_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_FILE_DETAIL
+		src_resolve_hits/resolve_hits/file/detail/hmmer_parser_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_FILE
+		src_resolve_hits/resolve_hits/file/cath_id_score_category_test.cpp
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_FILE_DETAIL}
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_HTML_OUTPUT
+		src_resolve_hits/resolve_hits/html_output/resolve_hits_html_outputter_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK
+		src_resolve_hits/resolve_hits/options/options_block/crh_filter_options_block_test.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_html_options_block_test.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_input_options_block_test.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_output_options_block_test.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_score_options_block_test.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_segment_options_block_test.cpp
+		src_resolve_hits/resolve_hits/options/options_block/crh_single_output_options_block_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS_SPEC
+		src_resolve_hits/resolve_hits/options/spec/crh_filter_spec_test.cpp
+		src_resolve_hits/resolve_hits/options/spec/crh_single_output_spec_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS
+		src_resolve_hits/resolve_hits/options/crh_options_test.cpp
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK}
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS_SPEC}
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR
+		src_resolve_hits/resolve_hits/read_and_process_hits/hits_processor/hits_processor_list_test.cpp
+		src_resolve_hits/resolve_hits/read_and_process_hits/hits_processor/hits_processor_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_READ_AND_PROCESS_HITS
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR}
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_RESOLVE
+		src_resolve_hits/resolve_hits/resolve/hit_resolver_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_TEST
+		src_resolve_hits/resolve_hits/test/resolve_hits_fixture.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_TRIM
+		src_resolve_hits/resolve_hits/trim/resolve_boundary_test.cpp
+		src_resolve_hits/resolve_hits/trim/seq_seg_boundary_fns_test.cpp
+		src_resolve_hits/resolve_hits/trim/trim_spec_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_ALGO}
+		src_resolve_hits/resolve_hits/calc_hit_list_test.cpp
+		src_resolve_hits/resolve_hits/cath_hit_resolver_test.cpp
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_FILE}
+		src_resolve_hits/resolve_hits/first_hit_is_better_test.cpp
+		src_resolve_hits/resolve_hits/full_hit_list_test.cpp
+		src_resolve_hits/resolve_hits/full_hit_test.cpp
+		src_resolve_hits/resolve_hits/hit_extras_test.cpp
+		src_resolve_hits/resolve_hits/hit_test.cpp
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_HTML_OUTPUT}
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_OPTIONS}
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_READ_AND_PROCESS_HITS}
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_RESOLVE}
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_TEST}
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS_TRIM}
+)
+
+set(
+	TESTSOURCES_SRC_RESOLVE_HITS
+		${TESTSOURCES_SRC_RESOLVE_HITS_RESOLVE_HITS}
+)
+
+set(
+	TESTSOURCES_SRC_SEQ_SEQ
+		src_seq/seq/seq_seg_run_test.cpp
+		src_seq/seq/seq_seg_test.cpp
+)
+
+set(
+	TESTSOURCES_SRC_SEQ
+		${TESTSOURCES_SRC_SEQ_SEQ}
 )
 
 set(
@@ -2506,21 +2586,21 @@ set(
 
 set(
 	TESTSOURCES
-		${TESTSOURCES_BIOCORE}
-		${TESTSOURCES_CATH_ASSIGN_DOMAINS}
-		${TESTSOURCES_CATH_CLUSTER}
 		${TESTSOURCES_CATH_REFINE_ALIGN}
-		${TESTSOURCES_CATH_SCORE_ALIGN}
 		${TESTSOURCES_CATH_SUPERPOSE}
 		${TESTSOURCES_CHOPPING}
-		${TESTSOURCES_CLUSTER}
 		${TESTSOURCES_DISPLAY_COLOUR}
 		${TESTSOURCES_EXECUTABLES}
-		${TESTSOURCES_OPTIONS}
-		${TESTSOURCES_RESOLVE_HITS}
-		${TESTSOURCES_SEQ}
+		${TESTSOURCES_SRC_BIOCORE}
+		${TESTSOURCES_SRC_CATH_ASSIGN_DOMAINS}
+		${TESTSOURCES_SRC_CATH_CLUSTER}
+		${TESTSOURCES_SRC_CATH_SCORE_ALIGN}
 		${TESTSOURCES_SRC_CLUSTAGGLOM}
+		${TESTSOURCES_SRC_CLUSTER}
 		${TESTSOURCES_SRC_COMMON}
+		${TESTSOURCES_SRC_OPTIONS}
+		${TESTSOURCES_SRC_RESOLVE_HITS}
+		${TESTSOURCES_SRC_SEQ}
 		${TESTSOURCES_SRC_TEST}
 		${TESTSOURCES_UNI}
 )

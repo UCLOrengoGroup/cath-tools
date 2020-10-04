@@ -27,6 +27,8 @@
 namespace cath {
 
 	/// \brief Represent a PDB residue name (eg 324A)
+	///
+	/// TODO: Come C++17, make this constexpr
 	class residue_name final : private boost::equality_comparable<residue_name> {
 	private:
 		/// \brief The residue number

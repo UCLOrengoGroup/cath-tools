@@ -54,7 +54,7 @@ namespace cath {
 
 		public:
 			constexpr residx_t res_before() const;
-			constexpr const residx_t & res_after () const;
+			constexpr const residx_t & res_after() const;
 
 			constexpr const resarw_t & get_index() const;
 

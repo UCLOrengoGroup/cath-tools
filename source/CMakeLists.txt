@@ -5,49 +5,49 @@ include( ./auto_generated_file_list.cmake )
 
 include_directories( $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/uni> )
 
-add_library( ct_biocore             ${NORMSOURCES_BIOCORE}             )
-add_library( ct_cath_assign_domains ${NORMSOURCES_CATH_ASSIGN_DOMAINS} )
-add_library( ct_cath_cluster        ${NORMSOURCES_CATH_CLUSTER}        )
-add_library( ct_cath_refine_align   ${NORMSOURCES_CATH_REFINE_ALIGN}   )
-add_library( ct_cath_score_align    ${NORMSOURCES_CATH_SCORE_ALIGN}    )
-add_library( ct_cath_superpose      ${NORMSOURCES_CATH_SUPERPOSE}      )
-add_library( ct_chopping            ${NORMSOURCES_CHOPPING}            )
-add_library( ct_clustagglom         ${NORMSOURCES_SRC_CLUSTAGGLOM}     )
-add_library( ct_cluster             ${NORMSOURCES_CLUSTER}             )
-add_library( ct_common              ${NORMSOURCES_SRC_COMMON}          )
-add_library( ct_display_colour      ${NORMSOURCES_DISPLAY_COLOUR}      )
-add_library( ct_options             ${NORMSOURCES_OPTIONS}             )
-add_library( ct_resolve_hits        ${NORMSOURCES_RESOLVE_HITS}        )
-add_library( ct_seq                 ${NORMSOURCES_SEQ}                 )
-add_library( ct_test                ${NORMSOURCES_SRC_TEST}            )
-add_library( ct_uni                 ${NORMSOURCES_UNI}                 )
+add_library( ct_biocore             ${NORMSOURCES_SRC_BIOCORE}             )
+add_library( ct_cath_assign_domains ${NORMSOURCES_SRC_CATH_ASSIGN_DOMAINS} )
+add_library( ct_cath_cluster        ${NORMSOURCES_SRC_CATH_CLUSTER}        )
+add_library( ct_cath_refine_align   ${NORMSOURCES_CATH_REFINE_ALIGN}       )
+add_library( ct_cath_score_align    ${NORMSOURCES_SRC_CATH_SCORE_ALIGN}    )
+add_library( ct_cath_superpose      ${NORMSOURCES_CATH_SUPERPOSE}          )
+add_library( ct_chopping            ${NORMSOURCES_CHOPPING}                )
+add_library( ct_clustagglom         ${NORMSOURCES_SRC_CLUSTAGGLOM}         )
+add_library( ct_cluster             ${NORMSOURCES_SRC_CLUSTER}             )
+add_library( ct_common              ${NORMSOURCES_SRC_COMMON}              )
+add_library( ct_display_colour      ${NORMSOURCES_DISPLAY_COLOUR}          )
+add_library( ct_options             ${NORMSOURCES_SRC_OPTIONS}             )
+add_library( ct_resolve_hits        ${NORMSOURCES_SRC_RESOLVE_HITS}        )
+add_library( ct_seq                 ${NORMSOURCES_SRC_SEQ}                 )
+add_library( ct_test                ${NORMSOURCES_SRC_TEST}                )
+add_library( ct_uni                 ${NORMSOURCES_UNI}                     )
 
-target_include_directories( ct_clustagglom         PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_clustagglom>  )
-target_include_directories( ct_common              PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common>       )
-target_include_directories( ct_test                PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>         )
+target_include_directories( ct_biocore             PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_biocore>             )
+target_include_directories( ct_cath_assign_domains PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_cath_assign_domains> )
+target_include_directories( ct_cath_cluster        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_cath_cluster>        )
+target_include_directories( ct_cath_score_align    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_cath_score_align>    )
+target_include_directories( ct_clustagglom         PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_clustagglom>         )
+target_include_directories( ct_cluster             PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_cluster>             )
+target_include_directories( ct_common              PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_common>              )
+target_include_directories( ct_options             PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_options>             )
+target_include_directories( ct_resolve_hits        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_resolve_hits>        )
+target_include_directories( ct_seq                 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_seq>                 )
+target_include_directories( ct_test                PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_test>                )
 
-# # TODO: Try to eradicate these...
-target_include_directories( ct_biocore             PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
-target_include_directories( ct_cath_assign_domains PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
-target_include_directories( ct_cath_cluster        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
+# TODO: Try to eradicate these...
 target_include_directories( ct_cath_refine_align   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
-target_include_directories( ct_cath_score_align    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
 target_include_directories( ct_cath_superpose      PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
 target_include_directories( ct_chopping            PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
-target_include_directories( ct_cluster             PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
 target_include_directories( ct_display_colour      PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
-target_include_directories( ct_options             PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
-target_include_directories( ct_resolve_hits        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
-target_include_directories( ct_seq                 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
 target_include_directories( ct_uni                 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>                  )
 
 target_include_directories( ct_uni          SYSTEM PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party_code> )
 
 target_link_libraries     ( ct_biocore             PUBLIC ct_common                                                                          )
-target_link_libraries     ( ct_cath_assign_domains PUBLIC ct_common                                                                          )
-target_link_libraries     ( ct_cath_cluster        PUBLIC ct_clustagglom                                                                     )
+target_link_libraries     ( ct_cath_assign_domains PUBLIC ct_biocore ct_options                                                              )
+target_link_libraries     ( ct_cath_cluster        PUBLIC ct_clustagglom ct_options                                                          )
 target_link_libraries     ( ct_cath_refine_align   PUBLIC ct_common ct_uni                                                                   )
-target_link_libraries     ( ct_cath_score_align    PUBLIC ct_common                                                                          )
+target_link_libraries     ( ct_cath_score_align    PUBLIC ct_biocore ct_options                                                              )
 target_link_libraries     ( ct_cath_superpose      PUBLIC ct_common ct_uni                                                                   )
 target_link_libraries     ( ct_chopping            PUBLIC ct_biocore Boost::program_options                                                  )
 target_link_libraries     ( ct_clustagglom         PUBLIC ct_common Boost::program_options                                                   )
@@ -67,20 +67,20 @@ set( TESTSOURCES_REMAIN ${TESTSOURCES} )
 list( REMOVE_ITEM TESTSOURCES_REMAIN
 		${TESTSOURCES_EXECUTABLES}
 
-		${TESTSOURCES_BIOCORE}
-		${TESTSOURCES_CATH_ASSIGN_DOMAINS}
-		${TESTSOURCES_CATH_CLUSTER}
 		${TESTSOURCES_CATH_REFINE_ALIGN}
-		${TESTSOURCES_CATH_SCORE_ALIGN}
 		${TESTSOURCES_CATH_SUPERPOSE}
 		${TESTSOURCES_CHOPPING}
-		${TESTSOURCES_CLUSTER}
 		${TESTSOURCES_DISPLAY_COLOUR}
-		${TESTSOURCES_OPTIONS}
-		${TESTSOURCES_RESOLVE_HITS}
-		${TESTSOURCES_SEQ}
+		${TESTSOURCES_SRC_BIOCORE}
+		${TESTSOURCES_SRC_CATH_ASSIGN_DOMAINS}
+		${TESTSOURCES_SRC_CATH_CLUSTER}
+		${TESTSOURCES_SRC_CATH_SCORE_ALIGN}
 		${TESTSOURCES_SRC_CLUSTAGGLOM}
+		${TESTSOURCES_SRC_CLUSTER}
 		${TESTSOURCES_SRC_COMMON}
+		${TESTSOURCES_SRC_OPTIONS}
+		${TESTSOURCES_SRC_RESOLVE_HITS}
+		${TESTSOURCES_SRC_SEQ}
 		${TESTSOURCES_SRC_TEST}
 		${TESTSOURCES_UNI}
 )
@@ -89,22 +89,22 @@ if ( TESTSOURCES_REMAIN )
 	message( SEND_ERROR "Some TESTSOURCES are not being handled : \"${TESTSOURCES_REMAIN}\"" )
 endif()
 
-add_library          ( testsrcs_biocore             OBJECT ${TESTSOURCES_BIOCORE}             )
-add_library          ( testsrcs_cath_assign_domains OBJECT ${TESTSOURCES_CATH_ASSIGN_DOMAINS} )
-add_library          ( testsrcs_cath_cluster        OBJECT ${TESTSOURCES_CATH_CLUSTER}        )
-add_library          ( testsrcs_cath_refine_align   OBJECT ${TESTSOURCES_CATH_REFINE_ALIGN}   )
-add_library          ( testsrcs_cath_score_align    OBJECT ${TESTSOURCES_CATH_SCORE_ALIGN}    )
-add_library          ( testsrcs_cath_superpose      OBJECT ${TESTSOURCES_CATH_SUPERPOSE}      )
-add_library          ( testsrcs_chopping            OBJECT ${TESTSOURCES_CHOPPING}            )
-add_library          ( testsrcs_clustagglom         OBJECT ${TESTSOURCES_SRC_CLUSTAGGLOM}     )
-add_library          ( testsrcs_cluster             OBJECT ${TESTSOURCES_CLUSTER}             )
-add_library          ( testsrcs_common              OBJECT ${TESTSOURCES_SRC_COMMON}          )
-add_library          ( testsrcs_display_colour      OBJECT ${TESTSOURCES_DISPLAY_COLOUR}      )
-add_library          ( testsrcs_options             OBJECT ${TESTSOURCES_OPTIONS}             )
-add_library          ( testsrcs_resolve_hits        OBJECT ${TESTSOURCES_RESOLVE_HITS}        )
-add_library          ( testsrcs_seq                 OBJECT ${TESTSOURCES_SEQ}                 )
-add_library          ( testsrcs_src_test            OBJECT ${TESTSOURCES_SRC_TEST}            )
-add_library          ( testsrcs_uni                 OBJECT ${TESTSOURCES_UNI}                 )
+add_library          ( testsrcs_biocore             OBJECT ${TESTSOURCES_SRC_BIOCORE}             )
+add_library          ( testsrcs_cath_assign_domains OBJECT ${TESTSOURCES_SRC_CATH_ASSIGN_DOMAINS} )
+add_library          ( testsrcs_cath_cluster        OBJECT ${TESTSOURCES_SRC_CATH_CLUSTER}        )
+add_library          ( testsrcs_cath_refine_align   OBJECT ${TESTSOURCES_CATH_REFINE_ALIGN}       )
+add_library          ( testsrcs_cath_score_align    OBJECT ${TESTSOURCES_SRC_CATH_SCORE_ALIGN}    )
+add_library          ( testsrcs_cath_superpose      OBJECT ${TESTSOURCES_CATH_SUPERPOSE}          )
+add_library          ( testsrcs_chopping            OBJECT ${TESTSOURCES_CHOPPING}                )
+add_library          ( testsrcs_clustagglom         OBJECT ${TESTSOURCES_SRC_CLUSTAGGLOM}         )
+add_library          ( testsrcs_cluster             OBJECT ${TESTSOURCES_SRC_CLUSTER}             )
+add_library          ( testsrcs_common              OBJECT ${TESTSOURCES_SRC_COMMON}              )
+add_library          ( testsrcs_display_colour      OBJECT ${TESTSOURCES_DISPLAY_COLOUR}          )
+add_library          ( testsrcs_options             OBJECT ${TESTSOURCES_SRC_OPTIONS}             )
+add_library          ( testsrcs_resolve_hits        OBJECT ${TESTSOURCES_SRC_RESOLVE_HITS}        )
+add_library          ( testsrcs_seq                 OBJECT ${TESTSOURCES_SRC_SEQ}                 )
+add_library          ( testsrcs_src_test            OBJECT ${TESTSOURCES_SRC_TEST}                )
+add_library          ( testsrcs_uni                 OBJECT ${TESTSOURCES_UNI}                     )
 
 target_link_libraries( testsrcs_biocore             PUBLIC ct_test ct_biocore             )
 target_link_libraries( testsrcs_cath_assign_domains PUBLIC ct_test ct_cath_assign_domains )
