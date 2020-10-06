@@ -21,17 +21,18 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_IO_ALIGNMENT_IO_HPP
 #define _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_IO_ALIGNMENT_IO_HPP
 
+#include <cstddef>
+#include <iostream>
+#include <string>
+
 #include <boost/filesystem/path.hpp>
 
 #include "alignment/align_type_aliases.hpp"
 #include "alignment/alignment.hpp"
+#include "biocore/biocore_type_aliases.hpp"
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "structure/structure_type_aliases.hpp"
-
-#include <cstddef>
-#include <iostream>
-#include <string>
 
 namespace cath { class protein; }
 namespace cath { class protein_list; }

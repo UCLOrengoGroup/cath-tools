@@ -65,29 +65,29 @@ before_script:
 script:
 - ninja -j 2 -k 0 -C "$TRAVIS_BUILD_DIR/release_build"
 # Explicit use of "$TRAVIS_BUILD_DIR/[...]" in the initial command causes trouble here
-- release_build/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
+- release_build/bin/build-test --build_info=yes --log_level=message --report_level=short --show_progress=yes
 # Explicit use of "$TRAVIS_BUILD_DIR/[...]" in the initial command causes trouble here
-- release_build/cath-superpose --version
-- mv "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains" "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains.$BUILD_FILE_SUFFIX"
-- mv "$TRAVIS_BUILD_DIR/release_build/cath-cluster"        "$TRAVIS_BUILD_DIR/release_build/cath-cluster.$BUILD_FILE_SUFFIX"
-- mv "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters"   "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters.$BUILD_FILE_SUFFIX"
-- mv "$TRAVIS_BUILD_DIR/release_build/cath-refine-align"   "$TRAVIS_BUILD_DIR/release_build/cath-refine-align.$BUILD_FILE_SUFFIX"
-- mv "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits"   "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX"
-- mv "$TRAVIS_BUILD_DIR/release_build/cath-ssap"           "$TRAVIS_BUILD_DIR/release_build/cath-ssap.$BUILD_FILE_SUFFIX"
-- mv "$TRAVIS_BUILD_DIR/release_build/cath-superpose"      "$TRAVIS_BUILD_DIR/release_build/cath-superpose.$BUILD_FILE_SUFFIX"
+- release_build/bin/cath-superpose --version
+- mv "$TRAVIS_BUILD_DIR/release_build/bin/cath-assign-domains" "$TRAVIS_BUILD_DIR/release_build/bin/cath-assign-domains.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/bin/cath-cluster"        "$TRAVIS_BUILD_DIR/release_build/bin/cath-cluster.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/bin/cath-map-clusters"   "$TRAVIS_BUILD_DIR/release_build/bin/cath-map-clusters.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/bin/cath-refine-align"   "$TRAVIS_BUILD_DIR/release_build/bin/cath-refine-align.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/bin/cath-resolve-hits"   "$TRAVIS_BUILD_DIR/release_build/bin/cath-resolve-hits.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/bin/cath-ssap"           "$TRAVIS_BUILD_DIR/release_build/bin/cath-ssap.$BUILD_FILE_SUFFIX"
+- mv "$TRAVIS_BUILD_DIR/release_build/bin/cath-superpose"      "$TRAVIS_BUILD_DIR/release_build/bin/cath-superpose.$BUILD_FILE_SUFFIX"
 
 deploy:
   provider: releases
   api_key:
     secure: U9kidMxrbP1+HDUcaGHKI57mJATYSSCjjjd+elPmTUpAwih9oerN4FKzJTsMHhhNRxieLanULcoVVM3EVcZR0EH6mL7TxQNs88Yspkncg76DoswgcIue0tMOONwQ8MLLnMIuihSD2QrVaDWiHMoKHLCIWTNrzUed9FfCHDisSwXCrIrhuyOdvCrmZBwe5NOmRzdzi4XhXBfcVdQHSQsClF29cE4D9ayimRSHEw/mt0MdXO76IelQUrGgpob+xItnOJks/hvB0vaDJ8HjXLSYkhy2ZS+VNwu6x+/OIqf/0H9qSJQNqRx8SYQPQjJUxBwJQcYr9gYlUT9xlsK4QTZz/ePOaxmvClQJvaUcXJu8I7LGI91SROJ5DlxBdwV6Jk1VvKZVaOSB1b96WJiQgURa3yiMC6CH/Jl7IyeinbcnrGBXUma3eysETJJmw1fiTQhyXQJx5GBGHQkyfvZTjb773B8ctfqUbYoxbGH/NHZg0abIEqgAG6FQIGzS6C+TbpZV5oHP1TVwny4lhlQWam+4iGw+MbnQHlJ70VBGfOB7NRuzt5uy9vXRZEPS8dF/T7E0GLxzkf7cq5SLWYQQGLmm9J7t5QC24vKJP0TpqX7w54Uln2VSW1sA04d2tHYSWnIIo9XGWggkd+HsBdVhUi0BR4Y62gXQfYQC64gT8wXCYr0=
   file:
-    - "$TRAVIS_BUILD_DIR/release_build/cath-assign-domains.$BUILD_FILE_SUFFIX"
-    - "$TRAVIS_BUILD_DIR/release_build/cath-cluster.$BUILD_FILE_SUFFIX"
-    - "$TRAVIS_BUILD_DIR/release_build/cath-map-clusters.$BUILD_FILE_SUFFIX"
-    - "$TRAVIS_BUILD_DIR/release_build/cath-refine-align.$BUILD_FILE_SUFFIX"
-    - "$TRAVIS_BUILD_DIR/release_build/cath-resolve-hits.$BUILD_FILE_SUFFIX"
-    - "$TRAVIS_BUILD_DIR/release_build/cath-ssap.$BUILD_FILE_SUFFIX"
-    - "$TRAVIS_BUILD_DIR/release_build/cath-superpose.$BUILD_FILE_SUFFIX"
+    - "$TRAVIS_BUILD_DIR/release_build/bin/cath-assign-domains.$BUILD_FILE_SUFFIX"
+    - "$TRAVIS_BUILD_DIR/release_build/bin/cath-cluster.$BUILD_FILE_SUFFIX"
+    - "$TRAVIS_BUILD_DIR/release_build/bin/cath-map-clusters.$BUILD_FILE_SUFFIX"
+    - "$TRAVIS_BUILD_DIR/release_build/bin/cath-refine-align.$BUILD_FILE_SUFFIX"
+    - "$TRAVIS_BUILD_DIR/release_build/bin/cath-resolve-hits.$BUILD_FILE_SUFFIX"
+    - "$TRAVIS_BUILD_DIR/release_build/bin/cath-ssap.$BUILD_FILE_SUFFIX"
+    - "$TRAVIS_BUILD_DIR/release_build/bin/cath-superpose.$BUILD_FILE_SUFFIX"
   # Do not just remove `skip_cleanup: true` (because you see that Travis says it's deprecated); that will break the deploys.
   # Read the Travis notes carefully (eg about what dpl v2 is).
   skip_cleanup: true

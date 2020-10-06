@@ -21,16 +21,17 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_FILE_PDB_PROXIMITY_CALCULATOR_HPP
 #define _CATH_TOOLS_SOURCE_UNI_FILE_PDB_PROXIMITY_CALCULATOR_HPP
 
+#include <functional>
+#include <vector>
+
 #include <boost/optional.hpp>
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "chopping/chopping_type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/coord_linkage.hpp"
 #include "structure/structure_type_aliases.hpp"
-
-#include <functional>
-#include <vector>
 
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace file { class pdb_residue; } }

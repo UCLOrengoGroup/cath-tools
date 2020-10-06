@@ -21,12 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL_RESIDUE_NAME_ALIGN_MAP_HPP
 #define _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL_RESIDUE_NAME_ALIGN_MAP_HPP
 
-#include "common/type_aliases.hpp"
-#include "structure/structure_type_aliases.hpp"
-
 #include <iosfwd>
 #include <map>
 #include <vector>
+
+#include "biocore/biocore_type_aliases.hpp"
+#include "common/type_aliases.hpp"
 
 namespace cath {
 	namespace align {

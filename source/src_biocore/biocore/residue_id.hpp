@@ -21,9 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_BIOCORE_RESIDUE_ID_HPP
 #define _CATH_TOOLS_SOURCE_BIOCORE_RESIDUE_ID_HPP
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "biocore/chain_label.hpp"
 #include "biocore/residue_name.hpp"
-#include "structure/structure_type_aliases.hpp"
 
 namespace cath {
 

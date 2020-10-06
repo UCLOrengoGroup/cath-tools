@@ -21,18 +21,19 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_FILE_PDB_PDB_LIST_HPP
 #define _CATH_TOOLS_SOURCE_UNI_FILE_PDB_PDB_LIST_HPP
 
+#include <iostream>
+#include <vector>
+
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
 #include <boost/range.hpp>
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/path_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "file/file_type_aliases.hpp"
 #include "structure/structure_type_aliases.hpp"
-
-#include <iostream>
-#include <vector>
 
 namespace cath { class protein_list; }
 namespace cath { namespace file { class name_set_list; } }

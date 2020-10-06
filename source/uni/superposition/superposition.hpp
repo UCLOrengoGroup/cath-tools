@@ -21,16 +21,17 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_SUPERPOSITION_SUPERPOSITION_H
 #define _CATH_TOOLS_SOURCE_UNI_SUPERPOSITION_SUPERPOSITION_H
 
+#include <array>
+#include <iosfwd>
+
 #include <boost/operators.hpp>
 #include <boost/range/size.hpp>
 #include <boost/tuple/tuple.hpp>
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "common/cpp20/make_array.hpp"
 #include "structure/geometry/coord.hpp"
 #include "structure/geometry/rotation.hpp"
-
-#include <array>
-#include <iosfwd>
 
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace geom { class coord_list; } }

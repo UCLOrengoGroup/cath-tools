@@ -24,10 +24,10 @@
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "biocore/residue_name.hpp"
 #include "chopping/residue_location/residue_locating.hpp"
 #include "common/type_aliases.hpp"
-#include "structure/structure_type_aliases.hpp"
 
 namespace cath {
 	namespace chop {

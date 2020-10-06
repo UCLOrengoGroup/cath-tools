@@ -21,15 +21,16 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_FILE_DSSP_WOLF_DSSP_FILE_HPP
 #define _CATH_TOOLS_SOURCE_UNI_FILE_DSSP_WOLF_DSSP_FILE_HPP
 
+#include <string>
+#include <vector>
+
 #include <boost/optional.hpp>
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "file/name_set/name_set.hpp"
 #include "file/pdb/dssp_skip_policy.hpp"
 #include "structure/structure_type_aliases.hpp"
-
-#include <string>
-#include <vector>
 
 namespace cath { class protein; }
 namespace cath { class residue; }

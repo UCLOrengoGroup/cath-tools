@@ -21,14 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_DISPLAY_VIEWER_VIEWER_HPP
 #define _CATH_TOOLS_SOURCE_UNI_DISPLAY_VIEWER_VIEWER_HPP
 
+#include <string>
+
 #include <boost/utility/string_ref.hpp>
 #include <boost/filesystem/path.hpp>
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "display/colour_category.hpp"
-#include "structure/structure_type_aliases.hpp"
-
-#include <string>
 
 namespace cath { class display_colour; }
 namespace cath { class display_colourer; }

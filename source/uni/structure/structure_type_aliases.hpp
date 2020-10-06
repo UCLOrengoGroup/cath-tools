@@ -139,42 +139,6 @@ namespace cath {
 	} // namespace geom
 
 
-
-
-	/// \brief Type alias for a vector of chain_label objects
-	using chain_label_vec                 = std::vector<chain_label>;
-
-	/// \brief Type alias for a set of chain_label objects
-	using chain_label_set                 = std::set<chain_label>;
-
-	/// \brief TODOCUMENT
-	using chain_label_opt                 = boost::optional<chain_label>;
-
-	/// \brief TODOCUMENT
-	using residue_name_opt                = boost::optional<residue_name>;
-
-	/// \brief TODOCUMENT
-	using residue_name_set                = std::set<residue_name>;
-
-	/// \brief TODOCUMENT
-	using residue_name_vec                = std::vector<residue_name>;
-
-	/// \brief TODOCUMENT
-	using residue_name_vec_itr            = residue_name_vec::iterator;
-
-	/// \brief TODOCUMENT
-	using residue_name_vec_citr           = residue_name_vec::const_iterator;
-
-	/// \brief TODOCUMENT
-	using residue_name_vec_vec            = std::vector<residue_name_vec>;
-
-	/// \brief Type alias for a vector of residue_ids
-	using residue_id_vec                  = std::vector<residue_id>;
-
-	/// \brief Type alias for a vector of residue_id_vec
-	using residue_id_vec_vec              = std::vector<residue_id_vec>;
-
-
 	/// \brief TODOCUMENT
 	using residue_vec                     = std::vector<residue>;
 
@@ -183,10 +147,6 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	using residue_vec_citr                = residue_vec::const_iterator;
-
-
-	/// \brief Type alias for a map from chain_label keys to residue_id_vec values
-	using chain_label_residue_id_vec_map  = std::map<chain_label, residue_id_vec>;
 
 
 	/// \brief TODOCUMENT

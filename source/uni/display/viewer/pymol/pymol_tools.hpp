@@ -21,13 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_DISPLAY_VIEWER_PYMOL_PYMOL_TOOLS_HPP
 #define _CATH_TOOLS_SOURCE_UNI_DISPLAY_VIEWER_PYMOL_PYMOL_TOOLS_HPP
 
-#include <boost/optional.hpp>
-
-#include "common/type_aliases.hpp"
-#include "structure/structure_type_aliases.hpp"
-
 #include <cstddef>
 #include <string>
+
+#include <boost/optional.hpp>
+
+#include "biocore/biocore_type_aliases.hpp"
+#include "common/type_aliases.hpp"
 
 namespace cath { class residue_id; }
 

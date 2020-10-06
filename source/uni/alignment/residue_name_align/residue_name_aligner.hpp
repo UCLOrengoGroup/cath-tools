@@ -21,15 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_RESIDUE_NAME_ALIGN_RESIDUE_NAME_ALIGNER_HPP
 #define _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_RESIDUE_NAME_ALIGN_RESIDUE_NAME_ALIGNER_HPP
 
-#include "alignment/align_type_aliases.hpp"
-#include "common/type_aliases.hpp"
-#include "structure/protein/protein_list.hpp"
-#include "structure/structure_type_aliases.hpp"
-
 #include <iosfwd>
 #include <set>
 #include <utility>
 #include <vector>
+
+#include "alignment/align_type_aliases.hpp"
+#include "biocore/biocore_type_aliases.hpp"
+#include "common/type_aliases.hpp"
+#include "structure/protein/protein_list.hpp"
 
 namespace cath {
 	namespace align {

@@ -21,8 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_UNI_FILE_DSSP_WOLF_TALLY_RESIDUE_IDS_HPP
 #define _CATH_TOOLS_SOURCE_UNI_FILE_DSSP_WOLF_TALLY_RESIDUE_IDS_HPP
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "common/type_aliases.hpp"
-#include "structure/structure_type_aliases.hpp"
 
 namespace cath {
 	namespace file {
