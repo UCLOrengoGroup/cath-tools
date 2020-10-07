@@ -18,11 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "global_test_constants.hpp"
-
-#include "common/exception/runtime_error_exception.hpp"
-
 #include <limits>
+
+#include "cath/external_info/cath_tools_cmake_dirs.hpp"
+#include "common/exception/runtime_error_exception.hpp"
+#include "test/global_test_constants.hpp"
 
 using namespace cath;
 using namespace cath::common;
@@ -113,7 +113,7 @@ const path & global_test_constants::TEST_RESIDUE_IDS_DATA_DIR() {
 
 /// \brief TODOCUMENT
 const path & global_test_constants::TEST_SOURCE_DATA_DIR() {
-	static const path test_source_data_dir          ( "build-test-data"             );
+	static const path test_source_data_dir{ path{ cath_tools_cmake_source_dir() } / "build-test-data" };
 	return test_source_data_dir;
 }
 

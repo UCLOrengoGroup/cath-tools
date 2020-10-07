@@ -392,6 +392,22 @@ set(
 )
 
 set(
+	NORMSOURCES_SRC_EXTERNAL_INFO_CATH_EXTERNAL_INFO
+		src_external_info/cath/external_info/cath_tools_cmake_dirs.cpp
+		src_external_info/cath/external_info/cath_tools_git_version.cpp
+)
+
+set(
+	NORMSOURCES_SRC_EXTERNAL_INFO_CATH
+		${NORMSOURCES_SRC_EXTERNAL_INFO_CATH_EXTERNAL_INFO}
+)
+
+set(
+	NORMSOURCES_SRC_EXTERNAL_INFO
+		${NORMSOURCES_SRC_EXTERNAL_INFO_CATH}
+)
+
+set(
 	NORMSOURCES_SRC_OPTIONS_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS
 		src_options/options/executable/cath_check_pdb_options/cath_check_pdb_options.cpp
 )
@@ -1357,6 +1373,7 @@ set(
 		${NORMSOURCES_SRC_CLUSTAGGLOM}
 		${NORMSOURCES_SRC_CLUSTER}
 		${NORMSOURCES_SRC_COMMON}
+		${NORMSOURCES_SRC_EXTERNAL_INFO}
 		${NORMSOURCES_SRC_OPTIONS}
 		${NORMSOURCES_SRC_RESOLVE_HITS}
 		${NORMSOURCES_SRC_SEQ}

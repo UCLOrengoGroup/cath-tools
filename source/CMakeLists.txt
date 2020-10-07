@@ -29,6 +29,7 @@ set( MODULE_DIRS
 	SRC_CLUSTAGGLOM
 	SRC_CLUSTER
 	SRC_COMMON
+	SRC_EXTERNAL_INFO
 	SRC_OPTIONS
 	SRC_RESOLVE_HITS
 	SRC_SEQ
@@ -57,13 +58,18 @@ foreach( MODULE_DIR ${MODULE_DIRS} )
 		target_include_directories( "ct_${MODULE}" PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>" )
 	endif()
 
-	# Create the OBJECT library of test sources for this module and link it to the appropriate dependencies (determined above)
-	add_library( "testsrcs_${MODULE}" OBJECT ${TESTSOURCES_${MODULE_DIR}} )
-	target_link_libraries( "testsrcs_${MODULE}" PUBLIC ct_test "ct_${MODULE}" )
+	if ( DEFINED TESTSOURCES_${MODULE_DIR} )
+		# Create the OBJECT library of test sources for this module and link it to the appropriate dependencies (determined above)
+		add_library( "testsrcs_${MODULE}" OBJECT ${TESTSOURCES_${MODULE_DIR}} )
+		target_link_libraries( "testsrcs_${MODULE}" PUBLIC ct_test "ct_${MODULE}" )
 
-	# Record that list of test sources that are being handled (which can be checked later for omissions)
-	list( APPEND ALL_MODULE_TESTSOURCES ${TESTSOURCES_${MODULE_DIR}} )
+		# Record that list of test sources that are being handled (which can be checked later for omissions)
+		list( APPEND ALL_MODULE_TESTSOURCES ${TESTSOURCES_${MODULE_DIR}} )
+	endif()
 endforeach()
+
+# For external_info, add the corresponding subdir of the _build_ directory where configure_file() places the populated header template
+target_include_directories( ct_external_info PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/source/src_external_info> )
 
 # 3. Specify the modules' dependencies
 
@@ -78,22 +84,22 @@ target_link_libraries( testsrcs_test          PUBLIC ct_chopping )
 target_link_libraries( testsrcs_test          PUBLIC ct_uni      ) # ct_uni for file/pdb/pdb.hpp
 target_link_libraries( testsrcs_options       PUBLIC ct_uni      ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
 
-target_link_libraries( ct_biocore             PUBLIC ct_common                                                                          )
-target_link_libraries( ct_cath_assign_domains PUBLIC ct_biocore ct_options ct_uni                                                       ) # ct_uni for acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp
-target_link_libraries( ct_cath_cluster        PUBLIC ct_clustagglom ct_options                                                          )
-target_link_libraries( ct_cath_refine_align   PUBLIC ct_common ct_uni                                                                   ) # ct_uni for acquirer/alignment_acquirer/alignment_acquirer.hpp and alignment/options_block/alignment_input_options_block.hpp
-target_link_libraries( ct_cath_score_align    PUBLIC ct_biocore ct_options ct_uni                                                       ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
-target_link_libraries( ct_cath_superpose      PUBLIC ct_common ct_uni                                                                   ) # ct_uni for acquirer/alignment_acquirer/align_refining.hpp acquirer/alignment_acquirer/alignment_acquirer.hpp
-target_link_libraries( ct_chopping            PUBLIC ct_biocore Boost::program_options                                                  )
-target_link_libraries( ct_clustagglom         PUBLIC ct_common Boost::program_options                                                   )
-target_link_libraries( ct_cluster             PUBLIC ct_common ct_options ct_seq Boost::program_options                                 )
-target_link_libraries( ct_common              PUBLIC Boost::boost Boost::log Boost::thread Boost::timer ${RT_LIBRARY} ${GSL_LIB_SUFFIX} )
-target_link_libraries( ct_display_colour      PUBLIC ct_common                                                                          )
-target_link_libraries( ct_options             PUBLIC ct_chopping                                                                        )
-target_link_libraries( ct_resolve_hits        PUBLIC ct_display_colour ct_options ct_seq                                                )
-target_link_libraries( ct_seq                 PUBLIC ct_common                                                                          )
-target_link_libraries( ct_test                PUBLIC ct_common Boost::unit_test_framework                                               )
-target_link_libraries( ct_uni                 PUBLIC ct_display_colour ct_options Boost::iostreams Boost::serialization                 )
+target_link_libraries( ct_biocore             PUBLIC ct_common                                                                           )
+target_link_libraries( ct_cath_assign_domains PUBLIC ct_biocore ct_options ct_uni                                                        ) # ct_uni for acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp
+target_link_libraries( ct_cath_cluster        PUBLIC ct_clustagglom ct_options                                                           )
+target_link_libraries( ct_cath_refine_align   PUBLIC ct_common ct_uni                                                                    ) # ct_uni for acquirer/alignment_acquirer/alignment_acquirer.hpp and alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_cath_score_align    PUBLIC ct_biocore ct_options ct_uni                                                        ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_cath_superpose      PUBLIC ct_common ct_uni                                                                    ) # ct_uni for acquirer/alignment_acquirer/align_refining.hpp acquirer/alignment_acquirer/alignment_acquirer.hpp
+target_link_libraries( ct_chopping            PUBLIC ct_biocore Boost::program_options                                                   )
+target_link_libraries( ct_clustagglom         PUBLIC ct_common Boost::program_options                                                    )
+target_link_libraries( ct_cluster             PUBLIC ct_common ct_options ct_seq Boost::program_options                                  )
+target_link_libraries( ct_common              PUBLIC Boost::boost Boost::log Boost::thread Boost::timer ${RT_LIBRARY} ${GSL_LIB_SUFFIX}  )
+target_link_libraries( ct_display_colour      PUBLIC ct_common                                                                           )
+target_link_libraries( ct_options             PUBLIC ct_chopping ct_external_info                                                        )
+target_link_libraries( ct_resolve_hits        PUBLIC ct_display_colour ct_options ct_seq                                                 )
+target_link_libraries( ct_seq                 PUBLIC ct_common                                                                           )
+target_link_libraries( ct_test                PUBLIC ct_common ct_external_info Boost::unit_test_framework                               )
+target_link_libraries( ct_uni                 PUBLIC ct_display_colour ct_external_info ct_options Boost::iostreams Boost::serialization )
 
 # Headers wanted from ct_uni by other targets:
 #   1 acquirer/alignment_acquirer/align_refining.hpp
@@ -178,7 +184,9 @@ endif()
 # Add build-test, containing all the tests
 add_executable( build-test ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
 foreach( MODULE ${MODULES} )
-	target_link_libraries( build-test PRIVATE "testsrcs_${MODULE}" )
+	if ( TARGET "testsrcs_${MODULE}" )
+		target_link_libraries( build-test PRIVATE "testsrcs_${MODULE}" )
+	endif()
 endforeach()
 add_test( NAME build-test COMMAND build-test )
 set_target_properties( build-test PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/bin> )
@@ -189,14 +197,16 @@ set_target_properties( build-test PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<BUILD_IN
 if ( BUILD_EXTRA_CATH_TESTS )
 
 	foreach( MODULE ${MODULES} )
-		# Make the test name (eg resolve_hits -> mod-test-resolve-hits)
-		string               ( REPLACE "_" "-" TESTED_MODULE_EXE "mod-test-${MODULE}" )
+		if ( TARGET "testsrcs_${MODULE}" )
+			# Make the test name (eg resolve_hits -> mod-test-resolve-hits)
+			string               ( REPLACE "_" "-" TESTED_MODULE_EXE "mod-test-${MODULE}" )
 
-		# Make the test, link it to the testsrcs OBJECT library and register it as a test
-		add_executable       ( "${TESTED_MODULE_EXE}" ${TESTSOURCES_EXECUTABLES_BUILD_TEST}  )
-		target_link_libraries( "${TESTED_MODULE_EXE}" "testsrcs_${MODULE}"                   )
-		add_test             ( NAME "${TESTED_MODULE_EXE}" COMMAND "${TESTED_MODULE_EXE}"    )
-		set_target_properties( "${TESTED_MODULE_EXE}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/bin> )
+			# Make the test, link it to the testsrcs OBJECT library and register it as a test
+			add_executable       ( "${TESTED_MODULE_EXE}" ${TESTSOURCES_EXECUTABLES_BUILD_TEST}  )
+			target_link_libraries( "${TESTED_MODULE_EXE}" "testsrcs_${MODULE}"                   )
+			add_test             ( NAME "${TESTED_MODULE_EXE}" COMMAND "${TESTED_MODULE_EXE}"    )
+			set_target_properties( "${TESTED_MODULE_EXE}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/bin> )
+		endif()
 	endforeach()
 
 endif()

@@ -23,12 +23,11 @@ execute_process(
 	OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-configure_file( "source/cath_tools_git_version.hpp.in"
-                "source/cath_tools_git_version/cath_tools_git_version.hpp"
-                )
+configure_file( "source/src_external_info/cath/external_info/cath_tools_git_version_impl.hpp.in"
+                "source/src_external_info/cath/external_info/cath_tools_git_version_impl.hpp" )
 
-include_directories( $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/source/cath_tools_git_version> )
-
+configure_file( "source/src_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp.in"
+                "source/src_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp" )
 
 SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
 IF ( ( ${CMAKE_VERSION} VERSION_GREATER "3.5.0" ) AND ( ${CMAKE_VERSION} VERSION_LESS "3.6.0" ) )
@@ -77,6 +76,8 @@ find_package( Boost 1.60 REQUIRED filesystem iostreams log program_options seria
 #  * -Wdouble-promotion
 #  * -Wold-style-cast   (fires in common/third_party_code/gnuplot-iostream.h)
 #  * -Wuseless-cast
+#
+# TODO: Add warnings (in particular, add the warnings from above that were just firing in system includes)
 SET( CMAKE_CXX_STANDARD   14    )
 SET( CMAKE_CXX_EXTENSIONS "OFF" )
 add_compile_options(

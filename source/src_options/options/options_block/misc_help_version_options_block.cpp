@@ -22,7 +22,7 @@
 
 #include <boost/optional.hpp>
 
-#include "cath_tools_git_version.hpp"
+#include "cath/external_info/cath_tools_git_version.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 
 using namespace cath;
@@ -37,19 +37,19 @@ using boost::program_options::options_description;
 using boost::program_options::variables_map;
 
 /// The program's current version
-const string misc_help_version_options_block::CATH_TOOLS_VERSION      { CATH_TOOLS_GIT_VERSION };
+const string misc_help_version_options_block::CATH_TOOLS_VERSION      { cath_tools_git_version() };
 
 /// The program's most recent update date
-const string misc_help_version_options_block::CATH_TOOLS_VERSION_DATE { CATH_TOOLS_GIT_DATE    };
+const string misc_help_version_options_block::CATH_TOOLS_VERSION_DATE { cath_tools_git_date()    };
 
 /// \brief The option name for the hidden help option
-const string misc_help_version_options_block::PO_HIDDEN_HELP          { "hidden-help"          };
+const string misc_help_version_options_block::PO_HIDDEN_HELP          { "hidden-help"            };
 
 /// \brief The option name for the help option
-const string misc_help_version_options_block::PO_HELP                 { "help"                 };
+const string misc_help_version_options_block::PO_HELP                 { "help"                   };
 
 /// \brief The option name for the version option
-const string misc_help_version_options_block::PO_VERSION              { "version"              };
+const string misc_help_version_options_block::PO_VERSION              { "version"                };
 
 /// \brief The single-character for the help option
 constexpr char misc_help_version_options_block::PO_CHAR_HELP;

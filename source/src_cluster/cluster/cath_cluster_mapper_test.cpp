@@ -31,6 +31,7 @@
 #include "common/regex/regex_count.hpp"
 #include "common/type_aliases.hpp"
 #include "options/options_block/misc_help_version_options_block.hpp"
+#include "test/global_test_constants.hpp"
 #include "test/predicate/files_equal.hpp"
 #include "test/predicate/string_matches_file.hpp"
 
@@ -39,19 +40,21 @@
 
 namespace cath { namespace test { } }
 
+using namespace cath;
 using namespace cath::clust;
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::test;
 using namespace std::literals::string_literals;
 
-using boost::filesystem::path;
-using boost::range::join;
-using std::istringstream;
-using std::ostringstream;
-using std::regex;
-using std::smatch;
-using std::string;
+using ::boost::filesystem::current_path;
+using ::boost::filesystem::path;
+using ::boost::range::join;
+using ::std::istringstream;
+using ::std::ostringstream;
+using ::std::regex;
+using ::std::smatch;
+using ::std::string;
 
 namespace cath {
 	namespace test {
@@ -612,17 +615,26 @@ BOOST_AUTO_TEST_CASE(handles_misordered_segments_in_input_in_map_from) {
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_CASE( handles_batch ) {
 
+	// Move to the test directory (so the relative paths in batch_file are
+	// correct)
+	const path orig_path = current_path();
+	current_path( global_test_constants::TEST_SOURCE_DATA_DIR() );
 
-BOOST_AUTO_TEST_CASE(handles_batch) {
-	// When calling perform_map_clusters with options: an batch input file and the --read-batches-from-input flag
-	execute_perform_map_clusters( { eg_batch_input_file().string(),
-		"--" + clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT } );
+	try {
+		// When calling perform_map_clusters with options: an batch input file and the --read-batches-from-input flag
+		execute_perform_map_clusters(
+		  { eg_batch_input_file().string(), "--" + clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT } );
 
-	// Then expect the correct error message in the error stream
-	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_batch_result_file() );
+		// Then expect the correct error message in the error stream
+		BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_batch_result_file() );
+	} catch ( ... ) {
+		current_path( orig_path );
+		throw;
+	}
+	current_path( orig_path );
 }
-
 
 BOOST_AUTO_TEST_CASE(provides_entry_level_output) {
 	// When calling perform_map_clusters with options: an input file, a map-from file and the --print-entry-results flag

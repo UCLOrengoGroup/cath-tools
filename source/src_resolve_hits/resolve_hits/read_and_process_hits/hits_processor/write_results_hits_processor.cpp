@@ -22,7 +22,7 @@
 
 #include <boost/algorithm/string/join.hpp>
 
-#include "cath_tools_git_version.hpp"
+#include "cath/external_info/cath_tools_git_version.hpp"
 #include "common/boost_addenda/range/front.hpp"
 #include "common/clone/make_uptr_clone.hpp"
 #include "resolve_hits/calc_hit_list.hpp"
@@ -62,7 +62,7 @@ void write_results_hits_processor::do_process_hits_for_query(const string       
 		prm_calc_hits.get_full_hits()
 	);
 
-	const string CATH_TOOLS_VERSION{ CATH_TOOLS_GIT_VERSION };
+	const string CATH_TOOLS_VERSION{ cath_tools_git_version() };
 
 	for (const ostream_ref &ostream_ref : get_ostreams() ) {
 		if ( ! written_header && ! result_full_hits.empty() ) {
