@@ -211,7 +211,7 @@ void cath::test::dssp_wolf_file_test_suite_fixture::check_pdb_and_dssp_built_pro
 	// Compare the combi's residues with the DSSP residues
 	//( this requires two counters to handle skipping null DSSP residues)
 	size_t combi_residue_ctr = 0;
-	for (const residue dssp_residue : the_dssp_file) {
+	for (const residue &dssp_residue : the_dssp_file) {
 
 		// If this is a null DSSP residue then just move onto the next one
 		if ( is_null_residue(dssp_residue) ) {

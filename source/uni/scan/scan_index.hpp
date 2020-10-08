@@ -102,9 +102,9 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename... KPs>
 		void scan_index<KPs...>::populate_index_from_structures_data() {
-			for (const auto &the_structure_data : structures_data) {
-//				the_structure_data.get_from_stride();
-			}
+			// for (const auto &the_structure_data : structures_data) {
+			// 	the_structure_data.get_from_stride();
+			// }
 		}
 
 		/// \brief TODOCUMENT
