@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CLUSTER_CLUSTER_DOMAINS_HPP
 
 #include "cluster/domain_cluster_ids.hpp"
+#include "common/exception/out_of_range_exception.hpp"
 
 #include <iostream>
 
@@ -131,7 +132,12 @@ namespace cath {
 		/// \brief Get the domain_cluster_ids associated with the specified seq ID
 		inline const domain_cluster_ids & cluster_domains::domain_cluster_ids_of_seq_id(const cluster_id_t &prm_seq_id ///< The ID of the sequence to query
 		                                                                                ) const {
-			return seq_domains[ index_of_seq_id.find( prm_seq_id )->second ].dom_cluster_ids;
+			const auto index_of_seq_id_itr = index_of_seq_id.find( prm_seq_id );
+			if ( index_of_seq_id_itr == common::cend( index_of_seq_id ) ) {
+				BOOST_THROW_EXCEPTION( common::out_of_range_exception( "Cannot find domain_cluster_ids_of_seq_id "
+				                                                       + ::std::to_string( prm_seq_id ) ) );
+			}
+			return seq_domains[ index_of_seq_id_itr->second ].dom_cluster_ids;
 		}
 
 		/// \brief Return whether this is empty
