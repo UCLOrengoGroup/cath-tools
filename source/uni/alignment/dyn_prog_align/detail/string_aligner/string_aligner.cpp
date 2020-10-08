@@ -168,7 +168,7 @@ size_size_pair cath::align::detail::get_num_gaps_and_extensions(const string &pr
 	// Count the number of gaps
 	const str_vec gap_split_parts     = split_build<str_vec>( prm_aligned_string, is_any_of( "-" ), token_compress_on );
 	const size_t  num_gap_split_parts = gap_split_parts.size();
-	const size_t  num_open_gaps       = max( static_cast<size_t>( 1_z ), num_gap_split_parts ) - 1;
+	const size_t  num_open_gaps       = max( 1_z, num_gap_split_parts ) - 1_z;
 
 	// Count the total number of gap characters and then subtract the number of gap opens
 	// to get the number of extensions

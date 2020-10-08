@@ -43,11 +43,11 @@ namespace cath {
 			static constexpr hbond_partner_t index    = 32;
 
 			/// \brief Example hbond partner energy
-			static constexpr hbond_energy_t  energy_a = static_cast<hbond_energy_t>( -0.65 );
+			static constexpr hbond_energy_t  energy_a = -0.65;
 			/// \brief Example hbond partner energy
-			static constexpr hbond_energy_t  energy_b = static_cast<hbond_energy_t>( -0.75 );
+			static constexpr hbond_energy_t  energy_b = -0.75;
 			/// \brief Example hbond partner energy
-			static constexpr hbond_energy_t  energy_c = static_cast<hbond_energy_t>( -0.85 );
+			static constexpr hbond_energy_t  energy_c = -0.85;
 
 			/// \brief Example hbond_half
 			static constexpr hbond_half      a{ index, energy_a };

@@ -57,8 +57,8 @@ links cath::clust::parse_dissimilarities(istream           &prm_input,     ///< 
 		const auto     id1        = make_string_ref( id1_itrs.first, id1_itrs.second );
 		const auto     id2        = make_string_ref( id2_itrs.first, id2_itrs.second );
 		const strength seq_id     = std::is_same<strength, float>::value
-			? static_cast<strength>( parse_float_from_field ( value_itrs.first, value_itrs.second ) )
-			: static_cast<strength>( parse_double_from_field( value_itrs.first, value_itrs.second ) );
+		                              ? parse_float_from_field( value_itrs.first, value_itrs.second )
+		                              : static_cast<strength>( parse_double_from_field( value_itrs.first, value_itrs.second ) );
 
 		const strength link_val   = ( prm_link_dirn == link_dirn::STRENGTH ) ? -seq_id : seq_id;
 		const item_idx id_1_id    = debug_numeric_cast<item_idx>( prm_name_ider.add_name( id1 ) );

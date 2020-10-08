@@ -99,7 +99,7 @@ namespace cath {
 			while ( vcies_a_itr != vcies_end_itr ) {
 				if ( prm_criteria( *vcies_a_itr, *vcies_b_itr ) ) {
 					const float_score_type distance = sqrt( squared_distance( *vcies_a_itr, *vcies_b_itr ) );
-					const float_score_type score    = static_cast<float_score_type>( 1.0 ) - (distance / static_cast<float_score_type>( 7.0 ) );
+					const float_score_type score    = 1.0 - (distance / 7.0 );
 					if ( score > 0 ) {
 						total_score += score;
 					}

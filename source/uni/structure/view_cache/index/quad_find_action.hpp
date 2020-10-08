@@ -63,7 +63,7 @@ namespace cath {
 		                                         const view_cache_index_entry &prm_cache_b  ///< A view_cache_index_entry representing the second from/to residue pair
 		                                         ) {
 			const double sq_dist = detail::squared_distance( prm_cache_a, prm_cache_b );
-			const float_score_type score = static_cast<float_score_type>( 1.0 ) - ( sqrt( sq_dist ) / static_cast<float_score_type>( 7.0 ) );
+			const float_score_type score = 1.0 - ( sqrt( sq_dist ) / 7.0 );
 //			const double score   = ( 10.0 / ( sq_dist + 10.0 ) );
 			total_score += score;
 		}
@@ -74,7 +74,7 @@ namespace cath {
 		                                         const size_size_pair &prm_indices_b  ///< The indices of the second from/to residue pair in their protein
 		                                         ) {
 			const double sq_dist = detail::squared_distance( prm_indices_a, prm_indices_b, protein_a, protein_b );
-			const float_score_type score = static_cast<float_score_type>( 1.0 ) - ( sqrt( sq_dist ) / static_cast<float_score_type>( 7.0 ) );
+			const float_score_type score = 1.0 - ( sqrt( sq_dist ) / 7.0 );
 //			const double score   = ( 10.0 / ( sq_dist + 10.0 ) );
 			total_score += score;
 		}

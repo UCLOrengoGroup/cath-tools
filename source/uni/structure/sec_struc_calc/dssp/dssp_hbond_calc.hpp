@@ -97,9 +97,9 @@ namespace cath {
 		                                                        ) {
 			constexpr double         MIN_DISTANCE      = 0.5;
 			constexpr double         ENERGY_MULTIPLIER = 0.42 * 0.2 * 332;
-			constexpr hbond_energy_t MIN_ENERGY        = static_cast<hbond_energy_t>(   -9.9 );
-			constexpr hbond_energy_t MAX_ENERGY        = static_cast<hbond_energy_t>(    0.0 );
-			constexpr hbond_energy_t ROUNDING_FACTOR   = static_cast<hbond_energy_t>( 1000.0 );
+			constexpr hbond_energy_t MIN_ENERGY        =   -9.9;
+			constexpr hbond_energy_t MAX_ENERGY        =    0.0;
+			constexpr hbond_energy_t ROUNDING_FACTOR   = 1000.0;
 
 			const double dist_no = distance_between_points( prm_n, prm_o );
 			const double dist_hc = distance_between_points( prm_h, prm_c );

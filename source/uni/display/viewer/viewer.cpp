@@ -328,7 +328,7 @@ string cath::generate_colour_name(const size_t          &prm_colour_index,   ///
                                   const size_t          &prm_num_colours,    ///< The total number of colours
                                   const colour_category &prm_colour_category ///< The category of colouring (structure-only or structure-or-residue)
                                   ) {
-	const size_t num_width  = lexical_cast<string>( max( static_cast<size_t>( 1_z ), prm_num_colours ) - 1 ).length();
+	const size_t num_width  = lexical_cast<string>( max( 1_z, prm_num_colours ) - 1 ).length();
 	const string format_str = R"(%0)" + ::std::to_string( num_width ) + "d";
 
 	return "ct_"

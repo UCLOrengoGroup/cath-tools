@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(everything_works) {
 			.start_object()
 				.write_key( "stuff" ).start_array()
 					.write_value( sqrt( 2.0 )                   )
-					.write_value( static_cast< int32_t>( -123 ) )
+					.write_value(                        -123   ) // int32_t
 					.write_value( static_cast< int64_t>( -123 ) )
 					.write_value( static_cast<uint32_t>(  123 ) )
 					.write_value( static_cast<uint64_t>(  123 ) )

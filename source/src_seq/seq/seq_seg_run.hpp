@@ -211,11 +211,8 @@ namespace cath {
 		inline residx_t get_length_of_seq_seg(const seq_seg_run &prm_seq_seg_run, ///< The seq_seg_run to query
 		                                      const size_t      &prm_seg_idx      ///< The index of the segment who length should be returned
 		                                      ) {
-			return static_cast<residx_t>(
-				prm_seq_seg_run.get_stop_arrow_of_segment ( prm_seg_idx )
-				-
-				prm_seq_seg_run.get_start_arrow_of_segment( prm_seg_idx )
-			);
+			return prm_seq_seg_run.get_stop_arrow_of_segment( prm_seg_idx )
+			       - prm_seq_seg_run.get_start_arrow_of_segment( prm_seg_idx );
 		}
 
 		/// \brief Get the middle of the specified seq_seg_run's segment corresponding to the specified index
