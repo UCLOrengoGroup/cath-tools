@@ -1,8 +1,0 @@
-These files were downloaded on 1st November 2017 from https://github.com/Kitware/CMake/tree/master/Modules at [a0d00a1](https://github.com/Kitware/CMake/commit/a0d00a17102d2740c1cf4b55fbf37308c7283f20) (ie https://github.com/Kitware/CMake/tree/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules)
-
-~~~
-wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/CMakeParseArguments.cmake"
-wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/FindGSL.cmake"
-wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/FindPackageHandleStandardArgs.cmake"
-wget "https://raw.githubusercontent.com/Kitware/CMake/a0d00a17102d2740c1cf4b55fbf37308c7283f20/Modules/FindPackageMessage.cmake"
-~~~

@@ -1,13 +1,8 @@
-cmake_minimum_required (VERSION 3.2)
-
-# Note: to use libc++, pass -DCMAKE_CXX_FLAGS="-stdlib=libc++" to cmake
+cmake_minimum_required (VERSION 3.12)
 
 MESSAGE( STATUS "Running under CMake v" ${CMAKE_VERSION} )
 
 project( cath-tools CXX )
-
-# Set the default GSL library to be static, If on Linux, get the release codename
-SET(USE_STATIC_GSL TRUE CACHE BOOL "Build with the static Gnu Scientific Library")
 
 execute_process(
 	COMMAND git describe --tags --long
@@ -29,13 +24,8 @@ configure_file( "source/src_external_info/cath/external_info/cath_tools_git_vers
 configure_file( "source/src_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp.in"
                 "source/src_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp" )
 
-SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
-IF ( ( ${CMAKE_VERSION} VERSION_GREATER "3.5.0" ) AND ( ${CMAKE_VERSION} VERSION_LESS "3.6.0" ) )
-	SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/FindBoostModules_in_3.5/" )
-ENDIF()
-IF ( ${CMAKE_VERSION} VERSION_LESS    "3.3.0" )
-	SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/FindBoostModules_lt_3.3.0/" )
-ENDIF()
+# Set the default GSL library to be static, If on Linux, get the release codename
+SET(USE_STATIC_GSL TRUE CACHE BOOL "Build with the static Gnu Scientific Library")
 
 # It'd be good to be able to tell FindGSL.cmake that we want static libraries (on all except Ubuntu 16.10 (yakkety))
 # and then use the target GSL::gsl but FindGSL.cmake doesn't appear to support that at present.
@@ -62,23 +52,12 @@ if ( NOT USE_STATIC_GSL )
 	MESSAGE( STATUS "Directed to use dynamic Gnu Scientific Library, overriding GSL libraries to be : " ${GSL_LIB_SUFFIX} )
 endif()
 
-IF( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
-	find_library( RT_LIBRARY rt )
-ENDIF()
-
 # For useful information on getting CMake to work with Boost, type the following command: `cmake --help-module FindBoost`
 # or add `SET( Boost_DEBUG "ON" )` to this file to get helpful debug information when running CMake
 find_package( Boost 1.60 REQUIRED filesystem iostreams log program_options serialization timer unit_test_framework )
 
 # Compiler options
-#
-# Not using the following due to excessive false-positives
-#  * -Wdouble-promotion
-#  * -Wold-style-cast   (fires in common/third_party_code/gnuplot-iostream.h)
-#  * -Wuseless-cast
-#
-# TODO: Add warnings (in particular, add the warnings from above that were just firing in system includes)
-SET( CMAKE_CXX_STANDARD   14    )
+SET( CMAKE_CXX_STANDARD   17    )
 SET( CMAKE_CXX_EXTENSIONS "OFF" )
 add_compile_options(
 	-W
@@ -89,44 +68,29 @@ add_compile_options(
 	-Wconversion
 	-Wformat=2
 	-Wnon-virtual-dtor
+	-Wold-style-cast
 	-Wshadow
 	-Wsign-compare
 	-Wsign-conversion
 	-pedantic
 	-ftabstop=2
+	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8.0>>:-Wuseless-cast>
 	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,6.0.0>>:-Wduplicated-cond>
-	# $<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,6.0.0>>:-Wnull-dereference> # Causes problems with superposition_context_from_ptree() - appears to be quite a hassle to resolve
+	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,6.0.0>>:-Wnull-dereference>
 	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,7.0.0>>:-Wduplicated-branches>
 	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,7.0.0>>:-Wrestrict>
-	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,8.0.0>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,9.0.0>>:-Wno-maybe-uninitialized>
+	$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,8.0.0>>:-Wno-maybe-uninitialized>
 )
-
-# *** TEMPORARY *** Prevent clang v3.6.0 from failing on Boost Concept checks due to unused local typedefs
-add_compile_options($<$<AND:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_VERSION:3.6.0>>:-Wno-unused-local-typedef>)
 
 enable_testing()
 
-# Add handling of includes and library links
-# 'SYSTEM' tells the compiler it's a system include directory so warnings should be suppressed
-include_directories( SYSTEM ${Boost_INCLUDE_DIR} )
-include_directories( SYSTEM ${GSL_INCLUDE_DIR}   )
-include_directories( SYSTEM rapidjson/include    )
-
-# Define GSL_RANGE_CHECK_OFF in non-debug builds
-add_compile_options( $<$<NOT:$<CONFIG:DEBUG>>:-DGSL_RANGE_CHECK_OFF> )
-
-add_definitions( -DRAPIDJSON_HAS_STDSTRING=1 )
+# Add INTERFACE target for gsl
+add_library                ( cath_tools_gsl        INTERFACE                                                 )
+target_include_directories ( cath_tools_gsl SYSTEM INTERFACE ${GSL_INCLUDE_DIR}                              )
+target_link_libraries      ( cath_tools_gsl        INTERFACE ${GSL_LIB_SUFFIX}                               )
+target_compile_options     ( cath_tools_gsl        INTERFACE $<$<NOT:$<CONFIG:DEBUG>>:-DGSL_RANGE_CHECK_OFF> )
 
 # Disallow cycles
 set_property( GLOBAL PROPERTY GLOBAL_DEPENDS_NO_CYCLES ON )
-
-SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY .. )
-
-if ( DEFINED ENV{BUILD_REVISION_NUMBER} )
-  add_definitions( -DBUILD_REVISION_NUMBER=$ENV{BUILD_REVISION_NUMBER} )
-endif ( DEFINED ENV{BUILD_REVISION_NUMBER} )
-if ( DEFINED ENV{BUILD_BRANCH_NAME} )
-  add_definitions( -DBUILD_BRANCH_NAME=$ENV{BUILD_BRANCH_NAME} )
-endif ( DEFINED ENV{BUILD_BRANCH_NAME} )
 
 add_subdirectory( source )

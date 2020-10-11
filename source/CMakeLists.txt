@@ -6,6 +6,17 @@ option( BUILD_EXTRA_CATH_TESTS "BUILD_EXTRA_CATH_TESTS" $ENV{BUILD_EXTRA_CATH_TE
 option( BUILD_EXTRA_CATH_TOOLS "BUILD_EXTRA_CATH_TOOLS" $ENV{BUILD_EXTRA_CATH_TOOLS} )
 
 #####################################################################
+
+# Add INTERFACE target for rapidjson
+add_library                ( cath_tools_rapidjson        INTERFACE                                                                                   )
+target_include_directories ( cath_tools_rapidjson SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party_code/rapidjson/include> )
+target_compile_definitions ( cath_tools_rapidjson        INTERFACE RAPIDJSON_HAS_STDSTRING=1                                                         )
+
+# Add INTERFACE target for gnuplot-iostream
+add_library               ( cath_tools_gnuplot_iostream        INTERFACE                                                                         )
+target_include_directories( cath_tools_gnuplot_iostream SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party_code/gnuplot> )
+
+#####################################################################
 ### Modules
 #####################################################################
 
@@ -68,7 +79,7 @@ foreach( MODULE_DIR ${MODULE_DIRS} )
 	endif()
 endforeach()
 
-# For external_info, add the corresponding subdir of the _build_ directory where configure_file() places the populated header template
+# For external_info, add the corresponding subdir of the *build* (not source) directory where configure_file() places the populated header template
 target_include_directories( ct_external_info PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/source/src_external_info> )
 
 # 3. Specify the modules' dependencies
@@ -76,30 +87,28 @@ target_include_directories( ct_external_info PUBLIC $<BUILD_INTERFACE:${PROJECT_
 # TODO: When the uni directory has been rename to src_uni, eradicate this line
 target_include_directories( ct_uni        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/uni>              )
 
-# TODO: Can this be tightened to be PRIVATE?
-# TODO: Wrap the third party dep in a target (perhaps with nothing but public target_include_directories)
-target_include_directories( ct_uni SYSTEM PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party_code> )
+target_link_libraries( testsrcs_test          PUBLIC  ct_chopping                                           )
+target_link_libraries( testsrcs_test          PUBLIC  ct_uni                                                ) # ct_uni for file/pdb/pdb.hpp
+target_link_libraries( testsrcs_options       PUBLIC  ct_uni                                                ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
 
-target_link_libraries( testsrcs_test          PUBLIC ct_chopping )
-target_link_libraries( testsrcs_test          PUBLIC ct_uni      ) # ct_uni for file/pdb/pdb.hpp
-target_link_libraries( testsrcs_options       PUBLIC ct_uni      ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_common              PRIVATE cath_tools_gsl                                        )
 
-target_link_libraries( ct_biocore             PUBLIC ct_common                                                                           )
-target_link_libraries( ct_cath_assign_domains PUBLIC ct_biocore ct_options ct_uni                                                        ) # ct_uni for acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp
-target_link_libraries( ct_cath_cluster        PUBLIC ct_clustagglom ct_options                                                           )
-target_link_libraries( ct_cath_refine_align   PUBLIC ct_common ct_uni                                                                    ) # ct_uni for acquirer/alignment_acquirer/alignment_acquirer.hpp and alignment/options_block/alignment_input_options_block.hpp
-target_link_libraries( ct_cath_score_align    PUBLIC ct_biocore ct_options ct_uni                                                        ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
-target_link_libraries( ct_cath_superpose      PUBLIC ct_common ct_uni                                                                    ) # ct_uni for acquirer/alignment_acquirer/align_refining.hpp acquirer/alignment_acquirer/alignment_acquirer.hpp
-target_link_libraries( ct_chopping            PUBLIC ct_biocore Boost::program_options                                                   )
-target_link_libraries( ct_clustagglom         PUBLIC ct_common Boost::program_options                                                    )
-target_link_libraries( ct_cluster             PUBLIC ct_common ct_options ct_seq Boost::program_options                                  )
-target_link_libraries( ct_common              PUBLIC Boost::boost Boost::log Boost::thread Boost::timer ${RT_LIBRARY} ${GSL_LIB_SUFFIX}  )
-target_link_libraries( ct_display_colour      PUBLIC ct_common                                                                           )
-target_link_libraries( ct_options             PUBLIC ct_chopping ct_external_info                                                        )
-target_link_libraries( ct_resolve_hits        PUBLIC ct_display_colour ct_options ct_seq                                                 )
-target_link_libraries( ct_seq                 PUBLIC ct_common                                                                           )
-target_link_libraries( ct_test                PUBLIC ct_common ct_external_info Boost::unit_test_framework                               )
-target_link_libraries( ct_uni                 PUBLIC ct_display_colour ct_external_info ct_options Boost::iostreams Boost::serialization )
+target_link_libraries( ct_biocore             PUBLIC  ct_common                                             )
+target_link_libraries( ct_cath_assign_domains PUBLIC  ct_biocore ct_options ct_uni                          ) # ct_uni for acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp
+target_link_libraries( ct_cath_cluster        PUBLIC  ct_clustagglom ct_options                             )
+target_link_libraries( ct_cath_refine_align   PUBLIC  ct_common ct_uni                                      ) # ct_uni for acquirer/alignment_acquirer/alignment_acquirer.hpp and alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_cath_score_align    PUBLIC  ct_biocore ct_options ct_uni                          ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_cath_superpose      PUBLIC  ct_common ct_uni                                      ) # ct_uni for acquirer/alignment_acquirer/align_refining.hpp acquirer/alignment_acquirer/alignment_acquirer.hpp
+target_link_libraries( ct_chopping            PUBLIC  ct_biocore Boost::program_options                     )
+target_link_libraries( ct_clustagglom         PUBLIC  ct_common Boost::program_options                      )
+target_link_libraries( ct_cluster             PUBLIC  ct_common ct_options ct_seq Boost::program_options    )
+target_link_libraries( ct_common              PUBLIC  Boost::log cath_tools_rapidjson                       )
+target_link_libraries( ct_display_colour      PUBLIC  ct_common                                             )
+target_link_libraries( ct_options             PUBLIC  ct_chopping ct_external_info                          )
+target_link_libraries( ct_resolve_hits        PUBLIC  ct_display_colour ct_options ct_seq                   )
+target_link_libraries( ct_seq                 PUBLIC  ct_common                                             )
+target_link_libraries( ct_test                PUBLIC  ct_common ct_external_info Boost::unit_test_framework )
+target_link_libraries( ct_uni                 PUBLIC  ct_display_colour ct_external_info ct_options cath_tools_gnuplot_iostream Boost::iostreams Boost::serialization )
 
 # Headers wanted from ct_uni by other targets:
 #   1 acquirer/alignment_acquirer/align_refining.hpp
@@ -150,24 +159,19 @@ endforeach()
 
 # 3. Specify the (non-test) executables' dependencies
 
-target_link_libraries( cath-assign-domains PRIVATE ct_cath_assign_domains )
-target_link_libraries( cath-assign-domains PRIVATE ct_uni                 ) # ct_uni for file/prc_scores_file/prc_scores_file.hpp
-target_link_libraries( cath-cluster        PRIVATE ct_cath_cluster        )
-target_link_libraries( cath-map-clusters   PRIVATE ct_cluster             )
-target_link_libraries( cath-refine-align   PRIVATE ct_cath_refine_align   )
-target_link_libraries( cath-resolve-hits   PRIVATE ct_resolve_hits        )
-target_link_libraries( cath-score-align    PRIVATE ct_cath_score_align    )
-target_link_libraries( cath-ssap           PRIVATE ct_chopping            )
-target_link_libraries( cath-ssap           PRIVATE ct_uni                 ) # ct_uni for ssap/options/cath_ssap_options.hpp
-target_link_libraries( cath-superpose      PRIVATE ct_cath_superpose      )
+target_link_libraries( cath-assign-domains PRIVATE ct_cath_assign_domains ct_uni ) # ct_uni for file/prc_scores_file/prc_scores_file.hpp
+target_link_libraries( cath-cluster        PRIVATE ct_cath_cluster               )
+target_link_libraries( cath-map-clusters   PRIVATE ct_cluster                    )
+target_link_libraries( cath-refine-align   PRIVATE ct_cath_refine_align          )
+target_link_libraries( cath-resolve-hits   PRIVATE ct_resolve_hits               )
+target_link_libraries( cath-score-align    PRIVATE ct_cath_score_align           )
+target_link_libraries( cath-ssap           PRIVATE ct_chopping            ct_uni ) # ct_uni for ssap/options/cath_ssap_options.hpp
+target_link_libraries( cath-superpose      PRIVATE ct_cath_superpose             )
 
 IF ( BUILD_EXTRA_CATH_TOOLS )
-	target_link_libraries( cath-extract-pdb PRIVATE ct_chopping )
-	target_link_libraries( cath-extract-pdb PRIVATE ct_uni      ) # ct_uni for file/pdb/pdb.hpp
-	target_link_libraries( check-pdb        PRIVATE ct_chopping )
-	target_link_libraries( check-pdb        PRIVATE ct_uni      ) # ct_uni for file/pdb/pdb.hpp
-	target_link_libraries( snap-judgement   PRIVATE ct_chopping )
-	target_link_libraries( snap-judgement   PRIVATE ct_uni      ) # ct_uni for scan/scan_tools/all_vs_all.hpp
+		target_link_libraries( cath-extract-pdb PRIVATE ct_uni ) # ct_uni for file/pdb/pdb.hpp
+		target_link_libraries( check-pdb        PRIVATE ct_uni ) # ct_uni for file/pdb/pdb.hpp
+		target_link_libraries( snap-judgement   PRIVATE ct_uni ) # ct_uni for scan/scan_tools/all_vs_all.hpp
 ENDIF()
 
 #####################################################################

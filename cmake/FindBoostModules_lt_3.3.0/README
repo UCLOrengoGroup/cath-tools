@@ -1,7 +1,0 @@
-These files were downloaded on 2nd November 2017 from https://raw.githubusercontent.com/Kitware/CMake/cb1a434ce093ea2530a7acd5692f4da8cfb9f8aa/Modules/FindBoost.cmake, ie commit [cb1a434](https://github.com/Kitware/CMake/commit/cb1a434ce093ea2530a7acd5692f4da8cfb9f8aa) from 30 Jun 2016.
-
-~~~
-wget "https://raw.githubusercontent.com/Kitware/CMake/cb1a434ce093ea2530a7acd5692f4da8cfb9f8aa/Modules/FindBoost.cmake"
-~~~
-
-The local version of `FindBoost` is being used here because the version that comes with CMake 3.3.2 (as used on the Travis-CI Linux machines) doesn't support the basic Boost targets used in this project.
