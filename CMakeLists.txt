@@ -57,7 +57,7 @@ endif()
 find_package( Boost 1.60 REQUIRED filesystem iostreams log program_options serialization timer unit_test_framework )
 
 # Compiler options
-SET( CMAKE_CXX_STANDARD   17    )
+SET( CMAKE_CXX_STANDARD   14    )
 SET( CMAKE_CXX_EXTENSIONS "OFF" )
 
 enable_testing()
