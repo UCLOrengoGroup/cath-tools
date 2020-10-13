@@ -36,12 +36,6 @@ using boost::program_options::bool_switch;
 using boost::program_options::options_description;
 using boost::program_options::variables_map;
 
-/// The program's current version
-const string misc_help_version_options_block::CATH_TOOLS_VERSION      { cath_tools_git_version() };
-
-/// The program's most recent update date
-const string misc_help_version_options_block::CATH_TOOLS_VERSION_DATE { cath_tools_git_date()    };
-
 /// \brief The option name for the hidden help option
 const string misc_help_version_options_block::PO_HIDDEN_HELP          { "hidden-help"            };
 
@@ -148,7 +142,7 @@ string misc_help_version_options_block::get_version_string(const string &prm_pro
                                                            const string &prm_program_description ///< A description of the program
                                                            ) {
 	return "============\n"
-		+ prm_program_name + " " + CATH_TOOLS_VERSION + " [" + CATH_TOOLS_VERSION_DATE + "]\n"
+		+ prm_program_name + " " + cath_tools_git_version() + " [" + cath_tools_git_date() + "]\n"
 		+ "============\n"
 		+ "\n"
 		+ prm_program_description + "\n"

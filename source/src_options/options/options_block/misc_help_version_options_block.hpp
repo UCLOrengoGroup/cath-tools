@@ -68,9 +68,6 @@ namespace cath {
 			static std::string get_version_string(const std::string &,
 			                                      const std::string &);
 
-			static const std::string CATH_TOOLS_VERSION;
-			static const std::string CATH_TOOLS_VERSION_DATE;
-
 			static const std::string PO_HIDDEN_HELP;
 			static const std::string PO_HELP;
 			static const std::string PO_VERSION;
