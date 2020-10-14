@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common/program_exception_wrapper.hpp"
-#include "resolve_hits/cath_hit_resolver.hpp"
-#include "resolve_hits/options/crh_options.hpp"
+#include "cath/common/program_exception_wrapper.hpp"
+#include "cath/resolve_hits/cath_hit_resolver.hpp"
+#include "cath/resolve_hits/options/crh_options.hpp"
 
 #include <chrono>
 

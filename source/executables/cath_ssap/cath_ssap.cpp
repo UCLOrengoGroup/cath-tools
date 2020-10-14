@@ -20,10 +20,10 @@
 
 #include <boost/log/trivial.hpp>
 
-#include "chopping/domain/domain.hpp"
-#include "common/program_exception_wrapper.hpp"
-#include "ssap/options/cath_ssap_options.hpp"
-#include "ssap/ssap.hpp"
+#include "cath/chopping/domain/domain.hpp"
+#include "cath/common/program_exception_wrapper.hpp"
+#include "cath/ssap/options/cath_ssap_options.hpp"
+#include "cath/ssap/ssap.hpp"
 
 using namespace cath;
 using namespace cath::common;

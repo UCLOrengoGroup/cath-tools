@@ -20,14 +20,14 @@
 
 #include <boost/filesystem.hpp>
 
-#include "common/exception/invalid_argument_exception.hpp"
-#include "common/file/open_fstream.hpp"
-#include "common/logger.hpp"
-#include "common/program_exception_wrapper.hpp"
-#include "file/pdb/pdb.hpp"
-#include "file/pdb/pdb_atom.hpp"
-#include "file/pdb/pdb_residue.hpp"
-#include "options/executable/cath_check_pdb_options/cath_check_pdb_options.hpp"
+#include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/common/file/open_fstream.hpp"
+#include "cath/common/logger.hpp"
+#include "cath/common/program_exception_wrapper.hpp"
+#include "cath/file/pdb/pdb.hpp"
+#include "cath/file/pdb/pdb_atom.hpp"
+#include "cath/file/pdb/pdb_residue.hpp"
+#include "cath/options/executable/cath_check_pdb_options/cath_check_pdb_options.hpp"
 
 #include <fstream>
 

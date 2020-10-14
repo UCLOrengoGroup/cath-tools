@@ -20,12 +20,12 @@
 
 #include <boost/filesystem.hpp>
 
-#include "chopping/chopping_type_aliases.hpp"
-#include "chopping/region/region.hpp"
-#include "common/file/ofstream_list.hpp"
-#include "common/program_exception_wrapper.hpp"
-#include "file/pdb/pdb.hpp"
-#include "options/executable/cath_extract_pdb_options/cath_extract_pdb_options.hpp"
+#include "cath/chopping/chopping_type_aliases.hpp"
+#include "cath/chopping/region/region.hpp"
+#include "cath/common/file/ofstream_list.hpp"
+#include "cath/common/program_exception_wrapper.hpp"
+#include "cath/file/pdb/pdb.hpp"
+#include "cath/options/executable/cath_extract_pdb_options/cath_extract_pdb_options.hpp"
 
 using namespace cath::chop;
 using namespace cath::common;

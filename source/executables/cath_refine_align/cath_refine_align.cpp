@@ -20,10 +20,10 @@
 
 #include <boost/log/trivial.hpp>
 
-#include "cath_refine_align/cath_align_refiner.hpp"
-#include "cath_refine_align/options/cath_refine_align_options.hpp"
-#include "chopping/domain/domain.hpp"
-#include "common/program_exception_wrapper.hpp"
+#include "cath/cath_refine_align/cath_align_refiner.hpp"
+#include "cath/cath_refine_align/options/cath_refine_align_options.hpp"
+#include "cath/chopping/domain/domain.hpp"
+#include "cath/common/program_exception_wrapper.hpp"
 
 using namespace cath;
 using namespace cath::common;

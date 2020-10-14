@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cluster/clustmap_options.hpp"
-#include "cluster/cath_cluster_mapper.hpp"
-#include "common/program_exception_wrapper.hpp"
+#include "cath/cluster/clustmap_options.hpp"
+#include "cath/cluster/cath_cluster_mapper.hpp"
+#include "cath/common/program_exception_wrapper.hpp"
 
 #include <chrono>
 

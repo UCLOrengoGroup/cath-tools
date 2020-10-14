@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_cluster/cath_clusterer.hpp"
-#include "cath_cluster/options/cath_cluster_options.hpp"
-#include "common/program_exception_wrapper.hpp"
+#include "cath/cath_cluster/cath_clusterer.hpp"
+#include "cath/cath_cluster/options/cath_cluster_options.hpp"
+#include "cath/common/program_exception_wrapper.hpp"
 
 using namespace ::cath::clust;
 using namespace ::cath::common;

@@ -27,48 +27,44 @@ target_include_directories( cath_tools_gnuplot_iostream SYSTEM INTERFACE $<BUILD
 
 # 1. Specify the modules to build
 
-set( MODULES
-	ct_biocore
-	ct_cath_assign_domains
-	ct_cath_cluster
-	ct_cath_refine_align
-	ct_cath_score_align
-	ct_cath_superpose
-	ct_chopping
-	ct_clustagglom
-	ct_cluster
-	ct_common
-	ct_display_colour
-	ct_external_info
-	ct_options
-	ct_resolve_hits
-	ct_seq
-	ct_uni
+set( MODULE_STEMS
+	biocore
+	cath_assign_domains
+	cath_cluster
+	cath_refine_align
+	cath_score_align
+	cath_superpose
+	chopping
+	clustagglom
+	cluster
+	common
+	display_colour
+	external_info
+	options
+	resolve_hits
+	seq
+	uni
 
-	ct_test
+	test
 )
 
 # 2. Set up ct_${MODULE} and testsrcs_${MODULE} for each MODULE
 
-foreach( MODULE ${MODULES} )
+foreach( MODULE_STEM ${MODULE_STEMS} )
+	set( MODULE "ct_${MODULE_STEM}" )
 	string( TOUPPER "${MODULE}" MODULE_UPPER )
 
 	# Create a library for the module with all the .cpp files
 	# and add the directory as a public include directory
 	add_library( "${MODULE}" ${NORMSOURCES_${MODULE_UPPER}} )
 	
-	# TODO: Separate out uni and then remove this special-case handling for it
-	if ( "${MODULE}" STREQUAL "ct_uni" )
-		target_include_directories( "${MODULE}" PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${MODULE}>/uni" )
-	else()
-		# Add the module's include directory to its public include directories
-		target_include_directories( "${MODULE}" PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${MODULE}>" )
-	endif()
+	# Add the module's include directory to its public include directories
+	target_include_directories( "${MODULE}" PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${MODULE}>" )
 
 	if ( DEFINED TESTSOURCES_${MODULE_UPPER} )
 		# Create the OBJECT library of test sources for this module and link it to the appropriate dependencies (determined above)
-		add_library( "testsrcs_${MODULE}" OBJECT ${TESTSOURCES_${MODULE_UPPER}} )
-		target_link_libraries( "testsrcs_${MODULE}" PUBLIC ct_test "${MODULE}" )
+		add_library( "testsrcs_${MODULE_STEM}" OBJECT ${TESTSOURCES_${MODULE_UPPER}} )
+		target_link_libraries( "testsrcs_${MODULE_STEM}" PUBLIC ct_test "${MODULE}" )
 
 		# Record that list of test sources that are being handled (which can be checked later for omissions)
 		list( APPEND ALL_MODULE_TESTSOURCES ${TESTSOURCES_${MODULE_UPPER}} )
@@ -80,9 +76,9 @@ target_include_directories( ct_external_info PUBLIC $<BUILD_INTERFACE:${PROJECT_
 
 # 3. Specify the modules' dependencies
 
-target_link_libraries( testsrcs_ct_test       PUBLIC  ct_chopping                                           )
-target_link_libraries( testsrcs_ct_test       PUBLIC  ct_uni                                                ) # ct_uni for file/pdb/pdb.hpp
-target_link_libraries( testsrcs_ct_options    PUBLIC  ct_uni                                                ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( testsrcs_test          PUBLIC  ct_chopping                                           )
+target_link_libraries( testsrcs_test          PUBLIC  ct_uni                                                ) # ct_uni for file/pdb/pdb.hpp
+target_link_libraries( testsrcs_options       PUBLIC  ct_uni                                                ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
 
 target_link_libraries( ct_common              PRIVATE cath_tools_gsl                                        )
 
@@ -183,9 +179,9 @@ endif()
 
 # Add build-test, containing all the tests
 add_executable( build-test ${TESTSOURCES_EXECUTABLES_BUILD_TEST} )
-foreach( MODULE ${MODULES} )
-	if ( TARGET "testsrcs_${MODULE}" )
-		target_link_libraries( build-test PRIVATE "testsrcs_${MODULE}" )
+foreach( MODULE_STEM ${MODULE_STEMS} )
+	if ( TARGET "testsrcs_${MODULE_STEM}" )
+		target_link_libraries( build-test PRIVATE "testsrcs_${MODULE_STEM}" )
 	endif()
 endforeach()
 add_test( NAME build-test COMMAND build-test )
@@ -196,14 +192,14 @@ set_target_properties( build-test PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<BUILD_IN
 # If requested, build a mod-test-XXX for each module
 if ( BUILD_EXTRA_CATH_TESTS )
 
-	foreach( MODULE ${MODULES} )
-		if ( TARGET "testsrcs_${MODULE}" )
+	foreach( MODULE_STEM ${MODULE_STEMS} )
+		if ( TARGET "testsrcs_${MODULE_STEM}" )
 			# Make the test name (eg resolve_hits -> mod-test-resolve-hits)
-			string               ( REPLACE "_" "-" TESTED_MODULE_EXE "mod-test-${MODULE}" )
+			string               ( REPLACE "_" "-" TESTED_MODULE_EXE "mod-test-${MODULE_STEM}" )
 
 			# Make the test, link it to the testsrcs OBJECT library and register it as a test
 			add_executable       ( "${TESTED_MODULE_EXE}" ${TESTSOURCES_EXECUTABLES_BUILD_TEST}  )
-			target_link_libraries( "${TESTED_MODULE_EXE}" "testsrcs_${MODULE}"                   )
+			target_link_libraries( "${TESTED_MODULE_EXE}" "testsrcs_${MODULE_STEM}"                   )
 			add_test             ( NAME "${TESTED_MODULE_EXE}" COMMAND "${TESTED_MODULE_EXE}"    )
 			set_target_properties( "${TESTED_MODULE_EXE}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/bin> )
 		endif()

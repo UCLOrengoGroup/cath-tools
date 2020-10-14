@@ -1,0 +1,137 @@
+/// \file
+/// \brief The simple_chopping_format class definitions
+
+/// \copyright
+/// CATH Tools - Protein structure comparison tools such as SSAP and SNAP
+/// Copyright (C) 2011, Orengo Group, University College London
+///
+/// This program is free software: you can redistribute it and/or modify
+/// it under the terms of the GNU General Public License as published by
+/// the Free Software Foundation, either version 3 of the License, or
+/// (at your option) any later version.
+///
+/// This program is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+/// GNU General Public License for more details.
+///
+/// You should have received a copy of the GNU General Public License
+/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#include "simple_chopping_format.hpp"
+
+#include "cath/chopping/domain/domain.hpp"
+#include "cath/common/boost_addenda/make_string_ref.hpp"
+#include "cath/common/clone/make_uptr_clone.hpp"
+#include "cath/common/cpp14/cbegin_cend.hpp"
+#include "cath/common/debug_numeric_cast.hpp"
+#include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
+
+#include <iostream> // ***** TEMPORARY *****
+
+using namespace cath;
+using namespace cath::chop;
+using namespace cath::common;
+
+using boost::string_ref;
+using std::find;
+using std::next;
+using std::string;
+using std::unique_ptr;
+
+/// \brief A standard do_clone method.
+unique_ptr<chopping_format> simple_chopping_format::do_clone() const {
+	return { make_uptr_clone( *this ) };
+}
+
+/// \brief TODOCUMENT
+bool simple_chopping_format::do_represents_fragments() const {
+	return false;
+}
+
+/// \brief TODOCUMENT
+domain simple_chopping_format::do_parse_domain(const string &prm_domain_chopping_string ///< TODOCUMENT
+                                               ) const {
+	std::cerr << "domain_chopping_string is " << prm_domain_chopping_string << "\n";
+
+	BOOST_THROW_EXCEPTION(not_implemented_exception("simple_chopping_format::do_parse_domain()"));
+
+	return domain( region_vec() );
+}
+
+/// \brief Concrete definition of this chopping_format writes a region to a string
+string simple_chopping_format::do_write_region(const region &/*prm_region*/ ///< The region to write to a string
+                                               ) const {
+	BOOST_THROW_EXCEPTION(not_implemented_exception("simple_chopping_format cannot currently write regions"));
+}
+
+/// \brief Concrete definition of this chopping_format writes a domain to a string
+string simple_chopping_format::do_write_domain(const domain &/*prm_domain*/ ///< The domain to write to a string
+                                               ) const {
+	BOOST_THROW_EXCEPTION(not_implemented_exception("simple_chopping_format cannot currently write domains"));
+}
+
+/// \brief Parse a segment from the specified segment string
+region simple_chopping_format::parse_segment(const string_ref &prm_segment_string ///< The string from which to parse the segment
+                                             ) const {
+	constexpr char   CHAIN_OPEN_SQ_BR                = '[';
+	constexpr char   CHAIN_CLOSE_SQ_BR               = ']';
+	constexpr char   RESIDUE_NAME_DELIM              = '-';
+	constexpr size_t MIN_VALID_CHARS                 = 6;
+	constexpr size_t CHAIN_NEG_OFFSET                = 2;
+	constexpr size_t CHAIN_OPEN_SQ_BR_END_NEG_OFFSET = 3;
+
+	const auto length = prm_segment_string.length();
+	if ( length < MIN_VALID_CHARS ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh"));
+	}
+	if ( prm_segment_string.back() != CHAIN_CLOSE_SQ_BR || prm_segment_string[ length - CHAIN_OPEN_SQ_BR_END_NEG_OFFSET ] != CHAIN_OPEN_SQ_BR ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh two"));
+	}
+
+	const auto begin_itr          = common::cbegin( prm_segment_string );
+	const auto end_itr            = common::cend  ( prm_segment_string );
+	const auto begin_plus_one_itr = next( begin_itr );
+	const auto res_end_itr        = next( end_itr, 0 - static_cast<int>( CHAIN_OPEN_SQ_BR_END_NEG_OFFSET ) );
+	const auto dash_itr           = find( begin_plus_one_itr, res_end_itr, RESIDUE_NAME_DELIM );
+
+	if ( dash_itr == res_end_itr ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh again"));
+	}
+
+	const auto dash_plus_one_itr = next( dash_itr );
+
+	return {
+		chain_label{ prm_segment_string[ length - CHAIN_NEG_OFFSET ] },
+		parse_residue( make_string_ref( begin_itr,         dash_itr    ) ),
+		parse_residue( make_string_ref( dash_plus_one_itr, res_end_itr ) )
+	};
+}
+
+/// \brief Parse a residue from the specified residue string
+residue_name simple_chopping_format::parse_residue(const string_ref &prm_string_ref ///< The string from which to parse the residue
+                                                   ) const {
+	constexpr char   INS_CODE_OPEN_BR             = '(';
+	constexpr char   INS_CODE_CLOSE_BR            = ')';
+	constexpr size_t MIN_INS_CODE_CHARS           = 4;
+	constexpr size_t INS_CODE_OFFSET              = 2;
+	constexpr size_t CHAIN_OPEN_BR_END_NEG_OFFSET = 3;
+
+	const auto length = prm_string_ref.length();
+	if ( length < MIN_INS_CODE_CHARS || prm_string_ref.back() != INS_CODE_CLOSE_BR ) {
+		return residue_name{ stoi( prm_string_ref.to_string() ) };
+	}
+
+	if ( prm_string_ref[ length - CHAIN_OPEN_BR_END_NEG_OFFSET ] != INS_CODE_OPEN_BR ) {
+		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh yet again"));
+	}
+	const auto begin_itr   = common::cbegin( prm_string_ref );
+	const auto end_itr     = common::cend  ( prm_string_ref );
+	const auto res_end_itr = next( end_itr, 0 - static_cast<int>( CHAIN_OPEN_BR_END_NEG_OFFSET ) );
+
+	return {
+		stoi( string{ begin_itr, res_end_itr } ),
+		prm_string_ref[ length - INS_CODE_OFFSET ]
+	};
+}

@@ -20,16 +20,16 @@
 
 #include <boost/units/quantity.hpp>
 
-#include "common/program_exception_wrapper.hpp"
-#include "scan/scan_tools/all_vs_all.hpp"
-#include "scan/scan_tools/load_and_scan.hpp"
-#include "scan/scan_tools/load_and_scan_metrics.hpp"
-#include "scan/scan_tools/single_pair.hpp"
-#include "structure/protein/protein.hpp"
-#include "structure/protein/protein_source_file_set/protein_from_pdb.hpp"
-#include "structure/protein/residue.hpp"
-#include "structure/protein/sec_struc.hpp"
-#include "structure/protein/sec_struc_planar_angles.hpp"
+#include "cath/common/program_exception_wrapper.hpp"
+#include "cath/scan/scan_tools/all_vs_all.hpp"
+#include "cath/scan/scan_tools/load_and_scan.hpp"
+#include "cath/scan/scan_tools/load_and_scan_metrics.hpp"
+#include "cath/scan/scan_tools/single_pair.hpp"
+#include "cath/structure/protein/protein.hpp"
+#include "cath/structure/protein/protein_source_file_set/protein_from_pdb.hpp"
+#include "cath/structure/protein/residue.hpp"
+#include "cath/structure/protein/sec_struc.hpp"
+#include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
 using namespace cath::common;
 using namespace cath::scan;

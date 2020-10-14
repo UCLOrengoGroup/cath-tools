@@ -28,8 +28,8 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_monitor.hpp>
 
-#include "common/test_or_exe_run_mode.hpp"
-#include "test/predicate/bootstrap_mode.hpp"
+#include "cath/common/test_or_exe_run_mode.hpp"
+#include "cath/test/predicate/bootstrap_mode.hpp"
 
 #include <iostream>
 
