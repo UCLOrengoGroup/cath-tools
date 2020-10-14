@@ -20,8 +20,13 @@
 
 #include "display_colourer.hpp"
 
+#include <string>
+
 #include "alignment/alignment_context.hpp"
+#include "chopping/chopping.hpp"
+#include "chopping/domain/domain.hpp"
 #include "chopping/region/region.hpp"
+#include "common/boost_addenda/range/to_vector.hpp"
 #include "common/clone/check_uptr_clone_against_this.hpp"
 #include "common/cpp14/make_unique.hpp"
 #include "display/display_colour_spec/display_colour_spec.hpp"
@@ -43,9 +48,10 @@ using namespace cath::detail;
 using namespace cath::file;
 using namespace cath::sup;
 
-using std::ostream;
-using std::reference_wrapper;
-using std::unique_ptr;
+using ::std::ostream;
+using ::std::reference_wrapper;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief Ctor from specification for post-modifying the colouring based on scores
 display_colourer::display_colourer(const score_colour_handler &prm_score_colour_handler ///< Specification for post-modifying the colouring based on scores
@@ -139,8 +145,8 @@ namespace {
 	/// \brief Helper guard to notify a viewer at the start and end of a colouring with a display_colourer
 	class viewer_colour_notifier_guard final {
 	private:
-		/// \brief Const-reference to the display_colourer that will be colouring the viewer
-		reference_wrapper<const display_colourer> the_colourer;
+		/// \brief The string that will be colouring the viewer
+		string label;
 
 		/// \brief Reference to the stream to which the viewer data is to be written
 		ostream_ref the_os;
@@ -150,19 +156,19 @@ namespace {
 
 	public:
 		/// \brief Ctor, which calls begin_colouring() on the viewer
-		viewer_colour_notifier_guard(const display_colourer &prm_display_colourer, ///< The display_colourer that will be colouring the viewer
-		                             ostream                &prm_os,               ///< The stream to which the viewer data is to be written
-		                             viewer                 &prm_viewer            ///< The viewer to notify
-		                             ) : the_colourer{ prm_display_colourer },
-		                                 the_os      { prm_os               },
-		                                 the_viewer  { prm_viewer           } {
-			the_viewer.get().begin_colouring( the_os.get(), the_colourer.get() );
+		viewer_colour_notifier_guard(string   prm_label, ///< The label that for the colouring in the viewer
+		                             ostream &prm_os,    ///< The stream to which the viewer data is to be written
+		                             viewer  &prm_viewer ///< The viewer to notify
+		                             ) : label       { ::std::move( prm_label ) },
+		                                 the_os      { prm_os                   },
+		                                 the_viewer  { prm_viewer               } {
+			the_viewer.get().begin_colouring( the_os.get() );
 		}
 
 		/// \brief Dtor, which calls end_colouring() on the viewer
 		~viewer_colour_notifier_guard() {
 			try {
-				the_viewer.get().end_colouring( the_os.get(), the_colourer.get() );
+				the_viewer.get().end_colouring( the_os.get(), label );
 			}
 			catch (...) {
 			}
@@ -170,6 +176,34 @@ namespace {
 	};
 
 } // namespace
+
+/// Write text to the specified ostream to colour the specified chunks with the specified colours
+/// for the specified viewer
+///
+/// \param prm_named_chunks     The (named) chunks of residues
+/// \param prm_viewer_seln_name The name of the object in the viewer in which the residues should be selected for colouring
+/// \param prm_viewer           The viewer for which the text is being written
+/// \param prm_os               The ostream to write to
+/// \param prm_colour_list      The list of colours
+void cath::colour_viewer_with_named_chunks( const named_chunk_vec &    prm_named_chunks,
+                                            const string &             prm_viewer_seln_name,
+                                            viewer &                   prm_viewer,
+                                            ostream &                  prm_os,
+                                            const display_colour_list &prm_colour_list ) {
+	define_all_colours( prm_colour_list | to_vector, prm_viewer, prm_os, colour_category::STRUC_OR_RES );
+
+	const viewer_colour_notifier_guard the_guard{ "Domain colouring", prm_os, prm_viewer };
+
+	for ( const size_t &domain_idx : indices( prm_named_chunks.size() ) ) {
+		// const display_colour &colour          = colour_of_mod_index( prm_colour_list, domain_idx );
+		const named_chunk &the_named_chunk = prm_named_chunks[ domain_idx ];
+
+		prm_os << prm_viewer.get_colour_pdb_residues_str(
+		  generate_colour_name( domain_idx % prm_named_chunks.size(), prm_colour_list.size(), colour_category::STRUC_OR_RES ),
+		  prm_viewer_seln_name,
+		  the_named_chunk.residues );
+	}
+}
 
 /// \brief Write instructions for the specified viewer to the specified ostream
 ///        to represent the specified display_colourer in the context of the specified alignment_context
@@ -182,7 +216,7 @@ void cath::colour_viewer(const display_colourer  &prm_colourer, ///< The display
                          viewer                  &prm_viewer,   ///< The viewer defining the instructions to be written
                          const alignment_context &prm_aln_con   ///< The alignment_context providing the context for the display_colourer
                          ) {
-	const viewer_colour_notifier_guard the_guard{ prm_colourer, prm_os, prm_viewer };
+	const viewer_colour_notifier_guard the_guard{ prm_colourer.get_label(), prm_os, prm_viewer };
 	colour_viewer_with_spec(
 		prm_colourer.get_colour_spec( prm_aln_con ),
 		prm_viewer,
@@ -205,7 +239,7 @@ void cath::colour_viewer(const alignment_free_display_colourer &prm_colourer,   
                          const str_vec                         &prm_cleaned_names_for_viewer, ///< The names of the structures (cleaned for the viewer)
                          const region_vec_opt_vec              &prm_regions                   ///< The key regions of the structures
                          ) {
-	const viewer_colour_notifier_guard the_guard{ prm_colourer, prm_os, prm_viewer };
+	const viewer_colour_notifier_guard the_guard{ prm_colourer.get_label(), prm_os, prm_viewer };
 	colour_viewer_with_spec(
 		prm_colourer.get_colour_spec_from_regions( prm_regions ),
 		prm_viewer,

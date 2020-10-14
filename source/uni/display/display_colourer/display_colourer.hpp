@@ -23,10 +23,12 @@
 
 #include <boost/optional.hpp>
 
+#include "biocore/biocore_type_aliases.hpp"
 #include "chopping/chopping_type_aliases.hpp"
 #include "common/type_aliases.hpp"
 #include "display/display_colourer/detail/score_colour_handler.hpp"
 #include "display_colour/display_colour_gradient.hpp"
+#include "display_colour/display_colour_list.hpp"
 
 #include <iosfwd>
 #include <memory>
@@ -96,6 +98,24 @@ namespace cath {
 	display_colour_spec get_colour_spec(const display_colourer &,
 	                                    const file::strucs_context &,
 	                                    const align::alignment &);
+
+	/// A named chunk of residues
+	struct named_chunk {
+		/// The name of the chunk
+		::std::string name;
+
+		/// The residues in the chunk
+		residue_id_vec residues;
+	};
+
+	/// Type alias for a vector of named_chunk
+	using named_chunk_vec = ::std::vector<named_chunk>;
+
+	void colour_viewer_with_named_chunks( const named_chunk_vec &,
+	                                      const ::std::string &,
+	                                      viewer &,
+	                                      ::std::ostream &,
+	                                      const display_colour_list & = default_display_colour_list() );
 
 	void colour_viewer(const display_colourer &,
 	                   std::ostream &,

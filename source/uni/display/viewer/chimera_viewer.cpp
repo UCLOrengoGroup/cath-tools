@@ -450,8 +450,8 @@ void chimera_viewer::do_write_alignment_extras(ostream                     &prm_
 }
 
 /// \brief TODOCUMENT
-void chimera_viewer::do_write_end(ostream          &prm_os,  ///< TODOCUMENT
-                                  const string_ref &prm_name ///< TODOCUMENT
+void chimera_viewer::do_write_end(ostream          &prm_os,            ///< TODOCUMENT
+                                  const string_ref &prm_advert_message ///< TODOCUMENT
                                   ) const {
 	prm_os << R"(show cartoon
 set cartoon_smooth_loops,1
@@ -471,13 +471,11 @@ set seq_view_label_mode, 1
 set ribbon_width, 1.5
 zoom protein
 
+cmd.wizard( "message", ")"
+	       << prm_advert_message
+	       << R"(" );
 feedback enable,all,output
-)"
-	<< (
-		prm_name.empty()
-		? ""
-		: ( "print \"" + prm_name.to_string() + "\"\n" )
-	);
+)";
 }
 
 /// \brief TODOCUMENT

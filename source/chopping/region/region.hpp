@@ -108,6 +108,9 @@ namespace cath {
 		const size_t & get_start_index(const region &);
 		const size_t & get_stop_index(const region &);
 
+		residue_id get_start_id( const region & );
+		residue_id get_stop_id( const region & );
+
 		residue_locating_opt get_residue_locating(const region &);
 
 		size_t get_length(const region &);

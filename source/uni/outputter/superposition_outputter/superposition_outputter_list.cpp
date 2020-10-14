@@ -96,12 +96,11 @@ ostream & cath::opts::operator<<(ostream                            &prm_os,    
 void cath::opts::use_all_superposition_outputters(const superposition_outputter_list &prm_superposition_outputters, ///< TODOCUMENT
                                                   const superposition_context        &prm_superposition_context,    ///< TODOCUMENT
                                                   ostream                            &prm_stdout,                   ///< TODOCUMENT
-                                                  ostream                            &/*prm_stderr*/,               ///< TODOCUMENT
-                                                  const string_ref                   &prm_name                      ///< A name for the superposition (so users of the superposition know what it represents)
+                                                  ostream                            &/*prm_stderr*/                ///< TODOCUMENT
                                                   ) {
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
 	for (const superposition_outputter &outputter : prm_superposition_outputters) {
-		outputter.output_superposition( prm_superposition_context, prm_stdout, prm_name );
+		outputter.output_superposition( prm_superposition_context, prm_stdout );
 	}
 }
 

@@ -41,8 +41,7 @@ unique_ptr<superposition_outputter> pymol_file_superposition_outputter::do_clone
 
 /// \brief TODOCUMENT
 void pymol_file_superposition_outputter::do_output_superposition(const superposition_context &prm_superposition_context, ///< TODOCUMENT
-                                                                 ostream                     &/*prm_ostream*/,           ///< TODOCUMENT
-                                                                 const string_ref            &prm_name                   ///< A name for the superposition (so users of the superposition know what it represents)
+                                                                 ostream                     &/*prm_ostream*/            ///< TODOCUMENT
                                                                  ) const {
 	pymol_viewer the_pymol_viewer{};
 	output_superposition_to_viewer_file(
@@ -51,8 +50,7 @@ void pymol_file_superposition_outputter::do_output_superposition(const superposi
 		the_display_spec,
 		prm_superposition_context,
 		content_spec,
-		missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY,
-		prm_name
+		missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY
 	);
 }
 

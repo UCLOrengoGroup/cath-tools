@@ -73,9 +73,6 @@ void cath_align_refiner::refine(const cath_refine_align_options &prm_cath_refine
 	// Grab the PDBs and their IDs
 	const strucs_context  context      = get_pdbs_and_names( prm_cath_refine_align_options, prm_istream, true );
 
-	// TODO: Populate this name summarising the overall group so it can be used, eg in superposition scripts
-	const string          overall_name{};
-
 	const auto backbone_complete_strucs_context = strucs_context_of_backbone_complete_region_limited_subset_pdbs(
 		context,
 		ref( prm_stderr )
@@ -140,5 +137,5 @@ void cath_align_refiner::refine(const cath_refine_align_options &prm_cath_refine
 	const superposition_outputter_list sup_outputters = prm_cath_refine_align_options.get_superposition_outputters(
 		aln_outputters.empty() ? default_supn_outputter::PYMOL : default_supn_outputter::NONE
 	);
-	use_all_superposition_outputters( sup_outputters, aln_based_sup_acq.get_superposition( prm_stderr ), prm_stdout, prm_stderr, overall_name );
+	use_all_superposition_outputters( sup_outputters, aln_based_sup_acq.get_superposition( prm_stderr ), prm_stdout, prm_stderr );
 }

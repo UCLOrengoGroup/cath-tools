@@ -45,14 +45,13 @@ unique_ptr<superposition_outputter> pdb_file_superposition_outputter::do_clone()
 
 /// \brief TODOCUMENT
 void pdb_file_superposition_outputter::do_output_superposition(const superposition_context &prm_superposition_context, ///< TODOCUMENT
-                                                               ostream                     &/*prm_ostream*/,           ///< TODOCUMENT
-                                                               const string_ref            &prm_name                   ///< A name for the superposition (so users of the superposition know what it represents)
+                                                               ostream                     &/*prm_ostream*/            ///< TODOCUMENT
                                                                ) const {
 	ofstream pdb_ostream;
 	open_ofstream( pdb_ostream, output_file );
 
 	ostream_superposition_outputter stream_outputter{ content_spec };
-	stream_outputter.output_superposition( prm_superposition_context, pdb_ostream, prm_name );
+	stream_outputter.output_superposition( prm_superposition_context, pdb_ostream );
 
 	pdb_ostream << flush;
 	pdb_ostream.close();

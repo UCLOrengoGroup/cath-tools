@@ -53,6 +53,8 @@ namespace cath {
 
 			const region & get_fragment_of_index(const size_t &) const;
 
+			const domain & operator[](const size_t &prm_index) const;
+
 			const_iterator begin() const;
 			const_iterator end() const;
 		};

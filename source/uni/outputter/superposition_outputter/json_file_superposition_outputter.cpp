@@ -48,8 +48,7 @@ unique_ptr<superposition_outputter> json_file_superposition_outputter::do_clone(
 
 /// \brief TODOCUMENT
 void json_file_superposition_outputter::do_output_superposition(const superposition_context &prm_superposition_context, ///< The superpositon_context object to output
-                                                                ostream                     &/*prm_ostream*/,           ///< An ostream object to which any warnings/errors may be written (currently ignored)
-                                                                const string_ref            &/*prm_name*/               ///< A name for the superposition (so users of the superposition know what it represents)
+                                                                ostream                     &/*prm_ostream*/            ///< An ostream object to which any warnings/errors may be written (currently ignored)
                                                                 ) const {
 	write_to_json_file( output_file, prm_superposition_context, the_json_style );
 }

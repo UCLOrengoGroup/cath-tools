@@ -85,6 +85,11 @@ namespace cath {
 	size_vec get_pdbs_of_colour(const broad_display_colour_spec &,
 	                            const display_colour &);
 
+	void define_all_colours( const display_colour_vec &,
+	                         const viewer &,
+	                         ::std::ostream &,
+	                         const colour_category & );
+
 	namespace detail {
 		void colour_base_and_pdbs_impl(const display_colour_vec &,
 		                               const broad_display_colour_spec &,

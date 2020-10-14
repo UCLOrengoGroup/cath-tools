@@ -71,9 +71,6 @@ void cath_superposer::superpose(const cath_superpose_options &prm_cath_superpose
 	// Get the superposition (and context) as specified by the cath_superpose_options
 	const superposition_context the_sup_context = get_superposition_context( prm_cath_superpose_options, prm_istream, prm_stderr );
 
-	// TODO: Populate this name summarising the overall group so it can be used, eg in superposition scripts
-	const string overall_name{};
-
 	// If there is an alignment, then for each of the alignment_outputters specified by the cath_superpose_options, output it
 	const auto aln_outputters = prm_cath_superpose_options.get_alignment_outputters();
 	if ( the_sup_context.has_alignment() ) {
@@ -94,7 +91,7 @@ void cath_superposer::superpose(const cath_superpose_options &prm_cath_superpose
 	const superposition_outputter_list outputters = prm_cath_superpose_options.get_superposition_outputters(
 		aln_outputters.empty() ? default_supn_outputter::PYMOL : default_supn_outputter::NONE
 	);
-	use_all_superposition_outputters( outputters, the_sup_context, prm_stdout, prm_stderr, overall_name );
+	use_all_superposition_outputters( outputters, the_sup_context, prm_stdout, prm_stderr );
 }
 
 /// \brief TODOCUMENT

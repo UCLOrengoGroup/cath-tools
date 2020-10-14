@@ -38,10 +38,15 @@ namespace cath {
 		display_colour_vec colours;
 
 	public:
+		using const_iterator = display_colour_vec::const_iterator;
+
 		explicit display_colour_list(display_colour_vec);
 
 		size_t size() const;
 		const display_colour & colour_of_index(const size_t &) const;
+
+		const_iterator begin() const;
+		const_iterator end() const;
 
 		static str_vec     DEFAULT_COLOURS_STRING_PARTS;
 		static std::string COLOURS_SEPARATOR;
@@ -52,6 +57,9 @@ namespace cath {
 	                                           const size_t &);
 
 	display_colour_list make_display_colour_list_from_string(const std::string &);
+
+	display_colour_list default_display_colour_list();
+
 } // namespace cath
 
 #endif

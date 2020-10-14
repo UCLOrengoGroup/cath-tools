@@ -59,12 +59,19 @@ const region & chopping::get_fragment_of_index(const size_t &prm_index ///< TODO
 	return fragments[ prm_index ];
 }
 
+/// \brief (A const-reference to) the domain at the specified index within this chopping
+///
+/// \param prm_index The index of the domain of interest
+const domain &chopping::operator[]( const size_t &prm_index ) const {
+	return domains[ prm_index ];
+}
+
 /// \brief TODOCUMENT
-chopping::const_iterator chopping::begin() const {
+auto chopping::begin() const -> const_iterator {
 	return common::cbegin( domains );
 }
 
 /// \brief TODOCUMENT
-chopping::const_iterator chopping::end() const {
+auto chopping::end() const -> const_iterator {
 	return common::cend( domains );
 }

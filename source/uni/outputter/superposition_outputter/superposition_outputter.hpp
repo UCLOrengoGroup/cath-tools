@@ -38,9 +38,7 @@ namespace cath {
 			virtual std::unique_ptr<superposition_outputter> do_clone() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual void do_output_superposition(const sup::superposition_context &,
-			                                     std::ostream &,
-			                                     const boost::string_ref &) const = 0;
+			virtual void do_output_superposition( const sup::superposition_context &, std::ostream & ) const = 0;
 
 			/// \brief TODOCUMENT
 			virtual bool do_involves_display_spec() const = 0;
@@ -58,9 +56,7 @@ namespace cath {
 			superposition_outputter & operator=(const superposition_outputter &) = default;
 			superposition_outputter & operator=(superposition_outputter &&) noexcept = default;
 
-			void output_superposition(const sup::superposition_context &,
-			                          std::ostream &,
-			                          const boost::string_ref &) const;
+			void output_superposition( const sup::superposition_context &, std::ostream & ) const;
 			bool involves_display_spec() const;
 
 			std::string get_name() const;

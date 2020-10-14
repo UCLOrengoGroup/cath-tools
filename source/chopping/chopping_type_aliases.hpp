@@ -28,9 +28,12 @@
 
 #include <vector>
 
+// clang-format off
+namespace cath { namespace chop { class chopping; } }
 namespace cath { namespace chop { class domain; } }
 namespace cath { namespace chop { class domain_definition; } }
 namespace cath { namespace chop { class region; } }
+// clang-format on
 
 namespace cath {
 	namespace chop {

@@ -25,6 +25,7 @@
 #include "common/clone/make_uptr_clone.hpp"
 #include "common/command_executer.hpp"
 #include "common/file/temp_file.hpp"
+#include "outputter/run_pymol.hpp"
 #include "outputter/superposition_outputter/pymol_file_superposition_outputter.hpp"
 
 #include <iostream>
@@ -32,6 +33,7 @@
 using namespace cath::common;
 using namespace cath::opts;
 using namespace cath::sup;
+using namespace cath::view;
 
 using boost::filesystem::path;
 using boost::string_ref;
@@ -46,8 +48,7 @@ unique_ptr<superposition_outputter> pymol_view_superposition_outputter::do_clone
 
 /// \brief TODOCUMENT
 void pymol_view_superposition_outputter::do_output_superposition(const superposition_context &prm_superposition_context, ///< TODOCUMENT
-                                                                 ostream                     &prm_ostream,               ///< TODOCUMENT
-                                                                 const string_ref            &prm_name                   ///< A name for the superposition (so users of the superposition know what it represents)
+                                                                 ostream                     &prm_ostream                ///< TODOCUMENT
                                                                  ) const {
 	const temp_file pymol_script_filename(".%%%%-%%%%-%%%%-%%%%.pml");
 	const pymol_file_superposition_outputter pymol_file_outputter(
@@ -55,15 +56,12 @@ void pymol_view_superposition_outputter::do_output_superposition(const superposi
 		the_display_spec,
 		content_spec
 	);
-	pymol_file_outputter.output_superposition( prm_superposition_context, prm_ostream, prm_name );
+	pymol_file_outputter.output_superposition( prm_superposition_context, prm_ostream );
 
-	const bool pymol_success = command_executer::execute(
-		pymol_program,
-		{ get_filename( pymol_script_filename ).string() }
+	run_pymol(
+		get_filename( pymol_script_filename ),
+		pymol_program
 	);
-	if ( ! pymol_success ) {
-		BOOST_LOG_TRIVIAL( warning ) << "PyMOL executable " + pymol_program.string() + " did not run/shutdown normally.";
-	}
 }
 
 /// \brief TODOCUMENT

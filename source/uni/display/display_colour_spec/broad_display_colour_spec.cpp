@@ -146,6 +146,23 @@ size_vec cath::get_pdbs_of_colour(const broad_display_colour_spec &prm_colour_sp
 	);
 }
 
+/// Write to specified stream the text to define all the specified colours with the specified viewer
+///
+/// \param prm_colours         The list of colours
+/// \param prm_viewer          The viewer to specify how to render the instructions
+/// \param prm_os              The ostream to which the instructions should be written
+/// \param prm_colour_category The category of colouring (structure-only or structure-or-residue)
+void cath::define_all_colours( const display_colour_vec &prm_colours,
+                               const viewer &            prm_viewer,
+                               ostream &                 prm_os,
+                               const colour_category &   prm_colour_category ) {
+	const size_t num_colours = prm_colours.size();
+	for ( const size_t &colour_ctr : indices( num_colours ) ) {
+		prm_viewer.define_colour(
+		  prm_os, prm_colours[ colour_ctr ], generate_colour_name( colour_ctr, num_colours, prm_colour_category ) );
+	}
+}
+
 /// \brief Write broad-level (ie not residue-specific) colouring instructions for the specified viewer to the specified ostream
 ///        using the specified broad_display_colour_spec and (viewer-cleaned) names
 ///        in the context of the specified list of colours
@@ -159,16 +176,9 @@ void cath::detail::colour_base_and_pdbs_impl(const display_colour_vec        &pr
                                              const colour_category           &prm_colour_category,          ///< The category of colouring (structure-only or structure-or-residue)
                                              ostream                         &prm_os                        ///< The ostream to which the instructions should be written
                                              ) {
+	define_all_colours( prm_colours, prm_viewer, prm_os, prm_colour_category );
+
 	const size_t num_colours = prm_colours.size();
-
-	for (const size_t &colour_ctr : indices( num_colours ) ) {
-		prm_viewer.define_colour(
-			prm_os,
-			prm_colours[ colour_ctr ],
-			generate_colour_name( colour_ctr, num_colours, prm_colour_category )
-		);
-	}
-
 	if ( has_base_colour( prm_colour_spec ) ) {
 		prm_viewer.define_colour( prm_os, get_base_colour( prm_colour_spec ), base_colour_name() );
 		prm_os << prm_viewer.get_colour_base_str( base_colour_name() );

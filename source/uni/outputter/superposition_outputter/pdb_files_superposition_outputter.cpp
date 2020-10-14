@@ -46,8 +46,7 @@ unique_ptr<superposition_outputter> pdb_files_superposition_outputter::do_clone(
 
 /// \brief TODOCUMENT
 void pdb_files_superposition_outputter::do_output_superposition(const superposition_context &prm_supn_context, ///< TODOCUMENT
-                                                                ostream                     &/*prm_ostream*/,  ///< TODOCUMENT
-                                                                const string_ref            &/*prm_name*/      ///< A name for the superposition (so users of the superposition know what it represents)
+                                                                ostream                     &/*prm_ostream*/   ///< TODOCUMENT
                                                                 ) const {
 	const pdb_list       pdbs      = get_supn_content_pdbs( prm_supn_context, content_spec );
 	const name_set_list &name_sets = get_name_sets( prm_supn_context );

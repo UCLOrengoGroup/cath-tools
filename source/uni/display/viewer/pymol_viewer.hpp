@@ -56,8 +56,7 @@ namespace cath {
 		                      const std::string &) const final;
 		bool do_accepts_multiple_colourings() const final;
 
-		void do_begin_colouring(std::ostream &,
-		                        const display_colourer &) final;
+		void do_begin_colouring(std::ostream &) final;
 		std::string do_get_colour_base_str(const std::string &) const final;
 		std::string do_get_colour_pdb_str(const std::string &,
 		                                  const std::string &) const final;
@@ -65,7 +64,7 @@ namespace cath {
 		                                           const std::string &,
 		                                           const residue_id_vec &) const final;
 		void do_end_colouring(std::ostream &,
-		                      const display_colourer &) final;
+		                      const ::std::string &) final;
 
 		void do_write_alignment_extras(std::ostream &,
 		                               const sup::superposition_context &) const final;

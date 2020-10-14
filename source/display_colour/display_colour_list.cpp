@@ -28,6 +28,7 @@
 
 #include "common/algorithm/transform_build.hpp"
 #include "common/boost_addenda/string_algorithm/split_build.hpp"
+#include "common/cpp14/cbegin_cend.hpp"
 #include "display_colour/display_colour.hpp"
 #include "display_colour/display_colour_type_aliases.hpp"
 
@@ -35,8 +36,8 @@ using namespace cath;
 using namespace cath::common;
 using namespace std;
 
-using boost::algorithm::is_any_of;
-using boost::algorithm::join;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::join;
 
 // This can be refreshed using:
 //  awk < /usr/local/svn/source/update/trunk/ddmake/colourlist.txt '{print "\t\"" $2 "," $3 "," $4 "\", // " $1}'
@@ -85,6 +86,16 @@ const display_colour & display_colour_list::colour_of_index(const size_t &prm_in
 	return colours[prm_index];
 }
 
+/// \brief Standard const begin() operator to provide range access
+auto display_colour_list::begin() const -> const_iterator {
+	return common::cbegin( colours );
+}
+
+/// \brief Standard const end() operator to provide range access
+auto display_colour_list::end() const -> const_iterator {
+	return common::cend( colours );
+}
+
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour_list
@@ -108,3 +119,7 @@ display_colour_list cath::make_display_colour_list_from_string(const string &prm
 	return result;
 }
 
+/// \brief Return a display_colour_list of the default list of colours
+display_colour_list cath::default_display_colour_list() {
+	return make_display_colour_list_from_string( display_colour_list::DEFAULT_COLOURS_STRING );
+}

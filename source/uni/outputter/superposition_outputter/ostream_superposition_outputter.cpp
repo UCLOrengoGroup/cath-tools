@@ -44,8 +44,7 @@ unique_ptr<superposition_outputter> ostream_superposition_outputter::do_clone() 
 
 /// \brief TODOCUMENT
 void ostream_superposition_outputter::do_output_superposition(const superposition_context &prm_supn_context, ///< TODOCUMENT
-                                                              ostream                     &prm_ostream,      ///< TODOCUMENT
-                                                              const string_ref            &/*prm_name*/      ///< A name for the superposition (so users of the superposition know what it represents)
+                                                              ostream                     &prm_ostream       ///< TODOCUMENT
                                                               ) const {
 	write_superposed_pdbs_to_ostream(
 		prm_ostream,

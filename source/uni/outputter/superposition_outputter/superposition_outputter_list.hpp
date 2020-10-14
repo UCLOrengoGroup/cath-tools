@@ -53,11 +53,10 @@ namespace cath {
 		std::ostream & operator<<(std::ostream &,
 		                          const superposition_outputter_list &);
 
-		void use_all_superposition_outputters(const superposition_outputter_list &,
-		                                      const sup::superposition_context &,
-		                                      std::ostream &,
-		                                      std::ostream &,
-		                                      const boost::string_ref &);
+		void use_all_superposition_outputters( const superposition_outputter_list &,
+		                                       const sup::superposition_context &,
+		                                       std::ostream &,
+		                                       std::ostream & );
 
 		bool any_superposition_outputters_involve_display_spec(const superposition_outputter_list &);
 	} // namespace opts

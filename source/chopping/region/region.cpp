@@ -24,6 +24,7 @@
 #include <boost/program_options.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
+#include "biocore/residue_id.hpp"
 #include "chopping/chopping_format/sillitoe_chopping_format.hpp"
 #include "common/exception/invalid_argument_exception.hpp"
 #include "common/optional/make_optional_if.hpp"
@@ -254,6 +255,28 @@ const size_t & cath::chop::get_start_index(const region &prm_region ///< TODOCUM
 const size_t & cath::chop::get_stop_index(const region &prm_region ///< TODOCUMENT
                                           ) {
 	return *get_opt_stop_index( prm_region );
+}
+
+/// \brief Get the residue_id of the residue on which the specified region starts
+///
+/// \pre has_chain_label( prm_region ) && has_names( prm_region )
+///
+/// \relates region
+///
+/// \param prm_region The region to query
+residue_id cath::chop::get_start_id( const region &prm_region ) {
+	return { *prm_region.get_opt_chain_label(), get_start_name( prm_region ) };
+}
+
+/// \brief Get the residue_id of the residue on which the specified region stops
+///
+/// \pre has_chain_label( prm_region ) && has_names( prm_region )
+///
+/// \relates region
+///
+/// \param prm_region The region to query
+residue_id cath::chop::get_stop_id( const region &prm_region ) {
+	return { *prm_region.get_opt_chain_label(), get_start_name( prm_region ) };
 }
 
 /// \brief TODOCUMENT

@@ -56,16 +56,15 @@ namespace cath {
 		                              const display_colour &,
 		                              const std::string &) const = 0;
 		virtual bool do_accepts_multiple_colourings() const;
-		virtual void do_begin_colouring(std::ostream &,
-		                                const display_colourer &);
+		virtual void do_begin_colouring(std::ostream &);
 		virtual std::string do_get_colour_base_str(const std::string &) const = 0;
 		virtual std::string do_get_colour_pdb_str(const std::string &,
 		                                          const std::string &) const = 0;
 		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
 		                                                   const std::string &,
 		                                                   const residue_id_vec &) const = 0;
-		virtual void do_end_colouring(std::ostream &,
-		                              const display_colourer &);
+		virtual void do_end_colouring(::std::ostream &,
+		                              const ::std::string &);
 		virtual void do_write_alignment_extras(std::ostream &,
 		                                       const sup::superposition_context &) const = 0;
 		virtual void do_write_end(std::ostream &,
@@ -92,8 +91,7 @@ namespace cath {
 		                   const display_colour &,
 		                   const std::string &) const;
 		bool accepts_multiple_colourings() const;
-		void begin_colouring(std::ostream &,
-		                     const display_colourer &);
+		void begin_colouring(std::ostream &);
 		std::string get_colour_base_str(const std::string &) const;
 		std::string get_colour_pdb_str(const std::string &,
 		                               const std::string &) const;
@@ -101,7 +99,7 @@ namespace cath {
 		                                        const std::string &,
 		                                        const residue_id_vec &) const;
 		void end_colouring(std::ostream &,
-		                   const display_colourer &);
+		                   const ::std::string &);
 		void write_alignment_extras(std::ostream &,
 		                            const sup::superposition_context &) const;
 		void write_end(std::ostream &,
@@ -122,21 +120,19 @@ namespace cath {
 		THROW                          ///< Throw on encountering a missing alignment
 	};
 
-	void output_superposition_to_viewer(std::ostream &,
-	                                    viewer &,
-	                                    const display_spec &,
-	                                    const sup::superposition_context &,
-	                                    const sup::superposition_content_spec &,
-	                                    const missing_aln_policy & = missing_aln_policy::THROW,
-	                                    const boost::string_ref & = "");
+	void output_superposition_to_viewer( std::ostream &,
+	                                     viewer &,
+	                                     const display_spec &,
+	                                     const sup::superposition_context &,
+	                                     const sup::superposition_content_spec &,
+	                                     const missing_aln_policy & = missing_aln_policy::THROW );
 
-	void output_superposition_to_viewer_file(const boost::filesystem::path &,
-	                                         viewer &,
-	                                         const display_spec &,
-	                                         const sup::superposition_context &,
-	                                         const sup::superposition_content_spec &,
-	                                         const missing_aln_policy & = missing_aln_policy::THROW,
-	                                         const boost::string_ref & = "");
+	void output_superposition_to_viewer_file( const boost::filesystem::path &,
+	                                          viewer &,
+	                                          const display_spec &,
+	                                          const sup::superposition_context &,
+	                                          const sup::superposition_content_spec &,
+	                                          const missing_aln_policy & = missing_aln_policy::THROW );
 
 	std::string colour_of_index_from_colours_string(const size_t &,
 	                                                const std::string &);
@@ -156,17 +152,17 @@ namespace cath {
 	}
 
 	/// \brief NVI pass-through to the virtual do_begin_colouring()
-	inline void viewer::begin_colouring(std::ostream           &prm_os,      ///< The ostream to which the PyMOL commands should be written
-	                                    const display_colourer &prm_colourer ///< The display_colourer to be used for the colouring that is beginning
+	inline void viewer::begin_colouring(std::ostream &prm_os ///< The ostream to which the PyMOL commands should be written
 	                                    ) {
-		do_begin_colouring( prm_os, prm_colourer );
+		do_begin_colouring( prm_os );
 	}
 
 	/// \brief NVI pass-through to the virtual do_end_colouring()
-	inline void viewer::end_colouring(std::ostream           &prm_os,      ///< The ostream to which the PyMOL commands should be written
-	                                  const display_colourer &prm_colourer ///< The display_colourer to be used for the colouring that is ending
-	                                  ) {
-		do_end_colouring( prm_os, prm_colourer );
+	///
+	/// \param prm_os    The ostream to which the PyMOL commands should be written
+	/// \param prm_label The label to be used for the colouring that is ending
+	inline void viewer::end_colouring( ::std::ostream &prm_os, const ::std::string &prm_label ) {
+		do_end_colouring( prm_os, prm_label );
 	}
 
 } // namespace cath

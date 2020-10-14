@@ -39,9 +39,9 @@ namespace cath {
 			sup::superposition_content_spec content_spec;
 
 			std::unique_ptr<superposition_outputter> do_clone() const final;
-			void do_output_superposition(const sup::superposition_context &,
-			                             std::ostream &,
-			                             const boost::string_ref &) const final;
+
+			void do_output_superposition( const sup::superposition_context &, std::ostream & ) const final;
+
 			bool do_involves_display_spec() const final;
 			std::string do_get_name() const final;
 
