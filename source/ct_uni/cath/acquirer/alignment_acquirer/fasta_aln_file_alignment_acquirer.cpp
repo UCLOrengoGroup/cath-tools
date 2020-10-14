@@ -35,15 +35,15 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> fasta_aln_file_alignment_acquirer::do_clone() const {

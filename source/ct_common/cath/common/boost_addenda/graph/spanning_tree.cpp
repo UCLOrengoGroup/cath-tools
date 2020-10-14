@@ -35,21 +35,21 @@
 #include <tuple>
 #include <vector>
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::filesystem::path;
-using boost::irange;
-using std::make_pair;
-using std::make_tuple;
-using std::max;
-using std::min;
-using std::ofstream;
-using std::string;
-using std::vector;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::filesystem::path;
+using ::boost::irange;
+using ::std::make_pair;
+using ::std::make_tuple;
+using ::std::max;
+using ::std::min;
+using ::std::ofstream;
+using ::std::string;
+using ::std::vector;
 
 /// \brief Get a simple ( 0 <-> 1 <-> 2 <-> ... <-> (prm_num_items -1) spanning tree)
 size_size_pair_vec cath::common::make_simple_unweighted_spanning_tree(const size_t &prm_num_items ///< The number of items to span
@@ -184,7 +184,7 @@ size_size_doub_tpl_vec cath::common::order_spanning_tree_from_start(const size_s
 /// \brief Create a graphviz string representing the specified spanning tree
 string cath::common::make_graphviz_string_of_spanning_tree(const size_size_doub_tpl_vec &prm_spanning_tree ///< The tree to represent in graphviz format
                                                            ) {
-	using std::to_string;
+	using ::std::to_string;
 	return "digraph example {\n"
 		+ join(
 			indices( prm_spanning_tree.size() )

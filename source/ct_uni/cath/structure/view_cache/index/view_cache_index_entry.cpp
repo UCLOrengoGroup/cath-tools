@@ -26,12 +26,12 @@
 
 #include "cath/structure/view_cache/index/view_cache_index_entry.hpp"
 
-using namespace cath::index;
-using namespace cath::index::detail;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath::index;
+using namespace ::cath::index::detail;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::numeric_cast;
+using ::boost::numeric_cast;
 
 //template <int T> class bytes_occupied;
 //

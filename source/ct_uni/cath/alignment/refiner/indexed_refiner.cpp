@@ -37,27 +37,27 @@
 #include "cath/common/metaprogramming/template_list.hpp"
 #include "cath/common/type_to_string.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::scan;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::scan;
 
 #include <tuple>
 #include <type_traits>
 #include <vector>
 
-using boost::adaptors::transformed;
-using boost::algorithm::erase_all;
-using boost::algorithm::replace_all;
-using boost::algorithm::replace_all_copy;
-// using boost::container::small_vector;
-using boost::filesystem::path;
-using boost::irange;
-using std::chrono::high_resolution_clock;
-using std::pair;
-using std::string;
-using std::tuple;
-using std::vector;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::erase_all;
+using ::boost::algorithm::replace_all;
+using ::boost::algorithm::replace_all_copy;
+// using ::boost::container::small_vector;
+using ::boost::filesystem::path;
+using ::boost::irange;
+using ::std::chrono::high_resolution_clock;
+using ::std::pair;
+using ::std::string;
+using ::std::tuple;
+using ::std::vector;
 
 using cell_type_list = tuple<
                               tuple< vector      <simple_locn_index>     >

@@ -28,16 +28,16 @@
 #include <sstream>
 #include <string>
 
-using namespace cath;
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
-using boost::filesystem::path;
-using std::ifstream;
-using std::istream;
-using std::istringstream;
-using std::pair;
-using std::string;
+using ::boost::filesystem::path;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::istringstream;
+using ::std::pair;
+using ::std::string;
 
 /// \brief Parse the cluster item names from the specified istream, populating the specified name_ider in the process
 doub_vec cath::clust::parse_names(istream           &prm_input,    ///< The istream from which to parse the names

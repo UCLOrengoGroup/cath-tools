@@ -27,10 +27,10 @@
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
 //namespace std {
 //	/// \brief Naughty addition of an insertion operator into std:: to get Boost.Test to output size_size_pairs

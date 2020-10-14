@@ -25,10 +25,10 @@
 
 #include <memory>
 
-using namespace cath;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::file;
 
-using std::string;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(element_type_string_test_suite)
 

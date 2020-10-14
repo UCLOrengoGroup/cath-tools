@@ -30,18 +30,18 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
-using namespace cath::test;
-using namespace std::literals::string_literals;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
+using namespace ::cath::test;
+using namespace ::std::literals::string_literals;
 
-using boost::filesystem::path;
-using boost::test_tools::per_element;
-using std::make_pair;
-using std::pair;
-using std::string;
-using std::vector;
+using ::boost::filesystem::path;
+using ::boost::test_tools::per_element;
+using ::std::make_pair;
+using ::std::pair;
+using ::std::string;
+using ::std::vector;
 
 namespace cath {
 	namespace test {

@@ -31,13 +31,13 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::irange;
-using std::max;
-using std::min;
+using ::boost::irange;
+using ::std::max;
+using ::std::min;
 
 /// \brief Ctor to populate the sec_file_records and planar_angles_lists
 sec_file::sec_file(sec_file_record_vec             prm_sec_file_records,   ///< The list of sec_file_records

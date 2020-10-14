@@ -35,13 +35,13 @@
 #include <ostream>  // for ostream, operator<<, etc
 #include <string>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
-using boost::adaptors::map_keys;
-using boost::algorithm::join;
+using ::boost::adaptors::map_keys;
+using ::boost::algorithm::join;
 
 /// \brief TODOCUMENT
 alignment_scan_comparison & alignment_scan_comparison::operator+=(const pair<quad_and_rep_criteria_result, double> &prm_result_and_score ///< TODOCUMENT

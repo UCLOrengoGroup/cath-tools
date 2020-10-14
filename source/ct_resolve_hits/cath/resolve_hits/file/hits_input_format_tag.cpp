@@ -27,17 +27,17 @@
 
 #include <map>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
 
-using boost::algorithm::to_lower;
-using boost::any;
-using std::istream;
-using std::map;
-using std::ostream;
-using std::string;
+using ::boost::algorithm::to_lower;
+using ::boost::any;
+using ::std::istream;
+using ::std::map;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Getter for a map from name to hits_input_format_tag
 ///

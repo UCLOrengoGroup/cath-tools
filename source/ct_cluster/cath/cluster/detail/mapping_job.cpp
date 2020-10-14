@@ -28,16 +28,16 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::clust::detail;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::clust::detail;
+using namespace ::cath::common;
 
-using boost::algorithm::is_any_of;
-using boost::filesystem::path;
-using boost::token_compress_on;
-using std::ifstream;
-using std::istream;
-using std::string;
+using ::boost::algorithm::is_any_of;
+using ::boost::filesystem::path;
+using ::boost::token_compress_on;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::string;
 
 /// \brief Ctor
 mapping_job::mapping_job(const str_opt  &prm_batch_id,                    ///< An optional identifier of the batch

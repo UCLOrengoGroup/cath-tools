@@ -33,18 +33,18 @@
 
 #include <iostream>
 
-using namespace cath::clust;
-using namespace cath::clust::detail;
-using namespace cath::common;
+using namespace ::cath::clust;
+using namespace ::cath::clust::detail;
+using namespace ::cath::common;
 
-using boost::adaptors::filtered;
-using boost::adaptors::reversed;
-using boost::none;
-using boost::remove_erase_if;
-using boost::sub_range;
-using std::cref;
-using std::max;
-using std::move;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::reversed;
+using ::boost::none;
+using ::boost::remove_erase_if;
+using ::boost::sub_range;
+using ::std::cref;
+using ::std::max;
+using ::std::move;
 
 /// \brief Make a vector of iterators into the specified vector of merges that demarcate the
 ///        boundaries of the each of the regions up to (and equal to) each of the successively
@@ -90,7 +90,7 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &prm_merges,
                                                  const item_idx     &prm_num_entities, ///< The number of items being clustered
                                                  const strength_vec &prm_cutoffs       ///< The cutoffs at which the clusters should be drawn, in ascending order
                                                  ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	// The layers that will be populated
 	hierarchy_layer_vec hier_layers;

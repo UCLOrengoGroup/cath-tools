@@ -26,17 +26,17 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/superposition/supn_regions_context.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::algorithm::join;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::algorithm::join;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for the context in which the alignment regions should be shown in the superposition (alone/in_chain/in_pdb)
 const string superposition_content_options_block::PO_REGIONS_CONTEXT                 { "regions-context"          };

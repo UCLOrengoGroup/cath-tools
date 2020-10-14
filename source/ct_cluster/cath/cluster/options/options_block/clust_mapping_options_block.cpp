@@ -25,18 +25,18 @@
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath;
 
-using boost::lexical_cast;
-using boost::none;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::lexical_cast;
+using ::boost::none;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
 const string clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL   { "min_equiv_dom_ol"   };
@@ -58,7 +58,7 @@ string clust_mapping_options_block::do_get_block_name() const {
 void clust_mapping_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
                                                                         const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                         ) {
-	using std::to_string;
+	using ::std::to_string;
 	const string percent_varname   { "<percent>" };
 
 	const auto min_equiv_dom_ol_notifier   = [&] (const double &x) { the_spec.set_min_equiv_dom_ol  ( x / 100.0 ); };

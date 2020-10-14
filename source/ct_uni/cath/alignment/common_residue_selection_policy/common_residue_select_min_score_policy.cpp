@@ -27,12 +27,12 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 constexpr double common_residue_select_min_score_policy::MIN_CUTOFF;
 constexpr double common_residue_select_min_score_policy::MAX_CUTOFF;
@@ -70,7 +70,7 @@ unique_ptr<common_residue_selection_policy> common_residue_select_min_score_poli
 /// \brief Ctor for common_residue_select_min_score_policy
 common_residue_select_min_score_policy::common_residue_select_min_score_policy(const double &prm_score_cutoff ///< TODOCUMENT
                                                                                ) : score_cutoff(prm_score_cutoff) {
-	using boost::math::isfinite;
+	using ::boost::math::isfinite;
 	if (!isfinite(get_score_cutoff())) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argument score_cutoff must be a normal, finite floating-point number"));
 	}

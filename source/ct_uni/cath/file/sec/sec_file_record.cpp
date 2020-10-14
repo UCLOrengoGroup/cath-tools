@@ -30,11 +30,11 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::std;
 
 /// \brief Check that the unit direction vector has a length vaguely close to one
 void sec_file_record::check_unit_dirn_length() {

@@ -36,23 +36,23 @@
 
 #include <cmath>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::scan;
-using namespace cath::scan::detail;
-using namespace cath::sec::detail;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
+using namespace ::cath::sec::detail;
 
-using boost::irange;
-using boost::make_optional;
-using boost::math::constants::pi;
-using boost::none;
-using boost::numeric_cast;
-using boost::range::count;
-using std::plus;
-using std::sqrt;
-using std::vector;
+using ::boost::irange;
+using ::boost::make_optional;
+using ::boost::math::constants::pi;
+using ::boost::none;
+using ::boost::numeric_cast;
+using ::boost::range::count;
+using ::std::plus;
+using ::std::sqrt;
+using ::std::vector;
 
 constexpr size_t dssp_ball_constants::NUMBER;
 constexpr double dssp_ball_constants::RADIUS_N;

@@ -37,16 +37,16 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::range::count_if;
-using std::hash;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::range::count_if;
+using ::std::hash;
+using ::std::string;
 
 /// \brief Build a strucs_context from the specified one that contains the backbone-complete subsets of the PDBs
 ///
@@ -118,7 +118,7 @@ string cath::file::to_string(const strucs_context &prm_strucs_context ///< The s
 	return "strucs_context[" + join(
 		indices( size( prm_strucs_context ) )
 			| transformed( [&] (const size_t &struc_context_idx) {
-				using std::to_string;
+				using ::std::to_string;
 
 				const pdb            &the_pdb         = prm_strucs_context.get_pdbs      () [ struc_context_idx ];
 				const name_set       &the_name_set    = prm_strucs_context.get_name_sets () [ struc_context_idx ];

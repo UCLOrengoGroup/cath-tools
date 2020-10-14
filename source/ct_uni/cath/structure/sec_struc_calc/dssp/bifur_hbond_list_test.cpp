@@ -24,10 +24,10 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::sec;
-using namespace cath::test;
+using namespace ::cath::sec;
+using namespace ::cath::test;
 
-using boost::none;
+using ::boost::none;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( hbond_half_opt_pair )
 

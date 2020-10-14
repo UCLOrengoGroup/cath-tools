@@ -36,7 +36,7 @@
 #include <cstdlib>
 #include <iostream>
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 

@@ -32,12 +32,12 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 namespace cath {
 	namespace test {

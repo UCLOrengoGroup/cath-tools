@@ -24,12 +24,12 @@
 
 #include <array>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::array;
-using std::make_tuple;
-using std::pair;
-using std::tuple;
+using ::std::array;
+using ::std::make_tuple;
+using ::std::pair;
+using ::std::tuple;
 
 BOOST_AUTO_TEST_SUITE(mins_maxs_tuple_pair_mins_maxs_element_test_suite)
 

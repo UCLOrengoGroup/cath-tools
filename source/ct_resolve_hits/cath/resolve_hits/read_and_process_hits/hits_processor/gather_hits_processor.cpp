@@ -22,12 +22,12 @@
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
 
-using std::string;
-using std::unique_ptr;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method
 unique_ptr<hits_processor> gather_hits_processor::do_clone() const {

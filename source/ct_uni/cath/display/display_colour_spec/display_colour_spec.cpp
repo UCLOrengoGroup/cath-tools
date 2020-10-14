@@ -39,20 +39,20 @@
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/file/pdb/pdb_residue.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::adaptors::filtered;
-using boost::adaptors::map_keys;
-using boost::adaptors::map_values;
-using boost::none;
-using boost::range::join;
-using std::make_pair;
-using std::ostream;
-using std::ostringstream;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::map_keys;
+using ::boost::adaptors::map_values;
+using ::boost::none;
+using ::boost::range::join;
+using ::std::make_pair;
+using ::std::ostream;
+using ::std::ostringstream;
+using ::std::string;
 
 /// \brief Ctor from a broad_display_colour_spec
 display_colour_spec::display_colour_spec(broad_display_colour_spec prm_broad_spec ///< The broad_display_colour_spec from which to construct this display_colour_spec

@@ -27,15 +27,15 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/structure/geometry/coord.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::tribool;
+using ::boost::tribool;
 
 /// \brief A standard do_clone method.
 unique_ptr<length_getter> num_aligned_length_getter::do_clone() const {

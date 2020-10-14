@@ -33,17 +33,17 @@
 #include "cath/ssap/windowed_matrix.hpp"
 //#include "cath/common/algorithm/copy_build.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::adaptors::map_values;
-using boost::algorithm::join;
-using boost::numeric_cast;
-using boost::range::max_element;
+using ::boost::adaptors::map_values;
+using ::boost::algorithm::join;
+using ::boost::numeric_cast;
+using ::boost::range::max_element;
 
 /// \brief TODOCUMENT
 void return_path_matrix::check_length(const size_type &prm_length ///< TODOCUMENT

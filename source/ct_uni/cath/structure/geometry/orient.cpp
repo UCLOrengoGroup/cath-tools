@@ -34,13 +34,13 @@
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_linalg.h>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::geom::detail;
-using namespace cath::geom;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::geom::detail;
+using namespace ::cath::geom;
 
-using boost::accumulate;
-// using boost::range::join;
+using ::boost::accumulate;
+// using ::boost::range::join;
 
 /// \brief Calculate the x and y coordinates of the later-weighted centre of gravity
 ///        (in which each coordinate is given a weight that increases linearly throughout the coords)

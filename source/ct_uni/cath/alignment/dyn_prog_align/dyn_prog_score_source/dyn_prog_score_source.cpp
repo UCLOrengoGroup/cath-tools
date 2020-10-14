@@ -23,8 +23,8 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/temp_check_offset_1.hpp"
 
-using namespace cath;
-using namespace cath::align;
+using namespace ::cath;
+using namespace ::cath::align;
 
 /// \brief An NVI pass-through method to get the number of elements in the first sequence
 size_t dyn_prog_score_source::get_length_a() const {

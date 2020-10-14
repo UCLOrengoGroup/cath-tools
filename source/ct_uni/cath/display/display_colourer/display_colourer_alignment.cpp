@@ -40,15 +40,15 @@
 #include <iostream>
 #include <numeric>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::detail;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::detail;
+using namespace ::cath::sup;
 
-using boost::accumulate;
-using std::string;
-using std::unique_ptr;
+using ::boost::accumulate;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<display_colourer> display_colourer_alignment::do_clone() const {

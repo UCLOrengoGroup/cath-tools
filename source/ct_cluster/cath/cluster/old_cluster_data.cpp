@@ -25,19 +25,19 @@
 
 #include "cath/common/boost_addenda/range/indices.hpp"
 
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
-using boost::adaptors::transformed;
-using boost::optional;
-using boost::algorithm::join;
+using ::boost::adaptors::transformed;
+using ::boost::optional;
+using ::boost::algorithm::join;
 
 /// \brief Generate a string describing the specified old_cluster_data
 ///
 /// \relates old_cluster_data
 std::string cath::clust::to_string(const old_cluster_data &prm_old_cluster_data ///< The old_cluster_data to describe
                                    ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	// Return a string summarising the old_cluster_data
 	return "old_cluster_data["

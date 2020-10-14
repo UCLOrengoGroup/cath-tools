@@ -27,11 +27,11 @@
 
 #include <sstream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 namespace cath {
 	namespace test {

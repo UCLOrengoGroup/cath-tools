@@ -32,12 +32,12 @@
 #include <deque>
 #include <vector>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::range::next_permutation;
+using ::boost::range::next_permutation;
 
 namespace cath {
 	namespace test {

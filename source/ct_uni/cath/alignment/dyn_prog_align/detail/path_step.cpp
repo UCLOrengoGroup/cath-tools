@@ -27,10 +27,10 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 const path_step_vec path_step_helper::ALL_PATH_STEPS = { path_step::ALIGN_PAIR,

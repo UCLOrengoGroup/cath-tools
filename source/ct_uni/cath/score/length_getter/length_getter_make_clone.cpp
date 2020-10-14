@@ -23,8 +23,8 @@
 #include "cath/score/length_getter/protein_only_length_getter.hpp"
 #include "cath/score/length_getter/sym_protein_only_length_getter.hpp"
 
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief Specialisation for getting a protein_only_length_getter clone from a protein_only_length_getter
 ///        object.

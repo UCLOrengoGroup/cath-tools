@@ -57,7 +57,7 @@ namespace cath { namespace score { class ssap_score; } }
 namespace cath { namespace score { class structal_score; } }
 namespace cath { namespace score { class tm_score; } }
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 	namespace score {

@@ -45,28 +45,28 @@
 #include "cath/ssap/ssap.hpp"
 #include "cath/superposition/options/align_regions_options_block.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::algorithm::trim_right_copy;
-using boost::filesystem::create_directories;
-using boost::filesystem::exists;
-using boost::filesystem::is_empty;
-using boost::filesystem::path;
-using boost::filesystem::temp_directory_path;
-using boost::format;
-using boost::irange;
-using std::ofstream;
-using std::max;
-using std::pair;
-using std::string;
-using std::unique_ptr;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::algorithm::trim_right_copy;
+using ::boost::filesystem::create_directories;
+using ::boost::filesystem::exists;
+using ::boost::filesystem::is_empty;
+using ::boost::filesystem::path;
+using ::boost::filesystem::temp_directory_path;
+using ::boost::format;
+using ::boost::irange;
+using ::std::ofstream;
+using ::std::max;
+using ::std::pair;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> do_the_ssaps_alignment_acquirer::do_clone() const {
@@ -82,7 +82,7 @@ bool do_the_ssaps_alignment_acquirer::do_requires_backbone_complete_input() cons
 pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< The details of the structures for which the alignment and spanning tree is required
                                                                                                         const align_refining &prm_align_refining  ///< How much refining should be done to the alignment
                                                                                                         ) const {
-	using std::to_string;
+	using ::std::to_string;
 
 	// Get the directory in which the cath-ssaps should be done
 	const path ssaps_dir = get_directory_of_joy().value_or(

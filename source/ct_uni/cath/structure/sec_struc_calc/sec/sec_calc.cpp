@@ -39,22 +39,22 @@
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::sec;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::sec;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::format;
-using boost::integer_range;
-using boost::irange;
-using boost::sub_range;
-using std::make_pair;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::format;
+using ::boost::integer_range;
+using ::boost::irange;
+using ::boost::sub_range;
+using ::std::make_pair;
+using ::std::string;
 
 /// \brief Round a coord in the way they are in sec files to allow for tests to compare
 ///

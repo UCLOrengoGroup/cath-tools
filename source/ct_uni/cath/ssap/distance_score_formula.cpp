@@ -22,8 +22,8 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace std;
+using namespace ::cath;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 map<distance_score_formula, string> name_of_distance_score_formula::get() {

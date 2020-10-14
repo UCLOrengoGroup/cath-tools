@@ -32,11 +32,11 @@
 //#include <iostream> // *** TEMPORARY ***
 #include <vector>
 
-using namespace cath;
-using namespace cath::common::test;
-using namespace cath::geom;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common::test;
+using namespace ::cath::geom;
+using namespace ::cath::sup;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

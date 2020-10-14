@@ -23,10 +23,10 @@
 
 #include "cath/resolve_hits/file/cath_id_score_category.hpp"
 
-using namespace cath::rslv;
+using namespace ::cath::rslv;
 
-using boost::string_ref;
-using std::string;
+using ::boost::string_ref;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(cath_id_score_category_test_suite)
 

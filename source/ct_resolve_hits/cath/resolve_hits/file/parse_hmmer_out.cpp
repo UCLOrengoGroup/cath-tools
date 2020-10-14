@@ -29,15 +29,15 @@
 #include <fstream>
 #include <memory>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
-using namespace cath::seq;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
+using namespace ::cath::seq;
 
-using boost::filesystem::path;
-using std::ifstream;
-using std::istream;
+using ::boost::filesystem::path;
+using ::std::ifstream;
+using ::std::istream;
 
 /// \brief Parse HMMER output data from the specified file and pass the hits to the specified read_and_process_mgr
 void cath::rslv::parse_hmmer_out_file(read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to which the hits should be passed for processing

@@ -34,19 +34,19 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::clust::detail;
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::seq;
+using namespace ::cath;
+using namespace ::cath::clust::detail;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::seq;
 
-using boost::adaptors::filtered;
-using boost::algorithm::any_of;
-using boost::none;
-using boost::range::stable_partition;
-using std::less;
-using std::max;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::algorithm::any_of;
+using ::boost::none;
+using ::boost::range::stable_partition;
+using ::std::less;
+using ::std::max;
+using ::std::string;
 
 /// \brief Map old clusters to new clusters
 ///

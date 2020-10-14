@@ -24,11 +24,11 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/hit_extras.hpp"
 
-using namespace cath;
-using namespace cath::rslv;
+using namespace ::cath;
+using namespace ::cath::rslv;
 
-using boost::make_optional;
-using boost::none;
+using ::boost::make_optional;
+using ::boost::none;
 
 BOOST_AUTO_TEST_SUITE(hit_extras_test_suite)
 

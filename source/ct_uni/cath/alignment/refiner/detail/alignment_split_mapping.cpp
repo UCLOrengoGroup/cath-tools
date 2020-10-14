@@ -37,15 +37,15 @@
 #include <iostream> // ***** TEMPORARY *****
 #include <iterator>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::none;
-using boost::numeric_cast;
-using boost::range::lower_bound;
+using ::boost::none;
+using ::boost::numeric_cast;
+using ::boost::range::lower_bound;
 
 /// \brief Ctor for alignment_split_mapping
 ///

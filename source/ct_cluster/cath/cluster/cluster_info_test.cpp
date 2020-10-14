@@ -26,16 +26,16 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::seq;
-using namespace cath::test;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::seq;
+using namespace ::cath::test;
 
-using boost::algorithm::is_strictly_increasing;
-using boost::none;
-using std::pair;
-using std::string;
-using std::vector;
+using ::boost::algorithm::is_strictly_increasing;
+using ::boost::none;
+using ::std::pair;
+using ::std::string;
+using ::std::vector;
 
 namespace cath {
 	namespace test {

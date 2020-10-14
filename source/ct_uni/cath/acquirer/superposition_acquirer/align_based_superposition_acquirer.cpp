@@ -48,28 +48,28 @@
 #include <fstream>
 #include <tuple>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::accumulate;
-using boost::filesystem::path;
-using std::endl;
-using std::get;
-using std::ifstream;
-using std::make_pair;
-using std::make_tuple;
-using std::map;
-using std::ostream;
-using std::pair;
-using std::string;
-using std::tuple;
-using std::vector;
+using ::boost::accumulate;
+using ::boost::filesystem::path;
+using ::std::endl;
+using ::std::get;
+using ::std::ifstream;
+using ::std::make_pair;
+using ::std::make_tuple;
+using ::std::map;
+using ::std::ostream;
+using ::std::pair;
+using ::std::string;
+using ::std::tuple;
+using ::std::vector;
 
 /// \brief TODOCUMENT
 superposition_context align_based_superposition_acquirer::do_get_superposition(ostream &prm_stderr ///< TODOCMENT

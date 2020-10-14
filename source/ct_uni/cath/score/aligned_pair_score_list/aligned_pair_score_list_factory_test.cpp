@@ -25,9 +25,9 @@
 #include "cath/score/aligned_pair_score_list/aligned_pair_score_list_factory.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

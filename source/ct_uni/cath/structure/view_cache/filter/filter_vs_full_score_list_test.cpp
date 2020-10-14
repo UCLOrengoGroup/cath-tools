@@ -31,11 +31,11 @@
 
 #include <random>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace cath::index::filter;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::cath::index::filter;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

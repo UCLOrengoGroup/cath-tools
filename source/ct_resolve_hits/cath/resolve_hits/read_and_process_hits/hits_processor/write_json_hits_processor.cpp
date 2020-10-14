@@ -27,13 +27,13 @@
 #include "cath/resolve_hits/resolve/hit_resolver.hpp"
 #include "cath/resolve_hits/scored_hit_arch.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv::detail;
+using namespace ::cath::common;
+using namespace ::cath::rslv::detail;
 
-using std::move;
-using std::ostream;
-using std::string;
-using std::unique_ptr;
+using ::std::move;
+using ::std::ostream;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method
 unique_ptr<hits_processor> write_json_hits_processor::do_clone() const {

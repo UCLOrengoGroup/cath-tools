@@ -36,16 +36,16 @@
 
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::geometry::cs::cartesian;
-using boost::geometry::model::point;
-using boost::mpl::contains;
-using boost::numeric_cast;
-using boost::range::for_each;
+using ::boost::geometry::cs::cartesian;
+using ::boost::geometry::model::point;
+using ::boost::mpl::contains;
+using ::boost::numeric_cast;
+using ::boost::range::for_each;
 
 /// \todo There are problems with quaternion tests when using double (or long double).
 ///       For now, the tests are only run on floats because that's what's used in the

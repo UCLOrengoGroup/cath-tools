@@ -50,25 +50,25 @@
 #include <fstream>
 #include <sstream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::detail;
-using namespace cath::file;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::detail;
+using namespace ::cath::file;
+using namespace ::cath::sup;
 
-using boost::algorithm::is_space;
-using boost::filesystem::path;
-using boost::format;
-using boost::is_alnum;
-using boost::lexical_cast;
-using boost::string_ref;
-using std::flush;
-using std::max;
-using std::ofstream;
-using std::ostream;
-using std::string;
-using std::unique_ptr;
+using ::boost::algorithm::is_space;
+using ::boost::filesystem::path;
+using ::boost::format;
+using ::boost::is_alnum;
+using ::boost::lexical_cast;
+using ::boost::string_ref;
+using ::std::flush;
+using ::std::max;
+using ::std::ofstream;
+using ::std::ostream;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief Default is to no accept multiple colourings
 bool viewer::do_accepts_multiple_colourings() const {

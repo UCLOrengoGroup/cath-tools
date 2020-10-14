@@ -20,8 +20,8 @@
 
 #include "out_of_range_exception.hpp"
 
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief Constructor for out_of_range_exception.
 out_of_range_exception::out_of_range_exception(const string &what_arg ///< The name of the argument that caused the problem (not ideal because the creation of the string could throw)

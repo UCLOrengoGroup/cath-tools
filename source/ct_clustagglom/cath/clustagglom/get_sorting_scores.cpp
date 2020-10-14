@@ -25,8 +25,8 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/invert_permutation.hpp"
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
 /// \brief Get the ordering rank of each entry
 ///

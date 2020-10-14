@@ -25,9 +25,9 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
 BOOST_AUTO_TEST_SUITE(map_results_test_suite)
 

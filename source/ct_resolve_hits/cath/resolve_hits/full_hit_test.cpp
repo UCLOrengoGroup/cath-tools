@@ -26,11 +26,11 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
+using namespace ::cath::test;
 
 namespace cath {
 	namespace test {

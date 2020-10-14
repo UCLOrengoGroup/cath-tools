@@ -33,16 +33,16 @@
 #include "cath/resolve_hits/algo/discont_hits_index_by_start.hpp"
 #include "cath/resolve_hits/calc_hit_list.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
+using namespace ::cath::seq;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::all_of;
-using boost::algorithm::any_of;
-using boost::range::max_element;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::all_of;
+using ::boost::algorithm::any_of;
+using ::boost::range::max_element;
 
 /// \brief Build a masked_bests_cacher to handle the caching of best results in the specified masked_bests_cache
 ///        whilst scanning from the specified start position with the specified hits and mask

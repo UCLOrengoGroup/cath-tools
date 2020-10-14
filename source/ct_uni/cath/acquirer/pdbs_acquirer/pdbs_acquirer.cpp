@@ -37,19 +37,19 @@
 #include "cath/options/options_block/pdb_input_options_block.hpp"
 #include "cath/options/options_block/pdb_input_spec.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::none;
-using std::cerr;
-using std::istream;
-using std::make_pair;
-using std::pair;
-using std::unique_ptr;
-using std::vector;
+using ::boost::none;
+using ::std::cerr;
+using ::std::istream;
+using ::std::make_pair;
+using ::std::pair;
+using ::std::unique_ptr;
+using ::std::vector;
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<pdbs_acquirer> pdbs_acquirer::clone() const {

@@ -25,8 +25,8 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
 namespace cath {
 	namespace test {

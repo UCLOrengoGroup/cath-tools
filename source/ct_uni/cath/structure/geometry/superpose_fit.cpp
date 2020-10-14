@@ -31,9 +31,9 @@
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_linalg.h>
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::geom::detail;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::geom::detail;
 
 /// \brief Find the rotation that, when applied to the first specified coord_list,
 ///        best superposes it onto the second specified coord list

@@ -25,15 +25,15 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::algorithm::replace_all_copy;
-using boost::algorithm::starts_with;
-using boost::erase_first_copy;
-using boost::program_options::options_description;
-using boost::to_lower_copy;
-using boost::to_upper_copy;
+using ::boost::algorithm::replace_all_copy;
+using ::boost::algorithm::starts_with;
+using ::boost::erase_first_copy;
+using ::boost::program_options::options_description;
+using ::boost::to_lower_copy;
+using ::boost::to_upper_copy;
 
 /// \brief Ctor for env_var_option_name_handler
 env_var_option_name_handler::env_var_option_name_handler(string                     prm_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_TOOLS_"

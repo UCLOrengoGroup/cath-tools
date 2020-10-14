@@ -23,11 +23,11 @@
 #include "cath/common/file/slurp.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::filesystem::path;
-using std::string;
+using ::boost::filesystem::path;
+using ::std::string;
 
 /// \brief Test constant for the cath-map-clusters test data directory
 path map_clusters_fixture::map_clusters_test_data_dir() {

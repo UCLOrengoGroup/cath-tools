@@ -24,11 +24,11 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
 
-using boost::format;
-using std::string;
+using ::boost::format;
+using ::std::string;
 
 /// \brief Generate a formatted string for the specified score of the specified type with the specified number of significant figures (roughly)
 std::string cath::rslv::get_score_string(const double         &prm_score,      ///< The score to represent in a string

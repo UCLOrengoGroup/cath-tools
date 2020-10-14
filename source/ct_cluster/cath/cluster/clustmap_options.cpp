@@ -22,16 +22,16 @@
 
 #include <boost/algorithm/string/join.hpp>
 
-using namespace cath;
-using namespace cath::clust;
-using namespace cath::opts;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::clust;
+using namespace ::cath::opts;
+using namespace ::std::literals::string_literals;
 
-using boost::algorithm::join;
-using boost::none;
-using boost::program_options::positional_options_description;
-using boost::program_options::variables_map;
-using std::string;
+using ::boost::algorithm::join;
+using ::boost::none;
+using ::boost::program_options::positional_options_description;
+using ::boost::program_options::variables_map;
+using ::std::string;
 
 /// The name of the program that uses this executable_options
 const string clustmap_options::PROGRAM_NAME("cath-map-clusters");

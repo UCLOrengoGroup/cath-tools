@@ -38,11 +38,11 @@
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::scan;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::scan;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

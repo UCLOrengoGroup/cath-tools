@@ -39,12 +39,12 @@
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::none;
+using ::boost::none;
 
 namespace cath {
 	namespace test {

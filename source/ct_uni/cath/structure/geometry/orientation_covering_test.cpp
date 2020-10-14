@@ -33,10 +33,10 @@
 
 #include <random>
 
-using namespace cath::common;
-using namespace cath::common::literals;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::common::literals;
+using namespace ::cath::geom;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

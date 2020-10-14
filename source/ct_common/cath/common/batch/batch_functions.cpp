@@ -27,13 +27,13 @@
 
 #include <algorithm>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::integer_range;
-using boost::irange;
-using boost::lexical_cast;
+using ::boost::integer_range;
+using ::boost::irange;
+using ::boost::lexical_cast;
 
 /// \brief TODOCUMENT
 size_t cath::common::batch_size(const size_t           &prm_num_items,       ///< TODOCUMENT

@@ -29,12 +29,12 @@
 
 #include <iomanip>
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
-using boost::numeric_cast;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
 
 /// \brief Ctor for horiz_align_outputter
 horiz_align_outputter::horiz_align_outputter(const alignment &prm_alignment ///< The alignment to be output

@@ -20,9 +20,9 @@
 
 #include "rasmol_style_viewer.hpp"
 
-using namespace cath;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::sup;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 string rasmol_style_viewer::do_default_file_extension() const {

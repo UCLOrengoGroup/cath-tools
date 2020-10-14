@@ -39,12 +39,12 @@
 #include <iostream>
 #include <random>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

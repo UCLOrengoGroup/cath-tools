@@ -29,14 +29,14 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/ssap/windowed_matrix.hpp"
 
-using namespace cath;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
-using boost::numeric_cast;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
 
 /// \brief TODOCUMENT
 void score_accumulation_matrix::check_length(const size_type &prm_length ///< TODOCUMENT

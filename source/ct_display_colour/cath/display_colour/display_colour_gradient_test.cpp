@@ -25,9 +25,9 @@
 #include "cath/display_colour/display_colour_gradient.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

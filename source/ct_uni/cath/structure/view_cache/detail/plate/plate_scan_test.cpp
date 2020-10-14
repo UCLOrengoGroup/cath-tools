@@ -24,7 +24,7 @@
 
 namespace cath { namespace index { namespace detail { class plate; } } }
 
-using namespace cath::index::detail;
+using namespace ::cath::index::detail;
 
 namespace cath {
 	namespace test {

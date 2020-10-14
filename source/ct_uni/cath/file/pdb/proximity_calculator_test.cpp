@@ -25,11 +25,11 @@
 #include "cath/file/pdb/proximity_calculator.hpp"
 #include "cath/structure/geometry/coord.hpp"
 
-using namespace cath::file;
-using namespace cath::geom;
+using namespace ::cath::file;
+using namespace ::cath::geom;
 
-using std::string;
-using std::istringstream;
+using ::std::string;
+using ::std::istringstream;
 
 BOOST_AUTO_TEST_SUITE(proximity_calculator_test_suite)
 

@@ -23,11 +23,11 @@
 #include "cath/alignment/alignment.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<dyn_prog_aligner> dyn_prog_aligner::clone() const {

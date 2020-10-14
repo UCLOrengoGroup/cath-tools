@@ -27,19 +27,19 @@
 
 #include <limits>
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::rslv;
-using namespace cath::seq;
-using namespace cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
+using namespace ::cath;
 
-using boost::none;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::numeric_limits;
-using std::string;
-using std::unique_ptr;
+using ::boost::none;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::numeric_limits;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for the specification for trimming hits' segments to allow some overlap
 const string crh_segment_options_block::PO_OVERLAP_TRIM_SPEC   { "overlap-trim-spec"   };

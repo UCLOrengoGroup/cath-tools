@@ -20,7 +20,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-using std::string;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(mapping_tool_test_suite)
 

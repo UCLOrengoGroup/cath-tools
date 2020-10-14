@@ -32,9 +32,9 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
-using boost::range::min_element;
+using ::boost::range::min_element;
 
 namespace cath {
 	namespace clust {

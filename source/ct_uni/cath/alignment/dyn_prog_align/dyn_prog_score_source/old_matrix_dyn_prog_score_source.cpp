@@ -23,11 +23,11 @@
 #include "cath/ssap/windowed_matrix.hpp"
 //#include "cath/common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::align;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::std;
 
-using boost::numeric_cast;
+using ::boost::numeric_cast;
 
 /// \brief Return the number of elements in the first entry to by aligned with dynamic-programming
 size_t old_matrix_dyn_prog_score_source::do_get_length_a() const {

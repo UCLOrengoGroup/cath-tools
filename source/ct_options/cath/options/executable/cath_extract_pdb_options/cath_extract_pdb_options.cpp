@@ -28,16 +28,16 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using boost::none;
-using boost::program_options::positional_options_description;
-using std::ifstream;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::program_options::positional_options_description;
+using ::std::ifstream;
+using ::std::string;
 
 /// \brief The name of the program that uses this executable_options
 const string cath_extract_pdb_options::PROGRAM_NAME("extract-pdb");

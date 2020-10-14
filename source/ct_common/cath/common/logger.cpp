@@ -25,8 +25,8 @@
 #include <cstdlib>
 #include <iostream>
 
-using namespace cath;
-using namespace std;
+using namespace ::cath;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 void logger::log_and_exit(const return_code     &prm_return_code,    ///< TODOCUMENT

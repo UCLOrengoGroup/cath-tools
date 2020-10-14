@@ -105,7 +105,7 @@ namespace cath {
 			/// \relates to_string
 			inline std::string to_string(const gsl_matrix_wrp &prm_matrix_wrap ///< The gsl_matrix_wrp to describe
 			                             ) {
-				using std::to_string;
+				using ::std::to_string;
 				return "gsl_matrix_wrp["
 					       + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 0, 0 ) )
 					+ ", " + to_string( gsl_matrix_get( prm_matrix_wrap.get_ptr(), 0, 1 ) )

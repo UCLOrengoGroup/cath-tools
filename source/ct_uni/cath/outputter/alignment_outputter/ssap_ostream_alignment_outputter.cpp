@@ -34,11 +34,11 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
 /// \brief A standard do_clone method.
 unique_ptr<alignment_outputter> ssap_ostream_alignment_outputter::do_clone() const {

@@ -25,8 +25,8 @@
 #include "cath/structure/geometry/rotation.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-using namespace cath::geom;
-using namespace cath::geom::detail;
+using namespace ::cath::geom;
+using namespace ::cath::geom::detail;
 
 BOOST_AUTO_TEST_SUITE(orient_test_suite)
 

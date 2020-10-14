@@ -27,9 +27,9 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::scan;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::scan;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 void load_and_scan::perform_load() {

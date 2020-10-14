@@ -42,14 +42,14 @@
 #include <fstream>
 #include <functional>
 
-using namespace cath::clust::detail;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath::clust::detail;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using std::ifstream;
-using std::istream;
-using std::ostream;
+using ::boost::filesystem::path;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::ostream;
 
 /// \brief Perform map-clusters according to the specified arguments strings with the specified i/o streams
 void cath::clust::perform_map_clusters(const str_vec       &args,             ///< The arguments strings specifying the map-clusters action to perform

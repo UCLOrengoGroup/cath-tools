@@ -29,11 +29,11 @@
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::numeric_cast;
+using ::boost::numeric_cast;
 
 /// \brief Randomly split the integers [ 0 .. prm_num_instances ) into two vectors, with prm_fraction_in_first (eg 0.5) of them in the first
 size_vec_size_vec_pair cath::common::random_split(mt19937       &prm_rng,              ///< TODOCUMENT

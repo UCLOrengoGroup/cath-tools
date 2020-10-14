@@ -23,10 +23,10 @@
 #include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using boost::none;
-using boost::optional;
+using ::boost::none;
+using ::boost::optional;
 
 BOOST_AUTO_TEST_SUITE(make_optional_if_test_suite)
 

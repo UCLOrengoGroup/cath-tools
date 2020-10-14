@@ -31,15 +31,15 @@
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
-using boost::range::for_each;
-using boost::range::partition;
-using boost::range::upper_bound;
-using std::max;
-using std::min;
-using std::tie;
+using ::boost::range::for_each;
+using ::boost::range::partition;
+using ::boost::range::upper_bound;
+using ::std::max;
+using ::std::min;
+using ::std::tie;
 
 /// \brief Calculate the ordered sequence of merges to be conducted by complete-linkage clustering
 ///        given the specified links and item ordering
@@ -55,7 +55,7 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             prm_li
                                                         const size_vec   &prm_sort_indices, ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
                                                         const strength   &prm_max_dissim    ///< The maximum dissimilarity at which merges may still happen
                                                         ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	const size_t num_entities = prm_sort_indices.size();
 	// std::cerr << "num_entities is : " << num_entities << "\n";

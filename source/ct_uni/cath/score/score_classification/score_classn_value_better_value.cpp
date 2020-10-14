@@ -24,8 +24,8 @@
 
 #include <limits>
 
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief Ctor for that allows the user to specify higher_is_better
 score_classn_value_better_value::score_classn_value_better_value(const bool &prm_higher_is_better ///< Whether a higher score_value is "better" and should be treated as less-than

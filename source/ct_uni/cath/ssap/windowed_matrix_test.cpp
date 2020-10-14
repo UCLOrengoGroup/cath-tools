@@ -32,13 +32,13 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::irange;
-using boost::numeric_cast;
-using boost::range::find;
+using ::boost::irange;
+using ::boost::numeric_cast;
+using ::boost::range::find;
 
 namespace cath {
 	namespace test {

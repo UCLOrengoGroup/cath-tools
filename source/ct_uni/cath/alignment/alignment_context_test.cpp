@@ -25,8 +25,8 @@
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::align;
+using namespace ::cath;
+using namespace ::cath::align;
 
 namespace cath {
 	namespace test {

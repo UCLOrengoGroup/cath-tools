@@ -27,14 +27,14 @@
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/options/executable/cath_extract_pdb_options/cath_extract_pdb_options.hpp"
 
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using std::cout;
-using std::string;
+using ::boost::filesystem::path;
+using ::std::cout;
+using ::std::string;
 
 namespace cath {
 

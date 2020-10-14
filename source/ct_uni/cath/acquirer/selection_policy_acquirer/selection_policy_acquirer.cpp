@@ -31,11 +31,11 @@
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-using namespace cath::align;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::opts;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 const common_residue_selection_policy & selection_policy_acquirer::get_comm_res_seln_pol_ptr_cref() const {

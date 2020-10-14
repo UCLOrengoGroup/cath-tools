@@ -39,16 +39,16 @@
 
 #include "cath/structure/view_cache/index/detail/dims/detail/view_cache_index_dim_linear.hpp"
 
-// using namespace cath;
-// using namespace cath::align;
-// using namespace cath::index;
-// using namespace cath::index::detail;
-// using namespace cath::index::detail::detail;
-using namespace cath::index::detail::detail::detail;
-// using namespace cath::geom;
-using namespace std;
+// using namespace ::cath;
+// using namespace ::cath::align;
+// using namespace ::cath::index;
+// using namespace ::cath::index::detail;
+// using namespace ::cath::index::detail::detail;
+using namespace ::cath::index::detail::detail::detail;
+// using namespace ::cath::geom;
+using namespace ::std;
 
-// using boost::numeric_cast;
+// using ::boost::numeric_cast;
 
 /// \todonow Tidy up this file
 

@@ -25,10 +25,10 @@
 #include "cath/resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "cath/seq/seq_type_aliases.hpp"
 
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::logic::indeterminate;
+using ::boost::logic::indeterminate;
 
 BOOST_AUTO_TEST_SUITE(first_hit_is_better_test_suite)
 

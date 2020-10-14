@@ -22,9 +22,9 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
 
 constexpr resscr_t crh_filter_spec::DEFAULT_WORST_PERMISSIBLE_EVALUE;
 constexpr resscr_t crh_filter_spec::DEFAULT_WORST_PERMISSIBLE_BITSCORE;

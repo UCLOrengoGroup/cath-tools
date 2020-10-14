@@ -34,16 +34,16 @@
 #include <regex>
 #include <unordered_set>
 
-using namespace cath::common;
-using namespace cath::homcheck;
-using namespace cath::homcheck::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::homcheck;
+using namespace ::cath::homcheck::detail;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::algorithm::contains;
-using boost::algorithm::is_space;
-using boost::filesystem::path;
-using boost::token_compress_on;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::contains;
+using ::boost::algorithm::is_space;
+using ::boost::filesystem::path;
+using ::boost::token_compress_on;
 
 /// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
 const regex is_valid_superfamily_id::SUPERFAMILY_ID_REGEX{ R"(^\d+\.\d+\.\d+\.\d+$)" };

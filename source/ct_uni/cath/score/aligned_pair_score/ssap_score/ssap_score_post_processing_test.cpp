@@ -25,10 +25,10 @@
 
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 namespace cath {
 	namespace test {

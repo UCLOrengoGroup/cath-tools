@@ -33,13 +33,13 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::tribool;
+using ::boost::tribool;
 
 BOOST_CLASS_EXPORT(sas_score)
 

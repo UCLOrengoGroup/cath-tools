@@ -29,14 +29,14 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
-using namespace cath::test;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
+using namespace ::cath::test;
 
-using boost::algorithm::all_of;
-using std::make_unique;
-using std::ostream;
-using std::ostringstream;
+using ::boost::algorithm::all_of;
+using ::std::make_unique;
+using ::std::ostream;
+using ::std::ostringstream;
 
 namespace cath {
 	namespace test {

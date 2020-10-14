@@ -20,7 +20,7 @@
 
 #include "dssp_skip_policy.hpp"
 
-using namespace cath::file;
+using namespace ::cath::file;
 
 static_assert( angle_skipping_of_dssp_skip_policy( dssp_skip_policy::SKIP__BREAK_ANGLES           ) == dssp_skip_angle_skipping::BREAK_ANGLES,      "" );
 static_assert( angle_skipping_of_dssp_skip_policy( dssp_skip_policy::DONT_SKIP__BREAK_ANGLES      ) == dssp_skip_angle_skipping::BREAK_ANGLES,      "" );

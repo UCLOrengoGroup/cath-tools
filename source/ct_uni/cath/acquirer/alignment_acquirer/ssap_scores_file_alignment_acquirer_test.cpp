@@ -29,12 +29,12 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::file;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::file;
+using namespace ::cath::test;
 
-using std::ostringstream;
+using ::std::ostringstream;
 
 namespace cath {
 	namespace test {

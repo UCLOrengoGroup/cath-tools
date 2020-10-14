@@ -26,17 +26,17 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using boost::none;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::none;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for the regions of the alignment (either to align or that have been aligned)
 const string align_regions_options_block::PO_ALN_REGIONS { "align-regions"   };

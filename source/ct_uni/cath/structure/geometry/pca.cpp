@@ -32,11 +32,11 @@
 
 #include <gsl/gsl_linalg.h>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::common::literals;
-using namespace cath::geom;
-using namespace cath::geom::detail;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::common::literals;
+using namespace ::cath::geom;
+using namespace ::cath::geom::detail;
 
 
 /// \brief Build a matrix of the specified points, offset by subtracting their specified centre-of-gravity

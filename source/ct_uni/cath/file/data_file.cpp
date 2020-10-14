@@ -26,12 +26,12 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
-using boost::adaptors::transformed;
-using boost::range::max_element;
+using ::boost::adaptors::transformed;
+using ::boost::range::max_element;
 
 /// \brief TODOCUMENT
 ///

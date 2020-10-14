@@ -27,10 +27,10 @@
 #include "cath/structure/protein/amino_acid.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
 /// \brief The sequence of 1cjn0, 1cjo0, 1roeA, 2cjnA and 2cjoA (prepended with HMWX) in names
 const     auto NAMES   = make_array( "Histidine"s, "Methionine"s, "Tryptophan"s, "Unknown"s, "Alanine"s, "Threonine"s, "Tyrosine"s, "Lysine"s, "Valine"s, "Threonine"s, "Leucine"s, "Valine"s, "Arginine"s, "Proline"s, "Aspartic Acid"s, "Glycine"s, "Serine"s, "Glutamic Acid"s, "Threonine"s, "Threonine"s, "Isoleucine"s, "Aspartic Acid"s, "Valine"s, "Proline"s, "Glutamic Acid"s, "Aspartic Acid"s, "Glutamic Acid"s, "Tyrosine"s, "Isoleucine"s, "Leucine"s, "Aspartic Acid"s, "Valine"s, "Alanine"s, "Glutamic Acid"s, "Glutamic Acid"s, "Glutamine"s, "Glycine"s, "Leucine"s, "Aspartic Acid"s, "Leucine"s, "Proline"s, "Phenylalanine"s, "Serine"s, "Cysteine"s, "Arginine"s, "Alanine"s, "Glycine"s, "Alanine"s, "Cysteine"s, "Serine"s, "Threonine"s, "Cysteine"s, "Alanine"s, "Glycine"s, "Lysine"s, "Leucine"s, "Leucine"s, "Glutamic Acid"s, "Glycine"s, "Glutamic Acid"s, "Valine"s, "Aspartic Acid"s, "Glutamine"s, "Serine"s, "Aspartic Acid"s, "Glutamine"s, "Serine"s, "Phenylalanine"s, "Leucine"s, "Aspartic Acid"s, "Aspartic Acid"s, "Aspartic Acid"s, "Glutamine"s, "Isoleucine"s, "Glutamic Acid"s, "Lysine"s, "Glycine"s, "Phenylalanine"s, "Valine"s, "Leucine"s, "Threonine"s, "Cysteine"s, "Valine"s, "Alanine"s, "Tyrosine"s, "Proline"s, "Arginine"s, "Serine"s, "Aspartic Acid"s, "Cysteine"s, "Lysine"s, "Isoleucine"s, "Leucine"s, "Threonine"s, "Asparagine"s, "Glutamine"s, "Glutamic Acid"s, "Glutamic Acid"s, "Glutamic Acid"s, "Leucine"s, "Tyrosine"s );

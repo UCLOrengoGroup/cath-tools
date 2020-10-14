@@ -29,10 +29,10 @@
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::align;
+using namespace ::cath;
+using namespace ::cath::align;
 
-using std::string;
+using ::std::string;
 
 namespace cath {
 	namespace test {

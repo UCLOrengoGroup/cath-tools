@@ -32,16 +32,16 @@
 
 #include <iostream>
 
-using namespace cath::common;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::seq;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::range::adjacent_find;
-using std::ostream;
-using std::pair;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::range::adjacent_find;
+using ::std::ostream;
+using ::std::pair;
+using ::std::string;
 
 /// \brief Get a vector of the entries that are present in the specified vector of optional seq_segs
 ///

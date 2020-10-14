@@ -35,10 +35,10 @@
 #include "cath/score/aligned_pair_score/tm_score.hpp"
 #include "cath/structure/protein/amino_acid.hpp"
 
-using namespace cath::score;
-using namespace cath::score::detail;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
 
-using boost::ptr_vector;
+using ::boost::ptr_vector;
 
 template <>
 void score_variety_factory::append_all_varieties<drmsd_score>(ptr_vector<aligned_pair_score> &prm_scores ///< TODOCUMENT

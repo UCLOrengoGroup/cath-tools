@@ -36,15 +36,15 @@
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::adaptors::filtered;
-using boost::assign::ptr_push_back;
-using boost::irange;
-using boost::lexical_cast;
-using boost::ptr_vector;
+using ::boost::adaptors::filtered;
+using ::boost::assign::ptr_push_back;
+using ::boost::irange;
+using ::boost::lexical_cast;
+using ::boost::ptr_vector;
 
 /// \brief TODOCUMENT
 vector<alignment::size_type> common_residue_selection_policy::select_common_residues(const alignment            &prm_alignment, ///< TODOCUMENT

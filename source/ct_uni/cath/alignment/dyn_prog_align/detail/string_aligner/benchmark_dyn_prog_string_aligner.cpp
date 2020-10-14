@@ -32,16 +32,16 @@
 #include <algorithm>
 #include <string>
 
-using namespace cath;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::adaptors::reversed;
-using boost::irange;
-using boost::numeric_cast;
-using boost::range::reverse;
+using ::boost::adaptors::reversed;
+using ::boost::irange;
+using ::boost::numeric_cast;
+using ::boost::range::reverse;
 
 /// \brief TODOCUMENT
 void benchmark_dyn_prog_string_aligner::make_ends_spaces(string &prm_string ///< TODOCUMENT

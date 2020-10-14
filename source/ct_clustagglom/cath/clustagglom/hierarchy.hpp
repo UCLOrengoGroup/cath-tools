@@ -33,7 +33,7 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath { namespace clust { class links; } }
 namespace cath { namespace common { class id_of_str_bidirnl; } }

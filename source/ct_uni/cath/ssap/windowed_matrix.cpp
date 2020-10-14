@@ -30,9 +30,9 @@
 
 #include <algorithm>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief Private method for converting two indices to a internal index
 size_t windowed_matrix::get_internal_index(const size_type &/*prm_index_a*/,

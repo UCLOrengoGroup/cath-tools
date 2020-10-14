@@ -28,13 +28,13 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::adaptors::filtered;
-using boost::algorithm::is_space;
-using boost::algorithm::join;
+using ::boost::adaptors::filtered;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::join;
 
 /// \brief TODOCUMENT
 string score_name_helper::build_short_name(const string  &prm_id_name, ///< TODOCUMENT

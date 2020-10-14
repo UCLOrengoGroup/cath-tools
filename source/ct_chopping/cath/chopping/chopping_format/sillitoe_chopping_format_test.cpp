@@ -23,12 +23,12 @@
 #include "cath/chopping/chopping_format/sillitoe_chopping_format.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
 
-using std::string;
-using boost::string_ref;
+using ::std::string;
+using ::boost::string_ref;
 
 BOOST_AUTO_TEST_SUITE(sillitoe_chopping_format_test_suite)
 

@@ -32,13 +32,13 @@
 
 //#include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::none_of;
-using boost::irange;
-using boost::range::combine;
+using ::boost::algorithm::none_of;
+using ::boost::irange;
+using ::boost::range::combine;
 
 namespace cath {
 	namespace test {

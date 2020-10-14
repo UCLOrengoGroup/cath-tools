@@ -36,13 +36,13 @@
 #include <thread>
 #include <utility>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
 
-using std::ostream;
-using std::string;
+using ::std::ostream;
+using ::std::string;
 
 constexpr bool read_and_process_mgr::DEFAULT_INPUT_HITS_ARE_GROUPED;
 

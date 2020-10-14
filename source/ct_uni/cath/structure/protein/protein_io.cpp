@@ -52,17 +52,17 @@
 #include <string>
 #include <vector>
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::sec;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::sec;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::filesystem::path;
-using boost::lexical_cast;
-using boost::numeric_cast;
+using ::boost::algorithm::any_of;
+using ::boost::filesystem::path;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
 
 /// \brief Read a wolf and a sec file and build them into a protein
 ///

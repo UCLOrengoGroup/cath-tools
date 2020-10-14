@@ -22,12 +22,12 @@
 
 #include "cath/common/exception/not_implemented_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::sup;
+using namespace ::std;
 
-using boost::string_ref;
+using ::boost::string_ref;
 
 /// \brief TODOCUMENT
 string jmol_viewer::do_default_executable() const {

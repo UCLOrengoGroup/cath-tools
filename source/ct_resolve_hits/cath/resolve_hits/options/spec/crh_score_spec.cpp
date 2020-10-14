@@ -20,7 +20,7 @@
 
 #include "crh_score_spec.hpp"
 
-using namespace cath::rslv;
+using namespace ::cath::rslv;
 
 constexpr resscr_t crh_score_spec::DEFAULT_LONG_DOMAINS_PREFERENCE;
 constexpr resscr_t crh_score_spec::DEFAULT_HIGH_SCORES_PREFERENCE;

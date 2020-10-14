@@ -27,11 +27,11 @@
 
 #include <memory>
 
-using namespace cath;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::file;
 
-using boost::lexical_cast;
-using std::string;
+using ::boost::lexical_cast;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(coarse_element_type_test_suite)
 

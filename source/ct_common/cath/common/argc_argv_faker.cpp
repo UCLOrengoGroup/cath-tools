@@ -26,12 +26,12 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::numeric_cast;
-using boost::shared_array;
+using ::boost::numeric_cast;
+using ::boost::shared_array;
 
 /// \brief A common initialisation function for the two ctors to call
 ///

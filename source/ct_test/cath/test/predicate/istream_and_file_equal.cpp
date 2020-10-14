@@ -26,16 +26,16 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::filesystem::path;
-using boost::test_tools::predicate_result;
-using std::ifstream;
-using std::istream;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::test_tools::predicate_result;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::string;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \brief Ctor for istream_and_file_equal
 istream_and_file_equal::istream_and_file_equal(const bootstrap_mode &prm_bootstrapping,  ///< TODOCUMENT

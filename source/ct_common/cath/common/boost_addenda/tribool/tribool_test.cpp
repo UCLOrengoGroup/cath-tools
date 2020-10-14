@@ -24,11 +24,11 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::indeterminate;
-using boost::tribool;
+using ::boost::indeterminate;
+using ::boost::tribool;
 
 namespace cath {
 	namespace test {

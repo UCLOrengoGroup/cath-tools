@@ -25,10 +25,10 @@
 #include <tuple>
 #include <type_traits>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::is_same;
-using std::tuple;
+using ::std::is_same;
+using ::std::tuple;
 
 BOOST_AUTO_TEST_SUITE(append_template_params_into_first_wrapper_test_suite)
 

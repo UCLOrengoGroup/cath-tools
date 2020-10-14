@@ -22,7 +22,7 @@
 
 #include "cath/clustagglom/detail/clust_id_pot.hpp"
 
-using namespace cath::clust::detail;
+using namespace ::cath::clust::detail;
 
 BOOST_AUTO_TEST_SUITE(clust_id_pot_test_suite)
 

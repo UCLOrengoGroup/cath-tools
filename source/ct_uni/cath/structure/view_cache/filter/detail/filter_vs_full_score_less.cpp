@@ -22,7 +22,7 @@
 
 #include "cath/structure/view_cache/filter/filter_vs_full_score.hpp"
 
-using namespace cath::index::filter::detail;
+using namespace ::cath::index::filter::detail;
 
 /// \brief A less-than operator for filter_vs_full_scores that uses the filter_score
 bool filter_score_less::operator()(const filter_vs_full_score &prm_filter_vs_full_score_lhs, ///< The first filter_vs_full_score to compare

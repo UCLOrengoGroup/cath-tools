@@ -31,7 +31,7 @@
 #include "cath/scan/scan_policy.hpp"
 #include "cath/structure/protein/protein.hpp"
 
-using namespace std::literals::string_literals;
+using namespace ::std::literals::string_literals;
 
 namespace cath {
 	namespace scan {

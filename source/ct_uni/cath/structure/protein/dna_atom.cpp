@@ -23,10 +23,10 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/string/char_arr_to_string.hpp"
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
-using std::string;
+using ::std::string;
 
 /// \brief Convert the specified dna_atom back to the three character string that represents it in PDBs
 char_3_arr cath::to_three_char_arr(const dna_atom &prm_dna_atom ///< The dna_atom to convert

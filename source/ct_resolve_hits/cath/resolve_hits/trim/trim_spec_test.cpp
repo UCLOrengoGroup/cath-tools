@@ -22,8 +22,8 @@
 
 #include "cath/resolve_hits/trim/trim_spec.hpp"
 
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
 BOOST_AUTO_TEST_SUITE(trim_spec_test_suite)
 

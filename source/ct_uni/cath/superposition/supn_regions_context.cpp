@@ -30,20 +30,20 @@
 #include "cath/common/program_options/validator.hpp"
 #include "cath/superposition/superposition_content_spec.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::sup;
-using namespace cath::sup::detail;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::sup;
+using namespace ::cath::sup::detail;
 
-using boost::algorithm::to_lower;
-using boost::any;
-using boost::none;
-using std::istream;
-using std::map;
-using std::ostream;
-using std::set;
-using std::string;
+using ::boost::algorithm::to_lower;
+using ::boost::any;
+using ::boost::none;
+using ::std::istream;
+using ::std::map;
+using ::std::ostream;
+using ::std::set;
+using ::std::string;
 
 /// \brief Getter for a map from name to supn_regions_context
 ///

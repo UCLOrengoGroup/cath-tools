@@ -20,9 +20,9 @@
 
 #include "scan_stride.hpp"
 
-//using namespace cath::scan;
-using namespace cath::scan::detail;
-//using namespace std;
+//using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
+//using namespace ::std;
 
 /// \brief TODOCUMENT
 ///

@@ -26,12 +26,12 @@
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::numeric_cast;
+using ::boost::numeric_cast;
 
 /// \brief A standard do_clone method.
 unique_ptr<sym_protein_only_length_getter> geometric_mean_length_getter::do_sym_protein_only_clone() const {

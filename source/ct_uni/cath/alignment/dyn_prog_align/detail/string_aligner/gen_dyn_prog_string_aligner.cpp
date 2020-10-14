@@ -30,14 +30,14 @@
 
 #include <string>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 /// \brief Check that there is dyn_prog_aligner stored in dyn_prog_aligner_ptr
 ///

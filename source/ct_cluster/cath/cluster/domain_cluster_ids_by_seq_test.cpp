@@ -22,7 +22,7 @@
 
 #include "cath/cluster/domain_cluster_ids_by_seq.hpp"
 
-using namespace cath::seq;
+using namespace ::cath::seq;
 
 BOOST_AUTO_TEST_SUITE(domain_cluster_ids_by_seq_test_suite)
 

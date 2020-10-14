@@ -24,8 +24,8 @@
 #include <limits>
 #include <string>
 
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::score;
+using namespace ::std;
 
 constexpr double value_list_scaling::BAD_SCALED_VALUE;
 

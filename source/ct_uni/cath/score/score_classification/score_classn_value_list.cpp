@@ -49,21 +49,21 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::adaptors::reversed;
-using boost::adaptors::transformed;
-//using boost::algorithm::join;
-using boost::const_rend;
-using boost::filesystem::path;
-using boost::numeric_cast;
-using boost::range::count_if;
-using boost::range::equal;
-using boost::range::find_if;
-using boost::range::sort;
+using ::boost::adaptors::reversed;
+using ::boost::adaptors::transformed;
+//using ::boost::algorithm::join;
+using ::boost::const_rend;
+using ::boost::filesystem::path;
+using ::boost::numeric_cast;
+using ::boost::range::count_if;
+using ::boost::range::equal;
+using ::boost::range::find_if;
+using ::boost::range::sort;
 
 /// \brief Private function to sort all the values in descending order of goodness
 void score_classn_value_list::sort_values() {

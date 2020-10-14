@@ -28,12 +28,12 @@
 #include "cath/score/length_getter/length_of_shorter_getter.hpp"
 #include "cath/score/length_getter/mean_length_getter.hpp"
 
-using namespace cath::align;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::assign::ptr_push_back;
-using boost::ptr_vector;
+using ::boost::assign::ptr_push_back;
+using ::boost::ptr_vector;
 
 /// \brief TODOCUMENT
 unique_ptr<protein_only_length_getter> sym_protein_only_length_getter::do_protein_only_clone() const {

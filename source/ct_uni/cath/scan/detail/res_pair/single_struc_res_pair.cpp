@@ -20,8 +20,8 @@
 
 #include "single_struc_res_pair.hpp"
 
-using namespace cath::scan;
-using namespace cath::scan::detail;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
 
 /// \brief TODOCUMENT
 constexpr index_type single_struc_res_pair::DUMMY_INDEX_VALUE;

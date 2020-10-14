@@ -23,7 +23,7 @@
 #include "cath/score/score_classification/score_classn_value.hpp"
 #include "cath/score/score_classification/score_classn_value_better_value.hpp"
 
-using namespace cath::score;
+using namespace ::cath::score;
 
 namespace cath {
 	namespace test {

@@ -30,13 +30,13 @@
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::ptr_vector;
-using boost::range::adjacent_find;
+using ::boost::ptr_vector;
+using ::boost::range::adjacent_find;
 
 /// \brief Ctor for aligned_pair_score_list that allows the caller to specify a ptr_vector of aligned_pair_scores
 aligned_pair_score_list::aligned_pair_score_list(const ptr_vector<aligned_pair_score> &prm_aligned_pair_scores ///< The ptr_vector of aligned_pair_scores with which this aligned_pair_score_list should be initialised

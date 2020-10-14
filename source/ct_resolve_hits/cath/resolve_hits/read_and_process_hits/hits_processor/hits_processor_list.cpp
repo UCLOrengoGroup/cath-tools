@@ -30,16 +30,16 @@
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/write_json_hits_processor.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
 
-using boost::algorithm::any_of;
-using std::initializer_list;
-using std::make_unique;
-using std::ostream;
-using std::string;
-using std::unique_ptr;
+using ::boost::algorithm::any_of;
+using ::std::initializer_list;
+using ::std::make_unique;
+using ::std::ostream;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief hits_processor_list ctor from crh_score_spec and crh_segment_spec
 hits_processor_list::hits_processor_list(const crh_score_spec                   &prm_crh_score_spec,   ///< The crh_segment_spec with which to construct this hits_processor_list

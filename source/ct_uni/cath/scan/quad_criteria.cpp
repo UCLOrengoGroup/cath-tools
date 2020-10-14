@@ -29,17 +29,17 @@
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/structure/geometry/quat_rot.hpp"
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::scan;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
-using boost::algorithm::ends_with;
-using boost::algorithm::erase_all_copy;
-using boost::algorithm::erase_tail_copy;
-using boost::algorithm::is_any_of;
-using boost::numeric_cast;
+using ::boost::algorithm::ends_with;
+using ::boost::algorithm::erase_all_copy;
+using ::boost::algorithm::erase_tail_copy;
+using ::boost::algorithm::is_any_of;
+using ::boost::numeric_cast;
 
 /// \brief Ctor to fully populate a quad_criteria
 quad_criteria::quad_criteria(const res_pair_index_dirn_criterion &prm_index_direction_criterion,      ///< Whether the two res_pairs are required to have matching directions

@@ -23,16 +23,16 @@
 #include "cath/common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "cath/resolve_hits/options/spec/crh_spec.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::rslv;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::rslv;
 
-using boost::none;
-using boost::program_options::positional_options_description;
-using boost::program_options::variables_map;
-using std::map;
-using std::string;
+using ::boost::none;
+using ::boost::program_options::positional_options_description;
+using ::boost::program_options::variables_map;
+using ::std::map;
+using ::std::string;
 
 /// The name of the program that uses this executable_options
 const string crh_options::PROGRAM_NAME("cath-resolve-hits");

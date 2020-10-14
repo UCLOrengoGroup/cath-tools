@@ -28,8 +28,8 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::std;
 
 using ::boost::core::demangle;
 using ::boost::log::expressions::format_date_time;

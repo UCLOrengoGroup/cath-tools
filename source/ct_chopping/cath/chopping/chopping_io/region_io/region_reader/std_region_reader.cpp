@@ -25,10 +25,10 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath::chop;
-using namespace cath::common;
+using namespace ::cath::chop;
+using namespace ::cath::common;
 
-using std::string;
+using ::std::string;
 
 /// \brief TODOCUMENT
 region std_region_reader::do_read_region(const string &prm_region_string ///< TODOCUMENT

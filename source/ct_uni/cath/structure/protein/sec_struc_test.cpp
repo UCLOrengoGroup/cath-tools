@@ -33,9 +33,9 @@
 
 namespace cath { namespace common { class invalid_argument_exception; } }
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

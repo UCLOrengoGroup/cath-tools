@@ -58,19 +58,19 @@
 #include <tuple>
 #include <vector>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::scan;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
-using boost::accumulate;
-using boost::algorithm::join;
-using boost::irange;
-using boost::numeric_cast;
-using boost::range::set_intersection;
-using boost::range::set_symmetric_difference;
+using ::boost::accumulate;
+using ::boost::algorithm::join;
+using ::boost::irange;
+using ::boost::numeric_cast;
+using ::boost::range::set_intersection;
+using ::boost::range::set_symmetric_difference;
 
 /// \brief TODOCUMENT
 quad_criteria_result check_scan_on_final_alignment::criteria_result_of(const quad_criteria            &prm_criteria,   ///< TODOCUMENT

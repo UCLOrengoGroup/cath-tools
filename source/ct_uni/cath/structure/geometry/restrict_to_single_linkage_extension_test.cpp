@@ -28,13 +28,13 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::test;
 
-using boost::adaptors::transformed;
-using std::make_pair;
-using std::tie;
+using ::boost::adaptors::transformed;
+using ::std::make_pair;
+using ::std::tie;
 
 namespace cath {
 	namespace test {

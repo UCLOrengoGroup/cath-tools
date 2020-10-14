@@ -27,12 +27,12 @@
 #include "cath/structure/view_cache/detail/plate/rod_cache.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::index::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::index::detail;
+using namespace ::std;
 
-using boost::irange;
+using ::boost::irange;
 
 namespace cath {
 	namespace test {

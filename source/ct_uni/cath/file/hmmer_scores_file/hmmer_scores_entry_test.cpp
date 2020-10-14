@@ -25,10 +25,10 @@
 
 #include <vector>
 
-using namespace cath::common::test;
-using namespace cath::file;
-using namespace cath::file::detail;
-using namespace std;
+using namespace ::cath::common::test;
+using namespace ::cath::file;
+using namespace ::cath::file::detail;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

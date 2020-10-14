@@ -25,13 +25,13 @@
 
 #include <string>
 
-using namespace cath::common;
-using namespace std::literals::string_literals;
+using namespace ::cath::common;
+using namespace ::std::literals::string_literals;
 
-using boost::make_optional;
-using boost::none;
-using boost::string_ref;
-using std::string;
+using ::boost::make_optional;
+using ::boost::none;
+using ::boost::string_ref;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(id_of_str_bidirnl_test_suite)
 

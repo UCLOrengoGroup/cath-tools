@@ -24,9 +24,9 @@
 #include "cath/scan/scan_action/record_scores_scan_action.hpp"
 #include "cath/scan/scan_tools/scan_metrics.hpp"
 
-using namespace cath::common;
-using namespace cath::scan;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::scan;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 pair<record_scores_scan_action, scan_metrics> scan_type::perform_scan(const protein_list &prm_query_protein_list, ///< TODOCUMENT

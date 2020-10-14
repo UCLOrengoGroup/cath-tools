@@ -27,12 +27,12 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using std::ostringstream;
-using std::string;
+using ::std::ostringstream;
+using ::std::string;
 
 namespace cath {
 	namespace test {

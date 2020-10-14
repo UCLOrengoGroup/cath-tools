@@ -44,19 +44,19 @@
 #include <iterator>  // for end, begin, etc
 #include <sstream>   // for string, etc
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::irange;
-using boost::lexical_cast;
-using boost::numeric_cast;
-using boost::range::find_if;
-using boost::range::for_each;
+using ::boost::algorithm::any_of;
+using ::boost::irange;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
+using ::boost::range::find_if;
+using ::boost::range::for_each;
 
 /// \brief TODOCUMENT
 protein::protein(name_set    prm_name_set, ///< TODOCUMENT

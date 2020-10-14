@@ -24,9 +24,9 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 string chain_label::to_string() const {

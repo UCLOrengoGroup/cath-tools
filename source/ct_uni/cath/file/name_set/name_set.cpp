@@ -24,10 +24,10 @@
 
 #include <iostream>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::string;
-using std::ostream;
+using ::std::string;
+using ::std::ostream;
 
 /// \brief If the specified name_set has a domain_name_from_regions, return that,
 ///        else if it has a specified_id, return that, else return the name_from_acq

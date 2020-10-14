@@ -36,7 +36,7 @@
 #include "cath/scan/spatial_index/simple_locn_index.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 	namespace scan {

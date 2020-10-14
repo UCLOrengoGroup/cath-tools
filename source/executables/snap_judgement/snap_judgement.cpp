@@ -31,11 +31,11 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath::common;
-using namespace cath::scan;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::scan;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 namespace cath {
 

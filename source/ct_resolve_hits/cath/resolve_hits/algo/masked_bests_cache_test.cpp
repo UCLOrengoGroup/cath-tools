@@ -27,12 +27,12 @@
 #include "cath/resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
+using namespace ::cath::seq;
 
-using std::string;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(masked_bests_cache_test_suite)
 

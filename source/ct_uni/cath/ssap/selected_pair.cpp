@@ -20,7 +20,7 @@
 
 #include "selected_pair.hpp"
 
-using namespace cath;
+using namespace ::cath;
 
 /// \brief Simple ctor
 selected_pair::selected_pair(const size_t     &prm_index_a, ///< The pair's first  index

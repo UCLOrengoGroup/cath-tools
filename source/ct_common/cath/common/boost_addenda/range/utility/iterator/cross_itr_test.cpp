@@ -31,9 +31,9 @@
 #include <algorithm>
 #include <tuple>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( bool_size_str_tpl     )
 BOOST_TEST_DONT_PRINT_LOG_VALUE( bool_size_str_tpl_vec )

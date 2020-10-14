@@ -22,9 +22,9 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::chop;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::chop;
 
 /// \brief Ctor for residue_location
 residue_location::residue_location(const residue_name &prm_residue_name ///< TODOCUMENT

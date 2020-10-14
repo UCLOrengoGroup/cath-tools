@@ -40,7 +40,7 @@ namespace cath {
 			std::string tuple_values_to_string_impl(const Tpl &prm_tuple,         ///< The tuple to be described
 			                                        std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 			                                        ) {
-				using std::to_string;
+				using ::std::to_string;
 				const auto a = { std::to_string( std::get<Index>( prm_tuple ) )... };
 				return boost::algorithm::join( a, ", " );
 			}

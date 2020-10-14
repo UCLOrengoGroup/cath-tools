@@ -46,13 +46,13 @@
 
 #include <fstream>
 
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::opts;
-using namespace cath::sup;
-using namespace cath::sup::detail;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
+using namespace ::cath::sup::detail;
 
 using ::boost::adaptors::map_values;
 using ::boost::algorithm::any_of;

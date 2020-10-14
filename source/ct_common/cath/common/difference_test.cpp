@@ -26,8 +26,8 @@
 
 #include <cmath>
 
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_SUITE(difference_test_suite)

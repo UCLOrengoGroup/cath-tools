@@ -26,11 +26,11 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/test/test_tools.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common::test;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common::test;
 
-using boost::none;
+using ::boost::none;
 
 BOOST_AUTO_TEST_SUITE(region_test_suite)
 

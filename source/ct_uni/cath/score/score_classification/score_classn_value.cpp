@@ -23,8 +23,8 @@
 #include <sstream>
 #include <utility>
 
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief Ctor for score_classn_value
 score_classn_value::score_classn_value(const double &prm_score_value,          ///< TODOCUMENT

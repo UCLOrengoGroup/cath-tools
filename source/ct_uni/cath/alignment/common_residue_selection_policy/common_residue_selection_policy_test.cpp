@@ -35,11 +35,11 @@
 
 #include <limits>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::common::test;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::common::test;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

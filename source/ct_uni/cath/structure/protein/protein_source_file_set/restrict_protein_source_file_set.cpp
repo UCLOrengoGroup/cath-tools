@@ -25,12 +25,12 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::file;
 
-using boost::none;
-using std::ostream;
-using std::string;
+using ::boost::none;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief For a restrict_protein_source_file_set, implement do_read_files in terms of do_read_and_restrict_files()
 protein restrict_protein_source_file_set::do_read_files(const data_file_path_map &prm_filename_of_data_file, ///< The pre-loaded map of file types to filenames

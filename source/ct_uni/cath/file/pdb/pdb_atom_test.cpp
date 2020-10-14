@@ -26,10 +26,10 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

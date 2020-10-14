@@ -28,12 +28,12 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 /// \brief Ctor for residue_name_align_map
 residue_name_align_map::residue_name_align_map(const str_vec &prm_residue_name_strings ///< The list of residue names to be indexed

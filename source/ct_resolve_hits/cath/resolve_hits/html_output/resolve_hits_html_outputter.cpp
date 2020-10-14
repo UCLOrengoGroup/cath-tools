@@ -48,26 +48,26 @@
 
 #include <string>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::any_of;
-using boost::algorithm::join;
-using boost::algorithm::replace_all;
-using boost::algorithm::to_lower_copy;
-using boost::algorithm::to_upper_copy;
-using boost::format;
-using boost::irange;
-using boost::make_optional;
-using boost::none;
-using std::make_pair;
-using std::string;
-using std::tie;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::join;
+using ::boost::algorithm::replace_all;
+using ::boost::algorithm::to_lower_copy;
+using ::boost::algorithm::to_upper_copy;
+using ::boost::format;
+using ::boost::irange;
+using ::boost::make_optional;
+using ::boost::none;
+using ::std::make_pair;
+using ::std::string;
+using ::std::tie;
 
 static string upper_first_lower_rest(const string &prm_string
                                      ) {

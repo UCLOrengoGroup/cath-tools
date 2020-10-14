@@ -36,13 +36,13 @@
 
 #include <algorithm>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::filesystem::path;
-using boost::range::set_intersection;
+using ::boost::filesystem::path;
+using ::boost::range::set_intersection;
 
 /// \brief TODOCUMENT
 alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alignment    &prm_alignment, ///< TODOCUMENT

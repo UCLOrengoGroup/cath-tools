@@ -30,13 +30,13 @@
 #include <iostream> // ***** TEMPORARY *****
 #include <numeric>
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::accumulate;
-using boost::numeric_cast;
-using boost::inner_product;
+using ::boost::accumulate;
+using ::boost::numeric_cast;
+using ::boost::inner_product;
 
 /// \brief Constructor for coord_list from a vector of coords.
 coord_list::coord_list(coord_vec prm_coords ///< The vector of coords with which this coord_list should be initialised

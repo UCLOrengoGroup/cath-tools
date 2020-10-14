@@ -32,13 +32,13 @@
 
 #include <string>
 
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
-using boost::none;
+using ::boost::lexical_cast;
+using ::boost::none;
 
 /// \brief Construct an alignment between multiple lists of residues by pulling together residues of the same name.
 ///

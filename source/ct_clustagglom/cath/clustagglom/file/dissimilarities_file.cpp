@@ -28,15 +28,15 @@
 
 #include <fstream>
 
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
-using boost::filesystem::path;
-using std::ifstream;
-using std::istream;
-using std::istringstream;
-using std::max;
-using std::string;
+using ::boost::filesystem::path;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::istringstream;
+using ::std::max;
+using ::std::string;
 
 /// \brief Parse the cluster dissimilarities/strengths (ie links) from the specified istream
 links cath::clust::parse_dissimilarities(istream           &prm_input,     ///< The istream from which the links should be read

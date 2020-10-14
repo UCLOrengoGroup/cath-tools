@@ -23,8 +23,8 @@
 #include "cath/alignment/residue_score/alignment_residue_scores.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::align;
+using namespace ::cath;
+using namespace ::cath::align;
 
 namespace cath {
 	namespace test {

@@ -26,8 +26,8 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
 
 namespace cath {
@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 }
 
 BOOST_AUTO_TEST_CASE(fast) {
-	using std::to_string;
+	using ::std::to_string;
 	constexpr size_t MAX = 1000_z;
 
 	id_of_string the_ios;

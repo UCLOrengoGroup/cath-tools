@@ -23,11 +23,11 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 
-using namespace cath::chop;
-using namespace cath::common;
+using namespace ::cath::chop;
+using namespace ::cath::common;
 
-using std::ostream;
-using std::string;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified residue_locating
 ///

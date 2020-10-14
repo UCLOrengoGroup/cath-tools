@@ -38,22 +38,22 @@
 #include <fstream>
 #include <tuple>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::clust;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::clust;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::filesystem::path;
-using boost::range::combine;
-using boost::range::for_each;
-using boost::range::sort;
-using boost::range::stable_sort;
-using std::get;
-using std::ofstream;
-using std::ostream;
-using std::string;
-using std::tie;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::filesystem::path;
+using ::boost::range::combine;
+using ::boost::range::for_each;
+using ::boost::range::sort;
+using ::boost::range::stable_sort;
+using ::std::get;
+using ::std::ofstream;
+using ::std::ostream;
+using ::std::string;
+using ::std::tie;
 
 /// \brief Make links from the specified raw links data
 ///

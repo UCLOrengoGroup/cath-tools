@@ -22,8 +22,8 @@
 
 #include "cath/resolve_hits/calc_hit.hpp"
 
-using namespace cath;
-using namespace cath::rslv;
+using namespace ::cath;
+using namespace ::cath::rslv;
 
 BOOST_AUTO_TEST_SUITE(hit_test_suite)
 

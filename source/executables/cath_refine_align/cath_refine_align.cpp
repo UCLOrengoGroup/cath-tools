@@ -25,13 +25,13 @@
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/common/program_exception_wrapper.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::log::trivial::info;
-using boost::log::trivial::severity;
+using ::boost::log::trivial::info;
+using ::boost::log::trivial::severity;
 
 namespace {
 

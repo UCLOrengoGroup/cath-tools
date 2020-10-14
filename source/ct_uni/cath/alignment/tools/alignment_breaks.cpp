@@ -33,13 +33,13 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
 
-using boost::adaptors::filtered;
-using boost::irange;
+using ::boost::adaptors::filtered;
+using ::boost::irange;
 
 /// \brief TODOCUMENT
 size_vec cath::align::get_alignment_breaks(const alignment &prm_alignment ///< TODOCUMENT

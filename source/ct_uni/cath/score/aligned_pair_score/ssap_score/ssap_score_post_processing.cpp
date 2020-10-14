@@ -22,8 +22,8 @@
 
 #include <iostream>
 
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 map<ssap_score_post_processing, string> name_of_ssap_score_post_processing::get() {

@@ -33,7 +33,7 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 	namespace scan {

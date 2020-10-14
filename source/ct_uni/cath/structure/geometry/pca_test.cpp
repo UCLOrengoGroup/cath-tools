@@ -26,7 +26,7 @@
 #include "cath/structure/geometry/pca.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-using namespace cath::geom;
+using namespace ::cath::geom;
 
 BOOST_AUTO_TEST_SUITE(pca_test_suite)
 

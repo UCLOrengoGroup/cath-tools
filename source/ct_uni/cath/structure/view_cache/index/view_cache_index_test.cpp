@@ -38,13 +38,13 @@
 #include "cath/structure/view_cache/index/view_cache_index.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::index;
-using namespace cath::index::detail;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::index;
+using namespace ::cath::index::detail;
+using namespace ::cath::geom;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

@@ -40,14 +40,14 @@
 #include <algorithm>
 #include <numeric>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
-using boost::accumulate;
-using boost::range::find_if;
+using ::boost::lexical_cast;
+using ::boost::accumulate;
+using ::boost::range::find_if;
 
 constexpr double common_residue_select_best_score_percent_policy::MIN_BEST_SCORE_PERCENTAGE;
 constexpr double common_residue_select_best_score_percent_policy::MAX_BEST_SCORE_PERCENTAGE;
@@ -101,7 +101,7 @@ unique_ptr<common_residue_selection_policy> common_residue_select_best_score_per
 /// \brief Ctor for common_residue_select_best_score_percent_policy
 common_residue_select_best_score_percent_policy::common_residue_select_best_score_percent_policy(const double &prm_best_score_percentage ///< TODOCUMENT
                                                                                                  ) : best_score_percentage(prm_best_score_percentage) {
-	using boost::math::isfinite;
+	using ::boost::math::isfinite;
 	if ( ! isfinite( best_score_percentage ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argument best_score_percentage must be a normal, finite floating-point number"));
 	}

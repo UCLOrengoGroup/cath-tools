@@ -25,10 +25,10 @@
 #include "cath/resolve_hits/trim/trim_spec.hpp"
 #include "cath/seq/seq_seg.hpp"
 
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::make_optional;
+using ::boost::make_optional;
 
 BOOST_AUTO_TEST_SUITE(seq_seg_boundary_fns_test_suite)
 

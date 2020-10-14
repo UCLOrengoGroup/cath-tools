@@ -22,9 +22,9 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief Return the classn_outcome resulting from a bool correct answer and a bool decision
 ///

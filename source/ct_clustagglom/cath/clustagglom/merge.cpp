@@ -33,30 +33,30 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::clust;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::clust;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::filesystem::path;
-using boost::format;
-using boost::is_space;
-using boost::token_compress_on;
-using boost::trim_copy;
-using std::ifstream;
-using std::istream;
-using std::ofstream;
-using std::ostream;
-using std::string;
-using std::to_string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::filesystem::path;
+using ::boost::format;
+using ::boost::is_space;
+using ::boost::token_compress_on;
+using ::boost::trim_copy;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::ofstream;
+using ::std::ostream;
+using ::std::string;
+using ::std::to_string;
 
 /// \brief Generate a string describing the specified merge
 ///
 /// \relates merge
 string cath::clust::to_string(const merge &prm_merge ///< The merge to describe
                               ) {
-	using std::to_string;
+	using ::std::to_string;
 	return
 		  "merge["
 		+ ( format( R"(%5d)" ) % prm_merge.node_a     ).str()
@@ -85,7 +85,7 @@ string cath::clust::to_string(const merge_vec &prm_merges ///< The merge_vec to 
 void cath::clust::write_merge_list(ostream         &prm_os,    ///< The ostream into which the description should be inserted
                                    const merge_vec &prm_merges ///< The merge_list to describe
                                    ) {
-	using std::to_string;
+	using ::std::to_string;
 	prm_os << join(
 		prm_merges
 			| transformed( [] (const merge &x) {

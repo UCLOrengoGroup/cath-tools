@@ -24,11 +24,11 @@
 #include "cath/structure/geometry/coord_list.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;
 
 /// \brief Concrete implementation for selecting common atoms by selecting the two residues' carbon beta atoms
 void common_atom_select_cb_policy::do_append_common_atoms_to_coord_lists(coord_list_coord_list_pair &prm_coord_lists, ///< The previous common coord_lists to which the new selections should be appended

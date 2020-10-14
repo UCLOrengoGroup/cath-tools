@@ -20,9 +20,9 @@
 
 #include "classn_rate_stat.hpp"
 
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::score;
+using namespace ::std;
 
-using namespace cath::score::detail;
+using namespace ::cath::score::detail;
 
 constexpr array<rate_stat_outcome_outcome_tuple, 11u> properties_of_classn_rate_stat::numerator_and_denominator_of_stat;

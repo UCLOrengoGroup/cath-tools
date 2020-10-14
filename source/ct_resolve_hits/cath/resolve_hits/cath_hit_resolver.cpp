@@ -36,15 +36,15 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::rslv;
-using namespace std::literals::string_literals;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::rslv;
+using namespace ::std::literals::string_literals;
 
-using std::istream;
-using std::ifstream;
-using std::ostream;
-using std::ofstream;
+using ::std::istream;
+using ::std::ifstream;
+using ::std::ostream;
+using ::std::ofstream;
 
 /// \brief Perform resolve-hits according to the specified arguments strings with the specified i/o streams
 void cath::rslv::perform_resolve_hits(const str_vec       &args,             ///< The arguments strings specifying the resolve-hits action to perform

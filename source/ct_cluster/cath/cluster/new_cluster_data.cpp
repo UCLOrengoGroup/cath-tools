@@ -27,19 +27,19 @@
 #include "cath/common/algorithm/sort_uniq_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::std::string;
 
 /// \brief Generate a string describing the specified new_cluster_data
 ///
 /// \relates new_cluster_data
 std::string cath::clust::to_string(const new_cluster_data &prm_new_cluster_data ///< The new_cluster_data to describe
                                    ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	// Grab the id_of_seq_name of the new_cluster_data
 	const id_of_str_bidirnl &id_of_seq_name = get_id_of_seq_name( prm_new_cluster_data );

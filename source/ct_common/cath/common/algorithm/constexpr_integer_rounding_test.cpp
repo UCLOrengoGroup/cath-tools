@@ -23,7 +23,7 @@
 #include "cath/common/algorithm/constexpr_integer_rounding.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_SUITE(constexpr_integer_rounding_test_suite)

@@ -20,7 +20,7 @@
 
 #include "clust_mapping_spec.hpp"
 
-using namespace cath::clust;
+using namespace ::cath::clust;
 
 constexpr double clust_mapping_spec::DEFAULT_MIN_EQUIV_DOM_OL;
 constexpr double clust_mapping_spec::DEFAULT_MIN_EQUIV_CLUST_OL;

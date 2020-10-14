@@ -30,14 +30,14 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
+using namespace ::cath::test;
 
-using boost::lexical_cast;
-using std::string;
+using ::boost::lexical_cast;
+using ::std::string;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( full_hit_list::const_iterator )
 

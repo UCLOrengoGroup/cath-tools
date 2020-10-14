@@ -34,16 +34,16 @@
 
 #include <string>
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::algorithm::is_any_of;
-using boost::any;
-using boost::lexical_cast;
-using std::istream;
-using std::ostream;
-using std::string;
+using ::boost::algorithm::is_any_of;
+using ::boost::any;
+using ::boost::lexical_cast;
+using ::std::istream;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a short string describing the specified trim_spec
 ///        that can, for example, be used to describe the default trim_spec

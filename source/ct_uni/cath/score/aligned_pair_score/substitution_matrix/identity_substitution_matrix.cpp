@@ -23,8 +23,8 @@
 #include "cath/score/aligned_pair_score/substitution_matrix/substitution_matrix.hpp"
 #include "cath/structure/protein/amino_acid.hpp"
 
-using namespace cath;
-using namespace cath::score;
+using namespace ::cath;
+using namespace ::cath::score;
 
 /// \brief Factory to make a identity substitution_matrix
 ///

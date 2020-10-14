@@ -35,20 +35,20 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/name_set/name_set.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::file::detail;
-using namespace cath::opts;
-using namespace cath::opts::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::file::detail;
+using namespace ::cath::opts;
+using namespace ::cath::opts::detail;
+using namespace ::std;
 
-using boost::adaptors::transformed;
-using boost::algorithm::is_any_of;
-using boost::algorithm::join;
-using boost::algorithm::token_compress_on;
-using boost::filesystem::path;
-using boost::lexical_cast;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::join;
+using ::boost::algorithm::token_compress_on;
+using ::boost::filesystem::path;
+using ::boost::lexical_cast;
 
 /// \brief Default values of each of the options (path, prefix, suffix) for each of the file types
 const data_dirs_spec::file_option_str_map_map data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS = {

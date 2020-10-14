@@ -22,7 +22,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath;
+using namespace ::cath;
 
 namespace cath {
 	namespace test {

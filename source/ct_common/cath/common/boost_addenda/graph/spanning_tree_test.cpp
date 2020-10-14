@@ -25,10 +25,10 @@
 #include "cath/common/tuple_insertion_operator.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
-using boost::test_tools::per_element;
+using ::boost::test_tools::per_element;
 
 BOOST_AUTO_TEST_SUITE(spanning_tree_test_suite)
 

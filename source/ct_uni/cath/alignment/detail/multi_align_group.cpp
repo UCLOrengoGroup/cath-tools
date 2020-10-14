@@ -36,23 +36,23 @@
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
 
-using boost::algorithm::join;
-using boost::lexical_cast;
-using boost::numeric_cast;
-using boost::range::find;
-using boost::range::max_element;
-using boost::range::push_back;
-using boost::range::remove_copy;
-using std::cerr;
-using std::flush;
-using std::ostream;
-using std::string;
+using ::boost::algorithm::join;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
+using ::boost::range::find;
+using ::boost::range::max_element;
+using ::boost::range::push_back;
+using ::boost::range::remove_copy;
+using ::std::cerr;
+using ::std::flush;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief TODOCUMENT
 void multi_align_group::refine_join(alignment_refiner  &prm_alignment_refiner, ///< TODOCUMENT

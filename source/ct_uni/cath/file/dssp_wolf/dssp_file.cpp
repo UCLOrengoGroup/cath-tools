@@ -42,15 +42,15 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::numeric_cast;
-using boost::range::count_if;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::numeric_cast;
+using ::boost::range::count_if;
 
 /// \brief Ctor for dssp_file
 dssp_file::dssp_file(residue_vec prm_dssp_residues ///< TODOCUMENT

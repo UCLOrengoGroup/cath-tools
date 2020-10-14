@@ -24,8 +24,8 @@
 #include "cath/score/true_pos_false_neg/classn_rate_stat.hpp"
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 
-using namespace cath;
-using namespace cath::score;
+using namespace ::cath;
+using namespace ::cath::score;
 
 namespace cath {
 	namespace test {

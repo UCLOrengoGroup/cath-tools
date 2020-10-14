@@ -29,11 +29,11 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::rslv::detail;
-using namespace cath::test;
+using namespace ::cath::rslv::detail;
+using namespace ::cath::test;
 
-using std::ostream;
-using std::ostringstream;
+using ::std::ostream;
+using ::std::ostringstream;
 
 namespace cath {
 	namespace test {

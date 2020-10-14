@@ -23,8 +23,8 @@
 #include "cath/alignment/refiner/detail/alignment_split_list.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::align::detail;
+using namespace ::cath;
+using namespace ::cath::align::detail;
 
 namespace cath {
 	namespace test {

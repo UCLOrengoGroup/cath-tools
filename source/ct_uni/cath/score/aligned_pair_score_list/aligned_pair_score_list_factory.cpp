@@ -60,14 +60,14 @@
 
 #include <vector>
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::assign::ptr_push_back;
-using boost::ptr_vector;
+using ::boost::assign::ptr_push_back;
+using ::boost::ptr_vector;
 
 /// \brief Factory function for making an aligned_pair_score_list that contains every type of aligned_pair_score there is
 ///

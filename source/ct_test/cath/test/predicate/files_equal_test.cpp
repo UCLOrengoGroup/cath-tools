@@ -23,9 +23,9 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
-using namespace cath::test;
+using namespace ::cath::test;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 namespace cath {
 	namespace test {

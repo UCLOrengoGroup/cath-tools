@@ -28,12 +28,12 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/test_tools.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::common::test;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::common::test;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 namespace cath {
 	namespace test {

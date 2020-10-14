@@ -46,19 +46,19 @@
 #include <numeric>
 #include <set>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::sup;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::algorithm::is_any_of;
-using boost::algorithm::token_compress_on;
-using boost::lexical_cast;
-using boost::range::combine;
-using boost::range::for_each;
-using std::make_tuple;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::token_compress_on;
+using ::boost::lexical_cast;
+using ::boost::range::combine;
+using ::boost::range::for_each;
+using ::std::make_tuple;
 
 //const double superposition::INVALID_RMSD(-1.0);
 constexpr size_t          superposition::NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION;

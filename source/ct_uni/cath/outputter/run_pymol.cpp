@@ -25,9 +25,9 @@
 
 #include "cath/common/command_executer.hpp"
 
-using namespace cath;
+using namespace ::cath;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// Run the specified pymol with the specified script file
 ///

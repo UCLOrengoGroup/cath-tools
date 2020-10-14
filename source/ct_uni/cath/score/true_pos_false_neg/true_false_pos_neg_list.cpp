@@ -25,10 +25,10 @@
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series.hpp"
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief Ctor from a vector of true_false_pos_neg objects
 true_false_pos_neg_list::true_false_pos_neg_list(true_false_pos_neg_vec prm_tfpns ///< The vector of true_false_pos_neg objects with which this true_false_pos_neg_list should be constructed

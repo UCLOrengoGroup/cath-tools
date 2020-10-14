@@ -34,16 +34,16 @@
 #include "cath/structure/geometry/coord_list.hpp"
 #include "cath/superposition/superposition.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::cath::sup;
+using namespace ::std;
 
-using boost::tribool;
+using ::boost::tribool;
 
 BOOST_CLASS_EXPORT(rmsd_score)
 

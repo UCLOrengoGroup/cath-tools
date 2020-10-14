@@ -22,8 +22,8 @@
 
 #include "cath/common/algorithm/constexpr_floor.hpp"
 
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

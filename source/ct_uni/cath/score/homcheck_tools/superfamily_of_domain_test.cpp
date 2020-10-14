@@ -25,10 +25,10 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/score/homcheck_tools/superfamily_of_domain.hpp"
 
-using namespace cath::common;
-using namespace cath::homcheck;
-using namespace cath::homcheck::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::homcheck;
+using namespace ::cath::homcheck::detail;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

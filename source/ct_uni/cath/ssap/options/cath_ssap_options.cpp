@@ -47,17 +47,17 @@
 #include "cath/structure/protein/protein_source_file_set/protein_source_file_set.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using boost::none;
-using boost::program_options::positional_options_description;
-using boost::range::join;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::program_options::positional_options_description;
+using ::boost::range::join;
+using ::std::string;
 
 /// \brief TODOCUMENT
 const string cath_ssap_options::PO_CITATION_HELP{ "citation-help" };

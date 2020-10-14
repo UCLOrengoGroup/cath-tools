@@ -27,9 +27,9 @@ namespace cath { namespace test { } }
 #include "cath/structure/geometry/rotation.hpp"
 #include "cath/structure/geometry/superpose_fit.hpp"
 
-using namespace cath;
-using namespace cath::geom;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::geom;
+using namespace ::cath::test;
 
 namespace cath {
 	namespace test {

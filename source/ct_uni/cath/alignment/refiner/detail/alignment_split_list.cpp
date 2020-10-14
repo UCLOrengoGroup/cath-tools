@@ -26,9 +26,9 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace cath::align::detail;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
 
 /// \brief TODOCUMENT
 void alignment_split_list::insert(const alignment_split &prm_alignment_split ///< TODOCUMENT

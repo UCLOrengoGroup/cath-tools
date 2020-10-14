@@ -29,13 +29,13 @@
 
 #include <iostream> // *** TEMPORARY ***
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::filesystem::path;
-using boost::filesystem::temp_directory_path;
-using boost::none;
+using ::boost::filesystem::path;
+using ::boost::filesystem::temp_directory_path;
+using ::boost::none;
 
 /// \brief Constructor for temp_file.
 temp_file::temp_file(const string &prm_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")

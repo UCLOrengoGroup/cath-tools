@@ -30,10 +30,10 @@
 
 #include <string>
 
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using std::ostream;
+using ::std::ostream;
 
 constexpr double superposition_acquirer::TOLERANCE_FOR_EQUAL_RMSDS;
 

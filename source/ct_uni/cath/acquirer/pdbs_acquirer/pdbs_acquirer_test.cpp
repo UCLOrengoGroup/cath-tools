@@ -28,13 +28,13 @@
 
 namespace cath{ namespace test { } }
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::cath::test;
 
-using std::istringstream;
+using ::std::istringstream;
 
 namespace cath {
 	namespace test {

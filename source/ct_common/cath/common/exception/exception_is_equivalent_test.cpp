@@ -24,9 +24,9 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::test;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::test;
+using namespace ::std;
 
 const string DEFAULT_EXCEPTION_STRING = "defaultExceptionString";
 const string equivalent_to_exception_with_default_string = "otherExceptionString";

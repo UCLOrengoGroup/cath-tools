@@ -29,16 +29,16 @@
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/structure/geometry/quat_rot.hpp"
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::index::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::index::detail;
+using namespace ::std;
 
-using boost::algorithm::ends_with;
-using boost::algorithm::erase_all_copy;
-using boost::algorithm::erase_tail_copy;
-using boost::algorithm::is_any_of;
-using boost::numeric_cast;
+using ::boost::algorithm::ends_with;
+using ::boost::algorithm::erase_all_copy;
+using ::boost::algorithm::erase_tail_copy;
+using ::boost::algorithm::is_any_of;
+using ::boost::numeric_cast;
 
 /// \brief Ctor to fully populate a vcie_match_criteria
 vcie_match_criteria::vcie_match_criteria(const bool            &prm_require_matching_directions,    ///< Whether the two vcies are required to have matching directions

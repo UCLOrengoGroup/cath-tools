@@ -48,18 +48,18 @@
 #include "cath/outputter/superposition_outputter/superposition_outputter_list.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::none;
-using boost::program_options::variables_map;
-using std::istream;
-using std::string;
-using std::unique_ptr;
+using ::boost::none;
+using ::boost::program_options::variables_map;
+using ::std::istream;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The name of the program that uses this executable_options
 const string cath_refine_align_options::PROGRAM_NAME("cath-refine-align");

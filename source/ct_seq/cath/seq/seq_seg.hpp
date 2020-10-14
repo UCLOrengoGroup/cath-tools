@@ -37,7 +37,7 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/seq/seq_arrow.hpp"
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 	namespace seq {

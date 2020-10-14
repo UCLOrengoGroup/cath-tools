@@ -27,10 +27,10 @@
 #include "cath/score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-// using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+// using namespace ::std;
 
 /// \brief TODOCUMENT
 named_true_false_pos_neg_list_list::named_true_false_pos_neg_list_list(named_true_false_pos_neg_list_vec prm_named_true_false_pos_neg_list_vec ///< TODOCUMENT

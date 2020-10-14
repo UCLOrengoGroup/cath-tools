@@ -25,12 +25,12 @@
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::sup;
+using namespace ::std;
 
-using boost::string_ref;
+using ::boost::string_ref;
 
 /// \brief TODOCUMENT
 string rasmol_viewer::do_default_executable() const {

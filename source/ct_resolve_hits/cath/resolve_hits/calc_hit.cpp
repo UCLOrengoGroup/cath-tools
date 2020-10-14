@@ -28,15 +28,15 @@
 
 #include <string>
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace std::literals::string_literals;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::transformed;
-using boost::algorithm::all_of;
-using boost::algorithm::join;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::all_of;
+using ::boost::algorithm::join;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the segments of the specified string
 ///
@@ -62,7 +62,7 @@ string cath::rslv::get_segments_string(const calc_hit &prm_hit ///< The calc_hit
 /// \relates calc_hit
 string cath::rslv::to_string(const calc_hit &prm_hit ///< The calc_hit to describe
                              ) {
-	using std::to_string;
+	using ::std::to_string;
 	return
 		  "calc_hit["
 		+ get_segments_string( prm_hit )

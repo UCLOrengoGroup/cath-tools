@@ -39,7 +39,7 @@
 
 #include <string>
 
-using namespace std::literals::string_literals;
+using namespace ::std::literals::string_literals;
 
 namespace cath {
 

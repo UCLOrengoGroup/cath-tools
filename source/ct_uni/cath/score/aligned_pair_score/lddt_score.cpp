@@ -48,21 +48,21 @@
 // #include <iostream> // ***** TEMPORARY *****
 #include <numeric>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::accumulate;
-using boost::algorithm::none_of;
-using boost::irange;
-using boost::lexical_cast;
-using boost::numeric_cast;
-using boost::range::join;
-using boost::tribool;
+using ::boost::accumulate;
+using ::boost::algorithm::none_of;
+using ::boost::irange;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
+using ::boost::range::join;
+using ::boost::tribool;
 
 BOOST_CLASS_EXPORT(lddt_score)
 

@@ -25,12 +25,12 @@
 
 #include "cath/seq/seq_seg.hpp"
 
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::algorithm::join;
-using boost::adaptors::transformed;
-using std::string;
+using ::boost::algorithm::join;
+using ::boost::adaptors::transformed;
+using ::std::string;
 
 /// \brief Ctor from start on each sequence and length
 alnd_rgn::alnd_rgn(seq_arrow       prm_start_res_a, ///< The start of the aligned region in the first  sequence

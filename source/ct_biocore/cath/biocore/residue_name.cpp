@@ -25,8 +25,8 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
 using ::boost::algorithm::is_alnum;
 using ::boost::algorithm::is_digit;

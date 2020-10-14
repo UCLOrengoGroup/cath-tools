@@ -20,10 +20,10 @@
 
 #include "chopping_format.hpp"
 
-using namespace cath::common;
-using namespace cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::chop;
 
-using std::string;
+using ::std::string;
 
 /// \brief TODOCUMENT
 ///

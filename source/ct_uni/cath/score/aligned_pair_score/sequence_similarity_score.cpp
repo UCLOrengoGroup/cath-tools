@@ -41,17 +41,17 @@
 #include "cath/structure/structure_type_aliases.hpp"
 #include "cath/superposition/superposition.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::score;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::score;
+using namespace ::cath::sup;
+using namespace ::std;
 
-using boost::numeric_cast;
-using boost::range::join;
-using boost::tribool;
+using ::boost::numeric_cast;
+using ::boost::range::join;
+using ::boost::tribool;
 
 //BOOST_CLASS_EXPORT(sequence_similarity_score)
 

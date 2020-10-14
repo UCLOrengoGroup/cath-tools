@@ -25,10 +25,10 @@
 #include "cath/display/display_colour_spec/display_colour_spec.hpp"
 #include "cath/file/pdb/pdb.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::detail;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::detail;
 
 /// \brief Implementation of getting the colour spec from the alignment
 ///

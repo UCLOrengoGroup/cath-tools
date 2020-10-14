@@ -23,8 +23,8 @@
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/structure/geometry/coord.hpp"
 
-using namespace cath;
-using namespace cath::geom;
+using namespace ::cath;
+using namespace ::cath::geom;
 
 /// \brief Find the coords within the specified vector that can be connected by a chain of links of
 ///        the specified distance or shorter (via the other coords) to one of the coords before the

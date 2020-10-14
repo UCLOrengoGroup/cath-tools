@@ -50,13 +50,13 @@
 #include <tuple>
 #include <type_traits>
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::scan;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
-using std::chrono::high_resolution_clock;
+using ::std::chrono::high_resolution_clock;
 
 /// \brief A standard do_clone method.
 unique_ptr<scan_type> all_vs_all::do_clone() const {

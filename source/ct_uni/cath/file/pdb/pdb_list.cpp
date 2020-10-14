@@ -38,14 +38,14 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
-using boost::filesystem::path;
-using boost::range::combine;
+using ::boost::filesystem::path;
+using ::boost::range::combine;
 
 /// \brief Ctor from a vector<pdb>
 pdb_list::pdb_list(pdb_vec prm_pdbs ///< The pdbs from which this pdb_list should be constructed

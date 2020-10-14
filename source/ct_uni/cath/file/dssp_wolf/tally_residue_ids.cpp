@@ -35,12 +35,12 @@
 
 #include <set>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::join;
-using boost::log::trivial::trace;
+using ::boost::algorithm::join;
+using ::boost::log::trivial::trace;
 
 /// \brief Tally up the residue records parsed from a PDB file with those parsed from a corresponding DSSP/WOLF file
 ///

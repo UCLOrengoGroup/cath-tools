@@ -29,10 +29,10 @@
 
 //#include <iostream>
 
-using namespace cath::align;
-using namespace cath::common::test;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common::test;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

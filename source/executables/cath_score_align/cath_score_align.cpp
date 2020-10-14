@@ -22,10 +22,10 @@
 #include "cath/cath_score_align/options/cath_score_align_options.hpp"
 #include "cath/common/program_exception_wrapper.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
 namespace {
 

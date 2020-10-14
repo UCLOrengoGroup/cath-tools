@@ -31,15 +31,15 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using std::cerr;
-using std::cout;
-using std::ifstream;
-using std::string;
+using ::boost::filesystem::path;
+using ::std::cerr;
+using ::std::cout;
+using ::std::ifstream;
+using ::std::string;
 
 namespace cath {
 

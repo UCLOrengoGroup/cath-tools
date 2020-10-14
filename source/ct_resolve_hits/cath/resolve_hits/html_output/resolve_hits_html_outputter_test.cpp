@@ -35,11 +35,11 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
-using namespace cath::test;
-using namespace std::literals::string_literals;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
+using namespace ::cath::test;
+using namespace ::std::literals::string_literals;
 
 namespace cath {
 	namespace test {

@@ -27,11 +27,11 @@
 #include "cath/structure/protein/residue.hpp"
 #include "cath/structure/protein/sec_struc.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::numeric_cast;
+using ::boost::numeric_cast;
 
 constexpr size_t sec_struc_querier::SEC_STRUC_A_VALUE;
 constexpr size_t sec_struc_querier::SEC_STRUC_B_VALUE;

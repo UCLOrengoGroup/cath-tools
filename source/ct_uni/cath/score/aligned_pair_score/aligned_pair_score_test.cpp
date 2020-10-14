@@ -75,14 +75,14 @@
 #include <iterator>
 #include <iostream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::common::test;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::common::test;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 namespace cath {
 	namespace test {

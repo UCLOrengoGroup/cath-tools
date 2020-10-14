@@ -25,8 +25,8 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/test/test_tools.hpp"
 
-using namespace cath::chop;
-using namespace cath::common::test;
+using namespace ::cath::chop;
+using namespace ::cath::common::test;
 
 BOOST_AUTO_TEST_SUITE(domain_test_suite)
 

@@ -25,10 +25,10 @@
 #include <cassert>
 #include <typeinfo>
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<alignment_outputter> alignment_outputter::clone() const {

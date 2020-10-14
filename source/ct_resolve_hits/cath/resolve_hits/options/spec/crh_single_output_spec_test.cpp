@@ -22,7 +22,7 @@
 
 #include "cath/resolve_hits/options/spec/crh_single_output_spec.hpp"
 
-using namespace cath::rslv;
+using namespace ::cath::rslv;
 
 BOOST_AUTO_TEST_SUITE(crh_single_output_spec_test_suite)
 

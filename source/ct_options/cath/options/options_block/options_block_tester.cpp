@@ -26,13 +26,13 @@
 #include "cath/common/argc_argv_faker.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
-using namespace cath;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::program_options::command_line_parser;
-using boost::program_options::options_description;
-using boost::program_options::variables_map;
+using ::boost::program_options::command_line_parser;
+using ::boost::program_options::options_description;
+using ::boost::program_options::variables_map;
 
 const string options_block_tester::UNKNOWN_OPT  ( "--it-does-not-know-me"            );
 const string options_block_tester::TEST_OPTION_1( "test_help_option_1"               );

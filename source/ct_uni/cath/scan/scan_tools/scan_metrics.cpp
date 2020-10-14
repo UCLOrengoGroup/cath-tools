@@ -32,10 +32,10 @@
 
 // #include <chrono>
 
-using namespace cath;
-//using namespace cath::common;
-using namespace cath::scan;
-//using namespace std;
+using namespace ::cath;
+//using namespace ::cath::common;
+using namespace ::cath::scan;
+//using namespace ::std;
 
 /// \brief TODOCUMENT
 const durn_mem_pair & scan_metrics::get_build_durn_and_size(const scan_build_type &prm_scan_build_type ///< TODOCUMENT

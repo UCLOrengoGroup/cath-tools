@@ -26,12 +26,12 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::is_upper;
+using ::boost::algorithm::is_upper;
 
 /// \brief Check that the specified string is valid (current checks: all characters are upper-case letters)
 ///        and throw invalid_argument_exception if not

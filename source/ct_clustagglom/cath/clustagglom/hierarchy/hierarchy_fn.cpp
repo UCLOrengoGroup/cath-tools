@@ -20,8 +20,8 @@
 
 #include "hierarchy_fn.hpp"
 
-using namespace cath::clust;
-using namespace cath::clust::detail;
+using namespace ::cath::clust;
+using namespace ::cath::clust::detail;
 
 constexpr size_t depth_first_hierachy_traverser::INIT_DEPTH;
 constexpr size_t depth_first_hierachy_traverser::INIT_GROUP;

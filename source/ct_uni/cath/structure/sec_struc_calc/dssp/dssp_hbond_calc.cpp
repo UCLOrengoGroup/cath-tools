@@ -26,10 +26,10 @@
 #include "cath/scan/spatial_index/spatial_index.hpp"
 #include "cath/structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::scan;
-using namespace cath::sec;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::scan;
+using namespace ::cath::sec;
 
 /// \brief Calculate the bifur_hbond_list list of (possibly bifurcating) hbonds between
 ///        the residues in the specified PDB

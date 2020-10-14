@@ -28,12 +28,12 @@
 #include "cath/alignment/dyn_prog_align/detail/return_path_matrix.hpp"
 #include "cath/common/boost_addenda/filesystem/replace_extension_copy.hpp"
 
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::filesystem::path;
-using boost::numeric_cast;
+using ::boost::filesystem::path;
+using ::boost::numeric_cast;
 
 /// \brief TODOCUMENT
 void gnuplot_matrix_plotter::do_plot_scores(doub_vec_vec &prm_scores,        ///< TODOCUMENT

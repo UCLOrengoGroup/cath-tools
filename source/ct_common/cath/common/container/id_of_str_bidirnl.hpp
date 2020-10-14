@@ -79,7 +79,7 @@ namespace cath {
 		template <typename... Ts>
 		auto to_string_hook(Ts &&...args ///< The arguments to pass to std::to_string()
 		                    ) -> decltype( auto ) {
-			using std::to_string;
+			using ::std::to_string;
 			return to_string( std::forward<Ts>( args )... );
 		}
 

@@ -32,13 +32,13 @@
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/structure/geometry/angle.hpp"
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::algorithm::clamp;
-using boost::format;
-using boost::property_tree::ptree;
+using ::boost::algorithm::clamp;
+using ::boost::format;
+using ::boost::property_tree::ptree;
 
 //const double LENGTH_CHECK_PRECISION_PERCENTAGE_TOLERANCE( 1E-10 );
 constexpr size_t coord::NUM_DIMS;
@@ -52,7 +52,7 @@ coord cath::geom::normalise_copy(const coord &prm_coord ///< TODOCUMENT
 	const double coord_length( length( prm_coord ) );
 
 #ifndef NDEBUG
-	using boost::math::isnormal;
+	using ::boost::math::isnormal;
 	if ( ! isnormal( coord_length ) ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Invalid coord factor"));
 	}
@@ -70,7 +70,7 @@ doub_angle cath::geom::angle_between_two_vectors(const coord &prm_vector_1, ///<
                                                  const coord &prm_vector_2  ///< TODOCUMENT
                                                  ) {
 #ifndef NDEBUG
-	using boost::math::isnormal;
+	using ::boost::math::isnormal;
 	if ( ! isnormal( length( prm_vector_1 ) ) || ! isnormal( length( prm_vector_2 ) ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("AngleBetweenZeroLengthVectorsRequested"));
 	}

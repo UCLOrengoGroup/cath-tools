@@ -25,13 +25,13 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::filesystem::path;
-using boost::test_tools::predicate_result;
-using std::ifstream;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::test_tools::predicate_result;
+using ::std::ifstream;
+using ::std::string;
 
 /// \brief TODOCUMENT
 const string files_equal::FILENAME_NAME_PREFIX{ "file " };

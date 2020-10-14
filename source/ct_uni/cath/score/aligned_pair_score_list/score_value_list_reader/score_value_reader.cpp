@@ -29,15 +29,15 @@
 #include "cath/score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
 #include "cath/score/aligned_pair_score_list/score_value_list_reader/score_value_reader.hpp"
 
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::filesystem::path;
-using boost::logic::tribool;
-using boost::property_tree::json_parser::read_json;
-using boost::property_tree::ptree;
-using boost::tribool;
+using ::boost::filesystem::path;
+using ::boost::logic::tribool;
+using ::boost::property_tree::json_parser::read_json;
+using ::boost::property_tree::ptree;
+using ::boost::tribool;
 
 /// \brief TODOCUMENT
 aligned_pair_score_value_list score_value_reader::read_aligned_pair_score_list_from_property_tree(const ptree &prm_property_tree ///< TODOCUMENT

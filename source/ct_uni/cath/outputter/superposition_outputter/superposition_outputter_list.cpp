@@ -28,15 +28,15 @@
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
 
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::adaptors::transformed;
-using boost::algorithm::any_of;
-using boost::algorithm::join;
-using boost::string_ref;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::join;
+using ::boost::string_ref;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief TODOCUMENT
 void superposition_outputter_list::push_back(const superposition_outputter &prm_outputter ///< TODOCUMENT

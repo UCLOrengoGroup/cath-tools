@@ -36,15 +36,15 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace std::literals::string_literals;
+using namespace ::cath::common;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::filesystem::path;
-using boost::format;
-using std::ofstream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::filesystem::path;
+using ::boost::format;
+using ::std::ofstream;
+using ::std::string;
 
 //               new_0[25]  new_1[23]  new_2[ 2]  new_3[64]  new_4[37]  new_5[33]
 //  old_0 [20] |          |          |          |     18   |          |          |
@@ -68,7 +68,7 @@ using std::string;
 string cath::clust::detail::get_name_of_new_unmapped_cluster_of_index(const boost::optional<ptrdiff_t> &prm_last_preceding_index, ///< The last preceding index (or 0 if not mapping from or none if mapping from clusters that don't all have numeric names)
                                                                       const size_t                     &prm_index                 ///< The index of the new, unmapped cluster
                                                                       ) {
-	using std::to_string;
+	using ::std::to_string;
 	if ( prm_last_preceding_index ) {
 		return to_string( *prm_last_preceding_index + 1l + debug_numeric_cast<ptrdiff_t>( prm_index ) );
 	}
@@ -264,7 +264,7 @@ string cath::clust::markdown_summary_string(const old_cluster_data_opt &prm_old_
                                             const new_cluster_data     &prm_new_clusters, ///< The new clusters
                                             const map_results          &prm_map_results   ///< The map_results to summarise
                                              ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	if ( ! prm_old_clusters ) {
 		return "Mapping was not performed\n";

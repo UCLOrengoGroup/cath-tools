@@ -49,13 +49,13 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace cath::index;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::cath::index;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 bool_aln_pair alignment_refiner::iterate_step(const alignment       &prm_alignment,       ///< TODOCUMENT

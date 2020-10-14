@@ -25,13 +25,13 @@
 #include <cassert>
 #include <typeinfo>
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::string_ref;
-using std::ostream;
-using std::unique_ptr;
+using ::boost::string_ref;
+using ::std::ostream;
+using ::std::unique_ptr;
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<superposition_outputter> superposition_outputter::clone() const {

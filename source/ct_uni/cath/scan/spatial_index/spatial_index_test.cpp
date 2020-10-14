@@ -26,11 +26,11 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::scan;
-using namespace cath::test;
+using namespace ::cath::scan;
+using namespace ::cath::test;
 
-using std::make_tuple;
-using std::tuple;
+using ::std::make_tuple;
+using ::std::tuple;
 
 using short_short_short_tuple = tuple<short int, short int, short int>;
 

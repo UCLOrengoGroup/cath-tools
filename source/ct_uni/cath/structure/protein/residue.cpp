@@ -37,21 +37,21 @@
 #include <tuple>
 #include <utility>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
 
-using boost::lexical_cast;
-using boost::numeric_cast;
-using std::get;
-using std::map;
-using std::ostream;
-using std::ostringstream;
-using std::right;
-using std::setw;
-using std::string;
-using std::tuple;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
+using ::std::get;
+using ::std::map;
+using ::std::ostream;
+using ::std::ostringstream;
+using ::std::right;
+using ::std::setw;
+using ::std::string;
+using ::std::tuple;
 
 #include "cath/structure/geometry/quat_rot.hpp"
 
@@ -71,7 +71,7 @@ using std::tuple;
 // 		chain_label b;
 // 	};
 
-// 	using boost::optional;
+// 	using ::boost::optional;
 
 // 	SD< sizeof( residue               ) > size_of_residue;
 // 	SD< sizeof( residue_id            ) > size_of_residue_id;
@@ -122,7 +122,7 @@ const residue residue::NULL_RESIDUE(
 /// \brief Throw if angle is not in range [0, 360]
 void residue::check_phi_psi_angle(const doub_angle &prm_angle
                                   ) {
-//	using boost::math::isfinite;
+//	using ::boost::math::isfinite;
 	if ( prm_angle < zero_angle<double>() || prm_angle > one_revolution<double>() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Phi/psi angle ("

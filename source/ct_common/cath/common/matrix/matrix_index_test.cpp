@@ -22,7 +22,7 @@
 
 #include "cath/common/matrix/matrix_index.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
 BOOST_AUTO_TEST_SUITE(matrix_index_test_suite)
 

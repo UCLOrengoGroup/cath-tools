@@ -28,10 +28,10 @@
 #include <string>
 #include <type_traits>
 
-using namespace cath::common;
-using namespace cath::rslv;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
 
-using std::string;
+using ::std::string;
 
 // Come GCC >= 5.0, reinstate this static_assert that should be passing
 //static_assert( std::is_nothrow_move_assignable   <hit_arch>::value, "" );

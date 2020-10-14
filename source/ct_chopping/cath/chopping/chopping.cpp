@@ -28,8 +28,8 @@
 
 #include <utility>
 
-using namespace cath;
-using namespace cath::chop;
+using namespace ::cath;
+using namespace ::cath::chop;
 
 /// \brief TODOCUMENT
 void chopping::sanity_check() const {

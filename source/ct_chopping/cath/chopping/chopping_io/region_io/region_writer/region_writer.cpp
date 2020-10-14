@@ -20,9 +20,9 @@
 
 #include "region_writer.hpp"
 
-using namespace cath::chop;
+using namespace ::cath::chop;
 
-using std::string;
+using ::std::string;
 
 /// \brief TODOCUMENT
 string region_writer::write_region(const region &prm_region ///< TODOCUMENT

@@ -29,13 +29,13 @@
 #include <iostream>
 #include <sys/wait.h>
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
-using boost::filesystem::path;
-using boost::range::join;
-using std::cerr;
-using std::strerror;
+using ::boost::filesystem::path;
+using ::boost::range::join;
+using ::std::cerr;
+using ::std::strerror;
 
 /// \brief Execute a system command, allowing searching within PATH but not using the shell to process the command
 ///

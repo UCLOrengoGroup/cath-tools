@@ -29,10 +29,10 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath::common;
-using namespace cath::scan;
-using namespace cath::scan::detail;
-using namespace cath::geom;
+using namespace ::cath::common;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
+using namespace ::cath::geom;
 
 namespace cath {
 	namespace test {

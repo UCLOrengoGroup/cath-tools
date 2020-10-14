@@ -24,15 +24,15 @@
 #include "cath/display/viewer/pymol_viewer.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::filesystem::path;
-using boost::string_ref;
-using std::ostream;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::string_ref;
+using ::std::ostream;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> pymol_file_superposition_outputter::do_clone() const {

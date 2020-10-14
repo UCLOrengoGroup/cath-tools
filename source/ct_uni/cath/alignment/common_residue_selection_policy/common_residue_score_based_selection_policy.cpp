@@ -24,10 +24,10 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
 size_vec common_residue_score_based_selection_policy::do_select_common_residues(const alignment                    &prm_alignment, ///< TODOCUMENT
                                                                                 const vector<alignment::size_type> &prm_indices,   ///< TODOCUMENT

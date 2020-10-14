@@ -26,13 +26,13 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::common;
-using namespace cath::seq;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::seq;
+using namespace ::cath::test;
 
-using boost::lexical_cast;
-using std::pair;
-using std::string;
+using ::boost::lexical_cast;
+using ::std::pair;
+using ::std::string;
 
 namespace cath {
 	namespace seq {

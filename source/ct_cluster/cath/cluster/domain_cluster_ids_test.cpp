@@ -24,11 +24,11 @@
 #include "cath/cluster/domain_cluster_ids.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
 
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::seq;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::seq;
 
-using boost::none;
+using ::boost::none;
 
 BOOST_AUTO_TEST_SUITE(domain_cluster_ids_test_suite)
 

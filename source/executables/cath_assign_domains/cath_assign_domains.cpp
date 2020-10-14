@@ -44,24 +44,24 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::homcheck;
-using namespace cath::opts;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::homcheck;
+using namespace ::cath::opts;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::algorithm::is_space;
-using boost::algorithm::join;
-using boost::algorithm::starts_with;
-using boost::algorithm::token_compress_on;
-using boost::filesystem::path;
-using boost::is_space;
-using boost::log::trivial::info;
-using boost::log::trivial::severity;
-using boost::make_optional;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::join;
+using ::boost::algorithm::starts_with;
+using ::boost::algorithm::token_compress_on;
+using ::boost::filesystem::path;
+using ::boost::is_space;
+using ::boost::log::trivial::info;
+using ::boost::log::trivial::severity;
+using ::boost::make_optional;
 
 // \todo Substantially tidy up the code in this file
 

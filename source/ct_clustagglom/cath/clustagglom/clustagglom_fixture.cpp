@@ -22,9 +22,9 @@
 
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath::clust;
+using namespace ::cath::clust;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \brief The directory in which clustagglom data is held
 path clustagglom_fixture::CLUSTAGGLOM_DIR() {

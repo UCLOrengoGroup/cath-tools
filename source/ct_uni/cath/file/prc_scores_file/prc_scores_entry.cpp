@@ -22,8 +22,8 @@
 #include "cath/file/prc_scores_file/detail/prc_scores_line_parser.hpp"
 #include "cath/file/prc_scores_file/prc_scores_entry.hpp"
 
-using namespace cath::file;
-using namespace std;
+using namespace ::cath::file;
+using namespace ::std;
 
 /// \brief Ctor from all of the required pieces of information
 prc_scores_entry::prc_scores_entry(string        prm_name_1,   ///< Name of protein 1

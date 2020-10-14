@@ -27,13 +27,13 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/display_colour/display_colour.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::clamp;
-using boost::lexical_cast;
-using boost::numeric_cast;
+using ::boost::algorithm::clamp;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
 
 /// \brief TODOCUMENT
 void display_colour_gradient::check_values() const {

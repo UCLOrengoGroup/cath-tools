@@ -45,7 +45,7 @@
 
 #include <utility>
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 	namespace scan {

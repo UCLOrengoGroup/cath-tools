@@ -30,15 +30,15 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::erase_all_copy;
-using boost::none;
-using boost::numeric_cast;
+using ::boost::algorithm::erase_all_copy;
+using ::boost::none;
+using ::boost::numeric_cast;
 
 namespace cath {
 	namespace test {

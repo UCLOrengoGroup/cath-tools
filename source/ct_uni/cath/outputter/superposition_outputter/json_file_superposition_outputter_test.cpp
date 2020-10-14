@@ -27,12 +27,12 @@
 #include "cath/test/predicate/files_equal.hpp"
 #include "cath/test/superposition_fixture.hpp"
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 namespace cath {
 	namespace test {

@@ -22,12 +22,12 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::rational_cast;
+using ::boost::rational_cast;
 
 /// \brief NVI wrapper to the pure-virtual do_calculate with some post-processing
 size_rational classn_stat::calculate(const true_false_pos_neg &prm_true_false_pos_neg ///< The true_false_pos_neg from which the statistic should be calculated

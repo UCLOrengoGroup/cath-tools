@@ -37,19 +37,19 @@
 #include <iostream>
 #include <iosfwd>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std::literals::string_literals;
 
-using boost::filesystem::path;
-using boost::program_options::command_line_parser;
-using boost::program_options::options_description;
-using boost::program_options::positional_options_description;
-using boost::program_options::variables_map;
-using boost::trim_right_copy;
-using std::ifstream;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::program_options::command_line_parser;
+using ::boost::program_options::options_description;
+using ::boost::program_options::positional_options_description;
+using ::boost::program_options::variables_map;
+using ::boost::trim_right_copy;
+using ::std::ifstream;
+using ::std::string;
 
 constexpr size_t executable_options::DEFAULT_PROG_OPS_LINE_LENGTH;
 

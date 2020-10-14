@@ -23,8 +23,8 @@
 #include "cath/cluster/map/overlap_frac_distn.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
 BOOST_AUTO_TEST_SUITE(overlap_frac_distn_test_suite)
 

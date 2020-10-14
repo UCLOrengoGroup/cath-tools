@@ -33,15 +33,15 @@
 
 #include <algorithm>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::detail;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::detail;
+using namespace ::cath::sup;
 
-using std::string;
-using std::unique_ptr;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method
 unique_ptr<display_colourer> display_colourer_consecutive::do_clone() const {

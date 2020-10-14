@@ -24,10 +24,10 @@
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 void alignment_outputter_list::push_back(const alignment_outputter &prm_outputter ///< TODOCUMENT

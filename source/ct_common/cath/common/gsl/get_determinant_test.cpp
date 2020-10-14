@@ -23,8 +23,8 @@
 #include "cath/common/gsl/get_determinant.hpp"
 #include "cath/common/gsl/gsl_matrix_wrp.hpp"
 
-// using namespace cath::geom;
-using namespace cath::geom::detail;
+// using namespace ::cath::geom;
+using namespace ::cath::geom::detail;
 
 BOOST_AUTO_TEST_SUITE(get_determinant_test_suite)
 

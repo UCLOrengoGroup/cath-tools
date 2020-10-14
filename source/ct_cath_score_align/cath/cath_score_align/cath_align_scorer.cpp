@@ -39,13 +39,13 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief Perform a cath-score-align job as specified by the cath_superpose_options argument
 ///

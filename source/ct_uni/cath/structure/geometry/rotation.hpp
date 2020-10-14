@@ -320,7 +320,7 @@ namespace cath {
 		/// \brief TODOCUMENT
 		inline void rotation::check_is_valid_rotation() const {
 #ifndef NDEBUG
-		//	using boost::math::isfinite;
+		//	using ::boost::math::isfinite;
 		//	for (const double_vec &row : matrix) {
 		//		for (const double &element : row) {
 		//			if (!boost::math::isfinite(element)) {

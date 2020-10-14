@@ -40,7 +40,7 @@
 #include <cstddef>
 #include <vector>
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 	namespace index {

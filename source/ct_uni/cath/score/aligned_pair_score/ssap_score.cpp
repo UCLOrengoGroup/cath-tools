@@ -45,18 +45,18 @@
 
 #include "cath/ssap/distance_score_formula.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::lexical_cast;
-using boost::numeric_cast;
-using boost::range::join;
-using boost::tribool;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
+using ::boost::range::join;
+using ::boost::tribool;
 
 BOOST_CLASS_EXPORT(ssap_score)
 

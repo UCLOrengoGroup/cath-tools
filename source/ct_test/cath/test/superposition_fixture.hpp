@@ -30,7 +30,7 @@
 #include "cath/superposition/superposition_context.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace std::literals::string_literals;
+using namespace ::std::literals::string_literals;
 
 namespace cath {
 	namespace sup {

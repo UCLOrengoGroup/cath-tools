@@ -33,15 +33,15 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::algorithm::is_space;
-using boost::algorithm::trim_left;
-using boost::filesystem::path;
-using boost::lexical_cast;
-using boost::token_compress_on;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::trim_left;
+using ::boost::filesystem::path;
+using ::boost::lexical_cast;
+using ::boost::token_compress_on;
 
 /// \brief Ctor from a map of pairs of labels to is_positive bools
 label_pair_is_positive::label_pair_is_positive(str_str_pair_bool_map prm_positive_of_label_pairs ///< A map of pairs of labels to is_positive bools from which to construct this label_pair_is_positive

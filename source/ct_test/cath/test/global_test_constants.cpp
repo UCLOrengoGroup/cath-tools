@@ -24,13 +24,13 @@
 #include "cath/external_info/cath_tools_cmake_dirs.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::filesystem::current_path;
-using boost::filesystem::path;
-using boost::filesystem::temp_directory_path;
+using ::boost::filesystem::current_path;
+using ::boost::filesystem::path;
+using ::boost::filesystem::temp_directory_path;
 
 constexpr double global_test_constants::DOUBLE_INFINITY;
 constexpr double global_test_constants::DOUBLE_QUIET_NAN;

@@ -29,14 +29,14 @@
 #include <iostream>
 #include <vector>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::test_tools::predicate_result;
-using std::istream;
-using std::istreambuf_iterator;
-using std::string;
+using ::boost::test_tools::predicate_result;
+using ::std::istream;
+using ::std::istreambuf_iterator;
+using ::std::string;
 
 constexpr str_size_type istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 

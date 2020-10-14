@@ -22,12 +22,12 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using namespace std::literals::string_literals;
+using namespace ::std::literals::string_literals;
 
-using std::tuple;
-using std::vector;
+using ::std::tuple;
+using ::std::vector;
 
 BOOST_AUTO_TEST_SUITE(type_to_string_test_suite)
 

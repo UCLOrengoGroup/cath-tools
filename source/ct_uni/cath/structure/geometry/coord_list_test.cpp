@@ -25,9 +25,9 @@
 
 #include <vector>
 
-using namespace cath;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::geom;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

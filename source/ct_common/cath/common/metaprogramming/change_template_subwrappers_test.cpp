@@ -27,12 +27,12 @@
 #include <type_traits>
 #include <vector>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::is_same;
-using std::list;
-using std::tuple;
-using std::vector;
+using ::std::is_same;
+using ::std::list;
+using ::std::tuple;
+using ::std::vector;
 
 BOOST_AUTO_TEST_SUITE(change_template_subwrappers_test_suite)
 

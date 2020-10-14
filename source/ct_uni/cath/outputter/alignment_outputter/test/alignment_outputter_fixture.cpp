@@ -28,12 +28,12 @@
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::opts;
-using namespace cath::test;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::opts;
+using namespace ::cath::test;
 
-using std::istringstream;
+using ::std::istringstream;
 
 /// \brief Check that the output stream is empty at the end  of the test
 alignment_outputter_fixture::~alignment_outputter_fixture() {

@@ -29,8 +29,8 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

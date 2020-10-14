@@ -20,9 +20,9 @@
 
 #include "cath/common/cpp17/apply.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::make_tuple;
+using ::std::make_tuple;
 
 namespace cath {
 	namespace test {

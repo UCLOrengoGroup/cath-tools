@@ -27,9 +27,9 @@
 #include <istream>
 #include <string>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief Simple extraction operator for sec_struc_type that expects H or S
 ///

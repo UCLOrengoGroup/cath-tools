@@ -33,14 +33,14 @@
 
 #include <iostream>
 
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::log::trivial::info;
-using boost::log::trivial::severity;
-using boost::unit_test::unit_test_monitor;
-using std::cerr;
-using std::endl;
+using ::boost::log::trivial::info;
+using ::boost::log::trivial::severity;
+using ::boost::unit_test::unit_test_monitor;
+using ::std::cerr;
+using ::std::endl;
 
 namespace {
 

@@ -27,18 +27,18 @@
 #include "cath/common/algorithm/sort_uniq_build.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::rslv;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::rslv;
 
-using boost::filesystem::path;
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for an optional file to which the hits text should be output
 const string crh_output_options_block::PO_HITS_TEXT_TO_FILE    { "hits-text-to-file"    };

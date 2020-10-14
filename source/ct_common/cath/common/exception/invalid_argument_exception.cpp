@@ -20,8 +20,8 @@
 
 #include "invalid_argument_exception.hpp"
 
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief Constructor for invalid_argument_exception.
 invalid_argument_exception::invalid_argument_exception(const string &what_arg ///< The name of the argument that caused the problem (not ideal because the creation of the string could throw)

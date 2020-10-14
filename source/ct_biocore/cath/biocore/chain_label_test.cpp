@@ -24,7 +24,7 @@
 
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
+using namespace ::cath;
 
 namespace cath {
 	namespace test {

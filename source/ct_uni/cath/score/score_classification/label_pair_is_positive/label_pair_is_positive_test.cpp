@@ -24,9 +24,9 @@
 #include "cath/score/score_classification/label_pair_is_positive/label_pair_is_positive.hpp"
 //#include "cath/test/global_test_constants.hpp"
 
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
 namespace cath {
     namespace test {

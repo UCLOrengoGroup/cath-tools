@@ -28,15 +28,15 @@
 
 #include <string>
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::make_optional;
-using boost::none;
-using boost::range::equal;
-using std::ostream;
-using std::string;
+using ::boost::make_optional;
+using ::boost::none;
+using ::boost::range::equal;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified full_hit_list
 ///

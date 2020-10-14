@@ -23,10 +23,10 @@
 #include <iostream>
 #include <string>
 
-using namespace cath::seq;
+using namespace ::cath::seq;
 
-using std::string;
-using std::ostream;
+using ::std::string;
+using ::std::ostream;
 
 static_assert( arrow_before_res( 5 ).res_before() == 4, "" );
 static_assert( arrow_before_res( 5 ).res_after () == 5, "" );

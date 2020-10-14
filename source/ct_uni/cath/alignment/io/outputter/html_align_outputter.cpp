@@ -39,13 +39,13 @@
 
 #include <iomanip>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::sup;
+using namespace ::std;
 
 /// \brief Ctor for html_align_outputter
 html_align_outputter::html_align_outputter(const alignment          &prm_alignment, ///< The alignment to be output

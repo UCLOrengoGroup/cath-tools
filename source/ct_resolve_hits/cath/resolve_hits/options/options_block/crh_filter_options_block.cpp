@@ -27,19 +27,19 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::rslv;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::rslv;
 
-using boost::format;
-using boost::none;
-using boost::program_options::options_description;
-using boost::program_options::validation_error;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::format;
+using ::boost::none;
+using ::boost::program_options::options_description;
+using ::boost::program_options::validation_error;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for the worst permissible evalue before a hit is ignored
 const string crh_filter_options_block::PO_WORST_PERMISSIBLE_EVALUE   { "worst-permissible-evalue"   };
@@ -141,7 +141,7 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
 	const string percent_varname{ "<percent>" };
 
 	const auto check_pc_fn = [] (const double &x, const string &y) {
-		using std::to_string;
+		using ::std::to_string;
 		if ( ! ( x >= 0.0 && x <= 100.0 ) ) {
 			throw validation_error{
 				validation_error::invalid_option_value,

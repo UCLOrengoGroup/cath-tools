@@ -26,12 +26,12 @@
 
 #include <fstream>
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \brief A standard do_clone method
 unique_ptr<alignment_outputter> file_alignment_outputter::do_clone() const {

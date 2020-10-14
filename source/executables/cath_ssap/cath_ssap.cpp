@@ -25,14 +25,14 @@
 #include "cath/ssap/options/cath_ssap_options.hpp"
 #include "cath/ssap/ssap.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::log::trivial::info;
-using boost::log::trivial::severity;
-using boost::log::trivial::trace;
+using ::boost::log::trivial::info;
+using ::boost::log::trivial::severity;
+using ::boost::log::trivial::trace;
 
 namespace {
 

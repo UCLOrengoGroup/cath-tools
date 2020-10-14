@@ -31,14 +31,14 @@
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/superposition_fixture.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 namespace cath {
 	namespace test {
@@ -164,15 +164,15 @@ BOOST_AUTO_TEST_CASE(get_supn_content_pdb_works) {
 // #include <boost/range/algorithm/lower_bound.hpp> // ***** TEMPORARY *****
 // #include "cath/common/boost_addenda/range/max_proj_element.hpp" // ***** TEMPORARY *****
 //
-// using boost::filesystem::directory_entry;
-// using boost::filesystem::directory_iterator;
-// using boost::filesystem::path;
-// using boost::range::sort;
-// using cath::file::pdb_atom;
-// using cath::file::pdb_residue;
-// using cath::file::read_pdb_file;
-// using cath::path_vec;
-// using cath::str_doub_map;
+// using ::boost::filesystem::directory_entry;
+// using ::boost::filesystem::directory_iterator;
+// using ::boost::filesystem::path;
+// using ::boost::range::sort;
+// using ::cath::file::pdb_atom;
+// using ::cath::file::pdb_residue;
+// using ::cath::file::read_pdb_file;
+// using ::cath::path_vec;
+// using ::cath::str_doub_map;
 //
 // BOOST_AUTO_TEST_CASE(scan_all_pdbs_for_max_intra_residue_to_ca_dists) {
 // 	constexpr size_t NUM_MAX_DISTS = 10;

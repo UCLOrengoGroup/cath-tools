@@ -24,10 +24,10 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath::chop;
-using namespace cath::common;
+using namespace ::cath::chop;
+using namespace ::cath::common;
 
-using std::string;
+using ::std::string;
 
 /// \brief Ctor for std_region_writer
 std_region_writer::std_region_writer(std_region_io_spec prm_region_io_spec ///< TODOCUMENT

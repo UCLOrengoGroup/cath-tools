@@ -30,14 +30,14 @@
 #include "cath/score/score_classification/label_pair_is_positive/label_pair_is_positive.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::algorithm::join;
-using boost::range::find_if;
+using ::boost::algorithm::join;
+using ::boost::range::find_if;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( size_size_doub_tpl_vec::const_iterator )
 

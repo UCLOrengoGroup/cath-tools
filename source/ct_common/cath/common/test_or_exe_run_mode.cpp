@@ -20,7 +20,7 @@
 
 #include "test_or_exe_run_mode.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
 /// \brief a static flag that acts as a global variable ( :-o ) to record whether
 ///        running as part of a normal binary or a test

@@ -22,10 +22,10 @@
 
 #include "cath/resolve_hits/trim/resolve_boundary.hpp"
 
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using std::invalid_argument;
+using ::std::invalid_argument;
 
 BOOST_AUTO_TEST_SUITE(resolve_boundary_test_suite)
 

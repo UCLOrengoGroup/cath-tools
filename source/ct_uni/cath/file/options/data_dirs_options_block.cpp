@@ -30,20 +30,20 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/file/options/data_dirs_spec.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts::detail;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts::detail;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::algorithm::replace_all_copy;
-using boost::algorithm::to_lower_copy;
-using boost::filesystem::path;
-using boost::none;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
+using ::boost::algorithm::replace_all_copy;
+using ::boost::algorithm::to_lower_copy;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
 
 const string data_dirs_options_block::DATA_OPTION_PATH_VARNAME   = "<path>";
 const string data_dirs_options_block::DATA_OPTION_PREFIX_VARNAME = "<pre>";

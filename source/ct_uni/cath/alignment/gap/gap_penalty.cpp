@@ -20,10 +20,10 @@
 
 #include "gap_penalty.hpp"
 
-using namespace cath;
-//using namespace cath::align;
-using namespace cath::align::gap;
-// using namespace std;
+using namespace ::cath;
+//using namespace ::cath::align;
+using namespace ::cath::align::gap;
+// using namespace ::std;
 
 /// \brief Ctor for gap_penalty
 gap_penalty::gap_penalty(const score_type &prm_open_gap_penalty,  ///< TODOCUMENT

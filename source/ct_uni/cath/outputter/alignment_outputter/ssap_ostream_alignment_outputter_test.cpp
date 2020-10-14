@@ -27,9 +27,9 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
-using namespace cath;
-using namespace cath::opts;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::opts;
+using namespace ::cath::test;
 
 BOOST_FIXTURE_TEST_SUITE(ssap_ostream_alignment_outputter_test_suite, alignment_outputter_fixture)
 

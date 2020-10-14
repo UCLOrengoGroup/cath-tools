@@ -27,20 +27,20 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
-using boost::algorithm::join;
-using boost::format;
-using std::ostream;
-using std::string;
+using ::boost::algorithm::join;
+using ::boost::format;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate string describing each of the groups in the specified hierarchy_layer
 ///
 /// \relates hierarchy_layer
 str_vec cath::clust::to_strings(const hierarchy_layer &prm_hierarchy_layer ///< The hierarchy_layer to describe
                                 ) {
-	using std::to_string;
+	using ::std::to_string;
 	return transform_build<str_vec>(
 		indices( prm_hierarchy_layer.size() ),
 		[&] (const size_t &x) {

@@ -22,7 +22,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
 BOOST_AUTO_TEST_SUITE(string_of_rapidjson_write_test_suite)
 

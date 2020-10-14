@@ -33,17 +33,17 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::chop::detail;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::chop::detail;
+using namespace ::cath::common;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::any_of;
-using boost::algorithm::join;
-using boost::make_optional;
-using boost::none;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::join;
+using ::boost::make_optional;
+using ::boost::none;
 
 /// \brief Sanity check this regions_limiter and throw if there's a problem
 ///

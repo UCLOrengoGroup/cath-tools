@@ -29,18 +29,18 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::any;
-using boost::program_options::invalid_option_value;
-using boost::program_options::validators::get_single_string;
-using std::make_pair;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::any;
+using ::boost::program_options::invalid_option_value;
+using ::boost::program_options::validators::get_single_string;
+using ::std::make_pair;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief TODOCUMENT
 void region::sanity_check() const {

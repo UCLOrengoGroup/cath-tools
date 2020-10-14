@@ -29,10 +29,10 @@
 
 #include <chrono>
 
-using namespace cath;
-using namespace std;
+using namespace ::cath;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \brief TODOCUMENT
 protein_list_loader::protein_list_loader(const protein_source_file_set &prm_source_file_set, ///< TODOCUMENT

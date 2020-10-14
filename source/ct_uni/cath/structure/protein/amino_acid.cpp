@@ -31,10 +31,10 @@
 
 #include <set>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
 constexpr size_t amino_acid::NUM_HETATM_CHARS;
 

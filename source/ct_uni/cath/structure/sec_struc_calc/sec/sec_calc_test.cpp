@@ -37,11 +37,11 @@
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::sec;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::sec;
 
 BOOST_FIXTURE_TEST_SUITE(sec_calc_test_suite, global_test_constants)
 

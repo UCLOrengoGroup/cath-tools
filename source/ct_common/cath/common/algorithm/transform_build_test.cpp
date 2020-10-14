@@ -25,9 +25,9 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

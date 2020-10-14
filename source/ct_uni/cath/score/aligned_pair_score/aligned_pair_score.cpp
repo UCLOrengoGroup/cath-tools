@@ -38,14 +38,14 @@
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::logic::tribool;
+using ::boost::logic::tribool;
 
 /// \brief Return a map of the different concrete aligned_pair_score types by the human_friendly_short_name string they return
 ///

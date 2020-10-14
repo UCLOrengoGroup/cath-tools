@@ -25,13 +25,13 @@
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/common/less_than_helper.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::tribool;
+using ::boost::tribool;
 
 /// \brief A standard do_clone method.
 unique_ptr<aligned_pair_score> pseudo_string_score::do_clone() const {

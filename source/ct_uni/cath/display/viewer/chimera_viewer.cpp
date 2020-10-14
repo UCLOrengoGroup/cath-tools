@@ -47,35 +47,35 @@
 
 #include <algorithm>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::detail;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::detail;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::sup;
 
-using boost::adaptors::transformed;
-using boost::adjacency_list;
-using boost::algorithm::join;
-using boost::algorithm::replace_all_copy;
-using boost::edge_weight_t;
-using boost::graph_traits;
-using boost::irange;
-using boost::lexical_cast;
-using boost::no_property;
-using boost::property;
-using boost::string_ref;
-using boost::undirectedS;
-using boost::vecS;
-using std::make_pair;
-using std::map;
-using std::min;
-using std::ostream;
-using std::ostringstream;
-using std::pair;
-using std::string;
-using std::vector;
+using ::boost::adaptors::transformed;
+using ::boost::adjacency_list;
+using ::boost::algorithm::join;
+using ::boost::algorithm::replace_all_copy;
+using ::boost::edge_weight_t;
+using ::boost::graph_traits;
+using ::boost::irange;
+using ::boost::lexical_cast;
+using ::boost::no_property;
+using ::boost::property;
+using ::boost::string_ref;
+using ::boost::undirectedS;
+using ::boost::vecS;
+using ::std::make_pair;
+using ::std::map;
+using ::std::min;
+using ::std::ostream;
+using ::std::ostringstream;
+using ::std::pair;
+using ::std::string;
+using ::std::vector;
 
 constexpr size_t chimera_viewer::RESIDUE_BATCH_SIZE;
 

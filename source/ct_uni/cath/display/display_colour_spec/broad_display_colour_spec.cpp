@@ -33,17 +33,17 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/display/viewer/viewer.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::adaptors::filtered;
-using boost::adaptors::map_keys;
-using boost::adaptors::map_values;
-using boost::none;
-using std::ostream;
-using std::ostringstream;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::map_keys;
+using ::boost::adaptors::map_values;
+using ::boost::none;
+using ::std::ostream;
+using ::std::ostringstream;
+using ::std::string;
 
 /// \brief Specify the base colour to use
 broad_display_colour_spec & broad_display_colour_spec::colour_base(const display_colour &prm_colour,   ///< The colour to use

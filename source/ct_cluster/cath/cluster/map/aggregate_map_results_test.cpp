@@ -23,7 +23,7 @@
 #include "cath/cluster/map/aggregate_map_results.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath::clust;
+using namespace ::cath::clust;
 
 BOOST_AUTO_TEST_SUITE(aggregate_map_results_test_suite)
 

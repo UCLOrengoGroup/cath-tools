@@ -32,19 +32,19 @@
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/structure/geometry/restrict_to_single_linkage_extension.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file::detail;
-using namespace cath::file;
-using namespace cath::geom;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file::detail;
+using namespace ::cath::file;
+using namespace ::cath::geom;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::any_of;
-using boost::range::binary_search;
-using boost::range::partition;
-using std::tie;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::any_of;
+using ::boost::range::binary_search;
+using ::boost::range::partition;
+using ::std::tie;
 
 /// \brief Get the res_index_key_coord_and_dist values for the specified PDB, restricted
 ///        to the specified regions

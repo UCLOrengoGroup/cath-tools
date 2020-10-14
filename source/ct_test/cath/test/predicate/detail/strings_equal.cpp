@@ -25,13 +25,13 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::test::detail;
+using namespace ::cath::common;
+using namespace ::cath::test::detail;
 
-using boost::irange;
-using boost::test_tools::predicate_result;
-using std::min;
-using std::string;
+using ::boost::irange;
+using ::boost::test_tools::predicate_result;
+using ::std::min;
+using ::std::string;
 
 /// \brief TODOCUMENT
 size_t cath::test::detail::index_of_first_difference(const string &prm_string1, ///< TODOCUMENT

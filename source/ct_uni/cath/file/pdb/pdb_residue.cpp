@@ -37,16 +37,16 @@
 
 #include <cmath>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::adaptors::filtered;
-using boost::algorithm::any_of;
-using boost::algorithm::join;
-using boost::lexical_cast;
+using ::boost::adaptors::filtered;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::join;
+using ::boost::lexical_cast;
 
 /// \brief TODOCUMENT
 ///

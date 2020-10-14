@@ -29,17 +29,17 @@
 
 #include <string>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::algorithm::starts_with;
-using boost::none;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::algorithm::starts_with;
+using ::boost::none;
+using ::std::string;
 
 /// \brief Get an HTML span string to represent some aspect of a segment
 string html_segment::get_html_string(const seq_arrow          &prm_start,           ///< The start of the segment to render

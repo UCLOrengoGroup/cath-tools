@@ -27,9 +27,9 @@
 #include "cath/options/options_block/extract_pdb_options_block.hpp"
 #include "cath/options/options_block/options_block_tester.hpp"
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

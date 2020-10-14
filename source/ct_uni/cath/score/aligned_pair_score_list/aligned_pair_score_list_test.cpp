@@ -22,8 +22,8 @@
 
 #include "cath/score/aligned_pair_score_list/aligned_pair_score_list.hpp"
 
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::score;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

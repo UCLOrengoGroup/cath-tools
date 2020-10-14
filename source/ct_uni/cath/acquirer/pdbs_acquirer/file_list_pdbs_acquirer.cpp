@@ -28,14 +28,14 @@
 #include "cath/file/pdb/pdb_list.hpp"
 #include "cath/file/pdb/pdb_residue.hpp"
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using std::istream;
-using std::make_pair;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::std::istream;
+using ::std::make_pair;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<pdbs_acquirer> file_list_pdbs_acquirer::do_clone() const {

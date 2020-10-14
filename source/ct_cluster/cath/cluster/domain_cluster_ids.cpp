@@ -26,11 +26,11 @@
 #include <iostream>
 #include <string>
 
-using namespace cath::clust;
+using namespace ::cath::clust;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::std::string;
 
 /// \brief Generate a string describing the specified domain_cluster_id
 ///
@@ -38,7 +38,7 @@ using std::string;
 string cath::clust::to_string(const domain_cluster_id &prm_dom_clust_id,   ///< The domain_cluster_id to describe
                               const bool              &prm_include_cluster ///< Whether to include the cluster ID for each entry (default: true)
                               ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	return
 		(

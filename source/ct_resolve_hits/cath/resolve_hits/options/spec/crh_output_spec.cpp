@@ -29,16 +29,16 @@
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
 #include "cath/resolve_hits/options/options_block/crh_output_options_block.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath;
-using namespace std::literals::string_literals;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath;
+using namespace ::std::literals::string_literals;
 
-using boost::filesystem::path;
-using boost::none;
-using boost::numeric_cast;
-using boost::range::count;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::numeric_cast;
+using ::boost::range::count;
+using ::std::string;
 
 constexpr bool                crh_output_spec::DEFAULT_QUIET;
 constexpr hit_boundary_output crh_output_spec::DEFAULT_BOUNDARY_OUTPUT;

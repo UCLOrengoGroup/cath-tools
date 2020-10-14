@@ -26,13 +26,13 @@
 #include "cath/structure/view_cache/filter/filter_vs_full_score.hpp"
 #include "cath/test/test_tools.hpp"
 
-using namespace cath::common::test;
-using namespace cath::index::filter;
-using namespace cath::index::filter::detail;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common::test;
+using namespace ::cath::index::filter;
+using namespace ::cath::index::filter::detail;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 namespace cath {
 	namespace test {

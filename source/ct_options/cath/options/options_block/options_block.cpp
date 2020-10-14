@@ -29,18 +29,18 @@
 #include "cath/common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::adaptors::filtered;
-using boost::algorithm::any_of;
-using boost::filesystem::is_empty;
-using boost::filesystem::path;
-using boost::numeric_cast;
-using boost::program_options::options_description;
-using boost::program_options::variables_map;
+using ::boost::adaptors::filtered;
+using ::boost::algorithm::any_of;
+using ::boost::filesystem::is_empty;
+using ::boost::filesystem::path;
+using ::boost::numeric_cast;
+using ::boost::program_options::options_description;
+using ::boost::program_options::variables_map;
 
 /// \brief A string to use to separate (valid values and their descriptions) from each other
 const string options_block::SUB_DESC_SEPARATOR = "\n   ";
@@ -136,7 +136,7 @@ bool options_block::is_acceptable_output_file(const path &prm_output_file ///< T
 bool options_block::is_acceptable_input_file(const path &prm_output_file, ///< TODOCUMENT
                                              const bool &prm_allow_empty  ///< TODOCUMENT
                                              ) {
-	using boost::filesystem::is_empty;
+	using ::boost::filesystem::is_empty;
 
 	if (!exists(prm_output_file)) {
 		return false;

@@ -26,13 +26,13 @@
 
 #include <string>
 
-using namespace cath::sec;
+using namespace ::cath::sec;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::format;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::format;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified hbond_half_opt
 ///

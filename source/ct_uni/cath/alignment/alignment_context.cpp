@@ -28,14 +28,14 @@
 #include "cath/file/pdb/pdb_residue.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using std::istream;
+using ::std::istream;
 
 /// \brief Ctor for alignment_context
 alignment_context::alignment_context(alignment      prm_alignment, ///< TODOCUMENT

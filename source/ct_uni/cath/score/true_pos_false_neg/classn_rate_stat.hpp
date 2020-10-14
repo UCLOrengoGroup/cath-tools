@@ -32,7 +32,7 @@
 #include "cath/score/true_pos_false_neg/classn_stat.hpp"
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 	namespace score {

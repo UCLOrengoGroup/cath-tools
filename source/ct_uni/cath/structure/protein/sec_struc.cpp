@@ -28,10 +28,10 @@
 #include "cath/structure/geometry/rotation.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;
 
 ///// \brief A static black sec_struc object
 //const sec_struc sec_struc::NULL_SEC_STRUC(

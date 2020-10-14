@@ -45,22 +45,22 @@
 #include <algorithm>
 #include <string>
 
-using namespace cath;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::is_any_of;
-using boost::algorithm::is_space;
-using boost::algorithm::is_upper;
-using boost::algorithm::token_compress_on;
-using boost::algorithm::trim_copy;
-using boost::empty_formatter;
-using boost::lexical_cast;
-using boost::numeric_cast;
-using boost::range::count;
-using boost::range::count_if;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::is_upper;
+using ::boost::algorithm::token_compress_on;
+using ::boost::algorithm::trim_copy;
+using ::boost::empty_formatter;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
+using ::boost::range::count;
+using ::boost::range::count_if;
 
 /// \brief An NVI pass-through to the derived class's concrete definition of the virtual do_align() method
 str_str_score_tpl string_aligner::align(const string      &prm_sequence_string_a, ///< The first  string to be aligned

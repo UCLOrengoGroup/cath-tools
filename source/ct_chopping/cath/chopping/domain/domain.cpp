@@ -32,18 +32,18 @@
 
 #include <string>
 
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath;
-using namespace std::literals::string_literals;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::none;
-using boost::range::equal;
-using std::equal_to;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::none;
+using ::boost::range::equal;
+using ::std::equal_to;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief TODOCUMENT
 void domain::sanity_check() const {

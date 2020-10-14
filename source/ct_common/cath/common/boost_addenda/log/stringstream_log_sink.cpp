@@ -20,7 +20,7 @@
 
 #include "stringstream_log_sink.hpp"
 
-using namespace cath;
+using namespace ::cath;
 
 using ::std::ostringstream;
 using ::std::string;

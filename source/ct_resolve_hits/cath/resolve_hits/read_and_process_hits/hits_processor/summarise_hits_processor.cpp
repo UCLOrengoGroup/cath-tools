@@ -30,21 +30,21 @@
 #include "cath/resolve_hits/full_hit_fns.hpp"
 #include "cath/resolve_hits/full_hit_list.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv::detail;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv::detail;
+using namespace ::std::literals::string_literals;
 
-using boost::format;
-using boost::numeric_cast;
-using boost::range::max_element;
-using boost::range::min_element;
-using std::move;
-using std::ostream;
-using std::right;
-using std::setw;
-using std::string;
-using std::unique_ptr;
+using ::boost::format;
+using ::boost::numeric_cast;
+using ::boost::range::max_element;
+using ::boost::range::min_element;
+using ::std::move;
+using ::std::ostream;
+using ::std::right;
+using ::std::setw;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method
 unique_ptr<hits_processor> summarise_hits_processor::do_clone() const {

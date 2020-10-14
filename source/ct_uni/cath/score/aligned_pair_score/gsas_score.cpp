@@ -35,15 +35,15 @@
 
 // #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::numeric_cast;
-using boost::tribool;
+using ::boost::numeric_cast;
+using ::boost::tribool;
 
 BOOST_CLASS_EXPORT(gsas_score)
 

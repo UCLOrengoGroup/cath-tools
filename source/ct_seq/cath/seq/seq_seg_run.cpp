@@ -28,15 +28,15 @@
 
 #include <string>
 
-using namespace cath::common;
-using namespace cath::seq;
-using namespace std::literals::string_literals;
+using namespace ::cath::common;
+using namespace ::cath::seq;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::transformed;
-using boost::algorithm::all_of;
-using boost::algorithm::join;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::all_of;
+using ::boost::algorithm::join;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the segments of the specified string
 ///

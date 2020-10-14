@@ -37,21 +37,21 @@
 #include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
 #include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace cath::sup;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
+using namespace ::std::literals::string_literals;
 
-using boost::none;
-using boost::program_options::variables_map;
-using std::istream;
-using std::pair;
-using std::string;
-using std::unique_ptr;
+using ::boost::none;
+using ::boost::program_options::variables_map;
+using ::std::istream;
+using ::std::pair;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The name of this program
 const string cath_superpose_options::PROGRAM_NAME("cath-superpose");

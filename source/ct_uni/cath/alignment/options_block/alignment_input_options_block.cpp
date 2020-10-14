@@ -28,22 +28,22 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std::literals::string_literals;
 
-using boost::numeric_cast;
-using boost::algorithm::join;
-using boost::filesystem::path;
-using boost::none;
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::numeric_cast;
+using ::boost::algorithm::join;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for whether to align based on matching residue names
 const string alignment_input_options_block::PO_RES_NAME_ALIGN    { "res-name-align"     };

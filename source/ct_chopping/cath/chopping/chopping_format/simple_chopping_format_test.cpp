@@ -22,8 +22,8 @@
 
 #include "cath/chopping/chopping_format/simple_chopping_format.hpp"
 
-using namespace cath;
-using namespace cath::chop;
+using namespace ::cath;
+using namespace ::cath::chop;
 
 BOOST_AUTO_TEST_SUITE(simple_chopping_format_test_suite)
 

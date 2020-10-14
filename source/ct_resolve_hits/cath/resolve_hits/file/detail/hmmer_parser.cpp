@@ -20,7 +20,7 @@
 
 #include "hmmer_parser.hpp"
 
-using namespace cath::rslv::detail;
+using namespace ::cath::rslv::detail;
 
 constexpr size_t hmmer_parser::LINE_BITSCORE_OFFSET;
 constexpr size_t hmmer_parser::LINE_COND_EVALUE_OFFSET;

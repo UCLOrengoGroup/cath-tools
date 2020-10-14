@@ -26,11 +26,11 @@
 
 #include <random>
 
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::irange;
+using ::boost::irange;
 
 namespace cath {
 	namespace test {

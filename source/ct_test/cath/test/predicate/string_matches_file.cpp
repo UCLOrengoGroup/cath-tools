@@ -28,13 +28,13 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::filesystem::path;
-using boost::test_tools::predicate_result;
-using std::ifstream;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::test_tools::predicate_result;
+using ::std::ifstream;
+using ::std::string;
 
 /// \brief Ctor for string_matches_file
 string_matches_file::string_matches_file(const bootstrap_mode &prm_bootstrapping,  ///< TODOCUMENT

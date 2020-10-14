@@ -26,11 +26,11 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series.hpp"
 
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::range::find_if;
+using ::boost::range::find_if;
 
 /// \brief TODOCUMENT
 classn_stat_pair_series_list::classn_stat_pair_series_list(classn_stat_pair_series_vec prm_classn_stat_pair_serieses ///< TODOCUMENT

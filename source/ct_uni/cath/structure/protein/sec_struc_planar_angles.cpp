@@ -27,11 +27,11 @@
 #include "cath/file/sec/sec_file_record.hpp"
 #include "cath/structure/geometry/coord.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using std::string;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using ::std::string;
 
 const sec_struc_planar_angles sec_struc_planar_angles::NULL_SEC_STRUC_PLANAR_ANGLES(0.0, 0.0, 0.0);
 
@@ -42,7 +42,7 @@ sec_struc_planar_angles::sec_struc_planar_angles(const double &prm_angle_x,     
                                                  ) : planar_angle_x      (prm_angle_x       ),
                                                      planar_angle_minus_y(prm_angle_minus_y ),
                                                      planar_angle_z      (prm_angle_z       ) {
-	using boost::math::isfinite;
+	using ::boost::math::isfinite;
 	if (!isfinite(planar_angle_x) || !isfinite(planar_angle_minus_y) || !isfinite(planar_angle_z)) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Arguments angle_x, angle_y and angle_z must be a normal, finite floating-point numbers"));
 	}

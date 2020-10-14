@@ -37,15 +37,15 @@
 #include "cath/structure/protein/amino_acid.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::find;
-using boost::numeric_cast;
-using boost::range::lower_bound;
-using boost::range::max_element;
+using ::boost::find;
+using ::boost::numeric_cast;
+using ::boost::range::lower_bound;
+using ::boost::range::max_element;
 
 /// \brief TODOCUMENT
 const amino_acid_vec & substitution_matrix::get_amino_acids() const {

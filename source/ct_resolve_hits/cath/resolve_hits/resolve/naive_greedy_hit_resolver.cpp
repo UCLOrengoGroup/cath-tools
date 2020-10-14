@@ -26,9 +26,9 @@
 #include "cath/resolve_hits/algo/scored_arch_proxy_fn.hpp"
 #include "cath/resolve_hits/scored_hit_arch.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
 
 /// \brief Naively, greedily resolve hits
 scored_hit_arch cath::rslv::naive_greedy_resolve_hits(const calc_hit_list &prm_hits ///< The hits to resolve

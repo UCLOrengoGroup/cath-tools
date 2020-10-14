@@ -24,12 +24,12 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/structure/entry_querier/residue_querier.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::none;
+using ::boost::none;
 
 const aln_posn_opt_vec alignment_fixture::aln_list_a     = { size_opt( 0_z ), 1, 2, 3       };
 const aln_posn_opt_vec alignment_fixture::aln_list_b     = { size_opt( 0_z ), 1, 2, none    };

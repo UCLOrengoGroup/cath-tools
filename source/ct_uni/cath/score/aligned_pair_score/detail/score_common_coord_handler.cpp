@@ -30,14 +30,14 @@
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/coord_list.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 /// \brief Private getter for comm_res_seln_pol_ptr
 const common_residue_selection_policy & score_common_coord_handler::get_comm_res_seln_pol() const {

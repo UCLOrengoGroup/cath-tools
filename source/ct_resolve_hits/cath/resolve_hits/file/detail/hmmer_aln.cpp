@@ -20,7 +20,7 @@
 
 #include "hmmer_aln.hpp"
 
-using namespace cath::rslv::detail;
+using namespace ::cath::rslv::detail;
 
 constexpr size_t hmmer_aln::LINE_ID_OFFSET;
 constexpr size_t hmmer_aln::LINE_START_OFFSET;

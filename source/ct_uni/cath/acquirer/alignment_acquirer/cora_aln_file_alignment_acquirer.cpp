@@ -35,19 +35,19 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using std::cerr;
-using std::ifstream;
-using std::make_pair;
-using std::pair;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::std::cerr;
+using ::std::ifstream;
+using ::std::make_pair;
+using ::std::pair;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method
 unique_ptr<alignment_acquirer> cora_aln_file_alignment_acquirer::do_clone() const {

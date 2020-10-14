@@ -39,20 +39,20 @@
 #include <fstream>
 #include <string>
 
-using namespace cath;
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
-using boost::adaptors::reversed;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::filesystem::path;
-using boost::format;
-using boost::range::reverse;
-using boost::range::sort;
-using std::ofstream;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::reversed;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::filesystem::path;
+using ::boost::format;
+using ::boost::range::reverse;
+using ::boost::range::sort;
+using ::std::ofstream;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Get the index of the first entry in the specified hierarchy
 ///        from the specified value at the specified depth
@@ -81,7 +81,7 @@ item_idx cath::clust::detail::first_index(const hierarchy       &prm_hierarchy, 
 /// \relates hierarchy
 string cath::clust::to_string(const hierarchy &prm_hierarchy ///< The hierarchy to describe
                               ) {
-	using std::to_string;
+	using ::std::to_string;
 	return
 		  "hierarchy["
 		+ join(
@@ -153,7 +153,7 @@ ostream & cath::clust::write_cluster(ostream                 &prm_os,        ///
                                      const hierarchy         &prm_hierarchy, ///< The hierarchy to write
                                      const id_of_str_bidirnl &prm_name_ider  ///< The holding the IDs of the entries in the hierarchy
                                      ) {
-	using std::to_string;
+	using ::std::to_string;
 	detail::depth_first_traverse_hierachy(
 		prm_hierarchy,
 		[&] (const item_vec &counters,

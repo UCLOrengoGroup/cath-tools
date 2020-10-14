@@ -30,15 +30,15 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
-using boost::filesystem::path;
-using boost::format;
-using boost::lexical_cast;
-using boost::numeric_cast;
-using std::ofstream;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::format;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
+using ::std::ofstream;
+using ::std::string;
 
 /// \brief Ctor from a clust_mapping_spec under which the mappings have been / will be performed
 aggregate_map_results::aggregate_map_results(const clust_mapping_spec &prm_clust_mapping_spec ///< The clust_mapping_spec under which the mappings have been / will be performed

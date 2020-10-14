@@ -23,9 +23,9 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/less_than_helper.hpp"
 
-using namespace cath::common;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 void quad_and_rep_criteria_result::sanity_check() const {

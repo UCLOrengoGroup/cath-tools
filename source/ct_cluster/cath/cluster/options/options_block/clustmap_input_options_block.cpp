@@ -22,18 +22,18 @@
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 
-using namespace cath;
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for the cluster-membership file for the working clusters
 const string clustmap_input_options_block::PO_WORKING_CLUSTMEMB_FILE  { "working-clustmemb-file"  };

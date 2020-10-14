@@ -41,17 +41,17 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::opts;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
+using namespace ::std;
 
-using boost::numeric_cast;
+using ::boost::numeric_cast;
 
 constexpr double residue_name_alignment_acquirer::RES_ALIGN_SCORE_CONSTANT;
 

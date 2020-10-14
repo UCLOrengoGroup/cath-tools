@@ -28,7 +28,7 @@
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 #include "cath/structure/view_cache/view_cache.hpp"
 
-using namespace cath::index;
+using namespace ::cath::index;
 
 /// \brief Build a vector of view_cache objects from a protein_list object
 view_cache_vec view_cache_list::build_caches(const protein_list &prm_protein_list ///< The list of proteins from which the view_cache_vec should be constructed

@@ -25,9 +25,9 @@
 #include "cath/chopping/region/regions_limiter.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
 
 BOOST_AUTO_TEST_SUITE(regions_limiter_test_suite)
 

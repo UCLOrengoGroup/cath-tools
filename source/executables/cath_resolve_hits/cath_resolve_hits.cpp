@@ -24,11 +24,11 @@
 
 #include <chrono>
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::rslv;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::rslv;
 
-using std::string;
+using ::std::string;
 
 namespace {
 

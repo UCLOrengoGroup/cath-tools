@@ -22,10 +22,10 @@
 
 #include "cath/test/predicate/istreams_equal.hpp"
 
-using namespace cath::test;
+using namespace ::cath::test;
 
-using std::istringstream;
-using std::string;
+using ::std::istringstream;
+using ::std::string;
 
 namespace cath {
 	namespace test {

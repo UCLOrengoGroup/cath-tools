@@ -31,14 +31,14 @@
 #include <iostream> /// ***** TEMPORARY *****
 #include <regex>
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
-using boost::algorithm::is_space;
-using boost::algorithm::starts_with;
-using boost::numeric_cast;
-using boost::token_compress_on;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::starts_with;
+using ::boost::numeric_cast;
+using ::boost::token_compress_on;
 
 /// \brief TODOCUMENT
 string cath::file::detail::strip_header_name(const string &prm_string ///< TODOCUMENT

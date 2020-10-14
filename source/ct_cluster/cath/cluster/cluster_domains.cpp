@@ -25,13 +25,13 @@
 
 #include "cath/common/container/id_of_str_bidirnl.hpp"
 
-using namespace cath::clust::detail;
-using namespace cath::common;
+using namespace ::cath::clust::detail;
+using namespace ::cath::common;
 
-using boost::accumulate;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using std::string;
+using ::boost::accumulate;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::std::string;
 
 /// \brief Get the number of entries in the specified cluster_domains
 ///

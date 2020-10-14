@@ -31,9 +31,9 @@
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
 
 using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::is_space;

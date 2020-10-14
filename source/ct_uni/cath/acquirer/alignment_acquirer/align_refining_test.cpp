@@ -23,10 +23,10 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::align;
+using namespace ::cath::align;
 
-using boost::lexical_cast;
-using std::string;
+using ::boost::lexical_cast;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(align_refining_test_suite)
 

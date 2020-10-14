@@ -26,11 +26,11 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::lexical_cast;
+using ::boost::lexical_cast;
 
 /// \brief Sanity check the specified entry value is within the range given the current number of entries
 ///        and throw an exception if not

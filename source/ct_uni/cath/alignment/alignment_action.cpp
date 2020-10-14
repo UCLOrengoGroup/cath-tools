@@ -29,15 +29,15 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::filesystem::path;
-using boost::lexical_cast;
-using std::get;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::lexical_cast;
+using ::std::get;
+using ::std::string;
 
 /// \brief A convenience function to append a glued row to the end of an alignment
 void cath::align::detail::append_glued_row(alignment                  &prm_alignment,     ///< The alignment to which the glued row should be appended

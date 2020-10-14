@@ -22,11 +22,11 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace cath::common::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::common::detail;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \brief Open an ifstream with a path, throwing runtime_error_exception on error, and leave exceptions set to throw on badbit
 ///

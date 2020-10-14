@@ -24,10 +24,10 @@
 #include "cath/scan/detail/stride/co_stride.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath::common;
-using namespace cath::scan::detail;
-using namespace cath::scan::detail::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::scan::detail;
+using namespace ::cath::scan::detail::detail;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

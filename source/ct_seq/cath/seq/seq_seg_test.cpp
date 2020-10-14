@@ -25,12 +25,12 @@
 #include "cath/seq/seq_seg.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-using namespace cath::common;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::seq;
 
-using boost::lexical_cast;
-using std::invalid_argument;
-using std::string;
+using ::boost::lexical_cast;
+using ::std::invalid_argument;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(seq_seg_test_suite)
 

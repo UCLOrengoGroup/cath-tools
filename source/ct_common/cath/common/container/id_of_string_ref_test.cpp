@@ -29,11 +29,11 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using std::string;
+using ::std::string;
 
 namespace cath {
 	namespace test {
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 }
 
 BOOST_AUTO_TEST_CASE(fast) {
-	using std::to_string;
+	using ::std::to_string;
 	constexpr size_t MAX = 1000_z;
 
 	str_vec strings;

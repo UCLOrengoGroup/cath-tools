@@ -42,28 +42,28 @@
 
 #include <algorithm>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::sec;
-using namespace cath::sec::detail;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::sec;
+using namespace ::cath::sec::detail;
 
-using boost::adaptors::reversed;
-using boost::algorithm::any_of;
-using boost::algorithm::clamp;
-using boost::algorithm::none_of;
-using boost::format;
-using boost::irange;
-using boost::make_optional;
-using boost::none;
-using boost::optional;
-using boost::range::binary_search;
-using boost::range::upper_bound;
-using boost::remove_if;
-using std::max;
-using std::min;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::reversed;
+using ::boost::algorithm::any_of;
+using ::boost::algorithm::clamp;
+using ::boost::algorithm::none_of;
+using ::boost::format;
+using ::boost::irange;
+using ::boost::make_optional;
+using ::boost::none;
+using ::boost::optional;
+using ::boost::range::binary_search;
+using ::boost::range::upper_bound;
+using ::boost::remove_if;
+using ::std::max;
+using ::std::min;
+using ::std::ostream;
+using ::std::string;
 
 constexpr size_t sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE;
 constexpr size_t sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE;

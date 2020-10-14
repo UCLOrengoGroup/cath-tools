@@ -37,13 +37,13 @@
 
 #include <map>
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
+using namespace ::cath::seq;
 
-using boost::ignore_unused;
-using std::numeric_limits;
+using ::boost::ignore_unused;
+using ::std::numeric_limits;
 
 // POSSIBLY TODO:
 //  * Replace sort with in-place insertion during parsing?

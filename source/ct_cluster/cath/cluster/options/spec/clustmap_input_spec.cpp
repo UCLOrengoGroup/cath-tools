@@ -22,10 +22,10 @@
 
 #include "cath/cluster/options/options_block/clustmap_input_options_block.hpp"
 
-using namespace cath;
-using namespace cath::clust;
+using namespace ::cath;
+using namespace ::cath::clust;
 
-using boost::none;
+using ::boost::none;
 
 constexpr bool clustmap_input_spec::DEFAULT_READ_BATCHES_FROM_INPUT;
 

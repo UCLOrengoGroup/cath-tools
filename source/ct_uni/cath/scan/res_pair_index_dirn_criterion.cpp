@@ -24,9 +24,9 @@
 
 #include <iostream>
 
-using namespace cath::common;
-using namespace cath::scan;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::scan;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 ///

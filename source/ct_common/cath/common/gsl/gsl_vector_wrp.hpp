@@ -105,7 +105,7 @@ namespace cath {
 			/// \relates to_string
 			inline std::string to_string(const gsl_vector_wrp &prm_vector_wrap ///< The gsl_vector_wrp to describe
 			                             ) {
-				using std::to_string;
+				using ::std::to_string;
 				return
 					  "gsl_vector_wrp["
 					+ to_string( gsl_vector_get( prm_vector_wrap.get_ptr(), 0 ) )

@@ -65,11 +65,11 @@
 #include <sstream>
 #include <tuple>
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
 
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
@@ -286,7 +286,7 @@ size_t cath::file::get_num_backbone_complete_residues(const pdb &prm_pdb ///< Th
 size_t cath::file::get_index_of_backbone_complete_index(const pdb    &prm_pdb,  ///< The pdb to query
                                                         const size_t &prm_index ///< The index of the required residue
                                                         ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	if ( prm_index >= prm_pdb.get_num_residues() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get_residue_ca_coord_of_backbone_complete_index() for index >= number of residues"));
@@ -379,7 +379,7 @@ size_t cath::file::get_index_of_region_limited_backbone_complete_index(const pdb
                                                                        const size_t          &prm_index,  ///< The index of the required residue
                                                                        const region_vec_opt  &prm_regions ///< The regions within which the index applies
                                                                        ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	if ( prm_index >= prm_pdb.get_num_residues() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to get_index_of_region_limited_backbone_complete_index() for index >= number of residues"));

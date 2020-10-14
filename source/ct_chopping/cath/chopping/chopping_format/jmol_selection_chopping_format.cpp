@@ -26,11 +26,11 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath::chop;
-using namespace cath::common;
+using namespace ::cath::chop;
+using namespace ::cath::common;
 
-using std::string;
-using std::unique_ptr;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<chopping_format> jmol_selection_chopping_format::do_clone() const {

@@ -25,10 +25,10 @@
 
 #include <string>
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified hierarchy_group
 ///

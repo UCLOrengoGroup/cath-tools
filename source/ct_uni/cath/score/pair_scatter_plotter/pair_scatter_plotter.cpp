@@ -24,13 +24,13 @@
 
 //#include "cath/common/boost_addenda/filesystem/replace_extension_copy.hpp"
 
-//using namespace boost::filesystem;
-//using namespace cath::score;
-//using namespace std;
+//using namespace ::boost::filesystem;
+//using namespace ::cath::score;
+//using namespace ::std;
 
-//using boost::filesystem::path;
+//using ::boost::filesystem::path;
 
-//using gnuplotio::Gnuplot;
+//using ::gnuplotio::Gnuplot;
 
 //void pair_scatter_plotter::plot(const path               &prm_output_file_stem, ///< TODOCUMENT
 //                                const doub_doub_pair_vec &prm_data,             ///< TODOCUMENT

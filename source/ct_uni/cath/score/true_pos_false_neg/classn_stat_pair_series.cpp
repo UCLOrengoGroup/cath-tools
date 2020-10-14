@@ -28,10 +28,10 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 classn_stat_pair_series::classn_stat_pair_series(doub_doub_pair_vec prm_data, ///< TODOCUMENT

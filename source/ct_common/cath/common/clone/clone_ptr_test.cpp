@@ -40,10 +40,10 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::common;
-using namespace cath::common::detail;
-using namespace cath::test;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::common::detail;
+using namespace ::cath::test;
+using namespace ::std;
 
 constexpr size_t CONCRETE1_METHOD_RESULT = 3984756;
 constexpr size_t CONCRETE2_METHOD_RESULT =     836;

@@ -29,12 +29,12 @@
 //#include <boost/units/systems/angle/degrees.hpp>
 //#include <boost/units/systems/angle/revolutions.hpp>
 
-//using boost::units::degree::degree;
-//using boost::units::quantity;
-//using boost::units::revolution::revolution;
-//using boost::units::si::plane_angle;
-//using boost::units::si::radian;
+//using ::boost::units::degree::degree;
+//using ::boost::units::quantity;
+//using ::boost::units::revolution::revolution;
+//using ::boost::units::si::plane_angle;
+//using ::boost::units::si::radian;
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;

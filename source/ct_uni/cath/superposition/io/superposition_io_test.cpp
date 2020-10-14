@@ -32,11 +32,11 @@
 #include <regex>
 #include <sstream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::sup;
 
 using ::boost::filesystem::path;
 using ::std::ostringstream;

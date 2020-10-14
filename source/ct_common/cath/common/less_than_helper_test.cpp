@@ -30,11 +30,11 @@
 #include <tuple>
 #include <utility>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::irange;
+using ::boost::irange;
 
 namespace cath {
 	namespace test {

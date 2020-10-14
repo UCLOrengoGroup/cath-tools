@@ -28,15 +28,15 @@
 #include <iostream>
 #include <string>
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
-using boost::algorithm::any_of;
-using boost::make_optional;
-using boost::none;
-using std::istream;
-using std::ostream;
-using std::string;
+using ::boost::algorithm::any_of;
+using ::boost::make_optional;
+using ::boost::none;
+using ::std::istream;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified residue_id
 ///

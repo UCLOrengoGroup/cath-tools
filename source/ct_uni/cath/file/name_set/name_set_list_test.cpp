@@ -22,7 +22,7 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::test;
+using namespace ::cath::test;
 
 namespace cath {
 	namespace test {

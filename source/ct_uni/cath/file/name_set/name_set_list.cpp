@@ -29,18 +29,18 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::adaptors::transformed;
-using boost::algorithm::all_of;
-using boost::algorithm::join;
-using boost::none;
-using boost::range::combine;
-using std::min;
-using std::ostream;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::all_of;
+using ::boost::algorithm::join;
+using ::boost::none;
+using ::boost::range::combine;
+using ::std::min;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Build a name_set_list from str_vec and a str_opt_vec
 ///

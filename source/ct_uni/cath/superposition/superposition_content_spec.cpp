@@ -24,10 +24,10 @@
 
 #include <utility>
 
-using namespace cath;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::sup;
 
-using boost::none;
+using ::boost::none;
 
 constexpr supn_regions_context superposition_content_spec::DEFAULT_REGIONS_CONTEXT;
 constexpr double               superposition_content_spec::DEFAULT_DNA_MAX_DIST;

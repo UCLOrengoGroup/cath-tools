@@ -28,21 +28,21 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/range/max_proj_element.hpp"
 
-using namespace cath;
-using namespace cath::clust;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::clust;
+using namespace ::cath::common;
 
 #include <numeric>
 #include <tuple>
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::format;
-using std::accumulate;
-using std::get;
-using std::max;
-using std::min;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::format;
+using ::std::accumulate;
+using ::std::get;
+using ::std::max;
+using ::std::min;
+using ::std::string;
 
 constexpr size_t overlap_frac_distn::num_dec_places;
 constexpr size_t overlap_frac_distn::num_gaps;
@@ -167,7 +167,7 @@ string cath::clust::percentile_markdown_table(const overlap_frac_distn          
                                               const string                            &prm_value_title,        ///< The title for the values column
                                               const overlap_frac_distn::zeroes_policy &prm_zeroes_policy       ///< Whether to exclude any zero overlap fractions from calculations
                                               ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	const doub_doub_pair_vec data = percentile_data( prm_overlap_frac_distn, prm_percentiles, prm_zeroes_policy );
 	return "| " + prm_percentile_title + " | " + prm_value_title + " |\n"
@@ -196,7 +196,7 @@ string cath::clust::percentile_markdown_table(const overlap_frac_distn          
 str_size_doub_tpl_vec cath::clust::histogram_data(const overlap_frac_distn &prm_overlap_frac_distn,        ///< The overlap_frac_distn to query
                                                   const size_t             &prm_num_with_nothing_on_parent ///< The number of domains that mapped at 0% with nothing on the parent sequence
                                                   ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	const size_t total       = prm_overlap_frac_distn.size();
 	const size_t num_at_zero = prm_overlap_frac_distn.get_num_at_fraction( 0.0 );
@@ -239,7 +239,7 @@ string cath::clust::histogram_markdown_table(const overlap_frac_distn &prm_overl
                                              const string             &prm_percent_title,             ///< The title for the percent column
                                              const size_t             &prm_num_with_nothing_on_parent ///< The number of domains that mapped at 0% with nothing on the parent sequence
                                              ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	const auto data = histogram_data( prm_overlap_frac_distn, prm_num_with_nothing_on_parent );
 

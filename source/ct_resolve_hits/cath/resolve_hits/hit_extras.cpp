@@ -22,9 +22,9 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::string;
+using ::std::string;
 
 /// \brief Generate a string describing the specified hit_extra_cat
 ///

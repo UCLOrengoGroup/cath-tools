@@ -29,12 +29,12 @@
 #include <type_traits>
 #include <vector>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::deque;
-using std::is_same;
-using std::tuple;
-using std::vector;
+using ::std::deque;
+using ::std::is_same;
+using ::std::tuple;
+using ::std::vector;
 
 BOOST_AUTO_TEST_SUITE(combine_params_lists_with_template_list_test_suite)
 

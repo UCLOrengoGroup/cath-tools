@@ -59,43 +59,43 @@
 #include <fstream>
 #include <iostream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::adaptors::transformed;
-using boost::algorithm::icontains;
-using boost::algorithm::is_any_of;
-using boost::algorithm::is_space;
-using boost::algorithm::join;
-using boost::algorithm::starts_with;
-using boost::algorithm::trim_copy;
-using boost::empty_formatter;
-using boost::filesystem::path;
-using boost::filesystem::temp_directory_path;
-using boost::format;
-using boost::is_alpha;
-using boost::is_print;
-using boost::lexical_cast;
-using boost::none;
-using boost::numeric_cast;
-using boost::to_upper;
-using boost::trim;
-using std::cerr;
-using std::endl;
-using std::flush;
-using std::ifstream;
-using std::ios;
-using std::istream;
-using std::max;
-using std::min;
-using std::ofstream;
-using std::ostream;
-using std::ostringstream;
-using std::strerror;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::icontains;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::join;
+using ::boost::algorithm::starts_with;
+using ::boost::algorithm::trim_copy;
+using ::boost::empty_formatter;
+using ::boost::filesystem::path;
+using ::boost::filesystem::temp_directory_path;
+using ::boost::format;
+using ::boost::is_alpha;
+using ::boost::is_print;
+using ::boost::lexical_cast;
+using ::boost::none;
+using ::boost::numeric_cast;
+using ::boost::to_upper;
+using ::boost::trim;
+using ::std::cerr;
+using ::std::endl;
+using ::std::flush;
+using ::std::ifstream;
+using ::std::ios;
+using ::std::istream;
+using ::std::max;
+using ::std::min;
+using ::std::ofstream;
+using ::std::ostream;
+using ::std::ostringstream;
+using ::std::strerror;
+using ::std::string;
 
 const double MIN_FRAC_OF_PDB_RESIDUES_IN_SEQ( 0.7 );
 
@@ -518,7 +518,7 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
                                                             const string         &prm_name,            ///< The name of the entry to use in warnings / errors
                                                             ostream              &/*prm_stderr*/       ///< The ostream to which warnings should be output
                                                             ) {
-	using std::to_string;
+	using ::std::to_string;
 
 	constexpr size_t ERR_MSG_SEQ_RADIUS = 10;
 

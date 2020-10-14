@@ -26,7 +26,7 @@
 #include "cath/display/options/display_spec.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
+using namespace ::cath;
 
 namespace cath {
 	namespace test {

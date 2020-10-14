@@ -31,13 +31,13 @@
 #include "cath/scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_y_keyer_part.hpp"
 #include "cath/scan/res_pair_keyer/res_pair_keyer_part/res_pair_view_z_keyer_part.hpp"
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::scan;
-using namespace cath::scan::detail;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
 
-using boost::adaptors::transformed;
-using std::vector;
+using ::boost::adaptors::transformed;
+using ::std::vector;
 
 namespace  {
 

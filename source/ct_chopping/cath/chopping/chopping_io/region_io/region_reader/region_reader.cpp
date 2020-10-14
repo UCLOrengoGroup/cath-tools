@@ -22,9 +22,9 @@
 
 #include "cath/chopping/region/region.hpp"
 
-using namespace cath::chop;
+using namespace ::cath::chop;
 
-using std::string;
+using ::std::string;
 
 /// \brief TODOCUMENT
 region region_reader::read_region(const string &prm_region_string ///< TODOCUMENT

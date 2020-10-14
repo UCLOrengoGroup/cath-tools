@@ -25,20 +25,20 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 // #include "exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std::literals::string_literals;
 
-using boost::filesystem::path;
-using boost::none;
-// using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::none;
+// using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 const string extract_pdb_options_block::PO_INPUT_PDB_FILE  ( "input-pdb-file"  );
 const string extract_pdb_options_block::PO_OUTPUT_PDB_FILE ( "output-pdb-file" );

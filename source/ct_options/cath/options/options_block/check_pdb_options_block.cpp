@@ -25,19 +25,19 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std::literals::string_literals;
 
-using boost::filesystem::path;
-using boost::none;
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 const string check_pdb_options_block::PO_PDB_FILE ( "pdb-file"        );
 const string check_pdb_options_block::PO_PERMIT   ( "permit-no-atoms" );

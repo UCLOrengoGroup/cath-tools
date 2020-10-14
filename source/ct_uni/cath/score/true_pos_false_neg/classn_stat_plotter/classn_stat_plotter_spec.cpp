@@ -27,12 +27,12 @@
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::none;
+using ::boost::none;
 
 /// \brief TODOCUMENT
 classn_stat_plotter_spec::classn_stat_plotter_spec(str_vec                                       prm_pre_plot_strs,              ///< TODOCUMENT

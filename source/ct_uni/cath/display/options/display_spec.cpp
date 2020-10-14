@@ -28,12 +28,12 @@
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_list.hpp"
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
-using boost::make_optional;
-using boost::none;
-using std::string;
+using ::boost::make_optional;
+using ::boost::none;
+using ::std::string;
 
 /// \brief A string value to use internally to indicate colours haven't been specified
 ///

@@ -26,14 +26,14 @@
 #include "cath/file/options/data_dirs_spec.hpp"
 #include "cath/file/pdb/pdb.hpp"
 
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using std::make_pair;
-using std::pair;
+using ::boost::filesystem::path;
+using ::std::make_pair;
+using ::std::pair;
 
 /// \brief TODOCUMENT
 pair<path, pdb> cath::file::read_domain_from_pdb(const domain_definition &prm_read_domain_def_from_pdb, ///< TODOCUMENT

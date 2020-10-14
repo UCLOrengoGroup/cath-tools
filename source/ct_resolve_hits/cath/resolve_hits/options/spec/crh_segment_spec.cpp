@@ -20,11 +20,11 @@
 
 #include "crh_segment_spec.hpp"
 
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::make_optional;
-using boost::none;
+using ::boost::make_optional;
+using ::boost::none;
 
 constexpr trim_spec crh_segment_spec::DEFAULT_OVERLAP_TRIM_SPEC;
 constexpr residx_t  crh_segment_spec::DEFAULT_MIN_SEG_LENGTH;

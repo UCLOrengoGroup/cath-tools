@@ -33,14 +33,14 @@
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/coord_list.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::assign::ptr_push_back;
-using boost::ptr_vector;
+using ::boost::assign::ptr_push_back;
+using ::boost::ptr_vector;
 
 /// \brief NVI pass-through method to the concrete class's do_select_common_atoms() which defines how the policy extracts common atoms from a pair of residues
 void common_atom_selection_policy::append_common_atoms_to_coord_lists(coord_list_coord_list_pair &prm_coord_lists, ///< The previous common coord_lists to which the new selections should be appended

@@ -32,12 +32,12 @@
 #include "cath/structure/geometry/orient.hpp"
 #include "cath/superposition/superposition.hpp"
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::sup;
-using namespace cath::sup::detail;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::sup;
+using namespace ::cath::sup::detail;
 
 /// \brief For the positions in the specified alignment that pass the specified filter, get their corresponding coordinates in
 ///        the specified PDBs after transformation by the corresponding part of the specified superposition

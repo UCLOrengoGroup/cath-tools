@@ -30,18 +30,18 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/resolve_hits/options/options_block/crh_output_options_block.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::filesystem::path;
-using boost::make_optional;
-using boost::none;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::filesystem::path;
+using ::boost::make_optional;
+using ::boost::none;
+using ::std::string;
 
 constexpr bool                crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
 constexpr bool                crh_single_output_spec::DEFAULT_JSON_OUTPUT;

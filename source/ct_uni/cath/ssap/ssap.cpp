@@ -171,38 +171,38 @@
 #include <iostream>
 #include <string>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::gap;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::sup;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::gap;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::sup;
+using namespace ::cath::opts;
 
-using boost::adaptors::reversed;
-using boost::algorithm::to_lower_copy;
-using boost::filesystem::path;
-using boost::irange;
-using boost::lexical_cast;
-using boost::none;
-using boost::numeric_cast;
-using boost::range::stable_sort;
-using std::abs;
-using std::boolalpha;
-using std::deque;
-using std::fill_n;
-using std::fixed;
-using std::make_pair;
-using std::max;
-using std::min;
-using std::ofstream;
-using std::ostream;
-using std::pair;
-using std::setprecision;
-using std::string;
-using std::vector;
+using ::boost::adaptors::reversed;
+using ::boost::algorithm::to_lower_copy;
+using ::boost::filesystem::path;
+using ::boost::irange;
+using ::boost::lexical_cast;
+using ::boost::none;
+using ::boost::numeric_cast;
+using ::boost::range::stable_sort;
+using ::std::abs;
+using ::std::boolalpha;
+using ::std::deque;
+using ::std::fill_n;
+using ::std::fixed;
+using ::std::make_pair;
+using ::std::max;
+using ::std::min;
+using ::std::ofstream;
+using ::std::ostream;
+using ::std::pair;
+using ::std::setprecision;
+using ::std::string;
+using ::std::vector;
 
 /// \brief The number of top-scoring residue pairs to select
 constexpr size_t     NUM_SELECTIONS_TO_SAVE   =  20;

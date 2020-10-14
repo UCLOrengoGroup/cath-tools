@@ -25,11 +25,11 @@
 
 #include "cath/common/size_t_literal.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using boost::lexical_cast;
-using std::make_tuple;
-using std::string;
+using ::boost::lexical_cast;
+using ::std::make_tuple;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(tuple_insertion_operator_test_suite)
 

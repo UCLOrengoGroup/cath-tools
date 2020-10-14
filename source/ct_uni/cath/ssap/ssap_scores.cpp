@@ -22,8 +22,8 @@
 
 #include <ostream>
 
-using namespace cath;
-using namespace std;
+using namespace ::cath;
+using namespace ::std;
 
 /// \brief Setter for percentage_aligned_pairs_over_larger
 void ssap_scores::set_percentage_aligned_pairs_over_larger(const double &prm_percentage_aligned_pairs_over_larger ///< The value to which percentage_aligned_pairs_over_larger should be set

@@ -42,15 +42,15 @@
 #include "cath/outputter/superposition_outputter/superposition_outputter_list.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace cath::sup;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \brief Perform a cath-superpose job as specified by the cath_superpose_options argument
 ///

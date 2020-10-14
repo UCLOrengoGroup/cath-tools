@@ -37,17 +37,17 @@
 
 #include <cmath>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::irange;
-using boost::numeric_cast;
-using boost::tribool;
+using ::boost::irange;
+using ::boost::numeric_cast;
+using ::boost::tribool;
 
 BOOST_CLASS_EXPORT(drmsd_score)
 

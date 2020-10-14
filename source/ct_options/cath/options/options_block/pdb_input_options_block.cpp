@@ -24,18 +24,18 @@
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath;
 
-using boost::filesystem::path;
-using boost::none;
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief The option name for the a list of PDB files that should be read
 const string pdb_input_options_block::PO_PDB_INFILE     ( "pdb-infile"      );

@@ -29,12 +29,12 @@
 
 #include <string>
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
-using boost::algorithm::is_space;
-using boost::token_compress_on;
+using ::boost::algorithm::is_space;
+using ::boost::token_compress_on;
 
 /// \brief Ctor from all of the required pieces of information
 ssap_scores_entry::ssap_scores_entry(string        prm_prot1,      ///< Name of protein 1

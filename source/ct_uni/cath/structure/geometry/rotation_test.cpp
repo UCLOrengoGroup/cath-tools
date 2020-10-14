@@ -32,9 +32,9 @@
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::geom;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::geom;
 
 namespace cath {
 	namespace test {

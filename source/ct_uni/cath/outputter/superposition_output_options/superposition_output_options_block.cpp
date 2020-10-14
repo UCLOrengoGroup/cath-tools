@@ -34,19 +34,19 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::filesystem::path;
-using boost::none;
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 const string superposition_output_options_block::PO_SUP_FILE         ( "sup-to-pdb-file"      );
 const string superposition_output_options_block::PO_SUP_FILES_DIR    ( "sup-to-pdb-files-dir" );

@@ -24,10 +24,10 @@
 
 #include "cath/ssap/windowed_matrix.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace std;
-using boost::numeric_cast;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::std;
+using ::boost::numeric_cast;
 
 /// \brief Return the number of elements in the first entry to by aligned with dynamic-programming
 size_t new_matrix_dyn_prog_score_source::do_get_length_a() const {

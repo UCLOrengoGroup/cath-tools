@@ -20,11 +20,11 @@
 
 #include "path_or_istream.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using boost::filesystem::path;
-using boost::none;
-using std::istream;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::std::istream;
 
 /// \brief Ctor from a special istream and a flag to be used to indicate when input should be read from that istream
 path_or_istream::path_or_istream(istream    &prm_istream,               ///< A special istream (often stdin) from which input can be read

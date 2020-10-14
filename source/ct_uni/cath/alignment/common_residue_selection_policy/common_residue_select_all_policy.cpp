@@ -23,10 +23,10 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 size_vec common_residue_select_all_policy::do_select_common_residues(const alignment                    &/*prm_alignment*/, ///< TODOCUMENT

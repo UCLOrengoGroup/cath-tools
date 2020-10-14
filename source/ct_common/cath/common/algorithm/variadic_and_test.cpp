@@ -22,7 +22,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
 BOOST_AUTO_TEST_SUITE(variadic_and_test_suite)
 

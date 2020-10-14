@@ -40,20 +40,20 @@
 #include <regex>
 #include <vector>
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::algorithm::icontains;
-using boost::algorithm::join;
-using boost::filesystem::path;
-using boost::irange;
-using std::istringstream;
-using std::ostringstream;
-using std::regex;
-using std::string;
-using std::stringstream;
+using ::boost::algorithm::icontains;
+using ::boost::algorithm::join;
+using ::boost::filesystem::path;
+using ::boost::irange;
+using ::std::istringstream;
+using ::std::ostringstream;
+using ::std::regex;
+using ::std::string;
+using ::std::stringstream;
 
 namespace cath {
 	namespace test {

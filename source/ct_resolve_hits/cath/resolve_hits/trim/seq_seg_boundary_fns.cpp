@@ -32,14 +32,14 @@
 #include "cath/seq/seq_arrow.hpp"
 #include "cath/seq/seq_seg.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::adaptors::filtered;
-using boost::algorithm::none_of;
-using boost::none;
-using std::make_pair;
+using ::boost::adaptors::filtered;
+using ::boost::algorithm::none_of;
+using ::boost::none;
+using ::std::make_pair;
 
 /// \brief Get the specified boundary for the specified segment in the context of the other segments and crh_segment_spec
 ///        or none if there are no overlapping segments on the relevant side of the query segment

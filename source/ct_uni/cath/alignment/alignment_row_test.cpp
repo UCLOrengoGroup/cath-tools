@@ -22,7 +22,7 @@
 
 #include "cath/alignment/alignment_row.hpp"
 
-using namespace cath::align;
+using namespace ::cath::align;
 
 namespace cath {
 	namespace test {

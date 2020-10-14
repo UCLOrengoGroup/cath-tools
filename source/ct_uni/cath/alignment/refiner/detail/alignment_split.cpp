@@ -26,9 +26,9 @@
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-using namespace cath;
-using namespace cath::align::detail;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
 
 /// \brief Ctor for alignment_split
 alignment_split::alignment_split(const size_t &prm_num_entries ///< TODOCUMENT

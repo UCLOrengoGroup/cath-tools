@@ -26,9 +26,9 @@
 #include "cath/ssap/ssap.hpp"
 #include "cath/structure/protein/protein.hpp"
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::index;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::index;
 
 
 /// \brief Private static method that implements the process of building the views from proteins

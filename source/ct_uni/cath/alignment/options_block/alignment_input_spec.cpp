@@ -27,14 +27,14 @@
 
 #include <array>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
-using boost::range::count;
-using std::array;
+using ::boost::filesystem::path;
+using ::boost::range::count;
+using ::std::array;
 
 constexpr bool alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN;
 

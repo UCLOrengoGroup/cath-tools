@@ -30,12 +30,12 @@
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::adaptors::filtered;
+using ::boost::adaptors::filtered;
 
 /// \brief TODOCUMENT
 ///

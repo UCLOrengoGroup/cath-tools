@@ -41,7 +41,7 @@
 
 #include <vector>
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath { class amino_acid; }
 namespace cath { namespace file { class pdb_atom; } }

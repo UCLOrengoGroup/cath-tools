@@ -22,9 +22,9 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::opts::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::opts::detail;
+using namespace ::std;
 
 /// \brief Simple insertion operator for data_option
 ///

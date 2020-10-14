@@ -22,9 +22,9 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath::common;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 ostream & cath::scan::detail::operator<<(ostream             &prm_os,           ///< TODOCUMENT

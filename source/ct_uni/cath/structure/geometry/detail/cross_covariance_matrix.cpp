@@ -26,9 +26,9 @@
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/coord_list.hpp"
 
-using namespace cath::geom::detail;
+using namespace ::cath::geom::detail;
 
-using boost::range::combine;
+using ::boost::range::combine;
 
 /// \brief Calculate the cross-covariance matrix for the specified coord_lists
 ///

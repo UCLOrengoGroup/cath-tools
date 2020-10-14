@@ -26,13 +26,13 @@
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/program_options/validator.hpp"
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using boost::any;
-using boost::to_upper;
-using std::istream;
-using std::ostream;
-using std::string;
+using ::boost::any;
+using ::boost::to_upper;
+using ::std::istream;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified align_refining
 ///

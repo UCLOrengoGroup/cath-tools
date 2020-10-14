@@ -27,8 +27,8 @@
 #include "cath/ssap/ssap.hpp"
 #include "cath/structure/protein/protein.hpp"
 
-using namespace cath;
-using namespace std;
+using namespace ::cath;
+using namespace ::std;
 
 constexpr float_score_type residue_querier::RESIDUE_A_VALUE;
 constexpr float_score_type residue_querier::RESIDUE_B_VALUE;

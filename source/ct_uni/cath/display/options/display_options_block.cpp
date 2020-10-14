@@ -25,15 +25,15 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/display_colour/display_colour_list.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::value;
-using boost::program_options::variables_map;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::value;
+using ::boost::program_options::variables_map;
 
 /// \brief The option name for the string to specify the colours to use
 const string display_options_block::PO_VIEWER_COLOURS            { "viewer-colours"            };

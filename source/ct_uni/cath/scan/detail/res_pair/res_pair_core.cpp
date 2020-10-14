@@ -20,9 +20,9 @@
 
 #include "res_pair_core.hpp"
 
-using namespace cath::scan::detail;
+using namespace ::cath::scan::detail;
 
-using std::ostream;
+using ::std::ostream;
 
  /// \brief TODOCUMENT
 ostream & cath::scan::detail::operator<<(ostream             &prm_os,           ///< TODOCUMENT

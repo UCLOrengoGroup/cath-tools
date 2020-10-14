@@ -27,12 +27,12 @@
 
 #include <regex>
 
-using namespace cath::rslv;
+using namespace ::cath::rslv;
 
-using boost::string_ref;
-using std::ostream;
-using std::regex;
-using std::string;
+using ::boost::string_ref;
+using ::std::ostream;
+using ::std::regex;
+using ::std::string;
 
 /// \brief Get the cath_id_score_category for the specified ID
 ///        (or return cath_id_score_category::NORMAL if `!prm_apply_cath_policies` )

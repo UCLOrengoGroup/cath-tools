@@ -34,15 +34,15 @@
 #include "cath/score/homcheck_tools/ssap_and_prc.hpp"
 #include "cath/score/homcheck_tools/ssaps_and_prcs_of_query.hpp"
 
-using namespace cath::file;
-using namespace cath::homcheck;
-using namespace std;
+using namespace ::cath::file;
+using namespace ::cath::homcheck;
+using namespace ::std;
 
-using boost::algorithm::all_of;
-using boost::algorithm::contains;
-using boost::algorithm::one_of;
-using cath::common::invalid_argument_exception;
-using cath::stringstream_log_sink;
+using ::boost::algorithm::all_of;
+using ::boost::algorithm::contains;
+using ::boost::algorithm::one_of;
+using ::cath::common::invalid_argument_exception;
+using ::cath::stringstream_log_sink;
 
 namespace cath {
 	namespace test {

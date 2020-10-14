@@ -22,8 +22,8 @@
 
 #include "cath/score/score_classification/score_classn_value_list.hpp"
 
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 bool score_classn_value_list_name_less::operator()(const score_classn_value_list &prm_score_classn_value_list_a, ///< The first  score_classn_value_list to compare

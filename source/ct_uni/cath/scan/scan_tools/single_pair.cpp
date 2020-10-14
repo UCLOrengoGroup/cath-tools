@@ -42,11 +42,11 @@
 
 #include <chrono>
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::scan;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
 /// \brief A standard do_clone method.
 unique_ptr<scan_type> single_pair::do_clone() const {

@@ -20,10 +20,10 @@
 
 #include "mask_dyn_prog_score_source.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-//using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+//using namespace ::std;
 
 /// \brief Return the number of elements in the first entry to by aligned with dynamic-programming
 size_t mask_dyn_prog_score_source::do_get_length_a() const {

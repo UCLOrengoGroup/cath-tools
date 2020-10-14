@@ -31,12 +31,12 @@
 #include <sstream>
 #include <string>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::test_tools::output_test_stream;
-using boost::algorithm::contains;
+using ::boost::test_tools::output_test_stream;
+using ::boost::algorithm::contains;
 
 namespace cath {
 	namespace test {

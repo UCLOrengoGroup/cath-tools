@@ -55,24 +55,24 @@
 #include "cath/score/true_pos_false_neg/named_true_false_pos_neg_list_list.hpp"
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::algorithm::join;
-//using boost::algorithm::join; // ***** TEMPORARY *****
-using boost::filesystem::path;
-using boost::irange;
-using boost::lexical_cast;
-using boost::range::adjacent_find;
-using boost::range::equal;
-using boost::range::find_if;
-using boost::range::includes;
-using boost::range::is_sorted;
-using boost::range::lower_bound;
-using boost::range::sort;
+using ::boost::algorithm::join;
+//using ::boost::algorithm::join; // ***** TEMPORARY *****
+using ::boost::filesystem::path;
+using ::boost::irange;
+using ::boost::lexical_cast;
+using ::boost::range::adjacent_find;
+using ::boost::range::equal;
+using ::boost::range::find_if;
+using ::boost::range::includes;
+using ::boost::range::is_sorted;
+using ::boost::range::lower_bound;
+using ::boost::range::sort;
 
 /// \brief Determine whether the score_classn_value_lists is correctly sorted+uniqued on the names
 bool score_classn_value_results_set::is_sorted_uniqued() const {

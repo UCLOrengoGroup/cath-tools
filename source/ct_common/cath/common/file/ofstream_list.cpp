@@ -26,12 +26,12 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::common;
 
-using boost::filesystem::path;
-using std::ofstream;
-using std::ostream;
+using ::boost::filesystem::path;
+using ::std::ofstream;
+using ::std::ostream;
 
 /// \brief Ctor from a special ostream and a flag to be used to indicate when output should be sent to that ostream
 ofstream_list::ofstream_list(ostream    &prm_standard_outstream,     ///< A special ostream (often stdout) to which output can be sent

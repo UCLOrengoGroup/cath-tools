@@ -31,13 +31,13 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::numeric_cast;
+using ::boost::algorithm::any_of;
+using ::boost::numeric_cast;
 
 /// \brief Ctor for alignment_residue_scores
 alignment_residue_scores::alignment_residue_scores(const size_t     &prm_num_entries,                    ///< TODOCUMENT

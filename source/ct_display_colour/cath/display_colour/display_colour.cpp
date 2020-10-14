@@ -34,15 +34,15 @@
 
 #include <tuple>
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::is_any_of;
-using boost::algorithm::join;
-using boost::lexical_cast;
-using boost::numeric_cast;
-using std::tie;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::join;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
+using ::std::tie;
 
 /// \brief TODOCUMENT
 const string        display_colour::COMPONENT_SEPARATOR(",");
@@ -92,7 +92,7 @@ const display_colour display_colour::DARK_MAGENTA ( 0.70, 0.00, 0.70 );
 /// \brief TODOCUMENT
 void display_colour::check_component_value(const double &prm_component_value ///< TODOCUMENT
                                            ) {
-	using boost::math::isfinite;
+	using ::boost::math::isfinite;
 	if ( ! isfinite( prm_component_value ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Viewer colour component value "
@@ -245,7 +245,7 @@ display_colour cath::rgb_mid_point(const display_colour &prm_colour1,      ///< 
                                    const display_colour &prm_colour2,      ///< TODOCUMENT
                                    const double         &prm_fraction_thru ///< TODOCUMENT
                                    ) {
-	using boost::math::isfinite;
+	using ::boost::math::isfinite;
 	if ( ! isfinite( prm_fraction_thru ) || prm_fraction_thru < 0.0 || prm_fraction_thru > 1.0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Fraction through must be a finite number between 0 and 1"));
 	}

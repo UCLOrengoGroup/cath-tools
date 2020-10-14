@@ -20,9 +20,9 @@
 
 #include "quad_find_action_check.hpp"
 
-using namespace cath::index;
-using namespace cath::index::detail;
-// using namespace std;
+using namespace ::cath::index;
+using namespace ::cath::index::detail;
+// using namespace ::std;
 
 /// \brief Ctor for quad_find_action_check
 quad_find_action_check::quad_find_action_check(const protein             &prm_protein_a, ///< The first  protein being compared

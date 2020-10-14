@@ -35,12 +35,12 @@
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace cath::score::detail;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
 
-using std::is_same;
+using ::std::is_same;
 
 namespace cath {
 	namespace test {

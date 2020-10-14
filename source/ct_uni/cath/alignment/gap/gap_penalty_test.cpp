@@ -22,7 +22,7 @@
 
 #include "gap_penalty.hpp"
 
-using namespace cath;
+using namespace ::cath;
 
 namespace cath {
 	namespace test {

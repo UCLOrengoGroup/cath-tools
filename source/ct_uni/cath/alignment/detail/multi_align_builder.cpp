@@ -38,15 +38,15 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::lexical_cast;
+using ::boost::algorithm::any_of;
+using ::boost::lexical_cast;
 
 /// \brief Return the index of the group containing the specified entry
 size_t multi_align_builder::find_group_of_entry(const size_t &prm_index ///< The index of the entry to be located

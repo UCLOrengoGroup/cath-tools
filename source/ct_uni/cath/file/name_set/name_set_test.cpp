@@ -24,9 +24,9 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::file;
-using namespace cath::test;
-using namespace std::literals::string_literals;
+using namespace ::cath::file;
+using namespace ::cath::test;
+using namespace ::std::literals::string_literals;
 
 namespace cath {
 	namespace test {

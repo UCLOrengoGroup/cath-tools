@@ -23,10 +23,10 @@
 #include <boost/core/null_deleter.hpp>
 #include <boost/shared_ptr.hpp>
 
-using namespace cath;
-using namespace std;
+using namespace ::cath;
+using namespace ::std;
 
-using boost::null_deleter;
+using ::boost::null_deleter;
 
 /// \brief Ctor for log_to_ostream_guard
 log_to_ostream_guard::log_to_ostream_guard(ostream &prm_ostream ///< TODOCUMENT

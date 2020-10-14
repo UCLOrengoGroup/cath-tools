@@ -20,8 +20,8 @@
 
 #include "multi_struc_res_rep_pair.hpp"
 
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 ostream & cath::scan::detail::operator<<(ostream                &prm_os,      ///< TODOCUMENT

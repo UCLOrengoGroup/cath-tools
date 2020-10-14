@@ -37,12 +37,12 @@
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::adaptors::filtered;
-using boost::sub_range;
+using ::boost::adaptors::filtered;
+using ::boost::sub_range;
 
 namespace std {
 	/// \brief Temporary hacky solution to just get the test working for now

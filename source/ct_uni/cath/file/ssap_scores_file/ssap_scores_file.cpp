@@ -37,13 +37,13 @@
 #include <fstream>
 #include <map>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
-using boost::algorithm::trim_left;
-using boost::filesystem::path;
+using ::boost::algorithm::trim_left;
+using ::boost::filesystem::path;
 
 /// \brief Parse a vector of ssap_scores_entry objects from the specified istream
 ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(istream &prm_ssap_scores_is ///< The istream of SSAP scores data from which to parse the ssap_scores_entry objects

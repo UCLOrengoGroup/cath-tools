@@ -34,12 +34,12 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/istream_and_file_equal.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::file;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 namespace cath {
 	namespace test {

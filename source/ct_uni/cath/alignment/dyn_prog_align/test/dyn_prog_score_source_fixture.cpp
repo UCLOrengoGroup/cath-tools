@@ -22,10 +22,10 @@
 
 #include "cath/structure/entry_querier/residue_querier.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief A first  sequence string for making an example sequence_string_dyn_prog_score_source
 const string dyn_prog_score_source_fixture::sequence_string_a( "CC" );

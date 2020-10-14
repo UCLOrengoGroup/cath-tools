@@ -40,13 +40,13 @@
 #include "cath/file/pdb/pdb_residue.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::detail;
-using namespace cath::file;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::detail;
+using namespace ::cath::file;
+using namespace ::cath::sup;
 
 using ::std::ostream;
 using ::std::reference_wrapper;

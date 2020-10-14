@@ -26,12 +26,12 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/string/booled_to_string.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using std::ostream;
-using std::string;
+using ::std::ostream;
+using ::std::string;
 
 constexpr bool pdb_input_spec::DEFAULT_READ_FROM_STDIN;
 

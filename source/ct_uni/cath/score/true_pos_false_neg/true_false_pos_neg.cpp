@@ -26,10 +26,10 @@
 #include <iomanip>
 #include <sstream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief Ctor for true_false_pos_neg from the numbers of true/false positives/negatives
 true_false_pos_neg::true_false_pos_neg(const size_t &prm_num_true_positives,  ///< The number of true  positives

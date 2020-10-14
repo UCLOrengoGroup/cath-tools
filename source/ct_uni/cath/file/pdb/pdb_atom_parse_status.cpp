@@ -24,9 +24,9 @@
 
 #include <iostream>
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
 //pdb_atom_parse_status cath::file::str_to_pdb_rec(const string &prm_string ///< TODOCUMENT
 //                                                 ) {

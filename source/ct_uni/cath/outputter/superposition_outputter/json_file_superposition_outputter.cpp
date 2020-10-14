@@ -29,15 +29,15 @@
 
 #include <fstream>
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::filesystem::path;
-using boost::string_ref;
-using std::ostream;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::string_ref;
+using ::std::ostream;
+using ::std::string;
+using ::std::unique_ptr;
 
 constexpr json_style json_file_superposition_outputter::DEFAULT_JSON_STYLE;
 

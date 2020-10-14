@@ -42,14 +42,14 @@
 #include <string>
 #include <unordered_map>
 
-using namespace cath::common;
-using namespace cath::homcheck;
-using namespace cath::file;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::homcheck;
+using namespace ::cath::file;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::algorithm::all_of;
-using boost::range::for_each;
+using ::boost::algorithm::all_of;
+using ::boost::range::for_each;
 
 /// \brief Check that the class invariants hold
 ///

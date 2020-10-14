@@ -26,11 +26,11 @@
 
 #include <string>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using boost::algorithm::join;
-using std::ostream;
-using std::string;
+using ::boost::algorithm::join;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified scored_arch_proxy
 ///

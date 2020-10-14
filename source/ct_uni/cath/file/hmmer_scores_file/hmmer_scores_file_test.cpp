@@ -29,12 +29,12 @@
 //#include <iomanip> /// ***** TEMPORARY *****
 //#include <iostream> /// ***** TEMPORARY *****
 
-using namespace cath::file;
-using namespace std;
+using namespace ::cath::file;
+using namespace ::std;
 
-//using boost::algorithm::ends_with; /// ***** TEMPORARY *****
-//using boost::filesystem::directory_iterator; /// ***** TEMPORARY *****
-//using boost::filesystem::path; /// ***** TEMPORARY *****
+//using ::boost::algorithm::ends_with; /// ***** TEMPORARY *****
+//using ::boost::filesystem::directory_iterator; /// ***** TEMPORARY *****
+//using ::boost::filesystem::path; /// ***** TEMPORARY *****
 
 namespace cath {
     namespace test {

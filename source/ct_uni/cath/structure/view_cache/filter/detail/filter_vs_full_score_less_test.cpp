@@ -22,7 +22,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::index::filter::detail;
+using namespace ::cath::index::filter::detail;
 
 namespace cath {
 	namespace test {

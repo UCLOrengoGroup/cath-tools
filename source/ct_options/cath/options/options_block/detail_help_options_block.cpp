@@ -27,17 +27,17 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using boost::adaptors::map_keys;
-using boost::none;
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::variables_map;
-using std::string;
-using std::unique_ptr;
+using ::boost::adaptors::map_keys;
+using ::boost::none;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::variables_map;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method
 ///

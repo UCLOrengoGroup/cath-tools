@@ -32,13 +32,13 @@
 #include "cath/file/pdb/pdb_list.hpp"
 #include "cath/file/pdb/pdb_residue.hpp"
 
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<pdbs_acquirer> domain_defn_pdbs_acquirer::do_clone() const {

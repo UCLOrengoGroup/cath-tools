@@ -31,15 +31,15 @@
 #include <fstream>
 #include <iostream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::filesystem::path;
-using std::ifstream;
-using std::istream;
-using std::string;
+using ::boost::filesystem::path;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::string;
 
 /// \brief Parse a HMMER domain hits table file (as produced by the --domtblout option to a HMMER program)
 ///        from the specified file and pass them to the specified read_and_process_mgr

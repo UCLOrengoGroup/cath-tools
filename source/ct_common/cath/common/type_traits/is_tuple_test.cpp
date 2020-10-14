@@ -22,10 +22,10 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::tuple;
-using std::vector;
+using ::std::tuple;
+using ::std::vector;
 
 BOOST_AUTO_TEST_SUITE(is_tuple_test_suite)
 

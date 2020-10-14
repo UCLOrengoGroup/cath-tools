@@ -45,14 +45,14 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::test;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::test;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 //namespace std {
 //	/// \brief Naughty addition of an insertion operator into std:: to get Boost.Test to output str_str_pairs

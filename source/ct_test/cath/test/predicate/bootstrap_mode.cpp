@@ -22,7 +22,7 @@
 
 #include <cstdlib>
 
-using std::string;
+using ::std::string;
 
 /// \brief Get the environment variable used for activate test bootstrapping
 string cath::test::get_bootstrap_env_var() {

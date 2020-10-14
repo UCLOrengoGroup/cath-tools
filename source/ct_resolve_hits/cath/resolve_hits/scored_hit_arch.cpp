@@ -23,8 +23,8 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/resolve_hits/calc_hit_list.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
 
 /// \brief Make a scored_hit_arch from a scored_arch_proxy and calc_hit_list
 ///

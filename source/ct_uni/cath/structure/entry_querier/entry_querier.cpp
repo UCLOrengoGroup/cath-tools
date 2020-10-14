@@ -24,8 +24,8 @@
 
 #include <algorithm>
 
-using namespace cath;
-using namespace std;
+using namespace ::cath;
+using namespace ::std;
 
 constexpr size_t entry_querier::INTEGER_SCALING;
 

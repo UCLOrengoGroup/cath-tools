@@ -42,31 +42,31 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::sec;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::sec;
+using namespace ::std::literals::string_literals;
 
-using boost::adaptors::filtered;
-using boost::algorithm::is_space;
-using boost::algorithm::starts_with;
-using boost::algorithm::trim_copy;
-using boost::filesystem::path;
-using boost::format;
-using boost::icontains;
-using boost::is_any_of;
-using boost::make_optional;
-using boost::math::fpc::percent_tolerance;
-using boost::none;
-using boost::test_tools::check_is_close;
-using boost::token_compress_on;
-using std::get;
-using std::getline;
-using std::ifstream;
-using std::istream;
-using std::min;
-using std::pair;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::algorithm::is_space;
+using ::boost::algorithm::starts_with;
+using ::boost::algorithm::trim_copy;
+using ::boost::filesystem::path;
+using ::boost::format;
+using ::boost::icontains;
+using ::boost::is_any_of;
+using ::boost::make_optional;
+using ::boost::math::fpc::percent_tolerance;
+using ::boost::none;
+using ::boost::test_tools::check_is_close;
+using ::boost::token_compress_on;
+using ::std::get;
+using ::std::getline;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::min;
+using ::std::pair;
+using ::std::string;
 
 /// \brief Map the specified dsspfile_hbond_opt parsed from a DSSP file with specified supplementary data
 ///        to a hbond_half_opt

@@ -35,13 +35,13 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::test;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::test;
+using namespace ::std;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 /// \file
 ///

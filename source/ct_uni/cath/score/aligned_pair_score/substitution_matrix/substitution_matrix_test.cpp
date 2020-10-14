@@ -26,8 +26,8 @@
 #include "cath/structure/protein/amino_acid.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::score;
+using namespace ::cath;
+using namespace ::cath::score;
 
 namespace cath {
 	namespace test {

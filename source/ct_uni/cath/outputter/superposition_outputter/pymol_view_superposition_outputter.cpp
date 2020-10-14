@@ -30,16 +30,16 @@
 
 #include <iostream>
 
-using namespace cath::common;
-using namespace cath::opts;
-using namespace cath::sup;
-using namespace cath::view;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
+using namespace ::cath::view;
 
-using boost::filesystem::path;
-using boost::string_ref;
-using std::ostream;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::boost::string_ref;
+using ::std::ostream;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> pymol_view_superposition_outputter::do_clone() const {

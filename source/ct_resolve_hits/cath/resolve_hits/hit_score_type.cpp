@@ -22,8 +22,8 @@
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-using std::ostream;
-using std::string;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified hit_score_type
 ///

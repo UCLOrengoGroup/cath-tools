@@ -25,16 +25,16 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/external_info/cath_tools_git_version.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
+using namespace ::std;
 
-using boost::lexical_cast;
-using boost::none;
-using boost::program_options::bool_switch;
-using boost::program_options::options_description;
-using boost::program_options::variables_map;
+using ::boost::lexical_cast;
+using ::boost::none;
+using ::boost::program_options::bool_switch;
+using ::boost::program_options::options_description;
+using ::boost::program_options::variables_map;
 
 /// \brief The option name for the hidden help option
 const string misc_help_version_options_block::PO_HIDDEN_HELP          { "hidden-help"            };

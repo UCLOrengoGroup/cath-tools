@@ -38,17 +38,17 @@
 #include "cath/score/true_pos_false_neg/classn_stat_plotter/classn_stat_plotter_spec.hpp"
 #include "cath/score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
 
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::algorithm::icontains;
-using boost::algorithm::join;
-using boost::algorithm::replace_all_copy;
-using boost::filesystem::path;
-using boost::lexical_cast;
-using boost::range::join;
-using gnuplotio::Gnuplot;
+using ::boost::algorithm::icontains;
+using ::boost::algorithm::join;
+using ::boost::algorithm::replace_all_copy;
+using ::boost::filesystem::path;
+using ::boost::lexical_cast;
+using ::boost::range::join;
+using ::gnuplotio::Gnuplot;
 
 /// \brief TODOCUMENT
 string classn_stat_plotter::process_legend_name_copy(const string &prm_legend_name, ///< TODOCUMENT

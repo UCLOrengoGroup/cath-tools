@@ -22,10 +22,10 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::equal_to;
-using std::vector;
+using ::std::equal_to;
+using ::std::vector;
 
 BOOST_AUTO_TEST_SUITE(are_same_test_suite)
 

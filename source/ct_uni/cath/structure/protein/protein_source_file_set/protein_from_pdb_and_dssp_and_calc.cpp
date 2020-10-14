@@ -29,14 +29,14 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
 
-using boost::filesystem::path;
-using std::ostream;
-using std::string;
-using std::unique_ptr;
+using ::boost::filesystem::path;
+using ::std::ostream;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method
 unique_ptr<protein_source_file_set> protein_from_pdb_and_dssp_and_calc::do_clone() const {

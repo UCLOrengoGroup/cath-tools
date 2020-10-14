@@ -22,9 +22,9 @@
 
 #include <boost/filesystem.hpp>
 
-using boost::filesystem::exists;
-using boost::filesystem::path;
-using std::string;
+using ::boost::filesystem::exists;
+using ::boost::filesystem::path;
+using ::std::string;
 
 /// \brief Search for a particular file basename through a path of directories
 ///

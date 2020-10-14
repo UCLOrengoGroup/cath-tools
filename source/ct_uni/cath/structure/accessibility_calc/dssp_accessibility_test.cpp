@@ -33,13 +33,13 @@
 
 // #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::sec;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::sec;
 
-using boost::numeric_cast;
+using ::boost::numeric_cast;
 
 BOOST_AUTO_TEST_SUITE(dssp_accessibility_test_suite)
 

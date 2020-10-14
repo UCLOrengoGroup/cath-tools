@@ -24,10 +24,10 @@
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief A standard do_clone method.
 unique_ptr<protein_only_length_getter> length_of_second_getter::do_protein_only_clone() const {

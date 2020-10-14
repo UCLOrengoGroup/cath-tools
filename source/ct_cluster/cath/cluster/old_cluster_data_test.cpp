@@ -22,7 +22,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include "cath/cluster/old_cluster_data.hpp"
-using namespace cath::seq;
+using namespace ::cath::seq;
 
 BOOST_AUTO_TEST_SUITE(old_cluster_data_test_suite)
 

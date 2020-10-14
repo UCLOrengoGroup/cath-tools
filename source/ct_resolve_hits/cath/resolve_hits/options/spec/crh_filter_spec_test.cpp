@@ -25,12 +25,12 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::rslv;
-using namespace cath::test;
+using namespace ::cath::rslv;
+using namespace ::cath::test;
 
-using boost::make_optional;
-using boost::none;
-using std::string;
+using ::boost::make_optional;
+using ::boost::none;
+using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(crh_filter_spec_test_suite)
 

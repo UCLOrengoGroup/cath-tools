@@ -40,13 +40,13 @@
 
 #include <chrono>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::scan;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::scan;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::numeric_cast;
+using ::boost::numeric_cast;
 
 namespace cath {
 	namespace test {

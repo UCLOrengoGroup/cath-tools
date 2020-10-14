@@ -32,21 +32,21 @@
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::rslv::detail;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::rslv::detail;
+using namespace ::cath::seq;
 
-using boost::adaptors::filtered;
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::integer_range;
-using boost::irange;
-using boost::numeric_cast;
-using boost::range::lower_bound;
-using boost::range::upper_bound;
-using std::make_pair;
-using std::string;
+using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::integer_range;
+using ::boost::irange;
+using ::boost::numeric_cast;
+using ::boost::range::lower_bound;
+using ::boost::range::upper_bound;
+using ::std::make_pair;
+using ::std::string;
 
 /// \brief Calculate the starts and indices of the discontiguous domains in the specified calc_hit_list,
 ///        ordered by their starts

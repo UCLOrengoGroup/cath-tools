@@ -24,8 +24,8 @@
 
 //#include "cath/test/global_test_constants.hpp"
 
-using namespace cath::scan;
-//using namespace std;
+using namespace ::cath::scan;
+//using namespace ::std;
 
 namespace cath {
 	namespace test {

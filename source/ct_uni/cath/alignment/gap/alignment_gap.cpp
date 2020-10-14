@@ -31,15 +31,15 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::irange;
-using boost::lexical_cast;
-using boost::numeric_cast;
+using ::boost::irange;
+using ::boost::lexical_cast;
+using ::boost::numeric_cast;
 
 /// \brief Count the number of gaps in a pairwise alignment
 ///

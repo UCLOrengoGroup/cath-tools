@@ -37,14 +37,14 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;
 
-using boost::range::join;
-using boost::tribool;
+using ::boost::range::join;
+using ::boost::tribool;
 
 //BOOST_CLASS_EXPORT(si_score)
 

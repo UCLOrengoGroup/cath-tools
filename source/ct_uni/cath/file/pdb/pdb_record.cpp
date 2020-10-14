@@ -24,9 +24,9 @@
 
 #include <iostream>
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
 /// \brief Simple extraction operator for pdb_record
 ///

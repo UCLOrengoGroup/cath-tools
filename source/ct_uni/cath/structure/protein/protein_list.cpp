@@ -33,9 +33,9 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 void protein_list::push_back(const protein &prm_pdb ///< TODOCUMENT

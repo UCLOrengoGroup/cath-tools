@@ -36,13 +36,13 @@
 #include <iostream> // ***** TEMPORARY *****
 #include <string>
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::std;
 
-using boost::adaptors::filtered;
-using boost::algorithm::trim_left;
-using boost::filesystem::path;
+using ::boost::adaptors::filtered;
+using ::boost::algorithm::trim_left;
+using ::boost::filesystem::path;
 
 /// \brief TODOCUMENT
 hmmer_scores_entry_vec hmmer_scores_file::remove_duplicates(const hmmer_scores_entry_vec &prm_hmmer_scores_entries ///< TODOCUMENT

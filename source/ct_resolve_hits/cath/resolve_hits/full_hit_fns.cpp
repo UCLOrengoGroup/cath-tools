@@ -27,16 +27,16 @@
 #include "cath/resolve_hits/full_hit_fns.hpp"
 #include "cath/resolve_hits/full_hit_list_fns.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
+using namespace ::std::literals::string_literals;
 
-using boost::format;
-using boost::make_optional;
-using boost::none;
-using std::string;
+using ::boost::format;
+using ::boost::make_optional;
+using ::boost::none;
+using ::std::string;
 
 /// \brief Generate a string describing the segments of the specified string
 ///

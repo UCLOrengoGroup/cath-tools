@@ -38,19 +38,19 @@
 #include <cassert>
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace cath::score::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::cath::score::detail;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::assign::ptr_push_back;
-using boost::numeric_cast;
-using boost::ptr_vector;
-using boost::range::join;
-using boost::tribool;
+using ::boost::algorithm::any_of;
+using ::boost::assign::ptr_push_back;
+using ::boost::numeric_cast;
+using ::boost::ptr_vector;
+using ::boost::range::join;
+using ::boost::tribool;
 
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<length_getter> length_getter::clone() const {

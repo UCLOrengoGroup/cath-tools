@@ -31,15 +31,15 @@
 #include "cath/common/difference.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::align::gap;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::align::gap;
+using namespace ::cath::common;
+using namespace ::std;
 
-using boost::adaptors::reversed;
-using boost::numeric_cast;
+using ::boost::adaptors::reversed;
+using ::boost::numeric_cast;
 
 /// \brief A standard do_clone method.
 unique_ptr<dyn_prog_aligner> std_dyn_prog_aligner::do_clone() const {

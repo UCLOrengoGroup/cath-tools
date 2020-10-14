@@ -30,7 +30,7 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace cath::common::literals;
+using namespace ::cath::common::literals;
 
 namespace cath {
 	namespace clust {
@@ -193,7 +193,7 @@ namespace cath {
 		inline overlap_frac_distn & overlap_frac_distn::add_overlap_fraction(const double &prm_overlap_fraction, ///< The overlap fraction to add
 		                                                                     const size_t &prm_count             ///< The number of instances of this fraction to add (default 1)
 		                                                                     ) {
-			using std::to_string;
+			using ::std::to_string;
 			if ( ! ::boost::math::isfinite( prm_overlap_fraction ) || prm_overlap_fraction < 0.0 || prm_overlap_fraction > 1.0 ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 					"Unable to add invalid overlap fraction "

@@ -22,7 +22,7 @@
 
 #include "cath/cluster/cluster_entry.hpp"
 
-using namespace cath::seq;
+using namespace ::cath::seq;
 
 BOOST_AUTO_TEST_SUITE(cluster_entry_test_suite)
 

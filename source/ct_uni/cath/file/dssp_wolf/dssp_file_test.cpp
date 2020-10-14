@@ -49,15 +49,15 @@
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::filesystem::path;
-using boost::numeric_cast;
-using boost::range::sort;
+using ::boost::filesystem::path;
+using ::boost::numeric_cast;
+using ::boost::range::sort;
 
 namespace cath {
 	namespace test {

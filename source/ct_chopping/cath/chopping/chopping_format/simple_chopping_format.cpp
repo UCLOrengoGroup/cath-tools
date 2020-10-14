@@ -30,15 +30,15 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
 
-using boost::string_ref;
-using std::find;
-using std::next;
-using std::string;
-using std::unique_ptr;
+using ::boost::string_ref;
+using ::std::find;
+using ::std::next;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<chopping_format> simple_chopping_format::do_clone() const {

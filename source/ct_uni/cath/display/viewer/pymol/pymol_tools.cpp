@@ -32,9 +32,9 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std::literals::string_literals;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::map_values;
@@ -61,7 +61,7 @@ double pymol_tools::pymol_size(const size_t &prm_x_1, ///< TODOCUMENT
                                const size_t &prm_x    ///< TODOCUMENT
                                ) {
 	// Sanity check the inputs
-	using boost::math::isfinite;
+	using ::boost::math::isfinite;
 	if (!isfinite(prm_y_1) || !isfinite(prm_y_2)) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Both y values must be finite numbers"));
 	}

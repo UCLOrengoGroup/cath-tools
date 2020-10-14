@@ -41,11 +41,11 @@
 
 #include <iostream>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::scan;
-using namespace cath::scan::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::scan;
+using namespace ::cath::scan::detail;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

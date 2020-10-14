@@ -38,18 +38,18 @@
 #include <sstream>
 #include <string>
 
-using namespace cath;
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::seq;
+using namespace ::cath;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::seq;
 
-using boost::filesystem::path;
-using boost::string_ref;
-using std::ifstream;
-using std::istream;
-using std::istringstream;
-using std::ostream;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::string_ref;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::istringstream;
+using ::std::ostream;
+using ::std::string;
 
 static constexpr size_t CLUSTER_ID_OFFSET = 0;
 static constexpr size_t DOMAIN_ID_OFFSET  = 1;
@@ -100,7 +100,7 @@ old_cluster_data cath::clust::parse_old_membership(istream               &prm_is
                                                    id_of_str_bidirnl     &prm_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
                                                    const ostream_ref_opt &prm_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
-	using std::to_string;
+	using ::std::to_string;
 	bool warned_duplicate = false;
 	old_cluster_data result{ prm_id_of_str_bidirnl };
 	seq_seg_run_parser segs_parser;
@@ -191,7 +191,7 @@ new_cluster_data cath::clust::parse_new_membership(istream               &prm_is
                                                    id_of_str_bidirnl     &prm_id_of_str_bidirnl, ///< The id_of_str_bidirnl to use to map from sequences names to IDs
                                                    const ostream_ref_opt &prm_ostream_ref_opt    ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
                                                    ) {
-	using std::to_string;
+	using ::std::to_string;
 	bool warned_duplicate = false;
 	new_cluster_data result{ prm_id_of_str_bidirnl };
 	seq_seg_run_parser segs_parser;

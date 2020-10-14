@@ -26,9 +26,9 @@
 
 #include <utility>
 
-using namespace cath;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::score;
+using namespace ::std;
 
 /// \brief TODOCUMENT
 named_true_false_pos_neg_list::named_true_false_pos_neg_list(true_false_pos_neg_list prm_list, ///< TODOCUMENT

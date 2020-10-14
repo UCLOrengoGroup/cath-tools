@@ -42,15 +42,15 @@
 #include <chrono>
 #include <random>
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::index;
-using namespace cath::index::detail;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::index;
+using namespace ::cath::index::detail;
+using namespace ::std;
 
-using boost::ignore_unused;
-using std::chrono::high_resolution_clock;
+using ::boost::ignore_unused;
+using ::std::chrono::high_resolution_clock;
 
 namespace cath {
 	namespace test {

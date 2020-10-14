@@ -45,16 +45,16 @@
 
 namespace boost { namespace program_options { class variables_map; } }
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
-using namespace cath::sup;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
+using namespace ::cath::sup;
 
-using boost::filesystem::path;
-using boost::none;
-using std::string;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::std::string;
 
 /// \brief The name of the program that uses this executable_options
 const string cath_assign_domains_options::PROGRAM_NAME("cath-assign-domains");

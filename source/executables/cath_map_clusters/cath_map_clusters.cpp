@@ -24,11 +24,11 @@
 
 #include <chrono>
 
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using std::string;
+using ::std::string;
 
 namespace cath {
 

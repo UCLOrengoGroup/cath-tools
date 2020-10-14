@@ -23,15 +23,15 @@
 #include <iostream>
 #include <string>
 
-using std::ostream;
-using std::string;
+using ::std::ostream;
+using ::std::string;
 
 /// \brief Generate a string describing the specified hierarchy_value
 ///
 /// \relates hierarchy_layer
 string cath::clust::to_string(const hierarchy_value &prm_hierarchy_value ///< The hierarchy_value to describe
                               ) {
-	using std::to_string;
+	using ::std::to_string;
 	return ( prm_hierarchy_value.get_type() == hierarchy_ref::CLUSTER )
 		? "deeper_group_" + to_string( prm_hierarchy_value.get_index() )
 		: to_string( prm_hierarchy_value.get_index() );

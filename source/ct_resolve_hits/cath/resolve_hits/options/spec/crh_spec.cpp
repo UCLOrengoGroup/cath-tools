@@ -20,7 +20,7 @@
 
 #include "crh_spec.hpp"
 
-using namespace cath::rslv;
+using namespace ::cath::rslv;
 
 /// \brief Ctor from the individual specs
 crh_spec::crh_spec(crh_input_spec         prm_input_spec,         ///< The input spec

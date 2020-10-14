@@ -23,9 +23,9 @@
 #include "cath/biocore/residue_id.hpp"
 #include "cath/display/viewer/pymol_viewer.hpp"
 
-using namespace cath;
+using namespace ::cath;
 
-using namespace std::literals::string_literals;
+using namespace ::std::literals::string_literals;
 
 BOOST_AUTO_TEST_SUITE(pymol_viewer_test_suite)
 

@@ -31,14 +31,14 @@
 #include "cath/common/file/temp_file.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::filesystem::path;
-using boost::test_tools::per_element;
-using std::move;
-using std::numeric_limits;
+using ::boost::filesystem::path;
+using ::boost::test_tools::per_element;
+using ::std::move;
+using ::std::numeric_limits;
 
 namespace cath {
 	namespace test {

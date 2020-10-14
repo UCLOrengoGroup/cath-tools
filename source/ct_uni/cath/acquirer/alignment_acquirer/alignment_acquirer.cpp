@@ -39,15 +39,15 @@
 #include "cath/common/logger.hpp"
 #include "cath/file/strucs_context.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using std::make_unique;
-using std::pair;
-using std::unique_ptr;
+using ::std::make_unique;
+using ::std::pair;
+using ::std::unique_ptr;
 
 constexpr size_t alignment_acquirer::MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR;
 
@@ -66,7 +66,7 @@ unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {
 pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< The structures to which the alignment should correspond
                                                                                         const align_refining &prm_align_refining  ///< How much refining should be done to the alignment
                                                                                         ) const {
-	using std::to_string;
+	using ::std::to_string;
 
 	// Call the concrete class's implementation of do_get_alignment_and_orderer() and grab the resulting alignment and spanning_tree
 	const pair<alignment, size_size_pair_vec> alignment_and_orderer = do_get_alignment_and_spanning_tree(
@@ -113,7 +113,7 @@ pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanni
 /// \relates alignment_input_spec
 uptr_vec<alignment_acquirer> cath::align::get_alignment_acquirers(const alignment_input_spec &prm_alignment_input_spec ///< The alignment_input_spec to query
                                                                   ) {
-	using std::to_string;
+	using ::std::to_string;
 	uptr_vec<alignment_acquirer> alignment_acquirers;
 
 	// If the alignment is to be created by reading a legacy CORA alignment file, do that

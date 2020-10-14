@@ -35,13 +35,13 @@
 
 #include <iostream> // **** TEMPORARY ****
 
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::algorithm::any_of;
-using boost::lexical_cast;
-using boost::property_tree::ptree;
+using ::boost::algorithm::any_of;
+using ::boost::lexical_cast;
+using ::boost::property_tree::ptree;
 
 /// \brief The identity rotation
 const rotation & rotation::IDENTITY_ROTATION() {

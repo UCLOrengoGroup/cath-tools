@@ -58,37 +58,37 @@
 #include <fstream>
 #include <string>
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::adaptors::filtered;
-using boost::empty;
-using boost::filesystem::path;
-using boost::integer_range;
-using boost::irange;
-using boost::make_optional;
-using boost::none;
-using boost::numeric_cast;
-using boost::range::lower_bound;
-using boost::range::max_element;
-using boost::range::reverse;
-using boost::range::sort;
-using boost::range::upper_bound;
-using boost::spirit::qi::double_;
-using boost::spirit::qi::omit;
-using boost::spirit::qi::parse;
-using boost::spirit::uint_;
-using boost::string_ref;
-using std::distance;
-using std::find_if;
-using std::ifstream;
-using std::istream;
-using std::ostream;
-using std::pair;
-using std::string;
-using std::vector;
+using ::boost::adaptors::filtered;
+using ::boost::empty;
+using ::boost::filesystem::path;
+using ::boost::integer_range;
+using ::boost::irange;
+using ::boost::make_optional;
+using ::boost::none;
+using ::boost::numeric_cast;
+using ::boost::range::lower_bound;
+using ::boost::range::max_element;
+using ::boost::range::reverse;
+using ::boost::range::sort;
+using ::boost::range::upper_bound;
+using ::boost::spirit::qi::double_;
+using ::boost::spirit::qi::omit;
+using ::boost::spirit::qi::parse;
+using ::boost::spirit::uint_;
+using ::boost::string_ref;
+using ::std::distance;
+using ::std::find_if;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::ostream;
+using ::std::pair;
+using ::std::string;
+using ::std::vector;
 
 // Temporarily suppress a GCC compiler warning:
 //

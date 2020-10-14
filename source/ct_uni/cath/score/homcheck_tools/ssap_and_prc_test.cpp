@@ -26,9 +26,9 @@
 #include "cath/score/homcheck_tools/ssap_and_prc.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::homcheck;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::homcheck;
 
 namespace cath {
 	namespace test {

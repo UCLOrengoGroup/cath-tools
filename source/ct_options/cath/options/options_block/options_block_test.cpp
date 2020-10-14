@@ -30,9 +30,9 @@
 #include "cath/options/options_block/pdb_input_options_block.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-using namespace cath;
-using namespace cath::opts;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::opts;
+using namespace ::std;
 
 using ::boost::core::demangle;
 using ::boost::program_options::options_description;

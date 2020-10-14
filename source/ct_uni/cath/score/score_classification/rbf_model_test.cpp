@@ -35,10 +35,10 @@
 #include <fstream>
 #include <utility>
 
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::score;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

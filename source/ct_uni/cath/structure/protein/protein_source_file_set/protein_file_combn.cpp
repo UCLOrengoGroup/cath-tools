@@ -28,9 +28,9 @@
 #include "cath/structure/protein/protein_source_file_set/protein_from_pdb_dssp_and_sec.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_from_wolf_and_sec.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::std;
 
 /// \brief Convert a protein_file_combn to (a smart pointer to) the equivalent protein_source_file_set
 ///

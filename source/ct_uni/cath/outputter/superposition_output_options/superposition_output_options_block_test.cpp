@@ -27,11 +27,11 @@
 #include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
 #include "cath/outputter/superposition_outputter/superposition_outputter_list.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::opts;
 
-using boost::filesystem::path;
+using ::boost::filesystem::path;
 
 namespace cath {
 	namespace test {

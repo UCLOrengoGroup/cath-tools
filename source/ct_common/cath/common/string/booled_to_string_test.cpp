@@ -26,11 +26,11 @@
 
 namespace cath { namespace test {} }
 
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::irange;
-using std::to_string;
+using ::boost::irange;
+using ::std::to_string;
 
 namespace cath {
 	namespace test {

@@ -34,15 +34,15 @@
 #include <cstdio>
 #include <iostream>
 
-using namespace cath;
-using namespace cath::file;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::file;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using boost::filesystem::path;
-using boost::ignore_unused;
-using boost::numeric_cast;
+using ::boost::filesystem::path;
+using ::boost::ignore_unused;
+using ::boost::numeric_cast;
 
 /// \brief TODOCUMENT
 ///

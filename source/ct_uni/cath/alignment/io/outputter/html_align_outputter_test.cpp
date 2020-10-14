@@ -26,9 +26,9 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/file/pdb/pdb.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::std;
 
 namespace cath {
 	namespace test {

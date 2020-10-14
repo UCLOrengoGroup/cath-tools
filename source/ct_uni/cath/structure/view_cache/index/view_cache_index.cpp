@@ -49,16 +49,16 @@
 #include <chrono>
 #include <iostream>
 
-using namespace cath::align;
-using namespace cath::align::detail;
-using namespace cath::common;
-using namespace cath::geom;
-using namespace cath::index;
-using namespace cath::index::detail;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::align::detail;
+using namespace ::cath::common;
+using namespace ::cath::geom;
+using namespace ::cath::index;
+using namespace ::cath::index::detail;
+using namespace ::std;
 
-using boost::numeric_cast;
-using std::chrono::high_resolution_clock;
+using ::boost::numeric_cast;
+using ::std::chrono::high_resolution_clock;
 
 /// \brief Ctor for view_cache_index
 view_cache_index::view_cache_index(dim_tuple prm_dim_defaults ///< TODOCUMENT

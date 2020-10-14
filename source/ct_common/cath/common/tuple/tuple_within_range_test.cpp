@@ -22,9 +22,9 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::common;
+using namespace ::cath::common;
 
-using std::make_tuple;
+using ::std::make_tuple;
 
 BOOST_AUTO_TEST_SUITE(tuple_within_range_test_suite)
 

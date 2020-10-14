@@ -22,7 +22,7 @@
 
 #include "residue_name.hpp"
 
-using namespace cath;
+using namespace ::cath;
 
 BOOST_AUTO_TEST_SUITE(residue_name_test_suite)
 

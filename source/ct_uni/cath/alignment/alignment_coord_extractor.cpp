@@ -35,14 +35,14 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::std;
 
-using std::cref;
+using ::std::cref;
 
 alignment_coord_extractor::residue_cref_residue_cref_pair_vec alignment_coord_extractor::get_common_residues(const alignment                       &prm_alignment,        ///< The alignment to determine which residues should be as close as possible to which
                                                                                                              const protein                         &prm_protein_a,        ///< Coordinates for first structure

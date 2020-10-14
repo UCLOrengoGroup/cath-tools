@@ -21,7 +21,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-using namespace cath::opts;
+using namespace ::cath::opts;
 
 namespace cath {
 	namespace test {

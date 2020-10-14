@@ -32,16 +32,16 @@
 #include "cath/resolve_hits/full_hit_rapidjson.hpp"
 #include "cath/resolve_hits/trim/seq_seg_boundary_fns.hpp"
 
-using namespace cath::common;
-using namespace cath::rslv;
-using namespace cath::seq;
+using namespace ::cath::common;
+using namespace ::cath::rslv;
+using namespace ::cath::seq;
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using boost::make_optional;
-using boost::none;
-using boost::range::combine;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::boost::make_optional;
+using ::boost::none;
+using ::boost::range::combine;
+using ::std::string;
 
 
 /// \brief Generate a string describing the specified full_hit_list in the specified format

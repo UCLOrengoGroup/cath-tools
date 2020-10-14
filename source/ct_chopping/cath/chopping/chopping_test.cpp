@@ -24,8 +24,8 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace cath;
-using namespace cath::chop;
+using namespace ::cath;
+using namespace ::cath::chop;
 
 // Chopping types: domall, new_to_jmol_selection, new_to_string, scop, simple
 

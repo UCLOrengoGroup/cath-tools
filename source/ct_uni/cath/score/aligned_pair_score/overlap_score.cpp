@@ -34,7 +34,7 @@
 
 #include <iostream> // ***** TEMPORARY *****
 
-using namespace cath::align;
-using namespace cath::common;
-using namespace cath::score;
-using namespace std;
+using namespace ::cath::align;
+using namespace ::cath::common;
+using namespace ::cath::score;
+using namespace ::std;

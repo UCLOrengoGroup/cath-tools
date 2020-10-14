@@ -30,11 +30,11 @@
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_type_aliases.hpp"
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::detail;
-using namespace cath::align;
-using namespace std;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::detail;
+using namespace ::cath::align;
+using namespace ::std;
 
 /// \brief Ctor for score_colour_handler
 score_colour_handler::score_colour_handler(const bool &prm_show_scores_if_present, ///< TODOCUMENT

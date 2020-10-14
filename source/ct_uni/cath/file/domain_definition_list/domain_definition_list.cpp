@@ -36,21 +36,21 @@
 
 #include <fstream>
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::algorithm::is_any_of;
-using boost::algorithm::token_compress_on;
-using boost::filesystem::path;
-using boost::none;
-using boost::trim;
-using std::ifstream;
-using std::istream;
-using std::make_pair;
-using std::string;
+using ::boost::algorithm::is_any_of;
+using ::boost::algorithm::token_compress_on;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::trim;
+using ::std::ifstream;
+using ::std::istream;
+using ::std::make_pair;
+using ::std::string;
 
 /// \brief Ctor for domain_definition_list
 domain_definition_list::domain_definition_list(domain_definition_vec prm_domain_definitions

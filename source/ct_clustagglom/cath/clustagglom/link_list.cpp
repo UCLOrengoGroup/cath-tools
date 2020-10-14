@@ -25,9 +25,9 @@
 
 #include <string>
 
-using boost::adaptors::transformed;
-using boost::algorithm::join;
-using std::string;
+using ::boost::adaptors::transformed;
+using ::boost::algorithm::join;
+using ::std::string;
 
 /// \brief Generate a string describing the specified link_list
 ///
@@ -35,7 +35,7 @@ using std::string;
 string cath::clust::link_list_string(const link_list &prm_links, ///< The link_list to describe
                                      const size_t    &prm_base   ///< The base node from which the links emanate
                                      ) {
-	using std::to_string;
+	using ::std::to_string;
 	return to_string( prm_base ) + " -> " + join(
 		prm_links
 			| transformed( [] (const link &x) {

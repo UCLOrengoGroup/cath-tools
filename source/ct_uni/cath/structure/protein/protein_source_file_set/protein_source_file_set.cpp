@@ -43,24 +43,24 @@
 
 #include <map>
 
-using namespace cath;
-using namespace cath::chop;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::opts;
+using namespace ::cath;
+using namespace ::cath::chop;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::opts;
 
-using boost::adaptors::filtered;
-using boost::assign::ptr_push_back;
-using boost::filesystem::path;
-using boost::lexical_cast;
-using boost::none;
-using boost::range::transform;
-using std::back_inserter;
-using std::make_pair;
-using std::ostream;
-using std::ostringstream;
-using std::string;
-using std::unique_ptr;
+using ::boost::adaptors::filtered;
+using ::boost::assign::ptr_push_back;
+using ::boost::filesystem::path;
+using ::boost::lexical_cast;
+using ::boost::none;
+using ::boost::range::transform;
+using ::std::back_inserter;
+using ::std::make_pair;
+using ::std::ostream;
+using ::std::ostringstream;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief Read a PDB and restrict it by the specified regions
 protein protein_source_file_set::do_read_and_restrict_files(const data_file_path_map &prm_filename_of_data_file, ///< The pre-loaded map of file types to filenames

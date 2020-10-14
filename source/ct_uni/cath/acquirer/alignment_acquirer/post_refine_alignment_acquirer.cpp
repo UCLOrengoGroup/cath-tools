@@ -32,12 +32,12 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-using namespace cath;
-using namespace cath::align::gap;
-using namespace cath::align;
-using namespace cath::file;
+using namespace ::cath;
+using namespace ::cath::align::gap;
+using namespace ::cath::align;
+using namespace ::cath::file;
 
-using std::pair;
+using ::std::pair;
 
 /// \brief Get the concrete alignment_acquirer to acquire an alignment and then refine and rescore it
 pair<alignment, size_size_pair_vec> post_refine_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< The structures corresponding to the alignment

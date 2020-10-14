@@ -46,19 +46,19 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath;
-using namespace cath::common;
-using namespace cath::file;
-using namespace cath::geom;
-using namespace cath::sec;
-using namespace cath::test;
+using namespace ::cath;
+using namespace ::cath::common;
+using namespace ::cath::file;
+using namespace ::cath::geom;
+using namespace ::cath::sec;
+using namespace ::cath::test;
 
-using boost::filesystem::directory_entry;
-using boost::filesystem::directory_iterator;
-using boost::filesystem::path;
-using boost::none;
-using boost::range::sort;
-using std::ostringstream;
+using ::boost::filesystem::directory_entry;
+using ::boost::filesystem::directory_iterator;
+using ::boost::filesystem::path;
+using ::boost::none;
+using ::boost::range::sort;
+using ::std::ostringstream;
 
 namespace cath {
 	namespace test {

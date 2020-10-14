@@ -31,14 +31,14 @@
 
 namespace cath { namespace test { } }
 
-using namespace cath::clust;
-using namespace cath::common;
-using namespace cath::test;
+using namespace ::cath::clust;
+using namespace ::cath::common;
+using namespace ::cath::test;
 
-using boost::none;
-using std::regex;
-using std::regex_search;
-using std::string;
+using ::boost::none;
+using ::std::regex;
+using ::std::regex_search;
+using ::std::string;
 
 namespace cath {
 	namespace test {
