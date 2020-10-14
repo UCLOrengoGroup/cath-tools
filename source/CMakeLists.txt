@@ -1,3 +1,7 @@
+#####################################################################
+### [1/4] Preamble
+#####################################################################
+
 include( ./auto_generated_file_list.cmake )
 
 #####################################################################
@@ -16,88 +20,77 @@ target_compile_definitions ( cath_tools_rapidjson        INTERFACE RAPIDJSON_HAS
 add_library               ( cath_tools_gnuplot_iostream        INTERFACE                                                                         )
 target_include_directories( cath_tools_gnuplot_iostream SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party_code/gnuplot> )
 
+
 #####################################################################
-### Modules
+### [2/4] Modules
 #####################################################################
 
 # 1. Specify the modules to build
 
-set( MODULE_DIRS
+set( MODULES
+	ct_biocore
+	ct_cath_assign_domains
+	ct_cath_cluster
+	ct_cath_refine_align
+	ct_cath_score_align
+	ct_cath_superpose
+	ct_chopping
+	ct_clustagglom
+	ct_cluster
+	ct_common
+	ct_display_colour
+	ct_external_info
+	ct_options
+	ct_resolve_hits
+	ct_seq
+	ct_uni
 
-	# TODO: Rename uni -> src_uni and move the other XXX inside a new src_XXX directory
-	#
-	# TODO: Then, remove the SRC_ from these and add it later where required rather than removing it
-	CATH_REFINE_ALIGN
-	CATH_SUPERPOSE
-	CHOPPING
-	DISPLAY_COLOUR
-	UNI
-
-	SRC_BIOCORE
-	SRC_CATH_ASSIGN_DOMAINS
-	SRC_CATH_CLUSTER
-	SRC_CATH_SCORE_ALIGN
-	SRC_CLUSTAGGLOM
-	SRC_CLUSTER
-	SRC_COMMON
-	SRC_EXTERNAL_INFO
-	SRC_OPTIONS
-	SRC_RESOLVE_HITS
-	SRC_SEQ
-
-	SRC_TEST
+	ct_test
 )
 
 # 2. Set up ct_${MODULE} and testsrcs_${MODULE} for each MODULE
 
-foreach( MODULE_DIR ${MODULE_DIRS} )
-
-	# TODO: When all dirs begin src_, remove SRC_ from the above list and change this code to add it for the dir
-	#       rather than removing it from the dir
-	string( TOLOWER "${MODULE_DIR}" MODULE )
-	string( REPLACE "src_" "" MODULE "${MODULE}" )
-	list  ( APPEND MODULES "${MODULE}" )
+foreach( MODULE ${MODULES} )
+	string( TOUPPER "${MODULE}" MODULE_UPPER )
 
 	# Create a library for the module with all the .cpp files
 	# and add the directory as a public include directory
-	add_library( "ct_${MODULE}" ${NORMSOURCES_${MODULE_DIR}} )
-	if ( MODULE_DIR MATCHES "^SRC_" )
-		target_include_directories( "ct_${MODULE}" PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src_${MODULE}>" )
+	add_library( "${MODULE}" ${NORMSOURCES_${MODULE_UPPER}} )
+	
+	# TODO: Separate out uni and then remove this special-case handling for it
+	if ( "${MODULE}" STREQUAL "ct_uni" )
+		target_include_directories( "${MODULE}" PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${MODULE}>/uni" )
 	else()
-		# TODO: When all the module dirs are prefixed with src_, nothing will use this else condition,
-		#       so remove everything except the `target_include_directories( [...] /src_${MODULE}>" )`
-		target_include_directories( "ct_${MODULE}" PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>" )
+		# Add the module's include directory to its public include directories
+		target_include_directories( "${MODULE}" PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${MODULE}>" )
 	endif()
 
-	if ( DEFINED TESTSOURCES_${MODULE_DIR} )
+	if ( DEFINED TESTSOURCES_${MODULE_UPPER} )
 		# Create the OBJECT library of test sources for this module and link it to the appropriate dependencies (determined above)
-		add_library( "testsrcs_${MODULE}" OBJECT ${TESTSOURCES_${MODULE_DIR}} )
-		target_link_libraries( "testsrcs_${MODULE}" PUBLIC ct_test "ct_${MODULE}" )
+		add_library( "testsrcs_${MODULE}" OBJECT ${TESTSOURCES_${MODULE_UPPER}} )
+		target_link_libraries( "testsrcs_${MODULE}" PUBLIC ct_test "${MODULE}" )
 
 		# Record that list of test sources that are being handled (which can be checked later for omissions)
-		list( APPEND ALL_MODULE_TESTSOURCES ${TESTSOURCES_${MODULE_DIR}} )
+		list( APPEND ALL_MODULE_TESTSOURCES ${TESTSOURCES_${MODULE_UPPER}} )
 	endif()
 endforeach()
 
 # For external_info, add the corresponding subdir of the *build* (not source) directory where configure_file() places the populated header template
-target_include_directories( ct_external_info PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/source/src_external_info> )
+target_include_directories( ct_external_info PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/source/ct_external_info> )
 
 # 3. Specify the modules' dependencies
 
-# TODO: When the uni directory has been rename to src_uni, eradicate this line
-target_include_directories( ct_uni        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/uni>              )
-
-target_link_libraries( testsrcs_test          PUBLIC  ct_chopping                                           )
-target_link_libraries( testsrcs_test          PUBLIC  ct_uni                                                ) # ct_uni for file/pdb/pdb.hpp
-target_link_libraries( testsrcs_options       PUBLIC  ct_uni                                                ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( testsrcs_ct_test       PUBLIC  ct_chopping                                           )
+target_link_libraries( testsrcs_ct_test       PUBLIC  ct_uni                                                ) # ct_uni for file/pdb/pdb.hpp
+target_link_libraries( testsrcs_ct_options    PUBLIC  ct_uni                                                ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
 
 target_link_libraries( ct_common              PRIVATE cath_tools_gsl                                        )
 
 target_link_libraries( ct_biocore             PUBLIC  ct_common                                             )
 target_link_libraries( ct_cath_assign_domains PUBLIC  ct_biocore ct_options ct_uni                          ) # ct_uni for acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp
 target_link_libraries( ct_cath_cluster        PUBLIC  ct_clustagglom ct_options                             )
-target_link_libraries( ct_cath_refine_align   PUBLIC  ct_common ct_uni                                      ) # ct_uni for acquirer/alignment_acquirer/alignment_acquirer.hpp and alignment/options_block/alignment_input_options_block.hpp
-target_link_libraries( ct_cath_score_align    PUBLIC  ct_biocore ct_options ct_uni                          ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_cath_refine_align   PUBLIC  ct_cath_superpose ct_common ct_uni                    ) # ct_uni for acquirer/alignment_acquirer/alignment_acquirer.hpp and alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_cath_score_align    PUBLIC  ct_biocore ct_cath_superpose ct_options ct_uni        ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
 target_link_libraries( ct_cath_superpose      PUBLIC  ct_common ct_uni                                      ) # ct_uni for acquirer/alignment_acquirer/align_refining.hpp acquirer/alignment_acquirer/alignment_acquirer.hpp
 target_link_libraries( ct_chopping            PUBLIC  ct_biocore Boost::program_options                     )
 target_link_libraries( ct_clustagglom         PUBLIC  ct_common Boost::program_options                      )
@@ -122,7 +115,7 @@ target_link_libraries( ct_uni                 PUBLIC  ct_display_colour ct_exter
 
 
 #####################################################################
-### (Non-test) executables
+### [3/4] (Non-test) executables
 #####################################################################
 
 # 1. Specify the (non-test) executables to build
@@ -174,6 +167,9 @@ IF ( BUILD_EXTRA_CATH_TOOLS )
 		target_link_libraries( snap-judgement   PRIVATE ct_uni ) # ct_uni for scan/scan_tools/all_vs_all.hpp
 ENDIF()
 
+
+#####################################################################
+### [4/4] Tests
 #####################################################################
 
 # Check that all the TESTSOURCES are accounted for

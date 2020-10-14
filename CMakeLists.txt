@@ -18,11 +18,11 @@ execute_process(
 	OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-configure_file( "source/src_external_info/cath/external_info/cath_tools_git_version_impl.hpp.in"
-                "source/src_external_info/cath/external_info/cath_tools_git_version_impl.hpp" )
+configure_file( "source/ct_external_info/cath/external_info/cath_tools_git_version_impl.hpp.in"
+                "source/ct_external_info/cath/external_info/cath_tools_git_version_impl.hpp" )
 
-configure_file( "source/src_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp.in"
-                "source/src_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp" )
+configure_file( "source/ct_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp.in"
+                "source/ct_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp" )
 
 # Set the default GSL library to be static, If on Linux, get the release codename
 SET(USE_STATIC_GSL TRUE CACHE BOOL "Build with the static Gnu Scientific Library")
