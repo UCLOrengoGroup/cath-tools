@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_SPEC_H
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_SPEC_CRH_SPEC_H
+#ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SPEC_HPP
+#define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SPEC_HPP
 
 #include "cath/resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "cath/resolve_hits/options/spec/crh_html_spec.hpp"
@@ -94,4 +94,4 @@ namespace cath {
 	} // namespace rslv
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SPEC_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_TESTER_HPP
-#define _CATH_TOOLS_SOURCE_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_TESTER_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_TESTER_HPP
+#define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_TESTER_HPP
 
 #include "cath/common/type_aliases.hpp"
 
@@ -73,4 +73,4 @@ namespace cath {
 	} // namespace opts
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_TESTER_HPP

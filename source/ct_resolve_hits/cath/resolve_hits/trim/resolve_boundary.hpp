@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_TRIM_RESOLVE_BOUNDARY_HPP
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_TRIM_RESOLVE_BOUNDARY_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_TRIM_RESOLVE_BOUNDARY_HPP
+#define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_TRIM_RESOLVE_BOUNDARY_HPP
 
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
@@ -81,4 +81,4 @@ namespace cath {
 	} // namespace rslv
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_TRIM_RESOLVE_BOUNDARY_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_RETURN_PATH_MATRIX_HPP
-#define _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_RETURN_PATH_MATRIX_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_RETURN_PATH_MATRIX_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_RETURN_PATH_MATRIX_HPP
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/dyn_prog_align/detail/path_step.hpp"
@@ -116,4 +116,4 @@ namespace cath {
 	} // namespace align
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_RETURN_PATH_MATRIX_HPP

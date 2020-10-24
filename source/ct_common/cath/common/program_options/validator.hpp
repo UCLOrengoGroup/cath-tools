@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_PROGRAM_OPTIONS_VALIDATOR_HPP
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_PROGRAM_OPTIONS_VALIDATOR_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_OPTIONS_VALIDATOR_HPP
+#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_OPTIONS_VALIDATOR_HPP
 
 #include <boost/any.hpp>
 #include <boost/lexical_cast.hpp>
@@ -75,4 +75,4 @@ namespace cath {
 	} // namespace common
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_OPTIONS_VALIDATOR_HPP

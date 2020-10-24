@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_HPP
-#define _CATH_TOOLS_SOURCE_UNI_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_HPP
 
 #include <boost/operators.hpp>
 
@@ -79,4 +79,4 @@ namespace cath {
 	} // namespace index
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_HPP

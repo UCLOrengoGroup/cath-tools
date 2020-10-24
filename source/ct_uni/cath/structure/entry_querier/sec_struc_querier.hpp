@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_STRUCTURE_ENTRY_QUERIER_SEC_STRUC_QUERIER_HPP
-#define _CATH_TOOLS_SOURCE_UNI_STRUCTURE_ENTRY_QUERIER_SEC_STRUC_QUERIER_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_ENTRY_QUERIER_SEC_STRUC_QUERIER_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_ENTRY_QUERIER_SEC_STRUC_QUERIER_HPP
 
 #include "cath/structure/entry_querier/entry_querier.hpp"
 
@@ -92,4 +92,4 @@ namespace cath {
 
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_ENTRY_QUERIER_SEC_STRUC_QUERIER_HPP

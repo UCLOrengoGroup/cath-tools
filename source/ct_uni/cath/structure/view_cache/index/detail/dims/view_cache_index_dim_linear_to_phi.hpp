@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_VIEW_CACHE_INDEX_DIM_LINEAR_TO_PHI_H
-#define _CATH_TOOLS_SOURCE_UNI_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_VIEW_CACHE_INDEX_DIM_LINEAR_TO_PHI_H
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_VIEW_CACHE_INDEX_DIM_LINEAR_TO_PHI_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_VIEW_CACHE_INDEX_DIM_LINEAR_TO_PHI_HPP
 
 #include "cath/structure/view_cache/index/detail/dims/detail/vci_linear_dim_spec_view_angle.hpp"
 #include "cath/structure/view_cache/index/detail/dims/detail/view_cache_index_dim_linear.hpp"
@@ -59,5 +59,5 @@ namespace cath {
 	} // namespace index
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_VIEW_CACHE_INDEX_DIM_LINEAR_TO_PHI_HPP
 

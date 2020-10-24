@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
+#define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
 
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/detail_help_options_block.hpp"
@@ -95,4 +95,4 @@ namespace cath {
 	} // namespace rslv
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP

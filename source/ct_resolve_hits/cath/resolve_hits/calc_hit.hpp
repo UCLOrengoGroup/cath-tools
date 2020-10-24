@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_CALC_HIT_HPP
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_CALC_HIT_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_HPP
+#define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_HPP
 
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/numeric.hpp>
@@ -488,4 +488,4 @@ namespace cath {
 	} // namespace rslv
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_HPP

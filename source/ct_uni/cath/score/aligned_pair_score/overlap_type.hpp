@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_HPP
-#define _CATH_TOOLS_SOURCE_UNI_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_HPP
 
 #include "cath/common/algorithm/constexpr_is_uniq.hpp"
 #include "cath/common/cpp20/make_array.hpp"
@@ -49,4 +49,4 @@ namespace cath {
 	} // namespace score
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_HPP

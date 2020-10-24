@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_CATH_SUPERPOSER_HPP
-#define _CATH_TOOLS_SOURCE_CATH_SUPERPOSE_CATH_SUPERPOSER_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_CATH_SUPERPOSE_CATH_CATH_SUPERPOSE_CATH_SUPERPOSER_HPP
+#define _CATH_TOOLS_SOURCE_CT_CATH_SUPERPOSE_CATH_CATH_SUPERPOSE_CATH_SUPERPOSER_HPP
 
 #include <iostream>
 
@@ -48,4 +48,4 @@ namespace cath {
 
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_CATH_SUPERPOSE_CATH_CATH_SUPERPOSE_CATH_SUPERPOSER_HPP

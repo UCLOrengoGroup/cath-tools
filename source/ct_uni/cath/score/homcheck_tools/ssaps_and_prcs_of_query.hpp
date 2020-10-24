@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_HPP
-#define _CATH_TOOLS_SOURCE_UNI_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_HPP
 
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
@@ -96,4 +96,4 @@ namespace cath {
 	} // namespace homcheck
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_HPP

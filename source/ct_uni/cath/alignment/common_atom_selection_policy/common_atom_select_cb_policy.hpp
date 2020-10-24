@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY_COMMON_ATOM_SELECT_CB_POLICY_HPP
-#define _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY_COMMON_ATOM_SELECT_CB_POLICY_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY_COMMON_ATOM_SELECT_CB_POLICY_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY_COMMON_ATOM_SELECT_CB_POLICY_HPP
 
 #include "cath/alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
 
@@ -41,4 +41,4 @@ namespace cath {
 	} // namespace align
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_COMMON_ATOM_SELECTION_POLICY_COMMON_ATOM_SELECT_CB_POLICY_HPP

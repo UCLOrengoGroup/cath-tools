@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_DETAIL_MAKE_STATIC_CONST_HPP
-#define _CATH_TOOLS_SOURCE_SRC_COMMON_COMMON_DETAIL_MAKE_STATIC_CONST_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_DETAIL_MAKE_STATIC_CONST_HPP
+#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_DETAIL_MAKE_STATIC_CONST_HPP
 
 #include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 
@@ -47,4 +47,4 @@ namespace cath {
    }                                                                            \
    MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( name )
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_DETAIL_MAKE_STATIC_CONST_HPP

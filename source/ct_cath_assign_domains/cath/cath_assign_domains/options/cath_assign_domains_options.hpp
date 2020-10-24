@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP
-#define _CATH_TOOLS_SOURCE_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP
+#define _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP
 
 #include "cath/cath_assign_domains/options/cath_assign_domains_options_block.hpp"
 #include "cath/options/executable/executable_options.hpp"
@@ -63,4 +63,4 @@ namespace cath {
 	} // namespace opts
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_JMOL_SELECTION_CHOPPING_FORMAT_HPP
-#define _CATH_TOOLS_SOURCE_CHOPPING_CHOPPING_FORMAT_JMOL_SELECTION_CHOPPING_FORMAT_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_JMOL_SELECTION_CHOPPING_FORMAT_HPP
+#define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_JMOL_SELECTION_CHOPPING_FORMAT_HPP
 
 #include "cath/chopping/chopping_format/chopping_format.hpp"
 
@@ -44,4 +44,4 @@ namespace cath {
 	} // namespace chop
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_JMOL_SELECTION_CHOPPING_FORMAT_HPP

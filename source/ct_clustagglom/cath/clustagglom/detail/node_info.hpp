@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_CLUSTAGGLOM_CLUSTAGGLOM_DETAIL_NODE_INFO_HPP
-#define _CATH_TOOLS_SOURCE_SRC_CLUSTAGGLOM_CLUSTAGGLOM_DETAIL_NODE_INFO_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_DETAIL_NODE_INFO_HPP
+#define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_DETAIL_NODE_INFO_HPP
 
 #include <boost/optional/optional_fwd.hpp>
 
@@ -58,4 +58,4 @@ namespace cath {
 	} // namespace clust
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_DETAIL_NODE_INFO_HPP

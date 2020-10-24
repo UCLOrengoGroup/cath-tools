@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_SCAN_STRUCTURE_DATA_H
-#define _CATH_TOOLS_SOURCE_UNI_SCAN_DETAIL_SCAN_STRUCTURE_DATA_H
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_STRUCTURE_DATA_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_STRUCTURE_DATA_HPP
 
 #include <boost/throw_exception.hpp>
 #include <boost/units/quantity.hpp>
@@ -258,4 +258,4 @@ namespace cath {
 	} // namespace scan
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_STRUCTURE_DATA_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_SCORE_SCORE_TYPE_ALIASES_HPP
-#define _CATH_TOOLS_SOURCE_UNI_SCORE_SCORE_TYPE_ALIASES_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_TYPE_ALIASES_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_TYPE_ALIASES_HPP
 
 #include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/optional/optional_fwd.hpp>
@@ -162,4 +162,4 @@ namespace cath {
 		using value_list_scaling_vec = std::vector<value_list_scaling>;
 	} // namespace score
 } // namespace cath
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_TYPE_ALIASES_HPP

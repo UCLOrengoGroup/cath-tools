@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_DYN_PROG_ALIGN_TEST_DYN_PROG_SCORE_SOURCE_FIXTURE_HPP
-#define _CATH_TOOLS_SOURCE_UNI_ALIGNMENT_DYN_PROG_ALIGN_TEST_DYN_PROG_SCORE_SOURCE_FIXTURE_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_TEST_DYN_PROG_SCORE_SOURCE_FIXTURE_HPP
+#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_TEST_DYN_PROG_SCORE_SOURCE_FIXTURE_HPP
 
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/mask_dyn_prog_score_source.hpp"
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.hpp"
@@ -77,4 +77,4 @@ namespace cath {
 		align::sequence_string_dyn_prog_score_source dyn_prog_score_source_fixture::make_example_dyn_prog_score_source<align::sequence_string_dyn_prog_score_source>();
 	} // namespace align
 } // namespace cath
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_TEST_DYN_PROG_SCORE_SOURCE_FIXTURE_HPP

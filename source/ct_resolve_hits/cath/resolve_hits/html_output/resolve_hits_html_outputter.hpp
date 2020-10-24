@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_RESOLVE_HITS_HTML_OUTPUT_RESOLVE_HITS_HTML_OUTPUTTER_HPP
-#define _CATH_TOOLS_SOURCE_RESOLVE_HITS_HTML_OUTPUT_RESOLVE_HITS_HTML_OUTPUTTER_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HTML_OUTPUT_RESOLVE_HITS_HTML_OUTPUTTER_HPP
+#define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HTML_OUTPUT_RESOLVE_HITS_HTML_OUTPUTTER_HPP
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/options/spec/crh_filter_spec.hpp"
@@ -123,4 +123,4 @@ namespace cath {
 	} // namespace rslv
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HTML_OUTPUT_RESOLVE_HITS_HTML_OUTPUTTER_HPP

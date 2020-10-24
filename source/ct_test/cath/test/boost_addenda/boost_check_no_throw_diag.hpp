@@ -27,8 +27,8 @@
 /// is a failure because it tells the user nothing about the exception that
 /// was thrown.
 
-#ifndef _CATH_TOOLS_SOURCE_SRC_TEST_TEST_BOOST_ADDENDA_BOOST_CHECK_NO_THROW_DIAG_HPP
-#define _CATH_TOOLS_SOURCE_SRC_TEST_TEST_BOOST_ADDENDA_BOOST_CHECK_NO_THROW_DIAG_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_BOOST_ADDENDA_BOOST_CHECK_NO_THROW_DIAG_HPP
+#define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_BOOST_ADDENDA_BOOST_CHECK_NO_THROW_DIAG_HPP
 
 #include <boost/test/tools/detail/fwd.hpp>
 #include <boost/test/tools/interface.hpp>
@@ -55,4 +55,4 @@ namespace cath {
 	} // namespace test
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_BOOST_ADDENDA_BOOST_CHECK_NO_THROW_DIAG_HPP

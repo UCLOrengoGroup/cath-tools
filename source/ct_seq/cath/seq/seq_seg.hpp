@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_SEQ_SEQ_SEG_HPP
-#define _CATH_TOOLS_SOURCE_SEQ_SEQ_SEG_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
+#define _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/operators.hpp>
@@ -474,4 +474,5 @@ namespace cath {
 	} // namespace seq
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
+

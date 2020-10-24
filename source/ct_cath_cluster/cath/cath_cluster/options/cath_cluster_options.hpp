@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CATH_CLUSTER_OPTIONS_CATH_CLUSTER_OPTIONS_HPP
-#define _CATH_TOOLS_SOURCE_CATH_CLUSTER_OPTIONS_CATH_CLUSTER_OPTIONS_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_CATH_CLUSTER_OPTIONS_HPP
+#define _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_CATH_CLUSTER_OPTIONS_HPP
 
 #include "cath/cath_cluster/options/options_block/cath_cluster_clustering_options_block.hpp"
 #include "cath/cath_cluster/options/options_block/cath_cluster_input_options_block.hpp"
@@ -66,4 +66,4 @@ namespace cath {
 	} // namespace clust
 } // namespace cath
 
-#endif
+#endif // _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_CATH_CLUSTER_OPTIONS_HPP
