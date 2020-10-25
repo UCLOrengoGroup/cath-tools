@@ -21,10 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_DETAIL_REF_WRAP_HASHER_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_DETAIL_REF_WRAP_HASHER_HPP
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 #include <functional>
-#include <type_traits>
+
+#include "cath/common/cpp14/cbegin_cend.hpp"
+#include "cath/common/type_traits.hpp"
 
 namespace cath { namespace common { namespace detail { template <typename T> class ref_wrap_uom_wrap; } } }
 
@@ -37,10 +37,10 @@ namespace cath {
 			template <typename T>
 			struct ref_wrap_hasher final {
 				/// \brief The function operator that performs the hash on the T value
-				///        using std::hash<decay_t<T>>
+				///        using std::hash<remove_cvref_t<T>>
 				size_t operator()(const ref_wrap_uom_wrap<T> &prm_value
 				                  ) const {
-					return std::hash<std::decay_t<T>>{}( prm_value.get() );
+					return std::hash<common::remove_cvref_t<T>>{}( prm_value.get() );
 				}
 			};
 		} // namespace detail

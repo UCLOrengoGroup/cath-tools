@@ -22,7 +22,8 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_DETAIL_TUPLE_INDEX_SEQUENCE_HPP
 
 #include <tuple>
-#include <type_traits>
+
+#include "cath/common/type_traits.hpp"
 
 namespace cath {
 	namespace common {
@@ -30,7 +31,7 @@ namespace cath {
 
 			/// \brief Helper to get an index_sequence corresponding to the indices of a tuple type
 			template <typename Tpl>
-			using tuple_index_sequence = std::make_index_sequence< std::tuple_size< std::decay_t< Tpl > >::value >;
+			using tuple_index_sequence = std::make_index_sequence< std::tuple_size< common::remove_cvref_t< Tpl > >::value >;
 
 		} // namespace detail
 	} // namespace common

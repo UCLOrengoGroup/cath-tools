@@ -21,12 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_ALGO_MASKED_BESTS_CACHE_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_ALGO_MASKED_BESTS_CACHE_HPP
 
+#include <unordered_map>
+
 #include "cath/common/hash/hash_value_combine.hpp"
+#include "cath/common/type_traits.hpp"
 #include "cath/resolve_hits/algo/scored_arch_proxy.hpp"
 #include "cath/resolve_hits/calc_hit.hpp"
 #include "cath/seq/seq_seg.hpp"
-
-#include <unordered_map>
 
 namespace cath {
 	namespace rslv {
@@ -43,7 +44,7 @@ namespace cath {
 					for (const seq::seq_seg &the_hit : prm_seq_seg_vec) {
 						for (const auto &index : { the_hit.get_start_arrow().get_index(),
 						                           the_hit.get_stop_arrow ().get_index(), } ) {
-							using index_type = std::decay_t< decltype( index ) >;
+							using index_type = common::remove_cvref_t< decltype( index ) >;
 							common::hash_value_combine( seed, std::hash< index_type >{}( index ) );
 						}
 					}

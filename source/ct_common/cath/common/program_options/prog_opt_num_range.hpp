@@ -21,15 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_OPTIONS_PROG_OPT_NUM_RANGE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_OPTIONS_PROG_OPT_NUM_RANGE_HPP
 
+#include <string>
+#include <vector>
+
 #include <boost/any.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
 
 #include "cath/common/type_aliases.hpp"
-
-#include <string>
-#include <type_traits>
-#include <vector>
+#include "cath/common/type_traits.hpp"
 
 namespace cath {
 	namespace common {
@@ -71,7 +71,7 @@ namespace cath {
 		              const str_vec &prm_value_strings, ///< The string values to validate
 		              prog_opt_num_range<Num, MinVal, MaxVal, ConvNum> * dummy_var1, int /*dummy_var2*/
 		              ) {
-			using ponr_t = std::decay_t< std::remove_pointer_t< decltype( dummy_var1 ) > >;
+			using ponr_t = common::remove_cvref_t< std::remove_pointer_t< decltype( dummy_var1 ) > >;
 
 			// Standard validate boilerplate:
 			//  * Make sure no previous assignment to 'a' was made.

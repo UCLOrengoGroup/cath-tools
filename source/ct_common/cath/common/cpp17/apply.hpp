@@ -27,7 +27,6 @@
 
 #include <cstddef>     // for size_t
 #include <tuple>       // for tuple_element_t
-#include <type_traits> // for decay_t
 #include <utility>     // for forward, index_sequence, etc
 
 namespace cath {

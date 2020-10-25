@@ -32,6 +32,7 @@
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
+#include "cath/common/type_traits.hpp"
 
 #include <tuple>
 #include <vector>
@@ -125,7 +126,7 @@ namespace cath {
 					),
 					std::less<>{},
 					[&] (const edge_wght_tpl_t<EdgeRng, WeightRng> &x) {
-						constexpr size_t  x_tpl_size = std::tuple_size< std::decay_t< decltype( x ) > >::value;
+						constexpr size_t  x_tpl_size = std::tuple_size< common::remove_cvref_t< decltype( x ) > >::value;
 						const     auto   &last_value = std::get< x_tpl_size - 1>( x );
 						return std::make_tuple(
 							( Dirn == spanning_tree_dirn::MAX ) ? -last_value : last_value,

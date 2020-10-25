@@ -21,11 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP20_MAKE_ARRAY_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP20_MAKE_ARRAY_HPP
 
+#include <array>
+
 #include "cath/common/cpp17/conjunction.hpp"
 #include "cath/common/cpp17/negation.hpp"
-
-#include <array>
-#include <type_traits>
+#include "cath/common/type_traits.hpp"
 
 namespace cath {
 	namespace common {
@@ -36,7 +36,7 @@ namespace cath {
 			template <typename T> struct is_ref_wrapper<std::reference_wrapper<T>> : std::true_type {};
 
 			template <typename T>
-			using not_ref_wrapper = negation<is_ref_wrapper<std::decay_t<T>>>;
+			using not_ref_wrapper = negation<is_ref_wrapper<common::remove_cvref_t<T>>>;
 
 
 			template <typename D, typename...> struct return_type_helper { using type = D; };

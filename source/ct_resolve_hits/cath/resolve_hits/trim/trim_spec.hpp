@@ -21,15 +21,16 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_TRIM_TRIM_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_TRIM_TRIM_SPEC_HPP
 
+#include <stdexcept>
+
 #include <boost/any.hpp>
 #include <boost/optional/optional_fwd.hpp>
 
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/type_aliases.hpp"
+#include "cath/common/type_traits.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 #include "cath/seq/seq_seg.hpp"
-
-#include <stdexcept>
 
 namespace cath {
 	namespace rslv {
@@ -105,8 +106,8 @@ namespace cath {
 		                                   	? prm_total_trimming
 		                                   	: throw "trim_spec total_trimming must be non-negative and less than the full_length"
 		                                   } {
-			static_assert( std::is_unsigned< std::decay_t< decltype( prm_full_length    ) > >::value, "If prm_full_length    isn't of an unsigned type, then add an explicit >= 0 check" );
-			static_assert( std::is_unsigned< std::decay_t< decltype( prm_total_trimming ) > >::value, "If prm_total_trimming isn't of an unsigned type, then add an explicit >= 0 check" );
+			static_assert( std::is_unsigned< common::remove_cvref_t< decltype( prm_full_length    ) > >::value, "If prm_full_length    isn't of an unsigned type, then add an explicit >= 0 check" );
+			static_assert( std::is_unsigned< common::remove_cvref_t< decltype( prm_total_trimming ) > >::value, "If prm_total_trimming isn't of an unsigned type, then add an explicit >= 0 check" );
 		}
 
 		/// \brief Getter for the length of a segment on which the trimming is to be defined

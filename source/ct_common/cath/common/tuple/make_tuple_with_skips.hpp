@@ -21,10 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_MAKE_TUPLE_WITH_SKIPS_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_MAKE_TUPLE_WITH_SKIPS_HPP
 
-#include "cath/common/metaprogramming/append_template_params_into_first_wrapper.hpp"
-
 #include <tuple>
-#include <type_traits>
+
+#include "cath/common/metaprogramming/append_template_params_into_first_wrapper.hpp"
+#include "cath/common/type_traits.hpp"
 
 namespace cath {
 	namespace common {
@@ -54,7 +54,7 @@ namespace cath {
 			template <typename T, typename... Ts>
 			struct tuple_with_skips_type<T, Ts...> final {
 				using type = std::conditional_t<
-					std::is_same< std::decay_t<T>, tpl_elmnt_skip_t>::value,
+					std::is_same< common::remove_cvref_t<T>, tpl_elmnt_skip_t>::value,
 					typename tuple_with_skips_type< Ts... >::type,
 					append_template_params_into_first_wrapper_t<
 						std::tuple< T >,
@@ -113,7 +113,7 @@ namespace cath {
 			                                               Vs                      &&...prm_vs   ///< The remaining arguments to process
 			                                               ) {
 				return make_tuple_with_skips_recursive_tag_dispatch(
-					std::is_same< std::decay_t<U>, tpl_elmnt_skip_t >{},
+					std::is_same< common::remove_cvref_t<U>, tpl_elmnt_skip_t >{},
 					prm_ts_tpl,
 					std::forward< U  >( prm_u  ),
 					std::forward< Vs >( prm_vs )...

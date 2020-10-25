@@ -23,7 +23,6 @@
 #include <boost/filesystem/path.hpp> // ***** TEMPORARY *****
 #include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/type_traits/is_same.hpp>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp"

@@ -21,20 +21,21 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_TRAITS_IS_TUPLE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_TRAITS_IS_TUPLE_HPP
 
-#include "cath/common/type_traits/is_template_of_type.hpp"
-
 #include <tuple>
+
+#include "cath/common/type_traits.hpp"
+#include "cath/common/type_traits/is_template_of_type.hpp"
 
 namespace cath {
 	namespace common {
 
 		/// \brief A type_trait for checking whether T is exactly a std::tuple<> of zero or more types
 		template <typename T>
-		struct is_tuple             : detail::is_template_of_type< T,               std::tuple > {};
+		struct is_tuple             : detail::is_template_of_type< T,                         std::tuple > {};
 
 		/// \brief A type_trait for checking whether the decayed version of T is a std::tuple<> of zero or more types
 		template <typename T>
-		struct is_tuple_after_decay : detail::is_template_of_type< std::decay_t<T>, std::tuple > {};
+		struct is_tuple_after_decay : detail::is_template_of_type< common::remove_cvref_t<T>, std::tuple > {};
 
 	} // namespace common
 } // namespace cath

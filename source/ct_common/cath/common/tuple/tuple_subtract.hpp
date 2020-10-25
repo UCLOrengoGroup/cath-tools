@@ -21,11 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_SUBTRACT_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_SUBTRACT_HPP
 
-#include "cath/common/detail/make_static_const.hpp"
-
 #include <cstddef>
 #include <tuple>
-#include <type_traits>
+
+#include "cath/common/detail/make_static_const.hpp"
+#include "cath/common/type_traits.hpp"
 
 namespace cath {
 	namespace common {
@@ -54,13 +54,13 @@ namespace cath {
 				                          const TplB &prm_tuple_b  ///< The tuple to subtract from the other
 				                          ) const {
 					static_assert(
-						std::tuple_size< std::decay_t< TplA > >::value == std::tuple_size< std::decay_t< TplB > >::value,
+						std::tuple_size< common::remove_cvref_t< TplA > >::value == std::tuple_size< common::remove_cvref_t< TplB > >::value,
 						"tuple_subtract() can only be used on tuples of equal size"
 					);
 					return tuple_subtract_impl(
 						prm_tuple_a,
 						prm_tuple_b,
-						std::make_index_sequence<std::tuple_size< std::decay_t< TplA > >::value>{}
+						std::make_index_sequence<std::tuple_size< common::remove_cvref_t< TplA > >::value>{}
 					);
 				}
 			};

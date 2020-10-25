@@ -21,11 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_ENUM_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_ENUM_HPP
 
+#include <type_traits>
+
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/find_if.hpp>
-#include <boost/type_traits/is_same.hpp>
-
-#include <type_traits>
 
 namespace cath { namespace score { class geometric_mean_length_getter; } }
 namespace cath { namespace score { class length_of_first_getter; } }
@@ -69,7 +68,7 @@ namespace cath {
 			private:
 				using enum_integral = std::integral_constant<length_getter_enum, E>;
 				using second_mf     = typename boost::mpl::second< ::boost::mpl::placeholders::_1 >;
-				using find_iter     = typename boost::mpl::find_if<enums_of_length_getter_types, boost::is_same< second_mf, enum_integral > >::type ;
+				using find_iter     = typename boost::mpl::find_if<enums_of_length_getter_types, ::std::is_same< second_mf, enum_integral > >::type ;
 
 			public:
 				using type          = typename boost::mpl::first<typename boost::mpl::deref<find_iter>::type>::type;
@@ -88,7 +87,7 @@ namespace cath {
 			class enum_of_length_getter_impl final {
 			private:
 				using first_mf      = typename boost::mpl::first< ::boost::mpl::placeholders::_1 >;
-				using find_iter     = typename boost::mpl::find_if<enums_of_length_getter_types, boost::is_same< first_mf, T> >::type ;
+				using find_iter     = typename boost::mpl::find_if<enums_of_length_getter_types, ::std::is_same< first_mf, T> >::type ;
 				using enum_integral = typename boost::mpl::second<typename boost::mpl::deref<find_iter>::type>::type;
 
 			public:

@@ -24,6 +24,7 @@
 #include <boost/optional.hpp>
 
 #include "cath/common/cpp17/invoke.hpp"
+#include "cath/common/type_traits.hpp"
 
 namespace cath {
 	namespace common {
@@ -38,7 +39,7 @@ namespace cath {
 		/// This could be enhanced:
 		///  * Allow 0 or more values after the bool and perfect-forward them to the relevant ctor
 		///  * Allow the resulting optional's value_type to be specified but have it default to the
-		///    (decay_t<> of the) type of the (first) value after the bool
+		///    (remove_cvref_t<> of the) type of the (first) value after the bool
 		///  * If combining both of the above, generate a sensible compile time error if 0
 		///    arguments are passed and no template parameter is specified
 		template <class T>
@@ -57,12 +58,12 @@ namespace cath {
 		///
 		/// This could be enhanced:
 		///  * Allow the resulting optional's value_type to be specified but have it default to the type
-		///    of the std::decay_t< std::result_of_t<> > of the Fn
+		///    of the common::remove_cvref_t< std::result_of_t<> > of the Fn
 		template <class Fn>
 		inline auto make_optional_if_fn(const bool  &prm_condition, ///< TODOCUMENT
 		                                Fn         &&prm_fn         ///< TODOCUMENT
 		                                ) {
-			using return_type = boost::optional< std::decay_t< std::result_of_t< Fn && () > > >;
+			using return_type = boost::optional< common::remove_cvref_t< std::result_of_t< Fn && () > > >;
 			return prm_condition
 				? return_type{ invoke( std::forward<Fn>( prm_fn ) ) }
 				: return_type{                                      };

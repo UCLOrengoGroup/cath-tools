@@ -34,6 +34,7 @@
 #include "cath/common/cpp17/apply.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/size_t_literal.hpp"
+#include "cath/common/type_traits.hpp"
 #include "cath/common/tuple/mins_maxs_tuple_pair_mins_maxs_element.hpp"
 #include "cath/common/tuple/tuple_increment.hpp"
 #include "cath/common/tuple/tuple_lattice_index.hpp"
@@ -197,7 +198,7 @@ namespace cath {
 			template <typename Key, typename Cell>
 			info_quantity scan_index_lattice_store<Key, Cell>::get_info_size() const {
 				const auto num_bytes =
-					  sizeof( std::decay_t< decltype( *this ) > )
+					  sizeof( common::remove_cvref_t< decltype( *this ) > )
 					+ sizeof( Cell ) * the_store.size()
 					+ sizeof( value_t ) * boost::accumulate(
 						the_store

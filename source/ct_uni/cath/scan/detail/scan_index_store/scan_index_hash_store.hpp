@@ -27,6 +27,7 @@
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
+#include "cath/common/type_traits.hpp"
 #include "cath/scan/detail/scan_index_store/detail/hash_tuple.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 
@@ -137,7 +138,7 @@ namespace cath {
 			template <typename Key, typename Cell>
 			info_quantity scan_index_hash_store<Key, Cell>::get_info_size() const {
 				const auto num_bytes =
-					  sizeof( std::decay_t< decltype( *this ) > )
+					  sizeof( common::remove_cvref_t< decltype( *this ) > )
 					+ sizeof( Cell    ) * the_store.size()
 					+ sizeof( value_t ) * num_adds;
 				return num_bytes * boost::units::information::bytes;

@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_RUN_HPP
 #define _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_RUN_HPP
 
+#include <array>
 
 #include "cath/common/algorithm/append.hpp"
 #include "cath/common/algorithm/contains.hpp"
@@ -29,10 +30,9 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/hash/hash_value_combine.hpp"
+#include "cath/common/type_traits.hpp"
 #include "cath/seq/seq_arrow.hpp"
 #include "cath/seq/seq_seg.hpp"
-
-#include <array>
 
 namespace cath {
 	namespace seq {
@@ -414,7 +414,7 @@ namespace cath {
 			static_assert( ( sizeof...( Ts ) % 2 ) == 0,
 				"make_seq_seg_run_from_res_indices() requires an even number of index parameters" );
 
-			static_assert( common::variadic_and( std::is_integral<std::decay_t<Ts>>::value... ),
+			static_assert( common::variadic_and( std::is_integral<common::remove_cvref_t<Ts>>::value... ),
 				"make_seq_seg_run_from_res_indices() requires all parameters to by of integral type" );
 
 			return {
