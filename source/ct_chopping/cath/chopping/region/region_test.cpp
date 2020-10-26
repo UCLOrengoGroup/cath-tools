@@ -22,6 +22,7 @@
 
 #include <boost/optional/optional_io.hpp>
 
+#include "cath/biocore/residue_id.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/chopping/region/region.hpp"
 #include "cath/test/test_tools.hpp"
@@ -51,6 +52,11 @@ BOOST_AUTO_TEST_CASE(equality_works) {
 
 BOOST_AUTO_TEST_CASE(locating_of_whole_chain_region_returns_none) {
 	BOOST_TEST( get_residue_locating( make_simple_region( 'A' ) ) == none );
+}
+
+BOOST_AUTO_TEST_CASE( get_start_id_and_get_stop_id_work ) {
+	BOOST_TEST( get_start_id( make_simple_region( 'K', 121, 232 ) ) == make_residue_id( 'K', 121 ) );
+	BOOST_TEST( get_stop_id( make_simple_region( 'K', 121, 232 ) ) == make_residue_id( 'K', 232 ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

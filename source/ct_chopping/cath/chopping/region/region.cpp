@@ -276,7 +276,7 @@ residue_id cath::chop::get_start_id( const region &prm_region ) {
 ///
 /// \param prm_region The region to query
 residue_id cath::chop::get_stop_id( const region &prm_region ) {
-	return { *prm_region.get_opt_chain_label(), get_start_name( prm_region ) };
+	return { *prm_region.get_opt_chain_label(), get_stop_name( prm_region ) };
 }
 
 /// \brief TODOCUMENT
