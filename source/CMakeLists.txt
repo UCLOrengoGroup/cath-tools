@@ -172,7 +172,7 @@ ENDIF()
 set( TESTSOURCES_REMAIN ${TESTSOURCES} )
 list( REMOVE_ITEM TESTSOURCES_REMAIN ${TESTSOURCES_EXECUTABLES_BUILD_TEST} ${ALL_MODULE_TESTSOURCES} )
 if ( TESTSOURCES_REMAIN )
-	message( SEND_ERROR "Some TESTSOURCES are not being handled : \"${TESTSOURCES_REMAIN}\"" )
+	message( FATAL_ERROR "Some TESTSOURCES are not being handled : \"${TESTSOURCES_REMAIN}\"" )
 endif()
 
 #####################################################################
