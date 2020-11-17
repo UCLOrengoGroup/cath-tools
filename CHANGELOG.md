@@ -1,6 +1,16 @@
 # Summary of changes in cath-tools releases
 
 
+### [v0.16.5](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.16.5) Improve docs, build, code
+
+2020-04-12 &nbsp; 
+
+
+### [v0.16.4](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.16.4) 
+
+2020-04-12 &nbsp; 
+
+
 ### [v0.16.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.16.2) cath-cluster: fast, simple complete-linkage clustering
 
 2018-01-09 &nbsp; 
@@ -183,14 +193,4 @@ See [42](https://github.com/UCLOrengoGroup/cath-tools/issues/42) and [a2d5fa12d1
 ### [v0.12.8](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.12.8) 
 
 2016-10-19 &nbsp; 
-
-
-### [v0.12.7](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.12.7) 
-
-2016-09-21 &nbsp; 
-
-
-### [v0.12.6](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.12.6) 
-
-2016-09-21 &nbsp; 
 
