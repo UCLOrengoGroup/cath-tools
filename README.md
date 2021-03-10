@@ -61,3 +61,4 @@ Feedback
 Please tell us about your cath-tools bugs/suggestions [here](https://github.com/UCLOrengoGroup/cath-tools/issues/new).
 
 If you find this software useful, please spread the word and star the [GitHub repo](https://github.com/UCLOrengoGroup/cath-tools).
+
