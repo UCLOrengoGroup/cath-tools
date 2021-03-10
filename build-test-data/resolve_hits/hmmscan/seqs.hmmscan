@@ -51,6 +51,7 @@ Domain annotation for each model (and alignments):
 
   Alignments for each domain:
   == domain 1  score: 14.1 bits;  conditional E-value: 7.9e-06
+                                    HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH CS
                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RF
   cath|4_2_0|4xurA00/172-332-i3  37 svstedahsGsyslkvtgrtstwdgisqditgklepgttYtlsawvkvdsgsasagvrvtlklgvddgsgntqyvnigsv 116
                                     ++++ +a+   y+l +++ ++ ++    + t+++  g  Y   + +++ +gs++ + +vtl+  v  + gn+++++ g++

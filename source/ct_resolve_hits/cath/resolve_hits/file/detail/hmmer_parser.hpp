@@ -434,7 +434,7 @@ namespace cath {
 
 			/// \brief Parse the current alignment section
 			inline void hmmer_parser::parse_alignment_section() {
-				if ( boost::algorithm::ends_with( line, " RF" ) ) {
+				while ( boost::algorithm::ends_with( line, " RF" ) || boost::algorithm::ends_with( line, " CS" ) ) {
 					advance_line();
 				}
 				the_aln.add_a( line );
