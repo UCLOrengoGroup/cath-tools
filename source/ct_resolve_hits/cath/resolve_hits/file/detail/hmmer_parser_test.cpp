@@ -18,6 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/algorithm/transform_build.hpp"
@@ -136,6 +137,19 @@ BOOST_AUTO_TEST_CASE(parses_jons_seqs_hmmscan_correctly) {
 			),
 		} }
 	);
+}
+
+BOOST_AUTO_TEST_CASE( detects_lack_of_alignment ) {
+	try {
+		parse_hmmer_out_file( CRH_HMMSCAN_DATA_DIR() / "seqs.no-alignments.hmmscan",
+		                      hmmer_format::HMMSCAN,
+		                      APPLY_CATH_POLICIES,
+		                      MIN_GAP_LENGTH,
+		                      OUTPUT_HMMER_ALN );
+		BOOST_TEST( false );
+	} catch ( const runtime_error_exception &ex ) {
+		BOOST_TEST( ::boost::algorithm::contains( ex.what(), "Unable to find alignment data" ) );
+	}
 }
 
 BOOST_AUTO_TEST_CASE(parses_jons_p53_p63_p73_hmmscan_correctly) {

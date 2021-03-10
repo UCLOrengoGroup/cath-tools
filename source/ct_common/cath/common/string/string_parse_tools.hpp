@@ -69,8 +69,9 @@ namespace cath {
 					BOOST_THROW_EXCEPTION(invalid_argument_exception(
 						"Failed to parse a number (of type "s
 						+ ::boost::core::demangle( typeid( T ).name() )
-						+ ") from "
+						+ R"() from ")"
 						+ std::string{ prm_begin_itr, prm_end_itr }
+						+ R"(")"
 					));
 				}
 				return value;

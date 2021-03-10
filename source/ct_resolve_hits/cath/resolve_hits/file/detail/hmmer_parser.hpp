@@ -353,8 +353,16 @@ namespace cath {
 
 			/// \brief Advance lines until the start of the next alignment
 			inline void hmmer_parser::advance_line_until_next_aln() {
-				if ( ! line_is_at_aln() ) {
-					while ( getline( the_istream.get(), line ) && ! line_is_at_aln() ) {}
+				if ( !line_is_at_aln() ) {
+					while ( getline( the_istream.get(), line ) && !line_is_at_aln() ) {
+						if ( line_is_at_block() || end_of_istream() ) {
+							BOOST_THROW_EXCEPTION( common::runtime_error_exception(
+							  "Unable to find alignment data whilst parsing"
+							  + ( query_id.has_value() ? ( ", query: " + *query_id ) : "" )
+							  + ( prefix_match_id.has_value() ? ( ", match: " + *prefix_match_id ) : "" )
+							  + ". Please ensure the alignments data is included." ) );
+						}
+					}
 				}
 			}
 
