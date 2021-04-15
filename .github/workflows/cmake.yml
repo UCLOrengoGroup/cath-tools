@@ -1,0 +1,45 @@
+name: CMake
+
+# TODO:
+#  * Mac?
+#  * UBSan/ASan?
+#  * Clang
+#  * Windows?
+
+on: [push, pull_request]
+
+env:
+  BUILD_EXTRA_CATH_TESTS: ON
+  BUILD_EXTRA_CATH_TOOLS: ON
+  BUILD_TYPE: Release
+  CC: /usr/bin/gcc-10
+  CXX: /usr/bin/g++-10
+  # DEBIAN_FRONTEND=noninteractive prevents the apt-get of the tzdata package hanging on an interactive user prompt
+  DEBIAN_FRONTEND: noninteractive
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install required Ubuntu packages
+      run: apt-get update && apt-get install -y cmake g++-10 git libboost-dev libboost-filesystem-dev libboost-iostreams-dev libboost-log-dev libboost-program-options-dev libboost-test-dev libboost-timer-dev libgsl-dev ninja-build
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{github.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      run: cmake -GNinja "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" "-B$GITHUB_WORKSPACE/build" "-S$GITHUB_WORKSPACE"
+      #run: cmake -GNinja "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" "-B$GITHUB_WORKSPACE/build" "-S$GITHUB_WORKSPACE" -DCMAKE_TOOLCHAIN_FILE=gcc_static.cmake
+
+    - name: Build
+      shell: bash
+      run: cmake -C "$GITHUB_WORKSPACE/build"
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: ctest --output-on-failure
