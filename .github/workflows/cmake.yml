@@ -1,9 +1,5 @@
 name: CMake
 
-# Currently attempting:
-#  * Artifacts (add a suffix of .linux / .macos?)
-#  * Mac (`brew update && brew install gsl && brew install ninja`)?
-
 # TODO:
 #  * UBSan/ASan (ASAN_OPTIONS="detect_container_overflow=0" on mac? `-fuse-ld=gold` for Linux GCC sanitizer?)?
 #  * Clang (libc++-dev libc++1 libc++abi-dev)?
@@ -49,15 +45,7 @@ jobs:
 
     - name: Build
       shell: bash
-      run: ninja -C "$GITHUB_WORKSPACE/build" -k 0 bin/mod-test-biocore
-
-    - name: Copy executables to have OS extension
-      shell: bash
-      run: find "$GITHUB_WORKSPACE/build/bin" -type f -exec cp {} {}.${{ matrix.os }} \;
-
-    - name: List executables
-      shell: bash
-      run: ls -l "$GITHUB_WORKSPACE/build/bin"
+      run: ninja -C "$GITHUB_WORKSPACE/build" -k 0
 
     - name: Grab version info from example executable
       shell: bash
@@ -67,6 +55,10 @@ jobs:
       working-directory: ${{github.workspace}}/build
       shell: bash
       run: ctest --output-on-failure
+
+    - name: Move executables to add OS suffix to their names
+      shell: bash
+      run: find "$GITHUB_WORKSPACE/build/bin" -type f -exec mv {} {}.${{ matrix.os }} \;
 
     - name: Publish to release
       uses: softprops/action-gh-release@v1
