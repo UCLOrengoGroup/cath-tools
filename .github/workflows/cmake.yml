@@ -51,7 +51,7 @@ jobs:
 
     - name: Grab version info from example executable
       shell: bash
-      run: "$GITHUB_WORKSPACE/build/bin/cath-superpose" --version
+      run: ${GITHUB_WORKSPACE}/build/bin/cath-superpose --version
 
     - name: Test
       working-directory: ${{github.workspace}}/build
