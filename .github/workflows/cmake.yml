@@ -38,11 +38,7 @@ jobs:
 
     - name: Setup (MacOS 10.15)
       if: matrix.os == 'macos-10.15'
-      run: brew update && brew install boost gsl ninja tree
-
-    - name: tree gsl
-      if: matrix.os == 'macos-10.15'
-      run: tree /usr/local/Cellar/gsl/2.6
+      run: brew update && brew install boost gsl ninja
 
     - name: Create build directory
       run: cmake -E make_directory ${{github.workspace}}/build
@@ -54,6 +50,14 @@ jobs:
     - name: Build
       shell: bash
       run: ninja -C "$GITHUB_WORKSPACE/build" -k 0 bin/mod-test-biocore
+
+    - name: Copy executables to have OS extension
+      shell: bash
+      run: find "$GITHUB_WORKSPACE/build/bin" -type f -exec cp {} {}.${{ matrix.os }} \;
+
+    - name: List executables
+      shell: bash
+      run: ls -l "$GITHUB_WORKSPACE/build/bin"
 
     - name: Grab version info from example executable
       shell: bash
@@ -69,12 +73,12 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
-          "$GITHUB_WORKSPACE/build/bin/cath-assign-domains"
-          "$GITHUB_WORKSPACE/build/bin/cath-cluster"
-          "$GITHUB_WORKSPACE/build/bin/cath-map-clusters"
-          "$GITHUB_WORKSPACE/build/bin/cath-refine-align"
-          "$GITHUB_WORKSPACE/build/bin/cath-resolve-hits"
-          "$GITHUB_WORKSPACE/build/bin/cath-ssap"
-          "$GITHUB_WORKSPACE/build/bin/cath-superpose"
+          "$GITHUB_WORKSPACE/build/bin/cath-assign-domains.${{ matrix.os }}"
+          "$GITHUB_WORKSPACE/build/bin/cath-cluster.${{ matrix.os }}"
+          "$GITHUB_WORKSPACE/build/bin/cath-map-clusters.${{ matrix.os }}"
+          "$GITHUB_WORKSPACE/build/bin/cath-refine-align.${{ matrix.os }}"
+          "$GITHUB_WORKSPACE/build/bin/cath-resolve-hits.${{ matrix.os }}"
+          "$GITHUB_WORKSPACE/build/bin/cath-ssap.${{ matrix.os }}"
+          "$GITHUB_WORKSPACE/build/bin/cath-superpose.${{ matrix.os }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
