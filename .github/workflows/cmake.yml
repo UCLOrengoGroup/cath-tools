@@ -36,7 +36,7 @@ jobs:
 
     - name: Setup (MacOS 10.15)
       if: matrix.os == 'macos-10.15'
-      run: brew update && brew install gsl ninja
+      run: brew update && brew install boost gsl ninja
 
     - name: Create build directory
       run: cmake -E make_directory ${{github.workspace}}/build
