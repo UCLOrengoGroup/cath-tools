@@ -20,8 +20,8 @@ jobs:
         os: [ ubuntu-20.04, macos-10.15 ]
 
         include:
-          - compiler: [ clang, gcc ]
-            flavour: [ release ]
+          - compiler: gcc
+            flavour: release
             os: ubuntu-20.04
 
       fail-fast: false
