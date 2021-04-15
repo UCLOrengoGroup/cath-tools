@@ -1,9 +1,12 @@
 name: CMake
 
+# Currently attempting:
+#  * Artifacts (add a suffix of .linux / .macos?)
+#  * Mac (`brew update && brew install gsl && brew install ninja`)?
+
 # TODO:
-#  * Mac?
-#  * UBSan/ASan?
-#  * Clang
+#  * UBSan/ASan (ASAN_OPTIONS="detect_container_overflow=0" on mac? `-fuse-ld=gold` for Linux GCC sanitizer?)?
+#  * Clang (libc++-dev libc++1 libc++abi-dev)?
 #  * Windows?
 
 on: [push, pull_request]
@@ -11,35 +14,61 @@ on: [push, pull_request]
 env:
   BUILD_EXTRA_CATH_TESTS: ON
   BUILD_EXTRA_CATH_TOOLS: ON
-  BUILD_TYPE: Release
-  CC: /usr/bin/gcc-10
-  CXX: /usr/bin/g++-10
-  # DEBIAN_FRONTEND=noninteractive prevents the apt-get of the tzdata package hanging on an interactive user prompt
-  DEBIAN_FRONTEND: noninteractive
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        os: [ 'ubuntu-20.04', 'macos-10.15' ]
+        flavour: [ 'release' ]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install required Ubuntu packages
+    - name: Setup (Ubuntu 20.04)
+      if: matrix.os == 'ubuntu-20.04'
+      env:
+        # Prevents the apt-get of the tzdata package hanging on an interactive user prompt
+        DEBIAN_FRONTEND: noninteractive
       run: sudo apt-get update && sudo apt-get install -y cmake g++-10 git libboost-dev libboost-filesystem-dev libboost-iostreams-dev libboost-log-dev libboost-program-options-dev libboost-test-dev libboost-timer-dev libgsl-dev ninja-build
 
-    - name: Create Build Environment
+    - name: Setup (MacOS 10.15)
+      if: matrix.os == 'macos-10.15'
+      run: brew update && brew install gsl ninja
+
+    - name: Create build directory
       run: cmake -E make_directory ${{github.workspace}}/build
 
     - name: Configure CMake
       shell: bash
-      run: cmake -GNinja "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" "-B$GITHUB_WORKSPACE/build" "-S$GITHUB_WORKSPACE"
-      #run: cmake -GNinja "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" "-B$GITHUB_WORKSPACE/build" "-S$GITHUB_WORKSPACE" -DCMAKE_TOOLCHAIN_FILE=gcc_static.cmake
+      run: cmake -GNinja "-B$GITHUB_WORKSPACE/build" "-S$GITHUB_WORKSPACE" "-DCMAKE_TOOLCHAIN_FILE=$GITHUB_WORKSPACE/.github/cmake-toolchain-files/${{ matrix.os }}.${{ matrix.flavour }}.cmake"
 
     - name: Build
       shell: bash
       run: ninja -C "$GITHUB_WORKSPACE/build"
 
+    - name: Grab version info from example executable
+      shell: bash
+      run: "$GITHUB_WORKSPACE/build/bin/cath-superpose" --version
+
     - name: Test
       working-directory: ${{github.workspace}}/build
       shell: bash
       run: ctest --output-on-failure
+
+    - name: Publish to release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          "$GITHUB_WORKSPACE/build/bin/cath-assign-domains"
+          "$GITHUB_WORKSPACE/build/bin/cath-cluster"
+          "$GITHUB_WORKSPACE/build/bin/cath-map-clusters"
+          "$GITHUB_WORKSPACE/build/bin/cath-refine-align"
+          "$GITHUB_WORKSPACE/build/bin/cath-resolve-hits"
+          "$GITHUB_WORKSPACE/build/bin/cath-ssap"
+          "$GITHUB_WORKSPACE/build/bin/cath-superpose"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
