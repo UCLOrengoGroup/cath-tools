@@ -37,7 +37,7 @@ jobs:
 
     - name: Build
       shell: bash
-      run: cmake -C "$GITHUB_WORKSPACE/build"
+      run: ninja -C "$GITHUB_WORKSPACE/build"
 
     - name: Test
       working-directory: ${{github.workspace}}/build
