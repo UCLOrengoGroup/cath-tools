@@ -1,9 +1,14 @@
 name: CMake
 
+# Currently attempting:
+#
+# * Clang (libc++-dev libc++1 libc++abi-dev)?
+
 # TODO:
-#  * UBSan/ASan (ASAN_OPTIONS="detect_container_overflow=0" on mac? `-fuse-ld=gold` for Linux GCC sanitizer?)?
-#  * Clang (libc++-dev libc++1 libc++abi-dev)?
-#  * Windows?
+#
+# * Windows?
+# * libc++ (if/when dependencies are all Conan-ified)
+# * UBSan/ASan (if/when dependencies are all Conan-ified; `-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer`)
 
 on: [push, pull_request]
 
@@ -48,7 +53,7 @@ jobs:
 
     - name: Setup (MacOS 10.15)
       if: matrix.os == 'macos-10.15'
-      run: brew update && brew install boost gsl ninja
+      run: brew update && brew install boost gsl icu4c ninja
 
     - name: Create build directory
       run: cmake -E make_directory ${{github.workspace}}/build
