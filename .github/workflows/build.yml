@@ -2,6 +2,12 @@ name: build
 
 # TODO:
 #
+# Fix: MacOS executables are currently dynamically linked to non-universal dylibs:
+#  * /usr/local/opt/icu4c/lib/libicudata.68.dylib
+#  * /usr/local/opt/icu4c/lib/libicui18n.68.dylib
+#  * /usr/local/opt/icu4c/lib/libicuuc.68.dylib
+# (and consider temporarily restricting the build to cath-resolve-hits for that)
+#
 # * Windows?
 # * libc++ (if/when dependencies are all Conan-ified)
 # * UBSan/ASan (if/when dependencies are all Conan-ified; `-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer`)
@@ -70,23 +76,19 @@ jobs:
     ##################### BUILD #####################
 
     - name: Build
-      run: ninja -C "$GITHUB_WORKSPACE/build" -k 0 cath-resolve-hits
+      run: ninja -C "$GITHUB_WORKSPACE/build" -k 0
       shell: bash
 
     ##################### TEST #####################
 
-    # - name: Grab version info from example executable
-    #   run: ${GITHUB_WORKSPACE}/build/bin/cath-superpose --version
-    #   shell: bash
-
-    - name: TEMP CRH
-      run: ${GITHUB_WORKSPACE}/build/bin/cath-resolve-hits --version
+    - name: Grab version info from example executable
+      run: ${GITHUB_WORKSPACE}/build/bin/cath-superpose --version
       shell: bash
 
-    # - name: Test
-    #   run: ctest --output-on-failure
-    #   shell: bash
-    #   working-directory: ${{github.workspace}}/build
+    - name: Test
+      run: ctest --output-on-failure
+      shell: bash
+      working-directory: ${{github.workspace}}/build
 
     ##################### PUBLISH #####################
 
@@ -95,51 +97,7 @@ jobs:
       run: find "$GITHUB_WORKSPACE/build/bin" -type f -exec mv {} {}.${{ matrix.os }} \;
       shell: bash
 
-    - name: list executables dir abs
-      if: startsWith(github.ref, 'refs/tags/')
-      run: ls -l "$GITHUB_WORKSPACE/build/bin/"
-      shell: bash
-
-    - name: list executables dir rel
-      if: startsWith(github.ref, 'refs/tags/')
-      run: ls -l "build/bin/"
-      shell: bash
-
-    # - name: list exe cath-assign-domains
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   run: ls -l "build/bin/cath-assign-domains.${{ matrix.os }}"
-    #   shell: bash
-
-    # - name: list exe cath-cluster
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   run: ls -l "build/bin/cath-cluster.${{ matrix.os }}"
-    #   shell: bash
-
-    # - name: list exe cath-map-clusters
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   run: ls -l "build/bin/cath-map-clusters.${{ matrix.os }}"
-    #   shell: bash
-
-    # - name: list exe cath-refine-align
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   run: ls -l "build/bin/cath-refine-align.${{ matrix.os }}"
-    #   shell: bash
-
-    - name: list exe cath-resolve-hits
-      if: startsWith(github.ref, 'refs/tags/')
-      run: ls -l "build/bin/cath-resolve-hits.${{ matrix.os }}"
-      shell: bash
-
-    # - name: list exe cath-ssap
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   run: ls -l "build/bin/cath-ssap.${{ matrix.os }}"
-    #   shell: bash
-
-    # - name: list exe cath-superpose
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   run: ls -l "build/bin/cath-superpose.${{ matrix.os }}"
-    #   shell: bash
-
+    # Note: this doesn't use a shell so don't use substitution or "
     - name: Publish to release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -147,11 +105,10 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
+          build/bin/cath-assign-domains.${{ matrix.os }}
+          build/bin/cath-cluster.${{ matrix.os }}
+          build/bin/cath-map-clusters.${{ matrix.os }}
+          build/bin/cath-refine-align.${{ matrix.os }}
           build/bin/cath-resolve-hits.${{ matrix.os }}
-
-      # "build/bin/cath-assign-domains.${{ matrix.os }}"
-      # "build/bin/cath-cluster.${{ matrix.os }}"
-      # "build/bin/cath-map-clusters.${{ matrix.os }}"
-      # "build/bin/cath-refine-align.${{ matrix.os }}"
-      # "build/bin/cath-ssap.${{ matrix.os }}"
-      # "build/bin/cath-superpose.${{ matrix.os }}"
+          build/bin/cath-ssap.${{ matrix.os }}
+          build/bin/cath-superpose.${{ matrix.os }}
