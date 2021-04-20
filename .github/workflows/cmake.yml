@@ -29,7 +29,7 @@ jobs:
             flavour: release
             os: ubuntu-20.04
 
-      fail-fast: false
+      # fail-fast: false
 
     runs-on: ${{ matrix.os }}
 
@@ -54,6 +54,14 @@ jobs:
     - name: Setup (MacOS 10.15)
       if: matrix.os == 'macos-10.15'
       run: brew update && brew install boost gsl icu4c ninja
+
+    - name: List icu4c
+      if: matrix.os == 'macos-10.15'
+      run: brew ls --verbose icu4c
+
+    - name: Stop quickly
+      if: matrix.os == 'macos-10.15'
+      run: exit 1
 
     - name: Create build directory
       run: cmake -E make_directory ${{github.workspace}}/build
