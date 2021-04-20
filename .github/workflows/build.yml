@@ -147,7 +147,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          "build/bin/cath-resolve-hits.${{ matrix.os }}"
+          build/bin/cath-resolve-hits.${{ matrix.os }}
 
       # "build/bin/cath-assign-domains.${{ matrix.os }}"
       # "build/bin/cath-cluster.${{ matrix.os }}"
