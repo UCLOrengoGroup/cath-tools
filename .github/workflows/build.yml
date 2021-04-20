@@ -1,4 +1,4 @@
-name: CMake
+name: build
 
 # TODO:
 #
@@ -98,10 +98,10 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          "$GITHUB_WORKSPACE/build/bin/cath-assign-domains.${{ matrix.os }}"
-          "$GITHUB_WORKSPACE/build/bin/cath-cluster.${{ matrix.os }}"
-          "$GITHUB_WORKSPACE/build/bin/cath-map-clusters.${{ matrix.os }}"
-          "$GITHUB_WORKSPACE/build/bin/cath-refine-align.${{ matrix.os }}"
-          "$GITHUB_WORKSPACE/build/bin/cath-resolve-hits.${{ matrix.os }}"
-          "$GITHUB_WORKSPACE/build/bin/cath-ssap.${{ matrix.os }}"
-          "$GITHUB_WORKSPACE/build/bin/cath-superpose.${{ matrix.os }}"
+          "build/bin/cath-assign-domains.${{ matrix.os }}"
+          "build/bin/cath-cluster.${{ matrix.os }}"
+          "build/bin/cath-map-clusters.${{ matrix.os }}"
+          "build/bin/cath-refine-align.${{ matrix.os }}"
+          "build/bin/cath-resolve-hits.${{ matrix.os }}"
+          "build/bin/cath-ssap.${{ matrix.os }}"
+          "build/bin/cath-superpose.${{ matrix.os }}"
