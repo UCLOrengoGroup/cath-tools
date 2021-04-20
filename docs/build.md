@@ -2,11 +2,11 @@
 
 ## Why?
 
-Do you really need to build cath-tools, or can you just use the 64-bit Linux executables from [**DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "The latest CATH Tools release")? Remember to chmod them to be executable (eg `chmod +x cath-ssap`). If you need cath-tools on a different platform (Windows? Mac?), please consider creating a [new GitHub issue](https://github.com/UCLOrengoGroup/cath-tools/issues/new "Open a new GitHub issue for cath-tools"); maybe we can work together to set up an automated build.
+Do you really need to build cath-tools, or can you just use the 64-bit Linux executables from [**DOWNLOADS**](https://github.com/UCLOrengoGroup/cath-tools/releases/latest "The latest CATH Tools release")? Remember to chmod them to be executable (eg `chmod +x cath-ssap`). If you need cath-tools on a different platform (Windows?), please consider creating a [new GitHub issue](https://github.com/UCLOrengoGroup/cath-tools/issues/new "Open a new GitHub issue for cath-tools"); maybe we can work together to set up an automated build.
 
 ## Requirements
 
-You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: `sudo apt-get install g++`). The code is currently being developed against GCC v4.9.2 and Clang v3.6.0.
+You'll need a fairly good (ie recent) C++ compiler (eg on Ubuntu: `sudo apt-get install g++`). The code is currently being developed to be buildable with GCC v4.9.2.
 
 ~~~no-highlight
 git clone https://github.com/UCLOrengoGroup/cath-tools.git
@@ -24,7 +24,7 @@ For Ubuntu:
 sudo apt-get install libboost-all-dev
 ~~~
 
-### CMake ( &ge; v3.2 )
+### CMake ( &ge; v3.12 )
 
 This is used to build the software.
 
@@ -84,9 +84,7 @@ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCM
 
 ## Running the Build Tests
 
-Once you've built the binaries, run the build tests to sanity check the build. From the root directory of the project, run `build-test` and confirm that all tests pass.
-
-(if you mistakenly run build-test from elsewhere, you'll get lots of `check_required_files_exist` errors).
+Once you've built the binaries, run the build tests to sanity check the build. Run `bin/build-test` in the build directory and confirm that all tests pass. (Alternatively, `cd` into the build directory and run `ctest`, with `-j [N]` for parallelism.)
 
 If your machine has Perl, you can also try running the Perl tests (which includes a run of `build-test` as one of the tests):
 
@@ -145,47 +143,3 @@ cd       ${BUILD_ROOT_DIR}/cath-tools/
 make -C gcc_relwithdebinfo -k -j2
 ls -l ${BUILD_ROOT_DIR}/cath-tools/gcc_relwithdebinfo/
 ~~~
-
-## Building for CentOS 5
-
-It's non-trivial got get a modern enough C++ compiler on CentOS 5. The standard downloads of Clang 3.6.2 don't work and it's likely that older versions won't compile the cath-tools code. (Though, for reference, CMake 3.6.3 seems to work cleanly on CentOS 5 from the download.)
-
-Instead, it's possible to build a version on CentOS 6 that's completely statically linked and this should run on CentOS5. You can find such executables in the [v0.16.2](https://github.com/UCLOrengoGroup/cath-tools/releases/tag/v0.16.2) release.
-
-So far, this has only been done in a fairly hacky way, by installing the relevant static libraries (`yum install glibc-static`), modifying the `CMakeLists.txt` file:
-
-~~~diff
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3badace..06520a3 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -53,14 +53,18 @@ foreach (loop_var RANGE ${GSL_LIBRARIES})
-  list(APPEND GSL_DYN_LINK_FLAGS "-l${loop_var}")
-endforeach(loop_var)
-
--if( BUILD_SHARED_LIBS )
--       add_definitions( -DBOOST_ALL_DYN_LINK )
--       add_definitions( -DBOOST_LOG_DYN_LINK )
--       SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
--else()
-+SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-+SET(BUILD_SHARED_LIBRARIES OFF)
-+SET(CMAKE_EXE_LINKER_FLAGS "-static")
-+
-+#if( BUILD_SHARED_LIBS )
-+#      add_definitions( -DBOOST_ALL_DYN_LINK )
-+#      add_definitions( -DBOOST_LOG_DYN_LINK )
-+#      SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
-+#else()
-       SET( Boost_USE_STATIC_LIBS ON )
-       SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
--endif()
-+#endif()
-
-if ( ${LSB_RELEASE_CODE} STREQUAL "yakkety" )
-       SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
-~~~
-
-&hellip;and manually repeating the link commands with all `-Wl,-Bdynamic` flags removed.
-
-This process can doubtless be improved with a bit of work.
