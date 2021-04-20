@@ -53,22 +53,12 @@ jobs:
 
     - name: Setup (MacOS 10.15)
       if: matrix.os == 'macos-10.15'
+      # Set LIBRARY_PATH as work around for this issue:
+      # https://github.com/Homebrew/homebrew-core/issues/67427#issuecomment-756511468
       run: |
         brew update
         brew install boost gsl icu4c ninja
-        echo "LIBRARY_PATH=/usr/local/opt/icu4c/lib" >> $GITHUB_ENV
-
-    - name: List usrlocalopticu4clib
-      if: matrix.os == 'macos-10.15'
-      run: ls -l /usr/local/opt/icu4c/lib
-
-    - name: Check LIBRARY_PATH
-      if: matrix.os == 'macos-10.15'
-      run: echo "${{ env.LIBRARY_PATH }}"
-
-    - name: Stop quickly
-      if: matrix.os == 'macos-10.15'
-      run: exit 1
+        echo "LIBRARY_PATH=${LIBRARY_PATH}:/usr/local/opt/icu4c/lib" >> $GITHUB_ENV
 
     - name: Create build directory
       run: cmake -E make_directory ${{github.workspace}}/build
