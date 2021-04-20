@@ -13,6 +13,7 @@ add_compile_options(
 	-Wcast-qual
 	-Wconversion
 	-Wformat=2
+	-Wno-range-loop-analysis
 	-Wnon-virtual-dtor
 	-Wold-style-cast
 	-Wshadow
