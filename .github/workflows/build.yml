@@ -70,7 +70,7 @@ jobs:
       run: cmake -E make_directory ${{github.workspace}}/build
 
     - name: Configure CMake
-      run: cmake -GNinja "-B$GITHUB_WORKSPACE/build" "-S$GITHUB_WORKSPACE" "-DCMAKE_TOOLCHAIN_FILE=$GITHUB_WORKSPACE/.github/cmake-toolchain-files/${{ matrix.os }}.${{ matrix.compiler }}.${{ matrix.flavour }}.cmake"
+      run: cmake -GNinja -B "$GITHUB_WORKSPACE/build" -S "$GITHUB_WORKSPACE" -D "CMAKE_TOOLCHAIN_FILE:FILEPATH=$GITHUB_WORKSPACE/.github/cmake-toolchain-files/${{ matrix.os }}.${{ matrix.compiler }}.${{ matrix.flavour }}.cmake"
       shell: bash
 
     ##################### BUILD #####################
