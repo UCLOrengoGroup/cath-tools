@@ -8,9 +8,8 @@ name: build
 #  * /usr/local/opt/icu4c/lib/libicuuc.68.dylib
 # (and consider temporarily restricting the build to cath-resolve-hits for that)
 #
+# * UBSan/ASan (currently blocked by Conan failing with Boost Locale under ubasan; consider dropping Boost Log (which pulls in Locale))
 # * Windows?
-# * libc++ (if/when dependencies are all Conan-ified)
-# * UBSan/ASan (if/when dependencies are all Conan-ified; `-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer`)
 
 on: [push, pull_request]
 
@@ -30,6 +29,11 @@ jobs:
           - compiler: gcc
             flavour: release
             os: ubuntu-20.04
+
+        # include:
+        #   - compiler: clang
+        #     flavour: ubasan
+        #     os: ubuntu-20.04
 
       fail-fast: false
 

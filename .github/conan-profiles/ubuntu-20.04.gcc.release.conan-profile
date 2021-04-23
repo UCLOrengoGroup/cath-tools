@@ -2,6 +2,7 @@
 CC=/usr/bin/gcc-10
 CXX=/usr/bin/g++-10
 
+
 [settings]
 arch=x86_64
 build_type=Release
