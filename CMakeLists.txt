@@ -24,6 +24,12 @@ configure_file( "source/ct_external_info/cath/external_info/cath_tools_git_versi
 configure_file( "source/ct_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp.in"
                 "source/ct_external_info/cath/external_info/cath_tools_cmake_dirs_impl.hpp" )
 
+set( CONAN_SYSTEM_INCLUDES ON )
+
+include( ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake )
+
+conan_basic_setup( TARGETS KEEP_RPATHS )
+
 # It'd be good to be able to tell FindGSL.cmake that we want static libraries
 # (and then just use GSL::gsl target it gives us) but FindGSL.cmake doesn't
 # appear to support that at present.
@@ -36,11 +42,11 @@ set                   ( GSL_STATIC_LIB      ${FIRST_GSL_LIBDIR}/libgsl.a      )
 set                   ( GSLCBLAS_STATIC_LIB ${FIRST_GSL_LIBDIR}/libgslcblas.a )
 
 if( BUILD_SHARED_LIBS AND NOT Boost_USE_STATIC_LIBS )
-	add_definitions( -DBOOST_ALL_DYN_LINK )
-	add_definitions( -DBOOST_LOG_DYN_LINK )
+	# add_definitions( -DBOOST_ALL_DYN_LINK )
+	# add_definitions( -DBOOST_LOG_DYN_LINK )
 	SET( GSL_LIB_SUFFIX ${GSL_LIBRARIES} )
 else()
-	SET( Boost_USE_STATIC_LIBS ON )
+	# SET( Boost_USE_STATIC_LIBS ON )
 	SET( GSL_LIB_SUFFIX "${GSL_STATIC_LIB}" "${GSLCBLAS_STATIC_LIB}" )
 endif()
 

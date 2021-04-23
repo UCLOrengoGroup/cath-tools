@@ -45,7 +45,7 @@ jobs:
         # Prevents the apt-get of the tzdata package hanging on an interactive user prompt
         DEBIAN_FRONTEND: noninteractive
       if: matrix.os == 'ubuntu-20.04'
-      run: sudo apt-get update && sudo apt-get install -y cmake git libboost-dev libboost-filesystem-dev libboost-iostreams-dev libboost-log-dev libboost-program-options-dev libboost-test-dev libboost-timer-dev libgsl-dev ninja-build
+      run: sudo apt-get update && sudo apt-get install -y cmake git libgsl-dev ninja-build python3-pip
 
     - name: Setup (Ubuntu 20.04 - Clang)
       if: matrix.os == 'ubuntu-20.04' && matrix.compiler == 'clang'
@@ -64,10 +64,17 @@ jobs:
         brew install boost gsl icu4c ninja
         echo "LIBRARY_PATH=${LIBRARY_PATH}:/usr/local/opt/icu4c/lib" >> $GITHUB_ENV
 
+    - name: Install Conan
+      run: sudo /usr/bin/pip3 install --upgrade conan
+
     ##################### PREPARE FOR BUILD #####################
 
     - name: Create build directory
       run: cmake -E make_directory ${{github.workspace}}/build
+
+    - name: Build Conan dependencies
+      run: conan install --build missing --settings compiler.libcxx=libstdc++11 --settings compiler.cppstd=14 --settings build_type=Release --install-folder "$GITHUB_WORKSPACE/build" "$GITHUB_WORKSPACE"
+      shell: bash
 
     - name: Configure CMake
       run: cmake -GNinja -B "$GITHUB_WORKSPACE/build" -S "$GITHUB_WORKSPACE" -D "CMAKE_TOOLCHAIN_FILE:FILEPATH=$GITHUB_WORKSPACE/.github/cmake-toolchain-files/${{ matrix.os }}.${{ matrix.compiler }}.${{ matrix.flavour }}.cmake"

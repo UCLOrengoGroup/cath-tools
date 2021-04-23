@@ -1,0 +1,48 @@
+[requires]
+
+# Using Boost 1.72 because:
+# 
+# * the CI is using Ubuntu 20.04, which has CMake 3.16, which only knows Boost ≤1.72 and spews warnings about higher versions
+# * though it wouldn't be hard to modify the CI to use the Kitware Ubuntu CMake repos, there's little point because the code doesn't use any features after 1.60 anyway
+boost/1.72.0@
+
+[generators]
+cmake_find_package
+cmake
+
+[options]
+# Primary dependencies
+boost:without_exception=False
+boost:without_filesystem=False
+boost:without_iostreams=False        # Used by gnuplot-iostream.h - consider dropping
+boost:without_log=False              # Without log, could drop: container, date_time, locale, thread
+boost:without_program_options=False
+boost:without_serialization=False
+boost:without_test=False
+
+# Secondary dependencies (ie required but only by primary dependencies)
+boost:without_atomic=False
+boost:without_chrono=False
+boost:without_container=False
+boost:without_date_time=False
+boost:without_locale=False
+boost:without_math=False
+boost:without_random=False
+boost:without_regex=False
+boost:without_system=False
+boost:without_thread=False
+boost:without_timer=False
+
+# boost:without_json=True   # applies for more recent Boosts
+# boost:without_nowide=True # applies for more recent Boosts
+boost:without_context=True
+boost:without_contract=True
+boost:without_coroutine=True
+boost:without_fiber=True
+boost:without_graph=True
+boost:without_graph_parallel=True
+boost:without_mpi=True
+boost:without_python=True
+boost:without_stacktrace=True
+boost:without_type_erasure=True
+boost:without_wave=True
