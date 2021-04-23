@@ -12,9 +12,9 @@ option( BUILD_EXTRA_CATH_TOOLS "BUILD_EXTRA_CATH_TOOLS" $ENV{BUILD_EXTRA_CATH_TO
 #####################################################################
 
 # Add INTERFACE target for rapidjson
-add_library                ( cath_tools_rapidjson        INTERFACE                                                                                   )
-target_include_directories ( cath_tools_rapidjson SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party_code/rapidjson/include> )
-target_compile_definitions ( cath_tools_rapidjson        INTERFACE RAPIDJSON_HAS_STDSTRING=1                                                         )
+add_library                ( cath_tools_rapidjson INTERFACE                           )
+target_link_libraries      ( cath_tools_rapidjson INTERFACE RapidJSON::RapidJSON      )
+target_compile_definitions ( cath_tools_rapidjson INTERFACE RAPIDJSON_HAS_STDSTRING=1 )
 
 # Add INTERFACE target for gnuplot-iostream
 add_library               ( cath_tools_gnuplot_iostream        INTERFACE                                                                         )

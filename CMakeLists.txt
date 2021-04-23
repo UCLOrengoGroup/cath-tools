@@ -54,6 +54,8 @@ endif()
 # or add `SET( Boost_DEBUG "ON" )` to this file to get helpful debug information when running CMake
 find_package( Boost 1.60 REQUIRED filesystem iostreams log program_options serialization timer unit_test_framework )
 
+find_package( RapidJSON 1.1.0 REQUIRED )
+
 # Compiler options
 SET( CMAKE_CXX_STANDARD   14    )
 SET( CMAKE_CXX_EXTENSIONS "OFF" )

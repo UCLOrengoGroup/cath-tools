@@ -5,6 +5,7 @@
 # * the CI is using Ubuntu 20.04, which has CMake 3.16, which only knows Boost ≤1.72 and spews warnings about higher versions
 # * though it wouldn't be hard to modify the CI to use the Kitware Ubuntu CMake repos, there's little point because the code doesn't use any features after 1.60 anyway
 boost/1.72.0@
+rapidjson/1.1.0
 
 [generators]
 cmake_find_package
