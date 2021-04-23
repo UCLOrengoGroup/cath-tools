@@ -63,6 +63,7 @@ SET( CMAKE_CXX_EXTENSIONS "OFF" )
 enable_testing()
 
 # Add INTERFACE target for gsl
+message( STATUS "GSL_INCLUDE_DIR is : \"${GSL_INCLUDE_DIR}\"")
 add_library                ( cath_tools_gsl        INTERFACE                                                 )
 target_include_directories ( cath_tools_gsl SYSTEM INTERFACE ${GSL_INCLUDE_DIR}                              )
 target_link_libraries      ( cath_tools_gsl        INTERFACE ${GSL_LIB_SUFFIX}                               )
