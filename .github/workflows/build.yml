@@ -101,6 +101,12 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/build
 
+    - name: Check Mac dylib dependencies
+      if: matrix.os == 'macos-10.15'
+      run:
+        otool -L ${GITHUB_WORKSPACE}/build/bin/*
+      shell: bash
+
     ##################### PUBLISH #####################
 
     - name: Move executables to add OS suffix to their names
