@@ -14,14 +14,15 @@ git clone https://github.com/UCLOrengoGroup/cath-tools.git
 
 There are three further dependencies/prerequisites...
 
-### Boost ( v1.60.0 / v1.61.0 )
+### Conan
 
-This is used heavily throughout the code. Both headers and compiled library files are needed.
+Conan is used to install some of the C++ dependencies (currently boost and rapidjson)
 
 For Ubuntu:
 
 ~~~sh
-sudo apt-get install libboost-all-dev
+sudo apt-get install python3-pip
+sudo pip3 install --upgrade conan
 ~~~
 
 ### CMake ( &ge; v3.12 )
@@ -60,12 +61,22 @@ The [GNU Scientific Library](https://www.gnu.org/software/gsl/) is used for its 
 apt-get install gsl-bin libgsl2:amd64 libgsl-dbg:amd64 libgsl-dev
 ~~~
 
+## Building the dependencies
+
+`cd` into the `cath-tools` directory and then:
+
+~~~sh
+mkdir build
+conan install --build missing --install-folder build .
+cmake -GNinja -B build -S . -D "CMAKE_MODULE_PATH:PATH=${PWD}/build"
+~~~
+
 ## Building the Code
 
 Once the dependencies are in place, the code can be built with:
 
 ~~~sh
-cmake -DCMAKE_BUILD_TYPE=RELEASE .
+cmake -DCMAKE_BUILD_TYPE=Release -B build -S . -D"CMAKE_MODULE_PATH:PATH=${PWD}/build"
 make
 ~~~
 
@@ -73,14 +84,6 @@ NOTE:
 
 * If you have multiple cores, you can make compiling faster by specifying that it may compile up to N sources simultaneously by appending `-j [N]` to the end of the make command.
 * If your system does not have the Gnu Scientific Library available as a static library on Linux, you should pass `-D USE_STATIC_GSL:BOOL=FALSE` to cmake.
-
-With default Ubuntu config, this will build with GCC against GCC's standard library (libstdc++). If you instead want to build with Clang against Clang's standard C++ library (libc++), you'll need a version of Boost built with Clang and libc++. If you have one, then you can build with Clang by adding `-DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++` to the CMake command and build against libc++ by adding `-DBOOST_ROOT=ROOT_DIR_OF_YOUR_CLANG_BUILD_OF_BOOST` and `-DCMAKE_CXX_FLAGS="-stdlib=libc++"`.
-
-To build against Clang's C++ library (libc++) rather than GCC's (libstdc++), you'll need a version of Boost built with Clang and libc++. If you have one, you can use a cmake command like:
-
-~~~sh
-cmake -DCMAKE_BUILD_TYPE=RELEASE -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-~~~
 
 ## Running the Build Tests
 
