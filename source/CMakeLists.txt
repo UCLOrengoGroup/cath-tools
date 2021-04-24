@@ -76,28 +76,26 @@ target_include_directories( ct_external_info PUBLIC $<BUILD_INTERFACE:${PROJECT_
 
 # 3. Specify the modules' dependencies
 
-target_link_libraries( testsrcs_test          PUBLIC  ct_chopping                                           )
-target_link_libraries( testsrcs_test          PUBLIC  ct_uni                                                ) # ct_uni for file/pdb/pdb.hpp
-target_link_libraries( testsrcs_options       PUBLIC  ct_uni                                                ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( testsrcs_test          PUBLIC ct_chopping                                           )
+target_link_libraries( testsrcs_test          PUBLIC ct_uni                                                ) # ct_uni for file/pdb/pdb.hpp
+target_link_libraries( testsrcs_options       PUBLIC ct_uni                                                ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
 
-target_link_libraries( ct_common              PRIVATE cath_tools_gsl                                        )
-
-target_link_libraries( ct_biocore             PUBLIC  ct_common                                             )
-target_link_libraries( ct_cath_assign_domains PUBLIC  ct_biocore ct_options ct_uni                          ) # ct_uni for acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp
-target_link_libraries( ct_cath_cluster        PUBLIC  ct_clustagglom ct_options                             )
-target_link_libraries( ct_cath_refine_align   PUBLIC  ct_cath_superpose ct_common ct_uni                    ) # ct_uni for acquirer/alignment_acquirer/alignment_acquirer.hpp and alignment/options_block/alignment_input_options_block.hpp
-target_link_libraries( ct_cath_score_align    PUBLIC  ct_biocore ct_cath_superpose ct_options ct_uni        ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
-target_link_libraries( ct_cath_superpose      PUBLIC  ct_common ct_uni                                      ) # ct_uni for acquirer/alignment_acquirer/align_refining.hpp acquirer/alignment_acquirer/alignment_acquirer.hpp
-target_link_libraries( ct_chopping            PUBLIC  ct_biocore Boost::program_options                     )
-target_link_libraries( ct_clustagglom         PUBLIC  ct_common Boost::program_options                      )
-target_link_libraries( ct_cluster             PUBLIC  ct_common ct_options ct_seq Boost::program_options    )
-target_link_libraries( ct_common              PUBLIC  Boost::log cath_tools_rapidjson                       )
-target_link_libraries( ct_display_colour      PUBLIC  ct_common                                             )
-target_link_libraries( ct_options             PUBLIC  ct_chopping ct_external_info                          )
-target_link_libraries( ct_resolve_hits        PUBLIC  ct_display_colour ct_options ct_seq                   )
-target_link_libraries( ct_seq                 PUBLIC  ct_common                                             )
-target_link_libraries( ct_test                PUBLIC  ct_common ct_external_info Boost::unit_test_framework )
-target_link_libraries( ct_uni                 PUBLIC  ct_display_colour ct_external_info ct_options cath_tools_gnuplot_iostream Boost::iostreams Boost::serialization )
+target_link_libraries( ct_biocore             PUBLIC ct_common                                             )
+target_link_libraries( ct_cath_assign_domains PUBLIC ct_biocore ct_options ct_uni                          ) # ct_uni for acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp
+target_link_libraries( ct_cath_cluster        PUBLIC ct_clustagglom ct_options                             )
+target_link_libraries( ct_cath_refine_align   PUBLIC ct_cath_superpose ct_common ct_uni                    ) # ct_uni for acquirer/alignment_acquirer/alignment_acquirer.hpp and alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_cath_score_align    PUBLIC ct_biocore ct_cath_superpose ct_options ct_uni        ) # ct_uni for alignment/options_block/alignment_input_options_block.hpp
+target_link_libraries( ct_cath_superpose      PUBLIC ct_common ct_uni                                      ) # ct_uni for acquirer/alignment_acquirer/align_refining.hpp acquirer/alignment_acquirer/alignment_acquirer.hpp
+target_link_libraries( ct_chopping            PUBLIC ct_biocore Boost::program_options                     )
+target_link_libraries( ct_clustagglom         PUBLIC ct_common Boost::program_options                      )
+target_link_libraries( ct_cluster             PUBLIC ct_common ct_options ct_seq Boost::program_options    )
+target_link_libraries( ct_common              PUBLIC Boost::log cath_tools_gsl cath_tools_rapidjson        )
+target_link_libraries( ct_display_colour      PUBLIC ct_common                                             )
+target_link_libraries( ct_options             PUBLIC ct_chopping ct_external_info                          )
+target_link_libraries( ct_resolve_hits        PUBLIC ct_display_colour ct_options ct_seq                   )
+target_link_libraries( ct_seq                 PUBLIC ct_common                                             )
+target_link_libraries( ct_test                PUBLIC ct_common ct_external_info Boost::unit_test_framework )
+target_link_libraries( ct_uni                 PUBLIC ct_display_colour ct_external_info ct_options cath_tools_gnuplot_iostream Boost::iostreams Boost::serialization )
 
 # Headers wanted from ct_uni by other targets:
 #   1 acquirer/alignment_acquirer/align_refining.hpp
