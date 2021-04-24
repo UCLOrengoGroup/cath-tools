@@ -2,12 +2,6 @@ name: build
 
 # TODO:
 #
-# Fix: MacOS executables are currently dynamically linked to non-universal dylibs:
-#  * /usr/local/opt/icu4c/lib/libicudata.68.dylib
-#  * /usr/local/opt/icu4c/lib/libicui18n.68.dylib
-#  * /usr/local/opt/icu4c/lib/libicuuc.68.dylib
-# (and consider temporarily restricting the build to cath-resolve-hits for that)
-#
 # * UBSan/ASan (currently blocked by Conan failing with Boost Locale under ubasan; consider dropping Boost Log (which pulls in Locale))
 # * Windows?
 
@@ -100,12 +94,6 @@ jobs:
       run: ctest --output-on-failure
       shell: bash
       working-directory: ${{github.workspace}}/build
-
-    - name: Check Mac dylib dependencies
-      if: matrix.os == 'macos-10.15'
-      run:
-        otool -L ${GITHUB_WORKSPACE}/build/bin/*
-      shell: bash
 
     ##################### PUBLISH #####################
 
