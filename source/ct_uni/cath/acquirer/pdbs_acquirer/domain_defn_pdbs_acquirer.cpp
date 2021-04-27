@@ -20,7 +20,7 @@
 
 #include "domain_defn_pdbs_acquirer.hpp"
 
-#include <boost/log/trivial.hpp>
+#include <spdlog/spdlog.h>
 
 #include "cath/chopping/domain/domain_definition.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
@@ -49,7 +49,7 @@ unique_ptr<pdbs_acquirer> domain_defn_pdbs_acquirer::do_clone() const {
 pdb_list_name_set_list_pair domain_defn_pdbs_acquirer::do_get_pdbs_and_names(istream &/*prm_istream*/ ///< TODOCUMENT
                                                                              ) const {
 	const domain_definition_list the_dom_defns = parse_domain_definition_file( domain_defn_file );
-	BOOST_LOG_TRIVIAL( warning ) << "Currently using a hard-coded domain PDB directory : /cath/data/current/pdb";
+	::spdlog::warn( "Currently using a hard-coded domain PDB directory : /cath/data/current/pdb" );
 	return read_domains_from_pdbs( the_dom_defns, build_data_dirs_spec_of_dir( "/cath/data/current/pdb" ) );
 }
 

@@ -21,7 +21,8 @@
 #include "alignment_action.hpp"
 
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/alignment_row.hpp"
@@ -156,20 +157,14 @@ alignment cath::align::glue_two_alignments(const alignment &prm_alignment_a,    
 			// Otherwise something funny is going on - a missing residue on one side of the alignment
 			else {
 				// Warn that problems have been detected
-				BOOST_LOG_TRIVIAL( warning ) << "Whilst gluing alignments, found mismatching positions ( alignment_a[ entry: "
-				                             << lexical_cast<string>( prm_entry_in_aln_a )
-				                             << ", index: "
-				                             << lexical_cast<string>( index_ctr_a        )
-				                             << " ] at position "
-				                             << lexical_cast<string>( glue_position_a    )
-				                             << " and alignment_b[ entry: "
-				                             << lexical_cast<string>( prm_entry_in_aln_b )
-				                             << ", index: "
-				                             << lexical_cast<string>( index_ctr_b        )
-				                             << " ] at position "
-				                             << lexical_cast<string>( glue_position_b    )
-				                             << " )";
-
+				::spdlog::warn( "Whilst gluing alignments, found mismatching positions ( alignment_a[ entry: {}, "
+				                "index: {} ] at position {} and alignment_b[ entry: {}, index: {} ] at position {} )",
+				                prm_entry_in_aln_a,
+				                index_ctr_a,
+				                glue_position_a,
+				                prm_entry_in_aln_b,
+				                index_ctr_b,
+				                glue_position_b );
 
 				// If glue_position_a is lower then add that side first
 				if ( glue_position_a < glue_position_b ) {

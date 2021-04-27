@@ -20,9 +20,12 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/log/trivial.hpp> // ***** TEMPORARY *****
+#include <chrono>
+
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/sort.hpp> // ***** TEMPORARY *****
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/boost_addenda/range/adaptor/limited.hpp" // ***** TEMPORARY *****
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -37,8 +40,6 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 #include "cath/test/global_test_constants.hpp"
-
-#include <chrono>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -112,8 +113,8 @@ BOOST_AUTO_TEST_CASE(basic) {
 //
 ////	the_scan_action_and_metrics
 //
-//	BOOST_LOG_TRIVIAL( warning ) << "Did stuff - took " << durn_to_seconds_string        ( do_stuff_durn )
-//	                             << " ("                << durn_to_rate_per_second_string( do_stuff_durn ) << ")";
+//	::spdlog::warn(
+//	  "Did stuff - took {} ({})", durn_to_seconds_string( do_stuff_durn ), durn_to_rate_per_second_string( do_stuff_durn ) );
 //	const auto prot_idx_range  = indices( proteins.size() );
 //	cerr << "       ";
 //	for (const size_t match_index : prot_idx_range) {

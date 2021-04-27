@@ -20,8 +20,12 @@
 
 #include "cath_superposer.hpp"
 
-#include <boost/log/trivial.hpp>
+#include <fstream>
+#include <sstream>
+
 #include <boost/test/unit_test.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/cath_superpose/options/cath_superpose_options.hpp"
 #include "cath/chopping/domain/domain.hpp"
@@ -33,9 +37,6 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 #include "cath/test/predicate/istream_and_file_equal.hpp"
-
-#include <fstream>
-#include <sstream>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -122,11 +123,9 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_c
 	if ( prm_outputs_to_temp_file ) {
 		const auto output_file = temp_output_filename;
 		if ( ! exists( output_file ) )  {
-			BOOST_LOG_TRIVIAL( error ) << "cath-superpose command did not produce output file. Got stdout is: \""
-			                           << test_stdout.str()
-			                           << "\". Got stderr is: \""
-			                           << test_stderr.str()
-			                           << "\"";
+			::spdlog::error( R"(cath-superpose command did not produce output file. Got stdout is: "{}". Got stderr is: "{}")",
+			                 test_stdout.str(),
+			                 test_stderr.str() );
 		}
 
 		// Blank out the version number in the superposition

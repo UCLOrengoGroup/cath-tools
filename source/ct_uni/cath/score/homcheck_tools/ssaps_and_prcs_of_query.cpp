@@ -20,10 +20,14 @@
 
 #include "ssaps_and_prcs_of_query.hpp"
 
+#include <string>
+#include <unordered_map>
+
 #include <boost/algorithm/cxx11/all_of.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/algorithm/for_each.hpp>
 #include <boost/range/algorithm/max_element.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/adaptor/adjacented.hpp"
@@ -38,9 +42,6 @@
 #include "cath/score/homcheck_tools/ssap_and_prc.hpp"
 #include "cath/score/homcheck_tools/superfamily_of_domain.hpp"
 #include "cath/score/score_classification/rbf_model.hpp"
-
-#include <string>
-#include <unordered_map>
 
 using namespace ::cath::common;
 using namespace ::cath::homcheck;
@@ -285,7 +286,12 @@ ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_
 	const string unmatched_prcs_str  = ( num_prcs  > num_comb           ) ? ( std::to_string( num_prcs  - num_comb ) + " unmatched PRC results from "  + std::to_string( num_prcs  ) ) : "";
 	const string conjuction_str      = ( unmatched_ssaps_str.empty() || unmatched_prcs_str.empty() ) ? "" : " and ";
 	if ( ! unmatched_ssaps_str.empty() || ! unmatched_prcs_str.empty() ) {
-		BOOST_LOG_TRIVIAL( warning ) << "After parsing " << num_comb << " ssaps_and_prcs_of_query" << query_id_str << ", was left with " << unmatched_ssaps_str << conjuction_str << unmatched_prcs_str;
+		::spdlog::warn( "After parsing {} ssaps_and_prcs_of_query{}, was left with {}{}{}",
+		                num_comb,
+		                query_id_str,
+		                unmatched_ssaps_str,
+		                conjuction_str,
+		                unmatched_prcs_str );
 	}
 	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return ssaps_and_prcs_of_query{ ssap_and_prc_entries };

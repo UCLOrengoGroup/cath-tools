@@ -21,11 +21,16 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_QUERY_SET_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_QUERY_SET_HPP
 
-//#include <boost/log/trivial.hpp> // ***** TEMPORARY *****
+#include <cassert>
+#include <chrono>
+#include <utility>
+
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/boost_addenda/range/back.hpp"
 #include "cath/common/chrono/chrono_type_aliases.hpp"
@@ -40,10 +45,6 @@
 #include "cath/scan/res_pair_keyer/res_pair_keyer.hpp"
 #include "cath/scan/scan_index.hpp"
 #include "cath/scan/scan_policy.hpp"
-
-#include <cassert>
-#include <chrono>
-#include <utility>
 
 namespace cath { class protein; }
 namespace cath { class protein_list; }
@@ -123,7 +124,7 @@ namespace cath {
 		template <typename... KPs>
 		void scan_query_set<KPs...>::add_structure(const protein &prm_protein ///< TODOCUMENT
 		                                           ) {
-			// BOOST_LOG_TRIVIAL( warning ) << "About to add structure to structures_data...";
+			// ::spdlog::warn( "About to add structure to structures_data..." );
 
 			const auto add_structure_data_starttime = std::chrono::high_resolution_clock::now();
 			add_structure_data(
@@ -135,8 +136,8 @@ namespace cath {
 			structure_build_durn_and_size.first  += std::chrono::high_resolution_clock::now() - add_structure_data_starttime;
 			structure_build_durn_and_size.second += common::back( structures_data ).get_info_size();
 
-			// BOOST_LOG_TRIVIAL( warning ) << "Added structure to structures_data";
-			// BOOST_LOG_TRIVIAL( warning ) << "About to add structure to store...";
+			// ::spdlog::warn( "Added structure to structures_data" );
+			// ::spdlog::warn( "About to add structure to store..." );
 
 			const auto add_structure_to_store_starttime = std::chrono::high_resolution_clock::now();
 			detail::add_structure_to_store(
@@ -148,7 +149,7 @@ namespace cath {
 			);
 
 			index_build_durn += std::chrono::high_resolution_clock::now() - add_structure_to_store_starttime;
-			// BOOST_LOG_TRIVIAL( warning ) << "Added structure to store";
+			// ::spdlog::warn( "Added structure to store" );
 		}
 
 		/// \brief TODOCUMENT
@@ -190,7 +191,7 @@ namespace cath {
 			for (const auto &x : the_store) {
 				const auto &key           = x.first;
 				const auto &res_pair_list = x.second;
-//				BOOST_LOG_TRIVIAL( warning ) << "Searching query key " << detail::output_key( key ) << " list of size " << res_pair_list.size();
+//				::spdlog::warn( "Searching query key {} list of size {}", detail::output_key( key ), res_pair_list.size() ) );
 				assert( ! res_pair_list.empty() );
 				prm_scan_index.act_on_matches( key, structures_data, res_pair_list, prm_fn );
 			}

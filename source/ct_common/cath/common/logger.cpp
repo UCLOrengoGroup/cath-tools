@@ -20,10 +20,10 @@
 
 #include "logger.hpp"
 
-#include <boost/log/trivial.hpp>
-
 #include <cstdlib>
 #include <iostream>
+
+#include <spdlog/spdlog.h>
 
 using namespace ::cath;
 using namespace ::std;
@@ -37,7 +37,7 @@ void logger::log_and_exit(const return_code     &prm_return_code,    ///< TODOCU
 		prm_message_ostream->get() << exit_message;
 	}
 	else {
-		BOOST_LOG_TRIVIAL( error ) << exit_message;
+		::spdlog::error( exit_message );
 	}
 	exit( static_cast<int>( prm_return_code ) );
 }

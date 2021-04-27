@@ -23,7 +23,6 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/sliced.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm.hpp>
@@ -34,6 +33,8 @@
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/range/algorithm_ext/is_sorted.hpp>
 #include <boost/range/irange.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/algorithm/random_split.hpp"
@@ -428,10 +429,10 @@ void cath::score::add_score_classn_value_list_and_add_missing(score_classn_value
 
 		// Emit a warning if warnings were requested
 		if ( prm_warn_on_missing ) {
-			BOOST_LOG_TRIVIAL( warning ) << "Having to add "
-										 << missing_instance_labels.size()
-										 << " missing instances to score_classn_value_list before adding to score_classn_value_results_set; examples include: "
-										 << join( missing_instance_labels | limited( 6_z ), ", " );
+			::spdlog::warn( "Having to add {} missing instances to score_classn_value_list before adding to "
+			                "score_classn_value_results_set; examples include: {}",
+			                missing_instance_labels.size(),
+			                join( missing_instance_labels | limited( 6_z ), ", " ) );
 		}
 
 		// For each entry in the results_set that's in the missing list, add an equivalent to the value_list

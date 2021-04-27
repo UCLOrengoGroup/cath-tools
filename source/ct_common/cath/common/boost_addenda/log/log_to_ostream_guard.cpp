@@ -18,48 +18,48 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "log_to_ostream_guard.hpp"
+#include <iostream>
 
-#include <boost/core/null_deleter.hpp>
-#include <boost/shared_ptr.hpp>
+#include <spdlog/sinks/ostream_sink.h>
+
+#include "cath/common/boost_addenda/log/log_to_ostream_guard.hpp"
 
 using namespace ::cath;
-using namespace ::std;
 
-using ::boost::null_deleter;
+using ::std::make_shared;
+using ::std::ostream;
+using ::std::shared_ptr;
+
+namespace sinks = ::spdlog::sinks;
 
 /// \brief Ctor for log_to_ostream_guard
-log_to_ostream_guard::log_to_ostream_guard(ostream &prm_ostream ///< TODOCUMENT
-                                           ) {
-	if ( &prm_ostream != &cerr ) {
-		// Construct a sink
-		boost_log_sink_bsptr = boost::make_shared<sink_t>();
+///
+/// \param prm_ostream The ostream to which logging should temporarily be redirected for the log_to_ostream_guard's lifetime
+log_to_ostream_guard::log_to_ostream_guard( ostream &prm_ostream ) : logger_shptr{ ::spdlog::default_logger() } {
+	// The previous logger is being stored in logger_shptr
+	// So now set a new logger to log to prm_ostream
+	::spdlog::set_default_logger( make_shared<::spdlog::logger>(
+	  "", shared_ptr<::sinks::sink>( make_shared<::sinks::ostream_sink_mt>( prm_ostream ) ) ) );
 
-		// Get a (non-deleting) shared_ptr to the ostream and add it to the sink
-		boost::shared_ptr<ostream> stream_bsptr( &prm_ostream, null_deleter() );
-		boost_log_sink_bsptr->locked_backend()->add_stream( stream_bsptr );
-
-		// Register the sink in the logging core
-		boost::log::core::get()->add_sink( boost_log_sink_bsptr );
-	}
+	// Change the format to just contain the message
+	::spdlog::default_logger()->set_pattern( "%v" );
 }
 
 /// \brief Virtual empty dtor for log_to_ostream_guard
 log_to_ostream_guard::~log_to_ostream_guard() noexcept {
-	// If this log_to_ostream_guard has added a sink to the Boost Log core
-	// then try to remove it now
+	// If this log_to_ostream_guard has changed the default logger, reset it
 	try {
-		remove_log_sink();
+		reset_default_logger();
 	}
 	// ...but don't let any exceptions escape the destructor
-	catch (...) {
+	catch ( ... ) {
 	}
 }
 
-/// \brief TODOCUMENT
-void log_to_ostream_guard::remove_log_sink() {
-	if ( boost_log_sink_bsptr ) {
-		boost::log::core::get()->remove_sink( boost_log_sink_bsptr );
-		boost_log_sink_bsptr.reset();
+/// \brief Reset the default logger
+void log_to_ostream_guard::reset_default_logger() {
+	if ( logger_shptr ) {
+		::spdlog::set_default_logger( logger_shptr );
+		logger_shptr.reset();
 	}
 }

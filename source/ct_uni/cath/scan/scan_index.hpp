@@ -21,9 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_INDEX_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_INDEX_HPP
 
+#include <chrono> /// ***** TEMPORARY ****
+#include <utility>
+
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/boost_addenda/range/back.hpp"
 #include "cath/common/chrono/chrono_type_aliases.hpp"
@@ -42,9 +47,6 @@
 
 //#include "cath/structure/protein/sec_struc.hpp"
 //#include "cath/structure/protein/sec_struc_planar_angles.hpp"
-
-#include <chrono> /// ***** TEMPORARY ****
-#include <utility>
 
 namespace cath { class protein; }
 
@@ -123,7 +125,7 @@ namespace cath {
 		template <typename... KPs>
 		void scan_index<KPs...>::add_structure(const protein &prm_protein ///< TODOCUMENT
 		                                       ) {
-			// BOOST_LOG_TRIVIAL( warning ) << "About to add_structure_data()";
+			// ::spdlog::warn( "About to add_structure_data()" );
 
 			const auto add_structure_data_starttime = std::chrono::high_resolution_clock::now();
 			add_structure_data(
@@ -134,8 +136,8 @@ namespace cath {
 			structure_build_durn_and_size.first  += std::chrono::high_resolution_clock::now() - add_structure_data_starttime;
 			structure_build_durn_and_size.second += common::back( structures_data ).get_info_size();
 
-			// BOOST_LOG_TRIVIAL( warning ) << "Finished add_structure_data() - took " << durn_to_seconds_string( add_structure_data_durn );
-			// BOOST_LOG_TRIVIAL( warning ) << "About to dense_add_structure_to_store()";
+			// ::spdlog::warn( "Finished add_structure_data() - took {}", durn_to_seconds_string( add_structure_data_durn ) );
+			// ::spdlog::warn( "About to dense_add_structure_to_store()" );
 			const auto add_structure_to_store_starttime = std::chrono::high_resolution_clock::now();
 			detail::dense_add_structure_to_store(
 				the_store,
@@ -145,7 +147,7 @@ namespace cath {
 				detail::scan_role::INDEX
 			);
 			index_build_durn += std::chrono::high_resolution_clock::now() - add_structure_to_store_starttime;
-			// BOOST_LOG_TRIVIAL( warning ) << "Finished dense_add_structure_to_store() - took " << durn_to_seconds_string( dense_add_structure_to_store_durn );
+			// ::spdlog::warn( "Finished dense_add_structure_to_store() - took {}", durn_to_seconds_string( dense_add_structure_to_store_durn ) );
 		}
 
 		/// \brief TODOCUMENT

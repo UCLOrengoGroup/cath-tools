@@ -20,7 +20,11 @@
 
 #include "ssap_scores_file_alignment_acquirer.hpp"
 
+#include <fstream>
+
 #include <boost/range/adaptor/transformed.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/alignment_action.hpp"
@@ -43,8 +47,6 @@
 #include "cath/structure/protein/residue.hpp"
 #include "cath/structure/protein/sec_struc.hpp"               /// *** TEMPORARY? ***
 #include "cath/structure/protein/sec_struc_planar_angles.hpp" /// *** TEMPORARY? ***
-
-#include <fstream>
 
 using namespace ::cath;
 using namespace ::cath::align;
@@ -127,7 +129,9 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 		return make_pair( new_alignment, spanning_tree );
 	}
 
-//	BOOST_LOG_TRIVIAL( warning )<< "About to attempt to build protein list using data that's been read from ssaps_filename (with " << num_pdbs << " pdbs and " << names.size() << " names)";
+	// ::spdlog::warn( "About to attempt to build protein list using data that's been read from ssaps_filename (with {} pdbs and {} names)",
+	//                 num_pdbs,
+	//                 names.size() );
 
 	const protein_list proteins_of_pdbs     = build_protein_list_of_pdb_list_and_names(
 		prm_strucs_context.get_pdbs(),

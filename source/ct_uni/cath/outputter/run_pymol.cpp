@@ -21,7 +21,8 @@
 #include "run_pymol.hpp"
 
 #include <boost/filesystem/path.hpp>
-#include <boost/log/trivial.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/command_executer.hpp"
 
@@ -36,6 +37,6 @@ using ::boost::filesystem::path;
 void cath::view::run_pymol( const path &prm_script_file, const path &prm_pymol_program ) {
 	const bool pymol_success = command_executer::execute( prm_pymol_program, { prm_script_file.string() } );
 	if ( !pymol_success ) {
-		BOOST_LOG_TRIVIAL( warning ) << "PyMOL executable " + prm_pymol_program.string() + " did not run/shutdown normally.";
+		::spdlog::warn( "PyMOL executable {} did not run/shutdown normally.", prm_pymol_program.string() );
 	}
 }

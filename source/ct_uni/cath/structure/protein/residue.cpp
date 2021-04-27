@@ -20,22 +20,24 @@
 
 #include "residue.hpp"
 
-#include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/math/special_functions/fpclassify.hpp>
-#include <boost/numeric/conversion/cast.hpp>
-#include <boost/throw_exception.hpp>
-
-#include "cath/common/difference.hpp"
-#include "cath/common/exception/invalid_argument_exception.hpp"
-#include "cath/structure/protein/sec_struc_type.hpp"
-
 #include <iomanip>
 #include <map>
 #include <sstream>
 #include <string>
 #include <tuple>
 #include <utility>
+
+#include <boost/lexical_cast.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/numeric/conversion/cast.hpp>
+#include <boost/throw_exception.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
+
+#include "cath/common/difference.hpp"
+#include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/structure/protein/sec_struc_type.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -521,23 +523,19 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 		const bool pdb_is_sec    = ( pdb_amino_acid  == amino_acid{ 'U' } );
 
 		if ( dssp_is_unk && ! pdb_is_proper ) {
-			BOOST_LOG_TRIVIAL( debug ) << "The amino acid \""
-				<< get_code_string( pdb_amino_acid )
-				<< "\" parsed from a PDB for residue \""
-				<< to_string( pdb_residue_id )
-				<< "\" does not match amino acid \""
-				<< get_code_string( dssp_amino_acid )
-				<< "\" parsed from a DSSP but this is fine because it's a HETATM amino acid";
+			::spdlog::debug( R"(The amino acid "{}" parsed from a PDB for residue "{}" does not match amino)"
+			                 R"( acid "{}" parsed from a DSSP but this is fine because it's a HETATM amino acid)",
+			                 get_code_string( pdb_amino_acid ),
+			                 to_string( pdb_residue_id ),
+			                 get_code_string( dssp_amino_acid ) );
 		}
 		else if ( dssp_is_unk && ( pdb_is_pyl || pdb_is_sec || pdb_is_asx || pdb_is_glx ) ) {
-			BOOST_LOG_TRIVIAL( info ) << "The amino acid \""
-				<< get_code_string( pdb_amino_acid )
-				<< "\" parsed from a PDB for residue \""
-				<< to_string( pdb_residue_id )
-				<< "\" does not match amino acid \""
-				<< get_code_string( dssp_amino_acid )
-				<< "\" parsed from a DSSP - continuing because it looks "
-				<< "like nothing worse than DSSP not recognising a non-standard amino-acid code";
+			::spdlog::info( R"(The amino acid "{}" parsed from a PDB for residue "{}" does not match amino acid "{}" )"
+			                "parsed from a DSSP - continuing because it looks like nothing worse than DSSP not "
+			                "recognising a non-standard amino-acid code",
+			                get_code_string( pdb_amino_acid ),
+			                to_string( pdb_residue_id ),
+			                get_code_string( dssp_amino_acid ) );
 		}
 		else if ( ! dssp_is_unk || prm_residue_makeup == residue_makeup::ALL_PROPER_AMINO_ACIDS ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(
@@ -569,26 +567,21 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 		if ( angle_in_degrees( wrapped_difference( pdb_angle, dssp_angle ) ) > 1.0 ) {
 			if ( angle_in_degrees( dssp_angle ) == 360.0 ) {
 				if ( prm_pdb_skipped_angles == dssp_skip_angle_skipping::BREAK_ANGLES ) {
-					BOOST_LOG_TRIVIAL( info ) << "The "
-						<< angle_name
-						<< " angle calculated for residue "
-						<< pdb_residue_id
-						<< " ("
-						<< pdb_angle
-						<< ") from the PDB conflicts with the DSSP angle of 360.0"
-						<< ", which is typically used by DSSP where it detects a"
-						<< " break in the chain (perhaps because it has rejected a neighbouring residue)";
+					::spdlog::info( "The {} angle calculated for residue {} ({}) from the PDB conflicts with the DSSP "
+					                "angle of 360.0, which is typically used by DSSP where it detects a break in the "
+					                "chain (perhaps because it has rejected a neighbouring residue)",
+					                angle_name,
+					                pdb_residue_id,
+					                pdb_angle );
 				}
 			}
 			else {
-				BOOST_LOG_TRIVIAL( warning ) << "Whilst combining PDB and DSSP files, at residue "
-					<< pdb_residue_id
-					<< " detected conflicting "
-					<< angle_name
-					<< " angles: "
-					<< pdb_angle
-					<< " and "
-					<< dssp_angle;
+				::spdlog::warn(
+				  "Whilst combining PDB and DSSP files, at residue {} detected conflicting {} angles: {} and {}",
+				  pdb_residue_id,
+				  angle_name,
+				  pdb_angle,
+				  dssp_angle );
 			}
 		}
 	}
@@ -607,14 +600,12 @@ residue cath::combine_residues_from_dssp_and_pdb(const residue                  
 		const double &pdb_value  = get<1>( x_y_z_entry );
 		const double &dssp_value = get<2>( x_y_z_entry );
 		if ( difference( pdb_value, dssp_value ) > 0.05001 ) {
-			BOOST_LOG_TRIVIAL( warning ) << "Whilst combining PDB and DSSP files, at residue "
-				<< pdb_residue_id
-				<< " detected conflicting "
-				<< dim
-				<< " coordinate: "
-				<< pdb_value
-				<< " and "
-				<< dssp_value;
+			::spdlog::warn(
+			  "Whilst combining PDB and DSSP files, at residue {} detected conflicting {} coordinate: {} and {}",
+			  pdb_residue_id,
+			  dim,
+			  pdb_value,
+			  dssp_value );
 		}
 	}
 

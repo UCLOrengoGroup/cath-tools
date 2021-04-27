@@ -20,9 +20,12 @@
 
 #include "alignment_refiner.hpp"
 
+#include <fstream>
+
 #include <boost/filesystem/path.hpp> // ***** TEMPORARY *****
-#include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp"
@@ -46,8 +49,6 @@
 #include "cath/structure/view_cache/view_cache.hpp"
 #include "cath/structure/view_cache/view_cache_list.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::align::detail;
@@ -62,7 +63,7 @@ bool_aln_pair alignment_refiner::iterate_step(const alignment       &prm_alignme
                                               const view_cache_list &prm_view_cache_list, ///< TODOCUMENT
                                               const gap_penalty     &prm_gap_penalty      ///< TODOCUMENT
                                               ) {
-	BOOST_LOG_TRIVIAL( info ) << "Will search for sensible ways to split alignment with " << prm_alignment.num_entries() << " entries";
+	::spdlog::info( "Will search for sensible ways to split alignment with {} entries", prm_alignment.num_entries() );
 
 	const size_t num_entries = prm_alignment.num_entries();
 	if ( prm_proteins.size() != num_entries ) {
@@ -110,7 +111,7 @@ bool_aln_pair alignment_refiner::iterate_step_for_alignment_split(const alignmen
                                                                   ) {
 	const size_vec correct_lengths = get_protein_lengths( prm_proteins );
 
-	BOOST_LOG_TRIVIAL( info ) << "Iterating alignment with " << prm_alignment.num_entries() << " entries";
+	::spdlog::info( "Iterating alignment with {} entries", prm_alignment.num_entries() );
 	// cerr << "Iterating alignment with " << prm_alignment.num_entries() << " entries using split :";
 	// for (const size_t &split_member : prm_alignment_split) {
 	// 	cerr << " " << split_member;

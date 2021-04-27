@@ -22,9 +22,10 @@
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/join.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/biocore/residue_id.hpp"
 #include "cath/chopping/region/region.hpp"
@@ -205,6 +206,6 @@ void cath::chop::warn_if_specified_regions_remain_unseen(const regions_limiter &
                                                          ) {
 	const auto warn_str = warn_str_if_specified_regions_remain_unseen( prm_regions );
 	if ( warn_str ) {
-		BOOST_LOG_TRIVIAL( warning ) << *warn_str;
+		::spdlog::warn( *warn_str );
 	}
 }

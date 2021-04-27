@@ -20,11 +20,14 @@
 
 #include "tally_residue_ids.hpp"
 
+#include <set>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm/find.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/biocore/residue_id.hpp"
 #include "cath/common/algorithm/contains.hpp"
@@ -33,14 +36,11 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-#include <set>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
 using ::boost::algorithm::join;
-using ::boost::log::trivial::trace;
 
 /// \brief Tally up the residue records parsed from a PDB file with those parsed from a corresponding DSSP/WOLF file
 ///
@@ -60,10 +60,9 @@ size_size_pair_vec cath::file::tally_residue_ids(const residue_id_vec &prm_pdb_r
                                                  const bool           &prm_permit_head_tail_break_without_null_residue, ///< (true even for DSSP v2.0.4: file for chain A of 1bvs stops with neither residue 203 or null residue (verbose message: "ignoring incomplete residue ARG  (203)")
                                                  const size_set       &prm_skippable_pdb_indices                        ///< A list of the indices of PDB residue names that should always be considered for being skipped over to find a match to the next DSSP/WOLF residue
                                                  ) {
-	BOOST_LOG_TRIVIAL( trace ) << "Tallying PDB residue names: "
-	                           << join( prm_pdb_residue_ids          | lexical_casted<string>(), "," )
-	                           << " with DSSP/WOLF residue names: "
-	                           << join( prm_dssp_or_wolf_residue_ids | lexical_casted<string>(), "," );
+	::spdlog::trace( "Tallying PDB residue names: {} with DSSP/WOLF residue names: {}",
+	                 join( prm_pdb_residue_ids | lexical_casted<string>(), "," ),
+	                 join( prm_dssp_or_wolf_residue_ids | lexical_casted<string>(), "," ) );
 
 	// Sanity check the inputs
 	//

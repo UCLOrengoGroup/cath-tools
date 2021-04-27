@@ -21,23 +21,21 @@
 #define BOOST_TEST_MODULE Cath Tools Master Test Suite
 #define BOOST_AUTO_TEST_MAIN
 
+#include <iostream>
+
 #include <boost/exception/diagnostic_information.hpp>
-#include <boost/log/core.hpp>
-#include <boost/log/expressions.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_monitor.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/test_or_exe_run_mode.hpp"
 #include "cath/test/predicate/bootstrap_mode.hpp"
 
-#include <iostream>
 
 using namespace ::cath::common;
 using namespace ::cath::test;
 
-using ::boost::log::trivial::info;
-using ::boost::log::trivial::severity;
 using ::boost::unit_test::unit_test_monitor;
 using ::std::cerr;
 using ::std::endl;
@@ -69,10 +67,7 @@ namespace {
 
 	/// \brief TODOCUMENT
 	prepare_for_test_global_fixture::prepare_for_test_global_fixture() {
-		boost::log::core::get()->set_filter(
-			severity >= info
-//				severity >= trace
-		);
+		::spdlog::set_level( ::spdlog::level::info );
 		unit_test_monitor.register_exception_translator<boost::exception>( &boost_exception_translator );
 
 		// Try to warn if in bootstrapping mode
@@ -94,10 +89,8 @@ namespace {
 	/// \brief Print a conspicuous warning if bootstrapping is turned on
 	void prepare_for_test_global_fixture::warn_if_bootstrapping() {
 		if ( bootstrap_env_var_is_set() ) {
-			BOOST_LOG_TRIVIAL( warning )
-				<< "\033[1m Environment variable "
-				<< get_bootstrap_env_var()
-				<<" is set, so test files are being bootstrapped\033[0m";
+			::spdlog::warn( "\033[1m Environment variable {} is set, so test files are being bootstrapped\033[0m",
+			                get_bootstrap_env_var() );
 		}
 	}
 

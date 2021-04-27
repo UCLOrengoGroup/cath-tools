@@ -20,12 +20,15 @@
 
 #include "aligned_pair_score_value_list.hpp"
 
+#include <iostream> // ***** TEMPORARY *****
+
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/logic/tribool.hpp>
 #include <boost/logic/tribool_io.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/range/algorithm/adjacent_find.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
@@ -34,8 +37,6 @@
 #include "cath/common/boost_addenda/tribool/tribool.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
-
-#include <iostream> // ***** TEMPORARY *****
 
 using namespace ::cath;
 using namespace ::cath::align;
@@ -88,7 +89,7 @@ void cath::score::warn_on_duplicate_human_friendly_names(const aligned_pair_scor
 	) );
 	const auto adjacent_itr = adjacent_find( sorted_human_friendly_names );
 	if ( adjacent_itr != common::cend( sorted_human_friendly_names ) ) {
-		BOOST_LOG_TRIVIAL( warning ) << "aligned_pair_score_value_list contains duplicates (eg " << *adjacent_itr << ")";
+		::spdlog::warn( "aligned_pair_score_value_list contains duplicates (eg {})", *adjacent_itr );
 	}
 }
 

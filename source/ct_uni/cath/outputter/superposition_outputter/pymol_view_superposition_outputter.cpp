@@ -20,8 +20,6 @@
 
 #include "pymol_view_superposition_outputter.hpp"
 
-#include <boost/log/trivial.hpp>
-
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/command_executer.hpp"
 #include "cath/common/file/temp_file.hpp"

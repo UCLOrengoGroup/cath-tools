@@ -23,7 +23,6 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/optional.hpp>
 
 #include "cath/common/algorithm/transform_build.hpp"

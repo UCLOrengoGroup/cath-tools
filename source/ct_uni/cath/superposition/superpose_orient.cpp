@@ -20,7 +20,7 @@
 
 #include "superpose_orient.hpp"
 
-#include <boost/log/trivial.hpp>
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -56,14 +56,12 @@ inline coord_list cath::sup::detail::get_superposed_filtered_coords_in_aln_order
 	const auto backbone_complete_indices = get_backbone_complete_indices( prm_pdbs );
 	for (const size_t &entry : indices( prm_alignment.num_entries() ) ) {
 		if ( backbone_complete_indices[ entry ].size() != 1_z + *get_last_present_position_of_entry( prm_alignment, entry ) ) {
-			BOOST_LOG_TRIVIAL( warning )
-				<< "Whilst getting alignment-ordered coords from alignment/PDBs,"
-				<< " found that the number of backbone complete indices in structure "
-				<< entry
-				<< " is "
-				<< backbone_complete_indices[ entry ].size()
-				<< " yet the last present position in the alignment in that entry is "
-				<< *get_last_present_position_of_entry( prm_alignment, entry );
+			::spdlog::warn(
+			  "Whilst getting alignment-ordered coords from alignment/PDBs, found that the number of backbone complete "
+			  "indices in structure {} is {} yet the last present position in the alignment in that entry is {}",
+			  entry,
+			  backbone_complete_indices[ entry ].size(),
+			  *get_last_present_position_of_entry( prm_alignment, entry ) );
 		}
 	}
 

@@ -114,14 +114,20 @@
 
 #include "ssap.hpp"
 
+#include <algorithm>
+#include <cassert>
+#include <fstream>
+#include <iostream>
+#include <string>
+
 #include <boost/algorithm/string/case_conv.hpp>
-#include <boost/log/core.hpp>
-#include <boost/log/expressions.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional/optional_io.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/stable_sort.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment_coord_extractor.hpp"
 #include "cath/alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
@@ -165,12 +171,6 @@
 #include "cath/superposition/io/superposition_io.hpp"
 #include "cath/superposition/superposition.hpp"
 
-#include <algorithm>
-#include <cassert>
-#include <fstream>
-#include <iostream>
-#include <string>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::align::gap;
@@ -190,17 +190,14 @@ using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::stable_sort;
 using ::std::abs;
-using ::std::boolalpha;
 using ::std::deque;
 using ::std::fill_n;
-using ::std::fixed;
 using ::std::make_pair;
 using ::std::max;
 using ::std::min;
 using ::std::ofstream;
 using ::std::ostream;
 using ::std::pair;
-using ::std::setprecision;
 using ::std::string;
 using ::std::vector;
 
@@ -518,7 +515,7 @@ void cath::align_proteins(const protein                 &prm_protein_a,    ///< 
                           const old_ssap_options_block  &prm_ssap_options, ///< The old_ssap_options_block to specify how things should be done
                           const data_dirs_spec          &prm_data_dirs     ///< The data directories from which data should be read
                           ) {
-	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq";
+	::spdlog::debug( "Function: alnseq" );
 
 	// Set alignment options
 	global_res_score   = false;
@@ -526,8 +523,8 @@ void cath::align_proteins(const protein                 &prm_protein_a,    ///< 
 	global_gap_penalty =     5;
 	global_window      = max( prm_protein_a.get_num_sec_strucs(), prm_protein_b.get_num_sec_strucs() );
 
-	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  seqa->nsec=" << prm_protein_a.get_num_sec_strucs();
-	BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  seqb->nsec=" << prm_protein_b.get_num_sec_strucs();
+	::spdlog::debug( "Function: alnseq:  seqa->nsec={}", prm_protein_a.get_num_sec_strucs() );
+	::spdlog::debug( "Function: alnseq:  seqb->nsec={}", prm_protein_b.get_num_sec_strucs() );
 
 	ssap_scores fast_ssap_scores;
 	if ( !prm_ssap_options.get_slow_ssap_only() ) {
@@ -544,7 +541,7 @@ void cath::align_proteins(const protein                 &prm_protein_a,    ///< 
 
 			// Re-run with increased window and torsional angle cutoffs, if not a great alignment
 			if ( first_score < prm_ssap_options.get_max_score_to_fast_ssap_rerun() && ! has_clique_file( prm_ssap_options ) ) {
-				BOOST_LOG_TRIVIAL( debug ) << "Dist is: " << prm_ssap_options.get_max_score_to_fast_ssap_rerun() << " Removing cutoffs....";
+				::spdlog::debug( "Dist is: {} Removing cutoffs....", prm_ssap_options.get_max_score_to_fast_ssap_rerun() );
 
 				--global_run_counter;
 
@@ -561,9 +558,9 @@ void cath::align_proteins(const protein                 &prm_protein_a,    ///< 
 				const double second_score = fast_ssap_scores.get_ssap_score_over_larger();
 
 				// Re-run original alignment if it doesn't give a better score
-				BOOST_LOG_TRIVIAL( debug ) << "Comparing score " << setprecision(30) << second_score << " with " << first_score;
+				::spdlog::debug( "Comparing score {:.30f} with {}", second_score, first_score );
 				if (second_score <= first_score) {
-					BOOST_LOG_TRIVIAL( debug ) << "Reverting back to original Fast SSAP....";
+					::spdlog::debug( "Reverting back to original Fast SSAP...." );
 
 					--global_run_counter;
 
@@ -589,13 +586,14 @@ void cath::align_proteins(const protein                 &prm_protein_a,    ///< 
 	// Don't run slow ssap if clique information is used
 	const bool run_slow_ssap = ( ! has_clique_file( prm_ssap_options ) && ! fast_ssap_result_is_close );
 	if ( fast_ssap_result_is_close ) {
-		BOOST_LOG_TRIVIAL( debug ) << "Not running slow SSAP. Cutoff: " << prm_ssap_options.get_max_score_to_slow_ssap_rerun()
-		                          << " Score: " << fast_ssap_scores.get_ssap_score_over_smaller();
+		::spdlog::debug( "Not running slow SSAP. Cutoff: {} Score: {}",
+		                 prm_ssap_options.get_max_score_to_slow_ssap_rerun(),
+		                 fast_ssap_scores.get_ssap_score_over_smaller() );
 	}
 
 	// RUN SLOW SSAP - START
 	if ( run_slow_ssap ) {
-		BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  slow_ssap";
+		::spdlog::debug( "Function: alnseq:  slow_ssap" );
 
 		// v1.14 JEB
 		++global_run_counter;
@@ -615,7 +613,7 @@ void cath::align_proteins(const protein                 &prm_protein_a,    ///< 
 
 		// Perform two residue alignment passes
 		for (const size_t &pass_ctr : { 1_z, 2_z } ) {
-			BOOST_LOG_TRIVIAL( debug ) << "Function: alnseq:  pass=" << pass_ctr;
+			::spdlog::debug( "Function: alnseq:  pass={}", pass_ctr );
 
 			global_align_pass = ( pass_ctr > 1 );
 			if (pass_ctr == 1 || (pass_ctr == 2 && global_res_score))  {
@@ -637,8 +635,8 @@ ssap_scores cath::fast_ssap(const protein                 &prm_protein_a,    ///
                             ) {
 	ssap_scores new_ssap_scores;
 
-	BOOST_LOG_TRIVIAL( debug ) << "Fast SSAP: dtot=" << global_res_sim_cutoff << " window_add=" << global_window_add;
-	BOOST_LOG_TRIVIAL( debug ) << "Function: fast_ssap:  fast_ssap";
+	::spdlog::debug( "Fast SSAP: dtot={} window_add={}", global_res_sim_cutoff, global_window_add );
+	::spdlog::debug( "Function: fast_ssap:  fast_ssap" );
 
 	// Perform secondary structure alignment
 	++global_run_counter;
@@ -661,7 +659,7 @@ ssap_scores cath::fast_ssap(const protein                 &prm_protein_a,    ///
 
 	// Perform two residue alignment passes
 	for (const size_t &pass_ctr  : { 1_z, 2_z } ) {
-		BOOST_LOG_TRIVIAL( debug ) << "Function: fast_ssap:  pass=" << pass_ctr;
+		::spdlog::debug( "Function: fast_ssap:  pass={}", pass_ctr );
 		global_align_pass = ( pass_ctr > 1 );
 		if ( pass_ctr == 1 || ( pass_ctr == 2 && global_res_score ) ) {
 			const pair<ssap_scores, alignment> tmp_scores_and_aln = compare( prm_protein_a, prm_protein_b, pass_ctr, residue_querier(), prm_ssap_options, prm_data_dirs, sec_struc_alignment );
@@ -697,12 +695,14 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &prm_pr
 	global_upper_ss_mask_matrix.resize ( length_b + 1, length_a + global_window + 1, false );
 	global_lower_mask_matrix.resize    ( length_b + 1, length_a + global_window + 1, false );
 
-	BOOST_LOG_TRIVIAL( debug ) << "Function: compare";
-	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "]";
-	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: pass=" << prm_pass_ctr;
+	::spdlog::debug( "Function: compare" );
+	::spdlog::debug( "Function: compare: [aligning {}]", entry_plural_name );
+	::spdlog::debug( "Function: compare: pass={}", prm_pass_ctr );
 
 	if ( ! res_not_ss__hacky || prm_pass_ctr == 1 ) {
-		BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
+		::spdlog::debug(
+		  "Function: compare: [aligning {}] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix",
+		  entry_plural_name );
 		// Each of these matrices is currently indexed with offset-1
 		//
 		// \todo Shift each of these matrices to not use offset-1 and remove the extra " + 1"
@@ -730,11 +730,12 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &prm_pr
 	//
 	// \todo Shift each of these matrices to not use offset-1 and remove the extra " + 1"
 	//       from these lines
-	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix";
+	::spdlog::debug(
+	  "Function: compare: [aligning {}] Initialise global_lower_mask_matrix and global_upper_ss_mask_matrix", entry_plural_name );
 	global_upper_score_matrix.assign   ( length_b + 1, length_a + global_window + 1, 0     );
 	// global_upper_res_mask_matrix.assign( length_b + 1, length_a + global_window + 1, false );
 
-	BOOST_LOG_TRIVIAL( debug ) << "Function: compare: [aligning " << entry_plural_name << "] score_matrix twice";
+	::spdlog::debug( "Function: compare: [aligning {}] score_matrix twice", entry_plural_name );
 
 	// Call score_matrix() to populate
 	populate_upper_score_matrix(prm_protein_a, prm_protein_b, prm_entry_querier, global_align_pass);
@@ -793,11 +794,10 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &prm_pr
 			global_res_score = true;
 		}
 		else {
-			// BOOST_LOG_TRIVIAL( warning ) << "Saving zero scores after an attempted alignment."
-			//                                 " This likely indicates a problem. If you think it does"
-			//                                 " and none of the previous messages has referenced an existing GitHub Issue"
-			//                                 " (or if you think there isn't any problem and this message is spurious)"
-			//                                 " please consider raising a new issue at https://github.com/UCLOrengoGroup/cath-tools/issues";
+			// ::spdlog::warn( "Saving zero scores after an attempted alignment. This likely indicates a problem. If you "
+			//                 "think it does and none of the previous messages has referenced an existing GitHub Issue "
+			//                 "(or if you think there isn't any problem and this message is spurious) please consider "
+			//                 "raising a new issue at https://github.com/UCLOrengoGroup/cath-tools/issues" );
 
 			// v1.14 JEB - Save zero scores
 			save_zero_scores( prm_protein_a, prm_protein_b, global_run_counter );
@@ -827,7 +827,7 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 	for (const auto &filename_and_data_file : filename_of_data_file) {
 		const string file_str              = to_lower_copy( lexical_cast<string>( filename_and_data_file.first ) );
 		const string right_padded_file_str = string( max_data_file_str_length() - file_str.length(), ' ' );
-		BOOST_LOG_TRIVIAL( debug ) << "Loading " << file_str << right_padded_file_str << " from " << filename_and_data_file.second;
+		::spdlog::debug( "Loading {}{} from {}", file_str, right_padded_file_str, filename_and_data_file.second.string() );
 	}
 
 	// Create a protein object from the name, wolf file and sec file
@@ -845,15 +845,9 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 	}
 
 	if ( new_protein_to_populate.get_length() == 0 ) {
-		BOOST_LOG_TRIVIAL( warning )
-			<< "After reading protein "
-			<< prm_protein_name
-			<< (
-				prm_domain
-				? ( " (" + to_string( *prm_domain ) + ")" )
-				: string{}
-			)
-			<< " from file(s), got no residues";
+		::spdlog::warn( "After reading protein {}{} from file(s), got no residues",
+		                prm_protein_name,
+		                ( prm_domain ? ( " (" + to_string( *prm_domain ) + ")" ) : string{} ) );
 	}
 
 	// Return the newly created protein object
@@ -868,7 +862,7 @@ clique cath::read_clique_file(const path &prm_filename ///< The clique file to r
 
 	FILE *in;
 	if ( ( in = fopen( prm_filename.string().c_str(),"r" ) ) == nullptr ) {
-		BOOST_LOG_TRIVIAL( error ) << "Clique file (" << prm_filename << ") not found!";
+		::spdlog::error( "Clique file ({}) not found!", prm_filename );
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("**** TEMPORARY ***** TEMPORARY ***** TEMPORARY ***** TEMPORARY *****"));
 		exit(1);
 	}
@@ -1021,7 +1015,7 @@ void cath::set_mask_matrix(const protein       &prm_protein_a,        ///< The f
 				*last_present_a_opt + 2, // ( + 1 to go from position to size and +1 because it will be indexed offset_1)
 				false
 			);
-			BOOST_LOG_TRIVIAL( trace ) << "Setting secondary structure alignment : " << *prm_opt_ss_alignment;;
+			::spdlog::trace( "Setting secondary structure alignment : {}", *prm_opt_ss_alignment );
 			for (const size_t &alignment_ctr : indices( prm_opt_ss_alignment->length() ) ) {
 				if ( has_both_positions_of_index( *prm_opt_ss_alignment, alignment_ctr ) ) {
 					sec_struc_match_matrix.set(
@@ -1361,34 +1355,31 @@ void cath::populate_upper_score_matrix(const protein       &prm_protein_a,     /
 	                                + "; pass "
 	                                + booled_to_string( prm_align_pass )
 	                                + "), ";
-	BOOST_LOG_TRIVIAL( trace ) << msg_context_prfx
-	                           << "compared "
-	                           << num_actual_upper_cell_comps
-	                           << " residue pairs out of a possible "
-	                           << num_potential_upper_cell_comps;
+	::spdlog::trace( "{}compared {} residue pairs out of a possible {}",
+	                 msg_context_prfx,
+	                 num_actual_upper_cell_comps,
+	                 num_potential_upper_cell_comps );
 	if ( res_not_ss__hacky && ! prm_align_pass ) {
 		if ( num_actual_upper_cell_comps == 0 ) {
-			BOOST_LOG_TRIVIAL( warning ) << msg_context_prfx
-			                             << "chose no residue pairs out of a possible "
-			                             << num_potential_upper_cell_comps
-			                             << " to compare."
-			                                " This may relate to https://github.com/UCLOrengoGroup/cath-tools/issues/8"
-			                                " - please see that issue for more information and please add a comment"
-			                                " if it's causing you problems (or open a new issue if this message is spurious).";
+			::spdlog::warn(
+			  "{}chose no residue pairs out of a possible {} to compare. This may relate to "
+			  "https://github.com/UCLOrengoGroup/cath-tools/issues/8 - please see that issue for more information and "
+			  "please add a comment if it's causing you problems (or open a new issue if this message is spurious).",
+			  msg_context_prfx,
+			  num_potential_upper_cell_comps );
 		}
 		else if ( ! found_threshold_cell ) {
 			if ( found_non_zero_cell ) {
-				BOOST_LOG_TRIVIAL( warning ) << msg_context_prfx
-				                             << "attempted alignment for "
-				                             << num_potential_upper_cell_comps
-				                             << " cells in the upper matrix and though some achieved non-zero scores,"
-				                                " none of them reached the threshold after their normalisation";
+				::spdlog::warn( "{}attempted alignment for {} cells in the upper matrix and though some achieved "
+				                "non-zero scores, none of them reached the threshold after their normalisation",
+				                msg_context_prfx,
+				                num_potential_upper_cell_comps );
 			}
 			else {
-				BOOST_LOG_TRIVIAL( warning ) << msg_context_prfx
-				                             << "attempted alignment for "
-				                             << num_potential_upper_cell_comps
-				                             << " cells in the upper matrix but none of them achieved non-zero scores";
+				::spdlog::warn(
+				  "{}attempted alignment for {} cells in the upper matrix but none of them achieved non-zero scores",
+				  msg_context_prfx,
+				  num_potential_upper_cell_comps );
 			}
 		}
 	}
@@ -1800,8 +1791,8 @@ bool cath::save_ssap_scores(const alignment               &prm_alignment,    ///
                             const old_ssap_options_block  &prm_ssap_options, ///< The old_ssap_options_block to specify how things should be done
                             const data_dirs_spec          &prm_data_dirs     ///< The data directories from which data should be read
                             ) {
-	BOOST_LOG_TRIVIAL( debug ) << "Function: save_ssap_scores";
-	
+	::spdlog::debug( "Function: save_ssap_scores" );
+
 	// Select get_ssap_score_over_smaller if a local score is needed, or get_ssap_score_over_larger otherwise
 	const double select_score = prm_ssap_options.get_use_local_ssap_score() ? prm_ssap_scores.get_ssap_score_over_smaller()
 	                                                             : prm_ssap_scores.get_ssap_score_over_larger();
@@ -1881,7 +1872,7 @@ void cath::save_zero_scores(const protein   &prm_protein_a,  ///< The first prot
                             const protein   &prm_protein_b,  ///< The second protein
                             const ptrdiff_t &prm_run_counter ///< The run counter
                             ) {
-	BOOST_LOG_TRIVIAL( debug ) << "Function: save_zero_scores()";
+	::spdlog::debug( "Function: save_zero_scores()" );
 
 	if ( prm_run_counter == 1 ) {
 		snprintf(
@@ -1946,7 +1937,7 @@ void cath::print_ssap_scores(ostream            &prm_os,              ///< TODOC
 		}
 	}
 	else {
-		BOOST_LOG_TRIVIAL( warning ) << "There's something strange in your neighbourhood";
+		::spdlog::warn( "There's something strange in your neighbourhood" );
 	}
 }
 
@@ -2078,9 +2069,9 @@ ssap_scores cath::plot_aln(const protein                 &prm_protein_a,     ///
 		global_score_run2 = select_score;
 	}
 
-	BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln:  score_run1 = " << fixed << setprecision(3) << global_score_run1;
-	BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln:  score_run2 = " << fixed << setprecision(3) << global_score_run2;
-	BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln:  r_fast     = " << boolalpha << global_doing_fast_ssap;;
+	::spdlog::debug( "Function: plot_aln:  score_run1 = {:.3f}", global_score_run1 );
+	::spdlog::debug( "Function: plot_aln:  score_run2 = {:.3f}", global_score_run2 );
+	::spdlog::debug( "Function: plot_aln:  r_fast     = {}", global_doing_fast_ssap );
 
 	// A decision is made here about whether to write an alignment file, based on
 	// the score of the alignment. However, this is inconsistent with save_ssap_scores
@@ -2098,7 +2089,7 @@ ssap_scores cath::plot_aln(const protein                 &prm_protein_a,     ///
 			out_score = global_score_run2;
 		}
 		if (out_score > -1.0) {
-			BOOST_LOG_TRIVIAL( debug ) << "Function: plot_aln: printing alignment (r_fast == 1) || (!r_fast && score_run2 > score_run1)";
+			::spdlog::debug( "Function: plot_aln: printing alignment (r_fast == 1) || (!r_fast && score_run2 > score_run1)" );
 
 			// Prevent writing if score isn't high enough
 			if (score_is_high_enough != (out_score >= prm_ssap_options.get_min_score_for_writing_files())) {
@@ -2106,12 +2097,9 @@ ssap_scores cath::plot_aln(const protein                 &prm_protein_a,     ///
 			}
 
 			if (score_is_high_enough) {
-				BOOST_LOG_TRIVIAL( debug ) << "Function: print_aln"
-					<< " "
-					<< to_string( prm_protein_a.get_name_set() )
-					<< " "
-					<< to_string( prm_protein_b.get_name_set() )
-					;
+				::spdlog::debug( "Function: print_aln {} {}",
+				                 to_string( prm_protein_a.get_name_set() ),
+				                 to_string( prm_protein_b.get_name_set() ) );
 				const path alignment_out_file = prm_ssap_options.get_alignment_dir() / (
 					  get_domain_or_specified_or_name_from_acq( prm_protein_a )
 					+ get_domain_or_specified_or_name_from_acq( prm_protein_b )

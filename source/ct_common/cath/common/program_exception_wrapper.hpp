@@ -21,14 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_EXCEPTION_WRAPPER_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_EXCEPTION_WRAPPER_HPP
 
-#include <boost/log/utility/setup/console.hpp>
-
-#include "cath/common/logger.hpp"
+#include <spdlog/spdlog.h>
 
 #include <iostream>
-
-using sink_t    = boost::log::sinks::synchronous_sink<boost::log::sinks::basic_text_ostream_backend<char> > ;
-using sink_sptr = boost::shared_ptr<sink_t>;
+#include <string>
 
 namespace cath {
 	namespace common {
@@ -41,34 +37,33 @@ namespace cath {
 		/// to get standard last-chance exception handling for free
 		///
 		/// Note that this design won't catch any exceptions that are thrown before do_run_program() is called.
-
 		class program_exception_wrapper {
-		private:
-			/// \brief A shared_ptr to a Boost Log sink that is added to the core for the duration of the program run
-			sink_sptr boost_log_sink_sptr;
+		  private:
+			/// A holder for the default_logger that gets switched out during the lifetime of the run
+			::std::shared_ptr<::spdlog::logger> logger_shptr;
 
-			void output_catch_context(std::ostream &, const char * const) const;
+			void output_catch_context( ::std::ostream &, const char *const ) const;
 
-			virtual std::string do_get_program_name() const = 0;
-			virtual void do_run_program(int, char * []) = 0;
+			virtual ::std::string do_get_program_name() const = 0;
 
-		public:
+			virtual void do_run_program( int, char *[] ) = 0;
+
+			void reset_default_logger() noexcept;
+
+		  public:
 			program_exception_wrapper() = default;
 			virtual ~program_exception_wrapper() noexcept;
 
-			/// \brief Specify that the copy-ctor shouldn't be used
-			program_exception_wrapper(const program_exception_wrapper &) = delete;
-			/// \brief Specify that the move-ctor shouldn't be used
-			program_exception_wrapper(program_exception_wrapper &&) = delete;
-			/// \brief Specify that the copy-assign shouldn't be used
-			program_exception_wrapper & operator=(const program_exception_wrapper &) = delete;
-			/// \brief Specify that the move-assign shouldn't be used
-			program_exception_wrapper & operator=(program_exception_wrapper &&) = delete;
+			/// \brief Block the copy-ctor
+			program_exception_wrapper( const program_exception_wrapper & ) = delete;
+			/// \brief Block the move-ctor
+			program_exception_wrapper( program_exception_wrapper && ) = delete;
+			/// \brief Block the copy-assign
+			program_exception_wrapper &operator=( const program_exception_wrapper & ) = delete;
+			/// \brief Block the move-assign
+			program_exception_wrapper &operator=( program_exception_wrapper && ) = delete;
 
-			int run_program(int,
-			                char * [],
-			                std::ostream & = std::cerr);
-			sink_sptr get_sink_ptr();
+			int run_program( int, char *[], ::std::ostream & = ::std::cerr );
 		};
 
 	} // namespace common

@@ -20,11 +20,14 @@
 
 #include "calc_hit_list.hpp"
 
+#include <chrono>
+#include <fstream>
+#include <string>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -36,6 +39,8 @@
 #include <boost/range/algorithm/upper_bound.hpp>
 #include <boost/range/sub_range.hpp>
 #include <boost/spirit/include/qi.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/remove_itrs_from_range.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -53,10 +58,6 @@
 #include "cath/resolve_hits/full_hit_fns.hpp"
 #include "cath/resolve_hits/full_hit_list.hpp"
 #include "cath/resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
-
-#include <chrono>
-#include <fstream>
-#include <string>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -136,11 +137,10 @@ calc_hit_vec cath::rslv::make_hit_list_from_full_hit_list(const full_hit_list   
 				const full_hit &full_hit_x = prm_full_hit_list[ x ];
 				if ( ::boost::empty( full_hit_x.get_segments() | filtered( seg_long_enough_fn ) ) ) {
 					if ( ! hit_failed_seg_length ) {
-						BOOST_LOG_TRIVIAL( warning )
-							<< "At least one hit (with match ID "
-							<< full_hit_x.get_label()
-							<< ") in list has no segments that meet the min-seg-length "
-							<< ::std::to_string( min_seg_length );
+						::spdlog::warn(
+						  "At least one hit (with match ID {}) in list has no segments that meet the min-seg-length {}",
+						  full_hit_x.get_label(),
+						  ::std::to_string( min_seg_length ) );
 						hit_failed_seg_length = true;
 					}
 					return false;
@@ -215,11 +215,10 @@ calc_hit_vec cath::rslv::make_sorted_pruned_calc_hit_vec(const full_hit_list    
 
 		if ( ::boost::empty( trimmed_segs ) ) {
 			if ( ! failed_seg_length ) {
-				BOOST_LOG_TRIVIAL( warning )
-					<< "At least one hit (with match ID "
-					<< the_full_hit.get_label()
-					<< ") in list has no segments that meet the min-seg-length "
-					<< ::std::to_string( min_seg_length );
+				::spdlog::warn(
+				  "At least one hit (with match ID {}) in list has no segments that meet the min-seg-length {}",
+				  the_full_hit.get_label(),
+				  ::std::to_string( min_seg_length ) );
 				failed_seg_length = true;
 			}
 			continue;

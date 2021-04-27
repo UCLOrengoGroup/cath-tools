@@ -18,10 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cmath>
+#include <functional>
+
 #include <boost/algorithm/string/join.hpp> // ***** TEMPORARY *****
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/optional.hpp>
 #include <boost/optional.hpp>
 #include <boost/range/adaptor/map.hpp>
@@ -31,6 +33,8 @@
 #include <boost/range/combine.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/test/unit_test.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/algorithm/copy_build.hpp"
@@ -56,9 +60,6 @@
 #include "cath/score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
 #include "cath/score/true_pos_false_neg/named_true_false_pos_neg_list_list.hpp"
 #include "score_classn_value_results_set.hpp"
-
-#include <cmath>
-#include <functional>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -614,7 +615,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 //	const auto full_results = value_lists_of_prc_data( prc_data, is_pos );
 //	const auto the_set      = make_score_classn_value_results_set( full_results );
 //
-//	BOOST_LOG_TRIVIAL( warning ) << "The PRC results don't cover all pairs and the code doesn't yet handle that";
+//	::spdlog::warn( "The PRC results don't cover all pairs and the code doesn't yet handle that" );
 //
 //	auto rng = mt19937{ random_device{}() };
 //	write_to_svm_light_data_files(
@@ -632,7 +633,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 //	const auto full_results = value_lists_of_hmmer_data( hmmer_data, is_pos );
 //	const auto the_set      = make_score_classn_value_results_set( full_results );
 //
-//	BOOST_LOG_TRIVIAL( warning ) << "The HMMER results don't cover all pairs and the code doesn't yet handle that";
+//	::spdlog::warn( "The HMMER results don't cover all pairs and the code doesn't yet handle that" );
 //
 //	auto rng = mt19937{ random_device{}() };
 //	write_to_svm_light_data_files(

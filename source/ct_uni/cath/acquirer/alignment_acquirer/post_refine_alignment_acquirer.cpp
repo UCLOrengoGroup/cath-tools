@@ -20,7 +20,7 @@
 
 #include "post_refine_alignment_acquirer.hpp"
 
-#include <boost/log/trivial.hpp>
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/gap/gap_penalty.hpp"
@@ -52,7 +52,7 @@ pair<alignment, size_size_pair_vec> post_refine_alignment_acquirer::do_get_align
 
 	// Or if only light refinement is required and this has three or more entries, warn and then return the result
 	if ( prm_align_refining == align_refining::LIGHT && unrefined_aln_n_spntree.first.num_entries() > 3 ) {
-		BOOST_LOG_TRIVIAL( warning ) << "";
+		::spdlog::warn( "" );
 		return unrefined_aln_n_spntree;
 	}
 

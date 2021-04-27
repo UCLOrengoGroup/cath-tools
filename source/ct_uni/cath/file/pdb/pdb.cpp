@@ -24,13 +24,15 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/binary_search.hpp>
 #include <boost/range/algorithm/count_if.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/biocore/residue_id.hpp"
 #include "cath/chopping/region/region.hpp"
@@ -558,10 +560,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 				));
 			}
 			else if ( parse_status == pdb_atom_parse_status::SKIP ) {
-				BOOST_LOG_TRIVIAL( warning ) << "Skipping PDB atom record \""
-					<< line_string
-					<< "\" with message: "
-					<< parse_string;
+				::spdlog::warn( R"(Skipping PDB atom record "{}" with message: {})", line_string, parse_string );
 				continue;
 			}
 
@@ -585,14 +584,12 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 				&&
 				atom.get_alt_locn() == ' '
 				) {
-				if ( ! prev_warned_conflict ) {
-					BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing PDB file, found conflicting consecutive entries for residue \""
-					                             << res_id
-					                             << "\" (with amino acids \""
-					                             << char_arr_to_string( *prev_amino_acid_3_char_code )
-					                             << "\" and then \""
-					                             << char_arr_to_string( amino_acid_3_char_code )
-					                             << "\") - won't warn about any further entries.";
+				if ( !prev_warned_conflict ) {
+					::spdlog::warn( R"(Whilst parsing PDB file, found conflicting consecutive entries for residue "{}")"
+					                R"( (with amino acids "{}" and then "{}") - won't warn about any further entries.)",
+					                res_id,
+					                char_arr_to_string( *prev_amino_acid_3_char_code ),
+					                char_arr_to_string( amino_acid_3_char_code ) );
 					prev_warned_conflict = true;
 				}
 			}
@@ -786,7 +783,7 @@ ostream & cath::file::write_pdb_file(ostream              &prm_os,            //
 	// Warn if the regions_limiter didn't see all the regions it hoped to
 	const auto warn_str = warn_str_if_specified_regions_remain_unseen( the_regions_limiter );
 	if ( warn_str ) {
-		BOOST_LOG_TRIVIAL( warning ) << *warn_str;
+		::spdlog::warn( *warn_str );
 	}
 
 	// Return the ostream
@@ -1076,17 +1073,12 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 		const bool multiple_skippeds = ( backbone_skipped_residues.size() > 1 );
 		const log_to_ostream_guard ostream_log_guard{ prm_ostream_ref_opt.get().get() };
 
-		BOOST_LOG_TRIVIAL( warning ) << "Ignoring residue"
-		                             << ( multiple_skippeds ? "s"s : ""s )
-		                             << " "
-		                             << join(
-		                             	backbone_skipped_residues
-		                             		| transformed( [] (const residue_id &x) { return to_string( x ); } ),
-		                             	", "
-		                             )
-		                             << " whilst extracting a protein structure from PDB file data because "
-		                             << ( multiple_skippeds ? "they don't"s : "it doesn't"s )
-		                             << " have all of N, CA and C atoms (or because of duplicate residue IDs)";
+		::spdlog::warn(
+		  "Ignoring residue{} {} whilst extracting a protein structure from PDB file data because {} have all of N, CA "
+		  "and C atoms (or because of duplicate residue IDs)",
+		  ( multiple_skippeds ? "s"s : ""s ),
+		  join( backbone_skipped_residues | transformed( []( const residue_id &x ) { return to_string( x ); } ), ", " ),
+		  ( multiple_skippeds ? "they don't"s : "it doesn't"s ) );
 	}
 
 	// Return a new pdb containing these residues

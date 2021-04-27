@@ -20,13 +20,17 @@
 
 #include "viewer.hpp"
 
+#include <fstream>
+#include <sstream>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment_context.hpp"
 #include "cath/chopping/region/region.hpp"
@@ -46,9 +50,6 @@
 #include "cath/file/pdb/pdb_atom.hpp"
 #include "cath/file/pdb/pdb_residue.hpp"
 #include "cath/superposition/superposition_context.hpp"
-
-#include <fstream>
-#include <sstream>
 
 using namespace ::cath;
 using namespace ::cath::align;
@@ -249,7 +250,7 @@ void cath::output_superposition_to_viewer(ostream                          &prm_
 		if ( missing_wanted_alignment ) {
 			const auto message = "Unable to apply an alignment-based colouring scheme to the superposition because it doesn't contain an alignment";
 			if ( prm_missing_aln_policy == missing_aln_policy::WARN_AND_COLOUR_CONSECUTIVELY ) {
-				BOOST_LOG_TRIVIAL( warning ) << message;
+				::spdlog::warn( message );
 			}
 			else {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(message));

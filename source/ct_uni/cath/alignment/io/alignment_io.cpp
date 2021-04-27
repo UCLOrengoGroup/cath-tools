@@ -20,6 +20,10 @@
 
 #include "alignment_io.hpp"
 
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/find_format.hpp>
 #include <boost/algorithm/string/formatter.hpp>
@@ -29,9 +33,11 @@
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/pair_alignment.hpp"
@@ -54,10 +60,6 @@
 #include "cath/structure/protein/residue.hpp"
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
-
-#include <algorithm>
-#include <fstream>
-#include <iostream>
 
 using namespace ::cath;
 using namespace ::cath::align;
@@ -607,15 +609,12 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 	}
 	// If not all residues were found, then output a warning about
 	if ( num_posns_found < num_amino_acids ) {
-		BOOST_LOG_TRIVIAL( warning ) << "When aligning a sequence to a PDB for \""
-		                             << prm_name
-		                             << "\", "
-		                             << lexical_cast<string>( num_amino_acids - num_posns_found )
-		                             << " of the PDB's "
-		                             << lexical_cast<string>( num_amino_acids )
-		                             << " residues were missing in the sequence and had to be inserted (residue indices, using offset of 0 : "
-		                             << join( skipped_residues, ", " )
-		                             << ")";
+		::spdlog::warn( R"(When aligning a sequence to a PDB for "{}", {} of the PDB's {} residues were missing in)"
+		                " the sequence and had to be inserted (residue indices, using offset of 0 : {}))",
+		                prm_name,
+		                num_amino_acids - num_posns_found,
+		                num_amino_acids,
+		                join( skipped_residues, ", " ) );
 	}
 
 	// Return the result of this work
@@ -862,17 +861,13 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 		if ( new_pos != prm_pos + 1 && ( new_pos != 0 || prm_pos != 0 ) && prm_ostream ) {
 			const size_t jump = new_pos - (prm_pos + 1);
 			const log_to_ostream_guard ostream_log_guard{ prm_ostream.get().get() };
-			BOOST_LOG_TRIVIAL( warning ) << "Missing some residues whilst loading alignment: jumped "
-			                             << jump
-			                             << " position(s) from residue "
-			                             << prm_residue_ids[prm_pos]
-			                             << " (in position "
-			                             << prm_pos
-			                             << ") to residue "
-			                             << prm_residue_ids[new_pos]
-			                             << " (in position "
-			                             << new_pos
-			                             << ")";
+			::spdlog::warn( "Missing some residues whilst loading alignment: jumped {} position(s) from residue {} (in "
+			                "position {}) to residue {} (in position {})",
+			                jump,
+			                prm_residue_ids[ prm_pos ],
+			                prm_pos,
+			                prm_residue_ids[ new_pos ],
+			                new_pos );
 		}
 		return aln_posn_opt( new_pos );
 	}
@@ -899,14 +894,10 @@ void cath::align::write_alignment_as_cath_ssap_legacy_format(const path         
 		if ( alt_output_path == prm_output_file ) {
 			throw;
 		}
-		BOOST_LOG_TRIVIAL( warning )
-			<< "Was unable to write alignment to file "
-			<< prm_output_file
-			<< " ("
-			<< ex.what()
-			<< ") - will try writing to "
-			<< alt_output_path
-			<< " instead";
+		::spdlog::warn( "Was unable to write alignment to file {} ({}) - will try writing to {} instead",
+		                prm_output_file,
+		                ex.what(),
+		                alt_output_path );
 		if ( aln_out_stream.is_open() ) {
 			aln_out_stream.close();
 		}

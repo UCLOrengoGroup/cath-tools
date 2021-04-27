@@ -20,6 +20,12 @@
 
 #include "parse_domain_hits_table.hpp"
 
+#include <fstream>
+#include <iostream>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
+
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/boost_addenda/make_string_ref.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
@@ -27,9 +33,6 @@
 #include "cath/common/string/string_parse_tools.hpp"
 #include "cath/resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
-
-#include <fstream>
-#include <iostream>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -131,14 +134,11 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &prm_read_and_proc
 
 		if ( bitscore <= 0 ) {
 			if ( ! skipped_for_negtv_bitscore ) {
-				BOOST_LOG_TRIVIAL( warning ) << "Skipping at least one hit (eg between \""
-					<< target_id_str_ref
-					<< "\" and \""
-					<< query_id_str_ref
-					<< "\" with bitscore "
-					<< bitscore
-					<< ") for having a negative bitscore, which cannot currently be handled."
-					<< " It's typically not a problem to exclude such weak hits.";
+				::spdlog::warn( R"(Skipping at least one hit (eg between "{}" and "{}" with bitscore {}) for having a negative bitscore, which )"
+				                "cannot currently be handled. It's typically not a problem to exclude such weak hits.",
+				                target_id_str_ref,
+				                query_id_str_ref,
+				                bitscore );
 				skipped_for_negtv_bitscore = true;
 			}
 			continue;

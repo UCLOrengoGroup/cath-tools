@@ -22,12 +22,13 @@
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm_ext/for_each.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment_context.hpp"
 #include "cath/chopping/region/region.hpp"
@@ -58,7 +59,6 @@ using namespace ::cath::sup::detail;
 using ::boost::adaptors::map_values;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::any_of;
-using ::boost::log::trivial::severity_level;
 using ::boost::make_optional;
 using ::boost::none;
 using ::boost::property_tree::ptree;
@@ -423,7 +423,8 @@ void cath::sup::save_to_ptree(ptree                       &prm_ptree,      ///< 
                               const superposition_context &prm_sup_context ///< TODOCUMENT
                               ) {
 	if ( prm_sup_context.has_alignment() ) {
-		BOOST_LOG_TRIVIAL( warning ) << "Whilst converting a superposition_context to JSON, its alignment will be ignored because that is not currently supported";
+		::spdlog::warn( "Whilst converting a superposition_context to JSON, its alignment will be ignored because that "
+		                "is not currently supported" );
 	}
 
 	const auto supn_ptree          = make_ptree_of( prm_sup_context.get_superposition() );

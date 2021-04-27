@@ -20,8 +20,15 @@
 
 #include "cluster_membership_file.hpp"
 
-#include <boost/log/trivial.hpp>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+
 #include <boost/utility/string_ref.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/cluster/cluster_type_aliases.hpp"
 #include "cath/cluster/old_cluster_data.hpp"
@@ -32,11 +39,6 @@
 #include "cath/common/optional/make_optional_if.hpp"
 #include "cath/common/string/string_parse_tools.hpp"
 #include "cath/seq/seq_seg_run_parser.hpp"
-
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
 
 using namespace ::cath;
 using namespace ::cath::clust;
@@ -68,26 +70,29 @@ static inline void warn_if_neccessary(const clust_entry_problem &prm_problem,   
 		switch ( prm_problem ) {
 			case ( clust_entry_problem::REPEAT ) : {
 				if ( ! prm_warned_duplicate ) {
-					BOOST_LOG_TRIVIAL( warning ) << "Skipping entry "
-						<< prm_entry_name   << " (in cluster "
-						<< prm_cluster_name << ") because it duplicates a previous entry in the same cluster-membership input data. Will not warn about any further duplicate entries."
-						<< ( prm_extra_info ? " - " + *prm_extra_info : string{} );
+					::spdlog::warn(
+					  "Skipping entry {} (in cluster {}) because it duplicates a previous entry in the same "
+					  "cluster-membership input data. Will not warn about any further duplicate entries.{}",
+					  prm_entry_name,
+					  prm_cluster_name,
+					  ( prm_extra_info ? " - " + *prm_extra_info : string{} ) );
 					prm_warned_duplicate = true;
 				}
 				break;
 			}
 			case ( clust_entry_problem::CLASH ) : {
-				BOOST_LOG_TRIVIAL( warning ) << "Skipping entry "
-					<< prm_entry_name   << " (in cluster "
-					<< prm_cluster_name << ") because it clashes with a previous entry in the same cluster-membership input data"
-					<< ( prm_extra_info ? " - " + *prm_extra_info : string{} );
+				::spdlog::warn( "Skipping entry {} (in cluster {}) because it clashes with a previous entry in the "
+				                "same cluster-membership input data{}",
+				                prm_entry_name,
+				                prm_cluster_name,
+				                ( prm_extra_info ? " - " + *prm_extra_info : string{} ) );
 				break;
 			}
 			case ( clust_entry_problem::PARSE_ERROR ) : {
-				BOOST_LOG_TRIVIAL( warning ) << "Problem parsing segments from entry "
-					<< prm_entry_name   << " (in cluster "
-					<< prm_cluster_name << ")"
-					<< ( prm_extra_info ? " - " + *prm_extra_info : string{} );
+				::spdlog::warn( "Problem parsing segments from entry {} (in cluster {}){}",
+				                prm_entry_name,
+				                prm_cluster_name,
+				                ( prm_extra_info ? " - " + *prm_extra_info : string{} ) );
 				break;
 			}
 			case ( clust_entry_problem::NONE ) : {}

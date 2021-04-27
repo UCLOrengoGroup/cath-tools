@@ -21,8 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_DETAIL_HMMER_PARSER_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_DETAIL_HMMER_PARSER_HPP
 
+#include <regex>
+#include <string>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/optional/optional_io.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/common/boost_addenda/make_string_ref.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
@@ -34,8 +40,6 @@
 #include "cath/resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 
-#include <regex>
-#include <string>
 
 namespace cath {
 	namespace rslv {
@@ -484,14 +488,11 @@ namespace cath {
 
 				if ( summ.bitscore <= 0 ) {
 					if ( ! skipped_for_negtv_bitscore ) {
-						BOOST_LOG_TRIVIAL( warning ) << "Skipping at least one hit (eg between \""
-							<< query_id
-							<< "\" and \""
-							<< id_a
-							<< "\" with bitscore "
-							<< summ.bitscore
-							<< ") for having a negative bitscore, which cannot currently be handled."
-							<< " It's typically not a problem to exclude such weak hits.";
+						::spdlog::warn( R"(Skipping at least one hit (eg between "{}" and "{}" with bitscore {}) for having a negative bitscore, which )"
+						                R"(cannot currently be handled. It's typically not a problem to exclude such weak hits.)",
+						                query_id,
+						                id_a,
+						                summ.bitscore );
 						skipped_for_negtv_bitscore = true;
 					}
 				}

@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_LIST_HPP
 
-#include <boost/log/trivial.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/range/algorithm/sort.hpp>
 

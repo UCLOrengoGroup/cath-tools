@@ -20,11 +20,16 @@
 
 #include "dssp_file_io.hpp"
 
+#include <cmath>
+#include <fstream>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/biocore/chain_label.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
@@ -33,8 +38,6 @@
 #include "cath/file/dssp_wolf/dssp_file.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-#include <cmath>
-#include <fstream>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -119,13 +122,11 @@ dssp_file cath::file::read_dssp(istream &prm_istream ///< The istream from which
 		const bool has_prev         = ! new_residues.empty();
 		const bool prev_is_not_null = ( has_prev && ! is_null_residue( new_residues.back() ) );
 		if ( this_is_not_null && prev_is_not_null && new_residues.back().get_pdb_residue_id() == parsed_residue.get_pdb_residue_id() ) {
-			BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing DSSP file, found conflicting consecutive entries for residue \""
-				<< parsed_residue.get_pdb_residue_id()
-				<< "\" (with amino acids \""
-				<< get_code_string( new_residues.back().get_amino_acid() )
-				<< "\" and then \""
-				<< get_code_string( parsed_residue.get_amino_acid() )
-				<< "\") - ignoring latter entry";
+			::spdlog::warn( R"(Whilst parsing DSSP file, found conflicting consecutive entries for residue "{}")"
+			                R"( (with amino acids " {} " and then " {} ") - ignoring latter entry))",
+			                parsed_residue.get_pdb_residue_id(),
+			                get_code_string( new_residues.back().get_amino_acid() ),
+			                get_code_string( parsed_residue.get_amino_acid() ) );
 		}
 		else {
 			new_residues.push_back( parsed_residue );

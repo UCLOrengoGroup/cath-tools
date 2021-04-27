@@ -21,11 +21,14 @@
 
 #include "superposition_io.hpp"
 
+#include <fstream>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/range/adaptor/map.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -43,8 +46,6 @@
 #include "cath/outputter/superposition_output_options/superposition_output_options_block.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 #include "cath/superposition/superposition.hpp"
-
-#include <fstream>
 
 using namespace ::cath::chop;
 using namespace ::cath::common;
@@ -212,12 +213,10 @@ ostream & cath::sup::write_superposed_pdb_to_ostream(ostream                    
 		// If the PDB being written out has multiple chain_labels then setting the whole PDB's
 		// chain_label to one value is probably a pretty bad idea so warn
 		if ( has_multiple_chain_labels( prm_pdb ) ) {
-			BOOST_LOG_TRIVIAL( warning )
-				<< "Overwriting chain labels whilst writing a PDB but this PDB contains multiple"
-				<< " chain labels, so this is probably a bad idea. Please consider different options for"
-				<< " writing out the superposed PDBs, such as --"
-				<< superposition_output_options_block::PO_SUP_FILES_DIR
-				<< ".";
+			::spdlog::warn( "Overwriting chain labels whilst writing a PDB but this PDB contains multiple chain "
+			                "labels, so this is probably a bad idea. Please consider different options for writing out "
+			                "the superposed PDBs, such as --{}.",
+			                superposition_output_options_block::PO_SUP_FILES_DIR );
 		}
 
 		prm_pdb.set_chain_label( superposition::SUPERPOSITION_CHAIN_LABELS[ prm_chain_index ] );

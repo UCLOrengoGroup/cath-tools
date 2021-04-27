@@ -19,10 +19,12 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/filesystem/path.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/logic/tribool_io.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/score/aligned_pair_score/pseudo_string_score.hpp"
@@ -72,7 +74,7 @@ aligned_pair_score_value_list score_value_reader::read(istream &prm_istream ///<
 /// \brief TODOCUMENT
 aligned_pair_score_value_list score_value_reader::read(const path &prm_input_file ///< TODOCUMENT
                                                        ) {
-	BOOST_LOG_TRIVIAL( debug ) << "Reading aligned_pair_score_value_list from file " << prm_input_file;
+	::spdlog::debug( "Reading aligned_pair_score_value_list from file {}", prm_input_file );
 	ifstream score_value_ifstream;
 	open_ifstream( score_value_ifstream, prm_input_file );
 	const aligned_pair_score_value_list result = read( score_value_ifstream );

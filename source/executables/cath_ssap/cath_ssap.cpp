@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/log/trivial.hpp>
+#include <spdlog/spdlog.h>
 
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/common/program_exception_wrapper.hpp"
@@ -29,10 +29,6 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
-
-using ::boost::log::trivial::info;
-using ::boost::log::trivial::severity;
-using ::boost::log::trivial::trace;
 
 namespace {
 
@@ -48,14 +44,9 @@ namespace {
 		void do_run_program(int argc, char * argv[]) final {
 			const auto the_cath_ssap_options = make_and_parse_options<cath_ssap_options>( argc, argv );
 
-			// If using Boost Log, and if debug requested, set the default filter to : permit all messages of severity info or more
-			if ( the_cath_ssap_options.get_old_ssap_options().get_debug() ) {
-//				get_sink_ptr()->set_filter( severity >= debug );
-				get_sink_ptr()->set_filter( severity >= trace );
-			}
-			else {
-				get_sink_ptr()->set_filter( severity >= info );
-			}
+			// Set log level to: trace if debug requested, or info otherwise
+			::spdlog::set_level( the_cath_ssap_options.get_old_ssap_options().get_debug() ? ::spdlog::level::trace
+			                                                                              : ::spdlog::level::info );
 
 			run_ssap( the_cath_ssap_options );
 		}

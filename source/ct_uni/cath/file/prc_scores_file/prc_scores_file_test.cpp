@@ -20,8 +20,9 @@
 
 //#include <boost/algorithm/string/predicate.hpp> /// ***** TEMPORARY *****
 //#include <boost/filesystem.hpp> /// ***** TEMPORARY *****
-//#include <boost/log/trivial.hpp> /// ***** TEMPORARY *****
 #include <boost/test/unit_test.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/file/prc_scores_file/prc_scores_entry.hpp"
 #include "cath/file/prc_scores_file/prc_scores_file.hpp"
@@ -112,7 +113,7 @@ BOOST_AUTO_TEST_CASE(parses_uniqued_results_correctly) {
 // 	const auto the_dir = path{ "/cath/mothra-data1/people/ucbctnl/ticket_914_prcs/scanned_results" };
 // 	for (const auto& x : directory_iterator( the_dir )) {
 // 		if ( ends_with( x.path().filename().string(), ".results.scores" ) ) {
-// 			BOOST_LOG_TRIVIAL( warning ) << "About to try to parse " << x.path().string();
+// 			::spdlog::warn( "About to try to parse {}", x.path().string() );
 // 			const auto the_results = prc_scores_file::parse_prc_scores_file_fancy( x.path() );
 // 			cerr << "Parsed " << right << setw( 7 ) << the_results.size() << " unique_results from " << x.path().string() << "\n";
 // 		}

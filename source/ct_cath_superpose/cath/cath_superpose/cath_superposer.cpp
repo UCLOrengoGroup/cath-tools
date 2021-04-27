@@ -21,8 +21,9 @@
 #include "cath_superposer.hpp"
 
 #include <boost/filesystem/path.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "cath/acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
@@ -83,7 +84,7 @@ void cath_superposer::superpose(const cath_superpose_options &prm_cath_superpose
 	}
 	else {
 		if ( ! aln_outputters.empty() ) {
-			BOOST_LOG_TRIVIAL( warning ) << "Ignoring alignment output options because there is no alignment (and the cake is a lie)";
+			::spdlog::warn( "Ignoring alignment output options because there is no alignment (and the cake is a lie)" );
 		}
 	}
 

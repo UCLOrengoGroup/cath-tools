@@ -20,10 +20,16 @@
 
 #include "prc_scores_file.hpp"
 
+#include <fstream>
+#include <iostream> // ***** TEMPORARY *****
+#include <string>
+#include <unordered_map>
+
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/remove_copy_if.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -35,10 +41,6 @@
 #include "cath/file/prc_scores_file/detail/prc_scores_line_parser.hpp"
 #include "cath/file/prc_scores_file/prc_scores_entry.hpp"
 
-#include <fstream>
-#include <iostream> // ***** TEMPORARY *****
-#include <string>
-#include <unordered_map>
 
 using namespace ::cath::common;
 using namespace ::cath::file;
@@ -77,7 +79,7 @@ prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_v
 //						BOOST_THROW_EXCEPTION(invalid_argument_exception(
 //							"When parsing PRC results, found hit between " + id1 + " and " + id2 + " with hit number that isn't higher than for previous result"
 //						));
-//						BOOST_LOG_TRIVIAL( warning ) << "When parsing PRC results, found hit between " << id1 << " and " << id2 << " with hit number that isn't higher than for previous result";
+//						::spdlog::warn( "When parsing PRC results, found hit between {} and {} with hit number that isn't higher than for previous result", id1, id2 );
 //					}
 					if ( evalue          <  prev_entry.get_evalue()  ) {
 						BOOST_THROW_EXCEPTION(invalid_argument_exception(

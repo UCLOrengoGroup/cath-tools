@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/log/trivial.hpp>
+#include <spdlog/spdlog.h>
 
 #include "cath/cath_refine_align/cath_align_refiner.hpp"
 #include "cath/cath_refine_align/options/cath_refine_align_options.hpp"
@@ -29,9 +29,6 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
-
-using ::boost::log::trivial::info;
-using ::boost::log::trivial::severity;
 
 namespace {
 
@@ -46,7 +43,7 @@ namespace {
 		/// \brief Parse the options and then pass them to cath_refine_alignr::superpose()
 		void do_run_program(int argc, char * argv[]) final {
 			const auto the_cath_refine_align_options = make_and_parse_options<cath_refine_align_options>( argc, argv );
-			get_sink_ptr()->set_filter( severity >= info );
+			::spdlog::set_level( ::spdlog::level::info );
 			cath_align_refiner::refine(the_cath_refine_align_options);
 		}
 	};

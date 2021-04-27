@@ -20,6 +20,10 @@
 
 #include "single_pair.hpp"
 
+#include <chrono>
+
+#include <spdlog/spdlog.h>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 #include "cath/scan/res_pair_keyer/res_pair_keyer.hpp"
@@ -39,8 +43,6 @@
 #include "cath/scan/scan_stride.hpp"
 #include "cath/scan/scan_tools/scan_metrics.hpp"
 #include "cath/structure/geometry/angle.hpp"
-
-#include <chrono>
 
 using namespace ::cath::common;
 using namespace ::cath::geom;
@@ -91,7 +93,7 @@ pair<record_scores_scan_action, scan_metrics> single_pair::do_perform_scan(const
 	);
 
 	const auto scan_duration  = the_query_set.do_magic( the_index, the_action );
-//	BOOST_LOG_TRIVIAL( warning ) << "Did magic - took " << do_magic_durn << "s (" << 1.0 / do_magic_durn << "/s)";
+	// ::spdlog::warn( "Did magic - took {}s ({}/s)", do_magic_durn, 1.0 / do_magic_durn;
 
 	const scan_metrics the_metrics{
 		the_query_set.get_structures_build_durn_and_size(),

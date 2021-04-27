@@ -21,7 +21,6 @@
 #include "display_spec.hpp"
 
 #include <boost/exception/diagnostic_information.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/optional.hpp>
 
 #include "cath/common/cpp14/make_unique.hpp"

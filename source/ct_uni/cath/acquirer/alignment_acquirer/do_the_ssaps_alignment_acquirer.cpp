@@ -24,9 +24,11 @@
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer.hpp"
 #include "cath/alignment/alignment.hpp"
@@ -91,7 +93,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 
 	// Ensure the directory exists
 	if ( ! exists( ssaps_dir ) ) {
-		BOOST_LOG_TRIVIAL( info ) << "About to create directory " << ssaps_dir;
+		::spdlog::info( "About to create directory {}", ssaps_dir );
 		if ( ! create_directories( ssaps_dir ) ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
 				"Unable to create directory "
@@ -108,7 +110,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 	const string num_str           = to_string( num_ssaps );
 	const size_t num_str_width     = num_str.length();
 	const string num_str_width_str = "%" + to_string( num_str_width ) + "d";
-	BOOST_LOG_TRIVIAL( info ) << "About to check for and possibly run " << num_ssaps << " cath-ssaps in directory " << ssaps_dir;
+	::spdlog::info( "About to check for and possibly run {} cath-ssaps in directory {}", num_ssaps, ssaps_dir );
 	for (const size_t &struc_1_index : indices( num_strucs ) ) {
 		for (const size_t &struc_2_index : irange( struc_1_index + 1, num_strucs ) ) {
 
@@ -150,7 +152,10 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 						cath_ssap_args.push_back( sillitoe_chopping_format{}.write_domain( *opt_domain ) );
 					}
 				}
-				BOOST_LOG_TRIVIAL( info ) << "[" << progress_str << "] Running : " << join( cath_ssap_args, " " ) << " and writing scores to " << scores_file;
+				::spdlog::info( "[{}] Running : {} and writing scores to {}",
+				                progress_str,
+				                join( cath_ssap_args, " " ),
+				                scores_file.string() );
 				ofstream out_scores_ofstream;
 				open_ofstream( out_scores_ofstream, scores_file );
 				run_ssap(
@@ -167,7 +172,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 				out_scores_ofstream.close();
 			}
 			else {
-				BOOST_LOG_TRIVIAL( info ) << "[" << progress_str << "] Skipping " << id_1 << " versus " << id_2 << " - non-empty data files already exist";
+				::spdlog::info( "[{}] Skipping {} versus {} - non-empty data files already exist", progress_str, id_1, id_2 );
 			}
 		}
 	}

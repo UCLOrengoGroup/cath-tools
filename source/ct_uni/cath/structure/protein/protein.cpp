@@ -20,13 +20,19 @@
 
 #include "protein.hpp"
 
+#include <algorithm> // for max, min
+#include <iterator>  // for end, begin, etc
+#include <sstream>   // for string, etc
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm_ext/for_each.hpp>
 #include <boost/range/irange.hpp>
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/biocore/residue_id.hpp"
 #include "cath/chopping/region/regions_limiter.hpp"
@@ -39,10 +45,6 @@
 #include "cath/structure/protein/residue.hpp"
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
-
-#include <algorithm> // for max, min
-#include <iterator>  // for end, begin, etc
-#include <sstream>   // for string, etc
 
 using namespace ::cath;
 using namespace ::cath::chop;
@@ -351,14 +353,14 @@ void cath::label_residues_with_sec_strucs(protein               &prm_protein,   
 			));
 		}
 		if ( sec_struc_stop > num_residues ) {
-			BOOST_LOG_TRIVIAL( warning ) << "Ignoring (part of) secondary structure because it has a stop of " << sec_struc_stop
-			                             << ", which is greater than the number of residues " << num_residues
-			                             << " for protein " << prm_protein.get_name_set()
-			                             << " (this is probably because the secondary structure has been read from a sec file"
-			                             << ", which refers to residues by their sequential order"
-			                             << ", whereas the residues have been read from a dssp or wolf file"
-			                             << ", which drops some residues"
-			                             << ", due to atom records removed by splitchains and for other reasons)";
+			::spdlog::warn( "Ignoring (part of) secondary structure because it has a stop of {}, which is greater than "
+			                "the number of residues {} for protein {} (this is probably because the secondary "
+			                "structure has been read from a sec file, which refers to residues by their sequential "
+			                "order, whereas the residues have been read from a dssp or wolf file, which drops some "
+			                "residues, due to atom records removed by splitchains and for other reasons)",
+			                sec_struc_stop,
+			                num_residues,
+			                prm_protein.get_name_set() );
 		}
 
 		// Get details for any preceding secondary structure
@@ -376,10 +378,12 @@ void cath::label_residues_with_sec_strucs(protein               &prm_protein,   
 			));
 		}
 		if ( there_is_a_preceding_ss && sec_struc_start <= prev_stop ) {
-			BOOST_LOG_TRIVIAL( warning ) << "Secondary structure starts at residue number " << lexical_cast<string>(sec_struc_start)
-			                             << ", which overlaps with the end of the previous secondary structure at residue number " << lexical_cast<string>(prev_stop)
-			                             << " for protein " << prm_protein.get_name_set()
-			                             << " - will use the previous secondary structure to label residue(s) within overlapping region.";
+			::spdlog::warn( "Secondary structure starts at residue number {}, which overlaps with the end of the "
+			                "previous secondary structure at residue number {} for protein {} - will use the previous "
+			                "secondary structure to label residue(s) within overlapping region.",
+			                sec_struc_start,
+			                prev_stop,
+			                prm_protein.get_name_set() );
 		}
 
 		// If there is an overlap with the previous, then start updating from the from the first residue after the end of the previous

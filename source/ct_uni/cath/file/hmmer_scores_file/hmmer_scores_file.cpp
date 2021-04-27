@@ -20,10 +20,15 @@
 
 #include "hmmer_scores_file.hpp"
 
+#include <fstream>
+#include <iostream> // ***** TEMPORARY *****
+#include <string>
+
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/remove_copy_if.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -32,9 +37,6 @@
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/file/hmmer_scores_file/hmmer_scores_entry.hpp"
 
-#include <fstream>
-#include <iostream> // ***** TEMPORARY *****
-#include <string>
 
 using namespace ::cath::common;
 using namespace ::cath::file;
@@ -73,7 +75,11 @@ hmmer_scores_entry_vec hmmer_scores_file::remove_duplicates(const hmmer_scores_e
 //						BOOST_THROW_EXCEPTION(invalid_argument_exception(
 //							"When parsing PRC results, found hit between " + id1 + " and " + id2 + " with hit number that isn't higher than for previous result"
 //						));
-//						BOOST_LOG_TRIVIAL( warning ) << "When parsing PRC results, found hit between " << id1 << " and " << id2 << " with hit number that isn't higher than for previous result";
+//						::spdlog::warn(
+//							"When parsing PRC results, found hit between {} and {} with hit number that isn't higher than for previous result",
+//							id1,
+//							id2
+//						);
 //					}
 					if ( evalue          <  prev_entry.get_full_sequence_evalue()  ) {
 						BOOST_THROW_EXCEPTION(invalid_argument_exception(

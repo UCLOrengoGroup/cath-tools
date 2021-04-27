@@ -89,7 +89,7 @@ target_link_libraries( ct_cath_superpose      PUBLIC ct_common ct_uni           
 target_link_libraries( ct_chopping            PUBLIC ct_biocore Boost::program_options                     )
 target_link_libraries( ct_clustagglom         PUBLIC ct_common Boost::program_options                      )
 target_link_libraries( ct_cluster             PUBLIC ct_common ct_options ct_seq Boost::program_options    )
-target_link_libraries( ct_common              PUBLIC Boost::log cath_tools_gsl cath_tools_rapidjson        )
+target_link_libraries( ct_common              PUBLIC Boost::filesystem cath_tools_gsl cath_tools_rapidjson spdlog::spdlog )
 target_link_libraries( ct_display_colour      PUBLIC ct_common                                             )
 target_link_libraries( ct_options             PUBLIC ct_chopping ct_external_info                          )
 target_link_libraries( ct_resolve_hits        PUBLIC ct_display_colour ct_options ct_seq                   )

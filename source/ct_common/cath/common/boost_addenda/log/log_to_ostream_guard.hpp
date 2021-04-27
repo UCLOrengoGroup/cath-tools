@@ -21,30 +21,34 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_LOG_LOG_TO_OSTREAM_GUARD_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_LOG_LOG_TO_OSTREAM_GUARD_HPP
 
-#include <boost/log/utility/setup/console.hpp>
-using sink_t     = boost::log::sinks::synchronous_sink<boost::log::sinks::basic_text_ostream_backend<char>>;
-using sink_bsptr = boost::shared_ptr<sink_t>;
-
 #include <iosfwd>
+#include <memory>
+
+#include <spdlog/spdlog.h>
 
 namespace cath {
 
-	/// \brief TODOCUMENT
+	/// \brief RAII guard for temporarily switching to logging to an ostream
 	class log_to_ostream_guard final {
-	private:
-		/// \brief A shared_ptr to a Boost Log sink that is added to the core for the lifetime of the log_to_ostream_guard
-		sink_bsptr boost_log_sink_bsptr;
+	  private:
+		/// A shared_ptr to the spdlog logger that's being switched out of spdlog's default logger for
+		/// the lifetime of the log_to_ostream_guard
+		::std::shared_ptr<::spdlog::logger> logger_shptr;
 
-	public:
-		explicit log_to_ostream_guard(std::ostream &);
+	  public:
+		explicit log_to_ostream_guard( std::ostream & );
 		~log_to_ostream_guard() noexcept;
 
-		/// \brief Specify that the copy-ctor shouldn't be used
-		log_to_ostream_guard(const log_to_ostream_guard &) = delete;
-		/// \brief Specify that the copy-assign shouldn't be used
-		log_to_ostream_guard & operator=(const log_to_ostream_guard &) = delete;
+		/// \brief Prevent any copying
+		log_to_ostream_guard( const log_to_ostream_guard & ) = delete;
+		/// \brief Prevent any moving
+		log_to_ostream_guard( log_to_ostream_guard && ) noexcept = delete;
+		/// \brief Prevent any copying
+		log_to_ostream_guard &operator=( const log_to_ostream_guard & ) = delete;
+		/// \brief Prevent any moving
+		log_to_ostream_guard &operator=( log_to_ostream_guard && ) noexcept = delete;
 
-		void remove_log_sink();
+		void reset_default_logger();
 	};
 
 } // namespace cath

@@ -21,17 +21,18 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_SCAFFOLD_VIEW_CACHE_INDEX_LAYER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_SCAFFOLD_VIEW_CACHE_INDEX_LAYER_HPP
 
+#include <cstddef>
+#include <vector>
+
 #include <boost/core/demangle.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/range/begin.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/structure/view_cache/index/view_cache_index_entry.hpp"
-
-#include <cstddef>
-#include <vector>
 
 namespace cath {
 	namespace index {
@@ -171,7 +172,7 @@ namespace cath {
 			template <typename ACTN>
 			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_leaves(ACTN &prm_action ///< TODOCUMENT
 			                                                                           ) const {
-				BOOST_LOG_TRIVIAL( trace ) << ::boost::core::demangle( typeid( *this ).name() ) << " : " << cells.size();
+				::spdlog::trace( "{} : {}", ::boost::core::demangle( typeid( *this ).name() ), cells.size() );
 				for (const T &cell : cells) {
 					cell.perform_action_on_all_match_at_leaves( prm_action );
 				}

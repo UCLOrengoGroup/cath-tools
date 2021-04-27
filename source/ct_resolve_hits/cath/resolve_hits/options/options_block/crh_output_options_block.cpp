@@ -21,8 +21,9 @@
 #include "crh_output_options_block.hpp"
 
 #include <boost/algorithm/string/join.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/join.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/sort_uniq_build.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
@@ -192,11 +193,9 @@ str_opt crh_output_options_block::do_invalid_string(const variables_map &prm_var
 				+ "). Please use the new options only.";
 		}
 
-		BOOST_LOG_TRIVIAL( warning )
-			<< "You're using deprecated output option(s) : --"
-			<< boost::algorithm::join( specified_old, ", --" )
-			<< ". Try replacing with : "
-			<< get_deprecated_suggestion_str( deprecated_single_output_ob.get_crh_single_output_spec() );
+		::spdlog::warn( "You're using deprecated output option(s) : --{}. Try replacing with : {}",
+		                boost::algorithm::join( specified_old, ", --" ),
+		                get_deprecated_suggestion_str( deprecated_single_output_ob.get_crh_single_output_spec() ) );
 	}
 
 	return get_invalid_description( the_spec );

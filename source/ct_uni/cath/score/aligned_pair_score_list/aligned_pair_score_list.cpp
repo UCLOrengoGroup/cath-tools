@@ -20,8 +20,9 @@
 
 #include "aligned_pair_score_list.hpp"
 
-#include <boost/log/trivial.hpp>
 #include <boost/range/algorithm/adjacent_find.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -95,7 +96,7 @@ void cath::score::warn_on_duplicate_human_friendly_names(const aligned_pair_scor
 	) );
 	const auto adjacent_itr = adjacent_find( sorted_human_friendly_names );
 	if ( adjacent_itr != common::cend( sorted_human_friendly_names ) ) {
-		BOOST_LOG_TRIVIAL( warning ) << "aligned_pair_score_value_list contains duplicates (eg " << *adjacent_itr << ")";
+		::spdlog::warn( "aligned_pair_score_value_list contains duplicates (eg {})", *adjacent_itr );
 	}
 }
 

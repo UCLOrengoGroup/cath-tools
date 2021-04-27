@@ -21,6 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_HASH_STORE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_HASH_STORE_HPP
 
+#include <iostream> // ***** TEMPORARY *****
+#include <limits>
+#include <tuple>
+#include <unordered_map>
+
+#include <spdlog/spdlog.h>
+
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/information/byte.hpp>
@@ -30,11 +37,6 @@
 #include "cath/common/type_traits.hpp"
 #include "cath/scan/detail/scan_index_store/detail/hash_tuple.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
-
-#include <iostream> // ***** TEMPORARY *****
-#include <limits>
-#include <tuple>
-#include <unordered_map>
 
 namespace cath {
 	namespace scan {
@@ -97,12 +99,12 @@ namespace cath {
 				const_iterator end() const;
 
 				void summarize() const {
-					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : size is            : " << the_store.size();
-					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : max_size is        : " << the_store.max_size();
-					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : bucket_count is    : " << the_store.bucket_count();
-					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : load_factor is     : " << the_store.load_factor();
-					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : max_load_factor is : " << the_store.max_load_factor();
-					// BOOST_LOG_TRIVIAL( warning )<< "scan_index_hash_store : num_adds is        : " << num_adds;
+					// ::spdlog::warn( "scan_index_hash_store : size is            : {}", the_store.size() );
+					// ::spdlog::warn( "scan_index_hash_store : max_size is        : {}", the_store.max_size() );
+					// ::spdlog::warn( "scan_index_hash_store : bucket_count is    : {}", the_store.bucket_count() );
+					// ::spdlog::warn( "scan_index_hash_store : load_factor is     : {}", the_store.load_factor() );
+					// ::spdlog::warn( "scan_index_hash_store : max_load_factor is : {}", the_store.max_load_factor() );
+					// ::spdlog::warn( "scan_index_hash_store : num_adds is        : {}", num_adds );
 				}
 			};
 

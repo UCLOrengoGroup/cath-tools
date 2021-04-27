@@ -20,14 +20,18 @@
 
 #include "dssp_dupl_fixture.hpp"
 
+#include <fstream>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/format.hpp>
-#include <boost/log/trivial.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/test/tools/floating_point_comparison.hpp>
 #include <boost/test/tools/old/impl.hpp> // For check_is_close
+
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -39,8 +43,6 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 #include "cath/test/global_test_constants.hpp"
-
-#include <fstream>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -289,9 +291,8 @@ dssp_dupl_res_vec dssp_dupl_fixture::parse_dssp_for_calc_testing(istream &prm_ds
 		const bool has_prev         = ! dssp_dupl_residues.empty();
 		const bool prev_is_not_null = ( has_prev && dssp_dupl_residues.back().residue_index > 0 );
 		if ( this_is_not_null && prev_is_not_null && dssp_dupl_residues.back().pdb_residue_name== dssp_dupl_residue.pdb_residue_name ) {
-			BOOST_LOG_TRIVIAL( warning ) << "Whilst parsing DSSP file, found conflicting consecutive entries for residue \""
-				<< dssp_dupl_residue.pdb_residue_name
-				<< "\" - ignoring latter entry";
+			::spdlog::warn( R"(Whilst parsing DSSP file, found conflicting consecutive entries for residue "{}" - ignoring latter entry)",
+			                dssp_dupl_residue.pdb_residue_name );
 		}
 		else {
 			dssp_dupl_residues.push_back( dssp_dupl_residue );

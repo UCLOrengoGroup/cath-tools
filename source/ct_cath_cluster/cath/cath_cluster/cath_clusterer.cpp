@@ -20,7 +20,9 @@
 
 #include "cath_clusterer.hpp"
 
-#include <boost/log/trivial.hpp>
+#include <fstream>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/cath_cluster/options/cath_cluster_options.hpp"
 #include "cath/clustagglom/calc_complete_linkage_merge_list.hpp"
@@ -38,14 +40,11 @@
 #include "cath/common/file/path_or_istream.hpp"
 #include "cath/common/logger.hpp"
 
-#include <fstream>
-
 using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
 using ::boost::filesystem::path;
-using ::boost::log::trivial::warning;
 using ::boost::make_optional;
 using ::std::ifstream;
 using ::std::istream;
@@ -88,7 +87,7 @@ void cath::clust::perform_cluster(const cath_cluster_options &prm_opts,    ///< 
 	const strength      the_max_dissim = get_max_dissim         ( clust_spec, the_link_dirn );
 
 	if ( level_warning ) {
-		BOOST_LOG_TRIVIAL( warning ) << *level_warning;
+		::spdlog::warn( *level_warning );
 	}
 
 	// Organise the input stream
@@ -112,10 +111,9 @@ void cath::clust::perform_cluster(const cath_cluster_options &prm_opts,    ///< 
 		if ( has_names_file ) {
 			return get_sorting_scores( the_name_ider, props );
 		}
-		BOOST_LOG_TRIVIAL( warning )
-			<< "No names file has been specified. You are recommended to specify a names file ("
-			<< cath_cluster_input_options_block::PO_NAMES_INFILE
-			<< ") to ensure singletons don't get missed.";
+		::spdlog::warn( "No names file has been specified. You are recommended to specify a names file ({}) to ensure "
+		                "singletons don't get missed.",
+		                cath_cluster_input_options_block::PO_NAMES_INFILE );
 		return get_sorting_scores( the_name_ider );
 	} ();
 

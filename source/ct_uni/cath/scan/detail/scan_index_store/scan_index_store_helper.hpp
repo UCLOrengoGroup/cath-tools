@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_HPP
 
+#include <spdlog/spdlog.h>
+
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
@@ -207,13 +209,13 @@ namespace cath {
 			                            const scan_role           &prm_scan_role        ///< TODOCUMENT
 			                            ) {
 				const auto &the_keyer        = prm_scan_policy.get_keyer();
-//				BOOST_LOG_TRIVIAL( warning ) << "Keyer is : " << the_keyer;
+//				::spdlog::warn( "Keyer is : {}", the_keyer );
 				const auto  roled_stride     = roled_scan_stride{ prm_scan_role, prm_scan_policy.get_scan_stride() };
 				const auto  num_residues     = debug_unwarned_numeric_cast<index_type>( prm_protein.get_length() );
 				const auto  from_rep_strider = get_this_from_strider( roled_stride );
 				const auto  to_rep_strider   = get_this_to_strider  ( roled_stride );
 				for (const auto &from_rep_index : get_rep_indices_range( from_rep_strider, num_residues ) ) {
-//					 BOOST_LOG_TRIVIAL( warning ) << "\tFrom rep " << from_rep_index;
+//					 ::spdlog::warn( "\tFrom rep {}", from_rep_index );
 					for (const auto &to_rep_index : get_rep_indices_range( to_rep_strider, num_residues ) ) {
 
 						if ( from_rep_index != to_rep_index ) {
@@ -224,7 +226,7 @@ namespace cath {
 								from_rep_index,
 								to_rep_index
 							);
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tTo rep " << to_rep_index << " - the rep : " << the_res_pair;
+//							::spdlog::warn( "\t\tTo rep {} - the rep : {}", to_rep_index, the_res_pair );
 							prm_store.push_back_entry_to_cell( the_keyer.make_key( the_res_pair ), the_res_pair );
 						}
 					}
@@ -243,15 +245,15 @@ namespace cath {
 			                                  ) {
 				const auto &the_criteria     = prm_scan_policy.get_criteria();
 				const auto &the_keyer        = prm_scan_policy.get_keyer();
-//				BOOST_LOG_TRIVIAL( warning ) << "Keyer is : " << the_keyer;
+//				::spdlog::warn( "Keyer is : {}", the_keyer );
 				const auto  roled_stride     = roled_scan_stride{ prm_scan_role, prm_scan_policy.get_scan_stride() };
 				const auto  num_residues     = debug_unwarned_numeric_cast<index_type>( prm_protein.get_length() );
 				const auto  from_rep_strider = get_this_from_strider( roled_stride );
 				const auto  to_rep_strider   = get_this_to_strider  ( roled_stride );
 				for (const auto &from_rep_index : get_rep_indices_range( from_rep_strider, num_residues ) ) {
-//					BOOST_LOG_TRIVIAL( warning ) << "\tFrom rep " << from_rep_index;
+//					::spdlog::warn( "\tFrom rep {}", from_rep_index );
 					for (const auto &to_rep_index : get_rep_indices_range( to_rep_strider, num_residues ) ) {
-//						BOOST_LOG_TRIVIAL( warning ) << "\t\tTo rep " << to_rep_index;
+//						::spdlog::warn( "\t\tTo rep {}", to_rep_index );
 						if ( from_rep_index != to_rep_index ) {
 							const auto the_res_pair = make_multi_struc_res_rep_pair(
 								prm_protein.get_residue_ref_of_index( get_index_of_rep_index( from_rep_strider, from_rep_index ) ),
@@ -260,82 +262,52 @@ namespace cath {
 								from_rep_index,
 								to_rep_index
 							);
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tMade multi_struc_res_rep_pair : " << the_res_pair;
+//							::spdlog::warn( "\t\tMade multi_struc_res_rep_pair : {}", the_res_pair );
 //							const auto the_key    = the_keyer.make_key       ( the_res_pair );
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\tThe actual key itself is      : " << output_key(the_key );
+//							::spdlog::warn( "\t\tThe actual key itself is      : {}", output_key(the_key ) );
 
 							const auto close_keys = the_keyer.make_close_keys( the_res_pair, the_criteria );
-//							BOOST_LOG_TRIVIAL( warning ) << "\t\t\t(from_phi : "
-//							                             << the_res_pair.get_res_pair_core().get_from_phi_angle()
-//							                             << ") There are "
-//							                             << boost::distance( common::cross( close_keys ) )
-//							                             << " keys close to "
-//							                             << output_key( the_keyer.make_key( the_res_pair ) );
+//							::spdlog::warn( << "\t\t\t(from_phi : {}) There are {} keys close to {}",
+//							                the_res_pair.get_res_pair_core().get_from_phi_angle(),
+//							                boost::distance( common::cross( close_keys ) ),
+//							                output_key( the_keyer.make_key( the_res_pair ) ) );
 
-							// BOOST_LOG_TRIVIAL( warning )
-							// 	<< "\t\tRange 0 : \""
-							// 	<< boost::algorithm::join (
-							// 		std::get<0>( close_keys )
-							// 			| boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ),
-							// 		"\", \""
-							// 	)
-							// 	<< "\"";
-							// BOOST_LOG_TRIVIAL( warning )
-							// 	<< "\t\tRange 1 : \""
-							// 	<< boost::algorithm::join (
-							// 		std::get<1>( close_keys )
-							// 			| boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ),
-							// 		"\", \""
-							// 	)
-							// 	<< "\"";
-							// BOOST_LOG_TRIVIAL( warning )
-							// 	<< "\t\tRange 2 : \""
-							// 	<< boost::algorithm::join (
-							// 		std::get<2>( close_keys )
-							// 			| boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ),
-							// 		"\", \""
-							// 	)
-							// 	<< "\"";
-							// BOOST_LOG_TRIVIAL( warning )
-							// 	<< "\t\tRange 3 : \""
-							// 	<< boost::algorithm::join (
-							// 		std::get<3>( close_keys )
-							// 			| boost::adaptors::transformed( [](const uint8_t &x) { return std::to_string( static_cast<size_t>( x) ); } ),
-							// 		"\", \""
-							// 	)
-							// 	<< "\"";
-							// BOOST_LOG_TRIVIAL( warning )
-							// 	<< "\t\tRange 4 : \""
-							// 	<< boost::algorithm::join (
-							// 		std::get<4>( close_keys )
-							// 			| common::lexical_casted<std::string>(),
-							// 		"\", \""
-							// 	)
-							// 	<< "\"";
-							// BOOST_LOG_TRIVIAL( warning )
-							// 	<< "\t\tRange 5 : \""
-							// 	<< boost::algorithm::join (
-							// 		std::get<5>( close_keys )
-							// 			| common::lexical_casted<std::string>(),
-							// 		"\", \""
-							// 	)
-							// 	<< "\"";
-							// BOOST_LOG_TRIVIAL( warning )
-							// 	<< "\t\tRange 6 : \""
-							// 	<< boost::algorithm::join (
-							// 		std::get<6>( close_keys )
-							// 			| common::lexical_casted<std::string>(),
-							// 		"\", \""
-							// 	)
-							// 	<< "\"";
-							// BOOST_LOG_TRIVIAL( warning )
-							// 	<< "\t\tRange 7 : \""
-							// 	<< boost::algorithm::join (
-							// 		std::get<7>( close_keys )
-							// 			| common::lexical_casted<std::string>(),
-							// 		"\", \""
-							// 	)
-							// 	<< "\"";
+							// ::spdlog::warn( R"(\t\tRange 0 : "{}")",
+							//                 boost::algorithm::join( std::get<0>( close_keys )
+							//                                           | boost::adaptors::transformed( []( const uint8_t &x ) {
+							// 	                                            return std::to_string( static_cast<size_t>( x ) );
+							//                                             } ),
+							//                                         "\", \"" ) );
+							// ::spdlog::warn( R"(\t\tRange 1 : "{}")",
+							//                 boost::algorithm::join( std::get<1>( close_keys )
+							//                                           | boost::adaptors::transformed( []( const uint8_t &x ) {
+							// 	                                            return std::to_string( static_cast<size_t>( x ) );
+							//                                             } ),
+							//                                         "\", \"" ) );
+							// ::spdlog::warn( R"(\t\tRange 2 : "{}")",
+							//                 boost::algorithm::join( std::get<2>( close_keys )
+							//                                           | boost::adaptors::transformed( []( const uint8_t &x ) {
+							// 	                                            return std::to_string( static_cast<size_t>( x ) );
+							//                                             } ),
+							//                                         "\", \"" ) );
+							// ::spdlog::warn( R"(\t\tRange 3 : "{}")",
+							//                 boost::algorithm::join( std::get<3>( close_keys )
+							//                                           | boost::adaptors::transformed( []( const uint8_t &x ) {
+							// 	                                            return std::to_string( static_cast<size_t>( x ) );
+							//                                             } ),
+							//                                         "\", \"" ) );
+							// ::spdlog::warn( R"(\t\tRange 4 : "{}")",
+							//                 boost::algorithm::join(
+							//                   std::get<4>( close_keys ) | common::lexical_casted<std::string>(), "\", \"" ) );
+							// ::spdlog::warn( R"(\t\tRange 5 : "{}")",
+							//                 boost::algorithm::join(
+							//                   std::get<5>( close_keys ) | common::lexical_casted<std::string>(), "\", \"" ) );
+							// ::spdlog::warn( R"(\t\tRange 6 : "{}")",
+							//                 boost::algorithm::join(
+							//                   std::get<6>( close_keys ) | common::lexical_casted<std::string>(), "\", \"" ) );
+							// ::spdlog::warn( R"(\t\tRange 7 : "{}")",
+							//                 boost::algorithm::join(
+							//                   std::get<7>( close_keys ) | common::lexical_casted<std::string>(), "\", \"" ) );
 
 //							KEYER_PARTS: tuple<
 //								res_pair_phi_psi_angle_keyer_part<res_pair_from_phi_keyer_part_spec>,
@@ -362,16 +334,16 @@ namespace cath {
 
 //							const bool contains_key = common::contains( common::cross( close_keys ), the_keyer.make_key( the_res_pair ) );
 //							if ( contains_key ) {
-//								BOOST_LOG_TRIVIAL( warning ) << "\t\t\tDoes contain the central key";
+//								::spdlog::warn( "\t\t\tDoes contain the central key" );
 //							}
 //							else {
-//								BOOST_LOG_TRIVIAL( warning ) << "\t\t\t***** Doesn't contain the central key";
+//								::spdlog::warn( "\t\t\t***** Doesn't contain the central key" );
 //							}
 
 //							size_t counter = 0;
 							for (const auto &x : common::cross( close_keys ) ) {
 //								if ( ! contains_key ) {
-//									BOOST_LOG_TRIVIAL( warning ) << "\t\t\t\t[" << counter << "] : Adding entry for close key " << output_key( x );
+//									::spdlog::warn( "\t\t\t\t[{}] : Adding entry for close key {}", counter, output_key( x ) );
 //								}
 								prm_store.push_back_entry_to_cell( x, the_res_pair );
 //								++counter;

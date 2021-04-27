@@ -20,8 +20,14 @@
 
 #include "all_vs_all.hpp"
 
-#include <boost/log/trivial.hpp>
+#include <chrono>
+#include <iterator>
+#include <tuple>
+#include <type_traits>
+
 #include <boost/units/quantity.hpp>
+
+#include <spdlog/spdlog.h>
 
 #include "cath/common/chrono/duration_to_seconds_string.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
@@ -44,11 +50,6 @@
 #include "cath/scan/scan_tools/scan_metrics.hpp"
 #include "cath/structure/geometry/angle.hpp"
 #include "cath/structure/protein/protein_list.hpp"
-
-#include <chrono>
-#include <iterator>
-#include <tuple>
-#include <type_traits>
 
 using namespace ::cath::common;
 using namespace ::cath::geom;
@@ -99,8 +100,8 @@ unique_ptr<scan_type> all_vs_all::do_clone() const {
 	const auto scan_duration  = the_query_set.do_magic( the_index, the_action );
 	const auto do_magic_durn  = high_resolution_clock::now() - do_magic_start;
 
-	BOOST_LOG_TRIVIAL( warning ) << "Did magic - took " << durn_to_seconds_string        ( do_magic_durn )
-	                             << " ("                << durn_to_rate_per_second_string( do_magic_durn ) << ")";
+	::spdlog::warn(
+	  "Did magic - took {} ({})", durn_to_seconds_string( do_magic_durn ), durn_to_rate_per_second_string( do_magic_durn ) );
 
 	const scan_metrics the_metrics{
 		the_query_set.get_structures_build_durn_and_size(),
