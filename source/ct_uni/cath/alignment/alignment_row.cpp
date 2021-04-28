@@ -21,6 +21,7 @@
 #include "alignment_row.hpp"
 
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/cxx11/any_of.hpp>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -30,6 +31,7 @@ using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::std;
 
+using ::boost::algorithm::any_of;
 using ::boost::lexical_cast;
 
 /// \brief Sanity check the specified entry value is within the range given the current number of entries
@@ -102,15 +104,11 @@ aln_posn_type cath::align::get_position_of_entry(const alignment_row &prm_row,  
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-bool cath::align::any_entries_present(const alignment_row &prm_alignment_row ///< TODOCUMENT
-                                      ) {
-	const size_t num_entries = prm_alignment_row.num_entries();
-	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		if ( has_position_of_entry( prm_alignment_row, entry_ctr ) ) {
-			return true;
-		}
-	}
-	return false;
+///
+/// \param prm_alignment_row TODOCUMENT
+bool cath::align::any_entries_present( const alignment_row &prm_alignment_row ) {
+	return any_of( indices( prm_alignment_row.num_entries() ),
+	               [ & ]( const size_t &entry_ctr ) { return has_position_of_entry( prm_alignment_row, entry_ctr ); } );
 }
 
 /// \brief TODOCUMENT

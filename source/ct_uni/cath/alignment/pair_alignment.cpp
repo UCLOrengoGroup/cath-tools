@@ -20,6 +20,7 @@
 
 #include "pair_alignment.hpp"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 
@@ -36,6 +37,8 @@ using namespace ::cath::common;
 using namespace ::std;
 
 using ::boost::adaptors::filtered;
+using ::boost::algorithm::any_of;
+using ::boost::make_optional;
 
 /// \brief TODOCUMENT
 ///
@@ -70,21 +73,25 @@ aln_posn_opt cath::align::b_position_of_index(const alignment &prm_alignment, //
 /// \brief TODOCUMENT
 ///
 /// \relates alignment
-bool cath::align::alignment_contains_pair(const alignment &prm_alignment, ///< TODOCUMENT
-                                          const size_t    &prm_posn_a,    ///< TODOCUMENT
-							              const size_t    &prm_posn_b     ///< TODOCUMENT
-							              ) {
+///
+/// \param prm_alignment TODOCUMENT
+/// \param prm_posn_a    TODOCUMENT
+/// \param prm_posn_b    TODOCUMENT
+bool cath::align::alignment_contains_pair( const alignment &prm_alignment, const size_t &prm_posn_a, const size_t &prm_posn_b ) {
 	check_alignment_is_a_pair( prm_alignment );
 
-	const size_t length = prm_alignment.length();
-	for (const size_t &index : indices( length ) ) {
-		const aln_posn_opt &posn_a = prm_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, index );
-		const aln_posn_opt &posn_b = prm_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, index );
-		if ( posn_a && *posn_a == prm_posn_a && posn_b && *posn_b == prm_posn_b ) {
-			return true;
+	// clang-format off
+	return any_of(
+		indices( prm_alignment.length() ),
+		[ & ]( const size_t &index ) {
+			return (
+				prm_alignment.position_of_entry_of_index( alignment::PAIR_A_IDX, index ) == make_optional( prm_posn_a )
+				&&
+				prm_alignment.position_of_entry_of_index( alignment::PAIR_B_IDX, index ) == make_optional( prm_posn_b )
+			);
 		}
-	}
-	return false;
+	);
+	// clang-format on
 }
 
 /// \brief TODOCUMENT
