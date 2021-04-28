@@ -23,6 +23,7 @@
 
 #include <boost/math/quaternion.hpp>
 #include <boost/math/special_functions/sign.hpp>
+#include <boost/mpl/vector.hpp>
 
 #include "cath/structure/geometry/rotation.hpp"
 

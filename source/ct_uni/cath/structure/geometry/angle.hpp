@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ANGLE_HPP
 
 #include <boost/math/constants/constants.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/operators.hpp>
 //#include <boost/units/quantity.hpp>
 //#include <boost/units/systems/si/plane_angle.hpp>

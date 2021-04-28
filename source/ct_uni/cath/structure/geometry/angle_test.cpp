@@ -19,6 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/math/constants/constants.hpp>
+#include <boost/mpl/vector.hpp>
 #include <boost/test/unit_test.hpp>
 
 //#include <boost/units/systems/si/plane_angle.hpp>
