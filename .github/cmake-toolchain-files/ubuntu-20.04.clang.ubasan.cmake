@@ -1,9 +1,9 @@
 set( CMAKE_BUILD_TYPE Debug )
 
 
-set( CMAKE_C_COMPILER      "/usr/bin/clang"   CACHE FILEPATH "The C compiler"                                          )
-set( CMAKE_CXX_COMPILER    "/usr/bin/clang++" CACHE FILEPATH "The C++ compiler"                                        )
-set( CMAKE_CXX_FLAGS_INIT  " ${CMAKE_CXX_FLAGS_INIT} -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer " )
+set( CMAKE_C_COMPILER      "/usr/bin/clang"   CACHE FILEPATH "The C compiler"                                                         )
+set( CMAKE_CXX_COMPILER    "/usr/bin/clang++" CACHE FILEPATH "The C++ compiler"                                                       )
+set( CMAKE_CXX_FLAGS_INIT  " ${CMAKE_CXX_FLAGS_INIT} -stdlib=libc++ -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer " )
 
 add_compile_options(
 	-W
