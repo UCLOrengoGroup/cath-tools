@@ -19,6 +19,9 @@ RUN /usr/bin/pip3 install --upgrade conan
 
 RUN conan profile new default --detect && conan profile update settings.compiler.libcxx=libstdc++11 default
 
+ARG CC=/usr/bin/gcc-10
+ARG CXX=/usr/bin/g++-10
+
 WORKDIR /cath-data
 ARG BUILD_EXTRA_CATH_TESTS=ON
 ARG BUILD_EXTRA_CATH_TOOLS=ON
