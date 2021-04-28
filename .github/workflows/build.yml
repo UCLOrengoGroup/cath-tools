@@ -2,7 +2,6 @@ name: build
 
 # TODO:
 #
-# * UBSan/ASan (currently blocked by Conan failing with Boost Locale under ubasan; consider dropping Boost Log (which pulls in Locale))
 # * Windows?
 
 on: [push, pull_request]
@@ -24,10 +23,10 @@ jobs:
             flavour: release
             os: ubuntu-20.04
 
-        # include:
-        #   - compiler: clang
-        #     flavour: ubasan
-        #     os: ubuntu-20.04
+        include:
+          - compiler: clang
+            flavour: ubasan
+            os: ubuntu-20.04
 
       fail-fast: false
 
@@ -38,10 +37,17 @@ jobs:
 
     ##################### SETUP #####################
 
+    - name: Prepare CMake repo (Ubuntu 20.04)
+      if: matrix.os == 'ubuntu-20.04'
+      run: |
+        sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
+        wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+        sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'
+
     - name: Setup (Ubuntu 20.04)
       env:
-        # Prevents the apt-get of the tzdata package hanging on an interactive user prompt
-        DEBIAN_FRONTEND: noninteractive
+        # Prevents the apt-get installation of the tzdata package hanging on an interactive user prompt
+        TZ: UTC
       if: matrix.os == 'ubuntu-20.04'
       run: sudo apt-get update && sudo apt-get install -y cmake git libgsl-dev ninja-build python3-pip
 

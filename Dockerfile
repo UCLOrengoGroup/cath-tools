@@ -2,8 +2,12 @@
 
 FROM ubuntu:20.04
 
-# DEBIAN_FRONTEND=noninteractive prevents the tzdata package hanging on an interactive user prompt
-ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ="UTC"
+
+RUN apt-get update && apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+RUN apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'
+
 RUN apt-get update && apt-get install -y \
     cmake \
     g++-10 \
