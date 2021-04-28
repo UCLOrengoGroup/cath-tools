@@ -22,8 +22,6 @@ jobs:
           - compiler: gcc
             flavour: release
             os: ubuntu-20.04
-
-        include:
           - compiler: clang
             flavour: ubasan
             os: ubuntu-20.04
