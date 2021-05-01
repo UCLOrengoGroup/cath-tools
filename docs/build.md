@@ -67,7 +67,7 @@ apt-get install gsl-bin libgsl2:amd64 libgsl-dbg:amd64 libgsl-dev
 
 ~~~sh
 mkdir build
-conan install --build missing --install-folder build .
+conan install --update --build outdated --build cascade --install-folder build .
 cmake -GNinja -B build -S . -D "CMAKE_MODULE_PATH:PATH=${PWD}/build"
 ~~~
 

@@ -75,7 +75,7 @@ jobs:
       run: cmake -E make_directory ${{github.workspace}}/build
 
     - name: Build Conan dependencies
-      run: conan install --build missing --install-folder "$GITHUB_WORKSPACE/build" "$GITHUB_WORKSPACE" --profile "$GITHUB_WORKSPACE/.github/conan-profiles/${{ matrix.os }}.${{ matrix.compiler }}.${{ matrix.flavour }}.conan-profile"
+      run: conan install --update --build outdated --build cascade --install-folder "$GITHUB_WORKSPACE/build" "$GITHUB_WORKSPACE" --profile "$GITHUB_WORKSPACE/.github/conan-profiles/${{ matrix.os }}.${{ matrix.compiler }}.${{ matrix.flavour }}.conan-profile"
       shell: bash
 
     - name: Configure CMake
