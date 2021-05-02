@@ -183,10 +183,14 @@ superposition_outputter_list superposition_output_options_block::get_superpositi
 	// add any defaults as requested
 	if ( superposition_outputters.empty() ) {
 		switch ( prm_default_supn_outputter ) {
-			case ( default_supn_outputter::PYMOL ) : {
-				superposition_outputters.push_back( pymol_view_superposition_outputter { get_pymol_program(), prm_display_spec, prm_content_spec } );
+			case ( default_supn_outputter::PYMOL ): {
+				superposition_outputters.push_back(
+				  pymol_view_superposition_outputter{ get_pymol_program(), prm_display_spec, prm_content_spec } );
+				break;
 			}
-			case ( default_supn_outputter::NONE  ) : {}
+			case ( default_supn_outputter::NONE ): {
+				break;
+			}
 		}
 	}
 
