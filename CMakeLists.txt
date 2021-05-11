@@ -59,7 +59,7 @@ find_package( fmt       7.1.3 REQUIRED )
 find_package( spdlog    1.8.5 REQUIRED )
 
 # Compiler options
-SET( CMAKE_CXX_STANDARD   14    )
+SET( CMAKE_CXX_STANDARD   17    )
 SET( CMAKE_CXX_EXTENSIONS "OFF" )
 
 enable_testing()

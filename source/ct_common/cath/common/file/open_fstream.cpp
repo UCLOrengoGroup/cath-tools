@@ -56,5 +56,21 @@ void cath::common::open_ofstream(ofstream                 &prm_ofstream, ///< TO
                                  const path               &prm_filename, ///< TODOCUMENT
                                  const ios_base::openmode &prm_mode      ///< TODOCUMENT
                                  ) {
-	return open_fstream_impl( prm_ofstream, prm_filename, prm_mode, fstream_type::WRITING );
+	open_fstream_impl( prm_ofstream, prm_filename, prm_mode, fstream_type::WRITING );
+}
+
+/// \brief Open an ifstream with a path, throwing runtime_error_exception on error, and leave exceptions set to throw on badbit
+///
+/// \param prm_filename  TODOCUMENT
+/// \param prm_mode      TODOCUMENT
+ifstream cath::common::open_ifstream( const ::std::filesystem::path &prm_filename, const ios_base::openmode &prm_mode ) {
+	return open_fstream_impl<ifstream>( prm_filename, prm_mode );
+}
+
+/// \brief Open an ofstream with a path, throwing runtime_error_exception on error, and leave exceptions set to throw on badbit or failbit
+///
+/// \param prm_filename  TODOCUMENT
+/// \param prm_mode      TODOCUMENT
+ofstream cath::common::open_ofstream( const ::std::filesystem::path &prm_filename, const ios_base::openmode &prm_mode ) {
+	return open_fstream_impl<ofstream>( prm_filename, prm_mode );
 }

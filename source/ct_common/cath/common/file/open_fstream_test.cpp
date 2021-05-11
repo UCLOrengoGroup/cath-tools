@@ -20,16 +20,17 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <fstream>
+
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/file/temp_file.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-#include <fstream>
-
 using namespace ::cath::common;
-using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
+using ::std::ifstream;
+using ::std::ofstream;
 
 namespace cath {
 	namespace test {
@@ -42,8 +43,10 @@ namespace cath {
 		public:
 			const temp_file TEST_OUTPUT_TEMP_FILE { "test_open_fstream_output_file.%%%%-%%%%-%%%%-%%%%" };
 
-			const path      TEST_OUTPUT_FILE      = { get_filename( TEST_OUTPUT_TEMP_FILE ) };
-			const path TEST_INPUT_FILE            = { ALIGNMENT_FILE() };
+			/// TODO: Come C++17 being fully embraced (with filesystem), drop the .string() for converting between path types
+			const path      TEST_OUTPUT_FILE      = { get_filename( TEST_OUTPUT_TEMP_FILE ).string() };
+			/// TODO: Come C++17 being fully embraced (with filesystem), drop the .string() for converting between path types
+			const path TEST_INPUT_FILE            = { ALIGNMENT_FILE().string() };
 		};
 
 	}  // namespace test
@@ -52,24 +55,21 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(open_fstream_test_suite, cath::test::open_fstream_test_suite_fixture)
 
 /// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(ifstream_basic) {
-	ifstream test_ifstream;
-	open_ifstream(test_ifstream, TEST_INPUT_FILE);
-	BOOST_CHECK(test_ifstream.is_open());
+BOOST_AUTO_TEST_CASE( ifstream_basic ) {
+	ifstream test_ifstream = open_ifstream( TEST_INPUT_FILE );
+	BOOST_CHECK( test_ifstream.is_open() );
 }
 
 /// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(ofstream_basic) {
-	ofstream test_ofstream;
-	open_ofstream(test_ofstream, TEST_OUTPUT_FILE);
-	BOOST_CHECK(test_ofstream.is_open());
+BOOST_AUTO_TEST_CASE( ofstream_basic ) {
+	ofstream test_ofstream = open_ofstream( TEST_OUTPUT_FILE );
+	BOOST_CHECK( test_ofstream.is_open() );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ifstream_throws_runtime_error_exception_for_nonexistent_file) {
-	ifstream test_ifstream;
-	BOOST_CHECK_THROW( open_ifstream(test_ifstream, NONEXISTENT_FILE()), runtime_error_exception );
+	/// TODO: Come C++17 being fully embraced (with filesystem), drop this conversion between path types
+	BOOST_CHECK_THROW( open_ifstream(::std::filesystem::path{ NONEXISTENT_FILE().string() } ), runtime_error_exception );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-

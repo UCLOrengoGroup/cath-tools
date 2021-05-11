@@ -7,7 +7,7 @@ CXXFLAGS=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer "
 arch=x86_64
 build_type=Debug
 compiler=clang
-compiler.cppstd=14
+compiler.cppstd=17
 compiler.libcxx=libc++
 compiler.version=10
 os=Linux

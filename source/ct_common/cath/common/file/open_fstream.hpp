@@ -21,71 +21,108 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_OPEN_FSTREAM_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_OPEN_FSTREAM_HPP
 
-#include <boost/filesystem.hpp>
-
-#include "cath/common/exception/runtime_error_exception.hpp"
-
+#include <filesystem>
 #include <iosfwd>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+#include <boost/filesystem.hpp>
 
-			enum class fstream_type : bool {
-				READING,
-				WRITING
+#include <fmt/core.h>
+
+#include "cath/common/exception/runtime_error_exception.hpp"
+#include "cath/common/type_traits.hpp"
+
+namespace cath::common {
+	namespace detail {
+
+
+		enum class fstream_type : bool { // *************** GET RID OF THIS ************
+			READING,                     // *************** GET RID OF THIS ************
+			WRITING                      // *************** GET RID OF THIS ************
+		};                               // *************** GET RID OF THIS ************
+
+		/// \brief Function used to implement open_ifstream and open_ofstream
+		///
+		/// This:
+		/// - sets the exceptions to throw on failbit or badbit
+		/// - tries to open the file
+		/// - catches any failure and rethrows as a runtime_error_exception
+		template <typename fstream_t>
+		void open_fstream_impl(fstream_t                     &prm_fstream,     ///< TODOCUMENT
+		                       const boost::filesystem::path &prm_filename,    ///< TODOCUMENT
+		                       const std::ios_base::openmode &prm_mode,        ///< TODOCUMENT
+		                       const fstream_type            &prm_fstream_type ///< TODOCUMENT
+		                       ) {
+			const bool is_reading                     = (prm_fstream_type == fstream_type::READING);
+			const std::string r_or_w_str              = is_reading ? "reading" : "writing";
+			const std::ios_base::iostate r_or_w_state = is_reading ? (                     std::ios::badbit )
+			                                                       : ( std::ios::failbit | std::ios::badbit );
+			prm_fstream.exceptions( r_or_w_state );
+			try {
+				prm_fstream.open(prm_filename.string().c_str(), prm_mode);
+			}
+			// Catch any I/O exceptions
+			catch (const std::exception &ex) {
+		//		const std::string reading_or_writing_str = (prm_fstream_type == FILE_READING) ? "reading" : "writing";
+				const std::string error_message(
+					"Cannot open file \""
+					+ prm_filename.string()
+					+ "\" for "
+					+ r_or_w_str
+					+ " ["
+					+ ex.what()
+					+ "] : "
+					+ std::strerror( errno )
+				);
+				BOOST_THROW_EXCEPTION(cath::common::runtime_error_exception(error_message));
 			};
 
-			/// \brief Function used to implement open_ifstream and open_ofstream
-			///
-			/// This:
-			/// - sets the exceptions to throw on failbit or badbit
-			/// - tries to open the file
-			/// - catches any failure and rethrows as a runtime_error_exception
-			template <typename fstream_t>
-			void open_fstream_impl(fstream_t                     &prm_fstream,     ///< TODOCUMENT
-			                       const boost::filesystem::path &prm_filename,    ///< TODOCUMENT
-			                       const std::ios_base::openmode &prm_mode,        ///< TODOCUMENT
-			                       const fstream_type            &prm_fstream_type ///< TODOCUMENT
-			                       ) {
-				const bool is_reading                     = (prm_fstream_type == fstream_type::READING);
-				const std::string r_or_w_str              = is_reading ? "reading" : "writing";
-				const std::ios_base::iostate r_or_w_state = is_reading ? (                     std::ios::badbit )
-				                                                       : ( std::ios::failbit | std::ios::badbit );
-				prm_fstream.exceptions( r_or_w_state );
-				try {
-					prm_fstream.open(prm_filename.string().c_str(), prm_mode);
-				}
-				// Catch any I/O exceptions
-				catch (const std::exception &ex) {
-			//		const std::string reading_or_writing_str = (prm_fstream_type == FILE_READING) ? "reading" : "writing";
-					const std::string error_message(
-						"Cannot open file \""
-						+ prm_filename.string()
-						+ "\" for "
-						+ r_or_w_str
-						+ " ["
-						+ ex.what()
-						+ "] : "
-						+ std::strerror( errno )
-					);
-					BOOST_THROW_EXCEPTION(cath::common::runtime_error_exception(error_message));
-				};
+			assert(prm_fstream.is_open());
+			assert(prm_fstream.good());
+		}
 
-				assert(prm_fstream.is_open());
-				assert(prm_fstream.good());
+		/// \brief Function used to implement open_ifstream and open_ofstream
+		///
+		/// This:
+		/// - sets the exceptions to throw on failbit or badbit
+		/// - tries to open the file
+		/// - throws a runtime_error_exception if the open failed
+		///
+		/// \param prm_filename     TODOCUMENT
+		/// \param prm_mode         TODOCUMENT
+		template <typename fstream_t>
+		fstream_t open_fstream_impl( const ::std::filesystem::path &prm_filename, const ::std::ios_base::openmode &prm_mode ) {
+			const bool is_reading = is_same_modulo_cvref_v<fstream_t, ::std::ifstream>;
+			static_assert( is_reading || is_same_modulo_cvref_v<fstream_t, ::std::ofstream>,
+			               "fstream_t must be either ::std::ifstream or ::std::ofstream" );
+
+			fstream_t the_stream;
+			the_stream.exceptions( ::std::ios::badbit | ( is_reading ? ::std::ios::goodbit : ::std::ios::failbit ) );
+			the_stream.open( prm_filename, prm_mode );
+			if ( !the_stream ) {
+				BOOST_THROW_EXCEPTION( runtime_error_exception( ::fmt::format( R"(Cannot open file "{}" for {}: {})",
+				                                                               prm_filename.string(),
+				                                                               is_reading ? "reading" : "writing",
+				                                                               strerror( errno ) ) ) );
 			}
-		} // namespace detail
+			return the_stream;
+		}
 
-		void open_ifstream(std::ifstream &,
-		                   const boost::filesystem::path &,
-		                   const std::ios_base::openmode & = std::ios_base::in);
+	} // namespace detail
 
-		void open_ofstream(std::ofstream &,
-		                   const boost::filesystem::path &,
-		                   const std::ios_base::openmode & = std::ios_base::out);
+	void open_ifstream( ::std::ifstream &,
+	                    const boost::filesystem::path &,
+	                    const ::std::ios_base::openmode & = ::std::ios_base::in );
 
-	} // namespace common
-} // namespace cath
+	void open_ofstream( ::std::ofstream &,
+	                    const boost::filesystem::path &,
+	                    const ::std::ios_base::openmode & = ::std::ios_base::out );
+
+	::std::ifstream open_ifstream( const ::std::filesystem::path &,
+	                               const ::std::ios_base::openmode & = ::std::ios_base::in );
+
+	::std::ofstream open_ofstream( const ::std::filesystem::path &,
+	                               const ::std::ios_base::openmode & = ::std::ios_base::out );
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_OPEN_FSTREAM_HPP
