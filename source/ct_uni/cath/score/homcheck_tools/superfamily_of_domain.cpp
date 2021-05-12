@@ -20,7 +20,11 @@
 
 #include "superfamily_of_domain.hpp"
 
-#include <boost/algorithm/cxx11/any_of.hpp>
+#include <filesystem>
+#include <fstream>
+#include <regex>
+#include <unordered_set>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
@@ -30,20 +34,15 @@
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/type_aliases.hpp"
 
-#include <fstream>
-#include <regex>
-#include <unordered_set>
-
 using namespace ::cath::common;
 using namespace ::cath::homcheck;
 using namespace ::cath::homcheck::detail;
 using namespace ::std;
 
-using ::boost::algorithm::any_of;
 using ::boost::algorithm::contains;
 using ::boost::algorithm::is_space;
-using ::boost::filesystem::path;
 using ::boost::token_compress_on;
+using ::std::filesystem::path;
 
 /// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
 const regex is_valid_superfamily_id::SUPERFAMILY_ID_REGEX{ R"(^\d+\.\d+\.\d+\.\d+$)" };
@@ -185,8 +184,7 @@ superfamily_of_domain cath::homcheck::parse_superfamily_of_domain(istream &prm_s
 /// \relates superfamily_of_domain
 superfamily_of_domain cath::homcheck::parse_superfamily_of_domain(const path &prm_sf_of_dom_file ///< The file from which the superfamily_of_domain information should be parsed
                                                                   ) {
-	ifstream input_ifstream;
-	open_ifstream( input_ifstream, prm_sf_of_dom_file );
+	ifstream input_ifstream = open_ifstream( prm_sf_of_dom_file );
 	const auto sf_of_dom = parse_superfamily_of_domain( input_ifstream );
 	input_ifstream.close();
 	return sf_of_dom;

@@ -21,11 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_FILE_NAMES_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_FILE_NAMES_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <iosfwd>
 
 #include "cath/common/type_aliases.hpp"
-
-#include <iosfwd>
 
 namespace cath { namespace common { class id_of_str_bidirnl; } }
 
@@ -38,14 +37,14 @@ namespace cath {
 		doub_vec parse_names(const std::string &,
 		                     common::id_of_str_bidirnl &);
 
-		doub_vec parse_names(const boost::filesystem::path &,
+		doub_vec parse_names(const ::std::filesystem::path &,
 		                     common::id_of_str_bidirnl &);
 
 		std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(std::istream &);
 
 		std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(const std::string &);
 
-		std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(const boost::filesystem::path &);
+		std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(const ::std::filesystem::path &);
 
 
 	} // namespace clust

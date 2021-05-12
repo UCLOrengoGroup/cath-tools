@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_PAIR_SCATTER_PLOTTER_PAIR_SCATTER_PLOTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_PAIR_SCATTER_PLOTTER_PAIR_SCATTER_PLOTTER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include <gnuplot-iostream.h>
 
@@ -41,7 +41,7 @@ namespace cath {
 		public:
 
 			template <typename T>
-			void plot(const boost::filesystem::path &prm_output_file_stem, ///< TODOCUMENT
+			void plot(const ::std::filesystem::path &prm_output_file_stem, ///< TODOCUMENT
 			          const std::vector<T>          &prm_data,             ///< TODOCUMENT
 			          const std::string             &prm_x_axis_label,     ///< TODOCUMENT
 			          const std::string             &prm_y_axis_label      ///< TODOCUMENT

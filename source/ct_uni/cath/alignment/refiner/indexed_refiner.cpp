@@ -20,11 +20,14 @@
 
 #include "indexed_refiner.hpp"
 
+#include <filesystem>
+#include <tuple>
+#include <type_traits>
+#include <vector>
+
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/algorithm/string/replace.hpp>
-// #include <boost/container/small_vector.hpp> // ***** small_vector was only added in Boost 1.58.0 *****
 #include <boost/core/demangle.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
 #include <gnuplot-iostream.h>
@@ -42,18 +45,13 @@ using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::cath::scan;
 
-#include <tuple>
-#include <type_traits>
-#include <vector>
-
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::erase_all;
 using ::boost::algorithm::replace_all;
 using ::boost::algorithm::replace_all_copy;
-// using ::boost::container::small_vector;
-using ::boost::filesystem::path;
 using ::boost::irange;
 using ::std::chrono::high_resolution_clock;
+using ::std::filesystem::path;
 using ::std::pair;
 using ::std::string;
 using ::std::tuple;

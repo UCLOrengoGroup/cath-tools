@@ -19,6 +19,11 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "protein_io.hpp"
 
+#include <filesystem>
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -48,10 +53,6 @@
 #include "cath/structure/sec_struc_calc/dssp/dssp_ss_calc.hpp"
 #include "cath/structure/sec_struc_calc/sec/sec_calc.hpp"
 
-#include <iostream>
-#include <string>
-#include <vector>
-
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::common;
@@ -60,9 +61,9 @@ using namespace ::cath::sec;
 using namespace ::std;
 
 using ::boost::algorithm::any_of;
-using ::boost::filesystem::path;
 using ::boost::lexical_cast;
 using ::boost::numeric_cast;
+using ::std::filesystem::path;
 
 /// \brief Read a wolf and a sec file and build them into a protein
 ///

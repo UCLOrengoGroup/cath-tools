@@ -21,16 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CHRONO_CHRONO_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CHRONO_CHRONO_TYPE_ALIASES_HPP
 
-//#include <boost/filesystem/path.hpp>
-//#include <boost/optional/optional_fwd.hpp>
-//#include <boost/tuple/tuple.hpp>
-
 #include <chrono>
-//#include <iosfwd>
-//#include <map>
-//#include <set>
-//#include <string>
-//#include <utility>
 #include <vector>
 
 namespace cath {

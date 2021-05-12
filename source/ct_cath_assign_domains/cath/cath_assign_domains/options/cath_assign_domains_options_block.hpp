@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_BLOCK_HPP
 
+#include <filesystem>
+
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include "cath/options/options_block/options_block.hpp"
@@ -41,13 +43,13 @@ namespace cath {
 			static const str_vec DEFAULT_FORBIDDEN_NODES;
 
 			/// \brief The SVM-light RBF model file
-			boost::filesystem::path rbf_svm_file;
+			::std::filesystem::path rbf_svm_file;
 
 			/// \brief The file containing the list of PRC/SSAP data files
-			boost::filesystem::path data_data_file;
+			::std::filesystem::path data_data_file;
 
 			/// \brief The file containing superfamily of domain
-			boost::filesystem::path sf_of_dom_file;
+			::std::filesystem::path sf_of_dom_file;
 
 			/// \brief The list of CATH nodes forbidden for assignment
 			str_vec forbidden_nodes;
@@ -60,9 +62,9 @@ namespace cath {
 			str_vec do_get_all_options_names() const final;
 
 		public:
-			const boost::filesystem::path & get_rbf_svm_file() const;
-			const boost::filesystem::path & get_data_data_file() const;
-			const boost::filesystem::path & get_sf_of_dom_file() const;
+			const ::std::filesystem::path & get_rbf_svm_file() const;
+			const ::std::filesystem::path & get_data_data_file() const;
+			const ::std::filesystem::path & get_sf_of_dom_file() const;
 			const str_vec & get_forbidden_nodes() const;
 		};
 

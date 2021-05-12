@@ -20,7 +20,9 @@
 
 #include "view_cache_index.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <chrono>
+#include <iostream>
+
 #include <boost/math/constants/constants.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
@@ -45,9 +47,6 @@
 #include "cath/structure/view_cache/index/detail/vcie_match_criteria.hpp"
 #include "cath/structure/view_cache/index/quad_find_action.hpp"
 #include "cath/structure/view_cache/index/quad_find_action_check.hpp"
-
-#include <chrono>
-#include <iostream>
 
 using namespace ::cath::align;
 using namespace ::cath::align::detail;

@@ -20,22 +20,31 @@
 
 #include "temp_file.hpp"
 
+#include <filesystem>
+#include <random>
+#include <string>
+#include <string_view>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/replace.hpp>
-#include <boost/filesystem.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 
-#include <iostream> // *** TEMPORARY ***
-
 using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::std;
 
-using ::boost::filesystem::path;
-using ::boost::filesystem::temp_directory_path;
+using ::boost::adaptors::transformed;
 using ::boost::none;
+using ::std::filesystem::path;
+using ::std::filesystem::temp_directory_path;
+using ::std::mt19937;
+using ::std::random_device;
+using ::std::string;
+using ::std::string_view;
+using ::std::uniform_int_distribution;
 
 /// \brief Constructor for temp_file.
 temp_file::temp_file(const string &prm_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
@@ -43,12 +52,27 @@ temp_file::temp_file(const string &prm_filename_pattern ///< A pattern for the f
 }
 
 /// \brief A function to construct a temporary filename from a pattern.
-path temp_file::temp_filename_of_basename_pattern(const string &prm_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
-                                                  ) {
-	if (path(prm_filename_pattern).has_parent_path()) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("temp_file pattern \"" + prm_filename_pattern + "\" should just be a basename, not a full path"));
+///
+/// \param prm_filename_pattern A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
+path temp_file::temp_filename_of_basename_pattern( const string &prm_filename_pattern ) {
+	if ( path( prm_filename_pattern ).has_parent_path() ) {
+		BOOST_THROW_EXCEPTION( invalid_argument_exception( "temp_file pattern \"" + prm_filename_pattern
+		                                                   + "\" should just be a basename, not a full path" ) );
 	}
-	return unique_path( temp_directory_path() / prm_filename_pattern );
+
+	constexpr string_view            PALETTE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	mt19937                          random_gen( random_device{}() );
+	uniform_int_distribution<size_t> dist( 0, PALETTE.length() - 1 );
+
+	// clang-format off
+	const string populated_pattern = prm_filename_pattern
+		| transformed( [&] ( const char &x ) {
+			return ( x == '%' ) ? PALETTE[ dist( random_gen ) ] : x;
+		} )
+		| to_string;
+	// clang-format on
+
+	return temp_directory_path() / populated_pattern;
 }
 
 /// \brief Destructor for temp_file

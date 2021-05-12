@@ -20,22 +20,21 @@
 
 #include "istream_and_file_equal.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/file/spew.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
-#include <fstream>
-
 using namespace ::cath::common;
 using namespace ::cath::test;
 
-using ::boost::filesystem::path;
 using ::boost::test_tools::predicate_result;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::string;
-
-using ::boost::filesystem::path;
 
 /// \brief Ctor for istream_and_file_equal
 istream_and_file_equal::istream_and_file_equal(const bootstrap_mode &prm_bootstrapping,  ///< TODOCUMENT
@@ -54,8 +53,7 @@ predicate_result istream_and_file_equal::operator()(istream      &prm_istream, /
                                                     const string &prm_name,    ///< TODOCUMENT
                                                     const path   &prm_filename ///< TODOCUMENT
                                                     ) const {
-	ifstream file_ifstream;
-	open_ifstream(file_ifstream, prm_filename);
+	ifstream file_ifstream = open_ifstream( prm_filename );
 
 	istreams_equal the_istreams_equal(diff_half_width);
 	const predicate_result the_result = the_istreams_equal(

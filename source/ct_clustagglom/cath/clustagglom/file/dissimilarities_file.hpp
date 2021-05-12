@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_FILE_DISSIMILARITIES_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_FILE_DISSIMILARITIES_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/clustagglom/link_dirn.hpp"
@@ -43,7 +44,7 @@ namespace cath {
 		                            const link_dirn &,
 		                            const size_t & = 2);
 
-		links parse_dissimilarities(const boost::filesystem::path &,
+		links parse_dissimilarities(const ::std::filesystem::path &,
 		                            common::id_of_str_bidirnl &,
 		                            const link_dirn &,
 		                            const size_t & = 2);

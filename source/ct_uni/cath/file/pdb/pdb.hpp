@@ -21,6 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_HPP
 
+#include <filesystem>
+#include <iostream>
+#include <vector>
+
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
@@ -34,9 +38,6 @@
 #include "cath/file/pdb/pdb_residue.hpp"
 #include "cath/file/pdb/pdb_write_mode.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
-
-#include <iostream>
-#include <vector>
 
 namespace cath { class protein; }
 namespace cath { namespace file { class pdb_list; } }
@@ -58,8 +59,8 @@ namespace cath {
 			pdb_residue_vec post_ter_residues;
 
 		public:
-			void read_file(const boost::filesystem::path &);
-			void append_to_file(const boost::filesystem::path &) const;
+			void read_file(const ::std::filesystem::path &);
+			void append_to_file(const ::std::filesystem::path &) const;
 			pdb & set_chain_label(const chain_label &);
 			residue_id_vec get_residue_ids_of_first_chain__backbone_unchecked() const;
 			geom::coord get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const;
@@ -126,7 +127,7 @@ namespace cath {
 		                                                                const bool & = true);
 		residue_id_vec get_backbone_complete_residue_ids(const pdb &);
 
-		pdb read_pdb_file(const boost::filesystem::path &);
+		pdb read_pdb_file(const ::std::filesystem::path &);
 
 		pdb read_pdb_file(std::istream &);
 		std::istream & read_pdb_file(std::istream &,
@@ -141,7 +142,7 @@ namespace cath {
 		                              const pdb &,
 		                              const chop::region_vec_opt & = boost::none,
 		                              const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
-		void write_pdb_file(const boost::filesystem::path &,
+		void write_pdb_file(const ::std::filesystem::path &,
 		                    const pdb &,
 		                    const chop::region_vec_opt & = boost::none,
 		                    const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);

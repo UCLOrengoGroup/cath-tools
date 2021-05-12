@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGNMENT_ACTION_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGNMENT_ACTION_HPP
 
-#include <boost/filesystem/path.hpp>
-
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/aln_glue_style.hpp"

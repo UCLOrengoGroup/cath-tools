@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_INPUT_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_INPUT_SPEC_HPP
 
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/common/path_type_aliases.hpp"
@@ -67,7 +69,7 @@ namespace cath {
 			const seq::residx_t & get_min_gap_length() const;
 			const bool & get_input_hits_are_grouped() const;
 
-			crh_input_spec & set_input_file(const boost::filesystem::path &);
+			crh_input_spec & set_input_file(const ::std::filesystem::path &);
 			crh_input_spec & set_read_from_stdin(const bool &);
 			crh_input_spec & set_input_format(const hits_input_format_tag &);
 			crh_input_spec & set_min_gap_length(const seq::residx_t &);

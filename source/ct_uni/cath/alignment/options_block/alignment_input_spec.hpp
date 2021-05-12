@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_OPTIONS_BLOCK_ALIGNMENT_INPUT_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_OPTIONS_BLOCK_ALIGNMENT_INPUT_SPEC_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/acquirer/alignment_acquirer/align_refining.hpp"
@@ -39,16 +40,16 @@ namespace cath {
 			bool residue_name_align = DEFAULT_RESIDUE_NAME_ALIGN;
 			
 			/// \brief A file from which to read a FASTA alignment
-			boost::filesystem::path fasta_alignment_file;
+			::std::filesystem::path fasta_alignment_file;
 
 			/// \brief A file from which to read a legacy-SSAP-format alignment
-			boost::filesystem::path ssap_alignment_file;
+			::std::filesystem::path ssap_alignment_file;
 
 			/// \brief A file from which to read a CORA alignment
-			boost::filesystem::path cora_alignment_file;
+			::std::filesystem::path cora_alignment_file;
 
 			/// \brief A file from which to read SSAP-scores format data to use to attempt to glue pairwise alignments together
-			boost::filesystem::path ssap_scores_file;
+			::std::filesystem::path ssap_scores_file;
 
 			/// \brief A directory in which SSAPs should be performed and then their alignments glued together
 			///        or (inner) none for cath-tools to choose a directory to use
@@ -72,18 +73,18 @@ namespace cath {
 			explicit alignment_input_spec(const align::align_refining &);
 
 			const bool & get_residue_name_align() const;
-			const boost::filesystem::path & get_fasta_alignment_file() const;
-			const boost::filesystem::path & get_ssap_alignment_file() const;
-			const boost::filesystem::path & get_cora_alignment_file() const;
-			const boost::filesystem::path & get_ssap_scores_file() const;
+			const ::std::filesystem::path & get_fasta_alignment_file() const;
+			const ::std::filesystem::path & get_ssap_alignment_file() const;
+			const ::std::filesystem::path & get_cora_alignment_file() const;
+			const ::std::filesystem::path & get_ssap_scores_file() const;
 			const path_opt_opt & get_do_the_ssaps_dir() const;
 			const align::align_refining & get_refining() const;
 
 			alignment_input_spec & set_residue_name_align(const bool &);
-			alignment_input_spec & set_fasta_alignment_file(const boost::filesystem::path &);
-			alignment_input_spec & set_ssap_alignment_file(const boost::filesystem::path &);
-			alignment_input_spec & set_cora_alignment_file(const boost::filesystem::path &);
-			alignment_input_spec & set_ssap_scores_file(const boost::filesystem::path &);
+			alignment_input_spec & set_fasta_alignment_file(const ::std::filesystem::path &);
+			alignment_input_spec & set_ssap_alignment_file(const ::std::filesystem::path &);
+			alignment_input_spec & set_cora_alignment_file(const ::std::filesystem::path &);
+			alignment_input_spec & set_ssap_scores_file(const ::std::filesystem::path &);
 			alignment_input_spec & set_do_the_ssaps_dir(const path_opt &);
 			alignment_input_spec & set_refining(const align::align_refining &);
 		};

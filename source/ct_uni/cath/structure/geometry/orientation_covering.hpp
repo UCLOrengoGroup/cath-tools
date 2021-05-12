@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ORIENTATION_COVERING_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ORIENTATION_COVERING_HPP
 
+#include <filesystem>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
@@ -65,12 +67,12 @@ namespace cath {
 			quat_rot_vec<T> orientations;
 
 			/// \brief TODOCUMENT
-			static boost::filesystem::path get_orientation_filename();
+			static ::std::filesystem::path get_orientation_filename();
 
 			/// \brief Load a list of orientations from a file
 			///
 			/// This is currently used to initialise the orientations on construction
-			static quat_rot_vec<T> orientations_from_file(const boost::filesystem::path &);
+			static quat_rot_vec<T> orientations_from_file(const ::std::filesystem::path &);
 
 		public:
 			/// \brief TODOCUMENT
@@ -156,7 +158,7 @@ namespace cath {
 
 // 		/// \brief TODOCUMENT
 // 		template <typename T>
-// 		boost::filesystem::path orientation_covering_impl<T>::get_orientation_filename() {
+// 		::std::filesystem::path orientation_covering_impl<T>::get_orientation_filename() {
 // //			return { "/tmp/c48u1.quat"   }; // num:  24; max_angle: 62.80
 // 			return { "/tmp/c600v.quat"   }; // num:  60; max_angle: 44.48
 // //			return { "/tmp/c48n9.quat"   }; // num: 216; max_angle: 36.47
@@ -168,12 +170,11 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		quat_rot_vec<T> orientation_covering_impl<T>::orientations_from_file(const boost::filesystem::path &prm_filename ///< TODOCUMENT
+		quat_rot_vec<T> orientation_covering_impl<T>::orientations_from_file(const ::std::filesystem::path &prm_filename ///< TODOCUMENT
 		                                                                     ) {
 			// Open an ifstream for the file
-			std::ifstream orentation_ifstream;
 			std::cerr << "About to attempt to open file " << prm_filename.string() << std::endl;
-			common::open_ifstream( orentation_ifstream, prm_filename );
+			std::ifstream orentation_ifstream = common::open_ifstream( prm_filename );
 
 			/// Populate the orientations, one per line
 			quat_rot_vec<T> orientations;

@@ -20,7 +20,7 @@
 
 #include "gen_dyn_prog_string_aligner.hpp"
 
-#include <boost/lexical_cast.hpp>
+#include <string>
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/alignment.hpp"
@@ -28,16 +28,15 @@
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 
-#include <string>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::align::detail;
 using namespace ::cath::align::gap;
 using namespace ::cath::common;
-using namespace ::std;
 
-using ::boost::lexical_cast;
+using ::std::max;
+using ::std::string;
+using ::std::to_string;
 
 /// \brief Check that there is dyn_prog_aligner stored in dyn_prog_aligner_ptr
 ///
@@ -100,9 +99,9 @@ str_str_pair gen_dyn_prog_string_aligner::do_align(const string      &prm_string
 			+ "\" <-> \""
 			+ aligned_strings.second
 			+ "\" was "
-			+ lexical_cast<string>(score)
+			+ to_string(score)
 			+ " but, based on a recalculation, it should be "
-			+ lexical_cast<string>(recalculated_score)
+			+ to_string(recalculated_score)
 		));
 	}
 #endif /* #ifndef NDEBUG */

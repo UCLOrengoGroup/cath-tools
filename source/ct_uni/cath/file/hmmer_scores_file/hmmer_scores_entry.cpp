@@ -36,7 +36,6 @@ using namespace ::cath::file;
 using namespace ::std;
 
 using ::boost::algorithm::is_space;
-using ::boost::algorithm::starts_with;
 using ::boost::numeric_cast;
 using ::boost::token_compress_on;
 

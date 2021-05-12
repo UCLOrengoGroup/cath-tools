@@ -23,7 +23,6 @@
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/filesystem/path.hpp>
 
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"

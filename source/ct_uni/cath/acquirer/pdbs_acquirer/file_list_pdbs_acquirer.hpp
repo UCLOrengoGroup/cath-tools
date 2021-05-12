@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_FILE_LIST_PDBS_ACQUIRER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_FILE_LIST_PDBS_ACQUIRER_HPP
 
-#include <boost/filesystem.hpp>
-
 #include "cath/acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "cath/common/path_type_aliases.hpp"
 

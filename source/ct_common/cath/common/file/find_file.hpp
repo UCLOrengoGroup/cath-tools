@@ -21,16 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_FIND_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_FIND_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <string>
 
 #include "cath/common/path_type_aliases.hpp"
-
-#include <string>
 
 namespace cath {
 	namespace common {
 
-		boost::filesystem::path find_file(const path_vec &,
+		::std::filesystem::path find_file(const path_vec &,
 		                                  const std::string &);
 
 	} // namespace common

@@ -21,13 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP
 #define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <string>
+
 #include <boost/test/test_tools.hpp>
 
 #include "cath/test/predicate/bootstrap_mode.hpp"
 #include "cath/test/predicate/istreams_equal.hpp"
-
-#include <string>
 
 namespace cath {
 	namespace test {
@@ -53,7 +53,7 @@ namespace cath {
 			explicit istream_and_file_equal(const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
 			boost::test_tools::predicate_result operator()(std::istream &,
 			                                               const std::string &,
-			                                               const boost::filesystem::path &) const;
+			                                               const ::std::filesystem::path &) const;
 		};
 
 	} // namespace test

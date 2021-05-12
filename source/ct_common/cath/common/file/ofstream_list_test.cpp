@@ -22,34 +22,28 @@
 
 #include "cath/common/file/ofstream_list.hpp"
 #include "cath/common/file/read_string_from_file.hpp"
-// #include "cath/common/file/simple_file_read_write.hpp"
 #include "cath/common/file/temp_file.hpp"
-
-namespace cath { namespace test { } }
 
 using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::cath::test;
 
 using ::std::ostringstream;
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The ofstream_list_test_suite_fixture to assist in testing ofstream_list
-		struct ofstream_list_test_suite_fixture {
-		protected:
-			~ofstream_list_test_suite_fixture() noexcept = default;
+	/// \brief The ofstream_list_test_suite_fixture to assist in testing ofstream_list
+	struct ofstream_list_test_suite_fixture {
+	  protected:
+		~ofstream_list_test_suite_fixture() noexcept = default;
 
-		public:
-			const temp_file test_out_1{ ".ofstream_list_test.temp_file.%%%%-%%%%-%%%%-%%%%" };
-			const temp_file test_out_2{ ".ofstream_list_test.temp_file.%%%%-%%%%-%%%%-%%%%" };
-			ostringstream   test_ostream;
-		};
+	  public:
+		const temp_file test_out_1{ ".ofstream_list_test.temp_file.%%%%-%%%%-%%%%-%%%%" };
+		const temp_file test_out_2{ ".ofstream_list_test.temp_file.%%%%-%%%%-%%%%-%%%%" };
+		ostringstream   test_ostream;
+	};
 
-	}  // namespace test
-}  // namespace cath
+}
 
 BOOST_FIXTURE_TEST_SUITE(ofstream_list_test_suite, ofstream_list_test_suite_fixture)
 

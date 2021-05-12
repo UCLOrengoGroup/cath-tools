@@ -21,8 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_PROTEIN_LOADER_PROTEIN_LIST_LOADER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_PROTEIN_LOADER_PROTEIN_LIST_LOADER_HPP
 
-#include <boost/filesystem/path.hpp>
-
+#include <filesystem>
 #include <iosfwd>
 #include <utility>
 
@@ -45,14 +44,14 @@ namespace cath {
 		const common::clone_ptr<protein_source_file_set> source_file_set_ptr;
 
 		/// \brief The directory from which the files should be read
-		const boost::filesystem::path data_dir;
+		const ::std::filesystem::path data_dir;
 
 		/// \brief The name of the proteins that are to be read from files
 		const str_vec protein_names;
 
 	public:
 		protein_list_loader(const protein_source_file_set &,
-		                    const boost::filesystem::path &,
+		                    const ::std::filesystem::path &,
 		                    str_vec);
 
 		std::pair<protein_list, hrc_duration> load_proteins(std::ostream &) const;

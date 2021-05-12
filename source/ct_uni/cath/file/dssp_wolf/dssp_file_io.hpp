@@ -21,8 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_DSSP_FILE_IO_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_DSSP_FILE_IO_HPP
 
-#include <boost/filesystem/path.hpp>
-
+#include <filesystem>
 #include <utility>
 
 namespace cath { class chain_label; }
@@ -35,7 +34,7 @@ namespace cath { namespace file { class dssp_file; } }
 namespace cath {
 	namespace file {
 
-		dssp_file read_dssp_file(const boost::filesystem::path &);
+		dssp_file read_dssp_file(const ::std::filesystem::path &);
 		dssp_file read_dssp(std::istream &);
 
 		using size_residue_pair = std::pair<size_t, residue>;

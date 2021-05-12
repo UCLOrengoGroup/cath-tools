@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_MAKE_CLUSTERS_FROM_MERGES_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_MAKE_CLUSTERS_FROM_MERGES_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -47,7 +47,7 @@ namespace cath {
 		                                             const strength_vec &);
 
 
-		void write_cluster(const boost::filesystem::path &,
+		void write_cluster(const ::std::filesystem::path &,
 		                   const hierarchy &,
 		                   const common::id_of_str_bidirnl &);
 

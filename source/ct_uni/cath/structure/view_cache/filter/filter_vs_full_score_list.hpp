@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_LIST_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/score/score_type_aliases.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
@@ -105,16 +105,16 @@ namespace cath {
 			                                                           const filter_vs_full_score &);
 
 			void gnuplot_data(const filter_vs_full_score_list &,
-			                  const boost::filesystem::path &,
+			                  const ::std::filesystem::path &,
 			                  const filter_vs_full_score_list & = filter_vs_full_score_list());
 
 			void gnuplot_classsn_stat_for_recall(const filter_vs_full_score_list &,
-			                                     const boost::filesystem::path &,
+			                                     const ::std::filesystem::path &,
 			                                     const score::classn_stat &,
 			                                     const double &);
 
 			void gnuplot_classsn_stat_for_recall(const score::doub_true_false_pos_neg_pair_vec &,
-			                                     const boost::filesystem::path &,
+			                                     const ::std::filesystem::path &,
 			                                     const score::classn_stat &);
 		} // namespace filter
 	} // namespace index

@@ -21,12 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS_CATH_EXTRACT_PDB_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS_CATH_EXTRACT_PDB_OPTIONS_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+#include <vector>
 
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/extract_pdb_options_block.hpp"
-
-#include <vector>
 
 namespace cath {
 	namespace opts {
@@ -55,7 +54,7 @@ namespace cath {
 			static const std::string PROGRAM_NAME;
 		};
 
-		const boost::filesystem::path & get_input_pdb_file(const cath_extract_pdb_options &);
+		const ::std::filesystem::path & get_input_pdb_file(const cath_extract_pdb_options &);
 		const path_opt & get_output_pdb_file(const cath_extract_pdb_options &);
 		const chop::domain_opt & get_regions(const cath_extract_pdb_options &);
 

@@ -20,14 +20,15 @@
 
 #include "resolve_hits_fixture.hpp"
 
-#include "cath/common/regex/regex_replace_file.hpp"
-
+#include <filesystem>
 #include <sstream>
+
+#include "cath/common/regex/regex_replace_file.hpp"
 
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ostringstream;
 using ::std::regex;
 using ::std::string;

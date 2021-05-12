@@ -21,13 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_FILE_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_FILE_TYPE_ALIASES_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <utility>
+#include <vector>
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/pdb/pdb_atom_parse_status.hpp"
-
-#include <utility>
-#include <vector>
 
 namespace cath { class amino_acid; }
 namespace cath { class chain_label; }
@@ -81,10 +80,10 @@ namespace cath {
 		using data_file_set = std::set<data_file>;
 
 		/// \brief Type alias for pair of data_file and path
-		using data_file_path_pair = std::pair<data_file, boost::filesystem::path>;
+		using data_file_path_pair = std::pair<data_file, ::std::filesystem::path>;
 
 		/// \brief Type alias for map from data_file to path
-		using data_file_path_map = std::map<data_file, boost::filesystem::path>;
+		using data_file_path_map = std::map<data_file, ::std::filesystem::path>;
 
 
 		/// \brief Type alias for a vector of ssap_scores_entry objects

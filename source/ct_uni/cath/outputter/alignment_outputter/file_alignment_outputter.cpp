@@ -20,18 +20,19 @@
 
 #include "file_alignment_outputter.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/outputter/alignment_outputter/fasta_ostream_alignment_outputter.hpp"
-
-#include <fstream>
 
 using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief A standard do_clone method
 unique_ptr<alignment_outputter> file_alignment_outputter::do_clone() const {
@@ -42,8 +43,7 @@ unique_ptr<alignment_outputter> file_alignment_outputter::do_clone() const {
 void file_alignment_outputter::do_output_alignment(const alignment_context &prm_alignment_context, ///< TODOCUMENT
                                                    ostream                 &/*prm_ostream*/        ///< TODOCUMENT
                                                    ) const {
-	ofstream pdb_ostream;
-	open_ofstream( pdb_ostream, output_file );
+	ofstream pdb_ostream = open_ofstream( output_file );
 
 	ostream_alignment_outputter_ptr->output_alignment( prm_alignment_context, pdb_ostream );
 

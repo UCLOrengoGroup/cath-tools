@@ -21,10 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_SIMPLE_FILE_READ_WRITE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_SIMPLE_FILE_READ_WRITE_HPP
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/concept/assert.hpp>
 #include <boost/concept_archetype.hpp>
 #include <boost/core/ignore_unused.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -34,8 +36,6 @@
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <fstream>
 
 namespace cath {
 	namespace common {
@@ -252,10 +252,9 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		std::vector<T> read_file(const boost::filesystem::path &prm_file ///< TODOCUMENT
+		std::vector<T> read_file(const ::std::filesystem::path &prm_file ///< TODOCUMENT
 		                         ) {
-			std::ifstream input_stream;
-			open_ifstream( input_stream, prm_file );
+			std::ifstream input_stream = open_ifstream( prm_file );
 			std::vector<T> line_entries;
 			std::string line_string;
 			while ( getline( input_stream, line_string ) ) {
@@ -268,13 +267,12 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename ITER>
-		void write_file(const boost::filesystem::path &prm_file,  ///< TODOCUMENT
+		void write_file(const ::std::filesystem::path &prm_file,  ///< TODOCUMENT
 		                const ITER                    &prm_begin, ///< TODOCUMENT
 		                const ITER                    &prm_end    ///< TODOCUMENT
 		                ) {
 			BOOST_CONCEPT_ASSERT(( boost::forward_iterator_archetype<ITER> ));
-			std::ofstream output_stream;
-			open_ofstream( output_stream, prm_file );
+			std::ofstream output_stream = open_ofstream( prm_file );
 			for (const auto &value : boost::iterator_range<ITER>( prm_begin, prm_end ) ) {
 				detail::type_line_writer()( output_stream, value );
 			}
@@ -284,7 +282,7 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		template <typename SinglePassRange>
-		void write_file(const boost::filesystem::path &prm_file, ///< TODOCUMENT
+		void write_file(const ::std::filesystem::path &prm_file, ///< TODOCUMENT
 		                const SinglePassRange         &prm_range ///< TODOCUMENT
 		                ) {
 			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept<const SinglePassRange> ));
@@ -296,7 +294,7 @@ namespace cath {
 		}
 
 		/// \brief Write a single string to a file
-		inline void write_file(const boost::filesystem::path &prm_file,  ///< The file to which the string should be written
+		inline void write_file(const ::std::filesystem::path &prm_file,  ///< The file to which the string should be written
 		                       const std::string             &prm_string ///< The string to write
 		                       ) {
 			cath::common::write_file(

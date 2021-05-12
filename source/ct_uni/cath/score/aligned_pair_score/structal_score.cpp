@@ -22,7 +22,6 @@
 
 #include <boost/logic/tribool.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/range/join.hpp>
 #include <boost/range/numeric.hpp>
 
 #include "cath/alignment/alignment.hpp"
@@ -50,7 +49,6 @@ using namespace ::std;
 
 using ::boost::inner_product;
 using ::boost::numeric_cast;
-using ::boost::range::join;
 using ::boost::tribool;
 
 //BOOST_CLASS_EXPORT(structal_score)

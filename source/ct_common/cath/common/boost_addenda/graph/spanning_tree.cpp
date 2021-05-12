@@ -20,6 +20,13 @@
 
 #include "spanning_tree.hpp"
 
+#include <algorithm>
+#include <filesystem>
+#include <fstream>
+#include <set>
+#include <tuple>
+#include <vector>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -29,20 +36,14 @@
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-#include <algorithm>
-#include <fstream>
-#include <set>
-#include <tuple>
-#include <vector>
-
 using namespace ::cath;
 using namespace ::cath::common;
 
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::irange;
+using ::std::filesystem::path;
 using ::std::make_pair;
 using ::std::make_tuple;
 using ::std::max;
@@ -209,8 +210,7 @@ string cath::common::make_graphviz_string_of_spanning_tree(const size_size_doub_
 void cath::common::write_graphviz_string_of_spanning_tree(const size_size_doub_tpl_vec &prm_spanning_tree, ///< The spanning tree to represent in the specified file as a graphviz string
                                                           const path                   &prm_file           ///< The file to write to
                                                           ) {
-	ofstream output_stream;
-	open_ofstream( output_stream, prm_file );
+	ofstream output_stream = open_ofstream( prm_file );
 	output_stream << make_graphviz_string_of_spanning_tree( prm_spanning_tree );
 	output_stream.close();
 }

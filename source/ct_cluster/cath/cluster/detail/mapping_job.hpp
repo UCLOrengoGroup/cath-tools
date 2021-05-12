@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_DETAIL_MAPPING_JOB_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_DETAIL_MAPPING_JOB_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/cluster/cluster_type_aliases.hpp"
@@ -42,23 +43,23 @@ namespace cath {
 				str_opt  batch_id;
 
 				/// \brief The file describing the cluster membership of the clusters to be mapped/renumbered
-				boost::filesystem::path new_cluster_membership_file;
+				::std::filesystem::path new_cluster_membership_file;
 
 				/// \brief An optional file describing map-from cluster membership
 				path_opt old_cluster_membership_file;
 
 			public:
 				explicit mapping_job(const str_opt &,
-				                     const boost::filesystem::path &,
+				                     const ::std::filesystem::path &,
 				                     const path_opt & = boost::none);
 
 				const str_opt & get_batch_id() const;
-				const boost::filesystem::path & get_new_cluster_membership_file() const;
+				const ::std::filesystem::path & get_new_cluster_membership_file() const;
 				const path_opt & get_old_cluster_membership_file() const;
 			};
 
 			mapping_job_vec read_batch_mapping_file(std::istream &);
-			mapping_job_vec read_batch_mapping_file(const boost::filesystem::path &);
+			mapping_job_vec read_batch_mapping_file(const ::std::filesystem::path &);
 
 		} // namespace detail
 	} // namespace clust

@@ -21,12 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_TEMP_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_TEMP_FILE_HPP
 
-//#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <string>
+
 #include <boost/optional.hpp>
 
 #include "cath/common/path_type_aliases.hpp"
-
-#include <string>
 
 namespace cath {
 	namespace common {
@@ -39,7 +39,7 @@ namespace cath {
 		private:
 			path_opt filename;
 
-			static boost::filesystem::path temp_filename_of_basename_pattern(const std::string &);
+			static ::std::filesystem::path temp_filename_of_basename_pattern(const std::string &);
 
 		public:
 			explicit temp_file(const std::string &);
@@ -58,7 +58,7 @@ namespace cath {
 		};
 
 		bool has_filename(const temp_file &);
-		boost::filesystem::path get_filename(const temp_file &);
+		::std::filesystem::path get_filename(const temp_file &);
 	} // namespace common
 } // namespace cath
 

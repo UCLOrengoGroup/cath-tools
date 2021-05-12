@@ -19,6 +19,8 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "cath_ssap_options.hpp"
 
+#include <filesystem>
+
 #include <boost/program_options.hpp>
 #include <boost/range/join.hpp>
 #include <boost/shared_array.hpp>
@@ -53,10 +55,10 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::program_options::positional_options_description;
 using ::boost::range::join;
+using ::std::filesystem::path;
 using ::std::string;
 
 /// \brief TODOCUMENT

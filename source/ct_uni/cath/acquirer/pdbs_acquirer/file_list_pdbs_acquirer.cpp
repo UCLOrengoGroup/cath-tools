@@ -20,6 +20,8 @@
 
 #include "file_list_pdbs_acquirer.hpp"
 
+#include <filesystem>
+
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/file/name_set/name_set_list.hpp"
@@ -32,7 +34,7 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::istream;
 using ::std::make_pair;
 using ::std::unique_ptr;

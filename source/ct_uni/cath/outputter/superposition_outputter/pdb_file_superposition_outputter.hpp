@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_PDB_FILE_SUPERPOSITION_OUTPUTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_PDB_FILE_SUPERPOSITION_OUTPUTTER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
 #include "cath/superposition/superposition_content_spec.hpp"
@@ -33,7 +33,7 @@ namespace cath {
 		class pdb_file_superposition_outputter final : public superposition_outputter {
 		private:
 			/// \brief TODOCUMENT
-			const boost::filesystem::path output_file;
+			const ::std::filesystem::path output_file;
 
 			/// \brief The specification of what should be included in the superposition
 			sup::superposition_content_spec content_spec;
@@ -46,7 +46,7 @@ namespace cath {
 			std::string do_get_name() const final;
 
 		public:
-			pdb_file_superposition_outputter(const boost::filesystem::path &,
+			pdb_file_superposition_outputter(const ::std::filesystem::path &,
 			                                 sup::superposition_content_spec);
 		};
 

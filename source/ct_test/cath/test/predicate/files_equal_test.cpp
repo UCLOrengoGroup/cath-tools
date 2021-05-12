@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/test/global_test_constants.hpp"
@@ -25,7 +27,7 @@
 
 using namespace ::cath::test;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {

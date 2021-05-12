@@ -20,6 +20,9 @@
 
 #include "protein_list_loader.hpp"
 
+#include <chrono>
+#include <filesystem>
+
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/protein_list.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_source_file_set.hpp"
@@ -27,12 +30,10 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-#include <chrono>
-
 using namespace ::cath;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 protein_list_loader::protein_list_loader(const protein_source_file_set &prm_source_file_set, ///< TODOCUMENT

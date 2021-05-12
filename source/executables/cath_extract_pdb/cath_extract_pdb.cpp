@@ -18,7 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/chopping/region/region.hpp"
@@ -32,8 +32,8 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::std::cout;
+using ::std::filesystem::path;
 using ::std::string;
 
 namespace cath {

@@ -20,7 +20,8 @@
 
 #include "gnuplot_matrix_plotter.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/numeric/conversion/cast.hpp>
 
 #include <gnuplot-iostream.h>
@@ -32,8 +33,8 @@ using namespace ::cath::align::detail;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::filesystem::path;
 using ::boost::numeric_cast;
+using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 void gnuplot_matrix_plotter::do_plot_scores(doub_vec_vec &prm_scores,        ///< TODOCUMENT

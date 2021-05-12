@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC_CLUSTMAP_INPUT_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC_CLUSTMAP_INPUT_SPEC_HPP
 
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/common/path_type_aliases.hpp"
@@ -33,7 +35,7 @@ namespace cath {
 		class clustmap_input_spec final {
 		private:
 			/// \brief The cluster-membership file for the working clusters
-			boost::filesystem::path working_clustmemb_file;
+			::std::filesystem::path working_clustmemb_file;
 
 			/// \brief An optional file specify a cluster-membership file for map-from clusters
 			path_opt                map_from_clustmemb_file;
@@ -48,11 +50,11 @@ namespace cath {
 			/// \brief Default ctor
 			clustmap_input_spec() = default;
 
-			const boost::filesystem::path & get_working_clustmemb_file() const;
+			const ::std::filesystem::path & get_working_clustmemb_file() const;
 			const path_opt & get_map_from_clustmemb_file() const;
 			const bool & get_read_batches_from_input() const;
 
-			clustmap_input_spec & set_working_clustmemb_file(const boost::filesystem::path &);
+			clustmap_input_spec & set_working_clustmemb_file(const ::std::filesystem::path &);
 			clustmap_input_spec & set_map_from_clustmemb_file(const path_opt &);
 			clustmap_input_spec & set_read_batches_from_input(const bool &);
 		};
@@ -60,7 +62,7 @@ namespace cath {
 		str_opt get_invalid_description(const clustmap_input_spec &);
 
 		/// \brief Getter for the cluster-membership file for the working clusters
-		inline const boost::filesystem::path & clustmap_input_spec::get_working_clustmemb_file() const {
+		inline const ::std::filesystem::path & clustmap_input_spec::get_working_clustmemb_file() const {
 			return working_clustmemb_file;
 		}
 
@@ -75,7 +77,7 @@ namespace cath {
 		}
 
 		/// \brief Setter for the cluster-membership file for the working clusters
-		inline clustmap_input_spec & clustmap_input_spec::set_working_clustmemb_file(const boost::filesystem::path &prm_working_clustmemb_file ///< The cluster-membership file for the working clusters
+		inline clustmap_input_spec & clustmap_input_spec::set_working_clustmemb_file(const ::std::filesystem::path &prm_working_clustmemb_file ///< The cluster-membership file for the working clusters
 		                                                                             ) {
 			working_clustmemb_file = prm_working_clustmemb_file;
 			return *this;

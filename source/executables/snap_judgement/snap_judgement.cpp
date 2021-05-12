@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+
 #include <boost/units/quantity.hpp>
 
 #include "cath/common/program_exception_wrapper.hpp"
@@ -35,7 +37,7 @@ using namespace ::cath::common;
 using namespace ::cath::scan;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 

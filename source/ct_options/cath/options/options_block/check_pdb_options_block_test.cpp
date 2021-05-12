@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/unit_test.hpp>
+#include <filesystem>
 
-#include <boost/filesystem/path.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/temp_file.hpp"
@@ -31,7 +31,7 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {

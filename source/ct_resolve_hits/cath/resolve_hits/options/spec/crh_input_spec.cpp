@@ -20,13 +20,15 @@
 
 #include "crh_input_spec.hpp"
 
+#include <filesystem>
+
 using namespace ::cath;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
 using namespace ::std::literals::string_literals;
 
-using ::boost::filesystem::path;
 using ::boost::none;
+using ::std::filesystem::path;
 
 constexpr bool                  crh_input_spec::DEFAULT_READ_FROM_STDIN;
 constexpr hits_input_format_tag crh_input_spec::DEFAULT_INPUT_FORMAT;

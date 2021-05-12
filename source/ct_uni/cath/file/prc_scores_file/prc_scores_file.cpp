@@ -20,6 +20,7 @@
 
 #include "prc_scores_file.hpp"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream> // ***** TEMPORARY *****
 #include <string>
@@ -41,14 +42,13 @@
 #include "cath/file/prc_scores_file/detail/prc_scores_line_parser.hpp"
 #include "cath/file/prc_scores_file/prc_scores_entry.hpp"
 
-
 using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::std;
 
 using ::boost::adaptors::filtered;
 using ::boost::algorithm::trim_left;
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_vec &prm_prc_scores_entries ///< TODOCUMENT
@@ -128,8 +128,7 @@ prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const string &prm_pr
 /// \brief TODOCUMENT
 prc_scores_entry_vec prc_scores_file::parse_prc_scores_file(const path &prm_prc_scores_file ///< TODOCUMENT
                                                             ) {
-	ifstream prc_scores_ifstream;
-	open_ifstream( prc_scores_ifstream, prm_prc_scores_file );
+	ifstream prc_scores_ifstream = open_ifstream( prm_prc_scores_file );
 	const auto prc_scores_data = prc_scores_file::parse_prc_scores_file( prc_scores_ifstream );
 	prc_scores_ifstream.close();
 	return prc_scores_data;

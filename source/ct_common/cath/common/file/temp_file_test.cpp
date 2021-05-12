@@ -18,20 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/unit_test.hpp>
+#include <filesystem>
+#include <fstream>
 
-#include <boost/filesystem.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/file/temp_file.hpp"
 
-#include <fstream>
-
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {
@@ -61,8 +60,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 		BOOST_CHECK_EQUAL( true, has_filename( basic_temp_file ) );
 		filename = get_filename( basic_temp_file );
 		BOOST_CHECK( !filename.empty() );
-		ofstream file_stream;
-		open_ofstream(file_stream, filename);
+		ofstream file_stream = open_ofstream( filename );
 		file_stream << "string\n";
 		file_stream.close();
 		BOOST_CHECK( exists(filename) );

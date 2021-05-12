@@ -20,9 +20,12 @@
 
 #include "ssap_scores_file.hpp"
 
+#include <filesystem>
+#include <fstream>
+#include <map>
+
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
@@ -34,16 +37,13 @@
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/file/ssap_scores_file/ssap_scores_entry.hpp"
 
-#include <fstream>
-#include <map>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::std;
 
 using ::boost::algorithm::trim_left;
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief Parse a vector of ssap_scores_entry objects from the specified istream
 ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(istream &prm_ssap_scores_is ///< The istream of SSAP scores data from which to parse the ssap_scores_entry objects
@@ -71,8 +71,7 @@ ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(const stri
 /// \brief Parse a vector of ssap_scores_entry objects from the specified file
 ssap_scores_entry_vec ssap_scores_file::parse_ssap_scores_file_simple(const path &prm_ssap_scores_file ///< The SSAP scores file from which to parse the ssap_scores_entry objects
                                                                       ) {
-	ifstream ssap_scores_ifstream;
-	open_ifstream( ssap_scores_ifstream, prm_ssap_scores_file );
+	ifstream ssap_scores_ifstream = open_ifstream( prm_ssap_scores_file );
 	const auto ssap_scores_data = ssap_scores_file::parse_ssap_scores_file_simple( ssap_scores_ifstream );
 	ssap_scores_ifstream.close();
 	return ssap_scores_data;
@@ -135,8 +134,7 @@ pair<str_vec, size_size_doub_tpl_vec> ssap_scores_file::parse_ssap_scores_file(i
 /// \brief TODOCUMENT
 pair<str_vec, size_size_doub_tpl_vec> ssap_scores_file::parse_ssap_scores_file(const path &prm_ssap_scores_file ///< TODOCUMENT
                                                                                ) {
-	ifstream ssap_scores_ifstream;
-	open_ifstream( ssap_scores_ifstream, prm_ssap_scores_file );
+	ifstream ssap_scores_ifstream = open_ifstream( prm_ssap_scores_file );
 	const pair<str_vec, size_size_doub_tpl_vec> ssap_scores_data = ssap_scores_file::parse_ssap_scores_file(ssap_scores_ifstream);
 	ssap_scores_ifstream.close();
 	return ssap_scores_data;

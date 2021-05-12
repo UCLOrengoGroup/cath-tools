@@ -18,7 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/filesystem/path.hpp>
+#include <iostream>
+#include <random>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/file/simple_file_read_write.hpp"
@@ -28,9 +30,6 @@
 #include "cath/structure/protein/residue.hpp"
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
-
-#include <iostream>
-#include <random>
 
 using namespace ::cath::common;
 using namespace ::cath::opts;

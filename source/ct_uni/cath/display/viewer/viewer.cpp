@@ -20,6 +20,7 @@
 
 #include "viewer.hpp"
 
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 
@@ -59,11 +60,11 @@ using namespace ::cath::file;
 using namespace ::cath::sup;
 
 using ::boost::algorithm::is_space;
-using ::boost::filesystem::path;
 using ::boost::format;
 using ::boost::is_alnum;
 using ::boost::lexical_cast;
 using ::boost::string_ref;
+using ::std::filesystem::path;
 using ::std::flush;
 using ::std::max;
 using ::std::ofstream;
@@ -301,8 +302,7 @@ void cath::output_superposition_to_viewer_file(const path                       
                                                const superposition_content_spec &prm_content_spec,            ///< The specification of what should be included in the superposition
                                                const missing_aln_policy         &prm_missing_aln_policy       ///< Whether to warn or throw if no alignment is present
                                                ) {
-	ofstream pymol_file_ostream;
-	open_ofstream( pymol_file_ostream, prm_out_file );
+	ofstream pymol_file_ostream = open_ofstream( prm_out_file );
 
 	output_superposition_to_viewer(
 		pymol_file_ostream,

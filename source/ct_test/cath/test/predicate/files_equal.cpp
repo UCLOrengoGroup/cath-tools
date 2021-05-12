@@ -20,16 +20,17 @@
 
 #include "files_equal.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/test/predicate/istream_and_file_equal.hpp"
-
-#include <fstream>
 
 using namespace ::cath::common;
 using namespace ::cath::test;
 
-using ::boost::filesystem::path;
 using ::boost::test_tools::predicate_result;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::string;
 
@@ -61,8 +62,7 @@ predicate_result files_equal::operator()(const path &prm_filename1, ///< TODOCUM
 	}
 
 	// Otherwise, create an ifstream for the first file...
-	ifstream file_ifstream1;
-	open_ifstream( file_ifstream1, prm_filename1 );
+	ifstream file_ifstream1 = open_ifstream( prm_filename1 );
 
 	// ...and then just use a istream_and_file_equal
 	const predicate_result the_result = istream_and_file_equal{ bootstrapping, diff_half_width }(

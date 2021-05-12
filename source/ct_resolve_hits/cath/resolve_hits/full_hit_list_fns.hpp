@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_LIST_FNS_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_LIST_FNS_HPP
 
-#include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 
 #include "cath/resolve_hits/full_hit_list.hpp"

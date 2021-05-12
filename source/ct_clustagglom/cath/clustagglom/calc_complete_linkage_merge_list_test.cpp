@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/clustagglom/calc_complete_linkage_merge_list.hpp"
@@ -35,8 +37,8 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::test;
 
-using ::boost::filesystem::path;
 using ::boost::test_tools::per_element;
+using ::std::filesystem::path;
 using ::std::move;
 using ::std::numeric_limits;
 

@@ -21,15 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_MAP_RESULTS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_MAP_RESULTS_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <iostream>
+#include <string>
 
 #include "cath/cluster/cluster_type_aliases.hpp"
 #include "cath/cluster/map/overlap_frac_distn.hpp"
 #include "cath/cluster/options/spec/clust_mapping_spec.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <iostream>
-#include <string>
 
 namespace cath { namespace clust { class clust_mapping_spec; } }
 namespace cath { namespace clust { class new_cluster_data; } }
@@ -114,7 +113,7 @@ namespace cath {
 		                                    const new_cluster_data &,
 		                                    const map_results &);
 
-		void write_markdown_summary_string_to_file(const boost::filesystem::path &,
+		void write_markdown_summary_string_to_file(const ::std::filesystem::path &,
 		                                           const old_cluster_data_opt &,
 		                                           const new_cluster_data &,
 		                                           const map_results &);

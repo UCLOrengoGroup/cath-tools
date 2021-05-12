@@ -20,7 +20,8 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/special_functions/round.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -55,9 +56,9 @@ using namespace ::cath::file;
 using namespace ::cath::geom;
 using namespace ::std;
 
-using ::boost::filesystem::path;
 using ::boost::numeric_cast;
 using ::boost::range::sort;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {
@@ -67,10 +68,10 @@ namespace cath {
 		protected:
 			~dssp_wolf_file_test_suite_fixture() noexcept = default;
 
-			const path wolf_file_of_example_id(const string &);
-			const path dssp_file_of_example_id(const string &);
-			const path pdb_file_of_example_id(const string &);
-			const path expected_wolf_phi_psi_of_example_id(const string &);
+			path wolf_file_of_example_id(const string &);
+			path dssp_file_of_example_id(const string &);
+			path pdb_file_of_example_id(const string &);
+			path expected_wolf_phi_psi_of_example_id(const string &);
 
 			void check_phi_psi_from_wolf_against_expected(const string &);
 			void compare_phi_psi_from_pdb_vs_dssp(const string &);
@@ -87,25 +88,25 @@ namespace cath {
 }  // namespace cath
 
 /// \brief TODOCUMENT
-const path cath::test::dssp_wolf_file_test_suite_fixture::wolf_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
+path cath::test::dssp_wolf_file_test_suite_fixture::wolf_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
                                                                                   ) {
 	return TEST_RESIDUE_IDS_DATA_DIR() / (prm_example_id + EXAMPLE_WOLF_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
-const path cath::test::dssp_wolf_file_test_suite_fixture::dssp_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
+path cath::test::dssp_wolf_file_test_suite_fixture::dssp_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
                                                                                   ) {
 	return TEST_RESIDUE_IDS_DATA_DIR() / (prm_example_id + EXAMPLE_DSSP_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
-const path cath::test::dssp_wolf_file_test_suite_fixture::pdb_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
+path cath::test::dssp_wolf_file_test_suite_fixture::pdb_file_of_example_id(const string &prm_example_id ///< TODOCUMENT
                                                                                  ) {
 	return TEST_RESIDUE_IDS_DATA_DIR() / (prm_example_id + EXAMPLE_PDB_FILE_SUFFIX);
 }
 
 /// \brief TODOCUMENT
-const path cath::test::dssp_wolf_file_test_suite_fixture::expected_wolf_phi_psi_of_example_id(const string &prm_example_id ///< TODOCUMENT
+path cath::test::dssp_wolf_file_test_suite_fixture::expected_wolf_phi_psi_of_example_id(const string &prm_example_id ///< TODOCUMENT
                                                                                               ) {
 	return TEST_RESIDUE_IDS_DATA_DIR() / (prm_example_id + EXPECTED_WOLF_PHI_PSI_SUFFIX);
 }

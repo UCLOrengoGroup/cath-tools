@@ -20,6 +20,10 @@
 
 #include "wolf_file_io.hpp"
 
+#include <cstdio>
+#include <filesystem>
+#include <iostream>
+
 #include <boost/core/ignore_unused.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
@@ -31,18 +35,15 @@
 #include "cath/structure/protein/residue.hpp"
 #include "cath/structure/protein/sec_struc_type.hpp"
 
-#include <cstdio>
-#include <iostream>
-
 using namespace ::cath;
 using namespace ::cath::file;
 using namespace ::cath::common;
 using namespace ::cath::geom;
 using namespace ::std;
 
-using ::boost::filesystem::path;
 using ::boost::ignore_unused;
 using ::boost::numeric_cast;
+using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 ///

@@ -18,7 +18,6 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/algorithm/string/join.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -36,7 +35,6 @@ using namespace ::cath::file;
 using namespace ::cath::score;
 using namespace ::std;
 
-using ::boost::algorithm::join;
 using ::boost::range::find_if;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( size_size_doub_tpl_vec::const_iterator )

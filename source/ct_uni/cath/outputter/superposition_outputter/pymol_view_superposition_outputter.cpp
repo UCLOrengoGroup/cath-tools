@@ -20,21 +20,22 @@
 
 #include "pymol_view_superposition_outputter.hpp"
 
+#include <filesystem>
+#include <iostream>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/command_executer.hpp"
 #include "cath/common/file/temp_file.hpp"
 #include "cath/outputter/run_pymol.hpp"
 #include "cath/outputter/superposition_outputter/pymol_file_superposition_outputter.hpp"
 
-#include <iostream>
-
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 using namespace ::cath::view;
 
-using ::boost::filesystem::path;
 using ::boost::string_ref;
+using ::std::filesystem::path;
 using ::std::ostream;
 using ::std::string;
 using ::std::unique_ptr;

@@ -20,6 +20,10 @@
 
 #include "filter_vs_full_score_list.hpp"
 
+#include <algorithm>
+#include <filesystem>
+#include <numeric>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm.hpp>
@@ -41,9 +45,6 @@
 #include "cath/structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"
 #include "cath/structure/view_cache/filter/filter_vs_full_score.hpp"
 
-#include <algorithm>
-#include <numeric>
-
 /// \todo Write some decent unit tests for sorted_insert and then remove this code
 #ifndef NDEBUG
 #include <boost/algorithm/cxx11/is_sorted.hpp>
@@ -57,7 +58,6 @@ using namespace ::cath::score;
 
 using ::boost::accumulate;
 using ::boost::distance;
-using ::boost::filesystem::path;
 using ::boost::numeric_cast;
 using ::boost::range::lower_bound;
 using ::boost::range::nth_element;
@@ -67,6 +67,7 @@ using ::boost::sub_range;
 using ::std::cerr;
 using ::std::end;
 using ::std::endl;
+using ::std::filesystem::path;
 using ::std::make_pair;
 using ::std::to_string;
 

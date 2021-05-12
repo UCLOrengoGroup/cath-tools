@@ -21,6 +21,7 @@
 #include "dssp_file_io.hpp"
 
 #include <cmath>
+#include <filesystem>
 #include <fstream>
 
 #include <boost/algorithm/string/classification.hpp>
@@ -38,7 +39,6 @@
 #include "cath/file/dssp_wolf/dssp_file.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
@@ -50,15 +50,14 @@ using ::boost::algorithm::is_lower;
 using ::boost::algorithm::is_space;
 using ::boost::algorithm::starts_with;
 using ::boost::algorithm::trim_copy;
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief Parse a dssp_file object from an istream
 ///
 /// \relates dssp_file
 dssp_file cath::file::read_dssp_file(const path &prm_dssp_file ///< The DSSP file from which to parse a dssp_file object
                                      ) {
-	ifstream my_dssp_istream;
-	open_ifstream( my_dssp_istream, prm_dssp_file );
+	ifstream my_dssp_istream = open_ifstream( prm_dssp_file );
 	const dssp_file the_dssp_file = read_dssp( my_dssp_istream );
 	my_dssp_istream.close();
 	return the_dssp_file;

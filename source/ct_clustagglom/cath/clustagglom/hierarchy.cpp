@@ -20,6 +20,10 @@
 
 #include "hierarchy.hpp"
 
+#include <filesystem>
+#include <fstream>
+#include <string>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
 #include <boost/range/adaptor/reversed.hpp>
@@ -36,9 +40,6 @@
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-#include <fstream>
-#include <string>
-
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
@@ -46,10 +47,10 @@ using namespace ::cath::common;
 using ::boost::adaptors::reversed;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::format;
 using ::boost::range::reverse;
 using ::boost::range::sort;
+using ::std::filesystem::path;
 using ::std::ofstream;
 using ::std::ostream;
 using ::std::string;
@@ -183,8 +184,7 @@ void cath::clust::write_cluster(const path              &prm_output_file, ///< T
                                 const hierarchy         &prm_hierarchy,   ///< The hierarchy to write
                                 const id_of_str_bidirnl &prm_name_ider    ///< The holding the IDs of the entries in the hierarchy
                                 ) {
-	ofstream clust_ostream;
-	open_ofstream( clust_ostream, prm_output_file );
+	ofstream clust_ostream = open_ofstream( prm_output_file );
 	write_cluster( clust_ostream, prm_hierarchy, prm_name_ider );
 	clust_ostream.close();
 }
@@ -297,8 +297,7 @@ void cath::clust::write_spanning_trees(const path              &prm_output_file,
                                        const id_of_str_bidirnl &prm_name_ider,   ///< The holding the IDs of the entries in the hierarchy
                                        const links             &prm_links        ///< The links between the items
                                        ) {
-	ofstream span_ostream;
-	open_ofstream( span_ostream, prm_output_file );
+	ofstream span_ostream = open_ofstream( prm_output_file );
 	write_spanning_trees( span_ostream, prm_hierarchy, prm_name_ider, prm_links );
 	span_ostream.close();
 }
@@ -324,8 +323,7 @@ void cath::clust::write_reps(const path              &prm_output_file, ///< The 
                              const hierarchy         &prm_hierarchy,   ///< The hierarchy to write
                              const id_of_str_bidirnl &prm_name_ider    ///< The holding the IDs of the entries in the hierarchy
                              ) {
-	ofstream reps_ostream;
-	open_ofstream( reps_ostream, prm_output_file );
+	ofstream reps_ostream = open_ofstream( prm_output_file );
 	write_reps( reps_ostream, prm_hierarchy, prm_name_ider );
 	reps_ostream.close();
 }

@@ -21,7 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_LIST_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <tuple>
+
 #include <boost/range/algorithm/sort.hpp>
 
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -33,8 +35,6 @@
 #include "cath/resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "cath/resolve_hits/score_functions.hpp"
 #include "cath/resolve_hits/seg_dupl_hit_policy.hpp"
-
-#include <tuple>
 
 namespace cath { namespace rslv { class read_and_process_mgr; } }
 namespace cath { namespace rslv { class crh_segment_spec; } }
@@ -132,7 +132,7 @@ namespace cath {
 		                                             const seg_dupl_hit_policy &);
 
 		void read_hit_list_from_file(read_and_process_mgr &,
-		                             const boost::filesystem::path &,
+		                             const ::std::filesystem::path &,
 		                             const hit_score_type &);
 		void read_hit_list_from_istream(read_and_process_mgr &,
 		                                std::istream &,

@@ -22,35 +22,41 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_TO_VECTOR_HPP
 
 #include <iterator>
+#include <string>
 #include <vector>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/detail/make_static_const.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		namespace detail {
+	namespace detail {
 
-			struct to_vector_fn {
-
-				template <typename Rng>
-				::std::vector<range_value_t<Rng>> operator()( Rng &&prm_rng ) const {
-					return ::std::vector<range_value_t<Rng>>( ::std::cbegin( prm_rng ), ::std::cend( prm_rng ) );
-				}
-			};
-
+		template <template <typename...> typename Cont>
+		struct to_container_of_fn {
 			template <typename Rng>
-			auto operator|( Rng &&prm_rng, const to_vector_fn &prm_to_vector_fn ) {
-				return prm_to_vector_fn( ::std::forward<Rng>( prm_rng ) );
+			Cont<range_value_t<Rng>> operator()( Rng &&prm_rng ) const {
+				return Cont<range_value_t<Rng>>( ::std::cbegin( prm_rng ), ::std::cend( prm_rng ) );
 			}
+		};
 
-		} // namespace detail
+		template <template <typename...> typename Cont, typename Rng>
+		auto operator|( Rng &&prm_rng, const to_container_of_fn<Cont> &prm_to_container_of_fn ) {
+			return prm_to_container_of_fn( ::std::forward<Rng>( prm_rng ) );
+		}
 
-		/// TODOCUMENT
-		MAKE_STATIC_CONST( detail::to_vector_fn, to_vector )
+	} // namespace detail
 
-	} // namespace common
-} // namespace cath
+	/// Make a string from a range
+	///
+	/// Use by piping the range through to_string
+	constexpr detail::to_container_of_fn<::std::basic_string> to_string;
+
+	/// Make a vector from a range
+	///
+	/// Use by piping the range through to_string
+	constexpr detail::to_container_of_fn<::std::vector> to_vector;
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_TO_VECTOR_HPP

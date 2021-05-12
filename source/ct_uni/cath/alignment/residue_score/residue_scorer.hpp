@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_RESIDUE_SCORE_RESIDUE_SCORER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_RESIDUE_SCORE_RESIDUE_SCORER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 namespace cath {
 	namespace align {
@@ -58,7 +58,7 @@ namespace cath {
 		                               alignment,
 		                               const protein_list &);
 
-		alignment read_and_rescore_fasta_alignment(const boost::filesystem::path &,
+		alignment read_and_rescore_fasta_alignment(const ::std::filesystem::path &,
 		                                           const protein_list &,
 		                                           const residue_scorer &,
 		                                           std::ostream &);

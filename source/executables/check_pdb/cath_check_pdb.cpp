@@ -18,7 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+#include <fstream>
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -29,15 +30,13 @@
 #include "cath/file/pdb/pdb_residue.hpp"
 #include "cath/options/executable/cath_check_pdb_options/cath_check_pdb_options.hpp"
 
-#include <fstream>
-
 using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::std::cerr;
 using ::std::cout;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::string;
 
@@ -92,8 +91,7 @@ namespace cath {
 			}
 
 			// Open an ifstream on the PDB files
-			ifstream pdb_istream;
-			open_ifstream(pdb_istream, prm_pdb_file);
+			ifstream pdb_istream = open_ifstream( prm_pdb_file );
 
 			// Attempt to read the PDB file (and let any exceptions propagate out)
 			const pdb newly_read_pdb = read_pdb_file( pdb_istream );

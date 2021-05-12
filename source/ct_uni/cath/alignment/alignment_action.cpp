@@ -35,7 +35,6 @@ using namespace ::cath::align::detail;
 using namespace ::cath::common;
 using namespace ::cath::file;
 
-using ::boost::filesystem::path;
 using ::boost::lexical_cast;
 using ::std::get;
 using ::std::string;

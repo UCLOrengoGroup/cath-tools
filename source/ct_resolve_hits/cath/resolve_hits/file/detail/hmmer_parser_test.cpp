@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -37,8 +39,8 @@ using namespace ::cath::seq;
 using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
-using ::boost::filesystem::path;
 using ::boost::test_tools::per_element;
+using ::std::filesystem::path;
 using ::std::make_pair;
 using ::std::pair;
 using ::std::string;

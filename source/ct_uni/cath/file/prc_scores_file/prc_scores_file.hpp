@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PRC_SCORES_FILE_PRC_SCORES_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PRC_SCORES_FILE_PRC_SCORES_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/file/file_type_aliases.hpp"
 
@@ -40,13 +40,13 @@ namespace cath {
 
 			static prc_scores_entry_vec parse_prc_scores_file(const std::string &);
 
-			static prc_scores_entry_vec parse_prc_scores_file(const boost::filesystem::path &);
+			static prc_scores_entry_vec parse_prc_scores_file(const ::std::filesystem::path &);
 
 			static prc_scores_entry_vec parse_prc_scores_file_fancy(std::istream &);
 
 			static prc_scores_entry_vec parse_prc_scores_file_fancy(const std::string &);
 
-			static prc_scores_entry_vec parse_prc_scores_file_fancy(const boost::filesystem::path &);
+			static prc_scores_entry_vec parse_prc_scores_file_fancy(const ::std::filesystem::path &);
 		};
 
 	} // namespace file

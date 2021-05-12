@@ -20,6 +20,7 @@
 
 #include "hmmer_scores_file.hpp"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream> // ***** TEMPORARY *****
 #include <string>
@@ -44,7 +45,7 @@ using namespace ::std;
 
 using ::boost::adaptors::filtered;
 using ::boost::algorithm::trim_left;
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 hmmer_scores_entry_vec hmmer_scores_file::remove_duplicates(const hmmer_scores_entry_vec &prm_hmmer_scores_entries ///< TODOCUMENT
@@ -122,8 +123,7 @@ hmmer_scores_entry_vec hmmer_scores_file::parse_hmmer_scores_file(istream       
 hmmer_scores_entry_vec hmmer_scores_file::parse_hmmer_scores_file(const path                &prm_hmmer_scores_file,  ///< TODOCUMENT
                                                                   const hmmer_name_handling &prm_hmmer_name_handling ///< TODOCUMENT
                                                                   ) {
-	ifstream hmmer_scores_ifstream;
-	open_ifstream( hmmer_scores_ifstream, prm_hmmer_scores_file );
+	ifstream hmmer_scores_ifstream = open_ifstream( prm_hmmer_scores_file );
 	const auto hmmer_scores_data = hmmer_scores_file::parse_hmmer_scores_file( hmmer_scores_ifstream, prm_hmmer_name_handling );
 	hmmer_scores_ifstream.close();
 	return hmmer_scores_data;

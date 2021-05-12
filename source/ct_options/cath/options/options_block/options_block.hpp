@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+
 #include <boost/program_options.hpp>
 
 #include "cath/common/type_aliases.hpp"
@@ -108,12 +109,12 @@ namespace cath {
 
 			str_vec get_all_options_names() const;
 
-			static bool is_acceptable_output_file(const boost::filesystem::path &);
-			static bool is_acceptable_input_file(const boost::filesystem::path &,
+			static bool is_acceptable_output_file(const ::std::filesystem::path &);
+			static bool is_acceptable_input_file(const ::std::filesystem::path &,
 			                                     const bool & = false);
-			static bool is_acceptable_output_dir(const boost::filesystem::path &);
-			static bool is_acceptable_input_dir(const boost::filesystem::path &);
-			static bool is_acceptable_executable(const boost::filesystem::path &);
+			static bool is_acceptable_output_dir(const ::std::filesystem::path &);
+			static bool is_acceptable_input_dir(const ::std::filesystem::path &);
+			static bool is_acceptable_executable(const ::std::filesystem::path &);
 
 			static const std::string SUB_DESC_SEPARATOR;
 			static const std::string SUB_DESC_PAIR_SEPARATOR;

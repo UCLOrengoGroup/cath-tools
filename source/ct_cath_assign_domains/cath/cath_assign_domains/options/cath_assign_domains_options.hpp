@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP
 
+#include <filesystem>
+
 #include "cath/cath_assign_domains/options/cath_assign_domains_options_block.hpp"
 #include "cath/options/executable/executable_options.hpp"
 
@@ -52,9 +54,9 @@ namespace cath {
 		public:
 			cath_assign_domains_options();
 
-			const boost::filesystem::path & get_rbf_svm_file() const;
-			const boost::filesystem::path & get_data_data_file() const;
-			const boost::filesystem::path & get_sf_of_dom_file() const;
+			const ::std::filesystem::path & get_rbf_svm_file() const;
+			const ::std::filesystem::path & get_data_data_file() const;
+			const ::std::filesystem::path & get_sf_of_dom_file() const;
 			const str_vec & get_forbidden_nodes() const;
 
 			static const std::string PROGRAM_NAME;

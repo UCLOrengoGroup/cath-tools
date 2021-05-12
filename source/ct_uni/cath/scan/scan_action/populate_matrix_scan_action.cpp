@@ -20,6 +20,8 @@
 
 #include "populate_matrix_scan_action.hpp"
 
+#include <filesystem>
+
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "cath/alignment/dyn_prog_align/detail/matrix_plotter/gnuplot_matrix_plotter.hpp"
@@ -30,10 +32,9 @@ using namespace ::cath::align;
 using namespace ::cath::align::detail;
 using namespace ::cath::common;
 using namespace ::cath::scan;
-// using namespace ::std;
 
-using ::boost::filesystem::path;
 using ::boost::numeric_cast;
+using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 populate_matrix_scan_action::populate_matrix_scan_action(const index_type &prm_num_residues_a, ///< TODOCUMENT

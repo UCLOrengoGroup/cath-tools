@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_POST_REFINE_ALIGNMENT_ACQUIRER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_POST_REFINE_ALIGNMENT_ACQUIRER_HPP
 
-#include <boost/filesystem.hpp>
-
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 
 namespace cath {

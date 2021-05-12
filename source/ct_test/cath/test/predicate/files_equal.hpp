@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP
 #define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/test/test_tools.hpp>
 
 #include "cath/test/predicate/bootstrap_mode.hpp"
@@ -48,8 +49,8 @@ namespace cath {
 			                     const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
 			explicit files_equal(const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
 
-			boost::test_tools::predicate_result operator()(const boost::filesystem::path &,
-			                                               const boost::filesystem::path &) const;
+			boost::test_tools::predicate_result operator()(const ::std::filesystem::path &,
+			                                               const ::std::filesystem::path &) const;
 
 			static const std::string FILENAME_NAME_PREFIX;
 		};

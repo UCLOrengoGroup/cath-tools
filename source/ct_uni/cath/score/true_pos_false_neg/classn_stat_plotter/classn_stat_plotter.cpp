@@ -20,6 +20,8 @@
 
 #include "classn_stat_plotter.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -45,10 +47,10 @@ using namespace ::std;
 using ::boost::algorithm::icontains;
 using ::boost::algorithm::join;
 using ::boost::algorithm::replace_all_copy;
-using ::boost::filesystem::path;
 using ::boost::lexical_cast;
 using ::boost::range::join;
 using ::gnuplotio::Gnuplot;
+using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 string classn_stat_plotter::process_legend_name_copy(const string &prm_legend_name, ///< TODOCUMENT

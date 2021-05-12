@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_CHECK_PDB_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_CHECK_PDB_OPTIONS_BLOCK_HPP
 
+#include <filesystem>
+
 #include "cath/options/options_block/options_block.hpp"
 
 namespace cath {
@@ -32,7 +34,7 @@ namespace cath {
 			using super = options_block;
 
 			/// \brief The PDB file to check
-			boost::filesystem::path pdb_file;
+			::std::filesystem::path pdb_file;
 
 			/// \brief Whether to permit no ATOM records
 			bool permit_no_atoms;
@@ -49,7 +51,7 @@ namespace cath {
 		public:
 			explicit check_pdb_options_block();
 
-			boost::filesystem::path get_pdb_file() const;
+			::std::filesystem::path get_pdb_file() const;
 			bool get_permit_no_atoms() const;
 
 			static const std::string PO_PDB_FILE;

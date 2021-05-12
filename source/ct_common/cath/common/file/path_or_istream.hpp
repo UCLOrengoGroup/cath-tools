@@ -21,13 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_PATH_OR_ISTREAM_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_PATH_OR_ISTREAM_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <fstream>
+#include <functional>
+
 #include <boost/optional.hpp>
 
 #include "cath/common/file/open_fstream.hpp"
-
-#include <fstream>
-#include <functional>
 
 namespace cath {
 	namespace common {
@@ -48,7 +48,7 @@ namespace cath {
 			istream_ref_opt standard_instream;
 
 			/// \brief A flag that can be used when passing a path to indicate input should be read from the standard_instream
-			boost::filesystem::path standard_instream_flag = "-";
+			::std::filesystem::path standard_instream_flag = "-";
 
 			/// \brief The ifstream from which file should be read
 			boost::optional<std::ifstream> input_file_stream;
@@ -56,16 +56,16 @@ namespace cath {
 		public:
 			path_or_istream() = default;
 			explicit path_or_istream(std::istream &,
-			                         const boost::filesystem::path & = "-");
+			                         const ::std::filesystem::path & = "-");
 
-			path_or_istream & set_path(const boost::filesystem::path &);
-			const boost::filesystem::path & get_flag() const;
+			path_or_istream & set_path(const ::std::filesystem::path &);
+			const ::std::filesystem::path & get_flag() const;
 			path_or_istream & close();
 			std::istream & get_istream();
 		};
 
 		bool file_is_missing(const path_or_istream &,
-		                     const boost::filesystem::path &);
+		                     const ::std::filesystem::path &);
 
 	} // namespace common
 } // namespace cath

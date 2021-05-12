@@ -21,14 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_READ_FROM_JSON_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_READ_FROM_JSON_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
-// #include <boost/property_tree/json_parser.hpp>
+#include <filesystem>
+#include <fstream>
+#include <string>
 
 #include "cath/common/file/read_string_from_file.hpp"
 #include "cath/common/property_tree/from_json_string.hpp"
-
-#include <fstream>
-#include <string>
 
 namespace cath {
 	namespace common {
@@ -37,7 +35,7 @@ namespace cath {
 		///
 		/// Requires that there is specialisation of read_from_ptree<> for T
 		template <typename T>
-		T read_from_json_file(const boost::filesystem::path &prm_json_file ///< The JSON file to read
+		T read_from_json_file(const ::std::filesystem::path &prm_json_file ///< The JSON file to read
 		                      ) {
 			return from_json_string<T>( read_string_from_file( prm_json_file ) );
 		}

@@ -21,13 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_FILE_CLUSTER_MEMBERSHIP_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_FILE_CLUSTER_MEMBERSHIP_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <iostream>
+#include <string>
 
 #include "cath/cluster/new_cluster_data.hpp" // Required for the deleted function definitions
 #include "cath/cluster/old_cluster_data.hpp" // Required for the deleted function definitions
-
-#include <iostream>
-#include <string>
 
 namespace cath { namespace common { class id_of_str_bidirnl; } }
 
@@ -54,12 +53,12 @@ namespace cath {
 		                                      const ostream_ref_opt & = boost::none) = delete;
 
 
-		old_cluster_data parse_old_membership(const boost::filesystem::path &,
+		old_cluster_data parse_old_membership(const ::std::filesystem::path &,
 		                                      common::id_of_str_bidirnl &,
 		                                      const ostream_ref_opt & = boost::none);
 
 		/// \brief Prevent calling with an rvalue id_of_str_bidirnl
-		old_cluster_data parse_old_membership(const boost::filesystem::path &,
+		old_cluster_data parse_old_membership(const ::std::filesystem::path &,
 		                                      const common::id_of_str_bidirnl &&,
 		                                      const ostream_ref_opt & = boost::none) = delete;
 
@@ -86,12 +85,12 @@ namespace cath {
 		                                      const ostream_ref_opt & = boost::none) = delete;
 
 
-		new_cluster_data parse_new_membership(const boost::filesystem::path &,
+		new_cluster_data parse_new_membership(const ::std::filesystem::path &,
 		                                      common::id_of_str_bidirnl &,
 		                                      const ostream_ref_opt & = boost::none);
 
 		/// \brief Prevent calling with an rvalue id_of_str_bidirnl
-		new_cluster_data parse_new_membership(const boost::filesystem::path &,
+		new_cluster_data parse_new_membership(const ::std::filesystem::path &,
 		                                      const common::id_of_str_bidirnl &&,
 		                                      const ostream_ref_opt & = boost::none) = delete;
 

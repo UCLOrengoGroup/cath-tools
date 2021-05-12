@@ -21,18 +21,17 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_REGEX_REGEX_REPLACE_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_REGEX_REGEX_REPLACE_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <regex>
 
 #include "cath/common/file/slurp.hpp"
 #include "cath/common/file/spew.hpp"
-
-#include <regex>
 
 namespace cath {
 	namespace common {
 
 		/// \brief Perform an in-place find/replace on the specified file
-		inline void regex_replace_file(const boost::filesystem::path &prm_file,  ///< The file to modify
+		inline void regex_replace_file(const ::std::filesystem::path &prm_file,  ///< The file to modify
 		                               const std::regex              &prm_regex, ///< The find regex, to be passed to std::regex_replace()
 		                               const std::string             &prm_string ///< The replace string, to be passed to std::regex_replace()
 		                               ) {

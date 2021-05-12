@@ -20,7 +20,7 @@
 
 #include "protein_from_pdb_dssp_and_sec.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/file/data_file.hpp"
@@ -33,7 +33,7 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ostream;
 using ::std::string;
 using ::std::unique_ptr;

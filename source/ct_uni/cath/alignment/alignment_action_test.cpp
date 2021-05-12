@@ -20,6 +20,8 @@
 
 #include "alignment_action.hpp"
 
+#include <filesystem>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/alignment/alignment.hpp"
@@ -39,7 +41,7 @@ using namespace ::cath::align;
 using namespace ::cath::file;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {

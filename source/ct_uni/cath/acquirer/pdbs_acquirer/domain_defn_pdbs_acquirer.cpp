@@ -20,6 +20,8 @@
 
 #include "domain_defn_pdbs_acquirer.hpp"
 
+#include <filesystem>
+
 #include <spdlog/spdlog.h>
 
 #include "cath/chopping/domain/domain_definition.hpp"
@@ -38,7 +40,7 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<pdbs_acquirer> domain_defn_pdbs_acquirer::do_clone() const {

@@ -20,18 +20,19 @@
 
 #include "pdb_file_superposition_outputter.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/outputter/superposition_outputter/ostream_superposition_outputter.hpp"
-
-#include <fstream>
 
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::filesystem::path;
 using ::boost::string_ref;
+using ::std::filesystem::path;
 using ::std::flush;
 using ::std::ofstream;
 using ::std::ostream;
@@ -47,8 +48,7 @@ unique_ptr<superposition_outputter> pdb_file_superposition_outputter::do_clone()
 void pdb_file_superposition_outputter::do_output_superposition(const superposition_context &prm_superposition_context, ///< TODOCUMENT
                                                                ostream                     &/*prm_ostream*/            ///< TODOCUMENT
                                                                ) const {
-	ofstream pdb_ostream;
-	open_ofstream( pdb_ostream, output_file );
+	ofstream pdb_ostream = open_ofstream( output_file );
 
 	ostream_superposition_outputter stream_outputter{ content_spec };
 	stream_outputter.output_superposition( prm_superposition_context, pdb_ostream );

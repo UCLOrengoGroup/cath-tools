@@ -21,12 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUT_OPTIONS_SUPERPOSITION_OUTPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUT_OPTIONS_SUPERPOSITION_OUTPUT_OPTIONS_BLOCK_HPP
 
+#include <filesystem>
+#include <iosfwd>
+
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/superposition/superposition_content_spec.hpp"
-
-#include <iosfwd>
 
 namespace cath { class display_spec; }
 namespace cath { namespace opts { class superposition_outputter; } }
@@ -55,13 +56,13 @@ namespace cath {
 
 			static const std::string DEFAULT_PYMOL_PROGRAM;
 
-			boost::filesystem::path sup_to_pdb_file;
-			boost::filesystem::path sup_to_pdb_files_dir;
+			::std::filesystem::path sup_to_pdb_file;
+			::std::filesystem::path sup_to_pdb_files_dir;
 			bool sup_to_stdout;
 			bool sup_to_pymol;
-			boost::filesystem::path sup_to_pymol_file;
-			boost::filesystem::path pymol_program;
-			boost::filesystem::path json_file;
+			::std::filesystem::path sup_to_pymol_file;
+			::std::filesystem::path pymol_program;
+			::std::filesystem::path json_file;
 
 			std::unique_ptr<options_block> do_clone() const final;
 			std::string do_get_block_name() const final;
@@ -70,13 +71,13 @@ namespace cath {
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 			str_vec do_get_all_options_names() const final;
 
-			boost::filesystem::path get_sup_to_pdb_file() const;
-			boost::filesystem::path get_sup_to_pdb_files_dir() const;
+			::std::filesystem::path get_sup_to_pdb_file() const;
+			::std::filesystem::path get_sup_to_pdb_files_dir() const;
 			bool get_sup_to_stdout() const;
 			bool get_sup_to_pymol() const;
-			boost::filesystem::path get_pymol_program() const;
-			boost::filesystem::path get_sup_to_pymol_file() const;
-			boost::filesystem::path get_json_file() const;
+			::std::filesystem::path get_pymol_program() const;
+			::std::filesystem::path get_sup_to_pymol_file() const;
+			::std::filesystem::path get_json_file() const;
 
 		public:
 			static const std::string PO_SUP_FILE;

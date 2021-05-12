@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_ACTION_POPULATE_MATRIX_SCAN_ACTION_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_ACTION_POPULATE_MATRIX_SCAN_ACTION_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/scan/detail/res_pair/single_struc_res_pair.hpp"
 #include "cath/scan/scan_index.hpp"
@@ -71,7 +71,7 @@ namespace cath {
 			                const index_type &);
 
 
-			void plot_to_file(const boost::filesystem::path &,
+			void plot_to_file(const ::std::filesystem::path &,
 			                  align::detail::matrix_plotter &) const;
 
 			index_type get_length_a() const;
@@ -117,7 +117,7 @@ namespace cath {
 		}
 
 		void gnuplot_to_file(const populate_matrix_scan_action &,
-		                     const boost::filesystem::path &);
+		                     const ::std::filesystem::path &);
 
 		/// \brief TODOCUMENT
 		template <typename... KPs>

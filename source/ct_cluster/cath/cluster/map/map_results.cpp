@@ -20,6 +20,9 @@
 
 #include "map_results.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
@@ -34,15 +37,13 @@
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 
-#include <fstream>
-
 using namespace ::cath::common;
 using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::format;
+using ::std::filesystem::path;
 using ::std::ofstream;
 using ::std::string;
 
@@ -285,8 +286,7 @@ void cath::clust::write_markdown_summary_string_to_file(const path              
                                                         const new_cluster_data     &prm_new_clusters, ///< The new clusters
                                                         const map_results          &prm_map_results   ///< The map_results to summarise
                                                         ) {
-	ofstream md_ostream;
-	open_ofstream( md_ostream, prm_output_file );
+	ofstream md_ostream = open_ofstream( prm_output_file );
 	md_ostream << markdown_summary_string( prm_old_clusters, prm_new_clusters, prm_map_results );
 	md_ostream.close();
 }

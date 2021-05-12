@@ -18,6 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+#include <regex>
+#include <vector>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/unit_test.hpp>
@@ -37,9 +41,6 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
-#include <regex>
-#include <vector>
-
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::common;
@@ -47,8 +48,8 @@ using namespace ::cath::file;
 
 using ::boost::algorithm::icontains;
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::irange;
+using ::std::filesystem::path;
 using ::std::istringstream;
 using ::std::ostringstream;
 using ::std::regex;

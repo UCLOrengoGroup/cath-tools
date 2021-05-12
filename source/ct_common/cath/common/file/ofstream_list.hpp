@@ -21,14 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_OFSTREAM_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_OFSTREAM_LIST_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+#include <fstream>
+#include <functional>
+
 #include <boost/optional.hpp>
 
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-#include <fstream>
-#include <functional>
 
 namespace cath {
 	namespace common {
@@ -46,7 +47,7 @@ namespace cath {
 			ostream_ref_opt standard_outstream;
 
 			/// \brief A flag that can be used when passing a path to indicate output should be sent to the standard_outstream
-			boost::filesystem::path standard_outstream_flag = "-";
+			::std::filesystem::path standard_outstream_flag = "-";
 
 			/// \brief The standard list of ofstreams to which output should be sent
 			std::deque<std::ofstream> ofstreams;
@@ -55,15 +56,15 @@ namespace cath {
 			ofstream_list() = default;
 
 			explicit ofstream_list(std::ostream &,
-			                       const boost::filesystem::path & = "-");
+			                       const ::std::filesystem::path & = "-");
 
 			ostream_ref_vec open_ofstreams(const path_vec &);
-			const boost::filesystem::path & get_flag() const;
+			const ::std::filesystem::path & get_flag() const;
 			void close_all();
 		};
 
 		ostream_ref open_ofstream(ofstream_list &,
-		                          const boost::filesystem::path &);
+		                          const ::std::filesystem::path &);
 
 	} // namespace common
 } // namespace cath

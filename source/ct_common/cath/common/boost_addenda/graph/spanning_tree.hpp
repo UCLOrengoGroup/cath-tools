@@ -21,7 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_GRAPH_SPANNING_TREE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_GRAPH_SPANNING_TREE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <tuple>
+#include <vector>
+
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/kruskal_min_spanning_tree.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -33,9 +36,6 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/common/type_traits.hpp"
-
-#include <tuple>
-#include <vector>
 
 namespace cath {
 	namespace common {
@@ -179,7 +179,7 @@ namespace cath {
 		                                                      const size_t &);
 		std::string make_graphviz_string_of_spanning_tree(const size_size_doub_tpl_vec &);
 		void write_graphviz_string_of_spanning_tree(const size_size_doub_tpl_vec &,
-		                                            const boost::filesystem::path &);
+		                                            const ::std::filesystem::path &);
 
 	} // namespace common
 } // namespace cath

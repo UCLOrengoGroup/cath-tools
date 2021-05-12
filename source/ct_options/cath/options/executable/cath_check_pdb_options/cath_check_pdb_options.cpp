@@ -20,21 +20,22 @@
 
 #include "cath_check_pdb_options.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/program_options.hpp>
 #include <boost/shared_array.hpp>
 
 #include "cath/common/argc_argv_faker.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::program_options::positional_options_description;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::string;
 

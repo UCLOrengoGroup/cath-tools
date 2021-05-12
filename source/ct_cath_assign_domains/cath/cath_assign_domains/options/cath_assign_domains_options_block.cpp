@@ -20,10 +20,10 @@
 
 #include "cath_assign_domains_options_block.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/string/join.hpp>
-#include <boost/assign/ptr_list_inserter.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 
 #include "cath/acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
@@ -39,13 +39,11 @@ using namespace ::std;
 
 using ::boost::algorithm::all_of;
 using ::boost::algorithm::join;
-using ::boost::assign::ptr_push_back;
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
-using ::boost::ptr_vector;
+using ::std::filesystem::path;
 
 /// \brief The long option specifying the SVM-light RBF model file
 const string cath_assign_domains_options_block::PO_SVMLIGHT_RBF_FILE( "svmlight-rbf-file" );

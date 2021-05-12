@@ -20,6 +20,7 @@
 
 #include "ssap_scores_file_alignment_acquirer.hpp"
 
+#include <filesystem>
 #include <fstream>
 
 #include <boost/range/adaptor/transformed.hpp>
@@ -55,8 +56,8 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::std::cerr;
+using ::std::filesystem::path;
 using ::std::make_pair;
 using ::std::pair;
 using ::std::string;

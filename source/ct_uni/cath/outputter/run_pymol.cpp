@@ -20,7 +20,7 @@
 
 #include "run_pymol.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include <spdlog/spdlog.h>
 
@@ -28,7 +28,7 @@
 
 using namespace ::cath;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// Run the specified pymol with the specified script file
 ///

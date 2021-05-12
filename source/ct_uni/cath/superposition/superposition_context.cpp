@@ -21,7 +21,6 @@
 #include "superposition_context.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/range/adaptor/map.hpp>

@@ -20,6 +20,9 @@
 
 #include "load_and_scan_metrics.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/max_element.hpp>
@@ -30,14 +33,12 @@
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/type_aliases.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::scan;
 using namespace ::cath::scan::detail;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ofstream;
 using ::std::string;
 using ::std::to_string;
@@ -153,8 +154,7 @@ string cath::scan::to_markdown_string(const load_and_scan_metrics &prm_load_and_
 void cath::scan::to_markdown_file(const load_and_scan_metrics &prm_scan_metrics,    ///< TODOCUMENT
                                   const path                  &prm_markdown_outfile ///< TODOCUMENT
                                   ) {
-	ofstream test_ofstream;
-	open_ofstream( test_ofstream, prm_markdown_outfile );
+	ofstream test_ofstream = open_ofstream( prm_markdown_outfile );
 	test_ofstream << to_markdown_string( prm_scan_metrics );
 	test_ofstream.close();
 }

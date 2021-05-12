@@ -20,21 +20,22 @@
 
 #include "mapping_job.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/algorithm/string/classification.hpp>
 
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::clust::detail;
 using namespace ::cath::common;
 
 using ::boost::algorithm::is_any_of;
-using ::boost::filesystem::path;
 using ::boost::token_compress_on;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::string;
@@ -100,8 +101,7 @@ mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &prm_istrea
 /// \brief relates mapping_job
 mapping_job_vec cath::clust::detail::read_batch_mapping_file(const path &prm_file ///< The file from which to read the mapping jobs
                                                              ) {
-	ifstream mapping_istream;
-	open_ifstream( mapping_istream, prm_file );
+	ifstream mapping_istream = open_ifstream( prm_file );
 	mapping_job_vec results = read_batch_mapping_file( mapping_istream );
 	mapping_istream.close();
 	return results;

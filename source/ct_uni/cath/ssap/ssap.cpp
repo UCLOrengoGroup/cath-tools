@@ -116,6 +116,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -183,7 +184,6 @@ using namespace ::cath::opts;
 
 using ::boost::adaptors::reversed;
 using ::boost::algorithm::to_lower_copy;
-using ::boost::filesystem::path;
 using ::boost::irange;
 using ::boost::lexical_cast;
 using ::boost::none;
@@ -191,6 +191,7 @@ using ::boost::numeric_cast;
 using ::boost::range::stable_sort;
 using ::std::abs;
 using ::std::deque;
+using ::std::filesystem::path;
 using ::std::fill_n;
 using ::std::make_pair;
 using ::std::max;

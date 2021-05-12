@@ -18,11 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 #include "score_classn_value_list.hpp"
 
+#include <filesystem>
+#include <iostream> // ***** TEMPORARY *****
+
 //#include <boost/algorithm/string/join.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/reversed.hpp>
@@ -47,8 +48,6 @@
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 #include "cath/score/true_pos_false_neg/true_false_pos_neg_list.hpp"
 
-#include <iostream> // ***** TEMPORARY *****
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::score;
@@ -56,14 +55,13 @@ using namespace ::std;
 
 using ::boost::adaptors::reversed;
 using ::boost::adaptors::transformed;
-//using ::boost::algorithm::join;
 using ::boost::const_rend;
-using ::boost::filesystem::path;
 using ::boost::numeric_cast;
 using ::boost::range::count_if;
 using ::boost::range::equal;
 using ::boost::range::find_if;
 using ::boost::range::sort;
+using ::std::filesystem::path;
 
 /// \brief Private function to sort all the values in descending order of goodness
 void score_classn_value_list::sort_values() {

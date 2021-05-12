@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/unit_test.hpp>
-
 #include "dssp_hbond_calc.hpp"
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+
 #include <boost/optional/optional_io.hpp>
 #include <boost/range/algorithm/sort.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cath/common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "cath/common/boost_addenda/log/stringstream_log_sink.hpp"
@@ -40,9 +40,6 @@
 #include "cath/structure/sec_struc_calc/dssp/test/dssp_dupl_fixture.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "cath/test/global_test_constants.hpp"
-// #include "cath/common/chrono/duration_to_seconds_string.hpp"
-
-// #include <chrono>
 
 namespace cath { namespace test { } }
 
@@ -53,11 +50,11 @@ using namespace ::cath::geom;
 using namespace ::cath::sec;
 using namespace ::cath::test;
 
-using ::boost::filesystem::directory_entry;
-using ::boost::filesystem::directory_iterator;
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::range::sort;
+using ::std::filesystem::directory_entry;
+using ::std::filesystem::directory_iterator;
+using ::std::filesystem::path;
 using ::std::ostringstream;
 
 namespace cath {

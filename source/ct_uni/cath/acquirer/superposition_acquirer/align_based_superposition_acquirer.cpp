@@ -57,18 +57,11 @@ using namespace ::cath::geom;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::accumulate;
-using ::boost::filesystem::path;
 using ::std::endl;
-using ::std::get;
 using ::std::ifstream;
-using ::std::make_pair;
-using ::std::make_tuple;
-using ::std::map;
 using ::std::ostream;
 using ::std::pair;
 using ::std::string;
-using ::std::tuple;
 using ::std::vector;
 
 /// \brief TODOCUMENT

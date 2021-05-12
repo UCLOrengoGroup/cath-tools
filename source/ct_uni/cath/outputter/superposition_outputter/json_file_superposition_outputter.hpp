@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_JSON_FILE_SUPERPOSITION_OUTPUTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_JSON_FILE_SUPERPOSITION_OUTPUTTER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/json_style.hpp"
 #include "cath/display/options/display_spec.hpp"
@@ -34,7 +34,7 @@ namespace cath {
 		class json_file_superposition_outputter final : public superposition_outputter {
 		private:
 			/// \brief The file to which the JSON representing the superposition should be written
-			boost::filesystem::path output_file;
+			::std::filesystem::path output_file;
 
 			/// \brief The style in which the JSON should be written
 			const common::json_style the_json_style = DEFAULT_JSON_STYLE;
@@ -47,7 +47,7 @@ namespace cath {
 			std::string do_get_name() const final;
 
 		public:
-			explicit json_file_superposition_outputter(const boost::filesystem::path &,
+			explicit json_file_superposition_outputter(const ::std::filesystem::path &,
 			                                           const common::json_style & = DEFAULT_JSON_STYLE);
 
 			/// \brief The default style to use for outputting the JSON if it isn't specified

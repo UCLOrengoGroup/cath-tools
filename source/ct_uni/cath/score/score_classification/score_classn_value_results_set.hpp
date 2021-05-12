@@ -21,7 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_RESULTS_SET_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_RESULTS_SET_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+#include <iostream>
+#include <random>
+
 #include <boost/range/algorithm/lower_bound.hpp>
 
 #include "cath/common/cpp14/cbegin_cend.hpp"
@@ -33,9 +36,6 @@
 #include "cath/score/score_classification/score_classn_value_list.hpp"
 #include "cath/score/score_type_aliases.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
-
-#include <iostream>
-#include <random>
 
 namespace cath { namespace score { class aligned_pair_score_value_list; } }
 namespace cath { namespace score { class classn_stat; } }
@@ -137,12 +137,12 @@ namespace cath {
 		namespace detail {
 			void write_to_svm_light_data_files_impl(const score_classn_value_vec_vec &,
 			                                        const value_list_scaling_vec &,
-			                                        const boost::filesystem::path &,
+			                                        const ::std::filesystem::path &,
 			                                        const size_vec &);
 		} // namespace detail
 
 		void write_to_svm_light_data_files(const score_classn_value_results_set &,
-		                                   const boost::filesystem::path &,
+		                                   const ::std::filesystem::path &,
 		                                   const size_t &,
 		                                   std::mt19937 &,
 		                                   const double & = 0.5);
@@ -199,19 +199,19 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		///
-		/// FN should take a single boost::filesystem::path and return optional<pair<bool, string>>,
+		/// FN should take a single ::std::filesystem::path and return optional<pair<bool, string>>,
 		/// representing files that should be processed with a bool indicating whether it's a positive instance and a label
 		template <typename FN>
-		score_classn_value_results_set read_from_dir(const boost::filesystem::path &prm_directory,                     ///< TODOCUMENT
+		score_classn_value_results_set read_from_dir(const ::std::filesystem::path &prm_directory,                     ///< TODOCUMENT
 		                                             const FN                       prm_positive_and_label_of_filename ///< TODOCUMENT
 		                                             ) {
-			if ( ! boost::filesystem::is_directory( prm_directory ) ) {
+			if ( ! ::std::filesystem::is_directory( prm_directory ) ) {
 				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot read_from_dir() for non-directory path"));
 			}
 
 			const auto the_dir_range = boost::make_iterator_range(
-				boost::filesystem::directory_iterator( prm_directory ),
-				boost::filesystem::directory_iterator(               )
+				::std::filesystem::directory_iterator( prm_directory ),
+				::std::filesystem::directory_iterator(               )
 			);
 
 			score_classn_value_results_set the_results;

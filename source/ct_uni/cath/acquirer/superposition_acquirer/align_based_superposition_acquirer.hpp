@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_SUPERPOSITION_ACQUIRER_ALIGN_BASED_SUPERPOSITION_ACQUIRER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_SUPERPOSITION_ACQUIRER_ALIGN_BASED_SUPERPOSITION_ACQUIRER_HPP
 
-#include <boost/filesystem.hpp>
-
 #include "cath/acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
 #include "cath/acquirer/superposition_acquirer/superposition_acquirer.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"

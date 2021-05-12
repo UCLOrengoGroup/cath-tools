@@ -20,19 +20,20 @@
 
 #include "names_file.hpp"
 
-#include "cath/common/container/id_of_str_bidirnl.hpp"
-#include "cath/common/file/open_fstream.hpp"
-#include "cath/common/string/string_parse_tools.hpp"
-
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
+
+#include "cath/common/container/id_of_str_bidirnl.hpp"
+#include "cath/common/file/open_fstream.hpp"
+#include "cath/common/string/string_parse_tools.hpp"
 
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::istringstream;
@@ -76,8 +77,7 @@ doub_vec cath::clust::parse_names(const string      &prm_input,    ///< The stri
 doub_vec cath::clust::parse_names(const path        &prm_input,    ///< The file from which to parse the names
                                   id_of_str_bidirnl &prm_name_ider ///< The name_ider to populate from the names data
                                   ) {
-	ifstream in_stream;
-	open_ifstream( in_stream, prm_input );
+	ifstream in_stream = open_ifstream( prm_input );
 	doub_vec dissims = parse_names( in_stream, prm_name_ider );
 	in_stream.close();
 	return dissims;

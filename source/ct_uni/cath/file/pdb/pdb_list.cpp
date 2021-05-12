@@ -20,7 +20,8 @@
 
 #include "pdb_list.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/range/combine.hpp>
 
 #include "cath/common/algorithm/transform_build.hpp"
@@ -44,8 +45,8 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::std;
 
-using ::boost::filesystem::path;
 using ::boost::range::combine;
+using ::std::filesystem::path;
 
 /// \brief Ctor from a vector<pdb>
 pdb_list::pdb_list(pdb_vec prm_pdbs ///< The pdbs from which this pdb_list should be constructed

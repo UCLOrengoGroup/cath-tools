@@ -20,6 +20,8 @@
 
 #include "cath_assign_domains_options.hpp"
 
+#include <filesystem>
+
 #include <boost/program_options.hpp>
 
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
@@ -52,8 +54,8 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::filesystem::path;
 using ::boost::none;
+using ::std::filesystem::path;
 using ::std::string;
 
 /// \brief The name of the program that uses this executable_options

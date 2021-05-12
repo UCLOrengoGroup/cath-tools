@@ -21,6 +21,7 @@
 #include "calc_complete_linkage_merge_list.hpp"
 
 #include <boost/range/algorithm/for_each.hpp>
+#include <boost/range/algorithm/min_element.hpp>
 #include <boost/range/algorithm/partition.hpp>
 #include <boost/range/algorithm/upper_bound.hpp>
 
@@ -35,6 +36,7 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 
 using ::boost::range::for_each;
+using ::boost::range::min_element;
 using ::boost::range::partition;
 using ::boost::range::upper_bound;
 using ::std::max;

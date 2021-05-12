@@ -20,8 +20,6 @@
 
 #include "protein_from_pdb_and_calc.hpp"
 
-#include <boost/filesystem/path.hpp>
-
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/file/data_file.hpp"
 #include "cath/structure/protein/protein.hpp"

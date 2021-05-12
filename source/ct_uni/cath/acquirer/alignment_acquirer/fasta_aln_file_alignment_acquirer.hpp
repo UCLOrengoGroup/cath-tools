@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_FASTA_ALN_FILE_ALIGNMENT_ACQUIRER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_FASTA_ALN_FILE_ALIGNMENT_ACQUIRER_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 #include "cath/acquirer/alignment_acquirer/post_refine_alignment_acquirer.hpp"
 
@@ -33,16 +33,16 @@ namespace cath {
 		private:
 			using super = post_refine_alignment_acquirer;
 
-			boost::filesystem::path fasta_alignment_file;
+			::std::filesystem::path fasta_alignment_file;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
 			bool do_requires_backbone_complete_input() const final;
 			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const final;
 
 		public:
-			explicit fasta_aln_file_alignment_acquirer(const boost::filesystem::path &);
+			explicit fasta_aln_file_alignment_acquirer(const ::std::filesystem::path &);
 
-			boost::filesystem::path get_fasta_alignment_file() const;
+			::std::filesystem::path get_fasta_alignment_file() const;
 		};
 
 	} // namespace align

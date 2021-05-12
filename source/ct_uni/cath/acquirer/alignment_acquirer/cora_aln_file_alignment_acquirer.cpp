@@ -20,6 +20,9 @@
 
 #include "cora_aln_file_alignment_acquirer.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/io/alignment_io.hpp"
 #include "cath/alignment/residue_score/residue_scorer.hpp"
@@ -33,8 +36,6 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::align::detail;
@@ -42,8 +43,8 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::std::cerr;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::make_pair;
 using ::std::pair;
@@ -65,8 +66,7 @@ pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_ali
 	// Construct an alignment from the CORA alignment file
 	const auto   &the_pdbs = prm_strucs_context.get_pdbs();
 	const size_t  num_pdbs = the_pdbs.size();
-	ifstream my_aln_stream;
-	open_ifstream(my_aln_stream, get_cora_alignment_file());
+	ifstream my_aln_stream = open_ifstream( get_cora_alignment_file() );
 	const alignment     new_alignment = read_alignment_from_cath_cora_legacy_format( my_aln_stream, the_pdbs, ostream_ref{ cerr } );
 	my_aln_stream.close();
 

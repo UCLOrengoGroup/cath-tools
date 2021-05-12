@@ -18,9 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/unit_test.hpp>
+#include <filesystem>
+#include <fstream>
+#include <string>
 
-#include <boost/filesystem.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/file/dssp_wolf/dssp_file.hpp"
@@ -30,9 +32,6 @@
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-#include <fstream>
-#include <string>
-
 namespace cath { namespace test { } }
 
 using namespace ::cath;
@@ -41,7 +40,7 @@ using namespace ::cath::file;
 using namespace ::cath::test;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \file
 ///
@@ -109,8 +108,7 @@ namespace cath {
 				//  * optionally load a pattern file as a vector of strings, one per line
 				//  * provide better context information on mismatch
 				const path correct_residue_names_file(TEST_RESIDUE_IDS_DATA_DIR() / (prm_chain_id + correct_residue_names_extension));
-				ifstream expected_stream;
-				open_ifstream( expected_stream, correct_residue_names_file );
+				ifstream expected_stream = open_ifstream( correct_residue_names_file );
 				residue_id_vec expected_values;
 				copy(
 					istream_iterator<residue_id>( expected_stream ),

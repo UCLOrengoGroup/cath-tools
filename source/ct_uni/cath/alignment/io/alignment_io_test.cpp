@@ -18,7 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/filesystem.hpp>
+#include <fstream>
+#include <iostream>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/alignment/io/alignment_io.hpp"
@@ -40,9 +42,6 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/istreams_equal.hpp"
 
-#include <fstream>
-#include <iostream>
-
 namespace cath { namespace test { } }
 
 using namespace ::cath;
@@ -51,8 +50,6 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::test;
 using namespace ::std;
-
-using ::boost::filesystem::path;
 
 //namespace std {
 //	/// \brief Naughty addition of an insertion operator into std:: to get Boost.Test to output str_str_pairs
@@ -198,8 +195,7 @@ BOOST_AUTO_TEST_CASE(alignment_legacy_input_output) {
 	// Read the alignment file into a stringstream which can be used both as expected output
 	// and as the istream for the parsing of the alignment
 	stringstream expected_ss;
-	ifstream alignment_file_stream;
-	open_ifstream(alignment_file_stream, ALIGNMENT_FILE());
+	ifstream alignment_file_stream = open_ifstream( ALIGNMENT_FILE() );
 	expected_ss << alignment_file_stream.rdbuf();
 	alignment_file_stream.close();
 

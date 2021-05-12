@@ -20,6 +20,9 @@
 
 #include "alignment_output_options_block.hpp"
 
+#include <filesystem>
+#include <iostream>
+
 #include <boost/optional.hpp>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
@@ -32,19 +35,17 @@
 #include "cath/outputter/alignment_outputter/html_ostream_alignment_outputter.hpp"
 #include "cath/outputter/alignment_outputter/ssap_ostream_alignment_outputter.hpp"
 
-#include <iostream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
+using ::std::filesystem::path;
 
 const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_FILE   ( "aln-to-cath-aln-file"   );
 const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_STDOUT ( "aln-to-cath-aln-stdout" );

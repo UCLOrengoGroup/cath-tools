@@ -21,9 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_GNUPLOT_MATRIX_PLOTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_GNUPLOT_MATRIX_PLOTTER_HPP
 
-#include "cath/alignment/dyn_prog_align/detail/matrix_plotter/matrix_plotter.hpp"
-
+#include <filesystem>
 #include <sstream>
+
+#include "cath/alignment/dyn_prog_align/detail/matrix_plotter/matrix_plotter.hpp"
 
 namespace cath {
 	namespace align {
@@ -45,7 +46,7 @@ namespace cath {
 				void do_write_corner_score(const size_t &,
 				                           const size_t &,
 				                           const double &) final;
-				void do_finish(const boost::filesystem::path &) const final;
+				void do_finish(const ::std::filesystem::path &) const final;
 
 				/// \brief TODOCUMENT
 				std::ostringstream preplot_commands;

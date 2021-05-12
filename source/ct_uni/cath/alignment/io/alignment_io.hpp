@@ -22,10 +22,9 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_IO_ALIGNMENT_IO_HPP
 
 #include <cstddef>
+#include <filesystem>
 #include <iostream>
 #include <string>
-
-#include <boost/filesystem/path.hpp>
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/alignment.hpp"
@@ -45,7 +44,7 @@ namespace cath {
 
 		/// \todo Organise these into three class hierarchies: alignment_format, alignment_reader and alignment_writer
 		///       a la the chopping hierarchies
-		alignment read_alignment_from_cath_ssap_legacy_format(const boost::filesystem::path &,
+		alignment read_alignment_from_cath_ssap_legacy_format(const ::std::filesystem::path &,
 		                                                      const protein &,
 		                                                      const protein &,
 		                                                      const ostream_ref_opt & = std::ref( std::cerr ) );
@@ -77,11 +76,11 @@ namespace cath {
 		                                               std::ostream & = std::cerr);
 
 		/// \todo Write code to make it easy to parse from proteins (and to optionally rescore whilst doing so)
-		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
+		alignment read_alignment_from_fasta_file(const ::std::filesystem::path &,
 		                                         const file::pdb_list &,
 		                                         std::ostream & = std::cerr);
 
-		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
+		alignment read_alignment_from_fasta_file(const ::std::filesystem::path &,
 		                                         const file::pdb_list &,
 		                                         const str_vec &,
 		                                         std::ostream & = std::cerr);
@@ -90,11 +89,11 @@ namespace cath {
 		                                    const file::pdb_list &,
 		                                    std::ostream & = std::cerr);
 
-		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
+		alignment read_alignment_from_fasta_file(const ::std::filesystem::path &,
 		                                         const protein_list &,
 		                                         std::ostream & = std::cerr);
 
-		alignment read_alignment_from_fasta_file(const boost::filesystem::path &,
+		alignment read_alignment_from_fasta_file(const ::std::filesystem::path &,
 		                                         const protein_list &,
 		                                         const str_vec &,
 		                                         std::ostream & = std::cerr);
@@ -114,7 +113,7 @@ namespace cath {
 		                                               const residue_name &,
 		                                               const ostream_ref_opt &);
 
-		void write_alignment_as_cath_ssap_legacy_format(const boost::filesystem::path &,
+		void write_alignment_as_cath_ssap_legacy_format(const ::std::filesystem::path &,
 		                                                const alignment &,
 		                                                const protein &,
 		                                                const protein &,
@@ -134,7 +133,7 @@ namespace cath {
 		                                                        const chop::region_vec_opt & = boost::none,
 		                                                        const chop::region_vec_opt & = boost::none);
 
-		void write_alignment_as_fasta_alignment(const boost::filesystem::path &,
+		void write_alignment_as_fasta_alignment(const ::std::filesystem::path &,
 		                                        const alignment &,
 		                                        const protein_list &);
 

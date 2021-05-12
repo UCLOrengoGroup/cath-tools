@@ -21,11 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_COMMAND_EXECUTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_COMMAND_EXECUTER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <vector>
 
 #include "cath/common/type_aliases.hpp"
-
-#include <vector>
 
 namespace cath {
 
@@ -35,7 +34,7 @@ namespace cath {
 		command_executer() = delete;
 
 	public:
-		static bool execute(const boost::filesystem::path &,
+		static bool execute(const ::std::filesystem::path &,
 		                    const str_vec &);
 	};
 

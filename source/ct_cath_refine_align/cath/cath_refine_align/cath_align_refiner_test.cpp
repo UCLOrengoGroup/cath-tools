@@ -20,6 +20,10 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <filesystem>
+#include <fstream>
+#include <sstream>
+
 #include "cath/cath_refine_align/cath_align_refiner.hpp"
 #include "cath/cath_refine_align/options/cath_refine_align_options.hpp"
 #include "cath/cath_superpose/cath_superposer.hpp"
@@ -31,14 +35,11 @@
 #include "cath/test/predicate/files_equal.hpp"
 #include "cath/test/predicate/istream_and_file_equal.hpp"
 
-#include <fstream>
-#include <sstream>
-
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {
@@ -100,8 +101,7 @@ void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner
                                                                                                  const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
                                                                                                  ) {
 	// Prepare an ifstream to read input from the input file
-	ifstream stdin_like_ifstream;
-	open_ifstream(stdin_like_ifstream, prm_input_file);
+	ifstream stdin_like_ifstream = open_ifstream( prm_input_file );
 	check_cath_align_refiner_use_case(
 		prm_command_line_args,
 		stdin_like_ifstream,

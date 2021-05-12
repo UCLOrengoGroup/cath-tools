@@ -21,6 +21,7 @@
 #include "matrix_plotter.hpp"
 
 #include <algorithm>
+#include <filesystem>
 #include <limits>
 
 #include <boost/numeric/conversion/cast.hpp>
@@ -37,14 +38,12 @@
 using namespace ::cath::align::detail;
 using namespace ::cath::common;
 
-using ::boost::filesystem::path;
 using ::boost::irange;
 using ::boost::numeric_cast;
+using ::std::filesystem::path;
 using ::std::get;
 using ::std::max;
-using ::std::max_element;
 using ::std::min;
-using ::std::min_element;
 using ::std::numeric_limits;
 using ::std::tuple;
 

@@ -20,6 +20,9 @@
 
 #include "merge.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/trim.hpp>
@@ -31,19 +34,17 @@
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/type_aliases.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::clust;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::format;
 using ::boost::is_space;
 using ::boost::token_compress_on;
 using ::boost::trim_copy;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::ofstream;
@@ -107,8 +108,7 @@ void cath::clust::write_merge_list(ostream         &prm_os,    ///< The ostream 
 void cath::clust::write_merge_list(const path      &prm_out_file, ///< The file to which the description should be written
                                    const merge_vec &prm_merges    ///< The merge_list to describe
                                    ) {
-	ofstream out_stream;
-	open_ofstream( out_stream, prm_out_file );
+	ofstream out_stream = open_ofstream( prm_out_file );
 	write_merge_list( out_stream, prm_merges );
 	out_stream.close();
 }
@@ -146,8 +146,7 @@ merge_vec cath::clust::read_merge_list(istream &prm_merges_istream ///< The istr
 /// \relates merge
 merge_vec cath::clust::read_merge_list(const path &prm_merges_file ///< The file to read the merge_list from
                                        ) {
-	ifstream merges_istream;
-	open_ifstream( merges_istream, prm_merges_file );
+	ifstream merges_istream = open_ifstream( prm_merges_file );
 	const auto merges = read_merge_list( merges_istream );
 	merges_istream.close();
 	return merges;

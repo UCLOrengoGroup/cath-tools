@@ -20,6 +20,9 @@
 
 #include "aggregate_map_results.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -33,10 +36,10 @@
 using namespace ::cath::clust;
 using namespace ::cath::common;
 
-using ::boost::filesystem::path;
 using ::boost::format;
 using ::boost::lexical_cast;
 using ::boost::numeric_cast;
+using ::std::filesystem::path;
 using ::std::ofstream;
 using ::std::string;
 
@@ -333,8 +336,7 @@ Excluding completely-unmapped clusters:
 void cath::clust::write_markdown_summary_string_to_file(const path                  &prm_output_file,          ///< The file to which the Markdown summary should be written
                                                         const aggregate_map_results &prm_aggregate_map_results ///< The aggregate_map_results to summarise
                                                         ) {
-	ofstream md_ostream;
-	open_ofstream( md_ostream, prm_output_file );
+	ofstream md_ostream = open_ofstream( prm_output_file );
 	md_ostream << markdown_summary_string( prm_aggregate_map_results );
 	md_ostream.close();
 }

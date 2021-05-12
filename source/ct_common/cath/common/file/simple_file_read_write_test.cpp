@@ -20,8 +20,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/filesystem/path.hpp>
-
 #include "cath/common/file/simple_file_read_write.hpp"
 #include "cath/common/file/temp_file.hpp"
 #include "cath/common/size_t_literal.hpp"

@@ -20,21 +20,20 @@
 
 #include "alignment_input_spec.hpp"
 
+#include <filesystem>
+
 #include <boost/range/algorithm/count.hpp>
 
 #include "cath/common/cpp20/make_array.hpp"
 #include "cath/common/size_t_literal.hpp"
-
-#include <array>
 
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::boost::range::count;
-using ::std::array;
+using ::std::filesystem::path;
 
 constexpr bool alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN;
 

@@ -21,8 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_LOAD_AND_SCAN_METRICS_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_LOAD_AND_SCAN_METRICS_HPP
 
+#include <filesystem>
+
 #include <boost/algorithm/string/join.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/range/adaptor/sliced.hpp>
 #include <boost/range/join.hpp>
 
@@ -143,7 +144,7 @@ namespace cath {
 
 		std::string to_markdown_string(const load_and_scan_metrics &);
 		void to_markdown_file(const load_and_scan_metrics &,
-		                      const boost::filesystem::path &);
+		                      const ::std::filesystem::path &);
 
 	} // namespace scan
 } // namespace cath

@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/exception/not_implemented_exception.hpp"
@@ -31,7 +33,7 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {

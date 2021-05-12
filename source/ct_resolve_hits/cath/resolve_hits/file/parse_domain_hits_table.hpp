@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_PARSE_DOMAIN_HITS_TABLE_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_PARSE_DOMAIN_HITS_TABLE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
@@ -59,7 +59,7 @@ namespace cath {
 		// }
 
 		void parse_domain_hits_table_file(read_and_process_mgr &,
-		                                  const boost::filesystem::path &,
+		                                  const ::std::filesystem::path &,
 		                                  const bool &);
 
 		void parse_domain_hits_table(read_and_process_mgr &,

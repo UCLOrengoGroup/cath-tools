@@ -20,6 +20,8 @@
 
 #include "options_block.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional.hpp>
@@ -32,15 +34,16 @@
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
-using namespace ::std;
 
 using ::boost::adaptors::filtered;
 using ::boost::algorithm::any_of;
-using ::boost::filesystem::is_empty;
-using ::boost::filesystem::path;
 using ::boost::numeric_cast;
 using ::boost::program_options::options_description;
 using ::boost::program_options::variables_map;
+using ::std::filesystem::is_empty;
+using ::std::filesystem::path;
+using ::std::string;
+using ::std::unique_ptr;
 
 /// \brief A string to use to separate (valid values and their descriptions) from each other
 const string options_block::SUB_DESC_SEPARATOR = "\n   ";
@@ -136,8 +139,6 @@ bool options_block::is_acceptable_output_file(const path &prm_output_file ///< T
 bool options_block::is_acceptable_input_file(const path &prm_output_file, ///< TODOCUMENT
                                              const bool &prm_allow_empty  ///< TODOCUMENT
                                              ) {
-	using ::boost::filesystem::is_empty;
-
 	if (!exists(prm_output_file)) {
 		return false;
 	}

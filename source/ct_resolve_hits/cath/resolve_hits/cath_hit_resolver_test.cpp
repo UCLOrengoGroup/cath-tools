@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/range/join.hpp>
 #include <boost/test/unit_test.hpp>
@@ -53,15 +55,14 @@ using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
 using ::boost::algorithm::contains;
-using ::boost::filesystem::path;
 using ::boost::range::join;
 using ::cath::common::copy_build;
 using ::cath::common::temp_file;
 using ::cath::common::write_file;
+using ::std::filesystem::path;
 using ::std::istringstream;
 using ::std::ostringstream;
 using ::std::regex;
-using ::std::regex_replace;
 using ::std::string;
 
 namespace cath {

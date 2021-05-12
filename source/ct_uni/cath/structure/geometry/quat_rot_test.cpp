@@ -20,20 +20,18 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/filesystem/path.hpp>
 #include <boost/mpl/contains.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm_ext/for_each.hpp>
 
 #include <gnuplot-iostream.h>
 
-#include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "cath/common/boost_addenda/range/adaptor/limited.hpp"
+#include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/quat_rot.hpp"
-
 #include "cath/test/global_test_constants.hpp"
 
 using namespace ::cath;

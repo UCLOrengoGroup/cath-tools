@@ -21,20 +21,18 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_READ_STRING_FROM_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_READ_STRING_FROM_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <fstream>
 
 #include "cath/common/file/open_fstream.hpp"
-
-#include <fstream>
 
 namespace cath {
 	namespace common {
 
 		/// \brief Read the contents of the specified file into a string
-		inline std::string read_string_from_file(const boost::filesystem::path &prm_file ///< The file from which the string should be read
+		inline std::string read_string_from_file(const ::std::filesystem::path &prm_file ///< The file from which the string should be read
 		                                         ) {
-			std::ifstream input_stream;
-			open_ifstream( input_stream, prm_file );
+			std::ifstream input_stream = open_ifstream( prm_file );
 
 			const std::string result{
 				std::istreambuf_iterator<char>( input_stream ),

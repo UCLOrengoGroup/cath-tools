@@ -20,6 +20,9 @@
 
 #include "old_ssap_options_block.hpp"
 
+#include <filesystem>
+#include <iostream>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
@@ -30,8 +33,6 @@
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_source_file_set.hpp"
 
-#include <iostream>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::common;
@@ -40,13 +41,13 @@ using namespace ::cath::sup;
 using namespace ::std;
 
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::lexical_cast;
 using ::boost::none;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
+using ::std::filesystem::path;
 
 constexpr bool               old_ssap_options_block::DEF_BOOL;
 constexpr protein_file_combn old_ssap_options_block::DEF_PROT_SRCS;

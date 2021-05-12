@@ -19,12 +19,11 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <cmath>
+#include <filesystem>
 #include <functional>
 
 #include <boost/algorithm/string/join.hpp> // ***** TEMPORARY *****
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/optional.hpp>
 #include <boost/optional.hpp>
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/algorithm/copy.hpp>
@@ -68,7 +67,6 @@ using namespace ::cath::score;
 
 using ::boost::adaptors::map_keys;
 using ::boost::algorithm::icontains;
-using ::boost::filesystem::path;
 using ::boost::irange;
 using ::boost::is_space;
 using ::boost::make_optional;
@@ -76,6 +74,7 @@ using ::boost::none;
 using ::boost::optional;
 using ::boost::range::copy;
 using ::boost::token_compress_on;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::map;
 using ::std::numeric_limits;
@@ -205,8 +204,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			static str_vec_vec parse_multi_struc_scores(const path &prm_filename ///< TODOCUMENT
 			                                            ) {
-				ifstream input_stream;
-				common::open_ifstream( input_stream, prm_filename );
+				ifstream input_stream = common::open_ifstream( prm_filename );
 				string line_string;
 				str_vec_vec results;
 				while ( getline( input_stream, line_string ) ) {

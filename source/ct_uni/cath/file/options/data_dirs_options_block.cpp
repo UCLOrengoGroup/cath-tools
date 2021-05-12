@@ -20,6 +20,8 @@
 
 #include "data_dirs_options_block.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/lexical_cast.hpp>
@@ -39,11 +41,11 @@ using namespace ::std;
 
 using ::boost::algorithm::replace_all_copy;
 using ::boost::algorithm::to_lower_copy;
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
+using ::std::filesystem::path;
 
 const string data_dirs_options_block::DATA_OPTION_PATH_VARNAME   = "<path>";
 const string data_dirs_options_block::DATA_OPTION_PREFIX_VARNAME = "<pre>";

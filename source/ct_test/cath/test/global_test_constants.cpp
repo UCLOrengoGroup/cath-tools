@@ -18,6 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
 #include <limits>
 
 #include "cath/common/exception/runtime_error_exception.hpp"
@@ -28,9 +29,9 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::filesystem::current_path;
-using ::boost::filesystem::path;
-using ::boost::filesystem::temp_directory_path;
+using ::std::filesystem::current_path;
+using ::std::filesystem::path;
+using ::std::filesystem::temp_directory_path;
 
 constexpr double global_test_constants::DOUBLE_INFINITY;
 constexpr double global_test_constants::DOUBLE_QUIET_NAN;

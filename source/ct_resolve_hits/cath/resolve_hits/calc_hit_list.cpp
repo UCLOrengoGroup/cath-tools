@@ -21,13 +21,13 @@
 #include "calc_hit_list.hpp"
 
 #include <chrono>
+#include <filesystem>
 #include <fstream>
 #include <string>
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -66,7 +66,6 @@ using namespace ::cath::seq;
 
 using ::boost::adaptors::filtered;
 using ::boost::empty;
-using ::boost::filesystem::path;
 using ::boost::integer_range;
 using ::boost::irange;
 using ::boost::make_optional;
@@ -83,6 +82,7 @@ using ::boost::spirit::qi::parse;
 using ::boost::spirit::uint_;
 using ::boost::string_ref;
 using ::std::distance;
+using ::std::filesystem::path;
 using ::std::find_if;
 using ::std::ifstream;
 using ::std::istream;
@@ -263,8 +263,7 @@ void cath::rslv::read_hit_list_from_file(read_and_process_mgr &prm_read_and_proc
                                          const path           &prm_file,                 ///< The file from which to read the hits data
                                          const hit_score_type &prm_score_type            ///< The type of score
                                          ) {
-	ifstream the_ifstream;
-	open_ifstream( the_ifstream, prm_file );
+	ifstream the_ifstream = open_ifstream( prm_file );
 
 	read_hit_list_from_istream( prm_read_and_process_mgr, the_ifstream, prm_score_type );
 

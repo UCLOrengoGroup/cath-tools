@@ -18,7 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/filesystem/path.hpp>
+#include <regex>
+#include <sstream>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/chopping/region/region.hpp"
@@ -29,16 +31,12 @@
 #include "cath/superposition/io/superposition_io.hpp"
 #include "cath/test/superposition_fixture.hpp"
 
-#include <regex>
-#include <sstream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::geom;
 using namespace ::cath::sup;
 
-using ::boost::filesystem::path;
 using ::std::ostringstream;
 using ::std::regex;
 

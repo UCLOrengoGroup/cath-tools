@@ -21,18 +21,18 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PATH_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PATH_TYPE_ALIASES_HPP
 
-#include <boost/filesystem/path.hpp>
-#include <boost/optional/optional_fwd.hpp>
-
+#include <filesystem>
 #include <vector>
+
+#include <boost/optional/optional_fwd.hpp>
 
 namespace cath {
 
 	/// \brief TODOCUMENT
-	using path_vec     = std::vector<boost::filesystem::path>;
+	using path_vec     = std::vector<::std::filesystem::path>;
 
 	/// \brief TODOCUMENT
-	using path_opt     = boost::optional<boost::filesystem::path>;
+	using path_opt     = boost::optional<::std::filesystem::path>;
 
 	/// \brief Type alias for an optional path_opt
 	using path_opt_opt = boost::optional<path_opt>;

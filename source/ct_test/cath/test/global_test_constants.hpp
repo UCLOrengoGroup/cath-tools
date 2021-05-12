@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_GLOBAL_TEST_CONSTANTS_HPP
 #define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_GLOBAL_TEST_CONSTANTS_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -44,68 +44,68 @@ namespace cath {
 		global_test_constants & operator=(const global_test_constants &) = delete;
 
 	public:
-		static const boost::filesystem::path              & TEST_BASIC_FILE_TEST_DATA_DIR();
-		static const boost::filesystem::path              & TEST_MULTI_SSAP_SUPERPOSE_DIR();
-		static const boost::filesystem::path              & TEST_RESIDUE_IDS_DATA_DIR();
-		static const boost::filesystem::path              & TEST_SOURCE_DATA_DIR();
-		static const boost::filesystem::path              & TEST_EXAMPLE_PDBS_DATA_DIR();
-		static const boost::filesystem::path              & TEST_SSAP_REGRESSION_DATA_DIR();
-		static const boost::filesystem::path              & TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR();
-		static const boost::filesystem::path              & TEST_SUP_JSON_DIR();
-		static const boost::filesystem::path              & TEST_SVM_DIR();
-		static const boost::filesystem::path              & TEST_OUTPUT_DIRECTORY();
-		static const boost::filesystem::path              & CRH_TEST_DATA_DIR();
-		static const boost::filesystem::path              & CRH_CATH_DC_HANDLING_DATA_DIR();
-		static const boost::filesystem::path              & CRH_HMM_COVERAGE_DATA_DIR();
-		static const boost::filesystem::path              & CRH_HMMSCAN_DATA_DIR();
+		static const ::std::filesystem::path              & TEST_BASIC_FILE_TEST_DATA_DIR();
+		static const ::std::filesystem::path              & TEST_MULTI_SSAP_SUPERPOSE_DIR();
+		static const ::std::filesystem::path              & TEST_RESIDUE_IDS_DATA_DIR();
+		static const ::std::filesystem::path              & TEST_SOURCE_DATA_DIR();
+		static const ::std::filesystem::path              & TEST_EXAMPLE_PDBS_DATA_DIR();
+		static const ::std::filesystem::path              & TEST_SSAP_REGRESSION_DATA_DIR();
+		static const ::std::filesystem::path              & TEST_SSAP_ALIGNMENT_GLUING_DATA_DIR();
+		static const ::std::filesystem::path              & TEST_SUP_JSON_DIR();
+		static const ::std::filesystem::path              & TEST_SVM_DIR();
+		static const ::std::filesystem::path              & TEST_OUTPUT_DIRECTORY();
+		static const ::std::filesystem::path              & CRH_TEST_DATA_DIR();
+		static const ::std::filesystem::path              & CRH_CATH_DC_HANDLING_DATA_DIR();
+		static const ::std::filesystem::path              & CRH_HMM_COVERAGE_DATA_DIR();
+		static const ::std::filesystem::path              & CRH_HMMSCAN_DATA_DIR();
 
-		static const boost::filesystem::path              & NONEXISTENT_FILE();
+		static const ::std::filesystem::path              & NONEXISTENT_FILE();
 
 		static const std::string                          & EXAMPLE_A_PDB_STEMNAME();
 		static const std::string                          & EXAMPLE_B_PDB_STEMNAME();
 
-		static const boost::filesystem::path              & EXAMPLE_A_PDB_FILENAME();
-		static const boost::filesystem::path              & EXAMPLE_B_PDB_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_A_PDB_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_B_PDB_FILENAME();
 
-		static const boost::filesystem::path              & EXAMPLE_A_DSSP_FILENAME();
-		static const boost::filesystem::path              & EXAMPLE_B_DSSP_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_A_DSSP_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_B_DSSP_FILENAME();
 
-		static const boost::filesystem::path              & EXAMPLE_A_WOLF_FILENAME();
-		static const boost::filesystem::path              & EXAMPLE_B_WOLF_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_A_WOLF_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_B_WOLF_FILENAME();
 
-		static const boost::filesystem::path              & EXAMPLE_A_SEC_FILENAME();
-		static const boost::filesystem::path              & EXAMPLE_B_SEC_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_A_SEC_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_B_SEC_FILENAME();
 
-		static const boost::filesystem::path              & ALIGNMENT_FILE();
-		static const boost::filesystem::path              & TEST_PAIR_SUPPOSN_XML();
+		static const ::std::filesystem::path              & ALIGNMENT_FILE();
+		static const ::std::filesystem::path              & TEST_PAIR_SUPPOSN_XML();
 
-		static const boost::filesystem::path              & MODIFIED_PDB_FILENAME();
-		static const boost::filesystem::path              & TEST_OUTPUT_FILENAME();
+		static const ::std::filesystem::path              & MODIFIED_PDB_FILENAME();
+		static const ::std::filesystem::path              & TEST_OUTPUT_FILENAME();
 
-		static const boost::filesystem::path              & EXAMPLE_DOUBLES_FILENAME();
-		static const boost::filesystem::path              & EXAMPLE_TUPLES_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_DOUBLES_FILENAME();
+		static const ::std::filesystem::path              & EXAMPLE_TUPLES_FILENAME();
 
-		static const boost::filesystem::path              & CRH_EG_DOMTBL_IN_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_DOMTBL_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_DOMTBL_JSON_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_IN_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_HTML_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_HMMSEARCH_JSON_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_IN_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_RAW_SCORE_IN_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_RAW_SCORE_OUT_FILENAME();
-		static const boost::filesystem::path              & CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_DOMTBL_IN_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_DOMTBL_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_DOMTBL_JSON_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_IN_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_HTML_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_HMMSEARCH_JSON_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_RAW_EVALUE_IN_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_RAW_EVALUE_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_RAW_SCORE_IN_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_RAW_SCORE_OUT_FILENAME();
+		static const ::std::filesystem::path              & CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME();
 
 		static const double                               & LOOSER_ACCURACY_PERCENTAGE();
 		static const double                               & ACCURACY_PERCENTAGE();

@@ -20,7 +20,6 @@
 
 #include "multi_align_group.hpp"
 
-#include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/find.hpp>
@@ -42,15 +41,12 @@ using namespace ::cath::align::detail;
 using namespace ::cath::align::gap;
 using namespace ::cath::common;
 
-using ::boost::algorithm::join;
 using ::boost::lexical_cast;
 using ::boost::numeric_cast;
 using ::boost::range::find;
 using ::boost::range::max_element;
 using ::boost::range::push_back;
 using ::boost::range::remove_copy;
-using ::std::cerr;
-using ::std::flush;
 using ::std::ostream;
 using ::std::string;
 

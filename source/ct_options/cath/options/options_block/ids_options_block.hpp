@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_IDS_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_IDS_OPTIONS_BLOCK_HPP
 
-#include <boost/filesystem/path.hpp>
-
 #include "cath/common/type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"
 

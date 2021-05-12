@@ -20,9 +20,10 @@
 
 #include "do_the_ssaps_alignment_acquirer.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
@@ -57,15 +58,12 @@ using namespace ::cath::opts;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::algorithm::trim_right_copy;
-using ::boost::filesystem::create_directories;
-using ::boost::filesystem::exists;
-using ::boost::filesystem::is_empty;
-using ::boost::filesystem::path;
-using ::boost::filesystem::temp_directory_path;
 using ::boost::format;
 using ::boost::irange;
-using ::std::ofstream;
+using ::std::filesystem::path;
+using ::std::filesystem::temp_directory_path;
 using ::std::max;
+using ::std::ofstream;
 using ::std::pair;
 using ::std::string;
 using ::std::unique_ptr;
@@ -156,8 +154,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 				                progress_str,
 				                join( cath_ssap_args, " " ),
 				                scores_file.string() );
-				ofstream out_scores_ofstream;
-				open_ofstream( out_scores_ofstream, scores_file );
+				ofstream out_scores_ofstream = open_ofstream( scores_file );
 				run_ssap(
 					make_and_parse_options<cath_ssap_options>(
 						cath_ssap_args,

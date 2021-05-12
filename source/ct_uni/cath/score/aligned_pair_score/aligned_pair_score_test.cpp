@@ -20,7 +20,10 @@
 
 #include "aligned_pair_score.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <iostream>
+#include <iterator>
+
 #include <boost/serialization/unique_ptr.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -72,9 +75,6 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/test_tools.hpp"
 
-#include <iterator>
-#include <iostream>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::common;
@@ -82,7 +82,7 @@ using namespace ::cath::common::test;
 using namespace ::cath::score;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {

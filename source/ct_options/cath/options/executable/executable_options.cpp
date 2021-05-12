@@ -20,6 +20,11 @@
 
 #include "executable_options.hpp"
 
+#include <filesystem>
+#include <fstream>
+#include <iosfwd>
+#include <iostream>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/optional.hpp>
@@ -33,21 +38,17 @@
 #include "cath/options/executable/env_var_option_name_handler.hpp"
 #include "cath/options/options_block/misc_help_version_options_block.hpp"
 
-#include <fstream>
-#include <iostream>
-#include <iosfwd>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std::literals::string_literals;
 
-using ::boost::filesystem::path;
 using ::boost::program_options::command_line_parser;
 using ::boost::program_options::options_description;
 using ::boost::program_options::positional_options_description;
 using ::boost::program_options::variables_map;
 using ::boost::trim_right_copy;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::string;
 
@@ -343,7 +344,7 @@ void executable_options::parse_options(const int           &argc,             //
 			prog_opts_try(
 				error_or_help_string,
 				[&] {
-					open_ifstream(config_file_stream, CATH_TOOLS_CONF_FILE);
+					open_ifstream( config_file_stream, CATH_TOOLS_CONF_FILE );
 					store( parse_config_file( config_file_stream, full_po_desc, true ), vm );
 					config_file_stream.close();
 				},

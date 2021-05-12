@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_LABEL_PAIR_IS_POSITIVE_LABEL_PAIR_IS_POSITIVE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_LABEL_PAIR_IS_POSITIVE_LABEL_PAIR_IS_POSITIVE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/type_aliases.hpp"
 
@@ -43,7 +43,7 @@ namespace cath {
 
 		label_pair_is_positive make_label_pair_is_positive(std::istream &);
 
-		label_pair_is_positive make_label_pair_is_positive(const boost::filesystem::path &);
+		label_pair_is_positive make_label_pair_is_positive(const ::std::filesystem::path &);
 
 	} // namespace score
 } // namespace cath

@@ -20,7 +20,9 @@
 
 #include "cath_cluster_mapper.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <fstream>
+#include <functional>
 
 #include "cath/cluster/clustmap_options.hpp"
 #include "cath/cluster/detail/mapping_job.hpp"
@@ -39,14 +41,11 @@
 #include "cath/common/optional/make_optional_if.hpp"
 #include "cath/options/executable/executable_options.hpp"
 
-#include <fstream>
-#include <functional>
-
 using namespace ::cath::clust::detail;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::ostream;

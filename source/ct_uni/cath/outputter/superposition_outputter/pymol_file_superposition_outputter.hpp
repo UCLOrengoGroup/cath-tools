@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_PYMOL_FILE_SUPERPOSITION_OUTPUTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_PYMOL_FILE_SUPERPOSITION_OUTPUTTER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/display/options/display_spec.hpp"
 #include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
@@ -34,7 +34,7 @@ namespace cath {
 		class pymol_file_superposition_outputter final : public superposition_outputter {
 		private:
 			/// \brief TODOCUMENT
-			boost::filesystem::path output_file;
+			::std::filesystem::path output_file;
 
 			/// \brief TODOCUMENT
 			display_spec the_display_spec;
@@ -50,7 +50,7 @@ namespace cath {
 			std::string do_get_name() const final;
 
 		public:
-			pymol_file_superposition_outputter(const boost::filesystem::path &,
+			pymol_file_superposition_outputter(const ::std::filesystem::path &,
 			                                   display_spec,
 			                                   sup::superposition_content_spec);
 		};

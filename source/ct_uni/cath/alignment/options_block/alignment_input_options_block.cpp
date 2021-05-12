@@ -20,6 +20,8 @@
 
 #include "alignment_input_options_block.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional.hpp>
@@ -34,14 +36,14 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std::literals::string_literals;
 
-using ::boost::numeric_cast;
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::none;
+using ::boost::numeric_cast;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
+using ::std::filesystem::path;
 using ::std::string;
 using ::std::unique_ptr;
 

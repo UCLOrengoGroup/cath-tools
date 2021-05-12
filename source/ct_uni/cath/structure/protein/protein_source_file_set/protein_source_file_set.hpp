@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FILE_SET_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FILE_SET_HPP
 
+#include <filesystem>
+
 #include <boost/optional.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -102,12 +104,12 @@ namespace cath {
 	                                std::ostream &);
 
 	protein read_protein_from_files(const protein_source_file_set &,
-	                                const boost::filesystem::path &,
+	                                const ::std::filesystem::path &,
 	                                const std::string &,
 	                                const ostream_ref_opt & = boost::none);
 
 	protein_list read_proteins_from_files(const protein_source_file_set &,
-	                                      const boost::filesystem::path &,
+	                                      const ::std::filesystem::path &,
 	                                      const str_vec &,
 	                                      const ostream_ref_opt & = boost::none);
 
@@ -115,7 +117,7 @@ namespace cath {
 	                                                   const opts::data_dirs_spec &,
 	                                                   const std::string &);
 
-	boost::filesystem::path get_primary_file_from_map(const protein_source_file_set &,
+	::std::filesystem::path get_primary_file_from_map(const protein_source_file_set &,
 	                                                  const file::data_file_path_map &);
 
 	using protein_source_file_set_pvec = boost::ptr_vector<protein_source_file_set>;

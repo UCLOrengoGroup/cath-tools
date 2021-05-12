@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_MATRIX_PLOT_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_MATRIX_PLOT_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/alignment/dyn_prog_align/detail/return_path_matrix.hpp"
 #include "cath/alignment/dyn_prog_align/detail/score_accumulation_matrix.hpp"
@@ -34,7 +34,7 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename P>
-			void matrix_plot(const boost::filesystem::path &prm_output_stem, ///< TODOCUMENT
+			void matrix_plot(const ::std::filesystem::path &prm_output_stem, ///< TODOCUMENT
 			                 const dyn_prog_score_source   &prm_scorer       ///< TODOCUMENT
 			                 ) {
 				const size_t length_a = prm_scorer.get_length_a();
@@ -46,7 +46,7 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			template <typename P>
-			void matrix_plot(const boost::filesystem::path   &prm_output_stem,              ///< TODOCUMENT
+			void matrix_plot(const ::std::filesystem::path   &prm_output_stem,              ///< TODOCUMENT
 			                 const dyn_prog_score_source     &prm_scorer,                   ///< TODOCUMENT
 			                 const return_path_matrix        &prm_return_path_matrix,       ///< TODOCUMENT
 			                 const score_accumulation_matrix &prm_score_accumulation_matrix ///< TODOCUMENT

@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_NAME_SET_NAME_SET_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_NAME_SET_NAME_SET_HPP
 
+#include <filesystem>
+
 #include <boost/operators.hpp>
 #include <boost/optional.hpp>
 
@@ -51,7 +53,7 @@ namespace cath {
 			                  str_opt = boost::none,
 			                  str_opt = boost::none);
 
-			explicit name_set(boost::filesystem::path,
+			explicit name_set(::std::filesystem::path,
 			                  str_opt = boost::none,
 			                  str_opt = boost::none);
 
@@ -76,7 +78,7 @@ namespace cath {
 		}
 
 		/// \brief Ctor
-		inline name_set::name_set(boost::filesystem::path prm_primary_source_file,     ///< The primary file from which the data was parsed
+		inline name_set::name_set(::std::filesystem::path prm_primary_source_file,     ///< The primary file from which the data was parsed
 		                          str_opt                 prm_specified_id,            ///< An optional name that may have been explicitly specified
 		                          str_opt                 prm_domain_name_from_regions ///< An optional (domain) name that may have come from regions (eg D[2zkmX03]308-465:X,516-669:X)
 		                          ) : name_from_acq            { prm_primary_source_file.filename().string() },

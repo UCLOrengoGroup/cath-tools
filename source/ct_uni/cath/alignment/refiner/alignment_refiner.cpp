@@ -22,7 +22,6 @@
 
 #include <fstream>
 
-#include <boost/filesystem/path.hpp> // ***** TEMPORARY *****
 #include <boost/numeric/conversion/cast.hpp>
 
 #include <spdlog/spdlog.h>

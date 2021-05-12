@@ -21,7 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_LINKS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_LINKS_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <algorithm>
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/clustagglom/link_dirn.hpp"
@@ -33,8 +35,6 @@
 #include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <algorithm>
 
 namespace cath { namespace common { class id_of_str_bidirnl; } }
 
@@ -227,7 +227,7 @@ namespace cath {
 		                         const common::id_of_str_bidirnl &,
 		                         const size_vec &);
 
-		void write_ordered_links(const boost::filesystem::path &,
+		void write_ordered_links(const ::std::filesystem::path &,
 		                         const links &,
 		                         const common::id_of_str_bidirnl &,
 		                         const size_vec &);

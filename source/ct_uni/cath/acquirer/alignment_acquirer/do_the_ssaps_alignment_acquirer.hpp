@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_DO_THE_SSAPS_ALIGNMENT_ACQUIRER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_DO_THE_SSAPS_ALIGNMENT_ACQUIRER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
@@ -50,7 +51,7 @@ namespace cath { namespace align {
 
 		const path_opt & get_directory_of_joy() const;
 
-		static boost::filesystem::path make_temp_dir_for_doing_ssaps(const file::strucs_context &);
+		static ::std::filesystem::path make_temp_dir_for_doing_ssaps(const file::strucs_context &);
 	};
 
 } } // namespace cath::align

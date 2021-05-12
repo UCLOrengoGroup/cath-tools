@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_LIST_SCORE_VALUE_LIST_READER_SCORE_VALUE_READER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_LIST_SCORE_VALUE_LIST_READER_SCORE_VALUE_READER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/property_tree/ptree_fwd.hpp>
 
 namespace cath { namespace score { class aligned_pair_score_value_list; } }
@@ -36,7 +37,7 @@ namespace cath {
 		public:
 			static aligned_pair_score_value_list read_aligned_pair_score_list_from_property_tree(const boost::property_tree::ptree &);
 			static aligned_pair_score_value_list read(std::istream &);
-			static aligned_pair_score_value_list read(const boost::filesystem::path &);
+			static aligned_pair_score_value_list read(const ::std::filesystem::path &);
 		};
 
 	} // namespace score

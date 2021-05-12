@@ -20,10 +20,12 @@
 
 #include "cath/score/score_classification/label_pair_is_positive/label_pair_is_positive.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
@@ -31,17 +33,15 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 
-#include <fstream>
-
 using namespace ::cath::common;
 using namespace ::cath::score;
 using namespace ::std;
 
 using ::boost::algorithm::is_space;
 using ::boost::algorithm::trim_left;
-using ::boost::filesystem::path;
 using ::boost::lexical_cast;
 using ::boost::token_compress_on;
+using ::std::filesystem::path;
 
 /// \brief Ctor from a map of pairs of labels to is_positive bools
 label_pair_is_positive::label_pair_is_positive(str_str_pair_bool_map prm_positive_of_label_pairs ///< A map of pairs of labels to is_positive bools from which to construct this label_pair_is_positive
@@ -96,8 +96,7 @@ label_pair_is_positive cath::score::make_label_pair_is_positive(istream &prm_inp
 /// \relates label_pair_is_positive
 label_pair_is_positive cath::score::make_label_pair_is_positive(const path &prm_input_file ///< The file of data from which to parse the label_pair_is_positive
                                                                 ) {
-	ifstream ssap_scores_ifstream;
-	open_ifstream( ssap_scores_ifstream, prm_input_file );
+	ifstream ssap_scores_ifstream = open_ifstream( prm_input_file );
 	const auto the_label_pair_is_positive = make_label_pair_is_positive(ssap_scores_ifstream);
 	ssap_scores_ifstream.close();
 	return the_label_pair_is_positive;

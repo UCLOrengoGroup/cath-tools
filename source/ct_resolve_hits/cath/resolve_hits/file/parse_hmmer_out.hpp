@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_PARSE_HMMER_OUT_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_PARSE_HMMER_OUT_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/file/hmmer_format.hpp"
@@ -34,7 +34,7 @@ namespace cath {
 	namespace rslv {
 
 		void parse_hmmer_out_file(read_and_process_mgr &,
-		                          const boost::filesystem::path &,
+		                          const ::std::filesystem::path &,
 		                          const hmmer_format &,
 		                          const bool &,
 		                          const seq::residx_t &,
@@ -47,7 +47,7 @@ namespace cath {
 		                     const seq::residx_t &,
 		                     const bool &);
 
-		str_calc_hit_list_pair_vec parse_hmmer_out_file(const boost::filesystem::path &,
+		str_calc_hit_list_pair_vec parse_hmmer_out_file(const ::std::filesystem::path &,
 		                                                const hmmer_format &,
 		                                                const bool &,
 		                                                const seq::residx_t &,

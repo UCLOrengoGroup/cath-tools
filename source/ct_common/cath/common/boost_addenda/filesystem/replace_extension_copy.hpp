@@ -21,15 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_FILESYSTEM_REPLACE_EXTENSION_COPY_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_FILESYSTEM_REPLACE_EXTENSION_COPY_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 namespace cath {
 	namespace common {
 
 		/// \brief Return a copy of the specified path in which the extension has been
 		///        replaced with the specified replacement
-		inline boost::filesystem::path replace_extension_copy(boost::filesystem::path        prm_file,
-		                                                      const boost::filesystem::path &prm_replacement = boost::filesystem::path()
+		inline ::std::filesystem::path replace_extension_copy(::std::filesystem::path        prm_file,
+		                                                      const ::std::filesystem::path &prm_replacement = ::std::filesystem::path()
 		                                                      ) {
 			prm_file.replace_extension( prm_replacement );
 			return prm_file;

@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 #include "superposition_io.hpp"
 
+#include <filesystem>
 #include <fstream>
 
 #include <boost/algorithm/cxx11/any_of.hpp>
@@ -57,9 +57,9 @@ using namespace ::cath::sup::detail;
 
 using ::boost::adaptors::map_values;
 using ::boost::algorithm::any_of;
-using ::boost::filesystem::path;
 using ::boost::irange;
 using ::boost::property_tree::ptree;
+using ::std::filesystem::path;
 using ::std::fixed;
 using ::std::ofstream;
 using ::std::ostream;
@@ -142,8 +142,7 @@ void cath::sup::write_xml_sup_filename(const superposition  &prm_superposition, 
                                        ) {
 	// A try block with the aim of catching any I/O errors
 	try {
-		ofstream xml_ostream;
-		open_ofstream(xml_ostream, prm_filename);
+		ofstream xml_ostream = open_ofstream( prm_filename );
 		write_xml_sup(xml_ostream, prm_superposition, prm_ids);
 		xml_ostream.close();
 	}
@@ -331,8 +330,7 @@ void cath::sup::write_superposed_pdb_to_file(const superposition        &prm_sup
                                              const chain_relabel_policy &prm_relabel_chain,  ///< TODOCUMENT
                                              const region_vec_opt       &prm_regions         ///< Optional specification of regions to which the written records should be restricted
                                              ) {
-	ofstream superposition_ostream;
-	open_ofstream(superposition_ostream, prm_filename);
+	ofstream superposition_ostream = open_ofstream( prm_filename);
 
 	// Try here to catch any I/O exceptions
 	try {
@@ -378,8 +376,7 @@ void cath::sup::write_superposed_pdb_to_file(const superposition          &prm_s
                                              const chain_relabel_policy   &prm_relabel_chain,  ///< TODOCUMENT
                                              const region_vec_opt         &prm_regions         ///< Optional specification of regions to which the written records should be restricted
                                              ) {
-	ofstream superposition_ostream;
-	open_ofstream(superposition_ostream, prm_filename);
+	ofstream superposition_ostream = open_ofstream( prm_filename );
 
 	// Try here to catch any I/O exceptions
 	try {

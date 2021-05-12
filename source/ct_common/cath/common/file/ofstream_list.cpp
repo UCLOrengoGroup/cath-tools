@@ -20,16 +20,17 @@
 
 #include "ofstream_list.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ofstream;
 using ::std::ostream;
 
@@ -50,8 +51,7 @@ ostream_ref_vec ofstream_list::open_ofstreams(const path_vec &prm_paths ///< The
 				return *standard_outstream;
 			}
 			else {
-				ofstreams.emplace_back();
-				open_ofstream( ofstreams.back(), the_path );
+				ofstreams.push_back( open_ofstream( the_path ) );
 				return { ofstreams.back() };
 			}
 		}

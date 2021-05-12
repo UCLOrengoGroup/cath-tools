@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_RBF_MODEL_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_RBF_MODEL_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/score/score_classification/value_list_scaling.hpp"
@@ -88,7 +88,7 @@ namespace cath {
 		};
 
 		rbf_model parse_rbf_model(std::istream &);
-		rbf_model parse_rbf_model(const boost::filesystem::path &);
+		rbf_model parse_rbf_model(const ::std::filesystem::path &);
 
 		double get_score(const rbf_model &,
 		                 const homcheck::ssap_and_prc &);

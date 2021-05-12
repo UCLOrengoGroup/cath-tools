@@ -21,11 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_TEST_ALIGNMENT_OUTPUTTER_FIXTURE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_TEST_ALIGNMENT_OUTPUTTER_FIXTURE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <sstream>
 
 #include "cath/common/file/temp_file.hpp"
-
-#include <sstream>
 
 namespace cath { namespace align { class alignment_context; } }
 
@@ -41,7 +40,7 @@ namespace cath {
 			const common::temp_file       out_temp_file{ "cath_tools_test_temp_file.alignment_outputter.%%%%" };
 
 			/// \brief The path of the temp_file
-			const boost::filesystem::path out_file     { get_filename( out_temp_file ) };
+			const ::std::filesystem::path out_file     { get_filename( out_temp_file ) };
 
 			/// \brief An output stream, which gets checked for emptiness at the end of the test
 			std::ostringstream            out_ss;

@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_FILE_ALIGNMENT_OUTPUTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_FILE_ALIGNMENT_OUTPUTTER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/clone/clone_ptr.hpp"
 #include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
@@ -33,7 +33,7 @@ namespace cath {
 		class file_alignment_outputter final : public alignment_outputter {
 		private:
 			/// \brief TODOCUMENT
-			const boost::filesystem::path output_file;
+			const ::std::filesystem::path output_file;
 
 			/// \brief TODOCUMENT
 			common::clone_ptr<alignment_outputter> ostream_alignment_outputter_ptr;
@@ -45,7 +45,7 @@ namespace cath {
 			std::string do_get_name() const final;
 
 		public:
-			file_alignment_outputter(const boost::filesystem::path &,
+			file_alignment_outputter(const ::std::filesystem::path &,
 			                         const alignment_outputter &);
 		};
 

@@ -20,11 +20,14 @@
 
 #include "links.hpp"
 
+#include <filesystem>
+#include <fstream>
+#include <tuple>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/for_each.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/range/algorithm/stable_sort.hpp>
 #include <boost/range/combine.hpp>
 
 #include "cath/clustagglom/link.hpp"
@@ -35,20 +38,16 @@
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-#include <fstream>
-#include <tuple>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::clust;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::range::combine;
 using ::boost::range::for_each;
 using ::boost::range::sort;
-using ::boost::range::stable_sort;
+using ::std::filesystem::path;
 using ::std::get;
 using ::std::ofstream;
 using ::std::ostream;
@@ -179,8 +178,7 @@ void cath::clust::write_ordered_links(const path              &prm_output,      
                                       const id_of_str_bidirnl &prm_ider,        ///< The name_ider containing the names for the links
                                       const size_vec          &prm_sort_indices ///< The ranks of the items (ie a 0 should appear in the index corresponding to that of the most preferred item)
                                       ) {
-	ofstream links_ostream;
-	open_ofstream( links_ostream, prm_output );
+	ofstream links_ostream = open_ofstream( prm_output );
 	write_ordered_links( links_ostream, prm_links, prm_ider, prm_sort_indices );
 	links_ostream.close();
 }

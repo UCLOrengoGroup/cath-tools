@@ -20,6 +20,7 @@
 
 #include "pdb_files_superposition_outputter.hpp"
 
+#include <filesystem>
 
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -33,8 +34,8 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::filesystem::path;
 using ::boost::string_ref;
+using ::std::filesystem::path;
 using ::std::ostream;
 using ::std::string;
 using ::std::unique_ptr;

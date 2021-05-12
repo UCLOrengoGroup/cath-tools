@@ -20,6 +20,13 @@
 
 #include "pdb.hpp"
 
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <set>
+#include <sstream>
+#include <tuple>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -61,12 +68,6 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-#include <fstream>
-#include <iostream>
-#include <set>
-#include <sstream>
-#include <tuple>
-
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::common;
@@ -80,11 +81,11 @@ using ::boost::algorithm::any_of;
 using ::boost::algorithm::is_space;
 using ::boost::algorithm::join;
 using ::boost::algorithm::starts_with;
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::optional;
 using ::boost::range::count_if;
+using ::std::filesystem::path;
 using ::std::get;
 using ::std::ifstream;
 using ::std::istream;
@@ -109,8 +110,7 @@ const string pdb::PDB_RECORD_STRING_TER ( "TER   " );
 /// \brief TODOCUMENT
 void pdb::read_file(const path &prm_filename ///< TODOCUMENT
                     ) {
-	ifstream pdb_istream;
-	open_ifstream(pdb_istream, prm_filename);
+	ifstream pdb_istream = open_ifstream( prm_filename );
 
 	// Try here to catch any I/O exceptions
 	try {
@@ -140,8 +140,7 @@ void pdb::read_file(const path &prm_filename ///< TODOCUMENT
 /// \brief TODOCUMENT
 void pdb::append_to_file(const path &prm_filename ///< TODOCUMENT
                          ) const {
-	ofstream pdb_appstream;
-	open_ofstream(pdb_appstream, prm_filename);
+	ofstream pdb_appstream = open_ofstream( prm_filename );
 
 	// Try here to catch any I/O exceptions
 	try {
@@ -799,8 +798,7 @@ void cath::file::write_pdb_file(const path           &prm_filename,      ///< Th
                                 const region_vec_opt &prm_regions,       ///< Optional specification of regions to which the written records should be restricted
                                 const pdb_write_mode &prm_pdb_write_mode ///< Whether this is the only/last part of the PDB file
                                 ) {
-	ofstream out_ofstream;
-	open_ofstream( out_ofstream, prm_filename );
+	ofstream out_ofstream = open_ofstream( prm_filename );
 	write_pdb_file(
 		out_ofstream,
 		prm_pdb,

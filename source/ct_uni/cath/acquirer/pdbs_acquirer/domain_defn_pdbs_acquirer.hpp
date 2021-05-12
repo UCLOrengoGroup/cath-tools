@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_DOMAIN_DEFN_PDBS_ACQUIRER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_DOMAIN_DEFN_PDBS_ACQUIRER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 
@@ -32,13 +32,13 @@ namespace cath {
 		class domain_defn_pdbs_acquirer final : public pdbs_acquirer {
 		private:
 			/// \brief TODOCUMENT
-			boost::filesystem::path domain_defn_file;
+			::std::filesystem::path domain_defn_file;
 
 			std::unique_ptr<pdbs_acquirer> do_clone() const final;
 			file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const final;
 
 		public:
-			explicit domain_defn_pdbs_acquirer(const boost::filesystem::path &);
+			explicit domain_defn_pdbs_acquirer(const ::std::filesystem::path &);
 		};
 
 	} // namespace opts

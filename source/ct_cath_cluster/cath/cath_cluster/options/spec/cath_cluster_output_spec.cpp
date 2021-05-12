@@ -20,6 +20,8 @@
 
 #include "cath_cluster_output_spec.hpp"
 
+#include <filesystem>
+
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/count.hpp>
 
@@ -33,11 +35,11 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::std::literals::string_literals;
 
-using ::boost::filesystem::path;
 using ::boost::make_optional;
 using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::count;
+using ::std::filesystem::path;
 
 /// \brief Getter for an optional file to which clusters should be written
 const path_opt & cath_cluster_output_spec::get_clusters_to_file() const {

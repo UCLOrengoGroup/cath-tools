@@ -20,6 +20,8 @@
 
 #include "read_domain_def_from_pdb.hpp"
 
+#include <filesystem>
+
 #include "cath/chopping/domain/domain_definition.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/file/data_file.hpp"
@@ -31,7 +33,7 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::make_pair;
 using ::std::pair;
 

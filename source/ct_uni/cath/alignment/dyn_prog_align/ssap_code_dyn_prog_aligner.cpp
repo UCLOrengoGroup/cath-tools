@@ -35,18 +35,21 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/ssap/windowed_matrix.hpp"
 
-#include <cassert> // **** TEMPORARY *****
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::align::gap;
 using namespace ::cath::common;
-using namespace ::std;
 
 using ::boost::adaptors::reversed;
 using ::boost::irange;
-using ::boost::lexical_cast;
 using ::boost::numeric_cast;
+using ::std::get;
+using ::std::make_pair;
+using ::std::make_tuple;
+using ::std::numeric_limits;
+using ::std::swap;
+using ::std::to_string;
+using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
 unique_ptr<dyn_prog_aligner> ssap_code_dyn_prog_aligner::do_clone() const {
@@ -309,17 +312,17 @@ alignment ssap_code_dyn_prog_aligner::traceback(const size_t      &prm_length_a,
 //		cerr << endl;
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
 			"After tracing, the last a_position is "
-			+ lexical_cast<string>(get_last_a_offset_1_position(new_alignment))
+			+ to_string(get_last_a_offset_1_position(new_alignment))
 			+ " which is past the end of structure a, which is of length "
-			+ lexical_cast<string>(prm_length_a)
+			+ to_string(prm_length_a)
 		));
 	}
 	if (get_last_b_offset_1_position( new_alignment ) > prm_length_b) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
 			"After tracing, the last b_position is "
-			+ lexical_cast<string>(get_last_b_offset_1_position( new_alignment ) )
+			+ to_string(get_last_b_offset_1_position( new_alignment ) )
 			+ " which is past the end of structure b, which is of length "
-			+ lexical_cast<string>(prm_length_b)
+			+ to_string(prm_length_b)
 		));
 	}
 #endif

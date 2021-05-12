@@ -20,7 +20,6 @@
 
 #include "cath_superposer.hpp"
 
-#include <boost/filesystem/path.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include <spdlog/spdlog.h>
@@ -50,8 +49,6 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 using namespace ::std;
-
-using ::boost::filesystem::path;
 
 /// \brief Perform a cath-superpose job as specified by the cath_superpose_options argument
 ///

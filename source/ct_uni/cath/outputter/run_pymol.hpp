@@ -21,12 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_RUN_PYMOL_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_RUN_PYMOL_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 namespace cath {
 	namespace view {
 
-		void run_pymol( const ::boost::filesystem::path &, const ::boost::filesystem::path & = { "pymol" } );
+		void run_pymol( const ::std::filesystem::path &, const ::std::filesystem::path & = { "pymol" } );
 
 	} // namespace vier
 } // namespace cath

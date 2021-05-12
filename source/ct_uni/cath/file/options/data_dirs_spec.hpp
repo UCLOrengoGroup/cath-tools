@@ -21,13 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_OPTIONS_DATA_DIRS_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_OPTIONS_DATA_DIRS_SPEC_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <map>
 
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/file/data_file.hpp"
 #include "cath/file/options/data_option.hpp"
-
-#include <map>
 
 namespace cath { namespace file { class name_set; } }
 
@@ -61,7 +60,7 @@ namespace cath {
 			file_option_str_map_map values;
 
 			/// \brief A root directory from which the other directories can be constructed
-			boost::filesystem::path cath_root_dir;
+			::std::filesystem::path cath_root_dir;
 
 		public:
 			data_dirs_spec();
@@ -71,7 +70,7 @@ namespace cath {
 
 			static std::string get_name_of_data_file(const file::data_file &);
 
-			const boost::filesystem::path & get_cath_root_dir() const;
+			const ::std::filesystem::path & get_cath_root_dir() const;
 
 
 
@@ -82,7 +81,7 @@ namespace cath {
 			data_dirs_spec & set_path_of_data_file(const file::data_file &,
 			                                       const std::string &);
 
-			data_dirs_spec & set_cath_root_dir(const boost::filesystem::path &);
+			data_dirs_spec & set_cath_root_dir(const ::std::filesystem::path &);
 
 
 
@@ -100,16 +99,16 @@ namespace cath {
 
 		data_dirs_spec build_data_dirs_spec_of_path(const path_vec &);
 
-		data_dirs_spec build_data_dirs_spec_of_dir(const boost::filesystem::path &);
+		data_dirs_spec build_data_dirs_spec_of_dir(const ::std::filesystem::path &);
 
 		path_vec get_paths_of_data_file(const data_dirs_spec &,
 		                                const file::data_file &);
 
-		boost::filesystem::path find_file(const data_dirs_spec &,
+		::std::filesystem::path find_file(const data_dirs_spec &,
 		                                  const file::data_file &,
 		                                  const std::string &);
 
-		boost::filesystem::path find_file(const data_dirs_spec &,
+		::std::filesystem::path find_file(const data_dirs_spec &,
 		                                  const file::data_file &,
 		                                  const file::name_set &);
 

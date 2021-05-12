@@ -20,6 +20,9 @@
 
 #include "fasta_aln_file_alignment_acquirer.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/io/alignment_io.hpp"
 #include "cath/alignment/residue_score/residue_scorer.hpp"
@@ -33,8 +36,6 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::align::detail;
@@ -43,7 +44,7 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> fasta_aln_file_alignment_acquirer::do_clone() const {

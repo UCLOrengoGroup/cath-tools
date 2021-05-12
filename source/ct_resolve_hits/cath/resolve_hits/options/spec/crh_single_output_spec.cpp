@@ -20,6 +20,8 @@
 
 #include "crh_single_output_spec.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -38,9 +40,9 @@ using namespace ::std::literals::string_literals;
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::filesystem::path;
 using ::boost::make_optional;
 using ::boost::none;
+using ::std::filesystem::path;
 using ::std::string;
 
 constexpr bool                crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;

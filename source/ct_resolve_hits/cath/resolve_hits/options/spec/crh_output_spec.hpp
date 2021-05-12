@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_OUTPUT_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_OUTPUT_SPEC_HPP
 
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/common/path_type_aliases.hpp"
@@ -91,7 +93,7 @@ namespace cath {
 		bool has_hits_text_output(const crh_output_spec &);
 
 		bool has_any_out_files_matching(const crh_output_spec &,
-		                                const boost::filesystem::path &);
+		                                const ::std::filesystem::path &);
 
 		path_vec get_all_output_paths(const crh_output_spec &);
 

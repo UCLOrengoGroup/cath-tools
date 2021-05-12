@@ -20,22 +20,22 @@
 
 #include "dissimilarities_file.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/clustagglom/link.hpp"
 #include "cath/clustagglom/links.hpp"
 #include "cath/common/container/id_of_str_bidirnl.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/string/string_parse_tools.hpp"
 
-#include <fstream>
-
 using namespace ::cath::clust;
 using namespace ::cath::common;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::istringstream;
-using ::std::max;
 using ::std::string;
 
 /// \brief Parse the cluster dissimilarities/strengths (ie links) from the specified istream
@@ -87,8 +87,7 @@ links cath::clust::parse_dissimilarities(const path        &prm_input,     ///< 
                                          const link_dirn   &prm_link_dirn, ///< Whether the links in the input file represent strengths or dissimilarities
                                          const size_t      &prm_column_idx ///< The index (offset 0) of the column from which the strengths or dissimilarities should be parsed
                                          ) {
-	ifstream in_stream;
-	open_ifstream( in_stream, prm_input );
+	ifstream in_stream = open_ifstream( prm_input );
 	links dissims = parse_dissimilarities( in_stream, prm_name_ider, prm_link_dirn, prm_column_idx );
 	in_stream.close();
 	return dissims;

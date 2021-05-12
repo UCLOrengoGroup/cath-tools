@@ -21,11 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS_ALIGNMENT_OUTPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS_ALIGNMENT_OUTPUT_OPTIONS_BLOCK_HPP
 
+#include <filesystem>
+#include <iosfwd>
+
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include "cath/options/options_block/options_block.hpp"
-
-#include <iosfwd>
 
 namespace cath { namespace opts { class alignment_outputter; } }
 namespace cath { namespace opts { class alignment_outputter_list; } }
@@ -48,13 +49,13 @@ namespace cath {
 			static const std::string PO_ALN_TO_HTML_FILE;
 			static const std::string PO_ALN_TO_HTML_STDOUT;
 
-			boost::filesystem::path aln_to_cath_aln_file;
+			::std::filesystem::path aln_to_cath_aln_file;
 			bool aln_to_cath_aln_stdout;
-			boost::filesystem::path aln_to_fasta_file;
+			::std::filesystem::path aln_to_fasta_file;
 			bool aln_to_fasta_stdout;
-			boost::filesystem::path aln_to_ssap_file;
+			::std::filesystem::path aln_to_ssap_file;
 			bool aln_to_ssap_stdout;
-			boost::filesystem::path aln_to_html_file;
+			::std::filesystem::path aln_to_html_file;
 			bool aln_to_html_stdout;
 
 			std::unique_ptr<options_block> do_clone() const final;
@@ -64,13 +65,13 @@ namespace cath {
 			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
 			str_vec do_get_all_options_names() const final;
 
-			boost::filesystem::path get_aln_to_cath_aln_file() const;
+			::std::filesystem::path get_aln_to_cath_aln_file() const;
 			bool get_aln_to_cath_aln_stdout() const;
-			boost::filesystem::path get_aln_to_fasta_file() const;
+			::std::filesystem::path get_aln_to_fasta_file() const;
 			bool get_aln_to_fasta_stdout() const;
-			boost::filesystem::path get_aln_to_ssap_file() const;
+			::std::filesystem::path get_aln_to_ssap_file() const;
 			bool get_aln_to_ssap_stdout() const;
-			boost::filesystem::path get_aln_to_html_file() const;
+			::std::filesystem::path get_aln_to_html_file() const;
 			bool get_aln_to_html_stdout() const;
 
 		public:

@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SINGLE_OUTPUT_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SINGLE_OUTPUT_SPEC_HPP
 
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/common/path_type_aliases.hpp"
@@ -80,7 +82,7 @@ namespace cath {
 			const bool & get_generate_html_output() const;
 			const bool & get_json_output() const;
 
-			crh_single_output_spec & set_output_file(const boost::filesystem::path &);
+			crh_single_output_spec & set_output_file(const ::std::filesystem::path &);
 			crh_single_output_spec & set_summarise(const bool &);
 			crh_single_output_spec & set_generate_html_output(const bool &);
 			crh_single_output_spec & set_json_output(const bool &);

@@ -20,7 +20,9 @@
 
 #include "residue_scorer.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <algorithm>
+#include <filesystem>
+
 #include <boost/range/algorithm/set_algorithm.hpp>
 
 #include "cath/alignment/alignment.hpp"
@@ -34,15 +36,13 @@
 #include "cath/structure/protein/protein_list.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-#include <algorithm>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::filesystem::path;
 using ::boost::range::set_intersection;
+using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 alignment_residue_scores residue_scorer::get_alignment_residue_scores(const alignment    &prm_alignment, ///< TODOCUMENT

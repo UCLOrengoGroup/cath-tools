@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DOMAIN_DEFINITION_LIST_DOMAIN_DEFINITION_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DOMAIN_DEFINITION_LIST_DOMAIN_DEFINITION_LIST_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/file/file_type_aliases.hpp"
@@ -48,7 +48,7 @@ namespace cath {
 			const_iterator end() const;
 		};
 
-		domain_definition_list parse_domain_definition_file(const boost::filesystem::path &);
+		domain_definition_list parse_domain_definition_file(const ::std::filesystem::path &);
 		domain_definition_list parse_domain_definition_file(std::istream &);
 
 		pdb_list_name_set_list_pair read_domains_from_pdbs(const domain_definition_list &,

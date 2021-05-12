@@ -18,6 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
 #include <fstream>
 
 #include <boost/algorithm/cxx11/any_of.hpp>
@@ -25,7 +26,6 @@
 #include <boost/algorithm/string/finder.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -59,9 +59,9 @@ using ::boost::algorithm::is_space;
 using ::boost::algorithm::join;
 using ::boost::algorithm::starts_with;
 using ::boost::algorithm::token_compress_on;
-using ::boost::filesystem::path;
 using ::boost::is_space;
 using ::boost::make_optional;
+using ::std::filesystem::path;
 
 // \todo Substantially tidy up the code in this file
 
@@ -70,8 +70,7 @@ namespace {
 	/// \brief Parse a file with each line containing two, whitespace-separated entries: the SSAP and PRC files
 	vector<pair<path, path> > parse_ssap_and_prc_files_data(const path &prm_filename ///< The file to parse
 	                                                        ) {
-		ifstream data_data_ifstream;
-		open_ifstream( data_data_ifstream, prm_filename );
+		ifstream data_data_ifstream = open_ifstream( prm_filename );
 
 		vector<pair<path, path> > data;
 		string line_string;

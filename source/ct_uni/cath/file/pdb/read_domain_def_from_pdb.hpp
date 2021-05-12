@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_READ_DOMAIN_DEF_FROM_PDB_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_READ_DOMAIN_DEF_FROM_PDB_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/chopping/domain/domain.hpp"
 
@@ -32,10 +32,10 @@ namespace cath { namespace file { class pdb; } }
 namespace cath {
 	namespace file {
 
-		std::pair<boost::filesystem::path, pdb> read_domain_from_pdb(const chop::domain_definition &,
+		std::pair<::std::filesystem::path, pdb> read_domain_from_pdb(const chop::domain_definition &,
 		                                                             const opts::data_dirs_spec &);
 
-		pdb read_domain_from_pdb_file(const boost::filesystem::path &,
+		pdb read_domain_from_pdb_file(const ::std::filesystem::path &,
 		                              const chop::domain &);
 
 	} // namespace file

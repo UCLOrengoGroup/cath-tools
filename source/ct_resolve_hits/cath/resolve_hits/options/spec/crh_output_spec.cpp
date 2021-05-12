@@ -20,6 +20,8 @@
 
 #include "crh_output_spec.hpp"
 
+#include <filesystem>
+
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/count.hpp>
 
@@ -34,10 +36,10 @@ using namespace ::cath::rslv;
 using namespace ::cath;
 using namespace ::std::literals::string_literals;
 
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::count;
+using ::std::filesystem::path;
 using ::std::string;
 
 constexpr bool                crh_output_spec::DEFAULT_QUIET;

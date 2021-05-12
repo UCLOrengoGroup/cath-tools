@@ -21,10 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_VIEWER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_VIEWER_HPP
 
+#include <filesystem>
 #include <string>
 
 #include <boost/utility/string_ref.hpp>
-#include <boost/filesystem/path.hpp>
 
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -127,7 +127,7 @@ namespace cath {
 	                                     const sup::superposition_content_spec &,
 	                                     const missing_aln_policy & = missing_aln_policy::THROW );
 
-	void output_superposition_to_viewer_file( const boost::filesystem::path &,
+	void output_superposition_to_viewer_file( const ::std::filesystem::path &,
 	                                          viewer &,
 	                                          const display_spec &,
 	                                          const sup::superposition_context &,

@@ -20,8 +20,10 @@
 
 #include "protein_source_file_set.hpp"
 
+#include <filesystem>
+#include <map>
+
 #include <boost/assign/ptr_list_inserter.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/transform.hpp>
 
@@ -41,8 +43,6 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-#include <map>
-
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::common;
@@ -51,11 +51,11 @@ using namespace ::cath::opts;
 
 using ::boost::adaptors::filtered;
 using ::boost::assign::ptr_push_back;
-using ::boost::filesystem::path;
 using ::boost::lexical_cast;
 using ::boost::none;
 using ::boost::range::transform;
 using ::std::back_inserter;
+using ::std::filesystem::path;
 using ::std::make_pair;
 using ::std::ostream;
 using ::std::ostringstream;

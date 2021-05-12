@@ -20,6 +20,8 @@
 
 #include "pymol_file_superposition_outputter.hpp"
 
+#include <filesystem>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/display/viewer/pymol_viewer.hpp"
 #include "cath/superposition/superposition_context.hpp"
@@ -28,8 +30,8 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::filesystem::path;
 using ::boost::string_ref;
+using ::std::filesystem::path;
 using ::std::ostream;
 using ::std::string;
 using ::std::unique_ptr;

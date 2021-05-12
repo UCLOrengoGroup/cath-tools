@@ -20,14 +20,15 @@
 
 #include "parse_hmmer_out.hpp"
 
+#include <filesystem>
+#include <fstream>
+#include <memory>
+
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/resolve_hits/file/detail/hmmer_parser.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/gather_hits_processor.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.hpp"
 #include "cath/resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
-
-#include <fstream>
-#include <memory>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -35,7 +36,7 @@ using namespace ::cath::rslv;
 using namespace ::cath::rslv::detail;
 using namespace ::cath::seq;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 
@@ -47,8 +48,7 @@ void cath::rslv::parse_hmmer_out_file(read_and_process_mgr &prm_read_and_process
                                       const residx_t       &prm_min_gap_length,       ///< The minimum length that an alignment gap can have to be considered a gap
                                       const bool           &prm_output_hmmer_aln      ///< Whether to parse/output HMMER output alignment information
                                       ) {
-	ifstream the_ifstream;
-	open_ifstream( the_ifstream, prm_hmmer_out_file );
+	ifstream the_ifstream = open_ifstream( prm_hmmer_out_file );
 
 	parse_hmmer_out(
 		prm_read_and_process_mgr,

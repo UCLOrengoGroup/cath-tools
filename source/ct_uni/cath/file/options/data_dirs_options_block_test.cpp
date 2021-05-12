@@ -18,8 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/filesystem/path.hpp>
 #include <boost/test/unit_test.hpp>
+
+#include <filesystem>
+#include <fstream>
 
 #include "cath/common/file/find_file.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -28,14 +30,12 @@
 #include "cath/file/options/data_dirs_options_block.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {
@@ -67,8 +67,7 @@ BOOST_AUTO_TEST_CASE(find_file_works) {
 	// Create a temporary file with some text in it
 	const temp_file temp_file("cath_tools_test_temp_file.data_dirs_options_block.%%%%");
 	const path      temp_file_filename = get_filename( temp_file );
-	ofstream temp_file_stream;
-	open_ofstream(temp_file_stream, temp_file_filename);
+	ofstream temp_file_stream = open_ofstream( temp_file_filename );
 	temp_file_stream << "some text\n";
 	temp_file_stream.close();
 

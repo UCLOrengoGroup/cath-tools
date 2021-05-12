@@ -19,7 +19,6 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#include <boost/algorithm/string/predicate.hpp> /// ***** TEMPORARY *****
-//#include <boost/filesystem.hpp> /// ***** TEMPORARY *****
 #include <boost/test/unit_test.hpp>
 
 #include <spdlog/spdlog.h>
@@ -27,15 +26,8 @@
 #include "cath/file/prc_scores_file/prc_scores_entry.hpp"
 #include "cath/file/prc_scores_file/prc_scores_file.hpp"
 
-//#include <iomanip> /// ***** TEMPORARY *****
-//#include <iostream> /// ***** TEMPORARY *****
-
 using namespace ::cath::file;
 using namespace ::std;
-
-//using ::boost::algorithm::ends_with; /// ***** TEMPORARY *****
-//using ::boost::filesystem::directory_iterator; /// ***** TEMPORARY *****
-//using ::boost::filesystem::path; /// ***** TEMPORARY *****
 
 namespace cath {
     namespace test {

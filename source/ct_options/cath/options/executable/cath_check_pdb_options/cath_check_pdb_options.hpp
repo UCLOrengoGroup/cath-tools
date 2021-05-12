@@ -21,12 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS_CATH_CHECK_PDB_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS_CATH_CHECK_PDB_OPTIONS_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+#include <vector>
 
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/check_pdb_options_block.hpp"
-
-#include <vector>
 
 namespace cath {
 	namespace opts {
@@ -50,7 +49,7 @@ namespace cath {
 		public:
 			cath_check_pdb_options();
 
-			boost::filesystem::path get_pdb_file() const;
+			::std::filesystem::path get_pdb_file() const;
 			bool get_permit_no_atoms() const;
 
 			static const std::string PROGRAM_NAME;

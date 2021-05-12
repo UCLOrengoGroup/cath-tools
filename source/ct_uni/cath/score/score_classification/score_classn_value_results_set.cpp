@@ -20,8 +20,9 @@
 
 #include "score_classn_value_results_set.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/string/join.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/sliced.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -63,8 +64,6 @@ using namespace ::cath::score::detail;
 using namespace ::std;
 
 using ::boost::algorithm::join;
-//using ::boost::algorithm::join; // ***** TEMPORARY *****
-using ::boost::filesystem::path;
 using ::boost::irange;
 using ::boost::lexical_cast;
 using ::boost::range::adjacent_find;
@@ -74,6 +73,7 @@ using ::boost::range::includes;
 using ::boost::range::is_sorted;
 using ::boost::range::lower_bound;
 using ::boost::range::sort;
+using ::std::filesystem::path;
 
 /// \brief Determine whether the score_classn_value_lists is correctly sorted+uniqued on the names
 bool score_classn_value_results_set::is_sorted_uniqued() const {
@@ -307,8 +307,7 @@ void cath::score::detail::write_to_svm_light_data_files_impl(const score_classn_
 //	}
 
 	// Open an ostream for the file
-	ofstream out_stream;
-	open_ofstream( out_stream, prm_output_file );
+	ofstream out_stream = open_ofstream( prm_output_file );
 
 	// Loop over the instances of the requested indices
 	for (const size_t &index : prm_indices) {

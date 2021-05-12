@@ -20,11 +20,13 @@
 
 #include "clustagglom_fixture.hpp"
 
+#include <filesystem>
+
 #include "cath/test/global_test_constants.hpp"
 
 using namespace ::cath::clust;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief The directory in which clustagglom data is held
 path clustagglom_fixture::CLUSTAGGLOM_DIR() {

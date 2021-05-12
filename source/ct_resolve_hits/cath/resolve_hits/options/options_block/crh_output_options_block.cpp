@@ -20,6 +20,8 @@
 
 #include "crh_output_options_block.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/join.hpp>
 
@@ -33,11 +35,11 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::rslv;
 
-using ::boost::filesystem::path;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
+using ::std::filesystem::path;
 using ::std::string;
 using ::std::unique_ptr;
 

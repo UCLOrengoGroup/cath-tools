@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_HMMER_SCORES_FILE_HMMER_SCORES_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_HMMER_SCORES_FILE_HMMER_SCORES_FILE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/file/hmmer_scores_file/hmmer_name_handling.hpp"
@@ -40,12 +40,12 @@ namespace cath {
 			static hmmer_scores_entry_vec parse_hmmer_scores_file(std::istream &,
 			                                                      const hmmer_name_handling & = hmmer_name_handling::STRIP);
 
-			static hmmer_scores_entry_vec parse_hmmer_scores_file(const boost::filesystem::path &,
+			static hmmer_scores_entry_vec parse_hmmer_scores_file(const ::std::filesystem::path &,
 			                                                      const hmmer_name_handling & = hmmer_name_handling::STRIP);
 
 //			static hmmer_scores_entry_vec parse_hmmer_scores_file_fancy(std::istream &);
 
-//			static hmmer_scores_entry_vec parse_hmmer_scores_file_fancy(const boost::filesystem::path &);
+//			static hmmer_scores_entry_vec parse_hmmer_scores_file_fancy(const ::std::filesystem::path &);
 		};
 
 	} // namespace file

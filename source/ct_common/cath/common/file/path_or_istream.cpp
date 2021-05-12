@@ -20,10 +20,12 @@
 
 #include "path_or_istream.hpp"
 
+#include <filesystem>
+
 using namespace ::cath::common;
 
-using ::boost::filesystem::path;
 using ::boost::none;
+using ::std::filesystem::path;
 using ::std::istream;
 
 /// \brief Ctor from a special istream and a flag to be used to indicate when input should be read from that istream
@@ -40,8 +42,7 @@ path_or_istream & path_or_istream::set_path(const path &prm_file ///< The path t
 		input_file_stream->close();
 	}
 	if ( prm_file != get_flag() || ! standard_instream ) {
-		input_file_stream.emplace();
-		open_ifstream( *input_file_stream, prm_file );
+		input_file_stream = open_ifstream( prm_file );
 	}
 	return *this;
 }

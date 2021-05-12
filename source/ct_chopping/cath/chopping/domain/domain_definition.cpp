@@ -20,8 +20,6 @@
 
 #include "domain_definition.hpp"
 
-#include <boost/filesystem/path.hpp>
-
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::file;

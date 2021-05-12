@@ -21,7 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_OPTIONS_OLD_SSAP_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_OPTIONS_OLD_SSAP_OPTIONS_BLOCK_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <fstream>
+#include <string>
 
 #include "cath/alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
 #include "cath/common/path_type_aliases.hpp"
@@ -29,9 +31,6 @@
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_file_combn.hpp"
 #include "cath/superposition/io/sup_pdbs_script_policy.hpp"
-
-#include <fstream>
-#include <string>
 
 namespace cath {
 	namespace opts {
@@ -64,10 +63,10 @@ namespace cath {
 			str_vec                     names;                                        ///< The names of the structures to compare
 
 			bool                        debug                        = DEF_BOOL;      ///< Whether debug level run information has been requested
-			boost::filesystem::path     output_filename;                              ///< A file to which all output should be written, or empty if stdout should be used
+			::std::filesystem::path     output_filename;                              ///< A file to which all output should be written, or empty if stdout should be used
 
-			boost::filesystem::path     clique_file;                                  ///< A file from which to read clique information
-			boost::filesystem::path     domin_file;                                   ///< A file from which to read domin information
+			::std::filesystem::path     clique_file;                                  ///< A file from which to read clique information
+			::std::filesystem::path     domin_file;                                   ///< A file from which to read domin information
 
 			double                      max_score_to_fast_ssap_rerun = DEF_REFAST;    ///< Maximum fast SSAP score to trigger running a second fast SSAP with looser cutoffs
 			double                      max_score_to_slow_ssap_rerun = DEF_RESLOW;    ///< Maximum (best) fast SSAP score to trigger running a slow SSAP
@@ -77,8 +76,8 @@ namespace cath {
 			bool                        write_all_scores             = DEF_BOOL;      ///< Whether to output all SSAP scores, rather than just the best
 			protein_file_combn          protein_source_files         = DEF_PROT_SRCS; ///< The files from which to read the protein (WOLF_SEC or PDB_DSSP_SEC)
 
-			boost::filesystem::path     superposition_dir;                            ///< A directory to which a superposition should be written, or empty if none should be written
-			boost::filesystem::path     alignment_dir                = ".";           ///< A directory to which the alignment file should be written
+			::std::filesystem::path     superposition_dir;                            ///< A directory to which a superposition should be written, or empty if none should be written
+			::std::filesystem::path     alignment_dir                = ".";           ///< A directory to which the alignment file should be written
 			double                      min_score_for_writing_files  = DEF_FILE_SC;   ///< Minimum final SSAP score for outputting alignment/superposition files
 			double                      min_score_for_superposition  = DEF_SUP;       ///< Minimum residue-pair score for inclusion in superposition calculation
 			sup::sup_pdbs_script_policy write_rasmol_script          = DEF_SCRIPT;    ///< Whether to write a Rasmol superposition script file
@@ -101,7 +100,7 @@ namespace cath {
 			bool get_debug() const;
 
 			bool get_output_to_file() const;
-			boost::filesystem::path get_output_filename() const;
+			::std::filesystem::path get_output_filename() const;
 
 			path_opt get_opt_clique_file() const;
 			path_opt get_opt_domin_file() const;
@@ -115,7 +114,7 @@ namespace cath {
 			std::unique_ptr<const protein_source_file_set> get_protein_source_files() const;
 
 			path_opt get_opt_superposition_dir() const;
-			boost::filesystem::path get_alignment_dir() const;
+			::std::filesystem::path get_alignment_dir() const;
 			double get_min_score_for_writing_files() const;
 			double get_min_score_for_superposition() const;
 			sup::sup_pdbs_script_policy get_write_rasmol_script() const;
@@ -150,11 +149,11 @@ namespace cath {
 		};
 
 		bool has_clique_file(const old_ssap_options_block &);
-		boost::filesystem::path get_clique_file(const old_ssap_options_block &);
+		::std::filesystem::path get_clique_file(const old_ssap_options_block &);
 		bool has_domin_file(const old_ssap_options_block &);
-		boost::filesystem::path get_domin_file(const old_ssap_options_block &);
+		::std::filesystem::path get_domin_file(const old_ssap_options_block &);
 		bool has_superposition_dir(const old_ssap_options_block &);
-		boost::filesystem::path get_superposition_dir(const old_ssap_options_block &);
+		::std::filesystem::path get_superposition_dir(const old_ssap_options_block &);
 	} // namespace opts
 } // namespace cath
 

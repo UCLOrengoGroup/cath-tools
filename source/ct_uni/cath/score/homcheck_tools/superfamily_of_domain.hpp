@@ -21,14 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SUPERFAMILY_OF_DOMAIN_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SUPERFAMILY_OF_DOMAIN_HPP
 
-#include <boost/filesystem/path.hpp>
-
-#include "cath/common/type_aliases.hpp"
-
+#include <filesystem>
 #include <regex>
 #include <string>
 #include <unordered_map>
 
+#include "cath/common/type_aliases.hpp"
 
 namespace cath {
 	namespace homcheck {
@@ -94,7 +92,7 @@ namespace cath {
 		};
 
 		superfamily_of_domain parse_superfamily_of_domain(std::istream &);
-		superfamily_of_domain parse_superfamily_of_domain(const boost::filesystem::path &);
+		superfamily_of_domain parse_superfamily_of_domain(const ::std::filesystem::path &);
 		superfamily_of_domain parse_superfamily_of_domain(const std::string &);
 
 	} // namespace homcheck

@@ -20,13 +20,15 @@
 
 #include "map_clusters_fixture.hpp"
 
+#include <filesystem>
+
 #include "cath/common/file/slurp.hpp"
 #include "cath/test/global_test_constants.hpp"
 
 using namespace ::cath::common;
 using namespace ::cath::test;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::string;
 
 /// \brief Test constant for the cath-map-clusters test data directory

@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/clustagglom/link_dirn.hpp"
 #include "cath/clustagglom/hierarchy/hierarchy_layer.hpp"
@@ -166,7 +166,7 @@ namespace cath {
 		                             const hierarchy &,
 		                             const common::id_of_str_bidirnl &);
 
-		void write_cluster(const boost::filesystem::path &,
+		void write_cluster(const ::std::filesystem::path &,
 		                   const hierarchy &,
 		                   const common::id_of_str_bidirnl &);
 
@@ -186,7 +186,7 @@ namespace cath {
 		                                    const common::id_of_str_bidirnl &,
 		                                    const links &);
 
-		void write_spanning_trees(const boost::filesystem::path &,
+		void write_spanning_trees(const ::std::filesystem::path &,
 		                          const hierarchy &,
 		                          const common::id_of_str_bidirnl &,
 		                          const links &);
@@ -195,7 +195,7 @@ namespace cath {
 		                          const hierarchy &,
 		                          const common::id_of_str_bidirnl &);
 
-		void write_reps(const boost::filesystem::path &,
+		void write_reps(const ::std::filesystem::path &,
 		                const hierarchy &,
 		                const common::id_of_str_bidirnl &);
 

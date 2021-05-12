@@ -21,6 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_LIST_HPP
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -31,8 +34,6 @@
 #include "cath/score/score_classification/score_classn_value.hpp"
 #include "cath/score/score_classification/score_classn_value_better_value.hpp"
 #include "cath/score/score_type_aliases.hpp"
-
-#include <fstream>
 
 namespace cath { namespace score { class classn_stat; } }
 namespace cath { namespace score { class score_classn_value_list; } }
@@ -132,13 +133,12 @@ namespace cath {
 		///
 		/// \relates score_classn_value_list
 		template <typename FN>
-		score_classn_value_list read_score_classn_value_list(const boost::filesystem::path &prm_path,             ///< TODOCUMENT
+		score_classn_value_list read_score_classn_value_list(const ::std::filesystem::path &prm_path,             ///< TODOCUMENT
 		                                                     const bool                    &prm_higher_is_better, ///< TODOCUMENT
 		                                                     const std::string             &prm_name,             ///< TODOCUMENT
 		                                                     FN                             prm_is_positive_fn    ///< TODOCUMENT
 		                                                     ) {
-			std::ifstream input_stream;
-			common::open_ifstream( input_stream, prm_path );
+			std::ifstream input_stream = common::open_ifstream( prm_path );
 
 			score_classn_value_vec score_classn_values;
 			std::string line_string;
@@ -168,10 +168,10 @@ namespace cath {
 			return make_score_classn_value_list( score_classn_values, prm_higher_is_better, prm_name );
 		}
 
-		score_classn_value_list read_svmlight_predictions_file(const boost::filesystem::path &,
+		score_classn_value_list read_svmlight_predictions_file(const ::std::filesystem::path &,
 		                                                       const std::string &);
 
-		score_classn_value_list_vec read_svmlight_predictions_files(const std::vector<std::pair<boost::filesystem::path, std::string>> &);
+		score_classn_value_list_vec read_svmlight_predictions_files(const std::vector<std::pair<::std::filesystem::path, std::string>> &);
 
 		named_true_false_pos_neg_list make_named_true_false_pos_neg_list(const score_classn_value_list &);
 

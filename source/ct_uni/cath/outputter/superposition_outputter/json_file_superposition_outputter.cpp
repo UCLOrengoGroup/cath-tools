@@ -20,6 +20,9 @@
 
 #include "json_file_superposition_outputter.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -27,14 +30,12 @@
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-#include <fstream>
-
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::filesystem::path;
 using ::boost::string_ref;
+using ::std::filesystem::path;
 using ::std::ostream;
 using ::std::string;
 using ::std::unique_ptr;

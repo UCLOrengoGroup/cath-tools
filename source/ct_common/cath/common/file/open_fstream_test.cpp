@@ -20,6 +20,7 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <filesystem>
 #include <fstream>
 
 #include "cath/common/file/open_fstream.hpp"
@@ -28,31 +29,26 @@
 
 using namespace ::cath::common;
 
-using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::ofstream;
+using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The open_fstream_test_suite_fixture to assist in testing open_fstream
-		struct open_fstream_test_suite_fixture : protected global_test_constants {
-		protected:
-			~open_fstream_test_suite_fixture() noexcept = default;
+	/// \brief The open_fstream_test_suite_fixture to assist in testing open_fstream
+	struct open_fstream_test_suite_fixture : protected ::cath::global_test_constants {
+	  protected:
+		~open_fstream_test_suite_fixture() noexcept = default;
 
-		public:
-			const temp_file TEST_OUTPUT_TEMP_FILE { "test_open_fstream_output_file.%%%%-%%%%-%%%%-%%%%" };
+	  public:
+		const temp_file TEST_OUTPUT_TEMP_FILE{ "test_open_fstream_output_file.%%%%-%%%%-%%%%-%%%%" };
+		const path      TEST_OUTPUT_FILE = { get_filename( TEST_OUTPUT_TEMP_FILE ) };
+		const path      TEST_INPUT_FILE  = { ALIGNMENT_FILE() };
+	};
 
-			/// TODO: Come C++17 being fully embraced (with filesystem), drop the .string() for converting between path types
-			const path      TEST_OUTPUT_FILE      = { get_filename( TEST_OUTPUT_TEMP_FILE ).string() };
-			/// TODO: Come C++17 being fully embraced (with filesystem), drop the .string() for converting between path types
-			const path TEST_INPUT_FILE            = { ALIGNMENT_FILE().string() };
-		};
+}
 
-	}  // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(open_fstream_test_suite, cath::test::open_fstream_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE( open_fstream_test_suite, open_fstream_test_suite_fixture )
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE( ifstream_basic ) {
@@ -67,9 +63,8 @@ BOOST_AUTO_TEST_CASE( ofstream_basic ) {
 }
 
 /// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(ifstream_throws_runtime_error_exception_for_nonexistent_file) {
-	/// TODO: Come C++17 being fully embraced (with filesystem), drop this conversion between path types
-	BOOST_CHECK_THROW( open_ifstream(::std::filesystem::path{ NONEXISTENT_FILE().string() } ), runtime_error_exception );
+BOOST_AUTO_TEST_CASE( ifstream_throws_runtime_error_exception_for_nonexistent_file ) {
+	BOOST_CHECK_THROW( open_ifstream( NONEXISTENT_FILE() ), runtime_error_exception );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

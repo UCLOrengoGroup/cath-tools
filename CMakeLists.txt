@@ -52,7 +52,7 @@ endif()
 
 # For useful information on getting CMake to work with Boost, type the following command: `cmake --help-module FindBoost`
 # or add `SET( Boost_DEBUG "ON" )` to this file to get helpful debug information when running CMake
-find_package( Boost 1.60 REQUIRED filesystem iostreams program_options serialization timer unit_test_framework )
+find_package( Boost 1.60 REQUIRED iostreams program_options serialization unit_test_framework )
 
 find_package( RapidJSON       REQUIRED ) # cci.20200410
 find_package( fmt       7.1.3 REQUIRED )

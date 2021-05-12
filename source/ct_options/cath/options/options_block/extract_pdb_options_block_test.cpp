@@ -20,8 +20,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/filesystem/path.hpp>
-
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/temp_file.hpp"
 #include "cath/options/options_block/extract_pdb_options_block.hpp"

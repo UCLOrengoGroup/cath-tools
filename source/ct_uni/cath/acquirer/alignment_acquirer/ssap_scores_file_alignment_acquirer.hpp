@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_SSAP_SCORES_FILE_ALIGNMENT_ACQUIRER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_SSAP_SCORES_FILE_ALIGNMENT_ACQUIRER_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
@@ -38,7 +39,7 @@ namespace cath {
 		class ssap_scores_file_alignment_acquirer final : public alignment_acquirer {
 		private:
 			using super = alignment_acquirer;
-			boost::filesystem::path ssap_scores_filename;
+			::std::filesystem::path ssap_scores_filename;
 
 			std::unique_ptr<alignment_acquirer> do_clone() const final;
 			bool do_requires_backbone_complete_input() const final;
@@ -46,15 +47,15 @@ namespace cath {
 			                                                                            const align_refining &) const final;
 
 		public:
-			explicit ssap_scores_file_alignment_acquirer(const boost::filesystem::path &);
+			explicit ssap_scores_file_alignment_acquirer(const ::std::filesystem::path &);
 
-			boost::filesystem::path get_ssap_scores_file() const;
+			::std::filesystem::path get_ssap_scores_file() const;
 		};
 
 		std::pair<alignment, size_size_pair_vec> build_multi_alignment(const file::pdb_list &,
 		                                                               const str_vec &,
 		                                                               const size_size_doub_tpl_vec &,
-		                                                               const boost::filesystem::path &,
+		                                                               const ::std::filesystem::path &,
 		                                                               const aln_glue_style &,
 		                                                               const ostream_ref_opt & = boost::none);
 

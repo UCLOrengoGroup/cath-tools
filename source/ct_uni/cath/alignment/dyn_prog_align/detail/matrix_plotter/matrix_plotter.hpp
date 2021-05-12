@@ -21,11 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_MATRIX_PLOTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_MATRIX_PLOTTER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <vector>
 
 #include "cath/common/type_aliases.hpp"
-
-#include <vector>
 
 namespace cath {
 	namespace align {
@@ -62,7 +61,7 @@ namespace cath {
 				virtual void do_write_corner_score(const size_t &,
 				                                   const size_t &,
 				                                   const double &) = 0;
-				virtual void do_finish(const boost::filesystem::path &) const = 0;
+				virtual void do_finish(const ::std::filesystem::path &) const = 0;
 
 				void check_lengths_match(const size_t &,
 				                         const size_t &) const;
@@ -90,7 +89,7 @@ namespace cath {
 				void plot_scores(const dyn_prog_score_source &);
 				void plot_return_path_matrix(const return_path_matrix &);
 				void plot_accumulated_scores(const score_accumulation_matrix &);
-				void finish(const boost::filesystem::path &) const;
+				void finish(const ::std::filesystem::path &) const;
 			};
 
 		} // namespace detail

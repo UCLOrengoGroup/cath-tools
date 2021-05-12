@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_MERGE_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_MERGE_HPP
 
-#include <boost/filesystem/path.hpp> // ***** Only required for merge_vec function *****
+#include <filesystem>
 
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"
 
@@ -89,10 +89,10 @@ namespace cath {
 		std::string to_string(const merge_vec &);
 		void write_merge_list(std::ostream &,
 		                      const merge_vec &);
-		void write_merge_list(const boost::filesystem::path &,
+		void write_merge_list(const ::std::filesystem::path &,
 		                      const merge_vec &);
 		merge_vec read_merge_list(std::istream &);
-		merge_vec read_merge_list(const boost::filesystem::path &);
+		merge_vec read_merge_list(const ::std::filesystem::path &);
 
 		std::ostream & operator<<(std::ostream &,
 		                          const merge &);

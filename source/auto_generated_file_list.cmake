@@ -2709,7 +2709,6 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER
 		${TESTSOURCES_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_DETAIL}
-		ct_uni/cath/structure/view_cache/filter/filter_vs_full_score_list_test.cpp
 		ct_uni/cath/structure/view_cache/filter/filter_vs_full_score_test.cpp
 )
 

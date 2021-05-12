@@ -21,7 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_SSAP_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_SSAP_HPP
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+#include <iostream>
+#include <string>
+
 #include <boost/optional.hpp>
 
 #include "cath/alignment/align_type_aliases.hpp"
@@ -29,9 +32,6 @@
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/ssap/compare_upper_cell_result.hpp"
-
-#include <iostream>
-#include <string>
 
 namespace cath { struct clique;                 }
 namespace cath { class entry_querier;           }
@@ -95,7 +95,7 @@ namespace cath {
 	                                                  const chop::domain_opt &,
 	                                                  std::ostream & = std::cerr);
 
-	clique read_clique_file(const boost::filesystem::path &);
+	clique read_clique_file(const ::std::filesystem::path &);
 
 	void set_mask_matrix(const protein &,
 	                     const protein &,
@@ -177,10 +177,10 @@ namespace cath {
 	                     const opts::old_ssap_options_block &,
 	                     const opts::data_dirs_spec &);
 
-	boost::filesystem::path look_for_file_globally_then_locally(const std::string &,
+	::std::filesystem::path look_for_file_globally_then_locally(const std::string &,
 	                                                            const std::string &,
-	                                                            const boost::filesystem::path &,
-	                                                            const boost::filesystem::path & = boost::filesystem::current_path(),
+	                                                            const ::std::filesystem::path &,
+	                                                            const ::std::filesystem::path & = ::std::filesystem::current_path(),
 	                                                            const bool & = false);
 
 } // namespace cath

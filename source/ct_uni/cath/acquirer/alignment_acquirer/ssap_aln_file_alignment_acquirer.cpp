@@ -20,6 +20,9 @@
 
 #include "ssap_aln_file_alignment_acquirer.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/io/alignment_io.hpp"
 #include "cath/alignment/residue_score/residue_scorer.hpp" // ***** TEMPORARY *****
@@ -35,8 +38,6 @@
 #include "cath/structure/protein/sec_struc.hpp" // ***** TEMPORARY *****
 #include "cath/structure/protein/sec_struc_planar_angles.hpp" // ***** TEMPORARY *****
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::align::detail;
@@ -44,8 +45,8 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::std::cerr;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::make_pair;
 using ::std::pair;
@@ -70,8 +71,7 @@ pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_ali
 	if ( num_pdbs != 2 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Superposing with a SSAP alignment requires exactly two PDBs"));
 	}
-	ifstream my_aln_stream;
-	open_ifstream(my_aln_stream, get_ssap_alignment_file());
+	ifstream my_aln_stream = open_ifstream( get_ssap_alignment_file() );
 	alignment new_alignment( num_pdbs );
 	try {
 		new_alignment = read_alignment_from_cath_ssap_legacy_format(

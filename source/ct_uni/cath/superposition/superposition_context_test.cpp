@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/biocore/residue_id.hpp"
@@ -38,7 +40,7 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {
@@ -164,9 +166,6 @@ BOOST_AUTO_TEST_CASE(get_supn_content_pdb_works) {
 // #include <boost/range/algorithm/lower_bound.hpp> // ***** TEMPORARY *****
 // #include "cath/common/boost_addenda/range/max_proj_element.hpp" // ***** TEMPORARY *****
 //
-// using ::boost::filesystem::directory_entry;
-// using ::boost::filesystem::directory_iterator;
-// using ::boost::filesystem::path;
 // using ::boost::range::sort;
 // using ::cath::file::pdb_atom;
 // using ::cath::file::pdb_residue;

@@ -20,7 +20,7 @@
 
 #include "protein_from_wolf_and_sec.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/file/data_file.hpp"
@@ -36,7 +36,7 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::std;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 
 /// \brief A standard do_clone method.
 unique_ptr<protein_source_file_set> protein_from_wolf_and_sec::do_clone() const {

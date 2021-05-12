@@ -20,6 +20,10 @@
 
 #include "rbf_model.hpp"
 
+#include <cmath>
+#include <filesystem>
+#include <fstream>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -38,9 +42,6 @@
 #include "cath/score/homcheck_tools/ssap_and_prc.hpp"
 #include "cath/score/score_classification/value_list_scaling.hpp"
 
-#include <cmath>
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
@@ -52,11 +53,11 @@ using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::is_space;
 using ::boost::algorithm::token_compress_on;
 using ::boost::contains;
-using ::boost::filesystem::path;
 using ::boost::icontains;
 using ::boost::irange;
 using ::boost::numeric_cast;
 using ::boost::optional;
+using ::std::filesystem::path;
 using ::std::get;
 using ::std::ifstream;
 using ::std::istream;
@@ -270,8 +271,7 @@ rbf_model cath::score::parse_rbf_model(istream &prm_model_istream ///< The istre
 /// \relates rbf_model
 rbf_model cath::score::parse_rbf_model(const path &prm_svmlight_model_file ///< The SVM-light RBF model file
                                        ) {
-	ifstream model_stream;
-	open_ifstream( model_stream, prm_svmlight_model_file );
+	ifstream model_stream = open_ifstream( prm_svmlight_model_file );
 	const auto the_model = parse_rbf_model( model_stream );
 	model_stream.close();
 	return the_model;

@@ -21,14 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_TEST_DSSP_DUPL_FIXTURE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_TEST_DSSP_DUPL_FIXTURE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <utility>
+#include <vector>
+
 #include <boost/optional.hpp>
 
 #include "cath/biocore/residue_name.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <utility>
-#include <vector>
 
 namespace cath { namespace sec { class bifur_hbond; } }
 namespace cath { namespace sec { class bifur_hbond_list; } }
@@ -91,15 +91,15 @@ namespace cath {
 		protected:
 			~dssp_dupl_fixture() noexcept = default;
 
-			dssp_dupl_res_vec parse_dssp_for_calc_testing(const boost::filesystem::path &);
+			dssp_dupl_res_vec parse_dssp_for_calc_testing(const ::std::filesystem::path &);
 			dssp_dupl_res_vec parse_dssp_for_calc_testing(std::istream &);
 			std::pair<size_t, dssp_dupl_res> parse_dssp_residue_line(const std::string &);
 
 			dsspfile_hbond_opt parse_dsspfile_bond(const std::string &);
 
-			static const boost::filesystem::path & DSSP_ROOT_TEST_DATA_DIR();
-			static const boost::filesystem::path & DSSP_HBOND_TEST_DATA_DIR();
-			static const boost::filesystem::path & DSSP_SS_TEST_DATA_DIR();
+			static const ::std::filesystem::path & DSSP_ROOT_TEST_DATA_DIR();
+			static const ::std::filesystem::path & DSSP_HBOND_TEST_DATA_DIR();
+			static const ::std::filesystem::path & DSSP_SS_TEST_DATA_DIR();
 		};
 
 	} // namespace sec

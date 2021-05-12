@@ -20,6 +20,10 @@
 
 #include "sec_file_io.hpp"
 
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
@@ -36,9 +40,6 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 
-#include <fstream>
-#include <iostream>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
@@ -49,16 +50,15 @@ using namespace ::std;
 using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::token_compress_on;
 using ::boost::algorithm::trim_copy;
-using ::boost::filesystem::path;
 using ::boost::lexical_cast;
+using ::std::filesystem::path;
 
 /// \brief Read a sec file into a sec_file object
 ///
 /// \relates sec_file
 sec_file cath::file::read_sec(const path &prm_sec_filename ///< The file from which to parse the sec data
                               ) {
-	ifstream my_sec_istream;
-	open_ifstream(my_sec_istream, prm_sec_filename);
+	ifstream my_sec_istream = open_ifstream( prm_sec_filename );
 	const sec_file the_sec_file = read_sec( my_sec_istream );
 	my_sec_istream.close();
 	return the_sec_file;

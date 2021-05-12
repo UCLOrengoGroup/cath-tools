@@ -21,8 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP
 
-#include <boost/filesystem/path.hpp>
-
+#include <filesystem>
 #include <vector>
 
 namespace cath { namespace file { class wolf_file; } }
@@ -30,7 +29,7 @@ namespace cath { namespace file { class wolf_file; } }
 namespace cath {
 	namespace file {
 
-		wolf_file read_wolf(const boost::filesystem::path &);
+		wolf_file read_wolf(const ::std::filesystem::path &);
 
 	} // namespace file
 } // namespace cath

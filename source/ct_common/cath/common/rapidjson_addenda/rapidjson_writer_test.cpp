@@ -28,7 +28,6 @@
 using namespace ::cath::common;
 using namespace ::std::literals::string_literals;
 
-using ::std::make_tuple;
 using ::std::sqrt;
 
 BOOST_AUTO_TEST_SUITE(rapidjson_writer_test_suite)

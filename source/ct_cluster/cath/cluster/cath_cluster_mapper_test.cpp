@@ -18,6 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <filesystem>
+#include <regex>
+#include <sstream>
+
 #include <boost/range/join.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -35,9 +39,6 @@
 #include "cath/test/predicate/files_equal.hpp"
 #include "cath/test/predicate/string_matches_file.hpp"
 
-#include <regex>
-#include <sstream>
-
 namespace cath { namespace test { } }
 
 using namespace ::cath;
@@ -47,9 +48,9 @@ using namespace ::cath::opts;
 using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
-using ::boost::filesystem::current_path;
-using ::boost::filesystem::path;
 using ::boost::range::join;
+using ::std::filesystem::current_path;
+using ::std::filesystem::path;
 using ::std::istringstream;
 using ::std::ostringstream;
 using ::std::regex;

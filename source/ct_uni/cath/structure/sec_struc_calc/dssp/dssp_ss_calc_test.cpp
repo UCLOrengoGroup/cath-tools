@@ -20,7 +20,8 @@
 
 #include "dssp_ss_calc.hpp"
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -44,10 +45,10 @@ using namespace ::cath::file;
 using namespace ::cath::sec;
 using namespace ::cath::test;
 
-using ::boost::filesystem::directory_entry;
-using ::boost::filesystem::directory_iterator;
-using ::boost::filesystem::path;
 using ::boost::range::sort;
+using ::std::filesystem::directory_entry;
+using ::std::filesystem::directory_iterator;
+using ::std::filesystem::path;
 
 namespace cath {
 	namespace test {

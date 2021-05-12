@@ -20,6 +20,9 @@
 
 #include "domain_definition_list.hpp"
 
+#include <filesystem>
+#include <fstream>
+
 #include <boost/algorithm/string/trim.hpp>
 
 #include "cath/chopping/chopping_format/sillitoe_chopping_format.hpp"
@@ -34,8 +37,6 @@
 #include "cath/file/pdb/pdb_residue.hpp"
 #include "cath/file/pdb/read_domain_def_from_pdb.hpp"
 
-#include <fstream>
-
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::common;
@@ -44,9 +45,9 @@ using namespace ::cath::opts;
 
 using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::token_compress_on;
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::trim;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::make_pair;
@@ -75,8 +76,7 @@ domain_definition_list::const_iterator domain_definition_list::end() const {
 /// \brief TODOCUMENT
 domain_definition_list cath::file::parse_domain_definition_file(const path &prm_dom_defn_file ///< TODOCUMENT
                                                                 ) {
-	ifstream dom_defn_ifstream;
-	open_ifstream( dom_defn_ifstream, prm_dom_defn_file );
+	ifstream dom_defn_ifstream = open_ifstream( prm_dom_defn_file );
 	const domain_definition_list new_domain_definition_list = parse_domain_definition_file( dom_defn_ifstream );
 	dom_defn_ifstream.close();
 	return new_domain_definition_list;

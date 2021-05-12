@@ -21,7 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_EXECUTABLE_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_EXECUTABLE_OPTIONS_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+#include <string>
+#include <vector>
+
 #include <boost/optional.hpp>
 #include <boost/program_options.hpp>
 
@@ -31,9 +34,6 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/options/executable/parse_sources.hpp"
 #include "cath/options/options_block/string_options_block.hpp"
-
-#include <string>
-#include <vector>
 
 namespace cath { namespace opts { class options_block; } }
 
@@ -67,7 +67,7 @@ namespace cath {
 			static constexpr size_t                  DEFAULT_PROG_OPS_LINE_LENGTH = 200;
 
 			static const     std::string             CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
-			static const     boost::filesystem::path CATH_TOOLS_CONF_FILE;
+			static const     ::std::filesystem::path CATH_TOOLS_CONF_FILE;
 
 			static path_vec CATH_TOOLS_CONF_FILE_SEARCH_PATH();
 

@@ -20,10 +20,11 @@
 
 #include "data_dirs_spec.hpp"
 
+#include <filesystem>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
@@ -47,8 +48,8 @@ using ::boost::adaptors::transformed;
 using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::join;
 using ::boost::algorithm::token_compress_on;
-using ::boost::filesystem::path;
 using ::boost::lexical_cast;
+using ::std::filesystem::path;
 
 /// \brief Default values of each of the options (path, prefix, suffix) for each of the file types
 const data_dirs_spec::file_option_str_map_map data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS = {

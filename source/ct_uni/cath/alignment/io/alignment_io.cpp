@@ -21,6 +21,7 @@
 #include "alignment_io.hpp"
 
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
@@ -75,8 +76,6 @@ using ::boost::algorithm::join;
 using ::boost::algorithm::starts_with;
 using ::boost::algorithm::trim_copy;
 using ::boost::empty_formatter;
-using ::boost::filesystem::path;
-using ::boost::filesystem::temp_directory_path;
 using ::boost::format;
 using ::boost::is_alpha;
 using ::boost::is_print;
@@ -87,6 +86,8 @@ using ::boost::to_upper;
 using ::boost::trim;
 using ::std::cerr;
 using ::std::endl;
+using ::std::filesystem::path;
+using ::std::filesystem::temp_directory_path;
 using ::std::flush;
 using ::std::ifstream;
 using ::std::ios;
@@ -112,8 +113,7 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(const path   
                                                                    const protein         &prm_protein_b,      ///< TODOCUMENT
                                                                    const ostream_ref_opt &prm_ostream         ///< TODOCUMENT
                                                                    ) {
-	ifstream alignment_ifstream;
-	open_ifstream( alignment_ifstream, prm_alignment_file );
+	ifstream alignment_ifstream = open_ifstream( prm_alignment_file );
 	const alignment new_alignment = read_alignment_from_cath_ssap_legacy_format(
 		alignment_ifstream,
 		prm_protein_a,
@@ -649,8 +649,7 @@ alignment cath::align::read_alignment_from_fasta_file(const path     &prm_fasta_
                                                       ostream        &prm_stderr      ///< An ostream to which any warnings should be output (currently unused)
                                                       ) {
 	// Construct an alignment from the FASTA alignment file
-	ifstream my_aln_stream;
-	open_ifstream( my_aln_stream, prm_fasta_file );
+	ifstream my_aln_stream = open_ifstream( prm_fasta_file );
 	const auto      backbone_complete_indices_list = get_backbone_complete_indices( prm_pdbs );
 	const alignment all_residue_alignment          = convert_to_backbone_complete_indices_copy(
 		read_alignment_from_fasta(
@@ -705,8 +704,7 @@ alignment cath::align::read_alignment_from_fasta_file(const path         &prm_fa
                                                       ostream            &prm_stderr      ///< An ostream to which any warnings should be output (currently unused)
                                                       ) {
 	// Construct an alignment from the FASTA alignment file
-	ifstream my_aln_stream;
-	open_ifstream( my_aln_stream, prm_fasta_file );
+	ifstream my_aln_stream = open_ifstream( prm_fasta_file );
 	const alignment new_alignment = read_alignment_from_fasta( my_aln_stream, get_amino_acid_lists( prm_proteins ), prm_names, prm_stderr );
 	my_aln_stream.close();
 	return new_alignment;
@@ -1023,8 +1021,7 @@ void cath::align::write_alignment_as_fasta_alignment(const path         &prm_out
                                                      const alignment    &prm_alignment,   ///< TODOCUMENT
                                                      const protein_list &prm_proteins     ///< TODOCUMENT
                                                      ) {
-	ofstream out_stream;
-	open_ofstream(out_stream, prm_output_file);
+	ofstream out_stream = open_ofstream( prm_output_file );
 	write_alignment_as_fasta_alignment( out_stream, prm_alignment, prm_proteins );
 	out_stream.close();
 }

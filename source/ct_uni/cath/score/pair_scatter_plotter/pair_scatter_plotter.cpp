@@ -24,11 +24,8 @@
 
 //#include "cath/common/boost_addenda/filesystem/replace_extension_copy.hpp"
 
-//using namespace ::boost::filesystem;
 //using namespace ::cath::score;
 //using namespace ::std;
-
-//using ::boost::filesystem::path;
 
 //using ::gnuplotio::Gnuplot;
 

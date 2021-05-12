@@ -20,6 +20,7 @@
 
 #include "cath_superposer.hpp"
 
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 
@@ -42,8 +43,8 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::current_path;
-using ::boost::filesystem::path;
+using ::std::filesystem::current_path;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::istringstream;
@@ -148,8 +149,7 @@ void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_std_i
                                                                                            const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
                                                                                            ) {
 	// Prepare an ifstream to read input from the input file
-	ifstream stdin_like_ifstream;
-	open_ifstream(stdin_like_ifstream, prm_input_file);
+	ifstream stdin_like_ifstream = open_ifstream( prm_input_file );
 	check_cath_superposer_use_case(
 		prm_command_line_args,
 		stdin_like_ifstream,

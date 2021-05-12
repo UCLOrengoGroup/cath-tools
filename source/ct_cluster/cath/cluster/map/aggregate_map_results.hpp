@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_AGGREGATE_MAP_RESULTS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_AGGREGATE_MAP_RESULTS_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/cluster/map/overlap_frac_distn.hpp"
 #include "cath/cluster/options/spec/clust_mapping_spec.hpp"
@@ -99,7 +99,7 @@ namespace cath {
 
 		std::string markdown_summary_string(const aggregate_map_results &);
 
-		void write_markdown_summary_string_to_file(const boost::filesystem::path &,
+		void write_markdown_summary_string_to_file(const ::std::filesystem::path &,
 		                                           const aggregate_map_results &);
 
 	} // namespace clust

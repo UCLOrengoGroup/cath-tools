@@ -20,6 +20,7 @@
 
 #include "parse_domain_hits_table.hpp"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
@@ -39,7 +40,7 @@ using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
 
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::string;
@@ -50,8 +51,7 @@ void cath::rslv::parse_domain_hits_table_file(read_and_process_mgr &prm_read_and
                                               const path           &prm_domain_hits_table_file, ///< The file from which the HMMER domain hits table data should be parsed
                                               const bool           &prm_apply_cath_policies     ///< Whether to apply CATH-specific policies
                                               ) {
-	ifstream the_ifstream;
-	open_ifstream( the_ifstream, prm_domain_hits_table_file );
+	ifstream the_ifstream = open_ifstream( prm_domain_hits_table_file );
 
 	parse_domain_hits_table(
 		prm_read_and_process_mgr,

@@ -20,10 +20,9 @@
 
 #include "find_file.hpp"
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
-using ::boost::filesystem::exists;
-using ::boost::filesystem::path;
+using ::std::filesystem::path;
 using ::std::string;
 
 /// \brief Search for a particular file basename through a path of directories

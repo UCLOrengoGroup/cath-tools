@@ -20,6 +20,8 @@
 
 #include "clustmap_output_options_block.hpp"
 
+#include <filesystem>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 
 using namespace ::cath;
@@ -27,12 +29,12 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::filesystem::path;
 using ::boost::none;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
+using ::std::filesystem::path;
 using ::std::string;
 using ::std::unique_ptr;
 

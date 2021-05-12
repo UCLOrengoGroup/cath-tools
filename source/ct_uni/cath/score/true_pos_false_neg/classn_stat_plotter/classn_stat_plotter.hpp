@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PLOTTER_CLASSN_STAT_PLOTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PLOTTER_CLASSN_STAT_PLOTTER_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/score/score_type_aliases.hpp"
@@ -49,31 +49,31 @@ namespace cath {
 			classn_stat_plotter() = default;
 			explicit classn_stat_plotter(const bool &);
 
-			void plot(const boost::filesystem::path &,
+			void plot(const ::std::filesystem::path &,
 			          const score_classn_value_list_vec &,
 			          const classn_stat &,
 			          const classn_stat &,
 			          const classn_stat_plotter_spec &) const;
 
-			void plot(const boost::filesystem::path &,
+			void plot(const ::std::filesystem::path &,
 			          const score_classn_value_results_set &,
 			          const classn_stat &,
 			          const classn_stat &,
 			          const classn_stat_plotter_spec &) const;
 
-			void plot(const boost::filesystem::path &,
+			void plot(const ::std::filesystem::path &,
 			          const named_true_false_pos_neg_list &,
 			          const classn_stat &,
 			          const classn_stat &,
 			          const classn_stat_plotter_spec &) const;
 
-			void plot(const boost::filesystem::path &,
+			void plot(const ::std::filesystem::path &,
 			          const classn_stat_pair_series &,
 			          const std::string &,
 			          const std::string &,
 			          const classn_stat_plotter_spec &) const;
 
-			void plot(const boost::filesystem::path &,
+			void plot(const ::std::filesystem::path &,
 			          const classn_stat_pair_series_list &,
 			          const std::string &,
 			          const std::string &,
@@ -82,7 +82,7 @@ namespace cath {
 
 		template <typename T>
 		void plot_classn_stat(const classn_stat_plotter         &prm_classn_stat_plotter,      ///< TODOCUMENT
-		                      const boost::filesystem::path     &prm_output_file_stem,         ///< TODOCUMENT
+		                      const ::std::filesystem::path     &prm_output_file_stem,         ///< TODOCUMENT
 		                      const score_classn_value_list_vec &prm_score_classn_value_lists, ///< TODOCUMENT
 		                      const classn_stat_plotter_spec    &prm_plot_spec                 ///< TODOCUMENT
 		                      ) {
@@ -99,7 +99,7 @@ namespace cath {
 
 		template <typename T>
 		void plot_classn_stat(const classn_stat_plotter            &prm_classn_stat_plotter,      ///< TODOCUMENT
-		                      const boost::filesystem::path        &prm_output_file_stem,         ///< TODOCUMENT
+		                      const ::std::filesystem::path        &prm_output_file_stem,         ///< TODOCUMENT
 		                      const score_classn_value_results_set &prm_scv_results_set,          ///< TODOCUMENT
 		                      const classn_stat_plotter_spec       &prm_plot_spec                 ///< TODOCUMENT
 		                      ) {
@@ -116,7 +116,7 @@ namespace cath {
 
 		template <typename T>
 		void plot_classn_stat(const classn_stat_plotter           &prm_classn_stat_plotter,      ///< TODOCUMENT
-		                      const boost::filesystem::path       &prm_output_file_stem,         ///< TODOCUMENT
+		                      const ::std::filesystem::path       &prm_output_file_stem,         ///< TODOCUMENT
 		                      const named_true_false_pos_neg_list &prm_named_tfpn,               ///< TODOCUMENT
 		                      const classn_stat_plotter_spec      &prm_plot_spec                 ///< TODOCUMENT
 		                      ) {
@@ -132,32 +132,32 @@ namespace cath {
 		}
 
 		void plot_roc(const classn_stat_plotter &,
-		              const boost::filesystem::path &,
+		              const ::std::filesystem::path &,
 		              const score_classn_value_list_vec &,
 		              const classn_stat_plotter_spec &);
 
 		void plot_roc(const classn_stat_plotter &,
-		              const boost::filesystem::path &,
+		              const ::std::filesystem::path &,
 		              const score_classn_value_results_set &,
 		              const classn_stat_plotter_spec &);
 
 		void plot_roc(const classn_stat_plotter &,
-		              const boost::filesystem::path &,
+		              const ::std::filesystem::path &,
 		              const named_true_false_pos_neg_list &,
 		              const classn_stat_plotter_spec &);
 
 		void plot_precision_recall(const classn_stat_plotter &,
-		                           const boost::filesystem::path &,
+		                           const ::std::filesystem::path &,
 		                           const score_classn_value_list_vec &,
 		                           const classn_stat_plotter_spec &);
 
 		void plot_precision_recall(const classn_stat_plotter &,
-		                           const boost::filesystem::path &,
+		                           const ::std::filesystem::path &,
 		                           const score_classn_value_results_set &,
 		                           const classn_stat_plotter_spec &);
 
 		void plot_precision_recall(const classn_stat_plotter &,
-		                           const boost::filesystem::path &,
+		                           const ::std::filesystem::path &,
 		                           const named_true_false_pos_neg_list &,
 		                           const classn_stat_plotter_spec &);
 

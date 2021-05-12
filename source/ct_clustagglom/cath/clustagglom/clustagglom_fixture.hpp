@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_CLUSTAGGLOM_FIXTURE_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_CLUSTAGGLOM_FIXTURE_HPP
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 namespace cath {
 	namespace clust {
@@ -29,7 +29,7 @@ namespace cath {
 		/// \brief A test fixture for clustagglom tests that adds some extras to global_test_constants
 		class clustagglom_fixture {
 		protected:
-			static boost::filesystem::path CLUSTAGGLOM_DIR();
+			static ::std::filesystem::path CLUSTAGGLOM_DIR();
 		};
 
 	} // namespace clust

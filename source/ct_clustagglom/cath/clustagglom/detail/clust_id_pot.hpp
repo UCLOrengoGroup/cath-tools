@@ -34,8 +34,6 @@
 
 using namespace ::cath::common::literals;
 
-using ::boost::range::min_element;
-
 namespace cath {
 	namespace clust {
 		namespace detail {
@@ -108,26 +106,14 @@ namespace cath {
 			}
 
 			/// \brief Get the minimum index, excluding the specified one
-			///
-			/// \TODO Come some version of Boost for which filtered doesn't require a copy constructible function object, do:
-			///     return *min_element( jumbled_values
-			///     	| boost::adaptors::filtered( [&] (const item_idx &x) {
-			///     		return ( x != prm_item );
-			///     	} )
-			///     );
 			inline item_idx clust_id_pot::get_min_value_excluding_spec(const item_idx &prm_item ///< The index to exclude
 			                                                           ) const {
-				item_idx min_value = 0;
-				bool found_any = false;
-				for (const item_idx &x: jumbled_values) {
-					if ( x != prm_item ) {
-						if ( ! found_any || x < min_value ) {
-							found_any = true;
-							min_value = x;
-						}
-					}
-				}
-				return min_value;
+				return *::boost::range::min_element(
+					jumbled_values
+						| ::boost::adaptors::filtered(
+							[ & ]( const item_idx &x ) { return ( x != prm_item ); }
+						)
+				);
 			}
 
 		} // namespace detail

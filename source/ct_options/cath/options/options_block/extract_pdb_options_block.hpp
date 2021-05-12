@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_EXTRACT_PDB_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_EXTRACT_PDB_OPTIONS_BLOCK_HPP
 
+#include <filesystem>
+
 #include <boost/optional.hpp>
 
 #include "cath/chopping/domain/domain.hpp"
@@ -36,7 +38,7 @@ namespace cath {
 			using super = options_block;
 
 			/// \brief The PDB file to extract
-			boost::filesystem::path input_pdb_file;
+			::std::filesystem::path input_pdb_file;
 
 			/// \brief TODOCUMENT
 			path_opt output_pdb_file;
@@ -54,7 +56,7 @@ namespace cath {
 			str_vec do_get_all_options_names() const final;
 
 		public:
-			const boost::filesystem::path & get_input_pdb_file() const;
+			const ::std::filesystem::path & get_input_pdb_file() const;
 			const path_opt & get_output_pdb_file() const;
 			const chop::domain_opt & get_regions() const;
 

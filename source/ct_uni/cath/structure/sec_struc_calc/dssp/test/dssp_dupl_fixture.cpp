@@ -20,6 +20,7 @@
 
 #include "dssp_dupl_fixture.hpp"
 
+#include <filesystem>
 #include <fstream>
 
 #include <boost/algorithm/string/classification.hpp>
@@ -53,7 +54,6 @@ using ::boost::adaptors::filtered;
 using ::boost::algorithm::is_space;
 using ::boost::algorithm::starts_with;
 using ::boost::algorithm::trim_copy;
-using ::boost::filesystem::path;
 using ::boost::format;
 using ::boost::icontains;
 using ::boost::is_any_of;
@@ -62,6 +62,7 @@ using ::boost::math::fpc::percent_tolerance;
 using ::boost::none;
 using ::boost::test_tools::check_is_close;
 using ::boost::token_compress_on;
+using ::std::filesystem::path;
 using ::std::get;
 using ::std::getline;
 using ::std::ifstream;
@@ -231,8 +232,7 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &prm_dssp_dupl_res_
 /// \brief Parse a DSSP file from the specified file into a dssp_dupl_res_vec for testing
 dssp_dupl_res_vec dssp_dupl_fixture::parse_dssp_for_calc_testing(const path &prm_dssp_file ///< The file from which to parse the data
                                                                  ) {
-	ifstream my_dssp_istream;
-	open_ifstream( my_dssp_istream, prm_dssp_file );
+	ifstream my_dssp_istream = open_ifstream( prm_dssp_file );
 	const auto parsed_results = parse_dssp_for_calc_testing( my_dssp_istream );
 	my_dssp_istream.close();
 	return parsed_results;
