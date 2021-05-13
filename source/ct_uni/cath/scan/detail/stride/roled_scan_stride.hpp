@@ -22,8 +22,8 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_ROLED_SCAN_STRIDE_HPP
 
 #include "cath/scan/detail/scan_role.hpp"
-#include "cath/scan/scan_stride.hpp"
 #include "cath/scan/detail/stride/rep_strider.hpp"
+#include "cath/scan/scan_stride.hpp"
 
 namespace cath {
 	namespace scan {

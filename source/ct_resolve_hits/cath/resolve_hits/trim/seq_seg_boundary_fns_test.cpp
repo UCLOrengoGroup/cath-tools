@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "cath/resolve_hits/trim/seq_seg_boundary_fns.hpp"
 #include "cath/resolve_hits/trim/trim_spec.hpp"
 #include "cath/seq/seq_seg.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
 
-using ::boost::make_optional;
+using ::std::make_optional;
 
 BOOST_AUTO_TEST_SUITE(seq_seg_boundary_fns_test_suite)
 

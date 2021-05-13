@@ -20,21 +20,22 @@
 
 #include "residue_id.hpp"
 
+#include <iostream>
+#include <optional>
+#include <string>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
-
-#include <iostream>
-#include <string>
+#include "cath/common/optional/make_optional_if.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;
 
 using ::boost::algorithm::any_of;
-using ::boost::make_optional;
-using ::boost::none;
 using ::std::istream;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::string;
 
@@ -114,18 +115,18 @@ chain_label_residue_id_vec_map cath::get_residue_id_by_chain_label(const residue
 }
 
 /// \brief Return a chain label that is used consistently in all of the specified residue_ids
-///        or none otherwise
+///        or nullopt otherwise
 ///
-/// Returns none if `prm_residue_ids.empty()`
+/// Returns nullopt if `prm_residue_ids.empty()`
 ///
 /// \relates residue_id
 chain_label_opt cath::consistent_chain_label(const residue_id_vec &prm_residue_ids ///< The vector of residue_ids to query
                                              ) {
 	if ( prm_residue_ids.empty() ) {
-		return none;
+		return nullopt;
 	}
 	const auto &front_chain_label = prm_residue_ids.front().get_chain_label();
-	return make_optional(
+	return make_optional_if(
 		all_of(
 			next( common::cbegin( prm_residue_ids ) ),
 			common::cend( prm_residue_ids ),

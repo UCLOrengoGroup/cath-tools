@@ -29,10 +29,10 @@ using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::none;
+using ::std::nullopt;
 
 const aln_posn_opt_vec alignment_fixture::aln_list_a     = { size_opt( 0_z ), 1, 2, 3       };
-const aln_posn_opt_vec alignment_fixture::aln_list_b     = { size_opt( 0_z ), 1, 2, none    };
+const aln_posn_opt_vec alignment_fixture::aln_list_b     = { size_opt( 0_z ), 1, 2, nullopt };
 const aln_posn_opt_vec alignment_fixture::aln_list_long  = { size_opt( 0_z ), 1, 2, 3, 4, 5 };
 
 const alignment        alignment_fixture::aln_a_a        ( { aln_list_a,    aln_list_a    } );

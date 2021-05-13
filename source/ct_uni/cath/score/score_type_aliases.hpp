@@ -21,12 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_TYPE_ALIASES_HPP
 
-#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
-#include <boost/optional/optional_fwd.hpp>
-#include <boost/ptr_container/ptr_map.hpp>
-
 #include <cstddef>
+#include <optional>
 #include <vector>
+
+#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
+#include <boost/ptr_container/ptr_map.hpp>
 
 namespace cath { namespace homcheck { class ssap_and_prc; } }
 namespace cath { namespace score { class aligned_pair_score; } }
@@ -47,7 +47,7 @@ namespace cath {
 		using ssap_and_prc_cref     = std::reference_wrapper<const ssap_and_prc>;
 
 		/// \brief Type alias for an optional reference_wrapper to a const ssap_and_prc
-		using ssap_and_prc_cref_opt = boost::optional<ssap_and_prc_cref>;
+		using ssap_and_prc_cref_opt = ::std::optional<ssap_and_prc_cref>;
 	} // namespace homcheck
 } // namespace cath
 

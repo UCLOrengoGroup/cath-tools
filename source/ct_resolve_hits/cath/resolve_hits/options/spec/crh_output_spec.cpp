@@ -36,10 +36,10 @@ using namespace ::cath::rslv;
 using namespace ::cath;
 using namespace ::std::literals::string_literals;
 
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::count;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::string;
 
 constexpr bool                crh_output_spec::DEFAULT_QUIET;
@@ -194,7 +194,7 @@ path_vec cath::rslv::get_all_output_paths(const crh_output_spec &prm_output_spec
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_output_spec invalid
-///        or none otherwise
+///        or nullopt otherwise
 ///
 /// \relates crh_output_spec
 str_opt cath::rslv::get_invalid_description(const crh_output_spec &prm_output_spec ///< The crh_output_spec to query
@@ -222,7 +222,7 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &prm_output_sp
 			+ ") but your output format may already contain the information you require";
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Convenience setter for whether to output the hits starts/stops *after* trimming

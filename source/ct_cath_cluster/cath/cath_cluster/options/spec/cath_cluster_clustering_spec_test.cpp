@@ -18,12 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/optional/optional_io.hpp>
+#include <string>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/cath_cluster/options/spec/cath_cluster_clustering_spec.hpp"
-
-#include <string>
+#include "cath/test/boost_test_print_type.hpp"
 
 namespace cath { namespace test { } }
 
@@ -31,8 +31,8 @@ using namespace ::cath::clust;
 using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
-using ::boost::none;
 using ::boost::test_tools::per_element;
+using ::std::nullopt;
 
 namespace cath {
 	namespace test {
@@ -69,12 +69,12 @@ BOOST_FIXTURE_TEST_SUITE(cath_cluster_clustering_spec_test_suite, cath_cluster_c
 
 BOOST_AUTO_TEST_CASE(levels_processing_is_correct) {
 	BOOST_TEST( get_dissim_sort_warning  ( jumbled_strength_levels, link_dirn::STRENGTH      ) == "The levels (35, 95, 60, 100) are not sorted to be increasing as would be expected with a strength link direction"s );
-	BOOST_TEST( get_dissim_sort_warning  ( valid_strength_levels,   link_dirn::STRENGTH      ) == none                                           );
+	BOOST_TEST( get_dissim_sort_warning  ( valid_strength_levels,   link_dirn::STRENGTH      ) == nullopt                                        );
 	BOOST_TEST( make_dissim_and_sort_copy( valid_strength_levels,   link_dirn::STRENGTH      ) == expected_strength_levels_result, per_element{} );
 	BOOST_TEST( get_max_dissim           ( valid_strength_levels,   link_dirn::STRENGTH      ) == -35                                            );
 
 	BOOST_TEST( get_dissim_sort_warning  ( jumbled_distance_levels, link_dirn::DISSIMILARITY ) == "The levels (4, 2, 3, 1) are not sorted to be decreasing as would be expected with a distance link direction"s );
-	BOOST_TEST( get_dissim_sort_warning  ( valid_distance_levels,   link_dirn::DISSIMILARITY ) == none                                           );
+	BOOST_TEST( get_dissim_sort_warning  ( valid_distance_levels,   link_dirn::DISSIMILARITY ) == nullopt                                        );
 	BOOST_TEST( make_dissim_and_sort_copy( valid_distance_levels,   link_dirn::DISSIMILARITY ) == expected_distance_levels_result, per_element{} );
 	BOOST_TEST( get_max_dissim           ( valid_distance_levels,   link_dirn::DISSIMILARITY ) == 4                                              );
 }

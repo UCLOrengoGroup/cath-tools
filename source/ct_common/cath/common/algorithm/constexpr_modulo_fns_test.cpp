@@ -18,10 +18,10 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/algorithm/cxx11/none_of.hpp>
 #include <boost/range/combine.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/test/unit_test.hpp>
-#include <boost/algorithm/cxx11/none_of.hpp>
 
 #include "cath/common/algorithm/constexpr_modulo_fns.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"

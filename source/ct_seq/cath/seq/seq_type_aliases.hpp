@@ -21,8 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_TYPE_ALIASES_HPP
 
-#include <boost/optional/optional_fwd.hpp>
-
+#include <optional>
 #include <vector>
 
 namespace cath { namespace seq { class seq_arrow; } }
@@ -32,7 +31,7 @@ namespace cath {
 	namespace seq {
 
 		/// \brief Type alias for an optional seq_arrow
-		using res_arrow_opt             = boost::optional<seq_arrow>;
+		using res_arrow_opt             = ::std::optional<seq_arrow>;
 
 		/// \brief Type alias for a vector of seq_arrow objects
 		using res_arrow_vec             = std::vector<seq_arrow>;
@@ -45,7 +44,7 @@ namespace cath {
 		using residx_t                  = resarw_t;
 
 		/// \brief Type alias for an optional residx_t
-		using residx_opt                = boost::optional<residx_t>;
+		using residx_opt                = ::std::optional<residx_t>;
 
 		/// \brief Type alias for a pair of residue indices
 		using residx_residx_pair        = std::pair<residx_t, residx_t>;
@@ -60,13 +59,13 @@ namespace cath {
 		using seq_arr_seq_arr_pair      = std::pair<seq_arrow, seq_arrow>;
 
 		/// \brief Type alias for an optional seq_seg
-		using seq_seg_opt               = boost::optional<seq_seg>;
+		using seq_seg_opt               = ::std::optional<seq_seg>;
 
 		/// \brief Type alias for a vector of seq_seg_opt
 		using seq_seg_opt_vec           = std::vector<seq_seg_opt>;
 
 		/// \brief Type alias for an optional seq_seg_run
-		using seq_seg_run_opt           = boost::optional<seq_seg_run>;
+		using seq_seg_run_opt           = ::std::optional<seq_seg_run>;
 
 		/// \brief Type alias for a vector of seq_seg_run
 		using seq_seg_run_vec           = std::vector<seq_seg_run>;

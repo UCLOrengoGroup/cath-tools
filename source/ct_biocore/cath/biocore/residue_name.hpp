@@ -21,8 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_RESIDUE_NAME_HPP
 #define _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_RESIDUE_NAME_HPP
 
+#include <optional>
+
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 
 namespace cath {
 
@@ -35,7 +36,7 @@ namespace cath {
 		int res_num = 0;
 
 		/// \brief The (optional insert code)
-		boost::optional<char> insert;
+		::std::optional<char> insert;
 
 		/// \brief Whether this is a null residue
 		bool is_null_residue_name = true;
@@ -51,7 +52,7 @@ namespace cath {
 
 		const bool & is_null() const;
 		const int & residue_number() const;
-		const boost::optional<char> & opt_insert() const;
+		const ::std::optional<char> & opt_insert() const;
 	};
 
 
@@ -72,8 +73,8 @@ namespace cath {
 
 	int residue_number_or_value_if_null(const residue_name &,
 	                                    const int &);
-	boost::optional<char> opt_insert_or_value_if_null(const residue_name &,
-	                                                  const boost::optional<char> &);
+	::std::optional<char> opt_insert_or_value_if_null(const residue_name &,
+	                                                  const ::std::optional<char> &);
 	bool has_insert(const residue_name &);
 	bool has_insert_or_value_if_null(const residue_name &,
 	                                 const bool &);

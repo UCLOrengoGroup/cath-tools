@@ -21,10 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_DSSP_FILE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_DSSP_FILE_HPP
 
+#include <optional>
 #include <string>
 #include <vector>
-
-#include <boost/optional.hpp>
 
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -60,7 +59,7 @@ namespace cath {
 		                                  const pdb &,
 		                                  const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES,
 		                                  const file::name_set & = file::name_set{},
-		                                  const ostream_ref_opt & = boost::none );
+		                                  const ostream_ref_opt & = ::std::nullopt );
 
 		residue_id_vec get_residue_ids(const dssp_file &,
 		                               const bool &);

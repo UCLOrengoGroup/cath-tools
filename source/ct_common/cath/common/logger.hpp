@@ -21,12 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOGGER_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOGGER_HPP
 
-#include <boost/optional.hpp>
+#include <cstdlib>
+#include <optional>
+#include <string>
 
 #include "cath/common/type_aliases.hpp"
-
-#include <cstdlib>
-#include <string>
 
 namespace cath {
 
@@ -51,7 +50,7 @@ namespace cath {
 
 		static void log_and_exit(const return_code &,
 		                         const std::string &,
-		                         const ostream_ref_opt & = boost::none);
+		                         const ostream_ref_opt & = ::std::nullopt);
 	};
 
 } // namespace cath

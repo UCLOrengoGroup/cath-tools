@@ -21,6 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_RESIDUE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_RESIDUE_HPP
 
+#include <optional>
+#include <vector>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/operators.hpp>
@@ -38,8 +41,6 @@
 #include "cath/file/pdb/residue_makeup.hpp"
 #include "cath/structure/geometry/coord_linkage.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
-
-#include <vector>
 
 using namespace ::cath::common::literals;
 
@@ -67,12 +68,12 @@ namespace cath {
 			pdb_atom_vec atoms;
 
 			/// \brief An array of the indices of the core element atoms (N/CA/C/CB/O) within atoms, above,
-			///        or none for any core element atoms not present in this residue
+			///        or nullopt for any core element atoms not present in this residue
 			std::array<size_opt, 5> core_atom_indices;
 
 			static constexpr size_t get_core_atom_index_ref_index(const coarse_element_type &);
-			const boost::optional<size_t> & get_core_atom_index_ref(const coarse_element_type &) const;
-			static std::array<boost::optional<size_t>, 5> make_core_atom_indices(const pdb_atom_vec &);
+			const ::std::optional<size_t> & get_core_atom_index_ref(const coarse_element_type &) const;
+			static std::array<::std::optional<size_t>, 5> make_core_atom_indices(const pdb_atom_vec &);
 
 		public:
 			/// \brief Type alias for the const_iterator type for the range of atoms
@@ -173,14 +174,14 @@ namespace cath {
 
 		/// \brief Get a const reference to the core atom index corresponding to the specified coarse_element_type
 		///
-		/// The returned value is the index within atoms of the relevant atom or none if no such is present
-		inline const boost::optional<size_t> & pdb_residue::get_core_atom_index_ref(const coarse_element_type &prm_element_type ///< The coarse_element_type to be accessed in core_atom_indices
+		/// The returned value is the index within atoms of the relevant atom or nullopt if no such is present
+		inline const ::std::optional<size_t> & pdb_residue::get_core_atom_index_ref(const coarse_element_type &prm_element_type ///< The coarse_element_type to be accessed in core_atom_indices
 		                                                                            ) const {
 			return core_atom_indices.at( get_core_atom_index_ref_index( prm_element_type ) );
 		}
 
 		/// \brief Make an array of the core element atoms' indices within the specified pdb_atoms
-		///        (or none for elements that have no corresponding atoms)
+		///        (or nullopt for elements that have no corresponding atoms)
 		///
 		/// The positions of the elements in the array are defined by get_core_atom_index_ref_index()
 		///
@@ -189,15 +190,15 @@ namespace cath {
 		///
 		///  * Prefer an atom that meets alt_locn_is_dssp_accepted() (ie altlocn of ' ' or 'A'), then
 		///  * Prefer an atom nearer the back
-		inline std::array<boost::optional<size_t>, 5> pdb_residue::make_core_atom_indices(const pdb_atom_vec &prm_pdb_atoms ///< The list of atoms to index
+		inline std::array<::std::optional<size_t>, 5> pdb_residue::make_core_atom_indices(const pdb_atom_vec &prm_pdb_atoms ///< The list of atoms to index
 		                                                                                  ) {
-			std::array<boost::optional<size_t>, 5> results;
+			std::array<::std::optional<size_t>, 5> results;
 			for (const size_t &atom_ctr : common::indices( prm_pdb_atoms.size() ) ) {
 
 				const pdb_atom            &the_atom = prm_pdb_atoms[ atom_ctr ];
 				const coarse_element_type &element  = get_coarse_element_type( the_atom );
 				if ( element != coarse_element_type::NON_CORE ) {
-					boost::optional<size_t>   &result   = results.at( get_core_atom_index_ref_index( element ) );
+					::std::optional<size_t>   &result   = results.at( get_core_atom_index_ref_index( element ) );
 					if ( ! result || alt_locn_is_dssp_accepted( the_atom ) || ! alt_locn_is_dssp_accepted( prm_pdb_atoms[ *result ] ) ) {
 						result = atom_ctr;
 					}
@@ -312,7 +313,7 @@ namespace cath {
 
 			// If there was one, return its amino acid
 			if ( first_present_core_itr != common::cend( core_atom_indices ) ) {
-				return get_atom_cref_of_index( first_present_core_itr->get() ).get_amino_acid();
+				return get_atom_cref_of_index( first_present_core_itr->value() ).get_amino_acid();
 			}
 
 			// If there are no atoms, throw an exception

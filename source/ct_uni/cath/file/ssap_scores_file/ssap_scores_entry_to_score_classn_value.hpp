@@ -21,8 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SSAP_SCORES_FILE_SSAP_SCORES_ENTRY_TO_SCORE_CLASSN_VALUE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SSAP_SCORES_FILE_SSAP_SCORES_ENTRY_TO_SCORE_CLASSN_VALUE_HPP
 
-#include <boost/tuple/tuple.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <boost/tuple/tuple.hpp>
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/file/file_type_aliases.hpp"

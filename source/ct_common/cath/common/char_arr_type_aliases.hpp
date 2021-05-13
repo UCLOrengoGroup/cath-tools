@@ -21,9 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CHAR_ARR_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CHAR_ARR_TYPE_ALIASES_HPP
 
-#include <boost/optional/optional_fwd.hpp>
-
 #include <array>
+#include <optional>
 
 namespace cath {
 
@@ -56,7 +55,7 @@ namespace cath {
 	using char_4_arr = std::array<char, 4>;
 
 	/// \brief A type alias for an optional std::array of 3 chars
-	using char_3_arr_opt = boost::optional<std::array<char, 3>>;
+	using char_3_arr_opt = ::std::optional<std::array<char, 3>>;
 
 } // namespace cath
 

@@ -47,9 +47,9 @@ using namespace ::cath::file;
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::map_keys;
 using ::boost::adaptors::map_values;
-using ::boost::none;
 using ::boost::range::join;
 using ::std::make_pair;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::ostringstream;
 using ::std::string;
@@ -133,7 +133,7 @@ display_colour_opt cath::get_clr_of_pdb_and_res_indices(const display_colour_spe
 	const size_size_display_colour_map &colour_of_pdb    = prm_display_colour_spec.get_clr_of_pdb_and_res();
 	const bool                          has_entry        = contains( colour_of_pdb, entry_index_pair );
 	return has_entry ? display_colour_opt( colour_of_pdb.at( entry_index_pair ) )
-	                 : display_colour_opt( none                                 );
+	                 : display_colour_opt( nullopt                              );
 }
 
 /// \brief Get a list of all colours used to colour whole structures

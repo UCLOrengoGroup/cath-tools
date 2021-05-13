@@ -20,8 +20,8 @@
 
 #include "alnd_rgn.hpp"
 
-#include <boost/range/adaptor/transformed.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "cath/seq/seq_seg.hpp"
 

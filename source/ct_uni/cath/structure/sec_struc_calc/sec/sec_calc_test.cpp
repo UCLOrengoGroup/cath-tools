@@ -24,7 +24,6 @@
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/boost_addenda/range/front.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/file/dssp_wolf/dssp_file.hpp"
 #include "cath/file/dssp_wolf/dssp_file_io.hpp"
 #include "cath/file/pdb/pdb.hpp"
@@ -35,6 +34,7 @@
 #include "cath/structure/protein/sec_struc.hpp"
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/global_test_constants.hpp"
 
 using namespace ::cath;

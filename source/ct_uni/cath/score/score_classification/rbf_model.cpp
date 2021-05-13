@@ -23,11 +23,11 @@
 #include <cmath>
 #include <filesystem>
 #include <fstream>
+#include <optional>
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/optional.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
@@ -56,12 +56,12 @@ using ::boost::contains;
 using ::boost::icontains;
 using ::boost::irange;
 using ::boost::numeric_cast;
-using ::boost::optional;
 using ::std::filesystem::path;
 using ::std::get;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::make_tuple;
+using ::std::optional;
 using ::std::pair;
 using ::std::string;
 using ::std::tuple;
@@ -80,7 +80,7 @@ constexpr value_list_scaling rbf_model::SSAP_SCORE_SCALING;
 //
 // It seems GCC has a problem that's currently making it
 // falsely warn about parsed_gamma and parsed_b in parse_rbf_model()
-// (two boost::optional<double> variables) being passed to this ctor
+// (two ::std::optional<double> variables) being passed to this ctor
 // when it can't confirm their values are initialised.
 //
 // That code does an explicit check they're both initialised and throws before

@@ -21,6 +21,7 @@
 #include "pdb_list.hpp"
 
 #include <filesystem>
+#include <optional>
 
 #include <boost/range/combine.hpp>
 
@@ -47,6 +48,7 @@ using namespace ::std;
 
 using ::boost::range::combine;
 using ::std::filesystem::path;
+using ::std::nullopt;
 
 /// \brief Ctor from a vector<pdb>
 pdb_list::pdb_list(pdb_vec prm_pdbs ///< The pdbs from which this pdb_list should be constructed
@@ -179,7 +181,7 @@ pdb_list cath::file::pdb_list_of_backbone_complete_region_limited_subset_pdbs(co
 /// \relates protein_list
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
-///       (fix all errors, *then* provide default of boost::none)
+///       (fix all errors, *then* provide default of ::std::nullopt)
 protein_list cath::file::build_protein_list_of_pdb_list(const pdb_list &prm_pdb_list ///< TODOCUMENT
                                                         ) {
 	protein_list new_protein_list;

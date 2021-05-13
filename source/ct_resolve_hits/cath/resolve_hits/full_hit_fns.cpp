@@ -23,6 +23,7 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include "cath/common/optional/make_optional_if.hpp"
 #include "cath/resolve_hits/file/alnd_rgn.hpp"
 #include "cath/resolve_hits/full_hit_fns.hpp"
 #include "cath/resolve_hits/full_hit_list_fns.hpp"
@@ -34,8 +35,8 @@ using namespace ::cath::seq;
 using namespace ::std::literals::string_literals;
 
 using ::boost::format;
-using ::boost::make_optional;
-using ::boost::none;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief Generate a string describing the segments of the specified string
@@ -112,10 +113,10 @@ string cath::rslv::to_string(const full_hit             &prm_full_hit,         /
 	}
 
 	const auto trim_spec_opt            = get_trim_spec_opt( prm_segment_spec_opt );
-	const auto trim_spec_if_trim_output =
-		trim_spec_opt
-		? make_optional( prm_boundary_output == hit_boundary_output::TRIMMED, *trim_spec_opt )
-		: none;
+	const auto trim_spec_if_trim_output = if_then_optional(
+		trim_spec_opt.has_value() && ( prm_boundary_output == hit_boundary_output::TRIMMED ),
+		*trim_spec_opt
+	);
 
 	switch ( prm_format ) {
 		case( hit_output_format::JON ) : {

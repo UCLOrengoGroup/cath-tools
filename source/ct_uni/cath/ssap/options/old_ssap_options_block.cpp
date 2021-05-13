@@ -42,12 +42,12 @@ using namespace ::std;
 
 using ::boost::algorithm::join;
 using ::boost::lexical_cast;
-using ::boost::none;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::nullopt;
 
 constexpr bool               old_ssap_options_block::DEF_BOOL;
 constexpr protein_file_combn old_ssap_options_block::DEF_PROT_SRCS;
@@ -166,7 +166,7 @@ str_opt old_ssap_options_block::do_invalid_string(const variables_map &/*prm_var
                                                   ) const {
 	// Always accept if no names have been specified
 	if ( names.empty() ) {
-		return none;
+		return nullopt;
 	}
 
 	// Otherwise, reject if there aren't exactly two names
@@ -200,7 +200,7 @@ str_opt old_ssap_options_block::do_invalid_string(const variables_map &/*prm_var
 	}
 
 	// Otherwise accept
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block
@@ -264,12 +264,12 @@ path old_ssap_options_block::get_output_filename() const {
 
 /// \brief TODOCUMENT
 path_opt old_ssap_options_block::get_opt_clique_file() const {
-	return ( ! clique_file.empty() ) ? path_opt( clique_file ) : none;
+	return ( ! clique_file.empty() ) ? path_opt( clique_file ) : nullopt;
 }
 
 /// \brief TODOCUMENT
 path_opt old_ssap_options_block::get_opt_domin_file() const {
-	return ( ! domin_file.empty() ) ? path_opt( domin_file ) : none;
+	return ( ! domin_file.empty() ) ? path_opt( domin_file ) : nullopt;
 }
 
 /// \brief Getter for max_score_considered_distant
@@ -304,7 +304,7 @@ unique_ptr<const protein_source_file_set> old_ssap_options_block::get_protein_so
 
 /// \brief TODOCUMENT
 path_opt old_ssap_options_block::get_opt_superposition_dir() const {
-	return ( ! superposition_dir.empty() ) ? path_opt( superposition_dir ) : none;
+	return ( ! superposition_dir.empty() ) ? path_opt( superposition_dir ) : nullopt;
 }
 
 /// \brief Getter for alignment_dir

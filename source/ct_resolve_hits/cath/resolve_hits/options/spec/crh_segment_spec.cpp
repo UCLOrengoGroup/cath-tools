@@ -23,8 +23,8 @@
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
 
-using ::boost::make_optional;
-using ::boost::none;
+using ::std::make_optional;
+using ::std::nullopt;
 
 constexpr trim_spec crh_segment_spec::DEFAULT_OVERLAP_TRIM_SPEC;
 constexpr residx_t  crh_segment_spec::DEFAULT_MIN_SEG_LENGTH;
@@ -63,7 +63,7 @@ crh_segment_spec cath::rslv::make_no_action_crh_segment_spec() {
 }
 
 /// \brief Apply the specified crh_segment_spec to a copy of the specified seq_seg, returning
-///        a trimmed version if the segment's length meets the min-seg-length, or none otherwise
+///        a trimmed version if the segment's length meets the min-seg-length, or nullopt otherwise
 ///
 /// \relates crh_segment_spec
 seq_seg_opt cath::rslv::apply_spec_to_seg_copy(const seq_seg              &prm_seg,         ///< The seq_seg to copy
@@ -72,16 +72,16 @@ seq_seg_opt cath::rslv::apply_spec_to_seg_copy(const seq_seg              &prm_s
 	return 
 		( prm_segment_spec && get_length( prm_seg ) >= prm_segment_spec->get_min_seg_length() )
 			? make_optional( trim_seq_seg_copy( prm_seg, prm_segment_spec->get_overlap_trim_spec() ) )
-			: none;
+			: nullopt;
 }
 
 /// \brief Get an optional trim_spec of the specified optional crh_segment_spec
-///        (where the result is none iff the input is none)
+///        (where the result is nullopt iff the input is nullopt)
 ///
 /// \relates crh_segment_spec
 trim_spec_opt cath::rslv::get_trim_spec_opt(const crh_segment_spec_opt &prm_crh_segment_spec ///< The optional crh_segment_spec from which to make an optional trim_spec
                                             ) {
 	return prm_crh_segment_spec
 		? make_optional( prm_crh_segment_spec->get_overlap_trim_spec() )
-		: none;
+		: nullopt;
 }

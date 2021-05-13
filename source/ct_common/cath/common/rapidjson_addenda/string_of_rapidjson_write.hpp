@@ -21,8 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_RAPIDJSON_ADDENDA_STRING_OF_RAPIDJSON_WRITE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_RAPIDJSON_ADDENDA_STRING_OF_RAPIDJSON_WRITE_HPP
 
-#include <boost/algorithm/string/trim.hpp>
 #include <boost/algorithm/string/find.hpp>
+#include <boost/algorithm/string/trim.hpp>
 
 #include "cath/common/algorithm/for_n.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"

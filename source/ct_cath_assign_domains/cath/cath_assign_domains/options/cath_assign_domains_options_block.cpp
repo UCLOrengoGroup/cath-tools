@@ -24,7 +24,6 @@
 
 #include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/string/join.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
 #include "cath/acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
@@ -39,11 +38,11 @@ using namespace ::std;
 
 using ::boost::algorithm::all_of;
 using ::boost::algorithm::join;
-using ::boost::none;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::nullopt;
 
 /// \brief The long option specifying the SVM-light RBF model file
 const string cath_assign_domains_options_block::PO_SVMLIGHT_RBF_FILE( "svmlight-rbf-file" );
@@ -104,7 +103,7 @@ str_opt cath_assign_domains_options_block::do_invalid_string(const variables_map
 	if ( ! all_of( forbidden_nodes, is_valid_cath_node_id{} ) ) {
 		return "Forbidden nodes list " + join( forbidden_nodes, ", ") + " is not a list of valid CATH nodes";
 	}
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

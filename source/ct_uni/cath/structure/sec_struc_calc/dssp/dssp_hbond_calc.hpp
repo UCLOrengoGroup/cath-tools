@@ -21,8 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_DSSP_HBOND_CALC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_DSSP_HBOND_CALC_HPP
 
+#include <optional>
+
 #include <boost/algorithm/clamp.hpp>
 
+#include "cath/chopping/region/region.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/file/pdb/pdb_residue.hpp"
 #include "cath/structure/geometry/coord.hpp"
@@ -66,7 +70,7 @@ namespace cath {
 			                                       const geom::coord &,
 			                                       const geom::coord &);
 
-			static hbond_energy_t get_hbond_energy(const boost::optional<file::pdb_residue> &,
+			static hbond_energy_t get_hbond_energy(const ::std::optional<file::pdb_residue> &,
 			                                       const file::pdb_residue &,
 			                                       const file::pdb_residue &);
 
@@ -74,7 +78,7 @@ namespace cath {
 			                                             const size_t &,
 			                                             const size_t &);
 
-			static bool has_hbond_energy(const boost::optional<file::pdb_residue> &,
+			static bool has_hbond_energy(const ::std::optional<file::pdb_residue> &,
 			                             const file::pdb_residue &,
 			                             const file::pdb_residue &);
 
@@ -83,7 +87,7 @@ namespace cath {
 			                                   const size_t &);
 
 			static bifur_hbond_list calc_bifur_hbonds_of_pdb__recalc_backbone_residues(const file::pdb &,
-			                                                                           const ostream_ref_opt & = boost::none);
+			                                                                           const ostream_ref_opt & = ::std::nullopt);
 
 			static bifur_hbond_list calc_bifur_hbonds_of_backbone_complete_pdb(const file::pdb &);
 		};
@@ -126,7 +130,7 @@ namespace cath {
 
 		/// \brief Calculate the DSSP hbond energy between the specified two residues (with supporting info
 		///        from the residue that precedes the first one)
-		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy(const boost::optional<file::pdb_residue> &prm_residue_i_prev, ///< The residue that precedes the first residue
+		inline hbond_energy_t dssp_hbond_calc::get_hbond_energy(const ::std::optional<file::pdb_residue> &prm_residue_i_prev, ///< The residue that precedes the first residue
 		                                                        const file::pdb_residue                  &prm_residue_i,      ///< The first residue
 		                                                        const file::pdb_residue                  &prm_residue_j       ///< The second residue
 		                                                        ) {
@@ -157,9 +161,10 @@ namespace cath {
 		                                                              ) {
 			const auto prev_index = index_of_preceding_residue_in_same_chain( prm_pdb, prm_i );
 			return get_hbond_energy(
-				prev_index
-					? boost::make_optional( prm_pdb.get_residue_of_index__backbone_unchecked( *prev_index ) )
-					: boost::none,
+				if_then_optional(
+					prev_index,
+					prm_pdb.get_residue_of_index__backbone_unchecked( *prev_index )
+				),
 				prm_pdb.get_residue_of_index__backbone_unchecked( prm_i     ),
 				prm_pdb.get_residue_of_index__backbone_unchecked( prm_j     )
 			);
@@ -170,7 +175,7 @@ namespace cath {
 		///
 		/// If calling with a PDB and indices, prefer to use the wrapper function below because that can
 		/// make additional checks on the indices
-		inline bool dssp_hbond_calc::has_hbond_energy(const boost::optional<file::pdb_residue> &prm_residue_i_prev, ///< The residue that precedes the first residue
+		inline bool dssp_hbond_calc::has_hbond_energy(const ::std::optional<file::pdb_residue> &prm_residue_i_prev, ///< The residue that precedes the first residue
 		                                              const file::pdb_residue                  &prm_residue_i,      ///< The first residue
 		                                              const file::pdb_residue                  &prm_residue_j       ///< The second residue
 		                                              ) {
@@ -228,9 +233,10 @@ namespace cath {
 				)
 				&&
 				has_hbond_energy(
-					prev_index
-						? boost::make_optional( prm_pdb.get_residue_of_index__backbone_unchecked( *prev_index ) )
-						: boost::none,
+					if_then_optional(
+						prev_index,
+						prm_pdb.get_residue_of_index__backbone_unchecked( *prev_index )
+					),
 					prm_pdb.get_residue_of_index__backbone_unchecked( prm_i     ),
 					prm_pdb.get_residue_of_index__backbone_unchecked( prm_j     )
 				)

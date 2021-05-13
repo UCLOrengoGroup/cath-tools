@@ -22,10 +22,10 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_LIST_HPP
 
 #include <iostream>
+#include <optional>
 #include <vector>
 
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 #include <boost/range.hpp>
 
 #include "cath/biocore/biocore_type_aliases.hpp"
@@ -75,11 +75,11 @@ namespace cath {
 		pdb_list make_pdb_list(const pdb_vec &);
 
 		pdb_list pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &,
-		                                                   const ostream_ref_opt & = boost::none);
+		                                                   const ostream_ref_opt & = ::std::nullopt);
 
 		pdb_list pdb_list_of_backbone_complete_region_limited_subset_pdbs(const pdb_list &,
 		                                                                  const chop::region_vec_opt_vec &,
-		                                                                  const ostream_ref_opt & = boost::none);
+		                                                                  const ostream_ref_opt & = ::std::nullopt);
 
 		protein_list build_protein_list_of_pdb_list(const pdb_list &);
 

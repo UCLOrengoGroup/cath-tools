@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PLOTTER_CLASSN_STAT_PLOTTER_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PLOTTER_CLASSN_STAT_PLOTTER_SPEC_HPP
 
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/common/type_aliases.hpp"
 
@@ -39,7 +39,7 @@ namespace cath {
 			str_vec pre_plot_strs;
 
 			/// \brief TODOCUMENT
-//			boost::optional<size_bool_pair_vec> series_to_plot;
+//			::std::optional<size_bool_pair_vec> series_to_plot;
 			std::vector<std::pair<std::string, str_opt>> series_to_plot;
 
 			/// \brief TODOCUMENT

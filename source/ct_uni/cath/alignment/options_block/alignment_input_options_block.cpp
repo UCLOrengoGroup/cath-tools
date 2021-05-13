@@ -24,7 +24,6 @@
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/common/boost_addenda/program_options/layout_values_with_descs.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
@@ -37,13 +36,13 @@ using namespace ::cath::opts;
 using namespace ::std::literals::string_literals;
 
 using ::boost::algorithm::join;
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
@@ -188,7 +187,7 @@ str_opt alignment_input_options_block::do_invalid_string(const variables_map &/*
 	if ( ! the_alignment_input_spec.get_ssap_scores_file().empty()     && ! is_acceptable_input_file( the_alignment_input_spec.get_ssap_scores_file(), true ) ) {
 		return "SSAP scores file "    + the_alignment_input_spec.get_ssap_scores_file().string()    + " is not a valid input file";
 	}
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

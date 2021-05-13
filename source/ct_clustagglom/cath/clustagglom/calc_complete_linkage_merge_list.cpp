@@ -39,6 +39,7 @@ using ::boost::range::for_each;
 using ::boost::range::min_element;
 using ::boost::range::partition;
 using ::boost::range::upper_bound;
+using ::std::make_optional;
 using ::std::max;
 using ::std::min;
 using ::std::tie;
@@ -170,9 +171,9 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             prm_li
 				     const strength &y, ///< The dissimilarity that the first  cluster had to the target cluster
 				     const strength &z  ///< The dissimilarity that the second cluster had to the target cluster
 				     ) {
-					return make_optional_if_fn(
+					return if_then_optional(
 						( clust_ids.has_index( x ) ),
-						[&] { return max( y, z ); }
+						max( y, z )
 					);
 				}
 			);

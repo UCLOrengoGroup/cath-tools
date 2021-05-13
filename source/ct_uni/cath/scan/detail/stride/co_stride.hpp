@@ -21,12 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_CO_STRIDE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_CO_STRIDE_HPP
 
-#include <boost/optional.hpp>
-
-#include "cath/common/algorithm/constexpr_modulo_fns.hpp"
-
+#include <optional>
 #include <type_traits>
 #include <utility>
+
+#include "cath/common/algorithm/constexpr_modulo_fns.hpp"
 
 namespace cath {
 	namespace scan {
@@ -89,14 +88,14 @@ namespace cath {
 			///
 			/// \returns TODOCUMENT
 			template <typename T>
-			inline boost::optional<T> entry_index_of_stride_neighbour_index(const T &prm_stride_index,       ///< TODOCUMENT
+			inline ::std::optional<T> entry_index_of_stride_neighbour_index(const T &prm_stride_index,       ///< TODOCUMENT
 			                                                                const T &prm_co_stride,          ///< TODOCUMENT
 			                                                                const T &prm_centre_entry_index, ///< TODOCUMENT
 			                                                                const T &prm_num_entries         ///< TODOCUMENT
 			                                                                ) {
 				static_assert( std::is_unsigned<T>::value, "entry_index_of_stride_neighbour_index() must be performed on an unsigned integral type" );
 				const auto result = detail::entry_index_of_stride_neighbour_index_impl( prm_stride_index, prm_co_stride, prm_centre_entry_index, prm_num_entries );
-				return result.first ? boost::make_optional( result.second ) : boost::none;
+				return result.first ? ::std::make_optional( result.second ) : ::std::nullopt;
 			}
 
 

@@ -29,6 +29,7 @@
 #include "cath/alignment/pair_alignment.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
@@ -289,43 +290,37 @@ alignment ssap_code_dyn_prog_aligner::traceback(const size_t      &prm_length_a,
 		prm_path_matrix
 	);
 
-#ifndef NDEBUG
+	if constexpr ( IS_IN_DEBUG_MODE ) {
 
-	/// \todo Investigate why this sometimes overruns, eg for 2h7cB00 vs 1qo0D02
-	///
-	/// Quite a few other bugs appear when the lengths are very different, as they are
-	/// in this case (531 and 46 respectively).
-	///
-	/// This appears to be an existing problem in the DP/tracing code because adding
-	/// a few debug statements into the original SSAP code and then running on 2h7cB00/1qo0D02
-	/// produced 60 copies of the line:
-	///
-	///     After calling trace, posa[aln->length] : 777, lena: 531, posb[aln->length] : 46, lenb: 46
-	if (get_last_a_offset_1_position(new_alignment) > prm_length_a) {
-//		cerr << endl;
-//		for (const size_t &ctr_a : indices( length_a + 1 ) ) {
-//			for (const size_t &ctr_b : indices( length_b + 1 ) ) {
-//				cerr << path_matrix[ctr_a][ctr_b] << "\t";
-//			}
-//			cerr << endl;
-//		}
-//		cerr << endl;
-		BOOST_THROW_EXCEPTION(out_of_range_exception(
-			"After tracing, the last a_position is "
-			+ to_string(get_last_a_offset_1_position(new_alignment))
-			+ " which is past the end of structure a, which is of length "
-			+ to_string(prm_length_a)
-		));
+		/// \todo Investigate why this sometimes overruns, eg for 2h7cB00 vs 1qo0D02
+		///
+		/// Quite a few other bugs appear when the lengths are very different, as they are
+		/// in this case (531 and 46 respectively).
+		///
+		/// This appears to be an existing problem in the DP/tracing code because adding
+		/// a few debug statements into the original SSAP code and then running on 2h7cB00/1qo0D02
+		/// produced 60 copies of the line:
+		///
+		///     After calling trace, posa[aln->length] : 777, lena: 531, posb[aln->length] : 46, lenb: 46
+		if ( get_last_a_offset_1_position( new_alignment ) > prm_length_a ) {
+			// cerr << endl;
+			// for (const size_t &ctr_a : indices( length_a + 1 ) ) {
+			// 	for (const size_t &ctr_b : indices( length_b + 1 ) ) {
+			// 		cerr << path_matrix[ctr_a][ctr_b] << "\t";
+			// 	}
+			// 	cerr << endl;
+			// }
+			// cerr << endl;
+			BOOST_THROW_EXCEPTION( out_of_range_exception(
+			  "After tracing, the last a_position is " + to_string( get_last_a_offset_1_position( new_alignment ) )
+			  + " which is past the end of structure a, which is of length " + to_string( prm_length_a ) ) );
+		}
+		if ( get_last_b_offset_1_position( new_alignment ) > prm_length_b ) {
+			BOOST_THROW_EXCEPTION( out_of_range_exception(
+			  "After tracing, the last b_position is " + to_string( get_last_b_offset_1_position( new_alignment ) )
+			  + " which is past the end of structure b, which is of length " + to_string( prm_length_b ) ) );
+		}
 	}
-	if (get_last_b_offset_1_position( new_alignment ) > prm_length_b) {
-		BOOST_THROW_EXCEPTION(out_of_range_exception(
-			"After tracing, the last b_position is "
-			+ to_string(get_last_b_offset_1_position( new_alignment ) )
-			+ " which is past the end of structure b, which is of length "
-			+ to_string(prm_length_b)
-		));
-	}
-#endif
 
 	// Add any overhangs
 	// (trace_recursive() will have built the alignment to the end of one of the lists,

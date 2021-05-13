@@ -21,10 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_ID_OF_STR_BIDIRNL_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_ID_OF_STR_BIDIRNL_HPP
 
+#include <optional>
+#include <string>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/functional.hpp>
-#include <boost/optional.hpp>
 #include <boost/range/empty.hpp>
 
 #include "cath/common/boost_addenda/range/front.hpp"
@@ -33,8 +35,6 @@
 #include "cath/common/container/id_of_string_view.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <string>
 
 namespace cath {
 	namespace common {
@@ -192,7 +192,7 @@ namespace cath {
 		///
 		/// \todo Consider just doing a regex instead
 		template <typename StrRng>
-		boost::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers(const StrRng &prm_strings ///< The range of strings to query
+		::std::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers(const StrRng &prm_strings ///< The range of strings to query
 		                                                                        ) {
 			using const_str_ref = range_const_reference_t<StrRng>;
 			const auto str_is_not_int_like_fn = [] (const_str_ref x) {
@@ -211,7 +211,7 @@ namespace cath {
 				);
 			};
 			if ( boost::empty( prm_strings ) || boost::algorithm::any_of( prm_strings, str_is_not_int_like_fn ) ) {
-				return boost::none;
+				return ::std::nullopt;
 			}
 			return max_proj(
 				prm_strings,

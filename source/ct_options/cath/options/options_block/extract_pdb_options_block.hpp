@@ -23,8 +23,6 @@
 
 #include <filesystem>
 
-#include <boost/optional.hpp>
-
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"

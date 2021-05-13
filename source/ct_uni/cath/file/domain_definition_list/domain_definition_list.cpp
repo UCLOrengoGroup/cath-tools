@@ -45,12 +45,12 @@ using namespace ::cath::opts;
 
 using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::token_compress_on;
-using ::boost::none;
 using ::boost::trim;
 using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::make_pair;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief Ctor for domain_definition_list
@@ -122,7 +122,7 @@ pdb_list_name_set_list_pair cath::file::read_domains_from_pdbs(const domain_defi
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Domain definitions to be read from PDBs do not have domain IDs"));
 		}
 		auto file_and_pdb = read_domain_from_pdb( domain_defn, prm_data_dirs_spec );
-		names.emplace_back( std::move( file_and_pdb.first  ), none, get_domain_id( the_domain ) );
+		names.emplace_back( std::move( file_and_pdb.first  ), nullopt, get_domain_id( the_domain ) );
 		pdbs.push_back ( std::move( file_and_pdb.second ) );
 	}
 	return make_pair( pdbs, name_set_list{ std::move( names ) } );

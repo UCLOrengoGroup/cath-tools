@@ -21,14 +21,14 @@
 #include "align_scaffold.hpp"
 
 #include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/join.hpp>
-#include <boost/optional.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/join.hpp>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
 #include "cath/common/type_aliases.hpp"
 
 using namespace ::cath;
@@ -38,8 +38,8 @@ using namespace ::cath::common;
 using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::is_space;
 using ::boost::join;
-using ::boost::make_optional;
-using ::boost::none;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief Generate data for an alignment entry from a scaffold string
@@ -56,8 +56,7 @@ aln_posn_opt_vec cath::align::detail::alignment_entry_of_scaffold_string(const s
 	return transform_build<aln_posn_opt_vec>(
 		prm_scaffold_string,
 		[&] (const char &x) {
-			return ( ! is_space()( x ) && x != '-' && x != '.' ) ? make_optional( ctr++ )
-			                                                     : none;
+			return if_then_optional( ( ! is_space()( x ) && x != '-' && x != '.' ), ctr++ );
 		}
 	);
 }

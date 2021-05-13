@@ -21,11 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_CLUSTAGGLOM_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_CLUSTAGGLOM_TYPE_ALIASES_HPP
 
-#include <boost/optional/optional_fwd.hpp>
+#include <optional>
+#include <vector>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-
-#include <vector>
 
 namespace cath { namespace clust { class hierarchy_group; } }
 namespace cath { namespace clust { class hierarchy_layer; } }
@@ -53,7 +52,7 @@ namespace cath {
 		using item_vec                   = std::vector<item_idx>;
 
 		/// \brief Type alias for an optional item_idx
-		using item_opt                   = boost::optional<item_idx>;
+		using item_opt                   = ::std::optional<item_idx>;
 
 		/// \brief Type alias for a vector of item_opt values
 		using item_opt_vec               = std::vector<item_opt>;
@@ -62,7 +61,7 @@ namespace cath {
 		using strength                   = float;
 
 		/// \brief Type alias for an optional strength
-		using strength_opt               = boost::optional<strength>;
+		using strength_opt               = ::std::optional<strength>;
 
 		/// \brief Type alias for a vector of strengths
 		using strength_vec               = std::vector<strength>;

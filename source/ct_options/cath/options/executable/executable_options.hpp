@@ -22,10 +22,10 @@
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_EXECUTABLE_OPTIONS_HPP
 
 #include <filesystem>
+#include <optional>
 #include <string>
 #include <vector>
 
-#include <boost/optional.hpp>
 #include <boost/program_options.hpp>
 
 #include "cath/common/argc_argv_faker.hpp"
@@ -120,7 +120,7 @@ namespace cath {
 			template <typename FN>
 			void prog_opts_try(str_opt &,
 			                   FN &&,
-			                   const str_opt & = boost::none);
+			                   const str_opt & = ::std::nullopt);
 
 		protected:
 			std::string get_standard_usage_error_string() const;
@@ -164,7 +164,7 @@ namespace cath {
 		template <typename Func>
 		void executable_options::prog_opts_try(str_opt        &prm_error_string, ///< The optional error string to update with a description of any errors that occur
 		                                       Func          &&prm_function,     ///< The function to perform
-		                                       const str_opt  &prm_parsing_phase ///< The phase in which this parsing is occurring (or none)
+		                                       const str_opt  &prm_parsing_phase ///< The phase in which this parsing is occurring (or nullopt)
 		                                       ) {
 			common::set_opt_str_from_prog_opts_try(
 				prm_error_string,

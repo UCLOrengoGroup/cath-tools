@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_RESOLVE_HIT_RESOLVER_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_RESOLVE_HIT_RESOLVER_HPP
 
-#include <boost/optional.hpp>
 #include <boost/range/sub_range.hpp>
 
 #include "cath/resolve_hits/algo/best_scan_arches.hpp"

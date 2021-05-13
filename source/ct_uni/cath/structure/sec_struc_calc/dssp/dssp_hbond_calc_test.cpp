@@ -22,7 +22,6 @@
 
 #include <filesystem>
 
-#include <boost/optional/optional_io.hpp>
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -39,6 +38,7 @@
 #include "cath/structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 #include "cath/structure/sec_struc_calc/dssp/test/dssp_dupl_fixture.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }
@@ -50,11 +50,11 @@ using namespace ::cath::geom;
 using namespace ::cath::sec;
 using namespace ::cath::test;
 
-using ::boost::none;
 using ::boost::range::sort;
 using ::std::filesystem::directory_entry;
 using ::std::filesystem::directory_iterator;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::ostringstream;
 
 namespace cath {
@@ -104,7 +104,7 @@ namespace cath {
 
 				// BOOST_TEST_INFO() isn't present in Boost > 1.58.0
 				// BOOST_TEST_INFO  ( "Checking DSSP file \"" + prm_dssp_file.string() + "\"" );
-				BOOST_CHECK_EQUAL( difference_string( dssp_hbonds, bifur_hbonds ), none );
+				BOOST_CHECK_EQUAL( difference_string( dssp_hbonds, bifur_hbonds ), nullopt );
 			}
 		}
 

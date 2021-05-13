@@ -24,8 +24,6 @@
 #include <filesystem>
 #include <string>
 
-#include <boost/optional.hpp>
-
 #include "cath/common/path_type_aliases.hpp"
 
 namespace cath {

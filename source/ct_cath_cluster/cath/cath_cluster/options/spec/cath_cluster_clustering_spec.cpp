@@ -29,6 +29,7 @@
 
 #include "cath/common/boost_addenda/range/max_proj_element.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
 
 #include <functional>
 
@@ -42,11 +43,10 @@ using ::boost::algorithm::is_sorted;
 using ::boost::algorithm::join;
 using ::boost::algorithm::to_lower_copy;
 using ::boost::lexical_cast;
-using ::boost::make_optional;
-using ::boost::none;
 using ::boost::range::sort;
 using ::std::greater;
 using ::std::less;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief Getter for the levels at which the clustering should be performed
@@ -62,7 +62,7 @@ cath_cluster_clustering_spec & cath_cluster_clustering_spec::set_levels(const st
 }
 
 /// \brief Generate a description of any problem that makes the specified cath_cluster_clustering_spec invalid
-///        or none otherwise
+///        or nullopt otherwise
 ///
 /// \relates cath_cluster_clustering_spec
 str_opt cath::clust::get_invalid_description(const cath_cluster_clustering_spec &prm_clustering_spec ///< The cath_cluster_clustering_spec to query
@@ -71,18 +71,18 @@ str_opt cath::clust::get_invalid_description(const cath_cluster_clustering_spec 
 		return "Most specify at least one clustering level"s;
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Get a warning string if the specified clustering levels aren't sorted suitable for the specified link_dirn
-///        or none otherwise
+///        or nullopt otherwise
 str_opt cath::clust::get_dissim_sort_warning(const strength_vec &prm_levels,   ///< The clustering levels to check
                                              const link_dirn    &prm_link_dirn ///< Whether the links in the input file represent strengths or dissimilarities
                                              ) {
 	const bool is_correct = ( prm_link_dirn == link_dirn::STRENGTH )
 		? is_sorted( prm_levels, less   <>{} )
 		: is_sorted( prm_levels, greater<>{} );
-	return make_optional(
+	return make_optional_if(
 		! is_correct,
 		"The levels ("
 			+ join(
@@ -135,7 +135,7 @@ strength cath::clust::get_max_dissim(const strength_vec &prm_levels,   ///< The 
 }
 
 /// \brief Get a warning string if the specified cath_cluster_clustering_spec's clustering levels aren't
-///        sorted suitable for the specified link_dirn or none otherwise
+///        sorted suitable for the specified link_dirn or nullopt otherwise
 ///
 /// \relates cath_cluster_clustering_spec
 str_opt cath::clust::get_dissim_sort_warning(const cath_cluster_clustering_spec &prm_spec,     ///< The cath_cluster_clustering_spec to check

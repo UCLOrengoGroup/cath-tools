@@ -21,14 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OLD_CLUSTER_DATA_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OLD_CLUSTER_DATA_HPP
 
+#include <functional>
+#include <optional>
+
 #include "cath/cluster/cluster_list.hpp"
 #include "cath/cluster/clusters_info.hpp"
 #include "cath/common/boost_addenda/range/accumulate_proj.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/container/id_of_str_bidirnl.hpp"
 #include "cath/common/cpp17/invoke.hpp"
-
-#include <functional>
 
 namespace cath {
 	namespace clust {
@@ -199,8 +200,8 @@ namespace cath {
 		}
 
 		std::string to_string(const old_cluster_data &);
-		boost::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers(const old_cluster_data &);
-		boost::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers_of_val_if_none(const old_cluster_data_opt &,
+		::std::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers(const old_cluster_data &);
+		::std::optional<ptrdiff_t> largest_number_if_names_all_numeric_integers_of_val_if_none(const old_cluster_data_opt &,
 		                                                                                       const ptrdiff_t &);
 
 	} // namespace clust

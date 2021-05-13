@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DETAIL_SCORE_COLOUR_HANDLER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DETAIL_SCORE_COLOUR_HANDLER_HPP
 
-#include <boost/optional/optional_fwd.hpp>
+#include <optional>
 
 #include "cath/common/type_aliases.hpp"
 
@@ -58,7 +58,7 @@ namespace cath {
 			                                       const size_t &) const;
 		};
 
-		using score_colour_handler_opt = boost::optional<score_colour_handler>;
+		using score_colour_handler_opt = ::std::optional<score_colour_handler>;
 
 		void score_colour(const score_colour_handler &,
 		                  const align::alignment &,

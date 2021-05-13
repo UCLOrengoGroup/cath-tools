@@ -21,7 +21,6 @@
 #include "display_spec.hpp"
 
 #include <boost/exception/diagnostic_information.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/common/cpp14/make_unique.hpp"
 #include "cath/display_colour/display_colour.hpp"
@@ -30,8 +29,8 @@
 using namespace ::cath;
 using namespace ::cath::common;
 
-using ::boost::make_optional;
-using ::boost::none;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief A string value to use internally to indicate colours haven't been specified
@@ -61,8 +60,8 @@ display_spec::display_spec(string      prm_display_colours_string,    ///< TODOC
 
 /// \brief TODOCUMENT
 str_opt display_spec::get_display_colours_string() const {
-	return ( display_colours_string != COLOURS_UNSPECIFIED ) ? ::boost::make_optional( display_colours_string )
-	                                                         : none;
+	return ( display_colours_string != COLOURS_UNSPECIFIED ) ? ::std::make_optional( display_colours_string )
+	                                                         : nullopt;
 }
 
 /// \brief Getter for whether to display a gradient of colours
@@ -146,7 +145,7 @@ str_opt cath::invalid_string(const display_spec &prm_display_spec ///< TODOCUMEN
 	catch (...) {
 		return "Colour list could not be parsed from \"" + prm_display_spec.get_display_colours_string().value_or( "<no-colour-list-specified>" ) + "\"";
 	}
-	return none;
+	return nullopt;
 }
 
 /// \brief TODOCUMENT

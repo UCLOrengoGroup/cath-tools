@@ -23,8 +23,6 @@
 
 #include <filesystem>
 
-#include <boost/optional.hpp>
-
 #include "cath/acquirer/alignment_acquirer/align_refining.hpp"
 #include "cath/common/path_type_aliases.hpp"
 
@@ -52,7 +50,7 @@ namespace cath {
 			::std::filesystem::path ssap_scores_file;
 
 			/// \brief A directory in which SSAPs should be performed and then their alignments glued together
-			///        or (inner) none for cath-tools to choose a directory to use
+			///        or (inner) nullopt for cath-tools to choose a directory to use
 			///
 			/// The outer optional<> is used to determine if the option has been specified
 			/// The inner optional<> is used to determine if a specific directory should be used

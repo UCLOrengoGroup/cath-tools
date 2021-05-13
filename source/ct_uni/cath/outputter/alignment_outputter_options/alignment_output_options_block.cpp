@@ -23,8 +23,6 @@
 #include <filesystem>
 #include <iostream>
 
-#include <boost/optional.hpp>
-
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/display/display_colourer/display_colourer_alignment.hpp"
 #include "cath/display_colour/display_colour.hpp"
@@ -40,12 +38,12 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::none;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::nullopt;
 
 const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_FILE   ( "aln-to-cath-aln-file"   );
 const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_STDOUT ( "aln-to-cath-aln-stdout" );
@@ -100,7 +98,7 @@ str_opt alignment_output_options_block::do_invalid_string(const variables_map &/
 		return string( "Cannot output alignment to stdout as both HTML and FASTA" );
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

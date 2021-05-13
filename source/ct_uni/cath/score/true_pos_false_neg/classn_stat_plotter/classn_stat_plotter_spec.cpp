@@ -20,8 +20,6 @@
 
 #include "classn_stat_plotter_spec.hpp"
 
-#include <boost/optional.hpp>
-
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series.hpp"
@@ -32,7 +30,7 @@ using namespace ::cath::common;
 using namespace ::cath::score;
 using namespace ::std;
 
-using ::boost::none;
+using ::std::nullopt;
 
 /// \brief TODOCUMENT
 classn_stat_plotter_spec::classn_stat_plotter_spec(str_vec                                       prm_pre_plot_strs,              ///< TODOCUMENT
@@ -70,7 +68,7 @@ vector<pair<string, str_opt>> cath::score::get_series_to_plot_or_make_default(co
 	return transform_build<vector<pair<string, str_opt>>>(
 		indices( prm_list.size() ),
 		[&] (const size_t &x) {
-			return make_pair( prm_list[ x].get_name(), none );
+			return make_pair( prm_list[ x].get_name(), nullopt );
 		}
 	);
 }

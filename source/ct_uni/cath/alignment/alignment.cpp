@@ -60,9 +60,9 @@ using ::boost::algorithm::all_of;
 using ::boost::algorithm::any_of;
 using ::boost::irange;
 using ::boost::lexical_cast;
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::count_if;
+using ::std::nullopt;
 
 constexpr alignment::size_type alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT;
 constexpr alignment::size_type alignment::PAIR_A_IDX;
@@ -163,7 +163,7 @@ alignment::alignment(const aln_posn_opt_vec_vec &prm_lists ///< TODOCUMENT
 void alignment::reserve(const size_type &prm_size ///< TODOCUMENT
                         ) {
 	for (aln_posn_opt_vec &position_part : positions) {
-		position_part.resize( prm_size, none );
+		position_part.resize( prm_size, nullopt );
 	}
 }
 
@@ -215,7 +215,7 @@ void alignment::set_position_value(const size_type     &prm_entry, ///< TODOCUME
 
 	if ( prm_index >= reserved_length() ) {
 		for (aln_posn_opt_vec &position_part : positions ) {
-			position_part.resize ( prm_index + 1, none );
+			position_part.resize ( prm_index + 1, nullopt );
 		}
 	}
 
@@ -245,7 +245,7 @@ void alignment::unset_position_value(const size_type &prm_entry, ///< The entry 
 
 	if ( prm_index >= reserved_length() ) {
 		for (aln_posn_opt_vec &position_part : positions ) {
-			position_part.resize ( prm_index + 1, none );
+			position_part.resize ( prm_index + 1, nullopt );
 		}
 	}
 
@@ -254,7 +254,7 @@ void alignment::unset_position_value(const size_type &prm_entry, ///< The entry 
 	}
 
 	// Set the entry
-	positions[ prm_entry ][ prm_index ] = none;
+	positions[ prm_entry ][ prm_index ] = nullopt;
 }
 
 /// \brief TODOCUMENT
@@ -280,7 +280,7 @@ void alignment::set_scores(const alignment_residue_scores &prm_scores ///< TODOC
 /// To be clearer about "first": all positions in one entry are considered to be before any in the next entry
 ///
 /// \returns A pair of the entry and expected position of the first non-consecutive entry, if any,
-///          or none otherwise.
+///          or nullopt otherwise.
 ///
 /// \relates alignment
 size_size_pair_opt cath::align::first_non_consecutive_entry_positions(const alignment &prm_alignment ///< The alignment to search
@@ -308,8 +308,8 @@ size_size_pair_opt cath::align::first_non_consecutive_entry_positions(const alig
 		}
 	}
 
-	// No non-consecutive position was found, so return none
-	return none;
+	// No non-consecutive position was found, so return nullopt
+	return nullopt;
 }
 
 /// \brief Check that alignments positions are consecutive for each entry, else throw an exception
@@ -571,7 +571,7 @@ aln_size_opt cath::align::get_index_of_first_present_position_of_entry(const ali
 			return index;
 		}
 	}
-	return none;
+	return nullopt;
 }
 
 /// \brief Convenience function for finding the index of the last present position of the specified entry in the specified alignment
@@ -587,7 +587,7 @@ aln_size_opt cath::align::get_index_of_last_present_position_of_entry(const alig
 			return index;
 		}
 	}
-	return none;
+	return nullopt;
 }
 
 /// \brief TODOCUMENT
@@ -632,7 +632,7 @@ aln_size_opt cath::align::get_index_of_first_present_position_of_both_entries(co
 			return index;
 		}
 	}
-	return none;
+	return nullopt;
 }
 
 /// \brief Convenience function for finding the index of the last present position of both of the specified two entries in the specified alignment
@@ -649,7 +649,7 @@ aln_size_opt cath::align::get_index_of_last_present_position_of_both_entries(con
 			return index;
 		}
 	}
-	return none;
+	return nullopt;
 }
 
 /// \brief Convenience function for finding first present position of the specified entry in the specified alignment
@@ -664,7 +664,7 @@ aln_posn_opt cath::align::get_first_present_position_of_entry(const alignment   
 		prm_alignment,
 		prm_entry
 	);
-	return ( index_of_first_present ) ? get_position_of_entry_of_index( prm_alignment, prm_entry, index_of_first_present.get() )
+	return ( index_of_first_present ) ? get_position_of_entry_of_index( prm_alignment, prm_entry, *index_of_first_present )
 	                                  : aln_posn_opt();
 }
 
@@ -680,7 +680,7 @@ aln_posn_opt cath::align::get_last_present_position_of_entry(const alignment    
 		prm_alignment,
 		prm_entry
 	);
-	return ( index_of_last_present ) ? get_position_of_entry_of_index( prm_alignment, prm_entry, index_of_last_present.get() )
+	return ( index_of_last_present ) ? get_position_of_entry_of_index( prm_alignment, prm_entry, *index_of_last_present )
 	                                 : aln_posn_opt();
 }
 

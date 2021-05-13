@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_HTML_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_HTML_SPEC_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/resolve_hits/file/hits_input_format_tag.hpp"
 #include "cath/resolve_hits/options/spec/crh_html_spec.hpp"

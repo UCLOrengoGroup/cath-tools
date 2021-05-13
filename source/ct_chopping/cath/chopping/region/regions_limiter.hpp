@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGIONS_LIMITER_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGIONS_LIMITER_HPP
 
-#include <boost/optional/optional.hpp>
+#include <optional>
 
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -43,7 +43,7 @@ namespace cath {
 			using region_seen_vec = std::vector<region_seen>;
 
 			/// \brief Type alias for an optional region_seen_vec
-			using region_seen_vec_opt = boost::optional<region_seen_vec>;
+			using region_seen_vec_opt = ::std::optional<region_seen_vec>;
 
 		} // namespace chop
 
@@ -60,10 +60,10 @@ namespace cath {
 			/// \brief An optional reference_wrapper to a vector of regions
 			region_vec_cref_opt regions;
 
-			/// \brief Store which of the specified regions have been seen (or none if no regions were specified)
+			/// \brief Store which of the specified regions have been seen (or nullopt if no regions were specified)
 			detail::region_seen_vec_opt regions_seen;
 
-			/// \brief The currently active region, or none if none is active
+			/// \brief The currently active region, or nullopt if none is active
 			size_opt active_region_idx;
 
 			void sanity_check() const;

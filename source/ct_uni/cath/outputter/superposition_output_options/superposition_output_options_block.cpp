@@ -23,8 +23,6 @@
 #include <filesystem>
 #include <iostream>
 
-#include <boost/optional.hpp>
-
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/outputter/superposition_outputter/json_file_superposition_outputter.hpp"
@@ -40,12 +38,12 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::none;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
@@ -104,7 +102,7 @@ str_opt superposition_output_options_block::do_invalid_string(const variables_ma
 		return "Not a valid superposition JSON output file:\"" + get_json_file().string() + "\"";
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

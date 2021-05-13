@@ -20,8 +20,8 @@
 
 #include "score_name_helper.hpp"
 
-#include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 

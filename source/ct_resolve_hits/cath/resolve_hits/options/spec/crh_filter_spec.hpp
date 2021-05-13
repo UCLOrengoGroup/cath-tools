@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_FILTER_SPEC_HPP
 
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/optional.hpp>
 #include <boost/utility/string_ref.hpp>
 
 #include "cath/common/algorithm/contains.hpp"
@@ -132,7 +131,7 @@ namespace cath {
 		}
 
 		/// \brief Return the min-hmm-coverage value to be required of the specified ID under the specified crh_filter_spec
-		///        or none if no value is required
+		///        or nullopt if no value is required
 		///
 		/// \TODO Consider extracting common code from this and cath_score_category_of_id()
 		///
@@ -154,7 +153,7 @@ namespace cath {
 				}
 			}
 
-			// Otherwise return any min_hmm_coverage fraction that has been specified (or none if none)
+			// Otherwise return any min_hmm_coverage fraction that has been specified (or nullopt if none)
 			return prm_filter_spec.get_min_hmm_coverage_frac();
 		}
 

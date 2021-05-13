@@ -20,8 +20,8 @@
 
 #include "alignment_row.hpp"
 
-#include <boost/lexical_cast.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"

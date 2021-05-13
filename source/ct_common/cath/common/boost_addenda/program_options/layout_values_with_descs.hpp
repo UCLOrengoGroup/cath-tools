@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_PROGRAM_OPTIONS_LAYOUT_VALUES_WITH_DESCS_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_PROGRAM_OPTIONS_LAYOUT_VALUES_WITH_DESCS_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/max_proj_element.hpp"
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"

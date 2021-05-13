@@ -22,11 +22,12 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET_PROTEIN_SOURCE_FILE_SET_HPP
 
 #include <filesystem>
+#include <optional>
 
-#include <boost/optional.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include "cath/chopping/chopping_type_aliases.hpp"
+#include "cath/chopping/region/region.hpp"
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/structure/protein/protein_list.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_file_combn.hpp"
@@ -106,12 +107,12 @@ namespace cath {
 	protein read_protein_from_files(const protein_source_file_set &,
 	                                const ::std::filesystem::path &,
 	                                const std::string &,
-	                                const ostream_ref_opt & = boost::none);
+	                                const ostream_ref_opt & = ::std::nullopt);
 
 	protein_list read_proteins_from_files(const protein_source_file_set &,
 	                                      const ::std::filesystem::path &,
 	                                      const str_vec &,
-	                                      const ostream_ref_opt & = boost::none);
+	                                      const ostream_ref_opt & = ::std::nullopt);
 
 	file::data_file_path_map get_filename_of_data_file(const protein_source_file_set &,
 	                                                   const opts::data_dirs_spec &,

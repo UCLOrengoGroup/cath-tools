@@ -20,6 +20,8 @@
 
 #include "residue_name.hpp"
 
+#include <optional>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -31,8 +33,8 @@ using namespace ::cath::common;
 using ::boost::algorithm::is_alnum;
 using ::boost::algorithm::is_digit;
 using ::boost::lexical_cast;
-using ::boost::optional;
 using ::std::istream;
+using ::std::optional;
 using ::std::ostream;
 using ::std::string;
 

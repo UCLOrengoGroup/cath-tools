@@ -21,16 +21,16 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
 
+#include <iosfwd>
+
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/detail_help_options_block.hpp"
 #include "cath/resolve_hits/options/options_block/crh_filter_options_block.hpp"
 #include "cath/resolve_hits/options/options_block/crh_html_options_block.hpp"
 #include "cath/resolve_hits/options/options_block/crh_input_options_block.hpp"
+#include "cath/resolve_hits/options/options_block/crh_output_options_block.hpp"
 #include "cath/resolve_hits/options/options_block/crh_score_options_block.hpp"
 #include "cath/resolve_hits/options/options_block/crh_segment_options_block.hpp"
-#include "cath/resolve_hits/options/options_block/crh_output_options_block.hpp"
-
-#include <iosfwd>
 
 namespace cath { namespace rslv {class crh_spec; } }
 

@@ -28,10 +28,10 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::rslv;
 
-using ::boost::none;
 using ::boost::program_options::positional_options_description;
 using ::boost::program_options::variables_map;
 using ::std::map;
+using ::std::nullopt;
 using ::std::string;
 
 /// The name of the program that uses this executable_options
@@ -159,8 +159,8 @@ str_opt crh_options::do_get_error_or_help_string() const {
 		}
 	}
 
-	// If no error or help string, then return none
-	return none;
+	// If no error or help string, then return nullopt
+	return nullopt;
 }
 
 /// \brief Get a string to prepend to the standard help

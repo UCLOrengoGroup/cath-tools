@@ -35,11 +35,11 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::std::literals::string_literals;
 
-using ::boost::make_optional;
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::count;
 using ::std::filesystem::path;
+using ::std::make_optional;
+using ::std::nullopt;
 
 /// \brief Getter for an optional file to which clusters should be written
 const path_opt & cath_cluster_output_spec::get_clusters_to_file() const {
@@ -141,18 +141,18 @@ path_vec cath::clust::get_all_output_paths(const cath_cluster_output_spec &prm_o
 }
 
 /// \brief If any of the specified output files require single-level clustering, return
-///        one of their corresponding option names, else return none
+///        one of their corresponding option names, else return nullopt
 ///
 /// \relates cath_cluster_output_spec
 str_opt cath::clust::has_output_requiring_single_level_clustering(const cath_cluster_output_spec &prm_output_spec ///< The cath_cluster_output_spec to query
                                                                   ) {
-	return prm_output_spec.get_clust_spans_to_file() ? ::boost::make_optional( cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE ) :
-	       prm_output_spec.get_reps_to_file()        ? ::boost::make_optional( cath_cluster_output_options_block::PO_REPS_TO_FILE        ) :
-	                                                   none;
+	return prm_output_spec.get_clust_spans_to_file() ? ::std::make_optional( cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE ) :
+	       prm_output_spec.get_reps_to_file()        ? ::std::make_optional( cath_cluster_output_options_block::PO_REPS_TO_FILE        ) :
+	                                                   nullopt;
 }
 
 /// \brief Generate a description of any problem that makes the specified cath_cluster_output_spec invalid
-///        or none otherwise
+///        or nullopt otherwise
 ///
 /// \relates cath_cluster_output_spec
 str_opt cath::clust::get_invalid_description(const cath_cluster_output_spec &prm_output_spec ///< The cath_cluster_output_spec to query
@@ -168,5 +168,5 @@ str_opt cath::clust::get_invalid_description(const cath_cluster_output_spec &prm
 		return "Cannot send more than one type of output to the same output file"s;
 	}
 
-	return none;
+	return nullopt;
 }

@@ -33,8 +33,8 @@
 #include "cath/alignment/gap/gap_penalty.hpp"
 #include "cath/common/algorithm/for_n.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/common/size_t_literal.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 #include <iostream>
 #include <random>

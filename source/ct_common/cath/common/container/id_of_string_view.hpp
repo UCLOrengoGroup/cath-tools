@@ -21,14 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_ID_OF_STRING_VIEW_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_ID_OF_STRING_VIEW_HPP
 
+#include <optional>
+#include <unordered_map>
+
 #include <boost/functional/hash.hpp>
-#include <boost/optional.hpp>
 #include <boost/utility/string_ref.hpp>
 
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
-
-#include <unordered_map>
 
 namespace cath {
 	namespace common {
@@ -86,12 +86,12 @@ namespace cath {
 			}
 
 			/// \brief Get the ID corresponding to the specified string
-			inline boost::optional<id_type> operator[](const boost::string_ref &prm_string ///< The string to lookup
+			inline ::std::optional<id_type> operator[](const boost::string_ref &prm_string ///< The string to lookup
 			                                           ) const {
 				const auto find_itr = the_map.find( prm_string );
-				return make_optional_if_fn(
+				return if_then_optional(
 					find_itr != common::cend( the_map ),
-					[&] { return find_itr->second; }
+					find_itr->second
 				);
 			}
 

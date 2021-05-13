@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SPATIAL_INDEX_SPATIAL_INDEX_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SPATIAL_INDEX_SPATIAL_INDEX_HPP
 
+#include "cath/chopping/region/region.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "cath/common/constexpr_ignore_unused.hpp"

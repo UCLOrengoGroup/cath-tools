@@ -27,7 +27,7 @@ namespace cath { namespace test { } }
 using namespace ::cath::sec;
 using namespace ::cath::test;
 
-using ::boost::none;
+using ::std::nullopt;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( hbond_half_opt_pair )
 
@@ -84,21 +84,21 @@ BOOST_AUTO_TEST_CASE(hbond_half_lower_energy_value_is_bondier_than) {
 }
 
 BOOST_AUTO_TEST_CASE(hbond_half_pair_updates_correctly) {
-	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { c,    b    }, a ), hbond_half_opt_pair( c, b    ) );
-	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { c,    a    }, b ), hbond_half_opt_pair( c, b    ) );
-	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { b,    a    }, c ), hbond_half_opt_pair( c, b    ) );
+	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { c,       b       }, a ), hbond_half_opt_pair( c, b       ) );
+	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { c,       a       }, b ), hbond_half_opt_pair( c, b       ) );
+	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { b,       a       }, c ), hbond_half_opt_pair( c, b       ) );
 
-	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { b,    none }, a ), hbond_half_opt_pair( b, a    ) );
-	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { a,    none }, b ), hbond_half_opt_pair( b, a    ) );
+	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { b,       nullopt }, a ), hbond_half_opt_pair( b, a       ) );
+	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { a,       nullopt }, b ), hbond_half_opt_pair( b, a       ) );
 
-	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { none, none }, b ), hbond_half_opt_pair( b, none ) );
+	BOOST_CHECK_EQUAL( update_half_bond_pair_copy( { nullopt, nullopt }, b ), hbond_half_opt_pair( b, nullopt ) );
 }
 
 BOOST_AUTO_TEST_CASE(bifur_hbond_updates_correctly) {
-	BOOST_CHECK_EQUAL( bifur_hbond{}.update_for_this_nh( a ).get_bound_pair_for_this_nh(), hbond_half_opt_pair( a,    none ) );
-	BOOST_CHECK_EQUAL( bifur_hbond{}.update_for_this_nh( a ).get_bound_pair_for_this_co(), hbond_half_opt_pair( none, none ) );
-	BOOST_CHECK_EQUAL( bifur_hbond{}.update_for_this_co( a ).get_bound_pair_for_this_nh(), hbond_half_opt_pair( none, none ) );
-	BOOST_CHECK_EQUAL( bifur_hbond{}.update_for_this_co( a ).get_bound_pair_for_this_co(), hbond_half_opt_pair( a,    none ) );
+	BOOST_CHECK_EQUAL( bifur_hbond{}.update_for_this_nh( a ).get_bound_pair_for_this_nh(), hbond_half_opt_pair( a,       nullopt ) );
+	BOOST_CHECK_EQUAL( bifur_hbond{}.update_for_this_nh( a ).get_bound_pair_for_this_co(), hbond_half_opt_pair( nullopt, nullopt ) );
+	BOOST_CHECK_EQUAL( bifur_hbond{}.update_for_this_co( a ).get_bound_pair_for_this_nh(), hbond_half_opt_pair( nullopt, nullopt ) );
+	BOOST_CHECK_EQUAL( bifur_hbond{}.update_for_this_co( a ).get_bound_pair_for_this_co(), hbond_half_opt_pair( a,       nullopt ) );
 }
 
 BOOST_AUTO_TEST_CASE(bifur_hbond_list_to_strings_correctly) {

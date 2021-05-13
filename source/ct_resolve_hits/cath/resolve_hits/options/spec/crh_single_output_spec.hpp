@@ -22,8 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SINGLE_OUTPUT_SPEC_HPP
 
 #include <filesystem>
-
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -44,7 +43,7 @@ namespace cath {
 		using crh_out_format_vec = std::vector<crh_out_format>;
 
 		/// \brief Type alias for an optional crh_out_format
-		using crh_out_format_opt = boost::optional<crh_out_format>;
+		using crh_out_format_opt = ::std::optional<crh_out_format>;
 
 		/// \brief Type alias for a vector of crh_out_format_opt
 		using crh_out_format_opt_vec = std::vector<crh_out_format_opt>;

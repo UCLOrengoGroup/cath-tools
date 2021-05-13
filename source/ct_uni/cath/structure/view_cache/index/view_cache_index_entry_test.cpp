@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/numeric/conversion/cast.hpp>
 #include <boost/core/ignore_unused.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/combine.hpp>
 #include <boost/range/numeric.hpp>
 #include <boost/test/unit_test.hpp>

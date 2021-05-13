@@ -38,12 +38,12 @@ using namespace ::std::literals::string_literals;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::algorithm::starts_with;
-using ::boost::none;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief Get an HTML span string to represent some aspect of a segment
 string html_segment::get_html_string(const seq_arrow          &prm_start,           ///< The start of the segment to render
-                                     const res_arrow_opt      &prm_stop,            ///< The stop of the segment to render (or none for a boundary)
+                                     const res_arrow_opt      &prm_stop,            ///< The stop of the segment to render (or nullopt for a boundary)
                                      const string             &prm_css_class,       ///< The CSS classes with which the HTML span should be marked
                                      const str_str_pair_vec   &prm_data_key_values, ///< A set of key/value pairs to be inserted as data attributes in the span (keys are prefixed with "data-" if not already)
                                      const display_colour_opt &prm_border_colour,   ///< The colour with which the border should be rendered
@@ -103,7 +103,7 @@ string html_segment::get_resolve_boundary_html_string(const seq_arrow      &prm_
                                                       ) {
 	return get_html_string(
 		prm_point,
-		none,
+		nullopt,
 		"crh-hit-boundary",
 		{},
 		display_colour::BLACK,
@@ -122,7 +122,7 @@ string html_segment::get_grey_back_html_string() const {
 		stop,
 		"crh-hit-pill-tail",
 		data_key_values,
-		none,
+		nullopt,
 		display_colour::WHITE,
 		full_seq_length
 	);

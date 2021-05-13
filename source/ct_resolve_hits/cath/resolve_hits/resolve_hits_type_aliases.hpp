@@ -21,14 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_RESOLVE_HITS_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_RESOLVE_HITS_TYPE_ALIASES_HPP
 
-#include <boost/optional/optional_fwd.hpp>
+#include <iosfwd>
+#include <optional>
+#include <vector>
 
 #include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/seq/seq_type_aliases.hpp"
-
-#include <iosfwd>
-#include <vector>
 
 namespace cath { namespace rslv { class calc_hit; } }
 namespace cath { namespace rslv { class calc_hit_list; } }
@@ -49,7 +48,7 @@ namespace cath {
 		using alnd_rgn_vec                  = std::vector<alnd_rgn>;
 
 		/// \brief Type alias for an optional alnd_rgn_vec
-		using alnd_rgn_vec_opt              = boost::optional<alnd_rgn_vec>;
+		using alnd_rgn_vec_opt              = ::std::optional<alnd_rgn_vec>;
 
 		/// \brief Type alias for a vector of calc_hit objects
 		using calc_hit_vec                  = std::vector<calc_hit>;
@@ -64,13 +63,13 @@ namespace cath {
 		using calc_hit_vec_itr              = calc_hit_vec::iterator;
 
 		/// \brief Type alias for an optional crh_segment_spec
-		using crh_segment_spec_opt          = boost::optional<crh_segment_spec>;
+		using crh_segment_spec_opt          = ::std::optional<crh_segment_spec>;
 
 		/// \brief Type alias for a vector of full_hit objects
 		using full_hit_vec                  = std::vector<full_hit>;
 
 		/// \brief Type alias for an optional full_hit_list
-		using full_hit_list_opt             = boost::optional<full_hit_list>;
+		using full_hit_list_opt             = ::std::optional<full_hit_list>;
 
 		/// \brief Type alias for the type to be used to index hits
 		using hitidx_t                      = unsigned int;
@@ -97,10 +96,10 @@ namespace cath {
 		using resscr_t                      = float;
 
 		/// \brief Type alias for an optional resscr_t
-		using resscr_opt                    = boost::optional<resscr_t>;
+		using resscr_opt                    = ::std::optional<resscr_t>;
 
 		/// \brief Type alias for an optional scored_arch_proxy object
-		using scored_arch_proxy_opt         = boost::optional<scored_arch_proxy>;
+		using scored_arch_proxy_opt         = ::std::optional<scored_arch_proxy>;
 
 		/// \brief Type alias for a vector of scored_arch_proxy objects
 		using scored_arch_proxy_vec         = std::vector<scored_arch_proxy>;
@@ -112,7 +111,7 @@ namespace cath {
 		using seg_boundary_pair_vec         = std::vector<seg_boundary_pair>;
 
 		/// \brief Type alias for an optional seg_boundary_pair_vec
-		using seg_boundary_pair_vec_opt     = boost::optional<seg_boundary_pair_vec>;
+		using seg_boundary_pair_vec_opt     = ::std::optional<seg_boundary_pair_vec>;
 
 		/// \brief Type alias for a pair of string and calc_hit_list
 		using str_calc_hit_list_pair        = std::pair<std::string, calc_hit_list>;
@@ -124,16 +123,16 @@ namespace cath {
 		using str_full_hit_pair             = std::pair<std::string, full_hit>;
 
 		/// \brief Type alias for an optional str_full_hit_pair
-		using str_full_hit_pair_opt         = boost::optional<str_full_hit_pair>;
+		using str_full_hit_pair_opt         = ::std::optional<str_full_hit_pair>;
 
 		/// \brief Type alias for a pair of string and hit data (non-const) reference
 		using str_hits_builder_ref_pair     = std::pair<std::string, detail::full_hit_prune_builder &>;
 
 		/// \brief Type alias for an optional str_hits_ref_pair
-		using str_hits_builder_ref_pair_opt = boost::optional<str_hits_builder_ref_pair>;
+		using str_hits_builder_ref_pair_opt = ::std::optional<str_hits_builder_ref_pair>;
 
 		/// \brief Type alias for an optional trim_spec
-		using trim_spec_opt                 = boost::optional<trim_spec>;
+		using trim_spec_opt                 = ::std::optional<trim_spec>;
 
 
 		/// \brief The initial score before any hits have been added

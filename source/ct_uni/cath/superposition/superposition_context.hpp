@@ -21,13 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTEXT_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTEXT_HPP
 
+#include <optional>
+
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/file/strucs_context.hpp"
 #include "cath/superposition/superposition.hpp"
-
 
 namespace cath { namespace align { class alignment_context; } }
 namespace cath { namespace file { class name_set_list; } }
@@ -50,7 +50,7 @@ namespace cath {
 			file::strucs_context context;
 
 			/// \brief An optional alignment corresponding to the superposition
-			boost::optional<align::alignment> any_alignment;
+			::std::optional<align::alignment> any_alignment;
 
 		public:
 			superposition_context(superposition,

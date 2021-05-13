@@ -34,7 +34,6 @@
 #include "cath/common/cpp17/apply.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/size_t_literal.hpp"
-#include "cath/common/type_traits.hpp"
 #include "cath/common/tuple/mins_maxs_tuple_pair_mins_maxs_element.hpp"
 #include "cath/common/tuple/tuple_increment.hpp"
 #include "cath/common/tuple/tuple_lattice_index.hpp"
@@ -42,6 +41,7 @@
 #include "cath/common/tuple/tuple_multiply_args.hpp"
 #include "cath/common/tuple/tuple_subtract.hpp"
 #include "cath/common/tuple/tuple_within_range.hpp"
+#include "cath/common/type_traits.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 
 #include <utility>

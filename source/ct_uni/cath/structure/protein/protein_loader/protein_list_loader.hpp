@@ -25,9 +25,9 @@
 #include <iosfwd>
 #include <utility>
 
-#include "cath/common/type_aliases.hpp"
 #include "cath/common/chrono/chrono_type_aliases.hpp"
 #include "cath/common/clone/clone_ptr.hpp"
+#include "cath/common/type_aliases.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_source_file_set.hpp"
 
 namespace cath { class protein_list; }

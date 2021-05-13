@@ -23,6 +23,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <optional>
 #include <sstream>
 #include <string>
 
@@ -51,6 +52,8 @@ using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::istringstream;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::string;
 
@@ -58,15 +61,15 @@ static constexpr size_t CLUSTER_ID_OFFSET = 0;
 static constexpr size_t DOMAIN_ID_OFFSET  = 1;
 
 /// \brief Print any warnings to the specified (optional) ostream arising from the interaction (if any) of the new entry
-static inline void warn_if_necessary(const clust_entry_problem &prm_problem,                 ///< The type of problem encountered when reading the new entry
-                                     const ostream_ref_opt     &prm_ostream_ref_opt,         ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
-                                     const string_ref          &prm_cluster_name,            ///< A string_ref to the name of the cluster
-                                     const string_ref          &prm_entry_name,              ///< A string_ref to the name of the entry
-                                     bool                      &prm_warned_duplicate,        ///< Whether a warning about duplicates has already been given
-                                     const str_opt             &prm_extra_info = boost::none ///< An optional string containing extra information about the problem (if any)
+static inline void warn_if_necessary(const clust_entry_problem &prm_problem,                    ///< The type of problem encountered when reading the new entry
+                                     const ostream_ref_opt     &prm_ostream_ref_opt,            ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
+                                     const string_ref          &prm_cluster_name,               ///< A string_ref to the name of the cluster
+                                     const string_ref          &prm_entry_name,                 ///< A string_ref to the name of the entry
+                                     bool                      &prm_warned_duplicate,           ///< Whether a warning about duplicates has already been given
+                                     const str_opt             &prm_extra_info = ::std::nullopt ///< An optional string containing extra information about the problem (if any)
                                      ) {
 	if ( prm_problem != clust_entry_problem::NONE && prm_ostream_ref_opt ) {
-		const log_to_ostream_guard ostream_log_guard{ prm_ostream_ref_opt.get().get() };
+		const log_to_ostream_guard ostream_log_guard{ prm_ostream_ref_opt->get() };
 
 		switch ( prm_problem ) {
 			case ( clust_entry_problem::REPEAT ) : {
@@ -150,11 +153,9 @@ old_cluster_data cath::clust::parse_old_membership(istream               &prm_is
 				cluster_name,
 				sequence_name,
 				entry_name,
-				make_optional_if_fn(
+				if_then_optional(
 					has_segs,
-					[&] {
-						return segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second );
-					}
+					segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second )
 				)
 			);
 			warn_if_necessary( interaction, prm_ostream_ref_opt, cluster_name, entry_name, warned_duplicate );
@@ -239,11 +240,9 @@ new_cluster_data cath::clust::parse_new_membership(istream               &prm_is
 				cluster_name,
 				sequence_name,
 				entry_name,
-				make_optional_if_fn(
+				if_then_optional(
 					has_segs,
-					[&] {
-						return segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second );
-					}
+					segs_parser.parse( next( pre_split_point_itr ), domain_id_itrs.second )
 				)
 			);
 			warn_if_necessary( problem, prm_ostream_ref_opt, cluster_name, entry_name, warned_duplicate );

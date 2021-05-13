@@ -20,6 +20,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <optional>
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
@@ -60,8 +61,9 @@ using ::boost::algorithm::join;
 using ::boost::algorithm::starts_with;
 using ::boost::algorithm::token_compress_on;
 using ::boost::is_space;
-using ::boost::make_optional;
 using ::std::filesystem::path;
+using ::std::make_optional;
+using ::std::nullopt;
 
 // \todo Substantially tidy up the code in this file
 
@@ -84,23 +86,23 @@ namespace {
 	}
 
 	/// \brief The query ID extracted from either SSAP or PRC results, whichever is non-empty
-	///        or boost::none if both are empty
+	///        or ::std::nullopt if both are empty
 	str_opt query_id_of_either(const ssap_scores_entry_vec &prm_ssaps, ///< The possibly-empty SSAP results
 	                           const prc_scores_entry_vec  &prm_prcs   ///< The possibly-empty PRC  results
 	                           ) {
-		return ( ! prm_prcs.empty()                   ) ? ::boost::make_optional( prm_prcs.front().get_name_1()  ) :
-		       ( ! prm_ssaps.empty()                  ) ? ::boost::make_optional( prm_ssaps.front().get_name_1() ) :
-		                                                  boost::none;
+		return ( ! prm_prcs.empty()                   ) ? ::std::make_optional( prm_prcs.front().get_name_1()  ) :
+		       ( ! prm_ssaps.empty()                  ) ? ::std::make_optional( prm_ssaps.front().get_name_1() ) :
+		                                                  ::std::nullopt;
 	}
 
 	/// \brief The query length extracted from either SSAP or PRC results, whichever is non-empty
-	///        or boost::none if both are empty
+	///        or ::std::nullopt if both are empty
 	size_opt query_length_of_either(const ssap_scores_entry_vec &prm_ssaps, ///< The possibly-empty SSAP results
 	                                const prc_scores_entry_vec  &prm_prcs   ///< The possibly-empty PRC  results
 	                                ) {
-		return ( ! prm_prcs.empty()                   ) ? ::boost::make_optional( prm_prcs.front().get_length_1()  ) :
-		       ( ! prm_ssaps.empty()                  ) ? ::boost::make_optional( prm_ssaps.front().get_length_1() ) :
-		                                                  boost::none;
+		return ( ! prm_prcs.empty()                   ) ? ::std::make_optional( prm_prcs.front().get_length_1()  ) :
+		       ( ! prm_ssaps.empty()                  ) ? ::std::make_optional( prm_ssaps.front().get_length_1() ) :
+		                                                  ::std::nullopt;
 	}
 
 	/// \brief Get the best specified number of PRC hits to domains in CATH

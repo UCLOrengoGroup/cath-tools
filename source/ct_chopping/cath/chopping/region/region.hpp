@@ -21,6 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGION_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGION_HPP
 
+#include <cstddef>
+#include <optional>
+
 #include <boost/any.hpp>
 #include <boost/operators.hpp>
 
@@ -28,8 +31,6 @@
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/chopping/region/region_comparison.hpp"
 #include "cath/chopping/residue_location/residue_location.hpp"
-
-#include <cstddef>
 
 namespace cath { namespace chop { class domain; } }
 
@@ -57,7 +58,7 @@ namespace cath {
 			chain_label_opt the_chain_label;
 
 			/// \brief TODOCUMENT
-			boost::optional<std::pair<residue_location, residue_location> > residues;
+			::std::optional<std::pair<residue_location, residue_location> > residues;
 			// residue_location start_residue;
 
 			// /// \brief TODOCUMENT

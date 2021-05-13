@@ -40,6 +40,7 @@
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
@@ -57,9 +58,7 @@ using ::boost::algorithm::trim_copy;
 using ::boost::format;
 using ::boost::icontains;
 using ::boost::is_any_of;
-using ::boost::make_optional;
 using ::boost::math::fpc::percent_tolerance;
-using ::boost::none;
 using ::boost::test_tools::check_is_close;
 using ::boost::token_compress_on;
 using ::std::filesystem::path;
@@ -67,7 +66,9 @@ using ::std::get;
 using ::std::getline;
 using ::std::ifstream;
 using ::std::istream;
+using ::std::make_optional;
 using ::std::min;
+using ::std::nullopt;
 using ::std::pair;
 using ::std::string;
 
@@ -81,7 +82,7 @@ hbond_half_opt cath::sec::mapped_dsspfile_hbond(const dsspfile_hbond_opt &prm_ds
                                                 ) {
 	// No hbond in -> no hbond out
 	if ( ! prm_dsspfile_hbond_opt ) {
-		return none;
+		return nullopt;
 	}
 
 	// Calculate the DSSP index of prm_dsspfile_hbond_opt and check it's non-negative
@@ -110,7 +111,7 @@ hbond_half_opt cath::sec::mapped_dsspfile_hbond(const dsspfile_hbond_opt &prm_ds
 }
 
 /// \brief Generate a string describing the difference between the specified DSSP parsed residue and calculated residue
-///        (in the context described by the specified string) or return none if there isn't any difference
+///        (in the context described by the specified string) or return nullopt if there isn't any difference
 ///
 /// \relates hbond_half
 str_opt cath::sec::difference_string(const string         &prm_context_str,        ///< A string describing the context of this comparison
@@ -149,11 +150,11 @@ str_opt cath::sec::difference_string(const string         &prm_context_str,     
 				+ ")";
 		}
 	}
-	return none;
+	return nullopt;
 }
 
 /// \brief Generate a string describing the difference between the specified dssp_dupl_res parsed from a DSSP file
-///        and the specified bifur_hbond or return none if there isn't any difference
+///        and the specified bifur_hbond or return nullopt if there isn't any difference
 ///
 /// \relates dssp_dupl_res
 str_opt cath::sec::difference_string(const dssp_dupl_res &prm_dssp_dupl_res,             ///< A dssp_dupl_res parsed from a DSSP file
@@ -172,15 +173,15 @@ str_opt cath::sec::difference_string(const dssp_dupl_res &prm_dssp_dupl_res,    
 		+ ::std::to_string( res_idx )
 		+ ")";
 	return
-		nh_1st ? ::boost::make_optional( *nh_1st + suffix_string ):
-		nh_2nd ? ::boost::make_optional( *nh_2nd + suffix_string ):
-		co_1st ? ::boost::make_optional( *co_1st + suffix_string ):
-		co_2nd ? ::boost::make_optional( *co_2nd + suffix_string ):
-		         none;
+		nh_1st ? ::std::make_optional( *nh_1st + suffix_string ):
+		nh_2nd ? ::std::make_optional( *nh_2nd + suffix_string ):
+		co_1st ? ::std::make_optional( *co_1st + suffix_string ):
+		co_2nd ? ::std::make_optional( *co_2nd + suffix_string ):
+		         nullopt;
 }
 
 /// \brief Generate a string describing the difference between the specified dssp_dupl_ress parsed from a DSSP file
-///        and the specified bifur_hbond_list or return none if there isn't any difference
+///        and the specified bifur_hbond_list or return nullopt if there isn't any difference
 ///
 /// \relates dssp_dupl_res
 str_opt cath::sec::difference_string(const dssp_dupl_res_vec &prm_dssp_dupl_res_vec, ///< A vector of dssp_dupl_res parsed from a DSSP file
@@ -200,13 +201,13 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &prm_dssp_dupl_res_
 
 	const size_t num_non_null_residues = dssp_non_null_indices.size();
 
-	const str_opt num_prob = ::boost::make_optional(
-		( num_non_null_residues != prm_bifur_hbonds ),
-		"Number of (non-null) DSSP hbond residues ("
-			+ ::std::to_string( num_non_null_residues )
-			+ "), doesn't match the number of calculated hbond residues ("
-			+ ::std::to_string( prm_bifur_hbonds )
-			+ "). "
+	const str_opt num_prob = make_optional_if(
+		num_non_null_residues != prm_bifur_hbonds,
+		::fmt::format(
+			"Number of (non-null) DSSP hbond residues ({}), doesn't match the number of calculated hbond residues ({}). ",
+			num_non_null_residues,
+			prm_bifur_hbonds
+		)
 	);
 
 	const auto normal_index_of_dssp_index = [&] {
@@ -225,8 +226,8 @@ str_opt cath::sec::difference_string(const dssp_dupl_res_vec &prm_dssp_dupl_res_
 	}
 
 	return num_prob
-		? ::boost::make_optional( *num_prob + " No differences spotted until the end of the shortest" )
-		: none;
+		? ::std::make_optional( *num_prob + " No differences spotted until the end of the shortest" )
+		: nullopt;
 }
 
 /// \brief Parse a DSSP file from the specified file into a dssp_dupl_res_vec for testing
@@ -354,7 +355,7 @@ dsspfile_hbond_opt dssp_dupl_fixture::parse_dsspfile_bond(const string &prm_hbon
 		if ( energy != 0.0 ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Whilst try to parse H-bond from DSSP file data, non-zero energy for zero offset"));
 		}
-		return none;
+		return nullopt;
 	}
 	return dsspfile_hbond{ offset, energy };
 }

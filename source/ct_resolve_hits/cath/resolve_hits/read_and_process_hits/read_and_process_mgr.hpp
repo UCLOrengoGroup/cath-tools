@@ -21,7 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_READ_AND_PROCESS_HITS_READ_AND_PROCESS_MGR_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_READ_AND_PROCESS_HITS_READ_AND_PROCESS_MGR_HPP
 
-#include <boost/optional.hpp>
+#include <future>
+#include <optional>
+#include <unordered_map>
+
 #include <boost/range/adaptor/map.hpp>
 #include <boost/utility/string_ref.hpp>
 
@@ -34,9 +37,6 @@
 #include "cath/resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "cath/resolve_hits/options/spec/should_skip_query.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/hits_processor_list.hpp"
-
-#include <future>
-#include <unordered_map>
 
 namespace cath { namespace rslv { class crh_input_spec; } }
 namespace cath { namespace rslv { class crh_spec; } }
@@ -262,7 +262,7 @@ namespace cath {
 			// process the hits associated with that previous query_id
 			if ( input_hits_are_grouped && prev_query_id_and_hits_builder_ref && prev_query_id_and_hits_builder_ref->first != temp_hashable_query_id ) {
 				trigger_async_process_query_id( prev_query_id_and_hits_builder_ref->first );
-				prev_query_id_and_hits_builder_ref = boost::none;
+				prev_query_id_and_hits_builder_ref = ::std::nullopt;
 			}
 
 			// If this query_id matches to_be_erased_query_id then something's wrong
@@ -345,8 +345,8 @@ namespace cath {
 			// Clear all data in hit_builder_by_query_id
 			// and wipe prev_query_id_and_hits_builder_ref and to_be_erased_query_id
 			hit_builder_by_query_id.clear();
-			prev_query_id_and_hits_builder_ref = boost::none;
-			to_be_erased_query_id      = boost::none;
+			prev_query_id_and_hits_builder_ref = ::std::nullopt;
+			to_be_erased_query_id      = ::std::nullopt;
 
 			// Signal the hits_processor to finish all work
 			processors.finish_work();

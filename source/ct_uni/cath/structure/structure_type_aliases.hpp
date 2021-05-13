@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_STRUCTURE_TYPE_ALIASES_HPP
 
 #include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
-#include <boost/optional/optional_fwd.hpp>
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/geometry/coord_linkage.hpp"

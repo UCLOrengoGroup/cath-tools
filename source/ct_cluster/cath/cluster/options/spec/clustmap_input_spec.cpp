@@ -25,11 +25,11 @@
 using namespace ::cath;
 using namespace ::cath::clust;
 
-using ::boost::none;
+using ::std::nullopt;
 
 constexpr bool clustmap_input_spec::DEFAULT_READ_BATCHES_FROM_INPUT;
 
-/// \brief Return a string explaining why the specified clustmap_input_spec is invalid or none if it isn't
+/// \brief Return a string explaining why the specified clustmap_input_spec is invalid or nullopt if it isn't
 ///
 /// \relates clustmap_input_spec
 str_opt cath::clust::get_invalid_description(const clustmap_input_spec &prm_clustmap_input_spec ///< The clustmap_input_spec to query
@@ -42,5 +42,5 @@ str_opt cath::clust::get_invalid_description(const clustmap_input_spec &prm_clus
 			+ ")";
 	}
 
-	return none;
+	return nullopt;
 }

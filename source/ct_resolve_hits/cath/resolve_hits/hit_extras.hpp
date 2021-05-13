@@ -21,6 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HIT_EXTRAS_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HIT_EXTRAS_HPP
 
+#include <optional>
+#include <type_traits>
+#include <vector>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/variant.hpp>
@@ -28,9 +32,6 @@
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
-
-#include <type_traits>
-#include <vector>
 
 namespace cath {
 	namespace rslv {
@@ -182,18 +183,18 @@ namespace cath {
 		};
 
 		/// \brief Get the first value in the specified hit_extras_store that matches the specified hit_extra_cat
-		///        or return none if there are no such matches
+		///        or return nullopt if there are no such matches
 		///
 		/// \relates hit_extras_store
 		template <hit_extra_cat Cat>
-		boost::optional<type_of_hit_extra_cat_t<Cat>> get_first(const hit_extras_store &prm_store ///< The hit_extras_store to query
+		::std::optional<type_of_hit_extra_cat_t<Cat>> get_first(const hit_extras_store &prm_store ///< The hit_extras_store to query
 		                                                        ) {
 			for (const auto &extra_pair : prm_store) {
 				if ( extra_pair.first == Cat ) {
-					return boost::make_optional( boost::get<type_of_hit_extra_cat_t<Cat>>( extra_pair.second ) );
+					return ::std::make_optional( boost::get<type_of_hit_extra_cat_t<Cat>>( extra_pair.second ) );
 				}
 			}
-			return boost::none;
+			return ::std::nullopt;
 		}
 
 		/// \brief Generate a string describing the specified hit_extras_store

@@ -41,10 +41,10 @@ using namespace ::cath::common;
 
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
+using ::std::nullopt;
 using ::boost::algorithm::any_of;
 using ::boost::algorithm::join;
-using ::boost::make_optional;
-using ::boost::none;
+using ::std::make_optional;
 
 /// \brief Sanity check this regions_limiter and throw if there's a problem
 ///
@@ -69,19 +69,19 @@ regions_limiter::regions_limiter(const region_vec &prm_regions ///< The regions 
 }
 
 /// \brief Ctor from a vector of regions to which processing should be limited
-///        or none to not limit
+///        or nullopt to not limit
 ///
 /// \pre prm_regions must be non-overlapping in the context of the residue_ids they will be used to limit
 regions_limiter::regions_limiter(const region_vec_opt &prm_regions
                                  ) : regions{
                                      	prm_regions
-                                     	? ::boost::make_optional( std::cref( *prm_regions ) )
-                                     	: none
+                                     	? ::std::make_optional( std::cref( *prm_regions ) )
+                                     	: nullopt
                                      },
                                      regions_seen{
                                      	prm_regions
-                                     	? ::boost::make_optional( region_seen_vec( prm_regions->size(), region_seen::NO ) )
-                                     	: none
+                                     	? ::std::make_optional( region_seen_vec( prm_regions->size(), region_seen::NO ) )
+                                     	: nullopt
                                      } {
 	sanity_check();
 }
@@ -105,7 +105,7 @@ bool regions_limiter::update_residue_is_included(const residue_id &prm_residue_i
 
 			// If prm_residue_id matches the stop of the active region, then deactivate that active region
 			if ( prm_residue_id == residue_id{ get_chain_label( active_region ), get_stop_name( active_region ) } ) {
-				active_region_idx = none;
+				active_region_idx = nullopt;
 			}
 
 			// ...and either way, return true
@@ -120,7 +120,7 @@ bool regions_limiter::update_residue_is_included(const residue_id &prm_residue_i
 
 		// Otherwise, deactivate that active region and then fall through to determine
 		// whether prm_residue_id is in the start of another region
-		active_region_idx = none;
+		active_region_idx = nullopt;
 	}
 
 	// If not currently within a region, loop over the regions
@@ -138,7 +138,7 @@ bool regions_limiter::update_residue_is_included(const residue_id &prm_residue_i
 				}
 
 				// ...and either way, mark the region as seen and return true
-				regions_seen.get()[ region_ctr ] = region_seen::YES;
+				regions_seen.value()[ region_ctr ] = region_seen::YES;
 				return true;
 			}
 		}
@@ -148,7 +148,7 @@ bool regions_limiter::update_residue_is_included(const residue_id &prm_residue_i
 			// mark the region as seen and return true
 			if ( prm_residue_id.get_chain_label() == get_chain_label( the_region ) ) {
 				active_region_idx = region_ctr;
-				regions_seen.get()[ region_ctr ] = region_seen::YES;
+				regions_seen.value()[ region_ctr ] = region_seen::YES;
 				return true;
 			}
 		}
@@ -169,7 +169,7 @@ region_vec regions_limiter::unseen_regions() const {
 	return transform_build<region_vec>(
 		indices( regions->get().size() )
 			| filtered( [&] (const size_t &region_idx) {
-				return ( regions_seen.get()[ region_idx ] == region_seen::NO );
+				return ( regions_seen.value()[ region_idx ] == region_seen::NO );
 			} ),
 		[&] (const size_t &region_idx) {
 			return regions->get()[ region_idx ];
@@ -178,23 +178,20 @@ region_vec regions_limiter::unseen_regions() const {
 }
 
 /// \brief Return a string describing any of the specified regions_limiter's specified regions that it hasn't yet seen
-///        or return none if no regions were specified or all have been seen
+///        or return nullopt if no regions were specified or all have been seen
 ///
 /// \relates regions_limiter
 str_opt cath::chop::warn_str_if_specified_regions_remain_unseen(const regions_limiter &prm_regions ///< The regions_limiter to query
                                                                 ) {
 	const auto unseen_regions = prm_regions.unseen_regions();
-	return make_optional_if_fn(
+	return if_then_optional(
 		! unseen_regions.empty(),
-		[&] {
-			return
-				"Unable to find anything corresponding to region(s) : "
-				+ join(
-					unseen_regions
-						| transformed( [] (const region &x) { return to_string( x ); } ),
-					", "
-				);
-		}
+		"Unable to find anything corresponding to region(s) : "
+		+ join(
+			unseen_regions
+				| transformed( [] (const region &x) { return to_string( x ); } ),
+			", "
+		)
 	);
 }
 

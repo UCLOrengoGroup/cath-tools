@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HTML_OUTPUT_HTML_SEGMENT_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HTML_OUTPUT_HTML_SEGMENT_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_type_aliases.hpp"
 #include "cath/seq/seq_arrow.hpp"
@@ -60,11 +58,11 @@ namespace cath {
 			seq::seq_arrow start;
 
 			/// \brief The position of the segment's trimmed start
-			///        (or none if this is so short it isn't counted as a segment)
+			///        (or nullopt if this is so short it isn't counted as a segment)
 			seq::res_arrow_opt trimmed_start;
 
 			/// \brief The position of the segment's trimmed stop
-			///        (or none if this is so short it isn't counted as a segment)
+			///        (or nullopt if this is so short it isn't counted as a segment)
 			seq::res_arrow_opt trimmed_stop;
 
 			/// \brief The position of the segment's stop

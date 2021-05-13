@@ -24,11 +24,11 @@
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/algorithm/transform_build.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/resolve_hits/file/detail/hmmer_parser.hpp"
 #include "cath/resolve_hits/file/parse_hmmer_out.hpp"
 #include "cath/resolve_hits/full_hit_list_fns.hpp"
 #include "cath/seq/seq_seg.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }

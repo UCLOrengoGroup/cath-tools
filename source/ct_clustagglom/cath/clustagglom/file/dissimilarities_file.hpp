@@ -23,8 +23,6 @@
 
 #include <filesystem>
 
-#include <boost/optional.hpp>
-
 #include "cath/clustagglom/link_dirn.hpp"
 #include "cath/common/type_aliases.hpp"
 

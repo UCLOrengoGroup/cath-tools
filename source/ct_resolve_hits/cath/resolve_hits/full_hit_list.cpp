@@ -20,10 +20,10 @@
 
 #include "full_hit_list.hpp"
 
-#include <boost/optional.hpp>
 #include <boost/range/algorithm/equal.hpp>
 
 #include "cath/common/boost_addenda/range/max_proj_element.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
 #include "cath/resolve_hits/full_hit.hpp"
 
 #include <string>
@@ -32,9 +32,9 @@ using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
 
-using ::boost::make_optional;
-using ::boost::none;
 using ::boost::range::equal;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::string;
 
@@ -68,17 +68,17 @@ bool cath::rslv::operator==(const full_hit_list &prm_lhs, ///< The first  full_h
 }
 
 /// \brief Get the maximum stop residue of all the full_hits in the specified full_hit_list
-///        or none if the full_hit_list is empty
+///        or nullopt if the full_hit_list is empty
 ///
 /// \relates full_hit_list
 residx_opt cath::rslv::get_max_stop(const full_hit_list &prm_full_hit_list ///< The full_hit_list to query
                                     ) {
-	// Can't just use make_optional(bool, T) because the second part shouldn't be evaluated if prm_full_hit_list's empty
-	return prm_full_hit_list.empty()
-		? none
-		: make_optional( max_proj(
+	return if_then_optional(
+		! prm_full_hit_list.empty(),
+		max_proj(
 			prm_full_hit_list,
 			std::less<>{},
 			&cath::rslv::get_stop_res_arrow
-		).res_before() );
+		).res_before()
+	);
 }

@@ -20,14 +20,14 @@
 
 #include "superposition_content_spec.hpp"
 
-#include "cath/superposition/options/superposition_content_options_block.hpp"
-
 #include <utility>
+
+#include "cath/superposition/options/superposition_content_options_block.hpp"
 
 using namespace ::cath;
 using namespace ::cath::sup;
 
-using ::boost::none;
+using ::std::nullopt;
 
 constexpr supn_regions_context superposition_content_spec::DEFAULT_REGIONS_CONTEXT;
 constexpr double               superposition_content_spec::DEFAULT_DNA_MAX_DIST;
@@ -35,8 +35,8 @@ constexpr double               superposition_content_spec::DEFAULT_ORGANIC_MAX_D
 
 /// \brief Ctor
 superposition_content_spec::superposition_content_spec(const supn_regions_context &prm_regions_context,                ///< The context to include when showing the specified region(s) of structure
-                                                       doub_opt                    prm_include_dna_within_distance,    ///< The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or none to always exclude)
-                                                       doub_opt                    prm_include_organic_within_distance ///< The maximum distance from the specified region(s) to ligands for the that to be included (or none to always exclude)
+                                                       doub_opt                    prm_include_dna_within_distance,    ///< The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or nullopt to always exclude)
+                                                       doub_opt                    prm_include_organic_within_distance ///< The maximum distance from the specified region(s) to ligands for the that to be included (or nullopt to always exclude)
                                                        ) : regions_context                { prm_regions_context                              },
                                                            include_dna_within_distance    { std::move( prm_include_dna_within_distance     ) },
                                                            include_organic_within_distance{ std::move( prm_include_organic_within_distance ) } {
@@ -47,12 +47,12 @@ const supn_regions_context & superposition_content_spec::get_regions_context() c
 	return regions_context;
 }
 
-/// \brief Getter for the maximum distance from the specified region(s) to DNA/RNA for the that to be included (or none to always exclude)
+/// \brief Getter for the maximum distance from the specified region(s) to DNA/RNA for the that to be included (or nullopt to always exclude)
 const doub_opt & superposition_content_spec::get_include_dna_within_distance() const {
 	return include_dna_within_distance;
 }
 
-/// \brief Getter for the maximum distance from the specified region(s) to ligands for the that to be included (or none to always exclude)
+/// \brief Getter for the maximum distance from the specified region(s) to ligands for the that to be included (or nullopt to always exclude)
 const doub_opt & superposition_content_spec::get_include_organic_within_distance() const {
 	return include_organic_within_distance;
 }
@@ -64,21 +64,21 @@ superposition_content_spec & superposition_content_spec::set_regions_context(con
 	return *this;
 }
 
-/// \brief Setter for the maximum distance from the specified region(s) to DNA/RNA for the that to be included (or none to always exclude)
-superposition_content_spec & superposition_content_spec::set_include_dna_within_distance(const doub_opt &prm_include_dna_within_distance ///< The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or none to always exclude)
+/// \brief Setter for the maximum distance from the specified region(s) to DNA/RNA for the that to be included (or nullopt to always exclude)
+superposition_content_spec & superposition_content_spec::set_include_dna_within_distance(const doub_opt &prm_include_dna_within_distance ///< The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or nullopt to always exclude)
                                                                                          ) {
 	include_dna_within_distance = prm_include_dna_within_distance;
 	return *this;
 }
 
-/// \brief Setter for the maximum distance from the specified region(s) to ligands for the that to be included (or none to always exclude)
-superposition_content_spec & superposition_content_spec::set_include_organic_within_distance(const doub_opt &prm_include_organic_within_distance ///< The maximum distance from the specified region(s) to ligands for the that to be included (or none to always exclude)
+/// \brief Setter for the maximum distance from the specified region(s) to ligands for the that to be included (or nullopt to always exclude)
+superposition_content_spec & superposition_content_spec::set_include_organic_within_distance(const doub_opt &prm_include_organic_within_distance ///< The maximum distance from the specified region(s) to ligands for the that to be included (or nullopt to always exclude)
                                                                                              ) {
 	include_organic_within_distance = prm_include_organic_within_distance;
 	return *this;
 }
 
-/// \brief Return a string explaining why the specified superposition_content_spec is invalid or none if it isn't
+/// \brief Return a string explaining why the specified superposition_content_spec is invalid or nullopt if it isn't
 ///
 /// \relates superposition_content_spec
 str_opt cath::sup::get_invalid_description(const superposition_content_spec &prm_spec ///< The superposition_content_spec to query
@@ -95,5 +95,5 @@ str_opt cath::sup::get_invalid_description(const superposition_content_spec &prm
 			+ superposition_content_options_block::PO_INCLUDE_ORGANIC_WITHIN_DISTANCE
 			+ " distance cannot be negative";
 	}
-	return none;
+	return nullopt;
 }

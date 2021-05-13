@@ -22,10 +22,10 @@
 
 #include "cath/biocore/residue_id.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/file/dssp_wolf/tally_residue_ids.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;

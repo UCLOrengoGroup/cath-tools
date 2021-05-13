@@ -21,17 +21,17 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_ALIASES_HPP
 
-#include <boost/optional/optional_fwd.hpp>
-#include <boost/tuple/tuple.hpp>
-
 #include <deque>
 #include <iosfwd>
 #include <map>
 #include <memory>
+#include <optional>
 #include <set>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include <boost/tuple/tuple.hpp>
 
 namespace cath { namespace common { template <typename> class clone_ptr; } }
 namespace cath { namespace common { template <typename T> class vector_of_vector; } }
@@ -39,7 +39,7 @@ namespace cath { namespace common { template <typename T> class vector_of_vector
 namespace cath {
 
 	using ostream_ref                   = std::reference_wrapper<std::ostream>;
-	using ostream_ref_opt               = boost::optional<ostream_ref>;
+	using ostream_ref_opt               = ::std::optional<ostream_ref>;
 
 	using bool_size_str_tpl             = std::tuple<bool, size_t, std::string>;
 	using bool_size_str_tpl_vec         = std::vector<bool_size_str_tpl>;
@@ -82,7 +82,7 @@ namespace cath {
 	using doub_vec_vec                  = std::vector<doub_vec>;
 
 	/// \brief Type alias for an optional double
-	using doub_opt                      = boost::optional<double>;
+	using doub_opt                      = ::std::optional<double>;
 
 	using diff_vec                      = std::vector<ptrdiff_t>;
 	using diff_vec_vec                  = std::vector<diff_vec>;
@@ -94,8 +94,8 @@ namespace cath {
 	template <typename T>
 	using uptr_vec                      = std::vector<std::unique_ptr<T>>;
 
-	using size_opt                      = boost::optional<size_t>;
-	using size_opt_vec                  = std::vector<boost::optional<size_t> >;
+	using size_opt                      = ::std::optional<size_t>;
+	using size_opt_vec                  = std::vector<::std::optional<size_t> >;
 
 	//using uint_uint_pair                = std::pair<unsigned int, unsigned int>;
 	//using uint_uint_pair_vec            = std::vector<uint_uint_pair>;
@@ -120,7 +120,7 @@ namespace cath {
 
 	using str_str_map                   = std::map<std::string, std::string>;
 
-	using size_size_pair_opt            = boost::optional<size_size_pair>;
+	using size_size_pair_opt            = ::std::optional<size_size_pair>;
 
 	using str_doub_map                  = std::map <std::string, double>;
 
@@ -128,7 +128,7 @@ namespace cath {
 	using str_size_map                  = std::map <std::string, size_t>;
 	using str_size_pair_vec             = std::vector<str_size_pair>;
 
-	using str_opt                       = boost::optional<std::string>;
+	using str_opt                       = ::std::optional<std::string>;
 
 	/// \brief A type alias for a vector of name_set objects
 	using str_opt_vec                   = std::vector<str_opt>;
@@ -167,7 +167,7 @@ namespace cath {
 
 	using size_size_map                 = std::map<size_t, size_t>;
 
-	using char_opt                      = boost::optional<char>;
+	using char_opt                      = ::std::optional<char>;
 
 	using int_vec                       = std::vector<int>;
 	using int_vec_vec                   = std::vector<int_vec>;
@@ -200,7 +200,7 @@ namespace cath {
 	using float_score_vec_vec          = std::vector<float_score_vec>;
 	using float_score_float_score_pair = std::pair<float_score_type, float_score_type>;
 
-	using score_opt                    = boost::optional<double>;
+	using score_opt                    = ::std::optional<double>;
 	using score_opt_vec                = std::vector<score_opt>;
 	using score_opt_vec_vec            = std::vector<score_opt_vec>;
 

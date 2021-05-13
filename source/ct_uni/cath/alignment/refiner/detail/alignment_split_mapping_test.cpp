@@ -18,7 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/optional/optional_io.hpp>
+#include <iostream>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/alignment/align_type_aliases.hpp"
@@ -26,8 +27,7 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
-
-#include <iostream>
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath;
 using namespace ::cath::align;
@@ -35,7 +35,7 @@ using namespace ::cath::align::detail;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::none;
+using ::std::nullopt;
 
 namespace cath {
 	namespace test {
@@ -52,10 +52,10 @@ namespace cath {
 			///     012345
 			///     01--34
 			const aln_posn_opt_vec_vec SRC_ALN_DATA = {
-				{ none, 1,    2,    4,    5,    none },
-				{ 0_z,  1,    none, none, 2,    4    },
-				{ 0_z,  1,    2,    3,    4,    5    },
-				{ 0_z,  1,    none, none, 3,    4    }
+				{ nullopt, 1,    2,       4,       5,    nullopt },
+				{ 0_z,     1,    nullopt, nullopt, 2,    4       },
+				{ 0_z,     1,    2,       3,       4,    5       },
+				{ 0_z,     1,    nullopt, nullopt, 3,    4       }
 			};
 			const alignment SRC_ALN{ SRC_ALN_DATA };
 
@@ -84,8 +84,8 @@ namespace cath {
 			///     .01-234...
 			///     .0123-4...
 			const aln_posn_opt_vec_vec INTER_ALN_DATA = {
-				{ 0_z,  1,    2,    none, 3,    4,    5,    6,    7,    8    },
-				{ none, 0_z,  1,    2,    3,    4,    5,    none, none, none }
+				{ 0_z,     1,    2,    nullopt, 3,    4,    5,    6,       7,       8       },
+				{ nullopt, 0_z,  1,    2,       3,    4,    5,    nullopt, nullopt, nullopt }
 			};
 			const alignment INTER_ALN{ INTER_ALN_DATA };
 
@@ -95,10 +95,10 @@ namespace cath {
 			///     0-1-2-345
 			///     -0123-4--
 			const aln_posn_opt_vec_vec FINAL_ALN_DATA = {
-				{ none, 0_z,  1, none, 2,    3,    4,    5,    none, none       },
-				{ none, 0_z,  1, none, 2,    3,    4,    none, none, none       },
-				{ 0_z,  none, 1, none, 2,    none, 3,    4,    5,    6          },
-				{ none, 0_z,  1,       2,    3,    none, 4,    none, none, none }
+				{ nullopt, 0_z,     1, nullopt,       2,    3,             4,    5,       nullopt, nullopt },
+				{ nullopt, 0_z,     1, nullopt,       2,    3,             4,    nullopt, nullopt, nullopt },
+				{ 0_z,     nullopt, 1, nullopt,       2,    nullopt,       3,    4,       5,       6       },
+				{ nullopt, 0_z,     1,       2,       3,    nullopt,       4,    nullopt, nullopt, nullopt }
 			};
 			const alignment FINAL_ALN{ FINAL_ALN_DATA };
 
@@ -161,19 +161,19 @@ BOOST_AUTO_TEST_CASE(index_of_orig_aln_index_works) {
 	const alignment_split_mapping test_mapping_a( SRC_ALN, SPLIT_SET_A, SRC_CORR_LENGTHS );
 	const alignment_split_mapping test_mapping_b( SRC_ALN, SPLIT_SET_B, SRC_CORR_LENGTHS );
 
-	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 0 ), size_opt( 0_z   ) );
-	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 1 ), size_opt( 2_z   ) );
-	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 2 ), size_opt( 3_z   ) );
-	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 3 ), size_opt( 5_z   ) );
-	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 4 ), size_opt( 6_z   ) );
-	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 5 ), size_opt( 7_z   ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 0 ), size_opt( 0_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 1 ), size_opt( 2_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 2 ), size_opt( 3_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 3 ), size_opt( 5_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 4 ), size_opt( 6_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.index_of_orig_aln_index( 5 ), size_opt( 7_z     ) );
 
-	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 0 ), size_opt( 0_z   ) );
-	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 1 ), size_opt( 1_z   ) );
-	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 2 ), size_opt( none ) );
-	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 3 ), size_opt( none ) );
-	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 4 ), size_opt( 3_z   ) );
-	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 5 ), size_opt( 5_z   ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 0 ), size_opt( 0_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 1 ), size_opt( 1_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 2 ), size_opt( nullopt ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 3 ), size_opt( nullopt ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 4 ), size_opt( 3_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.index_of_orig_aln_index( 5 ), size_opt( 5_z     ) );
 }
 
 /// \brief TODOCUMENT
@@ -181,15 +181,15 @@ BOOST_AUTO_TEST_CASE(entry_of_orig_aln_entry_works) {
 	const alignment_split_mapping test_mapping_a( SRC_ALN, SPLIT_SET_A, SRC_CORR_LENGTHS );
 	const alignment_split_mapping test_mapping_b( SRC_ALN, SPLIT_SET_B, SRC_CORR_LENGTHS );
 
-	BOOST_CHECK_EQUAL( test_mapping_a.entry_of_orig_aln_entry( 0 ), size_opt( 0_z   )  );
-	BOOST_CHECK_EQUAL( test_mapping_a.entry_of_orig_aln_entry( 1 ), size_opt( none )  );
-	BOOST_CHECK_EQUAL( test_mapping_a.entry_of_orig_aln_entry( 2 ), size_opt( 1_z   )  );
-	BOOST_CHECK_EQUAL( test_mapping_a.entry_of_orig_aln_entry( 3 ), size_opt( none )  );
+	BOOST_CHECK_EQUAL( test_mapping_a.entry_of_orig_aln_entry( 0 ), size_opt( 0_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.entry_of_orig_aln_entry( 1 ), size_opt( nullopt ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.entry_of_orig_aln_entry( 2 ), size_opt( 1_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_a.entry_of_orig_aln_entry( 3 ), size_opt( nullopt ) );
 
-	BOOST_CHECK_EQUAL( test_mapping_b.entry_of_orig_aln_entry( 0 ), size_opt( none )  );
-	BOOST_CHECK_EQUAL( test_mapping_b.entry_of_orig_aln_entry( 1 ), size_opt( 0_z   )  );
-	BOOST_CHECK_EQUAL( test_mapping_b.entry_of_orig_aln_entry( 2 ), size_opt( none )  );
-	BOOST_CHECK_EQUAL( test_mapping_b.entry_of_orig_aln_entry( 3 ), size_opt( 1_z   )  );
+	BOOST_CHECK_EQUAL( test_mapping_b.entry_of_orig_aln_entry( 0 ), size_opt( nullopt ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.entry_of_orig_aln_entry( 1 ), size_opt( 0_z     ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.entry_of_orig_aln_entry( 2 ), size_opt( nullopt ) );
+	BOOST_CHECK_EQUAL( test_mapping_b.entry_of_orig_aln_entry( 3 ), size_opt( 1_z     ) );
 }
 
 /// \brief TODOCUMENT
@@ -209,21 +209,21 @@ BOOST_AUTO_TEST_CASE(position_of_entry_of_index_works) {
 	const alignment_split_mapping test_mapping_a( SRC_ALN, SPLIT_SET_A, SRC_CORR_LENGTHS );
 	const alignment_split_mapping test_mapping_b( SRC_ALN, SPLIT_SET_B, SRC_CORR_LENGTHS );
 
-	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 0 ), none               );
+	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 0 ), nullopt            );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 1 ), aln_posn_type( 0 ) );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 2 ), aln_posn_type( 1 ) );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 3 ), aln_posn_type( 2 ) );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 4 ), aln_posn_type( 3 ) );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 5 ), aln_posn_type( 4 ) );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 6 ), aln_posn_type( 5 ) );
-	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 7 ), none               );
-	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 8 ), none               );
+	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 7 ), nullopt            );
+	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 0, 8 ), nullopt            );
 
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 0 ), aln_posn_type( 0 ) );
-	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 1 ), none               );
+	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 1 ), nullopt            );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 2 ), aln_posn_type( 1 ) );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 3 ), aln_posn_type( 2 ) );
-	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 4 ), none               );
+	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 4 ), nullopt            );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 5 ), aln_posn_type( 3 ) );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 6 ), aln_posn_type( 4 ) );
 	BOOST_CHECK_EQUAL( test_mapping_a.position_of_entry_of_index( 1, 7 ), aln_posn_type( 5 ) );
@@ -231,7 +231,7 @@ BOOST_AUTO_TEST_CASE(position_of_entry_of_index_works) {
 
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 0, 0 ), aln_posn_type( 0 ) );
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 0, 1 ), aln_posn_type( 1 ) );
-	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 0, 2 ), none               );
+	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 0, 2 ), nullopt            );
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 0, 3 ), aln_posn_type( 2 ) );
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 0, 4 ), aln_posn_type( 3 ) );
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 0, 5 ), aln_posn_type( 4 ) );
@@ -240,7 +240,7 @@ BOOST_AUTO_TEST_CASE(position_of_entry_of_index_works) {
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 1, 1 ), aln_posn_type( 1 ) );
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 1, 2 ), aln_posn_type( 2 ) );
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 1, 3 ), aln_posn_type( 3 ) );
-	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 1, 4 ), none               );
+	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 1, 4 ), nullopt            );
 	BOOST_CHECK_EQUAL( test_mapping_b.position_of_entry_of_index( 1, 5 ), aln_posn_type( 4 ) );
 }
 

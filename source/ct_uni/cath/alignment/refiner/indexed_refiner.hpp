@@ -23,6 +23,7 @@
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/pair_alignment.hpp"
+#include "cath/chopping/region/region.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"

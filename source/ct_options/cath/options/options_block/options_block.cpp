@@ -24,7 +24,6 @@
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/optional.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"

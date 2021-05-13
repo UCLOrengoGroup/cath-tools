@@ -22,10 +22,9 @@
 #define _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_BIOCORE_TYPE_ALIASES_HPP
 
 #include <map>
+#include <optional>
 #include <set>
 #include <vector>
-
-#include <boost/optional/optional_fwd.hpp>
 
 // clang-format off
 namespace cath { class chain_label; }
@@ -42,10 +41,10 @@ namespace cath {
 	using chain_label_set                 = ::std::set<chain_label>;
 
 	/// \brief TODOCUMENT
-	using chain_label_opt                 = ::boost::optional<chain_label>;
+	using chain_label_opt                 = ::std::optional<chain_label>;
 
 	/// \brief TODOCUMENT
-	using residue_name_opt                = ::boost::optional<residue_name>;
+	using residue_name_opt                = ::std::optional<residue_name>;
 
 	/// \brief TODOCUMENT
 	using residue_name_set                = ::std::set<residue_name>;

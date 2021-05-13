@@ -27,7 +27,7 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::std::literals::string_literals;
 
-using ::boost::none;
+using ::std::nullopt;
 
 /// \brief Getter for an optional file from which links should be read
 const path_opt & cath_cluster_input_spec::get_links_infile() const {
@@ -81,7 +81,7 @@ cath_cluster_input_spec & cath_cluster_input_spec::set_names_infile(const path_o
 }
 
 /// \brief Generate a description of any problem that makes the specified cath_cluster_input_spec invalid
-///        or none otherwise
+///        or nullopt otherwise
 ///
 /// \relates cath_cluster_input_spec
 str_opt cath::clust::get_invalid_description(const cath_cluster_input_spec &prm_input_spec ///< The cath_cluster_input_spec to query
@@ -90,5 +90,5 @@ str_opt cath::clust::get_invalid_description(const cath_cluster_input_spec &prm_
 		return "An input file of links must be specified"s;
 	}
 
-	return none;
+	return nullopt;
 }

@@ -23,9 +23,8 @@
 
 #include <filesystem>
 #include <iostream>
+#include <optional>
 #include <string>
-
-#include <boost/optional.hpp>
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
@@ -68,7 +67,7 @@ namespace cath {
 	void run_ssap(const opts::cath_ssap_options &,
 	              std::ostream & = std::cout,
 	              std::ostream & = std::cerr,
-	              const ostream_ref_opt & = boost::none);
+	              const ostream_ref_opt & = ::std::nullopt);
 
 	void align_proteins(const protein &,
 	                    const protein &,

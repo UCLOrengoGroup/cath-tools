@@ -30,8 +30,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_COPY_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_COPY_HPP
 
-#include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 namespace cath {
 	namespace common {

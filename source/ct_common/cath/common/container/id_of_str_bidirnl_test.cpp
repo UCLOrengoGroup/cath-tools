@@ -18,19 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/container/id_of_str_bidirnl.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 #include <string>
 
 using namespace ::cath::common;
 using namespace ::std::literals::string_literals;
 
-using ::boost::make_optional;
-using ::boost::none;
 using ::boost::string_ref;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(id_of_str_bidirnl_test_suite)
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE(handles_non_numeric) {
 	the_ider.add_name( "-8"s  );
 	the_ider.add_name( "bob"s );
 
-	BOOST_CHECK_EQUAL( largest_number_if_names_all_numeric_integers( the_ider ), none );
+	BOOST_TEST( largest_number_if_names_all_numeric_integers( the_ider ) == nullopt );
 }
 
 
@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(rejects_scientific_notation) {
 
 	the_ider.add_name( "1e2"s  );
 
-	BOOST_CHECK_EQUAL( largest_number_if_names_all_numeric_integers( the_ider ), none );
+	BOOST_TEST( largest_number_if_names_all_numeric_integers( the_ider ) == nullopt );
 }
 
 BOOST_AUTO_TEST_CASE(rejects_empty) {
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE(rejects_empty) {
 
 	the_ider.add_name( ""s  );
 
-	BOOST_CHECK_EQUAL( largest_number_if_names_all_numeric_integers( the_ider ), none );
+	BOOST_TEST( largest_number_if_names_all_numeric_integers( the_ider ) == nullopt );
 }
 
 BOOST_AUTO_TEST_CASE(rejects_single_dash) {
@@ -154,7 +154,7 @@ BOOST_AUTO_TEST_CASE(rejects_single_dash) {
 
 	the_ider.add_name( "-"s  );
 
-	BOOST_CHECK_EQUAL( largest_number_if_names_all_numeric_integers( the_ider ), none );
+	BOOST_TEST( largest_number_if_names_all_numeric_integers( the_ider ) == nullopt );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

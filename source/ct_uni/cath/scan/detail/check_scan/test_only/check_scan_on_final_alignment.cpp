@@ -23,7 +23,6 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/operators.hpp>
-//#include <boost/optional.hpp>
 #include <boost/range/algorithm/set_algorithm.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>

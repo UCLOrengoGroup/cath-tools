@@ -30,6 +30,7 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
 #include "cath/resolve_hits/options/options_block/crh_output_options_block.hpp"
 
 using namespace ::cath;
@@ -40,9 +41,8 @@ using namespace ::std::literals::string_literals;
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::make_optional;
-using ::boost::none;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::string;
 
 constexpr bool                crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
@@ -184,7 +184,7 @@ crh_out_format cath::rslv::get_out_format(const crh_single_output_spec &prm_sing
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_single_output_spec invalid
-///        or none otherwise
+///        or nullopt otherwise
 ///
 /// \relates crh_single_output_spec
 str_opt cath::rslv::get_invalid_description(const crh_single_output_spec &prm_single_output_spec ///< The crh_single_output_spec to query
@@ -192,9 +192,9 @@ str_opt cath::rslv::get_invalid_description(const crh_single_output_spec &prm_si
 	// Prepare a list of the mutually exclusive outputs that have been requested
 	// Note: Don't include CSS export here because that takes a file argument and is independent of the output format
 	const auto  mut_excl_output_opts = crh_out_format_opt_vec{
-		make_optional( prm_single_output_spec.get_summarise(),            crh_out_format::SUMMARY ),
-		make_optional( prm_single_output_spec.get_generate_html_output(), crh_out_format::HTML    ),
-		make_optional( prm_single_output_spec.get_json_output(),          crh_out_format::JSON    )
+		make_optional_if( prm_single_output_spec.get_summarise(),            crh_out_format::SUMMARY ),
+		make_optional_if( prm_single_output_spec.get_generate_html_output(), crh_out_format::HTML    ),
+		make_optional_if( prm_single_output_spec.get_json_output(),          crh_out_format::JSON    )
 	};
 	const auto  mut_excl_outputs = transform_build<crh_out_format_vec>(
 		mut_excl_output_opts | filtered( [] (const crh_out_format_opt &x) { return static_cast<bool>( x ); } ),
@@ -209,5 +209,5 @@ str_opt cath::rslv::get_invalid_description(const crh_single_output_spec &prm_si
 		);
 	}
 
-	return none;
+	return nullopt;
 }

@@ -23,8 +23,8 @@
 
 #include <boost/operators.hpp>
 
-#include "detail/scan_type_aliases.hpp"
 #include "cath/scan/detail/stride/rep_strider.hpp"
+#include "detail/scan_type_aliases.hpp"
 
 namespace cath {
 	namespace scan {

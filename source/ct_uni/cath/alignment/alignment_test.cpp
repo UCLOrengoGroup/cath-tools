@@ -18,24 +18,23 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <utility>
+
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/optional/optional_io.hpp>
-#include <boost/test/unit_test.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cath/alignment/io/align_scaffold.hpp"
 #include "cath/alignment/pair_alignment.hpp"
 #include "cath/alignment/test/alignment_fixture.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/test_tools.hpp"
-
-#include <utility>
 
 using namespace ::cath;
 using namespace ::cath::align;
@@ -43,8 +42,8 @@ using namespace ::cath::common;
 using namespace ::cath::common::test;
 using namespace ::std;
 
-using ::boost::none;
 using ::boost::test_tools::output_test_stream;
+using ::std::nullopt;
 
 namespace cath {
 	namespace test {
@@ -167,8 +166,8 @@ void cath::test::alignment_test_suite_fixture::check_consecutive_position(const 
 		BOOST_CHECK_THROW( check_entry_positions_are_consecutive( prm_alignment ), invalid_argument_exception );
 	}
 	else {
-		BOOST_CHECK_EQUAL        ( first_non_consecutive_entry_positions( prm_alignment ), none );
-		BOOST_CHECK_NO_THROW_DIAG( check_entry_positions_are_consecutive( prm_alignment )       );
+		BOOST_CHECK_EQUAL        ( first_non_consecutive_entry_positions( prm_alignment ), nullopt );
+		BOOST_CHECK_NO_THROW_DIAG( check_entry_positions_are_consecutive( prm_alignment )          );
 	}
 }
 
@@ -287,20 +286,20 @@ BOOST_AUTO_TEST_CASE(insertion_operator) {
 
 /// \brief Check that get_last_present_position_of_entry() works as expected
 BOOST_AUTO_TEST_CASE( get_last_present_position_of_entry_works ) {
-	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_a_a       ).get() );
-	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_a_b       ).get() );
-	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_b_a       ).get() );
-	BOOST_CHECK_EQUAL( 5_z, get_max_last_present_position( aln_long_long ).get() );
+	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_a_a       ).value() );
+	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_a_b       ).value() );
+	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_b_a       ).value() );
+	BOOST_CHECK_EQUAL( 5_z, get_max_last_present_position( aln_long_long ).value() );
 }
 
 /// \brief Check that first_non_consecutive_entry_positions works as expected
 BOOST_AUTO_TEST_CASE( first_non_consecutive_entry_positions ) {
 	check_consecutive_position(
 		alignment( {
-			{ 0_z, 1,    none },
-			{ 0_z, none, 1    }
+			{ 0_z, 1,       nullopt },
+			{ 0_z, nullopt, 1       }
 		} ),
-		none
+		nullopt
 	);
 	check_consecutive_position(
 		alignment( {

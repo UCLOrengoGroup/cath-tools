@@ -22,9 +22,9 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_NAME_SET_NAME_SET_HPP
 
 #include <filesystem>
+#include <optional>
 
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -50,12 +50,12 @@ namespace cath {
 		public:
 			name_set() = default;
 			explicit name_set(std::string,
-			                  str_opt = boost::none,
-			                  str_opt = boost::none);
+			                  str_opt = ::std::nullopt,
+			                  str_opt = ::std::nullopt);
 
 			explicit name_set(::std::filesystem::path,
-			                  str_opt = boost::none,
-			                  str_opt = boost::none);
+			                  str_opt = ::std::nullopt,
+			                  str_opt = ::std::nullopt);
 
 			const std::string & get_name_from_acq() const;
 			const path_opt & get_primary_source_file() const;

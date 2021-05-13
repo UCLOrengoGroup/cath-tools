@@ -21,8 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_TYPE_ALIASES_HPP
 
-#include <boost/optional/optional_fwd.hpp>
-
+#include <optional>
 #include <vector>
 
 namespace cath { namespace clust { class cluster_domains; } }
@@ -52,7 +51,7 @@ namespace cath {
 		using domain_cluster_id_vec    = std::vector<domain_cluster_id>;
 
 		/// \brief Type alias for an optional old_cluster_data
-		using old_cluster_data_opt     = boost::optional<old_cluster_data>;
+		using old_cluster_data_opt     = ::std::optional<old_cluster_data>;
 
 		/// \brief Type alias for a vector of potential_maps
 		using potential_map_vec        = std::vector<potential_map>;

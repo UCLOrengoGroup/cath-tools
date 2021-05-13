@@ -38,6 +38,7 @@ using ::boost::token_compress_on;
 using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
+using ::std::make_optional;
 using ::std::string;
 
 /// \brief Ctor
@@ -87,9 +88,9 @@ mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &prm_istrea
 		results.emplace_back(
 			move( batch_id_str ),
 			path{ parts[ 1 ] },
-			make_optional_if_fn(
+			if_then_optional(
 				parts.size() >= 3,
-				[&] { return path{ parts[ 2 ] }; }
+				path{ parts[ 2 ] }
 			)
 		);
 	}

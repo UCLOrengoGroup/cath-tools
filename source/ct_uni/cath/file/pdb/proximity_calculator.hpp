@@ -22,12 +22,12 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PROXIMITY_CALCULATOR_HPP
 
 #include <functional>
+#include <optional>
 #include <vector>
-
-#include <boost/optional.hpp>
 
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
+#include "cath/chopping/region/region.hpp"
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/coord_linkage.hpp"
@@ -93,7 +93,7 @@ namespace cath {
 
 		public:
 			proximity_calculator(const pdb &,
-			                     const chop::region_vec_opt & = boost::none);
+			                     const chop::region_vec_opt & = ::std::nullopt);
 
 			proximity_calculator(const proximity_calculator &) = default;
 			proximity_calculator(proximity_calculator &&) noexcept = default;

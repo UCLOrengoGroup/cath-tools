@@ -23,8 +23,8 @@
 using namespace ::cath;
 using namespace ::cath::clust;
 
-using ::boost::none;
 using ::boost::program_options::positional_options_description;
+using ::std::nullopt;
 using ::std::string;
 
 /// The name of the program that uses this executable_options
@@ -62,7 +62,7 @@ str_opt cath_cluster_options::do_get_error_or_help_string() const {
 			+ " output when generating more than one level of clustering";
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Get a string to prepend to the standard help

@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTENT_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTENT_SPEC_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/common/type_aliases.hpp"
 #include "cath/superposition/supn_regions_context.hpp"
 
@@ -35,20 +33,20 @@ namespace cath {
 			/// \brief The context to include when showing the specified region(s) of structure
 			supn_regions_context regions_context     = DEFAULT_REGIONS_CONTEXT;
 
-			/// \brief The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or none to always exclude)
+			/// \brief The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or nullopt to always exclude)
 			doub_opt include_dna_within_distance     = DEFAULT_DNA_MAX_DIST;
 
-			/// \brief The maximum distance from the specified region(s) to ligands for the that to be included (or none to always exclude)
+			/// \brief The maximum distance from the specified region(s) to ligands for the that to be included (or nullopt to always exclude)
 			doub_opt include_organic_within_distance = DEFAULT_ORGANIC_MAX_DIST;
 
 		public:
 			/// \brief The default value for the context to include when showing the specified region(s) of structure
 			static constexpr supn_regions_context DEFAULT_REGIONS_CONTEXT  = supn_regions_context::ALONE;
 
-			/// \brief The default value for the maximum distance from the specified region(s) to DNA/RNA for the that to be included (or none to always exclude)
+			/// \brief The default value for the maximum distance from the specified region(s) to DNA/RNA for the that to be included (or nullopt to always exclude)
 			static constexpr double               DEFAULT_DNA_MAX_DIST     =  4.0;
 
-			/// \brief The default value for the maximum distance from the specified region(s) to ligands for the that to be included (or none to always exclude)
+			/// \brief The default value for the maximum distance from the specified region(s) to ligands for the that to be included (or nullopt to always exclude)
 			static constexpr double               DEFAULT_ORGANIC_MAX_DIST = 10.0;
 
 			superposition_content_spec() = default;

@@ -18,33 +18,33 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "cath/resolve_hits/options/spec/crh_filter_spec.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 namespace cath { namespace test { } }
 
 using namespace ::cath::rslv;
 using namespace ::cath::test;
 
-using ::boost::make_optional;
-using ::boost::none;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::string;
 
 BOOST_AUTO_TEST_SUITE(crh_filter_spec_test_suite)
 
 BOOST_AUTO_TEST_CASE(applies_hmm_coverages_correctly_for_normal_id) {
 	const string id = "normal_id";
-	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{},                                                                      id ), none                 );
+	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{},                                                                      id ), nullopt              );
 	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{}.set_min_hmm_coverage_frac( 0.7 ),                                     id ), make_optional( 0.7 ) );
-	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{}                                 .set_min_dc_hmm_coverage_frac( 0.8 ), id ), none                 );
+	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{}                                 .set_min_dc_hmm_coverage_frac( 0.8 ), id ), nullopt              );
 	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{}.set_min_hmm_coverage_frac( 0.7 ).set_min_dc_hmm_coverage_frac( 0.8 ), id ), make_optional( 0.7 ) );
 }
 
 BOOST_AUTO_TEST_CASE(applies_hmm_coverages_correctly_for_dc_id) {
 	const string id = "dc_6772b88707fa16c1222d117998650d3d";
-	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{},                                                                      id ), none                 );
+	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{},                                                                      id ), nullopt              );
 	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{}.set_min_hmm_coverage_frac( 0.7 ),                                     id ), make_optional( 0.7 ) );
 	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{}                                 .set_min_dc_hmm_coverage_frac( 0.8 ), id ), make_optional( 0.8 ) );
 	BOOST_CHECK_EQUAL( hmm_coverage_for_match( crh_filter_spec{}.set_min_hmm_coverage_frac( 0.7 ).set_min_dc_hmm_coverage_frac( 0.8 ), id ), make_optional( 0.8 ) );

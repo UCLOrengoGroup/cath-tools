@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SEGMENT_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SEGMENT_SPEC_HPP
 
+#include <optional>
+
 #include "cath/resolve_hits/trim/trim_spec.hpp"
 
 namespace cath {
@@ -49,7 +51,7 @@ namespace cath {
 			crh_segment_spec & set_min_seg_length(const seq::residx_t &);
 		};
 
-		using crh_segment_spec_opt = boost::optional<crh_segment_spec>;
+		using crh_segment_spec_opt = ::std::optional<crh_segment_spec>;
 
 		crh_segment_spec make_no_action_crh_segment_spec();
 

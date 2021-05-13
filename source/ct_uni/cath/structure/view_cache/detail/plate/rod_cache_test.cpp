@@ -22,10 +22,10 @@
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/structure/view_cache/detail/plate/rod_cache.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;

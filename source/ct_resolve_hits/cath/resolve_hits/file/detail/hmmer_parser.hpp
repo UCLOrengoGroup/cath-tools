@@ -21,11 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_DETAIL_HMMER_PARSER_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_DETAIL_HMMER_PARSER_HPP
 
+#include <optional>
 #include <regex>
 #include <string>
 
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/optional/optional_io.hpp>
 
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
@@ -33,6 +33,8 @@
 #include "cath/common/boost_addenda/make_string_ref.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
+#include "cath/common/string/cath_to_string.hpp"
 #include "cath/common/string/string_parse_tools.hpp"
 #include "cath/resolve_hits/file/cath_id_score_category.hpp"
 #include "cath/resolve_hits/file/detail/hmmer_aln.hpp"
@@ -309,8 +311,8 @@ namespace cath {
 
 			/// \brief Advance lines until the start of a new block
 			inline void hmmer_parser::advance_line_to_block() {
-				prefix_hmm_length = boost::none;
-				prefix_match_id   = boost::none;
+				prefix_hmm_length = ::std::nullopt;
+				prefix_match_id   = ::std::nullopt;
 
 				while ( ! line_is_at_block() && ! end_of_istream() ) {
 					advance_to_block_or_prefix();
@@ -377,7 +379,7 @@ namespace cath {
 				// Get the min hmm coverage for this specific match ID
 				const doub_opt min_hmm_coverage = static_cast<bool>( prefix_match_id )
 					? hmm_coverage_for_match( prm_filter_spec, *prefix_match_id )
-					: boost::none;
+					: ::std::nullopt;
 
 				summaries.clear();
 				summary_ctr = 0;
@@ -459,7 +461,7 @@ namespace cath {
 				auto              aln_results   = the_aln.process_aln( prm_min_gap_length, prm_parse_hmmer_aln );
 				std::string      &id_a          = std::get<0>( aln_results );
 				seq::seq_seg_vec &segs          = std::get<1>( aln_results );
-				auto              alnd_rngs_opt = boost::make_optional(
+				auto              alnd_rngs_opt = common::make_optional_if(
 					prm_parse_hmmer_aln,
 					std::get<2>( aln_results )
 				);
@@ -490,7 +492,7 @@ namespace cath {
 					if ( ! skipped_for_negtv_bitscore ) {
 						::spdlog::warn( R"(Skipping at least one hit (eg between "{}" and "{}" with bitscore {}) for having a negative bitscore, which )"
 						                R"(cannot currently be handled. It's typically not a problem to exclude such weak hits.)",
-						                query_id,
+						                common::cath_to_string( query_id ),
 						                id_a,
 						                summ.bitscore );
 						skipped_for_negtv_bitscore = true;

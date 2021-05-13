@@ -20,24 +20,34 @@
 
 #include "make_optional_if.hpp"
 
-#include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
+
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath::common;
 
-using ::boost::none;
-using ::boost::optional;
+using ::std::make_optional;
+using ::std::nullopt;
+using ::std::optional;
 
 BOOST_AUTO_TEST_SUITE(make_optional_if_test_suite)
 
 BOOST_AUTO_TEST_CASE(make_optional_if_works) {
-	BOOST_CHECK_EQUAL( make_optional_if( true,  1 ), optional<int>{ 1    } );
-	BOOST_CHECK_EQUAL( make_optional_if( false, 1 ), optional<int>{ none } );
+	BOOST_TEST( make_optional_if( true,  1 ) == 1       );
+	BOOST_TEST( make_optional_if( false, 1 ) == nullopt );
 }
 
 BOOST_AUTO_TEST_CASE(make_optional_if_fn_works) {
-	BOOST_CHECK_EQUAL( make_optional_if_fn( true,  [] {                      return 1; } ), optional<int>{ 1    } );
-	BOOST_CHECK_EQUAL( make_optional_if_fn( false, [] { BOOST_CHECK( false); return 1; } ), optional<int>{ none } );
+	BOOST_TEST( make_optional_if_fn( true,  [] {                      return 1; } ) == 1       );
+	BOOST_TEST( make_optional_if_fn( false, [] { BOOST_CHECK( false); return 1; } ) == nullopt );
+}
+
+BOOST_AUTO_TEST_CASE( if_then_optional_works ) {
+	int a = 0;
+	BOOST_TEST( if_then_optional( true, ++a ) == 1 );
+	BOOST_TEST( a == 1 );
+	BOOST_TEST( if_then_optional( false, ++a ) == nullopt );
+	BOOST_TEST( a == 1 );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

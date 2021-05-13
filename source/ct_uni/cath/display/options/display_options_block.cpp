@@ -20,8 +20,6 @@
 
 #include "display_options_block.hpp"
 
-#include <boost/optional.hpp>
-
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/display_colour/display_colour_list.hpp"
 

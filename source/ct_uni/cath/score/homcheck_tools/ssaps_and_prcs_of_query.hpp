@@ -21,9 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SSAPS_AND_PRCS_OF_QUERY_HPP
 
+#include <iosfwd>
+#include <vector>
+
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
@@ -31,9 +33,6 @@
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/score/homcheck_tools/ssap_and_prc.hpp"
 #include "cath/score/score_type_aliases.hpp"
-
-#include <iosfwd>
-#include <vector>
 
 namespace cath { namespace file { class prc_scores_entry; } }
 namespace cath { namespace file { class ssap_scores_entry; } }

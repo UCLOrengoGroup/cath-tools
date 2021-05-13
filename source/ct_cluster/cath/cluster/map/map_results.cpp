@@ -22,11 +22,11 @@
 
 #include <filesystem>
 #include <fstream>
+#include <optional>
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/optional.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/numeric.hpp>
 
@@ -65,8 +65,8 @@ using ::std::string;
 
 /// \brief Get the name of the new, unmapped cluster of the specified index
 ///        based on the specified last preceding index (or 0 if not mapping from
-///        or none if mapping from clusters that don't all have numeric names)
-string cath::clust::detail::get_name_of_new_unmapped_cluster_of_index(const boost::optional<ptrdiff_t> &prm_last_preceding_index, ///< The last preceding index (or 0 if not mapping from or none if mapping from clusters that don't all have numeric names)
+///        or nullopt if mapping from clusters that don't all have numeric names)
+string cath::clust::detail::get_name_of_new_unmapped_cluster_of_index(const ::std::optional<ptrdiff_t> &prm_last_preceding_index, ///< The last preceding index (or 0 if not mapping from or nullopt if mapping from clusters that don't all have numeric names)
                                                                       const size_t                     &prm_index                 ///< The index of the new, unmapped cluster
                                                                       ) {
 	using ::std::to_string;

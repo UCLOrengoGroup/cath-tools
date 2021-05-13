@@ -20,8 +20,8 @@
 
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm.hpp>
-#include <boost/test/unit_test.hpp>
 #include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -31,11 +31,11 @@
 #include "cath/common/boost_addenda/range/adaptor/limited.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;

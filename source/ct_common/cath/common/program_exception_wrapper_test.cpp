@@ -21,7 +21,6 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/algorithm/string/predicate.hpp>
-//#include <boost/scoped_array.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
 
 #include "cath/common/argc_argv_faker.hpp"

@@ -24,10 +24,8 @@
 #include <algorithm>
 #include <filesystem>
 
-#include <boost/optional.hpp>
-
-#include "cath/clustagglom/link_dirn.hpp"
 #include "cath/clustagglom/link.hpp"
+#include "cath/clustagglom/link_dirn.hpp"
 #include "cath/clustagglom/link_list.hpp"
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"

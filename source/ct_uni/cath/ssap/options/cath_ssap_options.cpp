@@ -55,10 +55,10 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::none;
 using ::boost::program_options::positional_options_description;
 using ::boost::range::join;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief TODOCUMENT
@@ -145,7 +145,7 @@ str_opt cath_ssap_options::do_get_error_or_help_string() const {
 		return "Cannot specify regions more than twice for cath-ssap"s;
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Get a string to prepend to the standard help

@@ -24,9 +24,9 @@
 
 using namespace ::cath::common;
 
-using ::boost::none;
 using ::std::filesystem::path;
 using ::std::istream;
+using ::std::nullopt;
 
 /// \brief Ctor from a special istream and a flag to be used to indicate when input should be read from that istream
 path_or_istream::path_or_istream(istream    &prm_istream,               ///< A special istream (often stdin) from which input can be read
@@ -56,7 +56,7 @@ const path & path_or_istream::get_flag() const {
 path_or_istream & path_or_istream::close() {
 	if ( input_file_stream ) {
 		input_file_stream->close();
-		input_file_stream = none;
+		input_file_stream = nullopt;
 	}
 	return *this;
 }

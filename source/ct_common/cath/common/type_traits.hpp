@@ -56,7 +56,7 @@ namespace cath {
 		};
 
 		template <typename T, typename U>
-		inline constexpr bool is_same_modulo_cvref_v = is_same_modulo_cvref<T, U>::value;
+		constexpr bool is_same_modulo_cvref_v = is_same_modulo_cvref<T, U>::value;
 
 	} // namespace common
 } // namespace cath

@@ -22,9 +22,8 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_PYMOL_PYMOL_TOOLS_HPP
 
 #include <cstddef>
+#include <optional>
 #include <string>
-
-#include <boost/optional.hpp>
 
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -50,7 +49,7 @@ namespace cath {
 
 		static std::string pymol_res_seln_str(const std::string &,
 		                                      const residue_id_vec &,
-		                                      const str_opt & = boost::none);
+		                                      const str_opt & = ::std::nullopt);
 
 	};
 

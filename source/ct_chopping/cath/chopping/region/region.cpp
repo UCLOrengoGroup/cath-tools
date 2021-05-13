@@ -38,6 +38,7 @@ using ::boost::algorithm::join;
 using ::boost::any;
 using ::boost::program_options::invalid_option_value;
 using ::boost::program_options::validators::get_single_string;
+using ::std::make_optional;
 using ::std::make_pair;
 using ::std::ostream;
 using ::std::string;
@@ -154,7 +155,7 @@ bool cath::chop::has_chain_label(const region &prm_region ///< TODOCUMENT
 /// \relates region
 const chain_label & cath::chop::get_chain_label(const region &prm_region ///< TODOCUMENT
                                                 ) {
-	return prm_region.get_opt_chain_label().get();
+	return prm_region.get_opt_chain_label().value();
 }
 
 /// \brief TODOCUMENT
@@ -284,9 +285,9 @@ residue_id cath::chop::get_stop_id( const region &prm_region ) {
 /// \relates region
 residue_locating_opt cath::chop::get_residue_locating(const region &prm_region ///< TODOCUMENT
                                                       ) {
-	return make_optional_if_fn(
+	return if_then_optional(
 		prm_region.has_starts_stops(),
-		[&] { return get_residue_locating( prm_region.get_start_residue() ); }
+		get_residue_locating( prm_region.get_start_residue() )
 	);
 }
 

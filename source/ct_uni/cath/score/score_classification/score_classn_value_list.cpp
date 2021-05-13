@@ -28,10 +28,10 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/range/algorithm.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/sort_uniq_copy.hpp"

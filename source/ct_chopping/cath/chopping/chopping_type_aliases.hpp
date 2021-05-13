@@ -21,12 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_TYPE_ALIASES_HPP
 
+#include <optional>
+#include <vector>
+
 #include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
-#include <boost/optional/optional_fwd.hpp>
 
 #include "cath/chopping/residue_location/residue_locating.hpp"
-
-#include <vector>
 
 // clang-format off
 namespace cath { namespace chop { class chopping; } }
@@ -39,7 +39,7 @@ namespace cath {
 	namespace chop {
 
 		/// \brief Type alias for an optional domains
-		using domain_opt            = boost::optional<domain>;
+		using domain_opt            = ::std::optional<domain>;
 
 		/// \brief Type alias for a vector of domains
 		using domain_vec            = std::vector<domain>;
@@ -48,13 +48,13 @@ namespace cath {
 		using region_vec            = std::vector<region>;
 
 		/// \brief Type alias for an optional region_vec
-		using region_vec_opt        = boost::optional<region_vec>;
+		using region_vec_opt        = ::std::optional<region_vec>;
 
 		/// \brief Type alias for a reference_wrapper of const region_vec
 		using region_vec_cref       = std::reference_wrapper<const region_vec>;
 
 		/// \brief Type alias for an optional region_vec_cref
-		using region_vec_cref_opt   = boost::optional<region_vec_cref>;
+		using region_vec_cref_opt   = ::std::optional<region_vec_cref>;
 
 		/// \brief Type alias for a vector of region_vecs
 		using region_vec_vec        = std::vector<region_vec>;
@@ -67,7 +67,7 @@ namespace cath {
 
 
 		/// \brief Type alias for an optional residue_locating
-		using residue_locating_opt  = boost::optional<residue_locating>;
+		using residue_locating_opt  = ::std::optional<residue_locating>;
 	} // namespace chop
 } // namespace cath
 

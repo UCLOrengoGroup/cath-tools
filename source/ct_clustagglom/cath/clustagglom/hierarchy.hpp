@@ -23,8 +23,8 @@
 
 #include <filesystem>
 
-#include "cath/clustagglom/link_dirn.hpp"
 #include "cath/clustagglom/hierarchy/hierarchy_layer.hpp"
+#include "cath/clustagglom/link_dirn.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"

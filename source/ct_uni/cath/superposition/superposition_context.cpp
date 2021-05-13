@@ -58,10 +58,10 @@ using namespace ::cath::sup::detail;
 using ::boost::adaptors::map_values;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::any_of;
-using ::boost::make_optional;
-using ::boost::none;
 using ::boost::property_tree::ptree;
 using ::boost::range::for_each;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::pair;
 using ::std::string;
 
@@ -197,13 +197,13 @@ pdb_list cath::sup::get_restricted_pdbs(const superposition_context &prm_superpo
 }
 
 /// \brief Get a PDB with the appropriate parts of the specified PDB according to the specified
-///        regions (or none for all) and specified superposition_content_spec
+///        regions (or nullopt for all) and specified superposition_content_spec
 ///
 /// At the moment, if the supn_regions_context is IN_CHAIN or IN_PDB, this will still only
 /// ligand atoms based on the specified region(s).
 /// This could be altered (or made configurable in the future).
 ///
-/// If the regions are not specified (ie none), the whole PDB is returned.
+/// If the regions are not specified (ie nullopt), the whole PDB is returned.
 ///
 /// This does a similar job to get_regions_limited_pdb() but adds in the extra
 /// handling of the superposition_content_spec.
@@ -247,14 +247,14 @@ pdb cath::sup::get_supn_content_pdb(const pdb                        &prm_pdb,  
 	// Form a list of regions that includes the originals,
 	// plus any DNA chains that have been found nearby
 	const region_vec_opt all_regions = expanded_regions
-		? ::boost::make_optional( append_copy(
+		? ::std::make_optional( append_copy(
 			*expanded_regions,
 			transform_build<region_vec>(
 				nearby_dna_chains,
 				[] (const chain_label &x) { return region{ x }; }
 			)
 		) )
-		: none;
+		: nullopt;
 
 	// Build a PDB from the information and return it
 	pdb result_pdb = get_regions_limited_pdb(

@@ -21,10 +21,10 @@
 #include <cmath>
 #include <filesystem>
 #include <functional>
+#include <optional>
 
 #include <boost/algorithm/string/join.hpp> // ***** TEMPORARY *****
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/optional.hpp>
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/algorithm/copy.hpp>
 #include <boost/range/algorithm/copy.hpp>
@@ -69,15 +69,15 @@ using ::boost::adaptors::map_keys;
 using ::boost::algorithm::icontains;
 using ::boost::irange;
 using ::boost::is_space;
-using ::boost::make_optional;
-using ::boost::none;
-using ::boost::optional;
 using ::boost::range::copy;
 using ::boost::token_compress_on;
 using ::std::filesystem::path;
 using ::std::ifstream;
+using ::std::make_optional;
 using ::std::map;
+using ::std::nullopt;
 using ::std::numeric_limits;
+using ::std::optional;
 using ::std::pair;
 using ::std::reference_wrapper;
 using ::std::set;
@@ -149,7 +149,7 @@ namespace cath {
 					if ( file_size( prm_file ) < 100
 							|| icontains( prm_file.string(), "stderr" )
 							|| icontains( prm_file.string(), "svmlight_data" ) ) {
-						return bool_str_pair_opt( none );
+						return bool_str_pair_opt( nullopt );
 					}
 
 					const auto file_stem = prm_file.stem().string();
@@ -511,7 +511,7 @@ namespace cath {
 						                                   : string{ " notitle " };
 						return make_pair(
 							prm_name_stem + to_string( x + 1 ),
-							::boost::make_optional( R"( linetype 1 linewidth 1 )" + prm_spec_string + title_string )
+							::std::make_optional( R"( linetype 1 linewidth 1 )" + prm_spec_string + title_string )
 						);
 					}
 				);
@@ -1403,7 +1403,7 @@ BOOST_AUTO_TEST_SUITE_END()
 ////		[&] (const path &prm_file) {
 ////			using bool_str_pair_opt = optional<pair<bool, string>>;
 ////			if ( file_size( prm_file ) < 100 || icontains( prm_file.string(), "stderr" ) ) {
-////				return bool_str_pair_opt( none );
+////				return bool_str_pair_opt( nullopt );
 ////			}
 ////
 ////			const auto file_stem = prm_file.stem().string();

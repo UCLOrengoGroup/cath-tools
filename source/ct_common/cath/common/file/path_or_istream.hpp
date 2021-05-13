@@ -24,8 +24,7 @@
 #include <filesystem>
 #include <fstream>
 #include <functional>
-
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/common/file/open_fstream.hpp"
 
@@ -36,7 +35,7 @@ namespace cath {
 		using istream_ref = std::reference_wrapper<std::istream>;
 
 		/// \brief Type alias for an optional reference_wrapper of istream
-		using istream_ref_opt = boost::optional<istream_ref>;
+		using istream_ref_opt = ::std::optional<istream_ref>;
 
 		/// \brief Handle opening a file and providing an istream, with support for
 		///        a special flag which indicates input from the istream optionally specified on construction
@@ -51,7 +50,7 @@ namespace cath {
 			::std::filesystem::path standard_instream_flag = "-";
 
 			/// \brief The ifstream from which file should be read
-			boost::optional<std::ifstream> input_file_stream;
+			::std::optional<std::ifstream> input_file_stream;
 
 		public:
 			path_or_istream() = default;

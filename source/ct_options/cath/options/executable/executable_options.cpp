@@ -27,7 +27,6 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/common/argc_argv_faker.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
@@ -50,6 +49,7 @@ using ::boost::program_options::variables_map;
 using ::boost::trim_right_copy;
 using ::std::filesystem::path;
 using ::std::ifstream;
+using ::std::make_optional;
 using ::std::string;
 
 constexpr size_t executable_options::DEFAULT_PROG_OPS_LINE_LENGTH;
@@ -397,11 +397,9 @@ str_opt executable_options::get_error_or_help_string() const {
 	if ( ! processed_options) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get error/help string because the options haven't yet been processed"));
 	}
-	return make_optional_if_fn(
+	return if_then_optional(
 		static_cast<bool>( error_or_help_string ),
-		[&] {
-			return trim_right_copy( *error_or_help_string ) + "\n";
-		}
+		trim_right_copy( *error_or_help_string ) + "\n"
 	);
 }
 

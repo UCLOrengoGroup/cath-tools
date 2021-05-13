@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_DOMAIN_CLUSTER_IDS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_DOMAIN_CLUSTER_IDS_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/cluster/cluster_type_aliases.hpp"
 #include "cath/seq/seq_seg_run.hpp"
 

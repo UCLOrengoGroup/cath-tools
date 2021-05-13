@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_SPEC_CATH_CLUSTER_CLUSTERING_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_SPEC_CATH_CLUSTER_CLUSTERING_SPEC_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"
 #include "cath/clustagglom/link_dirn.hpp"
 #include "cath/common/path_type_aliases.hpp"

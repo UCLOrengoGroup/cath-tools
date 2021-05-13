@@ -24,8 +24,8 @@
 #include <filesystem>
 
 #include "cath/common/type_aliases.hpp"
-#include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 #include "cath/resolve_hits/file/cath_id_score_category.hpp"
+#include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 
 namespace cath { namespace rslv { class read_and_process_mgr; } }
 

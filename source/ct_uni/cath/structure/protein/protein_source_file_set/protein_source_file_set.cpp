@@ -30,6 +30,7 @@
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/file/options/data_dirs_options_block.hpp"
@@ -52,11 +53,11 @@ using namespace ::cath::opts;
 using ::boost::adaptors::filtered;
 using ::boost::assign::ptr_push_back;
 using ::boost::lexical_cast;
-using ::boost::none;
 using ::boost::range::transform;
 using ::std::back_inserter;
 using ::std::filesystem::path;
 using ::std::make_pair;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::ostringstream;
 using ::std::string;
@@ -135,9 +136,9 @@ protein cath::read_protein_from_files(const protein_source_file_set &prm_source_
                                       const domain_opt              &prm_domain,          ///< The domain to which the resulting protein should be restricted
                                       ostream                       &prm_stderr           ///< The ostream to which any warnings/errors should be written
                                       ) {
-	const region_vec_opt regions = make_optional_if_fn(
+	const region_vec_opt regions = if_then_optional(
 		static_cast<bool>( prm_domain ),
-		[&] { return region_vec{ common::cbegin( *prm_domain ), common::cend( *prm_domain ) }; }
+		*prm_domain | to_vector
 	);
 	protein the_protein = prm_source_file_set.read_files(
 		prm_data_dirs,
@@ -163,7 +164,7 @@ protein cath::read_protein_from_files(const protein_source_file_set &prm_source_
 	return prm_source_file_set.read_files(
 		build_data_dirs_spec_of_dir( prm_data_dir ),
 		prm_protein_name,
-		none,
+		nullopt,
 		( prm_ostream ? prm_ostream->get() : parse_ss )
 	);
 }

@@ -22,6 +22,7 @@
 
 #include <iomanip>
 #include <map>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -68,12 +69,10 @@ using ::std::tuple;
 
 // 	struct broken_residue_id final {
 // 		int res_num = 0;
-// 		boost::optional<char> insert;
+// 		::std::optional<char> insert;
 // 		bool is_null_residue_name;
 // 		chain_label b;
 // 	};
-
-// 	using ::boost::optional;
 
 // 	SD< sizeof( residue               ) > size_of_residue;
 // 	SD< sizeof( residue_id            ) > size_of_residue_id;

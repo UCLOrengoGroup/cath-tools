@@ -21,23 +21,25 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_FNS_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_FNS_HPP
 
+#include <optional>
+
+#include "cath/resolve_hits/full_hit.hpp"
 #include "cath/resolve_hits/full_hit_list.hpp"
 #include "cath/resolve_hits/hit_output_format.hpp"
 #include "cath/resolve_hits/options/spec/crh_score_spec.hpp"
 #include "cath/resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "cath/resolve_hits/options/spec/hit_boundary_output.hpp"
-#include "cath/resolve_hits/trim/trim_spec.hpp"
-#include "cath/resolve_hits/full_hit.hpp"
 #include "cath/resolve_hits/score_functions.hpp"
+#include "cath/resolve_hits/trim/trim_spec.hpp"
 
 namespace cath {
 	namespace rslv {
 
 		seq::seq_seg_vec get_segments(const full_hit &,
-		                              const trim_spec_opt & = boost::none);
+		                              const trim_spec_opt & = ::std::nullopt);
 
 		std::string get_segments_string(const full_hit &,
-		                                const trim_spec_opt & = boost::none);
+		                                const trim_spec_opt & = ::std::nullopt);
 
 		cath::str_vec get_field_headers(const full_hit &,
 		                                const bool &,
@@ -46,8 +48,8 @@ namespace cath {
 		std::string to_string(const full_hit &,
 		                      const hit_output_format & = hit_output_format::CLASS,
 		                      const std::string & = std::string{},
-		                      const crh_segment_spec_opt & = boost::none,
-		                      const full_hit_list_opt & = boost::none,
+		                      const crh_segment_spec_opt & = ::std::nullopt,
+		                      const full_hit_list_opt & = ::std::nullopt,
 		                      const hit_boundary_output & = hit_boundary_output::ORIG);
 
 		/// \brief Get the crh-score associated with the specified hit, calculated according to the specified crh_score_spec

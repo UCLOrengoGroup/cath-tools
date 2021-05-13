@@ -38,7 +38,7 @@ using namespace ::cath::common;
 using namespace ::std;
 
 using ::boost::lexical_cast;
-using ::boost::none;
+using ::std::nullopt;
 
 /// \brief Construct an alignment between multiple lists of residues by pulling together residues of the same name.
 ///
@@ -121,7 +121,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &p
 			equivalent_indices.reserve( num_lists );
 			for (const residue_name_align_map &map : maps) {
 				const aln_posn_opt value = contains_residue_name( map, the_res_name ) ? aln_posn_opt( get_index_of_residue_name( map, the_res_name ) )
-				                                                                      : aln_posn_opt( none );
+				                                                                      : aln_posn_opt( nullopt );
 				equivalent_indices.push_back( value );
 			}
 
@@ -170,7 +170,7 @@ alignment residue_name_aligner::residue_name_align(const residue_name_vec_vec &p
 			for (const size_t &entry_check_ctr : indices( num_lists ) ) {
 				const bool &should_insert_entry = equivalent_presences[ entry_check_ctr ];
 				const aln_posn_opt value = should_insert_entry ? next_index_to_add_for_lists[ entry_check_ctr ]
-				                                               : aln_posn_opt( none );
+				                                               : aln_posn_opt( nullopt );
 				raw_alignment_data[ entry_check_ctr ].push_back( value );
 				if ( should_insert_entry ) {
 					++( next_index_to_add_for_lists[ entry_check_ctr ] );

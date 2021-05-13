@@ -20,8 +20,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/optional.hpp> // ***** TEMPORARY *****
-
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/boost_addenda/log/stringstream_log_sink.hpp"
@@ -44,7 +42,7 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
-using ::boost::none;
+using ::std::nullopt;
 
 namespace cath {
 	namespace test {
@@ -94,7 +92,7 @@ namespace cath {
 			const string id1 = { *ID1 };
 			const string id2 = { *ID2 };
 			const data_dirs_spec data_dirs       = build_data_dirs_spec_of_dir( TEST_SSAP_REGRESSION_DATA_DIR() );
-			const prot_prot_pair parsed_proteins = read_protein_pair( id1, none, id2, none, data_dirs, protein_from_wolf_and_sec(), none );
+			const prot_prot_pair parsed_proteins = read_protein_pair( id1, nullopt, id2, nullopt, data_dirs, protein_from_wolf_and_sec(), nullopt );
 			const protein &prot1 = parsed_proteins.first;
 			const protein &prot2 = parsed_proteins.second;
 			

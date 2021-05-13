@@ -25,11 +25,8 @@
 #include <fstream>
 #include <functional>
 
-#include <boost/optional.hpp>
-
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
-
 
 namespace cath {
 	namespace common {

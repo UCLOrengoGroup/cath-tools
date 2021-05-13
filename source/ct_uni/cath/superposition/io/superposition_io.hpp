@@ -23,8 +23,10 @@
 
 #include <filesystem>
 #include <iosfwd>
+#include <optional>
 #include <vector>
 
+#include "cath/chopping/region/region.hpp"
 #include "cath/chopping/region/regions_limiter.hpp"
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/property_tree/read_from_ptree.hpp"
@@ -69,7 +71,7 @@ namespace cath {
 		                                               file::pdb,
 		                                               const size_t &,
 		                                               const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                               const chop::region_vec_opt & = boost::none,
+		                                               const chop::region_vec_opt & = ::std::nullopt,
 		                                               const file::pdb_write_mode & = file::pdb_write_mode::ONLY_OR_LAST_PDB);
 
 		std::ostream & write_superposed_pdbs_to_ostream(std::ostream &,
@@ -77,28 +79,28 @@ namespace cath {
 		                                                file::pdb_list,
 		                                                const sup_pdbs_script_policy &,
 		                                                const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                                const chop::region_vec_opt & = boost::none);
+		                                                const chop::region_vec_opt & = ::std::nullopt);
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const ::std::filesystem::path &,
 		                                  const file::pdb &,
 		                                  const size_t &,
 		                                  const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                  const chop::region_vec_opt & = boost::none);
+		                                  const chop::region_vec_opt & = ::std::nullopt);
 
 		void write_superposed_pdb_to_file(const superposition &,
 		                                  const ::std::filesystem::path &,
 		                                  const file::pdb_list &,
 		                                  const sup_pdbs_script_policy &,
 		                                  const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                  const chop::region_vec_opt & = boost::none);
+		                                  const chop::region_vec_opt & = ::std::nullopt);
 
 		void write_superposed_pdb_from_files(const superposition &,
 		                                     const ::std::filesystem::path &,
 		                                     const path_vec &,
 		                                     const sup_pdbs_script_policy &,
 		                                     const chain_relabel_policy & = chain_relabel_policy::LEAVE,
-		                                     const chop::region_vec_opt & = boost::none);
+		                                     const chop::region_vec_opt & = ::std::nullopt);
 
 		superposition superposition_from_ptree(const boost::property_tree::ptree &);
 

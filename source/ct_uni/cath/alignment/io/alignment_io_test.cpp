@@ -27,7 +27,6 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "cath/common/file/open_fstream.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/file/pdb/pdb_atom.hpp"
 #include "cath/file/pdb/pdb_residue.hpp"
@@ -39,6 +38,7 @@
 #include "cath/structure/protein/sec_struc_planar_angles.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/istreams_equal.hpp"
 

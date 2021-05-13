@@ -26,6 +26,7 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/algorithm/are_same.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
@@ -39,9 +40,10 @@ using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::none;
 using ::boost::range::equal;
 using ::std::equal_to;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::string;
 
@@ -116,22 +118,14 @@ domain::const_iterator domain::end() const {
 	return common::cend( segments );
 }
 
-/// \brief Get any regions from the specified optional domain or none if none
+/// \brief Get any regions from the specified optional domain or nullopt if none
 ///
 /// \relates domain
 ///
 /// \relatesalso region
 region_vec_opt cath::chop::get_regions_opt(const domain_opt &prm_domain_opt ///< The optional domain from which any regions should be extracted
                                            ) {
-	return make_optional_if_fn(
-		static_cast<bool>( prm_domain_opt ),
-		[&] {
-			return region_vec{
-				common::cbegin( *prm_domain_opt ),
-				common::cend  ( *prm_domain_opt ),
-			};
-		}
-	);
+	return if_then_optional( static_cast<bool>( prm_domain_opt ), *prm_domain_opt | to_vector );
 }
 
 /// \brief Return whether the two specified domains are identical
@@ -168,9 +162,9 @@ string cath::chop::get_domain_id(const domain &prm_domain ///< TODOCUMENT
 /// \relates domain
 residue_locating_opt cath::chop::get_residue_locating(const domain &prm_domain ///< TODOCUMENT
                                                       ) {
-	// If there are no segments then this domain doesn't locate any residues so return none
+	// If there are no segments then this domain doesn't locate any residues so return nullopt
 	if ( prm_domain.num_segments() == 0 ) {
-		return none;
+		return nullopt;
 	}
 	// Otherwise return the residue_locating method of the first segment
 	return get_residue_locating( front( prm_domain ) );

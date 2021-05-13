@@ -20,12 +20,14 @@
 
 #include "dssp_ss_calc.hpp"
 
+#include <algorithm>
+#include <optional>
+
 #include <boost/algorithm/clamp.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/cxx11/none_of.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/format.hpp>
-#include <boost/optional/optional_io.hpp>
 #include <boost/range/algorithm/binary_search.hpp>
 #include <boost/range/algorithm/remove_if.hpp>
 #include <boost/range/algorithm/upper_bound.hpp>
@@ -34,13 +36,12 @@
 #include "cath/common/algorithm/append.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/residue.hpp"
 #include "cath/structure/protein/sec_struc_type.hpp"
 #include "cath/structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 #include "cath/structure/sec_struc_calc/dssp/dssp_hbond_calc.hpp"
-
-#include <algorithm>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -54,22 +55,14 @@ using ::boost::algorithm::clamp;
 using ::boost::algorithm::none_of;
 using ::boost::format;
 using ::boost::irange;
-using ::boost::make_optional;
-using ::boost::none;
-using ::boost::optional;
 using ::boost::range::binary_search;
 using ::boost::range::upper_bound;
 using ::boost::remove_if;
 using ::std::max;
 using ::std::min;
+using ::std::optional;
 using ::std::ostream;
 using ::std::string;
-
-constexpr size_t sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE;
-constexpr size_t sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE;
-constexpr size_t sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST;
-constexpr size_t sec_struc_consts::DEFAULT_HELIX_N;
-constexpr beta_bridge_context beta_bridge::DEFAULT_CONTEXT;
 
 /// \brief Generate a string describing the specified beta_bridge_type
 ///
@@ -253,7 +246,7 @@ optional<helix_category> cath::sec::detail::n_helix_cat(const bifur_hbond_list &
 	if ( bonded_to_later ) {
 		return { bonded_to_earlier ? helix_category::BONDED_TO_BOTH : helix_category::BONDED_TO_LATER_ONLY };
 	}
-	return make_optional( bonded_to_earlier, helix_category::BONDED_TO_EARLIER_ONLY );
+	return make_optional_if( bonded_to_earlier, helix_category::BONDED_TO_EARLIER_ONLY );
 }
 
 /// \brief Return whether the residue at the specified is n-helix bonded to the relevant later residue
@@ -388,7 +381,7 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_to_src(const b
                                                                          const size_t           &prm_src_index,        ///< The index of the source residue to query
                                                                          const size_t           &prm_dest_index        ///< The index of the destination residue to query
                                                                          ) {
-	return make_optional(
+	return make_optional_if(
 		(
 			difference( prm_src_index, prm_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&
@@ -410,7 +403,7 @@ beta_bridge_opt cath::sec::detail::has_parallel_beta_bridge_bonds_straddling_src
                                                                                  const size_t           &prm_src_index,        ///< The index of the source residue to query
                                                                                  const size_t           &prm_dest_index        ///< The index of the destination residue to query
                                                                                  ) {
-	return make_optional(
+	return make_optional_if(
 		(
 			difference( prm_src_index, prm_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&
@@ -432,7 +425,7 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_to_src(con
                                                                              const size_t           &prm_src_index,        ///< The index of the source residue to query
                                                                              const size_t           &prm_dest_index        ///< The index of the destination residue to query
                                                                              ) {
-	return make_optional(
+	return make_optional_if(
 		(
 			difference( prm_src_index, prm_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&
@@ -454,7 +447,7 @@ beta_bridge_opt cath::sec::detail::has_antiparallel_beta_bridge_bonds_straddling
                                                                                      const size_t           &prm_src_index,        ///< The index of the source residue to query
                                                                                      const size_t           &prm_dest_index        ///< The index of the destination residue to query
                                                                                      ) {
-	return make_optional(
+	return make_optional_if(
 		(
 			difference( prm_src_index, prm_dest_index ) >= sec_struc_consts::MIN_ALLOWABLE_RES_DIFF_FOR_BETA_BRIDGE
 			&&

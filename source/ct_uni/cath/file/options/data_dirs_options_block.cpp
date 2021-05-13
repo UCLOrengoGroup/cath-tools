@@ -25,7 +25,6 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/optional.hpp>
 #include <boost/program_options.hpp>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
@@ -41,11 +40,11 @@ using namespace ::std;
 
 using ::boost::algorithm::replace_all_copy;
 using ::boost::algorithm::to_lower_copy;
-using ::boost::none;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::nullopt;
 
 const string data_dirs_options_block::DATA_OPTION_PATH_VARNAME   = "<path>";
 const string data_dirs_options_block::DATA_OPTION_PREFIX_VARNAME = "<pre>";
@@ -164,7 +163,7 @@ str_opt data_dirs_options_block::do_invalid_string(const variables_map &/*prm_va
 		return "CATH root directory \"" + cath_root_dir.string() + "\" is not a valid input directory";
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

@@ -20,17 +20,15 @@
 
 #include "string_options_block.hpp"
 
-#include <boost/optional.hpp>
-
 #include "cath/common/clone/make_uptr_clone.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::none;
 using ::boost::program_options::options_description;
 using ::boost::program_options::variables_map;
+using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
@@ -63,7 +61,7 @@ void string_options_block::do_add_visible_options_to_description(options_descrip
 /// \returns A string describing the conflict in the options or an empty string if there's none
 str_opt string_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                 ) const {
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

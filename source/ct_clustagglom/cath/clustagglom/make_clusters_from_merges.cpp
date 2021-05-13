@@ -20,10 +20,11 @@
 
 #include "make_clusters_from_merges.hpp"
 
-#include <boost/optional.hpp>
+#include <iostream>
+
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
-#include <boost/range/adaptor/filtered.hpp>
 
 #include "cath/clustagglom/detail/node_info.hpp"
 #include "cath/clustagglom/hierarchy.hpp"
@@ -31,20 +32,18 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 
-#include <iostream>
-
 using namespace ::cath::clust;
 using namespace ::cath::clust::detail;
 using namespace ::cath::common;
 
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::reversed;
-using ::boost::none;
 using ::boost::remove_erase_if;
 using ::boost::sub_range;
 using ::std::cref;
 using ::std::max;
 using ::std::move;
+using ::std::nullopt;
 
 /// \brief Make a vector of iterators into the specified vector of merges that demarcate the
 ///        boundaries of the each of the regions up to (and equal to) each of the successively
@@ -177,7 +176,7 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &prm_merges,
 			for (const auto &x : cutoff_subrange_of_merges) {
 				for (const auto &child_node : { cref( x.node_a ), cref( x.node_b ) } ) {
 					if ( static_cast<bool>( info_of_cutoff_root[ child_node ] ) ) {
-						info_of_cutoff_root[ child_node ] = none;
+						info_of_cutoff_root[ child_node ] = nullopt;
 					}
 				}
 			}

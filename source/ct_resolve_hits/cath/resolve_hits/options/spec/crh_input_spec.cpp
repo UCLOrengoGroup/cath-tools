@@ -27,8 +27,8 @@ using namespace ::cath::rslv;
 using namespace ::cath::seq;
 using namespace ::std::literals::string_literals;
 
-using ::boost::none;
 using ::std::filesystem::path;
+using ::std::nullopt;
 
 constexpr bool                  crh_input_spec::DEFAULT_READ_FROM_STDIN;
 constexpr hits_input_format_tag crh_input_spec::DEFAULT_INPUT_FORMAT;
@@ -96,7 +96,7 @@ crh_input_spec & crh_input_spec::set_input_hits_are_grouped(const bool &prm_inpu
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_input_spec invalid
-///        or none otherwise
+///        or nullopt otherwise
 ///
 /// \relates crh_input_spec
 str_opt cath::rslv::get_invalid_description(const crh_input_spec &prm_spec ///< The crh_input_spec to query
@@ -105,5 +105,5 @@ str_opt cath::rslv::get_invalid_description(const crh_input_spec &prm_spec ///< 
 		return "Cannot read from both a file and stdin"s;
 	}
 
-	return none;
+	return nullopt;
 }

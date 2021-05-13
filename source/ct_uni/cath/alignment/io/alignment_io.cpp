@@ -80,7 +80,6 @@ using ::boost::format;
 using ::boost::is_alpha;
 using ::boost::is_print;
 using ::boost::lexical_cast;
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::to_upper;
 using ::boost::trim;
@@ -94,6 +93,7 @@ using ::std::ios;
 using ::std::istream;
 using ::std::max;
 using ::std::min;
+using ::std::nullopt;
 using ::std::ofstream;
 using ::std::ostream;
 using ::std::ostringstream;
@@ -212,7 +212,7 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 			scores.push_back( numeric_cast<double>( score ) );
 		}
 		else {
-			scores.push_back( none );
+			scores.push_back( nullopt );
 			if ( find_a_result ) {
 				append_position_a_offset_1( new_alignment, ( *find_a_result ) + 1 );
 			}
@@ -388,7 +388,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 					res_name,
 					prm_ostream
 				);
-				data_col.push_back( find_result ? aln_posn_opt( ( *find_result ) + 1 ) : aln_posn_opt( none ) );
+				data_col.push_back( find_result ? aln_posn_opt( ( *find_result ) + 1 ) : aln_posn_opt( nullopt ) );
 				if ( find_result ) {
 					posn = *find_result;
 					++num_present_posns;
@@ -436,7 +436,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 		for (const size_t &entry : indices( new_alignment.num_entries() ) ) {
 			for (const size_t &index : indices( new_alignment.length() ) ) {
 				if ( ! has_position_of_entry_of_index( new_alignment, entry, index ) ) {
-					all_scores[ entry ][ index ] = none;
+					all_scores[ entry ][ index ] = nullopt;
 				}
 			}
 		}
@@ -513,7 +513,7 @@ str_str_pair_vec cath::align::read_ids_and_sequences_from_fasta(istream &prm_ist
 ///       by one residue, the result is a warning rather than an exception being thrown
 ///
 /// \returns A vector of aln_posn_opts corresponding to the letters of the sequence. Each is:
-///           * none if the entry is a '-' character
+///           * nullopt if the entry is a '-' character
 ///           * the index of the corresponding residue in prm_pdb otherwise
 aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string         &prm_sequence_string, ///< The raw sequence string (no headers; no whitespace) to be aligned
                                                             const amino_acid_vec &prm_amino_acids,     ///< The PDB against which the sequence is to be aligned
@@ -539,7 +539,7 @@ aln_posn_opt_vec cath::align::align_sequence_to_amino_acids(const string        
 
 		// If this is a '-' character then add none to the back of new_posns
 		if ( sequence_char == '-' ) {
-			new_posns.push_back( none );
+			new_posns.push_back( nullopt );
 		}
 
 		// Otherwise, it's an amino-acid letter
@@ -858,7 +858,7 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 		const size_t new_pos = numeric_cast<size_t>( distance( common::cbegin( prm_residue_ids ), res_itr ) );
 		if ( new_pos != prm_pos + 1 && ( new_pos != 0 || prm_pos != 0 ) && prm_ostream ) {
 			const size_t jump = new_pos - (prm_pos + 1);
-			const log_to_ostream_guard ostream_log_guard{ prm_ostream.get().get() };
+			const log_to_ostream_guard ostream_log_guard{ prm_ostream->get() };
 			::spdlog::warn( "Missing some residues whilst loading alignment: jumped {} position(s) from residue {} (in "
 			                "position {}) to residue {} (in position {})",
 			                jump,
@@ -869,7 +869,7 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 		}
 		return aln_posn_opt( new_pos );
 	}
-	return aln_posn_opt( none );
+	return aln_posn_opt( nullopt );
 }
 
 

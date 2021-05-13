@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_RAPIDJSON_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_RAPIDJSON_HPP
 
+#include <optional>
+
 #include "cath/common/rapidjson_addenda/to_rapidjson_string.hpp"
 #include "cath/resolve_hits/full_hit.hpp"
 #include "cath/resolve_hits/full_hit_fns.hpp"
@@ -33,10 +35,10 @@ namespace cath {
 
 		/// \brief Write the specified full_hit to the specified rapidjson_writer
 		template <common::json_style Style>
-		void write_to_rapidjson(common::rapidjson_writer<Style> &prm_writer,                     ///< The rapidjson_writer to which the full_hit should be written
-		                        const full_hit                  &prm_full_hit,                   ///< The full_hit to write
-		                        const crh_segment_spec_opt      &prm_segment_spec = boost::none, ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
-		                        const full_hit_list_opt         &prm_hits         = boost::none  ///< An optional full_hit_list (from which the specified full_hit is drawn), which can be used for including the full_hit's resolved boundaries
+		void write_to_rapidjson(common::rapidjson_writer<Style> &prm_writer,                        ///< The rapidjson_writer to which the full_hit should be written
+		                        const full_hit                  &prm_full_hit,                      ///< The full_hit to write
+		                        const crh_segment_spec_opt      &prm_segment_spec = ::std::nullopt, ///< An optional crh_segment_spec which can be used for including each full_hit's trimmed boundaries and resolved boundaries
+		                        const full_hit_list_opt         &prm_hits         = ::std::nullopt  ///< An optional full_hit_list (from which the specified full_hit is drawn), which can be used for including the full_hit's resolved boundaries
 		                        ) {
 			prm_writer.start_object();
 			prm_writer.write_key_value( full_hit::get_label_name(),       prm_full_hit.get_label()                   );
@@ -74,7 +76,7 @@ namespace cath {
 						the_full_hit,
 						0,
 						prm_segment_spec,
-						boost::make_optional( prm_full_hit_list )
+						::std::make_optional( prm_full_hit_list )
 					)
 				);
 			}

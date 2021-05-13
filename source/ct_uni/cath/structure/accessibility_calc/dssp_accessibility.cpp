@@ -20,8 +20,12 @@
 
 #include "dssp_accessibility.hpp"
 
+#include <cmath>
+#include <optional>
+
 #include <boost/math/constants/constants.hpp>
 #include <boost/range/algorithm/count.hpp>
+#include <boost/range/algorithm/transform.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
 
@@ -34,8 +38,6 @@
 #include "cath/scan/spatial_index/spatial_index.hpp"
 #include "cath/structure/geometry/coord.hpp"
 
-#include <cmath>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
@@ -45,11 +47,12 @@ using namespace ::cath::scan::detail;
 using namespace ::cath::sec::detail;
 
 using ::boost::irange;
-using ::boost::make_optional;
 using ::boost::math::constants::pi;
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::count;
+using ::boost::range::transform;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::plus;
 using ::std::sqrt;
 using ::std::vector;
@@ -278,7 +281,7 @@ doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &prm_pdb ///< T
 	);
 
 	const coord_vec dssp_ball_points = make_dssp_ball_points();
-	using coord_opt = boost::optional<coord>;
+	using coord_opt = ::std::optional<coord>;
 	using coord_opt_vec = std::vector<coord_opt>;
 	coord_opt_vec ball_points( dssp_ball_points.size() );
 
@@ -320,7 +323,7 @@ doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &prm_pdb ///< T
 									for (auto &ball_point : ball_points) {
 										if ( ball_point ) {
 											if ( squared_distance_between_points( *ball_point, that_point ) < that_radius_sq ) {
-												ball_point = none;
+												ball_point = nullopt;
 											}
 										}
 									}
@@ -331,7 +334,7 @@ doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &prm_pdb ///< T
 
 					return
 						  sphere_surface_area
-						* ( numeric_cast<double>( ball_points.size() ) - numeric_cast<double>( count( ball_points, none ) ) )
+						* ( numeric_cast<double>( ball_points.size() ) - numeric_cast<double>( count( ball_points, nullopt ) ) )
 						/ numeric_cast<double>( ball_points.size() );
 				}
 			);

@@ -37,8 +37,8 @@ using namespace ::cath::common;
 using namespace ::std;
 
 using ::boost::algorithm::erase_all_copy;
-using ::boost::none;
 using ::boost::numeric_cast;
+using ::std::nullopt;
 
 namespace cath {
 	namespace test {
@@ -75,7 +75,7 @@ alignment cath::test::alignment_gap_test_suite_fixture::make_gap_alignment_of_st
 				++counter;
 			}
 			else if ( character == '-' ) {
-				positions.push_back( none );
+				positions.push_back( nullopt );
 			}
 			else {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception(

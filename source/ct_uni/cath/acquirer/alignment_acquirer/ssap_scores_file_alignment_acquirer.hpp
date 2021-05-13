@@ -22,8 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_SSAP_SCORES_FILE_ALIGNMENT_ACQUIRER_HPP
 
 #include <filesystem>
-
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "cath/alignment/align_type_aliases.hpp"
@@ -57,7 +56,7 @@ namespace cath {
 		                                                               const size_size_doub_tpl_vec &,
 		                                                               const ::std::filesystem::path &,
 		                                                               const aln_glue_style &,
-		                                                               const ostream_ref_opt & = boost::none);
+		                                                               const ostream_ref_opt & = ::std::nullopt);
 
 	} // namespace align
 } // namespace cath

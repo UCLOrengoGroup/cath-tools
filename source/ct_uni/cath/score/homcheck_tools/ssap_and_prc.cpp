@@ -20,6 +20,10 @@
 
 #include "ssap_and_prc.hpp"
 
+#include <cmath>
+#include <optional>
+#include <string>
+
 #include <boost/lexical_cast.hpp>
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
@@ -27,15 +31,12 @@
 #include "cath/file/ssap_scores_file/ssap_scores_entry.hpp"
 #include "cath/score/score_classification/rbf_model.hpp"
 
-#include <cmath>
-#include <string>
-
 using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::homcheck;
 using namespace ::cath::score;
 
-using ::boost::optional;
+using ::std::optional;
 using ::std::ostream;
 using ::std::ostringstream;
 using ::std::string;

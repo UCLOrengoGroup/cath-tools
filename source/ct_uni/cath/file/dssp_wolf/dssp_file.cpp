@@ -20,10 +20,12 @@
 
 #include "dssp_file.hpp"
 
+#include <optional>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 
 #include "cath/biocore/residue_id.hpp"
@@ -51,6 +53,7 @@ using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
 using ::boost::numeric_cast;
 using ::boost::range::count_if;
+using ::std::nullopt;
 
 /// \brief Ctor for dssp_file
 dssp_file::dssp_file(residue_vec prm_dssp_residues ///< TODOCUMENT
@@ -83,7 +86,7 @@ dssp_file::const_iterator dssp_file::end() const {
 /// \relates dssp_file
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
-///       (fix all errors, *then* provide default of boost::none)
+///       (fix all errors, *then* provide default of ::std::nullopt)
 protein cath::file::protein_from_dssp_and_pdb(const dssp_file        &prm_dssp_file,        ///< The dssp_file object for a given structure
                                               const pdb              &prm_pdb_file,         ///< The dssp_file object for a given structure
                                               const dssp_skip_policy &prm_dssp_skip_policy, ///< Whether to exclude residues that are in the PDB but not the DSSP

@@ -54,7 +54,7 @@ namespace cath {
 			display_colour colour;
 
 			/// \brief The resolved boundaries for the hit if this is being rendered as a result
-			///        or none otherwise
+			///        or nullopt otherwise
 			seg_boundary_pair_vec_opt result_boundaries;
 
 		};

@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_LIST_FNS_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_LIST_FNS_HPP
 
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/resolve_hits/full_hit_list.hpp"
 #include "cath/resolve_hits/hit_output_format.hpp"
@@ -59,7 +59,7 @@ namespace cath {
 		                                             const crh_segment_spec &);
 
 		std::string to_json_string_with_compact_fullhits(const full_hit_list &,
-		                                                 const crh_segment_spec_opt & = boost::none,
+		                                                 const crh_segment_spec_opt & = ::std::nullopt,
 		                                                 const size_t & = 0);
 
 	} // namespace rslv

@@ -23,8 +23,8 @@
 
 #include <type_traits>
 
-#include <boost/mpl/vector.hpp>
 #include <boost/mpl/find_if.hpp>
+#include <boost/mpl/vector.hpp>
 
 namespace cath { namespace score { class geometric_mean_length_getter; } }
 namespace cath { namespace score { class length_of_first_getter; } }

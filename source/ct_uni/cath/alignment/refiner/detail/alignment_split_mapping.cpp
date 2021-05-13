@@ -43,9 +43,9 @@ using namespace ::cath::align::detail;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::lower_bound;
+using ::std::nullopt;
 
 /// \brief Ctor for alignment_split_mapping
 ///
@@ -200,7 +200,7 @@ size_opt alignment_split_mapping::entry_of_orig_aln_entry(const size_t &prm_orig
 		prm_orig_aln_entry
 	);
 	if ( find_itr == common::cend( orig_aln_entries ) || *find_itr != prm_orig_aln_entry ) {
-		return none;
+		return nullopt;
 //		BOOST_THROW_EXCEPTION(invalid_argument_exception("Entry in original alignment doesn't appear in this alignment_split_mapping"));
 	}
 	return numeric_cast<size_t>( distance( common::cbegin( orig_aln_entries ), find_itr ) );

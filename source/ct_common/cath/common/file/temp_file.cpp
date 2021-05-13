@@ -37,10 +37,10 @@ using namespace ::cath;
 using namespace ::cath::common;
 
 using ::boost::adaptors::transformed;
-using ::boost::none;
 using ::std::filesystem::path;
 using ::std::filesystem::temp_directory_path;
 using ::std::mt19937;
+using ::std::nullopt;
 using ::std::random_device;
 using ::std::string;
 using ::std::string_view;
@@ -48,7 +48,7 @@ using ::std::uniform_int_distribution;
 
 /// \brief Constructor for temp_file.
 temp_file::temp_file(const string &prm_filename_pattern ///< A pattern for the filename to create with % symbols for characters to be altered (eg ".%%%%-%%%%-%%%%-%%%%.pml")
-                     ) : filename( ! prm_filename_pattern.empty() ? path_opt( temp_filename_of_basename_pattern( prm_filename_pattern ) ) : none ) {
+                     ) : filename( ! prm_filename_pattern.empty() ? path_opt( temp_filename_of_basename_pattern( prm_filename_pattern ) ) : nullopt ) {
 }
 
 /// \brief A function to construct a temporary filename from a pattern.

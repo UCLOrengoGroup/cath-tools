@@ -44,9 +44,9 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::make_optional;
 using ::std::ifstream;
 using ::std::istream;
+using ::std::make_optional;
 using ::std::ostream;
 
 /// \brief Perform clustering according to the specified arguments strings with the specified i/o streams

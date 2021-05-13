@@ -20,8 +20,8 @@
 
 #include "hierarchy_layer.hpp"
 
-#include <boost/format.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include <boost/format.hpp>
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"

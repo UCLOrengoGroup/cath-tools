@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOUR_SPEC_BROAD_DISPLAY_COLOUR_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOUR_SPEC_BROAD_DISPLAY_COLOUR_SPEC_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/display/colour_category.hpp"
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_type_aliases.hpp"

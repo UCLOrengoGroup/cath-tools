@@ -23,6 +23,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <optional>
 #include <set>
 #include <sstream>
 #include <tuple>
@@ -81,9 +82,7 @@ using ::boost::algorithm::any_of;
 using ::boost::algorithm::is_space;
 using ::boost::algorithm::join;
 using ::boost::algorithm::starts_with;
-using ::boost::none;
 using ::boost::numeric_cast;
-using ::boost::optional;
 using ::boost::range::count_if;
 using ::std::filesystem::path;
 using ::std::get;
@@ -92,7 +91,9 @@ using ::std::istream;
 using ::std::istringstream;
 using ::std::make_pair;
 using ::std::make_tuple;
+using ::std::nullopt;
 using ::std::ofstream;
+using ::std::optional;
 using ::std::ostream;
 using ::std::ostringstream;
 using ::std::pair;
@@ -532,7 +533,7 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 			prev_res_id,
 			std::move( prev_atoms )
 		);
-		prev_amino_acid_3_char_code = none;
+		prev_amino_acid_3_char_code = nullopt;
 		prev_atoms                  = pdb_atom_vec{};
 		prev_warned_conflict        = false;
 	};
@@ -1069,7 +1070,7 @@ pdb_size_vec_pair cath::file::backbone_complete_subset_of_pdb(const pdb         
 
 	if ( ! backbone_skipped_residues.empty() && prm_ostream_ref_opt ) {
 		const bool multiple_skippeds = ( backbone_skipped_residues.size() > 1 );
-		const log_to_ostream_guard ostream_log_guard{ prm_ostream_ref_opt.get().get() };
+		const log_to_ostream_guard ostream_log_guard{ prm_ostream_ref_opt->get() };
 
 		::spdlog::warn(
 		  "Ignoring residue{} {} whilst extracting a protein structure from PDB file data because {} have all of N, CA "

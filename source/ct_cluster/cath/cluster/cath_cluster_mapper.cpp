@@ -48,6 +48,7 @@ using namespace ::cath::opts;
 using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
+using ::std::make_optional;
 using ::std::ostream;
 
 /// \brief Perform map-clusters according to the specified arguments strings with the specified i/o streams
@@ -142,9 +143,9 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &prm_input_sp
 		const new_cluster_data new_to_clusters = parse_new_membership( the_istream, seq_ider, ref( prm_stderr ) );
 		istream_wrapper.close();
 
-		const old_cluster_data_opt old_from_clusters = make_optional_if_fn(
+		const old_cluster_data_opt old_from_clusters = if_then_optional(
 			static_cast<bool>( job_old_clustmemb_file ),
-			[&] { return parse_old_membership( *job_old_clustmemb_file, seq_ider, ref( prm_stderr )  ); }
+			parse_old_membership( *job_old_clustmemb_file, seq_ider, ref( prm_stderr )  )
 		);
 
 		const auto results = map_clusters(

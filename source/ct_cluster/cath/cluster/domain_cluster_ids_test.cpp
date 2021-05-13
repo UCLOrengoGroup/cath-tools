@@ -18,39 +18,39 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "cath/cluster/domain_cluster_ids.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::seq;
 
-using ::boost::none;
+using ::std::nullopt;
 
 BOOST_AUTO_TEST_SUITE(domain_cluster_ids_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	domain_cluster_ids the_ids;
 
-	BOOST_CHECK      (        the_ids.empty()               );
-	BOOST_CHECK_EQUAL(        the_ids.size(),          0    );
+	BOOST_CHECK      (        the_ids.empty()                  );
+	BOOST_CHECK_EQUAL(        the_ids.size(),          0       );
 
 	the_ids.emplace_back(
-		none,
+		nullopt,
 		5ul
 	);
 
-	BOOST_CHECK      (      ! the_ids.empty()               );
-	BOOST_CHECK_EQUAL(        the_ids.size(),          1    );
+	BOOST_CHECK      (      ! the_ids.empty()                  );
+	BOOST_CHECK_EQUAL(        the_ids.size(),          1       );
 
-	BOOST_CHECK_EQUAL(        the_ids[ 0 ].segments,   none );
-	BOOST_CHECK_EQUAL(        the_ids[ 0 ].cluster_id, 5    );
+	BOOST_CHECK_EQUAL(        the_ids[ 0 ].segments,   nullopt );
+	BOOST_CHECK_EQUAL(        the_ids[ 0 ].cluster_id, 5       );
 
-	BOOST_CHECK_EQUAL( front( the_ids ).segments,      none );
-	BOOST_CHECK_EQUAL( front( the_ids ).cluster_id,    5    );
+	BOOST_CHECK_EQUAL( front( the_ids ).segments,      nullopt );
+	BOOST_CHECK_EQUAL( front( the_ids ).cluster_id,    5       );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

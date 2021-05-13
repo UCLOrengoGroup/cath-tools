@@ -21,9 +21,9 @@
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/size_t_literal.hpp"
-#include "display_colour_spec.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/global_test_constants.hpp"
+#include "display_colour_spec.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;

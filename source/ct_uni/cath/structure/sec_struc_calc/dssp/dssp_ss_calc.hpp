@@ -21,18 +21,17 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_DSSP_SS_CALC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_DSSP_SS_CALC_HPP
 
-#include <boost/optional/optional.hpp>
+#include <optional>
+#include <vector>
 
 #include "cath/structure/structure_type_aliases.hpp"
-
-#include <vector>
 
 namespace cath { class protein; }
 namespace cath { namespace file { class pdb; } }
 namespace cath { namespace sec { class bifur_hbond; } }
 namespace cath { namespace sec { class bifur_hbond_list; } }
 namespace cath { namespace sec { struct hbond_half; } }
-namespace cath { namespace sec { using hbond_half_opt = boost::optional<hbond_half>; } }
+namespace cath { namespace sec { using hbond_half_opt = ::std::optional<hbond_half>; } }
 namespace cath { namespace sec { using hbond_half_opt_pair = std::pair<hbond_half_opt, hbond_half_opt>; } }
 
 namespace cath {
@@ -116,7 +115,7 @@ namespace cath {
 			                          const beta_bridge &);
 
 			/// \brief Type alias for an optional beta_bridge
-			using beta_bridge_opt     = boost::optional<beta_bridge>;
+			using beta_bridge_opt     = ::std::optional<beta_bridge>;
 
 			/// \brief Type alias for a vector of beta_bridge values
 			using beta_bridge_vec     = std::vector<beta_bridge>;
@@ -150,7 +149,7 @@ namespace cath {
 			                         const size_t &,
 			                         const size_t &);
 
-			boost::optional<helix_category> n_helix_cat(const bifur_hbond_list &,
+			::std::optional<helix_category> n_helix_cat(const bifur_hbond_list &,
 			                                            const size_vec &,
 			                                            const size_t &,
 			                                            const size_t & = sec_struc_consts::DEFAULT_HELIX_N);
@@ -243,7 +242,7 @@ namespace cath {
 		                                   const size_vec &);
 
 		sec_struc_type_vec calc_sec_strucs_of_pdb__recalc_backbone_residues(const file::pdb &,
-		                                                                    const ostream_ref_opt & = boost::none);
+		                                                                    const ostream_ref_opt & = ::std::nullopt);
 
 		sec_struc_type_vec calc_sec_strucs_of_backbone_complete_pdb(const file::pdb &);
 

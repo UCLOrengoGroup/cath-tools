@@ -46,9 +46,9 @@ using namespace ::cath::opts;
 using namespace ::cath::sup;
 using namespace ::std::literals::string_literals;
 
-using ::boost::none;
 using ::boost::program_options::variables_map;
 using ::std::istream;
+using ::std::nullopt;
 using ::std::pair;
 using ::std::string;
 using ::std::unique_ptr;
@@ -115,7 +115,7 @@ str_opt cath_superpose_options::do_get_error_or_help_string() const {
 		return "Cannot specify display options because no display is being used in superposition/alignment outputters"s;
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Get a string to prepend to the standard help

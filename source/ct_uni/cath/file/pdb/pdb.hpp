@@ -23,11 +23,12 @@
 
 #include <filesystem>
 #include <iostream>
+#include <optional>
 #include <vector>
 
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 
+#include "cath/chopping/region/region.hpp"
 #include "cath/chopping/region/regions_limiter.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
@@ -109,18 +110,18 @@ namespace cath {
 		                                                            const size_t &);
 
 		size_t get_num_region_limited_backbone_complete_residues(const pdb &,
-		                                                         const chop::region_vec_opt & = boost::none);
+		                                                         const chop::region_vec_opt & = ::std::nullopt);
 
 		size_t get_index_of_region_limited_backbone_complete_index(const pdb &,
 		                                                           const size_t &,
-		                                                           const chop::region_vec_opt & = boost::none);
+		                                                           const chop::region_vec_opt & = ::std::nullopt);
 
 		const pdb_residue & get_residue_of_region_limited_backbone_complete_index(const pdb &,
 		                                                                          const size_t &,
-		                                                                          const chop::region_vec_opt & = boost::none);
+		                                                                          const chop::region_vec_opt & = ::std::nullopt);
 		geom::coord get_residue_ca_coord_of_region_limited_backbone_complete_index(const pdb &,
 		                                                                           const size_t &,
-		                                                                           const chop::region_vec_opt & = boost::none);
+		                                                                           const chop::region_vec_opt & = ::std::nullopt);
 
 
 		residue_id_vec get_backbone_complete_residue_ids_of_first_chain(const pdb &,
@@ -136,19 +137,19 @@ namespace cath {
 		pdb_list read_end_separated_pdb_files(std::istream &);
 
 		std::string to_pdb_file_string(const pdb &,
-		                               const chop::region_vec_opt & = boost::none,
+		                               const chop::region_vec_opt & = ::std::nullopt,
 		                               const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
 		std::ostream & write_pdb_file(std::ostream &,
 		                              const pdb &,
-		                              const chop::region_vec_opt & = boost::none,
+		                              const chop::region_vec_opt & = ::std::nullopt,
 		                              const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
 		void write_pdb_file(const ::std::filesystem::path &,
 		                    const pdb &,
-		                    const chop::region_vec_opt & = boost::none,
+		                    const chop::region_vec_opt & = ::std::nullopt,
 		                    const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
 
 		std::string pdb_file_to_string(const pdb &,
-		                               const chop::region_vec_opt & = boost::none,
+		                               const chop::region_vec_opt & = ::std::nullopt,
 		                               const pdb_write_mode & = pdb_write_mode::ONLY_OR_LAST_PDB);
 
 		amino_acid_vec get_amino_acid_list(const pdb &);
@@ -165,26 +166,26 @@ namespace cath {
 		                                                            const dssp_skip_angle_skipping &);
 
 		pdb_size_vec_pair backbone_complete_subset_of_pdb(const pdb &,
-		                                                  const ostream_ref_opt & = boost::none,
+		                                                  const ostream_ref_opt & = ::std::nullopt,
 		                                                  const dssp_skip_res_skipping & = dssp_skip_res_skipping::DONT_SKIP);
 
 		std::pair<protein, protein_info> build_protein_of_pdb(const pdb &,
-		                                                      const ostream_ref_opt & = boost::none,
+		                                                      const ostream_ref_opt & = ::std::nullopt,
 		                                                      const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES);
 
 		protein build_protein_of_pdb_and_name(const pdb &,
 		                                      const name_set &,
-		                                      const ostream_ref_opt & = boost::none);
+		                                      const ostream_ref_opt & = ::std::nullopt);
 
 		size_set get_protein_res_indices_that_dssp_might_skip(const pdb &,
-		                                                      const ostream_ref_opt & = boost::none);
+		                                                      const ostream_ref_opt & = ::std::nullopt);
 
 		pdb get_regions_limited_pdb(const chop::region_vec_opt &,
 		                            const pdb &);
 
 		pdb backbone_complete_region_limited_subset_of_pdb(const pdb &,
 		                                                   const chop::region_vec_opt &,
-		                                                   const ostream_ref_opt & = boost::none);
+		                                                   const ostream_ref_opt & = ::std::nullopt);
 
 		/// \brief Get whether this PDB is empty of residues
 		inline bool pdb::empty() const {
@@ -222,7 +223,7 @@ namespace cath {
 		}
 
 		/// \brief Find the index of preceding residue in the same chain of the specified PDB
-		///        as the residue at the specified index, or return none if there is none
+		///        as the residue at the specified index, or return nullopt if there is none
 		///
 		/// \relates pdb
 		inline size_opt index_of_preceding_residue_in_same_chain(const pdb    &prm_pdb,  ///< The PDB containing the residues in question
@@ -234,7 +235,7 @@ namespace cath {
 					return index;
 				}
 			}
-			return boost::none;
+			return ::std::nullopt;
 		}
 
 

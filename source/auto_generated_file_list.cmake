@@ -1878,6 +1878,7 @@ set(
 set(
 	TESTSOURCES_CT_COMMON_CATH_COMMON_STRING
 		ct_common/cath/common/string/booled_to_string_test.cpp
+		ct_common/cath/common/string/cath_to_string_test.cpp
 		ct_common/cath/common/string/string_parse_tools_test.cpp
 		ct_common/cath/common/string/sub_string_parser_test.cpp
 )
@@ -1924,7 +1925,6 @@ set(
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_STRING}
 		ct_common/cath/common/temp_check_offset_1_test.cpp
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_TUPLE}
-		ct_common/cath/common/tuple_insertion_operator_test.cpp
 		ct_common/cath/common/type_to_string_test.cpp
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_TYPE_TRAITS}
 )

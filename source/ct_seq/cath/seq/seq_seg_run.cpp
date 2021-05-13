@@ -57,9 +57,9 @@ string cath::seq::get_segments_string(const seq_seg_run &prm_seq_seg_run ///< Th
 	);
 }
 
-/// \brief Generate a string describing the segments of the specified string or an empty string if none
+/// \brief Generate a string describing the segments of the specified string or an empty string if nullopt
 ///
-/// If not none, the result is the same as returned from get_segments_string() prefixed by '/'
+/// If not nullopt, the result is the same as returned from get_segments_string() prefixed by '/'
 ///
 /// \relates seq_seg_run
 string cath::seq::get_segments_suffix_string(const seq_seg_run_opt &prm_seq_seg_run ///< The seq_seg_run whose segments should be described

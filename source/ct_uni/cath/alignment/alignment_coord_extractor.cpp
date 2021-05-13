@@ -20,6 +20,8 @@
 
 #include "alignment_coord_extractor.hpp"
 
+#include <optional>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/throw_exception.hpp>
 
@@ -170,7 +172,7 @@ pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const 
 /// See alignment_coord_extractor for more information
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
-///       (fix all errors, *then* provide default of boost::none)
+///       (fix all errors, *then* provide default of ::std::nullopt)
 pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const alignment                       &prm_alignment,        ///< The alignment to determine which residues should be as close as possible to which
                                                                           const pdb                             &prm_pdb_a,            ///< Coordinates for first structure
                                                                           const pdb                             &prm_pdb_b,            ///< Coordinates for second structure

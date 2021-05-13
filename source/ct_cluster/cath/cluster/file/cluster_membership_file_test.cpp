@@ -18,16 +18,16 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
+
+#include <regex>
 
 #include "cath/cluster/file/cluster_membership_file.hpp"
 #include "cath/cluster/map/map_clusters.hpp"
 #include "cath/cluster/options/spec/clust_mapping_spec.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
-
-#include <regex>
+#include "cath/test/boost_test_print_type.hpp"
 
 namespace cath { namespace test { } }
 
@@ -35,7 +35,7 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::test;
 
-using ::boost::none;
+using ::std::nullopt;
 using ::std::regex;
 using ::std::regex_search;
 using ::std::string;
@@ -109,10 +109,10 @@ BOOST_AUTO_TEST_CASE(old_cluster_data__to_string) {
 
 BOOST_AUTO_TEST_CASE(old_cluster_info_first) {
 	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_size                    (),                                          1 );
-	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_total_sqrt_length       (),                                       none );
-	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_total_mid_point_index   (),                                       none );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_total_sqrt_length       (),                                    nullopt );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_total_mid_point_index   (),                                    nullopt );
 	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( old_data, 0 ).get_lowest_domain_id        (),         "126c3de59272d9c6d2de490d47f9f19d" );
-	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( old_data, 0 ) ),                                       none );
+	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( old_data, 0 ) ),                                    nullopt );
 }
 
 BOOST_AUTO_TEST_CASE(old_cluster_info_second) {
@@ -155,10 +155,10 @@ BOOST_AUTO_TEST_CASE(new_cluster_info_second) {
 
 BOOST_AUTO_TEST_CASE(new_cluster_info_third) {
 	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_size                    (),                                          2 );
-	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_total_sqrt_length       (),                                       none );
-	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_total_mid_point_index   (),                                       none );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_total_sqrt_length       (),                                    nullopt );
+	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_total_mid_point_index   (),                                    nullopt );
 	BOOST_CHECK_EQUAL( get_info_of_cluster_of_id( new_data, 2 ).get_lowest_domain_id        (),         "126c3de59272d9c6d2de490d47f9f19d" );
-	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( new_data, 2 ) ),                                       none );
+	BOOST_CHECK_EQUAL( get_average_mid_point_index( get_info_of_cluster_of_id( new_data, 2 ) ),                                    nullopt );
 }
 
 // BOOST_AUTO_TEST_CASE(map_clusters_does_stuff) {

@@ -22,8 +22,6 @@
 
 #include <filesystem>
 
-#include <boost/optional.hpp>
-
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
@@ -32,13 +30,13 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std::literals::string_literals;
 
-using ::boost::none;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
-using ::std::string;
 using ::std::filesystem::path;
+using ::std::nullopt;
+using ::std::string;
 using ::std::unique_ptr;
 
 const string check_pdb_options_block::PO_PDB_FILE ( "pdb-file"        );
@@ -100,7 +98,7 @@ str_opt check_pdb_options_block::do_invalid_string(const variables_map &/*prm_va
 	}
 
 	// Otherwise return all OK
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

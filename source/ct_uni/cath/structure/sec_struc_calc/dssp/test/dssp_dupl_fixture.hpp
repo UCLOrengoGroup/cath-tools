@@ -22,10 +22,9 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_TEST_DSSP_DUPL_FIXTURE_HPP
 
 #include <filesystem>
+#include <optional>
 #include <utility>
 #include <vector>
-
-#include <boost/optional.hpp>
 
 #include "cath/biocore/residue_name.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -33,7 +32,7 @@
 namespace cath { namespace sec { class bifur_hbond; } }
 namespace cath { namespace sec { class bifur_hbond_list; } }
 namespace cath { namespace sec { struct hbond_half; } }
-namespace cath { namespace sec { using hbond_half_opt = boost::optional<hbond_half>; } }
+namespace cath { namespace sec { using hbond_half_opt = ::std::optional<hbond_half>; } }
 
 namespace cath {
 	namespace sec {
@@ -42,7 +41,7 @@ namespace cath {
 		using dsspfile_hbond     = std::pair<int, double>;
 
 		/// \brief Type alias for an optional dsspfile_hbond
-		using dsspfile_hbond_opt = boost::optional<dsspfile_hbond>;
+		using dsspfile_hbond_opt = ::std::optional<dsspfile_hbond>;
 
 		/// \brief Represent the hbond information stored on one DSSP line for one residue
 		struct dssp_dupl_res final {
@@ -63,8 +62,8 @@ namespace cath {
 		/// \brief Make a null dssp_dupl_res
 		inline dssp_dupl_res make_null_dssp_dupl_res() {
 			return {
-				std::make_pair( boost::none, boost::none ),
-				std::make_pair( boost::none, boost::none ),
+				std::make_pair( ::std::nullopt, ::std::nullopt ),
+				std::make_pair( ::std::nullopt, ::std::nullopt ),
 				0,
 				residue_name{},
 			};

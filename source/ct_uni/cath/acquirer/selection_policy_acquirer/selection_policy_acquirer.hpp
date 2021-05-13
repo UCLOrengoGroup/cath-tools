@@ -21,12 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_SELECTION_POLICY_ACQUIRER_SELECTION_POLICY_ACQUIRER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_SELECTION_POLICY_ACQUIRER_SELECTION_POLICY_ACQUIRER_HPP
 
-#include <boost/shared_ptr.hpp>
-
 #include "cath/alignment/alignment.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
+#include <memory>
 #include <utility>
 
 namespace cath { namespace align { class common_atom_selection_policy; } }

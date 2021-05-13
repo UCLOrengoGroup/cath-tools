@@ -21,9 +21,8 @@
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/boost_addenda/graph/spanning_tree.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
-#include "cath/common/tuple_insertion_operator.hpp"
 #include "cath/common/type_aliases.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;

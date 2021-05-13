@@ -18,13 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "boost/optional/optional_io.hpp"
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/container/id_of_string_view.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 #include <string>
 
@@ -34,7 +34,7 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::test;
 
-using ::boost::make_optional;
+using ::std::make_optional;
 using ::std::string;
 
 namespace cath {

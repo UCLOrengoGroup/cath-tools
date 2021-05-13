@@ -23,11 +23,11 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
-#include <boost/range/numeric.hpp>
+#include <boost/range.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/range/algorithm/stable_sort.hpp>
-#include <boost/range.hpp>
+#include <boost/range/numeric.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/sort_uniq_build.hpp"

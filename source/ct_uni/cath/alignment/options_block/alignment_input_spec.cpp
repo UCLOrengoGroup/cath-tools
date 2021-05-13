@@ -68,7 +68,7 @@ const path & alignment_input_spec::get_ssap_scores_file() const {
 }
 
 /// \brief Getter for a directory in which SSAPs should be performed and then their alignments glued together
-///        or (inner) none for cath-tools to choose a directory to use
+///        or (inner) nullopt for cath-tools to choose a directory to use
 const path_opt_opt & alignment_input_spec::get_do_the_ssaps_dir() const {
 	return do_the_ssaps_dir;
 }
@@ -114,8 +114,8 @@ alignment_input_spec & alignment_input_spec::set_ssap_scores_file(const path &pr
 }
 
 /// \brief Setter for a directory in which SSAPs should be performed and then their alignments glued together
-///        or (inner) none for cath-tools to choose a directory to use
-alignment_input_spec & alignment_input_spec::set_do_the_ssaps_dir(const path_opt &prm_do_the_ssaps_dir ///< A directory in which SSAPs should be performed and then their alignments glued together or (inner) none for cath-tools to choose a directory to use
+///        or (inner) nullopt for cath-tools to choose a directory to use
+alignment_input_spec & alignment_input_spec::set_do_the_ssaps_dir(const path_opt &prm_do_the_ssaps_dir ///< A directory in which SSAPs should be performed and then their alignments glued together or (inner) nullopt for cath-tools to choose a directory to use
                                                                   ) {
 	do_the_ssaps_dir = prm_do_the_ssaps_dir;
 	return *this;

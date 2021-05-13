@@ -123,7 +123,6 @@
 
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/optional/optional_io.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/stable_sort.hpp>
 
@@ -186,7 +185,6 @@ using ::boost::adaptors::reversed;
 using ::boost::algorithm::to_lower_copy;
 using ::boost::irange;
 using ::boost::lexical_cast;
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::stable_sort;
 using ::std::abs;
@@ -196,6 +194,7 @@ using ::std::fill_n;
 using ::std::make_pair;
 using ::std::max;
 using ::std::min;
+using ::std::nullopt;
 using ::std::ofstream;
 using ::std::ostream;
 using ::std::pair;
@@ -330,9 +329,9 @@ prot_prot_pair cath::read_protein_pair(const cath_ssap_options &prm_cath_ssap_op
 	const auto &the_domains      = prm_cath_ssap_options.get_domains();
 	return read_protein_pair(
 		the_ssap_options.get_protein_name_a(),
-		make_optional_if_fn( the_domains.size() > 0, [&] { return the_domains[ 0 ]; } ),
+		if_then_optional( the_domains.size() > 0, the_domains[ 0 ] ),
 		the_ssap_options.get_protein_name_b(),
-		make_optional_if_fn( the_domains.size() > 1, [&] { return the_domains[ 1 ]; } ),
+		if_then_optional( the_domains.size() > 1, the_domains[ 1 ] ),
 		prm_cath_ssap_options.get_data_dirs_spec(),
 		*the_ssap_options.get_protein_source_files(),
 		the_ssap_options.get_opt_domin_file(),
@@ -362,7 +361,7 @@ prot_prot_pair cath::read_protein_pair(const string                  &prm_protei
 		prm_data_dirs_spec,
 		prm_protein_name_b,
 		prm_protein_source_file_set,
-		none,
+		nullopt,
 		prm_domain_b,
 		prm_stderr
 	);
@@ -618,7 +617,7 @@ void cath::align_proteins(const protein                 &prm_protein_a,    ///< 
 
 			global_align_pass = ( pass_ctr > 1 );
 			if (pass_ctr == 1 || (pass_ctr == 2 && global_res_score))  {
-				compare( prm_protein_a, prm_protein_b, pass_ctr, residue_querier(), prm_ssap_options, prm_data_dirs, none );
+				compare( prm_protein_a, prm_protein_b, pass_ctr, residue_querier(), prm_ssap_options, prm_data_dirs, nullopt );
 			}
 		}
 	}
@@ -641,7 +640,7 @@ ssap_scores cath::fast_ssap(const protein                 &prm_protein_a,    ///
 
 	// Perform secondary structure alignment
 	++global_run_counter;
-	const pair<ssap_scores, alignment> scores_and_alignment = compare( prm_protein_a, prm_protein_b, 1, sec_struc_querier(), prm_ssap_options, prm_data_dirs, none );
+	const pair<ssap_scores, alignment> scores_and_alignment = compare( prm_protein_a, prm_protein_b, 1, sec_struc_querier(), prm_ssap_options, prm_data_dirs, nullopt );
 	new_ssap_scores = scores_and_alignment.first;
 	const alignment &sec_struc_alignment = scores_and_alignment.second;
 	fflush(stdout);
@@ -772,7 +771,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &prm_pr
 //			cerr << "Retrieved score:\t" << local_score << ",\twhich normalises to: " << ( local_score / 10.0 + 0.5 ) << endl;
 		}
 		else {
-			scores.push_back( none );
+			scores.push_back( nullopt );
 		}
 	}
 	set_pair_alignment_duplicate_scores( new_alignment, scores );

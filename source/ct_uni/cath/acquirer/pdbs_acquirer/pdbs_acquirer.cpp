@@ -20,6 +20,8 @@
 
 #include "pdbs_acquirer.hpp"
 
+#include <optional>
+
 #include "cath/acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
 #include "cath/acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
 #include "cath/chopping/domain/domain.hpp"
@@ -43,10 +45,10 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::none;
 using ::std::cerr;
 using ::std::istream;
 using ::std::make_pair;
+using ::std::nullopt;
 using ::std::pair;
 using ::std::unique_ptr;
 using ::std::vector;
@@ -59,7 +61,7 @@ unique_ptr<pdbs_acquirer> pdbs_acquirer::clone() const {
 /// \brief TODOCUMENT
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
-///       (fix all errors, *then* provide default of boost::none)
+///       (fix all errors, *then* provide default of ::std::nullopt)
 pdb_list_name_set_list_pair pdbs_acquirer::get_pdbs_and_names(istream    &prm_istream,                ///< TODOCUMENT
                                                               const bool &prm_remove_partial_residues ///< TODOCUMENT
                                                               ) const {
@@ -169,7 +171,7 @@ strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_domains(
                                                                                 ) {
 	auto stripped_domain_vec = strip_domain_vec( std::move( prm_domains ) );
 
-	stripped_domain_vec.second.resize( prm_names_from_acq.size(), none );
+	stripped_domain_vec.second.resize( prm_names_from_acq.size(), nullopt );
 
 	return {
 		std::move( prm_pdbs ),

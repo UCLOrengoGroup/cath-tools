@@ -21,14 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGN_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGN_TYPE_ALIASES_HPP
 
-#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
-#include <boost/optional/optional_fwd.hpp>
-
-#include "cath/alignment/dyn_prog_align/detail/path_step.hpp"
-
 #include <map>
+#include <optional>
 #include <utility>
 #include <vector>
+
+#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
+
+#include "cath/alignment/dyn_prog_align/detail/path_step.hpp"
 
 namespace cath {
 	namespace align {
@@ -41,7 +41,7 @@ namespace cath {
 		/// \brief TODOCUMENT
 		using aln_posn_vec_vec = std::vector<aln_posn_vec>;
 		/// \brief TODOCUMENT
-		using aln_posn_opt = boost::optional<aln_posn_type>;
+		using aln_posn_opt = ::std::optional<aln_posn_type>;
 		/// \brief TODOCUMENT
 		using aln_posn_opt_vec = std::vector<aln_posn_opt>;
 		/// \brief TODOCUMENT
@@ -66,7 +66,7 @@ namespace cath {
 		using size_size_alignment_tuple_vec = std::vector<size_size_alignment_tuple>;
 
 		/// \brief TODOCUMENT
-		using alignment_opt = boost::optional<alignment>;
+		using alignment_opt = ::std::optional<alignment>;
 
 		/// \brief TODOCUMENT
 		using alignment_vec = std::vector<alignment>;

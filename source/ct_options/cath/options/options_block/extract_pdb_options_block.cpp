@@ -31,11 +31,11 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std::literals::string_literals;
 
-using ::boost::none;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
@@ -122,7 +122,7 @@ str_opt extract_pdb_options_block::do_invalid_string(const variables_map &prm_va
 	}
 
 	// Otherwise return all OK
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

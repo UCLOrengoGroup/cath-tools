@@ -20,6 +20,8 @@
 
 #include "pair_alignment.hpp"
 
+#include <optional>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
@@ -37,7 +39,7 @@ using namespace ::cath::common;
 
 using ::boost::adaptors::filtered;
 using ::boost::algorithm::any_of;
-using ::boost::make_optional;
+using ::std::make_optional;
 
 /// \brief TODOCUMENT
 ///
@@ -131,7 +133,7 @@ aln_posn_type cath::align::get_a_position_of_index(const alignment &prm_alignmen
                                                    const size_t    &prm_index      ///< The index to query
                                                    ) {
 	// This uses get_position_of_entry_of_index() so that it benefits from the check that will
-	// ensure errors result in an invalid_error_exception rather than an exception from boost::optional
+	// ensure errors result in an invalid_error_exception rather than an exception from ::std::optional
 	return get_position_of_entry_of_index( prm_alignment, alignment::PAIR_A_IDX, prm_index );
 }
 
@@ -142,7 +144,7 @@ aln_posn_type cath::align::get_b_position_of_index(const alignment &prm_alignmen
                                                    const size_t    &prm_index      ///< The index to query
                                                    ) {
 	// This uses get_position_of_entry_of_index() so that it benefits from the check that will
-	// ensure errors result in an invalid_error_exception rather than an exception from boost::optional
+	// ensure errors result in an invalid_error_exception rather than an exception from ::std::optional
 	return get_position_of_entry_of_index( prm_alignment, alignment::PAIR_B_IDX, prm_index );
 }
 

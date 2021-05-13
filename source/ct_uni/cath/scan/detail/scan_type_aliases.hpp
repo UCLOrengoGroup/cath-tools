@@ -26,12 +26,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_TYPE_ALIASES_HPP
 
+#include <optional>
+
 #include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/geometries/point.hpp>
-#include <boost/optional/optional_fwd.hpp>
-// #include <boost/units/base_units/information/byte.hpp>
 #include <boost/units/systems/information.hpp>
 #include <boost/units/systems/information/byte.hpp>
 
@@ -78,7 +78,7 @@ namespace cath {
 			using rep_rep_pair        = std::pair<res_rep_index_type, res_rep_index_type>;
 
 			/// \brief Type alias for an optional pair of representative residue indices
-			using rep_rep_pair_opt    = boost::optional<rep_rep_pair>;
+			using rep_rep_pair_opt    = ::std::optional<rep_rep_pair>;
 
 			/// \brief Type alias for a vector of scan_structure_data
 			using scan_structure_data_vec      = std::vector<scan_structure_data>;
@@ -180,10 +180,10 @@ namespace cath {
 		using durn_mem_pair     = std::pair<hrc_duration, info_quantity>;
 
 		// /// \brief TODOCUMENT
-		// using durn_mem_pair_opt = boost::optional<durn_mem_pair>;
+		// using durn_mem_pair_opt = ::std::optional<durn_mem_pair>;
 
 		/// \brief TODOCUMENT
-		using hrc_duration_opt  = boost::optional<hrc_duration>;
+		using hrc_duration_opt  = ::std::optional<hrc_duration>;
 
 		/// \brief Type alias for a vector of quad_criteria
 		using quad_criteria_vec = std::vector<quad_criteria>;

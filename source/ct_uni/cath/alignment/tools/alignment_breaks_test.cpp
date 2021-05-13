@@ -23,10 +23,10 @@
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/io/align_scaffold.hpp"
 #include "cath/alignment/tools/alignment_breaks.hpp"
-#include "cath/common/pair_insertion_operator.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 //#include "cath/alignment/test/alignment_fixture.hpp"
 //#include "cath/common/exception/invalid_argument_exception.hpp"
 

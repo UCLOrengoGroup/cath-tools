@@ -52,6 +52,7 @@
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/file/open_fstream.hpp"
+#include "cath/common/optional/make_optional_if.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/detail/calc_hit_prune_builder.hpp"
 #include "cath/resolve_hits/first_hit_is_better.hpp"
@@ -68,8 +69,6 @@ using ::boost::adaptors::filtered;
 using ::boost::empty;
 using ::boost::integer_range;
 using ::boost::irange;
-using ::boost::make_optional;
-using ::boost::none;
 using ::boost::numeric_cast;
 using ::boost::range::lower_bound;
 using ::boost::range::max_element;
@@ -86,6 +85,8 @@ using ::std::filesystem::path;
 using ::std::find_if;
 using ::std::ifstream;
 using ::std::istream;
+using ::std::make_optional;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::pair;
 using ::std::string;
@@ -388,37 +389,36 @@ ostream & cath::rslv::operator<<(ostream             &prm_ostream,      ///< The
 }
 
 /// \brief Get the maximum stop residue of all the hits in the specified calc_hit_list
-///        or none if the calc_hit_list is empty
+///        or nullopt if the calc_hit_list is empty
 ///
 /// \relates calc_hit_list
 residx_opt cath::rslv::get_max_stop(const calc_hit_list &prm_calc_hit_list ///< The calc_hit_list to query
                                     ) {
-	// Can't just use make_optional(bool, T) because the second part shouldn't be evaluated if prm_full_hit_list's empty
-	return prm_calc_hit_list.empty()
-		? none
-		: make_optional( get_stop_res_index( *max_element(
+	return if_then_optional(
+		! prm_calc_hit_list.empty(),
+		get_stop_res_index( *max_element(
 			prm_calc_hit_list,
 			[] (const calc_hit &x, const calc_hit &y) {
 				return get_stop_arrow( x ) < get_stop_arrow( y );
-		} ) ) );
+		} ) )
+	);
 }
 
-
 /// \brief Get the best (ie maximum) score of all the hits in the specified calc_hit_list
-///        or none if the calc_hit_list is empty
+///        or nullopt if the calc_hit_list is empty
 ///
 /// \relates calc_hit_list
 resscr_opt cath::rslv::get_best_score(const calc_hit_list &prm_calc_hit_list ///< The calc_hit_list to query
                                       ) {
-	// Can't just use make_optional(bool, T) because the second part shouldn't be evaluated if prm_full_hit_list's empty
-	return prm_calc_hit_list.empty()
-		? none
-		: make_optional( max_element(
+	return if_then_optional(
+		! prm_calc_hit_list.empty(),
+		max_element(
 			prm_calc_hit_list,
 			[] (const calc_hit &x, const calc_hit &y) {
 				return x.get_score() < y.get_score();
 			}
-		)->get_score() );
+		)->get_score()
+	);
 }
 
 /// \brief Find the first calc_hit in the specified calc_hit_list that stops at or after the specified residue boundary

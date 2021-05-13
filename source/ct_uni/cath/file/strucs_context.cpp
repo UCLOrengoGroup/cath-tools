@@ -46,6 +46,7 @@ using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::range::count_if;
 using ::std::hash;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief Build a strucs_context from the specified one that contains the backbone-complete subsets of the PDBs

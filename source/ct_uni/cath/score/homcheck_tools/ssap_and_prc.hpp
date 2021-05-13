@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SSAP_AND_PRC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_SSAP_AND_PRC_HPP
 
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/file/prc_scores_file/prc_scores_entry.hpp"
 #include "cath/file/ssap_scores_file/ssap_scores_entry.hpp"
@@ -48,7 +48,7 @@ namespace cath {
 			double magic_function_score;
 
 			/// \brief The SVM score for this SSAP and PRC pair which may or may not get populated
-			boost::optional<double> svm_score;
+			::std::optional<double> svm_score;
 
 		public:
 			ssap_and_prc(file::ssap_scores_entry,
@@ -63,7 +63,7 @@ namespace cath {
 			const file::prc_scores_entry & get_prc() const;
 			const double & get_magic_function_score() const;
 
-			const boost::optional<double> & get_svm_score_opt() const;
+			const ::std::optional<double> & get_svm_score_opt() const;
 		};
 
 		double magic_function(const file::ssap_scores_entry &,

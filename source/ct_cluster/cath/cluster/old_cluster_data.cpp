@@ -29,8 +29,8 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 
 using ::boost::adaptors::transformed;
-using ::boost::optional;
 using ::boost::algorithm::join;
+using ::std::optional;
 
 /// \brief Generate a string describing the specified old_cluster_data
 ///
@@ -60,7 +60,7 @@ std::string cath::clust::to_string(const old_cluster_data &prm_old_cluster_data 
 		+ " } ]";
 }
 
-/// \brief Get the largest number if the names are all numeric or none otherwise
+/// \brief Get the largest number if the names are all numeric or nullopt otherwise
 ///
 /// \relates old_cluster_data
 optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers(const old_cluster_data &prm_old_cluster_data ///< The old_cluster_data to describe
@@ -72,7 +72,7 @@ optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers(co
 
 /// \brief Get the largest number if the names are all numeric
 ///        or prm_value if no old_cluster_data is present
-///        or none if the cluster names aren't all numeric
+///        or nullopt if the cluster names aren't all numeric
 ///
 /// \relates old_cluster_data
 optional<ptrdiff_t> cath::clust::largest_number_if_names_all_numeric_integers_of_val_if_none(const old_cluster_data_opt &prm_old_cluster_data, ///< The old_cluster_data to describe

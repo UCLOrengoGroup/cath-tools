@@ -21,10 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_FIRST_RESULT_IF_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_HOMCHECK_TOOLS_FIRST_RESULT_IF_HPP
 
+#include <optional>
+#include <vector>
+
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/sort.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -34,9 +36,6 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/score/homcheck_tools/ssaps_and_prcs_of_query.hpp"
-
-#include <vector>
-
 
 namespace cath { namespace homcheck { class ssaps_and_prcs_of_query; } }
 
@@ -50,7 +49,7 @@ namespace cath {
 			auto first_result_if_impl(const RES &prm_results,   ///< The results to query
 			                          LT_FN      prm_less_than, ///< The less-than function to determine which results should come first ("lower" comes earlier)
 			                          PRED_FN    prm_pred       ///< The predicate to specify acceptable results
-			                          ) -> decltype( boost::make_optional( std::cref( prm_results[ 0 ] ) ) ) {
+			                          ) -> decltype( ::std::make_optional( std::cref( prm_results[ 0 ] ) ) ) {
 				auto indices = common::copy_build<size_vec>( common::indices( prm_results.size() ) );
 				boost::range::sort(
 					indices,
@@ -64,8 +63,8 @@ namespace cath {
 						return prm_pred( prm_results[ x ] );
 					}
 				);
-				return ( find_itr != common::cend( indices ) ) ? boost::make_optional( std::cref( prm_results[ *find_itr ] ) )
-				                                               : boost::none;
+				return ( find_itr != common::cend( indices ) ) ? ::std::make_optional( std::cref( prm_results[ *find_itr ] ) )
+				                                               : ::std::nullopt;
 			}
 
 			/// \brief Return the first N results ordered by the specified less-than function that meet the specified predicate

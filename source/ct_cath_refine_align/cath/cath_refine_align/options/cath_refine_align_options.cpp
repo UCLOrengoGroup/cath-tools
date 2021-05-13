@@ -55,9 +55,9 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::boost::none;
 using ::boost::program_options::variables_map;
 using ::std::istream;
+using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
@@ -117,7 +117,7 @@ str_opt cath_refine_align_options::do_get_error_or_help_string() const {
 		return "Cannot specify display options because no display is being used in superposition/alignment outputters"s;
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Get a string to prepend to the standard help

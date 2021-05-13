@@ -20,6 +20,8 @@
 
 #include "cath_superposer.hpp"
 
+#include <optional>
+
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include <spdlog/spdlog.h>
@@ -49,6 +51,8 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 using namespace ::std;
+
+using ::std::nullopt;
 
 /// \brief Perform a cath-superpose job as specified by the cath_superpose_options argument
 ///
@@ -97,7 +101,7 @@ void cath_superposer::superpose(const cath_superpose_options &prm_cath_superpose
 /// \relates cath_superpose_options
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than ostream
-///       (fix all errors, *then* provide default of boost::none)
+///       (fix all errors, *then* provide default of ::std::nullopt)
 superposition_context cath_superposer::get_superposition_context(const cath_superpose_options &prm_cath_sup_opts, ///< TODOCUMENT
                                                                  istream                      &prm_istream,       ///< TODOCUMENT
                                                                  ostream                      &prm_stderr         ///< TODOCUMENT

@@ -21,7 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_DETAIL_CLUST_ID_POT_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_DETAIL_CLUST_ID_POT_HPP
 
-#include <boost/optional.hpp>
+#include <optional>
+
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/min_element.hpp>
 
@@ -93,7 +94,7 @@ namespace cath {
 					std::swap( jumbled_values[ x_index ], jumbled_values.back() );
 					indices[ jumbled_values[ x_index ] ] = x_index;
 				}
-				indices[ jumbled_values.back() ] = boost::none;
+				indices[ jumbled_values.back() ] = ::std::nullopt;
 				jumbled_values.pop_back();
 				return *this;
 			}

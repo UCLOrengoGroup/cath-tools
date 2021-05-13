@@ -131,17 +131,15 @@ namespace cath {
 		/// \brief Get the average mid point index of the specified cluster
 		inline doub_opt get_average_mid_point_index(const cluster_info &prm_cluster_info ///< The cluster_info to query
 		                                            ) {
-			return common::make_optional_if_fn(
+			return if_then_optional(
 				prm_cluster_info.get_total_sqrt_length()
 				&&
 				prm_cluster_info.get_total_mid_point_index(),
-				[&] {
-					return (
-						static_cast<double>( *prm_cluster_info.get_total_mid_point_index() )
-						/
-						static_cast<double>(  prm_cluster_info.get_size                 () )
-					);
-				}
+				(
+					static_cast<double>( *prm_cluster_info.get_total_mid_point_index() )
+					/
+					static_cast<double>(  prm_cluster_info.get_size                 () )
+				)
 			);
 		}
 

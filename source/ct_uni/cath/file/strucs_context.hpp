@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_STRUCS_CONTEXT_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_STRUCS_CONTEXT_HPP
 
+#include <optional>
+
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
@@ -41,7 +43,7 @@ namespace cath {
 			/// \brief The IDs of the structures
 			name_set_list            name_sets;
 
-			/// \brief The key regions of each structure to which this refers (or none where it refers to all of a structure)
+			/// \brief The key regions of each structure to which this refers (or nullopt where it refers to all of a structure)
 			chop::region_vec_opt_vec regions;
 
 		public:
@@ -83,7 +85,7 @@ namespace cath {
 		/// \brief Ctor for strucs_context
 		inline strucs_context::strucs_context(pdb_list                 prm_pdbs,      ///< The PDBs of the structures
 		                                      name_set_list            prm_name_sets, ///< The IDs of the structures
-		                                      chop::region_vec_opt_vec prm_regions    ///< The key regions of each structure to which this refers (or none where it refers to all of a structure)
+		                                      chop::region_vec_opt_vec prm_regions    ///< The key regions of each structure to which this refers (or nullopt where it refers to all of a structure)
 		                                      ) : pdbs      { std::move( prm_pdbs      ) },
 		                                          name_sets { std::move( prm_name_sets ) },
 		                                          regions   { std::move( prm_regions   ) } {
@@ -102,7 +104,7 @@ namespace cath {
 			return name_sets;
 		}
 
-		/// \brief Getter for the key regions of each structure to which this refers (or none where it refers to all of a structure)
+		/// \brief Getter for the key regions of each structure to which this refers (or nullopt where it refers to all of a structure)
 		inline const chop::region_vec_opt_vec & strucs_context::get_regions() const {
 			return regions;
 		}
@@ -124,10 +126,10 @@ namespace cath {
 		}
 
 		strucs_context strucs_context_of_backbone_complete_subset_pdbs(const strucs_context &,
-		                                                               const ostream_ref_opt & = boost::none);
+		                                                               const ostream_ref_opt & = ::std::nullopt);
 
 		strucs_context strucs_context_of_backbone_complete_region_limited_subset_pdbs(const strucs_context &,
-		                                                                              const ostream_ref_opt & = boost::none);
+		                                                                              const ostream_ref_opt & = ::std::nullopt);
 
 		void restrict_pdbs(strucs_context &);
 

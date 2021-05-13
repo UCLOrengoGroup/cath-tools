@@ -24,12 +24,14 @@
 #include <cstddef>
 #include <filesystem>
 #include <iostream>
+#include <optional>
 #include <string>
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/alignment.hpp"
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
+#include "cath/chopping/region/region.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
@@ -117,21 +119,21 @@ namespace cath {
 		                                                const alignment &,
 		                                                const protein &,
 		                                                const protein &,
-		                                                const chop::region_vec_opt & = boost::none,
-		                                                const chop::region_vec_opt & = boost::none);
+		                                                const chop::region_vec_opt & = ::std::nullopt,
+		                                                const chop::region_vec_opt & = ::std::nullopt);
 
 		std::ostream & output_alignment_to_cath_ssap_legacy_format(std::ostream &,
 		                                                           const alignment &,
 		                                                           const protein &,
 		                                                           const protein &,
-		                                                           const chop::region_vec_opt & = boost::none,
-		                                                           const chop::region_vec_opt & = boost::none);
+		                                                           const chop::region_vec_opt & = ::std::nullopt,
+		                                                           const chop::region_vec_opt & = ::std::nullopt);
 
 		std::string to_cath_ssap_legacy_format_alignment_string(const alignment &,
 		                                                        const protein &,
 		                                                        const protein &,
-		                                                        const chop::region_vec_opt & = boost::none,
-		                                                        const chop::region_vec_opt & = boost::none);
+		                                                        const chop::region_vec_opt & = ::std::nullopt,
+		                                                        const chop::region_vec_opt & = ::std::nullopt);
 
 		void write_alignment_as_fasta_alignment(const ::std::filesystem::path &,
 		                                        const alignment &,

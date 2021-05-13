@@ -110,7 +110,7 @@ const score_colour_handler & cath::get_score_colour_handler(const display_colour
 	if ( ! has_score_colour_handler( prm_display_colourer ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot retrieve score_colour_handler from display_colourer which doesn't have one"));
 	}
-	return prm_display_colourer.get_score_colour_handler_opt().get();
+	return *prm_display_colourer.get_score_colour_handler_opt();
 }
 
 /// \brief TODOCUMENT

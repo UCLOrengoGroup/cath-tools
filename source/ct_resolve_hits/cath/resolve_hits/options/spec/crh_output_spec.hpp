@@ -23,8 +23,6 @@
 
 #include <filesystem>
 
-#include <boost/optional.hpp>
-
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/options/spec/hit_boundary_output.hpp"

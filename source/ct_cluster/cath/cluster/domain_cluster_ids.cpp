@@ -43,7 +43,7 @@ string cath::clust::to_string(const domain_cluster_id &prm_dom_clust_id,   ///< 
 	return
 		(
 			prm_dom_clust_id.segments
-			? ( "[" + get_segments_string( prm_dom_clust_id.segments.get() ) + "]" )
+			? ( "[" + get_segments_string( *prm_dom_clust_id.segments ) + "]" )
 			: "*"
 		)
 		+ (

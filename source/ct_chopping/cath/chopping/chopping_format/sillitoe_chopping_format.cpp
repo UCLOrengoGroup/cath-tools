@@ -20,8 +20,8 @@
 
 #include "sillitoe_chopping_format.hpp"
 
-#include <boost/range/adaptor/transformed.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/common/boost_addenda/make_string_ref.hpp"

@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_DOMAIN_DOMAIN_HPP
 
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/chopping/region/region.hpp"

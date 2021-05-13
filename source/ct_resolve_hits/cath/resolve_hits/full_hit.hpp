@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_HPP
 
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/resolve_hits/file/alnd_rgn.hpp"
 #include "cath/resolve_hits/hit_extras.hpp"

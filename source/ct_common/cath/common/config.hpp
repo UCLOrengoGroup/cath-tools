@@ -1,5 +1,5 @@
 /// \file
-/// \brief The path_type_aliases header
+/// \brief The config header
 
 /// \copyright
 /// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
@@ -18,24 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PATH_TYPE_ALIASES_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PATH_TYPE_ALIASES_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONFIG_HPP
+#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONFIG_HPP
 
-#include <filesystem>
-#include <optional>
-#include <vector>
+namespace cath::common {
 
-namespace cath {
+	constexpr bool IS_IN_DEBUG_MODE =
+#ifndef NDEBUG
+	  false
+#else
+	  true
+#endif
+	  ;
 
-	/// \brief TODOCUMENT
-	using path_vec     = std::vector<::std::filesystem::path>;
+} // namespace cath::common
 
-	/// \brief TODOCUMENT
-	using path_opt     = ::std::optional<::std::filesystem::path>;
-
-	/// \brief Type alias for an optional path_opt
-	using path_opt_opt = ::std::optional<path_opt>;
-
-} // namespace cath
-
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PATH_TYPE_ALIASES_HPP
+#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONFIG_HPP

@@ -23,10 +23,10 @@
 
 #include <filesystem>
 #include <iostream>
-
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/chopping/chopping_type_aliases.hpp"
+#include "cath/chopping/region/region.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/name_set/name_set.hpp"
 
@@ -61,32 +61,32 @@ namespace cath {
 	                                       const ::std::filesystem::path &,
 	                                       const file::dssp_skip_policy &,
 	                                       const std::string & = "",
-	                                       const ostream_ref_opt & = boost::none );
+	                                       const ostream_ref_opt & = ::std::nullopt );
 
 	protein read_protein_from_pdb(const ::std::filesystem::path &,
 	                              const std::string & = "",
-	                              const chop::region_vec_opt & = boost::none,
+	                              const chop::region_vec_opt & = ::std::nullopt,
 	                              std::ostream & = std::cerr);
 
 
 
 	protein make_protein_from_pdb_and_calc_dssp(const file::pdb &,
 	                                            const std::string &,
-	                                            const ostream_ref_opt & = boost::none );
+	                                            const ostream_ref_opt & = ::std::nullopt );
 
 	protein make_protein_from_pdb_and_calc_dssp_and_sec(const file::pdb &,
 	                                                    const std::string &,
-	                                                    const ostream_ref_opt & = boost::none );
+	                                                    const ostream_ref_opt & = ::std::nullopt );
 
 	protein read_protein_from_pdb_and_calc_dssp(const ::std::filesystem::path &,
 	                                            const std::string & = "",
-	                                            const chop::region_vec_opt & = boost::none,
-	                                            const ostream_ref_opt & = boost::none );
+	                                            const chop::region_vec_opt & = ::std::nullopt,
+	                                            const ostream_ref_opt & = ::std::nullopt );
 
 	protein read_protein_from_pdb_and_calc_dssp_and_sec(const ::std::filesystem::path &,
 	                                                    const std::string & = "",
-	                                                    const chop::region_vec_opt & = boost::none,
-	                                                    const ostream_ref_opt & = boost::none );
+	                                                    const chop::region_vec_opt & = ::std::nullopt,
+	                                                    const ostream_ref_opt & = ::std::nullopt );
 
 
 

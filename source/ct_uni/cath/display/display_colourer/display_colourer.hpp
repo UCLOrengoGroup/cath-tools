@@ -21,7 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_HPP
 
-#include <boost/optional.hpp>
+#include <iosfwd>
+#include <memory>
+#include <optional>
 
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
@@ -29,9 +31,6 @@
 #include "cath/display/display_colourer/detail/score_colour_handler.hpp"
 #include "cath/display_colour/display_colour_gradient.hpp"
 #include "cath/display_colour/display_colour_list.hpp"
-
-#include <iosfwd>
-#include <memory>
 
 namespace cath { class alignment_free_display_colourer; }
 namespace cath { class display_colour_spec; }
@@ -49,7 +48,7 @@ namespace cath {
 	class display_colourer {
 	private:
 		/// \brief Optional specification for post-modifying the colouring based on scores
-		detail::score_colour_handler_opt the_score_colour_handler{ boost::none };
+		detail::score_colour_handler_opt the_score_colour_handler{ ::std::nullopt };
 
 		/// \brief Pure virtual method with which each concrete display_colourer must define how to create a clone of itself
 		virtual std::unique_ptr<display_colourer> do_clone() const = 0;

@@ -21,16 +21,16 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONTAINS_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONTAINS_HPP
 
-#include <boost/range/algorithm/adjacent_find.hpp>
-#include <boost/range/algorithm/find.hpp>
-#include <boost/range/algorithm/find_if.hpp>
-#include <boost/ptr_container/ptr_map.hpp>
-
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 #include <map>
 #include <set>
 #include <unordered_map>
+
+#include <boost/ptr_container/ptr_map.hpp>
+#include <boost/range/algorithm/adjacent_find.hpp>
+#include <boost/range/algorithm/find.hpp>
+#include <boost/range/algorithm/find_if.hpp>
+
+#include "cath/common/cpp14/cbegin_cend.hpp"
 
 /// \todo Consider adding predicate versions of all contains functions
 namespace cath {

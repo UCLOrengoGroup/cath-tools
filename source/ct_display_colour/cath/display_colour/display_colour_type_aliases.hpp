@@ -21,19 +21,19 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_TYPE_ALIASES_HPP
 
+#include <map>
+#include <optional>
+#include <vector>
+
 #include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
-#include <boost/optional/optional_fwd.hpp>
 
 #include "cath/common/type_aliases.hpp"
-
-#include <map>
-#include <vector>
 
 namespace cath {
 	class display_colour;
 
 	/// \brief TODOCUMENT
-	using display_colour_opt = boost::optional<display_colour>;
+	using display_colour_opt = ::std::optional<display_colour>;
 
 	/// \brief TODOCUMENT
 	using display_colour_set = std::set<display_colour>;

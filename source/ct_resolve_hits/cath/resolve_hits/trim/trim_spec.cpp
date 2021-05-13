@@ -156,7 +156,7 @@ string cath::rslv::get_segments_string(const seq_seg_vec   &prm_segs,         //
 /// \brief Generate a string describing the segments of the specified optional segments
 ///
 /// This is the numbers of the start/stop residues, separated by a '-' between the start and stop
-/// and by a ',' between segments. Values of none are excluded from the output.
+/// and by a ',' between segments. Values of nullopt are excluded from the output.
 ///
 /// \relates full_hit
 string cath::rslv::get_segments_string(const seq_seg_opt_vec &prm_segs,         ///< The segments to be described

@@ -23,8 +23,6 @@
 
 #include <filesystem>
 
-#include <boost/optional.hpp>
-
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/resolve_hits/file/hits_input_format_tag.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"

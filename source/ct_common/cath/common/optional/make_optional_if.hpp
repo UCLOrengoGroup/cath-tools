@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_OPTIONAL_MAKE_OPTIONAL_IF_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_OPTIONAL_MAKE_OPTIONAL_IF_HPP
 
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/type_traits.hpp"
@@ -31,7 +31,7 @@ namespace cath {
 
 		/// \brief Make an optional value from a bool and a value
 		///
-		/// This should be used over boost::make_optional to make it easy to switch
+		/// This should be used over ::std::make_optional to make it easy to switch
 		/// to std::optional (which doesn't provide this bool version of make_optional)
 		///
 		/// \todo Apply this across the code base
@@ -43,12 +43,12 @@ namespace cath {
 		///  * If combining both of the above, generate a sensible compile time error if 0
 		///    arguments are passed and no template parameter is specified
 		template <class T>
-		inline boost::optional<T> make_optional_if(const bool &prm_condition, ///< TODOCUMENT
+		inline ::std::optional<T> make_optional_if(const bool &prm_condition, ///< TODOCUMENT
 		                                           const T    &prm_value      ///< TODOCUMENT
 		                                           ) {
 			return prm_condition
-				? boost::optional<T>{ prm_value }
-				: boost::optional<T>{           };
+				? ::std::optional<T>{ prm_value }
+				: ::std::optional<T>{           };
 		}
 
 		/// \brief Make an optional from a bool and an nullary invokable, which is only invoked
@@ -63,7 +63,7 @@ namespace cath {
 		inline auto make_optional_if_fn(const bool  &prm_condition, ///< TODOCUMENT
 		                                Fn         &&prm_fn         ///< TODOCUMENT
 		                                ) {
-			using return_type = boost::optional< common::remove_cvref_t< std::result_of_t< Fn && () > > >;
+			using return_type = ::std::optional< common::remove_cvref_t< std::result_of_t< Fn && () > > >;
 			return prm_condition
 				? return_type{ invoke( std::forward<Fn>( prm_fn ) ) }
 				: return_type{                                      };
@@ -71,5 +71,7 @@ namespace cath {
 
 	} // namespace common
 } // namespace cath
+
+#define if_then_optional( pred, expr ) ( ( pred ) ? ::std::make_optional( ( expr ) ) : ::std::nullopt )
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_OPTIONAL_MAKE_OPTIONAL_IF_HPP

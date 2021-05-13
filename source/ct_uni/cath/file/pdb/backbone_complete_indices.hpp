@@ -21,14 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_BACKBONE_COMPLETE_INDICES_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_BACKBONE_COMPLETE_INDICES_HPP
 
+#include <cassert>
+#include <optional>
+
 #include <boost/algorithm/cxx11/is_sorted.hpp>
-#include <boost/optional.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
 
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <cassert>
 
 namespace cath {
 	namespace file {
@@ -122,11 +122,11 @@ namespace cath {
 			);
 			return
 				( lower_bound_itr != common::cend( prm_bb_compl_indices ) && *lower_bound_itr == prm_index )
-				? boost::optional<size_t>( std::distance(
+				? ::std::optional<size_t>( std::distance(
 					common::cbegin( prm_bb_compl_indices ),
 					lower_bound_itr
 				) )
-				: boost::none;
+				: ::std::nullopt;
 		}
 
 	} // namespace file

@@ -21,8 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_VIEW_CACHE_INDEX_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_VIEW_CACHE_INDEX_HPP
 
-#include <boost/optional/optional_io.hpp>
-#include <boost/optional.hpp>
+#include <chrono>
 
 #include "cath/structure/view_cache/index/detail/dims/view_cache_index_dim_dirn.hpp"
 #include "cath/structure/view_cache/index/detail/dims/view_cache_index_dim_linear_from_phi.hpp"
@@ -36,8 +35,6 @@
 #include "cath/structure/view_cache/index/detail/scaffold/view_cache_index_layer.hpp"
 #include "cath/structure/view_cache/index/detail/scaffold/view_cache_index_tail.hpp"
 #include "cath/structure/view_cache/index/view_cache_index_entry.hpp"
-
-#include <chrono>
 
 namespace cath { namespace align { class alignment; } }
 namespace cath { class protein; }

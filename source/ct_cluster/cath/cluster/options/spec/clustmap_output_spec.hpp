@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC_CLUSTMAP_OUTPUT_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC_CLUSTMAP_OUTPUT_SPEC_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 

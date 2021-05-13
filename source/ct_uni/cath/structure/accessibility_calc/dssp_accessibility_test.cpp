@@ -20,8 +20,8 @@
 
 #include "dssp_accessibility.hpp"
 
-#include <boost/test/unit_test.hpp>
 #include <boost/math/constants/constants.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/size_t_literal.hpp"

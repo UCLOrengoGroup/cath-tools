@@ -21,7 +21,6 @@
 #include "map_clusters.hpp"
 
 #include <boost/algorithm/cxx11/any_of.hpp>
-#include <boost/optional.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/stable_partition.hpp>
 
@@ -42,7 +41,6 @@ using namespace ::cath::seq;
 
 using ::boost::adaptors::filtered;
 using ::boost::algorithm::any_of;
-using ::boost::none;
 using ::boost::range::stable_partition;
 using ::std::less;
 using ::std::max;

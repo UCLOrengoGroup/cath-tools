@@ -20,6 +20,9 @@
 
 #include "resolve_hits_html_outputter.hpp"
 
+#include <optional>
+#include <string>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -46,8 +49,6 @@
 #include "cath/resolve_hits/scored_hit_arch.hpp"
 #include "cath/resolve_hits/trim/trim_spec.hpp"
 
-#include <string>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
@@ -63,9 +64,9 @@ using ::boost::algorithm::to_lower_copy;
 using ::boost::algorithm::to_upper_copy;
 using ::boost::format;
 using ::boost::irange;
-using ::boost::make_optional;
-using ::boost::none;
+using ::std::make_optional;
 using ::std::make_pair;
+using ::std::nullopt;
 using ::std::string;
 using ::std::tie;
 
@@ -140,7 +141,7 @@ string resolve_hits_html_outputter::total_score_row(const resscr_t &prm_total_sc
 
 /// \brief Generate the HTML string for the markers row (ie the residue numbers)
 string resolve_hits_html_outputter::markers_row(const size_t          &prm_sequence_length,  ///< The length of the full sequence on which this full_hit appears
-                                                const str_opt         &prm_score_header_lbl, ///< The string for the score header or none if headers shouldn't be used
+                                                const str_opt         &prm_score_header_lbl, ///< The string for the score header or nullopt if headers shouldn't be used
                                                 const table_section   &prm_table_section     ///< TODOCUMENT
                                                 ) {
 	const double length_mult  = 100.0 / debug_numeric_cast<double>( prm_sequence_length );
@@ -219,7 +220,7 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &prm_html_hi
 				const seq_seg &x = the_full_hit.get_segments()[ x_idx ];
 
 				// Grab the result of applying the crh_segment_spec to the segment
-				// (which may be boost::none if the segment is shorter than min-seg-length)
+				// (which may be ::std::nullopt if the segment is shorter than min-seg-length)
 				const seq_seg_opt trimmed_seg_opt = apply_spec_to_seg_copy( x, prm_segment_spec );
 
 				// Prepare batch index and hit index strings
@@ -230,11 +231,11 @@ string resolve_hits_html_outputter::hit_html(const html_hit         &prm_html_hi
 					+ join(
 						html_segment{
 							x.get_start_arrow(),
-							( trimmed_seg_opt ? make_optional( trimmed_seg_opt->get_start_arrow() ) : none ),
-							( trimmed_seg_opt ? make_optional( trimmed_seg_opt->get_stop_arrow () ) : none ),
+							( trimmed_seg_opt ? make_optional( trimmed_seg_opt->get_start_arrow() ) : nullopt ),
+							( trimmed_seg_opt ? make_optional( trimmed_seg_opt->get_stop_arrow () ) : nullopt ),
 							x.get_stop_arrow (),
-							( the_result_boundaries ? ( *the_result_boundaries )[ x_idx ].first  : none ),
-							( the_result_boundaries ? ( *the_result_boundaries )[ x_idx ].second : none ),
+							( the_result_boundaries ? ( *the_result_boundaries )[ x_idx ].first  : nullopt ),
+							( the_result_boundaries ? ( *the_result_boundaries )[ x_idx ].second : nullopt ),
 							prm_html_hit.colour,
 							// data fields, should allow something like:
 							//
@@ -902,7 +903,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 </tr>
 
 )"
-	+ markers_row( seq_length, none, table_section::RESULTS )
+	+ markers_row( seq_length, nullopt, table_section::RESULTS )
 	+ hits_row_html(
 		transform_build<html_hit_vec>(
 			best_result.get_arch(),
@@ -919,7 +920,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 							get_crh_score( the_full_hit, prm_score_spec ) / *best_crh_score
 						)
 						: filtered_grey,
-					boost::make_optional( resolved_boundaries(
+					::std::make_optional( resolved_boundaries(
 						the_full_hit,
 						chosen_full_hits,
 						prm_segment_spec
@@ -961,7 +962,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 								get_crh_score( the_full_hit, prm_score_spec ) / *best_crh_score
 							)
 							: filtered_grey,
-						boost::make_optional( resolved_boundaries(
+						::std::make_optional( resolved_boundaries(
 							the_full_hit,
 							chosen_full_hits,
 							prm_segment_spec
@@ -995,7 +996,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 </tr>
 
 )"
-	+ markers_row( seq_length, boost::make_optional( orig_score_str ), table_section::INPUTS )
+	+ markers_row( seq_length, ::std::make_optional( orig_score_str ), table_section::INPUTS )
 	+ "\n\n"
 	+ join(
 		sorted_indices
@@ -1029,7 +1030,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 								gradient,
 								get_crh_score( hit_x, prm_score_spec ) / *best_crh_score
 							),
-						none
+						nullopt
 					} },
 					prm_segment_spec,
 					prm_score_spec,

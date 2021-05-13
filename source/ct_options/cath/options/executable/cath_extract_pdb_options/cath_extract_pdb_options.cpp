@@ -34,10 +34,10 @@ using namespace ::cath::chop;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::none;
 using ::boost::program_options::positional_options_description;
 using ::std::filesystem::path;
 using ::std::ifstream;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief The name of the program that uses this executable_options
@@ -68,7 +68,7 @@ positional_options_description cath_extract_pdb_options::get_positional_options(
 /// \returns Any error/help string arising from the newly specified options
 ///          or an empty string if there aren't any
 str_opt cath_extract_pdb_options::do_get_error_or_help_string() const {
-	return none;
+	return nullopt;
 }
 
 /// \brief Get a string to prepend to the standard help

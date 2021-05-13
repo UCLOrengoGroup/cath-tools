@@ -21,8 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_DETAIL_NODE_INFO_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_DETAIL_NODE_INFO_HPP
 
-#include <boost/optional/optional_fwd.hpp>
-
+#include <optional>
 #include <vector>
 
 namespace cath {
@@ -49,7 +48,7 @@ namespace cath {
 			}
 
 			/// \brief Type alias for an optional node_info
-			using node_info_opt     = boost::optional<node_info>;
+			using node_info_opt     = ::std::optional<node_info>;
 
 			/// \brief Type alias for a vector of node_info_opt values
 			using node_info_opt_vec = std::vector<node_info_opt>;

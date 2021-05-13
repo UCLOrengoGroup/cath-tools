@@ -21,7 +21,6 @@
 #include "seq_seg_boundary_fns.hpp"
 
 #include <boost/algorithm/cxx11/none_of.hpp>
-#include <boost/optional.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
@@ -38,11 +37,11 @@ using namespace ::cath::seq;
 
 using ::boost::adaptors::filtered;
 using ::boost::algorithm::none_of;
-using ::boost::none;
 using ::std::make_pair;
+using ::std::nullopt;
 
 /// \brief Get the specified boundary for the specified segment in the context of the other segments and crh_segment_spec
-///        or none if there are no overlapping segments on the relevant side of the query segment
+///        or nullopt if there are no overlapping segments on the relevant side of the query segment
 ///
 /// The other segments may include the original segment (though that may
 /// suggest that the client code isn't correctly handling hits)
@@ -56,9 +55,9 @@ res_arrow_opt cath::rslv::detail::get_boundary_impl(const boundary_wanted  &prm_
 		return get_length( x ) >= prm_crh_segment_spec.get_min_seg_length();
 	};
 
-	// If the query segment isn't long enough then return none
+	// If the query segment isn't long enough then return nullopt
 	if ( ! is_long_enough_fn( prm_segment ) ) {
-		return none;
+		return nullopt;
 	}
 
 	// Create a range that excludes the query segment
@@ -82,9 +81,9 @@ res_arrow_opt cath::rslv::detail::get_boundary_impl(const boundary_wanted  &prm_
 		);
 	};
 
-	// If none of the other segments are on the correct side of the query, return none
+	// If none of the other segments are on the correct side of the query, return nullopt
 	if ( none_of( other_segments, is_long_enough_and_on_correct_side_fn ) ) {
-		return none;
+		return nullopt;
 	}
 
 	// Build a vector of the segments that are on the correct side and are long enough
@@ -146,7 +145,7 @@ seg_boundary_pair cath::rslv::get_boundary_pair(const seq_seg          &prm_segm
 
 /// \brief Calculate shared boundary between the two specified segments given the specified trim_spec
 ///
-/// If the segments don't overlap, then this returns none
+/// If the segments don't overlap, then this returns nullopt
 ///
 /// The segments do not need to be provided in order
 res_arrow_opt cath::rslv::calc_resolved_boundary(const seq_seg   &prm_segment_a, ///< The first  segment to compare
@@ -158,9 +157,9 @@ res_arrow_opt cath::rslv::calc_resolved_boundary(const seq_seg   &prm_segment_a,
 	const seq_seg &seg_lhs =     a_is_first   ? prm_segment_a : prm_segment_b;
 	const seq_seg &seg_rhs = ( ! a_is_first ) ? prm_segment_a : prm_segment_b;
 
-	// If the segments don't overlap, return none
+	// If the segments don't overlap, return nullopt
 	if ( seg_lhs.get_stop_arrow() <= seg_rhs.get_start_arrow() ) {
-		return none;
+		return nullopt;
 	}
 
 	// Otherwise, grab the relevant trim lengths and resolve the boundary

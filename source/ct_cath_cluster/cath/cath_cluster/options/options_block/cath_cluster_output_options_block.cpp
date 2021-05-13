@@ -29,11 +29,11 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
-using ::boost::none;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
@@ -131,10 +131,10 @@ void cath_cluster_output_options_block::do_add_hidden_options_to_description(opt
 }
 
 /// \brief Generate a description of any problem that makes the specified cath_cluster_output_options_block invalid
-///        or none otherwise
+///        or nullopt otherwise
 str_opt cath_cluster_output_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                              ) const {
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

@@ -22,10 +22,13 @@
 
 #include <string>
 
+#include <fmt/core.h>
+
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/dyn_prog_align/dyn_prog_aligner.hpp"
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 
 using namespace ::cath;
@@ -36,7 +39,6 @@ using namespace ::cath::common;
 
 using ::std::max;
 using ::std::string;
-using ::std::to_string;
 
 /// \brief Check that there is dyn_prog_aligner stored in dyn_prog_aligner_ptr
 ///
@@ -84,28 +86,21 @@ str_str_pair gen_dyn_prog_string_aligner::do_align(const string      &prm_string
 		prm_string_b
 	);
 
-	// If running in debug mode, check that the score is the same as a freshly calculated one
-#ifndef NDEBUG
-	const score_type &score              = score_and_alignment.first;
-	const score_type  recalculated_score = get_score_of_aligned_sequence_strings(
-		aligned_strings.first,
-		aligned_strings.second,
-		prm_gap_penalty
-	);
-	if ( score != recalculated_score ) {
-		BOOST_THROW_EXCEPTION(out_of_range_exception(
-			"Score retrieved from alignment \""
-			+ aligned_strings.first
-			+ "\" <-> \""
-			+ aligned_strings.second
-			+ "\" was "
-			+ to_string(score)
-			+ " but, based on a recalculation, it should be "
-			+ to_string(recalculated_score)
-		));
-	}
-#endif /* #ifndef NDEBUG */
+	if constexpr ( IS_IN_DEBUG_MODE ) {
+		// If running in debug mode, check that the score is the same as a freshly calculated one
+		const score_type &score = score_and_alignment.first;
+		const score_type  recalculated_score =
+		  get_score_of_aligned_sequence_strings( aligned_strings.first, aligned_strings.second, prm_gap_penalty );
 
+		if ( score != recalculated_score ) {
+			BOOST_THROW_EXCEPTION( out_of_range_exception( ::fmt::format(
+			  "Score retrieved from alignment \"{}\" <-> \"{}\" was {} but, based on a recalculation, it should be {}",
+			  aligned_strings.first,
+			  aligned_strings.second,
+			  score,
+			  recalculated_score ) ) );
+		}
+	}
 	return aligned_strings;
 }
 

@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_REP_STRIDER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_REP_STRIDER_HPP
 
+#include <optional>
+
 #include <boost/operators.hpp>
 #include <boost/range/irange.hpp>
 
@@ -124,7 +126,7 @@ namespace cath {
 				);
 			}
 
-			boost::optional<index_type> centre_index_of_index_and_next_centre_index(const index_type &,
+			::std::optional<index_type> centre_index_of_index_and_next_centre_index(const index_type &,
 			                                                                        const index_type &,
 			                                                                        const index_type &);
 

@@ -20,8 +20,8 @@
 
 #include "clustering_levels.hpp"
 
-#include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"

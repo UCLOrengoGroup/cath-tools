@@ -33,13 +33,13 @@ namespace cath {
 		/// This is a useful for manipulating alignment rows (eg appending them to the end of alignments)
 		///
 		/// The value for each entry is stored as an optional<aln_posn_type> and this is revealed in some of the interface.
-		/// An absent position is represented by a value of none; a present position is indicated by a value of the
+		/// An absent position is represented by a value of nullopt; a present position is indicated by a value of the
 		/// index in the thing being aligned (offset 0).
 		///
 		/// NOTE: there isn't any suggestion that this is how rows are stored in the alignment class (it isn't).
 		class alignment_row final {
 		private:
-			/// \brief The positions in the row (with absent positions represented as none)
+			/// \brief The positions in the row (with absent positions represented as nullopt)
 			aln_posn_opt_vec positions;
 
 			void sanity_check_entry(const size_t &) const;

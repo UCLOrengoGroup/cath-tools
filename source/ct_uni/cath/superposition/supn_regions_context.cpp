@@ -21,7 +21,6 @@
 #include "supn_regions_context.hpp"
 
 #include <boost/algorithm/string/case_conv.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -38,9 +37,9 @@ using namespace ::cath::sup::detail;
 
 using ::boost::algorithm::to_lower;
 using ::boost::any;
-using ::boost::none;
 using ::std::istream;
 using ::std::map;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::set;
 using ::std::string;
@@ -100,7 +99,7 @@ region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec     
 			);
 		}
 		case ( supn_regions_context::IN_PDB   ) : {
-			return none;
+			return nullopt;
 		}
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Value of supn_regions_context not recognised whilst in get_regions_expanded_for_context()"));

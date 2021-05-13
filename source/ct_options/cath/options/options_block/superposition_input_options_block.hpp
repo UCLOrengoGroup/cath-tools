@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_SUPERPOSITION_INPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_SUPERPOSITION_INPUT_OPTIONS_BLOCK_HPP
 
-#include <boost/optional.hpp>
-
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"
 

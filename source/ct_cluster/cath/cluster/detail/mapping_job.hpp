@@ -22,8 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_DETAIL_MAPPING_JOB_HPP
 
 #include <filesystem>
-
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/cluster/cluster_type_aliases.hpp"
 #include "cath/common/path_type_aliases.hpp"
@@ -51,7 +50,7 @@ namespace cath {
 			public:
 				explicit mapping_job(const str_opt &,
 				                     const ::std::filesystem::path &,
-				                     const path_opt & = boost::none);
+				                     const path_opt & = ::std::nullopt);
 
 				const str_opt & get_batch_id() const;
 				const ::std::filesystem::path & get_new_cluster_membership_file() const;

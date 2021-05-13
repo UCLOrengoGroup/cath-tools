@@ -28,7 +28,7 @@
 using namespace ::cath;
 using namespace ::cath::file;
 
-using ::boost::none;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::string;
 
@@ -40,7 +40,7 @@ protein restrict_protein_source_file_set::do_read_files(const data_file_path_map
 	return do_read_and_restrict_files(
 		prm_filename_of_data_file,
 		prm_protein_name,
-		none,
+		nullopt,
 		prm_stderr
 	);
 }

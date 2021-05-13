@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_LOAD_AND_SCAN_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_LOAD_AND_SCAN_HPP
 
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/common/clone/clone_ptr.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
@@ -47,16 +47,16 @@ namespace cath {
 			common::clone_ptr<scan_type> scan_ptr;
 
 			/// \brief TODOCUMENT
-			boost::optional<protein_list> query_proteins;
+			::std::optional<protein_list> query_proteins;
 
 			/// \brief TODOCUMENT
-			boost::optional<protein_list> match_proteins;
+			::std::optional<protein_list> match_proteins;
 
 			/// \brief TODOCUMENT
 			hrc_duration_opt load_files_duration;
 
 			/// \brief TODOCUMENT
-			boost::optional<scan_metrics> the_scan_metrics;
+			::std::optional<scan_metrics> the_scan_metrics;
 
 			void perform_load();
 			void perform_scan();

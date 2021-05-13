@@ -21,8 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_AMINO_ACID_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_AMINO_ACID_HPP
 
+#include <iosfwd>
+#include <tuple>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/utility/string_ref.hpp>
 #include <boost/variant.hpp>
@@ -40,12 +45,6 @@
 #include "cath/file/pdb/pdb_record.hpp"
 #include "cath/structure/protein/dna_atom.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
-
-#include <iosfwd>
-#include <tuple>
-#include <unordered_map>
-#include <utility>
-#include <vector>
 
 namespace cath {
 	namespace detail { struct aa_code_getter;            }
@@ -333,12 +332,12 @@ namespace cath {
 		return *raw_string_ptr;
 	}
 
-	/// \brief Get the single letter for the amino_acid if it is an amino acid, or none otherwise
+	/// \brief Get the single letter for the amino_acid if it is an amino acid, or nullopt otherwise
 	inline char_opt amino_acid::get_letter_if_amino_acid() const {
 		const aa_variant_t * const aa_ptr = boost::get<aa_variant_t>( &data );
-		return common::make_optional_if_fn(
+		return if_then_optional(
 			aa_ptr != nullptr,
-			[&] { return get_label<char, 0>( *aa_ptr ); }
+			( get_label<char, 0>( *aa_ptr ) )
 		);
 	}
 

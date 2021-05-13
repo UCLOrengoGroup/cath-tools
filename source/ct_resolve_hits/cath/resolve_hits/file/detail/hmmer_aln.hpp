@@ -21,7 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_DETAIL_HMMER_ALN_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_DETAIL_HMMER_ALN_HPP
 
-#include <boost/optional.hpp>
+#include <optional>
+#include <string>
+
 #include <boost/range/combine.hpp>
 #include <boost/utility/string_ref.hpp>
 
@@ -32,8 +34,6 @@
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 #include "cath/seq/seq_arrow.hpp"
 #include "cath/seq/seq_seg.hpp"
-
-#include <string>
 
 namespace cath {
 	namespace rslv {
@@ -200,8 +200,8 @@ namespace cath {
 			inline void hmmer_aln::reset() {
 				id_a.clear();
 				id_b.clear();
-				start_a = boost::none;
-				start_b = boost::none;
+				start_a = ::std::nullopt;
+				start_b = ::std::nullopt;
 				aln_seq_a.clear();
 				stretches.clear();
 			}

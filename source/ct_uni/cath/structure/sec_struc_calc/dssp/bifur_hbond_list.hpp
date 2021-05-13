@@ -21,12 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_BIFUR_HBOND_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_BIFUR_HBOND_LIST_HPP
 
-#include <boost/optional.hpp>
-
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
+#include <optional>
 #include <utility>
 #include <vector>
+
+#include "cath/common/cpp14/cbegin_cend.hpp"
 
 namespace cath {
 	namespace sec {
@@ -83,7 +82,7 @@ namespace cath {
 		}
 
 		/// \brief Type alias for an optional hbond_half
-		using hbond_half_opt = boost::optional<hbond_half>;
+		using hbond_half_opt = ::std::optional<hbond_half>;
 
 		std::string to_string(const hbond_half_opt &);
 
@@ -99,13 +98,13 @@ namespace cath {
 			return ( prm_hbond_half_opt && is_bondy_enough( *prm_hbond_half_opt ) );
 		}
 
-		/// \brief Wipe the specified hbond_half_opt to none if 
+		/// \brief Wipe the specified hbond_half_opt to nullopt if
 		///         * (a) it isn't already and
 		///         * (b) it isn't strong enough to be considered a true hbond
 		inline void remove_not_bondy_enough(hbond_half_opt &prm_hbond_half_opt ///< The hbond_half_opt to examine (and potentially wipe)
 		                                    ) {
 			if ( prm_hbond_half_opt && ! is_bondy_enough( *prm_hbond_half_opt ) ) {
-				prm_hbond_half_opt = boost::none;
+				prm_hbond_half_opt = ::std::nullopt;
 			}
 		}
 
@@ -144,7 +143,7 @@ namespace cath {
 			return prm_hbond_pair;
 		}
 
-		/// \brief Wipe each half of the specified hbond_half_opt_pair to none if 
+		/// \brief Wipe each half of the specified hbond_half_opt_pair to nullopt if
 		///         * (a) it isn't already and
 		///         * (b) it isn't strong enough to be considered a true hbond
 		///

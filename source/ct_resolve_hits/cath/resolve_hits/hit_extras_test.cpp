@@ -18,17 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/hit_extras.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath;
 using namespace ::cath::rslv;
 
-using ::boost::make_optional;
-using ::boost::none;
+using ::std::make_optional;
+using ::std::nullopt;
 
 BOOST_AUTO_TEST_SUITE(hit_extras_test_suite)
 
@@ -42,11 +42,11 @@ BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK_EQUAL( to_string( the_store ), R"(hit_extras_store[cond-evalue:4.000000,aligned-regions:#,indp-evalue:8.000000])" );
 }
 
-BOOST_AUTO_TEST_CASE(get_first_works) {
+BOOST_AUTO_TEST_CASE( get_first_works ) {
 	hit_extras_store the_store;
-	the_store.push_back< hit_extra_cat::COND_EVAL >( 4.0 );
-	BOOST_CHECK_EQUAL( get_first<hit_extra_cat::COND_EVAL>( the_store ), make_optional( 4.0 ) );
-	BOOST_CHECK_EQUAL( get_first<hit_extra_cat::INDP_EVAL>( the_store ), doub_opt{ none }     );
+	the_store.push_back<hit_extra_cat::COND_EVAL>( 4.0 );
+	BOOST_TEST( get_first<hit_extra_cat::COND_EVAL>( the_store ) == 4.0 );
+	BOOST_TEST( get_first<hit_extra_cat::INDP_EVAL>( the_store ) == nullopt );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

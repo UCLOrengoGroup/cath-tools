@@ -20,6 +20,8 @@
 
 #include "rep_strider.hpp"
 
+#include <optional>
+
 #include "cath/common/algorithm/constexpr_modulo_fns.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
@@ -27,9 +29,9 @@ using namespace ::cath::common;
 using namespace ::cath::scan;
 using namespace ::cath::scan::detail;
 
-using ::boost::none;
-using ::boost::optional;
 using ::std::make_pair;
+using ::std::nullopt;
+using ::std::optional;
 
 /// \brief TODOCUMENT
 ///
@@ -46,7 +48,7 @@ optional<index_type> cath::scan::detail::centre_index_of_index_and_next_centre_i
 	const index_type steps_to_next_centre         = prm_next_centre_index - prm_entry_index;
 	return ( steps_to_next_centre <= centre_stride_neighour_index ) ? optional<index_type>( prm_next_centre_index           ) :
 	       ( prm_entry_index      >= prm_co_stride                ) ? optional<index_type>( prm_entry_index - prm_co_stride ) :
-	                                                                  none;
+	                                                                  nullopt;
 	}
 
 /// \brief TODOCUMENT
@@ -76,7 +78,7 @@ rep_rep_pair_opt cath::scan::detail::get_rep_of_indices(const rep_strider &prm_r
 		coprime_pair.second
 	);
 	if ( ! centre_index_a || ! centre_index_b ) {
-		return none;
+		return nullopt;
 	}
 	return { make_pair(
 		static_cast<res_rep_index_type>( *centre_index_a / ( prm_rep_strider_a.get_stride() + 1 ) ),

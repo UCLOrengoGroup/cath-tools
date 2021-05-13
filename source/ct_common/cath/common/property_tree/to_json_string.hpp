@@ -21,13 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_TO_JSON_STRING_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_TO_JSON_STRING_HPP
 
+#include <sstream>
+#include <string>
+
 #include <boost/property_tree/json_parser.hpp>
 
 #include "cath/common/json_style.hpp"
 #include "cath/common/property_tree/make_ptree_of.hpp"
-
-#include <string>
-#include <sstream>
 
 namespace cath {
 	namespace common {

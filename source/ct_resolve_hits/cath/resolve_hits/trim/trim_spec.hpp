@@ -24,7 +24,6 @@
 #include <stdexcept>
 
 #include <boost/any.hpp>
-#include <boost/optional/optional_fwd.hpp>
 
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/type_aliases.hpp"

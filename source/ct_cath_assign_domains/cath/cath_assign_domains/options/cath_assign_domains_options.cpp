@@ -54,8 +54,8 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::none;
 using ::std::filesystem::path;
+using ::std::nullopt;
 using ::std::string;
 
 /// \brief The name of the program that uses this executable_options
@@ -89,7 +89,7 @@ str_opt cath_assign_domains_options::do_get_error_or_help_string() const {
 		return "Please specify a superfamily of domain file"s;
 	}
 
-	return none;
+	return nullopt;
 }
 
 /// \brief Get a string to prepend to the standard help

@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_FILE_TYPE_ALIASES_HPP
 
 #include <filesystem>
+#include <optional>
 #include <utility>
 #include <vector>
 
@@ -107,7 +108,7 @@ namespace cath {
 		using ssap_scores_entry_cref     = std::reference_wrapper<const ssap_scores_entry>;
 
 		/// \brief Type alias for an optional reference_wrapper of a const ssap_scores_entry>
-		using ssap_scores_entry_cref_opt = boost::optional<ssap_scores_entry_cref>;
+		using ssap_scores_entry_cref_opt = ::std::optional<ssap_scores_entry_cref>;
 
 		/// \brief Type alias for a pair of residue_id and pdb_atom
 		using resid_atom_pair = std::pair<residue_id, pdb_atom>;

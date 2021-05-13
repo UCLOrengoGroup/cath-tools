@@ -22,7 +22,6 @@
 
 #include <boost/core/demangle.hpp>
 #include <boost/mpl/list.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/alignment/options_block/alignment_input_options_block.hpp"
 #include "cath/options/options_block/detail_help_options_block.hpp"

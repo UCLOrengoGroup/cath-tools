@@ -25,9 +25,9 @@
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/logic/tribool.hpp>
-#include <boost/range/numeric.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/join.hpp>
+#include <boost/range/numeric.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/vector.hpp>
 

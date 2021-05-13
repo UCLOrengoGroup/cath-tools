@@ -36,9 +36,9 @@ using namespace ::cath::file;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::all_of;
 using ::boost::algorithm::join;
-using ::boost::none;
 using ::boost::range::combine;
 using ::std::min;
+using ::std::nullopt;
 using ::std::ostream;
 using ::std::string;
 
@@ -57,10 +57,10 @@ name_set_list cath::file::build_name_set_list(str_vec     prm_names_from_acq, //
 	for (string &the_string : prm_ids) {
 		ids.push_back( std::move( the_string ) );
 	}
-	ids.resize( prm_names_from_acq.size(), none );
+	ids.resize( prm_names_from_acq.size(), nullopt );
 
 	// Adjust prm_domains to the correct size (if necessary)
-	prm_domains.resize( prm_names_from_acq.size(), none );
+	prm_domains.resize( prm_names_from_acq.size(), nullopt );
 
 	// Build a name_set_vec from the data
 	name_set_vec result;

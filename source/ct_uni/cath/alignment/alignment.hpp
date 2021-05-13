@@ -21,15 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGNMENT_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGNMENT_HPP
 
+#include <cstddef>
+#include <iosfwd>
+#include <optional>
+
 #include <boost/operators.hpp>
-#include <boost/optional.hpp>
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/residue_score/alignment_residue_scores.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <cstddef>
-#include <iosfwd>
 
 namespace cath { namespace align { class alignment_row; } }
 namespace cath { namespace file { class backbone_complete_indices; } }
@@ -75,7 +75,7 @@ namespace cath {
 			size_type logical_length;
 
 			/// \brief TODOCUMENT
-			boost::optional<alignment_residue_scores> new_scores;
+			::std::optional<alignment_residue_scores> new_scores;
 
 			void check_scored() const;
 			void check_not_scored() const;
@@ -144,7 +144,7 @@ namespace cath {
 		                                           const size_t &);
 
 		/// \brief TODOCUMENT
-		using aln_size_opt = boost::optional<alignment::size_type>;
+		using aln_size_opt = ::std::optional<alignment::size_type>;
 
 		bool operator==(const alignment &,
 		                const alignment &);

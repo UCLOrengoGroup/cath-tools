@@ -20,8 +20,6 @@
 
 #include "misc_help_version_options_block.hpp"
 
-#include <boost/optional.hpp>
-
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/external_info/cath_tools_git_version.hpp"
 
@@ -31,10 +29,10 @@ using namespace ::cath::opts;
 using namespace ::std;
 
 using ::boost::lexical_cast;
-using ::boost::none;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::variables_map;
+using ::std::nullopt;
 
 /// \brief The option name for the hidden help option
 const string misc_help_version_options_block::PO_HIDDEN_HELP          { "hidden-help"            };
@@ -93,7 +91,7 @@ void misc_help_version_options_block::do_add_hidden_options_to_description(optio
 /// At present, this always accepts
 str_opt misc_help_version_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                            ) const {
-	return none;
+	return nullopt;
 }
 
 /// \brief Return all options names for this block

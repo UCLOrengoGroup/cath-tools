@@ -23,6 +23,7 @@
 
 #include <filesystem>
 #include <iostream>
+#include <optional>
 #include <string>
 
 #include "cath/cluster/cluster_type_aliases.hpp"
@@ -58,7 +59,7 @@ namespace cath {
 		};
 
 		namespace detail {
-			std::string get_name_of_new_unmapped_cluster_of_index(const boost::optional<ptrdiff_t> &,
+			std::string get_name_of_new_unmapped_cluster_of_index(const ::std::optional<ptrdiff_t> &,
 			                                                      const size_t &);
 
 		} // namespace detail

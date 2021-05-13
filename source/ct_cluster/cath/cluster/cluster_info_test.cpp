@@ -19,10 +19,10 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/algorithm/cxx11/is_sorted.hpp>
-#include <boost/optional/optional_io.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "cath/cluster/cluster_info.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 namespace cath { namespace test { } }
 
@@ -32,7 +32,7 @@ using namespace ::cath::seq;
 using namespace ::cath::test;
 
 using ::boost::algorithm::is_strictly_increasing;
-using ::boost::none;
+using ::std::nullopt;
 using ::std::pair;
 using ::std::string;
 using ::std::vector;
@@ -81,14 +81,14 @@ BOOST_AUTO_TEST_CASE(has_correct_properties_after_construction) {
 
 BOOST_AUTO_TEST_CASE(has_correct_properties_after_adding_two_with_no_segs) {
 	const cluster_info cluster_info_a = make_cluster_info( {
-		str_seq_seg_run_opt_pair{ "sue",  none },
-		str_seq_seg_run_opt_pair{ "mary", none },
+		str_seq_seg_run_opt_pair{ "sue",  nullopt },
+		str_seq_seg_run_opt_pair{ "mary", nullopt },
 	} );
-	BOOST_CHECK_EQUAL( cluster_info_a.get_size                 (),       2 );
-	BOOST_CHECK_EQUAL( cluster_info_a.get_total_sqrt_length    (),    none );
-	BOOST_CHECK_EQUAL( cluster_info_a.get_total_mid_point_index(),    none );
-	BOOST_CHECK_EQUAL( cluster_info_a.get_lowest_domain_id     (),  "mary" );
-	BOOST_CHECK_EQUAL( get_average_mid_point_index( cluster_info_a ), none );
+	BOOST_CHECK_EQUAL( cluster_info_a.get_size                 (),          2 );
+	BOOST_CHECK_EQUAL( cluster_info_a.get_total_sqrt_length    (),    nullopt );
+	BOOST_CHECK_EQUAL( cluster_info_a.get_total_mid_point_index(),    nullopt );
+	BOOST_CHECK_EQUAL( cluster_info_a.get_lowest_domain_id     (),     "mary" );
+	BOOST_CHECK_EQUAL( get_average_mid_point_index( cluster_info_a ), nullopt );
 }
 
 BOOST_AUTO_TEST_CASE(has_correct_properties_after_adding_two_with_segs) {
@@ -105,13 +105,13 @@ BOOST_AUTO_TEST_CASE(has_correct_properties_after_adding_two_with_segs) {
 
 BOOST_AUTO_TEST_CASE(treats_empty_string_as_lower) {
 	const cluster_info cluster_info_sue_then_empty = make_cluster_info( {
-		str_seq_seg_run_opt_pair{ "sue",  none },
-		str_seq_seg_run_opt_pair{ "",     none },
+		str_seq_seg_run_opt_pair{ "sue",  nullopt },
+		str_seq_seg_run_opt_pair{ "",     nullopt },
 	} );
 	BOOST_CHECK_EQUAL( cluster_info_sue_then_empty.get_lowest_domain_id(), "" );
 	const cluster_info cluster_info_empty_then_sue = make_cluster_info( {
-		str_seq_seg_run_opt_pair{ "",     none },
-		str_seq_seg_run_opt_pair{ "sue",  none },
+		str_seq_seg_run_opt_pair{ "",     nullopt },
+		str_seq_seg_run_opt_pair{ "sue",  nullopt },
 	} );
 	BOOST_CHECK_EQUAL( cluster_info_empty_then_sue.get_lowest_domain_id(), "" );
 }
@@ -142,16 +142,16 @@ BOOST_AUTO_TEST_CASE(less_than_is_correct) {
 		} ),
 
 		make_cluster_info( {
-			str_seq_seg_run_opt_pair{ "nas",  none },
-			str_seq_seg_run_opt_pair{ "may",  none },
+			str_seq_seg_run_opt_pair{ "nas",  nullopt },
+			str_seq_seg_run_opt_pair{ "may",  nullopt },
 		} ),
 
 		make_cluster_info( {
-			str_seq_seg_run_opt_pair{ "kim",  none },
+			str_seq_seg_run_opt_pair{ "kim",  nullopt },
 		} ),
 
 		make_cluster_info( {
-			str_seq_seg_run_opt_pair{ "liz",  none },
+			str_seq_seg_run_opt_pair{ "liz",  nullopt },
 		} ),
 
 	};

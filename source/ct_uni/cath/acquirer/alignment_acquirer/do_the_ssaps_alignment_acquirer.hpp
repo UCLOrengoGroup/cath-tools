@@ -22,8 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_DO_THE_SSAPS_ALIGNMENT_ACQUIRER_HPP
 
 #include <filesystem>
-
-#include <boost/optional.hpp>
+#include <optional>
 
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "cath/common/path_type_aliases.hpp"
@@ -47,7 +46,7 @@ namespace cath { namespace align {
 		                                                                            const align_refining &) const final;
 
 	public:
-		explicit do_the_ssaps_alignment_acquirer(const path_opt & = boost::none);
+		explicit do_the_ssaps_alignment_acquirer(const path_opt & = ::std::nullopt);
 
 		const path_opt & get_directory_of_joy() const;
 
