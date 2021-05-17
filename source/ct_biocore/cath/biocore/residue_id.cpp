@@ -94,14 +94,6 @@ residue_id cath::make_residue_id(const string &prm_input_string ///< The string 
 	};
 }
 
-/// \brief Return whether the specified residue ID has a strictly negative residue number
-///
-/// \relates residue_id
-bool cath::has_strictly_negative_residue_number(const residue_id &prm_residue_id ///< The residue_id to query
-                                                ) {
-	return has_strictly_negative_residue_number( prm_residue_id.get_residue_name() );
-}
-
 /// \brief Return the specified residue_ids, grouped by chain_label
 ///
 /// \relates residue_id

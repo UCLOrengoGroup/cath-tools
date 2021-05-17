@@ -21,10 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_ATOM_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_ATOM_HPP
 
+#include <iosfwd>
+#include <string_view>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/lexical_cast/bad_lexical_cast.hpp>
 #include <boost/tuple/tuple.hpp>
-#include <boost/utility/string_ref.hpp>
 
 #include "cath/biocore/chain_label.hpp"
 #include "cath/biocore/residue_id.hpp"
@@ -38,7 +40,6 @@
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/protein/amino_acid.hpp"
 
-#include <iosfwd>
 namespace cath { namespace geom { class rotation; } }
 
 namespace cath {
@@ -78,28 +79,28 @@ namespace cath {
 			char_2_arr          charge;
 
 		public:
-			pdb_atom(const pdb_record &,
-			         const uint &,
-			         const char_4_arr &,
-			         const char &,
-			         amino_acid,
-			         geom::coord,
-			         const float &,
-			         const float &,
-			         char_2_arr,
-			         char_2_arr);
+			constexpr pdb_atom(const pdb_record &,
+			                   const uint &,
+			                   const char_4_arr &,
+			                   const char &,
+			                   amino_acid,
+			                   geom::coord,
+			                   const float &,
+			                   const float &,
+			                   char_2_arr,
+			                   char_2_arr);
 
-			const pdb_record & get_record_type() const;
-			const uint & get_atom_serial() const;
-			const char_4_arr & get_element_type_untrimmed() const;
-			boost::string_ref get_element_type() const;
-			const char & get_alt_locn() const;
-			const amino_acid & get_amino_acid() const;
-			const geom::coord & get_coord() const;
-			const float & get_occupancy() const;
-			const float & get_temp_factor() const;
-			const char_2_arr & get_element_symbol() const;
-			const char_2_arr & get_charge() const;
+			constexpr const pdb_record & get_record_type() const;
+			constexpr const uint & get_atom_serial() const;
+			constexpr const char_4_arr & get_element_type_untrimmed() const;
+			constexpr ::std::string_view get_element_type() const;
+			constexpr const char & get_alt_locn() const;
+			constexpr const amino_acid & get_amino_acid() const;
+			constexpr const geom::coord & get_coord() const;
+			constexpr const float & get_occupancy() const;
+			constexpr const float & get_temp_factor() const;
+			constexpr const char_2_arr & get_element_symbol() const;
+			constexpr const char_2_arr & get_charge() const;
 
 			void rotate(const geom::rotation &);
 			void operator+=(const geom::coord &);
@@ -114,12 +115,12 @@ namespace cath {
 			static constexpr size_t MAX_NUM_PDB_COLS =  2 * 80;
 		};
 
-		boost::string_ref get_element_type_untrimmed_str_ref(const pdb_atom &);
-		coarse_element_type get_coarse_element_type(const pdb_atom &);
+		constexpr ::std::string_view get_element_type_untrimmed_str_ref(const pdb_atom &);
+		constexpr coarse_element_type get_coarse_element_type(const pdb_atom &);
 		char get_amino_acid_letter_tolerantly(const pdb_atom &);
 		char_3_arr get_amino_acid_code(const pdb_atom &);
 		std::string get_amino_acid_code_string(const pdb_atom &);
-		std::string get_amino_acid_name(const pdb_atom &);
+		std::string_view get_amino_acid_name( const pdb_atom & );
 		bool is_pdb_record_of_type(const std::string &,
 		                           const pdb_record &);
 
@@ -131,31 +132,31 @@ namespace cath {
 		bool alt_locn_is_dssp_accepted(const pdb_atom &);
 		std::ostream & operator<<(std::ostream &,
 		                          const pdb_atom &);
-		boost::string_ref get_element_symbol_str_ref(const pdb_atom &);
-		boost::string_ref get_charge_str_ref(const pdb_atom &);
+		::std::string_view get_element_symbol_str_ref(const pdb_atom &);
+		::std::string_view get_charge_str_ref(const pdb_atom &);
 
 		/// \brief Ctor for pdb_atom
-		inline pdb_atom::pdb_atom(const pdb_record &prm_record_type,    ///< TODOCUMENT
-		                          const uint       &prm_atom_serial,    ///< TODOCUMENT
-		                          const char_4_arr &prm_element_type,   ///< TODOCUMENT
-		                          const char       &prm_alt_locn,       ///< TODOCUMENT
-		                          amino_acid        prm_amino_acid,     ///< TODOCUMENT
-		                          geom::coord       prm_coord,          ///< TODOCUMENT
-		                          const float      &prm_occupancy,      ///< TODOCUMENT
-		                          const float      &prm_temp_factor,    ///< TODOCUMENT
-		                          char_2_arr        prm_element_symbol, ///< TODOCUMENT
-		                          char_2_arr        prm_charge          ///< TODOCUMENT
-		                          ) : atom_coord       { std::move( prm_coord )          },
-		                              the_amino_acid   { std::move( prm_amino_acid )     },
-		                              the_element_type { prm_element_type                },
-		                              record_type      { prm_record_type                 },
-		                              alt_locn         { prm_alt_locn                    },
-		                              atom_serial      { prm_atom_serial                 },
-		                              occupancy        { prm_occupancy                   },
-		                              temp_factor      { prm_temp_factor                 },
-		                              element_symbol   ( std::move( prm_element_symbol ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
-		                              charge           ( std::move( prm_charge )         )  //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
-		                              {
+		constexpr pdb_atom::pdb_atom(const pdb_record &prm_record_type,    ///< TODOCUMENT
+		                             const uint       &prm_atom_serial,    ///< TODOCUMENT
+		                             const char_4_arr &prm_element_type,   ///< TODOCUMENT
+		                             const char       &prm_alt_locn,       ///< TODOCUMENT
+		                             amino_acid        prm_amino_acid,     ///< TODOCUMENT
+		                             geom::coord       prm_coord,          ///< TODOCUMENT
+		                             const float      &prm_occupancy,      ///< TODOCUMENT
+		                             const float      &prm_temp_factor,    ///< TODOCUMENT
+		                             char_2_arr        prm_element_symbol, ///< TODOCUMENT
+		                             char_2_arr        prm_charge          ///< TODOCUMENT
+		                             ) : atom_coord       { std::move( prm_coord )          },
+		                                 the_amino_acid   { std::move( prm_amino_acid )     },
+		                                 the_element_type { prm_element_type                },
+		                                 record_type      { prm_record_type                 },
+		                                 alt_locn         { prm_alt_locn                    },
+		                                 atom_serial      { prm_atom_serial                 },
+		                                 occupancy        { prm_occupancy                   },
+		                                 temp_factor      { prm_temp_factor                 },
+		                                 element_symbol   ( std::move( prm_element_symbol ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
+		                                 charge           ( std::move( prm_charge )         )  //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
+		                                 {
 			if ( ! boost::math::isfinite( occupancy ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Argument occupancy must be a normal, finite floating-point number"));
 			}
@@ -165,69 +166,69 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline const pdb_record & pdb_atom::get_record_type() const {
+		constexpr const pdb_record & pdb_atom::get_record_type() const {
 			return record_type;
 		}
 
 		/// \brief TODOCUMENT
-		inline const uint & pdb_atom::get_atom_serial() const {
+		constexpr const uint & pdb_atom::get_atom_serial() const {
 			return atom_serial;
 		}
 
 		/// \brief TODOCUMENT
-		inline const char_4_arr & pdb_atom::get_element_type_untrimmed() const {
+		constexpr const char_4_arr & pdb_atom::get_element_type_untrimmed() const {
 			return the_element_type.get_element_type_untrimmed();
 		}
 
 		/// \brief TODOCUMENT
-		inline boost::string_ref pdb_atom::get_element_type() const {
+		constexpr ::std::string_view pdb_atom::get_element_type() const {
 			return the_element_type.get_element_type();
 		}
 
 		/// \brief TODOCUMENT
-		inline const char & pdb_atom::get_alt_locn() const {
+		constexpr const char & pdb_atom::get_alt_locn() const {
 			return alt_locn;
 		}
 
 		/// \brief TODOCUMENT
-		inline const amino_acid & pdb_atom::get_amino_acid() const {
+		constexpr const amino_acid & pdb_atom::get_amino_acid() const {
 			return the_amino_acid;
 		}
 
 		/// \brief TODOCUMENT
-		inline const geom::coord & pdb_atom::get_coord() const {
+		constexpr const geom::coord & pdb_atom::get_coord() const {
 			return atom_coord;
 		}
 
 		/// \brief TODOCUMENT
-		inline const float & pdb_atom::get_occupancy() const {
+		constexpr const float & pdb_atom::get_occupancy() const {
 			return occupancy;
 		}
 
 		/// \brief TODOCUMENT
-		inline const float & pdb_atom::get_temp_factor() const {
+		constexpr const float & pdb_atom::get_temp_factor() const {
 			return temp_factor;
 		}
 
 		/// \brief Getter for the element symbol characters
-		inline const char_2_arr & pdb_atom::get_element_symbol() const {
+		constexpr const char_2_arr & pdb_atom::get_element_symbol() const {
 			return element_symbol;
 		}
 
 		/// \brief Getter for the charge characters
-		inline const char_2_arr & pdb_atom::get_charge() const {
+		constexpr const char_2_arr & pdb_atom::get_charge() const {
 			return charge;
 		}
 
-		/// \brief Get a string_ref for the untrimmed element type of the specified pdb_atom
-		inline boost::string_ref get_element_type_untrimmed_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
-		                                                            ) {
-			return common::string_ref_of_char_arr( prm_pdb_atom.get_element_type_untrimmed() );
+		/// \brief Get a string_view for the untrimmed element type of the specified pdb_atom
+		constexpr ::std::string_view get_element_type_untrimmed_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
+		                                                               ) {
+			return common::string_view_of_char_arr( prm_pdb_atom.get_element_type_untrimmed() );
 		}
 
 		/// \brief Get the coarse_element_type corresponding to the specified pdb_atom
-		inline coarse_element_type get_coarse_element_type(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
-		                                                   ) {
+		constexpr coarse_element_type get_coarse_element_type(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
+		                                                      ) {
 			return get_coarse_element_type( prm_pdb_atom.get_element_type() );
 		}
 
@@ -262,22 +263,19 @@ namespace cath {
 		/// to be accepted for decay to UNK/X. See function body for the accepted combinations.
 		///
 		/// \relates pdb_atom
-		inline amino_acid get_amino_acid_of_string_and_record(const std::string &prm_aa_string,  ///< The three-letter amino acid string (eg "SER")
-		                                                      const pdb_record  &prm_record_type ///< Whether this is an ATOM or HETATM record
+		inline amino_acid get_amino_acid_of_string_and_record(const char_3_arr &prm_aa_string,  ///< The three-letter amino acid string (eg "SER")
+		                                                      const pdb_record &prm_record_type ///< Whether this is an ATOM or HETATM record
 		                                                      ) {
-			if ( prm_aa_string.length() != 3 ) {
-				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Amino acid string must contain three characters"));
-			}
 			try {
 				return { prm_aa_string, prm_record_type };
 			}
 			catch (...) {
-				const std::set<std::pair<std::string, pdb_record>> pdb_aa_entries_allowed_to_decay_to_unk = {
-					{ "MLY", pdb_record::HETATM },
-					{ "MSE", pdb_record::ATOM   },
-					{ "MSE", pdb_record::HETATM },
+				constexpr ::std::array PDB_AA_ENTRIES_ALLOWED_TO_DECAY_TO_UNK = {
+					::std::pair{ make_char_arr( "MLY" ), pdb_record::HETATM },
+					::std::pair{ make_char_arr( "MSE" ), pdb_record::ATOM   },
+					::std::pair{ make_char_arr( "MSE" ), pdb_record::HETATM },
 				};
-				if ( common::contains( pdb_aa_entries_allowed_to_decay_to_unk, std::make_pair( prm_aa_string, prm_record_type ) ) ) {
+				if ( common::contains( PDB_AA_ENTRIES_ALLOWED_TO_DECAY_TO_UNK, ::std::pair( prm_aa_string, prm_record_type ) ) ) {
 					return { "UNK", prm_record_type };
 				}
 				throw;
@@ -290,12 +288,13 @@ namespace cath {
 		/// See the body of get_amino_acid_of_string_and_record() for the accepted combinations.
 		///
 		/// \relates pdb_atom
-		inline amino_acid parse_amino_acid_from_pdb_atom_record(const std::string &prm_pdb_atom_record_string ///< TODOCUMENT
+		inline amino_acid parse_amino_acid_from_pdb_atom_record(const ::std::string_view &prm_pdb_atom_record_string ///< TODOCUMENT
 		                                                        ) {
-			const pdb_record  record_type = pdb_rec_of_six_chars_in_string( prm_pdb_atom_record_string                ); //  1 -  6        Record name   "ATOM  "
-			const std::string the_a_a     =                                 prm_pdb_atom_record_string.substr( 17, 3  ); // 18 - 20        Residue name  resName      Residue name.
+			assert( prm_pdb_atom_record_string.length() >= 20 );
+			const pdb_record         record_type = pdb_rec_of_six_chars_in_string( prm_pdb_atom_record_string                ); //  1 -  6        Record name   "ATOM  "
+			const ::std::string_view the_a_a     =                                 prm_pdb_atom_record_string.substr( 17, 3  ); // 18 - 20        Residue name  resName      Residue name.
 			return get_amino_acid_of_string_and_record(
-				the_a_a,
+				char_3_arr{ the_a_a[0], the_a_a[1], the_a_a[2] },
 				record_type
 			);
 		}
@@ -423,20 +422,20 @@ namespace cath {
 			);
 		}
 
-		/// \brief Get a string_ref to (the non-null part of) the specified pdb_atom's element_symbol string
+		/// \brief Get a string_view to (the non-null part of) the specified pdb_atom's element_symbol string
 		///
 		/// \relates pdb_atom
-		inline boost::string_ref get_element_symbol_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
+		inline ::std::string_view get_element_symbol_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
 		                                                    ) {
-			return common::string_ref_of_null_term_char_arr( prm_pdb_atom.get_element_symbol() );
+			return common::string_view_of_null_term_char_arr( prm_pdb_atom.get_element_symbol() );
 		}
 
-		/// \brief Get a string_ref to (the non-null part of) the specified pdb_atom's charge string
+		/// \brief Get a string_view to (the non-null part of) the specified pdb_atom's charge string
 		///
 		/// \relates pdb_atom
-		inline boost::string_ref get_charge_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
+		inline ::std::string_view get_charge_str_ref(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
 		                                            ) {
-			return common::string_ref_of_null_term_char_arr( prm_pdb_atom.get_charge() );
+			return common::string_view_of_null_term_char_arr( prm_pdb_atom.get_charge() );
 		}
 
 		/// \brief Return whether the specified pdb_atom's amino_acid is for water (HOH)

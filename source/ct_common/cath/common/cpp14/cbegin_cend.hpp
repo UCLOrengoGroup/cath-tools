@@ -30,8 +30,8 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto cbegin(const T &prm_range
-		                   )->decltype( std::begin( prm_range ) ) {
+		constexpr auto cbegin(const T &prm_range
+		                      )->decltype( std::begin( prm_range ) ) {
 			return std::begin( prm_range );
 		}
 
@@ -39,8 +39,8 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto cend(const T &prm_range
-		                 )->decltype( std::end( prm_range ) ) {
+		constexpr auto cend(const T &prm_range
+		                    )->decltype( std::end( prm_range ) ) {
 			return std::end( prm_range );
 		}
 
@@ -48,8 +48,8 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto rbegin(T& prm_range
-		                   ) -> decltype( prm_range.rbegin() ) {
+		constexpr auto rbegin(T& prm_range
+		                      ) -> decltype( prm_range.rbegin() ) {
 			return prm_range.rbegin();
 		}
 
@@ -57,8 +57,8 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto rbegin(const T& prm_range
-		                   ) -> decltype( prm_range.rbegin() ) {
+		constexpr auto rbegin(const T& prm_range
+		                      ) -> decltype( prm_range.rbegin() ) {
 			return prm_range.rbegin();
 		}
 
@@ -66,8 +66,8 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto rend(T& prm_range
-		                 ) -> decltype( prm_range.rend() ) {
+		constexpr auto rend(T& prm_range
+		                    ) -> decltype( prm_range.rend() ) {
 			return prm_range.rend();
 		}
 
@@ -75,8 +75,8 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto rend(const T &prm_range
-		                 ) -> decltype( prm_range.rend() ) {
+		constexpr auto rend(const T &prm_range
+		                    ) -> decltype( prm_range.rend() ) {
 			return prm_range.rend();
 		}
 
@@ -85,14 +85,14 @@ namespace cath {
 		///
 		/// \todo Come C++14, remove this and use the proper version instead
 		template <typename T>
-		inline auto crbegin(const T &prm_range
-		                    ) -> decltype( ::cath::common::rbegin( prm_range ) ) {
+		constexpr auto crbegin(const T &prm_range
+		                       ) -> decltype( ::cath::common::rbegin( prm_range ) ) {
 			return ::cath::common::rbegin( prm_range );
 		}
 
 		template <typename T>
-		inline auto crend(const T& prm_range
-		                  ) -> decltype( ::cath::common::rend( prm_range ) ) {
+		constexpr auto crend(const T& prm_range
+		                     ) -> decltype( ::cath::common::rend( prm_range ) ) {
 			return ::cath::common::rend( prm_range );
 		}
 

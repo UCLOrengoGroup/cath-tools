@@ -170,12 +170,10 @@ namespace cath {
 
 		/// \brief Trim the specified seq_seg according to the specified trim_spec
 		///
-		/// \todo Come relaxed constexpr, make this constexpr
-		///
 		/// \relates trim_spec
-		inline void trim_seq_seg(seq::seq_seg    &prm_seq_seg,    ///< The seq_seg to trim
-		                         const trim_spec &prm_trim_spec ///< The trim_spec to apply
-		                         ) {
+		constexpr void trim_seq_seg(seq::seq_seg    &prm_seq_seg,    ///< The seq_seg to trim
+		                            const trim_spec &prm_trim_spec ///< The trim_spec to apply
+		                            ) {
 			const auto length = get_length( prm_seq_seg );
 			prm_seq_seg.set_start_arrow( prm_seq_seg.get_start_arrow() + start_trimming_of_length( prm_trim_spec, length ) );
 			prm_seq_seg.set_stop_arrow ( prm_seq_seg.get_stop_arrow () - stop_trimming_of_length ( prm_trim_spec, length ) );
@@ -183,12 +181,10 @@ namespace cath {
 
 		/// \brief Return a copy of the specified seq_seg, trimmed according to the specified trim_spec
 		///
-		/// \todo Come relaxed constexpr, make this constexpr
-		///
 		/// \relates trim_spec
-		inline seq::seq_seg trim_seq_seg_copy(seq::seq_seg     prm_seq_seg,  ///< The seq_seg to trim
-		                                      const trim_spec &prm_trim_spec ///< The trim_spec to apply
-		                                      ) {
+		constexpr seq::seq_seg trim_seq_seg_copy(seq::seq_seg     prm_seq_seg,  ///< The seq_seg to trim
+		                                         const trim_spec &prm_trim_spec ///< The trim_spec to apply
+		                                         ) {
 			trim_seq_seg( prm_seq_seg, prm_trim_spec );
 			return prm_seq_seg;
 		}
@@ -196,9 +192,9 @@ namespace cath {
 		/// \brief Return a copy of the specified seq_seg, trimmed according to the specified trim_spec if specified
 		///
 		/// \relates trim_spec
-		inline seq::seq_seg trim_seq_seg_copy(seq::seq_seg         prm_seq_seg,  ///< The seq_seg to trim
-		                                      const trim_spec_opt &prm_trim_spec ///< The trim_spec to apply
-		                                      ) {
+		constexpr seq::seq_seg trim_seq_seg_copy(seq::seq_seg         prm_seq_seg,  ///< The seq_seg to trim
+		                                         const trim_spec_opt &prm_trim_spec ///< The trim_spec to apply
+		                                         ) {
 			return prm_trim_spec ? trim_seq_seg_copy( std::move( prm_seq_seg ), *prm_trim_spec )
 			                     : prm_seq_seg;
 		}

@@ -1275,7 +1275,6 @@ set(
 set(
 	NORMSOURCES_CT_UNI_CATH_STRUCTURE_PROTEIN
 		ct_uni/cath/structure/protein/amino_acid.cpp
-		ct_uni/cath/structure/protein/dna_atom.cpp
 		ct_uni/cath/structure/protein/protein.cpp
 		ct_uni/cath/structure/protein/protein_io.cpp
 		ct_uni/cath/structure/protein/protein_list.cpp

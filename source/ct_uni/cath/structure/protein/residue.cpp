@@ -25,6 +25,7 @@
 #include <optional>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <tuple>
 #include <utility>
 
@@ -54,6 +55,7 @@ using ::std::ostringstream;
 using ::std::right;
 using ::std::setw;
 using ::std::string;
+using ::std::string_view;
 using ::std::tuple;
 
 #include "cath/structure/geometry/quat_rot.hpp"
@@ -384,8 +386,8 @@ char_3_arr cath::get_amino_acid_code(const residue &prm_residue ///< TODOCUMENT
 /// \brief TODOCUMENT
 ///
 /// \relates residue
-string cath::get_amino_acid_name(const residue &prm_residue ///< TODOCUMENT
-                                 ) {
+string_view cath::get_amino_acid_name(const residue &prm_residue ///< TODOCUMENT
+                                      ) {
 	return prm_residue.get_amino_acid().get_name();
 }
 

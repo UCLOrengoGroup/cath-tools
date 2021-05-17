@@ -21,18 +21,17 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_RECORD_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_RECORD_HPP
 
-#include <boost/range/sub_range.hpp>
+#include <string_view>
 
 #include "cath/common/char_arr_type_aliases.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
-#include <array>
-#include <iosfwd>
-
 namespace cath {
 	namespace file {
+
+		using ::std::literals::string_view_literals::operator""sv;
 
 		/// \brief Represent the type of record of a PDB file line
 		enum class pdb_record : bool {
@@ -46,20 +45,17 @@ namespace cath {
 		///      an invalid_argument_exception will be thrown
 		///
 		/// \todo Come C++17, convert this to use string_view rather than sub_range<const string>
-		inline pdb_record pdb_rec_of_substring(const boost::sub_range<const std::string> &prm_substring ///< The substring to examine
+		inline pdb_record pdb_rec_of_substring(const ::std::string_view &prm_substring ///< The substring to examine
 		                                       ) {
-			constexpr auto atom_6_str   = make_char_arr( "ATOM  " );
-			constexpr auto atom_4_str   = make_char_arr( "ATOM"   );
-			constexpr auto hetatm_6_str = make_char_arr( "HETATM" );
-			if ( boost::range::equal( prm_substring, atom_6_str ) || boost::range::equal( prm_substring, atom_4_str ) ) {
+			if ( prm_substring == "ATOM  "sv || prm_substring == "ATOM"sv ) {
 				return pdb_record::ATOM;
 			}
-			if ( boost::range::equal( prm_substring, hetatm_6_str ) ) {
+			if ( prm_substring == "HETATM"sv ) {
 				return pdb_record::HETATM;
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 				"Unable to recognise pdb_record type "
-				+ std::string{
+				+ ::std::string{
 					common::cbegin( prm_substring ),
 					common::cend  ( prm_substring )
 				}
@@ -71,8 +67,8 @@ namespace cath {
 		///
 		/// \pre The six chars must be "ATOM  " or "HETATM" else
 		///      an invalid_argument_exception will be thrown
-		inline pdb_record pdb_rec_of_six_chars_in_string(const std::string &prm_string,   ///< The string in which the substring of six chars appears
-		                                                 const size_t      &prm_start = 0 ///< The index of the first char of the substring within the string
+		inline pdb_record pdb_rec_of_six_chars_in_string(const ::std::string_view &prm_string,   ///< The string in which the substring of six chars appears
+		                                                 const size_t             &prm_start = 0 ///< The index of the first char of the substring within the string
 		                                                 ) {
 			constexpr size_t NUM_CHARS = 6;
 			if ( prm_start + NUM_CHARS > prm_string.length() ) {
@@ -80,16 +76,14 @@ namespace cath {
 					"Cannot determine pdb_rec_of_six_chars_in_string() of a string that isn't long enough for six characters after the specified start"
 				));
 			}
-			const auto begin_itr = std::next( prm_string.begin(), cath::debug_numeric_cast<ptrdiff_t>( prm_start ) );
-			const auto end_itr   = std::next( begin_itr,          NUM_CHARS                                        );
-			return pdb_rec_of_substring( boost::sub_range<const std::string>{ begin_itr, end_itr } );
+			return pdb_rec_of_substring( prm_string.substr(prm_start, NUM_CHARS) );
 		}
 
 		/// \brief Return the pdb_record corresponding to the six chars in the specified string
 		///
 		/// \pre The string must contain exactly six chars and must be "ATOM  " or "HETATM" else
 		///      an invalid_argument_exception will be thrown
-		inline pdb_record pdb_rec_of_str(const std::string &prm_string ///< TODOCUMENT
+		inline pdb_record pdb_rec_of_str(const ::std::string &prm_string ///< TODOCUMENT
 		                                 ) {
 			constexpr size_t NUM_CHARS = 6;
 			if ( prm_string.length() != NUM_CHARS ) {
@@ -98,11 +92,9 @@ namespace cath {
 			return pdb_rec_of_six_chars_in_string( prm_string );
 		}
 
-		std::istream & operator>>(std::istream &,
-		                          pdb_record &);
+		::std::istream &operator>>( ::std::istream &, pdb_record & );
 
-		std::ostream & operator<<(std::ostream &,
-		                          const pdb_record &);
+		::std::ostream &operator<<( ::std::ostream &, const pdb_record & );
 
 	} // namespace file
 } // namespace cath

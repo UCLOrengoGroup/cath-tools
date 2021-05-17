@@ -33,28 +33,28 @@ using ::std::string;
 BOOST_AUTO_TEST_SUITE(element_type_string_test_suite)
 
 BOOST_AUTO_TEST_CASE(get_coarse_element_type_works) {
-	BOOST_CHECK_EQUAL( get_coarse_element_type( "C"   ), coarse_element_type::CARBON       );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( "CA"  ), coarse_element_type::CARBON_ALPHA );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( "CB"  ), coarse_element_type::CARBON_BETA  );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( "N"   ), coarse_element_type::NITROGEN     );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( "O"   ), coarse_element_type::OXYGEN       );
+	static_assert( get_coarse_element_type( "C"   ) == coarse_element_type::CARBON       );
+	static_assert( get_coarse_element_type( "CA"  ) == coarse_element_type::CARBON_ALPHA );
+	static_assert( get_coarse_element_type( "CB"  ) == coarse_element_type::CARBON_BETA  );
+	static_assert( get_coarse_element_type( "N"   ) == coarse_element_type::NITROGEN     );
+	static_assert( get_coarse_element_type( "O"   ) == coarse_element_type::OXYGEN       );
 
-	BOOST_CHECK_EQUAL( get_coarse_element_type( ""    ), coarse_element_type::NON_CORE     );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( "CAA" ), coarse_element_type::NON_CORE     );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( "BR"  ), coarse_element_type::NON_CORE     );
+	static_assert( get_coarse_element_type( ""    ) == coarse_element_type::NON_CORE     );
+	static_assert( get_coarse_element_type( "CAA" ) == coarse_element_type::NON_CORE     );
+	static_assert( get_coarse_element_type( "BR"  ) == coarse_element_type::NON_CORE     );
 }
 
 BOOST_AUTO_TEST_CASE(get_coarse_element_type_of_element_type_string) {
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'A', ' ' } } } ), coarse_element_type::CARBON_ALPHA );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'A', ' ' } } } ), coarse_element_type::CARBON_ALPHA );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', ' ', ' ' } } } ), coarse_element_type::CARBON       );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'A', ' ' } } } ), coarse_element_type::CARBON_ALPHA );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'B', ' ' } } } ), coarse_element_type::CARBON_BETA  );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'N', ' ', ' ' } } } ), coarse_element_type::NITROGEN     );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'O', ' ', ' ' } } } ), coarse_element_type::OXYGEN       );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " CA " ) } ) == coarse_element_type::CARBON_ALPHA );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " CA " ) } ) == coarse_element_type::CARBON_ALPHA );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " C  " ) } ) == coarse_element_type::CARBON       );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " CA " ) } ) == coarse_element_type::CARBON_ALPHA );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " CB " ) } ) == coarse_element_type::CARBON_BETA  );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " N  " ) } ) == coarse_element_type::NITROGEN     );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " O  " ) } ) == coarse_element_type::OXYGEN       );
 
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'C', 'A', 'A' } } } ), coarse_element_type::NON_CORE     );
-	BOOST_CHECK_EQUAL( get_coarse_element_type( element_type_string{ { { ' ', 'B', 'R', ' ' } } } ), coarse_element_type::NON_CORE     );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " CAA" ) } ) == coarse_element_type::NON_CORE     );
+	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " BR " ) } ) == coarse_element_type::NON_CORE     );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

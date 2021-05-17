@@ -31,22 +31,22 @@ BOOST_AUTO_TEST_CASE(basic) {
 	BOOST_CHECK_EQUAL( to_string( make_residue_id( 'A', -5      ) ), "A:-5"       );
 	BOOST_CHECK_EQUAL( to_string( make_residue_id( 'A', -5, 'A' ) ), "A:-5A"      );
 
-	BOOST_CHECK_EQUAL( make_residue_id( 'A'          ), make_residue_id( 'A'          ) );
-	BOOST_CHECK_EQUAL( make_residue_id( 'A', -5      ), make_residue_id( 'A', -5      ) );
-	BOOST_CHECK_EQUAL( make_residue_id( 'A', -5, 'A' ), make_residue_id( 'A', -5, 'A' ) );
+	static_assert( make_residue_id( 'A'          ) == make_residue_id( 'A'          ) );
+	static_assert( make_residue_id( 'A', -5      ) == make_residue_id( 'A', -5      ) );
+	static_assert( make_residue_id( 'A', -5, 'A' ) == make_residue_id( 'A', -5, 'A' ) );
 }
 
 BOOST_AUTO_TEST_CASE(negative_number_check_works) {
-	BOOST_CHECK(   has_strictly_negative_residue_number( make_residue_id( 'A', -1      ) ) );
-	BOOST_CHECK(   has_strictly_negative_residue_number( make_residue_id( 'A', -1, 'A' ) ) );
+	static_assert(   has_strictly_negative_residue_number( make_residue_id( 'A', -1      ) ) );
+	static_assert(   has_strictly_negative_residue_number( make_residue_id( 'A', -1, 'A' ) ) );
 
-	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A',  0      ) ) );
-	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A',  0, 'A' ) ) );
+	static_assert( ! has_strictly_negative_residue_number( make_residue_id( 'A',  0      ) ) );
+	static_assert( ! has_strictly_negative_residue_number( make_residue_id( 'A',  0, 'A' ) ) );
 
-	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A',  1      ) ) );
-	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A',  1, 'A' ) ) );
+	static_assert( ! has_strictly_negative_residue_number( make_residue_id( 'A',  1      ) ) );
+	static_assert( ! has_strictly_negative_residue_number( make_residue_id( 'A',  1, 'A' ) ) );
 
-	BOOST_CHECK( ! has_strictly_negative_residue_number( make_residue_id( 'A'          ) ) );
+	static_assert( ! has_strictly_negative_residue_number( make_residue_id( 'A'          ) ) );
 }
 
 BOOST_AUTO_TEST_CASE(any_negative_number_check_works) {
@@ -71,6 +71,5 @@ BOOST_AUTO_TEST_CASE(any_negative_number_check_works) {
 
 	BOOST_CHECK(   has_any_strictly_negative_residue_numbers (  one_strictly_negative ) );
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()

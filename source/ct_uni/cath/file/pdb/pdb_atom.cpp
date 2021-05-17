@@ -80,8 +80,8 @@ string cath::file::get_amino_acid_code_string(const pdb_atom &prm_pdb_atom ///< 
 }
 
 /// \brief Get the three letter amino acid code (eg "SER") from a pdb_atom
-string cath::file::get_amino_acid_name(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
-                                       ) {
+string_view cath::file::get_amino_acid_name(const pdb_atom &prm_pdb_atom ///< The pdb_atom to query
+                                            ) {
 	return prm_pdb_atom.get_amino_acid().get_name();
 }
 
@@ -133,7 +133,7 @@ ostream & cath::file::write_pdb_file_entry(ostream          &prm_os,      ///< T
 
 	if ( ! element_sym_strref.empty() || ! charge_strref.empty() ) {
 		prm_os << "          ";
-		prm_os << right << setw( 2 ) << ( element_sym_strref.empty() ? "  "s : element_sym_strref.to_string() );
+		prm_os << right << setw( 2 ) << ( element_sym_strref.empty() ? "  "sv : element_sym_strref );
 		if ( ! charge_strref.empty() ) {
 			prm_os << charge_strref;
 		}

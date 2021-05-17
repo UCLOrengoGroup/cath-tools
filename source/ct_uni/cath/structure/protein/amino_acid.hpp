@@ -22,37 +22,38 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_AMINO_ACID_HPP
 
 #include <iosfwd>
+#include <string_view>
 #include <tuple>
 #include <unordered_map>
 #include <utility>
+#include <variant>
 #include <vector>
 
 #include <boost/operators.hpp>
 #include <boost/throw_exception.hpp>
-#include <boost/utility/string_ref.hpp>
-#include <boost/variant.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/char_arr_type_aliases.hpp"
 #include "cath/common/cpp17/invoke.hpp"
+#include "cath/common/cpp20/arrays_are_equal.hpp"
+#include "cath/common/cpp20/overload.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/function/ident.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 #include "cath/common/string/char_arr_to_string.hpp"
+#include "cath/common/string/string_view_of_char_arr.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/pdb/pdb_record.hpp"
 #include "cath/structure/protein/dna_atom.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
 namespace cath {
-	namespace detail { struct aa_code_getter;            }
-	namespace detail { struct tolerant_aa_letter_getter; }
-	namespace detail { struct aa_type_getter;            }
 
-	using char_char_3_arr_str_tpl     = std::tuple<char, char_3_arr, std::string>;
-	using char_char_3_arr_str_tpl_vec = std::vector<char_char_3_arr_str_tpl>;
+	using ::std::literals::string_view_literals::operator""sv;
 
 	/// \brief Represent the type of amino_acid record
 	enum class amino_acid_type : char {
@@ -61,7 +62,323 @@ namespace cath {
 		DNA      ///< A DNA/RNA amino acid record
 	};
 
-	std::string to_string(const amino_acid_type &);
+	::std::string to_string(const amino_acid_type &);
+
+
+
+	/// \brief TODOCUMENT
+	///
+	/// \todo Since, some part of this arose as taking excessive & non-trivial time in some profile
+	///       it is worth seeing if it can be made faster, probably by using a ::std::array and constexpr_find()
+	///       and constexpr_for_n() to generate lookups with minimal runtime overhead.
+	constexpr auto LETTER_CODE_AND_NAME_LIST = ::std::array{
+		::std::tuple( 'A', make_char_arr( "ALA" ), "Alanine"sv                            ),
+		::std::tuple( 'B', make_char_arr( "ASX" ), "Ambiguous Asparagine/Aspartic Acid"sv ), // eg PDBs 156b, 1kp0, 1pgk, 2atc, 2fmd, 2rxn, 3atc, 3bcl and 3e2o
+		::std::tuple( 'C', make_char_arr( "CYS" ), "Cysteine"sv                           ),
+		::std::tuple( 'D', make_char_arr( "ASP" ), "Aspartic Acid"sv                      ),
+		::std::tuple( 'E', make_char_arr( "GLU" ), "Glutamic Acid"sv                      ),
+		::std::tuple( 'F', make_char_arr( "PHE" ), "Phenylalanine"sv                      ),
+		::std::tuple( 'G', make_char_arr( "GLY" ), "Glycine"sv                            ),
+		::std::tuple( 'H', make_char_arr( "HIS" ), "Histidine"sv                          ),
+		::std::tuple( 'I', make_char_arr( "ILE" ), "Isoleucine"sv                         ),
+		::std::tuple( 'J', make_char_arr( "XLE" ), "Leucine/Isoleucine"sv                 ), // eg PDBs?
+		::std::tuple( 'K', make_char_arr( "LYS" ), "Lysine"sv                             ),
+		::std::tuple( 'L', make_char_arr( "LEU" ), "Leucine"sv                            ),
+		::std::tuple( 'M', make_char_arr( "MET" ), "Methionine"sv                         ),
+		::std::tuple( 'N', make_char_arr( "ASN" ), "Asparagine"sv                         ),
+		::std::tuple( 'O', make_char_arr( "PYL" ), "Pyrrolysine"sv                        ),
+		::std::tuple( 'P', make_char_arr( "PRO" ), "Proline"sv                            ),
+		::std::tuple( 'Q', make_char_arr( "GLN" ), "Glutamine"sv                          ),
+		::std::tuple( 'R', make_char_arr( "ARG" ), "Arginine"sv                           ),
+		::std::tuple( 'S', make_char_arr( "SER" ), "Serine"sv                             ),
+		::std::tuple( 'T', make_char_arr( "THR" ), "Threonine"sv                          ),
+		::std::tuple( 'U', make_char_arr( "SEC" ), "Selenocysteine"sv                     ), // eg PDBs 1aa6, 1cc1, 1fdi, 1fdo, 1h0h, 1kqf, 1kqg, 1pae, 1pfp, 2bc7, 2bc8, 2iv2, 2wpn, 2xsk, 3ean, 3eao, 3fwf, 3fwi, 3fwj, 3u5s, 3ze7, 3ze8, 3ze9, 3zea, 4kl8, 4kn9, 4ko1, 4ko2, 4ko3, 4ko4
+		::std::tuple( 'V', make_char_arr( "VAL" ), "Valine"sv                             ),
+		::std::tuple( 'W', make_char_arr( "TRP" ), "Tryptophan"sv                         ),
+		::std::tuple( 'X', make_char_arr( "UNK" ), "Unknown"sv                            ),
+		::std::tuple( 'Y', make_char_arr( "TYR" ), "Tyrosine"sv                           ),
+		::std::tuple( 'Z', make_char_arr( "GLX" ), "Ambiguous Glutamine/Glutamic Acid"sv  )  // eg PDBs 156b, 1kp0, 1pgk, 2rxn, 2tnc, 3bcl and 4cpa
+	};
+
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_letter The 1 letter code
+	constexpr ::std::optional<uint> index_opt_of_letter( const char &prm_letter ) {
+		for ( unsigned int x = 0; x < LETTER_CODE_AND_NAME_LIST.size(); ++x ) {
+			if ( ::std::get<0>( LETTER_CODE_AND_NAME_LIST[ x ] ) == prm_letter ) {
+				return { x };
+			}
+		}
+		return ::std::nullopt;
+	}
+
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_letter The 1 letter code
+	constexpr uint index_of_letter( const char &prm_letter ) {
+		const auto index_opt = index_opt_of_letter( prm_letter );
+		if ( index_opt ) {
+			return *index_opt;
+		} else {
+			BOOST_THROW_EXCEPTION(
+			  common::invalid_argument_exception( ::fmt::format( "Amino acid letter '{}' is not valid", prm_letter ) ) );
+		}
+	}
+
+	constexpr ::std::optional<uint> index_opt_of_code( const char_3_arr &prm_code ) {
+		for ( unsigned int x = 0; x < LETTER_CODE_AND_NAME_LIST.size(); ++x ) {
+			if ( common::arrays_are_equal( ::std::get<1>( LETTER_CODE_AND_NAME_LIST[ x ] ), prm_code ) ) {
+				return { x };
+			}
+		}
+		return ::std::nullopt;
+	}
+
+	constexpr uint index_of_code( const char_3_arr &prm_code ) {
+		const auto index_opt = index_opt_of_code( prm_code );
+		if ( index_opt ) {
+			return *index_opt;
+		} else {
+			BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+			  ::fmt::format( "Amino acid code '{}' is not valid", common::string_view_of_char_arr( prm_code ) ) ) );
+		}
+	}
+
+	constexpr ::std::optional<uint> index_opt_of_name( const ::std::string_view &prm_name ) {
+		for ( unsigned int x = 0; x < LETTER_CODE_AND_NAME_LIST.size(); ++x ) {
+			if ( ::std::get<2>( LETTER_CODE_AND_NAME_LIST[ x ] ) == prm_name ) {
+				return { x };
+			}
+		}
+		return ::std::nullopt;
+	}
+
+	constexpr uint index_of_name( const ::std::string_view &prm_name ) {
+		const auto index_opt = index_opt_of_name( prm_name );
+		if ( index_opt ) {
+			return *index_opt;
+		} else {
+			BOOST_THROW_EXCEPTION(
+			  common::invalid_argument_exception( ::fmt::format( "Amino acid name '{}' is not valid", prm_name ) ) );
+		}
+	}
+
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_index TODOCUMENT
+	template <typename T>
+	constexpr T get_letter_code_or_name( const size_t &prm_index ) {
+		return ::std::get<T>( LETTER_CODE_AND_NAME_LIST.at( prm_index ) );
+	}
+
+	namespace detail {
+
+		/// \brief The number of chars used to store a HETATM
+		constexpr size_t NUM_HETATM_CHARS_IN_AA_REPN = 3;
+
+		/// TODOCUMENT
+		///
+		/// The typical size of aa_aa_repn is 4 bytes
+		///
+		/// This is an index into LETTER_CODE_AND_NAME_LIST
+		using aa_aa_repn = uint;
+
+		/// TODOCUMENT
+		///
+		/// The typical size of dna_aa_repn is 1 bytes
+		using dna_aa_repn = dna_atom;
+
+		/// TODOCUMENT
+		///
+		/// The typical size of hetatm_aa_repn is 3 bytes
+		using hetatm_aa_repn = ::std::array<char, NUM_HETATM_CHARS_IN_AA_REPN>;
+
+		/// TODOCUMENT
+		///
+		/// The typical size of aa_data is 8 bytes
+		///
+		/// If there's strong reason, this could be squeezed into 4 bytes, maybe even 3 at a push
+		using aa_data = ::std::variant<aa_aa_repn, hetatm_aa_repn, dna_aa_repn>;
+
+
+		/// \brief TODOCUMENT
+		///
+		/// This only matches true (ATOM) amino acids or DNA, not HETATMs (except for "ACE" and "NH2")
+		/// so it only returns returns aa_aa_repn or dna_aa_repn, not hetatm_aa_repn (except for "ACE" and "NH2")
+		///
+		/// \param prm_id The three letter code
+		constexpr aa_data atom_aa_or_dna_of_id( const char_3_arr &prm_id ) {
+			// If this matches an AA code, return the index for that
+			const ::std::optional<unsigned int> index_opt = index_opt_of_code( prm_id );
+			if ( index_opt ) {
+				return *index_opt;
+			}
+
+			// If this matches a DNA/RNA base, return the dna_atom for that
+			const ::std::optional<dna_atom> dna_opt = dna_atom_of_code( prm_id );
+			if ( dna_opt ) {
+				return *dna_opt;
+			}
+
+			// Hacks to handle erroneous ATOM AA in versions of 2yjd from before it was fixed in January 2017
+			//
+			// From http://deposit.rcsb.org/format-faq-v1.html :
+			//
+			// > Noteworthy exceptions to the above treatment of modified residues are the cases of
+			// > acetylation of the N-terminus (residue ACE) and amidation of the C-terminus (residue NH2).
+			if ( common::arrays_are_equal( prm_id, make_char_arr( "ACE" ) ) ) {
+				return prm_id;
+			}
+			if ( common::arrays_are_equal( prm_id, make_char_arr( "NH2" ) ) ) {
+				return prm_id;
+			}
+			BOOST_THROW_EXCEPTION( common::invalid_argument_exception( ::fmt::format(
+			  R"(Amino acid string "{}" has three characters but is not a recognised code (currently case-sensitive))",
+			  common::string_view_of_char_arr( prm_id ) ) ) );
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// This only matches true (ATOM) amino acids or DNA, not HETATMs (except for "ACE" and "NH2")
+		/// so it only returns returns aa_aa_repn or dna_aa_repn, not hetatm_aa_repn (except for "ACE" and "NH2")
+		///
+		/// \param prm_id The 1 letter code, three letter code or name to which the amino_acid should be set
+		constexpr aa_data atom_aa_or_dna_of_id( const ::std::string_view &prm_id ) {
+			// If the argument has more than three characters, try to match it against a name
+			if ( prm_id.length() > 3 ) {
+				return index_of_name( prm_id );
+			}
+
+			// If the argument has one character, try to match it against one of the letters
+			if ( prm_id.length() == 1 ) {
+				return index_of_letter( prm_id.front() );
+			}
+
+			// If the argument doesn't now have three characters, it must have two and that's invalid so throw
+			if ( prm_id.length() != 3 ) {
+				BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+				  ::fmt::format( R"(Two-character amino acid id "{}" not recognised)", prm_id ) ) );
+			}
+
+			// Must be three characters
+			return atom_aa_or_dna_of_id( ::std::array{ prm_id[ 0 ], prm_id[ 1 ], prm_id[ 2 ] } );
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// If pdb_record::ATOM, this acts as if that argument hadn't been passed (try AA code, try DNA code, throw)
+		/// If pdb_record::HETATM, this tries for an AA code then falls back on HETATM
+		///
+		/// \param prm_id         TODOCUMENT
+		/// \param prm_pdb_record TODOCUMENT
+		constexpr aa_data aa_data_of_id_and_pdb_record( const char_3_arr &prm_id, const file::pdb_record &prm_pdb_record ) {
+			switch ( prm_pdb_record ) {
+				case ( file::pdb_record::ATOM ): {
+					return detail::atom_aa_or_dna_of_id( prm_id );
+				}
+				case ( file::pdb_record::HETATM ): {
+					const ::std::optional<uint> index_opt = index_opt_of_code( prm_id );
+					return index_opt ? aa_data{ *index_opt } : aa_data{ prm_id };
+				}
+			}
+			BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+			  "Value of prm_pdb_record not recognised whilst constructing an amino_acid" ) );
+		}
+
+		/// \brief TODOCUMENT
+		///
+		/// If pdb_record::ATOM, this acts as if that argument hadn't been passed (try AA code, try DNA code, throw)
+		/// If pdb_record::HETATM, this throws if not a 3-char code, tries for an AA code then falls back on HETATM
+		///
+		/// \param prm_id         TODOCUMENT
+		/// \param prm_pdb_record TODOCUMENT
+		constexpr aa_data aa_data_of_id_and_pdb_record( const ::std::string_view &prm_id, const file::pdb_record &prm_pdb_record ) {
+			switch ( prm_pdb_record ) {
+				case ( file::pdb_record::ATOM ): {
+					return detail::atom_aa_or_dna_of_id( prm_id );
+				}
+				case ( file::pdb_record::HETATM ): {
+					if ( prm_id.length() != 3 ) {
+						BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+						  "Cannot create a HETATM amino acid from a string that is not 3 characters long" ) );
+					}
+					const ::std::array str_as_arr = { prm_id[ 0 ], prm_id[ 1 ], prm_id[ 2 ] };
+					const ::std::optional<uint> index_opt = index_opt_of_code( str_as_arr );
+					return index_opt ? aa_data{ *index_opt } : aa_data{ str_as_arr };
+				}
+			}
+			BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+			  "Value of prm_pdb_record not recognised whilst constructing an amino_acid" ) );
+		}
+
+		/// \brief Get the amino_acid_type of this amino_acid
+		constexpr amino_acid_type get_type( const aa_data &prm_aa_data ) {
+			// clang-format off
+			return ::std::visit(
+				common::overload(
+					[]( aa_aa_repn     ) { return amino_acid_type::AA      ; },
+					[]( dna_aa_repn    ) { return amino_acid_type::DNA     ; },
+					[]( hetatm_aa_repn ) { return amino_acid_type::HETATOM ; }
+				),
+				prm_aa_data
+			);
+			// clang-format on
+		}
+
+		/// \brief TODOCUMENT
+		constexpr char_3_arr get_code( const aa_data &prm_aa_data ) {
+			// clang-format off
+			return ::std::visit(
+				common::overload(
+					[] ( const aa_aa_repn     &x ) { return get_letter_code_or_name<char_3_arr>( x ) ; },
+					[] ( const dna_aa_repn    &x ) { return to_three_char_arr( x )                   ; },
+					[] ( const hetatm_aa_repn &x ) { return x                                        ; }
+				),
+				prm_aa_data
+			);
+			// clang-format on
+		}
+
+		/// \brief Get a single letter for the amino_acid, which is the expected letter for
+		///        the standard amino acids and a few HETATMs (eg MSE -> M) and is 'X' otherwise
+		/// \brief A visitor to get the one-letter code from the variant in amino_acid.
+		///        This just returns 'X' for DNA or unrecognised HETATM.
+		constexpr char get_letter_tolerantly( const aa_data &prm_aa_data ) {
+			// clang-format off
+			return ::std::visit(
+				common::overload(
+					[] ( const aa_aa_repn     &x ) { return get_letter_code_or_name<char>( x ) ; },
+					[] ( const dna_aa_repn    &  ) { return 'X'                                ; },
+					[] ( const hetatm_aa_repn &x ) {
+						// Some of the most common codes, as extracted from PDB dir with command like:
+						//
+						//     ls -1 | xargs grep -hPB99999 '^TER   ' | grep -P '^HETATM' | awk '{print substr( $0, 18, 3 )}' | sort | uniq -c | sort -g
+						//
+						// Codes from pages like : http://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/MSE
+						//
+						// Default to 'X'
+						return
+							( x == make_char_arr( " IC" ) ) ? 'C' :
+							( x == make_char_arr( " IG" ) ) ? 'G' :
+							( x == make_char_arr( "HYP" ) ) ? 'P' :
+							( x == make_char_arr( "LCG" ) ) ? 'G' :
+							( x == make_char_arr( "MLY" ) ) ? 'K' :
+							( x == make_char_arr( "MSE" ) ) ? 'M' :
+							( x == make_char_arr( "NCX" ) ) ? 'N' :
+							( x == make_char_arr( "OMG" ) ) ? 'G' :
+							( x == make_char_arr( "PCA" ) ) ? 'E' :
+							( x == make_char_arr( "PSU" ) ) ? 'U' :
+							( x == make_char_arr( "PTR" ) ) ? 'Y' :
+							( x == make_char_arr( "SEP" ) ) ? 'S' :
+							                                  'X' ;
+					}
+				),
+				prm_aa_data
+			);
+			// clang-format on
+		}
+
+	} // namespace detail
 
 	/// \brief TODOCUMENT
 	///
@@ -69,149 +386,44 @@ namespace cath {
 	class amino_acid final : private boost::equivalent      < amino_acid,
 	                                 boost::totally_ordered < amino_acid > > {
 	private:
-		friend detail::aa_code_getter;
-		friend detail::aa_type_getter;
-		friend detail::tolerant_aa_letter_getter;
-
-		/// \brief The number of chars used to store a HETATM
-		static constexpr size_t NUM_HETATM_CHARS = 3;
-
-		static const char_char_3_arr_str_tpl_vec & LETTER_CODE_AND_NAME_LIST();
-
-		using char_size_unordered_map   = std::unordered_map<char,        uint>;
-		using string_size_unordered_map = std::unordered_map<std::string, uint>;
-
-		static const char_size_unordered_map   & INDEX_OF_LETTER();
-		static const string_size_unordered_map & INDEX_OF_CODE();
-		static const string_size_unordered_map & INDEX_OF_NAME();
-
-		using aa_variant_t     = uint;
-		using hetatm_variant_t = std::array<char, NUM_HETATM_CHARS>;
-		using dna_variant_t    = dna_atom;
+		using char_size_unordered_map   = ::std::unordered_map<char,        uint>;
+		using string_size_unordered_map = ::std::unordered_map<::std::string, uint>;
 
 		/// \brief The data for the amino acid, one of three different types in the variant
-		boost::variant<
-			aa_variant_t,
-			hetatm_variant_t,
-			dna_variant_t
-		> data;
+		detail::aa_data data;
 
-		template <typename T, size_t I, typename Proj = common::ident>
-		static std::unordered_map<T, uint> build_index_unordered_map(Proj && = Proj{});
-		template <typename T, size_t I> static T get_label(const size_t &);
+		[[nodiscard]] const detail::aa_aa_repn &check_is_proper_amino_acid() const;
 
-		static uint get_letter_index(const char &);
-		void set_letter_code_or_name(const std::string &);
+	  public:
+		constexpr amino_acid( const char_3_arr &, const file::pdb_record & );
+		constexpr amino_acid( const ::std::string_view &, const file::pdb_record & );
+		constexpr explicit amino_acid( const char & );
+		constexpr explicit amino_acid( const char_3_arr & );
+		constexpr explicit amino_acid( const ::std::string_view & );
 
-		const aa_variant_t & check_is_proper_amino_acid() const;
+		[[nodiscard]] constexpr amino_acid_type get_type() const;
 
-	public:
-		amino_acid(const std::string &,
-		           const file::pdb_record &);
-		explicit amino_acid(const std::string &);
-		explicit amino_acid(const char &);
+		[[nodiscard]] constexpr const char_3_arr &get_hetatm_chars() const;
 
-		amino_acid_type get_type() const;
-
-		const char_3_arr & get_hetatm_chars() const;
-
-		char_opt    get_letter_if_amino_acid() const;
-		char        get_letter_tolerantly() const;
-		char_3_arr  get_code() const;
-		std::string get_name() const;
-
-//		static const std::string UNKNOWN_AMINO_ACID_NAME;
+		[[nodiscard]] constexpr char_opt   get_letter_if_amino_acid() const;
+		[[nodiscard]] constexpr char       get_letter_tolerantly() const;
+		[[nodiscard]] constexpr char_3_arr get_code() const;
+		[[nodiscard]] ::std::string_view   get_name() const;
 	};
 
 	amino_acid_vec make_amino_acids_of_chars(const char_vec &);
 
-	/// \brief TODOCUMENT
-	///
-	/// \todo Since, some part of this arose as taking excessive & non-trivial time in some profile
-	///       it is worth seeing if it can be made faster, probably by using a std::array and constexpr_find()
-	///       and constexpr_for_n() to generate lookups with minimal runtime overhead.
-	inline const char_char_3_arr_str_tpl_vec & amino_acid::LETTER_CODE_AND_NAME_LIST() {
-		static const char_char_3_arr_str_tpl_vec letter_code_and_name_list = {
-			std::make_tuple( 'A', make_char_arr( "ALA" ), "Alanine"                            ),
-			std::make_tuple( 'B', make_char_arr( "ASX" ), "Ambiguous Asparagine/Aspartic Acid" ), // eg PDBs 156b, 1kp0, 1pgk, 2atc, 2fmd, 2rxn, 3atc, 3bcl and 3e2o
-			std::make_tuple( 'C', make_char_arr( "CYS" ), "Cysteine"                           ),
-			std::make_tuple( 'D', make_char_arr( "ASP" ), "Aspartic Acid"                      ),
-			std::make_tuple( 'E', make_char_arr( "GLU" ), "Glutamic Acid"                      ),
-			std::make_tuple( 'F', make_char_arr( "PHE" ), "Phenylalanine"                      ),
-			std::make_tuple( 'G', make_char_arr( "GLY" ), "Glycine"                            ),
-			std::make_tuple( 'H', make_char_arr( "HIS" ), "Histidine"                          ),
-			std::make_tuple( 'I', make_char_arr( "ILE" ), "Isoleucine"                         ),
-			std::make_tuple( 'J', make_char_arr( "XLE" ), "Leucine/Isoleucine"                 ), // eg PDBs?
-			std::make_tuple( 'K', make_char_arr( "LYS" ), "Lysine"                             ),
-			std::make_tuple( 'L', make_char_arr( "LEU" ), "Leucine"                            ),
-			std::make_tuple( 'M', make_char_arr( "MET" ), "Methionine"                         ),
-			std::make_tuple( 'N', make_char_arr( "ASN" ), "Asparagine"                         ),
-			std::make_tuple( 'O', make_char_arr( "PYL" ), "Pyrrolysine"                        ),
-			std::make_tuple( 'P', make_char_arr( "PRO" ), "Proline"                            ),
-			std::make_tuple( 'Q', make_char_arr( "GLN" ), "Glutamine"                          ),
-			std::make_tuple( 'R', make_char_arr( "ARG" ), "Arginine"                           ),
-			std::make_tuple( 'S', make_char_arr( "SER" ), "Serine"                             ),
-			std::make_tuple( 'T', make_char_arr( "THR" ), "Threonine"                          ),
-			std::make_tuple( 'U', make_char_arr( "SEC" ), "Selenocysteine"                     ), // eg PDBs 1aa6, 1cc1, 1fdi, 1fdo, 1h0h, 1kqf, 1kqg, 1pae, 1pfp, 2bc7, 2bc8, 2iv2, 2wpn, 2xsk, 3ean, 3eao, 3fwf, 3fwi, 3fwj, 3u5s, 3ze7, 3ze8, 3ze9, 3zea, 4kl8, 4kn9, 4ko1, 4ko2, 4ko3, 4ko4
-			std::make_tuple( 'V', make_char_arr( "VAL" ), "Valine"                             ),
-			std::make_tuple( 'W', make_char_arr( "TRP" ), "Tryptophan"                         ),
-			std::make_tuple( 'X', make_char_arr( "UNK" ), "Unknown"                            ),
-			std::make_tuple( 'Y', make_char_arr( "TYR" ), "Tyrosine"                           ),
-			std::make_tuple( 'Z', make_char_arr( "GLX" ), "Ambiguous Glutamine/Glutamic Acid"  )  // eg PDBs 156b, 1kp0, 1pgk, 2rxn, 2tnc, 3bcl and 4cpa
-		};
-		return letter_code_and_name_list;
-	}
-
-	/// \brief TODOCUMENT
-	template <typename T, size_t I, typename Proj>
-	inline std::unordered_map<T, uint> amino_acid::build_index_unordered_map(Proj &&prm_proj ///< An optional projection function to apply to each of the elements
-	                                                                         ) {
-		std::unordered_map<T, uint> index_map;
-		for (const uint &amino_acid_ctr : common::indices( static_cast<uint>( LETTER_CODE_AND_NAME_LIST().size() ) ) ) {
-			index_map.emplace(
-				common::invoke(
-					std::forward<Proj>( prm_proj ),
-					std::get<I>( LETTER_CODE_AND_NAME_LIST()[ amino_acid_ctr ] )
-				),
-				amino_acid_ctr
-			);
-		}
-		return index_map;
-	}
-
-	/// \brief TODOCUMENT
-	template <typename T, size_t I>
-	inline T amino_acid::get_label(const size_t &prm_index ///< TODOCUMENT
-	                               ) {
-		if (prm_index >= amino_acid::LETTER_CODE_AND_NAME_LIST().size()) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Amino acid index is out of range"));
-		}
-		return std::get<I>( amino_acid::LETTER_CODE_AND_NAME_LIST()[ prm_index ] );
-	}
-
-	/// \brief TODOCUMENT
-	inline uint amino_acid::get_letter_index(const char &prm_letter ///< The 1 letter code
-	                                         ) {
-		const auto index_itr = INDEX_OF_LETTER().find( prm_letter );
-		if ( index_itr == common::cend( INDEX_OF_LETTER() ) ) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-				"Amino acid letter \"" + std::string{ prm_letter } + "\" is not a recognised letter (currently case-sensitive)"
-			));
-		}
-		return index_itr->second;
-	}
-
 	/// \brief Check that this is a proper amino acid (rather than a HETATM record or DNA/RNA pseudo-amino-acid)
 	///        and throw an exception if not, otherwise return the index value
-	inline auto amino_acid::check_is_proper_amino_acid() const -> const aa_variant_t & {
-		const aa_variant_t * const aa_ptr = boost::get<aa_variant_t>( &data );
+	inline auto amino_acid::check_is_proper_amino_acid() const -> const detail::aa_aa_repn & {
+		const detail::aa_aa_repn * const aa_ptr = ::std::get_if<detail::aa_aa_repn>( &data );
 		if ( aa_ptr == nullptr ) {
 			const auto code = get_code();
 			BOOST_THROW_EXCEPTION(common::out_of_range_exception(
 				R"(Cannot use a generic HETATM amino_acid or DNA value as a proper, ATOM-record amino acid. Problem was a )"
 				+ to_string( get_type() )
 				+ R"( with code ")"
-				+ std::string( code.begin(), code.end() )
+				+ ::std::string( code.begin(), code.end() )
 				+ R"(".)"
 			));
 		}
@@ -219,113 +431,51 @@ namespace cath {
 	}
 
 	/// \brief Ctor for amino_acid
-	inline amino_acid::amino_acid(const std::string      &prm_string,    ///< TODOCUMENT
-	                              const file::pdb_record &prm_pdb_record ///< TODOCUMENT
-	                              ) {
-		switch ( prm_pdb_record ) {
-			case ( file::pdb_record::ATOM   ) : {
-				set_letter_code_or_name( prm_string );
-				return;
-			}
-			case ( file::pdb_record::HETATM ) : {
-				if ( prm_string.length() != 3 ) {
-					BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-						"Cannot create a HETATM amino acid from a string that is not 3 characters long"
-					));
-				}
-				if ( common::contains( INDEX_OF_CODE(), prm_string ) ) {
-					set_letter_code_or_name( prm_string );
-				}
-				else {
-					data = char_3_arr{ {
-						prm_string[ 0 ],
-						prm_string[ 1 ],
-						prm_string[ 2 ]
-					} };
-				}
-				return;
-			}
-		}
-		BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of prm_pdb_record not recognised whilst constructing an amino_acid"));
+	///
+	/// If pdb_record::ATOM, this acts as if that argument hadn't been passed (try AA code, try DNA code, throw)
+	/// If pdb_record::HETATM, this tries for an AA code then falls back on HETATM
+	///
+	/// \param pdb_id         TODOCUMENT
+	/// \param prm_pdb_record TODOCUMENT
+	constexpr amino_acid::amino_acid( const char_3_arr &pdb_id, const file::pdb_record &prm_pdb_record ) :
+	        data{ detail::aa_data_of_id_and_pdb_record( pdb_id, prm_pdb_record ) } {
 	}
 
 	/// \brief Ctor for amino_acid
-	inline amino_acid::amino_acid(const char &prm_letter ///< The 1 letter code
-	                              ) : data{ get_letter_index( prm_letter ) } {
+	///
+	/// If pdb_record::ATOM, this acts as if that argument hadn't been passed (try AA code, try DNA code, throw)
+	/// If pdb_record::HETATM, this throws if not a 3-char code, tries for an AA code then falls back on HETATM
+	///
+	/// \param prm_string     TODOCUMENT
+	/// \param prm_pdb_record TODOCUMENT
+	constexpr amino_acid::amino_acid( const ::std::string_view &prm_string, const file::pdb_record &prm_pdb_record ) :
+	        data{ detail::aa_data_of_id_and_pdb_record( prm_string, prm_pdb_record ) } {
 	}
 
-	namespace detail {
+	/// \brief Ctor for amino_acid
+	///
+	/// \param prm_letter The 1 letter code
+	constexpr amino_acid::amino_acid(const char &prm_letter
+	                                 ) : data{ index_of_letter( prm_letter ) } {
+	}
 
-		/// \brief A visitor to get the three-letter code from the variant in amino_acid
-		struct aa_code_getter : public boost::static_visitor<char_3_arr> {
-			char_3_arr operator()(const amino_acid::aa_variant_t     &x) const {
-				return amino_acid::get_label<char_3_arr, 1>( x );
-			}
-			char_3_arr operator()(const amino_acid::hetatm_variant_t &x) const {
-				return x;
-			}
-			char_3_arr operator()(const amino_acid::dna_variant_t    &x) const {
-				return to_three_char_arr( x );
-			}
-		};
+	/// \brief Ctor for amino_acid
+	constexpr amino_acid::amino_acid( const char_3_arr &prm_code ) : data{ detail::atom_aa_or_dna_of_id( prm_code ) } {
+	}
 
-		/// \brief A visitor to get the amino_acid_type from the variant in amino_acid
-		struct aa_type_getter : public boost::static_visitor<amino_acid_type> {
-			amino_acid_type operator()(const amino_acid::aa_variant_t     &) const {
-				return amino_acid_type::AA;
-			}
-			amino_acid_type operator()(const amino_acid::hetatm_variant_t &) const {
-				return amino_acid_type::HETATOM;
-			}
-			amino_acid_type operator()(const amino_acid::dna_variant_t    &) const {
-				return amino_acid_type::DNA;
-			}
-		};
-
-		/// \brief A visitor to get the one-letter code from the variant in amino_acid.
-		///        This just returns 'X' for DNA/HETATM amino_acids.
-		struct tolerant_aa_letter_getter : public boost::static_visitor<char> {
-			char operator()(const amino_acid::aa_variant_t     &x) const {
-				return amino_acid::get_label<char, 0>( x );
-			}
-			char operator()(const amino_acid::hetatm_variant_t &x) const {
-				// Some of the most common codes, as extracted from PDB dir with command like:
-				//
-				//     ls -1 | xargs grep -hPB99999 '^TER   ' | grep -P '^HETATM' | awk '{print substr( $0, 18, 3 )}' | sort | uniq -c | sort -g
-				//
-				// Codes from pages like : http://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/MSE
-				//
-				// Default to 'X'
-				return
-					( x == char_3_arr{ { ' ', 'I', 'C' } } ) ? 'C' :
-					( x == char_3_arr{ { ' ', 'I', 'G' } } ) ? 'G' :
-					( x == char_3_arr{ { 'H', 'Y', 'P' } } ) ? 'P' :
-					( x == char_3_arr{ { 'L', 'C', 'G' } } ) ? 'G' :
-					( x == char_3_arr{ { 'M', 'L', 'Y' } } ) ? 'K' :
-					( x == char_3_arr{ { 'M', 'S', 'E' } } ) ? 'M' :
-					( x == char_3_arr{ { 'N', 'C', 'X' } } ) ? 'N' :
-					( x == char_3_arr{ { 'O', 'M', 'G' } } ) ? 'G' :
-					( x == char_3_arr{ { 'P', 'C', 'A' } } ) ? 'E' :
-					( x == char_3_arr{ { 'P', 'S', 'U' } } ) ? 'U' :
-					( x == char_3_arr{ { 'P', 'T', 'R' } } ) ? 'Y' :
-					( x == char_3_arr{ { 'S', 'E', 'P' } } ) ? 'S' :
-					                                           'X' ;
-			}
-			char operator()(const amino_acid::dna_variant_t    & ) const {
-				return 'X';
-			}
-		};
-
-	} // namespace detail
+	/// \brief Ctor for amino_acid
+	constexpr amino_acid::amino_acid( const ::std::string_view &prm_id ) :
+	        data{ detail::atom_aa_or_dna_of_id( prm_id ) } {
+	}
 
 	/// \brief Get the amino_acid_type of this amino_acid
-	inline amino_acid_type amino_acid::get_type() const {
-		return boost::apply_visitor( detail::aa_type_getter{}, data );
+	constexpr amino_acid_type amino_acid::get_type() const {
+		return detail::get_type( data );
 	}
 
 	/// \brief Getter for the raw string for HETATM amino_acids
-	inline const char_3_arr & amino_acid::get_hetatm_chars() const {
-		const hetatm_variant_t * const raw_string_ptr = boost::get<hetatm_variant_t>( &data );
+	constexpr const char_3_arr & amino_acid::get_hetatm_chars() const {
+		const detail::hetatm_aa_repn * const raw_string_ptr = ::std::get_if<detail::hetatm_aa_repn>( &data );
 		if ( raw_string_ptr == nullptr ) {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unable to get raw_string from non-HETATM amino_acid"));
 		}
@@ -333,58 +483,62 @@ namespace cath {
 	}
 
 	/// \brief Get the single letter for the amino_acid if it is an amino acid, or nullopt otherwise
-	inline char_opt amino_acid::get_letter_if_amino_acid() const {
-		const aa_variant_t * const aa_ptr = boost::get<aa_variant_t>( &data );
+	constexpr char_opt amino_acid::get_letter_if_amino_acid() const {
+		const detail::aa_aa_repn * const aa_ptr = ::std::get_if<detail::aa_aa_repn>( &data );
 		return if_then_optional(
 			aa_ptr != nullptr,
-			( get_label<char, 0>( *aa_ptr ) )
+			( get_letter_code_or_name<char>( *aa_ptr ) )
 		);
 	}
 
 	/// \brief Get a single letter for the amino_acid, which is the expected letter for
 	///        the standard amino acids and a few HETATMs (eg MSE -> M) and is 'X' otherwise
-	inline char amino_acid::get_letter_tolerantly() const {
-		return boost::apply_visitor( detail::tolerant_aa_letter_getter{}, data );
+	constexpr char amino_acid::get_letter_tolerantly() const {
+		return detail::get_letter_tolerantly( data );
+	}
+
+	constexpr char_3_arr amino_acid::get_code() const {
+		return detail::get_code( data );
 	}
 
 	/// \brief TODOCUMENT
-	inline char_3_arr amino_acid::get_code() const {
-		return boost::apply_visitor( detail::aa_code_getter{}, data );
-	}
-
-	/// \brief TODOCUMENT
-	inline std::string amino_acid::get_name() const {
-		return get_label<std::string, 2>( check_is_proper_amino_acid() );
+	inline ::std::string_view amino_acid::get_name() const {
+		return get_letter_code_or_name<::std::string_view>( check_is_proper_amino_acid() );
 	}
 
 	/// \brief Get a string of the three-letter-code for the specified amino_acid
 	///
 	/// \relates amino_acid
-	inline std::string get_code_string(const amino_acid &prm_amino_acid ///< The amino_acid to query
-	                                   ) {
+	inline ::std::string get_code_string(const amino_acid &prm_amino_acid ///< The amino_acid to query
+	                                     ) {
 		return common::char_arr_to_string( prm_amino_acid.get_code() );
 	}
 
 	namespace detail {
 
 		/// \brief Make a less-than comparator for the specified amino_acid
-		inline std::tuple<uint8_t, char, char_3_arr> make_amino_acid_lt_comparator(const amino_acid &prm_aa ///< The amino_acid to query
-		                                                                           ) {
-			/// \todo Come GCC 6 as oldest compiler, remove this type alias and just return using braces
-			using uint8_char_char_3_arr_tpl = std::tuple<uint8_t, char, char_3_arr>;
+		///
+		/// TODO: Redo this:
+		///         * no need for the char field
+		///         * change it to operate on an aa_data argument
+		///         * add constexpr
+		///         * use in a friend constexpr operator< in amino_acid
+		inline ::std::tuple<uint8_t, char, char_3_arr> make_amino_acid_lt_comparator(const amino_acid &prm_aa ///< The amino_acid to query
+		                                                                             ) {
 			switch ( prm_aa.get_type() ) {
 				case ( amino_acid_type::AA ) : {
-					return uint8_char_char_3_arr_tpl{ 0, *prm_aa.get_letter_if_amino_acid(), char_3_arr{ { 0, 0, 0 } } };
+					return { 0, *prm_aa.get_letter_if_amino_acid(), char_3_arr{ { 0, 0, 0 } } };
 				}
 				case ( amino_acid_type::HETATOM ) : {
-					return uint8_char_char_3_arr_tpl{ 1, 0,                                  prm_aa.get_hetatm_chars() };
+					return { 1, 0,                                  prm_aa.get_hetatm_chars() };
 				}
 				case ( amino_acid_type::DNA ) : {
-					return uint8_char_char_3_arr_tpl{ 2, 0,                                  char_3_arr{ { 0, 0, 0 } } };
+					return { 2, 0,                                  char_3_arr{ { 0, 0, 0 } } };
 				}
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of prm_aa.get_type() not recognised whilst in make_amino_acid_lt_comparator()"));
 		}
+
 	} // namespace detail
 
 	/// \brief Simple less-than operator for amino-acid
@@ -422,19 +576,19 @@ namespace cath {
 	/// \relates amino_acid
 	inline bool is_water(const amino_acid &prm_amino_acid ///< The amino_acid to query
 	                     ) {
-		return ( prm_amino_acid.get_code() == char_3_arr{{ 'H', 'O', 'H' }} );
+		return ( prm_amino_acid.get_code() == make_char_arr( "HOH" ) );
 	}
 
-	char_3_arr get_code_of_amino_acid_letter(const char &);
-	std::string get_code_str_of_amino_acid_letter(const char &);
+	char_3_arr get_code_of_amino_acid_letter( const char & );
 
-	char get_letter_of_amino_acid_code(const std::string &);
+	::std::string get_code_str_of_amino_acid_letter( const char & );
 
-	std::ostream & operator<<(std::ostream &,
-	                          const amino_acid &);
+	char get_letter_of_amino_acid_code( const ::std::string_view & );
 
-	std::istream & operator>>(std::istream &,
-	                          amino_acid &);
+	::std::ostream &operator<<( ::std::ostream &, const amino_acid & );
+
+	::std::istream &operator>>( ::std::istream &, amino_acid & );
+
 } // namespace cath
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_AMINO_ACID_HPP

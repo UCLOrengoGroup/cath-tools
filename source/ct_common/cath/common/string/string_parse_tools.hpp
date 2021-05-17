@@ -21,6 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_STRING_STRING_PARSE_TOOLS_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_STRING_STRING_PARSE_TOOLS_HPP
 
+#include <string>
+#include <string_view>
+
 #include <boost/core/demangle.hpp>
 #include <boost/core/ignore_unused.hpp>
 #include <boost/range/adaptor/reversed.hpp>
@@ -37,14 +40,15 @@
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 
-#include <string>
-
 using namespace ::std::literals::string_literals;
 
 namespace cath {
 
 	/// \brief Type alias for boost::string_ref's const_iterator
 	using str_ref_citr = boost::string_ref::const_iterator;
+
+	/// \brief Type alias for std::string_view's const_iterator
+	using str_view_citr = ::std::string_view::const_iterator;
 
 	namespace common {
 		namespace detail {
@@ -113,8 +117,8 @@ namespace cath {
 		///
 		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
 		///
-		/// \todo Come C++17, switch from boost::string_ref to std::string_view
-		inline str_ref_citr find_itr_before_first_non_space(const boost::string_ref &prm_substring ///< The string_ref in which to search 
+		/// \todo Come C++17, switch everything to use the ::std::string_view overload and then drop this one
+		inline str_ref_citr find_itr_before_first_non_space(const boost::string_ref &prm_substring ///< The string_ref in which to search
 		                                                    ) {
 			const auto itr = boost::range::find_if(
 				prm_substring,
@@ -126,13 +130,32 @@ namespace cath {
 			return itr;
 		}
 
+		/// \brief Find the iterator that points to (just before) the first non-whitespace character
+		///        in the specified string_view
+		///
+		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
+		constexpr str_view_citr find_itr_before_first_non_space(const ::std::string_view &prm_substring ///< The string_view in which to search
+		                                                        ) {
+			for (auto itr = ::std::cbegin( prm_substring ); itr != ::std::cend( prm_substring ); ++itr) {
+				if ( ( *itr != ' ' ) && ( *itr != '\t' ) ) {
+					return itr;
+				}
+			}
+			/// TODO: Come GCC >= 10, remove this silly dance to appeas it about the unconditionally non-constexpr throwing after here
+			if ( !prm_substring.empty() && prm_substring.front() != ' ' && prm_substring.front() != '\t' ) {
+				return ::std::cbegin( prm_substring );
+			} else {
+				BOOST_THROW_EXCEPTION( invalid_argument_exception( "Unable to find any non-space chars in string" ) );
+			}
+		}
+
 		/// \brief Find the iterator that points to (just after) the last non-whitespace character
 		///        in the specified string_ref
 		///
 		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
 		///
-		/// \todo Come C++17, switch from boost::string_ref to std::string_view
-		inline str_ref_citr find_itr_after_last_non_space(const boost::string_ref &prm_substring ///< The string_ref in which to search 
+		/// \todo Come C++17, switch everything to use the ::std::string_view overload and then drop this one
+		inline str_ref_citr find_itr_after_last_non_space(const boost::string_ref &prm_substring ///< The string_ref in which to search
 		                                                  ) {
 			const auto ritr = boost::range::find_if(
 				prm_substring | boost::adaptors::reversed,
@@ -142,6 +165,25 @@ namespace cath {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find any non-space chars in string"));
 			}
 			return ritr.base();
+		}
+
+		/// \brief Find the iterator that points to (just after) the last non-whitespace character
+		///        in the specified string_view
+		///
+		/// This is dumb about whitespace (explicitly compares to ' ' and '\t'; ignores locale) for the sake of speed
+		constexpr str_view_citr find_itr_after_last_non_space(const ::std::string_view &prm_substring ///< The string_view in which to search
+		                                                      ) {
+			for (auto itr = ::std::crbegin( prm_substring ); itr != ::std::crend( prm_substring ); ++itr) {
+				if ( ( *itr != ' ' ) && ( *itr != '\t' ) ) {
+					return itr.base();
+				}
+			}
+			/// TODO: Come GCC >= 10, remove this silly dance to appeas it about the unconditionally non-constexpr throwing after here
+			if ( !prm_substring.empty() && prm_substring.back() != ' ' && prm_substring.back() != '\t' ) {
+				return ::std::crbegin( prm_substring ).base();
+			} else {
+				BOOST_THROW_EXCEPTION( invalid_argument_exception( "Unable to find any non-space chars in string" ) );
+			}
 		}
 
 		/// \brief Return a string_ref to the section of the specified string_ref after trimming
@@ -161,7 +203,7 @@ namespace cath {
 			);
 		}
 
-		/// \brief Return a pair of offsets to the section of the specified string_ref after trimming
+		/// \brief Return a pair of offsets to the section of the specified string_view after trimming
 		///
 		/// This can sensibly be called with a string argument.
 		///
@@ -171,11 +213,11 @@ namespace cath {
 		///       so should maybe calculated end pointer first and then restrict calculation for start pointer within
 		///       range up to that end.
 		template <typename T>
-		std::pair<T, T> dumb_trim_string_ref_to_offsets(const boost::string_ref &prm_substring ///< The string_ref to trim
-		                                                ) {
+		constexpr ::std::pair<T, T> dumb_trim_string_view_to_offsets(const ::std::string_view &prm_substring ///< The string_view to trim
+		                                                             ) {
 			return {
-				static_cast<T>( std::distance( common::cbegin( prm_substring ), find_itr_before_first_non_space( prm_substring ) ) ),
-				static_cast<T>( std::distance( common::cbegin( prm_substring ), find_itr_after_last_non_space  ( prm_substring ) ) )
+				static_cast<T>( ::std::distance( ::std::cbegin( prm_substring ), find_itr_before_first_non_space( prm_substring ) ) ),
+				static_cast<T>( ::std::distance( ::std::cbegin( prm_substring ), find_itr_after_last_non_space  ( prm_substring ) ) )
 			};
 		}
 

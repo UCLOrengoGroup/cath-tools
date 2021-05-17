@@ -20,6 +20,9 @@
 
 #include "pdb_residue.hpp"
 
+#include <cmath>
+#include <string_view>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
@@ -35,8 +38,6 @@
 #include "cath/file/pdb/pdb_atom.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-#include <cmath>
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
@@ -47,6 +48,7 @@ using ::boost::adaptors::filtered;
 using ::boost::algorithm::any_of;
 using ::boost::algorithm::join;
 using ::boost::lexical_cast;
+using ::std::string_view;
 
 /// \brief TODOCUMENT
 ///
@@ -83,8 +85,8 @@ string cath::file::get_amino_acid_code_string(const pdb_residue &prm_residue ///
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_residue
-string cath::file::get_amino_acid_name(const pdb_residue &prm_residue ///< The pdb_residue to query
-                                       ) {
+string_view cath::file::get_amino_acid_name(const pdb_residue &prm_residue ///< The pdb_residue to query
+                                            ) {
 	return prm_residue.get_amino_acid().get_name();
 }
 

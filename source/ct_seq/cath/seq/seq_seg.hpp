@@ -69,8 +69,8 @@ namespace cath {
 			constexpr const seq_arrow & get_start_arrow() const;
 			constexpr const seq_arrow & get_stop_arrow() const;
 
-			seq_seg & set_start_arrow(const seq_arrow &);
-			seq_seg & set_stop_arrow(const seq_arrow &);
+			constexpr seq_seg & set_start_arrow(const seq_arrow &);
+			constexpr seq_seg & set_stop_arrow(const seq_arrow &);
 
 			static auto get_seq_seg_start_less() {
 				return [] (const seq_seg &x, const seq_seg &y) {
@@ -120,20 +120,16 @@ namespace cath {
 		}
 
 		/// \brief Setter for the start boundary
-		///
-		/// \todo GCC >= 5 (with relaxed constexpr), make this constexpr
-		inline seq_seg & seq_seg::set_start_arrow(const seq_arrow &prm_start ///< The start boundary to set
-		                                          ) {
+		constexpr seq_seg & seq_seg::set_start_arrow(const seq_arrow &prm_start ///< The start boundary to set
+		                                             ) {
 			sanity_check( prm_start, stop );
 			start = prm_start;
 			return *this;
 		}
 
 		/// \brief Setter for the stop boundary
-		///
-		/// \todo GCC >= 5 (with relaxed constexpr), make this constexpr
-		inline seq_seg & seq_seg::set_stop_arrow(const seq_arrow &prm_stop ///< The stop boundary to set
-		                                         ) {
+		constexpr seq_seg & seq_seg::set_stop_arrow(const seq_arrow &prm_stop ///< The stop boundary to set
+		                                            ) {
 			sanity_check( start, prm_stop );
 			stop = prm_stop;
 			return *this;

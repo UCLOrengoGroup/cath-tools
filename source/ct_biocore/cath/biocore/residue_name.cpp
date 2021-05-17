@@ -25,98 +25,15 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "cath/common/exception/invalid_argument_exception.hpp"
-
 using namespace ::cath;
 using namespace ::cath::common;
 
-using ::boost::algorithm::is_alnum;
 using ::boost::algorithm::is_digit;
 using ::boost::lexical_cast;
 using ::std::istream;
 using ::std::optional;
 using ::std::ostream;
 using ::std::string;
-
-/// \brief Throw if insert code is invalid
-void residue_name::sanity_check() const {
-	if ( insert ) {
-		if ( ! is_alnum()( *insert ) ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception(
-				"Residue name's insert code '"
-				+ string{ *insert }
-				+ "' is not a valid alphanumeric character"
-			));
-		}
-	}
-}
-
-/// \brief TODOCUMENT
-void residue_name::sanity_check_is_not_null_residue() const {
-	if ( is_null() ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot access number or insert code of null residue"));
-	}
-}
-
-/// \brief Ctor for residue_name
-residue_name::residue_name() {
-	sanity_check();
-}
-
-/// \brief Ctor for residue_name
-residue_name::residue_name(const int &prm_residue_number ///< TODOCUMENT
-                           ) : res_num             ( prm_residue_number ),
-                               is_null_residue_name( false              ) {
-	sanity_check();
-}
-
-/// \brief Ctor for residue_name
-residue_name::residue_name(const int  &prm_residue_number, ///< TODOCUMENT
-                           const char &prm_insert     ///< TODOCUMENT
-                           ) : res_num             ( prm_residue_number ),
-                               insert              ( prm_insert         ),
-                               is_null_residue_name( false              ) {
-	sanity_check();
-}
-
-/// \brief TODOCUMENT
-const bool & residue_name::is_null() const {
-	return is_null_residue_name;
-}
-
-/// \brief TODOCUMENT
-const int & residue_name::residue_number() const {
-	sanity_check_is_not_null_residue();
-	return res_num;
-}
-
-/// \brief TODOCUMENT
-const optional<char> & residue_name::opt_insert() const {
-	sanity_check_is_not_null_residue();
-	return insert;
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates residue_name
-bool cath::operator==(const residue_name &prm_residue_name_a, ///< TODOCUMENT
-                      const residue_name &prm_residue_name_b  ///< TODOCUMENT
-                      ) {
-	return (
-		( prm_residue_name_a.is_null() == prm_residue_name_b.is_null() )
-		&&
-		(
-			prm_residue_name_a.is_null()
-			||
-			(
-				prm_residue_name_a.residue_number()  == prm_residue_name_b.residue_number()
-				&&
-				prm_residue_name_a.opt_insert() == prm_residue_name_b.opt_insert()
-			)
-		)
-	);
-}
-
 
 /// \brief Simple to_string() overload for residue_name
 ///
@@ -152,78 +69,6 @@ istream & cath::operator>>(istream      &prm_istream,     ///< TODOCUMENT
 	prm_istream >> input_string;
 	prm_residue_name = make_residue_name( input_string );
 	return prm_istream;
-}
-
-/// \brief Get the specified residue_name's number or the specified value if the residue_name is null
-///
-/// \relates residue_name
-int cath::residue_number_or_value_if_null(const residue_name &prm_residue_name, ///< The residue_name to query
-                                          const int          &prm_value         ///< The value to use if the residue_name is null
-                                          ) {
-	return prm_residue_name.is_null() ? prm_value : prm_residue_name.residue_number();
-}
-
-/// \brief Get the specified residue_name's insert code or the specified value if the residue_name is null
-///
-/// \relates residue_name
-optional<char> cath::opt_insert_or_value_if_null(const residue_name   &prm_residue_name, ///< The residue_name to query
-                                                 const optional<char> &prm_value         ///< The value to use if the residue_name is null
-                                                 ) {
-	return prm_residue_name.is_null() ? prm_value : prm_residue_name.opt_insert();
-}
-
-/// \brief Get whether the specified residue_name has an insert code
-///
-/// \relates residue_name
-bool cath::has_insert(const residue_name &prm_residue_name ///< The residue_name to query
-                      ) {
-	return static_cast<bool>( prm_residue_name.opt_insert() );
-}
-
-/// \brief Get whether the specified residue_name has an insert code or the specified value if the residue_name is null
-///
-/// \relates residue_name
-bool cath::has_insert_or_value_if_null(const residue_name &prm_residue_name, ///< The residue_name to query
-                                       const bool         &prm_value         ///< The value to use if the residue_name is null
-                                       ) {
-	return prm_residue_name.is_null() ? prm_value : has_insert( prm_residue_name );
-}
-
-
-/// \brief Get the specified residue_name's insert code
-///
-/// \relates residue_name
-const char & cath::insert(const residue_name &prm_residue_name ///< The residue_name to query
-                          ) {
-	return *prm_residue_name.opt_insert();
-}
-
-/// \brief Get the specified residue_name's insert code or the specified value if the residue_name is null
-///
-/// \relates residue_name
-char cath::insert_or_value_if_null(const residue_name &prm_residue_name, ///< The residue_name to query
-                                   const char         &prm_value         ///< The value to use if the residue_name is null
-                                   ) {
-	return prm_residue_name.is_null() ? prm_value : insert( prm_residue_name );
-}
-
-/// \brief Get the specified residue_name's insert code or the specified value if the residue_name is null or if it has no insert code
-///
-/// \relates residue_name
-char cath::insert_or_value_if_null_or_absent(const residue_name &prm_residue_name, ///< The residue_name to query
-                                             const char         &prm_value         ///< The value to use if the residue_name is null or the insert is absent
-                                             ) {
-	return ( prm_residue_name.is_null() || ! has_insert( prm_residue_name ) )
-		? prm_value
-		: insert( prm_residue_name );
-}
-
-/// \brief Return whether the specified residue_name has a strictly negative residue number
-///
-/// \relates residue_name
-bool cath::has_strictly_negative_residue_number(const residue_name &prm_residue_name ///< The residue_name to query
-                                                ) {
-	return ( ! prm_residue_name.is_null() && prm_residue_name.residue_number() < 0 );
 }
 
 /// \brief TODOCUMENT
@@ -268,15 +113,4 @@ residue_name cath::make_residue_name(const string &prm_residue_name ///< TODOCUM
 	}
 	// Otherwise, no insert code so just return a residue_name of the string converted to an int
 	return residue_name( lexical_cast<int>( prm_residue_name ) );
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates residue_name
-residue_name cath::make_residue_name_with_non_insert_char(const int  &prm_residue_number,  ///< TODOCUMENT
-                                                          const char &prm_possible_insert, ///< TODOCUMENT
-                                                          const char &prm_non_insert_char  ///< TODOCUMENT
-                                                          ) {
-	return ( prm_possible_insert == prm_non_insert_char ) ? residue_name( prm_residue_number                      )
-	                                                      : residue_name( prm_residue_number, prm_possible_insert );
 }

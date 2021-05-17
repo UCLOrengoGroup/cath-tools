@@ -23,11 +23,11 @@
 
 #include <optional>
 #include <type_traits>
+#include <variant>
 #include <vector>
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
-#include <boost/variant.hpp>
 
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp17/invoke.hpp"
@@ -68,7 +68,7 @@ namespace cath {
 		/// \brief Variant for storing any of the types of information associated with hit_extra_cat
 		///
 		/// Exercise: this could be auto generated from an ALL_HIT_EXTRA_CATS std::array using type_of_hit_extra_cat_t and some unique-ing
-		using hit_extra_variant          = boost::variant<std::string, double>;
+		using hit_extra_variant          = ::std::variant<std::string, double>;
 
 		/// \brief Type alias for a pair of hit_extra_cat and a hit_extra_variant
 		using hit_extra_cat_var_pair     = std::pair<hit_extra_cat, hit_extra_variant>;
@@ -88,9 +88,9 @@ namespace cath {
 		                               const hit_extra_cat_var_pair  &prm_pair ///< The pair of hit_extra_cat and associated hit_extra_variant
 		                               ) {
 			switch ( prm_pair.first ) {
-				case( hit_extra_cat::ALND_RGNS ) : { common::invoke( std::forward<Fn>( prm_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::ALND_RGNS > >( prm_pair.second ) ); return; }
-				case( hit_extra_cat::COND_EVAL ) : { common::invoke( std::forward<Fn>( prm_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::COND_EVAL > >( prm_pair.second ) ); return; }
-				case( hit_extra_cat::INDP_EVAL ) : { common::invoke( std::forward<Fn>( prm_fn ), boost::get< type_of_hit_extra_cat_t< hit_extra_cat::INDP_EVAL > >( prm_pair.second ) ); return; }
+				case( hit_extra_cat::ALND_RGNS ) : { common::invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::ALND_RGNS > >( prm_pair.second ) ); return; }
+				case( hit_extra_cat::COND_EVAL ) : { common::invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::COND_EVAL > >( prm_pair.second ) ); return; }
+				case( hit_extra_cat::INDP_EVAL ) : { common::invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::INDP_EVAL > >( prm_pair.second ) ); return; }
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_extra_cat not recognised whilst trying to do something with it"));
 		}
@@ -191,7 +191,7 @@ namespace cath {
 		                                                        ) {
 			for (const auto &extra_pair : prm_store) {
 				if ( extra_pair.first == Cat ) {
-					return ::std::make_optional( boost::get<type_of_hit_extra_cat_t<Cat>>( extra_pair.second ) );
+					return ::std::make_optional( ::std::get<type_of_hit_extra_cat_t<Cat>>( extra_pair.second ) );
 				}
 			}
 			return ::std::nullopt;

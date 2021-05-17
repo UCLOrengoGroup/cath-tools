@@ -23,14 +23,16 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#include "cath/common/type_traits.hpp"
+
 namespace cath {
 
 	/// \brief TODOCUMENT
 	template <typename Target, typename Source>
-	inline Target debug_unwarned_numeric_cast(const Source &prm_value ///< TODOCUMENT
-	                                          ) {
+	constexpr Target debug_unwarned_numeric_cast(const Source &prm_value ///< TODOCUMENT
+	                                             ) {
 #ifndef NDEBUG
-		return boost::numeric_cast<Target>( prm_value );
+		return ::boost::numeric_cast<Target>( prm_value );
 #else
 		return static_cast<Target>( prm_value );
 #endif
@@ -38,16 +40,15 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	template <typename Target, typename Source>
-	inline Target debug_numeric_cast(const Source &prm_value ///< TODOCUMENT
-	                                 ) {
-		using stripped_target  = typename std::remove_reference<typename std::remove_const<Target>::type>::type;
-		using stripped_source  = typename std::remove_reference<typename std::remove_const<Source>::type>::type;
+	constexpr Target debug_numeric_cast(const Source &prm_value ///< TODOCUMENT
+	                                    ) {
 		static_assert(
-			! std::is_same<stripped_target, stripped_source>::value,
+			! common::is_same_modulo_cvref_v<Target, Source>,
 			"debug_numeric_cast is being used to cast a type to itself"
 		);
 		return debug_unwarned_numeric_cast<Target, Source>( prm_value );
 	}
+
 } // namespace cath
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_DEBUG_NUMERIC_CAST_HPP

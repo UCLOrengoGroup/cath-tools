@@ -18,11 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <array>
+#include <optional>
+#include <string>
+#include <string_view>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/cpp20/make_array.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/common/string/string_view_of_char_arr.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/protein/amino_acid.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
@@ -30,13 +36,19 @@
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
-using namespace ::std;
+
+using ::std::array;
+using ::std::literals::string_view_literals::operator""sv;
+using ::std::make_optional;
+using ::std::nullopt;
+using ::std::string;
+using ::std::string_view;
 
 /// \brief The sequence of 1cjn0, 1cjo0, 1roeA, 2cjnA and 2cjoA (prepended with HMWX) in names
-const     auto NAMES   = make_array( "Histidine"s, "Methionine"s, "Tryptophan"s, "Unknown"s, "Alanine"s, "Threonine"s, "Tyrosine"s, "Lysine"s, "Valine"s, "Threonine"s, "Leucine"s, "Valine"s, "Arginine"s, "Proline"s, "Aspartic Acid"s, "Glycine"s, "Serine"s, "Glutamic Acid"s, "Threonine"s, "Threonine"s, "Isoleucine"s, "Aspartic Acid"s, "Valine"s, "Proline"s, "Glutamic Acid"s, "Aspartic Acid"s, "Glutamic Acid"s, "Tyrosine"s, "Isoleucine"s, "Leucine"s, "Aspartic Acid"s, "Valine"s, "Alanine"s, "Glutamic Acid"s, "Glutamic Acid"s, "Glutamine"s, "Glycine"s, "Leucine"s, "Aspartic Acid"s, "Leucine"s, "Proline"s, "Phenylalanine"s, "Serine"s, "Cysteine"s, "Arginine"s, "Alanine"s, "Glycine"s, "Alanine"s, "Cysteine"s, "Serine"s, "Threonine"s, "Cysteine"s, "Alanine"s, "Glycine"s, "Lysine"s, "Leucine"s, "Leucine"s, "Glutamic Acid"s, "Glycine"s, "Glutamic Acid"s, "Valine"s, "Aspartic Acid"s, "Glutamine"s, "Serine"s, "Aspartic Acid"s, "Glutamine"s, "Serine"s, "Phenylalanine"s, "Leucine"s, "Aspartic Acid"s, "Aspartic Acid"s, "Aspartic Acid"s, "Glutamine"s, "Isoleucine"s, "Glutamic Acid"s, "Lysine"s, "Glycine"s, "Phenylalanine"s, "Valine"s, "Leucine"s, "Threonine"s, "Cysteine"s, "Valine"s, "Alanine"s, "Tyrosine"s, "Proline"s, "Arginine"s, "Serine"s, "Aspartic Acid"s, "Cysteine"s, "Lysine"s, "Isoleucine"s, "Leucine"s, "Threonine"s, "Asparagine"s, "Glutamine"s, "Glutamic Acid"s, "Glutamic Acid"s, "Glutamic Acid"s, "Leucine"s, "Tyrosine"s );
+constexpr     auto NAMES   = make_array( "Histidine"sv, "Methionine"sv, "Tryptophan"sv, "Unknown"sv, "Alanine"sv, "Threonine"sv, "Tyrosine"sv, "Lysine"sv, "Valine"sv, "Threonine"sv, "Leucine"sv, "Valine"sv, "Arginine"sv, "Proline"sv, "Aspartic Acid"sv, "Glycine"sv, "Serine"sv, "Glutamic Acid"sv, "Threonine"sv, "Threonine"sv, "Isoleucine"sv, "Aspartic Acid"sv, "Valine"sv, "Proline"sv, "Glutamic Acid"sv, "Aspartic Acid"sv, "Glutamic Acid"sv, "Tyrosine"sv, "Isoleucine"sv, "Leucine"sv, "Aspartic Acid"sv, "Valine"sv, "Alanine"sv, "Glutamic Acid"sv, "Glutamic Acid"sv, "Glutamine"sv, "Glycine"sv, "Leucine"sv, "Aspartic Acid"sv, "Leucine"sv, "Proline"sv, "Phenylalanine"sv, "Serine"sv, "Cysteine"sv, "Arginine"sv, "Alanine"sv, "Glycine"sv, "Alanine"sv, "Cysteine"sv, "Serine"sv, "Threonine"sv, "Cysteine"sv, "Alanine"sv, "Glycine"sv, "Lysine"sv, "Leucine"sv, "Leucine"sv, "Glutamic Acid"sv, "Glycine"sv, "Glutamic Acid"sv, "Valine"sv, "Aspartic Acid"sv, "Glutamine"sv, "Serine"sv, "Aspartic Acid"sv, "Glutamine"sv, "Serine"sv, "Phenylalanine"sv, "Leucine"sv, "Aspartic Acid"sv, "Aspartic Acid"sv, "Aspartic Acid"sv, "Glutamine"sv, "Isoleucine"sv, "Glutamic Acid"sv, "Lysine"sv, "Glycine"sv, "Phenylalanine"sv, "Valine"sv, "Leucine"sv, "Threonine"sv, "Cysteine"sv, "Valine"sv, "Alanine"sv, "Tyrosine"sv, "Proline"sv, "Arginine"sv, "Serine"sv, "Aspartic Acid"sv, "Cysteine"sv, "Lysine"sv, "Isoleucine"sv, "Leucine"sv, "Threonine"sv, "Asparagine"sv, "Glutamine"sv, "Glutamic Acid"sv, "Glutamic Acid"sv, "Glutamic Acid"sv, "Leucine"sv, "Tyrosine"sv );
 
 /// \brief The sequence of 1cjn0, 1cjo0, 1roeA, 2cjnA and 2cjoA (prepended with HMWX) in codes
-const     auto CODES   = make_array( "HIS"s, "MET"s, "TRP"s, "UNK"s, "ALA"s, "THR"s, "TYR"s, "LYS"s, "VAL"s, "THR"s, "LEU"s, "VAL"s, "ARG"s, "PRO"s, "ASP"s, "GLY"s, "SER"s, "GLU"s, "THR"s, "THR"s, "ILE"s, "ASP"s, "VAL"s, "PRO"s, "GLU"s, "ASP"s, "GLU"s, "TYR"s, "ILE"s, "LEU"s, "ASP"s, "VAL"s, "ALA"s, "GLU"s, "GLU"s, "GLN"s, "GLY"s, "LEU"s, "ASP"s, "LEU"s, "PRO"s, "PHE"s, "SER"s, "CYS"s, "ARG"s, "ALA"s, "GLY"s, "ALA"s, "CYS"s, "SER"s, "THR"s, "CYS"s, "ALA"s, "GLY"s, "LYS"s, "LEU"s, "LEU"s, "GLU"s, "GLY"s, "GLU"s, "VAL"s, "ASP"s, "GLN"s, "SER"s, "ASP"s, "GLN"s, "SER"s, "PHE"s, "LEU"s, "ASP"s, "ASP"s, "ASP"s, "GLN"s, "ILE"s, "GLU"s, "LYS"s, "GLY"s, "PHE"s, "VAL"s, "LEU"s, "THR"s, "CYS"s, "VAL"s, "ALA"s, "TYR"s, "PRO"s, "ARG"s, "SER"s, "ASP"s, "CYS"s, "LYS"s, "ILE"s, "LEU"s, "THR"s, "ASN"s, "GLN"s, "GLU"s, "GLU"s, "GLU"s, "LEU"s, "TYR"s );
+constexpr     auto CODES   = make_array( "HIS"sv, "MET"sv, "TRP"sv, "UNK"sv, "ALA"sv, "THR"sv, "TYR"sv, "LYS"sv, "VAL"sv, "THR"sv, "LEU"sv, "VAL"sv, "ARG"sv, "PRO"sv, "ASP"sv, "GLY"sv, "SER"sv, "GLU"sv, "THR"sv, "THR"sv, "ILE"sv, "ASP"sv, "VAL"sv, "PRO"sv, "GLU"sv, "ASP"sv, "GLU"sv, "TYR"sv, "ILE"sv, "LEU"sv, "ASP"sv, "VAL"sv, "ALA"sv, "GLU"sv, "GLU"sv, "GLN"sv, "GLY"sv, "LEU"sv, "ASP"sv, "LEU"sv, "PRO"sv, "PHE"sv, "SER"sv, "CYS"sv, "ARG"sv, "ALA"sv, "GLY"sv, "ALA"sv, "CYS"sv, "SER"sv, "THR"sv, "CYS"sv, "ALA"sv, "GLY"sv, "LYS"sv, "LEU"sv, "LEU"sv, "GLU"sv, "GLY"sv, "GLU"sv, "VAL"sv, "ASP"sv, "GLN"sv, "SER"sv, "ASP"sv, "GLN"sv, "SER"sv, "PHE"sv, "LEU"sv, "ASP"sv, "ASP"sv, "ASP"sv, "GLN"sv, "ILE"sv, "GLU"sv, "LYS"sv, "GLY"sv, "PHE"sv, "VAL"sv, "LEU"sv, "THR"sv, "CYS"sv, "VAL"sv, "ALA"sv, "TYR"sv, "PRO"sv, "ARG"sv, "SER"sv, "ASP"sv, "CYS"sv, "LYS"sv, "ILE"sv, "LEU"sv, "THR"sv, "ASN"sv, "GLN"sv, "GLU"sv, "GLU"sv, "GLU"sv, "LEU"sv, "TYR"sv );
 
 /// \brief The sequence of 1cjn0, 1cjo0, 1roeA, 2cjnA and 2cjoA (prepended with HMWX) in letters
 constexpr auto LETTERS = make_array( 'H',   'M',   'W',   'X',   'A',   'T',   'Y',   'K',   'V',   'T',   'L',   'V',   'R',   'P',   'D',   'G',   'S',   'E',   'T',   'T',   'I',   'D',   'V',   'P',   'E',   'D',   'E',   'Y',   'I',   'L',   'D',   'V',   'A',   'E',   'E',   'Q',   'G',   'L',   'D',   'L',   'P',   'F',   'S',   'C',   'R',   'A',   'G',   'A',   'C',   'S',   'T',   'C',   'A',   'G',   'K',   'L',   'L',   'E',   'G',   'E',   'V',   'D',   'Q',   'S',   'D',   'Q',   'S',   'F',   'L',   'D',   'D',   'D',   'Q',   'I',   'E',   'K',   'G',   'F',   'V',   'L',   'T',   'C',   'V',   'A',   'Y',   'P',   'R',   'S',   'D',   'C',   'K',   'I',   'L',   'T',   'N',   'Q',   'E',   'E',   'E',   'L',   'Y'   );
@@ -44,21 +56,75 @@ constexpr auto LETTERS = make_array( 'H',   'M',   'W',   'X',   'A',   'T',   '
 BOOST_AUTO_TEST_SUITE(amino_acid_test_suite)
 
 /// \brief TODOCUMENT
+BOOST_AUTO_TEST_CASE( static_tests ) {
+	static_assert( dna_atom_of_code( make_char_arr( "  T" ) ) == make_optional( dna_atom::T ) );
+	static_assert( dna_atom_of_code( make_char_arr( " +C" ) ) == make_optional( dna_atom::PLUS_C ) );
+	static_assert( dna_atom_of_code( make_char_arr( " DI" ) ) == make_optional( dna_atom::DI ) );
+	static_assert( dna_atom_of_code( make_char_arr( " G " ) ) == make_optional( dna_atom::G_SPACE ) );
+	static_assert( dna_atom_of_code( make_char_arr( "AAA" ) ) == nullopt );
+
+	static_assert( get_letter_code_or_name<char>( index_of_letter( 'F' ) ) == 'F' );
+	static_assert( get_letter_code_or_name<char>( index_of_letter( 'L' ) ) == 'L' );
+	static_assert( get_letter_code_or_name<char>( index_of_letter( 'T' ) ) == 'T' );
+
+	static_assert( get_letter_code_or_name<char>( index_of_code( make_char_arr( "PHE" ) ) ) == 'F' );
+	static_assert( get_letter_code_or_name<char>( index_of_code( make_char_arr( "LEU" ) ) ) == 'L' );
+	static_assert( get_letter_code_or_name<char>( index_of_code( make_char_arr( "THR" ) ) ) == 'T' );
+
+	static_assert( get_letter_code_or_name<char>( index_of_name( "Phenylalanine"sv ) ) == 'F' );
+	static_assert( get_letter_code_or_name<char>( index_of_name( "Leucine"sv ) ) == 'L' );
+	static_assert( get_letter_code_or_name<char>( index_of_name( "Threonine"sv ) ) == 'T' );
+
+	/////
+
+	static_assert( amino_acid( make_char_arr( "  T" ) ).get_type() == amino_acid_type::DNA );
+	static_assert( amino_acid( make_char_arr( " +C" ) ).get_type() == amino_acid_type::DNA );
+	static_assert( amino_acid( make_char_arr( " DI" ) ).get_type() == amino_acid_type::DNA );
+	static_assert( amino_acid( make_char_arr( " G " ) ).get_type() == amino_acid_type::DNA );
+
+	static_assert( amino_acid( make_char_arr( "PHE" ) ).get_type() == amino_acid_type::AA );
+	static_assert( amino_acid( make_char_arr( "LEU" ) ).get_type() == amino_acid_type::AA );
+	static_assert( amino_acid( make_char_arr( "THR" ) ).get_type() == amino_acid_type::AA );
+
+	static_assert( amino_acid( make_char_arr( "MLY" ), pdb_record::HETATM ).get_type() == amino_acid_type::HETATOM );
+	static_assert( amino_acid( make_char_arr( "MSE" ), pdb_record::HETATM ).get_type() == amino_acid_type::HETATOM );
+	static_assert( amino_acid( make_char_arr( "NCX" ), pdb_record::HETATM ).get_type() == amino_acid_type::HETATOM );
+
+	/////
+
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( "  T" ) ).get_code() ) == "  T"sv );
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( " +C" ) ).get_code() ) == " +C"sv );
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( " DI" ) ).get_code() ) == " DI"sv );
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( " G " ) ).get_code() ) == " G "sv );
+
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( "PHE" ) ).get_code() ) == "PHE"sv );
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( "LEU" ) ).get_code() ) == "LEU"sv );
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( "THR" ) ).get_code() ) == "THR"sv );
+
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( "MLY" ), pdb_record::HETATM ).get_code() ) == "MLY"sv );
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( "MSE" ), pdb_record::HETATM ).get_code() ) == "MSE"sv );
+	static_assert( string_view_of_char_arr( amino_acid( make_char_arr( "NCX" ), pdb_record::HETATM ).get_code() ) == "NCX"sv );
+
+	BOOST_TEST(true);
+}
+
+/// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(simple_conversion) {
 	BOOST_REQUIRE_EQUAL(CODES.size(), NAMES.size());
 	BOOST_REQUIRE_EQUAL(CODES.size(), LETTERS.size());
-	for (const size_t &letter_ctr : indices( CODES.size() ) ) {
-		const string &code   = CODES[letter_ctr];
-		const string &name   = NAMES[letter_ctr];
-		const char   &letter = LETTERS[letter_ctr];
+	for ( const size_t &letter_ctr : indices( CODES.size() ) ) {
+		const string_view &code   = CODES[ letter_ctr ];
+		const string_view &name   = NAMES[ letter_ctr ];
+		const char &       letter = LETTERS[ letter_ctr ];
 
 		// Check non-member, non-friend 1->3 and 3->1 converters
 		BOOST_CHECK_EQUAL( code,   get_code_str_of_amino_acid_letter( letter ) );
 		BOOST_CHECK_EQUAL( letter, get_letter_of_amino_acid_code    ( code   ) );
 
 		// Check that the correct amino acid is constructed from any of the three labels
-		const str_vec all_names_and_codes = { code, string{ letter }, name} ;
-		for (const string &name_or_code : all_names_and_codes) {
+		const string letter_string { letter };
+		const array all_names_and_codes = { code, string_view{ letter_string }, name} ;
+		for (const string_view &name_or_code : all_names_and_codes) {
 			const amino_acid the_amino_acid(name_or_code);
 			BOOST_CHECK_EQUAL( the_amino_acid.get_name(),                  name   );
 			BOOST_CHECK_EQUAL( *the_amino_acid.get_letter_if_amino_acid(), letter );

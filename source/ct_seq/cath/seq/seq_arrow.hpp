@@ -58,8 +58,8 @@ namespace cath {
 
 			constexpr const resarw_t & get_index() const;
 
-			seq_arrow & operator+=(const resarw_t &);
-			seq_arrow & operator-=(const resarw_t &);
+			constexpr seq_arrow & operator+=(const resarw_t &);
+			constexpr seq_arrow & operator-=(const resarw_t &);
 		};
 
 		/// \brief Return whether the first specified arrow appears earlier in the sequence than the second
@@ -118,19 +118,15 @@ namespace cath {
 		}
 
 		/// \brief Increment the arrow by the specified offset
-		///
-		/// \todo Come relaxed constexpr in all supported compilers, make this constexpr
-		inline seq_arrow & seq_arrow::operator+=(const resarw_t &prm_offset ///< The offset by which to increment the seq_arrow
-		                                         ) {
+		constexpr seq_arrow & seq_arrow::operator+=(const resarw_t &prm_offset ///< The offset by which to increment the seq_arrow
+		                                            ) {
 			arrow += prm_offset;
 			return *this;
 		}
 
 		/// \brief Decrement the arrow by the specified offset
-		///
-		/// \todo Come relaxed constexpr in all supported compilers, make this constexpr
-		inline seq_arrow & seq_arrow::operator-=(const resarw_t &prm_offset ///< The offset by which to decrement the seq_arrow
-		                                         ) {
+		constexpr seq_arrow & seq_arrow::operator-=(const resarw_t &prm_offset ///< The offset by which to decrement the seq_arrow
+		                                            ) {
 #ifndef NDEBUG
 			if ( prm_offset > arrow ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot decrement seq_arrow below 0"));

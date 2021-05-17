@@ -39,6 +39,8 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	///
+	/// TODO: Make this constexpr
+	///
 	/// \todo This currently hard-codes the member+getter for two atoms coordinates: CA and CB
 	///       These two should remain and remain mandatory but they should be complemented by
 	///       N, C and O but these should be optional (with has_atom_coord method).
@@ -164,7 +166,7 @@ namespace cath {
 
 	char_3_arr get_amino_acid_code(const residue &);
 
-	std::string get_amino_acid_name(const residue &);
+	std::string_view get_amino_acid_name( const residue & );
 
 	std::string ssap_legacy_alignment_left_side_string(const cath::residue &);
 
