@@ -24,35 +24,34 @@
 #include "cath/common/boost_addenda/range/adaptor/detail/equal_grouped_holder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/detail/gen_forwarder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/range/equal_grouped_range.hpp"
-#include "cath/common/detail/make_static_const.hpp"
 
 namespace cath {
 	namespace common {
 
-		/// \brief TODOCUMENT
-		class equal_grouped_forwarder final {
-		public:
-			template <typename FN>
-			detail::equal_grouped_holder<FN> operator()(FN) const;
-
-			detail::equal_grouped_holder<std::nullptr_t> operator()() const;
-		};
-
-		/// \brief TODOCUMENT
-		template <typename FN>
-		detail::equal_grouped_holder<FN> equal_grouped_forwarder::operator()(FN prm_unequal_function
-		                                                                     ) const {
-			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-			return detail::equal_grouped_holder<FN>{ prm_unequal_function };
-		}
-
-		/// \brief TODOCUMENT
-		inline detail::equal_grouped_holder<std::nullptr_t> equal_grouped_forwarder::operator()() const {
-			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
-			return detail::equal_grouped_holder<std::nullptr_t>{ nullptr };
-		}
-
 		namespace detail {
+
+			/// \brief TODOCUMENT
+			class equal_grouped_forwarder final {
+			public:
+				template <typename FN>
+				detail::equal_grouped_holder<FN> operator()(FN) const;
+
+				detail::equal_grouped_holder<std::nullptr_t> operator()() const;
+			};
+
+			/// \brief TODOCUMENT
+			template <typename FN>
+			detail::equal_grouped_holder<FN> equal_grouped_forwarder::operator()(FN prm_unequal_function
+																				) const {
+				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+				return detail::equal_grouped_holder<FN>{ prm_unequal_function };
+			}
+
+			/// \brief TODOCUMENT
+			inline detail::equal_grouped_holder<std::nullptr_t> equal_grouped_forwarder::operator()() const {
+				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
+				return detail::equal_grouped_holder<std::nullptr_t>{ nullptr };
+			}
 
 			/// \brief Non-const range overload of operator| for equal_grouped range adaptor
 			template <typename RNG, typename FN>
@@ -78,13 +77,8 @@ namespace cath {
 				};
 			}
 		} // namespace detail
-	} // namespace common
-} // namespace cath
 
-namespace cath {
-	namespace common {
-
-		MAKE_STATIC_CONST( equal_grouped_forwarder, equal_grouped )
+		[[maybe_unused]] constexpr detail::equal_grouped_forwarder equal_grouped{};
 
 	} // namespace common
 } // namespace cath

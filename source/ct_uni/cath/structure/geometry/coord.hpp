@@ -28,7 +28,6 @@
 #include <boost/operators.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
-#include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/json_style.hpp"
 #include "cath/common/property_tree/read_from_ptree.hpp"
@@ -179,16 +178,13 @@ namespace cath {
 		constexpr coord  ORIGIN_COORD { 0.0, 0.0, 0.0 };
 
 		/// \brief TODOCUMENT
-		constexpr coord  UNIT_X_COORD { 1.0, 0.0, 0.0 };
-		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( UNIT_X_COORD )
+		[[maybe_unused]] constexpr coord  UNIT_X_COORD { 1.0, 0.0, 0.0 };
 
 		/// \brief TODOCUMENT
-		constexpr coord  UNIT_Y_COORD { 0.0, 1.0, 0.0 };
-		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( UNIT_Y_COORD )
+		[[maybe_unused]] constexpr coord  UNIT_Y_COORD { 0.0, 1.0, 0.0 };
 
 		/// \brief TODOCUMENT
-		constexpr coord  UNIT_Z_COORD { 0.0, 0.0, 1.0 };
-		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( UNIT_Z_COORD )
+		[[maybe_unused]] constexpr coord  UNIT_Z_COORD { 0.0, 0.0, 1.0 };
 
 
 		/// \brief TODOCUMENT

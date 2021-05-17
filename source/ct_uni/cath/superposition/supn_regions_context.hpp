@@ -25,7 +25,6 @@
 
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/common/algorithm/constexpr_is_uniq.hpp"
-#include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "cath/common/type_aliases.hpp"
 
 namespace cath { namespace sup { class superposition_content_spec; } }
@@ -51,8 +50,7 @@ namespace cath {
 		static_assert( common::constexpr_is_uniq( all_supn_regions_contexts ), "all_supn_regions_contexts shouldn't contain repeated values" );
 
 		/// \brief Store a constexpr record of the number of supn_regions_contexts
-		static constexpr size_t num_supn_regions_contexts = std::tuple_size_v< decltype( all_supn_regions_contexts ) >;
-		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_supn_regions_contexts )
+		[[maybe_unused]] constexpr size_t num_supn_regions_contexts = std::tuple_size_v< decltype( all_supn_regions_contexts ) >;
 
 		namespace detail {
 

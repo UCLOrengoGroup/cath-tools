@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_VARIADIC_AND_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_VARIADIC_AND_HPP
 
-#include "cath/common/detail/make_static_const.hpp"
-
 namespace cath {
 	namespace common {
 		namespace detail {
@@ -63,7 +61,7 @@ namespace cath {
 
 		} // namespace detail
 
-		MAKE_STATIC_CONST( detail::variadic_and_fn, variadic_and )
+		[[maybe_unused]] constexpr detail::variadic_and_fn variadic_and{};
 
 	} // namespace common
 } // namespace cath

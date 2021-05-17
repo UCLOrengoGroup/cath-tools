@@ -25,7 +25,6 @@
 #include <optional>
 #include <vector>
 
-#include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/seq/seq_type_aliases.hpp"
 
@@ -136,8 +135,7 @@ namespace cath {
 
 
 		/// \brief The initial score before any hits have been added
-		constexpr resscr_t INIT_SCORE = 0.0;
-		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( INIT_SCORE )
+		[[maybe_unused]] constexpr resscr_t INIT_SCORE = 0.0;
 
 		namespace detail {
 

@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_MULTIPLY_ARGS_HPP
 
 #include "cath/common/cpp17/apply.hpp"
-#include "cath/common/detail/make_static_const.hpp"
 #include "cath/common/function/multiply_args.hpp"
 #include "cath/common/type_traits/is_tuple.hpp"
 
@@ -52,7 +51,7 @@ namespace cath {
 
 		} // namespace detail
 
-		MAKE_STATIC_CONST( detail::tuple_multiply_args_fn, tuple_multiply_args )
+		[[maybe_unused]] constexpr detail::tuple_multiply_args_fn tuple_multiply_args{};
 
 	} // namespace common
 } // namespace cath

@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_INCREMENT_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_INCREMENT_HPP
 
-#include "cath/common/detail/make_static_const.hpp"
 #include "cath/common/detail/tuple_index_sequence.hpp"
 #include "cath/common/type_traits/is_tuple.hpp"
 
@@ -74,7 +73,7 @@ namespace cath {
 
 		} // namespace detail
 
-		MAKE_STATIC_CONST( detail::tuple_increment_fn, tuple_increment )
+		[[maybe_unused]] constexpr detail::tuple_increment_fn tuple_increment{};
 
 	} // namespace common
 } // namespace cath

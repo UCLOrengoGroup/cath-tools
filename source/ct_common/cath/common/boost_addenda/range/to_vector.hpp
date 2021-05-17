@@ -26,7 +26,6 @@
 #include <vector>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/detail/make_static_const.hpp"
 
 namespace cath::common {
 

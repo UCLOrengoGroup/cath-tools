@@ -24,7 +24,6 @@
 #include <cstddef>
 #include <tuple>
 
-#include "cath/common/detail/make_static_const.hpp"
 #include "cath/common/detail/tuple_index_sequence.hpp"
 #include "cath/common/type_traits.hpp"
 #include "cath/common/type_traits/is_tuple.hpp"
@@ -86,7 +85,7 @@ namespace cath {
 
 		} // namespace detail
 
-		MAKE_STATIC_CONST( detail::tuple_lattice_index_fn, tuple_lattice_index )
+		[[maybe_unused]] constexpr detail::tuple_lattice_index_fn tuple_lattice_index{};
 
 	} // namespace common
 } // namespace cath

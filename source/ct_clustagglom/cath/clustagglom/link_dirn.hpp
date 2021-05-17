@@ -25,7 +25,6 @@
 
 #include "cath/common/algorithm/constexpr_is_uniq.hpp"
 #include "cath/common/cpp20/make_array.hpp"
-#include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "cath/common/type_aliases.hpp"
 
 namespace cath {
@@ -47,8 +46,7 @@ namespace cath {
 		static_assert( common::constexpr_is_uniq( all_link_dirns ), "all_link_dirns shouldn't contain repeated values" );
 
 		/// \brief Store a constexpr record of the number of link_dirns
-		static constexpr size_t num_link_dirns = std::tuple_size_v< decltype( all_link_dirns ) >;
-		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_link_dirns )
+		[[maybe_unused]] constexpr size_t num_link_dirns = std::tuple_size_v< decltype( all_link_dirns ) >;
 
 		namespace detail {
 

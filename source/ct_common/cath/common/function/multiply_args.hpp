@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FUNCTION_MULTIPLY_ARGS_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FUNCTION_MULTIPLY_ARGS_HPP
 
-#include "cath/common/detail/make_static_const.hpp"
-
 namespace cath {
 	namespace common {
 		namespace detail {
@@ -63,7 +61,7 @@ namespace cath {
 
 		} // namespace detail
 
-		MAKE_STATIC_CONST( detail::multiply_args_fn, multiply_args )
+		[[maybe_unused]] constexpr detail::multiply_args_fn multiply_args{};
 
 	} // namespace common
 } // namespace cath

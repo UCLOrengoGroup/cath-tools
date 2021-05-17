@@ -23,7 +23,6 @@
 
 #include "cath/common/algorithm/constexpr_is_uniq.hpp"
 #include "cath/common/cpp20/make_array.hpp"
-#include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 
 #include <array>
 #include <iosfwd>
@@ -48,8 +47,7 @@ namespace cath {
 	static_assert( common::constexpr_is_uniq( all_distance_score_formulae ), "all_distance_score_formulae shouldn't contain repeated values" );
 
 	/// \brief TODOCUMENT
-	static constexpr size_t num_distance_score_formulae = std::tuple_size_v< decltype( all_distance_score_formulae ) >;
-	MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_distance_score_formulae )
+	[[maybe_unused]] constexpr size_t num_distance_score_formulae = std::tuple_size_v< decltype( all_distance_score_formulae ) >;
 
 	/// \brief TODOCUMENT
 	struct name_of_distance_score_formula final {

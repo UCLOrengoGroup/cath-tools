@@ -24,7 +24,6 @@
 #include <boost/any.hpp>
 
 #include "cath/common/cpp20/make_array.hpp"
-#include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "cath/common/type_aliases.hpp"
 
 #include <array>
@@ -42,12 +41,11 @@ namespace cath {
 		};
 
 		/// \brief A constexpr list of all align_refinings
-		static constexpr auto all_align_refinings = common::make_array(
+		[[maybe_unused]] constexpr auto all_align_refinings = common::make_array(
 			align_refining::NO,
 			align_refining::LIGHT,
 			align_refining::HEAVY
 		);
-		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( all_align_refinings )
 
 		std::string to_string(const align_refining &);
 

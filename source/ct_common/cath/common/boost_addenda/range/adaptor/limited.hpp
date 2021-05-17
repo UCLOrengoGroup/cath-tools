@@ -26,7 +26,6 @@
 #include "cath/common/boost_addenda/range/adaptor/detail/gen_forwarder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/detail/limited_holder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/range/limited_range.hpp"
-#include "cath/common/detail/make_static_const.hpp"
 
 namespace cath {
 	namespace common {
@@ -54,13 +53,8 @@ namespace cath {
 				};
 			}
 		} // namespace detail
-	} // namespace common
-} // namespace cath
 
-namespace cath {
-	namespace common {
-
-		MAKE_STATIC_CONST( cath::common::detail::gen_forwarder<detail::limited_holder>, limited )
+		[[maybe_unused]] constexpr detail::gen_forwarder<detail::limited_holder> limited{};
 
 	} // namespace common
 } // namespace cath

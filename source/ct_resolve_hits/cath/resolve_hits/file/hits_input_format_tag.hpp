@@ -24,7 +24,6 @@
 #include <boost/any.hpp>
 
 #include "cath/common/algorithm/constexpr_is_uniq.hpp"
-#include "cath/common/detail/maybe_unused_namespace_scope_constexpr.hpp"
 #include "cath/common/type_aliases.hpp"
 
 #include <array>
@@ -58,8 +57,7 @@ namespace cath {
 		static_assert( common::constexpr_is_uniq( all_hits_input_format_tags ), "all_hits_input_format_tags shouldn't contain repeated values" );
 
 		/// \brief Store a constexpr record of the number of hits_input_format_tags
-		static constexpr size_t num_hits_input_format_tags = std::tuple_size_v< decltype( all_hits_input_format_tags ) >;
-		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_hits_input_format_tags )
+		[[maybe_unused]] constexpr size_t num_hits_input_format_tags = std::tuple_size_v< decltype( all_hits_input_format_tags ) >;
 
 		namespace detail {
 

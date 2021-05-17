@@ -25,7 +25,6 @@
 #include <cstddef>
 
 #include "cath/common/algorithm/variadic_and.hpp"
-#include "cath/common/detail/make_static_const.hpp"
 #include "cath/common/detail/tuple_index_sequence.hpp"
 
 namespace cath {
@@ -67,7 +66,7 @@ namespace cath {
 
 		} // namespace detail
 
-		MAKE_STATIC_CONST( detail::tuple_within_range_fn, tuple_within_range )
+		[[maybe_unused]] constexpr detail::tuple_within_range_fn tuple_within_range{};
 
 	} // namespace common
 } // namespace cath

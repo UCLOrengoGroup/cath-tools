@@ -24,7 +24,6 @@
 #include <cstddef>
 #include <tuple>
 
-#include "cath/common/detail/make_static_const.hpp"
 #include "cath/common/type_traits.hpp"
 
 namespace cath {
@@ -67,7 +66,7 @@ namespace cath {
 
 		} // namespace detail
 
-		MAKE_STATIC_CONST( detail::tuple_subtract_fn, tuple_subtract )
+		[[maybe_unused]] constexpr detail::tuple_subtract_fn tuple_subtract{};
 
 	} // namespace common
 } // namespace cath

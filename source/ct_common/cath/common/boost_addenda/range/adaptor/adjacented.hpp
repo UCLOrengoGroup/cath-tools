@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ADJACENTED_HPP
 
 #include "cath/common/boost_addenda/range/adaptor/range/adjacented_range.hpp"
-#include "cath/common/detail/make_static_const.hpp"
 
 namespace cath {
 	namespace common {
@@ -46,13 +45,8 @@ namespace cath {
 				return adjacented_range<const ForwardRng>( prm_range );
 			}
 		} // namespace detail
-	} // namespace common
-} // namespace cath
 
-namespace cath {
-	namespace common {
-
-		MAKE_STATIC_CONST( detail::adjacented_forwarder, adjacented )
+		[[maybe_unused]] constexpr detail::adjacented_forwarder adjacented{};
 
 	} // namespace common
 } // namespace cath

@@ -25,7 +25,6 @@
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
-#include "cath/common/detail/make_static_const.hpp"
 #include "cath/common/detail/tuple_index_sequence.hpp"
 #include "cath/common/type_traits/is_tuple.hpp"
 
@@ -115,7 +114,7 @@ namespace cath {
 
 		} // namespace detail
 
-		MAKE_STATIC_CONST( detail::tuple_mins_maxs_element_fn, tuple_mins_maxs_element )
+		[[maybe_unused]] constexpr detail::tuple_mins_maxs_element_fn tuple_mins_maxs_element{};
 
 	} // namespace common
 } // namespace cath
