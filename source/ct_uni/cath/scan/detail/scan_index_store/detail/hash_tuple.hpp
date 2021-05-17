@@ -65,7 +65,7 @@ namespace cath {
 					}
 
 					/// \brief Recursive template for hashing tuples
-					template <class Tuple, size_t Index = std::tuple_size<Tuple>::value - 1>
+					template <class Tuple, size_t Index = std::tuple_size_v<Tuple> - 1>
 					struct HashValueImpl final {
 
 						/// \brief Apply the hash method to the existing seed and remaining value

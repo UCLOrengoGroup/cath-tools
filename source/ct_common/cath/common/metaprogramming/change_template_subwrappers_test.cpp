@@ -29,7 +29,7 @@
 
 using namespace ::cath::common;
 
-using ::std::is_same;
+using ::std::is_same_v;
 using ::std::list;
 using ::std::tuple;
 using ::std::vector;
@@ -38,13 +38,13 @@ BOOST_AUTO_TEST_SUITE(change_template_subwrappers_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	static_assert(
-		is_same<
+		is_same_v<
 			change_template_subwrappers_t<
 				tuple< tuple<int>, list<double>, tuple<char> >,
 				vector
 			>,
 			tuple< vector<int>, vector<double>, vector<char> >
-		>::value,
+		>,
 		"change_template_subwrappers_t should change tuple< tuple<int>, list<double>, tuple<char> > with vector into tuple< vector<int>, vector<double>, vector<char> >"
 	);
 

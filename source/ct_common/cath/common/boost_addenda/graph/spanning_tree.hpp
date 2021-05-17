@@ -126,7 +126,7 @@ namespace cath {
 					),
 					std::less<>{},
 					[&] (const edge_wght_tpl_t<EdgeRng, WeightRng> &x) {
-						constexpr size_t  x_tpl_size = std::tuple_size< common::remove_cvref_t< decltype( x ) > >::value;
+						constexpr size_t  x_tpl_size = std::tuple_size_v< common::remove_cvref_t< decltype( x ) > >;
 						const     auto   &last_value = std::get< x_tpl_size - 1>( x );
 						return std::make_tuple(
 							( Dirn == spanning_tree_dirn::MAX ) ? -last_value : last_value,

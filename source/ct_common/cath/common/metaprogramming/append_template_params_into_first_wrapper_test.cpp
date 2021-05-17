@@ -27,14 +27,14 @@
 
 using namespace ::cath::common;
 
-using ::std::is_same;
+using ::std::is_same_v;
 using ::std::tuple;
 
 BOOST_AUTO_TEST_SUITE(append_template_params_into_first_wrapper_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	static_assert(
-		is_same<
+		is_same_v<
 			append_template_params_into_first_wrapper_t<
 				tuple< int, int >,
 				tuple< char >,
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 				tuple< double, double >
 			>,
 			tuple< int, int, char, tuple<int>, double, double >
-		>::value,
+		>,
 		"append_template_params_into_first_wrapper_t should append the templates' parameters into one templates list wrapped by the first template's wrapper"
 	);
 	BOOST_CHECK( true );

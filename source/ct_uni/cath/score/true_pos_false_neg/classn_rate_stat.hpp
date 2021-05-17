@@ -101,9 +101,9 @@ namespace cath {
 					std::make_tuple( std_classn_rate_stat::FALSE_DISCOVERY_RATE,      classn_outcome::FALSE_POSITIVE,  classn_outcome::TRUE_POSITIVE  )
 				}};
 
-				static constexpr size_t num_std_classn_rate_stats = std::tuple_size<
+				static constexpr size_t num_std_classn_rate_stats = std::tuple_size_v<
 					decltype( properties_of_classn_rate_stat::numerator_and_denominator_of_stat )
-				>::value;
+				>;
 			};
 		} // namespace detail
 

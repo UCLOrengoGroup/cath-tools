@@ -30,18 +30,6 @@ namespace cath {
 	namespace common {
 
 		/// \brief A type_trait for checking whether T is exactly a std::tuple<> of zero or more types
-		///
-		/// TODO: Come C+17 being fully embraced, drop these in favour of the template variables below
-		template <typename T>
-		struct is_tuple             : detail::is_template_of_type< T,                         ::std::tuple > {};
-
-		/// \brief A type_trait for checking whether the decayed version of T is a std::tuple<> of zero or more types
-		///
-		/// TODO: Come C+17 being fully embraced, drop these in favour of the template variables below
-		template <typename T>
-		struct is_tuple_after_decay : detail::is_template_of_type< common::remove_cvref_t<T>, ::std::tuple > {};
-
-		/// \brief A type_trait for checking whether T is exactly a std::tuple<> of zero or more types
 		template <typename T>
 		constexpr bool is_tuple_v = is_template_of_type_v<T, ::std::tuple>;
 

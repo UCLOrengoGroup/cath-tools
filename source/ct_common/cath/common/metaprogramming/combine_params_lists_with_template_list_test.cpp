@@ -32,7 +32,7 @@
 using namespace ::cath::common;
 
 using ::std::deque;
-using ::std::is_same;
+using ::std::is_same_v;
 using ::std::tuple;
 using ::std::vector;
 
@@ -40,13 +40,13 @@ BOOST_AUTO_TEST_SUITE(combine_params_lists_with_template_list_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	static_assert(
-		is_same<
+		is_same_v<
 			combine_params_lists_with_template_list_t<
 				tuple< tuple<int>, tuple<double> >,
 				template_list<vector, deque>
 			>,
 			tuple< vector<int>, vector<double>, deque<int>, deque<double> >
-		>::value,
+		>,
 		"combine_params_lists_with_template_list_t should combine typelists with a template_list"
 	);
 	BOOST_CHECK( true );

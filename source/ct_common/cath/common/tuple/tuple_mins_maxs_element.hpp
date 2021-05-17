@@ -87,7 +87,7 @@ namespace cath {
 				                       ) const {
 					using value_t = common::range_value_t<Rng>;
 
-					static_assert( is_tuple< value_t >::value, "tuple_mins_maxs_element requires a range of tuples" );
+					static_assert( is_tuple_v< value_t >, "tuple_mins_maxs_element requires a range of tuples" );
 
 					auto       begin_itr     = common::cbegin( prm_rng );
 					const auto end_itr       = common::cend  ( prm_rng );

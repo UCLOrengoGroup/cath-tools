@@ -28,7 +28,7 @@
 
 using namespace ::cath::common;
 
-using ::std::is_same;
+using ::std::is_same_v;
 using ::std::tuple;
 using ::std::vector;
 
@@ -36,10 +36,10 @@ BOOST_AUTO_TEST_SUITE(change_template_wrapper_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	static_assert(
-		is_same<
+		is_same_v<
 			change_template_wrapper_t< tuple<int>, vector >,
 			vector<int>
-		>::value,
+		>,
 		"change_template_wrapper_t should change tuple<int> with vector into vector<int>"
 	);
 

@@ -94,6 +94,9 @@ namespace cath {
 				static constexpr length_getter_enum value = enum_integral();
 			};
 
+			template <typename T>
+			constexpr length_getter_enum enum_of_length_getter_v = enum_of_length_getter_impl<T>::value;
+
 		} // namespace detail
 	} // namespace score
 } // namespace cath

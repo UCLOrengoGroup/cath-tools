@@ -22,13 +22,13 @@
 #define _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_RUN_HPP
 
 #include <array>
+#include <functional>
 
 #include "cath/common/algorithm/append.hpp"
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/algorithm/variadic_and.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/hash/hash_value_combine.hpp"
 #include "cath/common/type_traits.hpp"
 #include "cath/seq/seq_arrow.hpp"
@@ -414,7 +414,7 @@ namespace cath {
 			static_assert( ( sizeof...( Ts ) % 2 ) == 0,
 				"make_seq_seg_run_from_res_indices() requires an even number of index parameters" );
 
-			static_assert( common::variadic_and( std::is_integral<common::remove_cvref_t<Ts>>::value... ),
+			static_assert( ( ... && std::is_integral_v<common::remove_cvref_t<Ts>> ),
 				"make_seq_seg_run_from_res_indices() requires all parameters to by of integral type" );
 
 			return {
@@ -503,7 +503,7 @@ namespace cath {
 					const seq_seg seg_a = get_seq_seg_of_seg_idx( prm_seq_seg_run_a, ctr_a );
 					const seq_seg seg_b = get_seq_seg_of_seg_idx( prm_seq_seg_run_b, ctr_b );
 					if ( are_overlapping( seg_a, seg_b ) ) {
-						common::invoke( prm_fn, seg_a, seg_b );
+						::std::invoke( prm_fn, seg_a, seg_b );
 					}
 					if ( seg_a.get_stop_arrow() <= seg_b.get_stop_arrow() ) {
 						++ctr_a;

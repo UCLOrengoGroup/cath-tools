@@ -40,7 +40,7 @@ using namespace ::cath::common;
 using namespace ::cath::score;
 using namespace ::cath::score::detail;
 
-using ::std::is_same;
+using ::std::is_same_v;
 
 namespace cath {
 	namespace test {
@@ -122,9 +122,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(names_work, length_getter_type, length_getter_type
 	BOOST_CHECK_GT( the_getter.long_name().length(),                   0 );
 	BOOST_CHECK_GT( the_getter.description().length(),                 0 );
 
-	constexpr length_getter_enum my_length_getter_enum = enum_of_length_getter_impl<length_getter_type>::value;
+	constexpr length_getter_enum my_length_getter_enum = enum_of_length_getter_v<length_getter_type>;
 	using orig_type = length_getter_of_enum_t<my_length_getter_enum>;
-	static_assert( is_same<length_getter_type, orig_type>::value, "Length_getter enum round trip produced different type" );
+	static_assert( is_same_v<length_getter_type, orig_type>, "Length_getter enum round trip produced different type" );
 }
 
 /// \brief TODOCUMENT

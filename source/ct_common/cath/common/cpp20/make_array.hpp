@@ -44,7 +44,7 @@ namespace cath {
 
 			template <typename... Types>
 			struct return_type_helper<void, Types...> : std::common_type<Types...> {
-				static_assert(::cath::common::conjunction<not_ref_wrapper<Types>...>::value,
+				static_assert(::std::conjunction_v<not_ref_wrapper<Types>...>,
 				"Types cannot contain reference_wrappers when D is void");
 			};
 

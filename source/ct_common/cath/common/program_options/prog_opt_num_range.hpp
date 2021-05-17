@@ -46,7 +46,7 @@ namespace cath {
 			/// \brief The wrapped Num value
 			Num value;
 
-			static_assert( std::is_arithmetic<Num>::value,
+			static_assert( std::is_arithmetic_v<Num>,
 				"prog_opt_num_range can only be instantiated for arithmetic types (eg int, double)");
 
 		public:

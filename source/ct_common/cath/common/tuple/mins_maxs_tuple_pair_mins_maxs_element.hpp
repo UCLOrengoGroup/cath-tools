@@ -89,16 +89,16 @@ namespace cath {
 				                ) const {
 					using pair_t  = common::range_value_t<Rng>;
 					static_assert(
-						is_template_of_type<pair_t, std::pair>::value,
+						is_template_of_type_v<pair_t, std::pair>,
 						"mins_maxs_tuple_pair_mins_maxs_element_fn() can only be applied to *pairs* of tuples"
 					);
 					using value_t = typename pair_t::first_type;
 					static_assert(
-						std::is_same<value_t, typename pair_t::second_type>::value,
+						std::is_same_v<value_t, typename pair_t::second_type>,
 						"mins_maxs_tuple_pair_mins_maxs_element_fn() can only be applied to pairs of the *same type* of tuples"
 					);
 					static_assert(
-						is_tuple<value_t>::value,
+						is_tuple_v<value_t>,
 						"mins_maxs_tuple_pair_mins_maxs_element_fn() can only be applied to pairs of *tuples*"
 					);
 

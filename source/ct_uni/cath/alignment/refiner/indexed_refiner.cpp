@@ -21,6 +21,7 @@
 #include "indexed_refiner.hpp"
 
 #include <filesystem>
+#include <functional>
 #include <tuple>
 #include <type_traits>
 #include <vector>
@@ -35,7 +36,6 @@
 #include "cath/common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/chrono/duration_to_seconds_string.hpp"
-#include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/metaprogramming/combine_params_lists_with_template_list.hpp"
 #include "cath/common/metaprogramming/template_list.hpp"
 #include "cath/common/type_to_string.hpp"
@@ -109,7 +109,7 @@ namespace {
 	                            Ts &&...prm_vars
 	                            ) {
 		const auto start_time = high_resolution_clock::now();
-		invoke( prm_fn, std::forward< Ts >( prm_vars )... );
+		::std::invoke( prm_fn, std::forward< Ts >( prm_vars )... );
 		return high_resolution_clock::now() - start_time;
 	}
 

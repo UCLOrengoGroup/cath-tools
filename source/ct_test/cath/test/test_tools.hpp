@@ -108,7 +108,7 @@ namespace cath {
 			template <typename T>
 			void check_equality_operators_on_value(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
 			                                       ) {
-				detail::check_equality_operators_on_value_impl<std::is_copy_constructible<T>::value>::check( prm_value );
+				detail::check_equality_operators_on_value_impl<std::is_copy_constructible_v<T>>::check( prm_value );
 			}
 
 			/// \brief Boost Test that the equality/inequality operators give correct values for two different objects

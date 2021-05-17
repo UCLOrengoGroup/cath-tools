@@ -54,13 +54,13 @@ namespace cath {
 				                          const TplB &prm_tuple_b  ///< The tuple to subtract from the other
 				                          ) const {
 					static_assert(
-						std::tuple_size< common::remove_cvref_t< TplA > >::value == std::tuple_size< common::remove_cvref_t< TplB > >::value,
+						std::tuple_size_v< common::remove_cvref_t< TplA > > == std::tuple_size_v< common::remove_cvref_t< TplB > >,
 						"tuple_subtract() can only be used on tuples of equal size"
 					);
 					return tuple_subtract_impl(
 						prm_tuple_a,
 						prm_tuple_b,
-						std::make_index_sequence<std::tuple_size< common::remove_cvref_t< TplA > >::value>{}
+						std::make_index_sequence< std::tuple_size_v< common::remove_cvref_t< TplA > > >{}
 					);
 				}
 			};

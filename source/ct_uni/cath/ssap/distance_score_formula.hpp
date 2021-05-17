@@ -48,7 +48,7 @@ namespace cath {
 	static_assert( common::constexpr_is_uniq( all_distance_score_formulae ), "all_distance_score_formulae shouldn't contain repeated values" );
 
 	/// \brief TODOCUMENT
-	static constexpr size_t num_distance_score_formulae = std::tuple_size< decltype( all_distance_score_formulae ) >::value;
+	static constexpr size_t num_distance_score_formulae = std::tuple_size_v< decltype( all_distance_score_formulae ) >;
 	MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_distance_score_formulae )
 
 	/// \brief TODOCUMENT

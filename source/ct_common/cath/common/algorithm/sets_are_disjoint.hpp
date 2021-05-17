@@ -55,7 +55,7 @@ namespace cath {
 			using value_type1 = range_value_t<RNG1>;
 			using value_type2 = range_value_t<RNG2>;
 			static_assert(
-				std::is_same<value_type1, value_type2 >::value,
+				std::is_same_v<value_type1, value_type2 >,
 				"sets_are_disjoint() cannot operator on two ranges with different value types"
 			);
 

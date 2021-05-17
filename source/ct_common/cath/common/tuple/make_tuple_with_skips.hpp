@@ -54,7 +54,7 @@ namespace cath {
 			template <typename T, typename... Ts>
 			struct tuple_with_skips_type<T, Ts...> final {
 				using type = std::conditional_t<
-					std::is_same< common::remove_cvref_t<T>, tpl_elmnt_skip_t>::value,
+					std::is_same_v< common::remove_cvref_t<T>, tpl_elmnt_skip_t>,
 					typename tuple_with_skips_type< Ts... >::type,
 					append_template_params_into_first_wrapper_t<
 						std::tuple< T >,

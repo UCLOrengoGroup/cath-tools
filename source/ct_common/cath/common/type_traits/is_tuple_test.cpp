@@ -30,25 +30,25 @@ using ::std::vector;
 BOOST_AUTO_TEST_SUITE(is_tuple_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	static_assert( ! is_tuple            <               int     >::value, "              int     should not be identified as a tuple" );
-	static_assert( ! is_tuple            < const         int     >::value, "const         int     should not be identified as a tuple" );
-	static_assert( ! is_tuple            <       vector< int >   >::value, "      vector< int >   should not be identified as a tuple" );
-	static_assert( ! is_tuple            < const vector< int >   >::value, "const vector< int >   should not be identified as a tuple" );
+	static_assert( ! is_tuple_v          <               int     >, "              int     should not be identified as a tuple" );
+	static_assert( ! is_tuple_v          < const         int     >, "const         int     should not be identified as a tuple" );
+	static_assert( ! is_tuple_v          <       vector< int >   >, "      vector< int >   should not be identified as a tuple" );
+	static_assert( ! is_tuple_v          < const vector< int >   >, "const vector< int >   should not be identified as a tuple" );
 
-	static_assert(   is_tuple            <       tuple < int >   >::value, "      tuple < int >   should     be identified as a tuple" );
-	static_assert( ! is_tuple            < const tuple < int >   >::value, "const tuple < int >   should not be identified as a tuple" );
-	static_assert( ! is_tuple            <       tuple < int > & >::value, "      tuple < int > & should not be identified as a tuple" );
-	static_assert( ! is_tuple            < const tuple < int > & >::value, "const tuple < int > & should not be identified as a tuple" );
+	static_assert(   is_tuple_v          <       tuple < int >   >, "      tuple < int >   should     be identified as a tuple" );
+	static_assert( ! is_tuple_v          < const tuple < int >   >, "const tuple < int >   should not be identified as a tuple" );
+	static_assert( ! is_tuple_v          <       tuple < int > & >, "      tuple < int > & should not be identified as a tuple" );
+	static_assert( ! is_tuple_v          < const tuple < int > & >, "const tuple < int > & should not be identified as a tuple" );
 
-	static_assert( ! is_tuple_after_decay<               int     >::value, "              int     should not be identified as a tuple" );
-	static_assert( ! is_tuple_after_decay< const         int     >::value, "const         int     should not be identified as a tuple" );
-	static_assert( ! is_tuple_after_decay<       vector< int >   >::value, "      vector< int >   should not be identified as a tuple" );
-	static_assert( ! is_tuple_after_decay< const vector< int >   >::value, "const vector< int >   should not be identified as a tuple" );
+	static_assert( ! is_tuple_mod_cvref_v<               int     >, "              int     should not be identified as a tuple" );
+	static_assert( ! is_tuple_mod_cvref_v< const         int     >, "const         int     should not be identified as a tuple" );
+	static_assert( ! is_tuple_mod_cvref_v<       vector< int >   >, "      vector< int >   should not be identified as a tuple" );
+	static_assert( ! is_tuple_mod_cvref_v< const vector< int >   >, "const vector< int >   should not be identified as a tuple" );
 
-	static_assert(   is_tuple_after_decay<       tuple < int >   >::value, "      tuple < int >   should     be identified as a tuple" );
-	static_assert(   is_tuple_after_decay< const tuple < int >   >::value, "const tuple < int >   should     be identified as a tuple" );
-	static_assert(   is_tuple_after_decay<       tuple < int > & >::value, "      tuple < int > & should     be identified as a tuple" );
-	static_assert(   is_tuple_after_decay< const tuple < int > & >::value, "const tuple < int > & should     be identified as a tuple" );
+	static_assert(   is_tuple_mod_cvref_v<       tuple < int >   >, "      tuple < int >   should     be identified as a tuple" );
+	static_assert(   is_tuple_mod_cvref_v< const tuple < int >   >, "const tuple < int >   should     be identified as a tuple" );
+	static_assert(   is_tuple_mod_cvref_v<       tuple < int > & >, "      tuple < int > & should     be identified as a tuple" );
+	static_assert(   is_tuple_mod_cvref_v< const tuple < int > & >, "const tuple < int > & should     be identified as a tuple" );
 
 	BOOST_CHECK( true );
 }

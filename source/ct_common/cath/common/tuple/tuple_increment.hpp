@@ -53,7 +53,7 @@ namespace cath {
 				/// \brief Return the result of incrementing all the members of the specified tuple
 				///
 				/// \todo Tidy up the enable_if / decltype()
-				template <typename Tpl, typename = std::enable_if< is_tuple< Tpl >::value > >
+				template <typename Tpl, typename = std::enable_if< is_tuple_v< Tpl > > >
 				constexpr auto operator()(const Tpl &prm_tuple ///< The tuple from which a copy should be taken, its members incremented and returned
 				                          ) const -> decltype(
 				                                     	detail::tuple_increment_impl(

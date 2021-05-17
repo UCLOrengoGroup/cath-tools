@@ -38,8 +38,8 @@ BOOST_AUTO_TEST_CASE(make_optional_if_works) {
 }
 
 BOOST_AUTO_TEST_CASE(make_optional_if_fn_works) {
-	BOOST_TEST( make_optional_if_fn( true,  [] {                      return 1; } ) == 1       );
-	BOOST_TEST( make_optional_if_fn( false, [] { BOOST_CHECK( false); return 1; } ) == nullopt );
+	static_assert( make_optional_if_fn( true,  [] {                      return 1; } ) == 1       );
+	static_assert( make_optional_if_fn( false, [] { BOOST_CHECK( false); return 1; } ) == nullopt );
 }
 
 BOOST_AUTO_TEST_CASE( if_then_optional_works ) {

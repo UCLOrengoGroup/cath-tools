@@ -42,7 +42,7 @@ namespace cath {
 		class res_pair_keyer final {
 		private:
 			// /// \brief Compile-time check that TPL's a std::tuple<> of zero or more types
-			// static_assert( common::is_tuple<TPL>::value, "ERROR: res_pair_keyer must be instantiated with a type that's a std::tuple" );
+			// static_assert( common::is_tuple_v<TPL>, "ERROR: res_pair_keyer must be instantiated with a type that's a std::tuple" );
 
 			/// \brief TODOCUMENT
 			using keyer_part_tuple = std::tuple<KPs...>;

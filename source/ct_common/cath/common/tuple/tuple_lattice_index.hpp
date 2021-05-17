@@ -68,12 +68,12 @@ namespace cath {
 
 				/// \brief Find the overall index of the cell with the specified indices
 				///        in a lattice of the specified dimensions
-				template <typename Tpl, typename = std::enable_if< is_tuple< Tpl >::value > >
+				template <typename Tpl, typename = std::enable_if< is_tuple_v< Tpl > > >
 				constexpr auto operator()(const Tpl &prm_indices, ///< The indices of the cell
 				                          const Tpl &prm_sizes    ///< The dimensions of the lattice
 				                          ) const {
-					static_assert( std::tuple_size< common::remove_cvref_t< Tpl > >::value > 0, "Can't use tuple_lattice_index on tuple with no elements" );
-					return tuple_lattice_index_impl<std::tuple_size< common::remove_cvref_t< Tpl > >::value - 1>::fn(
+					static_assert( std::tuple_size_v< common::remove_cvref_t< Tpl > > > 0, "Can't use tuple_lattice_index on tuple with no elements" );
+					return tuple_lattice_index_impl<std::tuple_size_v< common::remove_cvref_t< Tpl > > - 1>::fn(
 						prm_indices,
 						prm_sizes
 					);

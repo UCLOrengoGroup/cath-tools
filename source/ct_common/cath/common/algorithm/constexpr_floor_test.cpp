@@ -33,8 +33,8 @@ namespace cath {
 		protected:
 			~constexpr_floor_test_suite_fixture() noexcept = default;
 
-			static_assert( is_same<decltype( constexpr_floor( declval<double>() ) ), double>::value, "constexpr_floor( double ) should return a double" );
-			static_assert( is_same<decltype( constexpr_floor( declval<float >() ) ), float >::value, "constexpr_floor( float  ) should return a float" );
+			static_assert( is_same_v<decltype( constexpr_floor( declval<double>() ) ), double>, "constexpr_floor( double ) should return a double" );
+			static_assert( is_same_v<decltype( constexpr_floor( declval<float >() ) ), float >, "constexpr_floor( float  ) should return a float" );
 
 			static_assert( constexpr_floor( -2.00 ) == -2.00, "constexpr_floor( -2.00 ) should return -2.00" );
 			static_assert( constexpr_floor( -1.75 ) == -2.00, "constexpr_floor( -1.75 ) should return -2.00" );

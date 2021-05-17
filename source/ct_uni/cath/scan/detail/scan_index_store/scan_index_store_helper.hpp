@@ -99,8 +99,8 @@ namespace cath {
 					// TD< value_t > value_t_obj;
 					// TD< decltype( mins_maxs.first  ) > first_obj;
 
-					// static_assert( std::is_same< decltype( mins_maxs.first  ), value_t >::value, "" );
-					// static_assert( std::is_same< decltype( mins_maxs.second ), value_t >::value, "" );
+					// static_assert( std::is_same_v< decltype( mins_maxs.first  ), value_t >, "" );
+					// static_assert( std::is_same_v< decltype( mins_maxs.second ), value_t >, "" );
 
 					return scan_index_lattice_store<Key, Cell>( mins_maxs.first, mins_maxs.second );
 				}
@@ -133,8 +133,8 @@ namespace cath {
 							} )
 					);
 
-					// static_assert(std::is_same< decltype( mins_maxs.first  ), value_t >::value, "" );
-					// static_assert(std::is_same< decltype( mins_maxs.second ), value_t >::value, "" );
+					// static_assert(std::is_same_v< decltype( mins_maxs.first  ), value_t >, "" );
+					// static_assert(std::is_same_v< decltype( mins_maxs.second ), value_t >, "" );
 
 					return scan_index_lattice_store<Key, Cell>( mins_maxs.first, mins_maxs.second );
 				}

@@ -70,7 +70,7 @@ namespace  {
 } // namespace
 
 
-static_assert( std::is_copy_assignable<cath::scan::simple_locn_index>::value, "" );
+static_assert( std::is_copy_assignable_v<cath::scan::simple_locn_index>, "" );
 
 /// \brief TODOCUMENT
 locn_index_store cath::scan::make_sparse_lattice(const protein &prm_protein,   ///< TODOCUMENT

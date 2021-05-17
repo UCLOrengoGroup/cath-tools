@@ -105,8 +105,8 @@ namespace cath {
 		                                   	? prm_total_trimming
 		                                   	: throw "trim_spec total_trimming must be non-negative and less than the full_length"
 		                                   } {
-			static_assert( std::is_unsigned< common::remove_cvref_t< decltype( prm_full_length    ) > >::value, "If prm_full_length    isn't of an unsigned type, then add an explicit >= 0 check" );
-			static_assert( std::is_unsigned< common::remove_cvref_t< decltype( prm_total_trimming ) > >::value, "If prm_total_trimming isn't of an unsigned type, then add an explicit >= 0 check" );
+			static_assert( std::is_unsigned_v< common::remove_cvref_t< decltype( prm_full_length    ) > >, "If prm_full_length    isn't of an unsigned type, then add an explicit >= 0 check" );
+			static_assert( std::is_unsigned_v< common::remove_cvref_t< decltype( prm_total_trimming ) > >, "If prm_total_trimming isn't of an unsigned type, then add an explicit >= 0 check" );
 		}
 
 		/// \brief Getter for the length of a segment on which the trimming is to be defined

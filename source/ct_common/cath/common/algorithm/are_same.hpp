@@ -21,8 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_ARE_SAME_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_ARE_SAME_HPP
 
+#include <functional>
+
 #include "cath/common/cpp14/cbegin_cend.hpp"
-#include "cath/common/cpp17/invoke.hpp"
+#include "cath/common/cpp17/constexpr_invoke.hpp"
 #include "cath/common/function/ident.hpp"
 
 namespace cath {
@@ -35,20 +37,18 @@ namespace cath {
 		/// \todo Constrain this function so that it isn't ambiguous with the range version
 		template <typename BeginItr,
 		          typename EndItr,
-		          typename Eq   = std::equal_to<>,
+		          typename Eq   = ::std::equal_to<>,
 		          typename Proj = ident
 		          >
-		bool are_same_itr(BeginItr &&prm_begin_itr,     ///< The begin of the range to query
-		                  EndItr   &&prm_end_itr,       ///< The end of the range to query
-		                  Eq       &&prm_equal = Eq{},  ///< The binary predicate to use as the equality operator
-		                  Proj     &&prm_proj  = Proj{} ///< The function to use to project the elements
-		                  ) {
+		constexpr bool are_same_itr(BeginItr &&prm_begin_itr,     ///< The begin of the range to query
+		                            EndItr   &&prm_end_itr,       ///< The end of the range to query
+		                            Eq       &&prm_equal = Eq{},  ///< The binary predicate to use as the equality operator
+		                            Proj     &&prm_proj  = Proj{} ///< The function to use to project the elements
+		                            ) {
 			if ( prm_begin_itr != prm_end_itr ) {
-				/// \TODO Come C++17, use ::std::invoke
-				const auto &first = ::cath::common::invoke( prm_proj, *prm_begin_itr );
+				const auto &first = ::cath::common::constexpr_invoke( prm_proj, *prm_begin_itr );
 				for (auto start_itr = prm_begin_itr; start_itr != prm_end_itr; ++start_itr) {
-					/// \TODO Come C++17, use ::std::invoke
-					if ( ! ::cath::common::invoke( prm_equal, first, ::cath::common::invoke( prm_proj, *start_itr ) ) ) {
+					if ( ! ::cath::common::constexpr_invoke( prm_equal, first, ::cath::common::constexpr_invoke( prm_proj, *start_itr ) ) ) {
 						return false;
 					}
 				}

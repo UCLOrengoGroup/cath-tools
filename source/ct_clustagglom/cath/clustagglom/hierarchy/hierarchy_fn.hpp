@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HIERARCHY_FN_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HIERARCHY_FN_HPP
 
+#include <functional>
+
 #include "cath/clustagglom/hierarchy.hpp"
 #include "cath/clustagglom/hierarchy/hierarchy_group.hpp"
 #include "cath/clustagglom/hierarchy/hierarchy_value.hpp"
@@ -66,7 +68,7 @@ namespace cath {
 						// If this value refers to an entry, temporarily fill out the counters and call the function
 						if ( value.get_type() == hierarchy_ref::ENTRY ) {
 							ctrs.resize( prm_hierarchy.size(), CTR_INIT );
-							common::invoke( prm_fn, ctrs, value.get_index() );
+							::std::invoke( prm_fn, ctrs, value.get_index() );
 							ctrs.resize( prm_depth + 1 );
 						}
 						// Otherwise recurse into traversing within the child group

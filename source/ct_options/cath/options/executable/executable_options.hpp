@@ -181,7 +181,7 @@ namespace cath {
 		                         const parse_sources &prm_parse_sources = parse_sources::CMND_ENV_AND_FILE ///< The sources from which options should be parsed
 		                         ) {
 			static_assert(
-				std::is_base_of<executable_options, T>::value,
+				std::is_base_of_v<executable_options, T>,
 				"make_and_parse_options() can only be used to make types that inherit from executable_options."
 			);
 			T new_options;

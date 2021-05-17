@@ -29,7 +29,6 @@
 #include "cath/common/boost_addenda/range/accumulate_proj.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/container/id_of_str_bidirnl.hpp"
-#include "cath/common/cpp17/invoke.hpp"
 
 namespace cath {
 	namespace clust {

@@ -24,7 +24,7 @@
 #include <boost/core/ignore_unused.hpp>
 
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp17/invoke.hpp"
+#include "cath/common/cpp17/constexpr_invoke.hpp"
 
 #include <cstddef>
 
@@ -38,7 +38,7 @@ namespace cath {
 		           ) {
 			for (const auto &x : indices( prm_n ) ) {
 				boost::ignore_unused( x );
-				invoke( std::forward<Fn>( prm_fn ) );
+				constexpr_invoke( std::forward<Fn>( prm_fn ) );
 			}
 		}
 

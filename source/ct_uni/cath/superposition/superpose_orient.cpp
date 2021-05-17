@@ -20,6 +20,8 @@
 
 #include "superpose_orient.hpp"
 
+#include <functional>
+
 #include <spdlog/spdlog.h>
 
 #include "cath/alignment/alignment.hpp"
@@ -38,6 +40,8 @@ using namespace ::cath::file;
 using namespace ::cath::geom;
 using namespace ::cath::sup;
 using namespace ::cath::sup::detail;
+
+using ::std::invoke;
 
 /// \brief For the positions in the specified alignment that pass the specified filter, get their corresponding coordinates in
 ///        the specified PDBs after transformation by the corresponding part of the specified superposition

@@ -25,7 +25,7 @@
 #include <boost/range/numeric.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp17/invoke.hpp"
+#include "cath/common/cpp17/constexpr_invoke.hpp"
 #include "cath/common/function/ident.hpp"
 
 #include <utility>
@@ -48,7 +48,7 @@ namespace cath {
 			return boost::accumulate(
 				std::forward<Rng>( prm_range )
 					| boost::adaptors::transformed( [&] (const auto &x) {
-						return invoke( std::forward<Proj>( prm_proj ), x );
+						return constexpr_invoke( std::forward<Proj>( prm_proj ), x );
 					} ),
 				std::forward< T  >( prm_init ),
 				std::forward< Op >( prm_op   )

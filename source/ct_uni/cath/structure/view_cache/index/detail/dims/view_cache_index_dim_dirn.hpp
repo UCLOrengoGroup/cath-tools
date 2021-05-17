@@ -51,7 +51,7 @@ namespace cath {
 				                               CELLS        &prm_cells,        ///< TODOCUMENT
 				                               const bool   &prm_increases     ///< TODOCUMENT
 				                               ) -> std::conditional_t<
-				                                    	std::is_const< DimDirn >::value,
+				                                    	std::is_const_v< DimDirn >,
 				                                    	const typename CELLS::value_type &,
 				                                    	typename CELLS::value_type &
 				                                    > {

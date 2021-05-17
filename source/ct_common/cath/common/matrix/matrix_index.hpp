@@ -56,7 +56,7 @@ namespace cath {
 		                                                         const Int &prm_col, ///< The col_index, in \f$ ( arg\_row, arg\_n    ) \f$
 		                                                         const Int &prm_n    ///< The width/height of the square matrix
 		                                                         ) {
-			static_assert( std::is_integral<Int>::value, "The type used for matrix calculations must be an integral type" );
+			static_assert( std::is_integral_v<Int>, "The type used for matrix calculations must be an integral type" );
 			return (
 				prm_col
 				+

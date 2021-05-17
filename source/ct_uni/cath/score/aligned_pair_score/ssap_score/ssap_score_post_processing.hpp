@@ -57,7 +57,7 @@ namespace cath {
 		static_assert( common::constexpr_is_uniq( all_ssap_score_post_processings ), "all_ssap_score_post_processings shouldn't contain repeated values" );
 
 		/// \brief TODOCUMENT
-		static constexpr size_t num_ssap_score_post_processings = std::tuple_size< decltype( all_ssap_score_post_processings ) >::value;
+		static constexpr size_t num_ssap_score_post_processings = std::tuple_size_v< decltype( all_ssap_score_post_processings ) >;
 		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_ssap_score_post_processings )
 
 		/// \brief TODOCUMENT

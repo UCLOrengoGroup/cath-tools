@@ -36,7 +36,7 @@ namespace cath {
 				template <typename T>
 				inline constexpr T stride_neighbour_index_of_centre(const T &prm_co_stride ///< TODOCUMENT
 				                                                    ) {
-					static_assert( std::is_unsigned<T>::value, "stride_neighbour_index_of_centre() must be performed on an unsigned integral type" );
+					static_assert( std::is_unsigned_v<T>, "stride_neighbour_index_of_centre() must be performed on an unsigned integral type" );
 					return prm_co_stride / 2;
 				}
 
@@ -51,7 +51,7 @@ namespace cath {
 				                                                                               const T &prm_centre_entry_index, ///< TODOCUMENT
 				                                                                               const T &prm_num_entries         ///< TODOCUMENT
 				                                                                               ) {
-					static_assert( std::is_unsigned<T>::value, "entry_index_of_stride_neighbour_index_impl() must be performed on an unsigned integral type" );
+					static_assert( std::is_unsigned_v<T>, "entry_index_of_stride_neighbour_index_impl() must be performed on an unsigned integral type" );
 					return               ( prm_centre_entry_index + prm_stride_index <  detail::stride_neighbour_index_of_centre( prm_co_stride )                   ) ? std::pair<bool, T>( false, 0 ) :
 					                     ( prm_centre_entry_index + prm_stride_index >= detail::stride_neighbour_index_of_centre( prm_co_stride ) + prm_num_entries ) ? std::pair<bool, T>( false, 0 ) :
 					 std::make_pair( true, prm_centre_entry_index + prm_stride_index -  detail::stride_neighbour_index_of_centre( prm_co_stride ) );
@@ -64,7 +64,7 @@ namespace cath {
 			inline constexpr T co_stride(const T &prm_stride_a, ///< The stride TODOCUMENT
 			                             const T &prm_stride_b  ///< The stride TODOCUMENT
 			                             ) {
-				static_assert( std::is_unsigned<T>::value, "co_stride() must be performed on an unsigned integral type" );
+				static_assert( std::is_unsigned_v<T>, "co_stride() must be performed on an unsigned integral type" );
 				return common::constexpr_lcm( prm_stride_a + 1, prm_stride_b + 1 ) - 1;
 			}
 
@@ -80,7 +80,7 @@ namespace cath {
 			template <typename T>
 			inline constexpr T num_in_stride_neighbour_range(const T &prm_co_stride ///< TODOCUMENT
 			                                                 ) {
-				static_assert( std::is_unsigned<T>::value, "num_stride_neighbour_range() must be performed on an unsigned integral type" );
+				static_assert( std::is_unsigned_v<T>, "num_stride_neighbour_range() must be performed on an unsigned integral type" );
 				return prm_co_stride + 1;
 			}
 
@@ -93,7 +93,7 @@ namespace cath {
 			                                                                const T &prm_centre_entry_index, ///< TODOCUMENT
 			                                                                const T &prm_num_entries         ///< TODOCUMENT
 			                                                                ) {
-				static_assert( std::is_unsigned<T>::value, "entry_index_of_stride_neighbour_index() must be performed on an unsigned integral type" );
+				static_assert( std::is_unsigned_v<T>, "entry_index_of_stride_neighbour_index() must be performed on an unsigned integral type" );
 				const auto result = detail::entry_index_of_stride_neighbour_index_impl( prm_stride_index, prm_co_stride, prm_centre_entry_index, prm_num_entries );
 				return result.first ? ::std::make_optional( result.second ) : ::std::nullopt;
 			}

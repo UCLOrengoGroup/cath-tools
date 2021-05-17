@@ -28,7 +28,6 @@
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
-#include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"

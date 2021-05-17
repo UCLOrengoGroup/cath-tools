@@ -30,7 +30,7 @@
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "cath/common/cpp14/cbegin_cend.hpp"
-#include "cath/common/cpp17/invoke.hpp"
+#include "cath/common/cpp17/constexpr_invoke.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 namespace cath {
@@ -84,13 +84,13 @@ namespace cath {
 		/// \pre The hit_extra_cat and associated hit_extra_variant must match
 		//       (ie type_of_hit_extra_cat_t of the hit_extra_cat must match the type stored in the hit_extra_variant)
 		template <typename Fn>
-		void invoke_for_hit_extra_info(Fn                           &&prm_fn,  ///< The function to invoke
-		                               const hit_extra_cat_var_pair  &prm_pair ///< The pair of hit_extra_cat and associated hit_extra_variant
-		                               ) {
+		constexpr void invoke_for_hit_extra_info(Fn                           &&prm_fn,  ///< The function to invoke
+		                                         const hit_extra_cat_var_pair  &prm_pair ///< The pair of hit_extra_cat and associated hit_extra_variant
+		                                         ) {
 			switch ( prm_pair.first ) {
-				case( hit_extra_cat::ALND_RGNS ) : { common::invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::ALND_RGNS > >( prm_pair.second ) ); return; }
-				case( hit_extra_cat::COND_EVAL ) : { common::invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::COND_EVAL > >( prm_pair.second ) ); return; }
-				case( hit_extra_cat::INDP_EVAL ) : { common::invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::INDP_EVAL > >( prm_pair.second ) ); return; }
+				case( hit_extra_cat::ALND_RGNS ) : { common::constexpr_invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::ALND_RGNS > >( prm_pair.second ) ); return; }
+				case( hit_extra_cat::COND_EVAL ) : { common::constexpr_invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::COND_EVAL > >( prm_pair.second ) ); return; }
+				case( hit_extra_cat::INDP_EVAL ) : { common::constexpr_invoke( std::forward<Fn>( prm_fn ), ::std::get< type_of_hit_extra_cat_t< hit_extra_cat::INDP_EVAL > >( prm_pair.second ) ); return; }
 			}
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_extra_cat not recognised whilst trying to do something with it"));
 		}

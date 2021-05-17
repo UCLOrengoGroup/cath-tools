@@ -21,10 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_STABLE_SORT_PROJ_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_STABLE_SORT_PROJ_HPP
 
+#include <functional>
+
 #include <boost/range/algorithm/stable_sort.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/function/ident.hpp"
 
 namespace cath {
@@ -43,13 +44,13 @@ namespace cath {
 			return boost::range::stable_sort(
 				prm_range,
 				[&] (const auto &x, const auto &y) {
-					return common::invoke(
+					return ::std::invoke(
 						std::forward<Pred>( prm_pred ),
-						common::invoke(
+						::std::invoke(
 							std::forward< Proj >( prm_proj ),
 							x
 						),
-						common::invoke(
+						::std::invoke(
 							std::forward< Proj >( prm_proj ),
 							y
 						)

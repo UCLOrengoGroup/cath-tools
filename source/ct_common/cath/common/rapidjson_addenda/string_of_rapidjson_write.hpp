@@ -21,12 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_RAPIDJSON_ADDENDA_STRING_OF_RAPIDJSON_WRITE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_RAPIDJSON_ADDENDA_STRING_OF_RAPIDJSON_WRITE_HPP
 
+#include <functional>
+
 #include <boost/algorithm/string/find.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
 #include "cath/common/algorithm/for_n.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
-#include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/rapidjson_addenda/rapidjson_writer.hpp"
 
@@ -46,7 +47,7 @@ namespace cath {
 
 			// Perform the specified function on the writer, within prm_extra_depth levels of array
 			for_n( prm_extra_depth, [&] { the_writer.start_array(); } );
-			invoke( std::forward<Fn>( prm_fn ), the_writer );
+			::std::invoke( std::forward<Fn>( prm_fn ), the_writer );
 			for_n( prm_extra_depth, [&] { the_writer.end_array();   } );
 
 			// Grab the C-style string

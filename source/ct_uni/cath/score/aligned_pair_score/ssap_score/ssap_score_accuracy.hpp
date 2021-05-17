@@ -49,7 +49,7 @@ namespace cath {
 		static_assert( common::constexpr_is_uniq( all_ssap_score_accuracies ), "all_ssap_score_accuracies shouldn't contain repeated values" );
 
 		/// \brief TODOCUMENT
-		static constexpr size_t num_ssap_score_accuracies = std::tuple_size< decltype( all_ssap_score_accuracies ) >::value;
+		static constexpr size_t num_ssap_score_accuracies = std::tuple_size_v< decltype( all_ssap_score_accuracies ) >;
 		MAYBE_UNUSED_NAMESPACE_SCOPE_CONSTEXPR( num_ssap_score_accuracies )
 
 		/// \brief TODOCUMENT

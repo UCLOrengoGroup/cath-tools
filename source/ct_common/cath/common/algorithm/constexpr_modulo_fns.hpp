@@ -54,7 +54,7 @@ namespace cath {
 			                                                           const U &prm_s_i_plus_one, ///< TODOCUMENT
 			                                                           const U &prm_t_i_plus_one  ///< TODOCUMENT
 			                                                           ) {
-				static_assert( std::is_unsigned<T>::value, "constexpr_gcd() must be performed on an unsigned integral type" );
+				static_assert( std::is_unsigned_v<T>, "constexpr_gcd() must be performed on an unsigned integral type" );
 				return ( prm_r_i_plus_one == 0 ) ? throw("Cannot perform extended_euclid_algo_impl with a 0") :
 				       ( prm_r_i_plus_one == 1 ) ? std::make_pair( prm_s_i_plus_one, prm_t_i_plus_one ) :
 				                                   extended_euclid_algo_impl(
@@ -198,7 +198,7 @@ namespace cath {
 		inline constexpr T constexpr_gcd(T a, ///< TODOCUMENT
 		                                 T b  ///< TODOCUMENT
 		                                 ) {
-			static_assert( std::is_unsigned<T>::value, "constexpr_gcd() must be performed on an unsigned integral type" );
+			static_assert( std::is_unsigned_v<T>, "constexpr_gcd() must be performed on an unsigned integral type" );
 			return ( b == 0 ) ? a
 			                  : constexpr_gcd( b, a % b );
 		}
@@ -210,7 +210,7 @@ namespace cath {
 		inline constexpr T constexpr_lcm(T a, ///< TODOCUMENT
 		                                 T b  ///< TODOCUMENT
 		                                 ) {
-			static_assert( std::is_unsigned<T>::value, "constexpr_lcm() must be performed on an unsigned integral type" );
+			static_assert( std::is_unsigned_v<T>, "constexpr_lcm() must be performed on an unsigned integral type" );
 			return ( a != 0 && b != 0 ) ? ( a / constexpr_gcd( a, b ) ) * b
 			                            : 0;
 		}

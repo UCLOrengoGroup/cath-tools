@@ -23,7 +23,7 @@
 
 #include <optional>
 
-#include "cath/common/cpp17/invoke.hpp"
+#include "cath/common/cpp17/constexpr_invoke.hpp"
 #include "cath/common/type_traits.hpp"
 
 namespace cath {
@@ -60,13 +60,13 @@ namespace cath {
 		///  * Allow the resulting optional's value_type to be specified but have it default to the type
 		///    of the common::remove_cvref_t< std::result_of_t<> > of the Fn
 		template <class Fn>
-		inline auto make_optional_if_fn(const bool  &prm_condition, ///< TODOCUMENT
-		                                Fn         &&prm_fn         ///< TODOCUMENT
-		                                ) {
+		constexpr auto make_optional_if_fn(const bool  &prm_condition, ///< TODOCUMENT
+		                                   Fn         &&prm_fn         ///< TODOCUMENT
+		                                   ) {
 			using return_type = ::std::optional< common::remove_cvref_t< std::result_of_t< Fn && () > > >;
 			return prm_condition
-				? return_type{ invoke( std::forward<Fn>( prm_fn ) ) }
-				: return_type{                                      };
+				? return_type{ constexpr_invoke( std::forward<Fn>( prm_fn ) ) }
+				: return_type{                                                };
 		}
 
 	} // namespace common

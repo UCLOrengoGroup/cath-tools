@@ -23,6 +23,7 @@
 
 #include <algorithm>
 #include <filesystem>
+#include <functional>
 
 #include "cath/clustagglom/link.hpp"
 #include "cath/clustagglom/link_dirn.hpp"
@@ -30,7 +31,6 @@
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp17/apply.hpp"
-#include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 
@@ -169,7 +169,7 @@ namespace cath {
 			for (const link &x : the_link_lists[ prm_b ] ) {
 				const auto &update_dists_val = update_dists_data[ x.node ];
 				if ( update_dists_val.first == detail::num_prev_scores::ONE ) {
-					const strength_opt dissim_opt = common::invoke( prm_fn, x.node, update_dists_val.second, x.dissim );
+					const strength_opt dissim_opt = ::std::invoke( prm_fn, x.node, update_dists_val.second, x.dissim );
 					if ( dissim_opt ) {
 						the_link_lists[ prm_new_label ].emplace_back( x.node,        *dissim_opt );
 						the_link_lists[ x.node        ].emplace_back( prm_new_label, *dissim_opt );

@@ -37,7 +37,6 @@
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/char_arr_type_aliases.hpp"
-#include "cath/common/cpp17/invoke.hpp"
 #include "cath/common/cpp20/arrays_are_equal.hpp"
 #include "cath/common/cpp20/overload.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
