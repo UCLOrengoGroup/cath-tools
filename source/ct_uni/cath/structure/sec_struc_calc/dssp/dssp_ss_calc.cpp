@@ -682,7 +682,7 @@ void cath::sec::detail::remove_bridges_to_chain_break_residues(beta_bridge_vec_v
 					);
 				}
 			),
-			common::cend( res_bridges )
+			cend( res_bridges )
 		);
 	}
 }

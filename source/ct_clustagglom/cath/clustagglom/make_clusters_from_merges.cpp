@@ -63,11 +63,11 @@ merge_vec_citr_vec cath::clust::detail::calc_merge_cutoff_boundaries(const merge
                                                                      ) {
 	merge_vec_citr_vec merge_cutoff_boundaries;
 	merge_cutoff_boundaries.reserve  ( prm_cutoffs.size() + 1       );
-	merge_cutoff_boundaries.push_back( common::cbegin( prm_merges ) );
+	merge_cutoff_boundaries.push_back( cbegin( prm_merges ) );
 	for (const strength &cutoff : prm_cutoffs) {
 		merge_cutoff_boundaries.push_back( upper_bound(
 			merge_cutoff_boundaries.back(),
-			common::cend( prm_merges ),
+			cend( prm_merges ),
 			cutoff,
 			[] (const strength &x, const merge &y) { return x < y.dissim; }
 		) );
@@ -202,9 +202,9 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &prm_merges,
 
 			// Add the numbers of this cutoff-region's new clusters
 			unused_prev_clust_indices.insert(
-				common::cend  ( unused_prev_clust_indices ),
-				common::cbegin( new_clust_indices         ),
-				common::cend  ( new_clust_indices         )
+				cend  ( unused_prev_clust_indices ),
+				cbegin( new_clust_indices         ),
+				cend  ( new_clust_indices         )
 			);
 
 			// Clear the new_clust_indices for reuse in the next cutoff-region

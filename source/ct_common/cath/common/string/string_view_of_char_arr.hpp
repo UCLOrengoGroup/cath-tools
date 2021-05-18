@@ -27,8 +27,6 @@
 
 #include <boost/range/algorithm/find_if.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 namespace cath {
 	namespace common {
 

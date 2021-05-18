@@ -32,7 +32,6 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/adaptor/limited.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/score/homcheck_tools/ssaps_and_prcs_of_query.hpp"
@@ -63,7 +62,7 @@ namespace cath {
 						return prm_pred( prm_results[ x ] );
 					}
 				);
-				return ( find_itr != common::cend( indices ) ) ? ::std::make_optional( std::cref( prm_results[ *find_itr ] ) )
+				return ( find_itr != ::std::cend( indices ) ) ? ::std::make_optional( std::cref( prm_results[ *find_itr ] ) )
 				                                               : ::std::nullopt;
 			}
 

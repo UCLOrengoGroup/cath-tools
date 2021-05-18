@@ -23,7 +23,6 @@
 
 #include "cath/common/container/detail/ref_wrap_hasher.hpp"
 #include "cath/common/container/detail/ref_wrap_uom_wrap.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_aliases.hpp"
 
 #include <string>
@@ -80,7 +79,7 @@ namespace cath {
 			/// \brief Return whether this contains the specified string_cref
 			inline bool contains(const string_cref &prm_string ///< The string to lookup
 			                     ) const {
-				return ( the_map.find( prm_string ) != common::cend( the_map ) );
+				return ( the_map.find( prm_string ) != ::std::cend( the_map ) );
 			}
 
 			/// \brief Return whether this id_of_string_ref is empty
@@ -106,12 +105,12 @@ namespace cath {
 
 			/// \brief Standard const begin() operator to make id_of_string_ref into a range
 			inline const_iterator begin() const {
-				return common::cbegin( the_map );
+				return ::std::cbegin( the_map );
 			}
 
 			/// \brief Standard const end() operator to make id_of_string_ref into a range
 			inline const_iterator end() const {
-				return common::cend( the_map );
+				return ::std::cend( the_map );
 			}
 		};
 

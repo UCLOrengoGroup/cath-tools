@@ -97,7 +97,7 @@ namespace cath {
 			// Use the unordered map to find the correct seq_id_and_domain_cluster_ids_pair_vec for this seq_id
 			// std::cerr << "Looking for seq_id " << prm_seq_id << "\n";
 			const auto index_find_itr = index_of_seq_id.find( prm_seq_id );
-			auto &the_pair = ( index_find_itr != common::cend( index_of_seq_id ) )
+			auto &the_pair = ( index_find_itr != ::std::cend( index_of_seq_id ) )
 				? seq_domains[ index_find_itr->second ]
 				: [&] () -> decltype( auto ) {
 					const size_t new_index = seq_domains.size();
@@ -133,7 +133,7 @@ namespace cath {
 		inline const domain_cluster_ids & cluster_domains::domain_cluster_ids_of_seq_id(const cluster_id_t &prm_seq_id ///< The ID of the sequence to query
 		                                                                                ) const {
 			const auto index_of_seq_id_itr = index_of_seq_id.find( prm_seq_id );
-			if ( index_of_seq_id_itr == common::cend( index_of_seq_id ) ) {
+			if ( index_of_seq_id_itr == ::std::cend( index_of_seq_id ) ) {
 				BOOST_THROW_EXCEPTION( common::out_of_range_exception( "Cannot find domain_cluster_ids_of_seq_id "
 				                                                       + ::std::to_string( prm_seq_id ) ) );
 			}
@@ -154,12 +154,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this into a range over the seq_id_and_domain_cluster_ids_pairs
 		inline auto cluster_domains::begin() const -> const_iterator {
-			return common::cbegin( seq_domains );
+			return ::std::cbegin( seq_domains );
 		}
 
 		/// \brief Standard const end() method, as part of making this into a range over the seq_id_and_domain_cluster_ids_pairs
 		inline auto cluster_domains::end() const -> const_iterator {
-			return common::cend  ( seq_domains );
+			return ::std::cend  ( seq_domains );
 		}
 
 		size_t num_entries(const cluster_domains &);

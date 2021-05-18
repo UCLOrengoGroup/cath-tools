@@ -29,7 +29,6 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/adaptor/equal_grouped.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/resolve_hits/algo/masked_bests_cacher.hpp"
 #include "cath/resolve_hits/calc_hit_list.hpp"
 #include "cath/resolve_hits/resolve/naive_greedy_hit_resolver.hpp"

@@ -24,7 +24,6 @@
 #include <boost/range/irange.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/size_t_literal.hpp"
 
 namespace cath {
@@ -44,7 +43,7 @@ namespace cath {
 
 			auto write_itr = next(
 				std::begin( prm_range ),
-				distance( common::cbegin( prm_range ), prm_removes.front() )
+				distance( ::std::cbegin( prm_range ), prm_removes.front() )
 			);
 
 			const auto move_range_fn = [&] (auto begin_itr, const auto end_itr) {
@@ -63,7 +62,7 @@ namespace cath {
 
 			move_range_fn(
 				next( prm_removes.back() ),
-				common::cend( prm_range )
+				::std::cend( prm_range )
 			);
 
 			return write_itr;

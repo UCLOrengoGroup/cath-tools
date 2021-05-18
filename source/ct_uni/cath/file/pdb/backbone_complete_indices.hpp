@@ -27,7 +27,6 @@
 #include <boost/algorithm/cxx11/is_sorted.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_aliases.hpp"
 
 namespace cath {
@@ -93,12 +92,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this a range over indices
 		inline auto backbone_complete_indices::begin() const -> const_iterator {
-			return common::cbegin( indices );
+			return ::std::cbegin( indices );
 		}
 
 		/// \brief Standard const end() method, as part of making this a range over indices
 		inline auto backbone_complete_indices::end() const -> const_iterator {
-			return common::cend  ( indices );
+			return ::std::cend  ( indices );
 		}
 
 		/// \brief Get the absolute index i-th backbone-complete residue
@@ -121,9 +120,9 @@ namespace cath {
 				prm_index
 			);
 			return
-				( lower_bound_itr != common::cend( prm_bb_compl_indices ) && *lower_bound_itr == prm_index )
+				( lower_bound_itr != ::std::cend( prm_bb_compl_indices ) && *lower_bound_itr == prm_index )
 				? ::std::optional<size_t>( std::distance(
-					common::cbegin( prm_bb_compl_indices ),
+					::std::cbegin( prm_bb_compl_indices ),
 					lower_bound_itr
 				) )
 				: ::std::nullopt;

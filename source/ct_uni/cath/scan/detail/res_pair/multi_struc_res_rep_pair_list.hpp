@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_LIST_HPP
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 
@@ -101,12 +100,12 @@ namespace cath {
 
 			/// \brief Standard const begin() method
 			inline auto multi_struc_res_rep_pair_list::begin() const -> const_iterator {
-				return common::cbegin( multi_struc_res_rep_pairs );
+				return ::std::cbegin( multi_struc_res_rep_pairs );
 			}
 
 			/// \brief Standard const end() method
 			inline auto multi_struc_res_rep_pair_list::end() const -> const_iterator {
-				return common::cend  ( multi_struc_res_rep_pairs );
+				return ::std::cend  ( multi_struc_res_rep_pairs );
 			}
 
 		} // namespace detail

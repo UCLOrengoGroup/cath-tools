@@ -31,7 +31,6 @@
 #include <boost/range.hpp>
 #include <boost/range/iterator_range.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp17/apply.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -288,8 +287,8 @@ namespace cath {
 			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept<const SinglePassRange> ));
 			cath::common::write_file(
 				prm_file,
-				common::cbegin( prm_range ),
-				common::cend  ( prm_range )
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range )
 			);
 		}
 

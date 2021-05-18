@@ -23,7 +23,6 @@
 
 #include <boost/range/algorithm_ext/for_each.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/scan/detail/quad_criteria_are_met_by.hpp"
 #include "cath/scan/detail/res_pair/single_struc_res_pair.hpp"
 
@@ -104,12 +103,12 @@ namespace cath {
 
 			/// \brief Standard const begin() method
 			inline auto single_struc_res_pair_list::begin() const -> const_iterator {
-				return common::cbegin( single_struc_res_pairs );
+				return ::std::cbegin( single_struc_res_pairs );
 			}
 
 			/// \brief Standard const end() method
 			inline auto single_struc_res_pair_list::end() const -> const_iterator {
-				return common::cend  ( single_struc_res_pairs );
+				return ::std::cend  ( single_struc_res_pairs );
 			}
 
 			/// \brief Perform action on the corresponding pairwise entries in two single_struc_res_pair_lists that meet prm_criteria

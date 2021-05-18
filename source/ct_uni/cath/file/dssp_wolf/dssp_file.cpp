@@ -31,7 +31,6 @@
 #include "cath/biocore/residue_id.hpp"
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/file/dssp_wolf/tally_residue_ids.hpp"
 #include "cath/file/pdb/dssp_skip_policy.hpp"
 #include "cath/file/pdb/pdb.hpp"
@@ -73,12 +72,12 @@ const residue & dssp_file::get_residue_of_index(const size_t &prm_index ///< TOD
 
 /// \brief TODOCUMENT
 dssp_file::const_iterator dssp_file::begin() const {
-	return cath::common::cbegin( dssp_residues );
+	return cbegin( dssp_residues );
 }
 
 /// \brief TODOCUMENT
 dssp_file::const_iterator dssp_file::end() const {
-	return cath::common::cend( dssp_residues );
+	return cend( dssp_residues );
 }
 
 /// \brief Combine a dssp_file and pdb representing the same structure in a sensible protein object

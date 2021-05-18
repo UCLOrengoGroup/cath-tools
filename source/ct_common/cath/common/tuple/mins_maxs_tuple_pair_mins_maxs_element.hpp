@@ -24,7 +24,6 @@
 #include <boost/core/ignore_unused.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/detail/tuple_index_sequence.hpp"
 #include "cath/common/type_traits/is_tuple.hpp"
 
@@ -101,8 +100,8 @@ namespace cath {
 						"mins_maxs_tuple_pair_mins_maxs_element_fn() can only be applied to pairs of *tuples*"
 					);
 
-					auto       begin_itr     = common::cbegin( prm_rng );
-					const auto end_itr       = common::cend  ( prm_rng );
+					auto       begin_itr     = ::std::cbegin( prm_rng );
+					const auto end_itr       = ::std::cend  ( prm_rng );
 
 					assert( begin_itr != end_itr ); // prm_rng mustn't be empty
 

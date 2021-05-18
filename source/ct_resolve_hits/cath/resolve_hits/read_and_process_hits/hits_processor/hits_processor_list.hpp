@@ -25,7 +25,6 @@
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/clone/clone_ptr.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/hits_processor.hpp"
 

@@ -29,7 +29,6 @@
 
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/boost_addenda/make_string_ref.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/string/string_parse_tools.hpp"
 #include "cath/resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"

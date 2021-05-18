@@ -23,8 +23,6 @@
 
 #include <boost/algorithm/minmax_element.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 namespace cath {
 	namespace common {
 
@@ -33,8 +31,8 @@ namespace cath {
 		inline auto minmax_element(RNG &prm_range ///< TODOCUMENT
 		                           ) {
 			return boost::minmax_element(
-				common::cbegin( prm_range ),
-				common::cend  ( prm_range )
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range )
 			);
 		}
 
@@ -44,8 +42,8 @@ namespace cath {
 		                           FN   prm_function ///< TODOCUMENT
 		                           ) {
 			return boost::minmax_element(
-				common::cbegin( prm_range ),
-				common::cend  ( prm_range ),
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range ),
 				prm_function
 			);
 		}

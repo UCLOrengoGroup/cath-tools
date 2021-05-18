@@ -117,12 +117,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this into a range over the hierarchy_group entries
 		inline auto hierarchy_layer::begin() const -> const_iterator {
-			return common::cbegin( groups );
+			return ::std::cbegin( groups );
 		}
 
 		/// \brief Standard const end() method, as part of making this into a range over the hierarchy_group entries
 		inline auto hierarchy_layer::end() const -> const_iterator {
-			return common::cend( groups );
+			return ::std::cend( groups );
 		}
 
 		str_vec to_strings(const hierarchy_layer &);

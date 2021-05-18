@@ -31,7 +31,6 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/chopping/region/regions_limiter.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/file_type_aliases.hpp"
@@ -214,12 +213,12 @@ namespace cath {
 
 		/// \brief Standard const begin method for the range of residues
 		inline auto pdb::begin() const -> const_iterator {
-			return common::cbegin( pdb_residues );
+			return ::std::cbegin( pdb_residues );
 		}
 
 		/// \brief Standard const end method for the range of residues
 		inline auto pdb::end() const -> const_iterator {
-			return common::cend( pdb_residues );
+			return ::std::cend( pdb_residues );
 		}
 
 		/// \brief Find the index of preceding residue in the same chain of the specified PDB

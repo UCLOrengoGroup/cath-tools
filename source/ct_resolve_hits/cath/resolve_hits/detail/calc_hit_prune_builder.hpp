@@ -91,7 +91,7 @@ namespace cath {
 
 					const size_t hash_value = calc_hash( prm_calc_hit.get_segments() );
 					const auto   itr        = index_of_signature_hash.find( hash_value );
-					if ( itr == common::cend( index_of_signature_hash ) ) {
+					if ( itr == ::std::cend( index_of_signature_hash ) ) {
 						index_of_signature_hash.emplace( hash_value, hits.size() );
 						hits.push_back( std::move( prm_calc_hit ) );
 					}

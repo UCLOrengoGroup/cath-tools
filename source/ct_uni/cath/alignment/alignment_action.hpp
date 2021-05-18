@@ -96,7 +96,7 @@ namespace cath {
 					// find the worst score and then restrict to larger side of the remaining
 					// tree until there's only one link left
 					const size_t START_INDEX = boost::numeric_cast<size_t>( std::distance(
-						common::cbegin( lcl_span_tree ),
+						::std::cbegin( lcl_span_tree ),
 						common::max_proj_element(
 							common::as_const( lcl_span_tree ),
 							std::less<>{},

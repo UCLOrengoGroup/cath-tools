@@ -27,7 +27,6 @@
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
 
@@ -75,12 +74,12 @@ const aligned_pair_score & aligned_pair_score_list::operator[](const size_t &prm
 
 /// \brief Standard begin() operator to allow aligned_pair_score_list to be accessed as range
 aligned_pair_score_list::const_iterator aligned_pair_score_list::begin() const {
-	return common::cbegin( scores );
+	return cbegin( scores );
 }
 
 /// \brief Standard end() operator to allow aligned_pair_score_list to be accessed as range
 aligned_pair_score_list::const_iterator aligned_pair_score_list::end() const {
-	return common::cend( scores );
+	return cend( scores );
 }
 
 /// \brief TODOCUMENT
@@ -95,7 +94,7 @@ void cath::score::warn_on_duplicate_human_friendly_names(const aligned_pair_scor
 		}
 	) );
 	const auto adjacent_itr = adjacent_find( sorted_human_friendly_names );
-	if ( adjacent_itr != common::cend( sorted_human_friendly_names ) ) {
+	if ( adjacent_itr != cend( sorted_human_friendly_names ) ) {
 		::spdlog::warn( "aligned_pair_score_value_list contains duplicates (eg {})", *adjacent_itr );
 	}
 }

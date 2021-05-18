@@ -89,7 +89,7 @@ namespace cath {
 			                                                ) : cache_ref       ( prm_masked_bests_cache            ),
 			                                                    masks_ref       ( prm_masks                         ),
 			                                                    arrows_to_store ( std::move( prm_arrows           ) ),
-			                                                    current_itr     ( common::cbegin( arrows_to_store ) ) {
+			                                                    current_itr     ( ::std::cbegin( arrows_to_store ) ) {
 			}
 
 			/// \brief Advance to the specified position with the specified best architecture (scored_arch_proxy)
@@ -100,7 +100,7 @@ namespace cath {
 				advance_to_itr_with_best_so_far(
 					std::find_if(
 						current_itr,
-						common::cend( arrows_to_store ),
+						::std::cend( arrows_to_store ),
 						[&] (const seq::seq_arrow &x) { return x >= prm_new_position; }
 					),
 					prm_best_so_far
@@ -112,7 +112,7 @@ namespace cath {
 			inline void masked_bests_cacher::advance_to_end_with_best_so_far(const scored_arch_proxy &prm_best_so_far ///< The best architecture (scored_arch_proxy) seen thus far
 			                                                                 ) {
 				advance_to_itr_with_best_so_far(
-					common::cend( arrows_to_store ),
+					::std::cend( arrows_to_store ),
 					prm_best_so_far
 				);
 			}

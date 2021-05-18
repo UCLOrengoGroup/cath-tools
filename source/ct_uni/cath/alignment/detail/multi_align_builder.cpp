@@ -27,7 +27,6 @@
 #include "cath/alignment/gap/gap_penalty.hpp"
 #include "cath/alignment/io/outputter/horiz_align_outputter.hpp" // ***** TEMPORARY *****
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/structure/protein/protein.hpp"
@@ -79,8 +78,8 @@ multi_align_builder::multi_align_builder(const size_t &prm_num_entries ///< The 
 /// \brief Get a list of indices of groups that are currently active
 size_set multi_align_builder::get_active_groups() const {
 	return size_set(
-		common::cbegin( group_index_of_entry ),
-		common::cend  ( group_index_of_entry )
+		cbegin( group_index_of_entry ),
+		cend  ( group_index_of_entry )
 	);
 }
 

@@ -30,7 +30,6 @@
 #include "cath/common/boost_addenda/range/adaptor/lexical_casted.hpp"
 #include "cath/common/boost_addenda/range/adaptor/limited.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
@@ -172,7 +171,7 @@ BOOST_AUTO_TEST_CASE(adjacented_of_filtered_irange_works) {
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(equal_grouped_works) {
 	const auto size_vec_of_size_vec_sub_range = [] (const sub_range<const size_vec> &x) {
-		return size_vec{ cath::common::cbegin( x ), cath::common::cend( x ) };
+		return size_vec{ cbegin( x ), cend( x ) };
 	};
 
 	BOOST_CHECK_EQUAL_RANGES(
@@ -196,7 +195,7 @@ BOOST_AUTO_TEST_CASE(equal_grouped_works) {
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(equal_grouped_works_with_sorted) {
 	const auto size_vec_of_size_vec_sub_range = [] (const sub_range<const size_vec> &x) {
-		return size_vec{ cath::common::cbegin( x ), cath::common::cend( x ) };
+		return size_vec{ cbegin( x ), cend( x ) };
 	};
 
 	BOOST_CHECK_EQUAL_RANGES(

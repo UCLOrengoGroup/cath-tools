@@ -24,7 +24,6 @@
 #include <string_view>
 
 #include "cath/common/char_arr_type_aliases.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
@@ -56,8 +55,8 @@ namespace cath {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
 				"Unable to recognise pdb_record type "
 				+ ::std::string{
-					common::cbegin( prm_substring ),
-					common::cend  ( prm_substring )
+					::std::cbegin( prm_substring ),
+					::std::cend  ( prm_substring )
 				}
 			));
 		}

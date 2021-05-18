@@ -21,7 +21,6 @@
 #include "named_true_false_pos_neg_list_list.hpp"
 
 #include "cath/common/algorithm/transform_build.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series_list.hpp"
 #include "cath/score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
@@ -56,12 +55,12 @@ const named_true_false_pos_neg_list & named_true_false_pos_neg_list_list::operat
 
 /// \brief TODOCUMENT
 named_true_false_pos_neg_list_list::const_iterator named_true_false_pos_neg_list_list::begin() const {
-	return cath::common::cbegin( named_true_false_pos_neg_lists );
+	return cbegin( named_true_false_pos_neg_lists );
 }
 
 /// \brief TODOCUMENT
 named_true_false_pos_neg_list_list::const_iterator named_true_false_pos_neg_list_list::end() const {
-	return cath::common::cend( named_true_false_pos_neg_lists );
+	return cend( named_true_false_pos_neg_lists );
 }
 
 /// \brief TODOCUMENT

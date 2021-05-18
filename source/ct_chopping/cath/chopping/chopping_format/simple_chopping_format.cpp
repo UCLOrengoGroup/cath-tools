@@ -23,7 +23,6 @@
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/common/boost_addenda/make_string_ref.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
@@ -90,8 +89,8 @@ region simple_chopping_format::parse_segment(const string_ref &prm_segment_strin
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh two"));
 	}
 
-	const auto begin_itr          = common::cbegin( prm_segment_string );
-	const auto end_itr            = common::cend  ( prm_segment_string );
+	const auto begin_itr          = cbegin( prm_segment_string );
+	const auto end_itr            = cend  ( prm_segment_string );
 	const auto begin_plus_one_itr = next( begin_itr );
 	const auto res_end_itr        = next( end_itr, 0 - static_cast<int>( CHAIN_OPEN_SQ_BR_END_NEG_OFFSET ) );
 	const auto dash_itr           = find( begin_plus_one_itr, res_end_itr, RESIDUE_NAME_DELIM );
@@ -126,8 +125,8 @@ residue_name simple_chopping_format::parse_residue(const string_ref &prm_string_
 	if ( prm_string_ref[ length - CHAIN_OPEN_BR_END_NEG_OFFSET ] != INS_CODE_OPEN_BR ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh yet again"));
 	}
-	const auto begin_itr   = common::cbegin( prm_string_ref );
-	const auto end_itr     = common::cend  ( prm_string_ref );
+	const auto begin_itr   = cbegin( prm_string_ref );
+	const auto end_itr     = cend  ( prm_string_ref );
 	const auto res_end_itr = next( end_itr, 0 - static_cast<int>( CHAIN_OPEN_BR_END_NEG_OFFSET ) );
 
 	return {

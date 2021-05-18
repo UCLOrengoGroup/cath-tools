@@ -29,7 +29,6 @@
 #include <boost/units/systems/information/byte.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 
@@ -89,7 +88,7 @@ namespace cath {
 					prm_key,
 					[] (const std::pair<Key, Cell> &x, const Key &y) {/* TD< decltype( x ) > fred; */return x.first < y; }
 				);
-				if ( cell_itr != common::cend( the_store ) && cell_itr->first == prm_key ) {
+				if ( cell_itr != ::std::cend( the_store ) && cell_itr->first == prm_key ) {
 					return cell_itr->second;
 				}
 				return the_store.insert( cell_itr, make_pair( prm_key, Cell{} ) )->second;
@@ -121,20 +120,20 @@ namespace cath {
 					prm_key,
 					[] (const std::pair<Key, Cell> &x, const Key &y) { return x.first < y; }
 				);
-				return ( cell_itr == common::cend( the_store ) || cell_itr->first != prm_key ) ? empty_cell
+				return ( cell_itr == ::std::cend( the_store ) || cell_itr->first != prm_key ) ? empty_cell
 				                                                                               : cell_itr->second;
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			auto scan_index_vector_store<Key, Cell>::begin() const -> const_iterator {
-				return common::cbegin( the_store );
+				return ::std::cbegin( the_store );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			auto scan_index_vector_store<Key, Cell>::end() const -> const_iterator {
-				return common::cend( the_store );
+				return ::std::cend( the_store );
 			}
 
 			/// \brief TODOCUMENT

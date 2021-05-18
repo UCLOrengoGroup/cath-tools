@@ -27,7 +27,6 @@
 
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
@@ -39,6 +38,8 @@ using namespace ::std;
 using ::boost::irange;
 using ::boost::numeric_cast;
 using ::boost::range::find;
+using ::std::crbegin;
+using ::std::crend;
 
 namespace cath {
 	namespace test {
@@ -96,8 +97,8 @@ namespace cath {
 				if ( ! contains( prm_entry, true) ) {
 					BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot find indices of first and last true values because there are no true values"));
 				}
-				const size_t first_true_idx = numeric_cast<size_t>( distance( common::cbegin ( prm_entry ), find( prm_entry,            true ) ) );
-				const size_t last_true_ridx = numeric_cast<size_t>( distance( common::crbegin( prm_entry ), find( common::crbegin( prm_entry ), common::crend( prm_entry), true ) ) );
+				const size_t first_true_idx = numeric_cast<size_t>( distance( cbegin ( prm_entry ), find( prm_entry,            true ) ) );
+				const size_t last_true_ridx = numeric_cast<size_t>( distance( crbegin( prm_entry ), find( crbegin( prm_entry ), crend( prm_entry), true ) ) );
 				const size_t last_true_idx  = prm_entry.size() - last_true_ridx - 1;
 		//		cerr << "First and last indices for ";
 		//		for (const bool &value : prm_entry) {

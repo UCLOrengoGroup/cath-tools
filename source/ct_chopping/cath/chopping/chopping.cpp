@@ -24,7 +24,6 @@
 
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/chopping/region/region.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 #include <utility>
 
@@ -68,10 +67,10 @@ const domain &chopping::operator[]( const size_t &prm_index ) const {
 
 /// \brief TODOCUMENT
 auto chopping::begin() const -> const_iterator {
-	return common::cbegin( domains );
+	return cbegin( domains );
 }
 
 /// \brief TODOCUMENT
 auto chopping::end() const -> const_iterator {
-	return common::cend( domains );
+	return cend( domains );
 }

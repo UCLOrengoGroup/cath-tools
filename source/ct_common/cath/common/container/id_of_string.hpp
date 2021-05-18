@@ -23,7 +23,6 @@
 
 #include <boost/range/algorithm/find_if.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 #include <string>
@@ -101,12 +100,12 @@ namespace cath {
 
 			/// \brief Standard const begin() method, as part of making this into a range over pair<const string, id_type>
 			inline const_iterator begin() const {
-				return common::cbegin( the_map );
+				return ::std::cbegin( the_map );
 			}
 
 			/// \brief Standard const end() method, as part of making this into a range over pair<const string, id_type>
 			inline const_iterator end() const {
-				return common::cend( the_map );
+				return ::std::cend( the_map );
 			}
 
 		};

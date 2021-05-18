@@ -27,7 +27,6 @@
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/mismatch.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp20/make_array.hpp"
 
 #include <array>
@@ -79,7 +78,7 @@ namespace cath {
 				).second;
 
 				return tidy_string_copy( std::string{
-					common::cbegin( new_template_fullname ),
+					::std::cbegin( new_template_fullname ),
 					mistmatch_rev_itr.base()
 				} );
 			}

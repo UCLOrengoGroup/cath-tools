@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 		got_scores,
 		[] (const auto &x) { return ( get<0>( x ) == 0 && get<1>( x ) == 1 ); }
 	);
-	BOOST_REQUIRE_NE( got_zero_and_one_score_itr, common::cend( got_scores ) );
+	BOOST_REQUIRE_NE( got_zero_and_one_score_itr, cend( got_scores ) );
 	BOOST_TEST( get<2>( *got_zero_and_one_score_itr ) == 81.01 );
 }
 

@@ -88,7 +88,7 @@ bool cath::seq::segments_are_start_sorted_and_non_overlapping(const seq_seg_vec 
 	const auto seg_pair_are_invalid = [] (const seq_seg &x, const seq_seg &y) {
 		return ( y.get_start_arrow() < x.get_stop_arrow() );
 	};
-	return ( adjacent_find( prm_segments, seg_pair_are_invalid ) == common::cend( prm_segments ) );
+	return ( adjacent_find( prm_segments, seg_pair_are_invalid ) == cend( prm_segments ) );
 }
 
 /// \brief Make the fragments between the specified segments

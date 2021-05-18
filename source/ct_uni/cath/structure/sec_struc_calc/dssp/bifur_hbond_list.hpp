@@ -22,10 +22,9 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_BIFUR_HBOND_LIST_HPP
 
 #include <optional>
+#include <string>
 #include <utility>
 #include <vector>
-
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 namespace cath {
 	namespace sec {
@@ -283,12 +282,12 @@ namespace cath {
 
 		/// \brief Standard begin() method to allow iteration over the bifur_hbonds
 		inline auto bifur_hbond_list::begin() const -> const_iterator {
-			return common::cbegin( bifur_hbonds );
+			return ::std::cbegin( bifur_hbonds );
 		}
 
 		/// \brief Standard end() method to allow iteration over the bifur_hbonds
 		inline auto bifur_hbond_list::end() const -> const_iterator {
-			return common::cend  ( bifur_hbonds );
+			return ::std::cend  ( bifur_hbonds );
 		}
 
 		/// \brief Remove any candidate bonds that aren't strong enough to be considered true hbonds

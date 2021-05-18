@@ -22,7 +22,6 @@
 
 #include <boost/utility/string_ref.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 
 #include <regex>
@@ -46,7 +45,7 @@ cath_id_score_category cath::rslv::cath_score_category_of_id(const string_ref &p
 		static const string dc_prefix_suffix{ "dc_" };
 
 		if ( prm_id.length() == 35 && prm_id.starts_with( dc_prefix_suffix ) ) {
-			if ( regex_search( common::cbegin( prm_id ), common::cend( prm_id ), dc_regex ) ) {
+			if ( regex_search( cbegin( prm_id ), cend( prm_id ), dc_regex ) ) {
 				return cath_id_score_category::DC_TYPE;
 			}
 		}

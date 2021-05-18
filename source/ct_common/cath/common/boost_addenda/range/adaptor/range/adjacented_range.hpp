@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_ADJACENTED_RANGE_HPP
 
 #include "cath/common/boost_addenda/range/adaptor/iterator/adjacent_itr.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 namespace cath {
 	namespace common {
@@ -53,8 +52,8 @@ namespace cath {
 		template <typename RNG>
 		adjacented_range<RNG>::adjacented_range(const RNG &prm_range ///< The range over which to apply this adjacented_range
 		                                        ) : super(
-		                                            	adjacented_iterator( cath::common::cbegin( prm_range ), cath::common::cend  ( prm_range ) ),
-		                                            	adjacented_iterator( cath::common::cend  ( prm_range ), cath::common::cend  ( prm_range ) )
+		                                            	adjacented_iterator( ::std::cbegin( prm_range ), ::std::cend  ( prm_range ) ),
+		                                            	adjacented_iterator( ::std::cend  ( prm_range ), ::std::cend  ( prm_range ) )
 		                                            ) {
 		}
 

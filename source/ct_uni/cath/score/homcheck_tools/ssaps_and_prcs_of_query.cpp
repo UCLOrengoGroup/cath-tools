@@ -107,12 +107,12 @@ const ssap_and_prc & ssaps_and_prcs_of_query::operator[](const size_t &prm_index
 
 /// \brief Standard begin() function to make this into a const range
 auto ssaps_and_prcs_of_query::begin() const -> const_iterator {
-	return common::cbegin( ssap_and_prc_entries );
+	return cbegin( ssap_and_prc_entries );
 }
 
 /// \brief Standard end() function to make this into a const range
 auto ssaps_and_prcs_of_query::end() const -> const_iterator{
-	return common::cend( ssap_and_prc_entries );
+	return cend( ssap_and_prc_entries );
 }
 
 /// \brief Calculate the SVM scores for all the results in a copy of the specified ssaps_and_prcs_of_query and return that copy
@@ -270,7 +270,7 @@ ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_
 		const string &match_id = the_ssap.get_name_2();
 
 		const auto prc_index_itr = prc_index_of_ids.find( make_pair( query_id, match_id ) );
-		if ( prc_index_itr != common::cend( prc_index_of_ids ) ) {
+		if ( prc_index_itr != cend( prc_index_of_ids ) ) {
 			ssap_and_prc_entries.emplace_back(
 				the_ssap,
 				prm_prcs[ prc_index_itr->second ]

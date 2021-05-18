@@ -25,7 +25,6 @@
 #include <boost/range/adaptor/indirected.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/rapidjson_addenda/rapidjson_writer.hpp"
 #include "cath/common/type_aliases.hpp"
 
@@ -109,7 +108,7 @@ namespace cath {
 			/// Note that this pipes through boost::indirected_range so the range is
 			/// over elements of type `rapidjson_writer_t &` rather than `unique_ptr<rapidjson_writer_t>`
 			auto begin() const -> const_iterator {
-				return common::cbegin( rapidjson_writers | boost::adaptors::indirected );
+				return ::std::cbegin( rapidjson_writers | boost::adaptors::indirected );
 			}
 
 			/// \brief Standard const end() method, as part of making this a range over rapidjson_writers
@@ -117,7 +116,7 @@ namespace cath {
 			/// Note that this pipes through boost::indirected_range so the range is
 			/// over elements of type `rapidjson_writer_t &` rather than `unique_ptr<rapidjson_writer_t>`
 			auto end() const -> const_iterator {
-				return common::cend( rapidjson_writers | boost::adaptors::indirected );
+				return ::std::cend( rapidjson_writers | boost::adaptors::indirected );
 			}
 
 			/// \brief Make this explicitly non-copyable/non-movable since the member rapidjson writer/outstream types are

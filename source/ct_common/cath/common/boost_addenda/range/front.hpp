@@ -24,7 +24,6 @@
 #include <boost/range.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 namespace cath {
 	namespace common {
@@ -45,7 +44,7 @@ namespace cath {
 		template <typename T>
 		inline range_const_reference_t<T> front(const T &prm_range ///< The range to query
 		                                        ) {
-			return * common::cbegin( prm_range );
+			return * ::std::cbegin( prm_range );
 		}
 
 	} // namespace common

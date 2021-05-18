@@ -312,7 +312,7 @@ namespace cath {
 			);
 
 			// If there was one, return its amino acid
-			if ( first_present_core_itr != common::cend( core_atom_indices ) ) {
+			if ( first_present_core_itr != ::std::cend( core_atom_indices ) ) {
 				return get_atom_cref_of_index( first_present_core_itr->value() ).get_amino_acid();
 			}
 
@@ -361,12 +361,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method for the range of pdb_atoms
 		inline auto pdb_residue::begin() const -> const_iterator {
-			return common::cbegin( atoms );
+			return ::std::cbegin( atoms );
 		}
 
 		/// \brief Standard const end() method for the range of pdb_atoms
 		inline auto pdb_residue::end() const -> const_iterator {
-			return common::cend  ( atoms );
+			return ::std::cend  ( atoms );
 		}
 
 		/// \brief Get the chain_label from the specified pdb_residue

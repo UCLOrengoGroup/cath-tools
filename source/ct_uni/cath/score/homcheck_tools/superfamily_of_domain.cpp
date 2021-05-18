@@ -29,7 +29,6 @@
 #include <boost/algorithm/string/predicate.hpp>
 
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -69,7 +68,7 @@ bool superfamily_of_domain::is_created_sf(const string &prm_superfamily ///< The
 
 /// \brief Ctor from a vector<pair<string, string>> where each pair contains domain ID and the corresponding superfamily ID
 superfamily_of_domain::superfamily_of_domain(const str_str_pair_vec &prm_sf_of_dom ///< The domain ID -> superfamily ID data from which this superfamily_of_domain should be constructed
-                                             ) : sf_of_dom( common::cbegin( prm_sf_of_dom ), common::cend( prm_sf_of_dom ) ) {
+                                             ) : sf_of_dom( cbegin( prm_sf_of_dom ), cend( prm_sf_of_dom ) ) {
 	const is_valid_superfamily_id is_valid_sf_pred{};
 	for (const auto &x: sf_of_dom) {
 		if ( ! is_valid_sf_pred( x.second ) ) {
@@ -95,7 +94,7 @@ bool superfamily_of_domain::has_superfamily_of_domain(const string &prm_domain_i
 const string & superfamily_of_domain::get_superfamily_of_domain(const string &prm_domain_id ///< The domain ID to query
                                                                 ) const {
 	const auto find_itr = sf_of_dom.find( prm_domain_id );
-	if ( find_itr == common::cend( sf_of_dom ) ) {
+	if ( find_itr == cend( sf_of_dom ) ) {
 		BOOST_THROW_EXCEPTION(
 			invalid_argument_exception("Unable to find any entry in superfamily_of_domain for domain ID \""
 			+ prm_domain_id

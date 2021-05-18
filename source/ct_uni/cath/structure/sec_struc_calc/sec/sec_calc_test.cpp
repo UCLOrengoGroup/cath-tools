@@ -43,6 +43,8 @@ using namespace ::cath::file;
 using namespace ::cath::geom;
 using namespace ::cath::sec;
 
+using ::std::cbegin;
+
 BOOST_FIXTURE_TEST_SUITE(sec_calc_test_suite, global_test_constants)
 
 BOOST_AUTO_TEST_CASE(get_correct_for_example_b_1hdoA00_first_strand) {
@@ -61,7 +63,7 @@ BOOST_AUTO_TEST_CASE(get_correct_for_example_b_1hdoA00_later_helix) {
 		read_pdb_file ( EXAMPLE_B_PDB_FILENAME()  )
 	);
 	const sec_file_record got_sec      = calculate_sec_record( the_protein, 57, 64 );
-	const sec_file_record expected_sec = *next( common::cbegin( read_sec( EXAMPLE_B_SEC_FILENAME() ) ), 4 );
+	const sec_file_record expected_sec = *next( cbegin( read_sec( EXAMPLE_B_SEC_FILENAME() ) ), 4 );
 	BOOST_CHECK_EQUAL( round_like_sec_file_copy( got_sec ), expected_sec );
 }
 

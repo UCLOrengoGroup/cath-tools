@@ -121,12 +121,12 @@ namespace cath {
 
 			/// \brief Standard const begin() method, as part of making this a range over domain_cluster_ids
 			inline auto begin() const -> const_iterator {
-				return common::cbegin( dom_clust_ids );
+				return ::std::cbegin( dom_clust_ids );
 			}
 
 			/// \brief Standard const end() method, as part of making this a range over domain_cluster_ids
 			inline auto end() const -> const_iterator {
-				return common::cend( dom_clust_ids );
+				return ::std::cend( dom_clust_ids );
 			}
 		};
 

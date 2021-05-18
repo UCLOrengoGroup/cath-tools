@@ -480,7 +480,7 @@ namespace cath {
 						return prm_seq_seg_run.get_stop_arrow_of_segment( seg_index ) <= other_start_arrow;
 					}
 				);
-				return ( result_itr != common::cend( seg_nums_range ) )
+				return ( result_itr != ::std::cend( seg_nums_range ) )
 					? *result_itr
 					: num_segs;
 			}

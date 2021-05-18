@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HIERARCHY_GROUP_HPP
 
 #include "cath/clustagglom/hierarchy/hierarchy_value.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 namespace cath {
 	namespace clust {
@@ -96,12 +95,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this into a range over the hierarchy_value entries
 		inline auto hierarchy_group::begin() const -> const_iterator {
-			return common::cbegin( values );
+			return ::std::cbegin( values );
 		}
 
 		/// \brief Standard const end() method, as part of making this into a range over the hierarchy_value entries
 		inline auto hierarchy_group::end() const -> const_iterator {
-			return common::cend( values );
+			return ::std::cend( values );
 		}
 
 		std::string to_string(const hierarchy_group &);

@@ -24,7 +24,6 @@
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/file/sec/sec_file_record.hpp"
@@ -89,12 +88,12 @@ const sec_struc_planar_angles & sec_file::get_planar_angles_of_indices(const siz
 
 /// \brief Standard begin() operator to allow iteration over the sec_file_records
 sec_file::const_iterator sec_file::begin() const {
-	return common::cbegin( records );
+	return cbegin( records );
 }
 
 /// \brief Standard end() operator to allow iteration over the sec_file_records
 sec_file::const_iterator sec_file::end() const {
-	return common::cend( records );
+	return cend( records );
 }
 
 /// \brief Non-member, non-friend function for converting a sec_file to a sec_struc_vec

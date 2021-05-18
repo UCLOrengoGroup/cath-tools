@@ -268,13 +268,13 @@ namespace cath {
 		/// \brief TODOCUMENT
 		template <typename T>
 		auto orientation_covering_impl<T>::begin() const -> const_iterator {
-			return common::cbegin( orientations );
+			return ::std::cbegin( orientations );
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
 		auto orientation_covering_impl<T>::end() const -> const_iterator {
-			return common::cend( orientations );
+			return ::std::cend( orientations );
 		}
 
 		/// \brief TODOCUMENT
@@ -411,10 +411,10 @@ namespace cath {
 //			std::cerr << "Found " << *min_itr << "\n";
 			
 			// Check that some entry was chosen
-			assert( min_itr != common::cend( prm_orientations ) );
+			assert( min_itr != ::std::cend( prm_orientations ) );
 
 			// Return the index of the element found
-			return debug_numeric_cast<size_t>( distance( common::cbegin( prm_orientations ), min_itr ) );
+			return debug_numeric_cast<size_t>( distance( ::std::cbegin( prm_orientations ), min_itr ) );
 		}
 
 		

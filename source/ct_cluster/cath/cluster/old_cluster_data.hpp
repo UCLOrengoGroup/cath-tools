@@ -142,12 +142,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this into a range over the cluster_domains entries
 		inline auto old_cluster_data::begin() const -> const_iterator {
-			return common::cbegin( clusters );
+			return ::std::cbegin( clusters );
 		}
 
 		/// \brief Standard const end() method, as part of making this into a range over the cluster_domains entries
 		inline auto old_cluster_data::end() const -> const_iterator {
-			return common::cend( clusters );
+			return ::std::cend( clusters );
 		}
 
 		/// \brief Get the number of clusters from the specified old_cluster_data

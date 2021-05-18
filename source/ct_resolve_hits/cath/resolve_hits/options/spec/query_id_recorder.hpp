@@ -121,11 +121,11 @@ namespace cath {
 			);
 
 			// If the query ID should be added, then emplace directly
-			if ( lower_bound_itr == common::cend( seen_query_ids ) || *lower_bound_itr != prm_query_id ) {
+			if ( lower_bound_itr == ::std::cend( seen_query_ids ) || *lower_bound_itr != prm_query_id ) {
 				seen_query_ids.emplace_hint(
 					lower_bound_itr,
-					common::cbegin( prm_query_id ),
-					common::cend  ( prm_query_id )
+					::std::cbegin( prm_query_id ),
+					::std::cend  ( prm_query_id )
 				);
 			}
 			return *this;

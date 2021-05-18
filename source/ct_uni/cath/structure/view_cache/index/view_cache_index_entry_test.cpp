@@ -93,9 +93,9 @@ namespace cath {
 								                                            const vcie_match_criteria        &prm_criteria ///< TODOCUMENT
 								                                            ) {
 			float_score_type total_score = 0.0;
-			auto vcies_a_itr = cath::common::cbegin( prm_vcies_a );
-			auto vcies_b_itr = cath::common::cbegin( prm_vcies_b );
-			const auto vcies_end_itr = cath::common::cend( prm_vcies_a );
+			auto vcies_a_itr = cbegin( prm_vcies_a );
+			auto vcies_b_itr = cbegin( prm_vcies_b );
+			const auto vcies_end_itr = cend( prm_vcies_a );
 			while ( vcies_a_itr != vcies_end_itr ) {
 				if ( prm_criteria( *vcies_a_itr, *vcies_b_itr ) ) {
 					const float_score_type distance = sqrt( squared_distance( *vcies_a_itr, *vcies_b_itr ) );

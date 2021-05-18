@@ -23,8 +23,6 @@
 
 #include <boost/range.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 #include <algorithm>
 
 namespace cath {
@@ -48,8 +46,8 @@ namespace cath {
 		                                  ) {
 			BOOST_RANGE_CONCEPT_ASSERT((boost::ForwardRangeConcept<ForwardRange>));
 			return is_uniq_for_unordered(
-				common::cbegin( prm_rng ),
-				common::cend  ( prm_rng )
+				::std::cbegin( prm_rng ),
+				::std::cend  ( prm_rng )
 			);
 		}
 	} // namespace common

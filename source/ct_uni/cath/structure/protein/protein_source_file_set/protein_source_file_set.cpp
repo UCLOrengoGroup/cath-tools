@@ -32,7 +32,6 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/file/options/data_dirs_options_block.hpp"
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_from_pdb.hpp"

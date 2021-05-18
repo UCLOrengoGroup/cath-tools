@@ -28,7 +28,6 @@
 
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/chrono/duration_to_seconds_string.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/resolve_hits/calc_hit.hpp"
 #include "cath/resolve_hits/full_hit.hpp"
 #include "cath/resolve_hits/full_hit_list.hpp"
@@ -217,12 +216,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this into a range over the hits
 		inline auto calc_hit_list::begin() const -> const_iterator {
-			return common::cbegin( the_hits );
+			return ::std::cbegin( the_hits );
 		}
 
 		/// \brief Standard const end() method, as part of making this into a range over the hits
 		inline auto calc_hit_list::end() const -> const_iterator {
-			return common::cend( the_hits );
+			return ::std::cend( the_hits );
 		}
 
 		using hit_tpl     = std::tuple<std::string, seq::residx_residx_pair_vec, double>;

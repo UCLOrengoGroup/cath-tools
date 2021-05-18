@@ -61,12 +61,12 @@ const size_set & alignment_split::get_first_half_entries() const {
 
 /// \brief TODOCUMENT
 alignment_split::const_iterator alignment_split::begin() const {
-	return common::cbegin( first_half_entries );
+	return cbegin( first_half_entries );
 }
 
 /// \brief TODOCUMENT
 alignment_split::const_iterator alignment_split::end() const {
-	return common::cend( first_half_entries );
+	return cend( first_half_entries );
 }
 
 /// \brief TODOCUMENT

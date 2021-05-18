@@ -27,7 +27,6 @@
 #include <boost/functional/hash.hpp>
 #include <boost/utility/string_ref.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 
 namespace cath {
@@ -90,7 +89,7 @@ namespace cath {
 			                                           ) const {
 				const auto find_itr = the_map.find( prm_string );
 				return if_then_optional(
-					find_itr != common::cend( the_map ),
+					find_itr != ::std::cend( the_map ),
 					find_itr->second
 				);
 			}
@@ -98,7 +97,7 @@ namespace cath {
 			/// \brief Return whether this contains the specified boost::string_ref
 			inline bool contains(const boost::string_ref &prm_string ///< The string to lookup
 			                     ) const {
-				return ( the_map.find( prm_string ) != common::cend( the_map ) );
+				return ( the_map.find( prm_string ) != ::std::cend( the_map ) );
 			}
 
 			/// \brief Return whether this id_of_string_view is empty
@@ -124,12 +123,12 @@ namespace cath {
 
 			/// \brief Standard const begin() operator to make id_of_string_view into a range
 			inline const_iterator begin() const {
-				return common::cbegin( the_map );
+				return ::std::cbegin( the_map );
 			}
 
 			/// \brief Standard const end() operator to make id_of_string_view into a range
 			inline const_iterator end() const {
-				return common::cend( the_map );
+				return ::std::cend( the_map );
 			}
 		};
 

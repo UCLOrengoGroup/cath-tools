@@ -23,7 +23,6 @@
 
 #include <functional>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_traits.hpp"
 
 namespace cath { namespace common { namespace detail { template <typename T> class ref_wrap_uom_wrap; } } }

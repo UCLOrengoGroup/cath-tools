@@ -140,7 +140,7 @@ namespace cath {
 						return;
 					}
 					const auto itr = index_of_full_hit_ref.find( prm_full_hit );
-					if ( itr == common::cend( index_of_full_hit_ref ) ) {
+					if ( itr == ::std::cend( index_of_full_hit_ref ) ) {
 						const auto hits_size_before = hits.size();
 						hits.push_back( std::move( prm_full_hit ) );
 						index_of_full_hit_ref.emplace( hits.back(), hits_size_before );

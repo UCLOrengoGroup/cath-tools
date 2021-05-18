@@ -80,6 +80,7 @@ using ::boost::spirit::qi::omit;
 using ::boost::spirit::qi::parse;
 using ::boost::spirit::uint_;
 using ::boost::string_ref;
+using ::std::cbegin;
 using ::std::distance;
 using ::std::filesystem::path;
 using ::std::find_if;
@@ -89,6 +90,8 @@ using ::std::make_optional;
 using ::std::nullopt;
 using ::std::ostream;
 using ::std::pair;
+using ::std::rbegin;
+using ::std::rend;
 using ::std::string;
 using ::std::vector;
 
@@ -306,8 +309,8 @@ void cath::rslv::read_hit_list_from_istream(read_and_process_mgr &prm_read_and_p
 	query_id_recorder seen_query_ids;
 
 	while ( getline( prm_istream, line ) ) {
-		const auto line_begin_itr        = common::cbegin ( line );
-		const auto line_end_itr          = common::cend   ( line );
+		const auto line_begin_itr        = cbegin ( line );
+		const auto line_end_itr          = cend   ( line );
 
 		const auto end_of_query_id_itr   = find_space     ( line_begin_itr,        line_end_itr        );
 		const auto query_id_str_ref      = make_string_ref( line_begin_itr,        end_of_query_id_itr );
@@ -478,7 +481,7 @@ integer_range<hitidx_t> cath::rslv::indices_of_hits_that_stop_in_range(const cal
 calc_hit_vec_citr_vec cath::rslv::identify_redundant_hits(const calc_hit_vec  &prm_calc_hits, ///< The calc_hit_list to query
                                                           const full_hit_list &prm_full_hits  ///< The corresponding full_hit_list that is used for names that can be used to pick a "better" of two otherwise identical hits
                                                           ) {
-	const auto rend_itr = common::rend( prm_calc_hits );
+	const auto rend_itr = rend( prm_calc_hits );
 	using chl_citr      = calc_hit_list::const_iterator;
 	using chl_citr_vec  = vector<chl_citr>;
 
@@ -486,10 +489,10 @@ calc_hit_vec_citr_vec cath::rslv::identify_redundant_hits(const calc_hit_vec  &p
 	chl_citr_vec to_be_removed_itrs;
 	to_be_removed_itrs.reserve( prm_calc_hits.size() );
 
-	for (auto the_ritr = common::rbegin( prm_calc_hits ); the_ritr != rend_itr; ++the_ritr) {
+	for (auto the_ritr = rbegin( prm_calc_hits ); the_ritr != rend_itr; ++the_ritr) {
 		const auto &this_hit = *the_ritr;
 
-		const auto active_hitrs_end = common::cend( active_hit_itrs );
+		const auto active_hitrs_end = cend( active_hit_itrs );
 		auto active_hit_write_itr   = std::begin  ( active_hit_itrs );
 
 		for (const auto &active_hit_itr : active_hit_itrs ) {
@@ -545,6 +548,6 @@ void cath::rslv::remove_redundant_hits(calc_hit_vec        &prm_calc_hits, ///< 
 				prm_full_hits
 			)
 		),
-		common::cend( prm_calc_hits )
+		cend( prm_calc_hits )
 	);
 }

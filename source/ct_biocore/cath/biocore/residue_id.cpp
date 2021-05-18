@@ -26,7 +26,6 @@
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 
@@ -120,8 +119,8 @@ chain_label_opt cath::consistent_chain_label(const residue_id_vec &prm_residue_i
 	const auto &front_chain_label = prm_residue_ids.front().get_chain_label();
 	return make_optional_if(
 		all_of(
-			next( common::cbegin( prm_residue_ids ) ),
-			common::cend( prm_residue_ids ),
+			next( cbegin( prm_residue_ids ) ),
+			cend( prm_residue_ids ),
 			[&] (const residue_id &x) { return x.get_chain_label() == front_chain_label; }
 		),
 		front_chain_label

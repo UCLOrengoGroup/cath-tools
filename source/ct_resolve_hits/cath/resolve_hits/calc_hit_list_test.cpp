@@ -34,6 +34,7 @@ using namespace ::cath::seq;
 using namespace ::cath::test;
 
 using ::boost::lexical_cast;
+using ::std::cend;
 using ::std::string;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( calc_hit_list::const_iterator )
@@ -108,8 +109,8 @@ BOOST_AUTO_TEST_CASE(find_first_hit_stopping_at_or_after_works) {
 	BOOST_CHECK_EQUAL( get_stop_res_index( *find_first_hit_stopping_at_or_after( eg_hit_list, arrow_after_res( 1439 ) ) ), 1439 );
 	BOOST_CHECK_EQUAL( get_stop_res_index( *find_first_hit_stopping_after      ( eg_hit_list, arrow_after_res( 1438 ) ) ), 1439 );
 
-	BOOST_CHECK_EQUAL( find_first_hit_stopping_at_or_after( eg_hit_list, arrow_after_res( 1440 ) ), common::cend( eg_hit_list ) );
-	BOOST_CHECK_EQUAL( find_first_hit_stopping_after      ( eg_hit_list, arrow_after_res( 1439 ) ), common::cend( eg_hit_list ) );
+	BOOST_CHECK_EQUAL( find_first_hit_stopping_at_or_after( eg_hit_list, arrow_after_res( 1440 ) ), cend( eg_hit_list ) );
+	BOOST_CHECK_EQUAL( find_first_hit_stopping_after      ( eg_hit_list, arrow_after_res( 1439 ) ), cend( eg_hit_list ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

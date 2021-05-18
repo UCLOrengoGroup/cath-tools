@@ -25,7 +25,6 @@
 #include <boost/range/algorithm/sort.hpp>
 
 #include "cath/common/chrono/duration_to_seconds_string.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/resolve_hits/calc_hit.hpp"
 #include "cath/resolve_hits/hit_output_format.hpp"
 #include "cath/resolve_hits/options/spec/hit_boundary_output.hpp"
@@ -120,7 +119,7 @@ namespace cath {
 				the_hits,
 				&are_overlapping
 			);
-			if ( overlap_itr != common::cend( the_hits ) ) {
+			if ( overlap_itr != ::std::cend( the_hits ) ) {
 				BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot create hit_arch with overlapping domains"));
 			}
 		}
@@ -150,12 +149,12 @@ namespace cath {
 
 		/// \brief Standard const begin() operator to make hit_arch into a range
 		inline auto hit_arch::begin() const -> const_iterator {
-			return common::cbegin( the_hits );
+			return ::std::cbegin( the_hits );
 		}
 
 		/// \brief Standard const end() operator to make hit_arch into a range
 		inline auto hit_arch::end() const -> const_iterator {
-			return common::cend( the_hits );
+			return ::std::cend( the_hits );
 		}
 
 		/// \brief If the hit_arch contains the specified calc_hit, remove it and return true; otherwise, return false
@@ -163,7 +162,7 @@ namespace cath {
 		                             ) {
 			// Do score second so that this can propagate any hit_arch::operator-=(const hit_arch &) exception guarantee
 			const auto find_itr = boost::range::find( the_hits, prm_hit );
-			if ( find_itr != common::cend( the_hits ) ) {
+			if ( find_itr != ::std::cend( the_hits ) ) {
 				the_hits.erase( find_itr );
 				return true;
 			}

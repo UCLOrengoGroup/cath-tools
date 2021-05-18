@@ -77,8 +77,8 @@ static string upper_first_lower_rest(const string &prm_string
 		: (
 			to_upper_copy( string{ prm_string.front() } )
 			+ to_lower_copy( string{
-				std::next( common::cbegin( prm_string ) ),
-				           common::cend  ( prm_string )
+				std::next( cbegin( prm_string ) ),
+				           cend  ( prm_string )
 			} )
 		);
 }

@@ -23,7 +23,6 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/numeric.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/structure/geometry/coord.hpp"
 
@@ -103,11 +102,11 @@ coord_list::iterator coord_list::end() {
 }
 /// \brief Standard const begin() operator to provide range access
 coord_list::const_iterator coord_list::begin() const {
-	return common::cbegin( coords );
+	return cbegin( coords );
 }
 /// \brief Standard const end() operator to provide range access
 coord_list::const_iterator coord_list::end() const {
-	return common::cend( coords );
+	return cend( coords );
 }
 
 /// \brief Flatten a vector of one coord_list

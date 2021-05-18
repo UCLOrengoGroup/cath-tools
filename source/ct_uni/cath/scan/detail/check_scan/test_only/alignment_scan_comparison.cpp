@@ -28,7 +28,6 @@
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_aliases.hpp"
 
 #include <iterator> // for end, inserter
@@ -47,7 +46,7 @@ using ::boost::algorithm::join;
 alignment_scan_comparison & alignment_scan_comparison::operator+=(const pair<quad_and_rep_criteria_result, double> &prm_result_and_score ///< TODOCUMENT
                                                                   ) {
 	const auto find_itr = score_by_result.find( prm_result_and_score.first );
-	if ( find_itr == common::cend( score_by_result ) ) {
+	if ( find_itr == cend( score_by_result ) ) {
 		score_by_result.insert( prm_result_and_score );
 	}
 	else {
@@ -70,12 +69,12 @@ double alignment_scan_comparison::get_score_of_criteria_result(const quad_and_re
 
 /// \brief TODOCUMENT
 auto alignment_scan_comparison::begin() const -> const_iterator {
-	return common::cbegin( score_by_result );
+	return cbegin( score_by_result );
 }
 
 /// \brief TODOCUMENT
 auto alignment_scan_comparison::end() const -> const_iterator {
-	return common::cend  ( score_by_result );
+	return cend  ( score_by_result );
 }
 
 /// \brief TODOCUMENT

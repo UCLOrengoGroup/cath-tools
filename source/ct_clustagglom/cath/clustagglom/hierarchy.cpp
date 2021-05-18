@@ -249,7 +249,7 @@ size_size_pair_vec_vec cath::clust::get_spanning_trees(const hierarchy &prm_hier
 		[&] (const size_vec &index_group) {
 			return get_spanning_tree_of_subset(
 				prm_links,
-				size_set{ common::cbegin( index_group ), common::cend( index_group ) }
+				size_set{ cbegin( index_group ), cend( index_group ) }
 			);
 		}
 	);

@@ -23,8 +23,6 @@
 
 #include <boost/range/algorithm.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 namespace cath {
 	namespace common {
 

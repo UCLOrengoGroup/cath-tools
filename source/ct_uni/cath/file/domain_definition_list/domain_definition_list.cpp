@@ -28,7 +28,6 @@
 #include "cath/chopping/chopping_format/sillitoe_chopping_format.hpp"
 #include "cath/chopping/domain/domain_definition.hpp"
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/file/name_set/name_set_list.hpp"
 #include "cath/file/pdb/pdb.hpp"
@@ -65,12 +64,12 @@ size_t domain_definition_list::size() const {
 
 /// \brief TODOCUMENT
 domain_definition_list::const_iterator domain_definition_list::begin() const {
-	return common::cbegin( domain_definitions );
+	return cbegin( domain_definitions );
 }
 
 /// \brief TODOCUMENT
 domain_definition_list::const_iterator domain_definition_list::end() const {
-	return common::cend( domain_definitions );
+	return cend( domain_definitions );
 }
 
 /// \brief TODOCUMENT

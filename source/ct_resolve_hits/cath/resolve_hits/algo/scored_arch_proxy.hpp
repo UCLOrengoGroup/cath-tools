@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_ALGO_SCORED_ARCH_PROXY_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_ALGO_SCORED_ARCH_PROXY_HPP
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 
 namespace cath {
@@ -86,12 +85,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this a range over hit indices
 		inline auto scored_arch_proxy::begin() const -> const_iterator {
-			return common::cbegin( hit_indices );
+			return ::std::cbegin( hit_indices );
 		}
 
 		/// \brief Standard const end() method, as part of making this a range over hit indices
 		inline auto scored_arch_proxy::end() const -> const_iterator {
-			return common::cend( hit_indices );
+			return ::std::cend( hit_indices );
 		}
 
 		/// \brief Add the specified hit index and associated score to this scored_arch_proxy

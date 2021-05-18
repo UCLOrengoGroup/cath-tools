@@ -29,7 +29,6 @@
 #include "cath/alignment/pair_alignment.hpp"
 #include "cath/alignment/refiner/detail/alignment_split.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/residue.hpp"
@@ -58,7 +57,7 @@ alignment_split_mapping::alignment_split_mapping(const alignment &prm_alignment,
                                                      did_insert_entries    ( false                                                      ),
                                                      local_aln             ( prm_entries.size()                                         ),
                                                      idx_of_orig_aln_idx   ( orig_length                                                ),
-                                                     orig_aln_entries      ( common::cbegin( prm_entries ), common::cend( prm_entries ) ),
+                                                     orig_aln_entries      ( cbegin( prm_entries ), cend( prm_entries ) ),
                                                      index_of_pdb_res_index( prm_alignment.num_entries()                                ) {
 	// Sanity check the input list of entries
 	if ( orig_aln_entries.empty() ) {
@@ -199,11 +198,11 @@ size_opt alignment_split_mapping::entry_of_orig_aln_entry(const size_t &prm_orig
 		orig_aln_entries,
 		prm_orig_aln_entry
 	);
-	if ( find_itr == common::cend( orig_aln_entries ) || *find_itr != prm_orig_aln_entry ) {
+	if ( find_itr == cend( orig_aln_entries ) || *find_itr != prm_orig_aln_entry ) {
 		return nullopt;
 //		BOOST_THROW_EXCEPTION(invalid_argument_exception("Entry in original alignment doesn't appear in this alignment_split_mapping"));
 	}
-	return numeric_cast<size_t>( distance( common::cbegin( orig_aln_entries ), find_itr ) );
+	return numeric_cast<size_t>( distance( cbegin( orig_aln_entries ), find_itr ) );
 }
 
 /// \brief TODOCUMENT

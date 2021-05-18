@@ -25,7 +25,6 @@
 
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
@@ -87,7 +86,7 @@ size_vec substitution_matrix::order_permutation(const amino_acid_vec &prm_orig_a
 	for (const amino_acid &orig_amino_acid : prm_orig_aa_ordering) {
 		// Find the index of the amino acid in the new ordering
 		const size_t index_in_new = numeric_cast<size_t>( distance(
-			common::cbegin( prm_new_aa_ordering ),
+			cbegin( prm_new_aa_ordering ),
 			find(
 				prm_new_aa_ordering,
 				orig_amino_acid
@@ -202,13 +201,13 @@ score_type substitution_matrix::get_score(const amino_acid &prm_amino_acid_a, //
                                           ) const {
 	// Grab the index of the first amino acid in amino_acids
 	const size_t index_a = numeric_cast<size_t>( distance(
-		common::cbegin( amino_acids ),
+		cbegin( amino_acids ),
 		lower_bound( amino_acids, prm_amino_acid_a )
 	) );
 
 	// Grab the index of the second amino acid in amino_acids
 	const size_t index_b = numeric_cast<size_t>( distance(
-		common::cbegin( amino_acids ),
+		cbegin( amino_acids ),
 		lower_bound( amino_acids, prm_amino_acid_b )
 	) );
 

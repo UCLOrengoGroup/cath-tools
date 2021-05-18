@@ -23,7 +23,6 @@
 
 #include "cath/common/algorithm/copy_build.hpp" // ***** TEMPORARY *****
 #include "cath/common/boost_addenda/range/adaptor/iterator/limit_itr.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 namespace cath {
 	namespace common {
@@ -53,8 +52,8 @@ namespace cath {
 		limited_range<RNG>::limited_range(const RNG    &prm_range,           ///< The range over which to apply this limited_range
 		                                  const size_t &prm_max_num_elements ///< The maximum number of elements
 		                                  ) : super(
-		                                      	limited_iterator( cath::common::cbegin( prm_range ), cath::common::cend  ( prm_range ), prm_max_num_elements ),
-		                                      	limited_iterator( cath::common::cend  ( prm_range ), cath::common::cend  ( prm_range ), prm_max_num_elements )
+		                                      	limited_iterator( ::std::cbegin( prm_range ), ::std::cend  ( prm_range ), prm_max_num_elements ),
+		                                      	limited_iterator( ::std::cend  ( prm_range ), ::std::cend  ( prm_range ), prm_max_num_elements )
 		                                      ) {
 		}
 

@@ -27,7 +27,6 @@
 #include "cath/clustagglom/link_dirn.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -134,12 +133,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this into a range over the hierarchy_layer entries
 		inline auto hierarchy::begin() const -> const_iterator {
-			return common::cbegin( layers );
+			return ::std::cbegin( layers );
 		}
 
 		/// \brief Standard const end() method, as part of making this into a range over the hierarchy_layer entries
 		inline auto hierarchy::end() const -> const_iterator {
-			return common::cend( layers );
+			return ::std::cend( layers );
 		}
 
 		namespace detail {

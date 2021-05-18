@@ -29,7 +29,6 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/score/aligned_pair_score_list/aligned_pair_score_list.hpp"
@@ -183,7 +182,7 @@ bool aligned_pair_score::less_than_with_same_dynamic_type(const aligned_pair_sco
 //                                                                                         ) {
 //	// Create a string containing the start of prm_short_name up to the first full-stop
 //	const auto first_full_stop_itr = find( prm_short_name, '.' );
-//	const auto the_id_name         = string( common::cbegin( prm_short_name ), first_full_stop_itr );
+//	const auto the_id_name         = string( cbegin( prm_short_name ), first_full_stop_itr );
 //
 //	// Grab all concrete types of aligned_pair_score by their id_name and throw if the_id_name isn't in it
 //	const auto aligned_pair_score_of_id_name = detail::get_aligned_pair_score_of_id_name();
@@ -195,8 +194,8 @@ bool aligned_pair_score::less_than_with_same_dynamic_type(const aligned_pair_sco
 //	const auto &the_score = aligned_pair_score_of_id_name.at( the_id_name );
 //
 //	// Grab any further characters if a full-stop was found or an empty string otherwise
-//	const bool has_more_chars  = ( first_full_stop_itr != common::cend( prm_short_name ) );
-//	const auto short_name_spec = has_more_chars ? string( next( first_full_stop_itr ), common::cend( prm_short_name ) )
+//	const bool has_more_chars  = ( first_full_stop_itr != cend( prm_short_name ) );
+//	const auto short_name_spec = has_more_chars ? string( next( first_full_stop_itr ), cend( prm_short_name ) )
 //	                                            : string();
 //
 //	// Return the result of getting the concrete type to build from the remainder of the string

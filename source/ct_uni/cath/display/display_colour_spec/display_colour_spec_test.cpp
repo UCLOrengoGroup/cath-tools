@@ -95,8 +95,8 @@ BOOST_AUTO_TEST_CASE(pdbs_of_colour_works) {
 BOOST_AUTO_TEST_CASE(residues_of_colour_works) {
 	const size_size_vec_map got_residues = get_residues_of_colour( the_spec, display_colour::YELLOW );
 	BOOST_REQUIRE_EQUAL( 1_z, got_residues.size()         );
-	BOOST_CHECK_EQUAL  ( 2_z, common::cbegin( got_residues )->first  );
-	const size_vec &got_pdb_two_residues = common::cbegin( got_residues )->second;
+	BOOST_CHECK_EQUAL  ( 2_z, cbegin( got_residues )->first  );
+	const size_vec &got_pdb_two_residues = cbegin( got_residues )->second;
 	BOOST_CHECK_EQUAL_RANGES( pdb_two_residues, got_pdb_two_residues );
 }
 

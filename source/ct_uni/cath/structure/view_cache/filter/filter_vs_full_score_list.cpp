@@ -37,7 +37,6 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "cath/common/boost_addenda/sorted_insert.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/score/true_pos_false_neg/classn_rate_stat.hpp"
@@ -64,6 +63,7 @@ using ::boost::range::nth_element;
 using ::boost::range::sort;
 using ::boost::rational_cast;
 using ::boost::sub_range;
+using ::std::cend;
 using ::std::cerr;
 using ::std::end;
 using ::std::endl;
@@ -114,12 +114,12 @@ const filter_vs_full_score & filter_vs_full_score_list::operator[](const size_t 
 
 /// \brief Standard const begin() method as part of making filter_vs_full_score_list into a (const) range
 filter_vs_full_score_list::const_iterator filter_vs_full_score_list::begin() const {
-	return common::cbegin( filter_vs_full_scores );
+	return cbegin( filter_vs_full_scores );
 }
 
 /// \brief Standard const end() method as part of making filter_vs_full_score_list into a (const) range
 filter_vs_full_score_list::const_iterator filter_vs_full_score_list::end() const {
-	return common::cend( filter_vs_full_scores );
+	return cend( filter_vs_full_scores );
 }
 
 /// \brief Find the minimum filter score that achieves the specified sensitivity re finding entries with the specified full score
@@ -141,7 +141,7 @@ double cath::index::filter::filter_score_full_score_with_sensitivity(const filte
 
 	// Construct a sub_range for the values after that point (ie all those with a full_score >= the specified full score),
 	// grab the number of such "wanted" elements and throw if it's zero
-	const sub_range<filter_vs_full_score_list> wanted_range( begin_of_wanted, common::cend( prm_filter_vs_full_score_list ) );
+	const sub_range<filter_vs_full_score_list> wanted_range( begin_of_wanted, cend( prm_filter_vs_full_score_list ) );
 	const size_t num_wanted = numeric_cast<size_t>( distance( wanted_range ) );
 	if ( num_wanted == 0 ) {
 		cerr << "Last entry is : " << *prev( end(prm_filter_vs_full_score_list ) ) << endl;
@@ -173,7 +173,7 @@ double cath::index::filter::filter_score_full_score_with_sensitivity(const filte
 		filter_scores_of_wanted,
 		std::begin( filter_scores_of_wanted ) + numeric_cast<ptrdiff_t>( fraction_offset )
 	);
-	return *( common::cbegin( filter_scores_of_wanted ) + numeric_cast<ptrdiff_t>( fraction_offset ) );
+	return *( cbegin( filter_scores_of_wanted ) + numeric_cast<ptrdiff_t>( fraction_offset ) );
 }
 
 /// \brief Find the minimum filter score that achieves the specified sensitivity re finding entries with the specified full score

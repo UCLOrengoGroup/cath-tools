@@ -276,7 +276,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &prm_old_cluste
 			make_move_iterator( partition_point_itr   ),
 			make_move_iterator( end( potential_maps ) )
 		);
-		potential_maps.erase( partition_point_itr, common::cend( potential_maps ) );
+		potential_maps.erase( partition_point_itr, cend( potential_maps ) );
 	}
 
 	// Return the results of the mapping

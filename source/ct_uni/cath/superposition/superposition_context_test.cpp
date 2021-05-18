@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE(get_supn_content_pdb_works) {
 // 				auto &dists = max_ca_to_atom_dists_by_aa.at( aa_code );
 // 				if ( dists.size() < NUM_MAX_DISTS || dists.back() < max_dist ) {
 // 					const auto posn_itr = boost::range::lower_bound( dists, max_dist, greater<>{} );
-// 					if ( posn_itr == cath::common::cend( dists ) || *posn_itr != max_dist ) {
+// 					if ( posn_itr == cend( dists ) || *posn_itr != max_dist ) {
 // 						dists.insert(
 // 							posn_itr,
 // 							max_dist

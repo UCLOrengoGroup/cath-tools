@@ -83,7 +83,7 @@ bool score_classn_value_results_set::is_sorted_uniqued() const {
 		[] (const score_classn_value_list &x, const score_classn_value_list &y) { return ! score_classn_value_list_name_less()( y, x ); }
 	);
 	// Return whether none was found
-	return ( decreasing_or_equal_pair_itr == common::cend( score_classn_value_lists ) );
+	return ( decreasing_or_equal_pair_itr == cend( score_classn_value_lists ) );
 }
 
 /// \brief Check that score_classn_value_lists is correctly sorted+uniqued on the names and throw if not
@@ -128,12 +128,12 @@ const score_classn_value_list & score_classn_value_results_set::operator[](const
 
 /// \brief TODOCUMENT
 score_classn_value_results_set::const_iterator score_classn_value_results_set::begin() const {
-	return cath::common::cbegin( score_classn_value_lists );
+	return cbegin( score_classn_value_lists );
 }
 
 /// \brief TODOCUMENT
 score_classn_value_results_set::const_iterator score_classn_value_results_set::end() const {
-	return cath::common::cend( score_classn_value_lists );
+	return cend( score_classn_value_lists );
 }
 
 /// \brief TODOCUMENT
@@ -167,7 +167,7 @@ void score_classn_value_results_set::add_score_classn_value_list(const score_cla
 
 	// If the list wouldn't be inserted at the end, check that the existing entry in the location
 	// doesn't have the same name and throw if it does
-	if ( insert_location_itr != common::cend( score_classn_value_lists ) ) {
+	if ( insert_location_itr != cend( score_classn_value_lists ) ) {
 		if ( insert_location_itr->get_name() == prm_score_classn_value_list.get_name() ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 		}
@@ -197,7 +197,7 @@ void score_classn_value_results_set::add_aligned_pair_score_value_list(const ali
 	}
 	else {
 		const auto    new_names      = get_all_names( prm_aligned_pair_score_value_list );
-		const str_set new_names_set( common::cbegin( new_names ), common::cend( new_names ) );
+		const str_set new_names_set( cbegin( new_names ), cend( new_names ) );
 		const size_t  num_series     = size();
 		const auto    existing_names = transform_build<str_vec>(
 			indices( num_series ),
@@ -526,7 +526,7 @@ const score_classn_value_list & cath::score::find_score_classn_value_list_of_nam
 		prm_results_set,
 		[&] (const score_classn_value_list &x) { return ( x.get_name() == prm_name ); }
 	);
-	if ( find_itr == cath::common::cend( prm_results_set ) ) {
+	if ( find_itr == cend( prm_results_set ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception( "No score_classn_value_list found with specified name " + prm_name ));
 	}
 	return *find_itr;

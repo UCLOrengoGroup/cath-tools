@@ -29,7 +29,6 @@
 #include "cath/common/algorithm/constexpr_clamp.hpp"
 #include "cath/common/algorithm/constexpr_floor.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"

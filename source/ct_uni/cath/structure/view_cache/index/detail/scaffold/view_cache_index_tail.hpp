@@ -25,7 +25,6 @@
 #include <boost/range/algorithm_ext/for_each.hpp>
 #include <boost/tuple/tuple.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/structure/view_cache/index/detail/vcie_match_criteria.hpp"
 #include "cath/structure/view_cache/index/view_cache_index_entry.hpp"
 

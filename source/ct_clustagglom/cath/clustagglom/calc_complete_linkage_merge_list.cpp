@@ -39,6 +39,7 @@ using ::boost::range::for_each;
 using ::boost::range::min_element;
 using ::boost::range::partition;
 using ::boost::range::upper_bound;
+using ::std::cend;
 using ::std::make_optional;
 using ::std::max;
 using ::std::min;
@@ -114,7 +115,7 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             prm_li
 						a_links,
 						[&] (const link &x) { return clust_ids.has_index( x.node ); }
 					),
-					common::cend( a_links )
+					cend( a_links )
 				);
 				const auto min_itr = min_element(
 					a_links,
@@ -130,7 +131,7 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             prm_li
 				);
 
 				b = a;
-				if ( min_itr == common::cend( a_links ) ) {
+				if ( min_itr == cend( a_links ) ) {
 					// BOOST_THROW_EXCEPTION(out_of_range_exception("argh"));
 					a    = clust_ids.get_min_value_excluding_spec( a );
 					dist = std::numeric_limits< decltype( dist ) >::infinity();
@@ -193,7 +194,7 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             prm_li
 				prm_max_dissim,
 				[] (const strength &max_dissim, const merge &x) { return max_dissim < x.dissim; }
 			),
-			common::cend( results )
+			cend( results )
 		);
 	}
 

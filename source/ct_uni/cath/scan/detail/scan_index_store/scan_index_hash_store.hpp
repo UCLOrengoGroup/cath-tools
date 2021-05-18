@@ -33,7 +33,6 @@
 #include <boost/units/systems/information/byte.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_traits.hpp"
 #include "cath/scan/detail/scan_index_store/detail/hash_tuple.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
@@ -133,7 +132,7 @@ namespace cath {
 			inline const Cell & scan_index_hash_store<Key, Cell>::find_matches(const Key &prm_key ///< TODOCUMENT
 			                                                                   ) const {
 				const auto &cell_itr = the_store.find( prm_key );
-				return ( cell_itr == common::cend( the_store ) ) ? empty_cell : cell_itr->second;
+				return ( cell_itr == ::std::cend( the_store ) ) ? empty_cell : cell_itr->second;
 			}
 
 			/// \brief TODOCUMENT
@@ -149,13 +148,13 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			auto scan_index_hash_store<Key, Cell>::begin() const -> const_iterator {
-				return common::cbegin( the_store );
+				return ::std::cbegin( the_store );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			auto scan_index_hash_store<Key, Cell>::end() const -> const_iterator {
-				return common::cend  ( the_store );
+				return ::std::cend  ( the_store );
 			}
 
 		} // namespace detail

@@ -94,8 +94,8 @@ region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec     
 				}
 			);
 			return region_vec(
-				common::cbegin( expanded_region_chain_labels ),
-				common::cend  ( expanded_region_chain_labels )
+				cbegin( expanded_region_chain_labels ),
+				cend  ( expanded_region_chain_labels )
 			);
 		}
 		case ( supn_regions_context::IN_PDB   ) : {

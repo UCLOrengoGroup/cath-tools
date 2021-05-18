@@ -88,7 +88,7 @@ void cath::score::warn_on_duplicate_human_friendly_names(const aligned_pair_scor
 		}
 	) );
 	const auto adjacent_itr = adjacent_find( sorted_human_friendly_names );
-	if ( adjacent_itr != common::cend( sorted_human_friendly_names ) ) {
+	if ( adjacent_itr != cend( sorted_human_friendly_names ) ) {
 		::spdlog::warn( "aligned_pair_score_value_list contains duplicates (eg {})", *adjacent_itr );
 	}
 }

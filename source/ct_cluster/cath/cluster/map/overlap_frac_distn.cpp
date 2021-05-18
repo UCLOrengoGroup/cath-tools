@@ -39,6 +39,7 @@ using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::format;
 using ::std::accumulate;
+using ::std::cbegin;
 using ::std::get;
 using ::std::max;
 using ::std::min;
@@ -81,8 +82,8 @@ size_t overlap_frac_distn::get_num_in_range(const double &prm_lower_fraction, //
 	const auto upper_index = static_cast<size_t>( round( get_index_of_fraction( prm_upper_fraction ) ) );
 
 	return accumulate(
-		next( common::cbegin( *this ), static_cast<ptrdiff_t>( min( num_posns, lower_index ) ) ),
-		next( common::cbegin( *this ), static_cast<ptrdiff_t>( min( num_posns, upper_index ) ) ),
+		next( cbegin( *this ), static_cast<ptrdiff_t>( min( num_posns, lower_index ) ) ),
+		next( cbegin( *this ), static_cast<ptrdiff_t>( min( num_posns, upper_index ) ) ),
 		0_z
 	);
 }
@@ -94,7 +95,7 @@ size_t overlap_frac_distn::get_num_at_fraction(const double &prm_fraction ///< T
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get_num_at_fraction() from overlap_frac_distn with invalid fraction"));
 	}
 	return *next(
-		common::cbegin( *this ),
+		cbegin( *this ),
 		static_cast<ptrdiff_t>( round( get_index_of_fraction( prm_fraction ) ) )
 	);
 }

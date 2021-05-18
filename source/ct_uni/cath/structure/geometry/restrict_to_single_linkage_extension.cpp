@@ -20,7 +20,6 @@
 
 #include "restrict_to_single_linkage_extension.hpp"
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/structure/geometry/coord.hpp"
 
 using namespace ::cath;
@@ -49,7 +48,7 @@ void cath::geom::restrict_to_single_linkage_extension(coord_coord_linkage_pair_v
 
 	// Keep looping while some were added in the previous iteration (or, on the first pass, if there is a non-empty core)
 	// and there are more to add
-	while ( added_begin_itr != added_end_itr && added_end_itr != common::cend( prm_coords ) ) {
+	while ( added_begin_itr != added_end_itr && added_end_itr != cend( prm_coords ) ) {
 
 		// Within the most recently added, partition the linkable entries to the end
 		// and record the dividing line
@@ -85,7 +84,7 @@ void cath::geom::restrict_to_single_linkage_extension(coord_coord_linkage_pair_v
 	// Remove any coords that never got added
 	prm_coords.erase(
 		added_end_itr,
-		common::cend( prm_coords )
+		cend( prm_coords )
 	);
 }
 

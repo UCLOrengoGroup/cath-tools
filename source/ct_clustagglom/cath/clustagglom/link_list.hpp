@@ -23,7 +23,6 @@
 
 #include "cath/clustagglom/link_dirn.hpp"
 #include "cath/clustagglom/link.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 namespace cath {
 	namespace clust {
@@ -135,12 +134,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this a range over hit links
 		inline auto link_list::begin() const -> const_iterator {
-			return common::cbegin( links );
+			return ::std::cbegin( links );
 		}
 
 		/// \brief Standard const end() method, as part of making this a range over hit links
 		inline auto link_list::end() const -> const_iterator {
-			return common::cend  ( links );
+			return ::std::cend  ( links );
 		}
 
 		std::string link_list_string(const link_list &,

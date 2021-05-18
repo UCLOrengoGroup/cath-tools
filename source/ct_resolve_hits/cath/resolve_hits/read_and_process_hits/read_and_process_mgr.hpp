@@ -279,7 +279,7 @@ namespace cath {
 
 			const auto get_or_add_builder_fn = [&] (const std::string &x) -> detail::full_hit_prune_builder & {
 				const auto find_itr = hit_builder_by_query_id.find( x );
-				if ( find_itr != common::cend( hit_builder_by_query_id ) ) {
+				if ( find_itr != ::std::cend( hit_builder_by_query_id ) ) {
 					return find_itr->second;
 				}
 				return hit_builder_by_query_id.emplace(

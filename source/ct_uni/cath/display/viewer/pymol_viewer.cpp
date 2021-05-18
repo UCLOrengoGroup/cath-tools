@@ -34,7 +34,6 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/batch/batch_functions.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/display/display_colourer/display_colourer.hpp"
 #include "cath/display/viewer/pymol/pymol_tools.hpp"
@@ -226,9 +225,9 @@ void cath::detail::write_pymol_global_alignment(ostream                     &prm
 
 		// Construct a graph from the edges and weights
 		const Graph my_graph(
-			common::cbegin( edges     ),
-			common::cend  ( edges     ),
-			common::cbegin( distances ),
+			cbegin( edges     ),
+			cend  ( edges     ),
+			cbegin( distances ),
 			num_present_posns
 		);
 
@@ -307,8 +306,8 @@ void cath::detail::write_pymol_global_alignment(ostream                     &prm
 							selection_strings.push_back( pymol_tools::pymol_res_seln_str(
 								entry_name,
 								residue_id_vec{
-									std::next( common::cbegin( res_ids ), static_cast<ptrdiff_t>( begin_and_end.first  ) ),
-									std::next( common::cbegin( res_ids ), static_cast<ptrdiff_t>( begin_and_end.second ) )
+									std::next( cbegin( res_ids ), static_cast<ptrdiff_t>( begin_and_end.first  ) ),
+									std::next( cbegin( res_ids ), static_cast<ptrdiff_t>( begin_and_end.second ) )
 								}
 							) );
 						}

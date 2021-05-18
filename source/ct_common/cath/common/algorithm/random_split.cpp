@@ -26,7 +26,6 @@
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/sort_copy.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 using namespace ::cath;
@@ -50,10 +49,10 @@ size_vec_size_vec_pair cath::common::random_split(mt19937       &prm_rng,       
 	shuffle( begin( the_indices ), end( the_indices ), prm_rng );
 
 	const auto num_in_first  = numeric_cast<size_t>( round( prm_fraction_in_first * numeric_cast<double>( prm_num_instances ) ) );
-	const auto cut_point_itr = next( cath::common::cbegin( the_indices ), numeric_cast<ptrdiff_t>( num_in_first ) );
+	const auto cut_point_itr = next( cbegin( the_indices ), numeric_cast<ptrdiff_t>( num_in_first ) );
 
 	return make_pair(
-		sort_copy( size_vec{ cath::common::cbegin( the_indices ), cut_point_itr                 } ),
-		sort_copy( size_vec{ cut_point_itr,                   cath::common::cend( the_indices ) } )
+		sort_copy( size_vec{ cbegin( the_indices ), cut_point_itr                 } ),
+		sort_copy( size_vec{ cut_point_itr,                   cend( the_indices ) } )
 	);
 }

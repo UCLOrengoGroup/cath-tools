@@ -25,7 +25,6 @@
 #include <boost/range/adaptor/transformed.hpp>
 
 #include "cath/common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
 
 using namespace ::cath::opts;
@@ -35,6 +34,8 @@ using ::boost::adaptors::transformed;
 using ::boost::algorithm::any_of;
 using ::boost::algorithm::join;
 using ::boost::string_ref;
+using ::std::cbegin;
+using ::std::cend;
 using ::std::ostream;
 using ::std::string;
 
@@ -56,12 +57,12 @@ bool superposition_outputter_list::empty() const {
 
 /// \brief TODOCUMENT
 superposition_outputter_list::const_iterator superposition_outputter_list::begin() const {
-	return common::cbegin( outputters );
+	return cbegin( outputters );
 }
 
 /// \brief TODOCUMENT
 superposition_outputter_list::const_iterator superposition_outputter_list::end() const {
-	return common::cend( outputters );
+	return cend( outputters );
 }
 
 /// \brief Generate a string describing the specified superposition_outputter_list

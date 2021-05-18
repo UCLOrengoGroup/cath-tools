@@ -318,8 +318,8 @@ namespace cath {
 					advance_to_block_or_prefix();
 
 					if ( line_is_at_prefix() && ! end_of_istream() ) {
-						const auto line_end = common::cend( line );
-						const auto match_id_begin_itr = common::find_itr_before_first_non_space( next( common::cbegin( line ), 7 ), line_end );
+						const auto line_end = ::std::cend( line );
+						const auto match_id_begin_itr = common::find_itr_before_first_non_space( next( ::std::cbegin( line ), 7 ), line_end );
 						const auto match_id_end_itr   = common::find_itr_before_first_space    ( match_id_begin_itr,                line_end );
 						const auto length_pre_itr     = common::find_itr_before_first_non_space( match_id_end_itr,                  line_end );
 
@@ -350,8 +350,8 @@ namespace cath {
 				}
 
 				if ( ! end_of_istream() ) {
-					const auto query_id_begin_itr = common::find_itr_before_first_non_space( next( common::cbegin( line ), 3 ), common::cend( line ) );
-					const auto query_id_end_itr   = common::find_itr_before_first_space    ( query_id_begin_itr,                common::cend( line ) );
+					const auto query_id_begin_itr = common::find_itr_before_first_non_space( next( ::std::cbegin( line ), 3 ), ::std::cend( line ) );
+					const auto query_id_end_itr   = common::find_itr_before_first_space    ( query_id_begin_itr,                ::std::cend( line ) );
 
 					get_block_id().emplace( query_id_begin_itr, query_id_end_itr );
 				}
@@ -507,8 +507,8 @@ namespace cath {
 					// If applying the CATH discontinuous policy, erase any segments after the first
 					if ( apply_dc_cat ) {
 						segs.erase(
-							std::next( common::cbegin( segs ) ),
-							           common::cend  ( segs )
+							std::next( ::std::cbegin( segs ) ),
+							           ::std::cend  ( segs )
 						);
 					}
 

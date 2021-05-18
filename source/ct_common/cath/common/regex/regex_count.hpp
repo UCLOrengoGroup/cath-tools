@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_REGEX_REGEX_COUNT_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_REGEX_REGEX_COUNT_HPP
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 #include <regex>
 
 namespace cath {
@@ -35,8 +33,8 @@ namespace cath {
 			return static_cast<size_t>(
 				std::distance(
 					std::sregex_iterator{
-						::cath::common::cbegin( prm_string ),
-						::cath::common::cend  ( prm_string ),
+						::std::cbegin( prm_string ),
+						::std::cend  ( prm_string ),
 						prm_regex
 					},
 					std::sregex_iterator{}

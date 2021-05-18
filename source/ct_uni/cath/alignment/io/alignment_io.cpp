@@ -45,7 +45,6 @@
 #include "cath/common/boost_addenda/log/log_to_ostream_guard.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -837,11 +836,11 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Counter has gone past end of list of residues whilst loading alignment"));
 		}
 		const auto res_itr = find_if(
-			common::cbegin( prm_residue_ids ) + numeric_cast<ptrdiff_t>( prm_pos ),
-			common::cend  ( prm_residue_ids ),
+			cbegin( prm_residue_ids ) + numeric_cast<ptrdiff_t>( prm_pos ),
+			cend  ( prm_residue_ids ),
 			[&] (const residue_id &x) { return x.get_residue_name() == prm_residue_name; }
 		);
-		if ( res_itr == common::cend( prm_residue_ids ) ) {
+		if ( res_itr == cend( prm_residue_ids ) ) {
 			cerr << "Residue names being searched:\n\n";
 			for (const residue_id &the_res_name : prm_residue_ids) {
 				cerr << " " << the_res_name;
@@ -855,7 +854,7 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 			));
 		}
 
-		const size_t new_pos = numeric_cast<size_t>( distance( common::cbegin( prm_residue_ids ), res_itr ) );
+		const size_t new_pos = numeric_cast<size_t>( distance( cbegin( prm_residue_ids ), res_itr ) );
 		if ( new_pos != prm_pos + 1 && ( new_pos != 0 || prm_pos != 0 ) && prm_ostream ) {
 			const size_t jump = new_pos - (prm_pos + 1);
 			const log_to_ostream_guard ostream_log_guard{ prm_ostream->get() };

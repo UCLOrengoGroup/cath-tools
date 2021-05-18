@@ -38,7 +38,6 @@
 #include "cath/chopping/region/regions_limiter.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/ssap/context_res.hpp"
@@ -129,18 +128,18 @@ protein::iterator protein::end() {
 
 /// \brief TODOCUMENT
 protein::const_iterator protein::begin() const {
-	return common::cbegin( residues );
+	return cbegin( residues );
 }
 
 /// \brief TODOCUMENT
 protein::const_iterator protein::end() const {
-	return common::cend( residues );
+	return cend( residues );
 }
 /// \brief TODOCUMENT
 protein::sec_struc_crange protein::get_sec_strucs() const {
 	return {
-		common::cbegin( sec_strucs ),
-		common::cend  ( sec_strucs )
+		cbegin( sec_strucs ),
+		cend  ( sec_strucs )
 	};
 }
 
@@ -190,7 +189,7 @@ size_t cath::get_index_of_pdb_residue_id(const protein    &prm_protein,   ///< T
 	// that matches the specified residue name
 
 	const size_t result_index = numeric_cast<size_t>( distance(
-		common::cbegin( prm_protein ),
+		cbegin( prm_protein ),
 		find_if(
 			prm_protein,
 			[&] (const residue &x) { return residue_matches_residue_id( x, prm_residue_id ); }

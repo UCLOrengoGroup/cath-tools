@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_NAME_SET_NAME_SET_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_NAME_SET_NAME_SET_LIST_HPP
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/file/name_set/name_set.hpp"
 
@@ -102,12 +101,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this into a range over the name_sets
 		inline auto name_set_list::begin() const -> const_iterator {
-			return common::cbegin( name_sets );
+			return ::std::cbegin( name_sets );
 		}
 
 		/// \brief Standard const end() method, as part of making this into a range over the name_sets
 		inline auto name_set_list::end() const -> const_iterator {
-			return common::cend  ( name_sets );
+			return ::std::cend  ( name_sets );
 		}
 
 		name_set_list build_name_set_list(str_vec,

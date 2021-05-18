@@ -30,7 +30,6 @@
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp17/apply.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/size_t_literal.hpp"
@@ -185,13 +184,13 @@ namespace cath {
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			auto scan_index_lattice_store<Key, Cell>::begin() const -> const_iterator {
-				return common::cbegin( the_store );
+				return ::std::cbegin( the_store );
 			}
 
 			/// \brief TODOCUMENT
 			template <typename Key, typename Cell>
 			auto scan_index_lattice_store<Key, Cell>::end() const -> const_iterator {
-				return common::cend( the_store );
+				return ::std::cend( the_store );
 			}
 
 			/// \brief TODOCUMENT

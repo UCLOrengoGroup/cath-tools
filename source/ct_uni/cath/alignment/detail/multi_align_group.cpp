@@ -32,7 +32,6 @@
 #include "cath/alignment/io/outputter/horiz_align_outputter.hpp"
 #include "cath/alignment/pair_alignment.hpp"
 #include "cath/common/boost_addenda/range/adaptor/lexical_casted.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 using namespace ::cath;
@@ -217,7 +216,7 @@ size_t cath::align::detail::get_index_of_entry(const multi_align_group &prm_alig
 	const auto find_itr = find( indices, prm_entry );
 
 	// If prm_entry wasn't found then throw an exception
-	if ( find_itr == common::cend( indices ) ) {
+	if ( find_itr == cend( indices ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"Unable to find entry "
 			+ lexical_cast<string>( prm_entry )
@@ -226,7 +225,7 @@ size_t cath::align::detail::get_index_of_entry(const multi_align_group &prm_alig
 	}
 
 	// Else return the index of the found entry
-	return numeric_cast<size_t>( distance( common::cbegin( indices ), find_itr ) );
+	return numeric_cast<size_t>( distance( cbegin( indices ), find_itr ) );
 }
 
 /// \brief Join another entry to the specified multi_align_group using a pair-alignment to one of the group's existing entries

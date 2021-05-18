@@ -31,7 +31,6 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP
 
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 namespace cath {
 	namespace common {
@@ -68,8 +67,8 @@ namespace cath {
 		Container sort_build(R prm_range ///< The range on which the sorted copy should be based
 		                     ) {
 			return sort_build<Container>(
-				common::cbegin( prm_range ),
-				common::cend  ( prm_range )
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range )
 			);
 		}
 
@@ -79,8 +78,8 @@ namespace cath {
 		                     P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
 		                     ) {
 			return sort_build<Container>(
-				common::cbegin( prm_range ),
-				common::cend  ( prm_range ),
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range ),
 				prm_bin_pred
 			);
 		}
@@ -128,8 +127,8 @@ namespace cath {
 		                            ) {
 			return stable_sort_copy(
 				Container(
-					common::cbegin( prm_range ),
-					common::cend  ( prm_range )
+					::std::cbegin( prm_range ),
+					::std::cend  ( prm_range )
 				)
 			);
 		}
@@ -141,8 +140,8 @@ namespace cath {
 		                            ) {
 			return stable_sort_copy(
 				Container(
-					common::cbegin( prm_range ),
-					common::cend  ( prm_range )
+					::std::cbegin( prm_range ),
+					::std::cend  ( prm_range )
 				),
 				prm_bin_pred
 			);
@@ -161,8 +160,8 @@ namespace cath {
 		                     ) {
 			return uniq_copy(
 				Container(
-					common::cbegin( prm_range ),
-					common::cend  ( prm_range )
+					::std::cbegin( prm_range ),
+					::std::cend  ( prm_range )
 				)
 			);
 		}
@@ -177,8 +176,8 @@ namespace cath {
 		                          ) {
 			return sort_uniq_copy(
 				Container(
-					common::cbegin( prm_range ),
-					common::cend  ( prm_range )
+					::std::cbegin( prm_range ),
+					::std::cend  ( prm_range )
 				)
 			);
 		}
@@ -194,8 +193,8 @@ namespace cath {
 		                          ) {
 			return sort_uniq_copy(
 				Container(
-					common::cbegin( prm_range ),
-					common::cend  ( prm_range )
+					::std::cbegin( prm_range ),
+					::std::cend  ( prm_range )
 				),
 				prm_bin_pred
 			);
@@ -212,8 +211,8 @@ namespace cath {
 		                                 ) {
 			return stable_sort_uniq_copy(
 				Container(
-					common::cbegin( prm_range ),
-					common::cend  ( prm_range )
+					::std::cbegin( prm_range ),
+					::std::cend  ( prm_range )
 				)
 			);
 		}

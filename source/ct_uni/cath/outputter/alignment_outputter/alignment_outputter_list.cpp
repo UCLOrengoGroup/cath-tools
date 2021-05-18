@@ -21,7 +21,6 @@
 #include "alignment_outputter_list.hpp"
 
 #include "cath/common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
 
 using namespace ::cath::align;
@@ -42,12 +41,12 @@ bool alignment_outputter_list::empty() const {
 
 /// \brief TODOCUMENT
 alignment_outputter_list::const_iterator alignment_outputter_list::begin() const {
-	return common::cbegin( outputters );
+	return cbegin( outputters );
 }
 
 /// \brief TODOCUMENT
 alignment_outputter_list::const_iterator alignment_outputter_list::end() const {
-	return common::cend( outputters );
+	return cend( outputters );
 }
 
 /// \brief TODOCUMENT

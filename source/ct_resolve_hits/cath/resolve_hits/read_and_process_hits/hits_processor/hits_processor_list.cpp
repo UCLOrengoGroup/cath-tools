@@ -115,7 +115,7 @@ bool hits_processor_list::requires_strictly_worse_hits() const {
 /// Note that this pipes through boost::indirected_range so the range is
 /// over elements of type `const hits_processor &` rather than `clone_ptr<const hits_processor>`
 auto hits_processor_list::begin() const -> const_iterator {
-	return common::cbegin( processors | boost::adaptors::indirected );
+	return cbegin( processors | boost::adaptors::indirected );
 }
 
 /// \brief Standard const end() method, as part of making this a range over hits_processors
@@ -123,7 +123,7 @@ auto hits_processor_list::begin() const -> const_iterator {
 /// Note that this pipes through boost::indirected_range so the range is
 /// over elements of type `const hits_processor &` rather than `clone_ptr<const hits_processor>`
 auto hits_processor_list::end() const -> const_iterator {
-	return common::cend( processors | boost::adaptors::indirected );
+	return cend( processors | boost::adaptors::indirected );
 }
 
 /// \brief Make the hits_processor implied by the specified spec object and the specified ostream

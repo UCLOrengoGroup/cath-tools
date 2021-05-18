@@ -24,7 +24,6 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/file/prc_scores_file/prc_scores_entry.hpp"
@@ -55,8 +54,8 @@ namespace cath {
 		                                                           ) {
 			const auto is_space_in_prc     = [] (const char &x) { return ( x == ' ' || x == '\t' || x == '\n' ); };
 			const auto is_not_space_in_prc = [] (const char &x) { return ( x != ' ' && x != '\t' && x != '\n' ); };
-			auto       start_itr = common::cbegin( prm_prc_line );
-			const auto end_itr   = common::cend  ( prm_prc_line );
+			auto       start_itr = ::std::cbegin( prm_prc_line );
+			const auto end_itr   = ::std::cend  ( prm_prc_line );
 			auto       next_itr  = std::find_if( start_itr, end_itr, is_space_in_prc );
 			size_t     ctr       = 0;
 			while ( start_itr != end_itr ) {

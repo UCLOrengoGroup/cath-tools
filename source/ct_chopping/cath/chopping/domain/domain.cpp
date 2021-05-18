@@ -27,7 +27,6 @@
 #include "cath/common/algorithm/are_same.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/boost_addenda/range/to_vector.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 
@@ -110,12 +109,12 @@ const str_opt & domain::get_opt_domain_id() const {
 
 /// \brief TODOCUMENT
 domain::const_iterator domain::begin() const {
-	return common::cbegin( segments );
+	return cbegin( segments );
 }
 
 /// \brief TODOCUMENT
 domain::const_iterator domain::end() const {
-	return common::cend( segments );
+	return cend( segments );
 }
 
 /// \brief Get any regions from the specified optional domain or nullopt if none

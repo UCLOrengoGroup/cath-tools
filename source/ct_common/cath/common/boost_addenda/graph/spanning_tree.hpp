@@ -32,7 +32,6 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/boost_addenda/range/stable_sort_proj.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/common/type_traits.hpp"
@@ -94,9 +93,9 @@ namespace cath {
 
 				// Construct a graph from the edges and weights
 				const graph my_graph(
-					common::cbegin( prm_edges           ),
-					common::cend  ( prm_edges           ),
-					common::cbegin( transformed_weights ),
+					::std::cbegin( prm_edges           ),
+					::std::cend  ( prm_edges           ),
+					::std::cbegin( transformed_weights ),
 					prm_num_items
 				);
 

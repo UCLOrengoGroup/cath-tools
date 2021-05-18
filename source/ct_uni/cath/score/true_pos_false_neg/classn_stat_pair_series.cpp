@@ -24,7 +24,6 @@
 
 #include "cath/common/algorithm/adjacent_accumulate.hpp"
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat.hpp"
 
@@ -58,12 +57,12 @@ const doub_doub_pair & classn_stat_pair_series::operator[](const size_t &prm_ind
 
 /// \brief TODOCUMENT
 classn_stat_pair_series::const_iterator classn_stat_pair_series::begin() const {
-	return common::cbegin( data );
+	return cbegin( data );
 }
 
 /// \brief TODOCUMENT
 classn_stat_pair_series::const_iterator classn_stat_pair_series::end() const {
-	return common::cend( data );
+	return cend( data );
 }
 
 ///// \brief TODOCUMENT

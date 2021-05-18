@@ -23,7 +23,6 @@
 
 #include <functional>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp17/constexpr_invoke.hpp"
 #include "cath/common/function/ident.hpp"
 
@@ -67,8 +66,8 @@ namespace cath {
 		              Proj &&prm_proj  = Proj{} ///< The function to use to project the elements
 		              ) {
 			return are_same_itr(
-				common::cbegin      ( prm_rng   ),
-				common::cend        ( prm_rng   ),
+				::std::cbegin       ( prm_rng   ),
+				::std::cend         ( prm_rng   ),
 				std::forward< Eq   >( prm_equal ),
 				std::forward< Proj >( prm_proj  )
 			);

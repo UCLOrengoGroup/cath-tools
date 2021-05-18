@@ -43,7 +43,6 @@
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/function/ident.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
-#include "cath/common/string/char_arr_to_string.hpp"
 #include "cath/common/string/string_view_of_char_arr.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/pdb/pdb_record.hpp"
@@ -510,7 +509,7 @@ namespace cath {
 	/// \relates amino_acid
 	inline ::std::string get_code_string(const amino_acid &prm_amino_acid ///< The amino_acid to query
 	                                     ) {
-		return common::char_arr_to_string( prm_amino_acid.get_code() );
+		return common::string_of_char_arr( prm_amino_acid.get_code() );
 	}
 
 	namespace detail {

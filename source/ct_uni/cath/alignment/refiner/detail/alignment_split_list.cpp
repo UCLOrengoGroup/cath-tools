@@ -22,7 +22,6 @@
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 #include <iostream>
 
@@ -48,12 +47,12 @@ alignment_split_list::iterator alignment_split_list::end() {
 
 /// \brief TODOCUMENT
 alignment_split_list::const_iterator alignment_split_list::begin() const {
-	return common::cbegin( splits );
+	return cbegin( splits );
 }
 
 /// \brief TODOCUMENT
 alignment_split_list::const_iterator alignment_split_list::end() const {
-	return common::cend( splits );
+	return cend( splits );
 }
 
 /// \brief TODOCUMENT

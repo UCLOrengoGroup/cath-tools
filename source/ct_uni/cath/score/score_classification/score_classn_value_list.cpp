@@ -41,7 +41,6 @@
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/sorted_insert.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/score/score_classification/value_list_scaling.hpp"
 #include "cath/score/true_pos_false_neg/named_true_false_pos_neg_list.hpp"
@@ -98,12 +97,12 @@ const score_classn_value & score_classn_value_list::operator[](const size_t &prm
 
 /// \brief TODOCUMENT
 score_classn_value_list::const_iterator score_classn_value_list::begin() const {
-	return common::cbegin( score_classn_values );
+	return cbegin( score_classn_values );
 }
 
 /// \brief TODOCUMENT
 score_classn_value_list::const_iterator score_classn_value_list::end() const {
-	return common::cend( score_classn_values );
+	return cend( score_classn_values );
 }
 
 /// \brief TODOCUMENT
@@ -145,7 +144,7 @@ double cath::score::worst_score(const score_classn_value_list &prm_score_classn_
 		prm_score_classn_value_list | reversed,
 		[&] (const score_classn_value &x) { return ( x.get_score_value() != worst_possible_score( prm_score_classn_value_list ) ); }
 	);
-	if ( find_itr == common::cend( prm_score_classn_value_list | reversed ) ) {
+	if ( find_itr == cend( prm_score_classn_value_list | reversed ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find a worst_score that isn't the worst possible score"));
 		// Could consider returning worst_possible_score( prm_score_classn_value_list ) in this case
 	}
@@ -188,7 +187,7 @@ value_list_scaling cath::score::get_scaling(const score_classn_value_list &prm_s
 const score_classn_value & cath::score::best_scoring_actual_positive(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                                      ) {
 	const auto find_itr = find_if( prm_score_classn_value_list, [] (const score_classn_value &x) { return x.get_instance_is_positive(); } );
-	if ( find_itr == cath::common::cend( prm_score_classn_value_list ) ) {
+	if ( find_itr == cend( prm_score_classn_value_list ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 	}
 	return *find_itr;
@@ -200,7 +199,7 @@ const score_classn_value & cath::score::best_scoring_actual_positive(const score
 const score_classn_value & cath::score::best_scoring_actual_negative(const score_classn_value_list &prm_score_classn_value_list ///< TODOCUMENT
                                                                      ) {
 	const auto find_itr = find_if( prm_score_classn_value_list, [] (const score_classn_value &x) { return ! x.get_instance_is_positive(); } );
-	if ( find_itr == cath::common::cend( prm_score_classn_value_list ) ) {
+	if ( find_itr == cend( prm_score_classn_value_list ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
 	}
 	return *find_itr;
@@ -264,8 +263,8 @@ str_set cath::score::get_sorted_instance_labels(const score_classn_value_list &p
                                                 ) {
 	const auto instance_labels = get_instance_labels( prm_score_classn_value_list );
 	return {
-		cath::common::cbegin( instance_labels ),
-		cath::common::cend  ( instance_labels )
+		cbegin( instance_labels ),
+		cend  ( instance_labels )
 	};
 }
 
@@ -308,7 +307,7 @@ score_classn_value_vec cath::score::get_score_classn_values_of_instance_labels(c
 				instance_labels_and_indices,
 				[&] (const str_size_pair &y) { return x == y.first; }
 			);
-			if ( find_itr == cath::common::cend( instance_labels_and_indices ) ) {
+			if ( find_itr == cend( instance_labels_and_indices ) ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find instance label in score_classn_value_list"));
 			}
 			return prm_score_classn_value_list[ find_itr->second ];

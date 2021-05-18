@@ -26,7 +26,6 @@
 
 #include "cath/common/algorithm/append.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"

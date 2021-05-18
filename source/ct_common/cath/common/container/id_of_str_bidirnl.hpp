@@ -177,12 +177,12 @@ namespace cath {
 
 		/// \brief Standard const begin() operator to provide range access
 		inline auto id_of_str_bidirnl::begin() const -> const_iterator {
-			return common::cbegin( names_by_id );
+			return ::std::cbegin( names_by_id );
 		}
 
 		/// \brief Standard const end() operator to provide range access
 		inline auto id_of_str_bidirnl::end() const -> const_iterator {
-			return common::cend  ( names_by_id );
+			return ::std::cend  ( names_by_id );
 		}
 
 		/// \brief Get the largest number if the specified strings are all numbers, or return none otherwise
@@ -204,8 +204,8 @@ namespace cath {
 					( ( front( x ) == '-' ) && boost::size( x ) == 1 )
 					||
 					boost::algorithm::any_of(
-						next( common::cbegin( x ) ),
-						common::cend( x ),
+						next( ::std::cbegin( x ) ),
+						::std::cend( x ),
 						[] (const auto &y) { return ! boost::algorithm::is_digit()( y ); }
 					)
 				);

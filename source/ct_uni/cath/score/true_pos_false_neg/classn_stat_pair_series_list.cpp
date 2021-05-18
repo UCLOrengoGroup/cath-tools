@@ -22,7 +22,6 @@
 
 #include <boost/range/algorithm/find_if.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat_pair_series.hpp"
 
@@ -55,12 +54,12 @@ const classn_stat_pair_series & classn_stat_pair_series_list::operator[](const s
 
 /// \brief TODOCUMENT
 classn_stat_pair_series_list::const_iterator classn_stat_pair_series_list::begin() const {
-	return cath::common::cbegin( classn_stat_pair_serieses );
+	return cbegin( classn_stat_pair_serieses );
 }
 
 /// \brief TODOCUMENT
 classn_stat_pair_series_list::const_iterator classn_stat_pair_series_list::end() const {
-	return cath::common::cend( classn_stat_pair_serieses );
+	return cend( classn_stat_pair_serieses );
 }
 
 /// \brief TODOCUMENT
@@ -75,7 +74,7 @@ const classn_stat_pair_series & cath::score::classn_stat_pair_series_list_of_nam
 			return ( x.get_name() == prm_name );
 		}
 	);
-	if ( find_itr == cath::common::cend( prm_classn_stat_pair_serieses ) ) {
+	if ( find_itr == cend( prm_classn_stat_pair_serieses ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find requested name \"" + prm_name + "\" in prm_classn_stat_pair_serieses"));
 	}
 	return *find_itr;

@@ -77,7 +77,7 @@ size_vec common_residue_select_best_score_percent_policy::do_select_common_resid
 	// percentile_total_score, then return a sorted copy of all those indices
 	double temp_sum( 0.0 );
 	return sort_build<size_vec>(
-		common::cbegin( score_sorted_indices ),
+		cbegin( score_sorted_indices ),
 		find_if(
 			score_sorted_indices,
 			[&] (const size_t &x) {

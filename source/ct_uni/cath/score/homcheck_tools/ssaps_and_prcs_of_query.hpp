@@ -28,7 +28,6 @@
 #include <boost/range/algorithm/sort.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/score/homcheck_tools/ssap_and_prc.hpp"

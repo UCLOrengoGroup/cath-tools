@@ -25,7 +25,6 @@
 #include <boost/operators.hpp>
 #include <boost/range/combine.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -179,14 +178,14 @@ namespace cath {
 		///
 		/// NOTE: be careful because the range is not over the values, it's over a bunch of bin-counts
 		inline auto overlap_frac_distn::begin() const -> const_iterator {
-			return common::cbegin( fraction_counts );
+			return ::std::cbegin( fraction_counts );
 		}
 
 		/// \brief Standard const begin() method, as part of making this into a range over the bins
 		///
 		/// NOTE: be careful because the range is not over the values, it's over a bunch of bin-counts
 		inline auto overlap_frac_distn::end() const -> const_iterator {
-			return common::cend  ( fraction_counts );
+			return ::std::cend  ( fraction_counts );
 		}
 
 		/// \brief Add an overlap fraction to the overlap_frac_distn

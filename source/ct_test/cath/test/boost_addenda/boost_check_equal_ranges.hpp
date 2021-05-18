@@ -24,7 +24,6 @@
 #include <boost/range/concepts.hpp>
 #include <boost/test/test_tools.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
 namespace cath {
@@ -43,10 +42,10 @@ namespace cath {
 			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const RNG2 > ));
 
 			BOOST_CHECK_EQUAL_COLLECTIONS(
-				common::cbegin( prm_rng_1 ),
-				common::cend  ( prm_rng_1 ),
-				common::cbegin( prm_rng_2 ),
-				common::cend  ( prm_rng_2 )
+				::std::cbegin( prm_rng_1 ),
+				::std::cend  ( prm_rng_1 ),
+				::std::cbegin( prm_rng_2 ),
+				::std::cend  ( prm_rng_2 )
 			);
 		}
 

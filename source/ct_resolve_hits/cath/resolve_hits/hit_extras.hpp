@@ -29,7 +29,6 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp17/constexpr_invoke.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
@@ -163,12 +162,12 @@ namespace cath {
 
 			/// \brief Standard const begin() operator to provide range access
 			const_iterator begin() const {
-				return common::cbegin( extras );
+				return ::std::cbegin( extras );
 			}
 
 			/// \brief Standard const end() operator to provide range access
 			const_iterator end() const {
-				return common::cend( extras );
+				return ::std::cend( extras );
 			}
 
 			/// \brief Return whether this is empty

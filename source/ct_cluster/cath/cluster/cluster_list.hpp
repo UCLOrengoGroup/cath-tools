@@ -79,12 +79,12 @@ namespace cath {
 
 			/// \brief Standard const begin() method, as part of making this into a range over the cluster_domains entries
 			const_iterator begin() const {
-				return common::cbegin( cluster_seq_domains );
+				return ::std::cbegin( cluster_seq_domains );
 			}
 
 			/// \brief Standard const end() method, as part of making this into a range over the cluster_domains entries
 			const_iterator end() const {
-				return common::cend( cluster_seq_domains );
+				return ::std::cend( cluster_seq_domains );
 			}
 		};
 

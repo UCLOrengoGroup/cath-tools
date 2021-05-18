@@ -23,8 +23,6 @@
 
 #include <boost/range/concepts.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 namespace cath {
 	namespace common {
 
@@ -68,8 +66,8 @@ namespace cath {
 			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const SinglePassRange > ));
 
 			return adjacent_accumulate(
-				common::cbegin( prm_rng ),
-				common::cend  ( prm_rng ),
+				::std::cbegin( prm_rng ),
+				::std::cend  ( prm_rng ),
 				std::move( prm_init ),
 				fun
 			);

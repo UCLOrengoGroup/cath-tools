@@ -31,7 +31,6 @@
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/ssap/windowed_matrix.hpp"
 
@@ -40,6 +39,8 @@ using namespace ::cath::common;
 
 using ::boost::irange;
 using ::boost::numeric_cast;
+using ::std::cbegin;
+using ::std::cend;
 using ::std::filesystem::path;
 using ::std::get;
 using ::std::max;
@@ -125,18 +126,18 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &prm_scorer ///< Th
 
 		// In principle this can use minmax_element, but Clang 10 with libc++ rejects it because
 		// cross_itr isn't a forward iterator because it's uses a proxy for its reference type
-		auto min_itr = common::cend( index_range_cross );
-		auto max_itr = common::cend( index_range_cross );
-		for (auto itr = common::cbegin( index_range_cross ); itr != common::cend( index_range_cross ); ++itr) {
-			if ( min_itr == common::cend( index_range_cross ) || score_of_idx_tpl( *itr ) < score_of_idx_tpl( *min_itr ) ) {
+		auto min_itr = cend( index_range_cross );
+		auto max_itr = cend( index_range_cross );
+		for (auto itr = cbegin( index_range_cross ); itr != cend( index_range_cross ); ++itr) {
+			if ( min_itr == cend( index_range_cross ) || score_of_idx_tpl( *itr ) < score_of_idx_tpl( *min_itr ) ) {
 				min_itr = itr;
 			}
-			if ( max_itr == common::cend( index_range_cross ) || score_of_idx_tpl( *itr ) > score_of_idx_tpl( *max_itr ) ) {
+			if ( max_itr == cend( index_range_cross ) || score_of_idx_tpl( *itr ) > score_of_idx_tpl( *max_itr ) ) {
 				max_itr = itr;
 			}
 		}
 
-		if ( min_itr == common::cend( index_range_cross ) || max_itr == common::cend( index_range_cross ) ) {
+		if ( min_itr == cend( index_range_cross ) || max_itr == cend( index_range_cross ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find min/max score in elements"));
 		}
 		const auto min_score = score_of_idx_tpl( *min_itr );

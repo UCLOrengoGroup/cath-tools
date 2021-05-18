@@ -77,7 +77,7 @@ char_3_arr cath::get_code_of_amino_acid_letter(const char &prm_one_letter_aa ///
 /// \relates amino_acid
 string cath::get_code_str_of_amino_acid_letter(const char &prm_one_letter_aa ///< The single-letter amino acid (eg 'A' for alanine)
                                                ) {
-	return char_arr_to_string( get_code_of_amino_acid_letter( prm_one_letter_aa ) );
+	return string_of_char_arr( get_code_of_amino_acid_letter( prm_one_letter_aa ) );
 }
 
 /// \brief TODOCUMENT

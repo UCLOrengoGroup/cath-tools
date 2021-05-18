@@ -27,7 +27,6 @@
 #include <boost/algorithm/string/trim.hpp>
 
 #include "cath/common/algorithm/for_n.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/rapidjson_addenda/rapidjson_writer.hpp"
 
@@ -60,10 +59,10 @@ namespace cath {
 			// Find the end of the any preceding prm_extra_depth array-open chars
 			// and the start of any following prm_extra_depth array-close chars
 			const auto end_of_preceding   = ( prm_extra_depth > 0 )
-			                                ? common::cend  ( boost::algorithm::find_nth( string_range, "[",     debug_numeric_cast<int>( prm_extra_depth - 1 ) ) )
+			                                ? ::std::cend  ( boost::algorithm::find_nth( string_range, "[",     debug_numeric_cast<int>( prm_extra_depth - 1 ) ) )
 			                                : c_string;
 			const auto begin_of_following = ( prm_extra_depth > 0 )
-			                                ? common::cbegin( boost::algorithm::find_nth( string_range, "]", 0 - debug_numeric_cast<int>( prm_extra_depth     ) ) )
+			                                ? ::std::cbegin( boost::algorithm::find_nth( string_range, "]", 0 - debug_numeric_cast<int>( prm_extra_depth     ) ) )
 			                                : c_string_end;
 
 			// Get an iterator_range of the trimmed section between those two points
@@ -71,8 +70,8 @@ namespace cath {
 
 			// Return a std::string of that range
 			return {
-				common::cbegin( trimmed_range ),
-				common::cend  ( trimmed_range )
+				::std::cbegin( trimmed_range ),
+				::std::cend  ( trimmed_range )
 			};
 		}
 

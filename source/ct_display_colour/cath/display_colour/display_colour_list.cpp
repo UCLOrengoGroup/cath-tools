@@ -26,7 +26,6 @@
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_type_aliases.hpp"
 
@@ -86,12 +85,12 @@ const display_colour & display_colour_list::colour_of_index(const size_t &prm_in
 
 /// \brief Standard const begin() operator to provide range access
 auto display_colour_list::begin() const -> const_iterator {
-	return common::cbegin( colours );
+	return cbegin( colours );
 }
 
 /// \brief Standard const end() operator to provide range access
 auto display_colour_list::end() const -> const_iterator {
-	return common::cend( colours );
+	return cend( colours );
 }
 
 /// \brief TODOCUMENT

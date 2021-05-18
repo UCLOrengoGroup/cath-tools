@@ -82,14 +82,14 @@ namespace cath {
 			///
 			/// This is part of making scan_multi_structure_data into a random access range
 			inline auto scan_multi_structure_data::begin() const -> const_iterator {
-				return common::cbegin( structures_data );
+				return ::std::cbegin( structures_data );
 			}
 
 			/// \brief Standard end() operator returning a const_iterator over the scan_structure_data objects
 			///
 			/// This is part of making scan_multi_structure_data into a random access range
 			inline auto scan_multi_structure_data::end() const -> const_iterator {
-				return common::cend  ( structures_data );
+				return ::std::cend  ( structures_data );
 			}
 
 			/// \brief TODOCUMENT

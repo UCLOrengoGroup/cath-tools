@@ -53,7 +53,6 @@
 #include "cath/common/boost_addenda/range/back.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -588,8 +587,8 @@ istream & cath::file::read_pdb_file(istream &input_stream, ///< TODOCUMENT
 					::spdlog::warn( R"(Whilst parsing PDB file, found conflicting consecutive entries for residue "{}")"
 					                R"( (with amino acids "{}" and then "{}") - won't warn about any further entries.)",
 					                res_id,
-					                char_arr_to_string( *prev_amino_acid_3_char_code ),
-					                char_arr_to_string( amino_acid_3_char_code ) );
+					                string_of_char_arr( *prev_amino_acid_3_char_code ),
+					                string_of_char_arr( amino_acid_3_char_code ) );
 					prev_warned_conflict = true;
 				}
 			}

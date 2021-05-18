@@ -27,7 +27,6 @@
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/file/name_set/name_set_list.hpp"
 #include "cath/file/pdb/backbone_complete_indices.hpp"
 #include "cath/file/pdb/pdb.hpp"
@@ -99,11 +98,11 @@ const pdb & pdb_list::operator[](const size_t &prm_index ///< TODOCUMENT
 //}
 /// \brief TODOCUMENT
 pdb_list::const_iterator pdb_list::begin() const {
-	return common::cbegin( pdbs );
+	return cbegin( pdbs );
 }
 /// \brief TODOCUMENT
 pdb_list::const_iterator pdb_list::end() const {
-	return common::cend( pdbs );
+	return cend( pdbs );
 }
 
 /// \brief TODOCUMENT

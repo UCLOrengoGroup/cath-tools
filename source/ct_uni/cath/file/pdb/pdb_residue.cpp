@@ -33,7 +33,6 @@
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/range/max_proj_element.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/file/pdb/pdb_atom.hpp"
 #include "cath/structure/protein/residue.hpp"

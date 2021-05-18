@@ -30,8 +30,6 @@
 #include <boost/range/algorithm/find.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
-
 /// \todo Consider adding predicate versions of all contains functions
 namespace cath {
 	namespace common {
@@ -50,7 +48,7 @@ namespace cath {
 		bool contains(const R &prm_range, ///< TODOCUMENT
 		              const T &prm_value  ///< TODOCUMENT
 		              ) {
-			return ( common::cend( prm_range ) != boost::range::find( prm_range, prm_value ) );
+			return ( ::std::cend( prm_range ) != boost::range::find( prm_range, prm_value ) );
 		}
 
 
@@ -103,7 +101,7 @@ namespace cath {
 		bool contains_if(const R &prm_range,   ///< TODOCUMENT
 		                 P        prm_uni_pred ///< TODOCUMENT
 		                 ) {
-			return ( common::cend( prm_range ) != boost::range::find_if( prm_range, prm_uni_pred ) );
+			return ( ::std::cend( prm_range ) != boost::range::find_if( prm_range, prm_uni_pred ) );
 		}
 
 
@@ -129,7 +127,7 @@ namespace cath {
 		template <typename R>
 		bool contains_adjacent_match(const R &prm_range ///< TODOCUMENT
 		                             ) {
-			return ( common::cend( prm_range ) != boost::range::adjacent_find( prm_range ) );
+			return ( ::std::cend( prm_range ) != boost::range::adjacent_find( prm_range ) );
 		}
 
 		/// \brief TODOCUMENT
@@ -137,7 +135,7 @@ namespace cath {
 		bool contains_adjacent_match(const R &prm_range,   ///< TODOCUMENT
 		                             P        prm_bin_pred ///< TODOCUMENT
 		                             ) {
-			return ( common::cend( prm_range ) != boost::range::adjacent_find( prm_range, prm_bin_pred ) );
+			return ( ::std::cend( prm_range ) != boost::range::adjacent_find( prm_range, prm_bin_pred ) );
 		}
 	} // namespace common
 } // namespace cath

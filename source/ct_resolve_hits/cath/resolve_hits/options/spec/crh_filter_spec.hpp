@@ -147,7 +147,7 @@ namespace cath {
 			const auto &min_dc_hmm_coverage_frac = prm_filter_spec.get_min_dc_hmm_coverage_frac();
 			if ( min_dc_hmm_coverage_frac ) {
 				if ( prm_match_id.length() == 35 && boost::algorithm::starts_with( prm_match_id, dc_prefix_suffix ) ) {
-					if ( regex_search( common::cbegin( prm_match_id ), common::cend( prm_match_id ), dc_regex ) ) {
+					if ( regex_search( ::std::cbegin( prm_match_id ), ::std::cend( prm_match_id ), dc_regex ) ) {
 						return min_dc_hmm_coverage_frac;
 					}
 				}

@@ -367,7 +367,7 @@ namespace cath {
 					[&] (const str_str_pair &x) {
 						const double &ssap_score = ssaps_by_label.at( x ).get().get_ssap_score();
 						const auto    prc_itr    = prcs_by_label.find( x );
-						if ( prc_itr == common::cend( prcs_by_label ) ) {
+						if ( prc_itr == cend( prcs_by_label ) ) {
 							return numeric_limits<double>::lowest();
 						};
 						const double &prc_score = prc_itr->second.get().get_evalue();

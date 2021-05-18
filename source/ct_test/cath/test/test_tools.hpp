@@ -26,7 +26,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 
 #include <iostream> // ***** TEMPORARY *****
 
@@ -160,8 +159,8 @@ namespace cath {
 			template <typename R>
 			void check_equality_operators_on_diff_vals_range(const R &prm_range ///< The range of values to compare
 			                                                 ) {
-				for (auto itr_a = common::cbegin( prm_range ); itr_a != common::cend( prm_range ); ++itr_a) {
-					for (auto itr_b = common::cbegin( prm_range ); itr_b != common::cend( prm_range ); ++itr_b) {
+				for (auto itr_a = ::std::cbegin( prm_range ); itr_a != ::std::cend( prm_range ); ++itr_a) {
+					for (auto itr_b = ::std::cbegin( prm_range ); itr_b != ::std::cend( prm_range ); ++itr_b) {
 						if ( itr_a != itr_b ) {
 							check_equality_operators_on_diff_vals( *itr_a, *itr_b );
 						}

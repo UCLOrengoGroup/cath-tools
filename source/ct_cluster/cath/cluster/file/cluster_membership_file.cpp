@@ -130,7 +130,7 @@ old_cluster_data cath::clust::parse_old_membership(istream               &prm_is
 				+ "\""
 			));
 		}
-		if ( find_itr_before_first_non_space( domain_id_itrs.second, common::cend( line ) ) != common::cend( line ) ) {
+		if ( find_itr_before_first_non_space( domain_id_itrs.second, cend( line ) ) != cend( line ) ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
 				  "Cannot parse cluster membership from more than two fields at line number "
 				+ to_string( line_ctr )
@@ -218,7 +218,7 @@ new_cluster_data cath::clust::parse_new_membership(istream               &prm_is
 				+ "\""
 			));
 		}
-		if ( find_itr_before_first_non_space( domain_id_itrs.second, common::cend( line ) ) != common::cend( line ) ) {
+		if ( find_itr_before_first_non_space( domain_id_itrs.second, cend( line ) ) != cend( line ) ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception(
 				  "Cannot parse cluster membership from more than two fields at line number "
 				+ to_string( line_ctr )

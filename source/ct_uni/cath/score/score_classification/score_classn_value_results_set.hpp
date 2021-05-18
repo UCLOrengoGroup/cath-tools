@@ -27,7 +27,6 @@
 
 #include <boost/range/algorithm/lower_bound.hpp>
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/score/aligned_pair_score_list/aligned_pair_score_value_list.hpp"
@@ -96,7 +95,7 @@ namespace cath {
 					prm_name,
 					detail::score_classn_value_list_name_less{}
 				);
-				if ( found_itr == common::cend( prm_set.score_classn_value_lists ) || found_itr->get_name() != prm_name ) {
+				if ( found_itr == ::std::cend( prm_set.score_classn_value_lists ) || found_itr->get_name() != prm_name ) {
 					BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot find score_classn_value_list of name"));
 				}
 				return *found_itr;

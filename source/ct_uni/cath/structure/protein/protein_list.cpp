@@ -24,7 +24,6 @@
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/minmax_element.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 //#include "cath/file/pdb/pdb.hpp"
 //#include "cath/file/pdb/pdb_atom.hpp"
 //#include "cath/file/pdb/pdb_residue.hpp"
@@ -88,12 +87,12 @@ auto protein_list::end() -> iterator{
 
 /// \brief Standard const begin() operator to provide range access
 auto protein_list::begin() const -> const_iterator {
-	return common::cbegin( proteins );
+	return cbegin( proteins );
 }
 
 /// \brief Standard const end() operator to provide range access
 auto protein_list::end() const -> const_iterator {
-	return common::cend( proteins );
+	return cend( proteins );
 }
 
 /// \brief TODOCUMENT

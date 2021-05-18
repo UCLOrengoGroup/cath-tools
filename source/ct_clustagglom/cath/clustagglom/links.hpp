@@ -29,7 +29,6 @@
 #include "cath/clustagglom/link_dirn.hpp"
 #include "cath/clustagglom/link_list.hpp"
 #include "cath/common/algorithm/contains.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/cpp17/apply.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -188,12 +187,12 @@ namespace cath {
 
 		/// \brief Standard begin() method to allow iteration over the lists of links
 		inline auto links::begin() const -> const_iterator {
-			return common::cbegin( the_link_lists );
+			return ::std::cbegin( the_link_lists );
 		}
 
 		/// \brief Standard end() method to allow iteration over the lists of links
 		inline auto links::end() const -> const_iterator {
-			return common::cend  ( the_link_lists );
+			return ::std::cend  ( the_link_lists );
 		}
 
 		/// \brief Symmetrically add the specified link tuple to the specified links

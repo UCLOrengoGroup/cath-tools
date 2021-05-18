@@ -26,7 +26,6 @@
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/common/boost_addenda/make_string_ref.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
@@ -65,8 +64,8 @@ bool sillitoe_chopping_format::do_represents_fragments() const {
 ///           * an iterator to the start of the regions part of the string
 pair<string_ref, str_citr> sillitoe_chopping_format::parse_to_start_of_regions(const string &prm_domain_chopping_string ///< The domain chopping string to parse
                                                                                ) {
-	const auto begin_itr = common::cbegin( prm_domain_chopping_string );
-	const auto end_itr   = common::cend  ( prm_domain_chopping_string );
+	const auto begin_itr = cbegin( prm_domain_chopping_string );
+	const auto end_itr   = cend  ( prm_domain_chopping_string );
 
 	// Check the first character and return if not 'D'
 	if ( prm_domain_chopping_string.empty() ) {
@@ -110,7 +109,7 @@ domain sillitoe_chopping_format::do_parse_domain(const string &prm_domain_choppi
 	const auto  parsed_start      = parse_to_start_of_regions( prm_domain_chopping_string );
 	const auto &name_str_ref      = parsed_start.first;
 	const auto &regions_begin_itr = parsed_start.second;
-	const auto  end_itr           = common::cend    ( prm_domain_chopping_string );
+	const auto  end_itr           = cend    ( prm_domain_chopping_string );
 	
 
 	// Parse each of the regions
@@ -192,8 +191,8 @@ region sillitoe_chopping_format::parse_segment(const string_ref &prm_segment_str
 		return region{ the_chain_label };
 	}
 
-	const auto begin_itr          = common::cbegin( prm_segment_string );
-	const auto end_itr            = common::cend  ( prm_segment_string );
+	const auto begin_itr          = cbegin( prm_segment_string );
+	const auto end_itr            = cend  ( prm_segment_string );
 	const auto begin_plus_one_itr = next( begin_itr );
 	const auto res_end_itr        = next( end_itr, 0 - static_cast<int>( CHAIN_DELIM_NEG_OFFSET ) );
 	const auto dash_itr           = find( begin_plus_one_itr, res_end_itr, RESIDUE_NAME_DELIM );
@@ -219,8 +218,8 @@ residue_name sillitoe_chopping_format::parse_residue(const string_ref &prm_strin
 	if ( prm_string_ref.empty() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse sillitoe-chopping-format residue from an empty string"));
 	}
-	const auto begin_itr   = common::cbegin( prm_string_ref );
-	const auto end_itr     = common::cend  ( prm_string_ref );
+	const auto begin_itr   = cbegin( prm_string_ref );
+	const auto end_itr     = cend  ( prm_string_ref );
 	if ( isdigit( prm_string_ref.back() ) != 0 ) {
 		/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 		return residue_name{ stoi( string{ begin_itr, end_itr } ) };

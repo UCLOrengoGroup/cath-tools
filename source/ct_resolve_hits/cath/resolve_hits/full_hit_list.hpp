@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_LIST_HPP
 
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/resolve_hits/full_hit.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 
@@ -114,12 +113,12 @@ namespace cath {
 
 		/// \brief Standard const begin() method, as part of making this into a range over the full_hits
 		inline auto full_hit_list::begin() const -> const_iterator {
-			return common::cbegin( the_full_hits );
+			return ::std::cbegin( the_full_hits );
 		}
 
 		/// \brief Standard const end() method, as part of making this into a range over the full_hits
 		inline auto full_hit_list::end() const -> const_iterator {
-			return common::cend( the_full_hits );
+			return ::std::cend( the_full_hits );
 		}
 
 	} // namespace rslv

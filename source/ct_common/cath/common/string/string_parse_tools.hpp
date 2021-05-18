@@ -34,7 +34,6 @@
 #include <boost/utility/string_ref.hpp>
 
 #include "cath/common/boost_addenda/make_string_ref.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
@@ -124,7 +123,7 @@ namespace cath {
 				prm_substring,
 				[] (const auto &x) { return ( ( x != ' ' ) && ( x != '\t' ) ); }
 			);
-			if ( itr == common::cend( prm_substring ) ) {
+			if ( itr == ::std::cend( prm_substring ) ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find any non-space chars in string"));
 			}
 			return itr;
@@ -161,7 +160,7 @@ namespace cath {
 				prm_substring | boost::adaptors::reversed,
 				[] (const auto &x) { return ( ( x != ' ' ) && ( x != '\t' ) ); }
 			);
-			if ( ritr.base() == common::cbegin( prm_substring ) ) {
+			if ( ritr.base() == ::std::cbegin( prm_substring ) ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to find any non-space chars in string"));
 			}
 			return ritr.base();
@@ -351,7 +350,7 @@ namespace cath {
 		                                              const size_t      &prm_init_index,  ///< The index of the field from which the search should start
 		                                              const str_citr    &prm_init_itr     ///< The iterator from which the search should start
 		                                              ) {
-			const auto end_itr = common::cend( prm_string );
+			const auto end_itr = ::std::cend( prm_string );
 			auto field_itr = find_itr_before_first_non_space( prm_init_itr, end_itr );
 			for (const size_t field_ctr : boost::irange( prm_init_index, prm_field_index ) ) {
 				boost::ignore_unused( field_ctr );
@@ -381,7 +380,7 @@ namespace cath {
 				prm_string,
 				prm_field_index,
 				0,
-				common::cbegin( prm_string )
+				::std::cbegin( prm_string )
 			);
 		}
 
@@ -408,8 +407,8 @@ namespace cath {
 		inline std::array<char, N> get_char_arr_of_substring(const std::string &prm_string,     ///< The string from which to copy the characters
 		                                                     const size_t      &prm_begin_index ///< The index at which to start copying characters from the string
 		                                                     ) {
-			const auto start_itr = std::next( common::cbegin( prm_string ), static_cast<ptrdiff_t>( prm_begin_index ) );
-			const auto end_itr   = common::cend( prm_string );
+			const auto start_itr = std::next( ::std::cbegin( prm_string ), static_cast<ptrdiff_t>( prm_begin_index ) );
+			const auto end_itr   = ::std::cend( prm_string );
 			return get_char_arr_of_char_range<N>(
 				std::min( start_itr, end_itr ),
 				end_itr

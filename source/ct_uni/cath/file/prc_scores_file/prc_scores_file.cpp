@@ -35,7 +35,6 @@
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/cbegin_cend.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/hash/pair_hash.hpp"
@@ -69,7 +68,7 @@ prc_scores_entry_vec prc_scores_file::remove_duplicates(const prc_scores_entry_v
 
 					const auto find_itr = index_of_previously_seen.find( name_pair );
 
-					if ( find_itr == common::cend( index_of_previously_seen ) ) {
+					if ( find_itr == cend( index_of_previously_seen ) ) {
 						index_of_previously_seen.emplace( name_pair, x );
 						return true;
 					}

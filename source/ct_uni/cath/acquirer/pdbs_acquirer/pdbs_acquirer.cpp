@@ -45,6 +45,8 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
+using ::std::cbegin;
+using ::std::cend;
 using ::std::cerr;
 using ::std::istream;
 using ::std::make_pair;
@@ -150,7 +152,7 @@ static pair<str_opt_vec, region_vec_opt_vec> strip_domain_vec(domain_vec prm_dom
 	result.second.reserve( prm_domains.size() );
 	for (const domain &the_domain : prm_domains) {
 		result.first .push_back( std::move( the_domain.get_opt_domain_id() ) );
-		result.second.push_back( region_vec{ common::cbegin( the_domain ), common::cend( the_domain ) } );
+		result.second.push_back( region_vec{ cbegin( the_domain ), cend( the_domain ) } );
 	}
 	return result;
 }
