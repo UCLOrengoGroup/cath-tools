@@ -32,8 +32,6 @@ using namespace ::std;
 
 using ::boost::property_tree::ptree;
 
-constexpr json_style score_value_list_json_outputter::DEFAULT_JSON_STYLE;
-
 /// \brief Ctor for score_value_list_json_outputter
 score_value_list_json_outputter::score_value_list_json_outputter(const aligned_pair_score_value_list &prm_aligned_pair_score_value_list, ///< The alignment to be output
                                                                  const json_style                    &prm_json_style                     ///< The style in which the JSON should be written

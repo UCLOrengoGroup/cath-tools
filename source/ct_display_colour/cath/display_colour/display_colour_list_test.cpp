@@ -43,8 +43,6 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-constexpr size_t display_colour_list_test_suite_fixture::NUM_COLOURS_IN_DEFAULT_COLOURS_STRING;
-
 BOOST_FIXTURE_TEST_SUITE(display_colour_list_test_suite, display_colour_list_test_suite_fixture)
 
 /// \brief TODOCUMENT

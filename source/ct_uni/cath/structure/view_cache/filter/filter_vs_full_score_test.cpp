@@ -56,9 +56,6 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-constexpr double cath::test::filter_vs_full_score_test_suite_fixture::STD_FILTER_SCORE;
-constexpr double cath::test::filter_vs_full_score_test_suite_fixture::STD_FULL_SCORE;
-
 /// \brief A test suite to unit test filter_vs_full_score
 BOOST_FIXTURE_TEST_SUITE(filter_vs_full_score_test_suite, cath::test::filter_vs_full_score_test_suite_fixture)
 

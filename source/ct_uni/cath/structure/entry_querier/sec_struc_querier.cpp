@@ -33,11 +33,6 @@ using namespace ::std;
 
 using ::boost::numeric_cast;
 
-constexpr size_t sec_struc_querier::SEC_STRUC_A_VALUE;
-constexpr size_t sec_struc_querier::SEC_STRUC_B_VALUE;
-constexpr size_t sec_struc_querier::SEC_STRUC_MIN_SCORE_CUTOFF;
-constexpr size_t sec_struc_querier::SEC_STRUC_MAX_DIST_SQ_CUTOFF;
-
 /// \brief TODOCUMENT
 size_t sec_struc_querier::do_get_length(const protein &prm_protein ///< TODOCUMENT
                                         ) const {

@@ -40,11 +40,6 @@ using ::std::string;
 /// unspecified can easily be distinguished from specified as empty.
 const string display_spec::COLOURS_UNSPECIFIED = "this string is used internally to indicate the colours haven't been specified";
 
-constexpr bool display_spec::DEFAULT_GRADIENT_COLOUR_ALIGNMENT;
-constexpr bool display_spec::DEFAULT_SHOW_SCORES_IF_PRESENT;
-constexpr bool display_spec::DEFAULT_SCORES_TO_EQUIVS;
-constexpr bool display_spec::DEFAULT_NORMALISE_SCORES;
-
 /// \brief Ctor for display_spec
 display_spec::display_spec(string      prm_display_colours_string,    ///< TODOCUMENT
                            const bool &prm_gradient_colour_alignment, ///< Whether to display a gradient of colours

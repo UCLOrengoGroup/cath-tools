@@ -44,10 +44,8 @@ const string misc_help_version_options_block::PO_HELP                 { "help"  
 const string misc_help_version_options_block::PO_VERSION              { "version"                };
 
 /// \brief The single-character for the help option
-constexpr char misc_help_version_options_block::PO_CHAR_HELP;
 
 /// \brief The single-character for the version option
-constexpr char misc_help_version_options_block::PO_CHAR_VERSION;
 
 /// \brief A standard do_clone method
 ///

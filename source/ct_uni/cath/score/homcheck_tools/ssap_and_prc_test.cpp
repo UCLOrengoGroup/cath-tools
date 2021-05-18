@@ -59,8 +59,6 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-constexpr double cath::test::ssap_and_prc_test_suite_fixture::MAGIC_FUNCTION_VALUE;
-
 BOOST_FIXTURE_TEST_SUITE(ssap_and_prc_test_suite, cath::test::ssap_and_prc_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(ctor_from_matching_pair_does_not_throw) {

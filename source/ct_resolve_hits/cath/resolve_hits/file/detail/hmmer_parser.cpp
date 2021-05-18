@@ -21,13 +21,3 @@
 #include "hmmer_parser.hpp"
 
 using namespace ::cath::rslv::detail;
-
-constexpr size_t hmmer_parser::LINE_BITSCORE_OFFSET;
-constexpr size_t hmmer_parser::LINE_COND_EVALUE_OFFSET;
-constexpr size_t hmmer_parser::LINE_INDP_EVALUE_OFFSET;
-constexpr size_t hmmer_parser::LINE_HMM_FROM_OFFSET;
-constexpr size_t hmmer_parser::LINE_HMM_TO_OFFSET;
-constexpr size_t hmmer_parser::LINE_ALI_FROM_OFFSET;
-constexpr size_t hmmer_parser::LINE_ALI_TO_OFFSET;
-constexpr size_t hmmer_parser::LINE_ENV_FROM_OFFSET;
-constexpr size_t hmmer_parser::LINE_ENV_TO_OFFSET;

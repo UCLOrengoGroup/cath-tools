@@ -33,8 +33,6 @@ using namespace ::cath::opts;
 using ::std::ostream;
 using ::std::string;
 
-constexpr bool pdb_input_spec::DEFAULT_READ_FROM_STDIN;
-
 /// \brief Getter for the list of PDB files that should be read
 const path_vec & pdb_input_spec::get_input_files() const {
 	return input_files;

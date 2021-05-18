@@ -52,8 +52,6 @@ using ::std::ifstream;
 using ::std::make_optional;
 using ::std::string;
 
-constexpr size_t executable_options::DEFAULT_PROG_OPS_LINE_LENGTH;
-
 /// \brief The prefix for "global" environment variables to be respected by all executables using this code.
 ///
 /// These "global" environment variables are overridden by command line options but override the configuration file.

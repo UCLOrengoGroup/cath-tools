@@ -46,11 +46,6 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-constexpr size_t     selected_pair_test_suite_fixture::TEST_INDEX_A;
-constexpr size_t     selected_pair_test_suite_fixture::TEST_INDEX_B;
-constexpr score_type selected_pair_test_suite_fixture::TEST_SCORE;
-constexpr score_type selected_pair_test_suite_fixture::TEST_HIGHER_SCORE;
-
 BOOST_FIXTURE_TEST_SUITE(selected_pair_test_suite, selected_pair_test_suite_fixture)
 
 /// \brief Check that the basic ctor doesn't throw

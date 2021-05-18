@@ -41,8 +41,6 @@ using ::std::ostream;
 using ::std::string;
 using ::std::unique_ptr;
 
-constexpr json_style json_file_superposition_outputter::DEFAULT_JSON_STYLE;
-
 /// \brief A standard do_clone method.
 unique_ptr<superposition_outputter> json_file_superposition_outputter::do_clone() const {
 	return { make_uptr_clone( *this ) };

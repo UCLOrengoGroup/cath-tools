@@ -60,12 +60,6 @@ using ::boost::tribool;
 
 BOOST_CLASS_EXPORT(ssap_score)
 
-constexpr ssap_score_post_processing ssap_score::default_post_processing;
-constexpr ssap_score_accuracy        ssap_score::default_accuracy;
-constexpr size_t                     ssap_score::default_num_excluded_on_sides;
-constexpr distance_score_formula     ssap_score::default_distance_formula;
-constexpr score_value                ssap_score::min_total_score;
-
 /// \brief TODOCUMENT
 ///
 /// \todo Parameterise on atoms (CA/CB) and whether to use all residues in alignment (common_residue_selection_policy)

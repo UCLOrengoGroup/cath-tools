@@ -45,10 +45,6 @@ using ::std::max;
 using ::std::min;
 using ::std::string;
 
-constexpr size_t overlap_frac_distn::num_dec_places;
-constexpr size_t overlap_frac_distn::num_gaps;
-constexpr size_t overlap_frac_distn::num_posns;
-
 /// \brief Find the index of the bin containing the i-th overlap fraction for specified i (where the overlap fractions are in ascending order)
 size_t overlap_frac_distn::find_index_of_nth(const size_t &prm_n ///< The index of the overlap fraction required
                                              ) const {

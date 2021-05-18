@@ -67,15 +67,6 @@ using ::std::string;
 using ::std::tuple;
 using ::std::vector;
 
-constexpr value_list_scaling rbf_model::PRC_EVALUE_SCALING;
-constexpr value_list_scaling rbf_model::PRC_REVERSE_SCALING;
-constexpr value_list_scaling rbf_model::PRC_SIMPLE_SCALING;
-constexpr value_list_scaling rbf_model::SSAP_NUM_EQUIVS_SCALING;
-constexpr value_list_scaling rbf_model::SSAP_OVERLAP_PC_SCALING;
-constexpr value_list_scaling rbf_model::SSAP_RMSD_SCALING;
-constexpr value_list_scaling rbf_model::SSAP_SEQ_ID_PC_SCALING;
-constexpr value_list_scaling rbf_model::SSAP_SCORE_SCALING;
-
 // Temporarily suppress a false-positive GCC compiler warning
 //
 // It seems GCC has a problem that's currently making it

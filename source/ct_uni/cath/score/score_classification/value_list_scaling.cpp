@@ -27,8 +27,6 @@
 using namespace ::cath::score;
 using namespace ::std;
 
-constexpr double value_list_scaling::BAD_SCALED_VALUE;
-
 /// \brief Simple to_string() overload for value_list_scaling
 ///
 /// \relates value_list_scaling

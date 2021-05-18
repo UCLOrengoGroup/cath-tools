@@ -24,7 +24,6 @@ using namespace ::cath::scan;
 using namespace ::cath::scan::detail;
 
 /// \brief TODOCUMENT
-constexpr index_type single_struc_res_pair::DUMMY_INDEX_VALUE;
 
 /// \brief TODOCUMENT
 std::ostream & cath::scan::detail::operator<<(std::ostream                &prm_os,      ///< TODOCUMENT

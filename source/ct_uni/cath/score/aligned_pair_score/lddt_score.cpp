@@ -66,8 +66,6 @@ using ::boost::tribool;
 
 BOOST_CLASS_EXPORT(lddt_score)
 
-constexpr double lddt_score::THRESHOLD_FOR_ALL;
-
 /// \brief A standard do_clone method.
 unique_ptr<aligned_pair_score> lddt_score::do_clone() const {
 	return { make_uptr_clone( *this ) };

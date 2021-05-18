@@ -33,13 +33,6 @@ using ::std::filesystem::current_path;
 using ::std::filesystem::path;
 using ::std::filesystem::temp_directory_path;
 
-constexpr double global_test_constants::DOUBLE_INFINITY;
-constexpr double global_test_constants::DOUBLE_QUIET_NAN;
-constexpr double global_test_constants::DOUBLE_SIGNALING_NAN;
-constexpr double global_test_constants::DOUBLE_DENORM_MIN;
-constexpr double global_test_constants::DOUBLE_MIN;
-constexpr double global_test_constants::DOUBLE_MAX;
-
 /// \brief TODOCUMENT
 void global_test_constants::check_required_files_exist() {
 	for (const path &required_file : REQUIRED_PREEXISTING_FILES() ) {

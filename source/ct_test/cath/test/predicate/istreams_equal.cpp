@@ -38,8 +38,6 @@ using ::std::istream;
 using ::std::istreambuf_iterator;
 using ::std::string;
 
-constexpr str_size_type istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
-
 /// \brief Ctor for istreams_equal
 istreams_equal::istreams_equal(const str_size_type &prm_diff_half_width ///< TODOCUMENT
                                ) : diff_half_width(prm_diff_half_width) {

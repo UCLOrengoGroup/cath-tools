@@ -106,9 +106,7 @@ namespace cath {
 		                    const angle_endpoint_loc & = angle_endpoint_loc::USE_LOWER);
 
 		template <typename T>
-		inline angle<T> make_angle_from_degrees(const double &);
-		template <typename T>
-		inline angle<T> make_angle_from_radians(const double &);
+		inline angle<T> make_angle_from_radians( const double & );
 		template <typename T>
 		inline angle<T> make_angle_from_revolutions(const double &);
 

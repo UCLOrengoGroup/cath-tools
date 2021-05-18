@@ -57,14 +57,6 @@ namespace cath {
 			static constexpr hbond_half      c{ index, energy_c };
 		};
 
-		constexpr hbond_partner_t bifur_hbond_list_test_suite_fixture::index;
-		constexpr hbond_energy_t  bifur_hbond_list_test_suite_fixture::energy_a;
-		constexpr hbond_energy_t  bifur_hbond_list_test_suite_fixture::energy_b;
-		constexpr hbond_energy_t  bifur_hbond_list_test_suite_fixture::energy_c;
-		constexpr hbond_half bifur_hbond_list_test_suite_fixture::a;
-		constexpr hbond_half bifur_hbond_list_test_suite_fixture::b;
-		constexpr hbond_half bifur_hbond_list_test_suite_fixture::c;
-
 	}  // namespace test
 }  // namespace cath
 

@@ -27,8 +27,6 @@ using namespace ::cath::clust;
 
 using ::std::nullopt;
 
-constexpr bool clustmap_input_spec::DEFAULT_READ_BATCHES_FROM_INPUT;
-
 /// \brief Return a string explaining why the specified clustmap_input_spec is invalid or nullopt if it isn't
 ///
 /// \relates clustmap_input_spec

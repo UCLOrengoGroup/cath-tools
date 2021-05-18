@@ -45,10 +45,6 @@ using ::std::filesystem::path;
 using ::std::nullopt;
 using ::std::string;
 
-constexpr bool                crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT;
-constexpr bool                crh_single_output_spec::DEFAULT_JSON_OUTPUT;
-constexpr bool                crh_single_output_spec::DEFAULT_SUMMARISE;
-
 /// \brief Generate a string describing the specified crh_out_format
 ///
 /// \relates crh_out_format

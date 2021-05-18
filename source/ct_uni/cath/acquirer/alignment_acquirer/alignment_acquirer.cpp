@@ -49,8 +49,6 @@ using ::std::make_unique;
 using ::std::pair;
 using ::std::unique_ptr;
 
-constexpr size_t alignment_acquirer::MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR;
-
 /// \brief Standard approach to achieving a virtual copy-ctor
 unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {
 	return check_uptr_clone_against_this( do_clone(), *this );

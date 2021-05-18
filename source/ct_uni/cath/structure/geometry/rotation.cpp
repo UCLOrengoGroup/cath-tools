@@ -67,8 +67,6 @@ const rotation & rotation::ROTATE_X_TO_Z_TO_Y_TO_X() {
 	return rotate_x_to_z_to_y_to_x;
 }
 
-constexpr double rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS;
-
 /// \brief Non-member equality operator for the rotation class
 ///
 /// \relates rotation

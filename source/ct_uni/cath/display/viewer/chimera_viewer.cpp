@@ -76,8 +76,6 @@ using ::std::pair;
 using ::std::string;
 using ::std::vector;
 
-constexpr size_t chimera_viewer::RESIDUE_BATCH_SIZE;
-
 /// \brief TODOCUMENT
 ///
 /// \relates chimera_viewer

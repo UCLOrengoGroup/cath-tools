@@ -49,10 +49,6 @@ using ::boost::lexical_cast;
 using ::boost::accumulate;
 using ::boost::range::find_if;
 
-constexpr double common_residue_select_best_score_percent_policy::MIN_BEST_SCORE_PERCENTAGE;
-constexpr double common_residue_select_best_score_percent_policy::MAX_BEST_SCORE_PERCENTAGE;
-constexpr double common_residue_select_best_score_percent_policy::DEFAULT_BEST_SCORE_PERCENTAGE;
-
 /// \brief TODOCUMENT
 size_vec common_residue_select_best_score_percent_policy::do_select_common_residues_with_scores(const doub_doub_pair_vec &prm_scores ///< TODOCUMENT
                                                                                                 ) const {

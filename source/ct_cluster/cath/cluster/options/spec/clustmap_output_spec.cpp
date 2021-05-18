@@ -21,5 +21,3 @@
 #include "clustmap_output_spec.hpp"
 
 using namespace ::cath::clust;
-
-constexpr bool clustmap_output_spec::DEFAULT_PRINT_DOMAIN_MAPPING;

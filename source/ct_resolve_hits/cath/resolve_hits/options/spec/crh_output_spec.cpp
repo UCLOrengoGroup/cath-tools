@@ -42,10 +42,6 @@ using ::std::filesystem::path;
 using ::std::nullopt;
 using ::std::string;
 
-constexpr bool                crh_output_spec::DEFAULT_QUIET;
-constexpr hit_boundary_output crh_output_spec::DEFAULT_BOUNDARY_OUTPUT;
-constexpr bool                crh_output_spec::DEFAULT_OUTPUT_HMMER_ALN;
-
 /// \brief Getter for any files to which hits text should be output
 const path_vec & crh_output_spec::get_hits_text_files() const {
 	return hits_text_files;

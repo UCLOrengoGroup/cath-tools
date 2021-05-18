@@ -21,5 +21,3 @@
 #include "superposition_fixture.hpp"
 
 using namespace ::cath::sup;
-
-constexpr size_t superposition_fixture::NUM_ENTRIES;

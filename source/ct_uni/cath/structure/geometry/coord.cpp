@@ -40,8 +40,6 @@ using ::boost::format;
 using ::boost::property_tree::ptree;
 
 //const double LENGTH_CHECK_PRECISION_PERCENTAGE_TOLERANCE( 1E-10 );
-constexpr size_t coord::NUM_DIMS;
-constexpr double coord::TOLERANCE_FOR_COORD_CLOSENESS_CHECKS;
 
 /// \brief TODOCUMENT
 ///

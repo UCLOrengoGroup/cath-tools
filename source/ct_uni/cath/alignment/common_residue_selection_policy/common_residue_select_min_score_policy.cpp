@@ -34,10 +34,6 @@ using namespace ::std;
 
 using ::boost::lexical_cast;
 
-constexpr double common_residue_select_min_score_policy::MIN_CUTOFF;
-constexpr double common_residue_select_min_score_policy::MAX_CUTOFF;
-constexpr double common_residue_select_min_score_policy::DEFAULT_CUTOFF;
-
 /// \brief TODOCUMENT
 double common_residue_select_min_score_policy::get_score_cutoff() const {
 	return score_cutoff;

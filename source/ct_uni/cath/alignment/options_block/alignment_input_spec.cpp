@@ -35,8 +35,6 @@ using namespace ::cath::opts;
 using ::boost::range::count;
 using ::std::filesystem::path;
 
-constexpr bool alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN;
-
 /// \brief Ctor from how much refining should be done to the alignment
 alignment_input_spec::alignment_input_spec(const align_refining &prm_refining ///< How much refining should be done to the alignment
                                            ) : refining{ prm_refining } {

@@ -22,11 +22,6 @@
 
 using namespace ::cath::rslv;
 
-constexpr resscr_t crh_score_spec::DEFAULT_LONG_DOMAINS_PREFERENCE;
-constexpr resscr_t crh_score_spec::DEFAULT_HIGH_SCORES_PREFERENCE;
-constexpr bool     crh_score_spec::DEFAULT_APPLY_CATH_RULES;
-constexpr bool     crh_score_spec::DEFAULT_NAIVE_GREEDY;
-
 /// \brief Ctor
 crh_score_spec::crh_score_spec(const bool     &prm_apply_cath_rules,        ///< Whether to apply rules specific to CATH-Gene3D
                                const resscr_t &prm_long_domains_preference, ///< The degree to which long domains are preferred

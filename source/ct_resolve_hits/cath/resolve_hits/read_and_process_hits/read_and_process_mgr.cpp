@@ -44,8 +44,6 @@ using namespace ::cath::rslv::detail;
 using ::std::ostream;
 using ::std::string;
 
-constexpr bool read_and_process_mgr::DEFAULT_INPUT_HITS_ARE_GROUPED;
-
 // /// \brief
 // template <typename Rng, typename Comp, typename Proj>
 // size_vec get_ranks(Rng  &&prm_range, ///<

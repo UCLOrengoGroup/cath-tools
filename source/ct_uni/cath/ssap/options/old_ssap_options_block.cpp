@@ -49,13 +49,6 @@ using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
 using ::std::nullopt;
 
-constexpr bool               old_ssap_options_block::DEF_BOOL;
-constexpr protein_file_combn old_ssap_options_block::DEF_PROT_SRCS;
-constexpr double             old_ssap_options_block::DEF_REFAST;
-constexpr double             old_ssap_options_block::DEF_RESLOW;
-constexpr double             old_ssap_options_block::DEF_FILE_SC;
-constexpr double             old_ssap_options_block::DEF_SUP;
-
 const string old_ssap_options_block::PO_NAME                 = { "name"                    }; ///< The option name for the names option
 
 const string old_ssap_options_block::PO_DEBUG                = { "debug"                   }; ///< The option name for the debug option
@@ -80,7 +73,6 @@ const string old_ssap_options_block::PO_RASMOL_SCRIPT        = { "rasmol-script"
 const string old_ssap_options_block::PO_XML_SUP              = { "xmlsup"                  }; ///< The option name for write_xml_sup option
 
 /// \brief The single-character for the output file option
-constexpr char old_ssap_options_block::PO_CHAR_OUT_FILE;
 
 /// \brief A standard do_clone() method to act as a virtual copy-ctor
 ///

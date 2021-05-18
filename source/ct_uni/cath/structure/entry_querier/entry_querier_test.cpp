@@ -48,8 +48,6 @@ namespace cath {
 	}  // namespace test
 }  // namespace cath
 
-constexpr size_t entry_querier_test_suite_fixture::exclusion_value_test_max;
-
 BOOST_FIXTURE_TEST_SUITE(entry_querier_test_suite, entry_querier_test_suite_fixture)
 
 /// \brief TODOCUMENT

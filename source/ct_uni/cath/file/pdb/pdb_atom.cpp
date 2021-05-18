@@ -40,9 +40,6 @@ using namespace ::std;
 using ::boost::format;
 using ::boost::io::ios_flags_saver;
 
-constexpr size_t pdb_atom::MIN_NUM_PDB_COLS;
-constexpr size_t pdb_atom::MAX_NUM_PDB_COLS;
-
 /// \brief TODOCUMENT
 void pdb_atom::rotate(const rotation &prm_rotation ///< TODOCUMENT
                       ) {

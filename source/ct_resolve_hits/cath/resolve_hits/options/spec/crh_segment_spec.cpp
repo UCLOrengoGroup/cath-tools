@@ -26,9 +26,6 @@ using namespace ::cath::seq;
 using ::std::make_optional;
 using ::std::nullopt;
 
-constexpr trim_spec crh_segment_spec::DEFAULT_OVERLAP_TRIM_SPEC;
-constexpr residx_t  crh_segment_spec::DEFAULT_MIN_SEG_LENGTH;
-
 /// \brief Getter for the specification for trimming hits' segments to allow some overlap
 const trim_spec & crh_segment_spec::get_overlap_trim_spec() const {
 	return overlap_trim_spec;

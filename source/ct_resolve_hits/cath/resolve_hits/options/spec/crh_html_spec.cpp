@@ -22,10 +22,6 @@
 
 using namespace ::cath::rslv;
 
-constexpr bool   crh_html_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY;
-constexpr size_t crh_html_spec::DEFAULT_MAX_NUM_NON_SOLN_HITS;
-constexpr bool   crh_html_spec::DEFAULT_EXCLUDE_REJECTED_HITS;
-
 /// \brief Getter for whether to restrict HTML output to the contents of the body tag
 const bool & crh_html_spec::get_restrict_html_within_body() const {
 	return restrict_html_within_body;

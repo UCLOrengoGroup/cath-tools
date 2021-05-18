@@ -74,9 +74,6 @@ namespace cath {
 			                                         const bool & = true);
 		};
 
-		constexpr chain_label tally_residue_ids_test_suite_fixture::CHAIN_LABEL;
-		constexpr char        tally_residue_ids_test_suite_fixture::CHAIN_LABEL_CHAR;
-
 		/// \brief Overload that converts the prm_dssp_or_wolf_residue_ids from strings to residue_ids
 		size_size_pair_vec tally_residue_ids_test_suite_fixture::tally_residue_ids_str(const residue_id_vec &prm_pdb_residue_ids,                       ///< A list of residue_ids parsed from the PDB file
 		                                                                               const chain_label    &prm_chain_label,                           ///< A chain_label to combine with the strings to make residue_ids

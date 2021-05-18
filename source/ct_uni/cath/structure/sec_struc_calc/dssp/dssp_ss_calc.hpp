@@ -207,8 +207,6 @@ namespace cath {
 			beta_bridge_vec has_beta_bridge(const bifur_hbond_list &,
 			                                const size_t &);
 
-			beta_bridge_vec has_beta_bridge(const bifur_hbond_list &,
-			                                const size_t &);
 			bool is_beta_bulge(const beta_bridge &,
 			                   const size_t &,
 			                   const beta_bridge &,

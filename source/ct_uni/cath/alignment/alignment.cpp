@@ -64,10 +64,6 @@ using ::boost::numeric_cast;
 using ::boost::range::count_if;
 using ::std::nullopt;
 
-constexpr alignment::size_type alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT;
-constexpr alignment::size_type alignment::PAIR_A_IDX;
-constexpr alignment::size_type alignment::PAIR_B_IDX;
-
 /// \brief TODOCUMENT
 void alignment::check_scored() const {
 	if (!is_scored()) {

@@ -29,10 +29,6 @@ using namespace ::cath::sup;
 
 using ::std::nullopt;
 
-constexpr supn_regions_context superposition_content_spec::DEFAULT_REGIONS_CONTEXT;
-constexpr double               superposition_content_spec::DEFAULT_DNA_MAX_DIST;
-constexpr double               superposition_content_spec::DEFAULT_ORGANIC_MAX_DIST;
-
 /// \brief Ctor
 superposition_content_spec::superposition_content_spec(const supn_regions_context &prm_regions_context,                ///< The context to include when showing the specified region(s) of structure
                                                        doub_opt                    prm_include_dna_within_distance,    ///< The maximum distance from the specified region(s) to DNA/RNA for the that to be included (or nullopt to always exclude)

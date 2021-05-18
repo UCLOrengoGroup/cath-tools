@@ -27,8 +27,6 @@
 using namespace ::cath;
 using namespace ::std;
 
-constexpr size_t entry_querier::INTEGER_SCALING;
-
 /// \brief TODOCUMENT
 ///
 /// \relates entry_querier

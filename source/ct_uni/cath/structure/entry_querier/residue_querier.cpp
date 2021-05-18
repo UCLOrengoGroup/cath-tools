@@ -30,11 +30,6 @@
 using namespace ::cath;
 using namespace ::std;
 
-constexpr float_score_type residue_querier::RESIDUE_A_VALUE;
-constexpr float_score_type residue_querier::RESIDUE_B_VALUE;
-constexpr float_score_type residue_querier::RESIDUE_MIN_SCORE_CUTOFF;
-constexpr float_score_type residue_querier::RESIDUE_MAX_DIST_SQ_CUTOFF;
-
 /// \brief TODOCUMENT
 size_t residue_querier::do_get_length(const protein &prm_protein ///< TODOCUMENT
                                       ) const {

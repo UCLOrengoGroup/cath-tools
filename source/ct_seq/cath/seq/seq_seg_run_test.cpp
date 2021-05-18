@@ -136,26 +136,6 @@ namespace cath {
 	} // namespace test
 } // namespace cath
 
-constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_zero_one;
-constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_zero_two;
-constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_zero_three;
-constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_one_two;
-constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_two_three;
-constexpr seq_seg              seq_seg_run_test_suite_fixture::seg_three_four;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_separated_1_before;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_separated_2_before;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_touching_1_before;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_touching_2_before;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrlp_1_before;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrlp_2_before;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrhng_1_starts_before;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrhng_2_starts_before;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrhng_2_stops_after;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_ovrhng_1_stops_after;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_nested_1_within;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_nested_2_within;
-constexpr seq_seg_seq_seg_pair seq_seg_run_test_suite_fixture::sngls_same;
-
 BOOST_FIXTURE_TEST_SUITE(seq_seg_run_test_suite, seq_seg_run_test_suite_fixture)
 
 

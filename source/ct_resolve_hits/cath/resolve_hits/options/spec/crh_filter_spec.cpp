@@ -26,9 +26,6 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 
-constexpr resscr_t crh_filter_spec::DEFAULT_WORST_PERMISSIBLE_EVALUE;
-constexpr resscr_t crh_filter_spec::DEFAULT_WORST_PERMISSIBLE_BITSCORE;
-
 /// \brief Getter for the worst permissible evalue before a hit is ignored
 const resscr_t & crh_filter_spec::get_worst_permissible_evalue() const {
 	return worst_permissible_evalue;

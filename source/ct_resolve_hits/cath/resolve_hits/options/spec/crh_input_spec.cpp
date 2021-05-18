@@ -30,11 +30,6 @@ using namespace ::std::literals::string_literals;
 using ::std::filesystem::path;
 using ::std::nullopt;
 
-constexpr bool                  crh_input_spec::DEFAULT_READ_FROM_STDIN;
-constexpr hits_input_format_tag crh_input_spec::DEFAULT_INPUT_FORMAT;
-constexpr residx_t              crh_input_spec::DEFAULT_MIN_GAP_LENGTH;
-constexpr bool                  crh_input_spec::DEFAULT_INPUT_HITS_ARE_GROUPED;
-
 /// \brief Getter for the input file from which data should be read
 const path_opt & crh_input_spec::get_input_file() const {
 	return input_file;

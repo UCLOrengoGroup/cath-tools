@@ -80,8 +80,6 @@ using ::std::pair;
 using ::std::string;
 using ::std::vector;
 
-constexpr size_t pymol_viewer::RESIDUE_BATCH_SIZE;
-
 /// \brief TODOCUMENT
 ///
 /// \relates pymol_viewer

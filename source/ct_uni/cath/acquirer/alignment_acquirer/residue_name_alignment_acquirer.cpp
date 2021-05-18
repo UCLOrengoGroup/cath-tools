@@ -53,8 +53,6 @@ using namespace ::std;
 
 using ::boost::numeric_cast;
 
-constexpr double residue_name_alignment_acquirer::RES_ALIGN_SCORE_CONSTANT;
-
 /// \brief A standard do_clone method.
 unique_ptr<alignment_acquirer> residue_name_alignment_acquirer::do_clone() const {
 	return { make_uptr_clone( *this ) };
