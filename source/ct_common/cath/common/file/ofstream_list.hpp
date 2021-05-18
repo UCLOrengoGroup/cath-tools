@@ -52,8 +52,7 @@ namespace cath {
 		public:
 			ofstream_list() = default;
 
-			explicit ofstream_list(std::ostream &,
-			                       const ::std::filesystem::path & = "-");
+			explicit ofstream_list( std::ostream &, ::std::filesystem::path = "-" );
 
 			ostream_ref_vec open_ofstreams(const path_vec &);
 			[[nodiscard]] const ::std::filesystem::path &get_flag() const;

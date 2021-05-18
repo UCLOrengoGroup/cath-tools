@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <utility>
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
@@ -36,9 +37,9 @@ using ::std::ostream;
 
 /// \brief Ctor from a special ostream and a flag to be used to indicate when output should be sent to that ostream
 ofstream_list::ofstream_list(ostream    &prm_standard_outstream,     ///< A special ostream (often stdout) to which output can be sent
-                             const path &prm_standard_outstream_flag ///< A flag to be used to indicate when output should be sent to the special ostream
-                             ) : standard_outstream     { prm_standard_outstream      },
-                                 standard_outstream_flag{ prm_standard_outstream_flag } {
+                             path        prm_standard_outstream_flag ///< A flag to be used to indicate when output should be sent to the special ostream
+                             ) : standard_outstream     { prm_standard_outstream                   },
+                                 standard_outstream_flag{ std::move( prm_standard_outstream_flag ) } {
 }
 
 /// \brief Open the specified list of paths and add them to the outputs

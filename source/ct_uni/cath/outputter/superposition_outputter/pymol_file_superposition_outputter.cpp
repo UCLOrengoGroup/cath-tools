@@ -21,6 +21,7 @@
 #include "pymol_file_superposition_outputter.hpp"
 
 #include <filesystem>
+#include <utility>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/display/viewer/pymol_viewer.hpp"
@@ -67,11 +68,10 @@ string pymol_file_superposition_outputter::do_get_name() const {
 }
 
 /// \brief Ctor for pymol_file_superposition_outputter
-pymol_file_superposition_outputter::pymol_file_superposition_outputter(const path                 &prm_output_file,  ///< TODOCUMENT
+pymol_file_superposition_outputter::pymol_file_superposition_outputter(path prm_output_file,  ///< TODOCUMENT
                                                                        display_spec                prm_display_spec, ///< TODOCUMENT
                                                                        superposition_content_spec  prm_content_spec  ///< The specification of what should be included in the superposition
-                                                                       ) : output_file      { prm_output_file               },
+                                                                       ) : output_file      { std::move( prm_output_file  ) },
                                                                            the_display_spec { std::move( prm_display_spec ) },
                                                                            content_spec     { std::move( prm_content_spec ) } {
 }
-

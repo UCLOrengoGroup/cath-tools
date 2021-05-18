@@ -73,7 +73,7 @@ path_vec executable_options::CATH_TOOLS_CONF_FILE_SEARCH_PATH () {
 ///
 /// This is a virtual function that may be overridden by any concrete, derived classes
 positional_options_description executable_options::get_positional_options() {
-	return positional_options_description();
+	return {};
 }
 
 /// \brief Return a standard string that can be appended to any options error message
@@ -149,7 +149,7 @@ void executable_options::add_options_block(options_block &prm_options_block ///<
 /// The slight annoyance is that it will automatically append a ':'.
 void executable_options::add_string(string prm_string ///< The string to add into the options usage
                                     ) {
-	string_obj_blocks.emplace_back( prm_string );
+	string_obj_blocks.emplace_back( ::std::move( prm_string ) );
 	all_options_blocks.push_back( string_obj_blocks.back() );
 }
 

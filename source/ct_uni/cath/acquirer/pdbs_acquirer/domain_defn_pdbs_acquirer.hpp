@@ -37,8 +37,8 @@ namespace cath {
 			[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
 			file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const final;
 
-		public:
-			explicit domain_defn_pdbs_acquirer(const ::std::filesystem::path &);
+		  public:
+			explicit domain_defn_pdbs_acquirer( ::std::filesystem::path );
 		};
 
 	} // namespace opts

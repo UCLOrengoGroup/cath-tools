@@ -44,7 +44,6 @@ static_assert( std::is_nothrow_move_constructible_v<hit_arch>, "" );
 full_hit_list cath::rslv::get_full_hits_of_hit_arch(const hit_arch      &prm_hit_arch, ///< The hit_arch whose full hits should be extracted
                                                     const full_hit_list &prm_full_hits ///< The full_hit_list associated with the hit_arch, from which the full_hits should be extracted
                                                     ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return full_hit_list{ transform_build<full_hit_vec>(
 		prm_hit_arch,
 		[&] (const calc_hit &x) { return prm_full_hits[ x.get_label_idx() ]; }

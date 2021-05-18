@@ -77,10 +77,10 @@ multi_align_builder::multi_align_builder(const size_t &prm_num_entries ///< The 
 
 /// \brief Get a list of indices of groups that are currently active
 size_set multi_align_builder::get_active_groups() const {
-	return size_set(
+	return {
 		cbegin( group_index_of_entry ),
 		cend  ( group_index_of_entry )
-	);
+	};
 }
 
 /// \brief Return a const reference to the group with the specified index

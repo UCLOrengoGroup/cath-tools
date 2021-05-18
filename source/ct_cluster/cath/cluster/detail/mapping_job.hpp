@@ -47,10 +47,8 @@ namespace cath {
 				/// \brief An optional file describing map-from cluster membership
 				path_opt old_cluster_membership_file;
 
-			public:
-				explicit mapping_job(const str_opt &,
-				                     const ::std::filesystem::path &,
-				                     const path_opt & = ::std::nullopt);
+			  public:
+				explicit mapping_job( str_opt, ::std::filesystem::path, path_opt = ::std::nullopt );
 
 				[[nodiscard]] const str_opt &                get_batch_id() const;
 				[[nodiscard]] const ::std::filesystem::path &get_new_cluster_membership_file() const;

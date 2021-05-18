@@ -278,8 +278,8 @@ namespace {
 					const string &query_id = best_svm_ref_opt ? best_svm_ref_opt->get().get_query_id()
 					                                          : best_mag_ref_opt->get().get_query_id();
 					if ( ! best_svm_ref_opt ) {
-						const string mag_match_id = best_mag_ref_opt->get().get_match_id();
-						const string mag_match_sf = sf_of_dom.get_superfamily_of_domain( mag_match_id );
+						const string  mag_match_id = best_mag_ref_opt->get().get_match_id();
+						const string &mag_match_sf = sf_of_dom.get_superfamily_of_domain( mag_match_id );
 						::spdlog::warn( "Under CMF, would have assigned {} to superfamily {} (based on {}) but it will "
 						                "not be assigned under SVM",
 						                query_id,
@@ -287,8 +287,8 @@ namespace {
 						                mag_match_id );
 					}
 					else {
-						const string svm_match_id = best_svm_ref_opt->get().get_match_id();
-						const string svm_match_sf = sf_of_dom.get_superfamily_of_domain( svm_match_id );
+						const string  svm_match_id = best_svm_ref_opt->get().get_match_id();
+						const string &svm_match_sf = sf_of_dom.get_superfamily_of_domain( svm_match_id );
 						if ( ! best_mag_ref_opt ) {
 							::spdlog::warn( "Under CMF, would not have assigned {} but under SVM it will be assigned "
 							                "to superfamily {} (based on {})",
@@ -297,8 +297,8 @@ namespace {
 							                svm_match_id );
 						}
 						else {
-							const string mag_match_id = best_mag_ref_opt->get().get_match_id();
-							const string mag_match_sf = sf_of_dom.get_superfamily_of_domain( mag_match_id );
+							const string  mag_match_id = best_mag_ref_opt->get().get_match_id();
+							const string &mag_match_sf = sf_of_dom.get_superfamily_of_domain( mag_match_id );
 							if ( svm_match_sf != mag_match_sf ) {
 								::spdlog::warn( "Under CMF, would have assigned {} to superfamily {} (based on {}) but "
 								                "under SVM it will be assigned to superfamily {} (based on {})",

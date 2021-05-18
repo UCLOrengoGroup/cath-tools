@@ -269,7 +269,6 @@ rotation cath::geom::rotation_from_ptree(const ptree &prm_ptree ///< The ptree f
 			values.push_back( row_col.second.get<double>( "" ) );
 		}
 	}
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return rotation{ values };
 }
 

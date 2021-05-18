@@ -53,7 +53,7 @@ namespace cath {
 			[[nodiscard]] const bool &get_higher_is_better() const;
 
 			bool operator()(const score_classn_value &,
-			                const score_classn_value &);
+			                const score_classn_value &) const;
 		};
 
 		double get_worst_possible_score(const score_classn_value_better_value &);

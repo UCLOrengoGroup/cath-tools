@@ -21,6 +21,7 @@
 #include "do_the_ssaps_alignment_acquirer.hpp"
 
 #include <filesystem>
+#include <utility>
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/trim.hpp>
@@ -191,8 +192,8 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 }
 
 /// \brief Ctor for do_the_ssaps_alignment_acquirer
-do_the_ssaps_alignment_acquirer::do_the_ssaps_alignment_acquirer(const path_opt &prm_directory_of_joy ///< The directory in which the cath-ssaps should be performed
-                                                                 ) : directory_of_joy { prm_directory_of_joy } {
+do_the_ssaps_alignment_acquirer::do_the_ssaps_alignment_acquirer(path_opt prm_directory_of_joy ///< The directory in which the cath-ssaps should be performed
+                                                                 ) : directory_of_joy { std::move( prm_directory_of_joy ) } {
 }
 
 /// \brief Getter for the directory in which the cath-ssaps should be performed

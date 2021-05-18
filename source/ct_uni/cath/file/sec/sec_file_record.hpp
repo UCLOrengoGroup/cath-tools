@@ -44,7 +44,7 @@ namespace cath {
 			/// \brief A unit vector along the secondary structure (\todo towards the start of the secondary structure?)
 			geom::coord    unit_dirn;
 
-			void check_unit_dirn_length();
+			void check_unit_dirn_length() const;
 			void check_sec_struc_type() const;
 
 		public:

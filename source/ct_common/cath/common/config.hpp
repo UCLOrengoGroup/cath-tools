@@ -23,7 +23,7 @@
 
 namespace cath::common {
 
-	constexpr bool IS_IN_DEBUG_MODE =
+	[[maybe_unused]] constexpr bool IS_IN_DEBUG_MODE =
 #ifndef NDEBUG
 	  false
 #else

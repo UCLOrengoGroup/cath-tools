@@ -140,8 +140,8 @@ hits_processor_list cath::rslv::detail::make_hits_processors(ofstream_list      
 	hits_processor_list the_list{ prm_score_spec, prm_segment_spec };
 	if ( ! is_default( prm_single_output_spec ) ) {
 		the_list.add_processor( [&] () -> unique_ptr<hits_processor> {
-			const path_opt output_file_opt = prm_single_output_spec.get_output_file();
-			const auto     ostream_refs    = prm_ofstreams.open_ofstreams( { output_file_opt.value_or( prm_ofstreams.get_flag() ) } );
+			const path_opt &output_file_opt = prm_single_output_spec.get_output_file();
+			const auto      ostream_refs    = prm_ofstreams.open_ofstreams( { output_file_opt.value_or( prm_ofstreams.get_flag() ) } );
 			switch ( get_out_format( prm_single_output_spec ) ) {
 				case ( crh_out_format::HTML     ) : { return make_unique< write_html_hits_processor    >( ostream_refs, prm_html_spec ); }
 				case ( crh_out_format::SUMMARY  ) : { return make_unique< summarise_hits_processor     >( ostream_refs                ); }

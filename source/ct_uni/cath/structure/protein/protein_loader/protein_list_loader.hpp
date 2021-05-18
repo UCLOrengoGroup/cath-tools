@@ -49,10 +49,8 @@ namespace cath {
 		/// \brief The name of the proteins that are to be read from files
 		const str_vec protein_names;
 
-	public:
-		protein_list_loader(const protein_source_file_set &,
-		                    const ::std::filesystem::path &,
-		                    str_vec);
+	  public:
+		protein_list_loader( const protein_source_file_set &, ::std::filesystem::path, str_vec );
 
 		std::pair<protein_list, hrc_duration> load_proteins(std::ostream &) const;
 	};

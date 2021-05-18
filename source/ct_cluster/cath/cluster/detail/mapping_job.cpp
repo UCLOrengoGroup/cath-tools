@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <utility>
 
 #include <boost/algorithm/string/classification.hpp>
 
@@ -42,12 +43,12 @@ using ::std::make_optional;
 using ::std::string;
 
 /// \brief Ctor
-mapping_job::mapping_job(const str_opt  &prm_batch_id,                    ///< An optional identifier of the batch
-                         const path     &prm_new_cluster_membership_file, ///< The file describing the cluster membership of the clusters to be mapped/renumbered
-                         const path_opt &prm_old_cluster_membership_file  ///< An optional file describing map-from cluster membership
-                         ) : batch_id                   { prm_batch_id                    },
-                             new_cluster_membership_file{ prm_new_cluster_membership_file },
-                             old_cluster_membership_file{ prm_old_cluster_membership_file } {
+mapping_job::mapping_job(str_opt prm_batch_id,                    ///< An optional identifier of the batch
+                         path prm_new_cluster_membership_file,    ///< The file describing the cluster membership of the clusters to be mapped/renumbered
+                         path_opt prm_old_cluster_membership_file ///< An optional file describing map-from cluster membership
+                         ) : batch_id                   { std::move( prm_batch_id                    ) },
+                             new_cluster_membership_file{ std::move( prm_new_cluster_membership_file ) },
+                             old_cluster_membership_file{ std::move( prm_old_cluster_membership_file ) } {
 }
 
 /// \brief Getter for an optional identifier of the batch

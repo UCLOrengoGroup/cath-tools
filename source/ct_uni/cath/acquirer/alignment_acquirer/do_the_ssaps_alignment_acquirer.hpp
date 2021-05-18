@@ -46,7 +46,7 @@ namespace cath { namespace align {
 			                                                                                       const align_refining & ) const final;
 
 	  public:
-		explicit do_the_ssaps_alignment_acquirer(const path_opt & = ::std::nullopt);
+		explicit do_the_ssaps_alignment_acquirer( path_opt = ::std::nullopt );
 
 		[[nodiscard]] const path_opt &get_directory_of_joy() const;
 

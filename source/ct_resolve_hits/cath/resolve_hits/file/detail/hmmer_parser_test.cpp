@@ -61,13 +61,13 @@ namespace cath {
 			~hmmer_parser_test_suite_fixture() noexcept = default;
 
 			/// \brief Whether to apply CATH-specific policies
-			static constexpr bool APPLY_CATH_POLICIES  = false;
+			static constexpr bool APPLY_CATH_POLICIES = false;
 
 			/// \brief The minimum length that an alignment gap can have to be considered a gap
-			static constexpr bool MIN_GAP_LENGTH       =    30;
+			static constexpr residx_t MIN_GAP_LENGTH = 3;
 
 			/// \brief Whether to parse/output hmmsearch output alignment information
-			static constexpr bool OUTPUT_HMMER_ALN     =  true;
+			static constexpr bool OUTPUT_HMMER_ALN = true;
 
 			/// \brief Test whether the result of parsing the specified type of HMMER data from
 			///        the specified file matches the specified data
@@ -95,10 +95,6 @@ namespace cath {
 
 	} // namespace test
 } // namespace cath
-
-constexpr bool hmmer_parser_test_suite_fixture::APPLY_CATH_POLICIES;
-constexpr bool hmmer_parser_test_suite_fixture::MIN_GAP_LENGTH;
-constexpr bool hmmer_parser_test_suite_fixture::OUTPUT_HMMER_ALN;
 
 BOOST_FIXTURE_TEST_SUITE(hmmer_parser_test_suite, hmmer_parser_test_suite_fixture)
 
@@ -194,12 +190,12 @@ BOOST_AUTO_TEST_CASE(parses_ians_single_sequence_hmmscan_out_correctly) {
 			make_pair(
 				"tr|A0A0Q0Y989|A0A0Q0Y989_9BACI",
 				full_hit_list{ {
-					full_hit{ segments_from_bounds( { 9,    30,  32, 139, 141, 193, 198, 217 } ), "3.20.20.10/FF/9715",  221.5, hit_score_type::BITSCORE },
-					full_hit{ segments_from_bounds( { 218, 234, 239,           333, 338, 369 } ), "2.40.37.10/FF/6607",    170, hit_score_type::BITSCORE },
-					full_hit{ segments_from_bounds( { 242,                               298 } ), "2.40.37.10/FF/6260",   25.1, hit_score_type::BITSCORE },
-					full_hit{ segments_from_bounds( { 332,                               377 } ), "2.40.37.10/FF/6260",    1.2, hit_score_type::BITSCORE },
-					full_hit{ segments_from_bounds( { 11,  141,                     143, 195 } ), "3.20.20.10/FF/9731",   15.9, hit_score_type::BITSCORE },
-					full_hit{ segments_from_bounds( { 16,                                 66 } ), "2.60.40.740/FF/2909",  10.8, hit_score_type::BITSCORE },
+					full_hit{ segments_from_bounds( { 9,   193,           198, 217 } ), "3.20.20.10/FF/9715",  221.5, hit_score_type::BITSCORE },
+					full_hit{ segments_from_bounds( { 218, 234, 239, 333, 338, 369 } ), "2.40.37.10/FF/6607",    170, hit_score_type::BITSCORE },
+					full_hit{ segments_from_bounds( { 242,                     298 } ), "2.40.37.10/FF/6260",   25.1, hit_score_type::BITSCORE },
+					full_hit{ segments_from_bounds( { 332,                     377 } ), "2.40.37.10/FF/6260",    1.2, hit_score_type::BITSCORE },
+					full_hit{ segments_from_bounds( { 11,                      195 } ), "3.20.20.10/FF/9731",   15.9, hit_score_type::BITSCORE },
+					full_hit{ segments_from_bounds( { 16,                       66 } ), "2.60.40.740/FF/2909",  10.8, hit_score_type::BITSCORE },
 				} }
 			),
 		} }

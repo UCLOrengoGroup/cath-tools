@@ -81,7 +81,7 @@ string protein_only_length_getter::do_description() const {
 }
 
 /// \brief TODOCUMENT
-const string protein_only_length_getter::do_description_brackets_string() const {
+string protein_only_length_getter::do_description_brackets_string() const {
 	return " (over the " + do_get_choice_adjective() + " protein length)";
 }
 

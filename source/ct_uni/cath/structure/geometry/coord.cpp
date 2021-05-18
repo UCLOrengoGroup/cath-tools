@@ -36,7 +36,6 @@ using namespace ::cath::common;
 using namespace ::cath::geom;
 using namespace ::std;
 
-using ::boost::algorithm::clamp;
 using ::boost::format;
 using ::boost::property_tree::ptree;
 

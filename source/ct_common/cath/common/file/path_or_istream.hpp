@@ -54,8 +54,7 @@ namespace cath {
 
 		public:
 			path_or_istream() = default;
-			explicit path_or_istream(std::istream &,
-			                         const ::std::filesystem::path & = "-");
+			explicit path_or_istream( std::istream &, ::std::filesystem::path = "-" );
 
 			path_or_istream & set_path(const ::std::filesystem::path &);
 			const ::std::filesystem::path & get_flag() const;

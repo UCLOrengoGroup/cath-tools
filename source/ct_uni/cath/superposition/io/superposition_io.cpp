@@ -231,7 +231,7 @@ ostream & cath::sup::write_superposed_pdb_to_ostream(ostream                    
 /// \relates superposition
 ostream & cath::sup::write_superposed_pdbs_to_ostream(ostream                      &prm_os,             ///< TODOCUMENT
                                                       const superposition          &prm_superposition,  ///< TODOCUMENT
-                                                      const pdb_list                prm_pdbs,           ///< TODOCUMENT
+                                                      const pdb_list               &prm_pdbs,           ///< TODOCUMENT
                                                       const sup_pdbs_script_policy &prm_script_policy,  ///< TODOCUMENT
                                                       const chain_relabel_policy   &prm_relabel_chain,  ///< TODOCUMENT
                                                       const region_vec_opt         &prm_regions         ///< Optional specification of regions to which the written records should be restricted

@@ -791,15 +791,12 @@ alignment cath::align::read_alignment_from_fasta(istream                  &prm_i
 			}
 
 			if ( ! icontains( id, name ) ) {
-				BOOST_THROW_EXCEPTION(runtime_error_exception(
-					"When attempting to parse entry number "
-					+ lexical_cast<string>( entry_ctr + 1 )
-					+ " of FASTA alignment, name \""
-					+ name
-					+ "\" could not be found in a case-insensitive search within FASTA header ID \""
-					+ id
-					+ "\""
-				));
+				BOOST_THROW_EXCEPTION( runtime_error_exception(
+				  ::fmt::format( R"(When attempting to parse entry number {} of FASTA alignment, name "{}" could not )"
+				                 R"(be found in a case-insensitive search within FASTA header ID "{}")",
+				                 entry_ctr + 1,
+				                 name,
+				                 id ) ) );
 			}
 
 			positions.push_back( align_sequence_to_amino_acids( sequence, amino_acids, name, prm_stderr ) );
@@ -868,7 +865,7 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 		}
 		return aln_posn_opt( new_pos );
 	}
-	return aln_posn_opt( nullopt );
+	return { nullopt };
 }
 
 

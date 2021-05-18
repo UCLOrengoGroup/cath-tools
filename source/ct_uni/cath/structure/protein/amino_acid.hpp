@@ -103,7 +103,7 @@ namespace cath {
 	/// \param prm_letter The 1 letter code
 	constexpr ::std::optional<uint> index_opt_of_letter( const char &prm_letter ) {
 		for ( unsigned int x = 0; x < LETTER_CODE_AND_NAME_LIST.size(); ++x ) {
-			if ( ::std::get<0>( LETTER_CODE_AND_NAME_LIST[ x ] ) == prm_letter ) {
+			if ( ::std::get<0>( LETTER_CODE_AND_NAME_LIST.at( x ) ) == prm_letter ) {
 				return { x };
 			}
 		}
@@ -125,7 +125,7 @@ namespace cath {
 
 	constexpr ::std::optional<uint> index_opt_of_code( const char_3_arr &prm_code ) {
 		for ( unsigned int x = 0; x < LETTER_CODE_AND_NAME_LIST.size(); ++x ) {
-			if ( common::arrays_are_equal( ::std::get<1>( LETTER_CODE_AND_NAME_LIST[ x ] ), prm_code ) ) {
+			if ( common::arrays_are_equal( ::std::get<1>( LETTER_CODE_AND_NAME_LIST.at( x ) ), prm_code ) ) {
 				return { x };
 			}
 		}
@@ -144,7 +144,7 @@ namespace cath {
 
 	constexpr ::std::optional<uint> index_opt_of_name( const ::std::string_view &prm_name ) {
 		for ( unsigned int x = 0; x < LETTER_CODE_AND_NAME_LIST.size(); ++x ) {
-			if ( ::std::get<2>( LETTER_CODE_AND_NAME_LIST[ x ] ) == prm_name ) {
+			if ( ::std::get<2>( LETTER_CODE_AND_NAME_LIST.at( x ) ) == prm_name ) {
 				return { x };
 			}
 		}

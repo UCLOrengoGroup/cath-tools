@@ -85,7 +85,6 @@ string cath::align::detail::scaffold_line_of_alignment_entry(const alignment &pr
 /// \relates alignment
 alignment cath::align::alignment_of_scaffold_lines(const str_vec &prm_scaffold_lines ///< The scaffold lines from which to generate the alignment
                                                    ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return alignment{
 		transform_build<aln_posn_opt_vec_vec>(
 			prm_scaffold_lines,

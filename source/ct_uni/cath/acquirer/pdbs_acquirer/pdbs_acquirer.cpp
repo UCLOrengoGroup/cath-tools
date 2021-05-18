@@ -145,13 +145,13 @@ unique_ptr<pdbs_acquirer> cath::opts::get_pdbs_acquirer(const pdb_input_spec &pr
 ///        making some attempt to avoid unnecessary allocations
 ///
 /// There currently allocates the region_vec. More could be done to improve efficiency given motivation.
-static pair<str_opt_vec, region_vec_opt_vec> strip_domain_vec(domain_vec prm_domains ///< The domain_vec to strip
+static pair<str_opt_vec, region_vec_opt_vec> strip_domain_vec(const domain_vec &prm_domains ///< The domain_vec to strip
                                                               ) {
 	pair<str_opt_vec, region_vec_opt_vec> result;
 	result.first .reserve( prm_domains.size() );
 	result.second.reserve( prm_domains.size() );
 	for (const domain &the_domain : prm_domains) {
-		result.first .push_back( std::move( the_domain.get_opt_domain_id() ) );
+		result.first .push_back( the_domain.get_opt_domain_id() );
 		result.second.push_back( region_vec{ cbegin( the_domain ), cend( the_domain ) } );
 	}
 	return result;
@@ -166,12 +166,12 @@ static pair<str_opt_vec, region_vec_opt_vec> strip_domain_vec(domain_vec prm_dom
 ///
 /// In the future, it may be worth building more interesting types (than str_vec) to record both the provenance (prm_names_from_acq)
 /// and user-specified names (prm_ids) of the structure
-strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_domains(pdb_list      prm_pdbs,           ///< The PDBs obtained from a pdbs_acquirer
-                                                                                name_set_list prm_names_from_acq, ///< The names obtained from a pdbs_acquirer
-                                                                                str_vec       specified_ids,      ///< Alternative IDs
-                                                                                domain_vec    prm_domains         ///< Regions for the strucs_context
+strucs_context cath::opts::combine_acquired_pdbs_and_names_with_ids_and_domains(pdb_list          prm_pdbs,           ///< The PDBs obtained from a pdbs_acquirer
+                                                                                name_set_list     prm_names_from_acq, ///< The names obtained from a pdbs_acquirer
+                                                                                str_vec           specified_ids,      ///< Alternative IDs
+                                                                                const domain_vec &prm_domains         ///< Regions for the strucs_context
                                                                                 ) {
-	auto stripped_domain_vec = strip_domain_vec( std::move( prm_domains ) );
+	auto stripped_domain_vec = strip_domain_vec( prm_domains );
 
 	stripped_domain_vec.second.resize( prm_names_from_acq.size(), nullopt );
 

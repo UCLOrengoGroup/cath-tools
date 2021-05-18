@@ -109,7 +109,6 @@ read_and_process_mgr cath::rslv::make_read_and_process_mgr(const hits_processor 
                                                            const crh_segment_spec &prm_crh_segment_spec, ///< The segment spec to apply to incoming hits
                                                            const crh_input_spec   &prm_input_spec        ///< The crh_input_spec to specify how hits should be read in
                                                            ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return read_and_process_mgr{
 		hits_processor_list{ prm_crh_score_spec, prm_crh_segment_spec, { prm_hits_processor.clone() } },
 		prm_filter_spec,

@@ -161,7 +161,7 @@ str_opt cath::clust::get_invalid_description(const cath_cluster_output_spec &prm
 
 	const size_t num_stdouts = numeric_cast<size_t>( count( all_sorted_paths, path{ "-" } ) );
 	if ( num_stdouts > 1 ) {
-		return "Cannot send more than one type of output to stdout (which is specified as file \"-\")"s;
+		return R"(Cannot send more than one type of output to stdout (which is specified as file "-"))";
 	}
 
 	if ( ! is_uniq( all_sorted_paths ) ) {

@@ -56,7 +56,7 @@ namespace cath {
 			                                          ) {
 				return ensure_and_get_cluster_domains_of_cluster_id( prm_cluster_id ).add_domain(
 					prm_seq_id,
-					prm_segments,
+					::std::move( prm_segments ),
 					prm_cluster_id
 				);
 			}

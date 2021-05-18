@@ -157,9 +157,7 @@ namespace cath {
 			inline detail::frame_quat_rot_type distance_1_between_frames(const view_cache_index_entry &prm_cache_a, ///< The first  view_cache_index_entry
 			                                                             const view_cache_index_entry &prm_cache_b  ///< The second view_cache_index_entry
 			                                                             ) {
-				const detail::frame_quat_rot frame_a = prm_cache_a.get_frame();
-				const detail::frame_quat_rot frame_b = prm_cache_b.get_frame();
-				return distance_1_between_quat_rots( frame_a, frame_b );
+				return distance_1_between_quat_rots( prm_cache_a.get_frame(), prm_cache_b.get_frame() );
 			}
 
 			/// \brief Calculate the squared distance between the views of the two residue pairs

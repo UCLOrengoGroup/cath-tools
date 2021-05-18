@@ -80,7 +80,7 @@ namespace cath {
 
 			const string EXAMPLE_WOLF_FILE_SUFFIX     { ".wolf"                  };
 			const string EXAMPLE_DSSP_FILE_SUFFIX     { ".dssp"                  };
-			const string EXAMPLE_PDB_FILE_SUFFIX      { ""                       };
+			const string EXAMPLE_PDB_FILE_SUFFIX;
 			const string EXPECTED_WOLF_PHI_PSI_SUFFIX { ".expected_wolf_phi_psi" };
 		};
 

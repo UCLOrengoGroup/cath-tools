@@ -141,7 +141,6 @@ namespace cath {
 //			/// \relates scan_stride
 //			inline constexpr rep_strider get_query_from_strider(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
 //			                                                    ) {
-//				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 //				return rep_strider{ prm_stride.get_query_from_stride() };
 //			}
 //
@@ -150,7 +149,6 @@ namespace cath {
 //			/// \relates scan_stride
 //			inline constexpr rep_strider get_query_to_strider(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
 //			                                                  ) {
-//				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 //				return rep_strider{ prm_stride.get_query_to_stride() };
 //			}
 //
@@ -159,7 +157,6 @@ namespace cath {
 //			/// \relates scan_stride
 //			inline constexpr rep_strider get_index_from_strider(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
 //			                                                    ) {
-//				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 //				return rep_strider{ prm_stride.get_index_from_stride() };
 //			}
 //
@@ -168,7 +165,6 @@ namespace cath {
 //			/// \relates scan_stride
 //			inline constexpr rep_strider get_index_to_strider(const scan_stride &prm_stride ///< The scan_stride object containing the relevant stride values
 //			                                                  ) {
-//				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 //				return rep_strider{ prm_stride.get_index_to_stride() };
 //			}
 

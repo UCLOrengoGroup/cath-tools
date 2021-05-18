@@ -257,7 +257,6 @@ hmmer_scores_entry cath::file::hmmer_scores_entry_from_line(const string        
 	const auto  name1         = strip_headers ? detail::strip_header_name( raw_name1 ) : raw_name1;
 	const auto  name2         = strip_headers ? detail::strip_header_name( raw_name2 ) : raw_name2;
 
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return hmmer_scores_entry{
 		       name1,
 		       line_parts[  1 ],

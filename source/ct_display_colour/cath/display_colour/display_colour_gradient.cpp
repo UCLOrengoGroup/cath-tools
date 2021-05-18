@@ -31,7 +31,6 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::algorithm::clamp;
 using ::boost::lexical_cast;
 using ::boost::numeric_cast;
 

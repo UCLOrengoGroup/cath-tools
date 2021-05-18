@@ -183,7 +183,6 @@ namespace cath {
 		/// \relates seq_arrow
 		inline constexpr seq_arrow arrow_before_res(const residx_t &prm_res_index ///< The index of the residue immediately after the arrow to return
 		                                            ) {
-			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 			return seq_arrow{ prm_res_index     };
 		}
 
@@ -192,7 +191,6 @@ namespace cath {
 		/// \relates seq_arrow
 		inline constexpr seq_arrow arrow_after_res(const residx_t &prm_res_index ///< The index of the residue immediately before the arrow to return
 		                                           ) {
-			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 			return seq_arrow{ prm_res_index + 1 };
 		}
 

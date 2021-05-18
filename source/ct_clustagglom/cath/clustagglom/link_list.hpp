@@ -96,7 +96,7 @@ namespace cath {
 
 		/// \brief Ctor from a vector of links
 		inline link_list::link_list(link_vec prm_links ///< The links from which to build this link_list
-		                            ) : links{ prm_links } {
+		                            ) : links{ ::std::move( prm_links ) } {
 		}
 
 		/// \brief Return whether this is empty

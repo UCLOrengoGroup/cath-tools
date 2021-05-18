@@ -24,6 +24,7 @@
 #include <future>
 #include <optional>
 #include <unordered_map>
+#include <utility>
 
 #include <boost/range/adaptor/map.hpp>
 #include <boost/utility/string_ref.hpp>
@@ -144,9 +145,7 @@ namespace cath {
 			/// This is false - better not to assume this guarantee
 			static constexpr bool DEFAULT_INPUT_HITS_ARE_GROUPED = false;
 
-			explicit read_and_process_mgr(const detail::hits_processor_list &,
-			                              crh_filter_spec,
-			                              const bool & = DEFAULT_INPUT_HITS_ARE_GROUPED);
+			explicit read_and_process_mgr( detail::hits_processor_list, crh_filter_spec, const bool & = DEFAULT_INPUT_HITS_ARE_GROUPED );
 
 			void add_hit(const boost::string_ref &,
 			             seq::seq_seg_vec,
@@ -229,12 +228,12 @@ namespace cath {
 		}
 
 		/// \brief Ctor from the ostream to which the results should be written
-		inline read_and_process_mgr::read_and_process_mgr(const detail::hits_processor_list &prm_hits_processors,        ///< The hits_processor to use to process the hits
-		                                                  crh_filter_spec                    prm_filter_spec,           ///< The filter spec to define how to filter the hits
-		                                                  const bool                        &prm_input_hits_are_grouped ///< Whether the input hits are guaranteed to be presorted
-		                                                  ) : processors             { prm_hits_processors          },
-		                                                      the_filter_spec        { std::move( prm_filter_spec ) },
-		                                                      input_hits_are_grouped { prm_input_hits_are_grouped   } {
+		inline read_and_process_mgr::read_and_process_mgr(detail::hits_processor_list prm_hits_processors,       ///< The hits_processor to use to process the hits
+		                                                  crh_filter_spec             prm_filter_spec,           ///< The filter spec to define how to filter the hits
+		                                                  const bool                 &prm_input_hits_are_grouped ///< Whether the input hits are guaranteed to be presorted
+		                                                  ) : processors             { std::move( prm_hits_processors ) },
+		                                                      the_filter_spec        { std::move( prm_filter_spec     ) },
+		                                                      input_hits_are_grouped { prm_input_hits_are_grouped       } {
 		}
 
 		/// \brief Add a new hit for the current query_id

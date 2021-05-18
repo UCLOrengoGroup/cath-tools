@@ -69,9 +69,8 @@ namespace cath {
 			};
 
 			/// \brief Ctor to build a dummy res_pair
-			inline single_struc_res_pair::single_struc_res_pair() : the_core(),
-			                                                        from_res_idx( DUMMY_INDEX_VALUE ),
-			                                                        to_res_idx  ( DUMMY_INDEX_VALUE ) {
+			inline single_struc_res_pair::single_struc_res_pair() :
+			        from_res_idx( DUMMY_INDEX_VALUE ), to_res_idx( DUMMY_INDEX_VALUE ) {
 			}
 
 			/// \brief Ctor from a res_pair_core and the indices of the from/to residues

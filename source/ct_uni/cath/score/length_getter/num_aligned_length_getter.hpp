@@ -61,7 +61,7 @@ namespace cath {
 
 			//			virtual std::string do_long_suffix_string() const;
 
-			[[nodiscard]] const std::string do_description_brackets_string() const final;
+			[[nodiscard]] std::string do_description_brackets_string() const final;
 
 			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const length_getter & ) const final;
 

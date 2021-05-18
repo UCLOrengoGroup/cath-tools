@@ -20,6 +20,7 @@
 
 #include "detail_help_options_block.hpp"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/range/adaptor/map.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
@@ -31,6 +32,7 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 
 using ::boost::adaptors::map_keys;
+using ::boost::algorithm::any_of;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::variables_map;
@@ -93,12 +95,8 @@ detail_help_options_block::detail_help_options_block(str_str_str_pair_map prm_de
 
 /// \brief Whether the options specified in this detail_help_options_block are requesting any help strings
 bool detail_help_options_block::has_help_string() const {
-	for (const str_bool_pair &value : values) {
-		if (value.second) {
-			return true;
-		}
-	}
-	return false;
+	/// TODO: Come a better any_of(), replace the lambda with &str_bool_pair::second
+	return any_of( values, []( const str_bool_pair &value ) { return value.second; } );
 }
 
 /// \brief Return the help string that the options specified in this detail_help_options_block are requesting

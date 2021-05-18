@@ -128,7 +128,7 @@ score_value tm_score::score_for_target_length(const pair<coord_list_vec, coord_l
 		prm_common_coords_by_residue.first,
 		superposed_second_coords,
 		numeric_cast<score_value>( 0.0 ),
-		plus<score_value>(),
+		plus<>(),
 		[&] (const coord_list &x, const coord_list &y) {
 
 			const score_value mean_distance = calc_mean_deviation( x, y );

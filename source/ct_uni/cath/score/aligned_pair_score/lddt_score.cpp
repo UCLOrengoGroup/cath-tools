@@ -106,7 +106,7 @@ score_value lddt_score::do_calculate(const alignment &prm_alignment, ///< The pa
 		));
 	}
 	// If none of the residue common coord entries has size() > 0, then throw an exception
-	if ( none_of( common_coords_by_residue.first, [] (const coord_list &x) { return x.size() > 0; } ) ) {
+	if ( none_of( common_coords_by_residue.first, [] (const coord_list &x) { return !x.empty(); } ) ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception(
 			"Cannot calculate " + do_id_name() + " for alignment from which no common coords are extracted"
 		));

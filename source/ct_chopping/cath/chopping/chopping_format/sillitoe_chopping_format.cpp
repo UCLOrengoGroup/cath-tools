@@ -187,7 +187,6 @@ region sillitoe_chopping_format::parse_segment(const string_ref &prm_segment_str
 	const chain_label the_chain_label{ prm_segment_string.back() };
 
 	if ( length == 2 ) {
-		/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 		return region{ the_chain_label };
 	}
 
@@ -221,7 +220,6 @@ residue_name sillitoe_chopping_format::parse_residue(const string_ref &prm_strin
 	const auto begin_itr   = cbegin( prm_string_ref );
 	const auto end_itr     = cend  ( prm_string_ref );
 	if ( isdigit( prm_string_ref.back() ) != 0 ) {
-		/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 		return residue_name{ stoi( string{ begin_itr, end_itr } ) };
 	}
 	if ( prm_string_ref.length() <= 1 ) {

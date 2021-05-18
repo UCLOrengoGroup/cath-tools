@@ -76,7 +76,7 @@ namespace cath {
 
 		std::ostream & write_superposed_pdbs_to_ostream(std::ostream &,
 		                                                const superposition &,
-		                                                file::pdb_list,
+		                                                const file::pdb_list &,
 		                                                const sup_pdbs_script_policy &,
 		                                                const chain_relabel_policy & = chain_relabel_policy::LEAVE,
 		                                                const chop::region_vec_opt & = ::std::nullopt);

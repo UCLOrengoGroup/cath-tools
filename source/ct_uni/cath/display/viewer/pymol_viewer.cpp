@@ -28,6 +28,8 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/alignment/alignment.hpp"
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/algorithm/copy_build.hpp"
@@ -137,24 +139,16 @@ void cath::detail::write_pymol_pair_alignments(ostream                     &prm_
 					const residue_id &residue_id_a = residue_ids_a[ *position_a ];
 					const residue_id &residue_id_b = residue_ids_b[ *position_b ];
 
-					prm_os << "distance "
-						+ name_a
-						+ "_"
-						+ name_b
-						+ "_alignment, "
-						+ pymol_tools::pymol_res_seln_str( name_a, { residue_id_a }, "CA"s )
-						+ ", "
-						+ pymol_tools::pymol_res_seln_str( name_b, { residue_id_b }, "CA"s )
-						+ "\n";
+					prm_os << ::fmt::format( "distance {}_{}_alignment, {}, {}\n",
+					                         name_a,
+					                         name_b,
+					                         pymol_tools::pymol_res_seln_str( name_a, { residue_id_a }, "CA"s ),
+					                         pymol_tools::pymol_res_seln_str( name_b, { residue_id_b }, "CA"s ) );
 				}
 			}
 
 			if (added_pair_distances) {
-				prm_os << "disable "
-					+ name_a
-					+ "_"
-					+ name_b
-					+ "_alignment\n";
+				prm_os << ::fmt::format( "disable {}_{}_alignment\n", name_a, name_b );
 			}
 		}
 	}
@@ -367,11 +361,11 @@ void pymol_viewer::do_write_load_pdbs(ostream             &prm_os,            //
                                       ) const {
 	const size_t num_pdbs = prm_pdbs.size();
 	for (const size_t &pdb_ctr : indices( num_pdbs ) ) {
-		prm_os << "cmd.read_pdbstr(\"\"\"";
+		prm_os << R"(cmd.read_pdbstr(""")";
 		ostringstream superposed_pdb_ss;
 		write_superposed_pdb_to_ostream( superposed_pdb_ss, prm_superposition, prm_pdbs[pdb_ctr], pdb_ctr );
 		prm_os << replace_all_copy(superposed_pdb_ss.str(), "\n", "\\\n");
-		prm_os << "\"\"\",\"" << prm_names[pdb_ctr] << "\")\n";
+		prm_os << R"(""",")" << prm_names[pdb_ctr] << "\")\n";
 	}
 	prm_os << "hide all\n";
 	prm_os << "set cartoon_rect_length  = " << pymol_tools::pymol_size(2, 1.50,  100, 0.090,  num_pdbs) << "\n";

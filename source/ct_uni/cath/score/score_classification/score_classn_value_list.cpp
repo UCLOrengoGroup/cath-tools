@@ -106,7 +106,7 @@ score_classn_value_list::const_iterator score_classn_value_list::end() const {
 }
 
 /// \brief TODOCUMENT
-const string score_classn_value_list::get_name() const {
+string score_classn_value_list::get_name() const {
 	return name;
 }
 

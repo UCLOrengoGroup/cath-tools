@@ -37,5 +37,5 @@ path cath::common::find_file(const path_vec &prm_path_dirs, ///< Directories thr
 			return potential_file;
 		}
 	}
-	return path();
+	return {};
 }

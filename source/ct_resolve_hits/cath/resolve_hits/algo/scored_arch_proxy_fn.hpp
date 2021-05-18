@@ -34,10 +34,10 @@ namespace cath {
 		///        which is tied to the specified calc_hits_list with the specified index 
 		///
 		/// \relates scored_arch_proxy
-		bool overlaps_with(const scored_arch_proxy &prm_scored_arch_proxy, ///< The scored_arch_proxy to look for overlaps with
-		                   const calc_hit          &prm_hit,               ///< The hit to look for overlaps with
-		                   const calc_hit_list     &prm_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
-		                   ) {
+		inline bool overlaps_with(const scored_arch_proxy &prm_scored_arch_proxy, ///< The scored_arch_proxy to look for overlaps with
+		                          const calc_hit          &prm_hit,               ///< The hit to look for overlaps with
+		                          const calc_hit_list     &prm_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
+		                          ) {
 			return boost::algorithm::any_of(
 				prm_scored_arch_proxy
 					| boost::adaptors::transformed( [&] (const hitidx_t &x) { return prm_calc_hit_list[ x ]; } ),
@@ -51,10 +51,10 @@ namespace cath {
 		///        which is tied to the specified calc_hits_list with the specified index
 		///
 		/// \relates scored_arch_proxy
-		bool overlaps_with(const scored_arch_proxy &prm_scored_arch_proxy, ///< The scored_arch_proxy to look for overlaps with
-		                   const hitidx_t          &prm_hit_index,         ///< The index of the hit to look for overlaps with
-		                   const calc_hit_list     &prm_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
-		                   ) {
+		inline bool overlaps_with(const scored_arch_proxy &prm_scored_arch_proxy, ///< The scored_arch_proxy to look for overlaps with
+		                          const hitidx_t          &prm_hit_index,         ///< The index of the hit to look for overlaps with
+		                          const calc_hit_list     &prm_calc_hit_list      ///< The calc_hit_list to which the scored_arch_proxy is tied
+		                          ) {
 			return overlaps_with(
 				prm_scored_arch_proxy,
 				prm_calc_hit_list[ prm_hit_index ],

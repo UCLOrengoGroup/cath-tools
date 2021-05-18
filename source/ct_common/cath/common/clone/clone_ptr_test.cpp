@@ -203,7 +203,7 @@ BOOST_AUTO_TEST_CASE(constructs_from_rvalue_ref_to_unique_ptr_to_const) {
 BOOST_AUTO_TEST_CASE(copy_constructs) {
 	clone_ptr_test_abstract_base * raw_ptr = new clone_ptr_test_concrete1;
 	const clone_ptr<clone_ptr_test_abstract_base> source_ptr( raw_ptr    );
-	const clone_ptr<clone_ptr_test_abstract_base> dest_ptr  ( source_ptr );
+	const clone_ptr<clone_ptr_test_abstract_base> dest_ptr  ( source_ptr ); // NOLINT(performance-unnecessary-copy-initialization) The extra copy is intentional
 	BOOST_CHECK( source_ptr );
 	BOOST_CHECK( dest_ptr );
 	BOOST_CHECK_EQUAL( source_ptr.get(), raw_ptr );
@@ -220,7 +220,7 @@ BOOST_AUTO_TEST_CASE(copy_constructs) {
 BOOST_AUTO_TEST_CASE(copy_constructs_with_const) {
 	const clone_ptr_test_abstract_base * raw_ptr = new clone_ptr_test_concrete1;
 	const clone_ptr<const clone_ptr_test_abstract_base> source_ptr(raw_ptr);
-	const clone_ptr<const clone_ptr_test_abstract_base> dest_ptr(source_ptr);
+	const clone_ptr<const clone_ptr_test_abstract_base> dest_ptr(source_ptr); // NOLINT(performance-unnecessary-copy-initialization) The extra copy is intentional
 	BOOST_CHECK( source_ptr );
 	BOOST_CHECK( dest_ptr   );
 	BOOST_CHECK_EQUAL( source_ptr.get(), raw_ptr);

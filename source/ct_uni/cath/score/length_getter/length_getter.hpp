@@ -75,7 +75,7 @@ namespace cath {
 		  [[nodiscard]] virtual std::string do_description() const = 0;
 
 		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual const std::string do_description_brackets_string() const = 0;
+		  [[nodiscard]] virtual std::string do_description_brackets_string() const = 0;
 
 		  /// \brief TODOCUMENT
 		  [[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const length_getter & ) const = 0;
@@ -104,7 +104,7 @@ namespace cath {
 			[[nodiscard]] str_bool_pair_vec short_name_suffixes() const;
 			[[nodiscard]] std::string       long_name() const;
 			[[nodiscard]] std::string       description() const;
-			[[nodiscard]] const std::string description_brackets_string() const;
+			[[nodiscard]] std::string       description_brackets_string() const;
 
 			[[nodiscard]] bool less_than_with_same_dynamic_type( const length_getter & ) const;
 		};

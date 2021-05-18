@@ -21,6 +21,7 @@
 #include "domain_defn_pdbs_acquirer.hpp"
 
 #include <filesystem>
+#include <utility>
 
 #include <spdlog/spdlog.h>
 
@@ -56,7 +57,7 @@ pdb_list_name_set_list_pair domain_defn_pdbs_acquirer::do_get_pdbs_and_names(ist
 }
 
 /// \brief Ctor for domain_defn_pdbs_acquirer
-domain_defn_pdbs_acquirer::domain_defn_pdbs_acquirer(const path &prm_domain_defn_file ///< TODOCUMENT
-                                                     ) : domain_defn_file( prm_domain_defn_file ) {
+domain_defn_pdbs_acquirer::domain_defn_pdbs_acquirer(path prm_domain_defn_file ///< TODOCUMENT
+                                                     ) : domain_defn_file( std::move( prm_domain_defn_file ) ) {
 }
 

@@ -50,9 +50,7 @@ namespace cath {
 			[[nodiscard]] std::string do_get_name() const final;
 
 		  public:
-			pymol_file_superposition_outputter(const ::std::filesystem::path &,
-			                                   display_spec,
-			                                   sup::superposition_content_spec);
+			pymol_file_superposition_outputter( ::std::filesystem::path, display_spec, sup::superposition_content_spec );
 		};
 
 	} // namespace opts

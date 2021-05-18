@@ -20,8 +20,6 @@
 
 #include "residue_name.hpp"
 
-#include <optional>
-
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -31,7 +29,6 @@ using namespace ::cath::common;
 using ::boost::algorithm::is_digit;
 using ::boost::lexical_cast;
 using ::std::istream;
-using ::std::optional;
 using ::std::ostream;
 using ::std::string;
 
@@ -95,7 +92,7 @@ residue_name cath::make_residue_name(const string &prm_residue_name ///< TODOCUM
                                      ) {
 	// Sanity check the input
 	if ( prm_residue_name.empty() ) {
-		return residue_name();
+		return {};
 	}
 	if ( prm_residue_name.length() == 1 && ! is_digit()( prm_residue_name.at( 0 ) ) && prm_residue_name.at( 0 ) != '-' ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot split residue name into number and insert if it only contains an insert code"));

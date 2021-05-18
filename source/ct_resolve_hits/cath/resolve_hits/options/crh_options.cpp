@@ -233,7 +233,6 @@ crh_options::crh_options() : detail_help_ob{ detail_help_spec() } {
 
 /// \brief Build a crh_spec of the individual specs
 crh_spec crh_options::get_crh_spec() const {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return crh_spec{
 		the_input_ob.get_crh_input_spec(),
 		the_segment_ob.get_crh_segment_spec(),

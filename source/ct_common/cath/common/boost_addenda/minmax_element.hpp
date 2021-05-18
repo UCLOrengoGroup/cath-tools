@@ -21,34 +21,29 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_MINMAX_ELEMENT_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_MINMAX_ELEMENT_HPP
 
+#include <iterator>
+
 #include <boost/algorithm/minmax_element.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		template <typename RNG, typename FN>
-		inline auto minmax_element(RNG &prm_range ///< TODOCUMENT
-		                           ) {
-			return boost::minmax_element(
-				::std::cbegin( prm_range ),
-				::std::cend  ( prm_range )
-			);
-		}
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_range TODOCUMENT
+	template <typename RNG, typename FN>
+	inline auto minmax_element( RNG &prm_range ) {
+		return boost::minmax_element( ::std::cbegin( prm_range ), ::std::cend( prm_range ) );
+	}
 
-		/// \brief TODOCUMENT
-		template <typename RNG, typename FN>
-		inline auto minmax_element(RNG &prm_range,   ///< TODOCUMENT
-		                           FN   prm_function ///< TODOCUMENT
-		                           ) {
-			return boost::minmax_element(
-				::std::cbegin( prm_range ),
-				::std::cend  ( prm_range ),
-				prm_function
-			);
-		}
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_range    TODOCUMENT
+	/// \param prm_function TODOCUMENT
+	template <typename RNG, typename FN>
+	inline auto minmax_element( RNG &prm_range, FN prm_function ) {
+		return boost::minmax_element( ::std::cbegin( prm_range ), ::std::cend( prm_range ), prm_function );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_MINMAX_ELEMENT_HPP

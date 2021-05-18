@@ -149,7 +149,6 @@ string cath::file::to_string(const strucs_context &prm_strucs_context ///< The s
 /// \relates strucs_context
 pdb_list cath::file::get_restricted_pdbs(const strucs_context &prm_strucs_context ///< The strucs_context to query
                                          ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return pdb_list{
 		transform_build<pdb_vec>(
 			prm_strucs_context.get_pdbs(),
@@ -186,7 +185,7 @@ domain_opt cath::file::get_domain_opt_of_index(const strucs_context &prm_strucs_
 	return make_optional_if_fn(
 		static_cast<bool>( regions ),
 		[&] {
-			const auto domain_name_opt = name_set.get_domain_name_from_regions();
+			const str_opt &domain_name_opt = name_set.get_domain_name_from_regions();
 			return
 				domain_name_opt
 					? domain{ *regions, *domain_name_opt }

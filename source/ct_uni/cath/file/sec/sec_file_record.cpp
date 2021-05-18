@@ -37,7 +37,7 @@ using namespace ::cath::geom;
 using namespace ::std;
 
 /// \brief Check that the unit direction vector has a length vaguely close to one
-void sec_file_record::check_unit_dirn_length() {
+void sec_file_record::check_unit_dirn_length() const {
 	if ( difference( 1.0, length( get_unit_dirn() ) ) > 0.1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("sec_file_record's unit direction "));
 	}

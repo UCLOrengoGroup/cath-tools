@@ -329,7 +329,7 @@ prot_prot_pair cath::read_protein_pair(const cath_ssap_options &prm_cath_ssap_op
 	const auto &the_domains      = prm_cath_ssap_options.get_domains();
 	return read_protein_pair(
 		the_ssap_options.get_protein_name_a(),
-		if_then_optional( the_domains.size() > 0, the_domains[ 0 ] ),
+		if_then_optional( !the_domains.empty(), the_domains[ 0 ] ),
 		the_ssap_options.get_protein_name_b(),
 		if_then_optional( the_domains.size() > 1, the_domains[ 1 ] ),
 		prm_cath_ssap_options.get_data_dirs_spec(),
@@ -2035,7 +2035,7 @@ ssap_scores cath::plot_aln(const protein                 &prm_protein_a,     ///
                            ) {
 	const bool res_not_ss__hacky = prm_entry_querier.temp_hacky_is_residue();
 	if (res_not_ss__hacky && prm_pass != 2) {
-		return ssap_scores();
+		return {};
 	}
 
 	const ssap_scores local_ssap_scores = calculate_log_score(
@@ -2047,7 +2047,7 @@ ssap_scores cath::plot_aln(const protein                 &prm_protein_a,     ///
 
 	// Score secondary structure alignment
 	if (!res_not_ss__hacky) {
-		return ssap_scores();
+		return {};
 	}
 
 	// Score and print residue alignment

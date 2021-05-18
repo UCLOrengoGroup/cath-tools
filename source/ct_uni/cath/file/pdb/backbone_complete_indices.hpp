@@ -69,7 +69,7 @@ namespace cath {
 
 		/// \brief Ctor from a vector of indices
 		inline backbone_complete_indices::backbone_complete_indices(size_vec prm_indices ///< The vector of indices
-		                                                            ) : indices{ prm_indices } {
+		                                                            ) : indices{ ::std::move( prm_indices ) } {
 			// Test that the indices are *strictly* increasing
 			assert( boost::algorithm::is_strictly_increasing( indices ) );
 		}

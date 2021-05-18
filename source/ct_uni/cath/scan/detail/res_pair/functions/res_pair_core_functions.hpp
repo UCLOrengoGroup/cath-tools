@@ -42,9 +42,7 @@ namespace cath {
 			inline frame_quat_rot_type distance_1_between_frames(const res_pair_core &prm_res_pair_a, ///< The first  res_pair_core
 			                                                     const res_pair_core &prm_res_pair_b  ///< The second res_pair_core
 			                                                     ) {
-				const frame_quat_rot frame_a = prm_res_pair_a.get_frame();
-				const frame_quat_rot frame_b = prm_res_pair_b.get_frame();
-				return distance_1_between_quat_rots( frame_a, frame_b );
+				return distance_1_between_quat_rots( prm_res_pair_a.get_frame(), prm_res_pair_b.get_frame() );
 			}
 
 			/// \brief Calculate the squared distance between the views of the two residue pairs

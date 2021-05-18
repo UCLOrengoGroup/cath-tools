@@ -47,7 +47,7 @@ namespace cath {
 				seq_id_and_domain_cluster_ids_pair(const cluster_id_t &prm_seq_id,
 				                                   domain_cluster_ids  prm_dom_cluster_ids
 				                                   ) : seq_id         { prm_seq_id          },
-				                                       dom_cluster_ids{ prm_dom_cluster_ids } {
+				                                       dom_cluster_ids{ ::std::move( prm_dom_cluster_ids ) } {
 				}
 
 
@@ -115,7 +115,7 @@ namespace cath {
 					return intrcn;
 				}
 			}
-			the_domain_cluster_ids.emplace_back( prm_segments, prm_cluster_id );
+			the_domain_cluster_ids.emplace_back( ::std::move( prm_segments ), prm_cluster_id );
 			return clust_entry_problem::NONE;
 		}
 

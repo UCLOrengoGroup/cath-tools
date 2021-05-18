@@ -68,7 +68,7 @@ namespace cath {
 		/// \brief The get_residue_names_test_suite_fixture to assist in testing getting residue names
 		struct get_residue_names_test_suite_fixture : protected global_test_constants {
 		private:
-			const string pdb_extension                   = "";
+			const string pdb_extension;
 			const string dssp_extension                  = ".dssp";
 			const string correct_residue_names_extension = ".residue_names";
 

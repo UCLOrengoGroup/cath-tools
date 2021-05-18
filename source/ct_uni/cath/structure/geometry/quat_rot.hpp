@@ -77,7 +77,6 @@ namespace cath {
 		template <typename T>
 		quat_rot_impl<T> operator-(const quat_rot_impl<T> &prm_quaternion ///< TODOCUMENT
 		                           ) {
-			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 			return quat_rot_impl<T>{ quat_rot_impl<T>( 0.0, 0.0, 0.0, 0.0 ) - prm_quaternion };
 		}
 

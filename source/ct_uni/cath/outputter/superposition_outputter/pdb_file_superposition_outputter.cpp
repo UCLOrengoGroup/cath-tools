@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <utility>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -68,8 +69,8 @@ string pdb_file_superposition_outputter::do_get_name() const {
 }
 
 /// \brief Ctor for pdb_file_superposition_outputter
-pdb_file_superposition_outputter::pdb_file_superposition_outputter(const path                 &prm_output_file, ///< TODOCUMENT
+pdb_file_superposition_outputter::pdb_file_superposition_outputter(path prm_output_file, ///< TODOCUMENT
                                                                    superposition_content_spec  prm_content_spec ///< The specification of what should be included in the superposition
-                                                                   ) : output_file  { prm_output_file               },
+                                                                   ) : output_file  { std::move( prm_output_file  ) },
                                                                        content_spec { std::move( prm_content_spec ) } {
 }

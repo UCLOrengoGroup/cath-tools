@@ -68,10 +68,10 @@ namespace cath {
 
 		std::unique_ptr<pdbs_acquirer> get_pdbs_acquirer(const pdb_input_spec &);
 
-		file::strucs_context combine_acquired_pdbs_and_names_with_ids_and_domains(file::pdb_list,
-		                                                                          file::name_set_list,
-		                                                                          str_vec,
-		                                                                          chop::domain_vec);
+		file::strucs_context combine_acquired_pdbs_and_names_with_ids_and_domains( file::pdb_list,
+		                                                                           file::name_set_list,
+		                                                                           str_vec,
+		                                                                           const chop::domain_vec & );
 
 		file::strucs_context get_strucs_context(const pdbs_acquirer &,
 		                                        std::istream &,

@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <utility>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/io/alignment_io.hpp"
@@ -78,8 +79,8 @@ pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_al
 }
 
 /// \brief Ctor for fasta_aln_file_alignment_acquirer
-fasta_aln_file_alignment_acquirer::fasta_aln_file_alignment_acquirer(const path &prm_fasta_alignment_file ///< TODOCUMENT
-                                                                     ) : fasta_alignment_file(prm_fasta_alignment_file) {
+fasta_aln_file_alignment_acquirer::fasta_aln_file_alignment_acquirer(path prm_fasta_alignment_file ///< TODOCUMENT
+                                                                     ) : fasta_alignment_file( std::move( prm_fasta_alignment_file ) ) {
 }
 
 /// \brief TODOCUMENT

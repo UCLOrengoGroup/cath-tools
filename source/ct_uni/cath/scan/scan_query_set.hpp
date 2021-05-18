@@ -202,7 +202,6 @@ namespace cath {
 		template <typename... KPs>
 		scan_query_set<KPs...> make_scan_query_set(const scan_policy<KPs...> &prm_policy ///< TODOCUMENT
 		                                           ) {
-			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 			return scan_query_set<KPs...>{ prm_policy };
 		}
 

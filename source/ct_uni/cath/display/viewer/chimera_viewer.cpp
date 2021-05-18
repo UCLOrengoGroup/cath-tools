@@ -363,11 +363,11 @@ void chimera_viewer::do_write_load_pdbs(ostream             &prm_os,            
                                         ) const {
 	const size_t num_pdbs = prm_pdbs.size();
 	for (const size_t &pdb_ctr : indices( num_pdbs ) ) {
-		prm_os << "cmd.read_pdbstr(\"\"\"";
+		prm_os << R"(cmd.read_pdbstr(""")";
 		ostringstream superposed_pdb_ss;
 		write_superposed_pdb_to_ostream( superposed_pdb_ss, prm_superposition, prm_pdbs[pdb_ctr], pdb_ctr );
 		prm_os << replace_all_copy(superposed_pdb_ss.str(), "\n", "\\\n");
-		prm_os << "\"\"\",\"" << prm_names[pdb_ctr] << "\")\n";
+		prm_os << R"(""",")" << prm_names[pdb_ctr] << "\")\n";
 	}
 	prm_os << "hide all\n";
 	prm_os << "set cartoon_rect_length  = " << pymol_tools::pymol_size( 2, 1.50,  100, 0.090,  num_pdbs ) << "\n";

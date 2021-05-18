@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <utility>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/io/alignment_io.hpp"
@@ -101,8 +102,8 @@ pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_ali
 }
 
 /// \brief Ctor for ssap_aln_file_alignment_acquirer
-ssap_aln_file_alignment_acquirer::ssap_aln_file_alignment_acquirer(const path &prm_ssap_alignment_file ///< TODOCUMENT
-                                                                   ) : ssap_alignment_file( prm_ssap_alignment_file ) {
+ssap_aln_file_alignment_acquirer::ssap_aln_file_alignment_acquirer(path prm_ssap_alignment_file ///< TODOCUMENT
+                                                                   ) : ssap_alignment_file( std::move( prm_ssap_alignment_file ) ) {
 }
 
 /// \brief TODOCUMENT

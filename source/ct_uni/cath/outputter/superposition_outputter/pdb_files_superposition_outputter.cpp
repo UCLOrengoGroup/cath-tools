@@ -21,6 +21,7 @@
 #include "pdb_files_superposition_outputter.hpp"
 
 #include <filesystem>
+#include <utility>
 
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -74,9 +75,9 @@ string pdb_files_superposition_outputter::do_get_name() const {
 }
 
 /// \brief Ctor for pdb_files_superposition_outputter
-pdb_files_superposition_outputter::pdb_files_superposition_outputter(const path                 &prm_output_dir,  ///< TODOCUMENT
+pdb_files_superposition_outputter::pdb_files_superposition_outputter(path prm_output_dir,  ///< TODOCUMENT
                                                                      superposition_content_spec  prm_content_spec ///< The specification of what should be included in the superposition
-                                                                     ) : output_dir  { prm_output_dir                },
+                                                                     ) : output_dir  { std::move( prm_output_dir   ) },
                                                                          content_spec{ std::move( prm_content_spec ) } {
 }
 

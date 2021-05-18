@@ -168,7 +168,6 @@ namespace cath {
 		template <typename... KPs>
 		constexpr res_pair_keyer<KPs...> make_res_pair_keyer(KPs ... prm_keyer_parts ///< TODOCUMENT
 		                                                     ) {
-			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 			return res_pair_keyer<KPs...>{ prm_keyer_parts... };
 		}
 

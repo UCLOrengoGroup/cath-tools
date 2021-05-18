@@ -113,9 +113,9 @@ BOOST_AUTO_TEST_CASE(simple_conversion) {
 	BOOST_REQUIRE_EQUAL(CODES.size(), NAMES.size());
 	BOOST_REQUIRE_EQUAL(CODES.size(), LETTERS.size());
 	for ( const size_t &letter_ctr : indices( CODES.size() ) ) {
-		const string_view &code   = CODES[ letter_ctr ];
-		const string_view &name   = NAMES[ letter_ctr ];
-		const char &       letter = LETTERS[ letter_ctr ];
+		const string_view &code   = CODES.at( letter_ctr );
+		const string_view &name   = NAMES.at( letter_ctr );
+		const char &       letter = LETTERS.at( letter_ctr );
 
 		// Check non-member, non-friend 1->3 and 3->1 converters
 		BOOST_CHECK_EQUAL( code,   get_code_str_of_amino_acid_letter( letter ) );

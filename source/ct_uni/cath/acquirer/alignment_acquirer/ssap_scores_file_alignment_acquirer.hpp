@@ -47,7 +47,7 @@ namespace cath {
 			  const align_refining & ) const final;
 
 		  public:
-			explicit ssap_scores_file_alignment_acquirer( const ::std::filesystem::path & );
+			explicit ssap_scores_file_alignment_acquirer( ::std::filesystem::path );
 
 			[[nodiscard]] ::std::filesystem::path get_ssap_scores_file() const;
 		};

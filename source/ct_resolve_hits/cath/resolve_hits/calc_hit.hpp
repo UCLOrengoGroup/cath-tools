@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CALC_HIT_HPP
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/numeric.hpp>
 
@@ -72,7 +73,7 @@ namespace cath {
 			         const resscr_t &,
 			         const hitidx_t &);
 
-			calc_hit(seq::seq_seg_vec,
+			calc_hit(const seq::seq_seg_vec &,
 			         const resscr_t &,
 			         const hitidx_t &);
 
@@ -158,12 +159,11 @@ namespace cath {
 		}
 
 		/// \brief Ctor for a possibly discontinuous calc_hit from segments
-		inline calc_hit::calc_hit(seq::seq_seg_vec  prm_segments, ///< The segments of the calc_hit
-		                          const resscr_t   &prm_score,    ///< The score associated with the calc_hit
-		                          const hitidx_t   &prm_label_idx ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
-		                          ) : score     { prm_score                 },
-		                              label_idx { prm_label_idx             },
-		                              segments  { std::move( prm_segments ) } {
+		inline calc_hit::calc_hit( const seq::seq_seg_vec &prm_segments, ///< The segments of the calc_hit
+		                           const resscr_t &        prm_score,    ///< The score associated with the calc_hit
+		                           const hitidx_t &        prm_label_idx ///< The index of the label associated with the calc_hit (in some other list of hits' labels)
+		                           ) :
+		        score{ prm_score }, label_idx{ prm_label_idx }, segments{ prm_segments } {
 			sanity_check();
 		}
 
@@ -259,16 +259,16 @@ namespace cath {
 		/// \brief Get a vector of the segments in this calc_hit
 		///
 		/// \relates calc_hit
-		inline const seq::seq_seg_vec get_seq_segs(const calc_hit &prm_hit ///< The calc_hit to query
-		                                           ) {
+		inline seq::seq_seg_vec get_seq_segs( const calc_hit &prm_hit ///< The calc_hit to query
+		                                      ) {
 			return get_seq_segs( prm_hit.get_segments() );
 		}
 
 		/// \brief Get the (possibly-repeated, non-sorted) segments from the specified hits
 		///
 		/// \relates calc_hit
-		inline const seq::seq_seg_vec get_seq_segs(const calc_hit_vec &prm_hit_vec ///< The hits whose segments should be returned
-		                                           ) {
+		inline seq::seq_seg_vec get_seq_segs( const calc_hit_vec &prm_hit_vec ///< The hits whose segments should be returned
+		                                      ) {
 			seq::seq_seg_vec results;
 			for (const calc_hit &the_hit : prm_hit_vec) {
 				common::append( results, get_seq_segs( the_hit ) );
@@ -412,12 +412,8 @@ namespace cath {
 		inline bool hit_overlaps_with_any_of_hits(const calc_hit     &prm_hit_lhs, ///< The calc_hit to query
 		                                          const calc_hit_vec &prm_hit_vec  ///< The list of hits to query
 		                                          ) {
-			for (const calc_hit &hit_rhs : prm_hit_vec) {
-				if ( are_overlapping( prm_hit_lhs, hit_rhs ) ) {
-					return true;
-				}
-			}
-			return false;
+			return ::boost::algorithm::any_of(
+			  prm_hit_vec, [ & ]( const calc_hit &x ) { return are_overlapping( prm_hit_lhs, x ); } );
 		}
 
 		/// \brief Whether the segments in the first specified calc_hit never extend outside

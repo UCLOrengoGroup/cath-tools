@@ -293,6 +293,5 @@ ssaps_and_prcs_of_query cath::homcheck::make_ssaps_and_prcs_of_query(const ssap_
 		                conjuction_str,
 		                unmatched_prcs_str );
 	}
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return ssaps_and_prcs_of_query{ ssap_and_prc_entries };
 }

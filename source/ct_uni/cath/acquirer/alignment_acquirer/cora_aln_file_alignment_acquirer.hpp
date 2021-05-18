@@ -41,7 +41,7 @@ namespace cath {
 			  const file::strucs_context & ) const final;
 
 		  public:
-			explicit cora_aln_file_alignment_acquirer(const ::std::filesystem::path &);
+			explicit cora_aln_file_alignment_acquirer( ::std::filesystem::path );
 
 			[[nodiscard]] ::std::filesystem::path get_cora_alignment_file() const;
 		};

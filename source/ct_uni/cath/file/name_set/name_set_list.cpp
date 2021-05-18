@@ -73,7 +73,6 @@ name_set_list cath::file::build_name_set_list(str_vec     prm_names_from_acq, //
 		);
 	}
 
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return name_set_list{ result };
 }
 

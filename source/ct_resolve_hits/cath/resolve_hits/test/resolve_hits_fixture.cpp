@@ -116,7 +116,6 @@ qyikaz cath|current|1nctA00/-6-91-i5_11,4e-07 1492.21 2037-2127 2037-2127
 ///
 /// To use, see the overloads of blank_vrsn()
 regex resolve_hits_fixture::output_version_regex() {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return regex{ R"(by cath-resolve-hits( v\d+\.\d+\.\d+\-\d+\-g?\w{8})?,)" };
 }
 

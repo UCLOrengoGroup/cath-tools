@@ -42,7 +42,7 @@ namespace cath {
 			/// A holder for the default_logger that gets switched out during the lifetime of the run
 			::std::shared_ptr<::spdlog::logger> logger_shptr;
 
-			void output_catch_context( ::std::ostream &, const char *const ) const;
+			void output_catch_context( ::std::ostream &, const char * ) const;
 
 			[[nodiscard]] virtual ::std::string do_get_program_name() const = 0;
 

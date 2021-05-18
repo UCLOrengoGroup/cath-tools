@@ -90,6 +90,5 @@ crh_score_spec & crh_score_spec::set_naive_greedy(const bool &prm_naive_greedy /
 ///
 /// \relates crh_score_spec
 crh_score_spec cath::rslv::make_neutral_score_spec() {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return crh_score_spec{ false, 0.0, 0.0 };
 }

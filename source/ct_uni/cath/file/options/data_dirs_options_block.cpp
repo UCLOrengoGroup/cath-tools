@@ -27,6 +27,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/file/options/data_dirs_spec.hpp"
@@ -118,7 +120,7 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
 			const string     default_value = data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS.at( the_data_file ).at( the_data_option );
 			const string    &desc_start    = DATA_OPTION_DESCRIPTION_START.at(  the_data_option );
 			const string    &desc_end      = DATA_OPTION_DESCRIPTION_END.at(    the_data_option );
-			const string     description   = desc_start + data_file_name + desc_end;
+			const string     description   = ::fmt::format( "{}{}{}", desc_start, data_file_name, desc_end );
 			const string    &varname       = DATA_OPTION_VARNAME.at( the_data_option );
 
 			// Add a new option, using the accumulated data
@@ -147,7 +149,7 @@ void data_dirs_options_block::do_add_hidden_options_to_description(options_descr
 			value<path>()
 				->notifier  ( cath_root_dir_notifier )
 				->value_name( rootdir_valname        ),
-			( "Find sub-directories of standard names (\"pdb\", \"dssp\", \"wolf\", \"sec\") in root directory " + rootdir_valname ).c_str()
+			( R"(Find sub-directories of standard names ("pdb", "dssp", "wolf", "sec") in root directory )" + rootdir_valname ).c_str()
 		);
 }
 

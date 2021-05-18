@@ -149,7 +149,7 @@ namespace cath {
 					if ( file_size( prm_file ) < 100
 							|| icontains( prm_file.string(), "stderr" )
 							|| icontains( prm_file.string(), "svmlight_data" ) ) {
-						return bool_str_pair_opt( nullopt );
+						return { nullopt };
 					}
 
 					const auto file_stem = prm_file.stem().string();

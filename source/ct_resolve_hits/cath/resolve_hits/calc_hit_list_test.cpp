@@ -49,7 +49,6 @@ namespace cath {
 
 			/// \brief Make an example calc_hit_list for testing
 			calc_hit_list make_eg_hit_list() {
-				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 				return calc_hit_list {
 					full_hit_list{ {
 						full_hit( { seq_seg{ 1266,                        1344 }, }, "label_a", 25.0 ), // This one needs a better score than "label_d", else it'd be worse

@@ -175,19 +175,19 @@ BOOST_AUTO_TEST_CASE(equal_grouped_works) {
 	};
 
 	BOOST_CHECK_EQUAL_RANGES(
-		transform_build<size_vec_vec>( equivalents        | equal_grouped(                ), size_vec_of_size_vec_sub_range ),
+		transform_build<size_vec_vec>( equivalents        | equal_grouped(          ), size_vec_of_size_vec_sub_range ),
 		grouped_equivalents
 	);
 	BOOST_CHECK_EQUAL_RANGES(
-		transform_build<size_vec_vec>( sorted_equivalents | equal_grouped( less<size_t>() ), size_vec_of_size_vec_sub_range ),
+		transform_build<size_vec_vec>( sorted_equivalents | equal_grouped( less<>() ), size_vec_of_size_vec_sub_range ),
 		grouped_sorted_equivalents
 	);
 	BOOST_CHECK_EQUAL_RANGES(
-		transform_build<size_vec_vec>( equivalents        | equal_grouped(                ), size_vec_of_size_vec_sub_range ),
+		transform_build<size_vec_vec>( equivalents        | equal_grouped(          ), size_vec_of_size_vec_sub_range ),
 		grouped_equivalents
 	);
 	BOOST_CHECK_EQUAL_RANGES(
-		transform_build<size_vec_vec>( sorted_equivalents | equal_grouped( less<size_t>() ), size_vec_of_size_vec_sub_range ),
+		transform_build<size_vec_vec>( sorted_equivalents | equal_grouped( less<>() ), size_vec_of_size_vec_sub_range ),
 		grouped_sorted_equivalents
 	);
 }
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE(equal_grouped_works_with_sorted) {
 	};
 
 	BOOST_CHECK_EQUAL_RANGES(
-		transform_build<size_vec_vec>( sorted_equivalents | equal_grouped( less<size_t>()  ), size_vec_of_size_vec_sub_range ),
+		transform_build<size_vec_vec>( sorted_equivalents | equal_grouped( less<>()  ), size_vec_of_size_vec_sub_range ),
 		grouped_sorted_equivalents
 	);
 }

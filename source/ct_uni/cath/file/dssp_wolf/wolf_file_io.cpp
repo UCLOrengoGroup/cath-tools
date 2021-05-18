@@ -144,11 +144,21 @@ wolf_file cath::file::read_wolf(const path &prm_wolf_filename ///< TODOCUMENT
 		double dummy_alpha;
 		double dummy_kappa;
 		double dummy_tco;
-		double ca_x, ca_y, ca_z;
-		double cb_x, cb_y, cb_z;
-		double frame_x1, frame_y1, frame_z1;
-		double frame_x2, frame_y2, frame_z2;
-		double frame_x3, frame_y3, frame_z3;
+		double ca_x;
+		double ca_y;
+		double ca_z;
+		double cb_x;
+		double cb_y;
+		double cb_z;
+		double frame_x1;
+		double frame_y1;
+		double frame_z1;
+		double frame_x2;
+		double frame_y2;
+		double frame_z2;
+		double frame_x3;
+		double frame_y3;
+		double frame_z3;
 
 		sscanf(
 			buffer+34,

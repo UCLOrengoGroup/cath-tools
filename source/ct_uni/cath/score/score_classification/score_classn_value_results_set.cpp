@@ -537,7 +537,6 @@ const score_classn_value_list & cath::score::find_score_classn_value_list_of_nam
 /// \relates score_classn_value_results_set
 named_true_false_pos_neg_list_list cath::score::make_named_true_false_pos_neg_list_list(const score_classn_value_results_set &prm_score_classn_value_results_set ///< TODOCUMENT
                                                                                         ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return named_true_false_pos_neg_list_list{
 		transform_build<named_true_false_pos_neg_list_vec>(
 			indices( prm_score_classn_value_results_set.size() ),
@@ -560,7 +559,6 @@ named_true_false_pos_neg_list_list cath::score::make_named_true_false_pos_neg_li
 /// \relates score_classn_value_results_set
 named_true_false_pos_neg_list_list cath::score::make_named_true_false_pos_neg_list_list(const score_classn_value_list_vec &prm_score_classn_value_lists ///< TODOCUMENT
                                                                                         ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return named_true_false_pos_neg_list_list{
 		transform_build<named_true_false_pos_neg_list_vec>(
 			prm_score_classn_value_lists,

@@ -63,9 +63,9 @@ namespace cath {
 
 //			std::string do_long_suffix_string() const final;
 
-			[[nodiscard]] const std::string do_description_brackets_string() const final;
+			[[nodiscard]] std::string do_description_brackets_string() const final;
 
-		public:
+		  public:
 			[[nodiscard]] std::unique_ptr<protein_only_length_getter> protein_only_clone() const;
 
 			[[nodiscard]] size_t get_prot_only_length(const protein &,

@@ -46,8 +46,7 @@ namespace cath {
 			[[nodiscard]] std::string do_get_name() const final;
 
 		  public:
-			pdb_file_superposition_outputter(const ::std::filesystem::path &,
-			                                 sup::superposition_content_spec);
+			pdb_file_superposition_outputter( ::std::filesystem::path, sup::superposition_content_spec );
 		};
 
 	} // namespace opts

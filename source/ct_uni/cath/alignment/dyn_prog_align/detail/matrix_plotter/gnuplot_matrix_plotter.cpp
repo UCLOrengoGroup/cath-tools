@@ -77,7 +77,7 @@ void gnuplot_matrix_plotter::do_write_centre_score(const size_t &prm_x,    ///< 
 	preplot_commands << numeric_cast<double>( prm_x );
 	preplot_commands << ", ";
 	preplot_commands << numeric_cast<double>( prm_y );
-	preplot_commands << " centre front textcolor rgbcolor \"black\" nopoint font \", " << 50.0 / numeric_cast<double>( max_length + 1 ) << "\"\n";
+	preplot_commands << R"( centre front textcolor rgbcolor "black" nopoint font ", )" << 50.0 / numeric_cast<double>( max_length + 1 ) << "\"\n";
 }
 
 /// \brief TODOCUMENT
@@ -94,7 +94,7 @@ void gnuplot_matrix_plotter::do_write_corner_score(const size_t &prm_x,    ///< 
 	preplot_commands << numeric_cast<double>( prm_x ) - 0.5;
 	preplot_commands << ", ";
 	preplot_commands << numeric_cast<double>( prm_y ) - 0.5;
-	preplot_commands << " centre front textcolor rgbcolor \"black\" nopoint offset first 0.200, -0.085 font \", " << 50.0 / numeric_cast<double>( max_length + 1 ) << "\"\n";
+	preplot_commands << R"( centre front textcolor rgbcolor "black" nopoint offset first 0.200, -0.085 font ", )" << 50.0 / numeric_cast<double>( max_length + 1 ) << "\"\n";
 }
 
 /// \brief TODOCUMENT

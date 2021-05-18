@@ -339,7 +339,6 @@ region cath::chop::expand_to_chain(const region &prm_region ///< The region to e
 	if ( ! has_chain_label( prm_region ) ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot expand_to_chain() a region that doesn't have a chain label"));
 	}
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return region{ get_chain_label( prm_region ) };
 }
 
@@ -348,7 +347,6 @@ region cath::chop::expand_to_chain(const region &prm_region ///< The region to e
 /// \relates region
 region cath::chop::make_simple_region(const char &prm_chain_label_char ///< The chain label char for the new region
                                       ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return region{ chain_label { prm_chain_label_char } };
 }
 

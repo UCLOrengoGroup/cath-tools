@@ -118,11 +118,11 @@ alignment_context cath::align::make_restricted_alignment_context(alignment      
 superposition_context cath::align::make_superposition_context(const alignment_context &prm_alignment_context, ///< TODOCUMENT
                                                               const superposition     &prm_superposition      ///< TODOCUMENT
                                                               ) {
-	return superposition_context(
+	return {
 		prm_superposition,
 		prm_alignment_context.get_strucs_context(),
 		prm_alignment_context.get_alignment()
-	);
+	};
 }
 
 /// \brief Get an alignment context

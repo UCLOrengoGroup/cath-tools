@@ -68,7 +68,6 @@ classn_stat_pair_series_list cath::score::make_classn_stat_pair_series_list(cons
                                                                             const classn_stat                        &prm_classn_stat_a,                      ///< TODOCUMENT
                                                                             const classn_stat                        &prm_classn_stat_b                       ///< TODOCUMENT
                                                                             ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return classn_stat_pair_series_list{
 		transform_build<classn_stat_pair_series_vec>(
 			prm_named_true_false_pos_neg_list_list,

@@ -454,7 +454,6 @@ void cath::remove_domin_res(protein                  &prm_protein,              
 			sec_struc_index_conv.push_back(sec_struc_ctr);
 
 			// Add the new sec_struc to sec_strucs_to_keep, first updating its sec_struc number to the new value
-			sec_struc new_sec_struc(my_sec_struc);
 			sec_strucs_to_keep.push_back(my_sec_struc);
 		}
 	}

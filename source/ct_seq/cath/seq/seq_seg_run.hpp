@@ -252,8 +252,8 @@ namespace cath {
 		/// \brief Get a vector of the segments in this seq_seg_run
 		///
 		/// \relates seq_seg_run
-		inline const seq_seg_vec get_seq_segs(const seq_seg_run &prm_seq_seg_run ///< The seq_seg_run to query
-		                                      ) {
+		inline seq_seg_vec get_seq_segs( const seq_seg_run &prm_seq_seg_run ///< The seq_seg_run to query
+		                                 ) {
 			return common::transform_build<seq_seg_vec>(
 				common::indices( prm_seq_seg_run.get_num_segments() ),
 				[&] (const size_t &x) {
@@ -265,8 +265,8 @@ namespace cath {
 		/// \brief Get the (possibly-repeated, non-sorted) segments from the specified seq_seg_runs
 		///
 		/// \relates seq_seg_run
-		inline const seq_seg_vec get_seq_segs(const seq_seg_run_vec &prm_seq_seg_run_vec ///< The seq_seg_runs whose segments should be returned
-		                                      ) {
+		inline seq_seg_vec get_seq_segs( const seq_seg_run_vec &prm_seq_seg_run_vec ///< The seq_seg_runs whose segments should be returned
+		                                 ) {
 			seq_seg_vec results;
 			for (const seq_seg_run &the_seq_seg_run : prm_seq_seg_run_vec) {
 				common::append( results, get_seq_segs( the_seq_seg_run ) );

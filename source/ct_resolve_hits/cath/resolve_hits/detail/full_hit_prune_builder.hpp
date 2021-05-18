@@ -72,10 +72,10 @@ namespace cath {
 			///        which just compares the full_hit's segments
 			struct full_hit_ref_segs_equal_to final {
 				/// \brief The function operator that performs compares two full_hits' segments
-				size_t operator()(const std::reference_wrapper<full_hit> &prm_lhs, ///< The first  reference_wrapper<full_hit> to compare
-				                  const std::reference_wrapper<full_hit> &prm_rhs  ///< The second reference_wrapper<full_hit> to compare
-				                  ) const {
-					return boost::range::equal(
+				bool operator()(const std::reference_wrapper<full_hit> &prm_lhs, ///< The first  reference_wrapper<full_hit> to compare
+				                const std::reference_wrapper<full_hit> &prm_rhs  ///< The second reference_wrapper<full_hit> to compare
+				                ) const {
+					return ::boost::range::equal(
 						prm_lhs.get().get_segments(),
 						prm_rhs.get().get_segments()
 					);

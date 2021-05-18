@@ -79,7 +79,8 @@ merge_vec cath::clust::calc_complete_linkage_merge_list(links             prm_li
 
 		while ( num_clusts > 1 ) {
 			const bool start_new_chain = ( chain.size() < 4_z );
-			item_idx a, b;
+			item_idx a;
+			item_idx b;
 			if ( start_new_chain ) {
 				a = clust_ids.get_jumbled_nth_index( 0 );
 				b = clust_ids.get_jumbled_nth_index( 1 );

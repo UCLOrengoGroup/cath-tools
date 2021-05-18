@@ -41,7 +41,7 @@ namespace cath {
 			  const file::strucs_context & ) const final;
 
 		  public:
-			explicit ssap_aln_file_alignment_acquirer(const ::std::filesystem::path &);
+			explicit ssap_aln_file_alignment_acquirer( ::std::filesystem::path );
 
 			[[nodiscard]] ::std::filesystem::path get_ssap_alignment_file() const;
 		};

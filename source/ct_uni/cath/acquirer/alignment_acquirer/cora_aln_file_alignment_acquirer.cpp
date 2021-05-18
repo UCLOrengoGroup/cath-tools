@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <utility>
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/io/alignment_io.hpp"
@@ -81,8 +82,8 @@ pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_ali
 }
 
 /// \brief Ctor for cora_aln_file_alignment_acquirer
-cora_aln_file_alignment_acquirer::cora_aln_file_alignment_acquirer(const path     &prm_cora_alignment_file ///< TODOCUMENT
-                                                                   ) : cora_alignment_file(prm_cora_alignment_file) {
+cora_aln_file_alignment_acquirer::cora_aln_file_alignment_acquirer(path prm_cora_alignment_file ///< TODOCUMENT
+                                                                   ) : cora_alignment_file( std::move( prm_cora_alignment_file ) ) {
 }
 
 /// \brief TODOCUMENT

@@ -40,7 +40,7 @@ const bool & score_classn_value_better_value::get_higher_is_better() const {
 /// \brief Function operator to return whether the first score_classn_value has a "better" score_value than the second
 bool score_classn_value_better_value::operator()(const score_classn_value &prm_score_classn_value_a, ///< The first  score_classn_value to compare
                                                  const score_classn_value &prm_score_classn_value_b  ///< The second score_classn_value to compare
-                                                 ) {
+                                                 ) const {
 	// Grab const-references to the two score values
 	const double &score_value_a = prm_score_classn_value_a.get_score_value();
 	const double &score_value_b = prm_score_classn_value_b.get_score_value();

@@ -147,7 +147,7 @@ sec_file cath::file::read_sec(istream &prm_istream ///< The istream from which t
 		}
 	}
 
-	return sec_file(new_sec_records, new_planar_angles);
+	return {new_sec_records, new_planar_angles};
 }
 
 /// \brief Parse a main line from a sec file out of the specified string
@@ -161,9 +161,14 @@ pair<size_t, sec_file_record> cath::file::detail::parse_sec_main_line(const stri
 	size_t         sec_struc_number;
 	sec_struc_type helix_or_strand;
 	char           unused_strand_type;
-	size_t         start_residue_num, stop_residue_num;
-	double         midpoint_x,  midpoint_y,  midpoint_z;
-	double         unit_dirn_x, unit_dirn_y, unit_dirn_z;
+	size_t         start_residue_num;
+	size_t         stop_residue_num;
+	double         midpoint_x;
+	double         midpoint_y;
+	double         midpoint_z;
+	double         unit_dirn_x;
+	double         unit_dirn_y;
+	double         unit_dirn_z;
 
 	// Put the string into an istringstream and then parse out the parts
 	// (and do this in a try block so that cast conversion failures can be caught)
@@ -201,7 +206,7 @@ sec_struc_planar_angles_vec cath::file::parse_sec_angles_line(const string &prm_
 	// Trim any whitespace of the ends of the string and just return an empty vector if that's empty
 	const string trimmed_sec_angles_string(trim_copy(prm_sec_line_string));
 	if (trimmed_sec_angles_string.empty()) {
-		return sec_struc_planar_angles_vec();
+		return {};
 	}
 
 	// Split the line on whitespace and throw if the number of parts doesn't divide by 3

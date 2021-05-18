@@ -106,7 +106,7 @@ string length_getter::description() const {
 }
 
 /// \brief TODOCUMENT
-const string length_getter::description_brackets_string() const {
+string length_getter::description_brackets_string() const {
 	return do_description_brackets_string();
 }
 

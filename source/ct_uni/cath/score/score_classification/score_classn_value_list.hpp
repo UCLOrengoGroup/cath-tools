@@ -27,6 +27,8 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -86,7 +88,7 @@ namespace cath {
 			[[nodiscard]] const_iterator begin() const;
 			[[nodiscard]] const_iterator end() const;
 
-			[[nodiscard]] const std::string get_name() const;
+			[[nodiscard]] std::string get_name() const;
 
 			[[nodiscard]] const score_classn_value_better_value &get_better_than() const;
 
@@ -155,7 +157,7 @@ namespace cath {
 				const double       score       = std::stod( line_parts[ 2 ] );
 				const bool         is_positive = prm_is_positive_fn( line_parts );
 
-				score_classn_values.emplace_back( score, is_positive, id1 + " " + id2 );
+				score_classn_values.emplace_back( score, is_positive, ::fmt::format("{} {}", id1, id2 ) );
 
 //				std::istringstream line_ss( line_string );
 //				line_ss >> std::boolalpha;

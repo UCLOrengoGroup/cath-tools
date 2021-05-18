@@ -20,6 +20,7 @@
 
 #include "superposition.hpp"
 
+#include <boost/algorithm/cxx11/all_of.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -53,6 +54,7 @@ using namespace ::cath::sup;
 using namespace ::std;
 
 using ::boost::algorithm::any_of;
+using ::boost::algorithm::all_of;
 using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::token_compress_on;
 using ::boost::lexical_cast;
@@ -155,7 +157,7 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &prm_ind
 	bool_deq inputs_processed( prm_indices_and_coord_lists.size(), false );
 
 	// While any of the inputs_processed are false
-	while ( any_of( inputs_processed, logical_not<bool>() ) ) {
+	while ( any_of( inputs_processed, logical_not<>() ) ) {
 		bool made_progress = false;
 
 		for (const size_t &input_ctr : indices( prm_indices_and_coord_lists.size() ) ) {
@@ -389,25 +391,22 @@ double cath::sup::calc_rmsd_between_superposed_entries(const superposition &prm_
 bool cath::sup::operator==(const superposition &prm_sup_a, ///< TODOCUMENT
                            const superposition &prm_sup_b  ///< TODOCUMENT
                            ) {
-	// Return false if the number of entries differ
-	if (prm_sup_a.get_num_entries() != prm_sup_b.get_num_entries()) {
-		return false;
-	}
-
-	// Otherwise, check each of the positions match
-	const size_t num_entries = prm_sup_a.get_num_entries();
-	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		if (prm_sup_a.get_translation_of_index(entry_ctr) != prm_sup_b.get_translation_of_index(entry_ctr) ) {
-			return false;
-		}
-		const rotation prm_rotation_a = prm_sup_a.get_rotation_of_index(entry_ctr);
-		const rotation prm_rotation_b = prm_sup_b.get_rotation_of_index(entry_ctr);
-		if ( prm_rotation_a != prm_rotation_b ) {
-			return false;
-		}
-	}
-
-	return true;
+	// clang-format off
+	return (
+		( prm_sup_a.get_num_entries() == prm_sup_b.get_num_entries() )
+		&&
+		all_of(
+			indices( prm_sup_a.get_num_entries() ),
+			[&] ( const size_t &idx ) {
+				return(
+					( prm_sup_a.get_translation_of_index( idx ) == prm_sup_b.get_translation_of_index( idx ) )
+					&&
+					( prm_sup_a.get_rotation_of_index   ( idx ) == prm_sup_b.get_rotation_of_index   ( idx ) )
+				);
+			}
+		)
+	);
+	// clang-format on
 }
 
 /// \brief Basic insertion operator to output a rough summary of an superposition to an ostream
@@ -436,26 +435,22 @@ ostream & cath::sup::operator<<(ostream             &prm_ostream,      ///< The 
 bool cath::sup::are_close(const superposition &prm_sup_1,  ///< TODOCUMENT
                           const superposition &prm_sup_2   ///< TODOCUMENT
                           ) {
-	const size_t num_entries = prm_sup_1.get_num_entries();
-
-	if (num_entries != prm_sup_2.get_num_entries()) {
-		return false;
-	}
-	for (const size_t &entry_ctr : indices( num_entries ) ) {
-		const bool translations_are_close = (
-			prm_sup_1.get_translation_of_index(entry_ctr) == prm_sup_2.get_translation_of_index(entry_ctr)
-		);
-		if (!translations_are_close) {
-			return false;
-		}
-		const bool rotations_are_close = are_close(
-			prm_sup_1.get_rotation_of_index(entry_ctr),      prm_sup_2.get_rotation_of_index(entry_ctr)
-		);
-		if (!rotations_are_close) {
-			return false;
-		}
-	}
-	return true;
+	// clang-format off
+	return (
+		( prm_sup_1.get_num_entries() == prm_sup_2.get_num_entries() )
+		&&
+		all_of(
+			indices( prm_sup_1.get_num_entries() ),
+			[&] ( const size_t &idx ) {
+				return (
+					( prm_sup_1.get_translation_of_index( idx ) == prm_sup_2.get_translation_of_index( idx ) )
+					&&
+					are_close( prm_sup_1.get_rotation_of_index( idx ), prm_sup_2.get_rotation_of_index( idx ) )
+				);
+			}
+		)
+	);
+	// clang-format on
 }
 
 /// \brief TODOCUMENT
@@ -514,7 +509,7 @@ superposition cath::sup::read_superposition(istream &prm_is ///< TODOCUMENT
 			stod( line_parts[ 11 ] )
 		));
 	}
-	return superposition(translations, rotations);
+	return {translations, rotations};
 }
 
 /// \brief A convenience factory to create a pairwise superposition from two coord lists

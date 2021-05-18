@@ -178,7 +178,7 @@ double cath::geom::calc_mean_deviation(const coord_list &prm_coord_list_1, ///< 
 		prm_coord_list_1,
 		prm_coord_list_2,
 		0.0,
-		plus<double>(),
+		plus<>(),
 //		[] (const coord &x, const coord &y) { cerr << "Distance between " << x << " and " << y << " is " << distance_between_points( x, y ) << endl; return distance_between_points( x, y ); }
 		[] (const coord &x, const coord &y) { return distance_between_points( x, y ); }
 	);
@@ -204,7 +204,7 @@ double cath::geom::calc_rmsd(const coord_list &prm_coord_list_1, ///< The first 
 		prm_coord_list_1,
 		prm_coord_list_2,
 		0.0,
-		plus<double>(),
+		plus<>(),
 		[] (const coord &x, const coord &y) { return squared_distance_between_points( x, y ); }
 	);
 

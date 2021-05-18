@@ -86,7 +86,6 @@ label_pair_is_positive cath::score::make_label_pair_is_positive(istream &prm_inp
 			results.insert( make_pair( make_pair( line_parts[ 0 ], line_parts[ 1 ] ), positive ) );
 		}
 	}
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return label_pair_is_positive{ results };
 }
 

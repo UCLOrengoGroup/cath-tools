@@ -117,5 +117,4 @@ void cath::align::detail::append_path_step_to_pair_alignment_from_point(alignmen
 		case ( path_step::INSERT_INTO_FIRST  ) : { append_position_a   ( prm_alignment, value_a          ); break; }
 		case ( path_step::INSERT_INTO_SECOND ) : { append_position_b   ( prm_alignment,          value_b ); break; }
 	}
-	return ;
 }

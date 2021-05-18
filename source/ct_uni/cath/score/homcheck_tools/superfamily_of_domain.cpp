@@ -174,7 +174,6 @@ superfamily_of_domain cath::homcheck::parse_superfamily_of_domain(istream &prm_s
 		}
 	}
 
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return superfamily_of_domain{ line_string_pairs };
 }
 

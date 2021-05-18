@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <utility>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -57,9 +58,9 @@ bool file_alignment_outputter::do_involves_display_spec() const {
 }
 
 /// \brief Ctor for file_alignment_outputter.
-file_alignment_outputter::file_alignment_outputter(const path                &prm_output_file,        ///< TODOCUMENT
+file_alignment_outputter::file_alignment_outputter(path prm_output_file,        ///< TODOCUMENT
                                                    const alignment_outputter &prm_alignment_outputter ///< TODOCUMENT
-                                                   ) : output_file                    ( prm_output_file                 ),
+                                                   ) : output_file                    ( std::move( prm_output_file    ) ),
                                                        ostream_alignment_outputter_ptr( prm_alignment_outputter.clone() ) {
 }
 

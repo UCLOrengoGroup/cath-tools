@@ -111,8 +111,7 @@ namespace cath {
 		                    const alignment_row &,
 		                    const size_vec &);
 
-		const alignment_row remove_entry_from_row(const alignment_row &,
-		                                          const size_t &);
+		alignment_row remove_entry_from_row( const alignment_row &, const size_t & );
 
 		aln_posn_opt_vec get_has_posns_and_posns(const alignment_row &);
 	} // namespace align

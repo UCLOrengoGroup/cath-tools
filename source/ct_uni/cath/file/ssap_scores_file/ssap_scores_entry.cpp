@@ -143,7 +143,6 @@ ssap_scores_entry cath::file::ssap_scores_entry_from_line(const string &prm_ssap
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse ssap_scores_entry from line that doesn't contain 9 parts"));
 	}
 
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return ssap_scores_entry{
 		       line_parts[ 0 ],
 		       line_parts[ 1 ],

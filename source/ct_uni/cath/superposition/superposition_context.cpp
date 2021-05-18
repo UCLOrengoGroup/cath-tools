@@ -272,7 +272,6 @@ pdb cath::sup::get_supn_content_pdb(const pdb                        &prm_pdb,  
 pdb_list cath::sup::get_supn_content_pdbs(const superposition_context      &prm_superposition_context, ///< The superposition_context containing the PDBs and regions to extract
                                           const superposition_content_spec &prm_content_spec           ///< The specification of what should be included in the superposition 
                                           ) {
-	/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 	return pdb_list{
 		transform_build<pdb_vec>(
 			get_pdbs   ( prm_superposition_context ),

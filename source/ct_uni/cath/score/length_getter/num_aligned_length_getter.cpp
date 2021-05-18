@@ -99,7 +99,7 @@ string num_aligned_length_getter::do_description() const {
 //}
 
 /// \brief TODOCUMENT
-const string num_aligned_length_getter::do_description_brackets_string() const {
+string num_aligned_length_getter::do_description_brackets_string() const {
 	return common_coord_handler.long_suffix_string();
 }
 

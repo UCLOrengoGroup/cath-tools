@@ -54,8 +54,7 @@ namespace cath {
 					write_to_rapidjson( prm_writer, get_present_segments( resolve_all_boundaries( prm_full_hit, *prm_hits, *prm_segment_spec ) ) );
 				}
 			}
-			const auto extras_store = prm_full_hit.get_extras_store();
-			for (const auto &extra_info_pair : extras_store) {
+			for ( const auto &extra_info_pair : prm_full_hit.get_extras_store() ) {
 				prm_writer.write_key( to_string( extra_info_pair.first ) );
 				invoke_for_hit_extra_info( [&] (const auto &x) { prm_writer.write_value( x ); }, extra_info_pair );
 			}

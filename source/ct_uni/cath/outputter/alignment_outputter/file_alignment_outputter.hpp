@@ -45,8 +45,7 @@ namespace cath {
 			[[nodiscard]] std::string                          do_get_name() const final;
 
 		  public:
-			file_alignment_outputter(const ::std::filesystem::path &,
-			                         const alignment_outputter &);
+			file_alignment_outputter( ::std::filesystem::path, const alignment_outputter & );
 		};
 
 	} // namespace opts

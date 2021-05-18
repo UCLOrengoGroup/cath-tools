@@ -22,6 +22,7 @@
 
 #include <chrono>
 #include <filesystem>
+#include <utility>
 
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/protein_list.hpp"
@@ -37,10 +38,10 @@ using ::std::filesystem::path;
 
 /// \brief TODOCUMENT
 protein_list_loader::protein_list_loader(const protein_source_file_set &prm_source_file_set, ///< TODOCUMENT
-                                         const path                    &prm_data_dir,        ///< TODOCUMENT
+                                         path                           prm_data_dir,        ///< TODOCUMENT
                                          str_vec                        prm_protein_names    ///< TODOCUMENT
                                          ) : source_file_set_ptr ( prm_source_file_set.clone()    ),
-                                             data_dir            ( prm_data_dir                   ),
+                                             data_dir            ( std::move( prm_data_dir      ) ),
                                              protein_names       ( std::move( prm_protein_names ) ) {
 }
 

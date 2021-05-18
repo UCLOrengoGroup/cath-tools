@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <utility>
 
 #include <boost/range/adaptor/transformed.hpp>
 
@@ -150,8 +151,8 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 }
 
 /// \brief Ctor for ssap_scores_file_alignment_acquirer
-ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(const path &prm_ssap_scores_filename ///< TODOCUMENT
-                                                                         ) : ssap_scores_filename { prm_ssap_scores_filename } {
+ssap_scores_file_alignment_acquirer::ssap_scores_file_alignment_acquirer(path prm_ssap_scores_filename ///< TODOCUMENT
+                                                                         ) : ssap_scores_filename { std::move( prm_ssap_scores_filename ) } {
 }
 
 /// \brief TODOCUMENT

@@ -72,7 +72,6 @@ namespace cath {
 				BOOST_THROW_EXCEPTION(common::runtime_error_exception("Unable to parse prc_scores_entry from line that doesn't contain 12 parts"));
 			}
 
-			/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 			return prc_scores_entry{
 				       string_parts[  0 ],
 				stoul( string_parts[  1 ] ),

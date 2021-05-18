@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <iostream>
+#include <utility>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/command_executer.hpp"
@@ -74,10 +75,10 @@ string pymol_view_superposition_outputter::do_get_name() const {
 }
 
 /// \brief Ctor for pymol_view_superposition_outputter
-pymol_view_superposition_outputter::pymol_view_superposition_outputter(const path                 &prm_pymol_program, ///< TODOCUMENT
+pymol_view_superposition_outputter::pymol_view_superposition_outputter(path prm_pymol_program, ///< TODOCUMENT
                                                                        display_spec                prm_display_spec,  ///< TODOCUMENT
                                                                        superposition_content_spec  prm_content_spec   ///< The specification of what should be included in the superposition
-                                                                       ) : pymol_program    { prm_pymol_program             },
-                                                                           the_display_spec { std::move( prm_display_spec ) },
-                                                                           content_spec     { std::move( prm_content_spec ) } {
+                                                                       ) : pymol_program    { std::move( prm_pymol_program ) },
+                                                                           the_display_spec { std::move( prm_display_spec  ) },
+                                                                           content_spec     { std::move( prm_content_spec  ) } {
 }

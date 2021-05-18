@@ -71,12 +71,12 @@ doub_doub_pair cath::geom::detail::x_and_y_of_later_weighted_cog(const coord_lis
 coord_rot_pair cath::geom::get_orienting_transformation(const coord_list &prm_core_coords ///< The coords (that have already been superposed) to orient
                                                         // const coord_list &prm_extra_coords ///< TODOCUMENT
                                                         ) {
-	const auto all_coords = prm_core_coords;
+	// const auto all_coords = prm_core_coords;
 	// const auto all_coords = join( prm_core_coords, prm_extra_coords );
 
 	// Get the centre-of-gravity of the coords and calculate a centred bunch of coords
-	const coord cog = centre_of_gravity( all_coords );
-	const coord_list centred_all_coords = all_coords - cog;
+	const coord cog = centre_of_gravity( prm_core_coords );
+	const coord_list centred_all_coords = prm_core_coords - cog;
 
 	// Grab a cross-covariance matrix
 	auto x_cov_mat = cross_covariance_matrix( centred_all_coords, centred_all_coords );

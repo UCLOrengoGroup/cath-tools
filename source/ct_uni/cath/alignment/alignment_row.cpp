@@ -352,9 +352,9 @@ alignment_row cath::align::weave(const alignment_row &prm_row_a,     ///< TODOCU
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_row
-const alignment_row cath::align::remove_entry_from_row(const alignment_row &prm_aln_row, ///< TODOCUMENT
-                                                       const size_t        &prm_entry    ///< TODOCUMENT
-                                                       ) {
+alignment_row cath::align::remove_entry_from_row( const alignment_row &prm_aln_row, ///< TODOCUMENT
+                                                  const size_t &       prm_entry    ///< TODOCUMENT
+                                                  ) {
 	// Grab the number of entries and sanity check that prm_entry is less than this
 	const size_t num_entries = prm_aln_row.num_entries();
 	if ( prm_entry >= num_entries ) {

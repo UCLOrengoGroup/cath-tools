@@ -20,13 +20,19 @@
 
 #include "alignment_outputter_list.hpp"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
+
 #include "cath/common/boost_addenda/ptr_container/unique_ptr_functions.hpp"
 #include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
 
 using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::cath::opts;
-using namespace ::std;
+
+using ::boost::algorithm::any_of;
+using ::std::cbegin;
+using ::std::cend;
+using ::std::ostream;
 
 /// \brief TODOCUMENT
 void alignment_outputter_list::push_back(const alignment_outputter &prm_outputter ///< TODOCUMENT
@@ -66,13 +72,11 @@ void cath::opts::use_all_alignment_outputters(const alignment_outputter_list &pr
 /// \brief TODOCUMENT
 ///
 /// \relates alignment_outputter_list
-bool cath::opts::any_alignment_outputters_involve_display_spec(const alignment_outputter_list &prm_alignment_outputters ///< TODOCUMENT
-                                                               ) {
+bool cath::opts::any_alignment_outputters_involve_display_spec( const alignment_outputter_list &prm_alignment_outputters ///< TODOCUMENT
+                                                                ) {
 	// For each of the superposition_outputters specified by the cath_superpose_options, output the superposition
-	for (const alignment_outputter &outputter : prm_alignment_outputters) {
-		if ( outputter.involves_display_spec() ) {
-			return true;
-		}
-	}
-	return false;
+	//
+	/// TODO: Come a better any_of(), replace the lambda with &alignment_outputter::involves_display_spec
+	return any_of( prm_alignment_outputters,
+	               []( const alignment_outputter &outputter ) { return outputter.involves_display_spec(); } );
 }

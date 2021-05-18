@@ -21,6 +21,7 @@
 #include "path_or_istream.hpp"
 
 #include <filesystem>
+#include <utility>
 
 using namespace ::cath::common;
 
@@ -30,9 +31,9 @@ using ::std::nullopt;
 
 /// \brief Ctor from a special istream and a flag to be used to indicate when input should be read from that istream
 path_or_istream::path_or_istream(istream    &prm_istream,               ///< A special istream (often stdin) from which input can be read
-                                 const path &prm_standard_instream_flag ///< A flag to be used to indicate when input should be read from the special istream
-                                 ) : standard_instream      { prm_istream                },
-                                     standard_instream_flag { prm_standard_instream_flag } {
+                                 path        prm_standard_instream_flag ///< A flag to be used to indicate when input should be read from the special istream
+                                 ) : standard_instream      { prm_istream                             },
+                                     standard_instream_flag { std::move( prm_standard_instream_flag ) } {
 }
 
 /// \brief Open the specified list of paths and add them to the inputs

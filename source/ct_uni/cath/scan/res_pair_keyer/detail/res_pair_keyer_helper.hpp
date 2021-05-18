@@ -93,7 +93,6 @@ namespace cath {
 			template <typename Data>
 			constexpr keyer_parts_value_maker<Data> make_keyer_parts_value_maker(const Data &prm_data ///< The data to be passed to the keyer_parts
 			                                                                     ) {
-				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 				return keyer_parts_value_maker<Data>{ prm_data };
 			}
 
@@ -138,7 +137,6 @@ namespace cath {
 			template <typename Data>
 			constexpr keyer_parts_key_maker<Data> make_keyer_parts_key_maker(const Data &prm_data ///< The data to be passed to the keyer_parts
 			                                                                 ) {
-				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 				return keyer_parts_key_maker<Data>{ prm_data };
 			}
 

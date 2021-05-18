@@ -51,7 +51,6 @@ namespace cath {
 
 			/// \brief Make an example full_hit_list for testing
 			full_hit_list make_eg_full_hit_list() {
-				/// \todo Come C++17, if Herb Sutter has gotten his way (n4029), just use braced list here
 				return full_hit_list{
 					{
 						full_hit( { seq_seg{ 1266,                        1344 }, }, "label_a", 20.0 ),
