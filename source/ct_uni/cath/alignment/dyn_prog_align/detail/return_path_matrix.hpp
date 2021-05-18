@@ -78,16 +78,16 @@ namespace cath {
 				           const size_type &,
 				           const size_type &);
 
-				size_type get_length_a() const;
-				size_type get_length_b() const;
-				size_type get_window_width() const;
+				[[nodiscard]] size_type get_length_a() const;
+				[[nodiscard]] size_type get_length_b() const;
+				[[nodiscard]] size_type get_window_width() const;
 
 				void set_path_step_towards_end_at_point(const return_path_matrix::size_type &,
 				                                        const return_path_matrix::size_type &,
 				                                        const path_step &);
 
-				path_step get_path_step_towards_end_at_point(const return_path_matrix::size_type &,
-				                                             const return_path_matrix::size_type &) const;
+				[[nodiscard]] path_step get_path_step_towards_end_at_point( const return_path_matrix::size_type &,
+				                                                            const return_path_matrix::size_type & ) const;
 			};
 
 			return_path_matrix make_uninitialised_return_path_matrix();

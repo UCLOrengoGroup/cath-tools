@@ -47,10 +47,10 @@ namespace cath {
 			public:
 				explicit residue_name_align_map(const str_vec &);
 
-				bool contains_residue_name_string(const std::string &) const;
-				size_t get_index_of_residue_name_string(const std::string &) const;
+				[[nodiscard]] bool   contains_residue_name_string( const std::string & ) const;
+				[[nodiscard]] size_t get_index_of_residue_name_string( const std::string & ) const;
 
-				str_vec get_residue_name_strings() const;
+				[[nodiscard]] str_vec get_residue_name_strings() const;
 			};
 
 			residue_name_align_map make_residue_name_align_map(const residue_name_vec &);

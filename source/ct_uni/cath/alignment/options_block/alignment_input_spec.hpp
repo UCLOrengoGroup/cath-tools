@@ -70,13 +70,13 @@ namespace cath {
 			alignment_input_spec() = default;
 			explicit alignment_input_spec(const align::align_refining &);
 
-			const bool & get_residue_name_align() const;
-			const ::std::filesystem::path & get_fasta_alignment_file() const;
-			const ::std::filesystem::path & get_ssap_alignment_file() const;
-			const ::std::filesystem::path & get_cora_alignment_file() const;
-			const ::std::filesystem::path & get_ssap_scores_file() const;
-			const path_opt_opt & get_do_the_ssaps_dir() const;
-			const align::align_refining & get_refining() const;
+			[[nodiscard]] const bool &                   get_residue_name_align() const;
+			[[nodiscard]] const ::std::filesystem::path &get_fasta_alignment_file() const;
+			[[nodiscard]] const ::std::filesystem::path &get_ssap_alignment_file() const;
+			[[nodiscard]] const ::std::filesystem::path &get_cora_alignment_file() const;
+			[[nodiscard]] const ::std::filesystem::path &get_ssap_scores_file() const;
+			[[nodiscard]] const path_opt_opt &           get_do_the_ssaps_dir() const;
+			[[nodiscard]] const align::align_refining &  get_refining() const;
 
 			alignment_input_spec & set_residue_name_align(const bool &);
 			alignment_input_spec & set_fasta_alignment_file(const ::std::filesystem::path &);

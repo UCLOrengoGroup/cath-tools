@@ -28,7 +28,6 @@ using namespace ::cath::common;
 
 using ::std::make_optional;
 using ::std::nullopt;
-using ::std::optional;
 
 BOOST_AUTO_TEST_SUITE(make_optional_if_test_suite)
 

@@ -44,9 +44,9 @@ namespace cath {
 		display_colour_gradient(display_colour_vec,
 		                        const size_t &);
 
-		size_t get_steps_in_between_points() const;
-		size_t get_num_colour_points() const;
-		const display_colour & get_colour_point_of_index(const size_t &) const;
+		[[nodiscard]] size_t                get_steps_in_between_points() const;
+		[[nodiscard]] size_t                get_num_colour_points() const;
+		[[nodiscard]] const display_colour &get_colour_point_of_index( const size_t & ) const;
 	};
 
 	size_t get_num_colours(const display_colour_gradient &);

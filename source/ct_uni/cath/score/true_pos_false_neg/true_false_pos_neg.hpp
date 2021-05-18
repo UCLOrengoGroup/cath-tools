@@ -55,7 +55,7 @@ namespace cath {
 			true_false_pos_neg & operator+=(const classn_outcome &);
 
 			template <classn_outcome CLN>
-			const size_t & get_num() const;
+			[[nodiscard]] const size_t &get_num() const;
 
 			template <classn_outcome CLN>
 			void set_num(const size_t &);

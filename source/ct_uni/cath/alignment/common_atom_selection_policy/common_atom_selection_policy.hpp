@@ -65,15 +65,15 @@ namespace cath {
 			                                                   const residue &) const = 0;
 
 			/// \brief Pure virtual method with which each concrete policy must descriptively name itself
-			virtual std::string do_get_descriptive_name() const = 0;
+			[[nodiscard]] virtual std::string do_get_descriptive_name() const = 0;
 
 			/// \brief Pure virtual method with which each concrete policy must define how to create a clone of itself
-			virtual std::unique_ptr<common_atom_selection_policy> do_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<common_atom_selection_policy> do_clone() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual bool do_less_than_with_same_dynamic_type(const common_atom_selection_policy &) const = 0;
+			[[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const common_atom_selection_policy & ) const = 0;
 
-		public:
+		  public:
 			common_atom_selection_policy() = default;
 			virtual ~common_atom_selection_policy() noexcept = default;
 
@@ -85,11 +85,11 @@ namespace cath {
 			void append_common_atoms_to_coord_lists(geom::coord_list_coord_list_pair &,
 			                                        const residue &,
 			                                        const residue &) const;
-			std::string get_descriptive_name() const;
+			[[nodiscard]] std::string get_descriptive_name() const;
 
-			std::unique_ptr<common_atom_selection_policy> clone() const;
+			[[nodiscard]] std::unique_ptr<common_atom_selection_policy> clone() const;
 
-			bool less_than_with_same_dynamic_type(const common_atom_selection_policy &) const;
+			[[nodiscard]] bool less_than_with_same_dynamic_type( const common_atom_selection_policy & ) const;
 		};
 
 		geom::coord_list_coord_list_pair select_common_atoms(const common_atom_selection_policy &,

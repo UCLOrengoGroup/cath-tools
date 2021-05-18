@@ -32,20 +32,19 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class alignment_outputter {
-		private:
+		  private:
 			/// \brief Pure virtual method with which each concrete alignment_outputter must define how to create a clone of itself
-			virtual std::unique_ptr<alignment_outputter> do_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<alignment_outputter> do_clone() const = 0;
 
-			virtual void do_output_alignment(const align::alignment_context &,
-			                                 std::ostream &) const = 0;
+			virtual void do_output_alignment( const align::alignment_context &, std::ostream & ) const = 0;
 
-			virtual bool do_involves_display_spec() const = 0;
+			[[nodiscard]] virtual bool do_involves_display_spec() const = 0;
 
-			virtual std::string do_get_name() const = 0;
+			[[nodiscard]] virtual std::string do_get_name() const = 0;
 
 		public:
 			alignment_outputter() = default;
-			std::unique_ptr<alignment_outputter> clone() const;
+			[[nodiscard]] std::unique_ptr<alignment_outputter> clone() const;
 			virtual ~alignment_outputter() noexcept = default;
 
 			alignment_outputter(const alignment_outputter &) = default;
@@ -55,8 +54,8 @@ namespace cath {
 
 			void output_alignment(const align::alignment_context &,
 			                      std::ostream &) const;
-			bool involves_display_spec() const;
-			std::string get_name() const;
+			[[nodiscard]] bool        involves_display_spec() const;
+			[[nodiscard]] std::string get_name() const;
 		};
 
 		/// \brief NVI pass-through to the concrete alignment_outputter's do_get_name(), which defines a name

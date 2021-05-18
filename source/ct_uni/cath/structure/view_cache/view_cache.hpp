@@ -40,9 +40,8 @@ namespace cath {
 
 		public:
 			explicit view_cache(const protein &);
-			
-			const geom::coord & get_view(const size_t &,
-			                             const size_t &) const;
+
+			[[nodiscard]] const geom::coord &get_view( const size_t &, const size_t & ) const;
 		};
 
 		/// \brief Getter for the view from residue with the specified from-index to the residue with the specified to-index

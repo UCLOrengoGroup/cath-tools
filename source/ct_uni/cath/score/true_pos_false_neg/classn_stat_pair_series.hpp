@@ -46,17 +46,17 @@ namespace cath {
 			explicit classn_stat_pair_series(doub_doub_pair_vec,
 			                                 std::string);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const doub_doub_pair & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 
-//			const doub_doub_pair_vec & get_doub_doub_data() const;
+			// const doub_doub_pair_vec & get_doub_doub_data() const;
 
-			const std::string & get_name() const;
+			[[nodiscard]] const std::string &get_name() const;
 		};
 
 		double area_under_curve(const classn_stat_pair_series &);

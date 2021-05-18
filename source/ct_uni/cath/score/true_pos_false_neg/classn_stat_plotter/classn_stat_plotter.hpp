@@ -42,10 +42,9 @@ namespace cath {
 			/// \brief TODOCUMENT
 			bool suppress_execution = false;
 
-			std::string process_legend_name_copy(const std::string &,
-			                                     const bool &) const;
+			[[nodiscard]] std::string process_legend_name_copy( const std::string &, const bool & ) const;
 
-		public:
+		  public:
 			classn_stat_plotter() = default;
 			explicit classn_stat_plotter(const bool &);
 

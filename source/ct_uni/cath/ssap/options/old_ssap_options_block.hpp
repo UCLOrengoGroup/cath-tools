@@ -83,42 +83,42 @@ namespace cath {
 			sup::sup_pdbs_script_policy write_rasmol_script          = DEF_SCRIPT;    ///< Whether to write a Rasmol superposition script file
 			bool                        write_xml_sup                = DEF_BOOL;      ///< Whether to write an XML superposition file
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
-			bool protein_names_specified() const;
-			std::string get_protein_name_a() const;
-			std::string get_protein_name_b() const;
+		  public:
+			[[nodiscard]] bool        protein_names_specified() const;
+			[[nodiscard]] std::string get_protein_name_a() const;
+			[[nodiscard]] std::string get_protein_name_b() const;
 
-			bool get_debug() const;
+			[[nodiscard]] bool get_debug() const;
 
-			bool get_output_to_file() const;
-			::std::filesystem::path get_output_filename() const;
+			[[nodiscard]] bool                    get_output_to_file() const;
+			[[nodiscard]] ::std::filesystem::path get_output_filename() const;
 
-			path_opt get_opt_clique_file() const;
-			path_opt get_opt_domin_file() const;
+			[[nodiscard]] path_opt get_opt_clique_file() const;
+			[[nodiscard]] path_opt get_opt_domin_file() const;
 
-			double get_max_score_to_fast_ssap_rerun() const;
-			double get_max_score_to_slow_ssap_rerun() const;
-			bool get_slow_ssap_only() const;
+			[[nodiscard]] double get_max_score_to_fast_ssap_rerun() const;
+			[[nodiscard]] double get_max_score_to_slow_ssap_rerun() const;
+			[[nodiscard]] bool   get_slow_ssap_only() const;
 
-			bool get_use_local_ssap_score() const;
-			bool get_write_all_scores() const;
-			std::unique_ptr<const protein_source_file_set> get_protein_source_files() const;
+			[[nodiscard]] bool                                           get_use_local_ssap_score() const;
+			[[nodiscard]] bool                                           get_write_all_scores() const;
+			[[nodiscard]] std::unique_ptr<const protein_source_file_set> get_protein_source_files() const;
 
-			path_opt get_opt_superposition_dir() const;
-			::std::filesystem::path get_alignment_dir() const;
-			double get_min_score_for_writing_files() const;
-			double get_min_score_for_superposition() const;
-			sup::sup_pdbs_script_policy get_write_rasmol_script() const;
-			bool get_write_xml_sup() const;
+			[[nodiscard]] path_opt                    get_opt_superposition_dir() const;
+			[[nodiscard]] ::std::filesystem::path     get_alignment_dir() const;
+			[[nodiscard]] double                      get_min_score_for_writing_files() const;
+			[[nodiscard]] double                      get_min_score_for_superposition() const;
+			[[nodiscard]] sup::sup_pdbs_script_policy get_write_rasmol_script() const;
+			[[nodiscard]] bool                        get_write_xml_sup() const;
 
 			old_ssap_options_block & set_write_rasmol_script(const sup::sup_pdbs_script_policy &);
 

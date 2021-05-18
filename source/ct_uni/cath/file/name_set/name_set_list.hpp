@@ -45,16 +45,16 @@ namespace cath {
 			explicit name_set_list(name_set_vec);
 			explicit name_set_list(const size_t &);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			name_set & operator[](const size_t &);
 			const name_set & operator[](const size_t &) const;
 
 			iterator begin();
 			iterator end();
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		/// \brief Ctor from vector of name_sets

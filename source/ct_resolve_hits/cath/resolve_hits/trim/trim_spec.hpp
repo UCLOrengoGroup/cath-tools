@@ -62,8 +62,8 @@ namespace cath {
 			constexpr trim_spec(const seq::residx_t &,
 			                    const seq::residx_t &);
 
-			constexpr const seq::residx_t & get_full_length() const noexcept;
-			constexpr const seq::residx_t & get_total_trimming() const noexcept;
+			[[nodiscard]] constexpr const seq::residx_t &get_full_length() const noexcept;
+			[[nodiscard]] constexpr const seq::residx_t &get_total_trimming() const noexcept;
 		};
 		
 

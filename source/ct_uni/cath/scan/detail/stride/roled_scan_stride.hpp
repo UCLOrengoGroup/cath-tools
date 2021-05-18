@@ -42,8 +42,8 @@ namespace cath {
 				constexpr roled_scan_stride(const scan_role &,
 				                            scan_stride);
 
-				constexpr const scan_role & get_scan_role() const;
-				constexpr const scan_stride & get_scan_stride() const;
+				[[nodiscard]] constexpr const scan_role &  get_scan_role() const;
+				[[nodiscard]] constexpr const scan_stride &get_scan_stride() const;
 			};
 
 			/// \brief Ctor from scan_role and scan_stride

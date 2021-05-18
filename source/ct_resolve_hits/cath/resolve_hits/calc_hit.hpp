@@ -82,9 +82,9 @@ namespace cath {
 			         const resscr_t &,
 			         const hitidx_t &);
 
-			const seq::seq_seg_run & get_segments () const;
-			const resscr_t         & get_score    () const;
-			const hitidx_t         & get_label_idx() const;
+			[[nodiscard]] const seq::seq_seg_run &get_segments() const;
+			[[nodiscard]] const resscr_t &        get_score() const;
+			[[nodiscard]] const hitidx_t &        get_label_idx() const;
 
 			static auto get_hit_start_less() {
 				return [] (const calc_hit &x, const calc_hit &y) {

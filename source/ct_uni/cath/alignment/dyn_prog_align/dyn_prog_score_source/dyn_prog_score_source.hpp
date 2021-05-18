@@ -34,30 +34,28 @@ namespace cath {
 		///       static-polymorphism. The main motivation for switching would probably be if the run-time approach
 		///       turned out to be too slow.
 		class dyn_prog_score_source {
-		private:
+		  private:
 			/// \brief Return the number of elements in the first entry to by aligned with dynamic-programming
-			virtual size_t do_get_length_a() const = 0;
+			[[nodiscard]] virtual size_t do_get_length_a() const = 0;
 
 			/// \brief Return the number of elements in the second entry to by aligned with dynamic-programming
-			virtual size_t do_get_length_b() const = 0;
+			[[nodiscard]] virtual size_t do_get_length_b() const = 0;
 
 			/// \brief Return the score the number of elements in the first entry to by aligned with dynamic-programming
-			virtual score_type do_get_score(const size_t &,
-			                                const size_t &) const = 0;
+			[[nodiscard]] virtual score_type do_get_score( const size_t &, const size_t & ) const = 0;
 
-		public:
-			dyn_prog_score_source() = default;
+		  public:
+			dyn_prog_score_source()                   = default;
 			virtual ~dyn_prog_score_source() noexcept = default;
 
-			dyn_prog_score_source(const dyn_prog_score_source &) = default;
-			dyn_prog_score_source(dyn_prog_score_source &&) noexcept = default;
-			dyn_prog_score_source & operator=(const dyn_prog_score_source &) = default;
-			dyn_prog_score_source & operator=(dyn_prog_score_source &&) noexcept = default;
+			dyn_prog_score_source( const dyn_prog_score_source & )     = default;
+			dyn_prog_score_source( dyn_prog_score_source && ) noexcept = default;
+			dyn_prog_score_source &operator=( const dyn_prog_score_source & ) = default;
+			dyn_prog_score_source &operator=( dyn_prog_score_source && ) noexcept = default;
 
-			size_t get_length_a() const;
-			size_t get_length_b() const;
-			score_type get_score(const size_t &,
-			                     const size_t &) const;
+			[[nodiscard]] size_t     get_length_a() const;
+			[[nodiscard]] size_t     get_length_b() const;
+			[[nodiscard]] score_type get_score( const size_t &, const size_t & ) const;
 		};
 
 		score_type get_score__offset_1(const dyn_prog_score_source &,

@@ -74,7 +74,7 @@ namespace cath {
 			/// \brief The number of overlap fractions stored so farm
 			size_t num_counts = 0;
 
-			size_t find_index_of_nth(const size_t &) const;
+			[[nodiscard]] size_t find_index_of_nth( const size_t & ) const;
 
 			static constexpr double get_fraction_of_index(const size_t &);
 			static constexpr double get_percentage_of_index(const size_t &);
@@ -101,19 +101,17 @@ namespace cath {
 
 			overlap_frac_distn() = default;
 
-			size_t size() const;
-			bool empty() const;
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] size_t         size() const;
+			[[nodiscard]] bool           empty() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 
 			overlap_frac_distn & add_overlap_fraction(const double &,
 			                                          const size_t & = 1);
 			overlap_frac_distn & operator+=(const overlap_frac_distn &);
-			size_t get_num_in_range(const double &,
-			                        const double &) const;
-			size_t get_num_at_fraction(const double &) const;
-			double get_frac_at_percentile(const double &,
-			                              const zeroes_policy & = zeroes_policy::INCLUDE) const;
+			[[nodiscard]] size_t get_num_in_range( const double &, const double & ) const;
+			[[nodiscard]] size_t get_num_at_fraction( const double & ) const;
+			[[nodiscard]] double get_frac_at_percentile( const double &, const zeroes_policy & = zeroes_policy::INCLUDE ) const;
 		};
 
 		size_t get_num_in_open_closed_range(const overlap_frac_distn &,

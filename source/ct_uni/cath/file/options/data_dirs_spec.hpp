@@ -65,14 +65,12 @@ namespace cath {
 		public:
 			data_dirs_spec();
 
-			std::string get_value_of_option_and_data_file(const detail::data_option &,
-			                                              const file::data_file &) const;
+			[[nodiscard]] std::string get_value_of_option_and_data_file( const detail::data_option &,
+			                                                             const file::data_file & ) const;
 
 			static std::string get_name_of_data_file(const file::data_file &);
 
-			const ::std::filesystem::path & get_cath_root_dir() const;
-
-
+			[[nodiscard]] const ::std::filesystem::path &get_cath_root_dir() const;
 
 			data_dirs_spec & set_value_of_option_and_data_file(const detail::data_option &,
 			                                                   const file::data_file &,

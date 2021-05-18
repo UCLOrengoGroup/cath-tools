@@ -50,8 +50,8 @@ namespace cath {
 			full_hit_list() = default;
 			explicit full_hit_list(full_hit_vec);
 
-			size_t size() const;
-			bool empty() const;
+			[[nodiscard]] size_t size() const;
+			[[nodiscard]] bool   empty() const;
 
 			template <typename... Ts>
 			void emplace_back(Ts &&...args);
@@ -60,8 +60,8 @@ namespace cath {
 
 			iterator begin();
 			iterator end();
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		std::string to_string(const full_hit_list &);

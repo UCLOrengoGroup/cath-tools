@@ -62,12 +62,12 @@ namespace cath {
 			}
 
 			/// \brief Return whether this is empty (ie stores info for no clusters)
-			bool empty() const {
+			[[nodiscard]] bool empty() const {
 				return cluster_seq_domains.empty();
 			}
 
 			/// \brief Return the number of cluster_domains entries (ie the number of clusters)
-			size_t size() const {
+			[[nodiscard]] size_t size() const {
 				return cluster_seq_domains.size();
 			}
 
@@ -78,12 +78,12 @@ namespace cath {
 			}
 
 			/// \brief Standard const begin() method, as part of making this into a range over the cluster_domains entries
-			const_iterator begin() const {
+			[[nodiscard]] const_iterator begin() const {
 				return ::std::cbegin( cluster_seq_domains );
 			}
 
 			/// \brief Standard const end() method, as part of making this into a range over the cluster_domains entries
-			const_iterator end() const {
+			[[nodiscard]] const_iterator end() const {
 				return ::std::cend( cluster_seq_domains );
 			}
 		};

@@ -56,10 +56,9 @@ namespace cath {
 
 			double & get_entry(const size_t &,
 			                   const size_t &);
-			const double & get_entry(const size_t &,
-			                         const size_t &) const;
+			[[nodiscard]] const double &get_entry( const size_t &, const size_t & ) const;
 
-		public:
+		  public:
 			record_scores_scan_action(const size_t &,
 			                          const size_t &);
 
@@ -68,8 +67,7 @@ namespace cath {
 			                const index_type &,
 			                const index_type &);
 
-			const double & get_score(const size_t &,
-			                         const size_t &) const;
+			[[nodiscard]] const double &get_score( const size_t &, const size_t & ) const;
 		};
 
 		/// \brief TODOCUMENT

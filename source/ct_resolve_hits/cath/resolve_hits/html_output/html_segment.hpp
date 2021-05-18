@@ -87,12 +87,12 @@ namespace cath {
 			/// \brief The full length of the sequence on which this hit appears
 			size_t full_seq_length;
 
-			std::string get_grey_back_html_string() const;
-			std::string get_lightened_back_html_string() const;
-			std::string get_full_result_html_string() const;
-			std::string get_strong_front_html_string() const;
+			[[nodiscard]] std::string get_grey_back_html_string() const;
+			[[nodiscard]] std::string get_lightened_back_html_string() const;
+			[[nodiscard]] std::string get_full_result_html_string() const;
+			[[nodiscard]] std::string get_strong_front_html_string() const;
 
-			str_vec get_all_span_html_strs(const bool & = true) const;
+			[[nodiscard]] str_vec get_all_span_html_strs( const bool & = true ) const;
 		};
 
 	} // namespace rslv

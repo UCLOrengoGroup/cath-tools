@@ -50,9 +50,9 @@ namespace cath {
 			                         std::vector<std::pair<std::string, str_opt>>,
 			                         const bool &);
 
-			const str_vec & get_pre_plot_strs() const;
-			const std::vector<std::pair<std::string, str_opt>> & get_series_to_plot() const;
-			const bool & get_tidy_up_score_based_legends() const;
+			[[nodiscard]] const str_vec &                                     get_pre_plot_strs() const;
+			[[nodiscard]] const std::vector<std::pair<std::string, str_opt>> &get_series_to_plot() const;
+			[[nodiscard]] const bool &                                        get_tidy_up_score_based_legends() const;
 		};
 
 		std::vector<std::pair<std::string, str_opt>> get_series_to_plot_or_make_default(const classn_stat_plotter_spec &,

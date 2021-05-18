@@ -95,14 +95,13 @@ namespace cath {
 				/// \brief TODOCUMENT
 				static constexpr size_t NUM_EXCLUDED_ON_SIDES = 5;
 
-				alignment_scan_comparison do_check(const align::alignment &,
-				                                   const protein &,
-				                                   const protein &,
-				                                   const quad_criteria &,
-				                                   const scan_stride &) const;
+				[[nodiscard]] alignment_scan_comparison do_check( const align::alignment &,
+				                                                  const protein &,
+				                                                  const protein &,
+				                                                  const quad_criteria &,
+				                                                  const scan_stride & ) const;
 
-				std::pair<str_vec, str_vec> get_rep_name_lists(const protein &,
-				                                               const roled_scan_stride &) const;
+				[[nodiscard]] std::pair<str_vec, str_vec> get_rep_name_lists( const protein &, const roled_scan_stride & ) const;
 			};
 
 			std::pair<index_vec, index_vec> get_rep_index_lists(const roled_scan_stride &,

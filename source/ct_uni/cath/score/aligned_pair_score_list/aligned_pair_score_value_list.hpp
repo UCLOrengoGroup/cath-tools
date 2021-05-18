@@ -48,9 +48,9 @@ namespace cath {
 			void add_score_and_value(const aligned_pair_score &,
 			                         const score_value &);
 
-			size_t size() const;
-			score_value get_value_of_index(const size_t &) const;
-			const aligned_pair_score & get_aligned_pair_score_of_index(const size_t &) const;
+			[[nodiscard]] size_t                    size() const;
+			[[nodiscard]] score_value               get_value_of_index( const size_t & ) const;
+			[[nodiscard]] const aligned_pair_score &get_aligned_pair_score_of_index( const size_t & ) const;
 		};
 
 		void warn_on_duplicate_human_friendly_names(const aligned_pair_score_value_list &);

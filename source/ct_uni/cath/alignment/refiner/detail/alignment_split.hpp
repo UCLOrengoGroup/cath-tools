@@ -45,15 +45,15 @@ namespace cath {
 			public:
 				explicit alignment_split(const size_t &);
 
-				size_t get_num_entries() const;
+				[[nodiscard]] size_t get_num_entries() const;
 				void add_first_half_entry(const size_t &);
 
-				size_t get_num_first_half_entries() const;
-				const size_set & get_first_half_entries() const;
+				[[nodiscard]] size_t          get_num_first_half_entries() const;
+				[[nodiscard]] const size_set &get_first_half_entries() const;
 
 				using const_iterator = size_set::const_iterator;
-				const_iterator begin() const;
-				const_iterator end() const;
+				[[nodiscard]] const_iterator begin() const;
+				[[nodiscard]] const_iterator end() const;
 			};
 
 			bool operator<(const alignment_split &,

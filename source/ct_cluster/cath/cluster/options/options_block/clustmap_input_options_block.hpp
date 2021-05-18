@@ -35,21 +35,21 @@ namespace cath {
 			/// \brief The spec this options_block configures
 			clustmap_input_spec the_spec;
 
-			std::unique_ptr<opts::options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
+			[[nodiscard]] std::string                          do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
+		  public:
 			static const std::string PO_WORKING_CLUSTMEMB_FILE;
 			static const std::string PO_MAP_FROM_CLUSTMEMB_FILE;
 			static const std::string PO_READ_BATCHES_FROM_INPUT;
 
-			const clustmap_input_spec & get_clustmap_input_spec() const;
+			[[nodiscard]] const clustmap_input_spec &get_clustmap_input_spec() const;
 		};
 
 	} // namespace clust

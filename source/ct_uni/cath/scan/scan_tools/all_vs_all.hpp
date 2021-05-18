@@ -34,11 +34,11 @@ namespace cath {
 
 			/// \brief TODOCUMENT
 			class all_vs_all : public scan_type {
-			private:
-				std::unique_ptr<scan_type> do_clone() const final;
+			  private:
+				[[nodiscard]] std::unique_ptr<scan_type> do_clone() const final;
 
-				std::pair<record_scores_scan_action, scan_metrics> do_perform_scan(const protein_list &,
-				                                                                   const protein_list &) const final;
+				[[nodiscard]] std::pair<record_scores_scan_action, scan_metrics> do_perform_scan( const protein_list &,
+				                                                                                  const protein_list & ) const final;
 			};
 
 	} // namespace scan

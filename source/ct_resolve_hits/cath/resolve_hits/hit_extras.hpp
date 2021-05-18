@@ -161,22 +161,22 @@ namespace cath {
 			}
 
 			/// \brief Standard const begin() operator to provide range access
-			const_iterator begin() const {
+			[[nodiscard]] const_iterator begin() const {
 				return ::std::cbegin( extras );
 			}
 
 			/// \brief Standard const end() operator to provide range access
-			const_iterator end() const {
+			[[nodiscard]] const_iterator end() const {
 				return ::std::cend( extras );
 			}
 
 			/// \brief Return whether this is empty
-			bool empty() const {
+			[[nodiscard]] bool empty() const {
 				return extras.empty();
 			}
 
 			/// \brief Return the number of pieces of information currently being stored
-			size_t size() const {
+			[[nodiscard]] size_t size() const {
 				return extras.size();
 			}
 		};

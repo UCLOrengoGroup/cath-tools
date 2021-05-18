@@ -72,7 +72,7 @@ namespace cath {
 			std::array<size_opt, 5> core_atom_indices;
 
 			static constexpr size_t get_core_atom_index_ref_index(const coarse_element_type &);
-			const ::std::optional<size_t> & get_core_atom_index_ref(const coarse_element_type &) const;
+			[[nodiscard]] const ::std::optional<size_t> & get_core_atom_index_ref( const coarse_element_type & ) const;
 			static std::array<::std::optional<size_t>, 5> make_core_atom_indices(const pdb_atom_vec &);
 
 		public:
@@ -82,24 +82,24 @@ namespace cath {
 			pdb_residue(residue_id,
 			            pdb_atom_vec);
 
-			const residue_id & get_residue_id() const;
-			bool empty() const;
-			size_t get_num_atoms() const;
-			const pdb_atom & get_atom_cref_of_index(const size_t &) const;
+			[[nodiscard]] const residue_id &get_residue_id() const;
+			[[nodiscard]] bool              empty() const;
+			[[nodiscard]] size_t            get_num_atoms() const;
+			[[nodiscard]] const pdb_atom &  get_atom_cref_of_index( const size_t & ) const;
 
-			bool has_nitrogen() const;
-			bool has_carbon_alpha() const;
-			bool has_carbon() const;
-			bool has_carbon_beta() const;
-			bool has_oxygen() const;
+			[[nodiscard]] bool has_nitrogen() const;
+			[[nodiscard]] bool has_carbon_alpha() const;
+			[[nodiscard]] bool has_carbon() const;
+			[[nodiscard]] bool has_carbon_beta() const;
+			[[nodiscard]] bool has_oxygen() const;
 
-			const pdb_atom & get_nitrogen() const;
-			const pdb_atom & get_carbon_alpha() const;
-			const pdb_atom & get_carbon() const;
-			const pdb_atom & get_carbon_beta() const;
-			const pdb_atom & get_oxygen() const;
+			[[nodiscard]] const pdb_atom &get_nitrogen() const;
+			[[nodiscard]] const pdb_atom &get_carbon_alpha() const;
+			[[nodiscard]] const pdb_atom &get_carbon() const;
+			[[nodiscard]] const pdb_atom &get_carbon_beta() const;
+			[[nodiscard]] const pdb_atom &get_oxygen() const;
 
-			const amino_acid & get_amino_acid() const;
+			[[nodiscard]] const amino_acid &get_amino_acid() const;
 
 			pdb_residue & set_chain_label(const chain_label &);
 
@@ -107,8 +107,8 @@ namespace cath {
 			pdb_residue & operator+=(const geom::coord &);
 			pdb_residue & operator-=(const geom::coord &);
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		const chain_label & get_chain_label(const pdb_residue &);

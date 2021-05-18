@@ -103,7 +103,7 @@ namespace cath {
 			void decrement();
 			void increment();
 
-			bool is_at_end() const;
+			[[nodiscard]] bool is_at_end() const;
 			difference_type distance_to_end() const;
 
 			template <typename OTHER_RNG>

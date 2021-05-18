@@ -36,41 +36,32 @@ namespace cath {
 		/// WARNING: This uses static data so using separate instances is not enough
 		///          to make this thread-safe.
 		class ssap_code_dyn_prog_aligner final : public dyn_prog_aligner {
-		private:
-			std::unique_ptr<dyn_prog_aligner> do_clone() const final;
+		  private:
+			[[nodiscard]] std::unique_ptr<dyn_prog_aligner> do_clone() const final;
 
-			using size_size_int_int_score_tuple = std::tuple<size_t,
-			                                                 size_t,
-			                                                 int,
-			                                                 int,
-			                                                 score_type>;
+			using size_size_int_int_score_tuple = std::tuple<size_t, size_t, int, int, score_type>;
 
-			static size_size_int_int_score_tuple score_matrix(const dyn_prog_score_source &,
-			                                                  const score_type &,
-			                                                  const size_type &,
-			                                                  int_vec_vec &);
+			static size_size_int_int_score_tuple score_matrix( const dyn_prog_score_source &,
+			                                                   const score_type &,
+			                                                   const size_type &,
+			                                                   int_vec_vec & );
 
-			static alignment traceback(const size_t &,
-			                           const size_t &,
-			                           const int &,
-			                           const int &,
-			                           const int &,
-			                           const int &,
-			                           const int_vec_vec &);
+			static alignment traceback( const size_t &, const size_t &, const int &, const int &, const int &, const int &, const int_vec_vec & );
 
-			static void traceback_recursive(alignment &,
-			                                const int &,
-			                                const int &,
-			                                const int &,
-			                                const int &,
-			                                const int &,
-			                                const int &,
-			                                const int_vec_vec &);
+			static void traceback_recursive( alignment &,
+			                                 const int &,
+			                                 const int &,
+			                                 const int &,
+			                                 const int &,
+			                                 const int &,
+			                                 const int &,
+			                                 const int_vec_vec & );
 
-			score_alignment_pair do_align(const dyn_prog_score_source &,
-			                              const gap::gap_penalty &,
-			                              const size_type &) const final;
+			[[nodiscard]] score_alignment_pair do_align( const dyn_prog_score_source &,
+			                                             const gap::gap_penalty &,
+			                                             const size_type & ) const final;
 		};
+
 	} // namespace align
 } // namespace cath
 

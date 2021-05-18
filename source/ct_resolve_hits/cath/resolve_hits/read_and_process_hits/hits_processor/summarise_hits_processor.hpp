@@ -43,7 +43,7 @@ namespace cath {
 				/// \brief Record an example query_id/full_hit pair
 				str_full_hit_pair_opt example_query_id_and_hit;
 
-				std::unique_ptr<hits_processor> do_clone() const final;
+				[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
 
 				void do_process_hits_for_query(const std::string &,
 				                               const crh_filter_spec &,
@@ -53,11 +53,11 @@ namespace cath {
 
 				void do_finish_work() final;
 
-				bool do_wants_hits_that_fail_score_filter() const final;
+				[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
 
-				bool do_requires_strictly_worse_hits() const final;
+				[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
 
-			public:
+			  public:
 				explicit summarise_hits_processor(ref_vec<std::ostream>) noexcept;
 			};
 

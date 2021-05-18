@@ -33,7 +33,7 @@ namespace cath {
 				struct vci_linear_view_z_getter final {
 
 					/// \brief TODOCUMENT
-					std::string get_name() const {
+					[[nodiscard]] std::string get_name() const {
 						return "z-axis";
 					}
 

@@ -109,23 +109,21 @@ namespace cath {
 		/// This allows the windowed to be memory efficient.
 		doub_vec data;
 
-		size_t get_internal_index(const size_type &,
-		                          const size_type &) const;
+		[[nodiscard]] size_t get_internal_index( const size_type &, const size_type & ) const;
 
-	public:
+	  public:
 		windowed_matrix(const size_type &,
 		                const size_type &,
 		                const size_type &);
 
-		size_type get_length_a() const;
-		size_type get_length_b() const;
-		size_type get_window_size() const;
+		[[nodiscard]] size_type get_length_a() const;
+		[[nodiscard]] size_type get_length_b() const;
+		[[nodiscard]] size_type get_window_size() const;
 
 		void set_value(const size_type &,
 		               const size_type &,
 		               const double &);
-		double get_value(const size_type &,
-		                 const size_type &) const;
+		[[nodiscard]] double get_value( const size_type &, const size_type & ) const;
 	};
 
 	void check_indices_are_within_window(const windowed_matrix::size_type &,

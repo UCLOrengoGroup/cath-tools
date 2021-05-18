@@ -53,9 +53,9 @@ namespace cath {
 		               const double &,
 		               const double &);
 
-		const double & get_r() const;
-		const double & get_g() const;
-		const double & get_b() const;
+		[[nodiscard]] const double &get_r() const;
+		[[nodiscard]] const double &get_g() const;
+		[[nodiscard]] const double &get_b() const;
 
 		static const std::string    COMPONENT_SEPARATOR;
 		static const display_colour BLACK;

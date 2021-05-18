@@ -87,7 +87,7 @@ namespace cath {
 			constexpr key_index_tuple_type make_max_close_key(Data &&,
 			                                                  Crit &&) const;
 
-			std::string parts_names() const;
+			[[nodiscard]] std::string parts_names() const;
 		};
 
 		/// \brief TODOCUMENT

@@ -70,12 +70,12 @@ namespace cath {
 				              angle_type,
 				              angle_type,
 				              angle_type);
-				const view_type & get_view() const;
-				const frame_quat_rot & get_frame() const;
-				const angle_type & get_from_phi_angle() const;
-				const angle_type & get_from_psi_angle() const;
-				const angle_type & get_to_phi_angle() const;
-				const angle_type & get_to_psi_angle() const;
+				[[nodiscard]] const view_type &     get_view() const;
+				[[nodiscard]] const frame_quat_rot &get_frame() const;
+				[[nodiscard]] const angle_type &    get_from_phi_angle() const;
+				[[nodiscard]] const angle_type &    get_from_psi_angle() const;
+				[[nodiscard]] const angle_type &    get_to_phi_angle() const;
+				[[nodiscard]] const angle_type &    get_to_psi_angle() const;
 			};
 
 			/// \brief Ctor to create dummy res_pair

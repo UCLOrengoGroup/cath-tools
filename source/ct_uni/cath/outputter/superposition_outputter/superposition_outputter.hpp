@@ -35,20 +35,20 @@ namespace cath {
 		class superposition_outputter {
 		private:
 			/// \brief Pure virtual method with which each concrete superposition_outputter must define how to create a clone of itself
-			virtual std::unique_ptr<superposition_outputter> do_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<superposition_outputter> do_clone() const = 0;
 
 			/// \brief TODOCUMENT
 			virtual void do_output_superposition( const sup::superposition_context &, std::ostream & ) const = 0;
 
 			/// \brief TODOCUMENT
-			virtual bool do_involves_display_spec() const = 0;
+			[[nodiscard]] virtual bool do_involves_display_spec() const = 0;
 
 			/// \brief Pure virtual method with which each concrete superposition_outputter must define its name
-			virtual std::string do_get_name() const = 0;
+			[[nodiscard]] virtual std::string do_get_name() const = 0;
 
 		public:
 			superposition_outputter() = default;
-			std::unique_ptr<superposition_outputter> clone() const;
+			[[nodiscard]] std::unique_ptr<superposition_outputter> clone() const;
 			virtual ~superposition_outputter() noexcept = default;
 
 			superposition_outputter(const superposition_outputter &) = default;
@@ -57,9 +57,9 @@ namespace cath {
 			superposition_outputter & operator=(superposition_outputter &&) noexcept = default;
 
 			void output_superposition( const sup::superposition_context &, std::ostream & ) const;
-			bool involves_display_spec() const;
+			[[nodiscard]] bool involves_display_spec() const;
 
-			std::string get_name() const;
+			[[nodiscard]] std::string get_name() const;
 		};
 
 		/// \brief NVI pass-through to get the concrete superposition_outputter's name

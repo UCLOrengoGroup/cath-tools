@@ -47,28 +47,27 @@ namespace cath {
 		///  * storing, validating etc the options
 		/// ...which may be OK for simpler options_blocks but they should be split as soon as they begin to show the strain.
 		class options_block {
-		private:
+		  private:
 			/// \brief A standard do_clone() method to act as a virtual copy-ctor
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual std::unique_ptr<options_block> do_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<options_block> do_clone() const = 0;
 
 			/// \brief Provide a name for the options block, as used in the options description text
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual std::string do_get_block_name() const = 0;
+			[[nodiscard]] virtual std::string do_get_block_name() const = 0;
 
 			/// \brief Add the block's visible options to the provided options_description
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                                   const size_t &) = 0;
+			virtual void do_add_visible_options_to_description( boost::program_options::options_description &,
+			                                                    const size_t & ) = 0;
 
 			/// \brief Add the block's hidden options to the provided options_description
 			///
 			/// This is a virtual function (which may or may not be overridden by concrete, derived classes).
-			virtual void do_add_hidden_options_to_description(boost::program_options::options_description &,
-			                                                  const size_t &);
+			virtual void do_add_hidden_options_to_description( boost::program_options::options_description &, const size_t & );
 
 			/// \brief Identify any conflicts that make the currently stored options invalid
 			///
@@ -79,16 +78,16 @@ namespace cath {
 			/// if that might be reasonable when the user requests help.
 			///
 			/// \returns A string describing the conflict in the options or an empty string if there's none
-			virtual str_opt do_invalid_string(const boost::program_options::variables_map &) const = 0;
+			[[nodiscard]] virtual str_opt do_invalid_string( const boost::program_options::variables_map & ) const = 0;
 
 			/// \brief Pure virtual method with which each concrete options_block must define its full list of options names
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual str_vec do_get_all_options_names() const = 0;
+			[[nodiscard]] virtual str_vec do_get_all_options_names() const = 0;
 
-		public:
+		  public:
 			options_block() = default;
-			std::unique_ptr<options_block> clone() const;
+			[[nodiscard]] std::unique_ptr<options_block> clone() const;
 			virtual ~options_block() noexcept = default;
 
 			options_block(const options_block &) = default;
@@ -105,9 +104,9 @@ namespace cath {
 			boost::program_options::options_description get_visible_options_description(const size_t &);
 			boost::program_options::options_description get_hidden_options_description(const size_t &);
 
-			str_opt invalid_string(const boost::program_options::variables_map &) const;
+			[[nodiscard]] str_opt invalid_string( const boost::program_options::variables_map & ) const;
 
-			str_vec get_all_options_names() const;
+			[[nodiscard]] str_vec get_all_options_names() const;
 
 			static bool is_acceptable_output_file(const ::std::filesystem::path &);
 			static bool is_acceptable_input_file(const ::std::filesystem::path &,

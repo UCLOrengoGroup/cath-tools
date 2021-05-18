@@ -41,13 +41,13 @@ namespace cath {
 
 			explicit named_true_false_pos_neg_list_list(named_true_false_pos_neg_list_vec);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const named_true_false_pos_neg_list & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		classn_stat_pair_series_list make_classn_stat_pair_series_list(const named_true_false_pos_neg_list_list &,

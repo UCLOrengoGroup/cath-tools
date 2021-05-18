@@ -72,24 +72,24 @@ namespace cath {
 		protein & set_sec_strucs(sec_struc_vec);
 
 		file::name_set & get_name_set();
-		const file::name_set & get_name_set() const;
+		[[nodiscard]] const file::name_set &get_name_set() const;
 
 		inline residue & get_residue_ref_of_index(const size_t &);
-		inline const residue & get_residue_ref_of_index(const size_t &) const;
+		[[nodiscard]] inline const residue &get_residue_ref_of_index( const size_t & ) const;
 
 		sec_struc & get_sec_struc_ref_of_index(const size_t &);
-		const sec_struc & get_sec_struc_ref_of_index(const size_t &) const;
+		[[nodiscard]] const sec_struc &get_sec_struc_ref_of_index( const size_t & ) const;
 
-		inline size_t get_length() const;
-		size_t get_num_sec_strucs() const;
+		[[nodiscard]] inline size_t get_length() const;
+		[[nodiscard]] size_t        get_num_sec_strucs() const;
 
 		iterator begin();
 		iterator end();
 
-		const_iterator begin() const;
-		const_iterator end() const;
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
 
-		sec_struc_crange get_sec_strucs() const;
+		[[nodiscard]] sec_struc_crange get_sec_strucs() const;
 	};
 
 	/// \brief TODOCUMENT

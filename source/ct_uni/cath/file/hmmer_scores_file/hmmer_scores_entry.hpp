@@ -120,27 +120,27 @@ namespace cath {
 			                   const size_t &,
 			                   std::string);
 
-			std::string get_name_1() const;
-			std::string get_accession_1() const;
-			std::string get_name_2() const;
-			std::string get_accession_2() const;
+			[[nodiscard]] std::string get_name_1() const;
+			[[nodiscard]] std::string get_accession_1() const;
+			[[nodiscard]] std::string get_name_2() const;
+			[[nodiscard]] std::string get_accession_2() const;
 
-			double      get_full_sequence_evalue() const;
-			double      get_full_sequence_score() const;
-			double      get_full_sequence_bias() const;
-			double      get_best_1_domain_evalue() const;
-			double      get_best_1_domain_score() const;
-			double      get_best_1_domain_bias() const;
-			double      get_expected_num_doms() const;
-			size_t      get_reg() const;
-			size_t      get_clu() const;
-			size_t      get_ov() const;
-			size_t      get_env() const;
-			size_t      get_dom() const;
-			size_t      get_rep() const;
-			size_t      get_inc() const;
+			[[nodiscard]] double get_full_sequence_evalue() const;
+			[[nodiscard]] double get_full_sequence_score() const;
+			[[nodiscard]] double get_full_sequence_bias() const;
+			[[nodiscard]] double get_best_1_domain_evalue() const;
+			[[nodiscard]] double get_best_1_domain_score() const;
+			[[nodiscard]] double get_best_1_domain_bias() const;
+			[[nodiscard]] double get_expected_num_doms() const;
+			[[nodiscard]] size_t get_reg() const;
+			[[nodiscard]] size_t get_clu() const;
+			[[nodiscard]] size_t get_ov() const;
+			[[nodiscard]] size_t get_env() const;
+			[[nodiscard]] size_t get_dom() const;
+			[[nodiscard]] size_t get_rep() const;
+			[[nodiscard]] size_t get_inc() const;
 
-			std::string get_description() const;
+			[[nodiscard]] std::string get_description() const;
 		};
 
 		bool operator==(const hmmer_scores_entry &,

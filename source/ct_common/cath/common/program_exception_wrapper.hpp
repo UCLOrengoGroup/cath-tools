@@ -44,7 +44,7 @@ namespace cath {
 
 			void output_catch_context( ::std::ostream &, const char *const ) const;
 
-			virtual ::std::string do_get_program_name() const = 0;
+			[[nodiscard]] virtual ::std::string do_get_program_name() const = 0;
 
 			virtual void do_run_program( int, char *[] ) = 0;
 

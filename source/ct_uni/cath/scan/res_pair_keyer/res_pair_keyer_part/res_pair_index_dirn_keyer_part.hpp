@@ -48,31 +48,31 @@ namespace cath {
 			using search_radius_t   = res_pair_index_dirn_criterion;
 
 			/// \brief Get a short name that describes this key part
-			std::string get_name() const {
+			[[nodiscard]] std::string get_name() const {
 				return "index_dirn";
 			}
 
 			/// \brief Extract the relevant value from the specified res_pair
-			value_t get_value(const detail::multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
+			[[nodiscard]] value_t get_value(const detail::multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
 			                  ) const {
 				return direction( prm_res_pair );
 			}
 
 			/// \brief Extract the search radius from the specified quad_criteria
-			search_radius_t get_search_radius(const quad_criteria &prm_criteria ///< The criteria defining what is considered a match
+			[[nodiscard]] search_radius_t get_search_radius(const quad_criteria &prm_criteria ///< The criteria defining what is considered a match
 			                                  ) const {
 				return prm_criteria.get_index_direction_criterion();
 			}
 
 			/// \brief Generate the key part for the specified value
-			cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
+			[[nodiscard]] cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
 			                      ) const {
 				return prm_value;
 			}
 
 			/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified value
 			///        within the specified search radius
-			cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The value for which the key_part should be extracted
+			[[nodiscard]] cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The value for which the key_part should be extracted
 			                                  const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 			                                  ) const {
 #ifndef NDEBUG

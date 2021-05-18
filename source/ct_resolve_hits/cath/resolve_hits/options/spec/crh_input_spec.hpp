@@ -61,11 +61,11 @@ namespace cath {
 			/// \brief The default value for whether the code can assume that the input data is pre-grouped by query_id
 			static constexpr bool                  DEFAULT_INPUT_HITS_ARE_GROUPED = false;
 
-			const path_opt & get_input_file() const;
-			const bool & get_read_from_stdin() const;
-			const hits_input_format_tag & get_input_format() const;
-			const seq::residx_t & get_min_gap_length() const;
-			const bool & get_input_hits_are_grouped() const;
+			[[nodiscard]] const path_opt &             get_input_file() const;
+			[[nodiscard]] const bool &                 get_read_from_stdin() const;
+			[[nodiscard]] const hits_input_format_tag &get_input_format() const;
+			[[nodiscard]] const seq::residx_t &        get_min_gap_length() const;
+			[[nodiscard]] const bool &                 get_input_hits_are_grouped() const;
 
 			crh_input_spec & set_input_file(const ::std::filesystem::path &);
 			crh_input_spec & set_read_from_stdin(const bool &);

@@ -32,13 +32,13 @@ namespace cath {
 			/// \brief TODOCUMENT
 			double best_score_percentage;
 
-			size_vec do_select_common_residues_with_scores(const doub_doub_pair_vec &) const final;
-			std::string do_get_descriptive_name() const final;
-			std::unique_ptr<common_residue_selection_policy> do_clone() const final;
+			[[nodiscard]] size_vec    do_select_common_residues_with_scores( const doub_doub_pair_vec & ) const final;
+			[[nodiscard]] std::string do_get_descriptive_name() const final;
+			[[nodiscard]] std::unique_ptr<common_residue_selection_policy> do_clone() const final;
 
-			bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const final;
+			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const final;
 
-		public:
+		  public:
 			explicit common_residue_select_best_score_percent_policy(const double & = DEFAULT_BEST_SCORE_PERCENTAGE);
 
 			/// \brief TODOCUMENT

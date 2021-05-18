@@ -72,8 +72,8 @@ namespace cath {
 			explicit constexpr clust_mapping_spec(const double &,
 			                                      const double & = MIN_MIN_EQUIV_CLUST_OL);
 
-			constexpr const double & get_min_equiv_dom_ol() const;
-			constexpr const double & get_min_equiv_clust_ol() const;
+			[[nodiscard]] constexpr const double &get_min_equiv_dom_ol() const;
+			[[nodiscard]] constexpr const double &get_min_equiv_clust_ol() const;
 
 			clust_mapping_spec & set_min_equiv_dom_ol(const double &);
 			clust_mapping_spec & set_min_equiv_clust_ol(const double &);

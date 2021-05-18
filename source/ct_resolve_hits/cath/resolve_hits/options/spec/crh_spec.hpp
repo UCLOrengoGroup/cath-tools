@@ -67,19 +67,19 @@ namespace cath {
 			                  crh_html_spec          = crh_html_spec          {} );
 
 			crh_input_spec & get_input_spec();
-			const crh_input_spec & get_input_spec() const;
+			[[nodiscard]] const crh_input_spec &        get_input_spec() const;
 			crh_segment_spec & get_segment_spec();
-			const crh_segment_spec & get_segment_spec() const;
+			[[nodiscard]] const crh_segment_spec &      get_segment_spec() const;
 			crh_score_spec & get_score_spec();
-			const crh_score_spec & get_score_spec() const;
+			[[nodiscard]] const crh_score_spec &        get_score_spec() const;
 			crh_filter_spec & get_filter_spec();
-			const crh_filter_spec & get_filter_spec() const;
+			[[nodiscard]] const crh_filter_spec &       get_filter_spec() const;
 			crh_single_output_spec & get_single_output_spec();
-			const crh_single_output_spec & get_single_output_spec() const;
+			[[nodiscard]] const crh_single_output_spec &get_single_output_spec() const;
 			crh_output_spec & get_output_spec();
-			const crh_output_spec & get_output_spec() const;
+			[[nodiscard]] const crh_output_spec &       get_output_spec() const;
 			crh_html_spec & get_html_spec();
-			const crh_html_spec & get_html_spec() const;
+			[[nodiscard]] const crh_html_spec &         get_html_spec() const;
 
 			crh_spec & set_input_spec(const crh_input_spec &);
 			crh_spec & set_segment_spec(const crh_segment_spec &);

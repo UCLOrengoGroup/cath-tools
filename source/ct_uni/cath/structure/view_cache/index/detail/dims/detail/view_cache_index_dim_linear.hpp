@@ -128,7 +128,7 @@ namespace cath {
 					int start_offset;
 
 					const value_type & get_cell_width() const;
-					const int & get_start_offset() const;
+					[[nodiscard]] const int &get_start_offset() const;
 
 					size_size_size_size_tpl search_cell_ranges(const size_t &,
 					                                           const value_type &,

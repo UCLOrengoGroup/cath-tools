@@ -55,9 +55,9 @@ namespace cath {
 			                                    doub_opt = DEFAULT_DNA_MAX_DIST,
 			                                    doub_opt = DEFAULT_ORGANIC_MAX_DIST);
 
-			const supn_regions_context & get_regions_context() const;
-			const doub_opt & get_include_dna_within_distance() const;
-			const doub_opt & get_include_organic_within_distance() const;
+			[[nodiscard]] const supn_regions_context &get_regions_context() const;
+			[[nodiscard]] const doub_opt &            get_include_dna_within_distance() const;
+			[[nodiscard]] const doub_opt &            get_include_organic_within_distance() const;
 
 			superposition_content_spec & set_regions_context(const supn_regions_context &);
 			superposition_content_spec & set_include_dna_within_distance(const doub_opt &);

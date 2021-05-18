@@ -54,69 +54,65 @@ namespace cath {
 			}
 
 			/// \brief Pure virtual method with which each concrete policy must define how to create a clone of itself
-			virtual std::unique_ptr<aligned_pair_score> do_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<aligned_pair_score> do_clone() const = 0;
 
 			/// \brief Pure virtual method with which each concrete aligned_pair_score must define whether a higher score
 			///        (rather than a lower score) generally reflects a better alignment and/or more similar structures.
-			virtual boost::logic::tribool do_higher_is_better() const = 0;
+			[[nodiscard]] virtual boost::logic::tribool do_higher_is_better() const = 0;
 
 			/// \brief Pure virtual method with which each concrete aligned_pair_score must define the method of calculating a score for
 			///        a pair alignment and two associated proteins.
-			virtual score_value do_calculate(const align::alignment &,
-			                                 const protein &,
-			                                 const protein &) const = 0;
+			[[nodiscard]] virtual score_value do_calculate( const align::alignment &, const protein &, const protein & ) const = 0;
 
 			/// \brief Pure virtual method with which each concrete aligned_pair_score must define a free text description, describing the score.
-			virtual std::string do_description() const = 0;
+			[[nodiscard]] virtual std::string do_description() const = 0;
 
 			/// \brief Pure virtual method with which each concrete aligned_pair_score must define a unique id_name (which cannot contain a full-stop)
-			virtual std::string do_id_name() const = 0;
+			[[nodiscard]] virtual std::string do_id_name() const = 0;
 
 			/// \brief Pure virtual method with which each concrete aligned_pair_score must define the strings to be appended to id_name()
 			///        with full-stops to the get the full short name. Each string also comes with a bool that specifies
 			///        whether the string should be included in human-friendly short_name (ie it indicates a non-default value)
 			///        as well as the full short_name.
-			virtual str_bool_pair_vec do_short_name_suffixes() const  = 0;
+			[[nodiscard]] virtual str_bool_pair_vec do_short_name_suffixes() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual std::string do_long_name() const;
+			[[nodiscard]] virtual std::string do_long_name() const;
 
 			/// \brief TODOCUMENT
-			virtual std::string do_reference() const;
+			[[nodiscard]] virtual std::string do_reference() const;
 
-//			/// \brief Pure virtual method with which each concrete aligned_pair_score must define how to build an aligned_pair_score
-//			///        of that concrete type from a short_name_spec string
-//			virtual std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const = 0;
+			//			/// \brief Pure virtual method with which each concrete aligned_pair_score must define how to build an aligned_pair_score
+			//			///        of that concrete type from a short_name_spec string
+			//			virtual std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const = 0;
 
 			/// \brief TODOCUMENT
-			virtual bool do_less_than_with_same_dynamic_type(const aligned_pair_score &) const = 0;
+			[[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const = 0;
 
-		public:
+		  public:
 			aligned_pair_score() = default;
 			virtual ~aligned_pair_score() noexcept = default;
-			std::unique_ptr<aligned_pair_score> clone() const;
+			[[nodiscard]] std::unique_ptr<aligned_pair_score> clone() const;
 
 			aligned_pair_score(const aligned_pair_score &) = default;
 			aligned_pair_score(aligned_pair_score &&) noexcept = default;
 			aligned_pair_score & operator=(const aligned_pair_score &) = default;
 			aligned_pair_score & operator=(aligned_pair_score &&) noexcept = default;
 
-			boost::logic::tribool higher_is_better() const;
-			score_value calculate(const align::alignment &,
-			                      const protein &,
-			                      const protein &) const;
+			[[nodiscard]] boost::logic::tribool higher_is_better() const;
+			[[nodiscard]] score_value calculate( const align::alignment &, const protein &, const protein & ) const;
 
-			std::string id_name() const;
-			str_bool_pair_vec short_name_suffixes() const;
-			std::string human_friendly_short_name() const;
-			std::string full_short_name() const;
-			std::string long_name() const;
-			std::string description() const;
-			std::string reference() const;
+			[[nodiscard]] std::string       id_name() const;
+			[[nodiscard]] str_bool_pair_vec short_name_suffixes() const;
+			[[nodiscard]] std::string       human_friendly_short_name() const;
+			[[nodiscard]] std::string       full_short_name() const;
+			[[nodiscard]] std::string       long_name() const;
+			[[nodiscard]] std::string       description() const;
+			[[nodiscard]] std::string       reference() const;
 
-//			std::unique_ptr<aligned_pair_score> build_from_short_name_spec(const std::string &) const;
+			// std::unique_ptr<aligned_pair_score> build_from_short_name_spec(const std::string &) const;
 
-			bool less_than_with_same_dynamic_type(const aligned_pair_score &) const;
+			[[nodiscard]] bool less_than_with_same_dynamic_type( const aligned_pair_score & ) const;
 		};
 
 //		std::unique_ptr<aligned_pair_score> make_aligned_pair_score_from_full_short_name(const std::string &);

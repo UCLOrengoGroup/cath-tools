@@ -42,8 +42,8 @@ namespace cath {
 			domain_definition(chop::domain,
 			                  std::string);
 
-			const chop::domain & get_domain() const;
-			const std::string & get_pdb_name() const;
+			[[nodiscard]] const chop::domain &get_domain() const;
+			[[nodiscard]] const std::string & get_pdb_name() const;
 		};
 
 	} // namespace chop

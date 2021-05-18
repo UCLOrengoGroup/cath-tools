@@ -79,7 +79,7 @@ namespace cath {
 
 			bool update_residue_is_included(const residue_id &);
 
-			region_vec unseen_regions() const;
+			[[nodiscard]] region_vec unseen_regions() const;
 		};
 
 		str_opt warn_str_if_specified_regions_remain_unseen(const regions_limiter &);

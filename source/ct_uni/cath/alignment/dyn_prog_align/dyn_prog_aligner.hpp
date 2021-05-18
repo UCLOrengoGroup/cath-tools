@@ -35,24 +35,24 @@ namespace cath {
 
 		/// \brief ABC defining interface for classes that align generic dyn_prog_score_sources with dynamic-programming
 		class dyn_prog_aligner {
-		public:
+		  public:
 			/// \brief TODOCUMENT
 			using size_type = windowed_matrix::size_type;
 
-		private:
+		  private:
 			/// \brief A standard do_clone() method to act as a virtual copy-ctor
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual std::unique_ptr<dyn_prog_aligner> do_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<dyn_prog_aligner> do_clone() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual score_alignment_pair do_align(const dyn_prog_score_source &,
-			                                      const gap::gap_penalty &,
-			                                      const size_type &) const = 0;
+			[[nodiscard]] virtual score_alignment_pair do_align( const dyn_prog_score_source &,
+			                                                     const gap::gap_penalty &,
+			                                                     const size_type & ) const = 0;
 
-		public:
+		  public:
 			dyn_prog_aligner() = default;
-			std::unique_ptr<dyn_prog_aligner> clone() const;
+			[[nodiscard]] std::unique_ptr<dyn_prog_aligner> clone() const;
 			virtual ~dyn_prog_aligner() noexcept = default;
 
 			dyn_prog_aligner(const dyn_prog_aligner &) = default;
@@ -60,9 +60,9 @@ namespace cath {
 			dyn_prog_aligner & operator=(const dyn_prog_aligner &) = default;
 			dyn_prog_aligner & operator=(dyn_prog_aligner &&) noexcept = default;
 
-			score_alignment_pair align(const dyn_prog_score_source &,
-			                           const gap::gap_penalty &,
-			                           const size_type &) const;
+			[[nodiscard]] score_alignment_pair align( const dyn_prog_score_source &,
+			                                          const gap::gap_penalty &,
+			                                          const size_type & ) const;
 		};
 
 	} // namespace align

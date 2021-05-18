@@ -36,18 +36,17 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class residue_scorer final {
-		private:
-//			bool renormalise;
-//			bool from_to_or_both;
-//			bool best_twenty;
-//			bool atom_policy_ca_or_cb;
-//			bool score_function;
+		  private:
+			// bool renormalise;
+			// bool from_to_or_both;
+			// bool best_twenty;
+			// bool atom_policy_ca_or_cb;
+			// bool score_function;
 
-//			alignment_residue_scores should store the number of entries and the number of present entries in the position;
+			// alignment_residue_scores should store the number of entries and the number of present entries in the position;
 
-		public:
-			alignment_residue_scores get_alignment_residue_scores(const alignment &,
-			                                                      const protein_list &) const;
+		  public:
+			[[nodiscard]] alignment_residue_scores get_alignment_residue_scores( const alignment &, const protein_list & ) const;
 		};
 
 		void score_alignment(const residue_scorer &,

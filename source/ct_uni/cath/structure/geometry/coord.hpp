@@ -70,9 +70,9 @@ namespace cath {
 			template <typename T>
 			explicit coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &);
 
-			constexpr const double & get_x() const;
-			constexpr const double & get_y() const;
-			constexpr const double & get_z() const;
+			[[nodiscard]] constexpr const double &get_x() const;
+			[[nodiscard]] constexpr const double &get_y() const;
+			[[nodiscard]] constexpr const double &get_z() const;
 
 			coord & operator-=(const coord &);
 			coord & operator+=(const coord &);

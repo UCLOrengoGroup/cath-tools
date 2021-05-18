@@ -32,46 +32,46 @@ namespace cath {
 		class protein_only_length_getter : public length_getter {
 		private:
 			/// \brief TODOCUMENT
-			virtual std::unique_ptr<protein_only_length_getter> do_protein_only_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<protein_only_length_getter> do_protein_only_clone() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual size_t do_get_length(const protein &,
+			[[nodiscard]] virtual size_t do_get_length(const protein &,
 			                             const protein &) const = 0;
 
 			/// \brief TODOCUMENT
-			virtual std::string do_get_choice_adjective() const = 0;
+			[[nodiscard]] virtual std::string do_get_choice_adjective() const = 0;
 
 
 
-			std::unique_ptr<length_getter> do_clone() const final;
+			[[nodiscard]] std::unique_ptr<length_getter> do_clone() const final;
 
-			boost::logic::tribool do_higher_is_better() const final;
+			[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
 
-			size_t do_get_length(const align::alignment &,
+			[[nodiscard]] size_t do_get_length(const align::alignment &,
 			                     const protein &,
 			                     const protein &) const final;
 
-			std::string do_id_name() const final;
+			[[nodiscard]] std::string do_id_name() const final;
 
-			str_bool_pair_vec do_short_name_suffixes() const final;
+			[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
 
-			std::string do_long_name() const final;
+			[[nodiscard]] std::string do_long_name() const final;
 
-			std::string do_description() const final;
+			[[nodiscard]] std::string do_description() const final;
 
 //			std::string do_short_suffix_string() const final;
 
 //			std::string do_long_suffix_string() const final;
 
-			const std::string do_description_brackets_string() const final;
+			[[nodiscard]] const std::string do_description_brackets_string() const final;
 
 		public:
-			std::unique_ptr<protein_only_length_getter> protein_only_clone() const;
+			[[nodiscard]] std::unique_ptr<protein_only_length_getter> protein_only_clone() const;
 
-			size_t get_prot_only_length(const protein &,
+			[[nodiscard]] size_t get_prot_only_length(const protein &,
 			                            const protein &) const;
 
-			std::string get_choice_adjective() const;
+			[[nodiscard]] std::string get_choice_adjective() const;
 		};
 
 		boost::ptr_vector<protein_only_length_getter> get_all_protein_only_length_getters();

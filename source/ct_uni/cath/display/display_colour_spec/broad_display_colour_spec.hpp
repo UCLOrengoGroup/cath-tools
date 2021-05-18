@@ -64,9 +64,9 @@ namespace cath {
 		//                                           const region &,
 		//                                           const display_colour &);
 
-		const display_colour_opt & get_base_clr() const;
+		[[nodiscard]] const display_colour_opt &get_base_clr() const;
 
-		const size_display_colour_map & get_clr_of_pdb() const;
+		[[nodiscard]] const size_display_colour_map &get_clr_of_pdb() const;
 
 		// const size_region_display_colour_pair_vec_map & get_clr_of_regions() const;
 	};

@@ -49,13 +49,11 @@ namespace cath {
 			                     const bool &,
 			                     const bool &);
 
-			bool get_show_scores_if_present() const;
-			bool get_scores_to_equivs() const;
-			bool get_normalise_scores() const;
+			[[nodiscard]] bool get_show_scores_if_present() const;
+			[[nodiscard]] bool get_scores_to_equivs() const;
+			[[nodiscard]] bool get_normalise_scores() const;
 
-			float_score_type get_score_of_position(const align::alignment &,
-			                                       const size_t &,
-			                                       const size_t &) const;
+			[[nodiscard]] float_score_type get_score_of_position( const align::alignment &, const size_t &, const size_t & ) const;
 		};
 
 		using score_colour_handler_opt = ::std::optional<score_colour_handler>;

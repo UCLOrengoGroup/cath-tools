@@ -32,10 +32,10 @@ namespace cath {
 			void do_append_common_atoms_to_coord_lists(geom::coord_list_coord_list_pair &,
 			                                           const residue &,
 			                                           const residue &) const final;
-			std::string do_get_descriptive_name() const final;
-			std::unique_ptr<common_atom_selection_policy> do_clone() const final;
+			[[nodiscard]] std::string do_get_descriptive_name() const final;
+			[[nodiscard]] std::unique_ptr<common_atom_selection_policy> do_clone() const final;
 
-			bool do_less_than_with_same_dynamic_type(const common_atom_selection_policy &) const final;
+			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const common_atom_selection_policy & ) const final;
 		};
 
 	} // namespace align

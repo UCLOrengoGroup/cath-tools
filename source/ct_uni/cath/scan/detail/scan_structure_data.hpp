@@ -81,8 +81,8 @@ namespace cath {
 				roled_scan_stride the_roled_scan_stride;
 
 				void sanity_check() const;
-				size_t get_rep_sets_index_of_res_rep_indices(const res_rep_index_type &,
-				                                             const res_rep_index_type &) const;
+				[[nodiscard]] size_t get_rep_sets_index_of_res_rep_indices( const res_rep_index_type &,
+				                                                            const res_rep_index_type & ) const;
 
 				scan_structure_data(single_struc_res_pair_list_vec,
 				                    const index_type &,
@@ -92,11 +92,11 @@ namespace cath {
 				scan_structure_data(const protein &,
 				                    const roled_scan_stride &);
 
-				const single_struc_res_pair_list & get_res_pairs_of_rep_indices(const res_rep_index_type &,
-				                                                                const res_rep_index_type &) const;
-				info_quantity get_info_size() const;
-				const index_type & get_num_residues() const;
-				const roled_scan_stride & get_roled_scan_stride() const;
+				[[nodiscard]] const single_struc_res_pair_list &get_res_pairs_of_rep_indices( const res_rep_index_type &,
+				                                                                              const res_rep_index_type & ) const;
+				[[nodiscard]] info_quantity                     get_info_size() const;
+				[[nodiscard]] const index_type &                get_num_residues() const;
+				[[nodiscard]] const roled_scan_stride &         get_roled_scan_stride() const;
 			};
 
 			/// \brief Perform sanity checks for consistency in the scan_structure_data

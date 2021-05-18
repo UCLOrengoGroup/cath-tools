@@ -51,10 +51,10 @@ namespace cath {
 		private:
 			/// \brief Pure virtual method with which each concrete classn_stat must define how
 			/// to calculate the numerator and denominator of the statistic
-			virtual size_rational do_calculate(const true_false_pos_neg &) const = 0;
+			[[nodiscard]] virtual size_rational do_calculate( const true_false_pos_neg & ) const = 0;
 
 			/// \brief TODOCUMENT
-			virtual std::string do_get_name() const = 0;
+			[[nodiscard]] virtual std::string do_get_name() const = 0;
 
 		public:
 			classn_stat() = default;
@@ -65,8 +65,8 @@ namespace cath {
 			classn_stat & operator=(const classn_stat &) = default;
 			classn_stat & operator=(classn_stat &&) noexcept = default;
 
-			size_rational calculate(const true_false_pos_neg &) const;
-			std::string get_name() const;
+			[[nodiscard]] size_rational calculate( const true_false_pos_neg & ) const;
+			[[nodiscard]] std::string   get_name() const;
 		};
 
 		double calculate_and_convert(const classn_stat &,

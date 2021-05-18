@@ -55,22 +55,22 @@ namespace cath {
 			/// \brief The detailed help options_block
 			opts::detail_help_options_block      the_detail_help_ob;
 
-			std::string do_get_program_name() const final;
+			[[nodiscard]] std::string                              do_get_program_name() const final;
 			boost::program_options::positional_options_description get_positional_options() final;
-			str_opt do_get_error_or_help_string() const final;
+			[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
 
-			std::string do_get_help_prefix_string() const final;
-			std::string do_get_help_suffix_string() const final;
-			std::string do_get_overview_string() const final;
+			[[nodiscard]] std::string do_get_help_prefix_string() const final;
+			[[nodiscard]] std::string do_get_help_suffix_string() const final;
+			[[nodiscard]] std::string do_get_overview_string() const final;
 
-		public:
+		  public:
 			clustmap_options();
 
-			clustmap_spec get_clustmap_spec() const;
+			[[nodiscard]] clustmap_spec get_clustmap_spec() const;
 
-			const clustmap_input_spec & get_clustmap_input_spec() const;
-			const clust_mapping_spec & get_clust_mapping_spec() const;
-			const clustmap_output_spec & get_clustmap_output_spec() const;
+			[[nodiscard]] const clustmap_input_spec & get_clustmap_input_spec() const;
+			[[nodiscard]] const clust_mapping_spec &  get_clust_mapping_spec() const;
+			[[nodiscard]] const clustmap_output_spec &get_clustmap_output_spec() const;
 
 			static const std::string PROGRAM_NAME;
 		};

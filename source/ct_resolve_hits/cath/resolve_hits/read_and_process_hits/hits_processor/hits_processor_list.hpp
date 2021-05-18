@@ -52,10 +52,10 @@ namespace cath {
 				/// \brief The segment spec to apply to incoming hits
 				crh_segment_spec the_segment_spec;
 
-				const crh_score_spec & get_score_spec() const;
-				const crh_segment_spec & get_segment_spec() const;
+				[[nodiscard]] const crh_score_spec &  get_score_spec() const;
+				[[nodiscard]] const crh_segment_spec &get_segment_spec() const;
 
-			public:
+			  public:
 				/// \brief A const_iterator type alias as part of making this a range
 				///
 				/// Note that this pipes through boost::indirected_range so the range is
@@ -77,22 +77,22 @@ namespace cath {
 				hits_processor_list & add_processor(hits_processor_uptr);
 				hits_processor_list & add_processor(hits_processor_clptr);
 
-				bool empty() const;
-				size_t size() const;
+				[[nodiscard]] bool   empty() const;
+				[[nodiscard]] size_t size() const;
 
 				const hits_processor & operator[](const size_t &) const;
 
-				bool wants_hits_that_fail_score_filter() const;
+				[[nodiscard]] bool wants_hits_that_fail_score_filter() const;
 
-				bool requires_strictly_worse_hits() const;
+				[[nodiscard]] bool requires_strictly_worse_hits() const;
 
 				void process_hits_for_query(const std::string &,
 				                            const crh_filter_spec &,
 				                            full_hit_list);
 				void finish_work();
 
-				const_iterator begin() const;
-				const_iterator end() const;
+				[[nodiscard]] const_iterator begin() const;
+				[[nodiscard]] const_iterator end() const;
 			};
 
 			hits_processor_list make_hits_processors(common::ofstream_list &,

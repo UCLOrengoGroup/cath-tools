@@ -52,7 +52,7 @@ namespace cath {
 		public:
 			explicit horiz_align_outputter(const alignment &);
 
-			const alignment & get_alignment() const;
+			[[nodiscard]] const alignment &get_alignment() const;
 		};
 
 		std::ostream & operator<<(std::ostream &,

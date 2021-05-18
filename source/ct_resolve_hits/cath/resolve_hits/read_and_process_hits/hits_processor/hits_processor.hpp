@@ -48,7 +48,7 @@ namespace cath {
 				ref_vec<std::ostream> output_streams;
 
 				/// \brief Pure virtual method with which each concrete hits_processor must define how to create a clone of itself
-				virtual std::unique_ptr<hits_processor> do_clone() const = 0;
+				[[nodiscard]] virtual std::unique_ptr<hits_processor> do_clone() const = 0;
 
 				/// \brief Pure virtual method with which each concrete hits_processor must define how it processes a new hit for a query
 				virtual void do_process_hits_for_query(const std::string &,
@@ -62,13 +62,13 @@ namespace cath {
 
 				/// \brief Pure virtual method with which each concrete hits_processor must define whether it expects
 				///        read_and_resolve_mgr to still parse hits that fail the score filter and pass them to this processor
-				virtual bool do_wants_hits_that_fail_score_filter() const = 0;
+				[[nodiscard]] virtual bool do_wants_hits_that_fail_score_filter() const = 0;
 
 				/// \brief Pure virtual method with which each concrete hits_processor must define whether it expects
 				///        to see results even if they're strictly worse than other hits in the results
-				virtual bool do_requires_strictly_worse_hits() const = 0;
+				[[nodiscard]] virtual bool do_requires_strictly_worse_hits() const = 0;
 
-			protected:
+			  protected:
 				const ref_vec<std::ostream> & get_ostreams();
 
 			public:
@@ -82,7 +82,7 @@ namespace cath {
 				hits_processor & operator=(const hits_processor &) = default;
 				hits_processor & operator=(hits_processor &&) noexcept = default;
 
-				std::unique_ptr<hits_processor> clone() const;
+				[[nodiscard]] std::unique_ptr<hits_processor> clone() const;
 
 				void process_hits_for_query(const std::string &,
 				                            const crh_filter_spec &,
@@ -95,8 +95,8 @@ namespace cath {
 				                            const crh_segment_spec &,
 				                            const calc_hit_list &);
 				void finish_work();
-				bool wants_hits_that_fail_score_filter() const;
-				bool requires_strictly_worse_hits() const;
+				[[nodiscard]] bool wants_hits_that_fail_score_filter() const;
+				[[nodiscard]] bool requires_strictly_worse_hits() const;
 			};
 
 			/// \brief Getter for the ostreams to which results should be written

@@ -49,10 +49,10 @@ namespace cath {
 			/// \brief Default ctor
 			clustmap_output_spec() = default;
 
-			const str_opt & get_append_batch_id() const;
-			const path_opt & get_output_to_file() const;
-			const path_opt & get_summarise_to_file() const;
-			const bool & get_print_domain_mapping() const;
+			[[nodiscard]] const str_opt & get_append_batch_id() const;
+			[[nodiscard]] const path_opt &get_output_to_file() const;
+			[[nodiscard]] const path_opt &get_summarise_to_file() const;
+			[[nodiscard]] const bool &    get_print_domain_mapping() const;
 
 			clustmap_output_spec & set_append_batch_id(const str_opt &);
 			clustmap_output_spec & set_output_to_file(const path_opt &);

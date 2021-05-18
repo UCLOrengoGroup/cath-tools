@@ -34,7 +34,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			::std::filesystem::path domain_defn_file;
 
-			std::unique_ptr<pdbs_acquirer> do_clone() const final;
+			[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
 			file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const final;
 
 		public:

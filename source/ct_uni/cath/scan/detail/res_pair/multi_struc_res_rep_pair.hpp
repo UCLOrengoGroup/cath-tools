@@ -62,10 +62,10 @@ namespace cath {
 				                         const res_rep_index_type &,
 				                         const res_rep_index_type &);
 
-				const res_pair_core & get_res_pair_core() const;
-				const index_type & get_structure_index() const;
-				const res_rep_index_type & get_from_res_rep_index() const;
-				const res_rep_index_type & get_to_res_rep_index() const;
+				[[nodiscard]] const res_pair_core &     get_res_pair_core() const;
+				[[nodiscard]] const index_type &        get_structure_index() const;
+				[[nodiscard]] const res_rep_index_type &get_from_res_rep_index() const;
+				[[nodiscard]] const res_rep_index_type &get_to_res_rep_index() const;
 			};
 
 			const view_base_type & get_view_x(const multi_struc_res_rep_pair &);

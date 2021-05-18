@@ -42,14 +42,14 @@ namespace cath {
 			/// \brief The specification of what should be included in the superposition
 			sup::superposition_content_spec content_spec;
 
-			std::unique_ptr<superposition_outputter> do_clone() const final;
+			[[nodiscard]] std::unique_ptr<superposition_outputter> do_clone() const final;
 
 			void do_output_superposition( const sup::superposition_context &, std::ostream & ) const final;
 
-			bool do_involves_display_spec() const final;
-			std::string do_get_name() const final;
+			[[nodiscard]] bool        do_involves_display_spec() const final;
+			[[nodiscard]] std::string do_get_name() const final;
 
-		public:
+		  public:
 			pymol_view_superposition_outputter(const ::std::filesystem::path &,
 			                                   display_spec,
 			                                   sup::superposition_content_spec);

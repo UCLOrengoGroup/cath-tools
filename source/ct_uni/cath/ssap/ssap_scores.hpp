@@ -56,12 +56,12 @@ namespace cath {
 		void set_ssap_score_over_smaller(const double &);
 		void set_ssap_score_over_larger(const double &);
 
-		size_t get_num_aligned_pairs() const;
-		double get_percentage_aligned_pairs_over_larger() const;
-		double get_seq_id() const;
-		double get_ssap_score_over_compared() const;
-		double get_ssap_score_over_smaller() const;
-		double get_ssap_score_over_larger() const;
+		[[nodiscard]] size_t get_num_aligned_pairs() const;
+		[[nodiscard]] double get_percentage_aligned_pairs_over_larger() const;
+		[[nodiscard]] double get_seq_id() const;
+		[[nodiscard]] double get_ssap_score_over_compared() const;
+		[[nodiscard]] double get_ssap_score_over_smaller() const;
+		[[nodiscard]] double get_ssap_score_over_larger() const;
 	};
 
 	std::ostream & operator<<(std::ostream &,

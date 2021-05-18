@@ -27,7 +27,6 @@
 using namespace ::cath;
 using namespace ::cath::rslv;
 
-using ::std::make_optional;
 using ::std::nullopt;
 
 BOOST_AUTO_TEST_SUITE(hit_extras_test_suite)

@@ -81,18 +81,18 @@ namespace cath {
 			                 const double &,
 			                 const double &);
 
-			const std::string & get_name_1() const;
-			const size_t &      get_start_1() const;
-			const size_t &      get_end_1() const;
-			const size_t &      get_length_1() const;
-			const size_t &      get_hit_num() const;
-			const std::string & get_name_2() const;
-			const size_t &      get_start_2() const;
-			const size_t &      get_end_2() const;
-			const size_t &      get_length_2() const;
-			const double &      get_simple() const;
-			const double &      get_reverse() const;
-			const double &      get_evalue() const;
+			[[nodiscard]] const std::string &get_name_1() const;
+			[[nodiscard]] const size_t &     get_start_1() const;
+			[[nodiscard]] const size_t &     get_end_1() const;
+			[[nodiscard]] const size_t &     get_length_1() const;
+			[[nodiscard]] const size_t &     get_hit_num() const;
+			[[nodiscard]] const std::string &get_name_2() const;
+			[[nodiscard]] const size_t &     get_start_2() const;
+			[[nodiscard]] const size_t &     get_end_2() const;
+			[[nodiscard]] const size_t &     get_length_2() const;
+			[[nodiscard]] const double &     get_simple() const;
+			[[nodiscard]] const double &     get_reverse() const;
+			[[nodiscard]] const double &     get_evalue() const;
 		};
 
 		bool operator==(const prc_scores_entry &,

@@ -49,14 +49,14 @@ namespace cath {
 
 			scored_arch_proxy() = default;
 
-			const resscr_t & get_score() const;
+			[[nodiscard]] const resscr_t &get_score() const;
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 			const hitidx_t & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 
 			scored_arch_proxy & add_hit(const resscr_t &,
 			                            const hitidx_t &);

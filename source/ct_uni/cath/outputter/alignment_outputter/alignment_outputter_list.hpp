@@ -39,12 +39,12 @@ namespace cath {
 
 		public:
 			void push_back(const alignment_outputter &);
-			bool empty() const;
+			[[nodiscard]] bool empty() const;
 
 			// Provide iterators
 			using const_iterator = boost::ptr_vector<alignment_outputter>::const_iterator;
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		void use_all_alignment_outputters(const alignment_outputter_list &,

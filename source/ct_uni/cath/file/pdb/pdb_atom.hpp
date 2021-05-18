@@ -90,17 +90,17 @@ namespace cath {
 			                   char_2_arr,
 			                   char_2_arr);
 
-			constexpr const pdb_record & get_record_type() const;
-			constexpr const uint & get_atom_serial() const;
-			constexpr const char_4_arr & get_element_type_untrimmed() const;
-			constexpr ::std::string_view get_element_type() const;
-			constexpr const char & get_alt_locn() const;
-			constexpr const amino_acid & get_amino_acid() const;
-			constexpr const geom::coord & get_coord() const;
-			constexpr const float & get_occupancy() const;
-			constexpr const float & get_temp_factor() const;
-			constexpr const char_2_arr & get_element_symbol() const;
-			constexpr const char_2_arr & get_charge() const;
+			[[nodiscard]] constexpr const pdb_record & get_record_type() const;
+			[[nodiscard]] constexpr const uint &       get_atom_serial() const;
+			[[nodiscard]] constexpr const char_4_arr & get_element_type_untrimmed() const;
+			[[nodiscard]] constexpr ::std::string_view get_element_type() const;
+			[[nodiscard]] constexpr const char &       get_alt_locn() const;
+			[[nodiscard]] constexpr const amino_acid & get_amino_acid() const;
+			[[nodiscard]] constexpr const geom::coord &get_coord() const;
+			[[nodiscard]] constexpr const float &      get_occupancy() const;
+			[[nodiscard]] constexpr const float &      get_temp_factor() const;
+			[[nodiscard]] constexpr const char_2_arr & get_element_symbol() const;
+			[[nodiscard]] constexpr const char_2_arr & get_charge() const;
 
 			void rotate(const geom::rotation &);
 			void operator+=(const geom::coord &);

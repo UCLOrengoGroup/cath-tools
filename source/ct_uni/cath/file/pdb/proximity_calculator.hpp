@@ -100,8 +100,7 @@ namespace cath {
 			proximity_calculator & operator=(const proximity_calculator &) = default;
 			proximity_calculator & operator=(proximity_calculator &&) noexcept = default;
 
-			bool is_within_distance(const geom::coord &,
-			                        const double &) const;
+			[[nodiscard]] bool is_within_distance( const geom::coord &, const double & ) const;
 		};
 
 		bool is_within_distance(const proximity_calculator &,

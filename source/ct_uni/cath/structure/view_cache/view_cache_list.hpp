@@ -47,8 +47,8 @@ namespace cath {
 
 		public:
 			explicit view_cache_list(const protein_list &);
-			
-			const view_cache & get_view_cache(const size_t &) const;
+
+			[[nodiscard]] const view_cache &get_view_cache( const size_t & ) const;
 		};
 
 		/// \brief Getter to retrieve the view_cache for the specified index

@@ -69,11 +69,11 @@ namespace cath {
 			         const hit_score_type & = hit_score_type::CRH_SCORE,
 			         hit_extras_store = {});
 
-			const seq::seq_seg_vec & get_segments() const;
-			const std::string & get_label() const;
-			const double & get_score() const;
-			const hit_score_type & get_score_type() const;
-			const hit_extras_store & get_extras_store() const;
+			[[nodiscard]] const seq::seq_seg_vec &get_segments() const;
+			[[nodiscard]] const std::string &     get_label() const;
+			[[nodiscard]] const double &          get_score() const;
+			[[nodiscard]] const hit_score_type &  get_score_type() const;
+			[[nodiscard]] const hit_extras_store &get_extras_store() const;
 
 			static std::string get_prefix_name();
 			static std::string get_label_name();

@@ -96,32 +96,33 @@ namespace cath {
 				common::clone_ptr<const align::common_atom_selection_policy> comm_atom_seln_pol_ptr   { align::common_atom_select_ca_policy().clone()     };
 
 				/// \todo Consider making these public
-				const align::common_residue_selection_policy & get_comm_res_seln_pol()  const;
+				[[nodiscard]] const align::common_residue_selection_policy &get_comm_res_seln_pol() const;
 
 				/// \todo Consider making these public
-				const align::common_atom_selection_policy    & get_comm_atom_seln_pol() const;
+				[[nodiscard]] const align::common_atom_selection_policy &get_comm_atom_seln_pol() const;
 
-				str_str_pair get_policy_description_strings() const;
-				
-			public:
+				[[nodiscard]] str_str_pair get_policy_description_strings() const;
+
+			  public:
 				score_common_coord_handler() = default;
 				score_common_coord_handler(const align::common_residue_selection_policy &,
 				                           const align::common_atom_selection_policy &);
 				score_common_coord_handler(const score_common_coord_handler &) = default;
 
-				std::string short_suffix_string() const;
-				std::string long_suffix_string() const;
-				std::string description_brackets_string() const;
+				[[nodiscard]] std::string short_suffix_string() const;
+				[[nodiscard]] std::string long_suffix_string() const;
+				[[nodiscard]] std::string description_brackets_string() const;
 
-				str_bool_pair_vec short_name_suffixes() const;
+				[[nodiscard]] str_bool_pair_vec short_name_suffixes() const;
 
-				geom::coord_list_coord_list_pair get_common_coords(const align::alignment &,
-				                                                   const protein &,
-				                                                   const protein &) const;
+				[[nodiscard]] geom::coord_list_coord_list_pair get_common_coords( const align::alignment &,
+				                                                                  const protein &,
+				                                                                  const protein & ) const;
 
-				std::pair<cath::geom::coord_list_vec, cath::geom::coord_list_vec> get_common_coords_by_residue(const align::alignment &,
-				                                                                                               const protein &,
-				                                                                                               const protein &) const;
+				[[nodiscard]] std::pair<cath::geom::coord_list_vec, cath::geom::coord_list_vec> get_common_coords_by_residue(
+				  const align::alignment &,
+				  const protein &,
+				  const protein & ) const;
 			};
 
 			score_common_coord_handler_vec get_all_score_common_coord_handlers();

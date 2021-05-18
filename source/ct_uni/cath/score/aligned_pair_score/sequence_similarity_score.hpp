@@ -61,28 +61,26 @@ namespace cath {
 			/// \brief The length getter with which the normalisation length should be acquired
 			common::clone_ptr<const length_getter> length_getter_ptr = { common::make_unique<length_of_longer_getter>() };
 
-			std::unique_ptr<aligned_pair_score> do_clone() const final;
+			[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
 
-			boost::logic::tribool do_higher_is_better() const final;
-			score_value do_calculate(const align::alignment &,
-			                         const protein &,
-			                         const protein &) const final;
-			std::string do_description() const final;
-			std::string do_id_name() const final;
-			str_bool_pair_vec do_short_name_suffixes() const final;
-			std::string do_long_name() const final;
+			[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
+			[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
+			[[nodiscard]] std::string       do_description() const final;
+			[[nodiscard]] std::string       do_id_name() const final;
+			[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
+			[[nodiscard]] std::string       do_long_name() const final;
 
-//			std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
+			// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
 
-			bool do_less_than_with_same_dynamic_type(const aligned_pair_score &) const final;
+			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
 
-		public:
+		  public:
 			explicit sequence_similarity_score(substitution_matrix = make_subs_matrix_identity());
 			explicit sequence_similarity_score(const length_getter &,
 			                                   substitution_matrix = make_subs_matrix_identity());
 
-			const substitution_matrix & get_substitution_matrix() const;
-			const length_getter & get_length_getter() const;
+			[[nodiscard]] const substitution_matrix &get_substitution_matrix() const;
+			[[nodiscard]] const length_getter &      get_length_getter() const;
 		};
 
 		bool operator<(const sequence_similarity_score &,

@@ -31,14 +31,14 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class sym_protein_only_length_getter : public protein_only_length_getter {
-		private:
+		  private:
 			/// \brief TODOCUMENT
-			virtual std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const = 0;
 
-			std::unique_ptr<protein_only_length_getter> do_protein_only_clone() const final;
+			[[nodiscard]] std::unique_ptr<protein_only_length_getter> do_protein_only_clone() const final;
 
-		public:
-			std::unique_ptr<sym_protein_only_length_getter> sym_protein_only_clone() const;
+		  public:
+			[[nodiscard]] std::unique_ptr<sym_protein_only_length_getter> sym_protein_only_clone() const;
 		};
 
 		boost::ptr_vector<sym_protein_only_length_getter> get_all_sym_protein_only_length_getters();

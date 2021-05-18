@@ -51,9 +51,9 @@ namespace cath {
 			/// \brief The default value for whether to exclude hits rejected by the score filters from the HTML
 			static constexpr bool   DEFAULT_EXCLUDE_REJECTED_HITS     = false;
 
-			const bool & get_restrict_html_within_body() const;
-			const size_t & get_max_num_non_soln_hits() const;
-			const bool & get_exclude_rejected_hits() const;
+			[[nodiscard]] const bool &  get_restrict_html_within_body() const;
+			[[nodiscard]] const size_t &get_max_num_non_soln_hits() const;
+			[[nodiscard]] const bool &  get_exclude_rejected_hits() const;
 
 			crh_html_spec & set_restrict_html_within_body(const bool &);
 			crh_html_spec & set_max_num_non_soln_hits(const size_t &);

@@ -44,12 +44,12 @@ namespace cath {
 			///
 			/// This is in cath::align::detail because it is currently only used in tests
 			class string_aligner {
-			private:
-				virtual str_str_pair do_align(const std::string &,
-				                              const std::string &,
-				                              const gap::gap_penalty &) const = 0;
+			  private:
+				[[nodiscard]] virtual str_str_pair do_align( const std::string &,
+				                                             const std::string &,
+				                                             const gap::gap_penalty & ) const = 0;
 
-			public:
+			  public:
 				string_aligner() = default;
 				virtual ~string_aligner() noexcept = default;
 
@@ -58,9 +58,9 @@ namespace cath {
 				string_aligner & operator=(const string_aligner &) = default;
 				string_aligner & operator=(string_aligner &&) noexcept = default;
 
-				cath::str_str_score_tpl align(const std::string &,
-				                              const std::string &,
-				                              const gap::gap_penalty &) const;
+				[[nodiscard]] cath::str_str_score_tpl align( const std::string &,
+				                                             const std::string &,
+				                                             const gap::gap_penalty & ) const;
 			};
 
 			void check_aligned_string_matches_original(const std::string &,

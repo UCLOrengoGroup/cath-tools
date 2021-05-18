@@ -43,32 +43,26 @@ namespace cath { namespace sup { class superposition_context; } }
 namespace cath {
 	/// \brief TODOCUMENT
 	class viewer {
-	private:
-		virtual std::string do_default_executable() const = 0;
-		virtual std::string do_default_file_extension() const = 0;
+	  private:
+		[[nodiscard]] virtual std::string do_default_executable() const     = 0;
+		[[nodiscard]] virtual std::string do_default_file_extension() const = 0;
 
-		virtual void do_write_start(std::ostream &) const = 0;
-		virtual void do_write_load_pdbs(std::ostream &,
-		                                const sup::superposition &,
-		                                const file::pdb_list &,
-		                                const str_vec &) const = 0;
-		virtual void do_define_colour(std::ostream &,
-		                              const display_colour &,
-		                              const std::string &) const = 0;
-		virtual bool do_accepts_multiple_colourings() const;
-		virtual void do_begin_colouring(std::ostream &);
-		virtual std::string do_get_colour_base_str(const std::string &) const = 0;
-		virtual std::string do_get_colour_pdb_str(const std::string &,
-		                                          const std::string &) const = 0;
-		virtual std::string do_get_colour_pdb_residues_str(const std::string &,
-		                                                   const std::string &,
-		                                                   const residue_id_vec &) const = 0;
-		virtual void do_end_colouring(::std::ostream &,
-		                              const ::std::string &);
-		virtual void do_write_alignment_extras(std::ostream &,
-		                                       const sup::superposition_context &) const = 0;
-		virtual void do_write_end(std::ostream &,
-		                          const boost::string_ref &) const = 0;
+		virtual void do_write_start( std::ostream & ) const                                                = 0;
+		virtual void do_write_load_pdbs( std::ostream &,
+		                                 const sup::superposition &,
+		                                 const file::pdb_list &,
+		                                 const str_vec & ) const                                           = 0;
+		virtual void do_define_colour( std::ostream &, const display_colour &, const std::string & ) const = 0;
+		[[nodiscard]] virtual bool        do_accepts_multiple_colourings() const;
+		virtual void                      do_begin_colouring( std::ostream & );
+		[[nodiscard]] virtual std::string do_get_colour_base_str( const std::string & ) const                     = 0;
+		[[nodiscard]] virtual std::string do_get_colour_pdb_str( const std::string &, const std::string & ) const = 0;
+		[[nodiscard]] virtual std::string do_get_colour_pdb_residues_str( const std::string &,
+		                                                                  const std::string &,
+		                                                                  const residue_id_vec & ) const          = 0;
+		virtual void                      do_end_colouring( ::std::ostream &, const ::std::string & );
+		virtual void do_write_alignment_extras( std::ostream &, const sup::superposition_context & ) const = 0;
+		virtual void do_write_end( std::ostream &, const boost::string_ref & ) const                       = 0;
 
 	public:
 		viewer() = default;
@@ -79,8 +73,8 @@ namespace cath {
 		viewer & operator=(const viewer &) = default;
 		viewer & operator=(viewer &&) noexcept = default;
 
-		std::string default_executable() const;
-		std::string default_file_extension() const;
+		[[nodiscard]] std::string default_executable() const;
+		[[nodiscard]] std::string default_file_extension() const;
 
 		void write_start(std::ostream &) const;
 		void write_load_pdbs(std::ostream &,
@@ -90,14 +84,13 @@ namespace cath {
 		void define_colour(std::ostream &,
 		                   const display_colour &,
 		                   const std::string &) const;
-		bool accepts_multiple_colourings() const;
+		[[nodiscard]] bool        accepts_multiple_colourings() const;
 		void begin_colouring(std::ostream &);
-		std::string get_colour_base_str(const std::string &) const;
-		std::string get_colour_pdb_str(const std::string &,
-		                               const std::string &) const;
-		std::string get_colour_pdb_residues_str(const std::string &,
-		                                        const std::string &,
-		                                        const residue_id_vec &) const;
+		[[nodiscard]] std::string get_colour_base_str( const std::string & ) const;
+		[[nodiscard]] std::string get_colour_pdb_str( const std::string &, const std::string & ) const;
+		[[nodiscard]] std::string get_colour_pdb_residues_str( const std::string &,
+		                                                       const std::string &,
+		                                                       const residue_id_vec & ) const;
 		void end_colouring(std::ostream &,
 		                   const ::std::string &);
 		void write_alignment_extras(std::ostream &,

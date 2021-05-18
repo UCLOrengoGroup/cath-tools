@@ -54,18 +54,18 @@ namespace cath {
 			/// \brief The list of CATH nodes forbidden for assignment
 			str_vec forbidden_nodes;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
-			const ::std::filesystem::path & get_rbf_svm_file() const;
-			const ::std::filesystem::path & get_data_data_file() const;
-			const ::std::filesystem::path & get_sf_of_dom_file() const;
-			const str_vec & get_forbidden_nodes() const;
+		  public:
+			[[nodiscard]] const ::std::filesystem::path &get_rbf_svm_file() const;
+			[[nodiscard]] const ::std::filesystem::path &get_data_data_file() const;
+			[[nodiscard]] const ::std::filesystem::path &get_sf_of_dom_file() const;
+			[[nodiscard]] const str_vec &                get_forbidden_nodes() const;
 		};
 
 	} // namespace opts

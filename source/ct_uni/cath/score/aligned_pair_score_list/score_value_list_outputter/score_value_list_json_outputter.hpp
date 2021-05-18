@@ -58,8 +58,8 @@ namespace cath {
 			/// \brief Default value for the style in which to output the JSON
 			static constexpr common::json_style DEFAULT_JSON_STYLE = common::json_style::PRETTY;
 
-			const aligned_pair_score_value_list & get_aligned_pair_score_value_list() const;
-			const common::json_style & get_json_style() const;
+			[[nodiscard]] const aligned_pair_score_value_list &get_aligned_pair_score_value_list() const;
+			[[nodiscard]] const common::json_style &           get_json_style() const;
 		};
 
 		std::ostream & operator<<(std::ostream &,

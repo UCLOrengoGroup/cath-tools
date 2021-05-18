@@ -79,12 +79,12 @@ namespace cath {
 			region(const size_t &,
 			       const size_t &);
 
-			const chain_label_opt & get_opt_chain_label() const;
+			[[nodiscard]] const chain_label_opt &get_opt_chain_label() const;
 
-			bool has_starts_stops() const;
+			[[nodiscard]] bool has_starts_stops() const;
 
-			const residue_location & get_start_residue() const;
-			const residue_location & get_stop_residue() const;
+			[[nodiscard]] const residue_location &get_start_residue() const;
+			[[nodiscard]] const residue_location &get_stop_residue() const;
 		};
 
 		bool operator==(const region &,

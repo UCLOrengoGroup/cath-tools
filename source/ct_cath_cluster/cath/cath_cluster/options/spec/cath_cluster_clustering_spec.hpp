@@ -35,12 +35,11 @@ namespace cath {
 			/// \brief The levels at which the clustering should be performed
 			strength_vec levels;
 
-		public:
-			const strength_vec & get_levels() const;
+		  public:
+			[[nodiscard]] const strength_vec &get_levels() const;
 
-			cath_cluster_clustering_spec & set_levels(const strength_vec &);
+			cath_cluster_clustering_spec &set_levels( const strength_vec & );
 		};
-
 
 		str_opt get_invalid_description(const cath_cluster_clustering_spec &);
 

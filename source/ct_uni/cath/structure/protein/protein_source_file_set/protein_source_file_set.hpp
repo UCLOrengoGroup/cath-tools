@@ -46,20 +46,20 @@ namespace cath {
 	class protein_source_file_set {
 	private:
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define how to create a clone of itself
-		virtual std::unique_ptr<protein_source_file_set> do_clone() const = 0;
+		[[nodiscard]] virtual std::unique_ptr<protein_source_file_set> do_clone() const = 0;
 
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the list of files it reads
-		virtual file::data_file_vec do_get_file_set() const = 0;
+		[[nodiscard]] virtual file::data_file_vec do_get_file_set() const = 0;
 
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the primary file it reads (which must be one of those returned by do_get_file_set())
-		virtual file::data_file do_get_primary_file() const = 0;
+		[[nodiscard]] virtual file::data_file do_get_primary_file() const = 0;
 
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the equivalent protein_file_combn value
-		virtual protein_file_combn do_get_protein_file_combn() const = 0;
+		[[nodiscard]] virtual protein_file_combn do_get_protein_file_combn() const = 0;
 
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define whether it
 		///        makes proteins that are SSAP-ready (with data loaded for sec, phi/psi accessibility etc)
-		virtual bool do_makes_ssap_ready_protein() const = 0;
+		[[nodiscard]] virtual bool do_makes_ssap_ready_protein() const = 0;
 
 		/// \brief Pure virtual method with which each concrete protein_source_file_set must define the behaviour to read the specified files
 		///        from a data_file_path_map that is pre-populated with the file types the concrete protein_source_file_set requires
@@ -86,16 +86,13 @@ namespace cath {
 		protein_source_file_set & operator=(const protein_source_file_set &) = default;
 		protein_source_file_set & operator=(protein_source_file_set &&) noexcept = default;
 		
-		std::unique_ptr<protein_source_file_set> clone() const;
+		[[nodiscard]] std::unique_ptr<protein_source_file_set> clone() const;
 
-		file::data_file_vec get_file_set() const;
-		file::data_file get_primary_file() const;
-		protein_file_combn get_protein_file_combn() const;
-		bool makes_ssap_ready_protein() const;
-		protein read_files(const opts::data_dirs_spec &,
-		                   const std::string &,
-		                   const chop::region_vec_opt &,
-		                   std::ostream &) const;
+		[[nodiscard]] file::data_file_vec get_file_set() const;
+		[[nodiscard]] file::data_file     get_primary_file() const;
+		[[nodiscard]] protein_file_combn  get_protein_file_combn() const;
+		[[nodiscard]] bool                makes_ssap_ready_protein() const;
+		protein read_files( const opts::data_dirs_spec &, const std::string &, const chop::region_vec_opt &, std::ostream & ) const;
 	};
 
 	protein read_protein_from_files(const protein_source_file_set &,

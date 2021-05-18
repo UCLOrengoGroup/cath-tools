@@ -39,8 +39,8 @@ namespace cath {
 			constexpr value_list_scaling(const double &,
 			                             const double &);
 
-			constexpr const double & get_multiplier() const;
-			constexpr const double & get_constant() const;
+			[[nodiscard]] constexpr const double &get_multiplier() const;
+			[[nodiscard]] constexpr const double &get_constant() const;
 
 			/// \brief The value to assign to bad (probably absent) entries after scaling
 			static constexpr double BAD_SCALED_VALUE = -999.0;

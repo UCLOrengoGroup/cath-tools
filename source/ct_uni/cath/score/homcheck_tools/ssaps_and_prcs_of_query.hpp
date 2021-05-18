@@ -63,13 +63,13 @@ namespace cath {
 
 			void calculate_all_svm_scores(const score::rbf_model &);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const ssap_and_prc & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		ssaps_and_prcs_of_query calculate_all_svm_scores_copy(ssaps_and_prcs_of_query,

@@ -88,13 +88,13 @@ namespace cath {
 				                    angle_type,
 				                    angle_type);
 
-				const bool & get_require_matching_directions() const;
-				const index_type & get_minimum_index_distance() const;
-				const view_base_type & get_maximum_squared_distance() const;
-				const frame_quat_rot_type & get_maximum_frame_angle_distance_1() const;
-				const angle_type & get_maximum_frame_angle_difference() const;
-				const angle_type & get_maximum_phi_angle_difference() const;
-				const angle_type & get_maximum_psi_angle_difference() const;
+				[[nodiscard]] const bool &               get_require_matching_directions() const;
+				[[nodiscard]] const index_type &         get_minimum_index_distance() const;
+				[[nodiscard]] const view_base_type &     get_maximum_squared_distance() const;
+				[[nodiscard]] const frame_quat_rot_type &get_maximum_frame_angle_distance_1() const;
+				[[nodiscard]] const angle_type &         get_maximum_frame_angle_difference() const;
+				[[nodiscard]] const angle_type &         get_maximum_phi_angle_difference() const;
+				[[nodiscard]] const angle_type &         get_maximum_psi_angle_difference() const;
 
 				bool operator()(const view_cache_index_entry &) const;
 

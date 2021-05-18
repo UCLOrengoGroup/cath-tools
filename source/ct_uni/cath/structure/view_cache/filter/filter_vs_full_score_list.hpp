@@ -60,7 +60,7 @@ namespace cath {
 				explicit filter_vs_full_score_list(filter_vs_full_score_vec);
 
 				void add_filter_vs_full_score(const filter_vs_full_score &);
-				size_t size() const;
+				[[nodiscard]] size_t         size() const;
 				const filter_vs_full_score & operator[](const size_t &) const;
 
 				/// \brief A const_iterator type alias as part of making filter_vs_full_score_list into a (const) range
@@ -70,8 +70,8 @@ namespace cath {
 				///        this type alias is required by Boost's sub_range<>
 				using iterator = filter_vs_full_score_vec::const_iterator;
 
-				const_iterator begin() const;
-				const_iterator end() const;
+				[[nodiscard]] const_iterator begin() const;
+				[[nodiscard]] const_iterator end() const;
 			};
 
 			/// \brief Type alias for filter_vs_full_score_list's const_iterator

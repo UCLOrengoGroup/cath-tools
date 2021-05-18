@@ -38,12 +38,12 @@ namespace cath {
 
 			explicit classn_stat_pair_series_list(classn_stat_pair_series_vec);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const classn_stat_pair_series & operator[](const size_t &) const;
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator    begin() const;
+			[[nodiscard]] const_iterator    end() const;
 		};
 
 		const classn_stat_pair_series & classn_stat_pair_series_list_of_name(const classn_stat_pair_series_list &,

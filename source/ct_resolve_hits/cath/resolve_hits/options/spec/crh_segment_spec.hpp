@@ -44,8 +44,8 @@ namespace cath {
 			/// \brief The default value for the minimum segment length
 			static constexpr seq::residx_t DEFAULT_MIN_SEG_LENGTH    =  7;
 
-			const trim_spec & get_overlap_trim_spec() const;
-			const seq::residx_t & get_min_seg_length() const;
+			[[nodiscard]] const trim_spec &    get_overlap_trim_spec() const;
+			[[nodiscard]] const seq::residx_t &get_min_seg_length() const;
 
 			crh_segment_spec & set_overlap_trim_spec(const trim_spec &);
 			crh_segment_spec & set_min_seg_length(const seq::residx_t &);

@@ -70,9 +70,9 @@ namespace cath {
 			superposition(geom::coord_vec,
 			              geom::rotation_vec);
 
-			size_t get_num_entries() const;
-			const geom::coord & get_translation_of_index(const size_t &) const;
-			const geom::rotation & get_rotation_of_index(const size_t &) const;
+			[[nodiscard]] size_t                get_num_entries() const;
+			[[nodiscard]] const geom::coord &   get_translation_of_index( const size_t & ) const;
+			[[nodiscard]] const geom::rotation &get_rotation_of_index( const size_t & ) const;
 
 			superposition & post_translate(const geom::coord &);
 			superposition & post_rotate(const geom::rotation &);

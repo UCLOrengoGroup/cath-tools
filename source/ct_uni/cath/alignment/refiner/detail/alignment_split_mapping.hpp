@@ -79,22 +79,20 @@ namespace cath {
 				                        const size_set &,
 				                        const size_vec &);
 
-				size_t orig_aln_length() const;
-				size_t orig_aln_num_entries() const;
-				bool inserted_entries() const;
+				[[nodiscard]] size_t orig_aln_length() const;
+				[[nodiscard]] size_t orig_aln_num_entries() const;
+				[[nodiscard]] bool   inserted_entries() const;
 
-				size_t length() const;
-				size_t num_entries() const;
+				[[nodiscard]] size_t length() const;
+				[[nodiscard]] size_t num_entries() const;
 
-				size_opt index_of_orig_aln_index(const size_t &) const;
-				size_opt entry_of_orig_aln_entry(const size_t &) const;
-				size_t orig_aln_entry_of_entry(const size_t &) const;
+				[[nodiscard]] size_opt index_of_orig_aln_index( const size_t & ) const;
+				[[nodiscard]] size_opt entry_of_orig_aln_entry( const size_t & ) const;
+				[[nodiscard]] size_t   orig_aln_entry_of_entry( const size_t & ) const;
 
-				aln_posn_opt position_of_entry_of_index(const size_t &,
-				                                        const size_t &) const;
+				[[nodiscard]] aln_posn_opt position_of_entry_of_index( const size_t &, const size_t & ) const;
 
-				size_t index_of_protein_index(const size_t &,
-				                              const size_t &) const;
+				[[nodiscard]] size_t index_of_protein_index( const size_t &, const size_t & ) const;
 			};
 
 			/// \brief TODOCUMENT

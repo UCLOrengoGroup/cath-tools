@@ -55,8 +55,8 @@ namespace cath {
 			void push_back(const pdb &);
 			void reserve(const size_t &);
 
-			size_t size() const;
-			bool empty() const;
+			[[nodiscard]] size_t size() const;
+			[[nodiscard]] bool   empty() const;
 
 			pdb & operator[](const size_t &);
 			const pdb & operator[](const size_t &) const;
@@ -66,8 +66,8 @@ namespace cath {
 			using iterator       = const_iterator;
 //			iterator begin();
 //			iterator end();
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		pdb_list read_pdb_files(const path_vec &);

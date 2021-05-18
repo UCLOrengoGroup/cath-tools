@@ -35,14 +35,14 @@ namespace cath {
 			/// \brief The alignment_input_spec to be configured by this options block
 			alignment_input_spec the_alignment_input_spec;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
+		  public:
 			static const std::string PO_RES_NAME_ALIGN;
 			static const std::string PO_FASTA_ALIGN_INFILE;
 			static const std::string PO_SSAP_ALIGN_INFILE;
@@ -54,7 +54,7 @@ namespace cath {
 			alignment_input_options_block() = default;
 			explicit alignment_input_options_block(const align::align_refining &);
 
-			const alignment_input_spec & get_alignment_input_spec() const;
+			[[nodiscard]] const alignment_input_spec &get_alignment_input_spec() const;
 		};
 
 		size_t get_num_acquirers(const alignment_input_options_block &);

@@ -33,15 +33,15 @@ namespace cath {
 		/// \brief Whether to limit the protein to residues that are found in the DSSP file
 		file::dssp_skip_policy the_dssp_skip_policy;
 
-		std::unique_ptr<protein_source_file_set> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<protein_source_file_set> do_clone() const final;
 
-		file::data_file_vec do_get_file_set() const final;
+		[[nodiscard]] file::data_file_vec do_get_file_set() const final;
 
-		file::data_file do_get_primary_file() const final;
+		[[nodiscard]] file::data_file do_get_primary_file() const final;
 
-		protein_file_combn do_get_protein_file_combn() const final;
+		[[nodiscard]] protein_file_combn do_get_protein_file_combn() const final;
 
-		bool do_makes_ssap_ready_protein() const final;
+		[[nodiscard]] bool do_makes_ssap_ready_protein() const final;
 
 		protein do_read_files(const file::data_file_path_map &,
 		                      const std::string &,

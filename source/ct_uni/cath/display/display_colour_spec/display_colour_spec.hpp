@@ -54,9 +54,9 @@ namespace cath {
 		                        const display_colour &,
 		                        const bool & = false);
 
-		const broad_display_colour_spec & get_broad_spec() const;
+		[[nodiscard]] const broad_display_colour_spec &get_broad_spec() const;
 
-		const size_size_display_colour_map & get_clr_of_pdb_and_res() const;
+		[[nodiscard]] const size_size_display_colour_map &get_clr_of_pdb_and_res() const;
 	};
 
 	const display_colour_opt & get_base_clr(const display_colour_spec &);

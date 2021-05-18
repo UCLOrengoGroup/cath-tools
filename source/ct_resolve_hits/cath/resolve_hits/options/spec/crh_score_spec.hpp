@@ -67,10 +67,10 @@ namespace cath {
 			                        const resscr_t & = DEFAULT_HIGH_SCORES_PREFERENCE,
 			                        const bool & = DEFAULT_NAIVE_GREEDY);
 
-			const resscr_t & get_long_domains_preference() const;
-			const resscr_t & get_high_scores_preference() const;
-			const bool & get_apply_cath_rules() const;
-			const bool & get_naive_greedy() const;
+			[[nodiscard]] const resscr_t &get_long_domains_preference() const;
+			[[nodiscard]] const resscr_t &get_high_scores_preference() const;
+			[[nodiscard]] const bool &    get_apply_cath_rules() const;
+			[[nodiscard]] const bool &    get_naive_greedy() const;
 
 			crh_score_spec & set_long_domains_preference(const resscr_t &);
 			crh_score_spec & set_high_scores_preference(const resscr_t &);

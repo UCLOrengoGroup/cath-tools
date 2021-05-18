@@ -52,7 +52,7 @@ namespace cath {
 			/// \todo Consider implementing a move-assign that ensures the source filename gets wiped
 			temp_file & operator=(const temp_file &) = delete;
 
-			const path_opt & get_opt_filename() const;
+			[[nodiscard]] const path_opt &get_opt_filename() const;
 		};
 
 		bool has_filename(const temp_file &);

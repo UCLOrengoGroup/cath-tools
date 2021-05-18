@@ -58,11 +58,11 @@ namespace cath {
 			                                          const size_t /*version*/
 			                                          ) {
 			}
-			virtual unique_ptr<clone_ptr_test_abstract_base> do_clone() const = 0;
+			[[nodiscard]] virtual unique_ptr<clone_ptr_test_abstract_base> do_clone() const = 0;
 
-		public:
+		  public:
 			clone_ptr_test_abstract_base() = default;
-			unique_ptr<clone_ptr_test_abstract_base> clone() const {
+			[[nodiscard]] unique_ptr<clone_ptr_test_abstract_base> clone() const {
 				return check_uptr_clone_against_this( do_clone(), *this );
 			}
 			virtual ~clone_ptr_test_abstract_base() noexcept = default;
@@ -72,7 +72,7 @@ namespace cath {
 			clone_ptr_test_abstract_base & operator=(const clone_ptr_test_abstract_base &) = default;
 			clone_ptr_test_abstract_base & operator=(clone_ptr_test_abstract_base &&) noexcept = default;
 
-			virtual size_t method() const = 0;
+			[[nodiscard]] virtual size_t method() const = 0;
 		};
 
 
@@ -84,16 +84,15 @@ namespace cath {
 			                                          ) {
 				ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(clone_ptr_test_abstract_base);
 			}
-			unique_ptr<clone_ptr_test_abstract_base> do_clone() const final {
+			[[nodiscard]] unique_ptr<clone_ptr_test_abstract_base> do_clone() const final {
 				return { make_uptr_clone( *this ) };
 			}
 
-		public:
-			size_t method() const final {
+		  public:
+			[[nodiscard]] size_t method() const final {
 				return CONCRETE1_METHOD_RESULT;
 			}
 		};
-
 
 		class clone_ptr_test_concrete2 final : public clone_ptr_test_abstract_base {
 		private:
@@ -103,12 +102,12 @@ namespace cath {
 			                                       ) {
 				ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(clone_ptr_test_abstract_base);
 			}
-			unique_ptr<clone_ptr_test_abstract_base> do_clone() const final {
+			[[nodiscard]] unique_ptr<clone_ptr_test_abstract_base> do_clone() const final {
 				return { make_uptr_clone( *this ) };
 			}
 
-		public:
-			size_t method() const final {
+		  public:
+			[[nodiscard]] size_t method() const final {
 				return CONCRETE2_METHOD_RESULT;
 			}
 		};

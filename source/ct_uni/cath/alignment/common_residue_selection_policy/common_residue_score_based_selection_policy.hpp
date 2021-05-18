@@ -28,13 +28,14 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class common_residue_score_based_selection_policy : public common_residue_selection_policy {
-		private:
-			size_vec do_select_common_residues(const alignment &,
-			                                   const std::vector<alignment::size_type> &,
-			                                   const alignment::size_type &,
-			                                   const alignment::size_type &) const final;
-			virtual size_vec do_select_common_residues_with_scores(const doub_doub_pair_vec &) const = 0;
+		  private:
+			[[nodiscard]] size_vec         do_select_common_residues( const alignment &,
+			                                                          const std::vector<alignment::size_type> &,
+			                                                          const alignment::size_type &,
+			                                                          const alignment::size_type & ) const final;
+			[[nodiscard]] virtual size_vec do_select_common_residues_with_scores( const doub_doub_pair_vec & ) const = 0;
 		};
+
 	} // namespace align
 } // namespace cath
 

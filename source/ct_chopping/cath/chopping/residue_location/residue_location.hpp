@@ -45,8 +45,8 @@ namespace cath {
 			                 const size_t &);
 			explicit residue_location(const size_t &);
 
-			const residue_name_opt & get_opt_residue_name() const;
-			const size_opt & get_opt_residue_index() const;
+			[[nodiscard]] const residue_name_opt &get_opt_residue_name() const;
+			[[nodiscard]] const size_opt &        get_opt_residue_index() const;
 		};
 
 		bool has_residue_name(const residue_location &);

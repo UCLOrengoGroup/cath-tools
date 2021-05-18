@@ -35,17 +35,17 @@ namespace cath {
 			/// \brief The spec this options_block configures
 			cath_cluster_clustering_spec the_spec;
 
-			std::unique_ptr<opts::options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
+			[[nodiscard]] std::string                          do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
+		  public:
 			static const std::string PO_LEVELS;
 
-			const cath_cluster_clustering_spec & get_cath_cluster_clustering_spec() const;
+			[[nodiscard]] const cath_cluster_clustering_spec &get_cath_cluster_clustering_spec() const;
 		};
 
 	} // namespace clust

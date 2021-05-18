@@ -53,12 +53,11 @@ namespace cath {
 			using const_iterator = sec_file_record_vec::const_iterator;
 			using size_type      = sec_file_record_vec::size_type;
 
-			size_type size() const;
-			const sec_struc_planar_angles & get_planar_angles_of_indices(const size_t &,
-			                                                             const size_t &) const;
+			[[nodiscard]] size_type                      size() const;
+			[[nodiscard]] const sec_struc_planar_angles &get_planar_angles_of_indices( const size_t &, const size_t & ) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		sec_struc_vec make_sec_struc_list(const sec_file &);

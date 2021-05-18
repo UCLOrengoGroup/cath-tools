@@ -45,15 +45,15 @@ namespace cath {
 
 			explicit true_false_pos_neg_list(true_false_pos_neg_vec);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			void push_back(const true_false_pos_neg &);
 
 			const true_false_pos_neg & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		size_rational get_classn_stat_val_of_index(const true_false_pos_neg_list &,

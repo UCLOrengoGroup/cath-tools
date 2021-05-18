@@ -65,27 +65,27 @@ namespace cath {
 			/// \brief The detailed help options_block
 			opts::detail_help_options_block detail_help_ob;
 
-			std::string do_get_program_name() const final;
+			[[nodiscard]] std::string                              do_get_program_name() const final;
 			boost::program_options::positional_options_description get_positional_options() final;
-			str_opt do_get_error_or_help_string() const final;
+			[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
 
-			std::string do_get_help_prefix_string() const final;
-			std::string do_get_help_suffix_string() const final;
-			std::string do_get_overview_string() const final;
+			[[nodiscard]] std::string do_get_help_prefix_string() const final;
+			[[nodiscard]] std::string do_get_help_suffix_string() const final;
+			[[nodiscard]] std::string do_get_overview_string() const final;
 
 			static str_str_str_pair_map detail_help_spec();
 
 		public:
 			crh_options();
 
-			crh_spec get_crh_spec() const;
+			[[nodiscard]] crh_spec get_crh_spec() const;
 
-			const crh_input_spec & get_crh_input_spec() const;
-			const crh_segment_spec & get_crh_segment_spec() const;
-			const crh_score_spec & get_crh_score_spec() const;
-			const crh_filter_spec & get_crh_filter_spec() const;
-			const crh_output_spec & get_crh_output_spec() const;
-			const crh_html_spec & get_crh_html_spec() const;
+			[[nodiscard]] const crh_input_spec &  get_crh_input_spec() const;
+			[[nodiscard]] const crh_segment_spec &get_crh_segment_spec() const;
+			[[nodiscard]] const crh_score_spec &  get_crh_score_spec() const;
+			[[nodiscard]] const crh_filter_spec & get_crh_filter_spec() const;
+			[[nodiscard]] const crh_output_spec & get_crh_output_spec() const;
+			[[nodiscard]] const crh_html_spec &   get_crh_html_spec() const;
 
 			static const std::string PROGRAM_NAME;
 		};

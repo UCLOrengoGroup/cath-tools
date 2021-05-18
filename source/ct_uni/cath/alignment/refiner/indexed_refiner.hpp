@@ -262,7 +262,7 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			scan::info_quantity get_info_size() const {
+			[[nodiscard]] scan::info_quantity get_info_size() const {
 				return the_store.get_info_size();
 			}
 		};
@@ -307,7 +307,7 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			scan::info_quantity get_info_size() const {
+			[[nodiscard]] scan::info_quantity get_info_size() const {
 				return accumulate(
 					the_store
 						| boost::adaptors::transformed( [] (const store_type &x) {
@@ -359,7 +359,7 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			scan::info_quantity get_info_size() const {
+			[[nodiscard]] scan::info_quantity get_info_size() const {
 				return the_store.get_info_size();
 			}
 
@@ -406,7 +406,7 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			scan::info_quantity get_info_size() const {
+			[[nodiscard]] scan::info_quantity get_info_size() const {
 				return accumulate(
 					the_store
 						| boost::adaptors::transformed( [] (const store_type &x) {
@@ -473,7 +473,7 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			scan::info_quantity get_info_size() const {
+			[[nodiscard]] scan::info_quantity get_info_size() const {
 				return the_store.get_info_size();
 			}
 
@@ -520,7 +520,7 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			scan::info_quantity get_info_size() const {
+			[[nodiscard]] scan::info_quantity get_info_size() const {
 				return accumulate(
 					the_store
 						| boost::adaptors::transformed( [] (const store_type &x) {

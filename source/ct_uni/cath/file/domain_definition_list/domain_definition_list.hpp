@@ -42,10 +42,10 @@ namespace cath {
 
 			explicit domain_definition_list(chop::domain_definition_vec);
 
-			size_t size() const;
+			[[nodiscard]] size_t size() const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		domain_definition_list parse_domain_definition_file(const ::std::filesystem::path &);

@@ -45,16 +45,16 @@ namespace cath {
 			/// \brief An optional file from which names should be read
 			path_opt names_infile;
 
-		public:
-			const path_opt & get_links_infile() const;
-			const link_dirn & get_link_dirn() const;
-			const size_t & get_column_idx() const;
-			const path_opt & get_names_infile() const;
+		  public:
+			[[nodiscard]] const path_opt & get_links_infile() const;
+			[[nodiscard]] const link_dirn &get_link_dirn() const;
+			[[nodiscard]] const size_t &   get_column_idx() const;
+			[[nodiscard]] const path_opt & get_names_infile() const;
 
-			cath_cluster_input_spec & set_links_infile(const path_opt &);
-			cath_cluster_input_spec & set_link_dirn(const link_dirn &);
-			cath_cluster_input_spec & set_column_idx(const size_t &);
-			cath_cluster_input_spec & set_names_infile(const path_opt &);
+			cath_cluster_input_spec &set_links_infile( const path_opt & );
+			cath_cluster_input_spec &set_link_dirn( const link_dirn & );
+			cath_cluster_input_spec &set_column_idx( const size_t & );
+			cath_cluster_input_spec &set_names_infile( const path_opt & );
 		};
 
 		str_opt get_invalid_description(const cath_cluster_input_spec &);

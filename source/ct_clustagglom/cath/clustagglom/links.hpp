@@ -73,8 +73,8 @@ namespace cath {
 
 			links() = default;
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			links & add_link_symmetrically(const size_t &,
 			                               const size_t &,
@@ -94,8 +94,8 @@ namespace cath {
 			link_list & operator[](const size_t &);
 			const link_list & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		/// \brief Return whether this collection of links is empty

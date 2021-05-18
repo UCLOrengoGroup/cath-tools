@@ -212,33 +212,33 @@ namespace cath {
 			using search_radius_t   = unsigned int;
 
 			/// \brief Get a short name that describes this key part
-			std::string get_name() const {
+			[[nodiscard]] std::string get_name() const {
 				return "index";
 			}
 
 			/// \brief Extract the relevant value from the specified simple_locn_index
-			constexpr value_t get_value(const simple_locn_index &prm_locn_index ///< TODOCUMENT
-			                            ) const {
+			[[nodiscard]] constexpr value_t get_value( const simple_locn_index &prm_locn_index ///< TODOCUMENT
+			                                           ) const {
 				return prm_locn_index.index;
 			}
 
 			/// \brief Extract the search radius from the specified criteria
-			constexpr search_radius_t get_search_radius(const simple_locn_crit &/*prm_criteria*/ ///< The criteria defining what is considered a match
-			                                            ) const {
+			[[nodiscard]] constexpr search_radius_t get_search_radius( const simple_locn_crit & /*prm_criteria*/ ///< The criteria defining what is considered a match
+			                                                           ) const {
 				return 0;
 			}
 
 			/// \brief Generate the key part for the specified value
-			constexpr cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
-			                                ) const {
+			[[nodiscard]] constexpr cell_index_t key_part( const value_t &prm_value ///< The value for which the key_part should be extracted
+			                                               ) const {
 				return prm_value;
 			}
 
 			/// \brief Generate a list of all key parts for all conceivable simple_locn_indexs that would match the specified value
 			///        within the specified search radius
-			constexpr cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The value for which the key_part should be extracted
-			                                            const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
-			                                            ) const {
+			[[nodiscard]] constexpr cell_index_list_t close_key_parts( const value_t &        prm_value,        ///< The value for which the key_part should be extracted
+			                                                           const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
+			                                                           ) const {
 				return
 #ifndef NDEBUG
 					( prm_search_radius == 0 )

@@ -51,11 +51,11 @@ namespace cath {
 
 				const scan_structure_data & operator[](const index_type &) const;
 
-				bool empty() const;
-				size_t size() const;
+				[[nodiscard]] bool   empty() const;
+				[[nodiscard]] size_t size() const;
 
-				const_iterator begin() const;
-				const_iterator end() const;
+				[[nodiscard]] const_iterator begin() const;
+				[[nodiscard]] const_iterator end() const;
 
 				template <class... Ts>
 				void emplace_back(Ts&& ...);

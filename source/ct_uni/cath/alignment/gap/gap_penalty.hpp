@@ -42,8 +42,8 @@ namespace cath {
 				gap_penalty(const score_type &,
 				            const score_type &);
 
-				score_type get_open_gap_penalty() const;
-				score_type get_extend_gap_penalty() const;
+				[[nodiscard]] score_type get_open_gap_penalty() const;
+				[[nodiscard]] score_type get_extend_gap_penalty() const;
 			};
 
 		} // namespace gap

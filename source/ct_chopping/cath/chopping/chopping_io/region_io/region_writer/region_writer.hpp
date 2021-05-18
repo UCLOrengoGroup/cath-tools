@@ -30,10 +30,10 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class region_writer {
-		public:
-			virtual std::string do_write_region(const region &) const = 0;
+		  public:
+			[[nodiscard]] virtual std::string do_write_region( const region & ) const = 0;
 
-		protected:
+		  protected:
 			region_writer() = default;
 			virtual ~region_writer() noexcept = default;
 
@@ -42,8 +42,8 @@ namespace cath {
 			region_writer & operator=(const region_writer &) = default;
 			region_writer & operator=(region_writer &&) noexcept = default;
 
-		public:
-			std::string write_region(const region &) const;
+		  public:
+			[[nodiscard]] std::string write_region( const region & ) const;
 		};
 
 	} // namespace chop

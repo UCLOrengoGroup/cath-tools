@@ -92,7 +92,7 @@ namespace cath {
 
 				const Cell & find_matches(const Key &) const;
 
-				info_quantity get_info_size() const;
+				[[nodiscard]] info_quantity get_info_size() const;
 
 				const_iterator begin() const;
 				const_iterator end() const;

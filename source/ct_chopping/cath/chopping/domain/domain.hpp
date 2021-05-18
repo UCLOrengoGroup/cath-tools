@@ -64,17 +64,17 @@ namespace cath {
 			explicit domain(region_vec,
 			                std::string);
 
-			size_t num_segments() const;
-//			region operator[](const size_t &);
+			[[nodiscard]] size_t num_segments() const;
+			// region operator[](const size_t &);
 			const region & operator[](const size_t &) const;
 
 			void set_opt_domain_id(const str_opt &);
-			const str_opt & get_opt_domain_id() const;
+			[[nodiscard]] const str_opt &get_opt_domain_id() const;
 
-//			iterator begin();
-//			iterator end();
-			const_iterator begin() const;
-			const_iterator end() const;
+			// iterator begin();
+			// iterator end();
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		region_vec_opt get_regions_opt(const domain_opt &);

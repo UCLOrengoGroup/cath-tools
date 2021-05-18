@@ -45,7 +45,7 @@ namespace cath {
 				/// \brief The specification for how to render the HTML
 				crh_html_spec html_spec;
 
-				std::unique_ptr<hits_processor> do_clone() const final;
+				[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
 
 				void do_process_hits_for_query(const std::string &,
 				                               const crh_filter_spec &,
@@ -55,11 +55,11 @@ namespace cath {
 
 				void do_finish_work() final;
 
-				bool do_wants_hits_that_fail_score_filter() const final;
+				[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
 
-				bool do_requires_strictly_worse_hits() const final;
+				[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
 
-			public:
+			  public:
 				explicit write_html_hits_processor(ref_vec<std::ostream>,
 				                                   crh_html_spec = crh_html_spec{}) noexcept;
 			};

@@ -43,8 +43,8 @@ namespace cath {
 			                hit_arch);
 			scored_hit_arch() = default;
 
-			const resscr_t & get_score() const noexcept;
-			const hit_arch & get_arch() const noexcept;
+			[[nodiscard]] const resscr_t &get_score() const noexcept;
+			[[nodiscard]] const hit_arch &get_arch() const noexcept;
 
 			scored_hit_arch & operator+=(const calc_hit &);
 			scored_hit_arch & operator+=(const scored_hit_arch &);

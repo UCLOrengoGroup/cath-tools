@@ -116,10 +116,10 @@ namespace cath {
 		///      false_positive_rate and false_discovery_rate).
 		template <std_classn_rate_stat S>
 		class classn_rate_stat final : public classn_stat {
-		private:
-			size_rational do_calculate(const true_false_pos_neg &) const final;
+		  private:
+			[[nodiscard]] size_rational do_calculate( const true_false_pos_neg & ) const final;
 
-			std::string do_get_name() const final;
+			[[nodiscard]] std::string do_get_name() const final;
 
 			/// \brief The numerator (looked up from numerator_and_denominator_of_stat at compile-time)
 			static constexpr classn_outcome numerator   = std::get<1>( common::constexpr_find(

@@ -36,16 +36,16 @@ namespace cath {
 		protected:
 			~display_colour_spec_test_suite_fixture() noexcept = default;
 
-		public:
-			display_colour_spec get_spec() const;
+		  public:
+			[[nodiscard]] display_colour_spec get_spec() const;
 
-			const display_colour_spec the_spec        { get_spec() };
-			const display_colour_vec  pdb_colours     { { display_colour::BLUE, display_colour::RED } };
-			const display_colour_vec  residue_colours { { display_colour::YELLOW } };
-			const display_colour_vec  all_colours     { { display_colour::BLUE, display_colour::RED, display_colour::YELLOW } };
-			const size_vec            red_pdbs        { 1 };
-			const size_vec            blue_pdbs       { 3 };
-			const size_vec            pdb_two_residues{ { 4, 6 } };
+			const display_colour_spec the_spec{ get_spec() };
+			const display_colour_vec  pdb_colours{ { display_colour::BLUE, display_colour::RED } };
+			const display_colour_vec  residue_colours{ { display_colour::YELLOW } };
+			const display_colour_vec all_colours{ { display_colour::BLUE, display_colour::RED, display_colour::YELLOW } };
+			const size_vec           red_pdbs{ 1 };
+			const size_vec           blue_pdbs{ 3 };
+			const size_vec           pdb_two_residues{ { 4, 6 } };
 		};
 
 	}  // namespace test

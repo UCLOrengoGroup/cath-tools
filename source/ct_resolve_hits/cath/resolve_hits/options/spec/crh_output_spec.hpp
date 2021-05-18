@@ -67,14 +67,14 @@ namespace cath {
 			/// \brief The default value for whether to output a summary of the HMMER alignment
 			static constexpr bool                DEFAULT_OUTPUT_HMMER_ALN = false;
 
-			const path_vec & get_hits_text_files() const;
-			const bool & get_quiet() const;
-			const hit_boundary_output & get_boundary_output() const;
-			const path_vec & get_summarise_files() const;
-			const path_vec & get_html_output_files() const;
-			const path_vec & get_json_output_files() const;
-			const path_opt & get_export_css_file() const;
-			const bool & get_output_hmmer_aln() const;
+			[[nodiscard]] const path_vec &           get_hits_text_files() const;
+			[[nodiscard]] const bool &               get_quiet() const;
+			[[nodiscard]] const hit_boundary_output &get_boundary_output() const;
+			[[nodiscard]] const path_vec &           get_summarise_files() const;
+			[[nodiscard]] const path_vec &           get_html_output_files() const;
+			[[nodiscard]] const path_vec &           get_json_output_files() const;
+			[[nodiscard]] const path_opt &           get_export_css_file() const;
+			[[nodiscard]] const bool &               get_output_hmmer_aln() const;
 
 			crh_output_spec & set_hits_text_files(const path_vec &);
 			crh_output_spec & set_quiet(const bool &);

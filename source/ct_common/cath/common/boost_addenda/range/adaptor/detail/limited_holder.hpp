@@ -38,7 +38,7 @@ namespace cath {
 			public:
 				explicit limited_holder(const size_t &);
 
-				const size_t & get_max_num_elements() const;
+				[[nodiscard]] const size_t &get_max_num_elements() const;
 			};
 
 			/// \brief TODOCUMENT

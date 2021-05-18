@@ -66,9 +66,9 @@ namespace cath {
 			              protein_list_loader,
 			              const scan_type &);
 
-			const protein_list & get_query_proteins() const;
-			const protein_list & get_match_proteins() const;
-			load_and_scan_metrics get_load_and_scan_metrics() const;
+			[[nodiscard]] const protein_list &  get_query_proteins() const;
+			[[nodiscard]] const protein_list &  get_match_proteins() const;
+			[[nodiscard]] load_and_scan_metrics get_load_and_scan_metrics() const;
 		};
 
 	} // namespace scan

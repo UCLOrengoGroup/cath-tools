@@ -39,9 +39,9 @@ namespace cath {
 		void push_back(const protein &);
 		void reserve(const size_t &);
 
-		size_t size() const noexcept;
-		size_t max_size() const noexcept;
-		bool empty() const;
+		[[nodiscard]] size_t size() const noexcept;
+		[[nodiscard]] size_t max_size() const noexcept;
+		[[nodiscard]] bool   empty() const;
 
 		protein & operator[](const size_t &);
 		const protein & operator[](const size_t &) const;
@@ -56,8 +56,8 @@ namespace cath {
 
 		iterator begin();
 		iterator end();
-		const_iterator begin() const;
-		const_iterator end() const;
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
 	};
 
 	protein_list make_protein_list(const protein_vec &);

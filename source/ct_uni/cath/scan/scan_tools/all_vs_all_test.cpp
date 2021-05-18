@@ -57,9 +57,7 @@ namespace cath {
 		protected:
 			~all_vs_all_test_suite_fixture() noexcept = default;
 
-
-
-			str_str_pair_doub_map read_ssap_scores() const {
+			[[nodiscard]] str_str_pair_doub_map read_ssap_scores() const {
 				const auto raw_scores = read_file<str_str_pair_doub_pair>( "ssap_score_summary_file.txt" );
 				str_str_pair_doub_map ssap_scores;
 				for (const auto &x : raw_scores) {

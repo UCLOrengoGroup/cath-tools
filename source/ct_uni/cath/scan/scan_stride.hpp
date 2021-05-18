@@ -52,10 +52,10 @@ namespace cath {
 			                               const index_type & = DEFAULT_STRIDE,
 			                               const index_type & = DEFAULT_STRIDE);
 
-			constexpr const detail::rep_strider & get_query_from_strider() const;
-			constexpr const detail::rep_strider & get_query_to_strider() const;
-			constexpr const detail::rep_strider & get_index_from_strider() const;
-			constexpr const detail::rep_strider & get_index_to_strider() const;
+			[[nodiscard]] constexpr const detail::rep_strider &get_query_from_strider() const;
+			[[nodiscard]] constexpr const detail::rep_strider &get_query_to_strider() const;
+			[[nodiscard]] constexpr const detail::rep_strider &get_index_from_strider() const;
+			[[nodiscard]] constexpr const detail::rep_strider &get_index_to_strider() const;
 		};
 
 		/// \brief TODOCUMENT

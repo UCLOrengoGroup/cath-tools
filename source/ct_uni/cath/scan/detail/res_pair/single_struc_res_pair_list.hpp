@@ -48,8 +48,8 @@ namespace cath {
 				explicit single_struc_res_pair_list(single_struc_res_pair_vec);
 
 				void reserve(const size_t &);
-				bool empty() const;
-				size_t size() const;
+				[[nodiscard]] bool   empty() const;
+				[[nodiscard]] size_t size() const;
 
 				const single_struc_res_pair & operator[](const size_t &) const;
 
@@ -57,8 +57,8 @@ namespace cath {
 				void emplace_back(Ts&& ...);
 				void push_back(const single_struc_res_pair &);
 
-				const_iterator begin() const;
-				const_iterator end() const;
+				[[nodiscard]] const_iterator begin() const;
+				[[nodiscard]] const_iterator end() const;
 			};
 
 			/// \brief Ctor from a vector of single_struc_res_pair objects

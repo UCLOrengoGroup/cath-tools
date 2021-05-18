@@ -61,9 +61,9 @@ namespace cath {
 				                      const index_type &,
 				                      const index_type &);
 
-				const res_pair_core & get_res_pair_core() const;
-				const index_type & get_from_res_idx() const;
-				const index_type & get_to_res_idx() const;
+				[[nodiscard]] const res_pair_core &get_res_pair_core() const;
+				[[nodiscard]] const index_type &   get_from_res_idx() const;
+				[[nodiscard]] const index_type &   get_to_res_idx() const;
 
 				static constexpr index_type DUMMY_INDEX_VALUE = std::numeric_limits<index_type>::max();
 			};

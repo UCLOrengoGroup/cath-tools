@@ -28,17 +28,16 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class geometric_mean_length_getter final : public sym_protein_only_length_getter {
-		private:
-			std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const final;
+		  private:
+			[[nodiscard]] std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const final;
 
-			size_t do_get_length(const protein &,
-			                     const protein &) const final;
+			[[nodiscard]] size_t do_get_length( const protein &, const protein & ) const final;
 
-			length_getter_category do_get_length_getter_category() const final;
+			[[nodiscard]] length_getter_category do_get_length_getter_category() const final;
 
-			std::string do_get_choice_adjective() const final;
+			[[nodiscard]] std::string do_get_choice_adjective() const final;
 
-			bool do_less_than_with_same_dynamic_type(const length_getter &) const final;
+			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const length_getter & ) const final;
 		};
 
 	} // namespace score

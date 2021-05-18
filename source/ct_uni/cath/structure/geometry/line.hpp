@@ -51,12 +51,12 @@ namespace cath {
 			}
 
 			/// \brief Getter for point_on_line
-			const coord & get_point_on_line() const {
+			[[nodiscard]] const coord &get_point_on_line() const {
 				return point_on_line;
 			}
 
 			/// \brief Getter for dirn
-			const coord & get_dirn() const {
+			[[nodiscard]] const coord &get_dirn() const {
 				return dirn;
 			}
 		};

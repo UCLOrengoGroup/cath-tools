@@ -47,11 +47,11 @@ BOOST_FIXTURE_TEST_SUITE(dyn_prog_score_source_test_suite, dyn_prog_score_source
 
 /// \brief Check that each dyn_prog_score_source returns two strictly positive lengths
 ///        and gets a score for indices 0, 0 without throwing
-BOOST_AUTO_TEST_CASE_TEMPLATE(basic_indices_and_score, dyn_prog_score_source_type, all_dyn_prog_score_source_types) {
+BOOST_AUTO_TEST_CASE_TEMPLATE( basic_indices_and_score, dyn_prog_score_source_type, all_dyn_prog_score_source_types ) {
 	const dyn_prog_score_source_type score_source = make_example_dyn_prog_score_source<dyn_prog_score_source_type>();
-	BOOST_REQUIRE_GT(          score_source.get_length_a(), 0_z );
-	BOOST_REQUIRE_GT(          score_source.get_length_b(), 0_z );
-	BOOST_CHECK_NO_THROW_DIAG( score_source.get_score(0, 0) );
+	BOOST_REQUIRE_GT( score_source.get_length_a(), 0_z );
+	BOOST_REQUIRE_GT( score_source.get_length_b(), 0_z );
+	BOOST_CHECK_NO_THROW_DIAG( [[maybe_unused]] auto &&x = score_source.get_score( 0, 0 ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

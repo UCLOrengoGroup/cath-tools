@@ -50,7 +50,7 @@ namespace cath {
 
 			explicit score_classn_value_better_value(const bool &);
 
-			const bool & get_higher_is_better() const;
+			[[nodiscard]] const bool &get_higher_is_better() const;
 
 			bool operator()(const score_classn_value &,
 			                const score_classn_value &);

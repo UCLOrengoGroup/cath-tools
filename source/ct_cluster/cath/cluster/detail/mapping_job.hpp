@@ -52,9 +52,9 @@ namespace cath {
 				                     const ::std::filesystem::path &,
 				                     const path_opt & = ::std::nullopt);
 
-				const str_opt & get_batch_id() const;
-				const ::std::filesystem::path & get_new_cluster_membership_file() const;
-				const path_opt & get_old_cluster_membership_file() const;
+				[[nodiscard]] const str_opt &                get_batch_id() const;
+				[[nodiscard]] const ::std::filesystem::path &get_new_cluster_membership_file() const;
+				[[nodiscard]] const path_opt &               get_old_cluster_membership_file() const;
 			};
 
 			mapping_job_vec read_batch_mapping_file(std::istream &);

@@ -39,14 +39,14 @@ namespace cath {
 			/// \brief The style in which the JSON should be written
 			const common::json_style the_json_style = DEFAULT_JSON_STYLE;
 
-			std::unique_ptr<superposition_outputter> do_clone() const final;
+			[[nodiscard]] std::unique_ptr<superposition_outputter> do_clone() const final;
 
 			void do_output_superposition( const sup::superposition_context &, std::ostream & ) const final;
 
-			bool do_involves_display_spec() const final;
-			std::string do_get_name() const final;
+			[[nodiscard]] bool        do_involves_display_spec() const final;
+			[[nodiscard]] std::string do_get_name() const final;
 
-		public:
+		  public:
 			explicit json_file_superposition_outputter(const ::std::filesystem::path &,
 			                                           const common::json_style & = DEFAULT_JSON_STYLE);
 

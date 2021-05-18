@@ -45,8 +45,8 @@ namespace cath {
 				using const_iterator = alignment_split_set::const_iterator;
 				iterator begin();
 				iterator end();
-				const_iterator begin() const;
-				const_iterator end() const;
+				[[nodiscard]] const_iterator begin() const;
+				[[nodiscard]] const_iterator end() const;
 			};
 
 			alignment_split_list make_list_of_alignment_split(const alignment &,

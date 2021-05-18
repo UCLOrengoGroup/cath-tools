@@ -53,10 +53,10 @@ namespace cath {
 			clust_entry_problem add(const boost::string_ref &,
 			                        domain_cluster_id);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
-			const common::id_of_str_bidirnl & get_id_of_seq_name() const;
+			[[nodiscard]] const common::id_of_str_bidirnl &get_id_of_seq_name() const;
 
 			const domain_cluster_ids & operator[](const size_t &) const;
 		};

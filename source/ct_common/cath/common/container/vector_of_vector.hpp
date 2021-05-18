@@ -68,8 +68,8 @@ namespace cath {
 			                 const size_t &,
 			                 const T & = T{});
 
-			const size_t & get_length_a() const;
-			const size_t & get_length_b() const;
+			[[nodiscard]] const size_t &get_length_a() const;
+			[[nodiscard]] const size_t &get_length_b() const;
 
 			vector_of_vector & assign(const size_t &,
 			                          const size_t &,

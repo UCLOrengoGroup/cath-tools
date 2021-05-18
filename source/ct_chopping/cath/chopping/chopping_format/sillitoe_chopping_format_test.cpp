@@ -33,12 +33,15 @@ using ::boost::string_ref;
 BOOST_AUTO_TEST_SUITE(sillitoe_chopping_format_test_suite)
 
 BOOST_AUTO_TEST_CASE(throws_on_attempt_to_parse_invalid_segment) {
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_segment( ""      ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_segment( "A"     ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_segment( "AA"    ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_segment( "3:A"   ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_segment( "3-:A"  ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_segment( "3-C:A" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_segment( "" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_segment( "A" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_segment( "AA" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_segment( "3:A" ),
+	                   invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_segment( "3-:A" ),
+	                   invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_segment( "3-C:A" ),
+	                   invalid_argument_exception );
 }
 
 BOOST_AUTO_TEST_CASE(parses_valid_segment) {
@@ -48,11 +51,12 @@ BOOST_AUTO_TEST_CASE(parses_valid_segment) {
 }
 
 BOOST_AUTO_TEST_CASE(throws_on_attempt_to_parse_invalid_domain) {
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( ""     ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( "D"    ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( "D["   ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( "D[A"  ), invalid_argument_exception );
-	BOOST_CHECK_THROW( sillitoe_chopping_format{}.parse_domain( "D[A]" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_domain( "" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_domain( "D" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_domain( "D[" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_domain( "D[A" ), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = sillitoe_chopping_format{}.parse_domain( "D[A]" ),
+	                   invalid_argument_exception );
 }
 
 BOOST_AUTO_TEST_CASE(parses_single_segment_domain) {

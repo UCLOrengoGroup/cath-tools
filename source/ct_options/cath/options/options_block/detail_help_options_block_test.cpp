@@ -47,13 +47,10 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(detail_help_options_block_test_suite, cath::test::detail_help_options_block_test_suite_fixture)
 
 /// \brief Check that if no help is requested then no help is given (and an attempt to retrieve it throws)
-BOOST_AUTO_TEST_CASE(handles_no_help_requested) {
-	parse_into_options_block(
-		the_options_block,
-		{ IGNORE_OPT }
-	);
-	BOOST_CHECK_EQUAL( false, the_options_block.has_help_string());
-	BOOST_CHECK_THROW( the_options_block.help_string(), invalid_argument_exception );
+BOOST_AUTO_TEST_CASE( handles_no_help_requested ) {
+	parse_into_options_block( the_options_block, { IGNORE_OPT } );
+	BOOST_CHECK_EQUAL( false, the_options_block.has_help_string() );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = the_options_block.help_string(), invalid_argument_exception );
 }
 
 /// \brief Check that if help 1 is requested, then help 1 is given

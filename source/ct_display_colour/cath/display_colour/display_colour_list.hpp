@@ -42,11 +42,11 @@ namespace cath {
 
 		explicit display_colour_list(display_colour_vec);
 
-		size_t size() const;
-		const display_colour & colour_of_index(const size_t &) const;
+		[[nodiscard]] size_t                size() const;
+		[[nodiscard]] const display_colour &colour_of_index( const size_t & ) const;
 
-		const_iterator begin() const;
-		const_iterator end() const;
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
 
 		static str_vec     DEFAULT_COLOURS_STRING_PARTS;
 		static std::string COLOURS_SEPARATOR;

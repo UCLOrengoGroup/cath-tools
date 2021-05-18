@@ -132,8 +132,8 @@ namespace cath {
 			load_and_scan_metrics(const hrc_duration &,
 			                      scan_metrics);
 
-			const hrc_duration & get_load_files_durn() const;
-			const scan_metrics & get_scan_metrics() const;
+			[[nodiscard]] const hrc_duration &get_load_files_durn() const;
+			[[nodiscard]] const scan_metrics &get_scan_metrics() const;
 		};
 
 		const durn_mem_pair & get_query_strucs_metrics(const load_and_scan_metrics &);

@@ -76,17 +76,17 @@ namespace cath {
 			aggregate_map_results() = default;
 			explicit aggregate_map_results(const clust_mapping_spec &) noexcept;
 
-			const bool & get_added_to() const;
-			const size_t & get_num_old_clusters() const;
-			const size_t & get_num_new_clusters() const;
-			const size_t & get_num_mapped_clusters() const;
-			const size_t & get_num_old_entries() const;
-			const size_t & get_num_new_entries() const;
-			const size_t & get_num_mapped_entries() const;
-			const size_t & get_num_with_nothing_on_parent() const;
-			const overlap_frac_distn & get_highest_old_dom_overlap_fractions() const;
-			const overlap_frac_distn & get_highest_old_clust_overlap_fractions() const;
-			const clust_mapping_spec & get_clust_mapping_spec() const;
+			[[nodiscard]] const bool &              get_added_to() const;
+			[[nodiscard]] const size_t &            get_num_old_clusters() const;
+			[[nodiscard]] const size_t &            get_num_new_clusters() const;
+			[[nodiscard]] const size_t &            get_num_mapped_clusters() const;
+			[[nodiscard]] const size_t &            get_num_old_entries() const;
+			[[nodiscard]] const size_t &            get_num_new_entries() const;
+			[[nodiscard]] const size_t &            get_num_mapped_entries() const;
+			[[nodiscard]] const size_t &            get_num_with_nothing_on_parent() const;
+			[[nodiscard]] const overlap_frac_distn &get_highest_old_dom_overlap_fractions() const;
+			[[nodiscard]] const overlap_frac_distn &get_highest_old_clust_overlap_fractions() const;
+			[[nodiscard]] const clust_mapping_spec &get_clust_mapping_spec() const;
 
 			aggregate_map_results & add_map_results(const map_results &,
 			                                        const old_cluster_data &,

@@ -43,9 +43,9 @@ namespace cath {
 			                   const bool &,
 			                   std::string = {} );
 
-			const double & get_score_value() const;
-			const bool & get_instance_is_positive() const;
-			const std::string & get_instance_label() const;
+			[[nodiscard]] const double &     get_score_value() const;
+			[[nodiscard]] const bool &       get_instance_is_positive() const;
+			[[nodiscard]] const std::string &get_instance_label() const;
 		};
 
 		std::ostream & operator<<(std::ostream &,

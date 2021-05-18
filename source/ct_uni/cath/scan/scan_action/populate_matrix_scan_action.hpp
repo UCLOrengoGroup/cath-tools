@@ -58,9 +58,9 @@ namespace cath {
 
 		public: // ***** TEMPORARILY PUBLIC *****
 			double & get_entry(const index_type &, const index_type &);
-			const double & get_entry(const index_type &, const index_type &) const;
+			[[nodiscard]] const double &get_entry( const index_type &, const index_type & ) const;
 
-		public:
+		  public:
 			populate_matrix_scan_action(const index_type &prm_num_residues_a,
 			                            const index_type &prm_num_residues_b,
 			                            const index_type & = 0,
@@ -74,9 +74,9 @@ namespace cath {
 			void plot_to_file(const ::std::filesystem::path &,
 			                  align::detail::matrix_plotter &) const;
 
-			index_type get_length_a() const;
-			index_type get_length_b() const;
-//			new_matrix_dyn_prog_score_source
+			[[nodiscard]] index_type get_length_a() const;
+			[[nodiscard]] index_type get_length_b() const;
+			// new_matrix_dyn_prog_score_source
 		};
 
 		/// \brief TODOCUMENT

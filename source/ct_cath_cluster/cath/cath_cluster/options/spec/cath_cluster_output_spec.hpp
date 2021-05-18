@@ -45,18 +45,18 @@ namespace cath {
 			/// \brief An optional file to which sorted_links should be written
 			path_opt sorted_links_to_file;
 
-		public:
-			const path_opt & get_clusters_to_file() const;
-			const path_opt & get_merges_to_file() const;
-			const path_opt & get_clust_spans_to_file() const;
-			const path_opt & get_reps_to_file() const;
-			const path_opt & get_sorted_links_to_file() const;
+		  public:
+			[[nodiscard]] const path_opt &get_clusters_to_file() const;
+			[[nodiscard]] const path_opt &get_merges_to_file() const;
+			[[nodiscard]] const path_opt &get_clust_spans_to_file() const;
+			[[nodiscard]] const path_opt &get_reps_to_file() const;
+			[[nodiscard]] const path_opt &get_sorted_links_to_file() const;
 
-			cath_cluster_output_spec & set_clusters_to_file(const path_opt &);
-			cath_cluster_output_spec & set_merges_to_file(const path_opt &);
-			cath_cluster_output_spec & set_clust_spans_to_file(const path_opt &);
-			cath_cluster_output_spec & set_reps_to_file(const path_opt &);
-			cath_cluster_output_spec & set_sorted_links_to_file(const path_opt &);
+			cath_cluster_output_spec &set_clusters_to_file( const path_opt & );
+			cath_cluster_output_spec &set_merges_to_file( const path_opt & );
+			cath_cluster_output_spec &set_clust_spans_to_file( const path_opt & );
+			cath_cluster_output_spec &set_reps_to_file( const path_opt & );
+			cath_cluster_output_spec &set_sorted_links_to_file( const path_opt & );
 		};
 
 		size_t get_num_output_paths(const cath_cluster_output_spec &);

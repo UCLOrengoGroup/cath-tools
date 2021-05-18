@@ -43,8 +43,8 @@ namespace cath {
 		void record_scene(std::ostream &,
 		                  const std::string &);
 
-		std::string do_default_executable() const final;
-		std::string do_default_file_extension() const final;
+		[[nodiscard]] std::string do_default_executable() const final;
+		[[nodiscard]] std::string do_default_file_extension() const final;
 
 		void do_write_start(std::ostream &) const final;
 		void do_write_load_pdbs(std::ostream &,
@@ -54,15 +54,14 @@ namespace cath {
 		void do_define_colour(std::ostream &,
 		                      const display_colour &,
 		                      const std::string &) const final;
-		bool do_accepts_multiple_colourings() const final;
+		[[nodiscard]] bool do_accepts_multiple_colourings() const final;
 
 		void do_begin_colouring(std::ostream &) final;
-		std::string do_get_colour_base_str(const std::string &) const final;
-		std::string do_get_colour_pdb_str(const std::string &,
-		                                  const std::string &) const final;
-		std::string do_get_colour_pdb_residues_str(const std::string &,
-		                                           const std::string &,
-		                                           const residue_id_vec &) const final;
+		[[nodiscard]] std::string do_get_colour_base_str( const std::string & ) const final;
+		[[nodiscard]] std::string do_get_colour_pdb_str( const std::string &, const std::string & ) const final;
+		[[nodiscard]] std::string do_get_colour_pdb_residues_str( const std::string &,
+		                                                          const std::string &,
+		                                                          const residue_id_vec & ) const final;
 		void do_end_colouring(std::ostream &,
 		                      const ::std::string &) final;
 

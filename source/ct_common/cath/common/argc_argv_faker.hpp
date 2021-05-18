@@ -65,9 +65,9 @@ namespace cath {
 		                const char * const []);
 
 		int & get_argc();
-		const int & get_argc() const;
+		[[nodiscard]] const int &  get_argc() const;
 		char * * get_argv();
-		char * const * get_argv() const;
+		[[nodiscard]] char *const *get_argv() const;
 	};
 
 	std::ostream & operator<<(std::ostream &,

@@ -71,10 +71,10 @@ namespace cath {
 			/// \brief A name for the substitution matrix
 			std::string name;
 
-			const amino_acid_vec & get_amino_acids() const;
-			const score_vec_vec & get_scores() const;
-			const score_type & get_score_for_one_unknown_aa() const;
-			const score_type & get_score_for_two_unknown_aas() const;
+			[[nodiscard]] const amino_acid_vec &get_amino_acids() const;
+			[[nodiscard]] const score_vec_vec & get_scores() const;
+			[[nodiscard]] const score_type &    get_score_for_one_unknown_aa() const;
+			[[nodiscard]] const score_type &    get_score_for_two_unknown_aas() const;
 
 			static size_vec order_permutation(const amino_acid_vec &,
 			                                  const amino_acid_vec &);
@@ -96,12 +96,11 @@ namespace cath {
 			                    const score_type &,
 			                    std::string);
 
-			const std::string & get_name() const;
+			[[nodiscard]] const std::string &get_name() const;
 
-			score_type get_highest_score() const;
+			[[nodiscard]] score_type get_highest_score() const;
 
-			score_type get_score(const amino_acid &,
-			                     const amino_acid &) const;
+			[[nodiscard]] score_type get_score( const amino_acid &, const amino_acid & ) const;
 		};
 
 		bool operator<(const substitution_matrix &,

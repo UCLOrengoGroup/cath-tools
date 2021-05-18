@@ -48,7 +48,7 @@ namespace cath {
 				constexpr std_classn_rate_stat to_test = get<0>( get<I>( properties_of_classn_rate_stat::numerator_and_denominator_of_stat ) );
 				BOOST_CHECK_NO_THROW_DIAG( classn_rate_stat<to_test>() );
 				classn_rate_stat<to_test> stat;
-				BOOST_CHECK_NO_THROW_DIAG( stat.get_name() );
+				BOOST_CHECK_NO_THROW_DIAG( [[maybe_unused]] auto &&x = stat.get_name() );
 				BOOST_CHECK_GT( stat.get_name().length(), 0 );
 			}
 		};

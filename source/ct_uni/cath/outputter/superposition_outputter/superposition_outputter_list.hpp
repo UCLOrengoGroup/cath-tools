@@ -39,13 +39,13 @@ namespace cath {
 
 		public:
 			void push_back(const superposition_outputter &);
-			size_t size() const;
-			bool empty() const;
+			[[nodiscard]] size_t size() const;
+			[[nodiscard]] bool   empty() const;
 
 			// Provide iterators
 			using const_iterator = boost::ptr_vector<superposition_outputter>::const_iterator;
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		std::string to_string(const superposition_outputter_list &);

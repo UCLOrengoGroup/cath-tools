@@ -59,12 +59,12 @@ namespace cath {
 				clust_id_pot() = delete;
 				explicit clust_id_pot(const size_t &);
 
-				const item_idx & get_jumbled_nth_index(const size_t &) const;
-				bool has_index(const item_idx &) const;
+				[[nodiscard]] const item_idx &get_jumbled_nth_index( const size_t & ) const;
+				[[nodiscard]] bool            has_index( const item_idx & ) const;
 				clust_id_pot & remove_index(const item_idx &);
 				const item_idx & add_new_index();
 
-				item_idx get_min_value_excluding_spec(const item_idx &) const;
+				[[nodiscard]] item_idx get_min_value_excluding_spec( const item_idx & ) const;
 			};
 
 			/// \brief Ctor from the number of items

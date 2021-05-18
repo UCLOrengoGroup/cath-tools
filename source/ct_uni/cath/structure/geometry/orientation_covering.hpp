@@ -80,8 +80,8 @@ namespace cath {
 
 			orientation_covering_impl();
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool       empty() const;
+			[[nodiscard]] size_t     size() const;
 			const quat_rot_impl<T> & operator[](const size_t &) const;
 
 			const_iterator begin() const;

@@ -71,15 +71,15 @@ namespace cath {
 			                  const double &,
 			                  const double &);
 
-			const std::string & get_name_1() const;
-			const std::string & get_name_2() const;
-			const size_t & get_length_1() const;
-			const size_t & get_length_2() const;
-			const double & get_ssap_score() const;
-			const size_t & get_num_equivs() const;
-			const double & get_overlap_pc() const;
-			const double & get_seq_id_pc() const;
-			const double & get_rmsd() const;
+			[[nodiscard]] const std::string &get_name_1() const;
+			[[nodiscard]] const std::string &get_name_2() const;
+			[[nodiscard]] const size_t &     get_length_1() const;
+			[[nodiscard]] const size_t &     get_length_2() const;
+			[[nodiscard]] const double &     get_ssap_score() const;
+			[[nodiscard]] const size_t &     get_num_equivs() const;
+			[[nodiscard]] const double &     get_overlap_pc() const;
+			[[nodiscard]] const double &     get_seq_id_pc() const;
+			[[nodiscard]] const double &     get_rmsd() const;
 		};
 
 		bool operator==(const ssap_scores_entry &,

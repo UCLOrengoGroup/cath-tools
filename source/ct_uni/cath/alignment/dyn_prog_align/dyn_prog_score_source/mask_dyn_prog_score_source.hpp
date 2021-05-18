@@ -36,12 +36,11 @@ namespace cath {
 			/// \brief TODOCUMENT
 			const dyn_prog_score_source &masked_score_source;
 
-			size_t do_get_length_a() const final;
-			size_t do_get_length_b() const final;
-			score_type do_get_score(const size_t &,
-			                        const size_t &) const final;
+			[[nodiscard]] size_t     do_get_length_a() const final;
+			[[nodiscard]] size_t     do_get_length_b() const final;
+			[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
 
-		public:
+		  public:
 			mask_dyn_prog_score_source(const common::bool_vec_of_vec &,
 			                           const dyn_prog_score_source &);
 		};

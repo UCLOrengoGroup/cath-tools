@@ -41,9 +41,9 @@ namespace cath {
 		              const size_t &,
 		              const score_type &);
 
-		size_t     get_index_a() const;
-		size_t     get_index_b() const;
-		score_type get_score()   const;
+		[[nodiscard]] size_t     get_index_a() const;
+		[[nodiscard]] size_t     get_index_b() const;
+		[[nodiscard]] score_type get_score() const;
 	};
 
 	bool operator<(const selected_pair &,

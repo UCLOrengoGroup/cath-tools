@@ -51,13 +51,13 @@ namespace cath {
 		detail::score_colour_handler_opt the_score_colour_handler{ ::std::nullopt };
 
 		/// \brief Pure virtual method with which each concrete display_colourer must define how to create a clone of itself
-		virtual std::unique_ptr<display_colourer> do_clone() const = 0;
+		[[nodiscard]] virtual std::unique_ptr<display_colourer> do_clone() const = 0;
 
-		virtual display_colour_spec do_get_colour_spec(const align::alignment_context &) const = 0;
+		[[nodiscard]] virtual display_colour_spec do_get_colour_spec( const align::alignment_context & ) const = 0;
 
-		virtual std::string do_get_label() const = 0;
+		[[nodiscard]] virtual std::string do_get_label() const = 0;
 
-	public:
+	  public:
 		display_colourer() noexcept;
 		explicit display_colourer(const detail::score_colour_handler &);
 		virtual ~display_colourer() noexcept = default;
@@ -67,12 +67,12 @@ namespace cath {
 		display_colourer & operator=(const display_colourer &) = default;
 		display_colourer & operator=(display_colourer &&) noexcept = default;
 
-		std::unique_ptr<display_colourer> clone() const;
+		[[nodiscard]] std::unique_ptr<display_colourer> clone() const;
 
-		const detail::score_colour_handler_opt & get_score_colour_handler_opt() const;
-		display_colour_spec get_colour_spec(const align::alignment_context &) const;
+		[[nodiscard]] const detail::score_colour_handler_opt &get_score_colour_handler_opt() const;
+		[[nodiscard]] display_colour_spec                     get_colour_spec( const align::alignment_context & ) const;
 
-		std::string get_label() const;
+		[[nodiscard]] std::string get_label() const;
 	};
 
 	/// \brief Default ctor

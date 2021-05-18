@@ -41,20 +41,20 @@ namespace cath {
 			/// \TODO Remove this after a reasonable time of it being deprecated
 			crh_single_output_options_block deprecated_single_output_ob;
 
-			std::unique_ptr<opts::options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
+			[[nodiscard]] std::string                          do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-			str_vec get_all_non_deprecated_option_names_that_clash_with_deprecated() const;
-			str_vec get_all_non_deprecated_option_names_that_do_not_clash_with_deprecated() const;
-			str_vec get_all_non_deprecated_option_names() const;
+			[[nodiscard]] str_vec get_all_non_deprecated_option_names_that_clash_with_deprecated() const;
+			[[nodiscard]] str_vec get_all_non_deprecated_option_names_that_do_not_clash_with_deprecated() const;
+			[[nodiscard]] str_vec get_all_non_deprecated_option_names() const;
 
-		public:
+		  public:
 			static const std::string PO_HITS_TEXT_TO_FILE;
 			static const std::string PO_QUIET;
 			static const std::string PO_OUTPUT_TRIMMED_HITS;
@@ -64,8 +64,8 @@ namespace cath {
 			static const std::string PO_EXPORT_CSS_FILE;
 			static const std::string PO_OUTPUT_HMMER_ALN;
 
-			const crh_output_spec & get_crh_output_spec() const;
-			const crh_single_output_options_block & get_deprecated_single_output_options_block() const;
+			[[nodiscard]] const crh_output_spec &                get_crh_output_spec() const;
+			[[nodiscard]] const crh_single_output_options_block &get_deprecated_single_output_options_block() const;
 		};
 
 		const crh_single_output_spec & get_deprecated_single_output_spec(const crh_output_options_block &);

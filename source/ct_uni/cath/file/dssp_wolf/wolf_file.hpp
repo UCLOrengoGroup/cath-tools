@@ -42,8 +42,8 @@ namespace cath {
 
 			explicit wolf_file(residue_vec);
 
-			size_type get_num_residues() const;
-			const residue & get_residue_of_index(const size_type &) const;
+			[[nodiscard]] size_type      get_num_residues() const;
+			[[nodiscard]] const residue &get_residue_of_index( const size_type & ) const;
 		};
 
 		protein protein_from_wolf(const wolf_file &);

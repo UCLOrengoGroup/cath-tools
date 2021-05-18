@@ -84,13 +84,13 @@ namespace cath {
 				              detail::angle_type,
 				              detail::angle_type);
 
-				const res_pair_index_dirn_criterion & get_index_direction_criterion() const;
-				const index_type & get_minimum_index_distance() const;
-				const detail::view_base_type & get_maximum_squared_distance() const;
-				const detail::frame_quat_rot_type & get_maximum_frame_angle_distance_1() const;
-				const detail::angle_type & get_maximum_frame_angle_difference() const;
-				const detail::angle_type & get_maximum_phi_angle_difference() const;
-				const detail::angle_type & get_maximum_psi_angle_difference() const;
+				[[nodiscard]] const res_pair_index_dirn_criterion &get_index_direction_criterion() const;
+				[[nodiscard]] const index_type &                   get_minimum_index_distance() const;
+				[[nodiscard]] const detail::view_base_type &       get_maximum_squared_distance() const;
+				[[nodiscard]] const detail::frame_quat_rot_type &  get_maximum_frame_angle_distance_1() const;
+				[[nodiscard]] const detail::angle_type &           get_maximum_frame_angle_difference() const;
+				[[nodiscard]] const detail::angle_type &           get_maximum_phi_angle_difference() const;
+				[[nodiscard]] const detail::angle_type &           get_maximum_psi_angle_difference() const;
 			};
 
 			/// \brief Getter for require_matching_directions

@@ -104,12 +104,12 @@ namespace cath {
 			}
 
 			/// \brief Whether this is empty
-			inline bool empty() const {
+			[[nodiscard]] inline bool empty() const {
 				return dom_clust_ids.empty();
 			}
 
 			/// \brief The number of domain_cluster_ids
-			inline size_t size() const {
+			[[nodiscard]] inline size_t size() const {
 				return dom_clust_ids.size();
 			}
 
@@ -120,12 +120,12 @@ namespace cath {
 			}
 
 			/// \brief Standard const begin() method, as part of making this a range over domain_cluster_ids
-			inline auto begin() const -> const_iterator {
+			[[nodiscard]] inline auto begin() const -> const_iterator {
 				return ::std::cbegin( dom_clust_ids );
 			}
 
 			/// \brief Standard const end() method, as part of making this a range over domain_cluster_ids
-			inline auto end() const -> const_iterator {
+			[[nodiscard]] inline auto end() const -> const_iterator {
 				return ::std::cend( dom_clust_ids );
 			}
 		};

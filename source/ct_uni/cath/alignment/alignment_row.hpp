@@ -48,8 +48,8 @@ namespace cath {
 		public:
 			explicit alignment_row(aln_posn_opt_vec);
 
-			size_t num_entries() const;
-			aln_posn_opt position_of_entry(const size_t &) const;
+			[[nodiscard]] size_t       num_entries() const;
+			[[nodiscard]] aln_posn_opt position_of_entry( const size_t & ) const;
 		};
 
 		bool has_position_of_entry(const alignment_row &,

@@ -78,25 +78,25 @@ namespace cath {
 			/// \brief The specification of what should be included in the superposition
 			sup::superposition_content_spec    the_content_spec;
 
-			std::string do_get_program_name() const final;
-			str_opt do_get_error_or_help_string() const final;
+			[[nodiscard]] std::string do_get_program_name() const final;
+			[[nodiscard]] str_opt     do_get_error_or_help_string() const final;
 
-			std::string do_get_help_prefix_string() const final;
-			std::string do_get_help_suffix_string() const final;
-			std::string do_get_overview_string() const final;
+			[[nodiscard]] std::string do_get_help_prefix_string() const final;
+			[[nodiscard]] std::string do_get_help_suffix_string() const final;
+			[[nodiscard]] std::string do_get_overview_string() const final;
 
 			void check_ok_to_use() const;
 
 		public:
 			cath_refine_align_options();
 
-			const str_vec & get_ids() const;
-			const pdb_input_spec & get_pdb_input_spec() const;
-			const alignment_input_spec & get_alignment_input_spec() const;
-			alignment_outputter_list get_alignment_outputters() const;
-			superposition_outputter_list get_superposition_outputters(const default_supn_outputter &) const;
+			[[nodiscard]] const str_vec &             get_ids() const;
+			[[nodiscard]] const pdb_input_spec &      get_pdb_input_spec() const;
+			[[nodiscard]] const alignment_input_spec &get_alignment_input_spec() const;
+			[[nodiscard]] alignment_outputter_list    get_alignment_outputters() const;
+			[[nodiscard]] superposition_outputter_list get_superposition_outputters( const default_supn_outputter & ) const;
 
-			const chop::domain_vec & get_domains() const;
+			[[nodiscard]] const chop::domain_vec &get_domains() const;
 
 			static const std::string PROGRAM_NAME;
 		};

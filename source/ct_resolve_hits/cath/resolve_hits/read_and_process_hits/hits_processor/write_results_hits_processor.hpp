@@ -40,7 +40,7 @@ namespace cath {
 				/// \brief Whether the header has yet been written
 				bool written_header = false;
 
-				std::unique_ptr<hits_processor> do_clone() const final;
+				[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
 
 				void do_process_hits_for_query(const std::string &,
 				                               const crh_filter_spec &,
@@ -50,11 +50,11 @@ namespace cath {
 
 				void do_finish_work() final;
 
-				bool do_wants_hits_that_fail_score_filter() const final;
+				[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
 
-				bool do_requires_strictly_worse_hits() const final;
+				[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
 
-			public:
+			  public:
 				explicit write_results_hits_processor(ref_vec<std::ostream>,
 				                                      const hit_boundary_output & = hit_boundary_output{}) noexcept;
 			};

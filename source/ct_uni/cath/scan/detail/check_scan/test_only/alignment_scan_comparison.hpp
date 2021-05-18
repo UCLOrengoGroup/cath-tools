@@ -48,11 +48,11 @@ namespace cath {
 			public:
 				alignment_scan_comparison & operator+=(const std::pair<quad_and_rep_criteria_result, double> &);
 
-				bool has_score_of_criteria_result(const quad_and_rep_criteria_result &) const;
-				double get_score_of_criteria_result(const quad_and_rep_criteria_result &) const;
+				[[nodiscard]] bool   has_score_of_criteria_result( const quad_and_rep_criteria_result & ) const;
+				[[nodiscard]] double get_score_of_criteria_result( const quad_and_rep_criteria_result & ) const;
 
-				const_iterator begin() const;
-				const_iterator end() const;
+				[[nodiscard]] const_iterator begin() const;
+				[[nodiscard]] const_iterator end() const;
 			};
 
 			std::vector<quad_and_rep_criteria_result> get_criteria_results(const alignment_scan_comparison &);

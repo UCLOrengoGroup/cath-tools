@@ -83,7 +83,7 @@ namespace cath {
 			/// \brief The one-
 			base_iterator_type end_itr;
 
-			bool is_at_end() const;
+			[[nodiscard]] bool is_at_end() const;
 			void advance_to_end_if_one_off();
 
 			adjacent_pair_type dereference() const;

@@ -48,19 +48,19 @@ namespace cath {
 			/// \brief Whether version information has been requested
 			bool version     = false;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
-			const bool & get_hidden_help() const;
-			const bool & get_help() const;
-			const bool & get_version() const;
+		  public:
+			[[nodiscard]] const bool &get_hidden_help() const;
+			[[nodiscard]] const bool &get_help() const;
+			[[nodiscard]] const bool &get_version() const;
 
 			static std::string get_help_string(const boost::program_options::options_description &,
 			                                   const std::string &,

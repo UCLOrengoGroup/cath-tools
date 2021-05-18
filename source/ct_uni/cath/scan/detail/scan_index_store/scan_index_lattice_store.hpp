@@ -118,7 +118,7 @@ namespace cath {
 				const_iterator begin() const;
 				const_iterator end() const;
 
-				info_quantity get_info_size() const;
+				[[nodiscard]] info_quantity get_info_size() const;
 			};
 
 			/// \brief TODOCUMENT

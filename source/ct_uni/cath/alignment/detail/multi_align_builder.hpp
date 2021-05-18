@@ -54,14 +54,14 @@ namespace cath {
 				/// \brief An alignment_refiner with which to refine the alignments being built
 				alignment_refiner              the_refiner;
 
-				size_t find_group_of_entry(const size_t &) const;
+				[[nodiscard]] size_t find_group_of_entry( const size_t & ) const;
 				void update_group_index_of_entry(const size_t &);
 
 			public:
 				explicit multi_align_builder(const size_t &);
 
-				size_set get_active_groups() const;
-				const multi_align_group & get_group_of_index(const size_t &) const;
+				[[nodiscard]] size_set                 get_active_groups() const;
+				[[nodiscard]] const multi_align_group &get_group_of_index( const size_t & ) const;
 
 				void add_alignment_branch(const size_t &,
 				                          const size_t &,
@@ -69,7 +69,7 @@ namespace cath {
 				                          const protein_list &,
 				                          const aln_glue_style &);
 
-				alignment get_alignment() const;
+				[[nodiscard]] alignment get_alignment() const;
 			};
 
 			std::ostream & operator<<(std::ostream &,

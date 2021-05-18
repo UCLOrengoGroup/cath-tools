@@ -44,8 +44,8 @@ namespace cath {
 			explicit hierarchy_layer(const size_t &);
 			explicit hierarchy_layer(hierarchy_group_vec);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			hierarchy_group & operator[](const size_t &);
 			const hierarchy_group & operator[](const size_t &) const;
@@ -55,8 +55,8 @@ namespace cath {
 
 			iterator begin();
 			iterator end();
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		/// \brief Construct from a count of hierarchy_groups to default-insert

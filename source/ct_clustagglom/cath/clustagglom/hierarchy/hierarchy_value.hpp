@@ -48,8 +48,8 @@ namespace cath {
 			constexpr hierarchy_value(const hierarchy_ref &,
 			                          const item_idx &) noexcept;
 
-			constexpr const hierarchy_ref & get_type() const;
-			constexpr const item_idx & get_index() const;
+			[[nodiscard]] constexpr const hierarchy_ref &get_type() const;
+			[[nodiscard]] constexpr const item_idx &     get_index() const;
 
 			hierarchy_value & set_type(const hierarchy_ref &);
 			hierarchy_value & set_index(const item_idx &);

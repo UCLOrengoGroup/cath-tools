@@ -42,8 +42,8 @@ namespace cath {
 			explicit coord_list(coord_vec);
 
 			void reserve(const size_t &);
-			bool empty() const noexcept;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const noexcept;
+			[[nodiscard]] size_t size() const;
 			void push_back(const coord &);
 			coord & operator[](const size_t &);
 			const coord & operator[](const size_t &) const;
@@ -56,8 +56,8 @@ namespace cath {
 			using const_iterator = coord_vec::const_iterator;
 			iterator begin();
 			iterator end();
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		coord_list flatten_coord_lists(const coord_list_vec &);

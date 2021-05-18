@@ -40,12 +40,10 @@ namespace cath {
 		protected:
 			~return_path_matrix_test_suite_fixture() noexcept = default;
 
-			path_step make_random_step() const;
+			[[nodiscard]] path_step make_random_step() const;
 
 			/// \brief TODOCUMENT
-			return_path_matrix make_random_return_path_matrix(const size_t &,
-			                                                  const size_t &,
-			                                                  const size_t &) const;
+			[[nodiscard]] return_path_matrix make_random_return_path_matrix( const size_t &, const size_t &, const size_t & ) const;
 		};
 
 	}  // namespace test

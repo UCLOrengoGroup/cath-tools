@@ -62,27 +62,27 @@ namespace cath {
 			void read_file(const ::std::filesystem::path &);
 			void append_to_file(const ::std::filesystem::path &) const;
 			pdb & set_chain_label(const chain_label &);
-			residue_id_vec get_residue_ids_of_first_chain__backbone_unchecked() const;
-			geom::coord get_residue_ca_coord_of_index__backbone_unchecked(const size_t &) const;
-			size_t get_num_atoms() const;
+			[[nodiscard]] residue_id_vec get_residue_ids_of_first_chain__backbone_unchecked() const;
+			[[nodiscard]] geom::coord    get_residue_ca_coord_of_index__backbone_unchecked( const size_t & ) const;
+			[[nodiscard]] size_t         get_num_atoms() const;
 
 			pdb & rotate(const geom::rotation &);
 			pdb & operator+=(const geom::coord &);
 			pdb & operator-=(const geom::coord &);
 
-			bool empty() const;
-			size_t get_num_residues() const;
-			const pdb_residue & get_residue_of_index__backbone_unchecked(const size_t &) const;
+			[[nodiscard]] bool               empty() const;
+			[[nodiscard]] size_t             get_num_residues() const;
+			[[nodiscard]] const pdb_residue &get_residue_of_index__backbone_unchecked( const size_t & ) const;
 			pdb & set_residues(pdb_residue_vec);
 			pdb & set_post_ter_residues(pdb_residue_vec);
 
-			const pdb_residue_vec & get_post_ter_residues() const;
+			[[nodiscard]] const pdb_residue_vec &get_post_ter_residues() const;
 
 			/// \brief TODOCUMENT
 			using const_iterator = pdb_residue_vec::const_iterator;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 
 			static const std::string PDB_RECORD_STRING_TER;
 		};

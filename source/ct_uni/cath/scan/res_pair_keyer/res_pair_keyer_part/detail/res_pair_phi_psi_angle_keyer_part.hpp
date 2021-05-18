@@ -62,31 +62,31 @@ namespace cath {
 				}
 
 				/// \brief Get a short name that describes this key part
-				std::string get_name() const {
+				[[nodiscard]] std::string get_name() const {
 					return F::get_name() + "(" + boost::lexical_cast<std::string>( cell_width ) + "]";
 				}
 
 				/// \brief Extract the relevant value from the specified res_pair
-				value_t get_value(const multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
+				[[nodiscard]] value_t get_value(const multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
 				                     ) const {
 					return F::get_value( prm_res_pair );
 				}
 
 				/// \brief Extract the search radius from the specified quad_criteria
-				search_radius_t get_search_radius(const quad_criteria &prm_criteria   ///< The criteria defining what is considered a match
+				[[nodiscard]] search_radius_t get_search_radius(const quad_criteria &prm_criteria   ///< The criteria defining what is considered a match
 				                                  ) const {
 					return F::get_search_radius( prm_criteria  );
 				}
 
 				/// \brief Generate the key part for the specified value
-				cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
+				[[nodiscard]] cell_index_t key_part(const value_t &prm_value ///< The value for which the key_part should be extracted
 				                      ) const {
 					return static_cast<cell_index_t>( std::floor( prm_value / cell_width ) );
 				}
 
 				/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified value
 				///        within the specified search radius
-				cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The res_pair whose matches' key parts should be generated
+				[[nodiscard]] cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The res_pair whose matches' key parts should be generated
 				                                  const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 				                                  ) const {
 #ifndef NDEBUG

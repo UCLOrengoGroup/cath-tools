@@ -93,11 +93,11 @@ namespace cath {
 
 			void add_structure(const protein &);
 
-			index_type get_num_structures() const;
-			index_type get_num_residues_of_structure_of_index(const index_type &) const;
+			[[nodiscard]] index_type get_num_structures() const;
+			[[nodiscard]] index_type get_num_residues_of_structure_of_index( const index_type & ) const;
 
-			durn_mem_pair get_structures_build_durn_and_size() const;
-			durn_mem_pair get_index_build_durn_and_size() const;
+			[[nodiscard]] durn_mem_pair get_structures_build_durn_and_size() const;
+			[[nodiscard]] durn_mem_pair get_index_build_durn_and_size() const;
 
 			template <typename FN>
 			hrc_duration do_magic(const scan_index<KPs...> &,

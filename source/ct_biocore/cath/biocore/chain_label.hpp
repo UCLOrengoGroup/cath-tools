@@ -38,16 +38,16 @@ namespace cath {
 		/// \brief TODOCUMENT
 		char chain_char = 0;
 
-		constexpr const char & get_char() const;
-		constexpr char get_char_with_zero_for_space() const;
+		[[nodiscard]] constexpr const char &get_char() const;
+		[[nodiscard]] constexpr char        get_char_with_zero_for_space() const;
 
-	public:
+	  public:
 		constexpr chain_label() noexcept = default;
 		explicit constexpr chain_label(const char &);
 
-		bool is_null() const;
+		[[nodiscard]] bool is_null() const;
 
-		std::string to_string() const;
+		[[nodiscard]] std::string to_string() const;
 	};
 
 	/// \brief TODOCUMENT

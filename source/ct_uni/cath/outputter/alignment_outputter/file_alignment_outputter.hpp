@@ -38,13 +38,13 @@ namespace cath {
 			/// \brief TODOCUMENT
 			common::clone_ptr<alignment_outputter> ostream_alignment_outputter_ptr;
 
-			std::unique_ptr<alignment_outputter> do_clone() const final;
+			[[nodiscard]] std::unique_ptr<alignment_outputter> do_clone() const final;
 			void do_output_alignment(const align::alignment_context &,
 			                         std::ostream &) const final;
-			bool do_involves_display_spec() const final;
-			std::string do_get_name() const final;
+			[[nodiscard]] bool                                 do_involves_display_spec() const final;
+			[[nodiscard]] std::string                          do_get_name() const final;
 
-		public:
+		  public:
 			file_alignment_outputter(const ::std::filesystem::path &,
 			                         const alignment_outputter &);
 		};

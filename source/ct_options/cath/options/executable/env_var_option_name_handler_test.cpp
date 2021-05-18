@@ -32,14 +32,13 @@ namespace cath {
 
 		/// \brief The env_var_option_name_handler_test_suite_fixture to assist in testing env_var_option_name_handler
 		struct env_var_option_name_handler_test_suite_fixture {
-		protected:
+		  protected:
 			~env_var_option_name_handler_test_suite_fixture() noexcept = default;
 
-		public:
-			options_description get_options_description() const {
+		  public:
+			[[nodiscard]] options_description get_options_description() const {
 				options_description temp_od;
-				temp_od.add_options()
-					( RECOGNISED_OPTION.c_str(), "a dummy options description" );
+				temp_od.add_options()( RECOGNISED_OPTION.c_str(), "a dummy options description" );
 				return temp_od;
 			}
 

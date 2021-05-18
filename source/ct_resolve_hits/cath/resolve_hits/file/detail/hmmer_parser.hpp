@@ -130,9 +130,9 @@ namespace cath {
 				inline static auto get_query_id_impl(T &prm_hmmer_parser) -> decltype( *prm_hmmer_parser.query_id );
 
 				void advance_to_block_or_prefix();
-				bool line_is_at_prefix() const;
-				bool line_is_empty() const;
-				bool line_is_summary() const;
+				[[nodiscard]] bool line_is_at_prefix() const;
+				[[nodiscard]] bool line_is_empty() const;
+				[[nodiscard]] bool line_is_summary() const;
 
 				str_opt & get_prefix_id();
 				str_opt & get_block_id();
@@ -143,14 +143,14 @@ namespace cath {
 				hmmer_parser(const hmmer_format &,
 				             const std::istream &&) = delete;
 
-				bool end_of_istream() const;
+				[[nodiscard]] bool end_of_istream() const;
 
-				bool line_is_at_block() const;
-				bool line_is_at_aln() const;
-				bool line_is_at_pipeline_stats() const;
-				bool line_is_summary_header() const;
+				[[nodiscard]] bool line_is_at_block() const;
+				[[nodiscard]] bool line_is_at_aln() const;
+				[[nodiscard]] bool line_is_at_pipeline_stats() const;
+				[[nodiscard]] bool line_is_summary_header() const;
 
-				bool alignment_is_empty() const;
+				[[nodiscard]] bool alignment_is_empty() const;
 
 				void advance_line();
 				void advance_line_to_nonempty();
@@ -166,13 +166,13 @@ namespace cath {
 				                      const bool &);
 
 				std::string & get_line();
-				const std::string & get_line() const;
+				[[nodiscard]] const std::string &get_line() const;
 
 				std::string & get_query_id();
-				const std::string & get_query_id() const;
+				[[nodiscard]] const std::string &get_query_id() const;
 
 				hmmer_summary_vec & get_summaries();
-				const hmmer_summary_vec & get_summaries() const;
+				[[nodiscard]] const hmmer_summary_vec &get_summaries() const;
 
 				static constexpr size_t LINE_BITSCORE_OFFSET    =  2;
 				static constexpr size_t LINE_COND_EVALUE_OFFSET =  4;

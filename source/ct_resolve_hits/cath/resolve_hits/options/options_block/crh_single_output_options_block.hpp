@@ -35,14 +35,14 @@ namespace cath {
 			/// \brief The spec this options_block configures
 			crh_single_output_spec the_spec;
 
-			std::unique_ptr<opts::options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
+			[[nodiscard]] std::string                          do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
+		  public:
 			/// \TODO Remove any options duplicated in crh_output_options_block once this
 			///       is only used for deprecated options within that. Then:
 			///        * propagate those changes to crh_single_output_spec
@@ -53,7 +53,7 @@ namespace cath {
 			static const std::string PO_GENERATE_HTML_OUTPUT;
 			static const std::string PO_JSON_OUTPUT;
 
-			const crh_single_output_spec & get_crh_single_output_spec() const;
+			[[nodiscard]] const crh_single_output_spec &get_crh_single_output_spec() const;
 		};
 
 		crh_out_format get_out_format(const crh_single_output_options_block &);

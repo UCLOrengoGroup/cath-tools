@@ -67,12 +67,12 @@ namespace cath {
 				                         const size_t &) const;
 				void check_window_width_matches(const size_t &);
 
-			protected:
-				size_t get_length_a() const;
-				size_t get_length_b() const;
-				size_t get_window_width() const;
+			  protected:
+				[[nodiscard]] size_t get_length_a() const;
+				[[nodiscard]] size_t get_length_b() const;
+				[[nodiscard]] size_t get_window_width() const;
 
-			public:
+			  public:
 				matrix_plotter(const size_t &,
 				               const size_t &);
 

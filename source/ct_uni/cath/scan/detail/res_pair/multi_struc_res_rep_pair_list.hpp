@@ -52,16 +52,16 @@ namespace cath {
 				multi_struc_res_rep_pair_list() = default;
 				explicit multi_struc_res_rep_pair_list(multi_struc_res_rep_pair_vec);
 
-				bool empty() const;
-				size_t size() const;
+				[[nodiscard]] bool               empty() const;
+				[[nodiscard]] size_t             size() const;
 				const multi_struc_res_rep_pair & operator[](const size_t &) const;
 
 				template <class... Ts>
 				void emplace_back(Ts&& ...);
 				void push_back(const multi_struc_res_rep_pair &);
 
-				const_iterator begin() const;
-				const_iterator end() const;
+				[[nodiscard]] const_iterator begin() const;
+				[[nodiscard]] const_iterator end() const;
 			};
 
 			/// \brief Ctor from a vector of multi_struc_res_rep_pair objects

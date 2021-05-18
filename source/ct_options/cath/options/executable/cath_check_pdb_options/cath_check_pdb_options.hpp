@@ -38,19 +38,19 @@ namespace cath {
 			/// \brief TODOCUMENT
 			check_pdb_options_block the_check_pdb_options_block;
 
-			std::string do_get_program_name() const final;
+			[[nodiscard]] std::string                              do_get_program_name() const final;
 			boost::program_options::positional_options_description get_positional_options() final;
-			str_opt do_get_error_or_help_string() const final;
+			[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
 
-			std::string do_get_help_prefix_string() const final;
-			std::string do_get_help_suffix_string() const final;
-			std::string do_get_overview_string() const final;
+			[[nodiscard]] std::string do_get_help_prefix_string() const final;
+			[[nodiscard]] std::string do_get_help_suffix_string() const final;
+			[[nodiscard]] std::string do_get_overview_string() const final;
 
-		public:
+		  public:
 			cath_check_pdb_options();
 
-			::std::filesystem::path get_pdb_file() const;
-			bool get_permit_no_atoms() const;
+			[[nodiscard]] ::std::filesystem::path get_pdb_file() const;
+			[[nodiscard]] bool                    get_permit_no_atoms() const;
 
 			static const std::string PROGRAM_NAME;
 		};

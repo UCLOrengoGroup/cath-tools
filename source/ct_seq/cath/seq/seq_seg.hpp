@@ -66,8 +66,8 @@ namespace cath {
 			constexpr seq_seg(const residx_t &,
 			                  const residx_t &);
 
-			constexpr const seq_arrow & get_start_arrow() const;
-			constexpr const seq_arrow & get_stop_arrow() const;
+			[[nodiscard]] constexpr const seq_arrow &get_start_arrow() const;
+			[[nodiscard]] constexpr const seq_arrow &get_stop_arrow() const;
 
 			constexpr seq_seg & set_start_arrow(const seq_arrow &);
 			constexpr seq_seg & set_stop_arrow(const seq_arrow &);

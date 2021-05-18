@@ -45,31 +45,31 @@ namespace cath {
 			using search_radius_t   = unsigned int;
 
 			/// \brief Get a short name that describes this key part
-			std::string get_name() const {
+			[[nodiscard]] std::string get_name() const {
 				return "from_to_index";
 			}
 
 			/// \brief Extract the relevant value from the specified res_pair
-			constexpr value_t get_value(const simple_locn_index &prm_res_pair ///< The res_pair from which the relevant value should be extracted
+			[[nodiscard]] constexpr value_t get_value(const simple_locn_index &prm_res_pair ///< The res_pair from which the relevant value should be extracted
 			                            ) const {
 				return prm_res_pair.index;
 			}
 
 			/// \brief Extract the search radius from the specified simple_locn_crit
-			constexpr search_radius_t get_search_radius(const simple_locn_crit &/*prm_criteria*/ ///< The criteria defining what is considered a match
+			[[nodiscard]] constexpr search_radius_t get_search_radius(const simple_locn_crit &/*prm_criteria*/ ///< The criteria defining what is considered a match
 			                                            ) const {
 				return 0;
 			}
 
 			/// \brief Generate the key part for the specified value
-			constexpr cell_index_t key_part(const value_t &/*prm_value*/ ///< The value for which the key_part should be extracted
+			[[nodiscard]] constexpr cell_index_t key_part(const value_t &/*prm_value*/ ///< The value for which the key_part should be extracted
 			                                ) const {
 				return {};
 			}
 
 			/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified value
 			///        within the specified search radius
-			cell_index_list_t close_key_parts(const value_t         &/*prm_value*/,        ///< The value for which the key_part should be extracted
+			[[nodiscard]] cell_index_list_t close_key_parts(const value_t         &/*prm_value*/,        ///< The value for which the key_part should be extracted
 			                                  const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 			                                  ) const {
 #ifndef NDEBUG
@@ -85,7 +85,7 @@ namespace cath {
 			/// \brief Generate the minimum key part within the specified search radius for the specified value
 			///
 			/// This is an extra that makes this usable for dense storing in a lattice
-			constexpr cell_index_t min_close_key_part(const value_t         &/*prm_value*/,    ///< The value for which the key_part should be extracted
+			[[nodiscard]] constexpr cell_index_t min_close_key_part(const value_t         &/*prm_value*/,    ///< The value for which the key_part should be extracted
 			                                          const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 			                                          ) const {
 				return
@@ -102,7 +102,7 @@ namespace cath {
 			/// \brief Generate the maximum key part within the specified search radius for the specified value
 			///
 			/// This is an extra that makes this usable for dense storing in a lattice
-			constexpr cell_index_t max_close_key_part(const value_t         &/*prm_value*/,    ///< The value for which the key_part should be extracted
+			[[nodiscard]] constexpr cell_index_t max_close_key_part(const value_t         &/*prm_value*/,    ///< The value for which the key_part should be extracted
 			                                          const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 			                                          ) const {
 				return

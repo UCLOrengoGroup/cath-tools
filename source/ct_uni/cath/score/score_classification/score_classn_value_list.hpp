@@ -78,17 +78,17 @@ namespace cath {
 			using const_iterator = score_classn_value_vec_citr;
 			using iterator       = score_classn_value_vec_citr;
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const score_classn_value & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 
-			const std::string get_name() const;
+			[[nodiscard]] const std::string get_name() const;
 
-			const score_classn_value_better_value & get_better_than() const;
+			[[nodiscard]] const score_classn_value_better_value &get_better_than() const;
 
 			void add_score_classn_value(const score_classn_value &);
 		};

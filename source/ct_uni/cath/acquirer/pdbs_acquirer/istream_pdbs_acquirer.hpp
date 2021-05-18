@@ -30,9 +30,9 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class istream_pdbs_acquirer final : public pdbs_acquirer {
-		private:
-			std::unique_ptr<pdbs_acquirer> do_clone() const final;
-			file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const final;
+		  private:
+			[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
+			file::pdb_list_name_set_list_pair            do_get_pdbs_and_names( std::istream & ) const final;
 		};
 
 	} // namespace opts

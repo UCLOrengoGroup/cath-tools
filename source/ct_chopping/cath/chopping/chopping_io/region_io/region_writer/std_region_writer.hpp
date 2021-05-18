@@ -33,9 +33,9 @@ namespace cath {
 			/// \brief TODOCUMENT
 			std_region_io_spec region_io_spec;
 
-			std::string do_write_region(const region &) const final;
+			[[nodiscard]] std::string do_write_region( const region & ) const final;
 
-		public:
+		  public:
 			explicit std_region_writer(std_region_io_spec);
 		};
 

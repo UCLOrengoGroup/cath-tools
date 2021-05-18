@@ -64,22 +64,22 @@ namespace cath {
 			::std::filesystem::path pymol_program;
 			::std::filesystem::path json_file;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-			::std::filesystem::path get_sup_to_pdb_file() const;
-			::std::filesystem::path get_sup_to_pdb_files_dir() const;
-			bool get_sup_to_stdout() const;
-			bool get_sup_to_pymol() const;
-			::std::filesystem::path get_pymol_program() const;
-			::std::filesystem::path get_sup_to_pymol_file() const;
-			::std::filesystem::path get_json_file() const;
+			[[nodiscard]] ::std::filesystem::path get_sup_to_pdb_file() const;
+			[[nodiscard]] ::std::filesystem::path get_sup_to_pdb_files_dir() const;
+			[[nodiscard]] bool                    get_sup_to_stdout() const;
+			[[nodiscard]] bool                    get_sup_to_pymol() const;
+			[[nodiscard]] ::std::filesystem::path get_pymol_program() const;
+			[[nodiscard]] ::std::filesystem::path get_sup_to_pymol_file() const;
+			[[nodiscard]] ::std::filesystem::path get_json_file() const;
 
-		public:
+		  public:
 			static const std::string PO_SUP_FILE;
 			static const std::string PO_SUP_FILES_DIR;
 			static const std::string PO_SUP_TO_STDOUT;
@@ -90,10 +90,11 @@ namespace cath {
 
 			/// \todo Consider adding a sister get_superposition_outputters() for getting outputters
 			///       that don't require a display_spec / superposition_content_spec
-			superposition_outputter_list get_superposition_outputters(const display_spec &,
-			                                                          const sup::superposition_content_spec & = sup::superposition_content_spec{},
-			                                                          const default_supn_outputter & = default_supn_outputter::NONE) const;
-			bool outputs_to_stdout() const;
+			[[nodiscard]] superposition_outputter_list get_superposition_outputters(
+			  const display_spec &,
+			  const sup::superposition_content_spec & = sup::superposition_content_spec{},
+			  const default_supn_outputter &          = default_supn_outputter::NONE ) const;
+			[[nodiscard]] bool outputs_to_stdout() const;
 		};
 	} // namespace opts
 } // namespace cath

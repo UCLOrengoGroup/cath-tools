@@ -42,8 +42,8 @@ namespace cath {
 		constexpr residue_id() = default;
 		constexpr residue_id( const chain_label &, residue_name );
 
-		constexpr const chain_label & get_chain_label() const;
-		constexpr const residue_name &get_residue_name() const;
+		[[nodiscard]] constexpr const chain_label & get_chain_label() const;
+		[[nodiscard]] constexpr const residue_name &get_residue_name() const;
 
 		/// \brief Return whether the two specified residue_ids are identical
 		///

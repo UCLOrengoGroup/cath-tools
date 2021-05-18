@@ -52,13 +52,13 @@ namespace cath {
 			backbone_complete_indices() = default;
 			explicit backbone_complete_indices(size_vec);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const size_t & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		size_t get_index_of_backbone_complete_index(const backbone_complete_indices &,

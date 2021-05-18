@@ -54,11 +54,11 @@ namespace cath {
 			                geom::coord,
 			                geom::coord);
 
-			size_t         get_start_residue_num() const;
-			size_t         get_stop_residue_num() const;
-			sec_struc_type get_type() const;
-			geom::coord    get_midpoint() const;
-			geom::coord    get_unit_dirn() const;
+			[[nodiscard]] size_t         get_start_residue_num() const;
+			[[nodiscard]] size_t         get_stop_residue_num() const;
+			[[nodiscard]] sec_struc_type get_type() const;
+			[[nodiscard]] geom::coord    get_midpoint() const;
+			[[nodiscard]] geom::coord    get_unit_dirn() const;
 		};
 
 		bool operator==(const sec_file_record &,

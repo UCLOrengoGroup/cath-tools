@@ -58,18 +58,18 @@ namespace cath {
 			/// adding the references to the options_description.
 			str_bool_map values;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
+		  public:
 			explicit detail_help_options_block(str_str_str_pair_map);
 
-			bool has_help_string() const;
-			std::string help_string() const;
+			[[nodiscard]] bool        has_help_string() const;
+			[[nodiscard]] std::string help_string() const;
 		};
 	} // namespace opts
 } // namespace cath

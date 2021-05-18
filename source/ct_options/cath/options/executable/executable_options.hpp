@@ -104,43 +104,41 @@ namespace cath {
 			/// This is used in error/help strings
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual std::string do_get_program_name() const = 0;
+			[[nodiscard]] virtual std::string do_get_program_name() const = 0;
 
 			/// \brief Review all specified options and return a string containing any errors or a help string
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			virtual str_opt do_get_error_or_help_string() const = 0;
+			[[nodiscard]] virtual str_opt do_get_error_or_help_string() const = 0;
 
 			virtual boost::program_options::positional_options_description get_positional_options();
 
-			virtual std::string do_get_help_prefix_string() const = 0;
-			virtual std::string do_get_help_suffix_string() const = 0;
-			virtual std::string do_get_overview_string() const = 0;
+			[[nodiscard]] virtual std::string do_get_help_prefix_string() const = 0;
+			[[nodiscard]] virtual std::string do_get_help_suffix_string() const = 0;
+			[[nodiscard]] virtual std::string do_get_overview_string() const    = 0;
 
 			template <typename FN>
-			void prog_opts_try(str_opt &,
-			                   FN &&,
-			                   const str_opt & = ::std::nullopt);
+			void prog_opts_try( str_opt &, FN &&, const str_opt & = ::std::nullopt );
 
-		protected:
-			std::string get_standard_usage_error_string() const;
-			std::string get_program_name() const;
-			std::string get_help_prefix_string() const;
-			std::string get_help_suffix_string() const;
-			std::string get_overview_string() const;
-			const boost::program_options::variables_map & get_variables_map() const;
+		  protected:
+			[[nodiscard]] std::string                                  get_standard_usage_error_string() const;
+			[[nodiscard]] std::string                                  get_program_name() const;
+			[[nodiscard]] std::string                                  get_help_prefix_string() const;
+			[[nodiscard]] std::string                                  get_help_suffix_string() const;
+			[[nodiscard]] std::string                                  get_overview_string() const;
+			[[nodiscard]] const boost::program_options::variables_map &get_variables_map() const;
 
-			void add_options_block(options_block &);
-			void add_string(std::string);
+			void add_options_block( options_block & );
+			void add_string( std::string );
 
-			static void add_all_options_to_description(boost::program_options::options_description &,
-			                                           options_block &,
-			                                           const size_t &);
-			static void add_visble_options_to_description(boost::program_options::options_description &,
-			                                              options_block &,
-			                                              const size_t &);
+			static void add_all_options_to_description( boost::program_options::options_description &,
+			                                            options_block &,
+			                                            const size_t & );
+			static void add_visble_options_to_description( boost::program_options::options_description &,
+			                                               options_block &,
+			                                               const size_t & );
 
-		public:
+		  public:
 			executable_options() = default;
 			virtual ~executable_options() noexcept = default;
 
@@ -157,7 +155,7 @@ namespace cath {
 			                   const char * const [],
 			                   const parse_sources & = parse_sources::CMND_ENV_AND_FILE);
 
-			str_opt get_error_or_help_string() const;
+			[[nodiscard]] str_opt get_error_or_help_string() const;
 		};
 
 		/// \brief Try a program options action and handle any exceptions that are thrown

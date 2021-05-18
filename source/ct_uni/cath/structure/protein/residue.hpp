@@ -107,18 +107,18 @@ namespace cath {
 		residue & set_sec_struc_type(const sec_struc_type &);
 		residue & set_access(const size_t &);
 
-		const residue_id & get_pdb_residue_id() const;
-		amino_acid get_amino_acid() const;
-		inline const geom::coord & get_carbon_alpha_coord() const;
-		inline const geom::coord & get_carbon_beta_coord() const;
+		[[nodiscard]] const residue_id &        get_pdb_residue_id() const;
+		[[nodiscard]] amino_acid                get_amino_acid() const;
+		[[nodiscard]] inline const geom::coord &get_carbon_alpha_coord() const;
+		[[nodiscard]] inline const geom::coord &get_carbon_beta_coord() const;
 
-		size_t get_sec_struc_number() const;
-		sec_struc_type get_sec_struc_type() const;
+		[[nodiscard]] size_t         get_sec_struc_number() const;
+		[[nodiscard]] sec_struc_type get_sec_struc_type() const;
 
-		inline const geom::rotation & get_frame() const;
-		const geom::doub_angle & get_phi_angle() const;
-		const geom::doub_angle & get_psi_angle() const;
-		size_t get_access() const;
+		[[nodiscard]] inline const geom::rotation &get_frame() const;
+		[[nodiscard]] const geom::doub_angle &     get_phi_angle() const;
+		[[nodiscard]] const geom::doub_angle &     get_psi_angle() const;
+		[[nodiscard]] size_t                       get_access() const;
 
 		static geom::doub_angle DEFAULT_PHI_PSI();
 

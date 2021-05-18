@@ -34,22 +34,22 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class chopping_format {
-		private:
-			virtual std::unique_ptr<chopping_format> do_clone() const = 0;
+		  private:
+			[[nodiscard]] virtual std::unique_ptr<chopping_format> do_clone() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual bool do_represents_fragments() const = 0;
+			[[nodiscard]] virtual bool do_represents_fragments() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual domain do_parse_domain(const std::string &) const = 0;
+			[[nodiscard]] virtual domain do_parse_domain( const std::string & ) const = 0;
 
 			/// \brief Pure virtual method with which each concrete format must define how to write a region to the specified string
-			virtual std::string do_write_region(const region &) const = 0;
+			[[nodiscard]] virtual std::string do_write_region( const region & ) const = 0;
 
 			/// \brief Pure virtual method with which each concrete format must define how to write a domain to the specified string
-			virtual std::string do_write_domain(const domain &) const = 0;
+			[[nodiscard]] virtual std::string do_write_domain( const domain & ) const = 0;
 
-		public:
+		  public:
 			chopping_format() = default;
 			virtual ~chopping_format() noexcept = default;
 
@@ -58,14 +58,14 @@ namespace cath {
 			chopping_format & operator=(const chopping_format &) = default;
 			chopping_format & operator=(chopping_format &&) noexcept = default;
 
-			bool represents_fragments() const;
+			[[nodiscard]] bool represents_fragments() const;
 
-			domain parse_domain(const std::string &) const;
+			[[nodiscard]] domain parse_domain( const std::string & ) const;
 
-			std::string write_region(const region &) const;
-			std::string write_domain(const domain &) const;
+			[[nodiscard]] std::string write_region( const region & ) const;
+			[[nodiscard]] std::string write_domain( const domain & ) const;
 
-			std::unique_ptr<chopping_format> clone() const;
+			[[nodiscard]] std::unique_ptr<chopping_format> clone() const;
 		};
 
 		/// \brief TODOCUMENT

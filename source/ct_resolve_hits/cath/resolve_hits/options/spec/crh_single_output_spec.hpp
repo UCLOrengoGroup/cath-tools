@@ -75,11 +75,10 @@ namespace cath {
 			/// \brief The default value for whether to output the results in JSON format
 			static constexpr bool                DEFAULT_JSON_OUTPUT          = false;
 
-
-			const path_opt & get_output_file() const;
-			const bool & get_summarise() const;
-			const bool & get_generate_html_output() const;
-			const bool & get_json_output() const;
+			[[nodiscard]] const path_opt &get_output_file() const;
+			[[nodiscard]] const bool &    get_summarise() const;
+			[[nodiscard]] const bool &    get_generate_html_output() const;
+			[[nodiscard]] const bool &    get_json_output() const;
 
 			crh_single_output_spec & set_output_file(const ::std::filesystem::path &);
 			crh_single_output_spec & set_summarise(const bool &);

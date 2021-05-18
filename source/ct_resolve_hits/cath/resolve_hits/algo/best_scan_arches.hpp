@@ -56,9 +56,9 @@ namespace cath {
 		public:
 			explicit best_scan_arches(const seq::residx_t &);
 
-			const scored_arch_proxy & get_best_scored_arch_up_to_arrow(const seq::seq_arrow &) const;
+			[[nodiscard]] const scored_arch_proxy &get_best_scored_arch_up_to_arrow( const seq::seq_arrow & ) const;
 
-			const scored_arch_proxy & get_best_scored_arch_so_far() const;
+			[[nodiscard]] const scored_arch_proxy &get_best_scored_arch_so_far() const;
 
 			resscr_t extend_up_to_arrow(const seq::seq_arrow &);
 

@@ -62,14 +62,14 @@ namespace cath {
 		protected:
 			~quat_rot_test_suite_fixture() noexcept = default;
 
-			rotation_vec make_all_rotations_between_coords() const;
+			[[nodiscard]] rotation_vec make_all_rotations_between_coords() const;
 
 			template <typename T>
 			vector<quat_rot_impl<T> > speed_test() const;
 
 			template <typename T>
 			vector<quat_rot_impl<T> > make_all_quat_rots_between_coords() const;
-			doub_doub_pair_vec get_num_degrees_and_distance_1s() const;
+			[[nodiscard]] doub_doub_pair_vec get_num_degrees_and_distance_1s() const;
 
 			const coord_list example_coords{ coord_vec{
 				{  1.0000000000000,  0.0000000000000,  0.0000000000000 },

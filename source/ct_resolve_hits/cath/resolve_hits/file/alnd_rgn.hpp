@@ -43,9 +43,9 @@ namespace cath {
 			         seq::seq_arrow,
 			         const seq::residx_t &) noexcept;
 
-			const seq::seq_arrow & get_start_res_a() const;
-			const seq::seq_arrow & get_start_res_b() const;
-			const seq::residx_t & get_length() const;
+			[[nodiscard]] const seq::seq_arrow &get_start_res_a() const;
+			[[nodiscard]] const seq::seq_arrow &get_start_res_b() const;
+			[[nodiscard]] const seq::residx_t & get_length() const;
 		};
 
 		std::string to_string(const alnd_rgn &);

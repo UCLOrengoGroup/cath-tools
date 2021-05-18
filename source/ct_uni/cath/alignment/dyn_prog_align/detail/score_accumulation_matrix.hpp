@@ -70,16 +70,16 @@ namespace cath {
 				           const size_type &,
 				           const size_type &);
 
-				size_type get_length_a() const;
-				size_type get_length_b() const;
-				size_type get_window_width() const;
+				[[nodiscard]] size_type get_length_a() const;
+				[[nodiscard]] size_type get_length_b() const;
+				[[nodiscard]] size_type get_window_width() const;
 
 				void set_score_towards_end_at_point(const score_accumulation_matrix::size_type &,
 				                                    const score_accumulation_matrix::size_type &,
 				                                    const score_type &);
 
-				score_type get_score_towards_end_at_point(const score_accumulation_matrix::size_type &,
-				                                          const score_accumulation_matrix::size_type &) const;
+				[[nodiscard]] score_type get_score_towards_end_at_point( const score_accumulation_matrix::size_type &,
+				                                                         const score_accumulation_matrix::size_type & ) const;
 			};
 
 			score_accumulation_matrix make_uninitialised_score_accumulation_matrix();

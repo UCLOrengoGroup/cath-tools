@@ -30,10 +30,10 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class region_reader {
-		private:
-			virtual region do_read_region(const std::string &) const = 0;
+		  private:
+			[[nodiscard]] virtual region do_read_region( const std::string & ) const = 0;
 
-		public:
+		  public:
 			region_reader() = default;
 			virtual ~region_reader() noexcept = default;
 
@@ -42,7 +42,7 @@ namespace cath {
 			region_reader & operator=(const region_reader &) = default;
 			region_reader & operator=(region_reader &&) noexcept = default;
 
-			region read_region(const std::string &) const;
+			[[nodiscard]] region read_region( const std::string & ) const;
 		};
 
 	} // namespace chop

@@ -47,20 +47,20 @@ namespace cath {
 			/// \brief TODOCUMENT
 			std::shared_ptr<align::common_atom_selection_policy> comm_atom_seln_pol_ptr;
 
-			const align::common_residue_selection_policy & get_comm_res_seln_pol_ptr_cref() const;
-			const align::common_atom_selection_policy    & get_comm_atom_seln_pol_ptr_cref() const;
+			[[nodiscard]] const align::common_residue_selection_policy &get_comm_res_seln_pol_ptr_cref() const;
+			[[nodiscard]] const align::common_atom_selection_policy &   get_comm_atom_seln_pol_ptr_cref() const;
 
-		public:
+		  public:
 			selection_policy_acquirer(const align::common_residue_selection_policy &,
 			                          const align::common_atom_selection_policy &);
 
-			geom::coord_list_coord_list_pair get_common_coords(const align::alignment &,
-			                                                   const file::pdb &,
-			                                                   const file::pdb &,
-			                                                   // const str_veSc &,
-			                                                   const size_t &,
-			                                                   const size_t &) const;
-			std::string get_descriptive_name() const;
+			[[nodiscard]] geom::coord_list_coord_list_pair get_common_coords( const align::alignment &,
+			                                                                  const file::pdb &,
+			                                                                  const file::pdb &,
+			                                                                  // const str_veSc &,
+			                                                                  const size_t &,
+			                                                                  const size_t & ) const;
+			[[nodiscard]] std::string                      get_descriptive_name() const;
 		};
 
 		selection_policy_acquirer get_selection_policy_acquirer(const alignment_input_spec &);

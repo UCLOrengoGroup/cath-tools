@@ -49,7 +49,7 @@ namespace cath {
 				/// \brief TODOCUMENT
 				// hrc_duration_opt  align_all_durn;
 
-				const durn_mem_pair & get_build_durn_and_size(const scan_build_type &) const;
+				[[nodiscard]] const durn_mem_pair &get_build_durn_and_size( const scan_build_type & ) const;
 
 			public:
 				scan_metrics(const durn_mem_pair &,
@@ -58,11 +58,11 @@ namespace cath {
 				             const durn_mem_pair &,
 				             const hrc_duration &);
 
-				const durn_mem_pair & get_query_strucs_metrics() const;
-				const durn_mem_pair & get_query_index_metrics() const;
-				const durn_mem_pair & get_index_strucs_metrics() const;
-				const durn_mem_pair & get_index_index_metrics() const;
-				const hrc_duration & get_scan_durn() const;
+				[[nodiscard]] const durn_mem_pair &get_query_strucs_metrics() const;
+				[[nodiscard]] const durn_mem_pair &get_query_index_metrics() const;
+				[[nodiscard]] const durn_mem_pair &get_index_strucs_metrics() const;
+				[[nodiscard]] const durn_mem_pair &get_index_index_metrics() const;
+				[[nodiscard]] const hrc_duration & get_scan_durn() const;
 			};
 
 	} // namespace scan

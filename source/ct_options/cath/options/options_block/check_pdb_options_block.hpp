@@ -39,20 +39,20 @@ namespace cath {
 			/// \brief Whether to permit no ATOM records
 			bool permit_no_atoms;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
+		  public:
 			explicit check_pdb_options_block();
 
-			::std::filesystem::path get_pdb_file() const;
-			bool get_permit_no_atoms() const;
+			[[nodiscard]] ::std::filesystem::path get_pdb_file() const;
+			[[nodiscard]] bool                    get_permit_no_atoms() const;
 
 			static const std::string PO_PDB_FILE;
 			static const std::string PO_PERMIT;

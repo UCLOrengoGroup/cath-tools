@@ -55,8 +55,8 @@ namespace cath {
 			            scan_stride);
 
 			const res_pair_keyer<KPs...> & get_keyer() const;
-			const quad_criteria & get_criteria() const;
-			const scan_stride & get_scan_stride() const;
+			[[nodiscard]] const quad_criteria &get_criteria() const;
+			[[nodiscard]] const scan_stride &  get_scan_stride() const;
 		};
 
 		/// \brief TODOCUMENT

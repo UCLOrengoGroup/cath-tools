@@ -54,9 +54,9 @@ namespace cath {
 			               name_set_list,
 			               chop::region_vec_opt_vec);
 
-			const file::pdb_list & get_pdbs() const;
-			const name_set_list & get_name_sets() const;
-			const chop::region_vec_opt_vec & get_regions() const;
+			[[nodiscard]] const file::pdb_list &          get_pdbs() const;
+			[[nodiscard]] const name_set_list &           get_name_sets() const;
+			[[nodiscard]] const chop::region_vec_opt_vec &get_regions() const;
 
 			strucs_context & set_pdbs(const file::pdb_list &);
 		};

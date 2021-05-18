@@ -80,10 +80,12 @@ BOOST_AUTO_TEST_CASE(ctor_arg_with_dup_throws) {
 }
 
 /// \brief Check that get_index_of_residue_name() throws and contains_residue_name() returns false if passed a previously unseen string
-BOOST_AUTO_TEST_CASE(unseens_work) {
+BOOST_AUTO_TEST_CASE( unseens_work ) {
 	const residue_name_align_map my_map( valid_names );
-	BOOST_CHECK_THROW(        my_map.get_index_of_residue_name_string( "my_previously_unseen_string" ), invalid_argument_exception );
-	BOOST_CHECK_EQUAL( false, my_map.contains_residue_name_string    ( "my_previously_unseen_string" )                             );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x =
+	                     my_map.get_index_of_residue_name_string( "my_previously_unseen_string" ),
+	                   invalid_argument_exception );
+	BOOST_CHECK_EQUAL( false, my_map.contains_residue_name_string( "my_previously_unseen_string" ) );
 }
 
 /// \brief Check that the residue_name_align_map insertion operator correctly summarises the residue_name_align_map

@@ -31,28 +31,28 @@ namespace cath {
 	/// \brief TODOCUMENT
 	class entry_querier {
 	private:
-		virtual size_t       do_get_length(const cath::protein &) const = 0;
-		virtual double       do_get_gap_penalty_ratio() const = 0;
-		virtual size_t       do_num_excluded_on_either_size() const = 0;
-		virtual double       do_optimum_single_score() const = 0;
-		virtual std::string  do_get_entry_name() const = 0;
-		virtual score_type   do_distance_score__offset_1(const cath::protein &,
+		[[nodiscard]] virtual size_t       do_get_length(const cath::protein &) const = 0;
+		[[nodiscard]] virtual double       do_get_gap_penalty_ratio() const = 0;
+		[[nodiscard]] virtual size_t       do_num_excluded_on_either_size() const = 0;
+		[[nodiscard]] virtual double       do_optimum_single_score() const = 0;
+		[[nodiscard]] virtual std::string  do_get_entry_name() const = 0;
+		[[nodiscard]] virtual score_type   do_distance_score__offset_1(const cath::protein &,
 		                                                 const cath::protein &,
 		                                                 const size_t &,
 		                                                 const size_t &,
 		                                                 const size_t &,
 		                                                 const size_t &) const = 0;
-		virtual bool         do_are_comparable__offset_1(const cath::protein &,
+		[[nodiscard]] virtual bool         do_are_comparable__offset_1(const cath::protein &,
 		                                                 const cath::protein &,
 		                                                 const size_t &,
 		                                                 const size_t &,
 		                                                 const size_t &,
 		                                                 const size_t &) const = 0;
-		virtual bool         do_are_similar__offset_1(const cath::protein &,
+		[[nodiscard]] virtual bool         do_are_similar__offset_1(const cath::protein &,
 		                                              const cath::protein &,
 		                                              const size_t &,
 		                                              const size_t &) const = 0;
-		virtual bool         do_temp_hacky_is_residue() const = 0;
+		[[nodiscard]] virtual bool         do_temp_hacky_is_residue() const = 0;
 
 	public:
 		entry_querier() = default;
@@ -63,28 +63,28 @@ namespace cath {
 		entry_querier & operator=(const entry_querier &) = default;
 		entry_querier & operator=(entry_querier &&) noexcept = default;
 
-		size_t       get_length(const cath::protein &) const;
-		double       get_gap_penalty_ratio() const;
-		size_t       num_excluded_on_either_size() const;
-		double       optimum_single_score() const;
-		std::string  get_entry_name() const;
-		score_type   distance_score__offset_1(const cath::protein &,
+		[[nodiscard]] size_t       get_length(const cath::protein &) const;
+		[[nodiscard]] double       get_gap_penalty_ratio() const;
+		[[nodiscard]] size_t       num_excluded_on_either_size() const;
+		[[nodiscard]] double       optimum_single_score() const;
+		[[nodiscard]] std::string  get_entry_name() const;
+		[[nodiscard]] score_type   distance_score__offset_1(const cath::protein &,
 		                                      const cath::protein &,
 		                                      const size_t &,
 		                                      const size_t &,
 		                                      const size_t &,
 		                                      const size_t &) const;
-		bool         are_comparable__offset_1(const cath::protein &,
+		[[nodiscard]] bool         are_comparable__offset_1(const cath::protein &,
 		                                      const cath::protein &,
 		                                      const size_t &,
 		                                      const size_t &,
 		                                      const size_t &,
 		                                      const size_t &) const;
-		bool         are_similar__offset_1(const cath::protein &,
+		[[nodiscard]] bool         are_similar__offset_1(const cath::protein &,
 		                                   const cath::protein &,
 		                                   const size_t &,
 		                                   const size_t &) const;
-		bool         temp_hacky_is_residue() const;
+		[[nodiscard]] bool         temp_hacky_is_residue() const;
 
 		/// \brief This appears to be used to multiply up int values to achieve one decimal place
 		///        for score calculations

@@ -56,8 +56,8 @@ namespace cath {
 				filter_vs_full_score(const double &,
 				                     const double &);
 
-				const double & get_filter_score() const;
-				const double & get_full_score() const;
+				[[nodiscard]] const double &get_filter_score() const;
+				[[nodiscard]] const double &get_full_score() const;
 
 				static const std::string STRING_PREFIX;
 				static const std::string STRING_SUFFIX;

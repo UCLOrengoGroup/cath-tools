@@ -82,14 +82,14 @@ namespace cath {
 			                       const detail::angle_type &,
 			                       const detail::angle_type &);
 
-			const detail::index_type & get_from_index() const;
-			const detail::index_type & get_to_index() const;
-			const detail::view_type & get_view() const;
-			const detail::frame_quat_rot & get_frame() const;
-			const detail::angle_type & get_from_phi_angle() const;
-			const detail::angle_type & get_from_psi_angle() const;
-			const detail::angle_type & get_to_phi_angle() const;
-			const detail::angle_type & get_to_psi_angle() const;
+			[[nodiscard]] const detail::index_type &    get_from_index() const;
+			[[nodiscard]] const detail::index_type &    get_to_index() const;
+			[[nodiscard]] const detail::view_type &     get_view() const;
+			[[nodiscard]] const detail::frame_quat_rot &get_frame() const;
+			[[nodiscard]] const detail::angle_type &    get_from_phi_angle() const;
+			[[nodiscard]] const detail::angle_type &    get_from_psi_angle() const;
+			[[nodiscard]] const detail::angle_type &    get_to_phi_angle() const;
+			[[nodiscard]] const detail::angle_type &    get_to_psi_angle() const;
 		};
 
 		/// \brief Getter for from_index

@@ -43,7 +43,7 @@ namespace cath {
 					using linear_dim_type = vci_linear_dim_spec_view_angle<vci_linear_dim_spec_view_angle>;
 
 					/// \brief TODOCUMENT
-					std::string get_name() const {
+					[[nodiscard]] std::string get_name() const {
 						return F().get_name();
 					}
 

@@ -141,7 +141,7 @@ namespace cath {
 				std::tuple<std::string &, seq::seq_seg_vec &, alnd_rgn_vec &> process_aln(const seq::residx_t &,
 				                                                                          const bool &);
 
-				bool empty() const;
+				[[nodiscard]] bool empty() const;
 			};
 
 			/// \brief Update the segments based on the parsed information

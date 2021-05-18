@@ -47,11 +47,11 @@ namespace cath {
 		public:
 			query_id_recorder() = default;
 
-			size_t size() const;
-			bool empty() const;
+			[[nodiscard]] size_t size() const;
+			[[nodiscard]] bool   empty() const;
 
-			bool seen_query_id(const std::string &) const;
-			bool seen_query_id(const boost::string_ref &) const;
+			[[nodiscard]] bool seen_query_id( const std::string & ) const;
+			[[nodiscard]] bool seen_query_id( const boost::string_ref & ) const;
 
 			query_id_recorder & add_query_id(const std::string &);
 			query_id_recorder & add_query_id(const boost::string_ref &);

@@ -42,16 +42,16 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class pdbs_acquirer {
-		private:
+		  private:
 			/// \brief Pure virtual method with which each concrete pdbs_acquirer must define how to create a clone of itself
-			virtual std::unique_ptr<pdbs_acquirer> do_clone() const = 0;
-			
-			/// \brief TODOCUMENT
-			virtual file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const = 0;
+			[[nodiscard]] virtual std::unique_ptr<pdbs_acquirer> do_clone() const = 0;
 
-		public:
+			/// \brief TODOCUMENT
+			virtual file::pdb_list_name_set_list_pair do_get_pdbs_and_names( std::istream & ) const = 0;
+
+		  public:
 			pdbs_acquirer() = default;
-			std::unique_ptr<pdbs_acquirer> clone() const;
+			[[nodiscard]] std::unique_ptr<pdbs_acquirer> clone() const;
 			virtual ~pdbs_acquirer() noexcept = default;
 
 			pdbs_acquirer(const pdbs_acquirer &) = default;

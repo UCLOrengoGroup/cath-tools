@@ -57,10 +57,10 @@ namespace cath {
 			                  str_opt = ::std::nullopt,
 			                  str_opt = ::std::nullopt);
 
-			const std::string & get_name_from_acq() const;
-			const path_opt & get_primary_source_file() const;
-			const str_opt & get_specified_id() const;
-			const str_opt & get_domain_name_from_regions() const;
+			[[nodiscard]] const std::string &get_name_from_acq() const;
+			[[nodiscard]] const path_opt &   get_primary_source_file() const;
+			[[nodiscard]] const str_opt &    get_specified_id() const;
+			[[nodiscard]] const str_opt &    get_domain_name_from_regions() const;
 
 			name_set & set_name_from_acq(std::string);
 			name_set & set_primary_source_file(path_opt);

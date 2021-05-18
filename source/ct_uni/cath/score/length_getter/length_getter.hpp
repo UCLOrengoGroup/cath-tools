@@ -52,35 +52,33 @@ namespace cath {
 		                              boost::totally_ordered<length_getter> > {
 		private:
 			/// \brief Pure virtual method with which each concrete length_getter must define how to create a clone of itself
-			virtual std::unique_ptr<length_getter> do_clone() const = 0;
+		  [[nodiscard]] virtual std::unique_ptr<length_getter> do_clone() const = 0;
 
-			virtual boost::logic::tribool do_higher_is_better() const = 0;
+		  [[nodiscard]] virtual boost::logic::tribool do_higher_is_better() const = 0;
 
-			/// \brief TODOCUMENT
-			virtual size_t do_get_length(const align::alignment &,
-			                             const protein &,
-			                             const protein &) const = 0;
+		  /// \brief TODOCUMENT
+		  [[nodiscard]] virtual size_t do_get_length( const align::alignment &, const protein &, const protein & ) const = 0;
 
-			/// \brief TODOCUMENT
-			virtual length_getter_category do_get_length_getter_category() const = 0;
+		  /// \brief TODOCUMENT
+		  [[nodiscard]] virtual length_getter_category do_get_length_getter_category() const = 0;
 
-			/// \brief TODOCUMENT
-			virtual std::string do_id_name() const = 0;
+		  /// \brief TODOCUMENT
+		  [[nodiscard]] virtual std::string do_id_name() const = 0;
 
-			/// \brief TODOCUMENT
-			virtual str_bool_pair_vec do_short_name_suffixes() const = 0;
+		  /// \brief TODOCUMENT
+		  [[nodiscard]] virtual str_bool_pair_vec do_short_name_suffixes() const = 0;
 
-			/// \brief TODOCUMENT
-			virtual std::string do_long_name() const = 0;
+		  /// \brief TODOCUMENT
+		  [[nodiscard]] virtual std::string do_long_name() const = 0;
 
-			/// \brief TODOCUMENT
-			virtual std::string do_description() const = 0;
+		  /// \brief TODOCUMENT
+		  [[nodiscard]] virtual std::string do_description() const = 0;
 
-			/// \brief TODOCUMENT
-			virtual const std::string do_description_brackets_string() const = 0;
+		  /// \brief TODOCUMENT
+		  [[nodiscard]] virtual const std::string do_description_brackets_string() const = 0;
 
-			/// \brief TODOCUMENT
-			virtual bool do_less_than_with_same_dynamic_type(const length_getter &) const = 0;
+		  /// \brief TODOCUMENT
+		  [[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const length_getter & ) const = 0;
 
 		public:
 			length_getter() = default;
@@ -91,26 +89,24 @@ namespace cath {
 			length_getter & operator=(const length_getter &) = default;
 			length_getter & operator=(length_getter &&) noexcept = default;
 
-			std::unique_ptr<length_getter> clone() const;
+			[[nodiscard]] std::unique_ptr<length_getter> clone() const;
 
-			boost::logic::tribool higher_is_better() const;
+			[[nodiscard]] boost::logic::tribool higher_is_better() const;
 
-			size_t get_length(const align::alignment &,
-			                  const protein &,
-			                  const protein &) const;
+			[[nodiscard]] size_t get_length( const align::alignment &, const protein &, const protein & ) const;
 
-			length_getter_category get_length_getter_category() const;
+			[[nodiscard]] length_getter_category get_length_getter_category() const;
 
-			std::string human_friendly_short_name() const;
-			std::string full_short_name() const;
+			[[nodiscard]] std::string human_friendly_short_name() const;
+			[[nodiscard]] std::string full_short_name() const;
 
-			std::string id_name() const;
-			str_bool_pair_vec short_name_suffixes() const;
-			std::string long_name() const;
-			std::string description() const;
-			const std::string description_brackets_string() const;
+			[[nodiscard]] std::string       id_name() const;
+			[[nodiscard]] str_bool_pair_vec short_name_suffixes() const;
+			[[nodiscard]] std::string       long_name() const;
+			[[nodiscard]] std::string       description() const;
+			[[nodiscard]] const std::string description_brackets_string() const;
 
-			bool less_than_with_same_dynamic_type(const length_getter &) const;
+			[[nodiscard]] bool less_than_with_same_dynamic_type( const length_getter & ) const;
 		};
 
 		str_bool_pair_vec length_getter_as_short_name_suffixes(const length_getter &,

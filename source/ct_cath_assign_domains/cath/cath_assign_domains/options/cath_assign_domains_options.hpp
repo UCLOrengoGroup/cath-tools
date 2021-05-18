@@ -44,20 +44,20 @@ namespace cath {
 			/// \brief The cath-assign-domains options block
 			cath_assign_domains_options_block the_cath_assign_domains_options_block;
 
-			std::string do_get_program_name() const final;
-			str_opt do_get_error_or_help_string() const final;
+			[[nodiscard]] std::string do_get_program_name() const final;
+			[[nodiscard]] str_opt     do_get_error_or_help_string() const final;
 
-			std::string do_get_help_prefix_string() const final;
-			std::string do_get_help_suffix_string() const final;
-			std::string do_get_overview_string() const final;
+			[[nodiscard]] std::string do_get_help_prefix_string() const final;
+			[[nodiscard]] std::string do_get_help_suffix_string() const final;
+			[[nodiscard]] std::string do_get_overview_string() const final;
 
-		public:
+		  public:
 			cath_assign_domains_options();
 
-			const ::std::filesystem::path & get_rbf_svm_file() const;
-			const ::std::filesystem::path & get_data_data_file() const;
-			const ::std::filesystem::path & get_sf_of_dom_file() const;
-			const str_vec & get_forbidden_nodes() const;
+			[[nodiscard]] const ::std::filesystem::path &get_rbf_svm_file() const;
+			[[nodiscard]] const ::std::filesystem::path &get_data_data_file() const;
+			[[nodiscard]] const ::std::filesystem::path &get_sf_of_dom_file() const;
+			[[nodiscard]] const str_vec &                get_forbidden_nodes() const;
 
 			static const std::string PROGRAM_NAME;
 		};

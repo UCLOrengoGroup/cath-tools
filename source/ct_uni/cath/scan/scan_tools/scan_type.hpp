@@ -34,10 +34,10 @@ namespace cath {
 			/// \brief TODOCUMENT
 			class scan_type {
 			private:
-				virtual std::unique_ptr<scan_type> do_clone() const = 0;
+				[[nodiscard]] virtual std::unique_ptr<scan_type> do_clone() const = 0;
 
-				virtual std::pair<record_scores_scan_action, scan_metrics> do_perform_scan(const protein_list &,
-				                                                                           const protein_list &) const = 0;
+				[[nodiscard]] virtual std::pair<record_scores_scan_action, scan_metrics> do_perform_scan( const protein_list &,
+				                                                                                          const protein_list & ) const = 0;
 
 			public:
 				scan_type() = default;
@@ -48,7 +48,7 @@ namespace cath {
 				scan_type & operator=(const scan_type &) = default;
 				scan_type & operator=(scan_type &&) noexcept = default;
 
-				std::unique_ptr<scan_type> clone() const;
+				[[nodiscard]] std::unique_ptr<scan_type> clone() const;
 
 				std::pair<record_scores_scan_action, scan_metrics> perform_scan(const protein_list &,
 				                                                                const protein_list &);

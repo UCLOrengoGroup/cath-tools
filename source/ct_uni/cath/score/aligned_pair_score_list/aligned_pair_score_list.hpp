@@ -50,14 +50,14 @@ namespace cath {
 			void add_aligned_pair_score(const aligned_pair_score &);
 
 			/// @{
-			size_t size() const;
+			[[nodiscard]] size_t       size() const;
 			aligned_pair_score & operator[](const size_t &);
 			const aligned_pair_score & operator[](const size_t &) const;
 			/// @}
 
 			/// @{
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 			/// @}
 		};
 

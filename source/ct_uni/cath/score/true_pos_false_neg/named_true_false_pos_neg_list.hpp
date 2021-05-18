@@ -42,8 +42,8 @@ namespace cath {
 			named_true_false_pos_neg_list(true_false_pos_neg_vec,
 			                              std::string);
 
-			const true_false_pos_neg_list & get_list() const;
-			const std::string & get_name() const;
+			[[nodiscard]] const true_false_pos_neg_list &get_list() const;
+			[[nodiscard]] const std::string &            get_name() const;
 		};
 
 		size_rational get_classn_stat_val_of_index(const named_true_false_pos_neg_list &,

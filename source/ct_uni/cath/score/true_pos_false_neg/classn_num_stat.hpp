@@ -33,7 +33,7 @@ namespace cath {
 		/// This allows these statistics to be simply defined as type aliases.
 		template <classn_outcome N>
 		class classn_num_stat final : public classn_stat {
-			size_rational do_calculate(const true_false_pos_neg &) const final;
+			[[nodiscard]] size_rational do_calculate( const true_false_pos_neg & ) const final;
 		};
 
 		/// \brief Calculate the numerator and denominator of the rate and return a rational

@@ -107,17 +107,17 @@ namespace cath {
 			                       const crh_filter_spec & = make_accept_all_filter_spec(),
 			                       const seg_dupl_hit_policy & = seg_dupl_hit_policy::PRESERVE);
 
-			size_t size() const;
-			bool empty() const;
+			[[nodiscard]] size_t size() const;
+			[[nodiscard]] bool   empty() const;
 
 			const calc_hit & operator[](const size_t &) const;
 
-			const full_hit_list & get_full_hits() const;
+			[[nodiscard]] const full_hit_list &get_full_hits() const;
 
 			iterator begin();
 			iterator end();
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		calc_hit_vec make_hit_list_from_full_hit_list(const full_hit_list &,

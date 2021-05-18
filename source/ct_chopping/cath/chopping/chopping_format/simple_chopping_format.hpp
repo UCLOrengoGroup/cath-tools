@@ -30,21 +30,21 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class simple_chopping_format final : public chopping_format {
-		private:
-			std::unique_ptr<chopping_format> do_clone() const final;
+		  private:
+			[[nodiscard]] std::unique_ptr<chopping_format> do_clone() const final;
 
-			bool do_represents_fragments() const final;
+			[[nodiscard]] bool do_represents_fragments() const final;
 
-			domain do_parse_domain(const std::string &) const final;
+			[[nodiscard]] domain do_parse_domain( const std::string & ) const final;
 
-			std::string do_write_region(const region &) const final;
+			[[nodiscard]] std::string do_write_region( const region & ) const final;
 
-			std::string do_write_domain(const domain &) const final;
+			[[nodiscard]] std::string do_write_domain( const domain & ) const final;
 
-		public:
-			region parse_segment(const boost::string_ref &) const;
+		  public:
+			[[nodiscard]] region parse_segment( const boost::string_ref & ) const;
 
-			residue_name parse_residue(const boost::string_ref &) const;
+			[[nodiscard]] residue_name parse_residue( const boost::string_ref & ) const;
 		};
 
 	} // namespace chop

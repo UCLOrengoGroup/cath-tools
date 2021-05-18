@@ -37,19 +37,20 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class alignment_acquirer {
-		private:
+		  private:
 			/// \brief Pure virtual method with which each concrete alignment_acquirer must define how to create a clone of itself
-			virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
 
 			/// \brief Pure virtual method with which each concrete alignment_acquirer must define whether it requires its input to
 			///        be restricted to backbone-complete residues
-			virtual bool do_requires_backbone_complete_input() const = 0;
+			[[nodiscard]] virtual bool do_requires_backbone_complete_input() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &,
-			                                                                                    const align_refining &) const = 0;
+			[[nodiscard]] virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+			  const file::strucs_context &,
+			  const align_refining & ) const = 0;
 
-		protected:
+		  protected:
 			/// \brief The minimum number of residues that are required in "residue name" aligning
 			///
 			/// \todo Decide: Is it correct that this is currently stored here rather than in the residue_name_alignment_acquirer
@@ -60,7 +61,7 @@ namespace cath {
 
 		public:
 			alignment_acquirer() = default;
-			std::unique_ptr<alignment_acquirer> clone() const;
+			[[nodiscard]] std::unique_ptr<alignment_acquirer> clone() const;
 			virtual ~alignment_acquirer() noexcept = default;
 
 			alignment_acquirer(const alignment_acquirer &) = default;
@@ -68,8 +69,9 @@ namespace cath {
 			alignment_acquirer & operator=(const alignment_acquirer &) = default;
 			alignment_acquirer & operator=(alignment_acquirer &&) noexcept = default;
 
-			std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(const file::strucs_context &,
-			                                                                         const align_refining & = align_refining::NO) const;
+			[[nodiscard]] std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(
+			  const file::strucs_context &,
+			  const align_refining & = align_refining::NO ) const;
 		};
 
 		uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_spec &);

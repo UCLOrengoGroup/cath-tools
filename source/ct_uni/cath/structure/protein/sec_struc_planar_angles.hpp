@@ -48,9 +48,9 @@ namespace cath {
 		sec_struc_planar_angles(const double &,
 		                        const double &,
 		                        const double &);
-		double get_planar_angle_x() const;
-		double get_planar_angle_minus_y() const;
-		double get_planar_angle_z() const;
+		[[nodiscard]] double get_planar_angle_x() const;
+		[[nodiscard]] double get_planar_angle_minus_y() const;
+		[[nodiscard]] double get_planar_angle_z() const;
 
 		static const sec_struc_planar_angles NULL_SEC_STRUC_PLANAR_ANGLES;
 	};

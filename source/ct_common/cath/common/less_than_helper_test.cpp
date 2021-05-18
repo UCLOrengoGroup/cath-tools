@@ -51,13 +51,12 @@ namespace cath {
 			using test_type_vec = std::vector<test_type>;
 
 			/// \brief TODOCUMENT
-			bool less_than_using_helper(const test_type &prm_helper_test_type_a, ///< TODOCUMENT
-			                            const test_type &prm_helper_test_type_b  ///< TODOCUMENT
-			                            ) const;
+			[[nodiscard]] bool less_than_using_helper( const test_type &prm_helper_test_type_a, ///< TODOCUMENT
+			                                           const test_type &prm_helper_test_type_b  ///< TODOCUMENT
+			) const;
 
 			/// \brief TODOCUMENT
-			test_type_vec make_examples() const;
-
+			[[nodiscard]] test_type_vec make_examples() const;
 		};
 
 		/// \brief TODOCUMENT

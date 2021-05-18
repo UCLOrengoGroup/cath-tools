@@ -84,7 +84,7 @@ namespace cath {
 			static double_octuple make_standard_scores(const file::prc_scores_entry &,
 			                                           const file::ssap_scores_entry &);
 
-			double get_score(const double_octuple &) const;
+			[[nodiscard]] double get_score( const double_octuple & ) const;
 		};
 
 		rbf_model parse_rbf_model(std::istream &);

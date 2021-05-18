@@ -44,19 +44,19 @@ namespace cath {
 			/// \brief TODOCUMENT
 			chop::domain_opt regions;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-		public:
-			const ::std::filesystem::path & get_input_pdb_file() const;
-			const path_opt & get_output_pdb_file() const;
-			const chop::domain_opt & get_regions() const;
+		  public:
+			[[nodiscard]] const ::std::filesystem::path &get_input_pdb_file() const;
+			[[nodiscard]] const path_opt &               get_output_pdb_file() const;
+			[[nodiscard]] const chop::domain_opt &       get_regions() const;
 
 			static const std::string PO_INPUT_PDB_FILE;
 			static const std::string PO_OUTPUT_PDB_FILE;

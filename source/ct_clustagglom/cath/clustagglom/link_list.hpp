@@ -50,8 +50,8 @@ namespace cath {
 
 			explicit link_list(link_vec);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const link & operator[](const size_t &) const;
 
@@ -90,8 +90,8 @@ namespace cath {
 				return std::end( links );
 			}
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		/// \brief Ctor from a vector of links

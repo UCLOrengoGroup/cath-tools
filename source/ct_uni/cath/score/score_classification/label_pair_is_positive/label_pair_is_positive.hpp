@@ -37,8 +37,7 @@ namespace cath {
 		public:
 			explicit label_pair_is_positive(str_str_pair_bool_map);
 
-			bool is_positive(const std::string &,
-			                 const std::string &) const;
+			[[nodiscard]] bool is_positive( const std::string &, const std::string & ) const;
 		};
 
 		label_pair_is_positive make_label_pair_is_positive(std::istream &);

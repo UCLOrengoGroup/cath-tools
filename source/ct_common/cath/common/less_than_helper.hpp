@@ -86,7 +86,7 @@ namespace cath {
 			template <typename F>
 			void register_comparison_field(F);
 
-			boost::logic::tribool final_less_than_spaceship_result() const;
+			[[nodiscard]] boost::logic::tribool final_less_than_spaceship_result() const;
 		};
 
 		/// \brief TODOCUMENT

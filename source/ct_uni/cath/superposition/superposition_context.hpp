@@ -71,10 +71,10 @@ namespace cath {
 			                      chop::region_vec_opt_vec,
 			                      align::alignment);
 
-			const superposition & get_superposition() const;
-			const file::strucs_context & get_strucs_context() const;
-			bool has_alignment() const;
-			const align::alignment & get_alignment() const;
+			[[nodiscard]] const superposition &       get_superposition() const;
+			[[nodiscard]] const file::strucs_context &get_strucs_context() const;
+			[[nodiscard]] bool                        has_alignment() const;
+			[[nodiscard]] const align::alignment &    get_alignment() const;
 
 			superposition_context & set_pdbs(const file::pdb_list &);
 		};

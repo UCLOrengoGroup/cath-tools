@@ -74,18 +74,18 @@ namespace cath {
 
 		void set_planar_angles(const sec_struc_planar_angles_vec &);
 
-		size_t                      get_start_residue_num() const;
-		size_t                      get_stop_residue_num() const;
-		sec_struc_type              get_type() const;
-		geom::coord                 get_midpoint() const;
-		geom::coord                 get_unit_dirn() const;
-		sec_struc_planar_angles_vec get_planar_angles() const;
+		[[nodiscard]] size_t                      get_start_residue_num() const;
+		[[nodiscard]] size_t                      get_stop_residue_num() const;
+		[[nodiscard]] sec_struc_type              get_type() const;
+		[[nodiscard]] geom::coord                 get_midpoint() const;
+		[[nodiscard]] geom::coord                 get_unit_dirn() const;
+		[[nodiscard]] sec_struc_planar_angles_vec get_planar_angles() const;
 
-		const sec_struc_planar_angles & get_planar_angles_of_index(const size_t &) const;
-		size_t get_num_planar_angles() const;
+		[[nodiscard]] const sec_struc_planar_angles &get_planar_angles_of_index( const size_t & ) const;
+		[[nodiscard]] size_t                         get_num_planar_angles() const;
 
-//		/// \todo Sort out indexing and then get rid of this because a blank secondary structure doesn't really make any sense
-//		static const sec_struc NULL_SEC_STRUC;
+		// /// \todo Sort out indexing and then get rid of this because a blank secondary structure doesn't really make any sense
+		// static const sec_struc NULL_SEC_STRUC;
 	};
 
 	geom::coord calculate_inter_sec_struc_vector(const sec_struc &,

@@ -47,8 +47,8 @@ namespace cath {
 		public:
 			quad_find_action(const protein &,
 			                 const protein &);
-			
-			const double & get_total_score() const;
+
+			[[nodiscard]] const double &get_total_score() const;
 
 			void operator()(const view_cache_index_entry &,
 			                const view_cache_index_entry &);

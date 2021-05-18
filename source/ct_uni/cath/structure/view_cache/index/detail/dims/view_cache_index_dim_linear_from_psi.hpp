@@ -33,7 +33,7 @@ namespace cath {
 				struct vci_linear_view_from_psi_getter final {
 
 					/// \brief TODOCUMENT
-					std::string get_name() const {
+					[[nodiscard]] std::string get_name() const {
 						return "from-psi";
 					}
 

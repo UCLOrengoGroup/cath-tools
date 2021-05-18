@@ -49,20 +49,20 @@ namespace cath {
 			/// \brief TODOCUMENT
 			pdb_input_options_block       the_pdb_input_options_block;
 
-			std::string do_get_program_name() const final;
-			str_opt do_get_error_or_help_string() const final;
+			[[nodiscard]] std::string do_get_program_name() const final;
+			[[nodiscard]] str_opt     do_get_error_or_help_string() const final;
 
-			std::string do_get_help_prefix_string() const final;
-			std::string do_get_help_suffix_string() const final;
-			std::string do_get_overview_string() const final;
+			[[nodiscard]] std::string do_get_help_prefix_string() const final;
+			[[nodiscard]] std::string do_get_help_suffix_string() const final;
+			[[nodiscard]] std::string do_get_overview_string() const final;
 
 			void check_ok_to_use() const;
 
 		public:
 			cath_score_align_options();
 
-			const pdb_input_spec & get_pdb_input_spec() const;
-			const alignment_input_spec & get_alignment_input_spec() const;
+			[[nodiscard]] const pdb_input_spec &      get_pdb_input_spec() const;
+			[[nodiscard]] const alignment_input_spec &get_alignment_input_spec() const;
 
 			static const std::string PROGRAM_NAME;
 		};

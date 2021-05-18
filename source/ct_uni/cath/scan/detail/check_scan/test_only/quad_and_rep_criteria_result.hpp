@@ -41,8 +41,8 @@ namespace cath {
 			public:
 				quad_and_rep_criteria_result(const quad_criteria_result &,
 				                             const quad_criteria_result &);
-				const quad_criteria_result & get_rep_status() const;
-				const quad_criteria_result & get_quad_status() const;
+				[[nodiscard]] const quad_criteria_result &get_rep_status() const;
+				[[nodiscard]] const quad_criteria_result &get_quad_status() const;
 			};
 
 			std::string to_string(const quad_and_rep_criteria_result &);

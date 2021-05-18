@@ -57,9 +57,9 @@ namespace cath {
 				                  const size_t &,
 				                  const size_t &);
 
-				const alignment & get_alignment() const;
+				[[nodiscard]] const alignment &get_alignment() const;
 
-				const size_vec & get_entries() const;
+				[[nodiscard]] const size_vec &get_entries() const;
 
 				void add_alignment(const size_t &,
 				                   const alignment &);

@@ -34,26 +34,26 @@ namespace cath {
 	namespace align {
 
 		/// \brief TODOCUMENT
-		class common_residue_selection_policy : private cath::common::polymorphic_less_than_comparable<common_residue_selection_policy>,
-		                                        private boost::equivalent<common_residue_selection_policy,
-		                                                boost::totally_ordered<common_residue_selection_policy> > {
-		private:
+		class common_residue_selection_policy
+		        : private cath::common::polymorphic_less_than_comparable<common_residue_selection_policy>
+		        , private boost::equivalent<common_residue_selection_policy, boost::totally_ordered<common_residue_selection_policy>> {
+		  private:
 			/// \brief TODOCUMENT
-			virtual size_vec do_select_common_residues(const alignment &,
-			                                           const std::vector<alignment::size_type> &,
-			                                           const alignment::size_type &,
-			                                           const alignment::size_type &) const = 0;
-			
+			[[nodiscard]] virtual size_vec do_select_common_residues( const alignment &,
+			                                                          const std::vector<alignment::size_type> &,
+			                                                          const alignment::size_type &,
+			                                                          const alignment::size_type & ) const = 0;
+
 			/// \brief TODOCUMENT
-			virtual std::string do_get_descriptive_name() const = 0;
-			
+			[[nodiscard]] virtual std::string do_get_descriptive_name() const = 0;
+
 			/// \brief Pure virtual method with which each concrete common_residue_selection_policy must define how to create a clone of itself
-			virtual std::unique_ptr<common_residue_selection_policy> do_clone() const = 0;
+			[[nodiscard]] virtual std::unique_ptr<common_residue_selection_policy> do_clone() const = 0;
 
 			/// \brief TODOCUMENT
-			virtual bool do_less_than_with_same_dynamic_type(const common_residue_selection_policy &) const = 0;
+			[[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const = 0;
 
-		public:
+		  public:
 			common_residue_selection_policy() = default;
 			virtual ~common_residue_selection_policy() noexcept = default;
 
@@ -62,14 +62,14 @@ namespace cath {
 			common_residue_selection_policy & operator=(const common_residue_selection_policy &) = default;
 			common_residue_selection_policy & operator=(common_residue_selection_policy &&) noexcept = default;
 
-			std::vector<alignment::size_type> select_common_residues(const alignment &,
-			                                                         const alignment::size_type &,
-			                                                         const alignment::size_type &) const;
-			std::string get_descriptive_name() const;
+			[[nodiscard]] std::vector<alignment::size_type> select_common_residues( const alignment &,
+			                                                                        const alignment::size_type &,
+			                                                                        const alignment::size_type & ) const;
+			[[nodiscard]] std::string                       get_descriptive_name() const;
 
-			std::unique_ptr<common_residue_selection_policy> clone() const;
+			[[nodiscard]] std::unique_ptr<common_residue_selection_policy> clone() const;
 
-			bool less_than_with_same_dynamic_type(const common_residue_selection_policy &) const;
+			[[nodiscard]] bool less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const;
 		};
 
 		boost::ptr_vector<common_residue_selection_policy> get_all_common_residue_selection_policies();

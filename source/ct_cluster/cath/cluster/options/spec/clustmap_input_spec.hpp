@@ -48,9 +48,9 @@ namespace cath {
 			/// \brief Default ctor
 			clustmap_input_spec() = default;
 
-			const ::std::filesystem::path & get_working_clustmemb_file() const;
-			const path_opt & get_map_from_clustmemb_file() const;
-			const bool & get_read_batches_from_input() const;
+			[[nodiscard]] const ::std::filesystem::path &get_working_clustmemb_file() const;
+			[[nodiscard]] const path_opt &               get_map_from_clustmemb_file() const;
+			[[nodiscard]] const bool &                   get_read_batches_from_input() const;
 
 			clustmap_input_spec & set_working_clustmemb_file(const ::std::filesystem::path &);
 			clustmap_input_spec & set_map_from_clustmemb_file(const path_opt &);

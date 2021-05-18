@@ -52,11 +52,11 @@ namespace cath {
 
 			explicit constexpr seq_arrow(const resarw_t &);
 
-		public:
-			constexpr residx_t res_before() const;
-			constexpr const residx_t & res_after() const;
+		  public:
+			[[nodiscard]] constexpr residx_t        res_before() const;
+			[[nodiscard]] constexpr const residx_t &res_after() const;
 
-			constexpr const resarw_t & get_index() const;
+			[[nodiscard]] constexpr const resarw_t &get_index() const;
 
 			constexpr seq_arrow & operator+=(const resarw_t &);
 			constexpr seq_arrow & operator-=(const resarw_t &);

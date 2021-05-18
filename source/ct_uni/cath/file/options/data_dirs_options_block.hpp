@@ -43,14 +43,14 @@ namespace cath {
 			static const data_option_str_map DATA_OPTION_DESCRIPTION_START;
 			static const data_option_str_map DATA_OPTION_DESCRIPTION_END;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
 			/// \brief The data_dirs_spec into which to parse options
 			data_dirs_spec the_data_dirs_spec;
@@ -58,7 +58,7 @@ namespace cath {
 		public:
 			data_dirs_options_block() = default;
 
-			const data_dirs_spec & get_data_dirs_spec() const;
+			[[nodiscard]] const data_dirs_spec &get_data_dirs_spec() const;
 
 			static const std::string PO_CATH_ROOT_DIR;
 		};

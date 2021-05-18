@@ -104,7 +104,7 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			const score_classn_value_results_set & get_som2_scores() const {
+			[[nodiscard]] const score_classn_value_results_set &get_som2_scores() const {
 				static score_classn_value_results_set some2_scores;
 				if ( some2_scores.empty() ) {
 					some2_scores = read_from_dir( path( "/export/people/ucbctnl/som2_scores" ), select_file() );
@@ -113,7 +113,7 @@ namespace cath {
 			}
 
 			/// \brief TODOCUMENT
-			const score_classn_value_results_set & get_refined_som2_scores() const {
+			[[nodiscard]] const score_classn_value_results_set &get_refined_som2_scores() const {
 				static score_classn_value_results_set refined_som2_scores;
 				if ( refined_som2_scores.empty() ) {
 					refined_som2_scores = read_from_dir( path( "/export/people/ucbctnl/refined_som2_scores" ), select_file() );

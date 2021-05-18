@@ -57,10 +57,10 @@ namespace cath {
 			cluster_info & add_entry(const boost::string_ref &,
 			                         const seq::seq_seg_run_opt &);
 
-			const size_t & get_size() const;
-			const doub_opt & get_total_sqrt_length() const;
-			const doub_opt & get_total_mid_point_index() const;
-			const std::string & get_lowest_domain_id() const;
+			[[nodiscard]] const size_t &     get_size() const;
+			[[nodiscard]] const doub_opt &   get_total_sqrt_length() const;
+			[[nodiscard]] const doub_opt &   get_total_mid_point_index() const;
+			[[nodiscard]] const std::string &get_lowest_domain_id() const;
 		};
 
 		bool operator<(const cluster_info &,

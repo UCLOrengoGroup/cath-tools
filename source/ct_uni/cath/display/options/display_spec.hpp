@@ -70,12 +70,12 @@ namespace cath {
 		             const bool &,
 		             const bool &);
 
-		str_opt get_display_colours_string() const;
+		[[nodiscard]] str_opt get_display_colours_string() const;
 
-		bool get_gradient_colour_alignment() const;
-		bool get_show_scores_if_present() const;
-		bool get_scores_to_equivs() const;
-		bool get_normalise_scores() const;
+		[[nodiscard]] bool get_gradient_colour_alignment() const;
+		[[nodiscard]] bool get_show_scores_if_present() const;
+		[[nodiscard]] bool get_scores_to_equivs() const;
+		[[nodiscard]] bool get_normalise_scores() const;
 
 		void set_display_colours_string(const std::string &);
 		void set_gradient_colour_alignment(const bool &);

@@ -80,7 +80,7 @@ namespace cath {
 				}
 
 				/// \brief Const-overload of getter for a reference to the gsl_vector
-				const gsl_vector & get_ref() const {
+				[[nodiscard]] const gsl_vector &get_ref() const {
 					return *ptr;
 				}
 
@@ -90,7 +90,7 @@ namespace cath {
 				}
 
 				/// \brief Const-overload of getter for a pointer to the gsl_vector
-				const gsl_vector * get_ptr() const {
+				[[nodiscard]] const gsl_vector *get_ptr() const {
 					return ptr;
 				}
 

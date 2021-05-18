@@ -82,11 +82,11 @@ namespace cath {
 			}
 
 			/// \brief Get the number of rapidjson_writers currently stored
-			inline size_t size() const {
+			[[nodiscard]] inline size_t size() const {
 				return rapidjson_writers.size();
 			}
 			/// \brief Get whether the list of rapidjson_writers is currently empty
-			inline bool empty() const {
+			[[nodiscard]] inline bool empty() const {
 				return rapidjson_writers.empty();
 			}
 
@@ -226,26 +226,25 @@ namespace cath {
 			}
 
 			/// \brief Get a C-style string of the JSON
-			const char * get_c_string(const size_t &prm_index ///< The index of the writer from which to grab the string
-			                          ) const {
+			[[nodiscard]] const char *get_c_string( const size_t &prm_index ///< The index of the writer from which to grab the string
+			) const {
 				return rapidjson_writers[ prm_index ]->get_c_string();
 			}
 
 			/// \brief Get a std::string of the JSON
-			std::string get_cpp_string(const size_t &prm_index ///< The index of the writer from which to grab the string
-			                           ) const {
+			[[nodiscard]] std::string get_cpp_string( const size_t &prm_index ///< The index of the writer from which to grab the string
+			) const {
 				return rapidjson_writers[ prm_index ]->get_cpp_string();
 			}
 
 			/// \brief Get whether the JSON is complete (ie finished the initial array/object/value)
 			///        after which no more data can be written
-			bool is_complete() const {
+			[[nodiscard]] bool is_complete() const {
 				return boost::algorithm::all_of(
 					*this,
 					[] (const rapidjson_writer<Style, OStrm> &x) { return x.is_complete(); }
 				);
 			}
-
 		};
 
 		/// \brief Write a key and a value

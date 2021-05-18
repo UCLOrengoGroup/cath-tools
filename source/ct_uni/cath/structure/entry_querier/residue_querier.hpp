@@ -28,32 +28,32 @@ namespace cath {
 	/// \brief TODOCUMENT
 	class residue_querier final : public entry_querier {
 	private:
-		size_t           do_get_length(const cath::protein &) const final;
-		double           do_get_gap_penalty_ratio() const final;
-		size_t           do_num_excluded_on_either_size() const final;
-		float_score_type do_optimum_single_score() const final;
+		[[nodiscard]] size_t           do_get_length(const cath::protein &) const final;
+		[[nodiscard]] double           do_get_gap_penalty_ratio() const final;
+		[[nodiscard]] size_t           do_num_excluded_on_either_size() const final;
+		[[nodiscard]] float_score_type do_optimum_single_score() const final;
 
-		std::string  do_get_entry_name() const final;
-		score_type   do_distance_score__offset_1(const cath::protein &,
+		[[nodiscard]] std::string  do_get_entry_name() const final;
+		[[nodiscard]] score_type   do_distance_score__offset_1(const cath::protein &,
 		                                         const cath::protein &,
 		                                         const size_t &,
 		                                         const size_t &,
 		                                         const size_t &,
 		                                         const size_t &) const final;
 
-		bool         do_are_comparable__offset_1(const cath::protein &,
+		[[nodiscard]] bool         do_are_comparable__offset_1(const cath::protein &,
 		                                         const cath::protein &,
 		                                         const size_t &,
 		                                         const size_t &,
 		                                         const size_t &,
 		                                         const size_t &) const final;
 
-		bool         do_are_similar__offset_1(const cath::protein &,
+		[[nodiscard]] bool         do_are_similar__offset_1(const cath::protein &,
 		                                      const cath::protein &,
 		                                      const size_t &,
 		                                      const size_t &) const final;
 
-		bool         do_temp_hacky_is_residue() const final;
+		[[nodiscard]] bool         do_temp_hacky_is_residue() const final;
 
 	public:
 		/// As in the SSAP paper(s), the a and b values are used to convert the distance into a score

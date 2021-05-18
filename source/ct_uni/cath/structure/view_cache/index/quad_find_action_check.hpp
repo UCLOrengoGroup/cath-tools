@@ -62,8 +62,8 @@ namespace cath {
 			quad_find_action_check(const protein &,
 			                       const protein &,
 			                       const detail::vcie_match_criteria &);
-			
-			const double & get_total_score() const;
+
+			[[nodiscard]] const double &get_total_score() const;
 
 			void operator()(const view_cache_index_entry &,
 			                const view_cache_index_entry &);

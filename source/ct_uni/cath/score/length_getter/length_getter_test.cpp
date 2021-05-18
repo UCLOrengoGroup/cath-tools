@@ -88,8 +88,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(ctor_works, length_getter_type, length_getter_type
 }
 
 /// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE_TEMPLATE(prot_only_get_length_does_not_throw, length_getter_type, protein_only_length_getter_types) {
-	BOOST_CHECK_NO_THROW_DIAG( length_getter_type().get_prot_only_length( dummy_protein_10, dummy_protein_90 ) );
+BOOST_AUTO_TEST_CASE_TEMPLATE( prot_only_get_length_does_not_throw, length_getter_type, protein_only_length_getter_types ) {
+	BOOST_CHECK_NO_THROW_DIAG( [[maybe_unused]] auto &&x =
+	                             length_getter_type().get_prot_only_length( dummy_protein_10, dummy_protein_90 ) );
 }
 
 ///// \brief TODOCUMENT

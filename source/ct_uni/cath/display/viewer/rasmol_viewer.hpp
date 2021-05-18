@@ -27,27 +27,19 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	class rasmol_viewer final : public rasmol_style_viewer {
-	private:
-		std::string do_default_executable() const final;
+	  private:
+		[[nodiscard]] std::string do_default_executable() const final;
 
-		void do_write_start(std::ostream &) const final;
-		void do_write_load_pdbs(std::ostream &,
-		                        const sup::superposition &,
-		                        const file::pdb_list &,
-		                        const str_vec &) const final;
-		void do_define_colour(std::ostream &,
-		                      const display_colour &,
-		                      const std::string &) const final;
-		std::string do_get_colour_base_str(const std::string &) const final;
-		std::string do_get_colour_pdb_str(const std::string &,
-		                                  const std::string &) const final;
-		std::string do_get_colour_pdb_residues_str(const std::string &,
-		                                           const std::string &,
-		                                           const residue_id_vec &) const final;
-		void do_write_alignment_extras(std::ostream &,
-		                               const sup::superposition_context &) const final;
-		void do_write_end(std::ostream &,
-		                  const boost::string_ref &) const final;
+		void do_write_start( std::ostream & ) const final;
+		void do_write_load_pdbs( std::ostream &, const sup::superposition &, const file::pdb_list &, const str_vec & ) const final;
+		void do_define_colour( std::ostream &, const display_colour &, const std::string & ) const final;
+		[[nodiscard]] std::string do_get_colour_base_str( const std::string & ) const final;
+		[[nodiscard]] std::string do_get_colour_pdb_str( const std::string &, const std::string & ) const final;
+		[[nodiscard]] std::string do_get_colour_pdb_residues_str( const std::string &,
+		                                                          const std::string &,
+		                                                          const residue_id_vec & ) const final;
+		void do_write_alignment_extras( std::ostream &, const sup::superposition_context & ) const final;
+		void do_write_end( std::ostream &, const boost::string_ref & ) const final;
 	};
 
 } // namespace cath

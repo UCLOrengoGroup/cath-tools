@@ -64,13 +64,13 @@ namespace cath {
 			hit_arch & operator=(const hit_arch &)          = default; ///< \brief Default copy-assignment-operator
 			hit_arch & operator=(hit_arch &&     ) noexcept = default; ///< \brief Default move-assignment-operator
 
-			size_t size() const;
-			bool empty() const;
+			[[nodiscard]] size_t size() const;
+			[[nodiscard]] bool   empty() const;
 
 			const calc_hit & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 
 			bool remove(const calc_hit &);
 			hit_arch & operator+=(const calc_hit &);

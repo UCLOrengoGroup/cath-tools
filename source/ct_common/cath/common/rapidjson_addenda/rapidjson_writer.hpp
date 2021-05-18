@@ -188,18 +188,18 @@ namespace cath {
 			}
 
 			/// \brief Get a C-style string of the JSON
-			const char * get_c_string() const {
+			[[nodiscard]] const char *get_c_string() const {
 				return outstream.GetString();
 			}
 
 			/// \brief Get a std::string of the JSON
-			std::string get_cpp_string() const {
+			[[nodiscard]] std::string get_cpp_string() const {
 				return { get_c_string() };
 			}
 
 			/// \brief Get whether the JSON is complete (ie finished the initial array/object/value)
 			///        after which no more data can be written
-			bool is_complete() const {
+			[[nodiscard]] bool is_complete() const {
 				return writer.IsComplete();
 			}
 

@@ -34,9 +34,10 @@ namespace cath {
 			/// \brief TODOCUMENT
 			static constexpr double RES_ALIGN_SCORE_CONSTANT = 10.0;
 
-			std::unique_ptr<alignment_acquirer> do_clone() const final;
-			bool do_requires_backbone_complete_input() const final;
-			std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(const file::strucs_context &) const final;
+			[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
+			[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
+			[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+			  const file::strucs_context & ) const final;
 		};
 
 	} // namespace align

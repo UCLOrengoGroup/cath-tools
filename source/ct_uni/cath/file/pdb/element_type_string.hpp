@@ -60,8 +60,8 @@ namespace cath {
 		public:
 			explicit constexpr element_type_string(char_4_arr);
 
-			constexpr const char_4_arr & get_element_type_untrimmed() const;
-			constexpr ::std::string_view get_element_type() const;
+			[[nodiscard]] constexpr const char_4_arr & get_element_type_untrimmed() const;
+			[[nodiscard]] constexpr ::std::string_view get_element_type() const;
 		};
 
 		/// \brief Constructor from lvalue string

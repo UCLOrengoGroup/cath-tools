@@ -72,10 +72,10 @@ namespace cath {
 			                                   const file::strucs_context &&,
 			                                   const selection_policy_acquirer &) = delete;
 
-			const align::alignment & get_alignment() const;
-			const size_size_pair_vec & get_spanning_tree() const;
-			const file::strucs_context & get_strucs_context() const;
-			const selection_policy_acquirer & get_selection_policy_acquirer() const;
+			[[nodiscard]] const align::alignment &         get_alignment() const;
+			[[nodiscard]] const size_size_pair_vec &       get_spanning_tree() const;
+			[[nodiscard]] const file::strucs_context &     get_strucs_context() const;
+			[[nodiscard]] const selection_policy_acquirer &get_selection_policy_acquirer() const;
 		};
 
 		const file::pdb_list & get_pdbs(const align_based_superposition_acquirer &);

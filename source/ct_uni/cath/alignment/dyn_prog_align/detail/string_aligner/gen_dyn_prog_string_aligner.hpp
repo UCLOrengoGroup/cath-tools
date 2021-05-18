@@ -42,13 +42,11 @@ namespace cath {
 
 				void check_dyn_prog_aligner_ptr() const;
 				dyn_prog_aligner & get_dyn_prog_aligner();
-				const dyn_prog_aligner & get_dyn_prog_aligner() const;
+				[[nodiscard]] const dyn_prog_aligner &get_dyn_prog_aligner() const;
 
-				str_str_pair do_align(const std::string &,
-				                      const std::string &,
-				                      const gap::gap_penalty &) const final;
+				[[nodiscard]] str_str_pair do_align( const std::string &, const std::string &, const gap::gap_penalty & ) const final;
 
-			public:
+			  public:
 				explicit gen_dyn_prog_string_aligner(const dyn_prog_aligner &);
 			};
 

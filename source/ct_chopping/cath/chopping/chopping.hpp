@@ -48,15 +48,15 @@ namespace cath {
 			explicit chopping(domain_vec,
 			                  region_vec = region_vec());
 
-			size_t num_domains() const;
-			size_t num_fragments() const;
+			[[nodiscard]] size_t num_domains() const;
+			[[nodiscard]] size_t num_fragments() const;
 
-			const region & get_fragment_of_index(const size_t &) const;
+			[[nodiscard]] const region &get_fragment_of_index( const size_t & ) const;
 
 			const domain & operator[](const size_t &prm_index) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 	} // namespace chop

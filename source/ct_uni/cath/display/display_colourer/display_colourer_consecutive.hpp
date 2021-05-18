@@ -41,15 +41,15 @@ namespace cath {
 		/// \brief The list of colours with which the structures should be coloured
 		display_colour_list colours;
 
-		std::unique_ptr<display_colourer> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<display_colourer> do_clone() const final;
 
-		broad_display_colour_spec do_get_colour_spec_from_regions(const chop::region_vec_opt_vec &) const final;
+		[[nodiscard]] broad_display_colour_spec do_get_colour_spec_from_regions( const chop::region_vec_opt_vec & ) const final;
 
-		std::string do_get_label() const final;
+		[[nodiscard]] std::string do_get_label() const final;
 
-		const display_colour_list & get_colours() const;
+		[[nodiscard]] const display_colour_list &get_colours() const;
 
-	public:
+	  public:
 		explicit display_colourer_consecutive(display_colour_list);
 		display_colourer_consecutive(display_colour_list,
 		                             const detail::score_colour_handler &);

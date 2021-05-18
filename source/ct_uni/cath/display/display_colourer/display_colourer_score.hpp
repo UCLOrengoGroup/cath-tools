@@ -49,15 +49,15 @@ namespace cath {
 		/// \brief The gradient with which this display_colourer_score should colour alignments
 		display_colour_gradient gradient;
 
-		std::unique_ptr<display_colourer> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<display_colourer> do_clone() const final;
 
-		display_colour_spec do_get_colour_spec(const align::alignment_context &) const final;
+		[[nodiscard]] display_colour_spec do_get_colour_spec( const align::alignment_context & ) const final;
 
-		std::string do_get_label() const final;
+		[[nodiscard]] std::string do_get_label() const final;
 
-		const display_colour_gradient & get_gradient() const;
+		[[nodiscard]] const display_colour_gradient &get_gradient() const;
 
-	public:
+	  public:
 		explicit display_colourer_score(display_colour_gradient);
 		display_colourer_score(display_colour_gradient,
 		                       const detail::score_colour_handler &);

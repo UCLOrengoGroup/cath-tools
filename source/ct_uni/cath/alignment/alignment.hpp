@@ -83,22 +83,21 @@ namespace cath {
 			void check_entry_in_range(const size_type &) const;
 			void check_index_in_range(const size_type &) const;
 
-			size_type reserved_length() const;
+			[[nodiscard]] size_type reserved_length() const;
 
-		public:
+		  public:
 			explicit alignment(const size_type &);
 			explicit alignment(const aln_posn_opt_vec_vec &);
 
 			void reserve(const size_type &);
-			size_type num_entries() const;
-			size_type length() const;
+			[[nodiscard]] size_type num_entries() const;
+			[[nodiscard]] size_type length() const;
 
-			bool is_scored() const;
-			const alignment_residue_scores & get_alignment_residue_scores() const;
-//			double get_score_of_index(const size_type &) const;
+			[[nodiscard]] bool                            is_scored() const;
+			[[nodiscard]] const alignment_residue_scores &get_alignment_residue_scores() const;
+			// double get_score_of_index(const size_type &) const;
 
-			aln_posn_opt position_of_entry_of_index(const size_type &,
-			                                        const size_type &) const;
+			[[nodiscard]] aln_posn_opt position_of_entry_of_index( const size_type &, const size_type & ) const;
 
 			void set_position_value(const size_type &,
 			                        const size_type &,
@@ -108,7 +107,7 @@ namespace cath {
 			                          const size_type &);
 
 			void set_scores(const alignment_residue_scores &);
-	//		void set_non_raw_scores(const doub_vec &);
+			// void set_non_raw_scores(const doub_vec &);
 
 			/// \brief A constant for the number of entries in a pair alignment
 			static constexpr size_type NUM_ENTRIES_IN_PAIR_ALIGNMENT = 2;

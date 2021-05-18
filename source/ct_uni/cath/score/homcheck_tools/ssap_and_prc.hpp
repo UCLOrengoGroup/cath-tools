@@ -56,14 +56,14 @@ namespace cath {
 
 			void calculate_svm_score(const score::rbf_model &);
 
-			const std::string & get_query_id() const;
-			const std::string & get_match_id() const;
+			[[nodiscard]] const std::string &get_query_id() const;
+			[[nodiscard]] const std::string &get_match_id() const;
 
-			const file::ssap_scores_entry & get_ssap() const;
-			const file::prc_scores_entry & get_prc() const;
-			const double & get_magic_function_score() const;
+			[[nodiscard]] const file::ssap_scores_entry &get_ssap() const;
+			[[nodiscard]] const file::prc_scores_entry & get_prc() const;
+			[[nodiscard]] const double &                 get_magic_function_score() const;
 
-			const ::std::optional<double> & get_svm_score_opt() const;
+			[[nodiscard]] const ::std::optional<double> &get_svm_score_opt() const;
 		};
 
 		double magic_function(const file::ssap_scores_entry &,

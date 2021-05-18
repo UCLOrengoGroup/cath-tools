@@ -47,9 +47,9 @@ namespace cath {
 				void store(const view_cache_index_entry &,
 				           const boost::tuples::null_type &);
 
-				bool empty() const;
-				size_t get_num_cells() const;
-				size_t dims_remaining() const;
+				[[nodiscard]] bool   empty() const;
+				[[nodiscard]] size_t get_num_cells() const;
+				[[nodiscard]] size_t dims_remaining() const;
 
 				template <typename ACTN>
 				void perform_action_on_all_match_at_leaves(ACTN &) const;

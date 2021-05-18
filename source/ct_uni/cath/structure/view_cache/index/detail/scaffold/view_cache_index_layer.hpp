@@ -59,15 +59,15 @@ namespace cath {
 				/// \brief The cells into which the Ts are indexed by DIM
 				std::vector<T> cells;
 
-				int cell_index_of_value_in_current(const double &) const;
+				[[nodiscard]] int cell_index_of_value_in_current( const double & ) const;
 
-			public:
+			  public:
 				explicit view_cache_index_layer(const DIM &);
 
 				// const double & get_cell_width() const;
-				bool empty() const;
-				size_t get_num_cells() const;
-	
+				[[nodiscard]] bool   empty() const;
+				[[nodiscard]] size_t get_num_cells() const;
+
 				// const T & get_cell_entry(const size_t &) const;
 				// bool has_cell_at_value(const double &) const;
 				// T & cell_at_value(const double &);

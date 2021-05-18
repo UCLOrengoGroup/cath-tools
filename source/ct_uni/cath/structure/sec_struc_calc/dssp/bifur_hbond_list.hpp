@@ -170,8 +170,8 @@ namespace cath {
 
 			bifur_hbond & remove_not_bondy_enough();
 
-			const hbond_half_opt_pair & get_bound_pair_for_this_nh() const;
-			const hbond_half_opt_pair & get_bound_pair_for_this_co() const;
+			[[nodiscard]] const hbond_half_opt_pair &get_bound_pair_for_this_nh() const;
+			[[nodiscard]] const hbond_half_opt_pair &get_bound_pair_for_this_co() const;
 		};
 
 		/// \brief Update the best h-bonds from the NH atoms of this residue with the new hbond_half
@@ -225,8 +225,8 @@ namespace cath {
 
 			explicit bifur_hbond_list(const size_t &);
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const bifur_hbond & operator[](const size_t &) const;
 
@@ -236,8 +236,8 @@ namespace cath {
 			                                                    const hbond_partner_t &,
 			                                                    const hbond_energy_t &);
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		/// \brief Ctor

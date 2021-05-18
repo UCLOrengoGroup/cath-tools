@@ -74,13 +74,13 @@ namespace cath {
 			            seq_arrow,
 			            seq_seg_vec);
 
-			bool is_discontig() const;
-			size_t get_num_segments() const;
-			const seq_arrow & get_start_arrow_of_segment(const size_t &) const;
-			const seq_arrow & get_stop_arrow_of_segment(const size_t &) const;
+			[[nodiscard]] bool             is_discontig() const;
+			[[nodiscard]] size_t           get_num_segments() const;
+			[[nodiscard]] const seq_arrow &get_start_arrow_of_segment( const size_t & ) const;
+			[[nodiscard]] const seq_arrow &get_stop_arrow_of_segment( const size_t & ) const;
 
-			const seq_arrow & get_start_arrow() const;
-			const seq_arrow & get_stop_arrow () const;
+			[[nodiscard]] const seq_arrow &get_start_arrow() const;
+			[[nodiscard]] const seq_arrow &get_stop_arrow() const;
 
 			static auto get_seg_run_start_less() {
 				return [] (const seq_seg_run &x, const seq_seg_run &y) {

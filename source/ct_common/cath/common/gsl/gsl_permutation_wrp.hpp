@@ -79,7 +79,7 @@ namespace cath {
 				}
 
 				/// \brief Const-overload of getter for a reference to the gsl_permutation
-				const gsl_permutation & get_ref() const {
+				[[nodiscard]] const gsl_permutation &get_ref() const {
 					return *ptr;
 				}
 
@@ -89,7 +89,7 @@ namespace cath {
 				}
 
 				/// \brief Const-overload of getter for a pointer to the gsl_permutation
-				const gsl_permutation * get_ptr() const {
+				[[nodiscard]] const gsl_permutation *get_ptr() const {
 					return ptr;
 				}
 

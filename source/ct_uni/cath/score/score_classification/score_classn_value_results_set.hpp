@@ -78,7 +78,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			score_classn_value_list_vec score_classn_value_lists;
 
-			bool is_sorted_uniqued() const;
+			[[nodiscard]] bool is_sorted_uniqued() const;
 			void check_is_sorted_uniqued() const;
 			void sort_score_classn_value_lists();
 
@@ -107,15 +107,15 @@ namespace cath {
 			using iterator       = score_classn_value_list_vec_citr;
 			using const_iterator = score_classn_value_list_vec_citr;
 
-			const score_classn_value_list & get_score_classn_value_list_of_name(const std::string &) const;
+			[[nodiscard]] const score_classn_value_list &get_score_classn_value_list_of_name( const std::string & ) const;
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const score_classn_value_list & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 
 			void add_score_classn_value_list(const score_classn_value_list &);
 			void add_aligned_pair_score_value_list(const aligned_pair_score_value_list &,

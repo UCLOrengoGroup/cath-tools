@@ -69,13 +69,12 @@ namespace cath {
 
 BOOST_FIXTURE_TEST_SUITE(cluster_info_test_suite, cluster_info_test_suite_fixture)
 
-
-BOOST_AUTO_TEST_CASE(has_correct_properties_after_construction) {
+BOOST_AUTO_TEST_CASE( has_correct_properties_after_construction ) {
 	const cluster_info cluster_info_a{};
-	BOOST_CHECK_EQUAL( cluster_info_a.get_size                 (),    0                          );
-	BOOST_CHECK_THROW( cluster_info_a.get_total_sqrt_length    (),    invalid_argument_exception );
-	BOOST_CHECK_THROW( cluster_info_a.get_total_mid_point_index(),    invalid_argument_exception );
-	BOOST_CHECK_THROW( cluster_info_a.get_lowest_domain_id     (),    invalid_argument_exception );
+	BOOST_CHECK_EQUAL( cluster_info_a.get_size(), 0 );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = cluster_info_a.get_total_sqrt_length(), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = cluster_info_a.get_total_mid_point_index(), invalid_argument_exception );
+	BOOST_CHECK_THROW( [[maybe_unused]] auto &&x = cluster_info_a.get_lowest_domain_id(), invalid_argument_exception );
 	BOOST_CHECK_THROW( get_average_mid_point_index( cluster_info_a ), invalid_argument_exception );
 }
 

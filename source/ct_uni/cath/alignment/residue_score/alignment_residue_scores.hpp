@@ -50,12 +50,11 @@ namespace cath {
 			                         size_vec,
 			                         score_opt_vec_vec);
 
-			size_t get_num_entries() const;
-			size_t get_length() const;
-			size_t get_num_present_entries_of_index(const size_t &) const;
+			[[nodiscard]] size_t get_num_entries() const;
+			[[nodiscard]] size_t get_length() const;
+			[[nodiscard]] size_t get_num_present_entries_of_index( const size_t & ) const;
 
-			score_opt get_opt_score_to_other_present_entries(const size_t &,
-			                                                 const size_t &) const;
+			[[nodiscard]] score_opt get_opt_score_to_other_present_entries( const size_t &, const size_t & ) const;
 		};
 
 		bool has_score(const alignment_residue_scores &,

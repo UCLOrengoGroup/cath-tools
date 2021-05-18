@@ -59,9 +59,9 @@ namespace cath {
 			                     const file::strucs_context &,
 			                     const display_colourer &);
 
-			const alignment & get_alignment() const;
-			const file::strucs_context & get_strucs_context() const;
-			const display_colourer & get_display_colourer() const;
+			[[nodiscard]] const alignment &           get_alignment() const;
+			[[nodiscard]] const file::strucs_context &get_strucs_context() const;
+			[[nodiscard]] const display_colourer &    get_display_colourer() const;
 		};
 
 		const file::pdb_list & get_pdbs(const html_align_outputter &);

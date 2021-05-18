@@ -86,13 +86,13 @@ namespace cath {
 			hierarchy();
 			explicit hierarchy(hierarchy_layer_vec);
 
-			size_t size() const;
+			[[nodiscard]] size_t size() const;
 
 			hierarchy_layer & operator[](const size_t &);
 			const hierarchy_layer & operator[](const size_t &) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		/// \brief Construct one layer with one empty group

@@ -42,7 +42,7 @@ namespace cath {
 					using linear_dim_type = view_cache_index_dim_linear<vci_linear_dim_spec_view_axis>;
 
 					/// \brief TODOCUMENT
-					std::string get_name() const {
+					[[nodiscard]] std::string get_name() const {
 						return F().get_name();
 					}
 

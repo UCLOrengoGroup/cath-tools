@@ -69,13 +69,13 @@ namespace cath {
 			/// \brief The default value for the worst permissible bitscore before a hit is ignored
 			static constexpr resscr_t DEFAULT_WORST_PERMISSIBLE_BITSCORE = 10.0;
 
-			const resscr_t & get_worst_permissible_evalue() const;
-			const resscr_t & get_worst_permissible_bitscore() const;
-			const resscr_opt & get_worst_permissible_score() const;
-			const str_vec & get_filter_query_ids() const;
-			const size_opt & get_limit_queries() const;
-			const doub_opt & get_min_hmm_coverage_frac() const;
-			const doub_opt & get_min_dc_hmm_coverage_frac() const;
+			[[nodiscard]] const resscr_t &  get_worst_permissible_evalue() const;
+			[[nodiscard]] const resscr_t &  get_worst_permissible_bitscore() const;
+			[[nodiscard]] const resscr_opt &get_worst_permissible_score() const;
+			[[nodiscard]] const str_vec &   get_filter_query_ids() const;
+			[[nodiscard]] const size_opt &  get_limit_queries() const;
+			[[nodiscard]] const doub_opt &  get_min_hmm_coverage_frac() const;
+			[[nodiscard]] const doub_opt &  get_min_dc_hmm_coverage_frac() const;
 
 			crh_filter_spec & set_worst_permissible_evalue(const resscr_t &);
 			crh_filter_spec & set_worst_permissible_bitscore(const resscr_t &);

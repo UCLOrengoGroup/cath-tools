@@ -30,21 +30,21 @@ namespace cath {
 	/// This does no extra calculations for DSSP/sec/phi/psi data. If you require that,
 	/// use protein_from_pdb_and_calc instead.
 	class protein_from_pdb final : public restrict_protein_source_file_set {
-	private:
-		std::unique_ptr<protein_source_file_set> do_clone() const final;
+	  private:
+		[[nodiscard]] std::unique_ptr<protein_source_file_set> do_clone() const final;
 
-		file::data_file_vec do_get_file_set() const final;
+		[[nodiscard]] file::data_file_vec do_get_file_set() const final;
 
-		file::data_file do_get_primary_file() const final;
+		[[nodiscard]] file::data_file do_get_primary_file() const final;
 
-		protein_file_combn do_get_protein_file_combn() const final;
+		[[nodiscard]] protein_file_combn do_get_protein_file_combn() const final;
 
-		bool do_makes_ssap_ready_protein() const final;
+		[[nodiscard]] bool do_makes_ssap_ready_protein() const final;
 
 		protein do_read_and_restrict_files(const file::data_file_path_map &,
 		                                   const std::string &,
 		                                   const chop::region_vec_opt &,
-		                                   std::ostream &) const final;
+		                                    std::ostream & ) const final;
 	};
 
 } // namespace cath

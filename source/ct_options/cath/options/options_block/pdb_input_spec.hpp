@@ -39,8 +39,8 @@ namespace cath {
 			/// \brief A default value for whether to read PDBs from stdin
 			static constexpr bool DEFAULT_READ_FROM_STDIN = false;
 
-			const path_vec & get_input_files() const;
-			const bool & get_read_from_stdin() const;
+			[[nodiscard]] const path_vec &get_input_files() const;
+			[[nodiscard]] const bool &    get_read_from_stdin() const;
 
 			pdb_input_spec & set_input_files(const path_vec &);
 			pdb_input_spec & set_read_from_stdin(const bool &);

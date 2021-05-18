@@ -64,7 +64,7 @@ namespace cath {
 				}
 
 				/// \brief Get a short name that describes this key part
-				std::string get_name() const {
+				[[nodiscard]] std::string get_name() const {
 					return Spec::get_name() + "(" + std::to_string( cell_width ) + "]";
 				}
 

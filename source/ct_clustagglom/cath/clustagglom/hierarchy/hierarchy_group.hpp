@@ -39,8 +39,8 @@ namespace cath {
 			/// \brief A const_iterator type alias as part of making this a range over hierarchy_values
 			using const_iterator = hierarchy_value_vec::const_iterator;
 
-			bool empty() const;
-			size_t size() const;
+			[[nodiscard]] bool   empty() const;
+			[[nodiscard]] size_t size() const;
 
 			const hierarchy_value & operator[](const size_t &) const;
 
@@ -49,8 +49,8 @@ namespace cath {
 
 			iterator begin();
 			iterator end();
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		/// \brief Return whether this is empty

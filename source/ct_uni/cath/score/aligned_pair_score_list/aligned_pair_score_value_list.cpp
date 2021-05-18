@@ -116,7 +116,6 @@ void cath::score::save_to_ptree(ptree                               &prm_ptree, 
 	auto &ptree_scores_array = prm_ptree.get_child( "scores" );
 
 	for (const size_t &score_ctr : indices( num_scores ) ) {
-		prm_score_value_list.get_value_of_index(score_ctr);
 		const score_value         the_score_value           = prm_score_value_list.get_value_of_index( score_ctr );
 		const aligned_pair_score &the_score_type            = prm_score_value_list.get_aligned_pair_score_of_index( score_ctr );
 		const string              human_friendly_short_name = the_score_type.human_friendly_short_name();

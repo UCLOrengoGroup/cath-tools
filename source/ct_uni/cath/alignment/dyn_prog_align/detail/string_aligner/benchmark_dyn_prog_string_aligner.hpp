@@ -34,9 +34,7 @@ namespace cath {
 			private:
 				static void make_ends_spaces(std::string &);
 
-				str_str_pair do_align(const std::string &,
-				                      const std::string &,
-				                      const gap::gap_penalty &) const final;
+				[[nodiscard]] str_str_pair do_align( const std::string &, const std::string &, const gap::gap_penalty & ) const final;
 			};
 		} // namespace detail
 	} // namespace align

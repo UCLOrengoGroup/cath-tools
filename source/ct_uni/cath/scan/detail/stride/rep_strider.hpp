@@ -54,7 +54,7 @@ namespace cath {
 				}
 
 				/// \brief Getter for the stride value
-				constexpr const index_type & get_stride() const {
+				[[nodiscard]] constexpr const index_type &get_stride() const {
 					return stride;
 				}
 			};

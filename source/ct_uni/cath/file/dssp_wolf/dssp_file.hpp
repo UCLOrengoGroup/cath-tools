@@ -48,11 +48,11 @@ namespace cath {
 
 			explicit dssp_file(residue_vec);
 
-			size_t get_num_residues() const;
-			const residue & get_residue_of_index(const size_t &) const;
+			[[nodiscard]] size_t         get_num_residues() const;
+			[[nodiscard]] const residue &get_residue_of_index( const size_t & ) const;
 
-			const_iterator begin() const;
-			const_iterator end() const;
+			[[nodiscard]] const_iterator begin() const;
+			[[nodiscard]] const_iterator end() const;
 		};
 
 		protein protein_from_dssp_and_pdb(const dssp_file &,

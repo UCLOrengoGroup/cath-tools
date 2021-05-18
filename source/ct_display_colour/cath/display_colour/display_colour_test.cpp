@@ -40,8 +40,8 @@ namespace cath {
 
 		/// \brief The display_colour_test_suite_fixture to assist in testing display_colour_test
 		struct display_colour_test_suite_fixture : protected global_test_constants {
-		private:
-			doub_vec get_invalid_component_values() const {
+		  private:
+			[[nodiscard]] doub_vec get_invalid_component_values() const {
 				// The standard invalid doubles
 				doub_vec invalid_doubles = INVALID_DOUBLES();
 				// -0.1 should be invalid because colour components must be >= 0.0
@@ -50,10 +50,10 @@ namespace cath {
 				return invalid_doubles;
 			}
 
-		protected:
+		  protected:
 			~display_colour_test_suite_fixture() noexcept = default;
 
-		public:
+		  public:
 			/// \brief Check that the r, g and b component values of a viewer colour are as expected
 			void check_r_g_b_of_display_colour(const display_colour &prm_display_colour, ///< The display_colour to check
 			                                  const double        &prm_expected_r,    ///< The expected r component value

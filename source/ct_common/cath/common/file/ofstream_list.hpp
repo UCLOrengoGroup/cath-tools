@@ -56,7 +56,7 @@ namespace cath {
 			                       const ::std::filesystem::path & = "-");
 
 			ostream_ref_vec open_ofstreams(const path_vec &);
-			const ::std::filesystem::path & get_flag() const;
+			[[nodiscard]] const ::std::filesystem::path &get_flag() const;
 			void close_all();
 		};
 

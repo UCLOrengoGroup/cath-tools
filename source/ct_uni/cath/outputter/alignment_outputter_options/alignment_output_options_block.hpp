@@ -58,26 +58,26 @@ namespace cath {
 			::std::filesystem::path aln_to_html_file;
 			bool aln_to_html_stdout;
 
-			std::unique_ptr<options_block> do_clone() const final;
-			std::string do_get_block_name() const final;
+			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
-			str_opt do_invalid_string(const boost::program_options::variables_map &) const final;
-			str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+			[[nodiscard]] str_vec do_get_all_options_names() const final;
 
-			::std::filesystem::path get_aln_to_cath_aln_file() const;
-			bool get_aln_to_cath_aln_stdout() const;
-			::std::filesystem::path get_aln_to_fasta_file() const;
-			bool get_aln_to_fasta_stdout() const;
-			::std::filesystem::path get_aln_to_ssap_file() const;
-			bool get_aln_to_ssap_stdout() const;
-			::std::filesystem::path get_aln_to_html_file() const;
-			bool get_aln_to_html_stdout() const;
+			[[nodiscard]] ::std::filesystem::path get_aln_to_cath_aln_file() const;
+			[[nodiscard]] bool                    get_aln_to_cath_aln_stdout() const;
+			[[nodiscard]] ::std::filesystem::path get_aln_to_fasta_file() const;
+			[[nodiscard]] bool                    get_aln_to_fasta_stdout() const;
+			[[nodiscard]] ::std::filesystem::path get_aln_to_ssap_file() const;
+			[[nodiscard]] bool                    get_aln_to_ssap_stdout() const;
+			[[nodiscard]] ::std::filesystem::path get_aln_to_html_file() const;
+			[[nodiscard]] bool                    get_aln_to_html_stdout() const;
 
-		public:
-			alignment_outputter_list get_alignment_outputters(const display_spec &) const;
+		  public:
+			[[nodiscard]] alignment_outputter_list get_alignment_outputters( const display_spec & ) const;
 
-			bool outputs_to_stdout() const;
+			[[nodiscard]] bool outputs_to_stdout() const;
 		};
 
 	} // namespace opts

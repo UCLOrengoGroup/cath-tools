@@ -28,17 +28,16 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		class domall_chopping_format final : public chopping_format {
-		private:
-			std::unique_ptr<chopping_format> do_clone() const final;
+		  private:
+			[[nodiscard]] std::unique_ptr<chopping_format> do_clone() const final;
 
-			bool do_represents_fragments() const final;
+			[[nodiscard]] bool do_represents_fragments() const final;
 
-			domain do_parse_domain(const std::string &) const final;
+			[[nodiscard]] domain do_parse_domain( const std::string & ) const final;
 
-			std::string do_write_region(const region &) const final;
+			[[nodiscard]] std::string do_write_region( const region & ) const final;
 
-			std::string do_write_domain(const domain &) const final;
-
+			[[nodiscard]] std::string do_write_domain( const domain & ) const final;
 		};
 
 	} // namespace chop

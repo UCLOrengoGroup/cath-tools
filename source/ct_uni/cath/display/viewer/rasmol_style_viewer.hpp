@@ -27,11 +27,10 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	class rasmol_style_viewer : public viewer {
-	private:
-		std::string do_default_executable() const override = 0;
-		std::string do_default_file_extension() const final;
-		void do_write_alignment_extras(std::ostream &,
-		                               const sup::superposition_context &) const override = 0;
+	  private:
+		[[nodiscard]] std::string do_default_executable() const override = 0;
+		[[nodiscard]] std::string do_default_file_extension() const final;
+		void do_write_alignment_extras( std::ostream &, const sup::superposition_context & ) const override = 0;
 	};
 
 } // namespace cath
