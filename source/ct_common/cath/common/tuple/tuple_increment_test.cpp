@@ -29,7 +29,7 @@ using ::std::make_tuple;
 BOOST_AUTO_TEST_SUITE(tuple_increment_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	static_assert( tuple_increment( make_tuple( 3u, -8, 2.0 ) ) == make_tuple( 4u, -7, 3.0 ), "" );
+	static_assert( tuple_increment( make_tuple( 3u, -8, 2.0 ) ) == make_tuple( 4u, -7, 3.0 ) );
 
 	// static_assert( tuple_increment( 5 ) == 6, "" ); // This should fail to compile with something like: `no matching function for call to object of type 'tuple_increment_fn'`
 

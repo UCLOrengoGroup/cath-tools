@@ -27,22 +27,22 @@ using namespace ::cath::common;
 BOOST_AUTO_TEST_SUITE(variadic_and_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	static_assert( variadic_and( true  ),  "" );
-	static_assert( !variadic_and( false ), "" );
+	static_assert( variadic_and( true  )  );
+	static_assert( !variadic_and( false ) );
 
-	static_assert( variadic_and( true,  true  ),  "" );
-	static_assert( !variadic_and( true,  false ), "" );
-	static_assert( !variadic_and( false, true  ), "" );
-	static_assert( !variadic_and( false, false ), "" );
+	static_assert( variadic_and( true,  true  )  );
+	static_assert( !variadic_and( true,  false ) );
+	static_assert( !variadic_and( false, true  ) );
+	static_assert( !variadic_and( false, false ) );
 
-	static_assert( variadic_and( true,  true,  true  ),  "" );
-	static_assert( !variadic_and( true,  true,  false ), "" );
-	static_assert( !variadic_and( true,  false, true  ), "" );
-	static_assert( !variadic_and( true,  false, false ), "" );
-	static_assert( !variadic_and( false, true,  true  ), "" );
-	static_assert( !variadic_and( false, true,  false ), "" );
-	static_assert( !variadic_and( false, false, true  ), "" );
-	static_assert( !variadic_and( false, false, false ), "" );
+	static_assert( variadic_and( true,  true,  true  )  );
+	static_assert( !variadic_and( true,  true,  false ) );
+	static_assert( !variadic_and( true,  false, true  ) );
+	static_assert( !variadic_and( true,  false, false ) );
+	static_assert( !variadic_and( false, true,  true  ) );
+	static_assert( !variadic_and( false, true,  false ) );
+	static_assert( !variadic_and( false, false, true  ) );
+	static_assert( !variadic_and( false, false, false ) );
 
 	BOOST_CHECK( true );
 }

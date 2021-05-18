@@ -22,10 +22,10 @@
 
 using namespace ::cath::file;
 
-static_assert( angle_skipping_of_dssp_skip_policy( dssp_skip_policy::SKIP__BREAK_ANGLES           ) == dssp_skip_angle_skipping::BREAK_ANGLES,      "" );
-static_assert( angle_skipping_of_dssp_skip_policy( dssp_skip_policy::DONT_SKIP__BREAK_ANGLES      ) == dssp_skip_angle_skipping::BREAK_ANGLES,      "" );
-static_assert( angle_skipping_of_dssp_skip_policy( dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES ) == dssp_skip_angle_skipping::DONT_BREAK_ANGLES, "" );
+static_assert( angle_skipping_of_dssp_skip_policy( dssp_skip_policy::SKIP__BREAK_ANGLES           ) == dssp_skip_angle_skipping::BREAK_ANGLES      );
+static_assert( angle_skipping_of_dssp_skip_policy( dssp_skip_policy::DONT_SKIP__BREAK_ANGLES      ) == dssp_skip_angle_skipping::BREAK_ANGLES      );
+static_assert( angle_skipping_of_dssp_skip_policy( dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES ) == dssp_skip_angle_skipping::DONT_BREAK_ANGLES );
 
-static_assert( res_skipping_of_dssp_skip_policy  ( dssp_skip_policy::SKIP__BREAK_ANGLES           ) == dssp_skip_res_skipping::SKIP,                "" );
-static_assert( res_skipping_of_dssp_skip_policy  ( dssp_skip_policy::DONT_SKIP__BREAK_ANGLES      ) == dssp_skip_res_skipping::DONT_SKIP,           "" );
-static_assert( res_skipping_of_dssp_skip_policy  ( dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES ) == dssp_skip_res_skipping::DONT_SKIP,           "" );
+static_assert( res_skipping_of_dssp_skip_policy  ( dssp_skip_policy::SKIP__BREAK_ANGLES           ) == dssp_skip_res_skipping::SKIP                );
+static_assert( res_skipping_of_dssp_skip_policy  ( dssp_skip_policy::DONT_SKIP__BREAK_ANGLES      ) == dssp_skip_res_skipping::DONT_SKIP           );
+static_assert( res_skipping_of_dssp_skip_policy  ( dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES ) == dssp_skip_res_skipping::DONT_SKIP           );

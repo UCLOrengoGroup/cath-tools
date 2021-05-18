@@ -83,9 +83,9 @@ static inline constexpr aln_glue_style aln_glue_style_of_align_refining(const al
 		                                                  aln_glue_style::WITH_HEAVY_REFINING;
 }
 
-static_assert( aln_glue_style_of_align_refining( align_refining::NO    ) == aln_glue_style::SIMPLY,                           "" );
-static_assert( aln_glue_style_of_align_refining( align_refining::LIGHT ) == aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING, "" );
-static_assert( aln_glue_style_of_align_refining( align_refining::HEAVY ) == aln_glue_style::WITH_HEAVY_REFINING,              "" );
+static_assert( aln_glue_style_of_align_refining( align_refining::NO    ) == aln_glue_style::SIMPLY                           );
+static_assert( aln_glue_style_of_align_refining( align_refining::LIGHT ) == aln_glue_style::INCREMENTALLY_WITH_PAIR_REFINING );
+static_assert( aln_glue_style_of_align_refining( align_refining::HEAVY ) == aln_glue_style::WITH_HEAVY_REFINING              );
 
 /// \brief TODOCUMENT
 pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< TODOCUMENT

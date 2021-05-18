@@ -22,7 +22,7 @@
 
 using namespace ::cath::rslv;
 
-static_assert(   hit_boundary_output_of_output_trimmed_hits( true                         ) == hit_boundary_output::TRIMMED, "" );
-static_assert(   hit_boundary_output_of_output_trimmed_hits( false                        ) == hit_boundary_output::ORIG,    "" );
-static_assert(   means_output_trimmed_hits                 ( hit_boundary_output::TRIMMED ),                                 "" );
-static_assert( ! means_output_trimmed_hits                 ( hit_boundary_output::ORIG    ),                                 "" );
+static_assert(   hit_boundary_output_of_output_trimmed_hits( true                         ) == hit_boundary_output::TRIMMED );
+static_assert(   hit_boundary_output_of_output_trimmed_hits( false                        ) == hit_boundary_output::ORIG    );
+static_assert(   means_output_trimmed_hits                 ( hit_boundary_output::TRIMMED )                                 );
+static_assert( ! means_output_trimmed_hits                 ( hit_boundary_output::ORIG    )                                 );

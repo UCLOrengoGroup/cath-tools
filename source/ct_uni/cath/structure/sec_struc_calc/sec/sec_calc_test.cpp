@@ -110,8 +110,8 @@ BOOST_AUTO_TEST_CASE(prosec_axis_point_gets_beta_strand_example_correct) {
 			prosec_sec_type::BETA_STRAND
 		)
 		==
-		coord{ -11.715646, 0.652680, -9.882344 },
-		""
+		coord{ -11.715646, 0.652680, -9.882344 }
+		
 	);
 	BOOST_CHECK( true );
 }
@@ -125,8 +125,8 @@ BOOST_AUTO_TEST_CASE(prosec_axis_point_gets_alpha_helix_example_correct) {
 			prosec_sec_type::ALPHA_HELIX
 		)
 		==
-		coord{ -23.585392, 10.599755, -16.286091 },
-		""
+		coord{ -23.585392, 10.599755, -16.286091 }
+		
 	);
 	BOOST_CHECK( true );
 }

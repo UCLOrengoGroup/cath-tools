@@ -28,21 +28,21 @@ using namespace ::cath::seq;
 using ::std::string;
 using ::std::ostream;
 
-static_assert( arrow_before_res( 5 ).res_before() == 4, "" );
-static_assert( arrow_before_res( 5 ).res_after () == 5, "" );
-static_assert( arrow_after_res ( 5 ).res_before() == 5, "" );
-static_assert( arrow_after_res ( 5 ).res_after () == 6, "" );
+static_assert( arrow_before_res( 5 ).res_before() == 4 );
+static_assert( arrow_before_res( 5 ).res_after () == 5 );
+static_assert( arrow_after_res ( 5 ).res_before() == 5 );
+static_assert( arrow_after_res ( 5 ).res_after () == 6 );
 
-static_assert( arrow_before_res( 0 ).res_after () == 0, "" );
-static_assert( arrow_after_res ( 0 ).res_before() == 0, "" );
-static_assert( arrow_after_res ( 0 ).res_after () == 1, "" );
+static_assert( arrow_before_res( 0 ).res_after () == 0 );
+static_assert( arrow_after_res ( 0 ).res_before() == 0 );
+static_assert( arrow_after_res ( 0 ).res_after () == 1 );
 
-static_assert( start_arrow().res_after() == 0, "" );
+static_assert( start_arrow().res_after() == 0 );
 
-static_assert( arrow_after_res( 15 ) - arrow_after_res( 10 ) == 5, "" );
+static_assert( arrow_after_res( 15 ) - arrow_after_res( 10 ) == 5 );
 
-static_assert( arrow_after_res( 10 ) - 5 == arrow_after_res(  5 ), "" );
-static_assert( arrow_after_res( 10 ) + 5 == arrow_after_res( 15 ), "" );
+static_assert( arrow_after_res( 10 ) - 5 == arrow_after_res(  5 ) );
+static_assert( arrow_after_res( 10 ) + 5 == arrow_after_res( 15 ) );
 
 /// \brief Generate a string describing the specified seq_arrow
 ///

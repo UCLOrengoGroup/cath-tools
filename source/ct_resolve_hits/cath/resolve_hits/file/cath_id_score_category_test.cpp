@@ -61,25 +61,25 @@ BOOST_AUTO_TEST_CASE(dc_example_is_dc_type) {
 }
 
 BOOST_AUTO_TEST_CASE(hmmer_evalues_are_suspicious_works) {
-	static_assert( ! hmmer_evalues_are_suspicious( 0.0009, 0.0009 ), "" );
-	static_assert( ! hmmer_evalues_are_suspicious( 0.0009, 0.0010 ), "" );
-	static_assert(   hmmer_evalues_are_suspicious( 0.0009, 0.0011 ), "" );
+	static_assert( ! hmmer_evalues_are_suspicious( 0.0009, 0.0009 ) );
+	static_assert( ! hmmer_evalues_are_suspicious( 0.0009, 0.0010 ) );
+	static_assert(   hmmer_evalues_are_suspicious( 0.0009, 0.0011 ) );
 
-	static_assert( ! hmmer_evalues_are_suspicious( 0.0010, 0.0009 ), "" );
-	static_assert( ! hmmer_evalues_are_suspicious( 0.0010, 0.0010 ), "" );
-	static_assert(   hmmer_evalues_are_suspicious( 0.0010, 0.0011 ), "" );
+	static_assert( ! hmmer_evalues_are_suspicious( 0.0010, 0.0009 ) );
+	static_assert( ! hmmer_evalues_are_suspicious( 0.0010, 0.0010 ) );
+	static_assert(   hmmer_evalues_are_suspicious( 0.0010, 0.0011 ) );
 
-	static_assert( ! hmmer_evalues_are_suspicious( 0.0011, 0.0009 ), "" );
-	static_assert( ! hmmer_evalues_are_suspicious( 0.0011, 0.0010 ), "" );
-	static_assert( ! hmmer_evalues_are_suspicious( 0.0011, 0.0011 ), "" );
+	static_assert( ! hmmer_evalues_are_suspicious( 0.0011, 0.0009 ) );
+	static_assert( ! hmmer_evalues_are_suspicious( 0.0011, 0.0010 ) );
+	static_assert( ! hmmer_evalues_are_suspicious( 0.0011, 0.0011 ) );
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(bitscore_divisor_works) {
-	static_assert( bitscore_divisor( false, false ) == 1.0, "" );
-	static_assert( bitscore_divisor( false, true  ) == 1.0, "" );
-	static_assert( bitscore_divisor( true,  false ) == 1.0, "" );
-	static_assert( bitscore_divisor( true,  true  ) == 4.0, "" );
+	static_assert( bitscore_divisor( false, false ) == 1.0 );
+	static_assert( bitscore_divisor( false, true  ) == 1.0 );
+	static_assert( bitscore_divisor( true,  false ) == 1.0 );
+	static_assert( bitscore_divisor( true,  true  ) == 4.0 );
 	BOOST_CHECK( true );
 }
 

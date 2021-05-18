@@ -32,16 +32,16 @@ BOOST_AUTO_TEST_CASE(basic) {
 	static_assert(
 		make_tuple_with_skips( 5, tpl_elmnt_skip_t{}, 4u )
 		==
-		make_tuple           ( 5,                     4u ),
-		""
+		make_tuple           ( 5,                     4u )
+		
 	);
 
 	constexpr tpl_elmnt_skip_t my_skipper{};
 	static_assert(
 		make_tuple_with_skips( 5, my_skipper,         4u )
 		==
-		make_tuple           ( 5,                     4u ),
-		""
+		make_tuple           ( 5,                     4u )
+		
 	);
 
 	BOOST_CHECK( true );

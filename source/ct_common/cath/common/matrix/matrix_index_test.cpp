@@ -27,19 +27,19 @@ using namespace ::cath::common;
 BOOST_AUTO_TEST_SUITE(matrix_index_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 0, 1, 5 ) == 0, "" );
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 0, 2, 5 ) == 1, "" );
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 0, 3, 5 ) == 2, "" );
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 0, 4, 5 ) == 3, "" );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 0, 1, 5 ) == 0 );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 0, 2, 5 ) == 1 );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 0, 3, 5 ) == 2 );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 0, 4, 5 ) == 3 );
 
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 1, 2, 5 ) == 4, "" );
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 1, 3, 5 ) == 5, "" );
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 1, 4, 5 ) == 6, "" );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 1, 2, 5 ) == 4 );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 1, 3, 5 ) == 5 );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 1, 4, 5 ) == 6 );
 
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 2, 3, 5 ) == 7, "" );
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 2, 4, 5 ) == 8, "" );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 2, 3, 5 ) == 7 );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 2, 4, 5 ) == 8 );
 
-	static_assert( get_zero_index_of_strict_upper_half_matrix( 3, 4, 5 ) == 9, "" );
+	static_assert( get_zero_index_of_strict_upper_half_matrix( 3, 4, 5 ) == 9 );
 
 	BOOST_TEST( true );
 }

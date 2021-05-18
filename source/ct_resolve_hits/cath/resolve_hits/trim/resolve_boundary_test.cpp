@@ -38,45 +38,45 @@ BOOST_AUTO_TEST_CASE(throws_on_non_meeting_boundaries) {
 }
 
 BOOST_AUTO_TEST_CASE(resolves_half_way_for_simple_symmetric) {
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 100, arrow_after_res( 200 ), 100 ) == arrow_after_res( 150 ), "" );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 100, arrow_after_res( 200 ), 100 ) == arrow_after_res( 150 ) );
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(removes_in_ratio_to_trimmed_lengths) {
-	static_assert(     resolve_boundary( arrow_after_res( 100 ),  50, arrow_after_res( 200 ),  75 ) == arrow_after_res( 140 ), "" );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ),  50, arrow_after_res( 200 ),  75 ) == arrow_after_res( 140 ) );
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(rounds_sensibly_below_and_above_residue_midpoint) {
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 145, arrow_after_res( 200 ), 155 ) == arrow_after_res( 148 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 146, arrow_after_res( 200 ), 154 ) == arrow_after_res( 149 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 147, arrow_after_res( 200 ), 153 ) == arrow_after_res( 149 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 148, arrow_after_res( 200 ), 152 ) == arrow_after_res( 149 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 149, arrow_after_res( 200 ), 151 ) == arrow_after_res( 150 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 150, arrow_after_res( 200 ), 150 ) == arrow_after_res( 150 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 151, arrow_after_res( 200 ), 149 ) == arrow_after_res( 150 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 152, arrow_after_res( 200 ), 148 ) == arrow_after_res( 151 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 153, arrow_after_res( 200 ), 147 ) == arrow_after_res( 151 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 154, arrow_after_res( 200 ), 146 ) == arrow_after_res( 151 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 155, arrow_after_res( 200 ), 145 ) == arrow_after_res( 152 ), "" );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 145, arrow_after_res( 200 ), 155 ) == arrow_after_res( 148 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 146, arrow_after_res( 200 ), 154 ) == arrow_after_res( 149 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 147, arrow_after_res( 200 ), 153 ) == arrow_after_res( 149 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 148, arrow_after_res( 200 ), 152 ) == arrow_after_res( 149 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 149, arrow_after_res( 200 ), 151 ) == arrow_after_res( 150 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 150, arrow_after_res( 200 ), 150 ) == arrow_after_res( 150 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 151, arrow_after_res( 200 ), 149 ) == arrow_after_res( 150 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 152, arrow_after_res( 200 ), 148 ) == arrow_after_res( 151 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 153, arrow_after_res( 200 ), 147 ) == arrow_after_res( 151 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 154, arrow_after_res( 200 ), 146 ) == arrow_after_res( 151 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 155, arrow_after_res( 200 ), 145 ) == arrow_after_res( 152 ) );
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(gives_spare_residue_to_shorter_trim_at_residue_midpoint) {
-	static_assert(     resolve_boundary( arrow_after_res( 100 ),  96, arrow_after_res( 200 ), 104 ) == arrow_after_res( 148 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ),  97, arrow_after_res( 200 ), 103 ) == arrow_after_res( 149 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ),  98, arrow_after_res( 200 ), 102 ) == arrow_after_res( 149 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ),  99, arrow_after_res( 200 ), 101 ) == arrow_after_res( 150 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 100, arrow_after_res( 200 ), 100 ) == arrow_after_res( 150 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 101, arrow_after_res( 200 ),  99 ) == arrow_after_res( 150 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 102, arrow_after_res( 200 ),  98 ) == arrow_after_res( 151 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 103, arrow_after_res( 200 ),  97 ) == arrow_after_res( 151 ), "" );
-	static_assert(     resolve_boundary( arrow_after_res( 100 ), 104, arrow_after_res( 200 ),  96 ) == arrow_after_res( 152 ), "" );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ),  96, arrow_after_res( 200 ), 104 ) == arrow_after_res( 148 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ),  97, arrow_after_res( 200 ), 103 ) == arrow_after_res( 149 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ),  98, arrow_after_res( 200 ), 102 ) == arrow_after_res( 149 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ),  99, arrow_after_res( 200 ), 101 ) == arrow_after_res( 150 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 100, arrow_after_res( 200 ), 100 ) == arrow_after_res( 150 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 101, arrow_after_res( 200 ),  99 ) == arrow_after_res( 150 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 102, arrow_after_res( 200 ),  98 ) == arrow_after_res( 151 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 103, arrow_after_res( 200 ),  97 ) == arrow_after_res( 151 ) );
+	static_assert(     resolve_boundary( arrow_after_res( 100 ), 104, arrow_after_res( 200 ),  96 ) == arrow_after_res( 152 ) );
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(rounds_up_at_midpoint_with_equal_trims) {
-	static_assert( resolve_boundary( arrow_after_res( 100 ), 100, arrow_after_res( 199 ), 100 ) == arrow_after_res( 150 ), "" );
+	static_assert( resolve_boundary( arrow_after_res( 100 ), 100, arrow_after_res( 199 ), 100 ) == arrow_after_res( 150 ) );
 	BOOST_CHECK( true );
 }
 

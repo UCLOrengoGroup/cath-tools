@@ -173,24 +173,24 @@ BOOST_AUTO_TEST_CASE(constexpr_gcd_works) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(chinese_remainder_coprime_pair_works) {
-	static_assert(                     detail::extended_euclid_algo(             5_z, 3_z ) == diff_diff_pair( -1,   2 ),  "" );
-	static_assert(                     detail::extended_euclid_algo(             3_z, 5_z ) == diff_diff_pair(  2,  -1 ),  "" );
-	static_assert(            detail::extended_euclid_algo_products(             5_z, 3_z ) == diff_diff_pair( -5,   6 ),  "" );
-	static_assert(            detail::extended_euclid_algo_products(             5_z, 3_z ) == diff_diff_pair( -5,   6 ),  "" );
-	static_assert( detail::chinese_remainder_coprime_pair_num_above( 10_z,  4_z, 5_z, 3_z ) == 19_z,                       "" );
-	static_assert( detail::chinese_remainder_coprime_pair_num_above(  4_z, 10_z, 3_z, 5_z ) == 19_z,                       "" );
+	static_assert(                     detail::extended_euclid_algo(             5_z, 3_z ) == diff_diff_pair( -1,   2 )  );
+	static_assert(                     detail::extended_euclid_algo(             3_z, 5_z ) == diff_diff_pair(  2,  -1 )  );
+	static_assert(            detail::extended_euclid_algo_products(             5_z, 3_z ) == diff_diff_pair( -5,   6 )  );
+	static_assert(            detail::extended_euclid_algo_products(             5_z, 3_z ) == diff_diff_pair( -5,   6 )  );
+	static_assert( detail::chinese_remainder_coprime_pair_num_above( 10_z,  4_z, 5_z, 3_z ) == 19_z                       );
+	static_assert( detail::chinese_remainder_coprime_pair_num_above(  4_z, 10_z, 3_z, 5_z ) == 19_z                       );
 
-	static_assert(         chinese_remainder_coprime_pair          ( 10_z,  4_z, 5_z, 3_z ) == make_pair( 15_z,  9_z ),    "" );
-	static_assert(         chinese_remainder_coprime_pair          (  4_z, 10_z, 3_z, 5_z ) == make_pair(  9_z, 15_z ),    "" );
+	static_assert(         chinese_remainder_coprime_pair          ( 10_z,  4_z, 5_z, 3_z ) == make_pair( 15_z,  9_z )    );
+	static_assert(         chinese_remainder_coprime_pair          (  4_z, 10_z, 3_z, 5_z ) == make_pair(  9_z, 15_z )    );
 
-	static_assert(         chinese_remainder_coprime_pair          (  0_z,  0_z, 1_z, 2_z ) == make_pair(  0_z,  0_z ),    "" );
-	static_assert(         chinese_remainder_coprime_pair          (  0_z,  0_z, 2_z, 1_z ) == make_pair(  0_z,  0_z ),    "" );
+	static_assert(         chinese_remainder_coprime_pair          (  0_z,  0_z, 1_z, 2_z ) == make_pair(  0_z,  0_z )    );
+	static_assert(         chinese_remainder_coprime_pair          (  0_z,  0_z, 2_z, 1_z ) == make_pair(  0_z,  0_z )    );
 
-	static_assert(         chinese_remainder_coprime_pair          (  0_z,  1_z, 1_z, 1_z ) == make_pair(  0_z,  1_z ),    "" );
-	static_assert(         chinese_remainder_coprime_pair          (  1_z,  0_z, 1_z, 1_z ) == make_pair(  1_z,  0_z ),    "" );
+	static_assert(         chinese_remainder_coprime_pair          (  0_z,  1_z, 1_z, 1_z ) == make_pair(  0_z,  1_z )    );
+	static_assert(         chinese_remainder_coprime_pair          (  1_z,  0_z, 1_z, 1_z ) == make_pair(  1_z,  0_z )    );
 
-	static_assert(         chinese_remainder_coprime_pair          (  0_z,  2_z, 2_z, 3_z ) == make_pair(  4_z,  6_z ),    "" );
-	static_assert(         chinese_remainder_coprime_pair          (  2_z,  0_z, 3_z, 2_z ) == make_pair(  6_z,  4_z ),    "" );
+	static_assert(         chinese_remainder_coprime_pair          (  0_z,  2_z, 2_z, 3_z ) == make_pair(  4_z,  6_z )    );
+	static_assert(         chinese_remainder_coprime_pair          (  2_z,  0_z, 3_z, 2_z ) == make_pair(  6_z,  4_z )    );
 
 	// This can ranges can be extended higher for more comprehensive testing
 	// (have used 1-10 and 0-100 at the time of writing)

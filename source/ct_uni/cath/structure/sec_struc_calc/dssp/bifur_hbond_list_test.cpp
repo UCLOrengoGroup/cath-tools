@@ -63,15 +63,15 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(bifur_hbond_list_test_suite, bifur_hbond_list_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(hbond_half_is_constexpr) {
-	static_assert( b.index  == index,    "" );
-	static_assert( b.energy == energy_b, "" );
+	static_assert( b.index  == index    );
+	static_assert( b.energy == energy_b );
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(hbond_half_lower_energy_value_is_bondier_than) {
-	static_assert(   is_bondier_than( c, b ), "" );
-	static_assert( ! is_bondier_than( b, b ), "" );
-	static_assert( ! is_bondier_than( a, b ), "" );
+	static_assert(   is_bondier_than( c, b ) );
+	static_assert( ! is_bondier_than( b, b ) );
+	static_assert( ! is_bondier_than( a, b ) );
 	BOOST_CHECK( true );
 }
 

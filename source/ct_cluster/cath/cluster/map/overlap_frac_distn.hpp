@@ -59,14 +59,14 @@ namespace cath {
 			/// This must be 10 ^ num_dec_places
 			static constexpr size_t num_gaps = detail::power_of_ten( num_dec_places );
 
-			static_assert( num_gaps == 10000, "" );
+			static_assert( num_gaps == 10000 );
 
 			/// \brief The total number of bins
 			///
 			/// This must be 1 + 10 ^ num_dec_places
 			static constexpr size_t num_posns = 1_z + num_gaps;
 
-			static_assert( num_posns == 10001, "" );
+			static_assert( num_posns == 10001 );
 
 			/// \brief The bins: counts of the number seen of each fraction between 0 and 1 to num_dec_places decimal places
 			size_vec fraction_counts{ size_vec( num_gaps + 1, 0 ) };

@@ -60,8 +60,8 @@ BOOST_AUTO_TEST_CASE(basic) {
 	);
 
 	static_assert(
-		index_x_y_z_keyer.make_value( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ) == make_tuple( 12.0, 34.0, -22.0, 4u ),
-		""
+		index_x_y_z_keyer.make_value( simple_locn_index{ 12.0, 34.0, -22.0, 4u } ) == make_tuple( 12.0, 34.0, -22.0, 4u )
+		
 	);
 
 	// Making this test a static_assert means that a floor() has to be switched for a constexpr_floor() which

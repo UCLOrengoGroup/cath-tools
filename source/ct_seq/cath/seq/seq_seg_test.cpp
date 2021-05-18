@@ -35,14 +35,14 @@ using ::std::string;
 BOOST_AUTO_TEST_SUITE(seq_seg_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	static_assert( get_start_res_index( seq_seg{ 1272, 1363 } ) == 1272, "" );
-	static_assert( get_stop_res_index ( seq_seg{ 1272, 1363 } ) == 1363, "" );
+	static_assert( get_start_res_index( seq_seg{ 1272, 1363 } ) == 1272 );
+	static_assert( get_stop_res_index ( seq_seg{ 1272, 1363 } ) == 1363 );
 
-	static_assert( get_start_res_index( seq_seg{    0,    1 } ) ==    0, "" );
-	static_assert( get_stop_res_index ( seq_seg{    0,    1 } ) ==    1, "" );
+	static_assert( get_start_res_index( seq_seg{    0,    1 } ) ==    0 );
+	static_assert( get_stop_res_index ( seq_seg{    0,    1 } ) ==    1 );
 
-	static_assert( get_start_res_index( seq_seg{    0,    0 } ) ==    0, "" );
-	static_assert( get_stop_res_index ( seq_seg{    0,    0 } ) ==    0, "" );
+	static_assert( get_start_res_index( seq_seg{    0,    0 } ) ==    0 );
+	static_assert( get_stop_res_index ( seq_seg{    0,    0 } ) ==    0 );
 
 	BOOST_CHECK( true );
 }
@@ -63,70 +63,70 @@ BOOST_AUTO_TEST_CASE(are_overlapping_works) {
 	constexpr auto seq_seg_a = seq_seg{ 1266, 1344 };
 	constexpr auto seq_seg_b = seq_seg{ 1272, 1320 };
 	constexpr auto seq_seg_c = seq_seg{ 1398, 1437 };
-	static_assert(   are_overlapping( seq_seg_a, seq_seg_b ), "" );
-	static_assert( ! are_overlapping( seq_seg_a, seq_seg_c ), "" );
-	static_assert( ! are_overlapping( seq_seg_b, seq_seg_c ), "" );
-	static_assert(   are_overlapping( seq_seg_b, seq_seg_a ), "" );
-	static_assert( ! are_overlapping( seq_seg_c, seq_seg_a ), "" );
-	static_assert( ! are_overlapping( seq_seg_c, seq_seg_b ), "" );
+	static_assert(   are_overlapping( seq_seg_a, seq_seg_b ) );
+	static_assert( ! are_overlapping( seq_seg_a, seq_seg_c ) );
+	static_assert( ! are_overlapping( seq_seg_b, seq_seg_c ) );
+	static_assert(   are_overlapping( seq_seg_b, seq_seg_a ) );
+	static_assert( ! are_overlapping( seq_seg_c, seq_seg_a ) );
+	static_assert( ! are_overlapping( seq_seg_c, seq_seg_b ) );
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(length) {
-	static_assert( get_length( seq_seg{ 10, 10 } ) ==  1, "" );
-	static_assert( get_length( seq_seg{ 10, 20 } ) == 11, "" );
+	static_assert( get_length( seq_seg{ 10, 10 } ) ==  1 );
+	static_assert( get_length( seq_seg{ 10, 20 } ) == 11 );
 	BOOST_CHECK( true );
 }
 
 
 BOOST_AUTO_TEST_CASE(shorter_and_longer_length) {
-	static_assert( shorter_length( seq_seg{ 10, 19 }, seq_seg{ 10, 29 } ) == 10, "" );
-	static_assert( longer_length ( seq_seg{ 10, 19 }, seq_seg{ 10, 29 } ) == 20, "" );
+	static_assert( shorter_length( seq_seg{ 10, 19 }, seq_seg{ 10, 29 } ) == 10 );
+	static_assert( longer_length ( seq_seg{ 10, 19 }, seq_seg{ 10, 29 } ) == 20 );
 	BOOST_CHECK( true );
 }
 
 
 BOOST_AUTO_TEST_CASE(overlap_by_works) {
-	static_assert( overlap_by( seq_seg{  2,  3 }, seq_seg{ 4, 7 } ) ==  0, "" );
-	static_assert( overlap_by( seq_seg{  3,  4 }, seq_seg{ 4, 7 } ) ==  1, "" );
-	static_assert( overlap_by( seq_seg{  4,  5 }, seq_seg{ 4, 7 } ) ==  2, "" );
-	static_assert( overlap_by( seq_seg{  5,  6 }, seq_seg{ 4, 7 } ) ==  2, "" );
-	static_assert( overlap_by( seq_seg{  6,  7 }, seq_seg{ 4, 7 } ) ==  2, "" );
-	static_assert( overlap_by( seq_seg{  7,  8 }, seq_seg{ 4, 7 } ) ==  1, "" );
-	static_assert( overlap_by( seq_seg{  8,  9 }, seq_seg{ 4, 7 } ) ==  0, "" );
+	static_assert( overlap_by( seq_seg{  2,  3 }, seq_seg{ 4, 7 } ) ==  0 );
+	static_assert( overlap_by( seq_seg{  3,  4 }, seq_seg{ 4, 7 } ) ==  1 );
+	static_assert( overlap_by( seq_seg{  4,  5 }, seq_seg{ 4, 7 } ) ==  2 );
+	static_assert( overlap_by( seq_seg{  5,  6 }, seq_seg{ 4, 7 } ) ==  2 );
+	static_assert( overlap_by( seq_seg{  6,  7 }, seq_seg{ 4, 7 } ) ==  2 );
+	static_assert( overlap_by( seq_seg{  7,  8 }, seq_seg{ 4, 7 } ) ==  1 );
+	static_assert( overlap_by( seq_seg{  8,  9 }, seq_seg{ 4, 7 } ) ==  0 );
 
-	static_assert( overlap_by( seq_seg{  4,  7 }, seq_seg{ 4, 7 } ) ==  4, "" );
-	static_assert( overlap_by( seq_seg{  2,  9 }, seq_seg{ 4, 7 } ) ==  4, "" );
+	static_assert( overlap_by( seq_seg{  4,  7 }, seq_seg{ 4, 7 } ) ==  4 );
+	static_assert( overlap_by( seq_seg{  2,  9 }, seq_seg{ 4, 7 } ) ==  4 );
 
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(fraction_overlap_over_shorter_works) {
-	static_assert( fraction_overlap_over_shorter( seq_seg{  2,  3 }, seq_seg{ 4, 7 } ) ==  0.00, "" );
-	static_assert( fraction_overlap_over_shorter( seq_seg{  3,  4 }, seq_seg{ 4, 7 } ) ==  0.50, "" );
-	static_assert( fraction_overlap_over_shorter( seq_seg{  4,  5 }, seq_seg{ 4, 7 } ) ==  1.00, "" );
-	static_assert( fraction_overlap_over_shorter( seq_seg{  5,  6 }, seq_seg{ 4, 7 } ) ==  1.00, "" );
-	static_assert( fraction_overlap_over_shorter( seq_seg{  6,  7 }, seq_seg{ 4, 7 } ) ==  1.00, "" );
-	static_assert( fraction_overlap_over_shorter( seq_seg{  7,  8 }, seq_seg{ 4, 7 } ) ==  0.50, "" );
-	static_assert( fraction_overlap_over_shorter( seq_seg{  8,  9 }, seq_seg{ 4, 7 } ) ==  0.00, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  2,  3 }, seq_seg{ 4, 7 } ) ==  0.00 );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  3,  4 }, seq_seg{ 4, 7 } ) ==  0.50 );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  4,  5 }, seq_seg{ 4, 7 } ) ==  1.00 );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  5,  6 }, seq_seg{ 4, 7 } ) ==  1.00 );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  6,  7 }, seq_seg{ 4, 7 } ) ==  1.00 );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  7,  8 }, seq_seg{ 4, 7 } ) ==  0.50 );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  8,  9 }, seq_seg{ 4, 7 } ) ==  0.00 );
 
-	static_assert( fraction_overlap_over_shorter( seq_seg{  4,  7 }, seq_seg{ 4, 7 } ) ==  1.00, "" );
-	static_assert( fraction_overlap_over_shorter( seq_seg{  2,  9 }, seq_seg{ 4, 7 } ) ==  1.00, "" );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  4,  7 }, seq_seg{ 4, 7 } ) ==  1.00 );
+	static_assert( fraction_overlap_over_shorter( seq_seg{  2,  9 }, seq_seg{ 4, 7 } ) ==  1.00 );
 
 	BOOST_CHECK( true );
 }
 
 BOOST_AUTO_TEST_CASE(fraction_overlap_over_longer_works) {
-	static_assert( fraction_overlap_over_longer( seq_seg{  2,  3 }, seq_seg{ 4, 7 } ) ==  0.00, "" );
-	static_assert( fraction_overlap_over_longer( seq_seg{  3,  4 }, seq_seg{ 4, 7 } ) ==  0.25, "" );
-	static_assert( fraction_overlap_over_longer( seq_seg{  4,  5 }, seq_seg{ 4, 7 } ) ==  0.50, "" );
-	static_assert( fraction_overlap_over_longer( seq_seg{  5,  6 }, seq_seg{ 4, 7 } ) ==  0.50, "" );
-	static_assert( fraction_overlap_over_longer( seq_seg{  6,  7 }, seq_seg{ 4, 7 } ) ==  0.50, "" );
-	static_assert( fraction_overlap_over_longer( seq_seg{  7,  8 }, seq_seg{ 4, 7 } ) ==  0.25, "" );
-	static_assert( fraction_overlap_over_longer( seq_seg{  8,  9 }, seq_seg{ 4, 7 } ) ==  0.00, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg{  2,  3 }, seq_seg{ 4, 7 } ) ==  0.00 );
+	static_assert( fraction_overlap_over_longer( seq_seg{  3,  4 }, seq_seg{ 4, 7 } ) ==  0.25 );
+	static_assert( fraction_overlap_over_longer( seq_seg{  4,  5 }, seq_seg{ 4, 7 } ) ==  0.50 );
+	static_assert( fraction_overlap_over_longer( seq_seg{  5,  6 }, seq_seg{ 4, 7 } ) ==  0.50 );
+	static_assert( fraction_overlap_over_longer( seq_seg{  6,  7 }, seq_seg{ 4, 7 } ) ==  0.50 );
+	static_assert( fraction_overlap_over_longer( seq_seg{  7,  8 }, seq_seg{ 4, 7 } ) ==  0.25 );
+	static_assert( fraction_overlap_over_longer( seq_seg{  8,  9 }, seq_seg{ 4, 7 } ) ==  0.00 );
 
-	static_assert( fraction_overlap_over_longer( seq_seg{  4,  7 }, seq_seg{ 4, 7 } ) ==  1.00, "" );
-	static_assert( fraction_overlap_over_longer( seq_seg{  2,  9 }, seq_seg{ 4, 7 } ) ==  0.50, "" );
+	static_assert( fraction_overlap_over_longer( seq_seg{  4,  7 }, seq_seg{ 4, 7 } ) ==  1.00 );
+	static_assert( fraction_overlap_over_longer( seq_seg{  2,  9 }, seq_seg{ 4, 7 } ) ==  0.50 );
 
 	BOOST_CHECK( true );
 }

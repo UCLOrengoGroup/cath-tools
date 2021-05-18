@@ -43,24 +43,24 @@ BOOST_FIXTURE_TEST_SUITE(chain_label_test_suite, cath::test::chain_label_test_su
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	static_assert(     chain_label( 'a' ) == chain_label( 'a' )  , "" );
-	static_assert( ! ( chain_label( 'a' ) == chain_label( 'b' ) ), "" );
-	static_assert( ! ( chain_label( 'a' ) == chain_label( 'A' ) ), "" );
+	static_assert(     chain_label( 'a' ) == chain_label( 'a' )   );
+	static_assert( ! ( chain_label( 'a' ) == chain_label( 'b' ) ) );
+	static_assert( ! ( chain_label( 'a' ) == chain_label( 'A' ) ) );
 	BOOST_CHECK_EQUAL( chain_label( 'a' ).to_string(), "a" );
 	BOOST_CHECK_EQUAL( chain_label( 'b' ).to_string(), "b" );
 
-	static_assert(   ( chain_label( '0' ) == chain_label( ' ' ) ), "" );
-	static_assert( ! ( chain_label( '1' ) == chain_label( ' ' ) ), "" );
-	static_assert( ! ( chain_label( '0' ) == chain_label( '1' ) ), "" );
+	static_assert(   ( chain_label( '0' ) == chain_label( ' ' ) ) );
+	static_assert( ! ( chain_label( '1' ) == chain_label( ' ' ) ) );
+	static_assert( ! ( chain_label( '0' ) == chain_label( '1' ) ) );
 
-	static_assert(   ( chain_label( ' ' ) == chain_label( '0' ) ), "" );
-	static_assert( ! ( chain_label( '1' ) == chain_label( '0' ) ), "" );
-	static_assert( ! ( chain_label( ' ' ) == chain_label( '1' ) ), "" );
+	static_assert(   ( chain_label( ' ' ) == chain_label( '0' ) ) );
+	static_assert( ! ( chain_label( '1' ) == chain_label( '0' ) ) );
+	static_assert( ! ( chain_label( ' ' ) == chain_label( '1' ) ) );
 
-	static_assert( ! ( chain_label( '0' ) < chain_label( ' ' ) ), "" );
-	static_assert(   ( chain_label( '0' ) < chain_label( '1' ) ), "" );
-	static_assert( ! ( chain_label( ' ' ) < chain_label( '0' ) ), "" );
-	static_assert(   ( chain_label( ' ' ) < chain_label( '1' ) ), "" );
+	static_assert( ! ( chain_label( '0' ) < chain_label( ' ' ) ) );
+	static_assert(   ( chain_label( '0' ) < chain_label( '1' ) ) );
+	static_assert( ! ( chain_label( ' ' ) < chain_label( '0' ) ) );
+	static_assert(   ( chain_label( ' ' ) < chain_label( '1' ) ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

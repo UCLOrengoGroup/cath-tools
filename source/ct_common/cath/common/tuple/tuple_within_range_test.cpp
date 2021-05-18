@@ -29,16 +29,16 @@ using ::std::make_tuple;
 BOOST_AUTO_TEST_SUITE(tuple_within_range_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	static_assert(   tuple_within_range( make_tuple(  0,  0,  0 ), make_tuple( 3, 7, 5 ) ), "" );
-	static_assert(   tuple_within_range( make_tuple(  2,  6,  4 ), make_tuple( 3, 7, 5 ) ), "" );
+	static_assert(   tuple_within_range( make_tuple(  0,  0,  0 ), make_tuple( 3, 7, 5 ) ) );
+	static_assert(   tuple_within_range( make_tuple(  2,  6,  4 ), make_tuple( 3, 7, 5 ) ) );
 
-	static_assert( ! tuple_within_range( make_tuple( -1,  0,  0 ), make_tuple( 3, 7, 5 ) ), "" );
-	static_assert( ! tuple_within_range( make_tuple(  0, -1,  0 ), make_tuple( 3, 7, 5 ) ), "" );
-	static_assert( ! tuple_within_range( make_tuple(  0,  0, -1 ), make_tuple( 3, 7, 5 ) ), "" );
+	static_assert( ! tuple_within_range( make_tuple( -1,  0,  0 ), make_tuple( 3, 7, 5 ) ) );
+	static_assert( ! tuple_within_range( make_tuple(  0, -1,  0 ), make_tuple( 3, 7, 5 ) ) );
+	static_assert( ! tuple_within_range( make_tuple(  0,  0, -1 ), make_tuple( 3, 7, 5 ) ) );
 
-	static_assert( ! tuple_within_range( make_tuple(  3,  6,  4 ), make_tuple( 3, 7, 5 ) ), "" );
-	static_assert( ! tuple_within_range( make_tuple(  2,  7,  4 ), make_tuple( 3, 7, 5 ) ), "" );
-	static_assert( ! tuple_within_range( make_tuple(  2,  6,  5 ), make_tuple( 3, 7, 5 ) ), "" );
+	static_assert( ! tuple_within_range( make_tuple(  3,  6,  4 ), make_tuple( 3, 7, 5 ) ) );
+	static_assert( ! tuple_within_range( make_tuple(  2,  7,  4 ), make_tuple( 3, 7, 5 ) ) );
+	static_assert( ! tuple_within_range( make_tuple(  2,  6,  5 ), make_tuple( 3, 7, 5 ) ) );
 
 	BOOST_CHECK( true );
 }

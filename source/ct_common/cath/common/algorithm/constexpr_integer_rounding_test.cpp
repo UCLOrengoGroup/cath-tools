@@ -30,32 +30,32 @@ BOOST_AUTO_TEST_SUITE(constexpr_integer_rounding_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {
-	static_assert( round_div_up  (  3_z ,  3_z ) ==  1_z, "" );
-	static_assert( round_div_up  (  3   ,  3   ) ==  1  , "" );
-	static_assert( round_div_up  (  4_z ,  3_z ) ==  2_z, "" );
-	static_assert( round_div_up  (  4   ,  3   ) ==  2  , "" );
-	static_assert( round_div_up  (  5_z ,  3_z ) ==  2_z, "" );
-	static_assert( round_div_up  (  5   ,  3   ) ==  2  , "" );
-	static_assert( round_div_up  (  6_z ,  3_z ) ==  2_z, "" );
-	static_assert( round_div_up  (  6   ,  3   ) ==  2  , "" );
+	static_assert( round_div_up  (  3_z ,  3_z ) ==  1_z );
+	static_assert( round_div_up  (  3   ,  3   ) ==  1   );
+	static_assert( round_div_up  (  4_z ,  3_z ) ==  2_z );
+	static_assert( round_div_up  (  4   ,  3   ) ==  2   );
+	static_assert( round_div_up  (  5_z ,  3_z ) ==  2_z );
+	static_assert( round_div_up  (  5   ,  3   ) ==  2   );
+	static_assert( round_div_up  (  6_z ,  3_z ) ==  2_z );
+	static_assert( round_div_up  (  6   ,  3   ) ==  2   );
 
-	static_assert( round_down_mod(  3_z ,  3_z ) ==  3_z, "" );
-	static_assert( round_down_mod(  3   ,  3   ) ==  3  , "" );
-	static_assert( round_down_mod(  4_z ,  3_z ) ==  3_z, "" );
-	static_assert( round_down_mod(  4   ,  3   ) ==  3  , "" );
-	static_assert( round_down_mod(  5_z ,  3_z ) ==  3_z, "" );
-	static_assert( round_down_mod(  5   ,  3   ) ==  3  , "" );
-	static_assert( round_down_mod(  6_z ,  3_z ) ==  6_z, "" );
-	static_assert( round_down_mod(  6   ,  3   ) ==  6  , "" );
+	static_assert( round_down_mod(  3_z ,  3_z ) ==  3_z );
+	static_assert( round_down_mod(  3   ,  3   ) ==  3   );
+	static_assert( round_down_mod(  4_z ,  3_z ) ==  3_z );
+	static_assert( round_down_mod(  4   ,  3   ) ==  3   );
+	static_assert( round_down_mod(  5_z ,  3_z ) ==  3_z );
+	static_assert( round_down_mod(  5   ,  3   ) ==  3   );
+	static_assert( round_down_mod(  6_z ,  3_z ) ==  6_z );
+	static_assert( round_down_mod(  6   ,  3   ) ==  6   );
 
-	static_assert( round_up_mod  (  3_z ,  3_z ) ==  3_z, "" );
-	static_assert( round_up_mod  (  3   ,  3   ) ==  3  , "" );
-	static_assert( round_up_mod  (  4_z ,  3_z ) ==  6_z, "" );
-	static_assert( round_up_mod  (  4   ,  3   ) ==  6  , "" );
-	static_assert( round_up_mod  (  5_z ,  3_z ) ==  6_z, "" );
-	static_assert( round_up_mod  (  5   ,  3   ) ==  6  , "" );
-	static_assert( round_up_mod  (  6_z ,  3_z ) ==  6_z, "" );
-	static_assert( round_up_mod  (  6   ,  3   ) ==  6  , "" );
+	static_assert( round_up_mod  (  3_z ,  3_z ) ==  3_z );
+	static_assert( round_up_mod  (  3   ,  3   ) ==  3   );
+	static_assert( round_up_mod  (  4_z ,  3_z ) ==  6_z );
+	static_assert( round_up_mod  (  4   ,  3   ) ==  6   );
+	static_assert( round_up_mod  (  5_z ,  3_z ) ==  6_z );
+	static_assert( round_up_mod  (  5   ,  3   ) ==  6   );
+	static_assert( round_up_mod  (  6_z ,  3_z ) ==  6_z );
+	static_assert( round_up_mod  (  6   ,  3   ) ==  6   );
 
 	BOOST_CHECK( true );
 }
