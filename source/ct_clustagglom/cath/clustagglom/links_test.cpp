@@ -74,8 +74,8 @@ namespace cath {
 				BOOST_CHECK_FILES_EQUAL( temp_links_file, prm_expected_file );
 			}
 		};
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(links_test_suite, links_test_suite_test_suite_fixture)
 

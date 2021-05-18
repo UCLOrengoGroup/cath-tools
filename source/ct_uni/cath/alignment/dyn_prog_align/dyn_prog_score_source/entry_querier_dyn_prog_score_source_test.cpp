@@ -30,8 +30,8 @@ namespace cath {
 			~entry_querier_dyn_prog_score_source_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(entry_querier_dyn_prog_score_source_test_suite, cath::test::entry_querier_dyn_prog_score_source_fixture)
 

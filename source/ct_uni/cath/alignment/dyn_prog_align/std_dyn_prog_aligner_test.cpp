@@ -30,8 +30,8 @@ namespace cath {
 			~dyn_prog_align_fixture() noexcept = default;
 		};
 
-		}
-}
+		} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(dyn_prog_align_test_suite, cath::test::dyn_prog_align_fixture)
 

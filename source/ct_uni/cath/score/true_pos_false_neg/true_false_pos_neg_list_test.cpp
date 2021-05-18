@@ -36,7 +36,7 @@ namespace cath {
 			~true_false_pos_neg_list_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

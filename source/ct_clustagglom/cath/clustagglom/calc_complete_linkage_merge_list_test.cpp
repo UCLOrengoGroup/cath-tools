@@ -81,8 +81,8 @@ namespace cath {
 			}
 
 		};
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(calc_complete_linkage_merge_list_test_suite, calc_complete_linkage_merge_list_test_suite_fixture)
 

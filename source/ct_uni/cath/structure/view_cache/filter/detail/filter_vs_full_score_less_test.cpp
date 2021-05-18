@@ -33,7 +33,7 @@ namespace cath {
 			~filter_vs_full_score_less_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

@@ -40,4 +40,4 @@ namespace cath {
 	} // namespace common
 } // namespace cath
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_TRAITS_IS_TUPLE_HPP
+#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_TRAITS_HPP

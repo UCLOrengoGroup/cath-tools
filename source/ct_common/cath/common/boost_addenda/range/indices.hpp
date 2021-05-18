@@ -36,7 +36,7 @@ namespace cath {
 			return ::boost::irange( static_cast<T>( 0 ), prm_n );
 		}
 
-	}
-}
+	} // namespace common
+} // namespace cath
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_INDICES_HPP

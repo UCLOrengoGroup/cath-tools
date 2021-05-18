@@ -29,7 +29,7 @@ namespace cath {
 			~selection_policy_acquirer_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(selection_policy_acquirer_test_suite, cath::test::selection_policy_acquirer_test_suite_fixture)

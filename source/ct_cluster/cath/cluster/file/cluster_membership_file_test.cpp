@@ -89,8 +89,8 @@ namespace cath {
 			const string spurious_extra_column_input_str = "a 1\nb 2 x\nc 3 y\nd 4 z\n";
 
 		};
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cluster_membership_file_test_suite, cluster_membership_file_test_suite_fixture)
 

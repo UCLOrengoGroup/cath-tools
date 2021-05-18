@@ -81,8 +81,8 @@ namespace cath {
 				BOOST_CHECK_FILES_EQUAL( temp_clusters_file, prm_expected_file );
 			}
 		};
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(make_clusters_from_merges_test_suite, make_clusters_from_merges_test_suite_fixture)
 

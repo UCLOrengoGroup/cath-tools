@@ -35,7 +35,7 @@ namespace cath {
 			~residue_scorer_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

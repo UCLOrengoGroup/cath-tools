@@ -30,8 +30,8 @@ namespace cath {
 			~logger_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(logger_test_suite, cath::test::logger_fixture)
 

@@ -29,7 +29,7 @@ namespace cath {
 			~cora_aln_file_alignment_acquirer_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cora_aln_file_alignment_acquirer_test_suite, cath::test::cora_aln_file_alignment_acquirer_test_suite_fixture)

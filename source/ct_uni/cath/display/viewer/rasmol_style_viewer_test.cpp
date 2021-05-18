@@ -29,7 +29,7 @@ namespace cath {
 			~rasmol_style_viewer_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(rasmol_style_viewer_test_suite, cath::test::rasmol_style_viewer_test_suite_fixture)

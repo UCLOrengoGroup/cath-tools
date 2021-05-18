@@ -38,8 +38,8 @@ namespace cath {
 		protected:
 			~distance_score_formula_test_suite_fixture() noexcept = default;
 		};
-	}
-}
+	} // namespace test
+} // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(distance_score_formula_test_suite, cath::test::distance_score_formula_test_suite_fixture)

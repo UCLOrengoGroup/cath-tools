@@ -35,8 +35,8 @@ namespace cath {
 		protected:
 			~named_true_false_pos_neg_list_test_suite_fixture() noexcept = default;
 		};
-	}
-}
+	} // namespace test
+} // namespace cath
 
 /// \brief TODOCUMENT
 BOOST_FIXTURE_TEST_SUITE(named_true_false_pos_neg_list_test_suite, cath::test::named_true_false_pos_neg_list_test_suite_fixture)

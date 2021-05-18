@@ -43,7 +43,7 @@ namespace {
 		ostringstream   test_ostream;
 	};
 
-}
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(ofstream_list_test_suite, ofstream_list_test_suite_fixture)
 

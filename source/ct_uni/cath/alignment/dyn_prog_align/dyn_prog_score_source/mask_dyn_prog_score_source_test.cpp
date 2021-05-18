@@ -30,8 +30,8 @@ namespace cath {
 			~mask_dyn_prog_score_source_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(mask_dyn_prog_score_source_test_suite, cath::test::mask_dyn_prog_score_source_fixture)
 

@@ -28,7 +28,7 @@ namespace cath {
 			~pdb_residue_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(pdb_residue_test_suite, cath::test::pdb_residue_test_suite_fixture)

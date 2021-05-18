@@ -30,8 +30,8 @@ namespace cath {
 			~score_accumulation_matrix_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(score_accumulation_matrix_test_suite, cath::test::score_accumulation_matrix_fixture)
 

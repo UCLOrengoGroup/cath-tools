@@ -33,8 +33,8 @@ namespace cath {
 			~rmsd_score_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(rmsd_score_test_suite, cath::test::rmsd_score_fixture)
 

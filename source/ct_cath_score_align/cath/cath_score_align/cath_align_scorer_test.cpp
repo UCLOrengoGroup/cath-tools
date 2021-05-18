@@ -44,7 +44,7 @@ namespace cath {
 			~cath_align_scorer_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cath_align_scorer_test_suite, cath::test::cath_align_scorer_test_suite_fixture)

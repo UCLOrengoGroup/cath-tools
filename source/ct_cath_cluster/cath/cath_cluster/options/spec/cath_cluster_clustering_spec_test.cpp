@@ -62,7 +62,7 @@ namespace cath {
 			const strength_vec expected_distance_levels_result {    1,    2,    3,    4 };
 		};
 
-	}
+	} // namespace test
 } // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cath_cluster_clustering_spec_test_suite, cath_cluster_clustering_spec_test_suite_fixture)

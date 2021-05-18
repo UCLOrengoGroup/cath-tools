@@ -36,7 +36,7 @@ namespace cath {
 			~classn_stat_pair_series_list_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

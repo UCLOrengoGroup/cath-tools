@@ -53,6 +53,7 @@ namespace cath { namespace align {
 		static ::std::filesystem::path make_temp_dir_for_doing_ssaps(const file::strucs_context &);
 	};
 
-} } // namespace cath::align
+} // namespace align
+ } // namespace cath
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_DO_THE_SSAPS_ALIGNMENT_ACQUIRER_HPP

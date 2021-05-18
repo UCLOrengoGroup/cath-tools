@@ -33,7 +33,7 @@ namespace cath {
 			~cath_cluster_input_options_block_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 } // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cath_cluster_input_options_block_test_suite, cath_cluster_input_options_block_test_suite_fixture)

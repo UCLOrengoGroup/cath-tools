@@ -46,7 +46,7 @@ namespace cath {
 			~angle_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief Test suite for the angle

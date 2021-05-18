@@ -46,7 +46,7 @@ namespace {
 		const path      TEST_INPUT_FILE  = { ALIGNMENT_FILE() };
 	};
 
-}
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE( open_fstream_test_suite, open_fstream_test_suite_fixture )
 

@@ -55,7 +55,7 @@ namespace cath {
 			~check_scan_on_final_alignment_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

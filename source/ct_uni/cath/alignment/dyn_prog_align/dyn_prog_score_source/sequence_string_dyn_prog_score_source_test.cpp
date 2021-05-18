@@ -30,8 +30,8 @@ namespace cath {
 			~sequence_string_dyn_prog_score_source_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(sequence_string_dyn_prog_score_source_test_suite, cath::test::sequence_string_dyn_prog_score_source_fixture)
 

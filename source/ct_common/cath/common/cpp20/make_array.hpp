@@ -50,7 +50,7 @@ namespace cath {
 
 			template <typename D, typename... Types>
 			using return_type = std::array<typename return_type_helper<D, Types...>::type, sizeof...(Types)>;
-		}
+		} // namespace detail
 
 		/// \brief C++20? factory function for arrays
 		template <typename D = void, typename... Types>

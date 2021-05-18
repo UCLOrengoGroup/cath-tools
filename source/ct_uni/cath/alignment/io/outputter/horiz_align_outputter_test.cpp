@@ -39,7 +39,7 @@ namespace cath {
 			~horiz_align_outputter_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(horiz_align_outputter_test_suite, cath::test::horiz_align_outputter_test_suite_fixture)

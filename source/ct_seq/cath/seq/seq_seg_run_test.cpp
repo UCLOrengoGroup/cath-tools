@@ -37,8 +37,8 @@ using ::std::string;
 namespace cath {
 	namespace seq {
 		using seq_seg_seq_seg_pair = pair< seq_seg, seq_seg >;
-	}
-}
+	} // namespace seq
+} // namespace cath
 
 namespace cath {
 	namespace test {

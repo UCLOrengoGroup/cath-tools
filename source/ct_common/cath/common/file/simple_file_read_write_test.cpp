@@ -34,8 +34,8 @@ namespace cath {
 	namespace test {
 		using test_tuple_t   = std::tuple<double, size_t, bool, int, string>;
 		using test_tuple_vec = std::vector<test_tuple_t>;
-	}
-}
+	} // namespace test
+} // namespace cath
 
 namespace std {
 	/// \brief Temporary hacky solution to just get the test working for now

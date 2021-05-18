@@ -42,7 +42,7 @@ namespace cath {
 			~sec_struc_type_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(sec_struc_type_test_suite, cath::test::sec_struc_type_test_suite_fixture)

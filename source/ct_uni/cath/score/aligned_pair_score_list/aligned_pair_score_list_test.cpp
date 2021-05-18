@@ -34,7 +34,7 @@ namespace cath {
 			~aligned_pair_score_list_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

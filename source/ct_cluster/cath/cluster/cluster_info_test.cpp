@@ -64,8 +64,8 @@ namespace cath {
 			}
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cluster_info_test_suite, cluster_info_test_suite_fixture)
 

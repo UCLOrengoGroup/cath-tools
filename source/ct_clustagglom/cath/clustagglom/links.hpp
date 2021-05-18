@@ -52,7 +52,7 @@ namespace cath {
 			/// \brief Type alias for a vector of num_prev_scores_strength_pair values
 			using num_prev_scores_strength_pair_vec = std::vector<num_prev_scores_strength_pair>;
 
-		} // namespace cath
+		} // namespace detail
 
 
 		/// \brief A sparse matrix of links between items

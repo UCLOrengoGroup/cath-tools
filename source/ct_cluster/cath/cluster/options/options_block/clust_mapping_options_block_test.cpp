@@ -29,7 +29,7 @@ namespace cath {
 			~clust_mapping_options_block_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(clust_mapping_options_block_test_suite, cath::test::clust_mapping_options_block_test_suite_fixture)

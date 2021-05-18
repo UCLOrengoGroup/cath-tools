@@ -36,7 +36,7 @@ namespace cath {
 			~scan_query_set_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

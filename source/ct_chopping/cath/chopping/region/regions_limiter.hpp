@@ -45,7 +45,7 @@ namespace cath {
 			/// \brief Type alias for an optional region_seen_vec
 			using region_seen_vec_opt = ::std::optional<region_seen_vec>;
 
-		} // namespace chop
+		} // namespace detail
 
 		/// \brief Implement limiting a series of residue_ids to an (optional) list of regions
 		///

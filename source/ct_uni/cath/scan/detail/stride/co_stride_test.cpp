@@ -38,7 +38,7 @@ namespace cath {
 			~co_stride_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

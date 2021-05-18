@@ -31,8 +31,8 @@ namespace cath {
 			~executable_options_test_suite_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(executable_options_test_suite, cath::test::executable_options_test_suite_fixture)
 

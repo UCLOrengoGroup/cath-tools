@@ -29,7 +29,7 @@ namespace cath {
 			~pdb_file_superposition_outputter_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(pdb_file_superposition_outputter_test_suite, cath::test::pdb_file_superposition_outputter_test_suite_fixture)

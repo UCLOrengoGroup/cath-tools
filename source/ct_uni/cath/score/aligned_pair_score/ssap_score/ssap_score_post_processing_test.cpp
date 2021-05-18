@@ -39,7 +39,7 @@ namespace cath {
 			~ssap_score_post_processing_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

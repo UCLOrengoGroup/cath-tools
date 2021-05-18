@@ -37,7 +37,7 @@ namespace cath {
 			~temp_check_offset_1_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(temp_check_offset_1_test_suite, cath::test::temp_check_offset_1_test_suite_fixture)

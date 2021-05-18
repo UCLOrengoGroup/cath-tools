@@ -33,7 +33,7 @@ namespace cath {
 			~gap_penalty_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 /// \brief TODOCUMENT

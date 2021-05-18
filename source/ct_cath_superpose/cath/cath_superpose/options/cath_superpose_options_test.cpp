@@ -28,7 +28,7 @@ namespace cath {
 			~cath_superpose_options_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cath_superpose_options_test_suite, cath::test::cath_superpose_options_test_suite_fixture)

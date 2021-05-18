@@ -28,7 +28,7 @@ namespace cath {
 
 		void run_pymol( const ::std::filesystem::path &, const ::std::filesystem::path & = { "pymol" } );
 
-	} // namespace vier
+	} // namespace view
 } // namespace cath
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_RUN_PYMOL_HPP

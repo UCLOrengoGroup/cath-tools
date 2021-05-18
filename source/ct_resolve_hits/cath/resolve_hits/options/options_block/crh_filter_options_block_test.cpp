@@ -29,7 +29,7 @@ namespace cath {
 			~crh_filter_options_block_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(crh_filter_options_block_test_suite, cath::test::crh_filter_options_block_test_suite_fixture)

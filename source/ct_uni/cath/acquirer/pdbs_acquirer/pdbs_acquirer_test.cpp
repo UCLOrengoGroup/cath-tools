@@ -47,7 +47,7 @@ namespace cath {
 			istringstream input_ss;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(pdbs_acquirer_test_suite, pdbs_acquirer_test_suite_fixture)

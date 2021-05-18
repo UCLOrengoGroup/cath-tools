@@ -36,8 +36,8 @@ namespace cath {
 			~display_spec_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(display_spec_test_suite, cath::test::display_spec_fixture)
 

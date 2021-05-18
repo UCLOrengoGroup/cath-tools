@@ -30,8 +30,8 @@ namespace cath {
 			~ssap_code_dyn_prog_align_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(ssap_code_dyn_prog_align_test_suite, cath::test::ssap_code_dyn_prog_align_fixture)
 

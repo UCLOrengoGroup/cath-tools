@@ -29,7 +29,7 @@ namespace cath {
 			~viewer_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(viewer_test_suite, cath::test::viewer_test_suite_fixture)

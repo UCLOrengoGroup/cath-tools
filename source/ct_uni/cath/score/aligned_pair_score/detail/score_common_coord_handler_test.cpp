@@ -42,8 +42,8 @@ namespace cath {
 			~score_common_coord_handler_fixture() noexcept = default;
 		};
 
-	}
-}
+	} // namespace test
+} // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(score_common_coord_handler_test_suite, cath::test::score_common_coord_handler_fixture)
 

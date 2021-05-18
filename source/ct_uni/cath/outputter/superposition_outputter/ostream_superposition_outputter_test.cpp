@@ -29,7 +29,7 @@ namespace cath {
 			~ostream_superposition_outputter_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(ostream_superposition_outputter_test_suite, cath::test::ostream_superposition_outputter_test_suite_fixture)

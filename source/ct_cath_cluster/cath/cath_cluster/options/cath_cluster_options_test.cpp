@@ -28,7 +28,7 @@ namespace cath {
 			~cath_cluster_options_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(cath_cluster_options_test_suite, cath::test::cath_cluster_options_test_suite_fixture)

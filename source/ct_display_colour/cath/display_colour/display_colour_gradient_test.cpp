@@ -38,7 +38,7 @@ namespace cath {
 			~display_colour_gradient_test_suite_fixture() noexcept = default;
 		};
 
-	}
+	} // namespace test
 }  // namespace cath
 
 BOOST_FIXTURE_TEST_SUITE(display_colour_gradient_test_suite, cath::test::display_colour_gradient_test_suite_fixture)
