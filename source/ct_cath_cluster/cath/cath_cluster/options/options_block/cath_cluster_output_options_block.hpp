@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CATH_CLUSTER_OUTPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CATH_CLUSTER_OUTPUT_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/cath_cluster/options/spec/cath_cluster_output_spec.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
@@ -42,16 +44,16 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_CLUSTERS_TO_FILE;
-			static const std::string PO_MERGES_TO_FILE;
-			static const std::string PO_CLUST_SPANS_TO_FILE;
-			static const std::string PO_REPS_TO_FILE;
-			static const std::string PO_SORTED_LINKS_TO_FILE;
-
 			[[nodiscard]] const cath_cluster_output_spec &get_cath_cluster_output_spec() const;
+
+			/// \brief The option name for an optional file to which clust_spans should be written
+			static constexpr ::std::string_view PO_CLUST_SPANS_TO_FILE{ "clust-spans-to-file" };
+
+			/// \brief The option name for an optional file to which reps should be written
+			static constexpr ::std::string_view PO_REPS_TO_FILE{ "reps-to-file" };
 		};
 
 	} // namespace clust

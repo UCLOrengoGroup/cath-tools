@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_FILTER_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_FILTER_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/resolve_hits/options/spec/crh_filter_spec.hpp"
 
@@ -42,18 +44,31 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_WORST_PERMISSIBLE_EVALUE;
-			static const std::string PO_WORST_PERMISSIBLE_BITSCORE;
-			static const std::string PO_WORST_PERMISSIBLE_SCORE;
-			static const std::string PO_FILTER_QUERY_ID;
-			static const std::string PO_LIMIT_QUERIES;
-			static const std::string PO_MIN_HMM_COVERAGE;
-			static const std::string PO_MIN_DC_HMM_COVERAGE;
-
 			[[nodiscard]] const crh_filter_spec &get_crh_filter_spec() const;
+
+			/// \brief The option name for the worst permissible evalue before a hit is ignored
+			static constexpr ::std::string_view PO_WORST_PERMISSIBLE_EVALUE{ "worst-permissible-evalue" };
+
+			/// \brief The option name for the worst permissible bitscore before a hit is ignored
+			static constexpr ::std::string_view PO_WORST_PERMISSIBLE_BITSCORE{ "worst-permissible-bitscore" };
+
+			/// \brief The option name for the worst permissible cath-resolve-hits score before a hit is ignored
+			static constexpr ::std::string_view PO_WORST_PERMISSIBLE_SCORE{ "worst-permissible-score" };
+
+			/// \brief The option name for the query IDs on which to filter the input, if any are present
+			static constexpr ::std::string_view PO_FILTER_QUERY_ID{ "filter-query-id" };
+
+			/// \brief The option name for the maximum number of query IDs to process
+			static constexpr ::std::string_view PO_LIMIT_QUERIES{ "limit-queries" };
+
+			/// \brief The option name for the (optional) minimum coverage fraction of an HMM for a hit to be considered
+			static constexpr ::std::string_view PO_MIN_HMM_COVERAGE{ "min-hmm-coverage" };
+
+			/// \brief The option name for the (optional) minimum coverage fraction of an HMM for a discontinuous hit (/^\dc_{32}$/) to be considered
+			static constexpr ::std::string_view PO_MIN_DC_HMM_COVERAGE{ "min-dc-hmm-coverage" };
 		};
 
 	} // namespace rslv

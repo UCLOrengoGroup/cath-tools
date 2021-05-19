@@ -47,10 +47,6 @@ namespace cath {
 
 		[[nodiscard]] const_iterator begin() const;
 		[[nodiscard]] const_iterator end() const;
-
-		static str_vec     DEFAULT_COLOURS_STRING_PARTS;
-		static std::string COLOURS_SEPARATOR;
-		static std::string DEFAULT_COLOURS_STRING;
 	};
 
 	const display_colour & colour_of_mod_index(const display_colour_list &,

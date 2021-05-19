@@ -24,9 +24,12 @@
 #include <filesystem>
 #include <optional>
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include <boost/program_options.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/argc_argv_faker.hpp"
 #include "cath/common/boost_addenda/program_options/set_opt_str_from_prog_opts_try.hpp"
@@ -59,15 +62,17 @@ namespace cath {
 		///  - Global environment variables (eg var  : "CATH_TOOLS_PDB_PATH" )
 		///  - Global configuration file    (   file : "cath-tools.conf"     )
 		class executable_options {
-		private:
+		  private:
 			/// \brief The line length to use when rendering program options
 			///
 			/// Its behaviour isn't 100% clear but setting this value to roughly the character-width of a
 			/// modern terminal prevents it prematurely wrapping and making a very long, narrow output.
-			static constexpr size_t                  DEFAULT_PROG_OPS_LINE_LENGTH = 200;
+			static constexpr size_t DEFAULT_PROG_OPS_LINE_LENGTH = 200;
 
-			static const     std::string             CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX;
-			static const     ::std::filesystem::path CATH_TOOLS_CONF_FILE;
+			/// \brief The prefix for "global" environment variables to be respected by all executables using this code.
+			///
+			/// These "global" environment variables are overridden by command line options but override the configuration file.
+			static constexpr ::std::string_view CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX{ "CATH_TOOLS_" };
 
 			static path_vec CATH_TOOLS_CONF_FILE_SEARCH_PATH();
 
@@ -104,7 +109,7 @@ namespace cath {
 			/// This is used in error/help strings
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			[[nodiscard]] virtual std::string do_get_program_name() const = 0;
+			[[nodiscard]] virtual ::std::string_view do_get_program_name() const = 0;
 
 			/// \brief Review all specified options and return a string containing any errors or a help string
 			///
@@ -122,7 +127,7 @@ namespace cath {
 
 		  protected:
 			[[nodiscard]] std::string                                  get_standard_usage_error_string() const;
-			[[nodiscard]] std::string                                  get_program_name() const;
+			[[nodiscard]] std::string_view                             get_program_name() const;
 			[[nodiscard]] std::string                                  get_help_prefix_string() const;
 			[[nodiscard]] std::string                                  get_help_suffix_string() const;
 			[[nodiscard]] std::string                                  get_overview_string() const;
@@ -167,7 +172,7 @@ namespace cath {
 			common::set_opt_str_from_prog_opts_try(
 				prm_error_string,
 				std::forward<Func>( prm_function ),
-				get_program_name() + ": " + ( prm_parsing_phase ? *prm_parsing_phase + " " : std::string{} ),
+				::fmt::format( "{}: {}", get_program_name(), ( prm_parsing_phase ? *prm_parsing_phase + " " : std::string{} ) ),
 				"\n" + get_standard_usage_error_string()
 			);
 		}

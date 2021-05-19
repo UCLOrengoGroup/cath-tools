@@ -20,25 +20,25 @@
 
 #include "cath_cluster_options.hpp"
 
+#include <fmt/core.h>
+
 using namespace ::cath;
 using namespace ::cath::clust;
 
 using ::boost::program_options::positional_options_description;
 using ::std::nullopt;
 using ::std::string;
-
-/// The name of the program that uses this executable_options
-const string cath_cluster_options::PROGRAM_NAME("cath-cluster");
+using ::std::string_view;
 
 /// \brief Get the name of the program that uses this executable_options
-string cath_cluster_options::do_get_program_name() const {
+string_view cath_cluster_options::do_get_program_name() const {
 	return PROGRAM_NAME;
 }
 
 /// \brief Get the positional options, which in this case is the input block's PO_LINKS_INFILE option
 positional_options_description cath_cluster_options::get_positional_options() {
 	positional_options_description positionals;
-	positionals.add( cath_cluster_input_options_block::PO_LINKS_INFILE.c_str(), 1 );
+	positionals.add( string( cath_cluster_input_options_block::PO_LINKS_INFILE ).c_str(), 1 );
 	return positionals;
 }
 
@@ -57,9 +57,7 @@ positional_options_description cath_cluster_options::get_positional_options() {
 str_opt cath_cluster_options::do_get_error_or_help_string() const {
 	const auto orslc = has_output_requiring_single_level_clustering( get_cath_cluster_output_spec() );
 	if ( orslc && get_cath_cluster_clustering_spec().get_levels().size() > 1 ) {
-		return "Cannot use --"
-			+ *orslc
-			+ " output when generating more than one level of clustering";
+		return ::fmt::format( "Cannot use --{} output when generating more than one level of clustering", *orslc );
 	}
 
 	return nullopt;
@@ -67,30 +65,29 @@ str_opt cath_cluster_options::do_get_error_or_help_string() const {
 
 /// \brief Get a string to prepend to the standard help
 string cath_cluster_options::do_get_help_prefix_string() const {
-	return "Usage: "
-		+ PROGRAM_NAME
-		+ " --"
-		+ cath_cluster_input_options_block::PO_LINK_DIRN
-		+ R"( <dirn> --)"
-		+ cath_cluster_clustering_options_block::PO_LEVELS
-		+ R"( <levels> [options] <input_file>
+	return ::fmt::format( R"(Usage: {} --{} <dirn> --{} <levels> [options] <input_file>
 
-)" + get_overview_string() + R"(
+{}
 
 When <input_file> is -, the links are read from standard input.
 
-The clustering is complete-linkage.)";
+The clustering is complete-linkage.)",
+	                      PROGRAM_NAME,
+	                      cath_cluster_input_options_block::PO_LINK_DIRN,
+	                      cath_cluster_clustering_options_block::PO_LEVELS,
+	                      get_overview_string() );
 }
 
 /// \brief Get a string to append to the standard help
 string cath_cluster_options::do_get_help_suffix_string() const {
-	return R"(
+	return ::fmt::format( R"(
 Links input format: `id1 id2 other columns afterwards`
-...where --)" + cath_cluster_input_options_block::PO_COLUMN_IDX + R"( can be used to specify the column that contains the values
+...where --{} can be used to specify the column that contains the values
 
 Names input format: `id score`
 ...where score is used to sort such that lower-scored entries appear earlier
-)";
+)",
+	                      cath_cluster_input_options_block::PO_COLUMN_IDX );
 }
 
 /// \brief Get an overview of the job that these options are for

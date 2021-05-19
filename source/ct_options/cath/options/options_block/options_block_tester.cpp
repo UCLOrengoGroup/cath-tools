@@ -23,6 +23,8 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/program_options.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/argc_argv_faker.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
@@ -33,12 +35,6 @@ using namespace ::std;
 using ::boost::program_options::command_line_parser;
 using ::boost::program_options::options_description;
 using ::boost::program_options::variables_map;
-
-const string options_block_tester::UNKNOWN_OPT  ( "--it-does-not-know-me"            );
-const string options_block_tester::TEST_OPTION_1( "test_help_option_1"               );
-const string options_block_tester::TEST_OPTION_2( "test_help_option_2"               );
-const string options_block_tester::TEST_HELP_1  ( "This is the first piece of help"  );
-const string options_block_tester::TEST_HELP_2  ( "This is the second piece of help" );
 
 /// \brief Simple implementation function to return the specified list of parameters but with a dummy program name prepended
 str_vec options_block_tester::prepend_dummy_program_name_copy(const str_vec &prm_params
@@ -86,7 +82,7 @@ void options_block_tester::parse_into_options_block(options_block &the_options_b
 /// \brief TODOCUMENT
 str_str_str_pair_map options_block_tester::TEST_DESC_AND_HELP_OF_OPTION_NAME() {
 	return {
-		{ TEST_OPTION_1, make_pair( "Description of " + TEST_OPTION_1, TEST_HELP_1 ), },
-		{ TEST_OPTION_2, make_pair( "Description of " + TEST_OPTION_2, TEST_HELP_2 ), },
+		{ string( TEST_OPTION_1 ), make_pair( ::fmt::format( "Description of {}", TEST_OPTION_1 ), string( TEST_HELP_1 ) ), },
+		{ string( TEST_OPTION_2 ), make_pair( ::fmt::format( "Description of {}", TEST_OPTION_2 ), string( TEST_HELP_2 ) ), },
 	};
 }

@@ -20,6 +20,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/options/options_block/misc_help_version_options_block.hpp"
 #include "cath/options/options_block/options_block_tester.hpp"
@@ -59,7 +61,7 @@ BOOST_AUTO_TEST_CASE(handles_help_request) {
 	parse_into_options_block(
 		the_options_block,
 		{ IGNORE_OPT,
-		  "--" + misc_help_version_options_block::PO_HELP }
+		  ::fmt::format( "--{}", misc_help_version_options_block::PO_HELP ) }
 	);
 	BOOST_CHECK_EQUAL( true,  the_options_block.get_help()    );
 	BOOST_CHECK_EQUAL( false, the_options_block.get_version() );
@@ -70,7 +72,7 @@ BOOST_AUTO_TEST_CASE(handles_version_request) {
 	parse_into_options_block(
 		the_options_block,
 		{ IGNORE_OPT,
-		  "--" + misc_help_version_options_block::PO_VERSION }
+		  ::fmt::format( "--{}", misc_help_version_options_block::PO_VERSION ) }
 	);
 	BOOST_CHECK_EQUAL( false, the_options_block.get_help()    );
 	BOOST_CHECK_EQUAL( true,  the_options_block.get_version() );
@@ -81,8 +83,8 @@ BOOST_AUTO_TEST_CASE(handles_help_and_version_requested) {
 	parse_into_options_block(
 		the_options_block,
 		{ IGNORE_OPT,
-		  "--" + misc_help_version_options_block::PO_HELP,
-		  "--" + misc_help_version_options_block::PO_VERSION }
+		  ::fmt::format( "--{}", misc_help_version_options_block::PO_HELP ),
+		  ::fmt::format( "--{}", misc_help_version_options_block::PO_VERSION ) }
 	);
 	BOOST_CHECK_EQUAL( true, the_options_block.get_help()    );
 	BOOST_CHECK_EQUAL( true, the_options_block.get_version() );

@@ -25,6 +25,8 @@
 #include <boost/range/join.hpp>
 #include <boost/shared_array.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "cath/acquirer/pdbs_acquirer/file_list_pdbs_acquirer.hpp"
 #include "cath/acquirer/pdbs_acquirer/istream_pdbs_acquirer.hpp"
@@ -60,24 +62,19 @@ using ::boost::range::join;
 using ::std::filesystem::path;
 using ::std::nullopt;
 using ::std::string;
-
-/// \brief TODOCUMENT
-const string cath_ssap_options::PO_CITATION_HELP{ "citation-help" };
-
-/// \brief The name of the program that uses this executable_options
-const string cath_ssap_options::PROGRAM_NAME    { "cath-ssap"     };
+using ::std::string_view;
 
 /// \brief Get the options for the "Detailed Help" block
 str_str_str_pair_map cath_ssap_options::detail_help_spec() {
 	return {
-		{ "alignment-help",         { "Help on alignment format",                 get_ssap_alignment_format_help_string() } },
-		{ "scores-help",            { "Help on scores format",                    get_ssap_matches_format_help_string()   } },
-		{ PO_CITATION_HELP.c_str(), { "Help on SSAP authorship & how to cite it", get_ssap_citation_help_string()         } }
+		{ "alignment-help",                   { "Help on alignment format",                 get_ssap_alignment_format_help_string() } },
+		{ "scores-help",                      { "Help on scores format",                    get_ssap_matches_format_help_string()   } },
+		{ string( PO_CITATION_HELP ).c_str(), { "Help on SSAP authorship & how to cite it", get_ssap_citation_help_string()         } }
 	};
 }
 
 /// \brief Get the name of the program that uses this executable_options
-string cath_ssap_options::do_get_program_name() const {
+string_view cath_ssap_options::do_get_program_name() const {
 	return PROGRAM_NAME;
 }
 
@@ -86,7 +83,7 @@ string cath_ssap_options::do_get_program_name() const {
 /// This overrides a virtual method in executable_options
 positional_options_description cath_ssap_options::get_positional_options() {
 	positional_options_description positionals;
-	positionals.add( old_ssap_options_block::PO_NAME.c_str(), -1 );
+	positionals.add( string( old_ssap_options_block::PO_NAME ).c_str(), -1 );
 	return positionals;
 }
 
@@ -150,19 +147,22 @@ str_opt cath_ssap_options::do_get_error_or_help_string() const {
 
 /// \brief Get a string to prepend to the standard help
 string cath_ssap_options::do_get_help_prefix_string() const {
-	return "Usage: " + PROGRAM_NAME + R"( [options] <protein1> <protein2>
+	return ::fmt::format( R"(Usage: {} [options] <protein1> <protein2>
 
-)" + get_overview_string() + R"(
+{}
 
-)" + PROGRAM_NAME + R"( uses two types of structural comparison:
+{} uses two types of structural comparison:
   1. Fast SSAP: a quick secondary-structure based SSAP alignment
   2. Slow SSAP: residue alignment only
 
 If both structures have more than one SS element, a fast SSAP is run first.)"
-	" If the fast SSAP score isn't good, another fast SSAP is run with looser cutoffs."
-	" If the (best) fast SSAP score isn't good, a slow SSAP is run."
-	" Only the best of these scores is output."
-	" These behaviours can be configured using the parameters below.)";
+	                      " If the fast SSAP score isn't good, another fast SSAP is run with looser cutoffs."
+	                      " If the (best) fast SSAP score isn't good, a slow SSAP is run."
+	                      " Only the best of these scores is output."
+	                      " These behaviours can be configured using the parameters below.)",
+	                      PROGRAM_NAME,
+	                      get_overview_string(),
+	                      PROGRAM_NAME );
 }
 
 /// \brief Get a string to append to the standard help (just empty here)
@@ -174,8 +174,9 @@ string cath_ssap_options::do_get_help_suffix_string() const {
 ///
 /// This can be used in the --help and --version outputs
 string cath_ssap_options::do_get_overview_string() const {
-	return R"(Run a SSAP pairwise structural alignment
-[algorithm devised by C A Orengo and W R Taylor, see --)" + PO_CITATION_HELP + "]";
+	return ::fmt::format( R"(Run a SSAP pairwise structural alignment
+[algorithm devised by C A Orengo and W R Taylor, see --{}])",
+	                      PO_CITATION_HELP );
 }
 
 /// \brief Check that these options are OK to use

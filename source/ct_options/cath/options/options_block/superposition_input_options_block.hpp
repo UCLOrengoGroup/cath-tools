@@ -32,8 +32,6 @@ namespace cath {
 		private:
 			using super = options_block;
 
-			static const std::string PO_JSON_SUP_INFILE;
-
 			/// \brief The optional JSON superposition input file
 			path_opt json_sup_infile;
 
@@ -42,7 +40,7 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
 			[[nodiscard]] const path_opt &get_json_sup_infile() const;

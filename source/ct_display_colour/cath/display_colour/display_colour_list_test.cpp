@@ -47,15 +47,15 @@ BOOST_FIXTURE_TEST_SUITE(display_colour_list_test_suite, display_colour_list_tes
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(default_colour_string_produces_list_with_sensible_properties) {
-	const display_colour_list list = make_display_colour_list_from_string(display_colour_list::DEFAULT_COLOURS_STRING);
+	const display_colour_list list = default_display_colour_list();
 	BOOST_CHECK_EQUAL( NUM_COLOURS_IN_DEFAULT_COLOURS_STRING, list.size() );
 
 	BOOST_CHECK_EQUAL( list.colour_of_index(  0 ), colour_of_mod_index( list,  0 ) );
 	BOOST_CHECK_EQUAL( list.colour_of_index(  1 ), colour_of_mod_index( list,  1 ) );
 	BOOST_CHECK_EQUAL( list.colour_of_index( 21 ), colour_of_mod_index( list, 21 ) );
 	BOOST_CHECK_EQUAL( list.colour_of_index( 22 ), colour_of_mod_index( list, 22 ) );
-	BOOST_CHECK_EQUAL( list.colour_of_index(  0 ), colour_of_mod_index( list, 23 ) );
-	BOOST_CHECK_EQUAL( list.colour_of_index(  1 ), colour_of_mod_index( list, 24 ) );
+	BOOST_CHECK_EQUAL( list.colour_of_index(  0 ), colour_of_mod_index( list, 0 + NUM_COLOURS_IN_DEFAULT_COLOURS_STRING ) );
+	BOOST_CHECK_EQUAL( list.colour_of_index(  1 ), colour_of_mod_index( list, 1 + NUM_COLOURS_IN_DEFAULT_COLOURS_STRING ) );
 
 //	BOOST_CHECK_EQUAL( "cath_tools_defined_colour_0",  name_of_colour_of_mod_index(list,  0) );
 //	BOOST_CHECK_EQUAL( "cath_tools_defined_colour_1",  name_of_colour_of_mod_index(list,  1) );

@@ -37,12 +37,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for the fraction that the overlap over the longest of two domains must exceed for them to be considered equivalent
-const string clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL   { "min_equiv_dom_ol"   };
-
-/// \brief The option name for the fraction of the old cluster's entries that must map to a map-from cluster for them to be considered equivalent
-const string clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL { "min_equiv_clust_ol" };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> clust_mapping_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -65,7 +59,7 @@ void clust_mapping_options_block::do_add_visible_options_to_description(options_
 
 	prm_desc.add_options()
 		(
-			PO_MIN_EQUIV_DOM_OL.c_str(),
+			string( PO_MIN_EQUIV_DOM_OL ).c_str(),
 			value<double>()
 				->value_name   ( percent_varname                                        )
 				->notifier     ( min_equiv_dom_ol_notifier                              )
@@ -79,7 +73,7 @@ void clust_mapping_options_block::do_add_visible_options_to_description(options_
 				+ ")" ).c_str()
 		)
 		(
-			PO_MIN_EQUIV_CLUST_OL.c_str(),
+			string( PO_MIN_EQUIV_CLUST_OL ).c_str(),
 			value<double>()
 				->value_name   ( percent_varname                                        )
 				->notifier     ( min_equiv_clust_ol_notifier                            )
@@ -108,10 +102,10 @@ str_opt clust_mapping_options_block::do_invalid_string(const variables_map &/*pr
 }
 
 /// \brief Return all options names for this block
-str_vec clust_mapping_options_block::do_get_all_options_names() const {
+str_view_vec clust_mapping_options_block::do_get_all_options_names() const {
 	return {
-		clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL,
-		clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL,
+		PO_MIN_EQUIV_DOM_OL,
+		PO_MIN_EQUIV_CLUST_OL,
 	};
 }
 
@@ -125,8 +119,8 @@ const clust_mapping_spec & clust_mapping_options_block::get_clust_mapping_spec()
 /// \relates clust_mapping_options_block
 str_vec cath::clust::clust_thresh_option_names() {
 	return {
-		clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL,
-		clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL,
+		string( clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL ),
+		string( clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL ),
 	};
 }
 

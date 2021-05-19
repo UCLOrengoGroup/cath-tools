@@ -36,36 +36,36 @@ using namespace ::std;
 using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::join;
 
+constexpr auto COLOURS_SEPARATOR = ":"sv;
+
 // This can be refreshed using:
 //  awk < /usr/local/svn/source/update/trunk/ddmake/colourlist.txt '{print "\t\"" $2 "," $3 "," $4 "\", // " $1}'
 // followed by a bit of tidying up
-str_vec display_colour_list::DEFAULT_COLOURS_STRING_PARTS= {
-	"0.000,0.000,1.000", // Blue
-	"1.000,0.000,0.000", // Red
-	"0.000,1.000,0.000", // Green
-	"1.000,1.000,0.000", // Yellow
-	"1.000,0.396,0.459", // Pink
-	"0.500,0.500,0.500", // Grey
-	"0.627,0.125,0.941", // Purple
-	"0.686,0.839,1.000", // BlueTint
-	"0.549,0.941,0.549", // LightGreen
-	"1.000,0.647,0.000", // Orange
-	"0.000,1.000,1.000", // Cyan
-	"0.686,0.459,0.349", // Brown
-	"0.180,0.545,0.341", // GreenBlue
-	"1.000,0.000,0.396", // HotPink
-	"1.000,0.000,1.000", // Magenta
-	"1.000,0.671,0.733", // PinkTint
-	"0.965,0.965,0.459", // YellowTint
-	"1.000,0.612,0.000", // Gold
-	"0.596,1.000,0.702", // GreenTint
-	"1.000,0.271,0.000", // RedOrange
-	"0.000,0.980,0.427", // SeaGreen
-	"0.227,0.565,1.000", // SkyBlue
-	"0.933,0.510,0.933"  // Violet
+constexpr array DEFAULT_COLOURS_STRING_PARTS = {
+	display_colour{ 0.000, 0.000, 1.000 }, // Blue
+	display_colour{ 1.000, 0.000, 0.000 }, // Red
+	display_colour{ 0.000, 1.000, 0.000 }, // Green
+	display_colour{ 1.000, 1.000, 0.000 }, // Yellow
+	display_colour{ 1.000, 0.396, 0.459 }, // Pink
+	display_colour{ 0.500, 0.500, 0.500 }, // Grey
+	display_colour{ 0.627, 0.125, 0.941 }, // Purple
+	display_colour{ 0.686, 0.839, 1.000 }, // BlueTint
+	display_colour{ 0.549, 0.941, 0.549 }, // LightGreen
+	display_colour{ 1.000, 0.647, 0.000 }, // Orange
+	display_colour{ 0.000, 1.000, 1.000 }, // Cyan
+	display_colour{ 0.686, 0.459, 0.349 }, // Brown
+	display_colour{ 0.180, 0.545, 0.341 }, // GreenBlue
+	display_colour{ 1.000, 0.000, 0.396 }, // HotPink
+	display_colour{ 1.000, 0.000, 1.000 }, // Magenta
+	display_colour{ 1.000, 0.671, 0.733 }, // PinkTint
+	display_colour{ 0.965, 0.965, 0.459 }, // YellowTint
+	display_colour{ 1.000, 0.612, 0.000 }, // Gold
+	display_colour{ 0.596, 1.000, 0.702 }, // GreenTint
+	display_colour{ 1.000, 0.271, 0.000 }, // RedOrange
+	display_colour{ 0.000, 0.980, 0.427 }, // SeaGreen
+	display_colour{ 0.227, 0.565, 1.000 }, // SkyBlue
+	display_colour{ 0.933, 0.510, 0.933 }  // Violet
 };
-string display_colour_list::COLOURS_SEPARATOR(":");
-string display_colour_list::DEFAULT_COLOURS_STRING(join(DEFAULT_COLOURS_STRING_PARTS, COLOURS_SEPARATOR));
 
 /// \brief Ctor for display_colour_list
 display_colour_list::display_colour_list(display_colour_vec prm_colours ///< TODOCUMENT
@@ -108,7 +108,7 @@ const display_colour & cath::colour_of_mod_index(const display_colour_list &prm_
 /// \relates display_colour_list
 display_colour_list cath::make_display_colour_list_from_string(const string &prm_colours_string ///< TODOCUMENT
                                                                ) {
-	const str_vec colour_strings = split_build<str_vec>( prm_colours_string, is_any_of( display_colour_list::COLOURS_SEPARATOR ) );
+	const str_vec colour_strings = split_build<str_vec>( prm_colours_string, is_any_of( COLOURS_SEPARATOR ) );
 	display_colour_list result( transform_build<display_colour_vec>(
 		colour_strings,
 		[] (const string &x) { return display_colour_from_string( x ); }
@@ -118,5 +118,6 @@ display_colour_list cath::make_display_colour_list_from_string(const string &prm
 
 /// \brief Return a display_colour_list of the default list of colours
 display_colour_list cath::default_display_colour_list() {
-	return make_display_colour_list_from_string( display_colour_list::DEFAULT_COLOURS_STRING );
+	return display_colour_list{ display_colour_vec( cbegin( DEFAULT_COLOURS_STRING_PARTS ),
+		                                            cend( DEFAULT_COLOURS_STRING_PARTS ) ) };
 }

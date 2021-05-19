@@ -74,7 +74,7 @@ display_colour_spec display_colourer_score::do_get_colour_spec(const alignment_c
 	double scores_so_far = 0.0;
 	display_colour_spec new_spec;
 
-	new_spec.colour_base( display_colour::BLACK );
+	new_spec.colour_base( BLACK );
 
 	// Loop along the length of the alignment
 	for (const size_t &index : indices( aln_length ) ) {

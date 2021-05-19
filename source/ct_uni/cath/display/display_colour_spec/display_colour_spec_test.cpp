@@ -40,9 +40,9 @@ namespace cath {
 			[[nodiscard]] display_colour_spec get_spec() const;
 
 			const display_colour_spec the_spec{ get_spec() };
-			const display_colour_vec  pdb_colours{ { display_colour::BLUE, display_colour::RED } };
-			const display_colour_vec  residue_colours{ { display_colour::YELLOW } };
-			const display_colour_vec all_colours{ { display_colour::BLUE, display_colour::RED, display_colour::YELLOW } };
+			const display_colour_vec  pdb_colours{ { BLUE, RED } };
+			const display_colour_vec  residue_colours{ { YELLOW } };
+			const display_colour_vec all_colours{ { BLUE, RED, YELLOW } };
 			const size_vec           red_pdbs{ 1 };
 			const size_vec           blue_pdbs{ 3 };
 			const size_vec           pdb_two_residues{ { 4, 6 } };
@@ -54,10 +54,10 @@ namespace cath {
 /// \brief TODOCUMENT
 display_colour_spec cath::test::display_colour_spec_test_suite_fixture::get_spec() const {
 	display_colour_spec temp_spec;
-	temp_spec.colour_pdb        ( 1,    display_colour::RED    );
-	temp_spec.colour_pdb        ( 3,    display_colour::BLUE   );
-	temp_spec.colour_pdb_residue( 2, 4, display_colour::YELLOW );
-	temp_spec.colour_pdb_residue( 2, 6, display_colour::YELLOW );
+	temp_spec.colour_pdb        ( 1,    RED    );
+	temp_spec.colour_pdb        ( 3,    BLUE   );
+	temp_spec.colour_pdb_residue( 2, 4, YELLOW );
+	temp_spec.colour_pdb_residue( 2, 6, YELLOW );
 	return temp_spec;
 }
 
@@ -85,15 +85,15 @@ BOOST_AUTO_TEST_CASE(all_colours_works) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(pdbs_of_colour_works) {
-	const size_vec got_red_pdbs = get_pdbs_of_colour( the_spec, display_colour::RED );
+	const size_vec got_red_pdbs = get_pdbs_of_colour( the_spec, RED );
 	BOOST_CHECK_EQUAL_RANGES( red_pdbs, got_red_pdbs );
-	const size_vec got_blue_pdbs = get_pdbs_of_colour( the_spec, display_colour::BLUE );
+	const size_vec got_blue_pdbs = get_pdbs_of_colour( the_spec, BLUE );
 	BOOST_CHECK_EQUAL_RANGES( blue_pdbs, got_blue_pdbs );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(residues_of_colour_works) {
-	const size_size_vec_map got_residues = get_residues_of_colour( the_spec, display_colour::YELLOW );
+	const size_size_vec_map got_residues = get_residues_of_colour( the_spec, YELLOW );
 	BOOST_REQUIRE_EQUAL( 1_z, got_residues.size()         );
 	BOOST_CHECK_EQUAL  ( 2_z, cbegin( got_residues )->first  );
 	const size_vec &got_pdb_two_residues = cbegin( got_residues )->second;

@@ -20,10 +20,10 @@
 
 #include "crh_segment_options_block.hpp"
 
+#include <limits>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/program_options/prog_opt_num_range.hpp"
-
-#include <limits>
 
 using namespace ::cath::common;
 using namespace ::cath::opts;
@@ -38,12 +38,6 @@ using ::std::nullopt;
 using ::std::numeric_limits;
 using ::std::string;
 using ::std::unique_ptr;
-
-/// \brief The option name for the specification for trimming hits' segments to allow some overlap
-const string crh_segment_options_block::PO_OVERLAP_TRIM_SPEC   { "overlap-trim-spec"   };
-
-/// \brief The option name for the minimum segment length
-const string crh_segment_options_block::PO_MIN_SEG_LENGTH      { "min-seg-length"      };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_segment_options_block::do_clone() const {
@@ -67,7 +61,7 @@ void crh_segment_options_block::do_add_visible_options_to_description(options_de
 
 	prm_desc.add_options()
 		(
-			( PO_OVERLAP_TRIM_SPEC ).c_str(),
+			string( PO_OVERLAP_TRIM_SPEC ).c_str(),
 			value<trim_spec>()
 				->value_name   ( trim_varname                             )
 				->notifier     ( overlap_trim_spec_notifier               )
@@ -84,7 +78,7 @@ void crh_segment_options_block::do_add_visible_options_to_description(options_de
 				+ "\n           then, set n to length of the shortest segment you'd want to have that total trim").c_str()
 		)
 		(
-			( PO_MIN_SEG_LENGTH ).c_str(),
+			string( PO_MIN_SEG_LENGTH ).c_str(),
 			value< prog_opt_num_range<residx_t, 0, numeric_limits<residx_t>::max(), int64_t> >()
 				->value_name   ( length_varname                           )
 				->notifier     ( min_seg_length_notifier                  )
@@ -101,10 +95,10 @@ str_opt crh_segment_options_block::do_invalid_string(const variables_map &/*prm_
 }
 
 /// \brief Return all options names for this block
-str_vec crh_segment_options_block::do_get_all_options_names() const {
+str_view_vec crh_segment_options_block::do_get_all_options_names() const {
 	return {
-		crh_segment_options_block::PO_OVERLAP_TRIM_SPEC,
-		crh_segment_options_block::PO_MIN_SEG_LENGTH,
+		PO_OVERLAP_TRIM_SPEC,
+		PO_MIN_SEG_LENGTH,
 	};
 }
 

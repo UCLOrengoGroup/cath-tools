@@ -36,9 +36,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for the regions of the alignment (either to align or that have been aligned)
-const string align_regions_options_block::PO_ALN_REGIONS { "align-regions"   };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> align_regions_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -59,7 +56,7 @@ void align_regions_options_block::do_add_visible_options_to_description(options_
 
 	prm_desc.add_options()
 		(
-			( PO_ALN_REGIONS ).c_str(),
+			string( PO_ALN_REGIONS ).c_str(),
 			value<domain_vec>()
 				->value_name   ( regions_varname        )
 				->notifier     ( align_regions_notifier ),
@@ -78,9 +75,9 @@ str_opt align_regions_options_block::do_invalid_string(const variables_map &/*pr
 }
 
 /// \brief Return all options names for this block
-str_vec align_regions_options_block::do_get_all_options_names() const {
+str_view_vec align_regions_options_block::do_get_all_options_names() const {
 	return {
-		align_regions_options_block::PO_ALN_REGIONS,
+		PO_ALN_REGIONS,
 	};
 }
 

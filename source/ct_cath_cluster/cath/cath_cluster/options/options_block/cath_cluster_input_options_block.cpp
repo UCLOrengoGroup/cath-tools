@@ -42,18 +42,6 @@ using ::std::numeric_limits;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for an optional file from which links should be read
-const string cath_cluster_input_options_block::PO_LINKS_INFILE { "links-infile" };
-
-/// \brief The option name for the direction of links in the input
-const string cath_cluster_input_options_block::PO_LINK_DIRN    { "link-dirn"    };
-
-/// \brief The option name for the index of the column from which the link values are to be read
-const string cath_cluster_input_options_block::PO_COLUMN_IDX   { "column-idx"   };
-
-/// \brief The option name for an optional file from which names should be read
-const string cath_cluster_input_options_block::PO_NAMES_INFILE { "names-infile" };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> cath_cluster_input_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -88,19 +76,20 @@ void cath_cluster_input_options_block::do_add_visible_options_to_description(opt
 
 	prm_desc.add_options()
 		(
-			PO_LINK_DIRN.c_str(),
+			string( PO_LINK_DIRN ).c_str(),
 			value<link_dirn>()
 				->value_name   ( link_dirn_varname     )
 				->notifier     ( link_dirn_notifier    )
 				->required     (                       ),
-			(   "Interpret each link value as "
-			  + link_dirn_varname
-			  + ", one of:"
-			  + sep
-			  + join( link_dirn_descs, sep ) ).c_str()
+			::fmt::format(
+				"Interpret each link value as {}, one of:{}{}",
+				link_dirn_varname,
+				sep,
+				join( link_dirn_descs, sep )
+			).c_str()
 		)
 		(
-			PO_COLUMN_IDX.c_str(),
+			string( PO_COLUMN_IDX ).c_str(),
 			value< prog_opt_num_range<size_t, 3, numeric_limits<uint32_t>::max(), size_t> >()
 				->value_name   ( column_idx_varname    )
 				->notifier     ( column_idx_notifier   )
@@ -110,7 +99,7 @@ void cath_cluster_input_options_block::do_add_visible_options_to_description(opt
 			  + "\nMust be ≥ 3 because columns 1 and 2 must contain the IDs" ).c_str()
 		)
 		(
-			PO_NAMES_INFILE.c_str(),
+			string( PO_NAMES_INFILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname          )
 				->notifier     ( names_infile_notifier ),
@@ -128,7 +117,7 @@ void cath_cluster_input_options_block::do_add_hidden_options_to_description(opti
 	const auto links_infile_notifier = [&] (const path &x) { the_spec.set_links_infile( x ); };
 	prm_desc.add_options()
 		(
-			PO_LINKS_INFILE.c_str(),
+			string( PO_LINKS_INFILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname          )
 				->notifier     ( links_infile_notifier ),
@@ -149,10 +138,10 @@ str_opt cath_cluster_input_options_block::do_invalid_string(const variables_map 
 }
 
 /// \brief Return all options names for this block
-str_vec cath_cluster_input_options_block::do_get_all_options_names() const {
+str_view_vec cath_cluster_input_options_block::do_get_all_options_names() const {
 	return {
-		cath_cluster_input_options_block::PO_LINKS_INFILE,
-		cath_cluster_input_options_block::PO_NAMES_INFILE,
+		PO_LINKS_INFILE,
+		PO_NAMES_INFILE,
 	};
 }
 

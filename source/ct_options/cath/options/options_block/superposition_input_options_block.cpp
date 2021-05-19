@@ -21,6 +21,7 @@
 #include "superposition_input_options_block.hpp"
 
 #include <filesystem>
+#include <string_view>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 
@@ -34,10 +35,11 @@ using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
 using ::std::nullopt;
 using ::std::string;
+using ::std::string_view;
 using ::std::unique_ptr;
 
 /// \brief The option name for a file from which to read a JSON superposition
-const string superposition_input_options_block::PO_JSON_SUP_INFILE{ "json-sup-infile" };
+constexpr string_view PO_JSON_SUP_INFILE{ "json-sup-infile" };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> superposition_input_options_block::do_clone() const {
@@ -59,7 +61,7 @@ void superposition_input_options_block::do_add_visible_options_to_description(op
 
 	prm_desc.add_options()
 		(
-			PO_JSON_SUP_INFILE.c_str(),
+			string( PO_JSON_SUP_INFILE ).c_str(),
 			value<path>()
 				->value_name( file_varname             )
 				->notifier  ( json_sup_infile_notifier ),
@@ -74,9 +76,9 @@ str_opt superposition_input_options_block::do_invalid_string(const variables_map
 }
 
 /// \brief Return all options names for this block
-str_vec superposition_input_options_block::do_get_all_options_names() const {
+str_view_vec superposition_input_options_block::do_get_all_options_names() const {
 	return {
-		superposition_input_options_block::PO_JSON_SUP_INFILE,
+		PO_JSON_SUP_INFILE,
 	};
 }
 

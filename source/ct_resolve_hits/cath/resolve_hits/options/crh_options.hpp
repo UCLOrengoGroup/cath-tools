@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_CRH_OPTIONS_HPP
 
 #include <iosfwd>
+#include <string_view>
 
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/detail_help_options_block.hpp"
@@ -41,8 +42,6 @@ namespace cath {
 		class crh_options final : public opts::executable_options {
 		private:
 			using super = opts::executable_options;
-
-			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief The cath-resolve-hits input options_block
 			crh_input_options_block         the_input_ob;
@@ -65,7 +64,7 @@ namespace cath {
 			/// \brief The detailed help options_block
 			opts::detail_help_options_block detail_help_ob;
 
-			[[nodiscard]] std::string                              do_get_program_name() const final;
+			[[nodiscard]] std::string_view                         do_get_program_name() const final;
 			boost::program_options::positional_options_description get_positional_options() final;
 			[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
 
@@ -87,7 +86,8 @@ namespace cath {
 			[[nodiscard]] const crh_output_spec & get_crh_output_spec() const;
 			[[nodiscard]] const crh_html_spec &   get_crh_html_spec() const;
 
-			static const std::string PROGRAM_NAME;
+			/// The name of the program that uses this executable_options
+			static constexpr ::std::string_view PROGRAM_NAME{ "cath-resolve-hits" };
 		};
 
 		std::string get_crh_raw_format_help_string();

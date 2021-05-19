@@ -28,6 +28,8 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/argc_argv_faker.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/find_file.hpp"
@@ -51,16 +53,12 @@ using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::make_optional;
 using ::std::string;
-
-/// \brief The prefix for "global" environment variables to be respected by all executables using this code.
-///
-/// These "global" environment variables are overridden by command line options but override the configuration file.
-const string       executable_options::CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX("CATH_TOOLS_");
+using ::std::string_view;
 
 /// \brief The name of the "global" configuration file to be respected by all executables using this code.
 ///
 /// This "global" file is overridden by environment variables or command line options
-const path         executable_options::CATH_TOOLS_CONF_FILE                  ("cath-tools.conf");
+static const path CATH_TOOLS_CONF_FILE( "cath-tools.conf" );
 
 /// \brief The path through which to search for the "global" configuration file.
 path_vec executable_options::CATH_TOOLS_CONF_FILE_SEARCH_PATH () {
@@ -80,15 +78,11 @@ positional_options_description executable_options::get_positional_options() {
 ///
 /// > Try 'cath-ssap --help' for usage information.
 string executable_options::get_standard_usage_error_string() const {
-	return "See '"
-	       + get_program_name()
-	       + " -"
-	       + misc_help_version_options_block::PO_CHAR_HELP
-	       + "' for usage.";
+	return ::fmt::format( "See '{} -{}' for usage.", get_program_name(), misc_help_version_options_block::PO_CHAR_HELP );
 }
 
 /// \brief An NVI pass-though method to get the name of the program from do_get_program_name()
-string executable_options::get_program_name() const {
+string_view executable_options::get_program_name() const {
 	return do_get_program_name();
 }
 
@@ -267,7 +261,8 @@ void executable_options::parse_options(const int           &argc,             //
 	// If version information was requested, then provide it
 	if ( the_help_block.get_version() ) {
 		// std::cerr << "Getting version\n";
-		error_or_help_string = misc_help_version_options_block::get_version_string( get_program_name(), get_overview_string() );
+		error_or_help_string =
+		  misc_help_version_options_block::get_version_string( string( get_program_name() ), get_overview_string() );
 		return;
 	}
 
@@ -331,7 +326,7 @@ void executable_options::parse_options(const int           &argc,             //
 					vm
 				);
 			},
-			"[whilst parsing from global environment variables with prefix " + CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX + "]"
+			::fmt::format( "[whilst parsing from global environment variables with prefix {}]", CATH_TOOLS_ENVIRONMENT_VARIABLE_PREFIX )
 		);
 
 		// Parse any configuration file called cath_tools.conf

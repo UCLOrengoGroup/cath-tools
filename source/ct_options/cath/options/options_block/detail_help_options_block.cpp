@@ -84,8 +84,8 @@ str_opt detail_help_options_block::do_invalid_string(const variables_map &/*prm_
 }
 
 /// \brief Return all options names for this block
-str_vec detail_help_options_block::do_get_all_options_names() const {
-	return copy_build<str_vec>( desc_and_help_of_option_name | map_keys );
+str_view_vec detail_help_options_block::do_get_all_options_names() const {
+	return copy_build<str_view_vec>( desc_and_help_of_option_name | map_keys );
 }
 
 /// \brief Construct a detail_help_options_block from a map from option name to a pair of description and help message

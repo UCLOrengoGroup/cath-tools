@@ -40,15 +40,6 @@ namespace cath {
 		private:
 			using alner = options_block;
 
-			static const std::string PO_ALN_TO_CATH_ALN_FILE;
-			static const std::string PO_ALN_TO_CATH_ALN_STDOUT;
-			static const std::string PO_ALN_TO_FASTA_FILE;
-			static const std::string PO_ALN_TO_FASTA_STDOUT;
-			static const std::string PO_ALN_TO_SSAP_FILE;
-			static const std::string PO_ALN_TO_SSAP_STDOUT;
-			static const std::string PO_ALN_TO_HTML_FILE;
-			static const std::string PO_ALN_TO_HTML_STDOUT;
-
 			::std::filesystem::path aln_to_cath_aln_file;
 			bool aln_to_cath_aln_stdout;
 			::std::filesystem::path aln_to_fasta_file;
@@ -63,7 +54,7 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 			[[nodiscard]] ::std::filesystem::path get_aln_to_cath_aln_file() const;
 			[[nodiscard]] bool                    get_aln_to_cath_aln_stdout() const;

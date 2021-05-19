@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CATH_CLUSTER_INPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CATH_CLUSTER_INPUT_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/cath_cluster/options/spec/cath_cluster_input_spec.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
@@ -42,15 +44,22 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_LINKS_INFILE;
-			static const std::string PO_LINK_DIRN;
-			static const std::string PO_COLUMN_IDX;
-			static const std::string PO_NAMES_INFILE;
-
 			[[nodiscard]] const cath_cluster_input_spec &get_cath_cluster_input_spec() const;
+
+			/// \brief The option name for an optional file from which names should be read
+			static constexpr ::std::string_view PO_NAMES_INFILE{ "names-infile" };
+
+			/// \brief The option name for an optional file from which links should be read
+			static constexpr ::std::string_view PO_LINKS_INFILE{ "links-infile" };
+
+			/// \brief The option name for the direction of links in the input
+			static constexpr ::std::string_view PO_LINK_DIRN{ "link-dirn" };
+
+			/// \brief The option name for the index of the column from which the link values are to be read
+			static constexpr ::std::string_view PO_COLUMN_IDX{ "column-idx" };
 		};
 
 	} // namespace clust

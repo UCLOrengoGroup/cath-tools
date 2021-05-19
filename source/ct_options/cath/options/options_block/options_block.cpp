@@ -21,12 +21,15 @@
 #include "options_block.hpp"
 
 #include <filesystem>
+#include <string_view>
 
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "cath/common/algorithm/copy_build.hpp"
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
 
@@ -35,6 +38,7 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 
 using ::boost::adaptors::filtered;
+using ::boost::adaptors::transformed;
 using ::boost::algorithm::any_of;
 using ::boost::numeric_cast;
 using ::boost::program_options::options_description;
@@ -42,13 +46,8 @@ using ::boost::program_options::variables_map;
 using ::std::filesystem::is_empty;
 using ::std::filesystem::path;
 using ::std::string;
+using ::std::string_view;
 using ::std::unique_ptr;
-
-/// \brief A string to use to separate (valid values and their descriptions) from each other
-const string options_block::SUB_DESC_SEPARATOR = "\n   ";
-
-/// \brief The string to use to separate valid values' names from their descriptions
-const string options_block::SUB_DESC_PAIR_SEPARATOR = " - ";
 
 /// \brief TODOCUMENT
 void options_block::do_add_hidden_options_to_description(options_description &/*prm_desc*/,       ///< TODOCUMENT
@@ -118,7 +117,7 @@ str_opt options_block::invalid_string(const variables_map &prm_variables_map ///
 }
 
 /// \brief An NVI pass-through to a method that returns the options_block's full list of options names
-str_vec options_block::get_all_options_names() const {
+str_view_vec options_block::get_all_options_names() const {
 	return do_get_all_options_names();
 }
 
@@ -207,7 +206,14 @@ str_vec cath::opts::specified_options(const variables_map &prm_vm,        ///< T
 str_vec cath::opts::specified_options_from_block(const variables_map &prm_vm,           ///< The variables_map to examine,
                                                  const options_block &prm_options_block ///< The options block
                                                  ) {
-	return specified_options( prm_vm, prm_options_block.get_all_options_names() );
+	// clang-format off
+	return specified_options(
+		prm_vm,
+		prm_options_block.get_all_options_names()
+			| transformed( []( const string_view &x ) { return string( x ); } )
+			| to_vector
+	);
+	// clang-format on
 }
 
 /// \brief Return whether the specified variables_map has specified any options with any of the specified names
@@ -228,5 +234,12 @@ bool cath::opts::specifies_any_of_options(const variables_map &prm_vm,        //
 bool cath::opts::specifies_options_from_block(const variables_map &prm_vm,           ///< The variables_map to examine
                                               const options_block &prm_options_block ///< The options block
                                               ) {
-	return specifies_any_of_options( prm_vm, prm_options_block.get_all_options_names() );
+	// clang-format off
+	return specifies_any_of_options(
+		prm_vm,
+		prm_options_block.get_all_options_names()
+			| transformed( []( const string_view &x ) { return string( x ); } )
+			| to_vector
+	);
+	// clang-format on
 }

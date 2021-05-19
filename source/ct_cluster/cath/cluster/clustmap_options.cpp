@@ -22,6 +22,8 @@
 
 #include <boost/algorithm/string/join.hpp>
 
+#include <fmt/core.h>
+
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::opts;
@@ -32,9 +34,7 @@ using ::boost::program_options::positional_options_description;
 using ::boost::program_options::variables_map;
 using ::std::nullopt;
 using ::std::string;
-
-/// The name of the program that uses this executable_options
-const string clustmap_options::PROGRAM_NAME("cath-map-clusters");
+using ::std::string_view;
 
 /// \brief Get the options for the "Detailed Help" block
 str_str_str_pair_map clustmap_options::detail_help_spec() {
@@ -44,14 +44,14 @@ str_str_str_pair_map clustmap_options::detail_help_spec() {
 }
 
 /// \brief Get the name of the program that uses this executable_options
-string clustmap_options::do_get_program_name() const {
+string_view clustmap_options::do_get_program_name() const {
 	return PROGRAM_NAME;
 }
 
 /// \brief Get the positional options, which in this case is the input block's PO_INPUT_FILE_OR_STDIN option
 positional_options_description clustmap_options::get_positional_options() {
 	positional_options_description positionals;
-	positionals.add( clustmap_input_options_block::PO_WORKING_CLUSTMEMB_FILE.c_str(), 1 );
+	positionals.add( string( clustmap_input_options_block::PO_WORKING_CLUSTMEMB_FILE ).c_str(), 1 );
 	return positionals;
 }
 
@@ -75,7 +75,7 @@ str_opt clustmap_options::do_get_error_or_help_string() const {
 
 	const variables_map &local_vm = get_variables_map();
 
-	if ( ! specifies_option( local_vm, clustmap_input_options_block::PO_WORKING_CLUSTMEMB_FILE ) ) {
+	if ( ! specifies_option( local_vm, string( clustmap_input_options_block::PO_WORKING_CLUSTMEMB_FILE ) ) ) {
 		return "Must specify an input file"s;
 	}
 
@@ -83,21 +83,17 @@ str_opt clustmap_options::do_get_error_or_help_string() const {
 	const path_opt map_from_clustmemb_file = get_clustmap_input_spec().get_map_from_clustmemb_file();
 
 	if ( get_clustmap_output_spec().get_append_batch_id() && read_batches_from_input ) {
-		return "Cannot specify a batch ID for appending (--"
-			+ clustmap_output_options_block::PO_APPEND_BATCH_ID
-			+ ") when reading batches from input (--"
-			+ clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT
-			+ ")";
+		return ::fmt::format( "Cannot specify a batch ID for appending (--{}) when reading batches from input (--{})",
+		                      clustmap_output_options_block::PO_APPEND_BATCH_ID,
+		                      clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT );
 	}
 
 	if ( specified_clust_thresh_options( local_vm ) && ! map_from_clustmemb_file && ! read_batches_from_input ) {
-		return "Cannot specify mapping threshold options (--"
-			+ join( clust_thresh_option_names(), ", --" )
-			+ ") if not specifying map-from file (--"
-			+ clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE
-			+ ") and not using batch mode (--"
-			+ clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT
-			+ ")";
+		return ::fmt::format( "Cannot specify mapping threshold options (--{}) if not specifying map-from file (--{}) "
+		                      "and not using batch mode (--{})",
+		                      join( clust_thresh_option_names(), ", --" ),
+		                      clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE,
+		                      clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT );
 	}
 
 	// If no error or help string, then return nullopt
@@ -106,11 +102,14 @@ str_opt clustmap_options::do_get_error_or_help_string() const {
 
 /// \brief Get a string to prepend to the standard help
 string clustmap_options::do_get_help_prefix_string() const {
-	return "Usage: " + PROGRAM_NAME + R"( [options] <input_file>
+	return ::fmt::format(
+	  R"(Usage: {} [options] <input_file>
 
-)" + get_overview_string() + R"(
+{}
 
-When <input_file> is -, the input is read from standard input.)";
+When <input_file> is -, the input is read from standard input.)",
+	  PROGRAM_NAME,
+	  get_overview_string() );
 }
 
 /// \brief Get a string to append to the standard help
@@ -127,9 +126,9 @@ cluster_name domain_id
 
 Input data doesn't have to be grouped by cluster.
 
-NOTE: When mapping (ie using --)" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE
+NOTE: When mapping (ie using --)" + string( clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE )
 	+ "), the mapping algorithm treats the two cluster membership files differently - see --"
-	+ clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL
+	+ string( clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL )
 	+ " description.\n";
 }
 

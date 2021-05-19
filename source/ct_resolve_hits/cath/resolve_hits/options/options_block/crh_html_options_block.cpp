@@ -20,13 +20,13 @@
 
 #include "crh_html_options_block.hpp"
 
+#include <limits>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 
 #include "cath/common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/program_options/prog_opt_num_range.hpp"
-
-#include <limits>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -41,15 +41,6 @@ using ::std::nullopt;
 using ::std::numeric_limits;
 using ::std::string;
 using ::std::unique_ptr;
-
-/// \brief  The option name for whether to restrict HTML output to the contents of the body tag
-const string crh_html_options_block::PO_RESTRICT_HTML_WITHIN_BODY { "restrict-html-within-body"  };
-
-/// \brief  The option name for the maximum number of non-solution hits to display in the HTML
-const string crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS     { "html-max-num-non-soln-hits" };
-
-/// \brief  The option name for whether to exclude hits rejected by the score filters from the HTML
-const string crh_html_options_block::PO_EXCLUDE_REJECTED_HITS     { "html-exclude-rejected-hits" };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_html_options_block::do_clone() const {
@@ -73,7 +64,7 @@ void crh_html_options_block::do_add_visible_options_to_description(options_descr
 
 	prm_desc.add_options()
 		(
-			( PO_RESTRICT_HTML_WITHIN_BODY ).c_str(),
+			string( PO_RESTRICT_HTML_WITHIN_BODY ).c_str(),
 			bool_switch()
 				->notifier     ( set_restrict_html_within_body_notifier           )
 				->default_value( crh_html_spec::DEFAULT_RESTRICT_HTML_WITHIN_BODY ),
@@ -81,7 +72,7 @@ void crh_html_options_block::do_add_visible_options_to_description(options_descr
 				"The contents should be included inside a body tag of class crh-body"
 		)
 		(
-			( PO_MAX_NUM_NON_SOLN_HITS ).c_str(),
+			string( PO_MAX_NUM_NON_SOLN_HITS ).c_str(),
 			value< prog_opt_num_range<size_t, 0, numeric_limits<uint32_t>::max(), int64_t> >()
 				->value_name   ( num_varname                                      )
 				->notifier     ( max_num_non_soln_hits_notifier                   )
@@ -89,7 +80,7 @@ void crh_html_options_block::do_add_visible_options_to_description(options_descr
 			( "Only display up to " + num_varname + " non-solution hits in the HTML" ).c_str()
 		)
 		(
-			( PO_EXCLUDE_REJECTED_HITS ).c_str(),
+			string( PO_EXCLUDE_REJECTED_HITS ).c_str(),
 			bool_switch()
 				->notifier     ( exclude_rejected_hits_notifier                   )
 				->default_value( crh_html_spec::DEFAULT_EXCLUDE_REJECTED_HITS     ),
@@ -110,11 +101,11 @@ str_opt crh_html_options_block::do_invalid_string(const variables_map &/*prm_var
 }
 
 /// \brief Return all options names for this block
-str_vec crh_html_options_block::do_get_all_options_names() const {
+str_view_vec crh_html_options_block::do_get_all_options_names() const {
 	return {
-		crh_html_options_block::PO_RESTRICT_HTML_WITHIN_BODY,
-		crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS,
-		crh_html_options_block::PO_EXCLUDE_REJECTED_HITS,
+		PO_RESTRICT_HTML_WITHIN_BODY,
+		PO_MAX_NUM_NON_SOLN_HITS,
+		PO_EXCLUDE_REJECTED_HITS,
 	};
 }
 

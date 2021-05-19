@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_SCORE_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_SCORE_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/resolve_hits/options/spec/crh_score_spec.hpp"
 
@@ -40,15 +42,22 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_LONG_DOMAINS_PREFERENCE;
-			static const std::string PO_HIGH_SCORES_PREFERENCE;
-			static const std::string PO_APPLY_CATH_RULES;
-			static const std::string PO_NAIVE_GREEDY;
-
 			[[nodiscard]] const crh_score_spec &get_crh_score_spec() const;
+
+			/// \brief The option name for the degree to which long domains are preferred
+			static constexpr ::std::string_view PO_LONG_DOMAINS_PREFERENCE{ "long-domains-preference" };
+
+			/// \brief The option name for the degree to which high scores are preferred
+			static constexpr ::std::string_view PO_HIGH_SCORES_PREFERENCE{ "high-scores-preference" };
+
+			/// \brief The option name for whether to apply rules specific to CATH-Gene3D
+			static constexpr ::std::string_view PO_APPLY_CATH_RULES{ "apply-cath-rules" };
+
+			/// \brief The option name for whether to use a naive, greedy approach to resolving
+			static constexpr ::std::string_view PO_NAIVE_GREEDY{ "naive-greedy" };
 		};
 
 	} // namespace rslv

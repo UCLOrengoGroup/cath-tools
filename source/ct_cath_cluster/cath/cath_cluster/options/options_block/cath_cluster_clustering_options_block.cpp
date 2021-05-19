@@ -35,9 +35,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for the levels at which the clustering should be performed
-const string cath_cluster_clustering_options_block::PO_LEVELS { "levels" };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> cath_cluster_clustering_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -58,7 +55,7 @@ void cath_cluster_clustering_options_block::do_add_visible_options_to_descriptio
 
 	prm_desc.add_options()
 		(
-			PO_LEVELS.c_str(),
+			string( PO_LEVELS ).c_str(),
 			value<clustering_levels>()
 				->value_name   ( levels_varname  )
 				->notifier     ( levels_notifier )
@@ -77,9 +74,9 @@ str_opt cath_cluster_clustering_options_block::do_invalid_string(const variables
 }
 
 /// \brief Return all options names for this block
-str_vec cath_cluster_clustering_options_block::do_get_all_options_names() const {
+str_view_vec cath_cluster_clustering_options_block::do_get_all_options_names() const {
 	return {
-		cath_cluster_clustering_options_block::PO_LEVELS,
+		PO_LEVELS,
 	};
 }
 

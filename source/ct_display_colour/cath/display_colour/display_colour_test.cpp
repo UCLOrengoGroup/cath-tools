@@ -152,12 +152,12 @@ BOOST_AUTO_TEST_CASE(comma_separated_string_of_display_colour_works) {
 
 /// \brief Check that the equality and inequality operators work as expected
 BOOST_AUTO_TEST_CASE(equality_and_inequality_operators) {
-	const auto standard_colours = { display_colour::RED,
-	                                display_colour::YELLOW,
-	                                display_colour::GREEN,
-	                                display_colour::CYAN,
-	                                display_colour::BLUE,
-	                                display_colour::MAGENTA };
+	const auto standard_colours = { RED,
+	                                YELLOW,
+	                                GREEN,
+	                                CYAN,
+	                                BLUE,
+	                                MAGENTA };
 	check_equality_operators_on_diff_vals_range( standard_colours );
 }
 

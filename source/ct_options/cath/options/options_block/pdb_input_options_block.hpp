@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_PDB_INPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_PDB_INPUT_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/options/options_block/pdb_input_spec.hpp"
 
@@ -38,13 +40,16 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_PDB_INFILE;
-			static const std::string PO_PDBS_FROM_STDIN;
-
 			[[nodiscard]] const pdb_input_spec &get_pdb_input_spec() const;
+
+			/// \brief The option name for the a list of PDB files that should be read
+			static constexpr ::std::string_view PO_PDB_INFILE{ "pdb-infile" };
+
+			/// \brief The option name for whether to read PDBs from stdin
+			static constexpr ::std::string_view PO_PDBS_FROM_STDIN{ "pdbs-from-stdin" };
 		};
 
 		size_t get_num_acquirers(const pdb_input_options_block &);

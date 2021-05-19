@@ -21,6 +21,7 @@
 #include "cath_cluster_output_options_block.hpp"
 
 #include <filesystem>
+#include <string_view>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 
@@ -35,22 +36,17 @@ using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
 using ::std::nullopt;
 using ::std::string;
+using ::std::string_view;
 using ::std::unique_ptr;
 
 /// \brief The option name for an optional file to which clusters should be written
-const string cath_cluster_output_options_block::PO_CLUSTERS_TO_FILE     { "clusters-to-file"     };
+constexpr string_view PO_CLUSTERS_TO_FILE     { "clusters-to-file"     };
 
 /// \brief The option name for an optional file to which merges should be written
-const string cath_cluster_output_options_block::PO_MERGES_TO_FILE       { "merges-to-file"       };
-
-/// \brief The option name for an optional file to which clust_spans should be written
-const string cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE  { "clust-spans-to-file"  };
-
-/// \brief The option name for an optional file to which reps should be written
-const string cath_cluster_output_options_block::PO_REPS_TO_FILE         { "reps-to-file"         };
+constexpr string_view PO_MERGES_TO_FILE       { "merges-to-file"       };
 
 /// \brief The option name for an optional file to which sorted_links should be written
-const string cath_cluster_output_options_block::PO_SORTED_LINKS_TO_FILE { "sorted-links-to-file" };
+constexpr string_view PO_SORTED_LINKS_TO_FILE { "sorted-links-to-file" };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> cath_cluster_output_options_block::do_clone() const {
@@ -75,7 +71,7 @@ void cath_cluster_output_options_block::do_add_visible_options_to_description(op
 
 	prm_desc.add_options()
 		(
-			PO_CLUSTERS_TO_FILE.c_str(),
+			string( PO_CLUSTERS_TO_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                 )
 				->notifier     ( clusters_to_file_notifier    ),
@@ -84,7 +80,7 @@ void cath_cluster_output_options_block::do_add_visible_options_to_description(op
 			  + " (or '-' for stdout)" ).c_str()
 		)
 		(
-			PO_MERGES_TO_FILE.c_str(),
+			string( PO_MERGES_TO_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                 )
 				->notifier     ( merges_to_file_notifier      ),
@@ -93,7 +89,7 @@ void cath_cluster_output_options_block::do_add_visible_options_to_description(op
 			  + " (or '-' for stdout)" ).c_str()
 		)
 		(
-			PO_CLUST_SPANS_TO_FILE.c_str(),
+			string( PO_CLUST_SPANS_TO_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                 )
 				->notifier     ( clust_spans_to_file_notifier ),
@@ -102,7 +98,7 @@ void cath_cluster_output_options_block::do_add_visible_options_to_description(op
 			  + " (or '-' for stdout)" ).c_str()
 		)
 		(
-			PO_REPS_TO_FILE.c_str(),
+			string( PO_REPS_TO_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                 )
 				->notifier     ( reps_to_file_notifier        ),
@@ -121,7 +117,7 @@ void cath_cluster_output_options_block::do_add_hidden_options_to_description(opt
 
 	prm_desc.add_options()
 		(
-			PO_SORTED_LINKS_TO_FILE.c_str(),
+			string( PO_SORTED_LINKS_TO_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                  )
 				->notifier     ( sorted_links_to_file_notifier ),
@@ -138,13 +134,13 @@ str_opt cath_cluster_output_options_block::do_invalid_string(const variables_map
 }
 
 /// \brief Return all options names for this block
-str_vec cath_cluster_output_options_block::do_get_all_options_names() const {
+str_view_vec cath_cluster_output_options_block::do_get_all_options_names() const {
 	return {
-		cath_cluster_output_options_block::PO_CLUSTERS_TO_FILE,
-		cath_cluster_output_options_block::PO_MERGES_TO_FILE,
-		cath_cluster_output_options_block::PO_CLUST_SPANS_TO_FILE,
-		cath_cluster_output_options_block::PO_REPS_TO_FILE,
-		cath_cluster_output_options_block::PO_SORTED_LINKS_TO_FILE,
+		PO_CLUSTERS_TO_FILE,
+		PO_MERGES_TO_FILE,
+		PO_CLUST_SPANS_TO_FILE,
+		PO_REPS_TO_FILE,
+		PO_SORTED_LINKS_TO_FILE,
 	};
 }
 

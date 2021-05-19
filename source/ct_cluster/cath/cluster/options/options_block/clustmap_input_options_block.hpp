@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CLUSTMAP_INPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CLUSTMAP_INPUT_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/cluster/options/spec/clustmap_input_spec.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
@@ -42,14 +44,19 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_WORKING_CLUSTMEMB_FILE;
-			static const std::string PO_MAP_FROM_CLUSTMEMB_FILE;
-			static const std::string PO_READ_BATCHES_FROM_INPUT;
-
 			[[nodiscard]] const clustmap_input_spec &get_clustmap_input_spec() const;
+
+			/// \brief The option name for the cluster-membership file for the working clusters
+			static constexpr ::std::string_view PO_WORKING_CLUSTMEMB_FILE{ "working-clustmemb-file" };
+
+			/// \brief The option name for an optional file specify a cluster-membership file for map-from clusters
+			static constexpr ::std::string_view PO_MAP_FROM_CLUSTMEMB_FILE{ "map-from-clustmemb-file" };
+
+			/// \brief The option name for whether to read batches from working_clustmemb_file (rather than cluster membership directly)
+			static constexpr ::std::string_view PO_READ_BATCHES_FROM_INPUT{ "read-batches-from-input" };
 		};
 
 	} // namespace clust

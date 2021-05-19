@@ -36,7 +36,7 @@ using ::boost::to_lower_copy;
 using ::boost::to_upper_copy;
 
 /// \brief Ctor for env_var_option_name_handler
-env_var_option_name_handler::env_var_option_name_handler(string                     prm_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_TOOLS_"
+env_var_option_name_handler::env_var_option_name_handler(string_view                prm_prefix,        ///< The prefix string to strip off all environment variable names(eg "CATH_TOOLS_"
                                                          const bool                &prm_allow_unknown, ///< Whether to allow unrecognised options (by not passing them back to parse_environment(), which would complain)
                                                          const options_description &prm_options        ///< The options_description containing the options that should be accepted (can be left to default empty value if prm_allow_unknown is false)
                                                          ) : prefix        { std::move( prm_prefix ) },
@@ -86,7 +86,7 @@ string env_var_option_name_handler::operator()(const string &prm_environment_var
 ///
 /// \relates env_var_option_name_handler
 string cath::opts::option_of_environment_variable_and_prefix(const string &prm_env_variable_name, ///< The environment variable name
-                                                             const string &prm_prefix             ///< The prefix with which the environment variable should begin for it to be accepted
+                                                             const string_view &prm_prefix             ///< The prefix with which the environment variable should begin for it to be accepted
                                                              ) {
 	// If this environment variable doesn't start with the correct prefix, ignore it
 	if (!starts_with(prm_env_variable_name, prm_prefix)) {

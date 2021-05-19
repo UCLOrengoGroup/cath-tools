@@ -20,6 +20,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/options/options_block/detail_help_options_block.hpp"
 #include "cath/options/options_block/options_block_tester.hpp"
@@ -57,7 +59,7 @@ BOOST_AUTO_TEST_CASE( handles_no_help_requested ) {
 BOOST_AUTO_TEST_CASE(handles_help_1_requested) {
 	parse_into_options_block(
 		the_options_block,
-		{ IGNORE_OPT, "--" + TEST_OPTION_1 }
+		{ IGNORE_OPT, ::fmt::format( "--{}", TEST_OPTION_1 ) }
 	);
 	BOOST_REQUIRE_EQUAL( true,        the_options_block.has_help_string() );
 	BOOST_CHECK_EQUAL(   TEST_HELP_1, the_options_block.help_string()     );
@@ -67,7 +69,7 @@ BOOST_AUTO_TEST_CASE(handles_help_1_requested) {
 BOOST_AUTO_TEST_CASE(handles_help_2_requested) {
 	parse_into_options_block(
 		the_options_block,
-		{ IGNORE_OPT, "--" + TEST_OPTION_2 }
+		{ IGNORE_OPT, ::fmt::format( "--{}", TEST_OPTION_2 ) }
 	);
 	BOOST_REQUIRE_EQUAL( true,        the_options_block.has_help_string() );
 	BOOST_CHECK_EQUAL(   TEST_HELP_2, the_options_block.help_string()     );
@@ -77,7 +79,7 @@ BOOST_AUTO_TEST_CASE(handles_help_2_requested) {
 BOOST_AUTO_TEST_CASE(handles_help_1_and_2_requested) {
 	parse_into_options_block(
 		the_options_block,
-		{ IGNORE_OPT, "--" + TEST_OPTION_1, "--" + TEST_OPTION_2 }
+		{ IGNORE_OPT, ::fmt::format( "--{}", TEST_OPTION_1 ), ::fmt::format( "--{}", TEST_OPTION_2 ) }
 	);
 	BOOST_REQUIRE_EQUAL( true,        the_options_block.has_help_string() );
 	BOOST_CHECK_EQUAL(   TEST_HELP_1, the_options_block.help_string()     );
@@ -87,7 +89,7 @@ BOOST_AUTO_TEST_CASE(handles_help_1_and_2_requested) {
 BOOST_AUTO_TEST_CASE(handles_help_2_and_1_requested) {
 	parse_into_options_block(
 		the_options_block,
-		{ IGNORE_OPT, "--" + TEST_OPTION_2, "--" + TEST_OPTION_1 }
+		{ IGNORE_OPT, ::fmt::format( "--{}", TEST_OPTION_2 ), ::fmt::format( "--{}", TEST_OPTION_1 ) }
 	);
 	BOOST_REQUIRE_EQUAL( true,        the_options_block.has_help_string() );
 	BOOST_CHECK_EQUAL(   TEST_HELP_1, the_options_block.help_string()     );

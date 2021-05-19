@@ -20,6 +20,10 @@
 
 #include "misc_help_version_options_block.hpp"
 
+#include <string_view>
+
+#include <fmt/core.h>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/external_info/cath_tools_git_version.hpp"
 
@@ -33,15 +37,7 @@ using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::variables_map;
 using ::std::nullopt;
-
-/// \brief The option name for the hidden help option
-const string misc_help_version_options_block::PO_HIDDEN_HELP          { "hidden-help"            };
-
-/// \brief The option name for the help option
-const string misc_help_version_options_block::PO_HELP                 { "help"                   };
-
-/// \brief The option name for the version option
-const string misc_help_version_options_block::PO_VERSION              { "version"                };
+using ::std::string_view;
 
 /// \brief The single-character for the help option
 
@@ -67,8 +63,8 @@ string misc_help_version_options_block::do_get_block_name() const {
 void misc_help_version_options_block::do_add_visible_options_to_description(options_description &prm_desc,           ///< The options_description to which the options are added
                                                                             const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                             ) {
-	const string PO_HELP_W_CHAR    = PO_HELP    + ',' + PO_CHAR_HELP;
-	const string PO_VERSION_W_CHAR = PO_VERSION + ',' + PO_CHAR_VERSION;
+	const string PO_HELP_W_CHAR    = ::fmt::format( "{},{}", PO_HELP, PO_CHAR_HELP );
+	const string PO_VERSION_W_CHAR = ::fmt::format( "{},{}", PO_VERSION, PO_CHAR_VERSION );
 	prm_desc.add_options()
 		( PO_HELP_W_CHAR    . c_str(), bool_switch( &help    )->default_value( false ), "Output help message"        )
 		( PO_VERSION_W_CHAR . c_str(), bool_switch( &version )->default_value( false ), "Output version information" );
@@ -79,7 +75,7 @@ void misc_help_version_options_block::do_add_hidden_options_to_description(optio
                                                                            const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                            ) {
 	prm_desc.add_options()
-		( ( PO_HIDDEN_HELP ).c_str(), bool_switch( &hidden_help )->default_value( false ), "Output help message including all hidden options" );
+		( string( PO_HIDDEN_HELP ).c_str(), bool_switch( &hidden_help )->default_value( false ), "Output help message including all hidden options" );
 }
 
 /// \brief Identify any conflicts that make the currently stored options invalid
@@ -93,10 +89,10 @@ str_opt misc_help_version_options_block::do_invalid_string(const variables_map &
 }
 
 /// \brief Return all options names for this block
-str_vec misc_help_version_options_block::do_get_all_options_names() const {
+str_view_vec misc_help_version_options_block::do_get_all_options_names() const {
 	return {
-		misc_help_version_options_block::PO_HELP,
-		misc_help_version_options_block::PO_VERSION,
+		PO_HELP,
+		PO_VERSION,
 	};
 }
 

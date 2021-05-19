@@ -20,6 +20,8 @@
 
 #include "clustmap_input_spec.hpp"
 
+#include <fmt/core.h>
+
 #include "cath/cluster/options/options_block/clustmap_input_options_block.hpp"
 
 using namespace ::cath;
@@ -33,11 +35,10 @@ using ::std::nullopt;
 str_opt cath::clust::get_invalid_description(const clustmap_input_spec &prm_clustmap_input_spec ///< The clustmap_input_spec to query
                                              ) {
 	if ( prm_clustmap_input_spec.get_map_from_clustmemb_file() && prm_clustmap_input_spec.get_read_batches_from_input() ) {
-		return "Cannot specify a map-from cluster-membership file (--"
-			+ clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE
-			+ ") when reading batches from input (--"
-			+ clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT
-			+ ")";
+		return ::fmt::format(
+		  "Cannot specify a map-from cluster-membership file (--{}) when reading batches from input (--{})",
+		  clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE,
+		  clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT );
 	}
 
 	return nullopt;

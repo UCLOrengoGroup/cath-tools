@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_MISC_HELP_VERSION_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_MISC_HELP_VERSION_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/options/options_block/options_block.hpp"
 
 namespace cath {
@@ -55,7 +57,7 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
 			[[nodiscard]] const bool &get_hidden_help() const;
@@ -68,13 +70,19 @@ namespace cath {
 			static std::string get_version_string(const std::string &,
 			                                      const std::string &);
 
-			static const std::string PO_HIDDEN_HELP;
-			static const std::string PO_HELP;
-			static const std::string PO_VERSION;
-
 			static constexpr char PO_CHAR_HELP    = 'h';
 			static constexpr char PO_CHAR_VERSION = 'v';
+
+			/// \brief The option name for the hidden help option
+			static constexpr ::std::string_view PO_HIDDEN_HELP{ "hidden-help" };
+
+			/// \brief The option name for the help option
+			static constexpr ::std::string_view PO_HELP{ "help" };
+
+			/// \brief The option name for the version option
+			static constexpr ::std::string_view PO_VERSION{ "version" };
 		};
+
 	} // namespace opts
 } // namespace cath
 

@@ -36,12 +36,6 @@ namespace cath {
 		/// for holding/validating the options is passed to display_spec.
 		class display_options_block final : public cath::opts::options_block {
 		private:
-			static const std::string PO_VIEWER_COLOURS;
-			static const std::string PO_GRADIENT_COLOUR_ALIGNMENT;
-			static const std::string PO_SHOW_SCORES_IF_PRESENT;
-			static const std::string PO_SCORES_TO_EQUIVS;
-			static const std::string PO_NORMALISE_SCORES;
-
 			display_spec the_display_spec;
 
 			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
@@ -49,7 +43,7 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
 			[[nodiscard]] display_spec get_display_spec() const;

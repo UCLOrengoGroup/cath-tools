@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP
 
 #include <filesystem>
+#include <string_view>
 
 #include "cath/cath_assign_domains/options/cath_assign_domains_options_block.hpp"
 #include "cath/options/executable/executable_options.hpp"
@@ -44,8 +45,8 @@ namespace cath {
 			/// \brief The cath-assign-domains options block
 			cath_assign_domains_options_block the_cath_assign_domains_options_block;
 
-			[[nodiscard]] std::string do_get_program_name() const final;
-			[[nodiscard]] str_opt     do_get_error_or_help_string() const final;
+			[[nodiscard]] std::string_view do_get_program_name() const final;
+			[[nodiscard]] str_opt          do_get_error_or_help_string() const final;
 
 			[[nodiscard]] std::string do_get_help_prefix_string() const final;
 			[[nodiscard]] std::string do_get_help_suffix_string() const final;
@@ -59,7 +60,8 @@ namespace cath {
 			[[nodiscard]] const ::std::filesystem::path &get_sf_of_dom_file() const;
 			[[nodiscard]] const str_vec &                get_forbidden_nodes() const;
 
-			static const std::string PROGRAM_NAME;
+			/// \brief The name of the program that uses this executable_options
+			static constexpr ::std::string_view PROGRAM_NAME{ "cath-assign-domains" };
 		};
 
 	} // namespace opts

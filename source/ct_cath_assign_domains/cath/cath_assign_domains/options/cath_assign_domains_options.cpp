@@ -24,6 +24,8 @@
 
 #include <boost/program_options.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "cath/acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "cath/acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
@@ -57,12 +59,10 @@ using namespace ::cath::sup;
 using ::std::filesystem::path;
 using ::std::nullopt;
 using ::std::string;
-
-/// \brief The name of the program that uses this executable_options
-const string cath_assign_domains_options::PROGRAM_NAME("cath-assign-domains");
+using ::std::string_view;
 
 /// \brief Get the name of the program that uses this executable_options
-string cath_assign_domains_options::do_get_program_name() const {
+string_view cath_assign_domains_options::do_get_program_name() const {
 	return PROGRAM_NAME;
 }
 
@@ -94,8 +94,7 @@ str_opt cath_assign_domains_options::do_get_error_or_help_string() const {
 
 /// \brief Get a string to prepend to the standard help
 string cath_assign_domains_options::do_get_help_prefix_string() const {
-	return "Usage: "      + PROGRAM_NAME + " [options]\n\n"
-		+ get_overview_string();
+	return ::fmt::format( "Usage: {} [options]\n\n{}", PROGRAM_NAME, get_overview_string() );
 }
 
 /// \brief Get a string to append to the standard help (just empty here)

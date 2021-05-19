@@ -106,7 +106,7 @@ string html_segment::get_resolve_boundary_html_string(const seq_arrow      &prm_
 		nullopt,
 		"crh-hit-boundary",
 		{},
-		display_colour::BLACK,
+		BLACK,
 		darken_by_fraction( prm_colour, 0.60 ),
 		prm_full_seq_length
 	);
@@ -123,7 +123,7 @@ string html_segment::get_grey_back_html_string() const {
 		"crh-hit-pill-tail",
 		data_key_values,
 		nullopt,
-		display_colour::WHITE,
+		WHITE,
 		full_seq_length
 	);
 }

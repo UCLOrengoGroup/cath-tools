@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_OPTIONS_SUPERPOSITION_CONTENT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_OPTIONS_SUPERPOSITION_CONTENT_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/superposition/superposition_content_spec.hpp"
 
@@ -40,14 +42,19 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_REGIONS_CONTEXT;
-			static const std::string PO_INCLUDE_DNA_WITHIN_DISTANCE;
-			static const std::string PO_INCLUDE_ORGANIC_WITHIN_DISTANCE;
-
 			[[nodiscard]] const superposition_content_spec &get_superposition_content_spec() const;
+
+			/// \brief The option name for the context in which the alignment regions should be shown in the superposition (alone/in_chain/in_pdb)
+			static constexpr ::std::string_view PO_REGIONS_CONTEXT{ "regions-context" };
+
+			/// \brief The option name for the minimum distance from DNA to the structure for the DNA to be included
+			static constexpr ::std::string_view PO_INCLUDE_DNA_WITHIN_DISTANCE{ "show-dna-within-dist" };
+
+			/// \brief The option name for the minimum distance from organic molecules to the structure for the organic molecules
+			static constexpr ::std::string_view PO_INCLUDE_ORGANIC_WITHIN_DISTANCE{ "show-organic-within-dist" };
 		};
 
 	} // namespace sup

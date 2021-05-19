@@ -34,15 +34,6 @@ namespace cath {
 		///  * a prioritised list of directories to search for some sort of file
 		class data_dirs_options_block final : public cath::opts::options_block {
 		private:
-			static const std::string DATA_OPTION_PATH_VARNAME;
-			static const std::string DATA_OPTION_PREFIX_VARNAME;
-			static const std::string DATA_OPTION_SUFFIX_VARNAME;
-
-			static const data_option_str_map DATA_OPTION_SUFFIXES;
-			static const data_option_str_map DATA_OPTION_VARNAME;
-			static const data_option_str_map DATA_OPTION_DESCRIPTION_START;
-			static const data_option_str_map DATA_OPTION_DESCRIPTION_END;
-
 			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
 			[[nodiscard]] std::string                    do_get_block_name() const final;
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
@@ -50,7 +41,7 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 			/// \brief The data_dirs_spec into which to parse options
 			data_dirs_spec the_data_dirs_spec;
@@ -59,8 +50,6 @@ namespace cath {
 			data_dirs_options_block() = default;
 
 			[[nodiscard]] const data_dirs_spec &get_data_dirs_spec() const;
-
-			static const std::string PO_CATH_ROOT_DIR;
 		};
 	} // namespace opts
 } // namespace cath

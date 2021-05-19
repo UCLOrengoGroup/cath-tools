@@ -81,7 +81,7 @@ void cath::detail::score_colour(const score_colour_handler &prm_score_colour_han
                                 display_colour             &prm_colour                ///< TODOCUMENT
                                 ) {
 	const float_score_type score = prm_score_colour_handler.get_score_of_position( prm_alignment, prm_entry, prm_index );
-	prm_colour = rgb_mid_point( display_colour::WHITE, prm_colour, score );
+	prm_colour = rgb_mid_point( WHITE, prm_colour, score );
 }
 
 /// \brief TODOCUMENT
@@ -124,7 +124,7 @@ void cath::detail::adjust_display_colour_spec(display_colour_spec        &prm_co
 					const display_colour_opt  res_col  = get_clr_of_pdb_and_res_indices( prm_colour_spec, entry, *position );
 					const display_colour best_colour = res_col  ? ( *res_col  ) :
 					                                   pdb_col  ? ( *pdb_col  ) :
-					                                   base_col ? ( *base_col ) : display_colour::BLACK;
+					                                   base_col ? ( *base_col ) : BLACK;
 					const display_colour the_colour = score_colour_copy( prm_score_colour_handler, prm_alignment, entry, index, best_colour );
 					prm_colour_spec.colour_pdb_residue(
 						entry,

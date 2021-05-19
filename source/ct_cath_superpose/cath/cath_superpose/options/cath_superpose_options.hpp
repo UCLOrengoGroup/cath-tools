@@ -21,6 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_SUPERPOSE_CATH_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_SUPERPOSE_CATH_CATH_SUPERPOSE_OPTIONS_CATH_SUPERPOSE_OPTIONS_HPP
 
+#include <iosfwd>
+#include <memory>
+#include <string>
+#include <string_view>
+
 #include "cath/acquirer/alignment_acquirer/align_refining.hpp"
 #include "cath/alignment/options_block/alignment_input_options_block.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
@@ -36,10 +41,6 @@
 #include "cath/outputter/superposition_outputter/superposition_outputter_list.hpp"
 #include "cath/superposition/options/align_regions_options_block.hpp"
 #include "cath/superposition/options/superposition_content_options_block.hpp"
-
-#include <iosfwd>
-#include <memory>
-#include <string>
 
 namespace boost { namespace program_options { class options_description; } }
 namespace cath { namespace align { class alignment; } }
@@ -62,8 +63,6 @@ namespace cath {
 		class cath_superpose_options final : public executable_options {
 		private:
 			using super = executable_options;
-
-			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief The options_block for the alignment input options
 			alignment_input_options_block            the_alignment_input_ob{ align::align_refining::NO };
@@ -92,8 +91,8 @@ namespace cath {
 			/// \brief The specification of what should be included in the superposition
 			sup::superposition_content_options_block the_content_ob;
 
-			[[nodiscard]] std::string do_get_program_name() const final;
-			[[nodiscard]] str_opt     do_get_error_or_help_string() const final;
+			[[nodiscard]] std::string_view do_get_program_name() const final;
+			[[nodiscard]] str_opt          do_get_error_or_help_string() const final;
 
 			[[nodiscard]] std::string do_get_help_prefix_string() const final;
 			[[nodiscard]] std::string do_get_help_suffix_string() const final;
@@ -117,7 +116,8 @@ namespace cath {
 
 			[[nodiscard]] const chop::domain_vec &get_domains() const;
 
-			static const std::string PROGRAM_NAME;
+			/// \brief The name of this program
+			static constexpr ::std::string_view PROGRAM_NAME{ "cath-superpose" };
 		};
 
 		std::unique_ptr<const align::alignment_acquirer> get_alignment_acquirer(const cath_superpose_options &);

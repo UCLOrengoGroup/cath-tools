@@ -45,7 +45,7 @@ namespace cath {
 			/// \brief The output options_block
 			cath_cluster_output_options_block the_output_ob;
 
-			[[nodiscard]] std::string                              do_get_program_name() const final;
+			[[nodiscard]] std::string_view                         do_get_program_name() const final;
 			boost::program_options::positional_options_description get_positional_options() final;
 			[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
 
@@ -60,7 +60,8 @@ namespace cath {
 			[[nodiscard]] const cath_cluster_clustering_spec &get_cath_cluster_clustering_spec() const;
 			[[nodiscard]] const cath_cluster_output_spec &    get_cath_cluster_output_spec() const;
 
-			static const std::string PROGRAM_NAME;
+			/// The name of the program that uses this executable_options
+			static constexpr ::std::string_view PROGRAM_NAME{ "cath-cluster" };
 		};
 
 	} // namespace clust

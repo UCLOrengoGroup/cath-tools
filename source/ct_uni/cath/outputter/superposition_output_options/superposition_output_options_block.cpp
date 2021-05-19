@@ -23,6 +23,8 @@
 #include <filesystem>
 #include <iostream>
 
+#include <fmt/core.h>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/outputter/superposition_outputter/json_file_superposition_outputter.hpp"
@@ -47,16 +49,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-const string superposition_output_options_block::PO_SUP_FILE         ( "sup-to-pdb-file"      );
-const string superposition_output_options_block::PO_SUP_FILES_DIR    ( "sup-to-pdb-files-dir" );
-const string superposition_output_options_block::PO_SUP_TO_STDOUT    ( "sup-to-stdout"        );
-const string superposition_output_options_block::PO_SUP_TO_PYMOL     ( "sup-to-pymol"         );
-const string superposition_output_options_block::PO_PYMOL_PROGRAM    ( "pymol-program"        );
-const string superposition_output_options_block::PO_SUP_TO_PYMOL_FILE( "sup-to-pymol-file"    );
-const string superposition_output_options_block::PO_SUP_TO_JSON_FILE ( "sup-to-json-file"     );
-
-const string superposition_output_options_block::DEFAULT_PYMOL_PROGRAM( "pymol" );
-
 /// \brief A standard do_clone method.
 unique_ptr<options_block> superposition_output_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -72,13 +64,13 @@ void superposition_output_options_block::do_add_visible_options_to_description(o
                                                                                const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                                ) {
 	prm_desc.add_options()
-		(PO_SUP_FILE.c_str(),          value<path>(&sup_to_pdb_file),                                     "Write the superposed structures to a single PDB file arg, separated using faked chain codes"  )
-		(PO_SUP_FILES_DIR.c_str(),     value<path>(&sup_to_pdb_files_dir),                                "Write the superposed structures to separate PDB files in directory arg"                       )
-		(PO_SUP_TO_STDOUT.c_str(),     bool_switch(&sup_to_stdout)->default_value(false),                 "Print the superposed structures to stdout, separated using faked chain codes"                 )
-		(PO_SUP_TO_PYMOL.c_str(),      bool_switch(&sup_to_pymol )->default_value(false),                 "Start up PyMOL for viewing the superposition"                                                 )
-		(PO_PYMOL_PROGRAM.c_str(),     value<path>(&pymol_program)->default_value(DEFAULT_PYMOL_PROGRAM), "Use arg as the PyMOL executable for viewing; may optionally include the full path"            )
-		(PO_SUP_TO_PYMOL_FILE.c_str(), value<path>(&sup_to_pymol_file),                                   "Write the superposition to a PyMOL script arg\n(Recommended filename extension: .pml)"        )
-		(PO_SUP_TO_JSON_FILE.c_str(),  value<path>(&json_file),                                           "Write the superposition to JSON superposition file\n(Recommended filename extension: .sup_json)"        );
+		(string( PO_SUP_FILE ).c_str(),          value<path>(&sup_to_pdb_file),                                     "Write the superposed structures to a single PDB file arg, separated using faked chain codes"  )
+		(string( PO_SUP_FILES_DIR ).c_str(),     value<path>(&sup_to_pdb_files_dir),                                "Write the superposed structures to separate PDB files in directory arg"                       )
+		(string( PO_SUP_TO_STDOUT ).c_str(),     bool_switch(&sup_to_stdout)->default_value(false),                 "Print the superposed structures to stdout, separated using faked chain codes"                 )
+		(string( PO_SUP_TO_PYMOL ).c_str(),      bool_switch(&sup_to_pymol )->default_value(false),                 "Start up PyMOL for viewing the superposition"                                                 )
+		(string( PO_PYMOL_PROGRAM ).c_str(),     value<path>(&pymol_program)->default_value(DEFAULT_PYMOL_PROGRAM), "Use arg as the PyMOL executable for viewing; may optionally include the full path"            )
+		(string( PO_SUP_TO_PYMOL_FILE ).c_str(), value<path>(&sup_to_pymol_file),                                   "Write the superposition to a PyMOL script arg\n(Recommended filename extension: .pml)"        )
+		(string( PO_SUP_TO_JSON_FILE ).c_str(),  value<path>(&json_file),                                           "Write the superposition to JSON superposition file\n(Recommended filename extension: .sup_json)"        );
 }
 
 str_opt superposition_output_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
@@ -90,7 +82,7 @@ str_opt superposition_output_options_block::do_invalid_string(const variables_ma
 		return "Not a valid superposition pdb output dir :\"" + get_sup_to_pdb_files_dir().string() + "\"";
 	}
 	if (get_pymol_program() != DEFAULT_PYMOL_PROGRAM && !get_sup_to_pymol()) {
-		return "Cannot specify PyMOL executable if not using --" + PO_SUP_TO_PYMOL + "";
+		return ::fmt::format( "Cannot specify PyMOL executable if not using --{}", PO_SUP_TO_PYMOL );
 	}
 	if (!is_acceptable_executable(get_pymol_program())) {
 		return "Not a valid PyMOL executable :\"" + get_pymol_program().string() + "\"";
@@ -106,15 +98,15 @@ str_opt superposition_output_options_block::do_invalid_string(const variables_ma
 }
 
 /// \brief Return all options names for this block
-str_vec superposition_output_options_block::do_get_all_options_names() const {
+str_view_vec superposition_output_options_block::do_get_all_options_names() const {
 	return {
-		superposition_output_options_block::PO_SUP_FILE,
-		superposition_output_options_block::PO_SUP_FILES_DIR,
-		superposition_output_options_block::PO_SUP_TO_STDOUT,
-		superposition_output_options_block::PO_SUP_TO_PYMOL,
-		superposition_output_options_block::PO_PYMOL_PROGRAM,
-		superposition_output_options_block::PO_SUP_TO_PYMOL_FILE,
-		superposition_output_options_block::PO_SUP_TO_JSON_FILE,
+		PO_SUP_FILE,
+		PO_SUP_FILES_DIR,
+		PO_SUP_TO_STDOUT,
+		PO_SUP_TO_PYMOL,
+		PO_PYMOL_PROGRAM,
+		PO_SUP_TO_PYMOL_FILE,
+		PO_SUP_TO_JSON_FILE,
 	};
 }
 

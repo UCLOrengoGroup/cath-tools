@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_INPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_INPUT_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/resolve_hits/options/spec/crh_input_spec.hpp"
 
@@ -42,15 +44,22 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_INPUT_FILE_OR_STDIN;
-			static const std::string PO_INPUT_FORMAT;
-			static const std::string PO_MIN_GAP_LENGTH;
-			static const std::string PO_INPUT_HITS_ARE_GROUPED;
-
 			[[nodiscard]] const crh_input_spec &get_crh_input_spec() const;
+
+			/// \brief The option name for the input file from which data should be read
+			static constexpr ::std::string_view PO_INPUT_FILE_OR_STDIN{ "input-file-or-stdin" };
+
+			/// \brief The option name for the format of the input data
+			static constexpr ::std::string_view PO_INPUT_FORMAT{ "input-format" };
+
+			/// \brief The option name for the minimum gap length to consider when parsing an alignment
+			static constexpr ::std::string_view PO_MIN_GAP_LENGTH{ "min-gap-length" };
+
+			/// \brief The option name for whether the code can assume that the input data is pre-grouped by query_id
+			static constexpr ::std::string_view PO_INPUT_HITS_ARE_GROUPED{ "input-hits-are-grouped" };
 		};
 
 	} // namespace rslv

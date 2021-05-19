@@ -22,6 +22,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/file/temp_file.hpp"
 #include "cath/options/options_block/check_pdb_options_block.hpp"
@@ -57,8 +59,8 @@ BOOST_AUTO_TEST_CASE(handles_permit_atoms) {
 	parse_into_options_block(
 		the_options_block,
 		{ IGNORE_OPT,
-		  "--" + check_pdb_options_block::PO_PERMIT,
-		  // "--" + check_pdb_options_block::PO_PDB_FILE,
+		  ::fmt::format( "--{}", check_pdb_options_block::PO_PERMIT ),
+		  // ::fmt::format( "--{}", check_pdb_options_block::PO_PDB_FILE ),
 		  temp_file_filename.string() }
 	);
 	BOOST_CHECK_EQUAL( path(), the_options_block.get_pdb_file()        );
@@ -72,7 +74,7 @@ BOOST_AUTO_TEST_CASE(handles_existent_pdb_file) {
 	parse_into_options_block(
 		the_options_block,
 		{ IGNORE_OPT,
-		  "--" + check_pdb_options_block::PO_PDB_FILE,
+		  ::fmt::format( "--{}", check_pdb_options_block::PO_PDB_FILE ),
 		  temp_file_filename.string() }
 	);
 	BOOST_CHECK_EQUAL( temp_file_filename, the_options_block.get_pdb_file()        );
@@ -84,7 +86,7 @@ BOOST_AUTO_TEST_CASE(handles_non_existent_pdb_file) {
 	parse_into_options_block(
 		the_options_block,
 		{ IGNORE_OPT,
-		  "--"+check_pdb_options_block::PO_PDB_FILE,
+		  ::fmt::format( "--{}", check_pdb_options_block::PO_PDB_FILE ),
 		  "/some/file/that/does/not/exist" }
 	);
 	BOOST_CHECK_EQUAL( path("/some/file/that/does/not/exist"), the_options_block.get_pdb_file()        );

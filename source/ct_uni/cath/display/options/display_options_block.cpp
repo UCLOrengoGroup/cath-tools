@@ -20,6 +20,10 @@
 
 #include "display_options_block.hpp"
 
+#include <string_view>
+
+#include <fmt/core.h>
+
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/display_colour/display_colour_list.hpp"
 
@@ -32,21 +36,22 @@ using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
+using ::std::string_view;
 
 /// \brief The option name for the string to specify the colours to use
-const string display_options_block::PO_VIEWER_COLOURS            { "viewer-colours"            };
+constexpr string_view PO_VIEWER_COLOURS            { "viewer-colours"            };
 
 /// \brief The option name for whether to display a gradient of colours
-const string display_options_block::PO_GRADIENT_COLOUR_ALIGNMENT { "gradient-colour-alignment" };
+constexpr string_view PO_GRADIENT_COLOUR_ALIGNMENT { "gradient-colour-alignment" };
 
 /// \brief The option name for whether to use colour to indicate scores (if they're present)
-const string display_options_block::PO_SHOW_SCORES_IF_PRESENT    { "show-scores-if-present"    };
+constexpr string_view PO_SHOW_SCORES_IF_PRESENT    { "show-scores-if-present"    };
 
 /// \brief The option name for whether to colour based on scores to the *present* equivalent positions
-const string display_options_block::PO_SCORES_TO_EQUIVS          { "scores-to-equivs"          };
+constexpr string_view PO_SCORES_TO_EQUIVS          { "scores-to-equivs"          };
 
 /// \brief The option name for whether to colour based on scores normalised across the alignment, rather than absolute scores
-const string display_options_block::PO_NORMALISE_SCORES          { "normalise-scores"          };
+constexpr string_view PO_NORMALISE_SCORES          { "normalise-scores"          };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> display_options_block::do_clone() const {
@@ -71,7 +76,7 @@ void display_options_block::do_add_visible_options_to_description(options_descri
 	const auto normalise_scores_notifier          = [&] (const bool   &x) { the_display_spec.set_normalise_scores         ( x ); };
 	prm_desc.add_options()
 		(
-			PO_VIEWER_COLOURS.c_str(),
+			string( PO_VIEWER_COLOURS ).c_str(),
 			value<string>()
 				->value_name( colrs_varname                   )
 				->notifier  ( display_colours_string_notifier ),
@@ -80,34 +85,34 @@ void display_options_block::do_add_visible_options_to_description(options_descri
 			  "(will wrap-around when it runs out of colours)" ).c_str()
 		)
 		(
-			PO_GRADIENT_COLOUR_ALIGNMENT.c_str(),
+			string( PO_GRADIENT_COLOUR_ALIGNMENT ).c_str(),
 			bool_switch()
 				->notifier     ( gradient_colour_alignment_notifier )
 				->default_value( false                              ),
 			"Colour the length of the alignment with a rainbow gradient (blue -> red)"
 		)
 		(
-			PO_SHOW_SCORES_IF_PRESENT.c_str(),
+			string( PO_SHOW_SCORES_IF_PRESENT ).c_str(),
 			bool_switch()
 				->notifier     ( show_scores_if_present_notifier )
 				->default_value( false                           ),
-			( "Show the alignment scores\n(use with " + PO_GRADIENT_COLOUR_ALIGNMENT + ")" ).c_str()
+			::fmt::format( "Show the alignment scores\n(use with {})", PO_GRADIENT_COLOUR_ALIGNMENT ).c_str()
 		)
 		(
-			PO_SCORES_TO_EQUIVS.c_str(),
+			string( PO_SCORES_TO_EQUIVS ).c_str(),
 			bool_switch()
 				->notifier     ( scores_to_equivs_notifier )
 				->default_value( false                     ),
-			( "Show the alignment scores to equivalent positions, which increases relative scores where few entries are aligned\n"
-				"(use with --" + PO_GRADIENT_COLOUR_ALIGNMENT + " and --" + PO_SHOW_SCORES_IF_PRESENT + ")" ).c_str()
+			::fmt::format( "Show the alignment scores to equivalent positions, which increases relative scores where few entries are aligned\n(use with --{} and --{})",
+				PO_GRADIENT_COLOUR_ALIGNMENT, PO_SHOW_SCORES_IF_PRESENT ).c_str()
 		)
 		(
-			PO_NORMALISE_SCORES.c_str(),
+			string( PO_NORMALISE_SCORES ).c_str(),
 			bool_switch()
 				->notifier     ( normalise_scores_notifier )
 				->default_value( false                     ),
-			( "When showing scores, normalise them to the highest score in the alignment\n"
-				"(use with --" + PO_GRADIENT_COLOUR_ALIGNMENT + " and --" + PO_SHOW_SCORES_IF_PRESENT + ")" ).c_str() 
+			::fmt::format( "When showing scores, normalise them to the highest score in the alignment\n(use with --{} and --{})",
+				PO_GRADIENT_COLOUR_ALIGNMENT, PO_SHOW_SCORES_IF_PRESENT ).c_str() 
 		);
 }
 
@@ -118,13 +123,13 @@ str_opt display_options_block::do_invalid_string(const variables_map &/*prm_vari
 }
 
 /// \brief Return all options names for this block
-str_vec display_options_block::do_get_all_options_names() const {
+str_view_vec display_options_block::do_get_all_options_names() const {
 	return {
-		display_options_block::PO_VIEWER_COLOURS,
-		display_options_block::PO_GRADIENT_COLOUR_ALIGNMENT,
-		display_options_block::PO_SHOW_SCORES_IF_PRESENT,
-		display_options_block::PO_SCORES_TO_EQUIVS,
-		display_options_block::PO_NORMALISE_SCORES,
+		PO_VIEWER_COLOURS,
+		PO_GRADIENT_COLOUR_ALIGNMENT,
+		PO_SHOW_SCORES_IF_PRESENT,
+		PO_SCORES_TO_EQUIVS,
+		PO_NORMALISE_SCORES,
 	};
 }
 

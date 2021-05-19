@@ -39,10 +39,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-const string extract_pdb_options_block::PO_INPUT_PDB_FILE  ( "input-pdb-file"  );
-const string extract_pdb_options_block::PO_OUTPUT_PDB_FILE ( "output-pdb-file" );
-const string extract_pdb_options_block::PO_REGIONS         ( "regions"         );
-
 /// \brief A standard do_clone method
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
@@ -71,14 +67,14 @@ void extract_pdb_options_block::do_add_visible_options_to_description(options_de
 
 	prm_desc.add_options()
 		(
-			PO_OUTPUT_PDB_FILE.c_str(),
+			string( PO_OUTPUT_PDB_FILE ).c_str(),
 			value<path>()
 				->notifier     ( out_pdb_notifier )
 				->value_name   ( file_varname ),
 			( "Permit success for a file " + file_varname  + " that has no ATOM records" ).c_str()
 		)
 		(
-			( PO_REGIONS ).c_str(),
+			string( PO_REGIONS ).c_str(),
 			value<domain>()
 				->notifier     ( regions_notifier )
 				->value_name   ( regions_varname ),
@@ -97,7 +93,7 @@ void extract_pdb_options_block::do_add_hidden_options_to_description(options_des
 
 	prm_desc.add_options()
 		(
-			PO_INPUT_PDB_FILE.c_str(),
+			string( PO_INPUT_PDB_FILE ).c_str(),
 			value<path>( &input_pdb_file)
 				// ->notifier  ( in_pdb_notifier )
 				->value_name( file_varname    ),
@@ -117,7 +113,7 @@ str_opt extract_pdb_options_block::do_invalid_string(const variables_map &prm_va
 	// (Best done here rather than via boost::program_options::typed_value::required() because
 	//  that leads to an error message that's unclear for users that don't know about positional options
 	//  being implemented via hidden options)
-	if ( ! specifies_option( prm_variables_map, PO_INPUT_PDB_FILE ) ) {
+	if ( ! specifies_option( prm_variables_map, string( PO_INPUT_PDB_FILE ) ) ) {
 		return "Must specify an input PDB file to extract."s;
 	}
 
@@ -126,11 +122,11 @@ str_opt extract_pdb_options_block::do_invalid_string(const variables_map &prm_va
 }
 
 /// \brief Return all options names for this block
-str_vec extract_pdb_options_block::do_get_all_options_names() const {
+str_view_vec extract_pdb_options_block::do_get_all_options_names() const {
 	return {
-		extract_pdb_options_block::PO_INPUT_PDB_FILE,
-		extract_pdb_options_block::PO_OUTPUT_PDB_FILE,
-		extract_pdb_options_block::PO_REGIONS,
+		PO_INPUT_PDB_FILE,
+		PO_OUTPUT_PDB_FILE,
+		PO_REGIONS,
 	};
 }
 

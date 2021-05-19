@@ -23,6 +23,7 @@
 
 #include <filesystem>
 #include <iosfwd>
+#include <string_view>
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -54,8 +55,6 @@ namespace cath {
 
 			using super = options_block;
 
-			static const std::string DEFAULT_PYMOL_PROGRAM;
-
 			::std::filesystem::path sup_to_pdb_file;
 			::std::filesystem::path sup_to_pdb_files_dir;
 			bool sup_to_stdout;
@@ -69,7 +68,7 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 			[[nodiscard]] ::std::filesystem::path get_sup_to_pdb_file() const;
 			[[nodiscard]] ::std::filesystem::path get_sup_to_pdb_files_dir() const;
@@ -80,14 +79,6 @@ namespace cath {
 			[[nodiscard]] ::std::filesystem::path get_json_file() const;
 
 		  public:
-			static const std::string PO_SUP_FILE;
-			static const std::string PO_SUP_FILES_DIR;
-			static const std::string PO_SUP_TO_STDOUT;
-			static const std::string PO_SUP_TO_PYMOL;
-			static const std::string PO_PYMOL_PROGRAM;
-			static const std::string PO_SUP_TO_PYMOL_FILE;
-			static const std::string PO_SUP_TO_JSON_FILE;
-
 			/// \todo Consider adding a sister get_superposition_outputters() for getting outputters
 			///       that don't require a display_spec / superposition_content_spec
 			[[nodiscard]] superposition_outputter_list get_superposition_outputters(
@@ -95,7 +86,17 @@ namespace cath {
 			  const sup::superposition_content_spec & = sup::superposition_content_spec{},
 			  const default_supn_outputter &          = default_supn_outputter::NONE ) const;
 			[[nodiscard]] bool outputs_to_stdout() const;
+
+			static constexpr ::std::string_view DEFAULT_PYMOL_PROGRAM{ "pymol" };
+			static constexpr ::std::string_view PO_PYMOL_PROGRAM{ "pymol-program" };
+			static constexpr ::std::string_view PO_SUP_FILE{ "sup-to-pdb-file" };
+			static constexpr ::std::string_view PO_SUP_FILES_DIR{ "sup-to-pdb-files-dir" };
+			static constexpr ::std::string_view PO_SUP_TO_JSON_FILE{ "sup-to-json-file" };
+			static constexpr ::std::string_view PO_SUP_TO_PYMOL{ "sup-to-pymol" };
+			static constexpr ::std::string_view PO_SUP_TO_PYMOL_FILE{ "sup-to-pymol-file" };
+			static constexpr ::std::string_view PO_SUP_TO_STDOUT{ "sup-to-stdout" };
 		};
+
 	} // namespace opts
 } // namespace cath
 

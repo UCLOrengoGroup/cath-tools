@@ -37,18 +37,6 @@ using ::std::filesystem::path;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for the output file to which data should be written (or unspecified for stdout)
-const string crh_single_output_options_block::PO_OUTPUT_FILE              { "output-file"               };
-
-/// \brief The option name for whether to output a summary of the input data
-const string crh_single_output_options_block::PO_SUMMARISE                { "summarise"                 };
-
-/// \brief The option name for whether to output HTML describing the hits and the results
-const string crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT     { "html-output"               };
-
-/// \brief The option name for whether to output the results in JSON format
-const string crh_single_output_options_block::PO_JSON_OUTPUT              { "json-output"               };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_single_output_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -72,28 +60,28 @@ void crh_single_output_options_block::do_add_visible_options_to_description(opti
 
 	prm_desc.add_options()
 		(
-			PO_OUTPUT_FILE.c_str(),
+			string( PO_OUTPUT_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                                         )
 				->notifier     ( output_file_notifier                                 ),
 			( "Write output to file " + file_varname + " (or, if unspecified, to stdout)" ).c_str()
 		)
 		(
-			( PO_SUMMARISE ).c_str(),
+			string( PO_SUMMARISE ).c_str(),
 			bool_switch()
 				->notifier     ( summarise_notifier                                   )
 				->default_value( crh_single_output_spec::DEFAULT_SUMMARISE            ),
 			"Output a brief text summary of the input data (rather than processing it)"
 		)
 		(
-			( PO_GENERATE_HTML_OUTPUT ).c_str(),
+			string( PO_GENERATE_HTML_OUTPUT ).c_str(),
 			bool_switch()
 				->notifier     ( generate_html_output_notifier                        )
 				->default_value( crh_single_output_spec::DEFAULT_GENERATE_HTML_OUTPUT ),
 			"Output the results as HTML"
 		)
 		(
-			( PO_JSON_OUTPUT ).c_str(),
+			string( PO_JSON_OUTPUT ).c_str(),
 			bool_switch()
 				->notifier     ( json_output_notifier                                 )
 				->default_value( crh_single_output_spec::DEFAULT_JSON_OUTPUT          ),
@@ -114,12 +102,12 @@ str_opt crh_single_output_options_block::do_invalid_string(const variables_map &
 }
 
 /// \brief Return all options names for this block
-str_vec crh_single_output_options_block::do_get_all_options_names() const {
+str_view_vec crh_single_output_options_block::do_get_all_options_names() const {
 	return {
-		crh_single_output_options_block::PO_OUTPUT_FILE,
-		crh_single_output_options_block::PO_SUMMARISE,
-		crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT,
-		crh_single_output_options_block::PO_JSON_OUTPUT,
+		PO_OUTPUT_FILE,
+		PO_SUMMARISE,
+		PO_GENERATE_HTML_OUTPUT,
+		PO_JSON_OUTPUT,
 	};
 }
 

@@ -21,6 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_REFINE_ALIGN_CATH_CATH_REFINE_ALIGN_OPTIONS_CATH_REFINE_ALIGN_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_REFINE_ALIGN_CATH_CATH_REFINE_ALIGN_OPTIONS_CATH_REFINE_ALIGN_OPTIONS_HPP
 
+#include <iosfwd>
+#include <string_view>
+#include <vector>
+
 #include "cath/alignment/options_block/alignment_input_options_block.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -31,9 +35,6 @@
 #include "cath/outputter/alignment_outputter_options/alignment_output_options_block.hpp"
 #include "cath/outputter/superposition_output_options/superposition_output_options_block.hpp"
 #include "cath/superposition/options/align_regions_options_block.hpp"
-
-#include <iosfwd>
-#include <vector>
 
 namespace cath { namespace align { class alignment_acquirer; } }
 namespace cath { namespace file { class strucs_context; } }
@@ -51,8 +52,6 @@ namespace cath {
 		class cath_refine_align_options final : public executable_options {
 		private:
 			using super = executable_options;
-
-			static const std::string STANDARD_USAGE_ERROR_STRING;
 
 			/// \brief TODOCUMENT
 			alignment_input_options_block      the_alignment_input_options_block{ align::align_refining::HEAVY };
@@ -78,8 +77,8 @@ namespace cath {
 			/// \brief The specification of what should be included in the superposition
 			sup::superposition_content_spec    the_content_spec;
 
-			[[nodiscard]] std::string do_get_program_name() const final;
-			[[nodiscard]] str_opt     do_get_error_or_help_string() const final;
+			[[nodiscard]] std::string_view do_get_program_name() const final;
+			[[nodiscard]] str_opt          do_get_error_or_help_string() const final;
 
 			[[nodiscard]] std::string do_get_help_prefix_string() const final;
 			[[nodiscard]] std::string do_get_help_suffix_string() const final;
@@ -98,7 +97,8 @@ namespace cath {
 
 			[[nodiscard]] const chop::domain_vec &get_domains() const;
 
-			static const std::string PROGRAM_NAME;
+			/// \brief The name of the program that uses this executable_options
+			static constexpr ::std::string_view PROGRAM_NAME{ "cath-refine-align" };
 		};
 
 		std::unique_ptr<const align::alignment_acquirer> get_alignment_acquirer(const cath_refine_align_options &);

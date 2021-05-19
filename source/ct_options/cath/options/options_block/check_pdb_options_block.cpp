@@ -39,9 +39,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-const string check_pdb_options_block::PO_PDB_FILE ( "pdb-file"        );
-const string check_pdb_options_block::PO_PERMIT   ( "permit-no-atoms" );
-
 /// \brief A standard do_clone method
 ///
 /// This is a concrete definition of a virtual method that's pure in options_block
@@ -63,7 +60,7 @@ void check_pdb_options_block::do_add_visible_options_to_description(options_desc
                                                                     const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	prm_desc.add_options()
-		( PO_PERMIT.c_str(), bool_switch( &permit_no_atoms )->default_value( false ), "Permit success for a file that has no ATOM records" );
+		( string( PO_PERMIT ).c_str(), bool_switch( &permit_no_atoms )->default_value( false ), "Permit success for a file that has no ATOM records" );
 }
 
 /// \brief Add this block's hidden options to the provided options_description
@@ -71,7 +68,7 @@ void check_pdb_options_block::do_add_hidden_options_to_description(options_descr
                                                                    const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                    ) {
 	prm_desc.add_options()
-		( PO_PDB_FILE.c_str(), value<path>( &pdb_file ), "PDB file to check" );
+		( string( check_pdb_options_block::PO_PDB_FILE ).c_str(), value<path>( &pdb_file ), "PDB file to check" );
 }
 
 /// \brief Identify any conflicts that make the currently stored options invalid
@@ -102,10 +99,10 @@ str_opt check_pdb_options_block::do_invalid_string(const variables_map &/*prm_va
 }
 
 /// \brief Return all options names for this block
-str_vec check_pdb_options_block::do_get_all_options_names() const {
+str_view_vec check_pdb_options_block::do_get_all_options_names() const {
 	return {
-		check_pdb_options_block::PO_PDB_FILE,
-		check_pdb_options_block::PO_PERMIT,
+		PO_PDB_FILE,
+		PO_PERMIT,
 	};
 }
 

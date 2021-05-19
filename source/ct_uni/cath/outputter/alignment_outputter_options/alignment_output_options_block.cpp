@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <iostream>
+#include <string_view>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/display/display_colourer/display_colourer_alignment.hpp"
@@ -44,15 +45,16 @@ using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
 using ::std::nullopt;
+using ::std::string_view;
 
-const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_FILE   ( "aln-to-cath-aln-file"   );
-const string alignment_output_options_block::PO_ALN_TO_CATH_ALN_STDOUT ( "aln-to-cath-aln-stdout" );
-const string alignment_output_options_block::PO_ALN_TO_FASTA_FILE      ( "aln-to-fasta-file"      );
-const string alignment_output_options_block::PO_ALN_TO_FASTA_STDOUT    ( "aln-to-fasta-stdout"    );
-const string alignment_output_options_block::PO_ALN_TO_SSAP_FILE       ( "aln-to-ssap-file"       );
-const string alignment_output_options_block::PO_ALN_TO_SSAP_STDOUT     ( "aln-to-ssap-stdout"     );
-const string alignment_output_options_block::PO_ALN_TO_HTML_FILE       ( "aln-to-html-file"       );
-const string alignment_output_options_block::PO_ALN_TO_HTML_STDOUT     ( "aln-to-html-stdout"     );
+constexpr string_view PO_ALN_TO_CATH_ALN_FILE   ( "aln-to-cath-aln-file"   );
+constexpr string_view PO_ALN_TO_CATH_ALN_STDOUT ( "aln-to-cath-aln-stdout" );
+constexpr string_view PO_ALN_TO_FASTA_FILE      ( "aln-to-fasta-file"      );
+constexpr string_view PO_ALN_TO_FASTA_STDOUT    ( "aln-to-fasta-stdout"    );
+constexpr string_view PO_ALN_TO_SSAP_FILE       ( "aln-to-ssap-file"       );
+constexpr string_view PO_ALN_TO_SSAP_STDOUT     ( "aln-to-ssap-stdout"     );
+constexpr string_view PO_ALN_TO_HTML_FILE       ( "aln-to-html-file"       );
+constexpr string_view PO_ALN_TO_HTML_STDOUT     ( "aln-to-html-stdout"     );
 
 /// \brief A standard do_clone method.
 unique_ptr<options_block> alignment_output_options_block::do_clone() const {
@@ -69,14 +71,14 @@ void alignment_output_options_block::do_add_visible_options_to_description(optio
                                                                            const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                            ) {
 	prm_desc.add_options()
-		( PO_ALN_TO_CATH_ALN_FILE.c_str(),   value<path>( &aln_to_cath_aln_file   ),                       "[EXPERIMENTAL] Write the alignment to a CATH alignment file"           )
-		( PO_ALN_TO_CATH_ALN_STDOUT.c_str(), bool_switch( &aln_to_cath_aln_stdout )->default_value(false), "[EXPERIMENTAL] Print the alignment to stdout in CATH alignment format" )
-		( PO_ALN_TO_FASTA_FILE.c_str(),      value<path>( &aln_to_fasta_file      ),                       "Write the alignment to a FASTA file"                                   )
-		( PO_ALN_TO_FASTA_STDOUT.c_str(),    bool_switch( &aln_to_fasta_stdout    )->default_value(false), "Print the alignment to stdout in FASTA format"                         )
-		( PO_ALN_TO_SSAP_FILE.c_str(),       value<path>( &aln_to_ssap_file       ),                       "Write the alignment to a SSAP file"                                    )
-		( PO_ALN_TO_SSAP_STDOUT.c_str(),     bool_switch( &aln_to_ssap_stdout     )->default_value(false), "Print the alignment to stdout as SSAP"                                 )
-		( PO_ALN_TO_HTML_FILE.c_str(),       value<path>( &aln_to_html_file       ),                       "Write the alignment to a HTML file"                                    )
-		( PO_ALN_TO_HTML_STDOUT.c_str(),     bool_switch( &aln_to_html_stdout     )->default_value(false), "Print the alignment to stdout as HTML"                                 );
+		( string( PO_ALN_TO_CATH_ALN_FILE ).c_str(),   value<path>( &aln_to_cath_aln_file   ),                       "[EXPERIMENTAL] Write the alignment to a CATH alignment file"           )
+		( string( PO_ALN_TO_CATH_ALN_STDOUT ).c_str(), bool_switch( &aln_to_cath_aln_stdout )->default_value(false), "[EXPERIMENTAL] Print the alignment to stdout in CATH alignment format" )
+		( string( PO_ALN_TO_FASTA_FILE ).c_str(),      value<path>( &aln_to_fasta_file      ),                       "Write the alignment to a FASTA file"                                   )
+		( string( PO_ALN_TO_FASTA_STDOUT ).c_str(),    bool_switch( &aln_to_fasta_stdout    )->default_value(false), "Print the alignment to stdout in FASTA format"                         )
+		( string( PO_ALN_TO_SSAP_FILE ).c_str(),       value<path>( &aln_to_ssap_file       ),                       "Write the alignment to a SSAP file"                                    )
+		( string( PO_ALN_TO_SSAP_STDOUT ).c_str(),     bool_switch( &aln_to_ssap_stdout     )->default_value(false), "Print the alignment to stdout as SSAP"                                 )
+		( string( PO_ALN_TO_HTML_FILE ).c_str(),       value<path>( &aln_to_html_file       ),                       "Write the alignment to a HTML file"                                    )
+		( string( PO_ALN_TO_HTML_STDOUT ).c_str(),     bool_switch( &aln_to_html_stdout     )->default_value(false), "Print the alignment to stdout as HTML"                                 );
 }
 
 /// \brief TODOCUMENT
@@ -102,16 +104,16 @@ str_opt alignment_output_options_block::do_invalid_string(const variables_map &/
 }
 
 /// \brief Return all options names for this block
-str_vec alignment_output_options_block::do_get_all_options_names() const {
+str_view_vec alignment_output_options_block::do_get_all_options_names() const {
 	return {
-		alignment_output_options_block::PO_ALN_TO_CATH_ALN_FILE,
-		alignment_output_options_block::PO_ALN_TO_CATH_ALN_STDOUT,
-		alignment_output_options_block::PO_ALN_TO_FASTA_FILE,
-		alignment_output_options_block::PO_ALN_TO_FASTA_STDOUT,
-		alignment_output_options_block::PO_ALN_TO_SSAP_FILE,
-		alignment_output_options_block::PO_ALN_TO_SSAP_STDOUT,
-		alignment_output_options_block::PO_ALN_TO_HTML_FILE,
-		alignment_output_options_block::PO_ALN_TO_HTML_STDOUT,
+		PO_ALN_TO_CATH_ALN_FILE,
+		PO_ALN_TO_CATH_ALN_STDOUT,
+		PO_ALN_TO_FASTA_FILE,
+		PO_ALN_TO_FASTA_STDOUT,
+		PO_ALN_TO_SSAP_FILE,
+		PO_ALN_TO_SSAP_STDOUT,
+		PO_ALN_TO_HTML_FILE,
+		PO_ALN_TO_HTML_STDOUT,
 	};
 }
 

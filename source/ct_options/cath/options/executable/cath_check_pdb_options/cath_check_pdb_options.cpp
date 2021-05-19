@@ -26,6 +26,8 @@
 #include <boost/program_options.hpp>
 #include <boost/shared_array.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/argc_argv_faker.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
@@ -38,19 +40,17 @@ using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::nullopt;
 using ::std::string;
-
-/// \brief The name of the program that uses this executable_options
-const string cath_check_pdb_options::PROGRAM_NAME("check-pdb");
+using ::std::string_view;
 
 /// \brief Get the name of the program that uses this executable_options
-string cath_check_pdb_options::do_get_program_name() const {
+string_view cath_check_pdb_options::do_get_program_name() const {
 	return PROGRAM_NAME;
 }
 
 /// \brief TODOCUMENT
 positional_options_description cath_check_pdb_options::get_positional_options() {
 	positional_options_description positionals;
-	positionals.add( check_pdb_options_block::PO_PDB_FILE.c_str(), 1 );
+	positionals.add( string( check_pdb_options_block::PO_PDB_FILE ).c_str(), 1 );
 	return positionals;
 }
 
@@ -72,8 +72,7 @@ str_opt cath_check_pdb_options::do_get_error_or_help_string() const {
 
 /// \brief Get a string to prepend to the standard help
 string cath_check_pdb_options::do_get_help_prefix_string() const {
-	return "Usage: " + PROGRAM_NAME + " pdb_file\n\n"
-		+ get_overview_string();
+	return ::fmt::format( "Usage: {} pdb_file\n\n{}", PROGRAM_NAME, get_overview_string() );
 }
 
 /// \brief Get a string to append to the standard help (just empty here)

@@ -126,11 +126,11 @@ display_colour cath::get_colour_of_index(const display_colour_gradient &prm_disp
 display_colour_gradient cath::make_default_light_colour_gradient() {
 	return display_colour_gradient(
 		{
-			display_colour::LIGHT_BLUE,
-			display_colour::CYAN,
-			display_colour::LIGHT_GREEN,
-			display_colour::YELLOW,
-			display_colour::LIGHT_RED
+			LIGHT_BLUE,
+			CYAN,
+			LIGHT_GREEN,
+			YELLOW,
+			LIGHT_RED
 		},
 		63
 	);
@@ -142,11 +142,11 @@ display_colour_gradient cath::make_default_light_colour_gradient() {
 display_colour_gradient cath::make_default_colour_gradient() {
 	return display_colour_gradient(
 		{
-			display_colour::BLUE,
-			display_colour::CYAN,
-			display_colour::GREEN,
-			display_colour::YELLOW,
-			display_colour::RED
+			BLUE,
+			CYAN,
+			GREEN,
+			YELLOW,
+			RED
 		},
 		63
 	);
@@ -158,11 +158,11 @@ display_colour_gradient cath::make_default_colour_gradient() {
 display_colour_gradient cath::make_default_dark_colour_gradient() {
 	return display_colour_gradient(
 		{
-			display_colour::BLUE,
-			display_colour::DARK_CYAN,
-			display_colour::GREEN,
-			display_colour::DARK_YELLOW,
-			display_colour::RED
+			BLUE,
+			DARK_CYAN,
+			GREEN,
+			DARK_YELLOW,
+			RED
 		},
 		63
 	);

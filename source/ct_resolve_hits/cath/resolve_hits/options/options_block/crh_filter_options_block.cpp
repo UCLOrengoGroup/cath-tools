@@ -20,12 +20,15 @@
 
 #include "crh_filter_options_block.hpp"
 
+#include <iostream>
+#include <string_view>
+
 #include <boost/format.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/program_options/prog_opt_num_range.hpp"
-
-#include <iostream>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -39,28 +42,8 @@ using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::nullopt;
 using ::std::string;
+using ::std::string_view;
 using ::std::unique_ptr;
-
-/// \brief The option name for the worst permissible evalue before a hit is ignored
-const string crh_filter_options_block::PO_WORST_PERMISSIBLE_EVALUE   { "worst-permissible-evalue"   };
-
-/// \brief The option name for the worst permissible bitscore before a hit is ignored
-const string crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE { "worst-permissible-bitscore" };
-
-/// \brief The option name for the worst permissible cath-resolve-hits score before a hit is ignored
-const string crh_filter_options_block::PO_WORST_PERMISSIBLE_SCORE    { "worst-permissible-score"    };
-
-/// \brief The option name for the query IDs on which to filter the input, if any are present
-const string crh_filter_options_block::PO_FILTER_QUERY_ID            { "filter-query-id"            };
-
-/// \brief The option name for the maximum number of query IDs to process
-const string crh_filter_options_block::PO_LIMIT_QUERIES              { "limit-queries"              };
-
-/// \brief The option name for the (optional) minimum coverage fraction of an HMM for a hit to be considered
-const string crh_filter_options_block::PO_MIN_HMM_COVERAGE           { "min-hmm-coverage"           };
-
-/// \brief The option name for the (optional) minimum coverage fraction of an HMM for a discontinuous hit (/^\dc_{32}$/) to be considered
-const string crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE        { "min-dc-hmm-coverage"        };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_filter_options_block::do_clone() const {
@@ -90,7 +73,7 @@ void crh_filter_options_block::do_add_visible_options_to_description(options_des
 
 	prm_desc.add_options()
 		(
-			( PO_WORST_PERMISSIBLE_EVALUE ).c_str(),
+			string( PO_WORST_PERMISSIBLE_EVALUE ).c_str(),
 			value< prog_opt_num_range<resscr_t, 0, 1'000'000'000'000'000 > >()
 				->value_name    ( evalue_varname                                      )
 				->notifier      ( worst_permissible_evalue_notifier                   )
@@ -101,7 +84,7 @@ void crh_filter_options_block::do_add_visible_options_to_description(options_des
 			( "Ignore any hits with an evalue worse than " + evalue_varname ).c_str()
 		)
 		(
-			( PO_WORST_PERMISSIBLE_BITSCORE ).c_str(),
+			string( PO_WORST_PERMISSIBLE_BITSCORE ).c_str(),
 			value< prog_opt_num_range<resscr_t, 0, 1'000'000'000'000'000 > >()
 				->value_name    ( bitscore_varname                                    )
 				->notifier      ( worst_permissible_bitscore_notifier                 )
@@ -109,14 +92,14 @@ void crh_filter_options_block::do_add_visible_options_to_description(options_des
 			( "Ignore any hits with a bitscore worse than " + bitscore_varname ).c_str()
 		)
 		(
-			( PO_WORST_PERMISSIBLE_SCORE ).c_str(),
+			string( PO_WORST_PERMISSIBLE_SCORE ).c_str(),
 			value< prog_opt_num_range<resscr_t, 0, 1'000'000'000'000'000 > >()
 				->value_name    ( score_varname                                       )
 				->notifier      ( worst_permissible_score_notifier                    ),
 			( "Ignore any hits with a score worse than " + score_varname ).c_str()
 		)
 		(
-			( PO_FILTER_QUERY_ID ).c_str(),
+			string( PO_FILTER_QUERY_ID ).c_str(),
 			value<str_vec>()
 				->value_name    ( id_varname                                          )
 				->notifier      ( filter_query_ids_notifier                           ),
@@ -124,7 +107,7 @@ void crh_filter_options_block::do_add_visible_options_to_description(options_des
 			  + "\n(may be specified multiple times for multiple query proteins)" ).c_str()
 		)
 		(
-			( PO_LIMIT_QUERIES ).c_str(),
+			string( PO_LIMIT_QUERIES ).c_str(),
 			value<size_t>()
 				->value_name    ( num_varname                                         )
 				->notifier      ( limit_queries_notifier                              )
@@ -140,12 +123,12 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
                                                                     ) {
 	const string percent_varname{ "<percent>" };
 
-	const auto check_pc_fn = [] (const double &x, const string &y) {
+	const auto check_pc_fn = [] (const double &x, const string_view &y) {
 		using ::std::to_string;
 		if ( ! ( x >= 0.0 && x <= 100.0 ) ) {
 			throw validation_error{
 				validation_error::invalid_option_value,
-				y,
+				string( y ),
 				to_string( x )
 			};
 		}
@@ -156,7 +139,7 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
 
 	prm_desc.add_options()
 		(
-			PO_MIN_HMM_COVERAGE.c_str(),
+			string( PO_MIN_HMM_COVERAGE ).c_str(),
 			value<double>()
 				->value_name    ( percent_varname     )
 				->notifier      ( min_hmm_cvg_ntfr    )
@@ -165,7 +148,7 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
 				+ percent_varname ).c_str()
 		)
 		(
-			PO_MIN_DC_HMM_COVERAGE.c_str(),
+			string( PO_MIN_DC_HMM_COVERAGE ).c_str(),
 			value<double>()
 				->value_name    ( percent_varname     )
 				->notifier      ( min_dc_hmm_cvg_ntfr )
@@ -181,19 +164,19 @@ void crh_filter_options_block::do_add_hidden_options_to_description(options_desc
 str_opt crh_filter_options_block::do_invalid_string(const variables_map &/*prm_variables_map*/ ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                     ) const {
 	if (the_spec.get_limit_queries() && ! the_spec.get_filter_query_ids().empty() ) {
-		return "Cannot specify both --" + PO_FILTER_QUERY_ID + " and --" + PO_LIMIT_QUERIES;
+		return ::fmt::format( "Cannot specify both --{} and --{}", PO_FILTER_QUERY_ID, PO_LIMIT_QUERIES );
 	}
 	return nullopt;
 }
 
 /// \brief Return all options names for this block
-str_vec crh_filter_options_block::do_get_all_options_names() const {
+str_view_vec crh_filter_options_block::do_get_all_options_names() const {
 	return {
-		crh_filter_options_block::PO_WORST_PERMISSIBLE_EVALUE,
-		crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE,
-		crh_filter_options_block::PO_WORST_PERMISSIBLE_SCORE,
-		crh_filter_options_block::PO_FILTER_QUERY_ID,
-		crh_filter_options_block::PO_LIMIT_QUERIES,
+		PO_WORST_PERMISSIBLE_EVALUE,
+		PO_WORST_PERMISSIBLE_BITSCORE,
+		PO_WORST_PERMISSIBLE_SCORE,
+		PO_FILTER_QUERY_ID,
+		PO_LIMIT_QUERIES,
 	};
 }
 

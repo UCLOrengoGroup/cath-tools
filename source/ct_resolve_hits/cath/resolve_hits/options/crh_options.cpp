@@ -20,6 +20,8 @@
 
 #include "crh_options.hpp"
 
+#include <fmt/core.h>
+
 #include "cath/common/boost_addenda/program_options/variables_map_contains.hpp"
 #include "cath/resolve_hits/options/spec/crh_spec.hpp"
 
@@ -33,19 +35,17 @@ using ::boost::program_options::variables_map;
 using ::std::map;
 using ::std::nullopt;
 using ::std::string;
-
-/// The name of the program that uses this executable_options
-const string crh_options::PROGRAM_NAME("cath-resolve-hits");
+using ::std::string_view;
 
 /// \brief Get the name of the program that uses this executable_options
-string crh_options::do_get_program_name() const {
+string_view crh_options::do_get_program_name() const {
 	return PROGRAM_NAME;
 }
 
 /// \brief Get the positional options, which in this case is the input block's PO_INPUT_FILE_OR_STDIN option
 positional_options_description crh_options::get_positional_options() {
 	positional_options_description positionals;
-	positionals.add( crh_input_options_block::PO_INPUT_FILE_OR_STDIN.c_str(), 1 );
+	positionals.add( string( crh_input_options_block::PO_INPUT_FILE_OR_STDIN ).c_str(), 1 );
 	return positionals;
 }
 
@@ -78,34 +78,28 @@ str_opt crh_options::do_get_error_or_help_string() const {
 
 	const variables_map &local_vm           = get_variables_map();
 	const auto          &input_format = get_crh_input_spec().get_input_format();
-	if ( specifies_option( local_vm, crh_score_options_block::PO_APPLY_CATH_RULES ) ) {
+	if ( specifies_option( local_vm, string( crh_score_options_block::PO_APPLY_CATH_RULES ) ) ) {
 		if ( input_format != hits_input_format_tag::HMMER_DOMTBLOUT && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
-			return "The --"
-				+ crh_score_options_block::PO_APPLY_CATH_RULES
-				+ " option cannot be used with the input format "
-				+ to_string( input_format )
-				+ "; CATH-Gene3D rules are only applied for "
-				+ to_string( hits_input_format_tag::HMMER_DOMTBLOUT )
-				+ " and "
-				+ to_string( hits_input_format_tag::HMMSEARCH_OUT )
-				+ " formats.";
+			return ::fmt::format( "The --{} option cannot be used with the input format {}; CATH-Gene3D rules are only "
+			                      "applied for {} and {} formats.",
+			                      crh_score_options_block::PO_APPLY_CATH_RULES,
+			                      to_string( input_format ),
+			                      to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
+			                      to_string( hits_input_format_tag::HMMSEARCH_OUT ) );
 		}
 	}
 
 	// Check that if the output_hmmer_aln option's enabled, the input format is HMMSCAN_OUT / HMMSEARCH_OUT
 	if ( the_out_spec.get_output_hmmer_aln() && input_format != hits_input_format_tag::HMMSCAN_OUT  && input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
-		return "Cannot use the --"
-			+ crh_output_options_block::PO_OUTPUT_HMMER_ALN
-			+ " option if using "
-			+ to_string( input_format )
-			+ " input format, must be using "
-			+ to_string( hits_input_format_tag::HMMSCAN_OUT   )
-			+ " or "
-			+ to_string( hits_input_format_tag::HMMSEARCH_OUT );
+		return ::fmt::format( "Cannot use the --{} option if using {} input format, must be using {} or ",
+		                      crh_output_options_block::PO_OUTPUT_HMMER_ALN,
+		                      to_string( input_format ),
+		                      to_string( hits_input_format_tag::HMMSCAN_OUT ),
+		                      to_string( hits_input_format_tag::HMMSEARCH_OUT ) );
 	}
 
 	// Store a map from score type to the equivalent "--worst-permissible-[...]" option name
-	const auto worst_perm_opt_name_of_score = map<hit_score_type, string>{
+	const auto worst_perm_opt_name_of_score = map<hit_score_type, string_view>{
 		{ hit_score_type::FULL_EVALUE, crh_filter_options_block::PO_WORST_PERMISSIBLE_EVALUE   },
 		{ hit_score_type::BITSCORE,    crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE },
 		{ hit_score_type::CRH_SCORE,   crh_filter_options_block::PO_WORST_PERMISSIBLE_SCORE    },
@@ -124,9 +118,9 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	for (const auto &format_worse_conf : formats_for_worst_perm_opt_of_score) {
 		const hit_score_type &score_type    = format_worse_conf.first;
 		const auto           &valid_formats = format_worse_conf.second;
-		const string         &option_name   = worst_perm_opt_name_of_score.at( score_type );
+		const string_view    &option_name   = worst_perm_opt_name_of_score.at( score_type );
 
-		if ( specifies_option( local_vm, option_name ) ) {
+		if ( specifies_option( local_vm, string( option_name ) ) ) {
 			if ( ! contains( valid_formats, input_format ) ) {
 				return "Cannot set worst permissible "
 					+ to_string( score_type   )
@@ -140,19 +134,18 @@ str_opt crh_options::do_get_error_or_help_string() const {
 	}
 
 	if ( specifies_options_from_block( local_vm, crh_html_options_block{} ) && ! has_any_html_output( the_output_ob ) ) {
-		return
-			"Cannot specify HTML options without outputting any HTML (with --"
-			+ crh_output_options_block::PO_HTML_OUTPUT_TO_FILE
-			+ ")";
+		return ::fmt::format( "Cannot specify HTML options without outputting any HTML (with --{})",
+		                      crh_output_options_block::PO_HTML_OUTPUT_TO_FILE );
 	}
 
 	// Complain if using MIN_HMM_COVERAGE / MIN_DC_HMM_COVERAGE for any format other than HMMSEARCH_OUT
 	if ( input_format != hits_input_format_tag::HMMSEARCH_OUT ) {
-		for (const string &hmm_cov_opt : { crh_filter_options_block::PO_MIN_HMM_COVERAGE,
-		                                   crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE } ) {
-			if ( specifies_option( local_vm, hmm_cov_opt ) ) {
+		for (const string_view &hmm_cov_opt : { crh_filter_options_block::PO_MIN_HMM_COVERAGE,
+		                                        crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE } ) {
+			const string hmm_cov_opt_str( hmm_cov_opt );
+			if ( specifies_option( local_vm, hmm_cov_opt_str ) ) {
 				return "Cannot specify --"
-					+ hmm_cov_opt
+					+ hmm_cov_opt_str
 					+ " unless using input format "
 					+ to_string( hits_input_format_tag::HMMSEARCH_OUT );
 			}
@@ -165,16 +158,20 @@ str_opt crh_options::do_get_error_or_help_string() const {
 
 /// \brief Get a string to prepend to the standard help
 string crh_options::do_get_help_prefix_string() const {
-	return "Usage: " + PROGRAM_NAME + R"( [options] <input_file>
+	return ::fmt::format(
+	  R"(Usage: {} [options] <input_file>
 
-)" + get_overview_string() + R"(
+{}
 
 When <input_file> is -, the input is read from standard input.
 
 The input data may contain unsorted hits for different query protein sequences.
 
 However, if your input data is already grouped by query protein sequence, then
-specify the --)" + crh_input_options_block::PO_INPUT_HITS_ARE_GROUPED + R"( flag for faster runs that use less memory.)";
+specify the --{} flag for faster runs that use less memory.)",
+	  PROGRAM_NAME,
+	  get_overview_string(),
+	  crh_input_options_block::PO_INPUT_HITS_ARE_GROUPED );
 }
 
 /// \brief Get a string to append to the standard help
@@ -211,9 +208,10 @@ str_str_str_pair_map crh_options::detail_help_spec() {
 		{
 			"cath-rules-help",
 			{
-				"Show help on the rules activated by the (DEPRECATED) --"
-					+ crh_score_options_block::PO_APPLY_CATH_RULES
-					+ " option",
+				::fmt::format(
+					"Show help on the rules activated by the (DEPRECATED) --{} option",
+					crh_score_options_block::PO_APPLY_CATH_RULES
+				),
 				get_crh_cath_rules_help_string()
 			}
 		},
@@ -298,16 +296,16 @@ qyikaz 1mkfA01/12-210-i5_4,3.5e-15 2470.04912752062 953-1053
 /// \brief Get the text for the apply CATH-Gene3d rules help
 string cath::rslv::get_crh_cath_rules_help_string() {
 	return R"(CATH Rules Help [--)"
-	+ crh_score_options_block::PO_APPLY_CATH_RULES
+	+ string( crh_score_options_block::PO_APPLY_CATH_RULES )
 	+ R"(]
 ------------------------------------
 
 [*DEPRECATED*] (please raise a GitHub issue if you want --)"
-	+ crh_score_options_block::PO_APPLY_CATH_RULES
+	+ string( crh_score_options_block::PO_APPLY_CATH_RULES )
 	+ R"( to be kept)
 
 The --)"
-	+ crh_score_options_block::PO_APPLY_CATH_RULES
+	+ string( crh_score_options_block::PO_APPLY_CATH_RULES )
 	+ R"( option applies the following CATH-Gene3D specific rules when parsing from )"
 	+ to_string( hits_input_format_tag::HMMER_DOMTBLOUT )
 	+ R"( or )"
@@ -323,7 +321,7 @@ If hit's match ID is like "dc_72a964d791dea7a3dd35a8bbf49385b8" (matches /^dc_\w
 If the conditional-evalue is <= 0.001 but the independent-value is > 0.001, then quarter the bitscore when parsing the hit.
 
 [*DEPRECATED*] (please raise a GitHub issue if you want --)"
-	+ crh_score_options_block::PO_APPLY_CATH_RULES
+	+ string( crh_score_options_block::PO_APPLY_CATH_RULES )
 	+ R"( to be kept)
 )";
 }

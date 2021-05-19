@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_SEGMENT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_SEGMENT_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/resolve_hits/options/spec/crh_segment_spec.hpp"
 
@@ -40,13 +42,16 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_OVERLAP_TRIM_SPEC;
-			static const std::string PO_MIN_SEG_LENGTH;
-
 			[[nodiscard]] const crh_segment_spec &get_crh_segment_spec() const;
+
+			/// \brief The option name for the specification for trimming hits' segments to allow some overlap
+			static constexpr ::std::string_view PO_OVERLAP_TRIM_SPEC{ "overlap-trim-spec" };
+
+			/// \brief The option name for the minimum segment length
+			static constexpr ::std::string_view PO_MIN_SEG_LENGTH{ "min-seg-length" };
 		};
 
 	} // namespace rslv

@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_CHECK_PDB_OPTIONS_BLOCK_HPP
 
 #include <filesystem>
+#include <string_view>
 
 #include "cath/options/options_block/options_block.hpp"
 
@@ -46,7 +47,7 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
 			explicit check_pdb_options_block();
@@ -54,10 +55,11 @@ namespace cath {
 			[[nodiscard]] ::std::filesystem::path get_pdb_file() const;
 			[[nodiscard]] bool                    get_permit_no_atoms() const;
 
-			static const std::string PO_PDB_FILE;
-			static const std::string PO_PERMIT;
+			static constexpr ::std::string_view PO_PDB_FILE{ "pdb-file" };
+
+			static constexpr ::std::string_view PO_PERMIT{ "permit-no-atoms" };
 		};
-		
+
 	} // namespace opts
 } // namespace cath
 

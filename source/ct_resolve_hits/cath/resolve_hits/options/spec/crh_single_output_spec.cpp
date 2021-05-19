@@ -27,6 +27,8 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/count_if.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
@@ -135,18 +137,18 @@ str_vec cath::rslv::get_deprecated_suggestion(const crh_single_output_spec &prm_
 	const path_opt       &output_file   = prm_single_output_spec.get_output_file();
 	if ( ! output_file ) {
 		switch ( output_format ) {
-			case ( crh_out_format::STANDARD ) : { return {                                                                                                                           }; }
-			case ( crh_out_format::SUMMARY  ) : { return {                                            "--" + crh_output_options_block::PO_SUMMARISE_TO_FILE,   "-"                   }; }
-			case ( crh_out_format::HTML     ) : { return {                                            "--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-"                   }; }
-			case ( crh_out_format::JSON     ) : { return {                                            "--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-"                   }; }
+			case ( crh_out_format::STANDARD ) : { return {                                                                                                                                                               }; }
+			case ( crh_out_format::SUMMARY  ) : { return {                                                              ::fmt::format( "--{}", crh_output_options_block::PO_SUMMARISE_TO_FILE ),   "-"                   }; }
+			case ( crh_out_format::HTML     ) : { return {                                                              ::fmt::format( "--{}", crh_output_options_block::PO_HTML_OUTPUT_TO_FILE ), "-"                   }; }
+			case ( crh_out_format::JSON     ) : { return {                                                              ::fmt::format( "--{}", crh_output_options_block::PO_JSON_OUTPUT_TO_FILE ), "-"                   }; }
 		}
 	}
 	else {
 		switch ( output_format ) {
-			case ( crh_out_format::STANDARD ) : { return { "--" + crh_output_options_block::PO_QUIET, "--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE,   output_file->string() }; }
-			case ( crh_out_format::SUMMARY  ) : { return { "--" + crh_output_options_block::PO_QUIET, "--" + crh_output_options_block::PO_SUMMARISE_TO_FILE,   output_file->string() }; }
-			case ( crh_out_format::HTML     ) : { return { "--" + crh_output_options_block::PO_QUIET, "--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, output_file->string() }; }
-			case ( crh_out_format::JSON     ) : { return { "--" + crh_output_options_block::PO_QUIET, "--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, output_file->string() }; }
+			case ( crh_out_format::STANDARD ) : { return { ::fmt::format( "--{}", crh_output_options_block::PO_QUIET ), ::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ),   output_file->string() }; }
+			case ( crh_out_format::SUMMARY  ) : { return { ::fmt::format( "--{}", crh_output_options_block::PO_QUIET ), ::fmt::format( "--{}", crh_output_options_block::PO_SUMMARISE_TO_FILE ),   output_file->string() }; }
+			case ( crh_out_format::HTML     ) : { return { ::fmt::format( "--{}", crh_output_options_block::PO_QUIET ), ::fmt::format( "--{}", crh_output_options_block::PO_HTML_OUTPUT_TO_FILE ), output_file->string() }; }
+			case ( crh_out_format::JSON     ) : { return { ::fmt::format( "--{}", crh_output_options_block::PO_QUIET ), ::fmt::format( "--{}", crh_output_options_block::PO_JSON_OUTPUT_TO_FILE ), output_file->string() }; }
 		}
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("Unrecognised crh_out_format " + to_string( output_format ) ));

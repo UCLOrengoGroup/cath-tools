@@ -24,6 +24,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <string_view>
 
 #include "cath/alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
 #include "cath/common/path_type_aliases.hpp"
@@ -90,7 +91,7 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
 			[[nodiscard]] bool        protein_names_specified() const;
@@ -122,30 +123,32 @@ namespace cath {
 
 			old_ssap_options_block & set_write_rasmol_script(const sup::sup_pdbs_script_policy &);
 
-			static const std::string PO_NAME;
-
-			static const std::string PO_DEBUG;
-			static const std::string PO_OUT_FILE;
-
-			static const std::string PO_CLIQUE_FILE;
-			static const std::string PO_DOMIN_FILE;
-
-			static const std::string PO_MAX_SCORE_TO_REFAST;
-			static const std::string PO_MAX_SCORE_TO_RESLOW;
-			static const std::string PO_SLOW_SSAP_ONLY;
-
-			static const std::string PO_LOC_SSAP_SCORE;
-			static const std::string PO_ALL_SCORES;
-			static const std::string PO_PROTEIN_SOURCE_FILES;
-
-			static const std::string PO_SUPN_DIR;
-			static const std::string PO_ALIGN_DIR;
-			static const std::string PO_MIN_OUT_SCORE;
-			static const std::string PO_MIN_SUP_SCORE;
-			static const std::string PO_RASMOL_SCRIPT;
-			static const std::string PO_XML_SUP;
-
 			static constexpr char PO_CHAR_OUT_FILE = 'o';
+
+			// clang-format off
+			static constexpr ::std::string_view PO_NAME                 { "name"                    }; ///< The option name for the names option
+
+			static constexpr ::std::string_view PO_DEBUG                { "debug"                   }; ///< The option name for the debug option
+			static constexpr ::std::string_view PO_OUT_FILE             { "outfile"                 }; ///< The option name for the output_filename option
+
+			static constexpr ::std::string_view PO_CLIQUE_FILE          { "clique-file"             }; ///< The option name for the clique_file option
+			static constexpr ::std::string_view PO_DOMIN_FILE           { "domin-file"              }; ///< The option name for the domin_file option
+
+			static constexpr ::std::string_view PO_MAX_SCORE_TO_REFAST  { "max-score-to-fast-rerun" }; ///< The option name for the max_score_to_fast_ssap_rerun option
+			static constexpr ::std::string_view PO_MAX_SCORE_TO_RESLOW  { "max-score-to-slow-rerun" }; ///< The option name for the max_score_to_slow_ssap_rerun option
+			static constexpr ::std::string_view PO_SLOW_SSAP_ONLY       { "slow-ssap-only"          }; ///< The option name for the slow_ssap_only option
+
+			static constexpr ::std::string_view PO_LOC_SSAP_SCORE       { "local-ssap-score"        }; ///< The option name for the use_local_ssap_score option
+			static constexpr ::std::string_view PO_ALL_SCORES           { "all-scores"              }; ///< The option name for the write_all_scores option
+			static constexpr ::std::string_view PO_PROTEIN_SOURCE_FILES { "prot-src-files"          }; ///< The option name for the protein_source_files option
+
+			static constexpr ::std::string_view PO_SUPN_DIR             { "supdir"                  }; ///< The option name for the superposition_dir option
+			static constexpr ::std::string_view PO_ALIGN_DIR            { "aligndir"                }; ///< The option name for the alignment_dir option
+			static constexpr ::std::string_view PO_MIN_OUT_SCORE        { "min-score-for-files"     }; ///< The option name for the min_score_for_writing_files option
+			static constexpr ::std::string_view PO_MIN_SUP_SCORE        { "min-sup-score"           }; ///< The option name for the min_score_for_superposition option
+			static constexpr ::std::string_view PO_RASMOL_SCRIPT        { "rasmol-script"           }; ///< The option name for the write_rasmol_script option
+			static constexpr ::std::string_view PO_XML_SUP              { "xmlsup"                  }; ///< The option name for write_xml_sup option
+			// clang-format on
 		};
 
 		bool has_clique_file(const old_ssap_options_block &);

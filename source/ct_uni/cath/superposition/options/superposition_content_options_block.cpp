@@ -38,15 +38,6 @@ using ::boost::program_options::variables_map;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for the context in which the alignment regions should be shown in the superposition (alone/in_chain/in_pdb)
-const string superposition_content_options_block::PO_REGIONS_CONTEXT                 { "regions-context"          };
-
-/// \brief The option name for the minimum distance from DNA to the structure for the DNA to be included
-const string superposition_content_options_block::PO_INCLUDE_DNA_WITHIN_DISTANCE     { "show-dna-within-dist"     };
-
-/// \brief The option name for the minimum distance from organic molecules to the structure for the organic molecules
-const string superposition_content_options_block::PO_INCLUDE_ORGANIC_WITHIN_DISTANCE { "show-organic-within-dist" };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> superposition_content_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -80,16 +71,20 @@ void superposition_content_options_block::do_add_visible_options_to_description(
 
 	prm_desc.add_options()
 		(
-			( PO_REGIONS_CONTEXT ).c_str(),
+			string( PO_REGIONS_CONTEXT ).c_str(),
 			value<supn_regions_context>()
 				->value_name   ( context_varname                                      )
 				->notifier     ( regions_context_notifier                             )
 				->default_value( superposition_content_spec::DEFAULT_REGIONS_CONTEXT  ),
-			( "Show the alignment regions in the context " + context_varname
-				+ ", one of available options:" + sep + join( supn_region_context_descs, sep ) ).c_str()
+			::fmt::format(
+				"Show the alignment regions in the context {}, one of available options:{}{}",
+				context_varname,
+				sep,
+				join( supn_region_context_descs, sep )
+			).c_str()
 		)
 		(
-			( PO_INCLUDE_DNA_WITHIN_DISTANCE ).c_str(),
+			string( PO_INCLUDE_DNA_WITHIN_DISTANCE ).c_str(),
 			value<double>()
 				->value_name   ( dist_varname                                         )
 				->notifier     ( include_dna_within_distance_notifier                 )
@@ -97,7 +92,7 @@ void superposition_content_options_block::do_add_visible_options_to_description(
 			( "Show DNA within " + dist_varname + "Å of the alignment regions" ).c_str()
 		)
 		(
-			( PO_INCLUDE_ORGANIC_WITHIN_DISTANCE ).c_str(),
+			string( PO_INCLUDE_ORGANIC_WITHIN_DISTANCE ).c_str(),
 			value<double>()
 				->value_name   ( dist_varname                                         )
 				->notifier     ( include_organic_within_distance_notifier             )
@@ -114,11 +109,11 @@ str_opt superposition_content_options_block::do_invalid_string(const variables_m
 }
 
 /// \brief Return all options names for this block
-str_vec superposition_content_options_block::do_get_all_options_names() const {
+str_view_vec superposition_content_options_block::do_get_all_options_names() const {
 	return {
-		superposition_content_options_block::PO_REGIONS_CONTEXT,
-		superposition_content_options_block::PO_INCLUDE_DNA_WITHIN_DISTANCE,
-		superposition_content_options_block::PO_INCLUDE_ORGANIC_WITHIN_DISTANCE,
+		PO_REGIONS_CONTEXT,
+		PO_INCLUDE_DNA_WITHIN_DISTANCE,
+		PO_INCLUDE_ORGANIC_WITHIN_DISTANCE,
 	};
 }
 

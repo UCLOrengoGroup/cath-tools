@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_EXTRACT_PDB_OPTIONS_BLOCK_HPP
 
 #include <filesystem>
+#include <string_view>
 
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/common/path_type_aliases.hpp"
@@ -51,18 +52,18 @@ namespace cath {
 			void do_add_hidden_options_to_description(boost::program_options::options_description &,
 			                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
 			[[nodiscard]] const ::std::filesystem::path &get_input_pdb_file() const;
 			[[nodiscard]] const path_opt &               get_output_pdb_file() const;
 			[[nodiscard]] const chop::domain_opt &       get_regions() const;
 
-			static const std::string PO_INPUT_PDB_FILE;
-			static const std::string PO_OUTPUT_PDB_FILE;
-			static const std::string PO_REGIONS;
+			static constexpr ::std::string_view PO_INPUT_PDB_FILE{ "input-pdb-file" };
+			static constexpr ::std::string_view PO_OUTPUT_PDB_FILE{ "output-pdb-file" };
+			static constexpr ::std::string_view PO_REGIONS{ "regions" };
 		};
-		
+
 	} // namespace opts
 } // namespace cath
 

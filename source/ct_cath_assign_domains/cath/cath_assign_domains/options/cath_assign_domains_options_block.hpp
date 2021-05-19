@@ -35,13 +35,6 @@ namespace cath {
 		/// \brief Options block for the main cath-assign-domains options
 		class cath_assign_domains_options_block final : public cath::opts::options_block {
 		private:
-			static const std::string PO_SVMLIGHT_RBF_FILE;
-			static const std::string PO_FILELIST_FILE;
-			static const std::string PO_SF_OF_DOMAIN_FILE;
-			static const std::string PO_FORBIDDEN_NODES;
-
-			static const str_vec DEFAULT_FORBIDDEN_NODES;
-
 			/// \brief The SVM-light RBF model file
 			::std::filesystem::path rbf_svm_file;
 
@@ -59,7 +52,7 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
 			[[nodiscard]] const ::std::filesystem::path &get_rbf_svm_file() const;

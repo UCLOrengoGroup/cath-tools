@@ -45,13 +45,13 @@ BOOST_FIXTURE_TEST_SUITE(display_colour_gradient_test_suite, cath::test::display
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ctor_works) {
-	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { display_colour::RED, display_colour::BLUE }, 2 ) );
-	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { display_colour::RED, display_colour::BLUE }, 1 ) );
-	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { display_colour::RED, display_colour::BLUE }, 0 ) );
+	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { RED, BLUE }, 2 ) );
+	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { RED, BLUE }, 1 ) );
+	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { RED, BLUE }, 0 ) );
 
-	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { display_colour::RED                       }, 2 ) );
-	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { display_colour::RED                       }, 1 ) );
-	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { display_colour::RED                       }, 0 ) );
+	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { RED       }, 2 ) );
+	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { RED       }, 1 ) );
+	BOOST_CHECK_NO_THROW_DIAG( display_colour_gradient( { RED       }, 0 ) );
 }
 
 /// \brief TODOCUMENT
@@ -76,15 +76,15 @@ BOOST_AUTO_TEST_CASE(default_has_correct_properties) {
 
 	BOOST_CHECK_THROW( get_colour_of_index(default_colour_gradient, num_colours), invalid_argument_exception                          );
 
-	BOOST_CHECK_EQUAL( display_colour::BLUE,          get_colour_of_index( default_colour_gradient, 0 * ( num_steps + 1 )            ) );
+	BOOST_CHECK_EQUAL( BLUE,                          get_colour_of_index( default_colour_gradient, 0 * ( num_steps + 1 )            ) );
 	BOOST_CHECK_EQUAL( display_colour(0.0, 0.5, 1.0), get_colour_of_index( default_colour_gradient, 0 * ( num_steps + 1 ) + half_way ) );
-	BOOST_CHECK_EQUAL( display_colour::CYAN,          get_colour_of_index( default_colour_gradient, 1 * ( num_steps + 1 )            ) );
+	BOOST_CHECK_EQUAL( CYAN,                          get_colour_of_index( default_colour_gradient, 1 * ( num_steps + 1 )            ) );
 	BOOST_CHECK_EQUAL( display_colour(0.0, 1.0, 0.5), get_colour_of_index( default_colour_gradient, 1 * ( num_steps + 1 ) + half_way ) );
-	BOOST_CHECK_EQUAL( display_colour::GREEN,         get_colour_of_index( default_colour_gradient, 2 * ( num_steps + 1 )            ) );
+	BOOST_CHECK_EQUAL( GREEN,                         get_colour_of_index( default_colour_gradient, 2 * ( num_steps + 1 )            ) );
 	BOOST_CHECK_EQUAL( display_colour(0.5, 1.0, 0.0), get_colour_of_index( default_colour_gradient, 2 * ( num_steps + 1 ) + half_way ) );
-	BOOST_CHECK_EQUAL( display_colour::YELLOW,        get_colour_of_index( default_colour_gradient, 3 * ( num_steps + 1 )            ) );
+	BOOST_CHECK_EQUAL( YELLOW,                        get_colour_of_index( default_colour_gradient, 3 * ( num_steps + 1 )            ) );
 	BOOST_CHECK_EQUAL( display_colour(1.0, 0.5, 0.0), get_colour_of_index( default_colour_gradient, 3 * ( num_steps + 1 ) + half_way ) );
-	BOOST_CHECK_EQUAL( display_colour::RED,           get_colour_of_index( default_colour_gradient, 4 * ( num_steps + 1 )            ) );
+	BOOST_CHECK_EQUAL( RED,                           get_colour_of_index( default_colour_gradient, 4 * ( num_steps + 1 )            ) );
 
 //	for (const size_t &colour_ctr : indices( num_colours ) ) {
 //		cerr << colour_ctr << "\t" << get_colour_of_index(default_colour_gradient, colour_ctr) << endl;

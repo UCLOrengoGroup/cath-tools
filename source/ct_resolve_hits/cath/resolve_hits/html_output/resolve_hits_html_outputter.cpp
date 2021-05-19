@@ -863,9 +863,9 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 
 	const auto gradient = display_colour_gradient{
 		{
-			display_colour::LIGHT_RED,
-			display_colour::YELLOW,
-			display_colour::LIGHT_GREEN,
+			LIGHT_RED,
+			YELLOW,
+			LIGHT_GREEN,
 		},
 		255
 	};
@@ -1059,7 +1059,7 @@ string resolve_hits_html_outputter::output_html(const string           &prm_quer
 					+ R"( non-solution results (current limit is )"
 					+ std::to_string( prm_html_spec.get_max_num_non_soln_hits() )
 					+ R"(; use <code>--)"
-					+ crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS
+					+ string( crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS )
 					+ R"(</code> to change)</div>)"
 				)
 		)

@@ -39,18 +39,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for the degree to which long domains are preferred
-const string crh_score_options_block::PO_LONG_DOMAINS_PREFERENCE { "long-domains-preference" };
-
-/// \brief The option name for the degree to which high scores are preferred
-const string crh_score_options_block::PO_HIGH_SCORES_PREFERENCE  { "high-scores-preference"  };
-
-/// \brief The option name for whether to apply rules specific to CATH-Gene3D
-const string crh_score_options_block::PO_APPLY_CATH_RULES        { "apply-cath-rules"        };
-
-/// \brief The option name for whether to use a naive, greedy approach to resolving
-const string crh_score_options_block::PO_NAIVE_GREEDY            { "naive-greedy"            };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_score_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -74,7 +62,7 @@ void crh_score_options_block::do_add_visible_options_to_description(options_desc
 
 	prm_desc.add_options()
 		(
-			( PO_LONG_DOMAINS_PREFERENCE ).c_str(),
+			string( PO_LONG_DOMAINS_PREFERENCE ).c_str(),
 			value< prog_opt_num_range<resscr_t, -100, 100 > >()
 				->value_name   ( val_varname                                     )
 				->notifier     ( long_domains_preference_notifier                )
@@ -83,7 +71,7 @@ void crh_score_options_block::do_add_visible_options_to_description(options_desc
 				+ "\n(" + val_varname + " may be negative to prefer shorter; 0 leaves scores unaffected)").c_str()
 		)
 		(
-			( PO_HIGH_SCORES_PREFERENCE ).c_str(),
+			string( PO_HIGH_SCORES_PREFERENCE ).c_str(),
 			value< prog_opt_num_range<resscr_t, -100, 100 > >()
 				->value_name   ( val_varname                                     )
 				->notifier     ( high_scores_preference_notifier                 )
@@ -95,14 +83,14 @@ void crh_score_options_block::do_add_visible_options_to_description(options_desc
 				+ "\n(" + val_varname + " may be negative to reduce preference for higher scores; 0 leaves scores unaffected)" ).c_str()
 		)
 		(
-			( PO_APPLY_CATH_RULES ).c_str(),
+			string( PO_APPLY_CATH_RULES ).c_str(),
 			bool_switch()
 				->notifier     ( apply_cath_rules_notifier                       )
 				->default_value( crh_score_spec::DEFAULT_APPLY_CATH_RULES        ),
 			"[DEPRECATED] Apply rules specific to CATH-Gene3D during the parsing and processing"
 		)
 		(
-			( PO_NAIVE_GREEDY ).c_str(),
+			string( PO_NAIVE_GREEDY ).c_str(),
 			bool_switch()
 				->notifier     ( naive_greedy_notifier                           )
 				->default_value( crh_score_spec::DEFAULT_NAIVE_GREEDY            ),
@@ -123,11 +111,11 @@ str_opt crh_score_options_block::do_invalid_string(const variables_map &/*prm_va
 }
 
 /// \brief Return all options names for this block
-str_vec crh_score_options_block::do_get_all_options_names() const {
+str_view_vec crh_score_options_block::do_get_all_options_names() const {
 	return {
-		crh_score_options_block::PO_LONG_DOMAINS_PREFERENCE,
-		crh_score_options_block::PO_HIGH_SCORES_PREFERENCE,
-		crh_score_options_block::PO_APPLY_CATH_RULES,
+		PO_LONG_DOMAINS_PREFERENCE,
+		PO_HIGH_SCORES_PREFERENCE,
+		PO_APPLY_CATH_RULES,
 	};
 }
 

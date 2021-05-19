@@ -42,7 +42,7 @@ namespace cath {
 
 		/// \brief A concrete program_exception_wrapper that throws requested exceptions to allow testing of program_exception_wrapper
 		class test_program_exception_wrapper final : public program_exception_wrapper {
-			[[nodiscard]] string do_get_program_name() const final {
+			[[nodiscard]] string_view do_get_program_name() const final {
 				return "test_program_exception_wrapper";
 			}
 

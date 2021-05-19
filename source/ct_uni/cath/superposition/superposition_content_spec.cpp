@@ -22,6 +22,8 @@
 
 #include <utility>
 
+#include <fmt/core.h>
+
 #include "cath/superposition/options/superposition_content_options_block.hpp"
 
 using namespace ::cath;
@@ -80,16 +82,12 @@ superposition_content_spec & superposition_content_spec::set_include_organic_wit
 str_opt cath::sup::get_invalid_description(const superposition_content_spec &prm_spec ///< The superposition_content_spec to query
                                            ) {
 	if ( prm_spec.get_include_dna_within_distance() && prm_spec.get_include_dna_within_distance() < 0.0 ) {
-		return
-			"The "
-			+ superposition_content_options_block::PO_INCLUDE_DNA_WITHIN_DISTANCE
-			+ " distance cannot be negative";
+		return ::fmt::format( "The {} distance cannot be negative",
+		                      superposition_content_options_block::PO_INCLUDE_DNA_WITHIN_DISTANCE );
 	}
 	if ( prm_spec.get_include_organic_within_distance() && prm_spec.get_include_organic_within_distance() < 0.0 ) {
-		return
-			"The "
-			+ superposition_content_options_block::PO_INCLUDE_ORGANIC_WITHIN_DISTANCE
-			+ " distance cannot be negative";
+		return ::fmt::format( "The {} distance cannot be negative",
+		                      superposition_content_options_block::PO_INCLUDE_ORGANIC_WITHIN_DISTANCE );
 	}
 	return nullopt;
 }

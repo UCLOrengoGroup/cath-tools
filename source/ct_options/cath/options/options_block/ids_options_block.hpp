@@ -46,14 +46,12 @@ namespace cath {
 	//		void do_add_hidden_options_to_description(boost::program_options::options_description &,
 	//		                                          const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
 			[[nodiscard]] const str_vec &get_ids() const;
-
-			static const std::string PO_ID;
 		};
-		
+
 		// str_vec get_all_ids(const ids_options_block &);
 		bool ids_specified(const ids_options_block &);
 		std::string get_id_a(const ids_options_block &);

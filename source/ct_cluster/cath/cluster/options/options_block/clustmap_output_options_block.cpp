@@ -38,18 +38,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for a batch ID to optionally append as a last column to the output
-const string clustmap_output_options_block::PO_APPEND_BATCH_ID      { "append-batch-id"     };
-
-/// \brief The option name for an optional file to which output should be redirected
-const string clustmap_output_options_block::PO_OUTPUT_TO_FILE       { "output-to-file"      };
-
-/// \brief The option name for an optional file to which a Markdown summary should be written
-const string clustmap_output_options_block::PO_SUMMARISE_TO_FILE    { "summarise-to-file"   };
-
-/// \brief The option name for whether to print out per-domain mapping info
-const string clustmap_output_options_block::PO_PRINT_DOMAIN_MAPPING { "print-entry-results" };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> clustmap_output_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -74,7 +62,7 @@ void clustmap_output_options_block::do_add_visible_options_to_description(option
 
 	prm_desc.add_options()
 		(
-			PO_APPEND_BATCH_ID.c_str(),
+			string( PO_APPEND_BATCH_ID ).c_str(),
 			value<string>()
 				->value_name   ( id_varname                                         )
 				->notifier     ( append_batch_id_notifier                           ),
@@ -82,21 +70,21 @@ void clustmap_output_options_block::do_add_visible_options_to_description(option
 				"(equivalent to the first column in a --multi-batch-file input file)" ).c_str()
 		)
 		(
-			PO_OUTPUT_TO_FILE.c_str(),
+			string( PO_OUTPUT_TO_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                                       )
 				->notifier     ( output_to_file_notifier                            ),
 			( "Write output to file " + file_varname + " (or, if unspecified, to stdout)" ).c_str()
 		)
 		(
-			PO_SUMMARISE_TO_FILE.c_str(),
+			string( PO_SUMMARISE_TO_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                                       )
 				->notifier     ( summarise_to_file_notifier                         ),
 			( "Print a summary of the renumbering to file " + file_varname ).c_str()
 		)
 		(
-			( PO_PRINT_DOMAIN_MAPPING ).c_str(),
+			string( PO_PRINT_DOMAIN_MAPPING ).c_str(),
 			bool_switch()
 				->notifier     ( print_domain_mapping_notifier                      )
 				->default_value( clustmap_output_spec::DEFAULT_PRINT_DOMAIN_MAPPING ),
@@ -115,12 +103,12 @@ str_opt clustmap_output_options_block::do_invalid_string(const variables_map &/*
 }
 
 /// \brief Return all options names for this block
-str_vec clustmap_output_options_block::do_get_all_options_names() const {
+str_view_vec clustmap_output_options_block::do_get_all_options_names() const {
 	return {
-		clustmap_output_options_block::PO_APPEND_BATCH_ID,
-		clustmap_output_options_block::PO_OUTPUT_TO_FILE,
-		clustmap_output_options_block::PO_SUMMARISE_TO_FILE,
-		clustmap_output_options_block::PO_PRINT_DOMAIN_MAPPING,
+		PO_APPEND_BATCH_ID,
+		PO_OUTPUT_TO_FILE,
+		PO_SUMMARISE_TO_FILE,
+		PO_PRINT_DOMAIN_MAPPING,
 	};
 }
 

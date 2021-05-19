@@ -21,9 +21,13 @@
 #include <filesystem>
 #include <regex>
 #include <sstream>
+#include <string>
+#include <string_view>
 
 #include <boost/range/join.hpp>
 #include <boost/test/unit_test.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/cluster/cath_cluster_mapper.hpp"
 #include "cath/cluster/options/options_block/clust_mapping_options_block.hpp"
@@ -124,7 +128,7 @@ BOOST_AUTO_TEST_CASE(fails_if_given_no_options) {
 
 BOOST_AUTO_TEST_CASE(gives_correct_help_usage) {
 	// When calling perform_map_clusters with options: help
-	execute_perform_map_clusters( { "--" + misc_help_version_options_block::PO_HELP } );
+	execute_perform_map_clusters( { ::fmt::format( "--{}", misc_help_version_options_block::PO_HELP ) } );
 
 	// Then expect the correct help message in the output stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), help_usage_file() );
@@ -152,7 +156,7 @@ BOOST_AUTO_TEST_CASE(processes_from_file_to_stdout) {
 BOOST_AUTO_TEST_CASE(processes_from_file_to_file) {
 	// When calling perform_map_clusters with options: an input file, the output file option and an output file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_output_options_block::PO_OUTPUT_TO_FILE, TEMP_TEST_FILE_FILENAME.string() } );
+		::fmt::format( "--{}", clustmap_output_options_block::PO_OUTPUT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string() } );
 
 	// Then expect:
 	//  * an empty output stream and
@@ -164,7 +168,7 @@ BOOST_AUTO_TEST_CASE(processes_from_file_to_file) {
 BOOST_AUTO_TEST_CASE(append_batch_id_works) {
 	// When calling perform_map_clusters with options: an input file, the output file option and an output file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_output_options_block::PO_APPEND_BATCH_ID, "agifttome" } );
+		::fmt::format( "--{}", clustmap_output_options_block::PO_APPEND_BATCH_ID ), "agifttome" } );
 
 	// Then expect:
 	//  * an empty output stream and
@@ -178,7 +182,7 @@ BOOST_AUTO_TEST_SUITE(overlap_thresholds)
 BOOST_AUTO_TEST_CASE(rejects_dom_overlap_option_if_not_mapping_from) {
 	// When calling perform_map_clusters with options: an input file and a domain overlap
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "60" } );
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL ), "60" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Cannot specify mapping threshold options)" } ) );
@@ -187,7 +191,7 @@ BOOST_AUTO_TEST_CASE(rejects_dom_overlap_option_if_not_mapping_from) {
 BOOST_AUTO_TEST_CASE(rejects_clust_overlap_option_if_not_mapping_from) {
 	// When calling perform_map_clusters with options: an input file and a cluster overlap
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "60" } );
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL ), "60" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Cannot specify mapping threshold options)" } ) );
@@ -200,7 +204,7 @@ BOOST_AUTO_TEST_SUITE(out_of_range)
 BOOST_AUTO_TEST_CASE(rejects_dom_overlap_less_than_50) {
 	// When calling perform_map_clusters with options: an input file and a too-small domain overlap
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "49.99" } );
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL ), "49.99" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(mapping fraction is out of range)" } ) );
@@ -209,7 +213,7 @@ BOOST_AUTO_TEST_CASE(rejects_dom_overlap_less_than_50) {
 BOOST_AUTO_TEST_CASE(rejects_clust_overlap_less_than_50) {
 	// When calling perform_map_clusters with options: an input file and a too-small cluster overlap
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "49.99" } );
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL ), "49.99" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(mapping fraction is out of range)" } ) );
@@ -218,7 +222,7 @@ BOOST_AUTO_TEST_CASE(rejects_clust_overlap_less_than_50) {
 BOOST_AUTO_TEST_CASE(rejects_dom_overlap_more_than_100) {
 	// When calling perform_map_clusters with options: an input file and a too-large domain overlap
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "100.1" } );
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL ), "100.1" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(mapping fraction is out of range)" } ) );
@@ -227,7 +231,7 @@ BOOST_AUTO_TEST_CASE(rejects_dom_overlap_more_than_100) {
 BOOST_AUTO_TEST_CASE(rejects_clust_overlap_more_than_100) {
 	// When calling perform_map_clusters with options: an input file and a too-large cluster overlap
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "100.1" } );
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL ), "100.1" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(mapping fraction is out of range)" } ) );
@@ -242,8 +246,8 @@ BOOST_AUTO_TEST_SUITE(in_range)
 BOOST_AUTO_TEST_CASE(accepts_dom_overlap_of_50) {
 	// When calling perform_map_clusters with options: an input file, a map-from file and a domain overlap of 50%
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "50" } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mapfrom_file().string(),
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL ), "50" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_mapfrom_dom_ol_50_result_file() );
@@ -252,8 +256,8 @@ BOOST_AUTO_TEST_CASE(accepts_dom_overlap_of_50) {
 BOOST_AUTO_TEST_CASE(accepts_clust_overlap_of_50) {
 	// When calling perform_map_clusters with options: an input file, a map-from file and a cluster overlap of 50%
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "50" } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mapfrom_file().string(),
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL ), "50" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_mapfrom_clust_ol_50_result_file() );
@@ -262,8 +266,8 @@ BOOST_AUTO_TEST_CASE(accepts_clust_overlap_of_50) {
 BOOST_AUTO_TEST_CASE(accepts_dom_overlap_of_100) {
 	// When calling perform_map_clusters with options: an input file, a map-from file and a domain overlap of 100%
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL, "100" } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mapfrom_file().string(),
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL ), "100" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_mapfrom_dom_ol_100_result_file() );
@@ -272,8 +276,8 @@ BOOST_AUTO_TEST_CASE(accepts_dom_overlap_of_100) {
 BOOST_AUTO_TEST_CASE(accepts_clust_overlap_of_100) {
 	// When calling perform_map_clusters with options: an input file, a map-from file and a cluster overlap of 100%
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
-		"--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL, "100" } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mapfrom_file().string(),
+		::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL ), "100" } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_mapfrom_clust_ol_100_result_file() );
@@ -291,8 +295,8 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_CASE(fails_if_batch_id_when_using_batches) {
 	// When calling perform_map_clusters with options: an input file, the append-batch-id flag and the batches flag
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_output_options_block::PO_APPEND_BATCH_ID, "agifttome",
-		"--" + clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT } );
+		::fmt::format( "--{}", clustmap_output_options_block::PO_APPEND_BATCH_ID ), "agifttome",
+		::fmt::format( "--{}", clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT ) } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Cannot specify a batch ID for appending.*when reading batches from input)" } ) );
@@ -302,8 +306,8 @@ BOOST_AUTO_TEST_CASE(fails_if_batch_id_when_using_batches) {
 BOOST_AUTO_TEST_CASE(fails_if_map_from_file_when_using_batches) {
 	// When calling perform_map_clusters with options: an input file, a map-from file and the batches flag
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
-		"--" + clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mapfrom_file().string(),
+		::fmt::format( "--{}", clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT ) } );
 
 	// Then expect the correct error message in the output stream
 	BOOST_CHECK( regex_search( output_ss.str(), regex{ R"(Cannot specify a map-from cluster-membership file.*when reading batches from input)" } ) );
@@ -313,7 +317,7 @@ BOOST_AUTO_TEST_CASE(fails_if_map_from_file_when_using_batches) {
 BOOST_AUTO_TEST_CASE(accepts_non_numeric_cluster_names_in_map_from) {
 	// When calling perform_map_clusters with options: an input file, a map-from file that includes non-numeric cluster names
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_non_numeric_file().string()} );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_non_numeric_file().string()} );
 
 	// Then expect the correct results output stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_input_non_numeric_fromresult() );
@@ -333,10 +337,10 @@ BOOST_AUTO_TEST_CASE(accepts_non_numeric_cluster_names_in_map_to) {
 BOOST_AUTO_TEST_CASE(generates_correct_summary_file_when_mapping) {
 	// When calling perform_map_clusters with options: an input file, a map-from file and a file to write a summary to
 	execute_perform_map_clusters( { eg_input_non_numeric_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
-		"--" + clustmap_output_options_block::PO_SUMMARISE_TO_FILE,      TEMP_TEST_FILE_FILENAME.string(),
-		// "--" + clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL,         "99",
-		// "--" + clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL,       "99",
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mapfrom_file().string(),
+		::fmt::format( "--{}", clustmap_output_options_block::PO_SUMMARISE_TO_FILE ),      TEMP_TEST_FILE_FILENAME.string(),
+		// ::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_DOM_OL ),         "99",
+		// ::fmt::format( "--{}", clust_mapping_options_block::PO_MIN_EQUIV_CLUST_OL ),       "99",
 	} );
 
 	// Then expect the correct output in the summary file (TEMP_TEST_FILE_FILENAME)
@@ -346,7 +350,7 @@ BOOST_AUTO_TEST_CASE(generates_correct_summary_file_when_mapping) {
 BOOST_AUTO_TEST_CASE(generates_correct_summary_file_when_renumbering) {
 	// When calling perform_map_clusters with options: an input file and a file to write a summary to
 	execute_perform_map_clusters( { eg_input_non_numeric_file().string(),
-		"--" + clustmap_output_options_block::PO_SUMMARISE_TO_FILE, TEMP_TEST_FILE_FILENAME.string() } );
+		::fmt::format( "--{}", clustmap_output_options_block::PO_SUMMARISE_TO_FILE ), TEMP_TEST_FILE_FILENAME.string() } );
 
 	// Then expect the correct output in the summary file (TEMP_TEST_FILE_FILENAME)
 	BOOST_CHECK_FILES_EQUAL( TEMP_TEST_FILE_FILENAME, eg_renumbering_summary_file() );
@@ -374,7 +378,7 @@ BOOST_AUTO_TEST_CASE(generates_correct_summary_file_when_renumbering) {
 BOOST_AUTO_TEST_CASE(handles_to_clust_ol_thresholds_correctly) {
 	// When calling perform_map_clusters with options: an input file and a map-from file with data to test to-cluster thresholds
 	execute_perform_map_clusters( { to_clust_ol_thresholds_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, to_clust_ol_thresholds_mapfrom_file().string(),
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), to_clust_ol_thresholds_mapfrom_file().string(),
 	} );
 
 	// Then expect the correct results in the output stream
@@ -397,7 +401,7 @@ BOOST_AUTO_TEST_CASE(handles_clashing_segments_in_input) {
 BOOST_AUTO_TEST_CASE(handles_clashing_segments_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a clashing_segments map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_clashing_segments_file().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_clashing_segments_file().string() } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_NE( output_ss.str(), "" );
@@ -421,7 +425,7 @@ BOOST_AUTO_TEST_CASE(handles_clashing_segments_w_diff_names_in_input) {
 BOOST_AUTO_TEST_CASE(handles_clashing_segments_w_diff_names_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a clashing_segments_w_diff_names map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_clashing_segments_w_diff_names_file().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_clashing_segments_w_diff_names_file().string() } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_NE( output_ss.str(), "" );
@@ -444,7 +448,7 @@ BOOST_AUTO_TEST_CASE(handles_mixed_wcds_and_segments_in_input) {
 BOOST_AUTO_TEST_CASE(handles_mixed_wcds_and_segments_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a mixed_wcds_and_segments map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mixed_wcds_and_segments_file().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mixed_wcds_and_segments_file().string() } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_NE( output_ss.str(), "" );
@@ -467,7 +471,7 @@ BOOST_AUTO_TEST_CASE(handles_eg_input_mixed_wcds_and_segments_within_cluster_fil
 BOOST_AUTO_TEST_CASE(handles_eg_input_mixed_wcds_and_segments_within_cluster_file_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a mixed_wcds_and_segments_within_cluster map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mixed_wcds_and_segments_within_cluster_file().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mixed_wcds_and_segments_within_cluster_file().string() } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_NE( output_ss.str(), "" );
@@ -491,7 +495,7 @@ BOOST_AUTO_TEST_CASE(handles_repeated_segments_in_input) {
 BOOST_AUTO_TEST_CASE(handles_repeated_segments_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a repeated_segments map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_repeated_segments_file().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_repeated_segments_file().string() } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_NE( output_ss.str(), "" );
@@ -512,7 +516,7 @@ BOOST_AUTO_TEST_CASE(handles_repeated_segments_w_diff_names_in_input) {
 BOOST_AUTO_TEST_CASE(handles_repeated_segments_w_diff_names_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a repeated_segments_w_diff_names map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_repeated_segments_w_diff_names_file().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_repeated_segments_w_diff_names_file().string() } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_NE( output_ss.str(), "" );
@@ -533,7 +537,7 @@ BOOST_AUTO_TEST_CASE(handles_repeated_wcds_in_input) {
 BOOST_AUTO_TEST_CASE(handles_repeated_wcds_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a repeated_wcds map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_repeated_wcds_file().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_repeated_wcds_file().string() } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_NE( output_ss.str(), "" );
@@ -556,7 +560,7 @@ BOOST_AUTO_TEST_CASE(handles_start_at_zero_in_input) {
 BOOST_AUTO_TEST_CASE(handles_start_at_zero_in_input_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a zero_start map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_zero_start().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_zero_start().string() } );
 
 	// Then expect the correct output
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_simple_mapfrom_result_file() );
@@ -578,7 +582,7 @@ BOOST_AUTO_TEST_CASE(handles_backward_segment_in_input) {
 BOOST_AUTO_TEST_CASE(handles_backward_segment_in_input_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a backward segment map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_backward_segment().string()  } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_backward_segment().string()  } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_simple_mapfrom_result_file() );
@@ -601,7 +605,7 @@ BOOST_AUTO_TEST_CASE(handles_misordered_segments_in_input) {
 BOOST_AUTO_TEST_CASE(handles_misordered_segments_in_input_in_map_from) {
 	// When calling perform_map_clusters with options: an input file and a misordered segments map-from file
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_misordered_segments().string() } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_misordered_segments().string() } );
 
 	// Then expect the correct error message in the error stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_simple_mapfrom_result_file() );
@@ -626,7 +630,7 @@ BOOST_AUTO_TEST_CASE( handles_batch ) {
 	try {
 		// When calling perform_map_clusters with options: an batch input file and the --read-batches-from-input flag
 		execute_perform_map_clusters(
-		  { eg_batch_input_file().string(), "--" + clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT } );
+		  { eg_batch_input_file().string(), ::fmt::format( "--{}", clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT ) } );
 
 		// Then expect the correct error message in the error stream
 		BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_batch_result_file() );
@@ -640,8 +644,8 @@ BOOST_AUTO_TEST_CASE( handles_batch ) {
 BOOST_AUTO_TEST_CASE(provides_entry_level_output) {
 	// When calling perform_map_clusters with options: an input file, a map-from file and the --print-entry-results flag
 	execute_perform_map_clusters( { eg_input_file().string(),
-		"--" + clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE, eg_input_mapfrom_file().string(),
-		"--" + clustmap_output_options_block::PO_PRINT_DOMAIN_MAPPING } );
+		::fmt::format( "--{}", clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE ), eg_input_mapfrom_file().string(),
+		::fmt::format( "--{}", clustmap_output_options_block::PO_PRINT_DOMAIN_MAPPING ) } );
 
 	// Then expect the correct results in the output stream
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), eg_entry_mapping_result_file() );

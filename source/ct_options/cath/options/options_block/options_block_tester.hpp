@@ -21,11 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_TESTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_TESTER_HPP
 
-#include "cath/common/type_aliases.hpp"
-
 #include <map>
 #include <string>
+#include <string_view>
 #include <vector>
+
+#include "cath/common/type_aliases.hpp"
 
 namespace cath { namespace opts { class options_block; } }
 
@@ -53,11 +54,12 @@ namespace cath {
 			static OB parse_into_options_block_copy(OB,
 			                                        const str_vec &);
 
-			static const std::string          UNKNOWN_OPT;
-			static const std::string          TEST_OPTION_1;
-			static const std::string          TEST_OPTION_2;
-			static const std::string          TEST_HELP_1;
-			static const std::string          TEST_HELP_2;
+			static constexpr ::std::string_view UNKNOWN_OPT{ "--it-does-not-know-me" };
+			static constexpr ::std::string_view TEST_OPTION_1{ "test_help_option_1" };
+			static constexpr ::std::string_view TEST_OPTION_2{ "test_help_option_2" };
+			static constexpr ::std::string_view TEST_HELP_1{ "This is the first piece of help" };
+			static constexpr ::std::string_view TEST_HELP_2{ "This is the second piece of help" };
+
 			static str_str_str_pair_map TEST_DESC_AND_HELP_OF_OPTION_NAME();
 		};
 

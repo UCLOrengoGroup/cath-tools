@@ -24,6 +24,8 @@
 #include <boost/range/join.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/boost_addenda/log/stringstream_log_sink.hpp"
 #include "cath/common/file/read_string_from_file.hpp"
@@ -108,10 +110,10 @@ BOOST_FIXTURE_TEST_SUITE(cath_hit_resolver_test_suite, hit_resolver_test_suite_f
 BOOST_AUTO_TEST_CASE(fails_on_attempt_to_mix_deprecated_options_with_new) {
 	// When calling perform_resolve_hits with options: - (a dash to read from the input stream)
 	execute_perform_resolve_hits( {
-		"--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-"
-		"--" + crh_single_output_options_block::PO_SUMMARISE,
-		"--" + crh_single_output_options_block::PO_OUTPUT_FILE, TEMP_TEST_FILE_FILENAME.string(),
-		"--" + crh_output_options_block::PO_QUIET,
+		::fmt::format( "--{}", crh_output_options_block::PO_JSON_OUTPUT_TO_FILE ),
+		::fmt::format( "--{}", crh_single_output_options_block::PO_SUMMARISE ),
+		::fmt::format( "--{}", crh_single_output_options_block::PO_OUTPUT_FILE ), TEMP_TEST_FILE_FILENAME.string(),
+		::fmt::format( "--{}", crh_output_options_block::PO_QUIET ),
 	} );
 
 	// Then expect the correct error message in the output stream
@@ -149,8 +151,8 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file) {
 	// When calling perform_resolve_hits with options: - (a dash to read from the input stream), the output file option and an output file
 	execute_perform_resolve_hits( {
 		"-",
-		"--" + crh_output_options_block::PO_QUIET,
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string() } );
+		::fmt::format( "--{}", crh_output_options_block::PO_QUIET ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string() } );
 
 	// Then expect:
 	//  * an empty output stream and
@@ -169,7 +171,7 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file__deprecated_opts) {
 	input_ss.str( example_input_raw );
 
 	// When calling perform_resolve_hits with options: - (a dash to read from the input stream), the output file option and an output file
-	execute_perform_resolve_hits( { "-", "--" + crh_single_output_options_block::PO_OUTPUT_FILE, TEMP_TEST_FILE_FILENAME.string() } );
+	execute_perform_resolve_hits( { "-", ::fmt::format( "--{}", crh_single_output_options_block::PO_OUTPUT_FILE ), TEMP_TEST_FILE_FILENAME.string() } );
 
 	// Then expect:
 	//  * an empty output stream and
@@ -194,7 +196,7 @@ BOOST_AUTO_TEST_CASE(does_not_require_right_intersperses_all_to_cache) {
 	// When calling perform_resolve_hits on that data with no trimming
 	execute_perform_resolve_hits( {
 		"-",
-		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC,
+		::fmt::format( "--{}", crh_segment_options_block::PO_OVERLAP_TRIM_SPEC ),
 		"1/0"
 	} );
 	
@@ -211,46 +213,46 @@ BOOST_AUTO_TEST_CASE(does_not_require_right_intersperses_all_to_cache) {
 
 BOOST_AUTO_TEST_CASE(file_domtbl) {
 	execute_perform_resolve_hits( {
-		CRH_EG_DOMTBL_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
+		CRH_EG_DOMTBL_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_DOMTBL_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch) {
 	execute_perform_resolve_hits( {
-		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_HMMSEARCH_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_big_gap) {
 	execute_perform_resolve_hits( {
-		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_input_options_block::PO_MIN_GAP_LENGTH, "10000"
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_input_options_block::PO_MIN_GAP_LENGTH ), "10000"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_HMMSEARCH_BIG_GAP_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_small_gap) {
 	execute_perform_resolve_hits( {
-		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_input_options_block::PO_MIN_GAP_LENGTH, "1"
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_input_options_block::PO_MIN_GAP_LENGTH ), "1"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_HMMSEARCH_SMALL_GAP_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_trimmed) {
 	execute_perform_resolve_hits( {
-		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_OUTPUT_TRIMMED_HITS
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_OUTPUT_TRIMMED_HITS )
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_HMMSEARCH_TRIMMED_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
 	execute_perform_resolve_hits( {
-		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC, "100/60"
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_segment_options_block::PO_OVERLAP_TRIM_SPEC ), "100/60"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_HMMSEARCH_BIG_TRIM_OUT_FILENAME() );
 }
@@ -258,22 +260,22 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch_big_trim) {
 
 BOOST_AUTO_TEST_CASE(handles_output_hmmer_aln) {
 	execute_perform_resolve_hits( {
-		CRH_EG_HMMSEARCH_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_OUTPUT_HMMER_ALN
+		CRH_EG_HMMSEARCH_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_OUTPUT_HMMER_ALN )
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_HMMSEARCH_HMMSEARCH_ALN_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_evalue) {
 	execute_perform_resolve_hits( {
-		CRH_EG_RAW_EVALUE_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
+		CRH_EG_RAW_EVALUE_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_RAW_EVALUE_OUT_FILENAME() );
 }
 
 BOOST_AUTO_TEST_CASE(file_raw_score) {
 	execute_perform_resolve_hits( {
-		CRH_EG_RAW_SCORE_IN_FILENAME().string(), "--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_SCORES ),
+		CRH_EG_RAW_SCORE_IN_FILENAME().string(), ::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::RAW_WITH_SCORES ),
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_RAW_SCORE_OUT_FILENAME() );
 }
@@ -282,8 +284,8 @@ BOOST_AUTO_TEST_CASE(file_raw_score) {
 BOOST_AUTO_TEST_CASE(handles_dc_correctly) {
 	execute_perform_resolve_hits( {
 		(CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-		"--" + crh_score_options_block::PO_APPLY_CATH_RULES,
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
+		::fmt::format( "--{}", crh_score_options_block::PO_APPLY_CATH_RULES ),
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.cath_rules.out" );
 }
@@ -291,7 +293,7 @@ BOOST_AUTO_TEST_CASE(handles_dc_correctly) {
 BOOST_AUTO_TEST_CASE(rejects_output_hmmer_aln_for_non_hmmsearch_format) {
 	execute_perform_resolve_hits( {
 		(CRH_CATH_DC_HANDLING_DATA_DIR() / "dc_eg_domtblout.in" ).string(),
-		"--" + crh_output_options_block::PO_OUTPUT_HMMER_ALN,
+		::fmt::format( "--{}", crh_output_options_block::PO_OUTPUT_HMMER_ALN ),
 	} );
 	BOOST_CHECK( boost::algorithm::contains( output_ss.str(), "Cannot use" ) );
 }
@@ -301,8 +303,8 @@ BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scor
 
 	BOOST_CHECK_NO_THROW_DIAG( execute_perform_resolve_hits( {
 		(CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.negatives_scores.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HTML_OUTPUT_TO_FILE ), "-"
 	} ) );
 
 	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(^Skipping .* weak hits\.)" } ) );
@@ -314,8 +316,8 @@ BOOST_AUTO_TEST_CASE(generates_html_even_if_hmmsearch_aln_data_has_negative_scor
 
 	BOOST_CHECK_NO_THROW_DIAG( execute_perform_resolve_hits( {
 		(CRH_TEST_DATA_DIR() / "eg_hmmsearch_out.negatives_scores.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT )
 	} ) );
 
 	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(deprecated.* \-\-html\-output\-to\-file \-)" } ) );
@@ -334,8 +336,8 @@ BOOST_AUTO_TEST_CASE(handles_overlap_being_valid_only_once_short_seg_gone) {
 	// remove segments shorter than 7 and perform no trimming
 	execute_perform_resolve_hits( {
 		"-",
-		"--" + crh_segment_options_block::PO_MIN_SEG_LENGTH,    "7",
-		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC, "1/0",
+		::fmt::format( "--{}", crh_segment_options_block::PO_MIN_SEG_LENGTH ),    "7",
+		::fmt::format( "--{}", crh_segment_options_block::PO_OVERLAP_TRIM_SPEC ), "1/0",
 	} );
 
 	// Then: expect the results to have included both hits but to have removed
@@ -353,8 +355,8 @@ BOOST_AUTO_TEST_SUITE(limit)
 BOOST_AUTO_TEST_CASE(file_domtbl) {
 	execute_perform_resolve_hits( {
 		CRH_EG_DOMTBL_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-		"--" + crh_filter_options_block::PO_LIMIT_QUERIES + "=2"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
+		::fmt::format( "--{}", crh_filter_options_block::PO_LIMIT_QUERIES ) + "=2"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_DOMTBL_LIMIT_2_OUT_FILENAME() );
 }
@@ -362,8 +364,8 @@ BOOST_AUTO_TEST_CASE(file_domtbl) {
 BOOST_AUTO_TEST_CASE(file_hmmsearch) {
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_filter_options_block::PO_LIMIT_QUERIES + "=2"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_filter_options_block::PO_LIMIT_QUERIES ) + "=2"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_HMMSEARCH_LIMIT_2_OUT_FILENAME() );
 }
@@ -371,8 +373,8 @@ BOOST_AUTO_TEST_CASE(file_hmmsearch) {
 BOOST_AUTO_TEST_CASE(file_raw_evalue) {
 	execute_perform_resolve_hits( {
 		CRH_EG_RAW_EVALUE_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
-		"--" + crh_filter_options_block::PO_LIMIT_QUERIES + "=2"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::RAW_WITH_EVALUES ),
+		::fmt::format( "--{}", crh_filter_options_block::PO_LIMIT_QUERIES ) + "=2"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_RAW_EVALUE_LIMIT_2_OUT_FILENAME() );
 }
@@ -380,8 +382,8 @@ BOOST_AUTO_TEST_CASE(file_raw_evalue) {
 BOOST_AUTO_TEST_CASE(file_raw_score) {
 	execute_perform_resolve_hits( {
 		CRH_EG_RAW_SCORE_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::RAW_WITH_SCORES ),
-		"--" + crh_filter_options_block::PO_LIMIT_QUERIES + "=2"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::RAW_WITH_SCORES ),
+		::fmt::format( "--{}", crh_filter_options_block::PO_LIMIT_QUERIES ) + "=2"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( blank_vrsn( output_ss ), CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() );
 }
@@ -395,8 +397,8 @@ BOOST_AUTO_TEST_SUITE(summary_output)
 BOOST_AUTO_TEST_CASE(summarise) {
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_SUMMARISE_TO_FILE, "-"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_SUMMARISE_TO_FILE ), "-"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
 }
@@ -407,8 +409,8 @@ BOOST_AUTO_TEST_CASE(summarise__deprecated_opts) {
 
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_single_output_options_block::PO_SUMMARISE
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_single_output_options_block::PO_SUMMARISE )
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_SUMMARISE_OUT_FILENAME() );
 
@@ -422,7 +424,7 @@ BOOST_AUTO_TEST_SUITE(css)
 
 BOOST_AUTO_TEST_CASE(export_css_to_stdout) {
 	execute_perform_resolve_hits( {
-		"--" + crh_output_options_block::PO_EXPORT_CSS_FILE, "-",
+		::fmt::format( "--{}", crh_output_options_block::PO_EXPORT_CSS_FILE ), "-",
 	} );
 
 	BOOST_CHECK(   regex_search( output_ss.str(), regex{ R"(^/\* \-\-\- Start[^]*crh-exclusion-note[^]{0,100}$)" } ) ); // In EMCAScript, . doesn't match newline characters, hence the use of [^] here
@@ -431,7 +433,7 @@ BOOST_AUTO_TEST_CASE(export_css_to_stdout) {
 
 BOOST_AUTO_TEST_CASE(export_css_to_file) {
 	execute_perform_resolve_hits( {
-		"--" + crh_output_options_block::PO_EXPORT_CSS_FILE, TEMP_TEST_FILE_FILENAME.string(),
+		::fmt::format( "--{}", crh_output_options_block::PO_EXPORT_CSS_FILE ), TEMP_TEST_FILE_FILENAME.string(),
 	} );
 
 	BOOST_CHECK(   output_ss.str().empty() );
@@ -447,12 +449,12 @@ BOOST_AUTO_TEST_SUITE(html_output)
 BOOST_AUTO_TEST_CASE(html) {
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC, "150/90",
-		"--" + crh_output_options_block::PO_HTML_OUTPUT_TO_FILE, "-",
-		"--" + crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE, "14",
-		"--" + crh_html_options_block::PO_EXCLUDE_REJECTED_HITS,
-		"--" + crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS, "10"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_segment_options_block::PO_OVERLAP_TRIM_SPEC ), "150/90",
+		::fmt::format( "--{}", crh_output_options_block::PO_HTML_OUTPUT_TO_FILE ), "-",
+		::fmt::format( "--{}", crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE ), "14",
+		::fmt::format( "--{}", crh_html_options_block::PO_EXCLUDE_REJECTED_HITS ),
+		::fmt::format( "--{}", crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS ), "10"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
 }
@@ -463,12 +465,12 @@ BOOST_AUTO_TEST_CASE(html__deprecated_opts) {
 
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_segment_options_block::PO_OVERLAP_TRIM_SPEC, "150/90",
-		"--" + crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT,
-		"--" + crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE, "14",
-		"--" + crh_html_options_block::PO_EXCLUDE_REJECTED_HITS,
-		"--" + crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS, "10"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_segment_options_block::PO_OVERLAP_TRIM_SPEC ), "150/90",
+		::fmt::format( "--{}", crh_single_output_options_block::PO_GENERATE_HTML_OUTPUT ),
+		::fmt::format( "--{}", crh_filter_options_block::PO_WORST_PERMISSIBLE_BITSCORE ), "14",
+		::fmt::format( "--{}", crh_html_options_block::PO_EXCLUDE_REJECTED_HITS ),
+		::fmt::format( "--{}", crh_html_options_block::PO_MAX_NUM_NON_SOLN_HITS ), "10"
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_HTML_OUT_FILENAME() );
 
@@ -483,8 +485,8 @@ BOOST_AUTO_TEST_SUITE(json_output)
 BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out) {
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-",
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_JSON_OUTPUT_TO_FILE ), "-",
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
 }
@@ -492,8 +494,8 @@ BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out) {
 BOOST_AUTO_TEST_CASE(json_from_domtblout) {
 	execute_perform_resolve_hits( {
 		(CRH_TEST_DATA_DIR() / "eg_domtblout.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-		"--" + crh_output_options_block::PO_JSON_OUTPUT_TO_FILE, "-",
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_JSON_OUTPUT_TO_FILE ), "-",
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
 }
@@ -504,8 +506,8 @@ BOOST_AUTO_TEST_CASE(json_from_hmmsearch_out__deprecated_opts) {
 
 	execute_perform_resolve_hits( {
 		CRH_EG_HMMSEARCH_IN_FILENAME().string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_single_output_options_block::PO_JSON_OUTPUT,
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_single_output_options_block::PO_JSON_OUTPUT ),
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_HMMSEARCH_JSON_OUT_FILENAME() );
 
@@ -518,8 +520,8 @@ BOOST_AUTO_TEST_CASE(json_from_domtblout__deprecated_opts) {
 
 	execute_perform_resolve_hits( {
 		(CRH_TEST_DATA_DIR() / "eg_domtblout.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT, to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
-		"--" + crh_single_output_options_block::PO_JSON_OUTPUT,
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ), to_string( hits_input_format_tag::HMMER_DOMTBLOUT ),
+		::fmt::format( "--{}", crh_single_output_options_block::PO_JSON_OUTPUT ),
 	} );
 	BOOST_CHECK_STRING_MATCHES_FILE( output_ss.str(), CRH_EG_DOMTBL_JSON_OUT_FILENAME() );
 
@@ -533,8 +535,8 @@ BOOST_AUTO_TEST_SUITE(hmm_coverage)
 BOOST_AUTO_TEST_CASE(hmm_coverage__neither) {
 	execute_perform_resolve_hits( {
 		(CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.hmmsearch_out.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT,         to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE,   TEMP_TEST_FILE_FILENAME.string()
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ),         to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ),   TEMP_TEST_FILE_FILENAME.string()
 	} );
 	BOOST_CHECK_FILES_EQUAL( blank_vrsn( TEMP_TEST_FILE_FILENAME ), CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_neither" );
 }
@@ -542,9 +544,9 @@ BOOST_AUTO_TEST_CASE(hmm_coverage__neither) {
 BOOST_AUTO_TEST_CASE(hmm_coverage__discontinuous) {
 	execute_perform_resolve_hits( {
 		(CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.hmmsearch_out.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string(),
-		"--" + crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE + "=99.9"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ),       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string(),
+		::fmt::format( "--{}", crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE ) + "=99.9"
 	} );
 	BOOST_CHECK_FILES_EQUAL( blank_vrsn( TEMP_TEST_FILE_FILENAME ), CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_dc" );
 }
@@ -552,9 +554,9 @@ BOOST_AUTO_TEST_CASE(hmm_coverage__discontinuous) {
 BOOST_AUTO_TEST_CASE(hmm_coverage__all) {
 	execute_perform_resolve_hits( {
 		(CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.hmmsearch_out.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string(),
-		"--" + crh_filter_options_block::PO_MIN_HMM_COVERAGE    + "=60.0"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ),       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string(),
+		::fmt::format( "--{}", crh_filter_options_block::PO_MIN_HMM_COVERAGE )    + "=60.0"
 	} );
 	BOOST_CHECK_FILES_EQUAL( blank_vrsn( TEMP_TEST_FILE_FILENAME ), CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_all" );
 }
@@ -562,10 +564,10 @@ BOOST_AUTO_TEST_CASE(hmm_coverage__all) {
 BOOST_AUTO_TEST_CASE(hmm_coverage__all_and_discontinuous) {
 	execute_perform_resolve_hits( {
 		(CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.hmmsearch_out.in" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string(),
-		"--" + crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE + "=99.9",
-		"--" + crh_filter_options_block::PO_MIN_HMM_COVERAGE    + "=60.0"
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ),       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string(),
+		::fmt::format( "--{}", crh_filter_options_block::PO_MIN_DC_HMM_COVERAGE ) + "=99.9",
+		::fmt::format( "--{}", crh_filter_options_block::PO_MIN_HMM_COVERAGE )    + "=60.0"
 	} );
 	BOOST_CHECK_FILES_EQUAL( blank_vrsn( TEMP_TEST_FILE_FILENAME ), CRH_HMM_COVERAGE_DATA_DIR() / "hmm_coverage.out.cov_both" );
 }
@@ -577,8 +579,8 @@ BOOST_AUTO_TEST_SUITE(hmmscan_format)
 BOOST_AUTO_TEST_CASE(seqs_hmmsearch) {
 	execute_perform_resolve_hits( {
 		( CRH_HMMSCAN_DATA_DIR() / "seqs.hmmsearch" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string()
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ),       to_string( hits_input_format_tag::HMMSEARCH_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string()
 	} );
 	BOOST_CHECK_FILES_EQUAL( blank_vrsn( TEMP_TEST_FILE_FILENAME ), CRH_HMMSCAN_DATA_DIR() / "seqs.hmmsearch.out" );
 }
@@ -586,8 +588,8 @@ BOOST_AUTO_TEST_CASE(seqs_hmmsearch) {
 BOOST_AUTO_TEST_CASE(seqs_hmmscan) {
 	execute_perform_resolve_hits( {
 		( CRH_HMMSCAN_DATA_DIR() / "seqs.hmmscan" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSCAN_OUT ),
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string()
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ),       to_string( hits_input_format_tag::HMMSCAN_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string()
 	} );
 	BOOST_CHECK_FILES_EQUAL( blank_vrsn( TEMP_TEST_FILE_FILENAME ), CRH_HMMSCAN_DATA_DIR() / "seqs.hmmscan.out" );
 }
@@ -595,8 +597,8 @@ BOOST_AUTO_TEST_CASE(seqs_hmmscan) {
 BOOST_AUTO_TEST_CASE(p53_p63_hmmscan) {
 	execute_perform_resolve_hits( {
 		( CRH_HMMSCAN_DATA_DIR() / "p53_p63.hmmscan" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSCAN_OUT ),
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string()
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ),       to_string( hits_input_format_tag::HMMSCAN_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string()
 	} );
 	BOOST_CHECK_FILES_EQUAL( blank_vrsn( TEMP_TEST_FILE_FILENAME ), CRH_HMMSCAN_DATA_DIR() / "p53_p63.hmmscan.out" );
 }
@@ -604,8 +606,8 @@ BOOST_AUTO_TEST_CASE(p53_p63_hmmscan) {
 BOOST_AUTO_TEST_CASE(single_sequence_hmmscan_out) {
 	execute_perform_resolve_hits( {
 		( CRH_HMMSCAN_DATA_DIR() / "single_sequence.hmmscan.out" ).string(),
-		"--" + crh_input_options_block::PO_INPUT_FORMAT,       to_string( hits_input_format_tag::HMMSCAN_OUT ),
-		"--" + crh_output_options_block::PO_HITS_TEXT_TO_FILE, TEMP_TEST_FILE_FILENAME.string()
+		::fmt::format( "--{}", crh_input_options_block::PO_INPUT_FORMAT ),       to_string( hits_input_format_tag::HMMSCAN_OUT ),
+		::fmt::format( "--{}", crh_output_options_block::PO_HITS_TEXT_TO_FILE ), TEMP_TEST_FILE_FILENAME.string()
 	} );
 	BOOST_CHECK_FILES_EQUAL( blank_vrsn( TEMP_TEST_FILE_FILENAME ), CRH_HMMSCAN_DATA_DIR() / "single_sequence.hmmscan.out.out" );
 }

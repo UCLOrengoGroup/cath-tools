@@ -20,6 +20,8 @@
 
 #include "cath_superpose_options.hpp"
 
+#include <string_view>
+
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "cath/acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "cath/acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
@@ -51,13 +53,11 @@ using ::std::istream;
 using ::std::nullopt;
 using ::std::pair;
 using ::std::string;
+using ::std::string_view;
 using ::std::unique_ptr;
 
-/// \brief The name of this program
-const string cath_superpose_options::PROGRAM_NAME("cath-superpose");
-
 /// TODOCUMENT
-string cath_superpose_options::do_get_program_name() const {
+string_view cath_superpose_options::do_get_program_name() const {
 	return PROGRAM_NAME;
 }
 
@@ -120,14 +120,19 @@ str_opt cath_superpose_options::do_get_error_or_help_string() const {
 
 /// \brief Get a string to prepend to the standard help
 string cath_superpose_options::do_get_help_prefix_string() const {
-	return "Usage: " + PROGRAM_NAME + " alignment_source pdb_file_source [superposition_outputs]\n\n"
-		+ get_overview_string() + R"(
+	return ::fmt::format(
+	  R"(Usage: {} alignment_source pdb_file_source [superposition_outputs]
+
+{}
 
 Please specify:
- * at most one superposition JSON or alignment (default: --)" + alignment_input_options_block::PO_DO_THE_SSAPS + R"()
+ * at most one superposition JSON or alignment (default: --{})
  * one method of reading PDB files (number to match the alignment)
 
-PyMOL is started if no alignment or superposition output option is specified)";
+PyMOL is started if no alignment or superposition output option is specified)",
+	  PROGRAM_NAME,
+	  get_overview_string(),
+	  alignment_input_options_block::PO_DO_THE_SSAPS );
 }
 
 /// \brief Get a string to append to the standard help

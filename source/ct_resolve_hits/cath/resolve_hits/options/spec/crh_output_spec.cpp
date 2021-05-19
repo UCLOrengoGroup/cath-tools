@@ -25,6 +25,8 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm/count.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/common/algorithm/append.hpp"
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/algorithm/is_uniq.hpp"
@@ -203,7 +205,7 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &prm_output_sp
 	}
 
 	if ( num_stdouts > 0 && prm_output_spec.get_quiet() ) {
-		return "Cannot send output to stdout when requesting --" + crh_output_options_block::PO_QUIET;
+		return ::fmt::format( "Cannot send output to stdout when requesting --{}", crh_output_options_block::PO_QUIET );
 	}
 
 	if ( ! is_uniq( all_sorted_paths ) ) {
@@ -212,10 +214,9 @@ str_opt cath::rslv::get_invalid_description(const crh_output_spec &prm_output_sp
 
 	const bool hits_text_to_stdout = num_stdouts == 0 && ! prm_output_spec.get_quiet();
 	if ( means_output_trimmed_hits( prm_output_spec.get_boundary_output() ) && ! ( hits_text_to_stdout || has_hits_text_output( prm_output_spec ) ) ) {
-		return
-			"Cannot specify trimmed boundaries if not outputting any hits text (with --"
-			+ crh_output_options_block::PO_HITS_TEXT_TO_FILE
-			+ ") but your output format may already contain the information you require";
+		return ::fmt::format( "Cannot specify trimmed boundaries if not outputting any hits text (with --{}) but your "
+		                      "output format may already contain the information you require",
+		                      crh_output_options_block::PO_HITS_TEXT_TO_FILE );
 	}
 
 	return nullopt;

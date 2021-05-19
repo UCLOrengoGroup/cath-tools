@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_CATH_CHECK_PDB_OPTIONS_CATH_CHECK_PDB_OPTIONS_HPP
 
 #include <filesystem>
+#include <string_view>
 #include <vector>
 
 #include "cath/options/executable/executable_options.hpp"
@@ -38,7 +39,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			check_pdb_options_block the_check_pdb_options_block;
 
-			[[nodiscard]] std::string                              do_get_program_name() const final;
+			[[nodiscard]] std::string_view                         do_get_program_name() const final;
 			boost::program_options::positional_options_description get_positional_options() final;
 			[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
 
@@ -52,7 +53,8 @@ namespace cath {
 			[[nodiscard]] ::std::filesystem::path get_pdb_file() const;
 			[[nodiscard]] bool                    get_permit_no_atoms() const;
 
-			static const std::string PROGRAM_NAME;
+			/// \brief The name of the program that uses this executable_options
+			static constexpr ::std::string_view PROGRAM_NAME{ "check-pdb" };
 		};
 
 	} // namespace opts

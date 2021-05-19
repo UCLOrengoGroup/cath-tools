@@ -27,6 +27,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
 
+#include <fmt/core.h>
+
 #include "cath/alignment/common_residue_selection_policy/common_residue_select_min_score_policy.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
@@ -48,29 +50,6 @@ using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
 using ::std::nullopt;
-
-const string old_ssap_options_block::PO_NAME                 = { "name"                    }; ///< The option name for the names option
-
-const string old_ssap_options_block::PO_DEBUG                = { "debug"                   }; ///< The option name for the debug option
-const string old_ssap_options_block::PO_OUT_FILE             = { "outfile"                 }; ///< The option name for the output_filename option
-
-const string old_ssap_options_block::PO_CLIQUE_FILE          = { "clique-file"             }; ///< The option name for the clique_file option
-const string old_ssap_options_block::PO_DOMIN_FILE           = { "domin-file"              }; ///< The option name for the domin_file option
-
-const string old_ssap_options_block::PO_MAX_SCORE_TO_REFAST  = { "max-score-to-fast-rerun" }; ///< The option name for the max_score_to_fast_ssap_rerun option
-const string old_ssap_options_block::PO_MAX_SCORE_TO_RESLOW  = { "max-score-to-slow-rerun" }; ///< The option name for the max_score_to_slow_ssap_rerun option
-const string old_ssap_options_block::PO_SLOW_SSAP_ONLY       = { "slow-ssap-only"          }; ///< The option name for the slow_ssap_only option
-
-const string old_ssap_options_block::PO_LOC_SSAP_SCORE       = { "local-ssap-score"        }; ///< The option name for the use_local_ssap_score option
-const string old_ssap_options_block::PO_ALL_SCORES           = { "all-scores"              }; ///< The option name for the write_all_scores option
-const string old_ssap_options_block::PO_PROTEIN_SOURCE_FILES = { "prot-src-files"          }; ///< The option name for the protein_source_files option
-
-const string old_ssap_options_block::PO_SUPN_DIR             = { "supdir"                  }; ///< The option name for the superposition_dir option
-const string old_ssap_options_block::PO_ALIGN_DIR            = { "aligndir"                }; ///< The option name for the alignment_dir option
-const string old_ssap_options_block::PO_MIN_OUT_SCORE        = { "min-score-for-files"     }; ///< The option name for the min_score_for_writing_files option
-const string old_ssap_options_block::PO_MIN_SUP_SCORE        = { "min-sup-score"           }; ///< The option name for the min_score_for_superposition option
-const string old_ssap_options_block::PO_RASMOL_SCRIPT        = { "rasmol-script"           }; ///< The option name for the write_rasmol_script option
-const string old_ssap_options_block::PO_XML_SUP              = { "xmlsup"                  }; ///< The option name for write_xml_sup option
 
 /// \brief The single-character for the output file option
 
@@ -101,30 +80,30 @@ void old_ssap_options_block::do_add_visible_options_to_description(options_descr
 
 	const auto write_rasmol_script_notifier = [&] (const bool &x) { set_write_rasmol_script( x ? sup_pdbs_script_policy::WRITE_RASMOL_SCRIPT : sup_pdbs_script_policy::LEAVE_RAW_PDBS ); };
 
-	const string PO_OUT_FILE_W_CHAR = PO_OUT_FILE + ',' + PO_CHAR_OUT_FILE;
+	const string PO_OUT_FILE_W_CHAR = ::fmt::format( "{},{}", PO_OUT_FILE, PO_CHAR_OUT_FILE );
 
 	const string protein_file_combns_str = join( get_ssap_ready_protein_file_combn_strings(), ", " );
 	prm_desc.add_options()
-		( PO_DEBUG.c_str(),                bool_switch              ( &debug                        )                           ->default_value(DEF_BOOL      ),   "Output debugging information"                                                                                          )
-		( PO_OUT_FILE_W_CHAR.c_str(),      value<path>              ( &output_filename              )->value_name(file_varname ),                                ( "[DEPRECATED] Output scores to " + file_varname + " rather than to stdout" ).c_str()                                    )
+		( string( PO_DEBUG ).c_str(),                bool_switch              ( &debug                        )                           ->default_value(DEF_BOOL      ),   "Output debugging information"                                                                                          )
+		( PO_OUT_FILE_W_CHAR.c_str(),                value<path>              ( &output_filename              )->value_name(file_varname ),                                ( "[DEPRECATED] Output scores to " + file_varname + " rather than to stdout" ).c_str()                                    )
 
-		( PO_CLIQUE_FILE.c_str(),          value<path>              ( &clique_file                  )->value_name(file_varname ),                                ( "Read clique from " + file_varname ).c_str()                                                                            )
-		( PO_DOMIN_FILE.c_str(),           value<path>              ( &domin_file                   )->value_name(file_varname ),                                ( "Read domin from "  + file_varname ).c_str()                                                                            )
+		( string( PO_CLIQUE_FILE ).c_str(),          value<path>              ( &clique_file                  )->value_name(file_varname ),                                ( "Read clique from " + file_varname ).c_str()                                                                            )
+		( string( PO_DOMIN_FILE ).c_str(),           value<path>              ( &domin_file                   )->value_name(file_varname ),                                ( "Read domin from "  + file_varname ).c_str()                                                                            )
 
-		( PO_MAX_SCORE_TO_REFAST.c_str(),  value<double>            ( &max_score_to_fast_ssap_rerun )->value_name(score_varname)->default_value(DEF_REFAST    ), ( "Run a second fast SSAP with looser cutoffs if the first fast SSAP's score falls below " + score_varname ).c_str()      )
-		( PO_MAX_SCORE_TO_RESLOW.c_str(),  value<double>            ( &max_score_to_slow_ssap_rerun )->value_name(score_varname)->default_value(DEF_RESLOW    ), ( "Perform a slow SSAP if the (best) fast SSAP score falls below " + score_varname ).c_str()                              )
-		( PO_SLOW_SSAP_ONLY.c_str(),       bool_switch              ( &slow_ssap_only               )                           ->default_value(DEF_BOOL      ),   "Don't try any fast SSAPs; only use slow SSAP"                                                                          )
+		( string( PO_MAX_SCORE_TO_REFAST ).c_str(),  value<double>            ( &max_score_to_fast_ssap_rerun )->value_name(score_varname)->default_value(DEF_REFAST    ), ( "Run a second fast SSAP with looser cutoffs if the first fast SSAP's score falls below " + score_varname ).c_str()      )
+		( string( PO_MAX_SCORE_TO_RESLOW ).c_str(),  value<double>            ( &max_score_to_slow_ssap_rerun )->value_name(score_varname)->default_value(DEF_RESLOW    ), ( "Perform a slow SSAP if the (best) fast SSAP score falls below " + score_varname ).c_str()                              )
+		( string( PO_SLOW_SSAP_ONLY ).c_str(),       bool_switch              ( &slow_ssap_only               )                           ->default_value(DEF_BOOL      ),   "Don't try any fast SSAPs; only use slow SSAP"                                                                          )
 
-		( PO_LOC_SSAP_SCORE.c_str(),       bool_switch              ( &use_local_ssap_score         )                           ->default_value(DEF_BOOL      ),   "[DEPRECATED] Normalise the SSAP score over the length of the smallest domain rather than the largest"                  )
-		( PO_ALL_SCORES.c_str(),           bool_switch              ( &write_all_scores             )                           ->default_value(DEF_BOOL      ),   "[DEPRECATED] Output all SSAP scores from fast and slow runs, not just the highest"                                     )
-		( PO_PROTEIN_SOURCE_FILES.c_str(), value<protein_file_combn>( &protein_source_files         )->value_name( set_varname )->default_value(DEF_PROT_SRCS ), ( "Read the protein data from the set of files "+set_varname+", of available sets:\n" + protein_file_combns_str ).c_str() )
+		( string( PO_LOC_SSAP_SCORE ).c_str(),       bool_switch              ( &use_local_ssap_score         )                           ->default_value(DEF_BOOL      ),   "[DEPRECATED] Normalise the SSAP score over the length of the smallest domain rather than the largest"                  )
+		( string( PO_ALL_SCORES ).c_str(),           bool_switch              ( &write_all_scores             )                           ->default_value(DEF_BOOL      ),   "[DEPRECATED] Output all SSAP scores from fast and slow runs, not just the highest"                                     )
+		( string( PO_PROTEIN_SOURCE_FILES ).c_str(), value<protein_file_combn>( &protein_source_files         )->value_name( set_varname )->default_value(DEF_PROT_SRCS ), ( "Read the protein data from the set of files "+set_varname+", of available sets:\n" + protein_file_combns_str ).c_str() )
 
-		( PO_SUPN_DIR.c_str(),             value<path>              ( &superposition_dir            )->value_name( dir_varname ),                                ( "[DEPRECATED] Output a superposition to directory " + dir_varname ).c_str()                                             )
-		( PO_ALIGN_DIR.c_str(),            value<path>              ( &alignment_dir                )->value_name( dir_varname )->default_value( path(".")    ), ( "Write alignment to directory " + dir_varname ).c_str()                                                                 )
-		( PO_MIN_OUT_SCORE.c_str(),        value<double>            ( &min_score_for_writing_files  )->value_name(score_varname)->default_value(DEF_FILE_SC   ), ( "Only output alignment/superposition files if the SSAP score exceeds " + score_varname ).c_str()                        )
-		( PO_MIN_SUP_SCORE.c_str(),        value<double>            ( &min_score_for_superposition  )->value_name(score_varname)->default_value(DEF_SUP       ), ( "[DEPRECATED] Calculate superposition based on the residue-pairs with scores greater than " + score_varname ).c_str()   )
-		( PO_RASMOL_SCRIPT.c_str(),        bool_switch()->notifier  ( write_rasmol_script_notifier  ),                                                             "[DEPRECATED] Write a rasmol superposition script to load and colour the superposed structures"                         )
-		( PO_XML_SUP.c_str(),              bool_switch              ( &write_xml_sup                )                           ->default_value(DEF_BOOL      ),   "[DEPRECATED] Write a small xml superposition file, from which a larger superposition file can be reconstructed"        );
+		( string( PO_SUPN_DIR ).c_str(),             value<path>              ( &superposition_dir            )->value_name( dir_varname ),                                ( "[DEPRECATED] Output a superposition to directory " + dir_varname ).c_str()                                             )
+		( string( PO_ALIGN_DIR ).c_str(),            value<path>              ( &alignment_dir                )->value_name( dir_varname )->default_value( path(".")    ), ( "Write alignment to directory " + dir_varname ).c_str()                                                                 )
+		( string( PO_MIN_OUT_SCORE ).c_str(),        value<double>            ( &min_score_for_writing_files  )->value_name(score_varname)->default_value(DEF_FILE_SC   ), ( "Only output alignment/superposition files if the SSAP score exceeds " + score_varname ).c_str()                        )
+		( string( PO_MIN_SUP_SCORE ).c_str(),        value<double>            ( &min_score_for_superposition  )->value_name(score_varname)->default_value(DEF_SUP       ), ( "[DEPRECATED] Calculate superposition based on the residue-pairs with scores greater than " + score_varname ).c_str()   )
+		( string( PO_RASMOL_SCRIPT ).c_str(),        bool_switch()->notifier  ( write_rasmol_script_notifier  ),                                                             "[DEPRECATED] Write a rasmol superposition script to load and colour the superposed structures"                         )
+		( string( PO_XML_SUP ).c_str(),              bool_switch              ( &write_xml_sup                )                           ->default_value(DEF_BOOL      ),   "[DEPRECATED] Write a small xml superposition file, from which a larger superposition file can be reconstructed"        );
 }
 
 /// \brief Add any hidden options to the provided options_description
@@ -132,7 +111,7 @@ void old_ssap_options_block::do_add_hidden_options_to_description(options_descri
                                                                   const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                   ) {
 	prm_desc.add_options()
-		( PO_NAME.c_str(), value<str_vec>( &names ), "Structure names" );
+		( string( PO_NAME ).c_str(), value<str_vec>( &names ), "Structure names" );
 }
 
 /// \brief Identify any conflicts that make the currently stored options invalid
@@ -196,25 +175,25 @@ str_opt old_ssap_options_block::do_invalid_string(const variables_map &/*prm_var
 }
 
 /// \brief Return all options names for this block
-str_vec old_ssap_options_block::do_get_all_options_names() const {
+str_view_vec old_ssap_options_block::do_get_all_options_names() const {
 	return {
-		old_ssap_options_block::PO_NAME,
-		old_ssap_options_block::PO_DEBUG,
-		old_ssap_options_block::PO_OUT_FILE,
-		old_ssap_options_block::PO_CLIQUE_FILE,
-		old_ssap_options_block::PO_DOMIN_FILE,
-		old_ssap_options_block::PO_MAX_SCORE_TO_REFAST,
-		old_ssap_options_block::PO_MAX_SCORE_TO_RESLOW,
-		old_ssap_options_block::PO_SLOW_SSAP_ONLY,
-		old_ssap_options_block::PO_LOC_SSAP_SCORE,
-		old_ssap_options_block::PO_ALL_SCORES,
-		old_ssap_options_block::PO_PROTEIN_SOURCE_FILES,
-		old_ssap_options_block::PO_SUPN_DIR,
-		old_ssap_options_block::PO_ALIGN_DIR,
-		old_ssap_options_block::PO_MIN_OUT_SCORE,
-		old_ssap_options_block::PO_MIN_SUP_SCORE,
-		old_ssap_options_block::PO_RASMOL_SCRIPT,
-		old_ssap_options_block::PO_XML_SUP,
+		PO_NAME,
+		PO_DEBUG,
+		PO_OUT_FILE,
+		PO_CLIQUE_FILE,
+		PO_DOMIN_FILE,
+		PO_MAX_SCORE_TO_REFAST,
+		PO_MAX_SCORE_TO_RESLOW,
+		PO_SLOW_SSAP_ONLY,
+		PO_LOC_SSAP_SCORE,
+		PO_ALL_SCORES,
+		PO_PROTEIN_SOURCE_FILES,
+		PO_SUPN_DIR,
+		PO_ALIGN_DIR,
+		PO_MIN_OUT_SCORE,
+		PO_MIN_SUP_SCORE,
+		PO_RASMOL_SCRIPT,
+		PO_XML_SUP,
 	};
 }
 

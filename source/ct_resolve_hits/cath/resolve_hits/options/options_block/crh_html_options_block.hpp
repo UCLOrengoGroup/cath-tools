@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_HTML_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK_CRH_HTML_OPTIONS_BLOCK_HPP
 
+#include <string_view>
+
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/resolve_hits/options/spec/crh_html_spec.hpp"
 
@@ -40,14 +42,19 @@ namespace cath {
 			void do_add_visible_options_to_description(boost::program_options::options_description &,
 			                                           const size_t &) final;
 			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_vec do_get_all_options_names() const final;
+			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
 		  public:
-			static const std::string PO_RESTRICT_HTML_WITHIN_BODY;
-			static const std::string PO_MAX_NUM_NON_SOLN_HITS;
-			static const std::string PO_EXCLUDE_REJECTED_HITS;
-
 			[[nodiscard]] const crh_html_spec &get_crh_html_spec() const;
+
+			/// \brief  The option name for whether to restrict HTML output to the contents of the body tag
+			static constexpr ::std::string_view PO_RESTRICT_HTML_WITHIN_BODY{ "restrict-html-within-body" };
+
+			/// \brief  The option name for the maximum number of non-solution hits to display in the HTML
+			static constexpr ::std::string_view PO_MAX_NUM_NON_SOLN_HITS{ "html-max-num-non-soln-hits" };
+
+			/// \brief  The option name for whether to exclude hits rejected by the score filters from the HTML
+			static constexpr ::std::string_view PO_EXCLUDE_REJECTED_HITS{ "html-exclude-rejected-hits" };
 		};
 
 	} // namespace rslv

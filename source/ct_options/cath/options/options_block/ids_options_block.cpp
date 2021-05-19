@@ -20,14 +20,15 @@
 
 #include "ids_options_block.hpp"
 
+#include <iostream>
+#include <string_view>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
-
-#include <iostream>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -38,8 +39,9 @@ using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::nullopt;
+using ::std::string_view;
 
-const string ids_options_block::PO_ID( "id" ); ///< The option name for the id option
+constexpr string_view PO_ID( "id" ); ///< The option name for the id option
 
 /// \brief A standard do_clone() method to act as a virtual copy-ctor
 ///
@@ -62,7 +64,7 @@ void ids_options_block::do_add_visible_options_to_description(options_descriptio
                                                               const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                               ) {
 	prm_desc.add_options()
-		( PO_ID.c_str(), value<str_vec>( &ids ), "Structure ids" );
+		( string( PO_ID ).c_str(), value<str_vec>( &ids ), "Structure ids" );
 }
 
 ///// \brief Add any hidden options to the provided options_description
@@ -81,9 +83,9 @@ str_opt ids_options_block::do_invalid_string(const variables_map &/*prm_variable
 }
 
 /// \brief Return all options names for this block
-str_vec ids_options_block::do_get_all_options_names() const {
+str_view_vec ids_options_block::do_get_all_options_names() const {
 	return {
-		ids_options_block::PO_ID,
+		PO_ID,
 	};
 }
 

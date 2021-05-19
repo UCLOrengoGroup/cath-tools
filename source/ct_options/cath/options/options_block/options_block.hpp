@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_OPTIONS_BLOCK_HPP
 
 #include <filesystem>
+#include <string_view>
 
 #include <boost/program_options.hpp>
 
@@ -83,7 +84,7 @@ namespace cath {
 			/// \brief Pure virtual method with which each concrete options_block must define its full list of options names
 			///
 			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			[[nodiscard]] virtual str_vec do_get_all_options_names() const = 0;
+			[[nodiscard]] virtual str_view_vec do_get_all_options_names() const = 0;
 
 		  public:
 			options_block() = default;
@@ -106,7 +107,7 @@ namespace cath {
 
 			[[nodiscard]] str_opt invalid_string( const boost::program_options::variables_map & ) const;
 
-			[[nodiscard]] str_vec get_all_options_names() const;
+			[[nodiscard]] str_view_vec get_all_options_names() const;
 
 			static bool is_acceptable_output_file(const ::std::filesystem::path &);
 			static bool is_acceptable_input_file(const ::std::filesystem::path &,
@@ -115,8 +116,11 @@ namespace cath {
 			static bool is_acceptable_input_dir(const ::std::filesystem::path &);
 			static bool is_acceptable_executable(const ::std::filesystem::path &);
 
-			static const std::string SUB_DESC_SEPARATOR;
-			static const std::string SUB_DESC_PAIR_SEPARATOR;
+			/// \brief A string to use to separate (valid values and their descriptions) from each other
+			static constexpr ::std::string_view SUB_DESC_SEPARATOR = "\n   ";
+
+			/// \brief The string to use to separate valid values' names from their descriptions
+			static constexpr ::std::string_view SUB_DESC_PAIR_SEPARATOR = " - ";
 		};
 
 		bool specifies_option(const boost::program_options::variables_map &,

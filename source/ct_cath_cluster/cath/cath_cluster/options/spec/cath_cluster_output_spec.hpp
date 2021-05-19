@@ -63,7 +63,7 @@ namespace cath {
 
 		path_vec get_all_output_paths(const cath_cluster_output_spec &);
 
-		str_opt has_output_requiring_single_level_clustering(const cath_cluster_output_spec &);
+		str_view_opt has_output_requiring_single_level_clustering(const cath_cluster_output_spec &);
 
 		str_opt get_invalid_description(const cath_cluster_output_spec &);
 

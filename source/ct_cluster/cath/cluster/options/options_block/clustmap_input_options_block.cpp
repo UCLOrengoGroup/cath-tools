@@ -37,15 +37,6 @@ using ::std::filesystem::path;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for the cluster-membership file for the working clusters
-const string clustmap_input_options_block::PO_WORKING_CLUSTMEMB_FILE  { "working-clustmemb-file"  };
-
-/// \brief The option name for an optional file specify a cluster-membership file for map-from clusters
-const string clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE { "map-from-clustmemb-file" };
-
-/// \brief The option name for whether to read batches from working_clustmemb_file (rather than cluster membership directly)
-const string clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT { "read-batches-from-input" };
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> clustmap_input_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -67,7 +58,7 @@ void clustmap_input_options_block::do_add_visible_options_to_description(options
 
 	prm_desc.add_options()
 		(
-			( PO_MAP_FROM_CLUSTMEMB_FILE ).c_str(),
+			string( PO_MAP_FROM_CLUSTMEMB_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                                         )
 				->notifier     ( map_from_clustmemb_file_notifier                     ),
@@ -77,7 +68,7 @@ void clustmap_input_options_block::do_add_visible_options_to_description(options
 				"(of, if unspecified, renumber all working clusters from 1 upwards)" ).c_str()
 		)
 		(
-			( PO_READ_BATCHES_FROM_INPUT ).c_str(),
+			string( PO_READ_BATCHES_FROM_INPUT ).c_str(),
 			bool_switch()
 				->notifier     ( read_batches_from_input_notifier                     )
 				->default_value( clustmap_input_spec::DEFAULT_READ_BATCHES_FROM_INPUT ),
@@ -100,7 +91,7 @@ void clustmap_input_options_block::do_add_hidden_options_to_description(options_
 
 	prm_desc.add_options()
 		(
-			( PO_WORKING_CLUSTMEMB_FILE ).c_str(),
+			string( PO_WORKING_CLUSTMEMB_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                                         )
 				->notifier     ( working_clustmemb_file_notifier                      ),
@@ -116,11 +107,11 @@ str_opt clustmap_input_options_block::do_invalid_string(const variables_map &/*p
 }
 
 /// \brief Return all options names for this block
-str_vec clustmap_input_options_block::do_get_all_options_names() const {
+str_view_vec clustmap_input_options_block::do_get_all_options_names() const {
 	return {
-		clustmap_input_options_block::PO_WORKING_CLUSTMEMB_FILE,
-		clustmap_input_options_block::PO_MAP_FROM_CLUSTMEMB_FILE,
-		clustmap_input_options_block::PO_READ_BATCHES_FROM_INPUT,
+		PO_WORKING_CLUSTMEMB_FILE,
+		PO_MAP_FROM_CLUSTMEMB_FILE,
+		PO_READ_BATCHES_FROM_INPUT,
 	};
 }
 

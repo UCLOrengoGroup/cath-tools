@@ -36,7 +36,7 @@ namespace {
 	///
 	/// Using program_exception_wrapper allows the program to be wrapped in standard last-chance exception handling.
 	class ssap_program_exception_wrapper final : public program_exception_wrapper {
-		[[nodiscard]] string do_get_program_name() const final {
+		[[nodiscard]] string_view do_get_program_name() const final {
 			return "cath-ssap";
 		}
 

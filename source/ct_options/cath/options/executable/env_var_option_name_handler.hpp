@@ -24,6 +24,7 @@
 #include <boost/program_options.hpp>
 
 #include <string>
+#include <string_view>
 
 namespace cath {
 	namespace opts {
@@ -40,22 +41,22 @@ namespace cath {
 		///
 		/// Example usage: \snippet executable_options.cpp Using env_var_option_name_handler
 		class env_var_option_name_handler final {
-			std::string prefix;
+			::std::string_view prefix;
 			bool allow_unknown;
 			const boost::program_options::options_description &the_options;
 
 		public:
-			env_var_option_name_handler(std::string,
+			env_var_option_name_handler(::std::string_view,
 			                            const bool &,
 			                            const boost::program_options::options_description & = boost::program_options::options_description());
 
-			std::string operator()(const std::string &) const;
+			::std::string operator()(const ::std::string &) const;
 		};
 
-		std::string option_of_environment_variable_and_prefix(const std::string &,
-		                                                      const std::string &);
+		::std::string option_of_environment_variable_and_prefix(const ::std::string &,
+		                                                        const ::std::string_view &);
 
-		std::string environment_variable_prefix_of_program_name(const std::string &);
+		::std::string environment_variable_prefix_of_program_name(const ::std::string &);
 		
 	} // namespace opts
 } // namespace cath

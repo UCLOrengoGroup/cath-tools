@@ -21,20 +21,24 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_HPP
 #define _CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_HPP
 
-#include <boost/operators.hpp>
-
-#include "cath/common/type_aliases.hpp"
-
+#include <cmath>
 #include <string>
 #include <vector>
+
+#include <boost/operators.hpp>
+#include <boost/throw_exception.hpp>
+
+#include <fmt/core.h>
+
+#include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/common/type_aliases.hpp"
 
 namespace cath {
 
 	/// \brief TODOCUMENT
 	///
 	/// \todo Consider making this constexpr
-	class display_colour final : private boost::equivalent      < display_colour,
-	                                     boost::totally_ordered < display_colour > > {
+	class display_colour final : private boost::equivalent<display_colour, boost::totally_ordered<display_colour>> {
 		/// \brief TODOCUMENT
 		double r = 0.0;
 
@@ -44,54 +48,156 @@ namespace cath {
 		/// \brief TODOCUMENT
 		double b = 0.0;
 
-		static void check_component_value(const double &);
+		static constexpr void check_component_value( const double & );
 
-	public:
+	  public:
 		/// \brief Default ctor for display_colour (makes BLACK)
-		display_colour() = default;
-		display_colour(const double &,
-		               const double &,
-		               const double &);
+		constexpr display_colour() = default;
+		constexpr display_colour( const double &, const double &, const double & );
 
-		[[nodiscard]] const double &get_r() const;
-		[[nodiscard]] const double &get_g() const;
-		[[nodiscard]] const double &get_b() const;
+		[[nodiscard]] constexpr const double &get_r() const;
+		[[nodiscard]] constexpr const double &get_g() const;
+		[[nodiscard]] constexpr const double &get_b() const;
 
-		static const std::string    COMPONENT_SEPARATOR;
-		static const display_colour BLACK;
-		static const display_colour WHITE;
+		/// \brief TODOCUMENT
+		static constexpr ::std::string_view COMPONENT_SEPARATOR{ "," };
 
-		static const display_colour RED;
-		static const display_colour LIGHT_RED;
-		static const display_colour YELLOW;
-		static const display_colour DARK_YELLOW;
-		static const display_colour GREEN;
-		static const display_colour LIGHT_GREEN;
-		static const display_colour CYAN;
-		static const display_colour DARK_CYAN;
-		static const display_colour BLUE;
-		static const display_colour LIGHT_BLUE;
-		static const display_colour MAGENTA;
-		static const display_colour DARK_MAGENTA;
+		/// \brief Return whether the first colour is less than the second
+		///
+		/// This is a simple ordering that compares on the red, green and then blue components
+		///
+		/// \todo Is this actually useful? If so, document the context; if not, consider removing.
+		///
+		/// \relates display_colour
+		friend constexpr bool operator<( const display_colour &prm_lhs, ///< The first  display_colour to compare
+		                                 const display_colour &prm_rhs  ///< The second display_colour to compare
+		                                 ) {
+			return ( ::std::tie( prm_lhs.get_r(), prm_lhs.get_g(), prm_lhs.get_b() )
+			         < ::std::tie( prm_rhs.get_r(), prm_rhs.get_g(), prm_rhs.get_b() ) );
+		}
 	};
 
-	display_colour lighten_by_fraction(const display_colour &,
-	                                   const double &);
-	display_colour darken_by_fraction(const display_colour &,
-	                                  const double &);
+	/// \brief TODOCUMENT
+	constexpr void display_colour::check_component_value( const double &prm_component_value ///< TODOCUMENT
+	                                                      ) {
+		if ( !( prm_component_value >= 0.0 && prm_component_value <= 1.0 ) ) {
+			BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+			  ::fmt::format( "Viewer colour component value {} is not between 0 and 1", prm_component_value ) ) );
+		}
+	}
 
-	bool operator<(const display_colour &,
-	               const display_colour &);
+	/// \brief Ctor for display_colour
+	constexpr display_colour::display_colour( const double &prm_r, ///< TODOCUMENT
+	                                          const double &prm_g, ///< TODOCUMENT
+	                                          const double &prm_b  ///< TODOCUMENT
+	                                          ) :
+	        r( prm_r ), g( prm_g ), b( prm_b ) {
+		check_component_value( r );
+		check_component_value( g );
+		check_component_value( b );
+	}
 
-	display_colour display_colour_from_string(const std::string &);
-	display_colour display_colour_from_components(const doub_vec &);
-	std::string    hex_string_of_colour(const display_colour &);
-	std::string    comma_separated_string_of_display_colour(const display_colour &);
-	display_colour rgb_mid_point(const display_colour &,
-	                             const display_colour &,
-	                             const double &);
-	std::ostream & operator<<(std::ostream &,
-	                          const display_colour &);
+	/// \brief Getter for the red component (between 0 and 1)
+	constexpr const double &display_colour::get_r() const {
+		return r;
+	}
+
+	/// \brief Getter for the green component (between 0 and 1)
+	constexpr const double &display_colour::get_g() const {
+		return g;
+	}
+
+	/// \brief Getter for the blue component (between 0 and 1)
+	constexpr const double &display_colour::get_b() const {
+		return b;
+	}
+
+	display_colour display_colour_from_string( const std::string & );
+	display_colour display_colour_from_components( const doub_vec & );
+	std::string    hex_string_of_colour( const display_colour & );
+	std::string    comma_separated_string_of_display_colour( const display_colour & );
+	std::ostream & operator<<( std::ostream &, const display_colour & );
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour BLACK{ 0.00, 0.00, 0.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour WHITE        { 1.00, 1.00, 1.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour RED          { 1.00, 0.00, 0.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour LIGHT_RED    { 1.00, 0.30, 0.30 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour YELLOW       { 1.00, 1.00, 0.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour DARK_YELLOW  { 0.70, 0.70, 0.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour GREEN        { 0.00, 1.00, 0.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour LIGHT_GREEN  { 0.30, 1.00, 0.30 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour CYAN         { 0.00, 1.00, 1.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour DARK_CYAN    { 0.00, 0.70, 0.70 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour BLUE         { 0.00, 0.00, 1.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour LIGHT_BLUE   { 0.30, 0.30, 1.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour MAGENTA      { 1.00, 0.00, 1.00 };
+
+	/// \brief TODOCUMENT
+	[[maybe_unused]] constexpr display_colour DARK_MAGENTA { 0.70, 0.00, 0.70 };
+
+	/// \brief TODOCUMENT
+	///
+	/// \TODO: Make constexpr
+	///
+	/// \relates display_colour
+	constexpr display_colour rgb_mid_point( const display_colour &prm_colour1,      ///< TODOCUMENT
+	                                        const display_colour &prm_colour2,      ///< TODOCUMENT
+	                                        const double &        prm_fraction_thru ///< TODOCUMENT
+	                                        ) {
+		if ( !( prm_fraction_thru >= 0.0 && prm_fraction_thru <= 1.0 ) ) {
+			BOOST_THROW_EXCEPTION(
+			  common::invalid_argument_exception( "Fraction through must be a finite number between 0 and 1" ) );
+		}
+
+		const double fraction_from = 1.0 - prm_fraction_thru;
+		return display_colour( fraction_from * prm_colour1.get_r() + prm_fraction_thru * prm_colour2.get_r(),
+		                       fraction_from * prm_colour1.get_g() + prm_fraction_thru * prm_colour2.get_g(),
+		                       fraction_from * prm_colour1.get_b() + prm_fraction_thru * prm_colour2.get_b() );
+	}
+
+	/// \brief Return a copy of the specified colour that has been lightened by the specified fraction
+	///
+	/// \relates display_colour
+	constexpr display_colour lighten_by_fraction( const display_colour &prm_colour, ///< The colour from which to start
+	                                              const double &prm_fraction ///< The fraction change (0.0 gives the original colour; 1.0 gives white)
+	                                              ) {
+		return rgb_mid_point( prm_colour, WHITE, prm_fraction );
+	}
+
+	/// \brief Return a copy of the specified colour that has been darkened by the specified fraction
+	///
+	/// \relates display_colour
+	constexpr display_colour darken_by_fraction( const display_colour &prm_colour, ///< The colour from which to start
+	                                             const double &prm_fraction ///< The fraction change (0.0 gives the original colour; 1.0 gives black)
+	                                             ) {
+		return rgb_mid_point( prm_colour, BLACK, prm_fraction );
+	}
+
 } // namespace cath
 
 #endif // _CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_HPP

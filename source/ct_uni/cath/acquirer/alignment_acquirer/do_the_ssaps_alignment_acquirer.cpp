@@ -29,6 +29,8 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/irange.hpp>
 
+#include <fmt/core.h>
+
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
 
@@ -138,16 +140,15 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 				// In particular, the name_set will know the location of the file that each
 				// PDB was loaded from (if it was loaded from a PDB) so cath-ssap should have
 				// a --pdb-infile option and it should be explicitly used here.
-				str_vec cath_ssap_args{
-					cath_ssap_options::PROGRAM_NAME,
-					"--" + old_ssap_options_block::PO_ALIGN_DIR, ssaps_dir.string()
-				};
+				str_vec cath_ssap_args{ string( cath_ssap_options::PROGRAM_NAME ),
+					                    ::fmt::format( "--{}", old_ssap_options_block::PO_ALIGN_DIR ),
+					                    ssaps_dir.string() };
 				for (const size_t &index : { struc_1_index, struc_2_index } ) {
 					const auto       &name_set   = prm_strucs_context.get_name_sets()[ index ];
 					const domain_opt  opt_domain = get_domain_opt_of_index( prm_strucs_context, index );
 					cath_ssap_args.push_back( name_set.get_name_from_acq() );
 					if ( opt_domain ) {
-						cath_ssap_args.push_back( "--" + align_regions_options_block::PO_ALN_REGIONS );
+						cath_ssap_args.push_back( ::fmt::format( "--{}", align_regions_options_block::PO_ALN_REGIONS ) );
 						cath_ssap_args.push_back( sillitoe_chopping_format{}.write_domain( *opt_domain ) );
 					}
 				}

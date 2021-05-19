@@ -149,7 +149,5 @@ str_opt cath::invalid_string(const display_spec &prm_display_spec ///< TODOCUMEN
 display_colour_list cath::get_colour_list(const display_spec &prm_display_spec ///< TODOCUMENT
                                           ) {
 	const auto cols_str_opt = prm_display_spec.get_display_colours_string();
-	return make_display_colour_list_from_string(
-		cols_str_opt.value_or( display_colour_list::DEFAULT_COLOURS_STRING )
-	);
+	return cols_str_opt ? make_display_colour_list_from_string( *cols_str_opt ) : default_display_colour_list();
 }

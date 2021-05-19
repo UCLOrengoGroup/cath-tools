@@ -67,7 +67,7 @@ str_opt string_options_block::do_invalid_string(const variables_map &/*prm_varia
 /// \brief Return all options names for this block
 ///
 /// This block has no options so this just returns empty
-str_vec string_options_block::do_get_all_options_names() const {
+str_view_vec string_options_block::do_get_all_options_names() const {
 	return {};
 }
 

@@ -21,13 +21,16 @@
 #include "crh_output_options_block.hpp"
 
 #include <filesystem>
+#include <string_view>
 
 #include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/join.hpp>
 
 #include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/sort_uniq_build.hpp"
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 
 using namespace ::cath;
@@ -35,37 +38,15 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::rslv;
 
+using ::boost::adaptors::transformed;
 using ::boost::program_options::bool_switch;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
 using ::std::string;
+using ::std::string_view;
 using ::std::unique_ptr;
-
-/// \brief The option name for an optional file to which the hits text should be output
-const string crh_output_options_block::PO_HITS_TEXT_TO_FILE    { "hits-text-to-file"    };
-
-/// \brief The option name for whether to suppress the default output of hits text to stdout
-const string crh_output_options_block::PO_QUIET                { "quiet"                };
-
-/// \brief The option name for whether to output the hits starts/stops *after* trimming
-const string crh_output_options_block::PO_OUTPUT_TRIMMED_HITS  { "output-trimmed-hits"  };
-
-/// \brief The option name for an optional file to which a summary of the input data should be output
-const string crh_output_options_block::PO_SUMMARISE_TO_FILE    { "summarise-to-file"    };
-
-/// \brief The option name for an optional file to which HTML should be output
-const string crh_output_options_block::PO_HTML_OUTPUT_TO_FILE  { "html-output-to-file"  };
-
-/// \brief The option name for an optional file to which JSON should be output
-const string crh_output_options_block::PO_JSON_OUTPUT_TO_FILE  { "json-output-to-file"  };
-
-/// \brief The option name for an optional file to which the CSS should be output
-const string crh_output_options_block::PO_EXPORT_CSS_FILE      { "export-css-file"      };
-
-/// \brief The option name for whether to output a summary of the HMMER alignment
-const string crh_output_options_block::PO_OUTPUT_HMMER_ALN     { "output-hmmer-aln"     };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_output_options_block::do_clone() const {
@@ -93,14 +74,14 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 
 	prm_desc.add_options()
 		(
-			PO_HITS_TEXT_TO_FILE.c_str(),
+			string( PO_HITS_TEXT_TO_FILE ).c_str(),
 			value<path_vec>()
 				->value_name   ( file_varname                          )
 				->notifier     ( hits_text_files_notifier              ),
 			( "Write the resolved hits in plain text to file " + file_varname ).c_str()
 		)
 		(
-			PO_QUIET.c_str(),
+			string( PO_QUIET ).c_str(),
 			bool_switch()
 				->value_name   ( file_varname                          )
 				->notifier     ( quiet_notifier                        )
@@ -108,7 +89,7 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 			"Suppress the default output of resolved hits in plain text to stdout"
 		)
 		(
-			( PO_OUTPUT_TRIMMED_HITS ).c_str(),
+			string( PO_OUTPUT_TRIMMED_HITS ).c_str(),
 			bool_switch()
 				->notifier     ( output_trimmed_hits_notifier          )
 				->default_value(
@@ -117,28 +98,28 @@ void crh_output_options_block::do_add_visible_options_to_description(options_des
 			"When writing out the final hits, output the hits' starts/stop as they are *after trimming*"
 		)
 		(
-			PO_SUMMARISE_TO_FILE.c_str(),
+			string( PO_SUMMARISE_TO_FILE ).c_str(),
 			value<path_vec>()
 				->value_name   ( file_varname                          )
 				->notifier     ( summarise_files_notifier              ),
 			( "Write a brief text summary of the input data to file " + file_varname + " (or '-' for stdout)" ).c_str()
 		)
 		(
-			PO_HTML_OUTPUT_TO_FILE.c_str(),
+			string( PO_HTML_OUTPUT_TO_FILE ).c_str(),
 			value<path_vec>()
 				->value_name   ( file_varname                          )
 				->notifier     ( html_output_files_notifier            ),
 			( "Write the results as HTML to file " + file_varname + " (or '-' for stdout)" ).c_str()
 		)
 		(
-			PO_JSON_OUTPUT_TO_FILE.c_str(),
+			string( PO_JSON_OUTPUT_TO_FILE ).c_str(),
 			value<path_vec>()
 				->value_name   ( file_varname                          )
 				->notifier     ( json_output_files_notifier            ),
 			( "Write the results as JSON to file " + file_varname + " (or '-' for stdout)" ).c_str()
 		)
 		(
-			PO_EXPORT_CSS_FILE.c_str(),
+			string( PO_EXPORT_CSS_FILE ).c_str(),
 			value<path>()
 				->value_name   ( file_varname                          )
 				->notifier     ( export_css_file_notifier              ),
@@ -162,7 +143,7 @@ void crh_output_options_block::do_add_hidden_options_to_description(options_desc
 
 	prm_desc.add_options()
 		(
-			PO_OUTPUT_HMMER_ALN.c_str(),
+			string( PO_OUTPUT_HMMER_ALN ).c_str(),
 			bool_switch()
 				->notifier     ( output_hmmer_aln_notifier                 )
 				->default_value( crh_output_spec::DEFAULT_OUTPUT_HMMER_ALN ),
@@ -182,8 +163,11 @@ str_opt crh_output_options_block::do_invalid_string(const variables_map &prm_var
 		return deprecated_invalid_str;
 	}
 
-	const str_vec specified_new  = specified_options           ( prm_variables_map, get_all_non_deprecated_option_names_that_clash_with_deprecated() );
-	const str_vec specified_old  = specified_options_from_block( prm_variables_map, deprecated_single_output_ob                                      );
+	const str_vec specified_new =
+	  specified_options( prm_variables_map,
+	                     get_all_non_deprecated_option_names_that_clash_with_deprecated()
+	                       | transformed( []( const string_view &x ) { return string( x ); } ) | to_vector );
+	const str_vec specified_old = specified_options_from_block( prm_variables_map, deprecated_single_output_ob );
 
 	if ( ! specified_old.empty() ) {
 		if ( ! specified_new.empty() ) {
@@ -204,10 +188,10 @@ str_opt crh_output_options_block::do_invalid_string(const variables_map &prm_var
 }
 
 /// \brief Return all options names for this block
-str_vec crh_output_options_block::do_get_all_options_names() const {
+str_view_vec crh_output_options_block::do_get_all_options_names() const {
 	// \TODO Remove the sort_uniq_build() (and replace with copy_build())
 	// once the duplicated options have been removed from crh_single_output_options_block
-	return sort_uniq_build<str_vec>(
+	return sort_uniq_build<str_view_vec>(
 		boost::range::join(
 			get_all_non_deprecated_option_names(),
 			deprecated_single_output_ob.get_all_options_names()
@@ -220,13 +204,13 @@ str_vec crh_output_options_block::do_get_all_options_names() const {
 ///
 /// \TODO Once the deprecated options have been removed, merge these functions' explicit options strings
 ///       into get_all_non_deprecated_option_names()
-str_vec crh_output_options_block::get_all_non_deprecated_option_names_that_clash_with_deprecated() const {
+str_view_vec crh_output_options_block::get_all_non_deprecated_option_names_that_clash_with_deprecated() {
 	return {
-		crh_output_options_block::PO_HITS_TEXT_TO_FILE,
-		crh_output_options_block::PO_QUIET,
-		crh_output_options_block::PO_SUMMARISE_TO_FILE,
-		crh_output_options_block::PO_HTML_OUTPUT_TO_FILE,
-		crh_output_options_block::PO_JSON_OUTPUT_TO_FILE,
+		PO_HITS_TEXT_TO_FILE,
+		PO_QUIET,
+		PO_SUMMARISE_TO_FILE,
+		PO_HTML_OUTPUT_TO_FILE,
+		PO_JSON_OUTPUT_TO_FILE,
 	};
 }
 /// \brief Return all non-deprecated options names for this block that should clash with
@@ -234,17 +218,17 @@ str_vec crh_output_options_block::get_all_non_deprecated_option_names_that_clash
 ///
 /// \TODO Once the deprecated options have been removed, merge these functions' explicit options strings
 ///       into get_all_non_deprecated_option_names()
-str_vec crh_output_options_block::get_all_non_deprecated_option_names_that_do_not_clash_with_deprecated() const {
+str_view_vec crh_output_options_block::get_all_non_deprecated_option_names_that_do_not_clash_with_deprecated() {
 	return {
-		crh_output_options_block::PO_OUTPUT_TRIMMED_HITS,
-		crh_output_options_block::PO_EXPORT_CSS_FILE,
-		crh_output_options_block::PO_OUTPUT_HMMER_ALN,
+		PO_OUTPUT_TRIMMED_HITS,
+		PO_EXPORT_CSS_FILE,
+		PO_OUTPUT_HMMER_ALN,
 	};
 }
 
 /// \brief Return all non-deprecated options names for this block
-str_vec crh_output_options_block::get_all_non_deprecated_option_names() const {
-	return sort_uniq_build<str_vec>(
+str_view_vec crh_output_options_block::get_all_non_deprecated_option_names() {
+	return sort_uniq_build<str_view_vec>(
 		boost::range::join(
 			get_all_non_deprecated_option_names_that_clash_with_deprecated(),
 			get_all_non_deprecated_option_names_that_do_not_clash_with_deprecated()

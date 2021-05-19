@@ -46,27 +46,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for whether to align based on matching residue names
-const string alignment_input_options_block::PO_RES_NAME_ALIGN    { "res-name-align"     };
-
-/// \brief The option name for a file from which to read a FASTA alignment
-const string alignment_input_options_block::PO_FASTA_ALIGN_INFILE{ "fasta-aln-infile"   };
-
-/// \brief The option name for a file from which to read a legacy-SSAP-format alignment
-const string alignment_input_options_block::PO_SSAP_ALIGN_INFILE { "ssap-aln-infile"    };
-
-/// \brief The option name for a file from which to read a CORA alignment
-const string alignment_input_options_block::PO_CORA_ALIGN_INFILE { "cora-aln-infile"    };
-
-/// \brief The option name for a file from which to read SSAP-scores format data to use to attempt to glue pairwise alignments together
-const string alignment_input_options_block::PO_SSAP_SCORE_INFILE { "ssap-scores-infile" };
-
-/// \brief The option name for a directory in which to do the necessary SSAPs and then use the scores to glue the resulting alignments together
-const string alignment_input_options_block::PO_DO_THE_SSAPS      { "do-the-ssaps"       };
-
-/// \brief The option name for how much refining should be done to the alignment
-const string alignment_input_options_block::PO_REFINING          { "align-refining"     };
-
 /// \brief A standard do_clone method.
 unique_ptr<options_block> alignment_input_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -100,48 +79,51 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 
 	prm_desc.add_options()
 		(
-			PO_RES_NAME_ALIGN.c_str(),
+			string( PO_RES_NAME_ALIGN ).c_str(),
 			bool_switch()
 				->notifier      ( residue_name_align_notifier                      )
 				->default_value ( alignment_input_spec::DEFAULT_RESIDUE_NAME_ALIGN ),
 			"Align residues by simply matching their names (numbers+insert)\n(for multiple models of the same structure)"
 		)
 		(
-			PO_FASTA_ALIGN_INFILE.c_str(),
+			string( PO_FASTA_ALIGN_INFILE ).c_str(),
 			value<path>()
 				->value_name    ( file_varname                  )
 				->notifier      ( fasta_alignment_file_notifier ),
 			( "Read FASTA alignment from file " + file_varname ).c_str()
 		)
 		(
-			PO_SSAP_ALIGN_INFILE.c_str(),
+			string( PO_SSAP_ALIGN_INFILE ).c_str(),
 			value<path>()
 				->value_name    ( file_varname                  )
 				->notifier      ( ssap_alignment_file_notifier  ),
 			( "Read SSAP alignment from file " + file_varname ).c_str()
 		)
 		(
-			PO_CORA_ALIGN_INFILE.c_str(),
+			string( PO_CORA_ALIGN_INFILE ).c_str(),
 			value<path>()
 				->value_name    ( file_varname                  )
 				->notifier      ( cora_alignment_file_notifier  ),
 			( "Read CORA alignment from file " + file_varname ).c_str()
 		)
 		(
-			PO_SSAP_SCORE_INFILE.c_str(),
+			string( PO_SSAP_SCORE_INFILE ).c_str(),
 			value<path>()
 				->value_name    ( file_varname                  )
 				->notifier      ( ssap_scores_file_notifier     ),
 			( "Glue pairwise alignments together using SSAP scores in file " + file_varname + "\nAssumes all .list alignment files in same directory" ).c_str()
 		)
 		(
-			PO_DO_THE_SSAPS.c_str(),
+			string( PO_DO_THE_SSAPS ).c_str(),
 			value<path>()
 				->value_name    ( dir_varname                   )
 				->notifier      ( do_the_ssaps_notifier         )
 				->implicit_value( path{}                        ),
-			( "Do the required SSAPs in directory " + dir_varname + "; use results as with --" + PO_SSAP_SCORE_INFILE + "\n"
-				"Use a suitable temp directory if none is specified" ).c_str()
+			::fmt::format(
+				"Do the required SSAPs in directory {}; use results as with --{}\nUse a suitable temp directory if none is specified",
+				dir_varname,
+				PO_SSAP_SCORE_INFILE
+			).c_str()
 		);
 
 	// Create and add a sub-block for alignment refining
@@ -154,14 +136,19 @@ void alignment_input_options_block::do_add_visible_options_to_description(option
 	);
 	sub_refine_desc.add_options()
 		(
-			PO_REFINING.c_str(),
+			string( PO_REFINING ).c_str(),
 			value<align_refining>()
 				->value_name    ( refining_varname                        )
 				->notifier      ( refining_notifier                       )
 				->default_value ( the_alignment_input_spec.get_refining() ),
-			( "Apply " + refining_varname + " refining to the alignment" + ", one of available values:" + sep
-				+ join( refining_descs, sep ) + "\n"
-				+ "This can change the method of gluing alignments under --" + PO_SSAP_SCORE_INFILE + " and --" + PO_DO_THE_SSAPS ).c_str()
+			::fmt::format(
+				"Apply {} refining to the alignment, one of available values:{}{}\nThis can change the method of gluing alignments under --{} and --{}",
+				refining_varname,
+				sep,
+				join( refining_descs, sep ),
+				PO_SSAP_SCORE_INFILE,
+				PO_DO_THE_SSAPS
+			).c_str()
 		);
 	prm_desc.add( sub_refine_desc );
 
@@ -191,15 +178,15 @@ str_opt alignment_input_options_block::do_invalid_string(const variables_map &/*
 }
 
 /// \brief Return all options names for this block
-str_vec alignment_input_options_block::do_get_all_options_names() const {
+str_view_vec alignment_input_options_block::do_get_all_options_names() const {
 	return {
-		alignment_input_options_block::PO_RES_NAME_ALIGN,
-		alignment_input_options_block::PO_FASTA_ALIGN_INFILE,
-		alignment_input_options_block::PO_SSAP_ALIGN_INFILE,
-		alignment_input_options_block::PO_CORA_ALIGN_INFILE,
-		alignment_input_options_block::PO_SSAP_SCORE_INFILE,
-		alignment_input_options_block::PO_DO_THE_SSAPS,
-		alignment_input_options_block::PO_REFINING
+		PO_RES_NAME_ALIGN,
+		PO_FASTA_ALIGN_INFILE,
+		PO_SSAP_ALIGN_INFILE,
+		PO_CORA_ALIGN_INFILE,
+		PO_SSAP_SCORE_INFILE,
+		PO_DO_THE_SSAPS,
+		PO_REFINING
 	};
 }
 

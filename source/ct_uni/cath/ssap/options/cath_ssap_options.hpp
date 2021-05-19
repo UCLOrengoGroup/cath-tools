@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_OPTIONS_CATH_SSAP_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_OPTIONS_CATH_SSAP_OPTIONS_HPP
 
+#include <string_view>
+
 #include "cath/file/options/data_dirs_options_block.hpp"
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/detail_help_options_block.hpp"
@@ -37,10 +39,7 @@ namespace cath {
 		private:
 			using super = executable_options;
 
-			// static const std::string STANDARD_USAGE_ERROR_STRING;
 			static std::map<std::string, str_str_pair> detail_help_spec();
-
-			static const std::string PO_CITATION_HELP;
 
 			/// \brief TODOCUMENT
 			old_ssap_options_block          the_ssap_options_block;
@@ -54,7 +53,7 @@ namespace cath {
 			/// \brief TODOCUMENT
 			detail_help_options_block       the_detail_help_options_block;
 
-			[[nodiscard]] std::string                              do_get_program_name() const final;
+			[[nodiscard]] std::string_view                         do_get_program_name() const final;
 			boost::program_options::positional_options_description get_positional_options() final;
 			[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
 
@@ -73,7 +72,11 @@ namespace cath {
 			[[nodiscard]] const data_dirs_spec &        get_data_dirs_spec() const;
 			[[nodiscard]] const chop::domain_vec &      get_domains() const;
 
-			static const std::string PROGRAM_NAME;
+			/// \brief TODOCUMENT
+			static constexpr ::std::string_view PO_CITATION_HELP{ "citation-help" };
+
+			/// \brief The name of the program that uses this executable_options
+			static constexpr ::std::string_view PROGRAM_NAME{ "cath-ssap" };
 		};
 
 		std::string get_ssap_matches_format_help_string();

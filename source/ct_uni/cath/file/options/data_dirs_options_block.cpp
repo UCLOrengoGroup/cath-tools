@@ -21,6 +21,7 @@
 #include "data_dirs_options_block.hpp"
 
 #include <filesystem>
+#include <string_view>
 
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -32,6 +33,7 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/file/options/data_dirs_spec.hpp"
+#include "cath/common/exception/out_of_range_exception.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -47,41 +49,59 @@ using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
 using ::std::nullopt;
-
-const string data_dirs_options_block::DATA_OPTION_PATH_VARNAME   = "<path>";
-const string data_dirs_options_block::DATA_OPTION_PREFIX_VARNAME = "<pre>";
-const string data_dirs_options_block::DATA_OPTION_SUFFIX_VARNAME = "<suf>";
-
-/// \brief For each of the options (path, prefix, suffix), the suffixes that are appended to the names of the file types to produce the option name
-const data_option_str_map data_dirs_options_block::DATA_OPTION_SUFFIXES = {
-	{ data_option::PATH,   "-path"   },
-	{ data_option::PREFIX, "-prefix" },
-	{ data_option::SUFFIX, "-suffix" }
-};
-
-/// \brief For each of the options (path, prefix, suffix), the start of the description up to the point of the data type name
-const data_option_str_map data_dirs_options_block::DATA_OPTION_VARNAME = {
-	{ data_option::PATH,   DATA_OPTION_PATH_VARNAME   },
-	{ data_option::PREFIX, DATA_OPTION_PREFIX_VARNAME },
-	{ data_option::SUFFIX, DATA_OPTION_SUFFIX_VARNAME }
-};
-
-/// \brief For each of the options (path, prefix, suffix), the start of the description up to the point of the data type name
-const data_option_str_map data_dirs_options_block::DATA_OPTION_DESCRIPTION_START = {
-	{ data_option::PATH,   "Search for "                                                                            },
-	{ data_option::PREFIX, "Prepend the prefix " + DATA_OPTION_PREFIX_VARNAME + " to a protein's name to form its " },
-	{ data_option::SUFFIX, "Append the suffix "  + DATA_OPTION_SUFFIX_VARNAME + " to a protein's name to form its " }
-};
-
-/// \brief For each of the options (path, prefix, suffix), the end of the description from the point of the data type name
-const data_option_str_map data_dirs_options_block::DATA_OPTION_DESCRIPTION_END = {
-	{ data_option::PATH,   " files using the path " + DATA_OPTION_PATH_VARNAME },
-	{ data_option::PREFIX, " filename"                                         },
-	{ data_option::SUFFIX, " filename"                                         }
-};
+using ::std::string_view;
 
 /// \brief The option name for the CATH root directory
-const string data_dirs_options_block::PO_CATH_ROOT_DIR{ "cath-root-dir" };
+constexpr string_view PO_CATH_ROOT_DIR{ "cath-root-dir" };
+
+constexpr string_view DATA_OPTION_PATH_VARNAME   = "<path>";
+constexpr string_view DATA_OPTION_PREFIX_VARNAME = "<pre>";
+constexpr string_view DATA_OPTION_SUFFIX_VARNAME = "<suf>";
+
+/// \brief For each of the options (path, prefix, suffix), the suffixes that are appended to the names of the file types to produce the option name
+static data_option_str_map DATA_OPTION_SUFFIXES() {
+	return {
+		{ data_option::PATH,   "-path"   },
+		{ data_option::PREFIX, "-prefix" },
+		{ data_option::SUFFIX, "-suffix" }
+	};
+}
+
+/// \brief For each of the options (path, prefix, suffix), the start of the description up to the point of the data type name
+static constexpr string_view data_option_varname( const data_option &prm_data_option ) {
+	// clang-format off
+	switch ( prm_data_option ) {
+		case( data_option::PATH   ) : { return DATA_OPTION_PATH_VARNAME   ; }
+		case( data_option::PREFIX ) : { return DATA_OPTION_PREFIX_VARNAME ; }
+		case( data_option::SUFFIX ) : { return DATA_OPTION_SUFFIX_VARNAME ; }
+	};
+	// clang-format on
+	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option in data_option_varname()" ) );
+}
+
+/// \brief For each of the options (path, prefix, suffix), the start of the description up to the point of the data type name
+static string data_option_description_start( const data_option &prm_data_option ) {
+	// clang-format off
+	switch ( prm_data_option ) {
+		case( data_option::PATH   ) : { return                "Search for "                                                                         ; }
+		case( data_option::PREFIX ) : { return ::fmt::format( "Prepend the prefix {} to a protein's name to form its ", DATA_OPTION_PREFIX_VARNAME ); }
+		case( data_option::SUFFIX ) : { return ::fmt::format( "Append the suffix {} to a protein's name to form its ",  DATA_OPTION_SUFFIX_VARNAME ); }
+	};
+	// clang-format on
+	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option in data_option_description_start()" ) );
+}
+
+/// \brief For each of the options (path, prefix, suffix), the end of the description from the point of the data type name
+static string data_option_description_end( const data_option &prm_data_option ) {
+	// clang-format off
+	switch ( prm_data_option ) {
+		case( data_option::PATH   ) : { return ::fmt::format( " files using the path {}", DATA_OPTION_PATH_VARNAME ); }
+		case( data_option::PREFIX ) : { return                " filename"                                           ; }
+		case( data_option::SUFFIX ) : { return                " filename"                                           ; }
+	};
+	// clang-format on
+	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option in data_option_description_end()" ) );
+}
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> data_dirs_options_block::do_clone() const {
@@ -100,7 +120,7 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
                                                                     const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	// Loop over each of the data option types (path, prefix, suffix) and grab the data_option and suffix string
-	for (const data_option_str_pair &data_option_suffix_pair : DATA_OPTION_SUFFIXES) {
+	for (const data_option_str_pair &data_option_suffix_pair : DATA_OPTION_SUFFIXES()) {
 		const data_option &the_data_option    = data_option_suffix_pair.first;
 		const string      &data_option_suffix = data_option_suffix_pair.second;
 
@@ -117,20 +137,22 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
 			const auto the_notifier = [&] (const string &x) { the_data_dirs_spec.set_value_of_option_and_data_file( the_data_option, the_data_file, x ); };
 
 			// Grab the default, description start and description end and join them together to get a description for the option
-			const string     default_value = data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS.at( the_data_file ).at( the_data_option );
-			const string    &desc_start    = DATA_OPTION_DESCRIPTION_START.at(  the_data_option );
-			const string    &desc_end      = DATA_OPTION_DESCRIPTION_END.at(    the_data_option );
-			const string     description   = ::fmt::format( "{}{}{}", desc_start, data_file_name, desc_end );
-			const string    &varname       = DATA_OPTION_VARNAME.at( the_data_option );
+			const string default_value =
+			  data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS.at( the_data_file ).at( the_data_option );
+			const string      description = ::fmt::format( "{}{}{}",
+			                                               data_option_description_start( the_data_option ),
+			                                               data_file_name,
+			                                               data_option_description_end( the_data_option ) );
+			const string_view varname     = data_option_varname( the_data_option );
 
 			// Add a new option, using the accumulated data
 			prm_desc.add_options()
 				(
 					option_name.c_str(),
 					value<string>()
-						->value_name   ( varname       )
-						->notifier     ( the_notifier  )
-						->default_value( default_value ),
+						->value_name   ( string( varname ) )
+						->notifier     ( the_notifier      )
+						->default_value( default_value     ),
 					description.c_str()
 				);
 		}
@@ -145,7 +167,7 @@ void data_dirs_options_block::do_add_hidden_options_to_description(options_descr
 	const auto cath_root_dir_notifier = [&] (const path &x) { the_data_dirs_spec.set_cath_root_dir( x ); };
 	prm_desc.add_options()
 		(
-			PO_CATH_ROOT_DIR.c_str(),
+			string( PO_CATH_ROOT_DIR ).c_str(),
 			value<path>()
 				->notifier  ( cath_root_dir_notifier )
 				->value_name( rootdir_valname        ),
@@ -169,9 +191,9 @@ str_opt data_dirs_options_block::do_invalid_string(const variables_map &/*prm_va
 }
 
 /// \brief Return all options names for this block
-str_vec data_dirs_options_block::do_get_all_options_names() const {
+str_view_vec data_dirs_options_block::do_get_all_options_names() const {
 	return {
-		data_dirs_options_block::PO_CATH_ROOT_DIR,
+		PO_CATH_ROOT_DIR,
 	};
 }
 

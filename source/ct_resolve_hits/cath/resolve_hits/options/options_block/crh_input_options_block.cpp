@@ -20,13 +20,15 @@
 
 #include "crh_input_options_block.hpp"
 
+#include <limits>
+
 #include <boost/algorithm/string/join.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/boost_addenda/program_options/layout_values_with_descs.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/program_options/prog_opt_num_range.hpp"
-
-#include <limits>
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -43,18 +45,6 @@ using ::boost::program_options::variables_map;
 using ::std::numeric_limits;
 using ::std::string;
 using ::std::unique_ptr;
-
-/// \brief The option name for the input file from which data should be read
-const string crh_input_options_block::PO_INPUT_FILE_OR_STDIN    { "input-file-or-stdin"    };
-
-/// \brief The option name for the format of the input data
-const string crh_input_options_block::PO_INPUT_FORMAT           { "input-format"           };
-
-/// \brief The option name for the minimum gap length to consider when parsing an alignment
-const string crh_input_options_block::PO_MIN_GAP_LENGTH         { "min-gap-length"         };
-
-/// \brief The option name for whether the code can assume that the input data is pre-grouped by query_id
-const string crh_input_options_block::PO_INPUT_HITS_ARE_GROUPED { "input-hits-are-grouped" };
 
 /// \brief A standard do_clone method
 unique_ptr<options_block> crh_input_options_block::do_clone() const {
@@ -89,16 +79,18 @@ void crh_input_options_block::do_add_visible_options_to_description(options_desc
 
 	prm_desc.add_options()
 		(
-			( PO_INPUT_FORMAT ).c_str(),
+			string( PO_INPUT_FORMAT ).c_str(),
 			value<hits_input_format_tag>()
 				->value_name   ( format_varname                                 )
 				->notifier     ( input_format_notifier                          )
 				->default_value( crh_input_spec::DEFAULT_INPUT_FORMAT           ),
-			( "Parse the input data from " + format_varname
-				+ ", one of available formats:" + sep + join( input_format_descs, sep ) ).c_str()
+			::fmt::format( "Parse the input data from {}, one of available formats:{}{}",
+			               format_varname,
+			               sep,
+			               join( input_format_descs, sep ) ).c_str()
 		)
 		(
-			( PO_MIN_GAP_LENGTH ).c_str(),
+			string( PO_MIN_GAP_LENGTH ).c_str(),
 			value< prog_opt_num_range<residx_t, 0, numeric_limits<residx_t>::max(), int64_t> >()
 				->value_name   ( length_varname                                 )
 				->notifier     ( min_gap_length_notifier                        )
@@ -107,7 +99,7 @@ void crh_input_options_block::do_add_visible_options_to_description(options_desc
 				+ length_varname + " residues").c_str()
 		)
 		(
-			( PO_INPUT_HITS_ARE_GROUPED ).c_str(),
+			string( PO_INPUT_HITS_ARE_GROUPED ).c_str(),
 			bool_switch()
 				->notifier     ( input_hits_are_grouped_notifier                )
 				->default_value( crh_input_spec::DEFAULT_INPUT_HITS_ARE_GROUPED ),
@@ -136,13 +128,17 @@ void crh_input_options_block::do_add_hidden_options_to_description(options_descr
 
 	prm_desc.add_options()
 		(
-			PO_INPUT_FILE_OR_STDIN.c_str(),
+			string( PO_INPUT_FILE_OR_STDIN ).c_str(),
 			value<string>()
 				->value_name   ( input_file_varname                                   )
 				->notifier     ( input_file_or_stdin                                  ),
-			( "Hidden option " + PO_INPUT_FILE_OR_STDIN + " with value " + input_file_varname + ".\n"
-			  + "When " + input_file_varname + " is -, read from standard input." ).c_str()
+			::fmt::format( "Hidden option {} with value {}.\nWhen {} is -, read from standard input.",
+			               PO_INPUT_FILE_OR_STDIN,
+			               input_file_varname,
+			               input_file_varname ).c_str()
 		);
+
+	;
 }
 
 /// \brief Generate a description of any problem that makes the specified crh_input_options_block invalid
@@ -150,7 +146,7 @@ void crh_input_options_block::do_add_hidden_options_to_description(options_descr
 str_opt crh_input_options_block::do_invalid_string(const variables_map &prm_variables_map ///< The variables map, which options_blocks can use to determine which options were specified, defaulted etc
                                                    ) const {
 
-	if ( specifies_option( prm_variables_map, PO_MIN_GAP_LENGTH ) ) {
+	if ( specifies_option( prm_variables_map, string( PO_MIN_GAP_LENGTH ) ) ) {
 		if ( the_spec.get_input_format() != hits_input_format_tag::HMMSCAN_OUT && the_spec.get_input_format() != hits_input_format_tag::HMMSEARCH_OUT ) {
 			return "Cannot specify the minimum gap length for input formats that don't involve parsing gaps out of an alignment"s;
 		}
@@ -159,12 +155,12 @@ str_opt crh_input_options_block::do_invalid_string(const variables_map &prm_vari
 }
 
 /// \brief Return all options names for this block
-str_vec crh_input_options_block::do_get_all_options_names() const {
+str_view_vec crh_input_options_block::do_get_all_options_names() const {
 	return {
-		crh_input_options_block::PO_INPUT_FILE_OR_STDIN,
-		crh_input_options_block::PO_INPUT_FORMAT,
-		crh_input_options_block::PO_MIN_GAP_LENGTH,
-		crh_input_options_block::PO_INPUT_HITS_ARE_GROUPED,
+		PO_INPUT_FILE_OR_STDIN,
+		PO_INPUT_FORMAT,
+		PO_MIN_GAP_LENGTH,
+		PO_INPUT_HITS_ARE_GROUPED,
 	};
 }
 

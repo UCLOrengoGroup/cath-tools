@@ -85,7 +85,7 @@ int program_exception_wrapper::run_program( int prm_c, char *prm_v[], ostream &p
 		// Add a sink that writes to stderr, rather than using the default stdout sink
 		::spdlog::set_default_logger( ::spdlog::stderr_color_st( "program_exception_wrapper_logger" ) );
 		::spdlog::default_logger()->set_level( spdlog::level::warn );
-		::spdlog::default_logger()->set_pattern( "[%Y-%m-%d %H:%M:%S.%f] [%P:%t] [" + do_get_program_name() + "|%^%-8l%$] %v" );
+		::spdlog::default_logger()->set_pattern( ::fmt::format( "[%Y-%m-%d %H:%M:%S.%f] [%P:%t] [{}|%^%-8l%$] %v", do_get_program_name() ) );
 		do_run_program( prm_c, prm_v );
 	} catch ( const boost::exception &e ) {
 		output_catch_context( prm_os, prm_v[ 0 ] );

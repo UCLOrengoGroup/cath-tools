@@ -37,12 +37,6 @@ using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;
 
-/// \brief The option name for the a list of PDB files that should be read
-const string pdb_input_options_block::PO_PDB_INFILE     ( "pdb-infile"      );
-
-/// \brief The option name for whether to read PDBs from stdin
-const string pdb_input_options_block::PO_PDBS_FROM_STDIN( "pdbs-from-stdin" );
-
 /// \brief A standard do_clone method
 unique_ptr<options_block> pdb_input_options_block::do_clone() const {
 	return { make_uptr_clone( *this ) };
@@ -64,14 +58,14 @@ void pdb_input_options_block::do_add_visible_options_to_description(options_desc
 
 	prm_desc.add_options()
 		(
-			PO_PDB_INFILE.c_str(),
+			string( PO_PDB_INFILE ).c_str(),
 			value<path_vec>()
 				->value_name( pdb_file_varname        )
 				->notifier  ( pdb_infile_notifier ),
 			( "Read PDB from file " + pdb_file_varname + " (may be specified multiple times)" ).c_str()
 		)
 		(
-			PO_PDBS_FROM_STDIN.c_str(),
+			string( PO_PDBS_FROM_STDIN ).c_str(),
 			bool_switch()
 				->notifier     ( stdin_read_notifier                     )
 				->default_value( pdb_input_spec::DEFAULT_READ_FROM_STDIN ),
@@ -93,10 +87,10 @@ str_opt pdb_input_options_block::do_invalid_string(const variables_map &/*prm_va
 }
 
 /// \brief Return all options names for this block
-str_vec pdb_input_options_block::do_get_all_options_names() const {
+str_view_vec pdb_input_options_block::do_get_all_options_names() const {
 	return {
-		pdb_input_options_block::PO_PDB_INFILE,
-		pdb_input_options_block::PO_PDBS_FROM_STDIN,
+		PO_PDB_INFILE,
+		PO_PDBS_FROM_STDIN,
 	};
 }
 
