@@ -39,8 +39,6 @@ using namespace ::cath::test;
 using ::boost::lexical_cast;
 using ::std::string;
 
-BOOST_TEST_DONT_PRINT_LOG_VALUE( full_hit_list::const_iterator )
-
 namespace cath {
 	namespace test {
 

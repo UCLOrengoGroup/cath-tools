@@ -30,34 +30,11 @@
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
-
-BOOST_TEST_DONT_PRINT_LOG_VALUE( bool_size_str_tpl     )
-BOOST_TEST_DONT_PRINT_LOG_VALUE( bool_size_str_tpl_vec )
-
-
-namespace std {
-	/// \brief Temporary hacky solution to just get the test working for now
-	///
-	/// It'd make more sense to use BOOST_TEST_DONT_PRINT_LOG_VALUE() but
-	/// that doesn't seem to work with BOOST_CHECK_EQUAL_COLLECTIONS (or BOOST_CHECK_EQUAL_RANGES)
-	ostream & operator<<(ostream                 &prm_os,   ///< TODOCUMENT
-	                     const bool_size_str_tpl &prm_tuple ///< TODOCUMENT
-	                     ) {
-		ostringstream temp_ss;
-		prm_os << "tuple<bool,size_t,string>(";
-		prm_os << boolalpha << get<0>( prm_tuple ) << noboolalpha;
-		prm_os << ", ";
-		prm_os << get<1>( prm_tuple );
-		prm_os << ", ";
-		prm_os << get<2>( prm_tuple );
-		prm_os << ")";
-		return prm_os;
-	}
-}  // namespace std
 
 namespace cath {
 	namespace test {

@@ -27,6 +27,9 @@
 
 #include "cath/common/string/cath_to_string.hpp"
 
+/// This violates clang-tidy check cert-dcl58-cpp ("warning: modification of 'std' namespace can result in undefined behavior")
+///
+/// TODO : Consider switching to catch2
 namespace std {
 
 	/// It's rather unpleasant to be putting these into the std namespace, which is bad practice.

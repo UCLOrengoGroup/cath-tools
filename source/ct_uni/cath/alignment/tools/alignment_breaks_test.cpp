@@ -117,14 +117,14 @@ BOOST_AUTO_TEST_CASE(alignment_breaks_are_correct_for_simple_alignment) {
 }
 
 BOOST_AUTO_TEST_CASE(alignment_break_pairs_are_correct_for_simple_alignment) {
-	BOOST_CHECK_EQUAL_RANGES( get_alignment_break_pairs( the_alignment ), expected_break_pairs );
+	BOOST_TEST( get_alignment_break_pairs( the_alignment ) == expected_break_pairs );
 }
 
 BOOST_AUTO_TEST_CASE(alignment_break_pairs_are_correct_for_big_alignment) {
 	BOOST_CHECK_EQUAL  ( big_alignment.length(), 382 );
 	BOOST_REQUIRE_EQUAL( get_alignment_break_pairs( big_alignment ).size(), 121_z );
-	BOOST_CHECK_EQUAL  ( get_alignment_break_pairs( big_alignment ).front(), make_pair(   1_z,   1_z ) );
-	BOOST_CHECK_EQUAL  ( get_alignment_break_pairs( big_alignment ).back(),  make_pair( 380_z, 380_z ) );
+	BOOST_TEST         ( get_alignment_break_pairs( big_alignment ).front() == make_pair(   1_z,   1_z ) );
+	BOOST_TEST         ( get_alignment_break_pairs( big_alignment ).back()  == make_pair( 380_z, 380_z ) );
 }
 
 

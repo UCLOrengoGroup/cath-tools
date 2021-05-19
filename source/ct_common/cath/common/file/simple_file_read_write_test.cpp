@@ -37,31 +37,6 @@ namespace cath {
 	} // namespace test
 } // namespace cath
 
-namespace std {
-	/// \brief Temporary hacky solution to just get the test working for now
-	///
-	/// It'd make more sense to use BOOST_TEST_DONT_PRINT_LOG_VALUE() but
-	/// that doesn't seem to work with BOOST_CHECK_EQUAL_COLLECTIONS (or BOOST_CHECK_EQUAL_RANGES)
-	ostream & operator<<(ostream                        &prm_os,   ///< TODOCUMENT
-	                     const cath::test::test_tuple_t &prm_tuple ///< TODOCUMENT
-	                     ) {
-		ostringstream temp_ss;
-		prm_os << "double, size_t, bool, int, string>(";
-		prm_os << get<0>( prm_tuple );
-		prm_os << ", ";
-		prm_os << get<1>( prm_tuple );
-		prm_os << ", ";
-		prm_os << boolalpha << get<2>( prm_tuple ) << noboolalpha;
-		prm_os << ", ";
-		prm_os << get<3>( prm_tuple );
-		prm_os << ", ";
-		prm_os << get<4>( prm_tuple );
-		prm_os << ")";
-		return prm_os;
-	}
-}  // namespace std
-
-
 namespace cath {
 	namespace test {
 
@@ -121,7 +96,7 @@ BOOST_AUTO_TEST_SUITE(tuples)
 /// \brief Test that reading tuples from an existing file gives the expected result
 BOOST_AUTO_TEST_CASE(read_tuples) {
 	const auto got = read_file<cath::test::test_tuple_t>( EXAMPLE_TUPLES_FILENAME() );
-	BOOST_CHECK_EQUAL_RANGES( EXAMPLE_TUPLES, got );
+	BOOST_TEST( EXAMPLE_TUPLES == got );
 }
 
 /// \brief Test that writing tuples to a new file creates an identical file

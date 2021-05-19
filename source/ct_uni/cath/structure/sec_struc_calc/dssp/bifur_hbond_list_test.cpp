@@ -20,7 +20,8 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "bifur_hbond_list.hpp"
+#include "cath/structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
+#include "cath/test/boost_test_print_type.hpp"
 
 namespace cath { namespace test { } }
 
@@ -28,8 +29,6 @@ using namespace ::cath::sec;
 using namespace ::cath::test;
 
 using ::std::nullopt;
-
-BOOST_TEST_DONT_PRINT_LOG_VALUE( hbond_half_opt_pair )
 
 namespace cath {
 	namespace test {

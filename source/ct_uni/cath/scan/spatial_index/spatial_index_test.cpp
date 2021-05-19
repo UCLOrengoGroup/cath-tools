@@ -22,6 +22,7 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/global_test_constants.hpp"
 
 namespace cath { namespace test { } }
@@ -33,8 +34,6 @@ using ::std::make_tuple;
 using ::std::tuple;
 
 using short_short_short_tuple = tuple<short int, short int, short int>;
-
-BOOST_TEST_DONT_PRINT_LOG_VALUE( short_short_short_tuple )
 
 namespace cath {
 	namespace test {
