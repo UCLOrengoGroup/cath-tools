@@ -50,7 +50,7 @@ namespace cath {
 					/// \brief TODOCUMENT
 					void check_cell_width(const value_type &prm_cell_width ///< TODOCUMENT
 					                      ) {
-						if ( prm_cell_width <= geom::zero_angle<angle_base_type>() || prm_cell_width > geom::one_revolution<angle_base_type>() ) {
+						if ( prm_cell_width <= geom::ZERO_ANGLE<angle_base_type> || prm_cell_width > geom::ONE_REVOLUTION<angle_base_type> ) {
 							BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot create a vci_linear_dim_spec_view_angle<view_from_phi> with a cell_width that isn't in (0, 2pi ] "));
 						}
 					}
@@ -68,7 +68,7 @@ namespace cath {
 					value_type get_search_radius(const vcie_match_criteria &prm_criteria ///< TODOCUMENT
 					                             ) {
 #ifndef NDEBUG
-						if ( F()( prm_criteria ) >= geom::half_revolution<angle_base_type>() ) {
+						if ( F()( prm_criteria ) >= geom::HALF_REVOLUTION<angle_base_type> ) {
 							BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Unable to search with radius >= pi"
 								" (because then a wrapped end can't be reliably detected by checking whether it ends up less than the start)"));
 						}
@@ -81,7 +81,7 @@ namespace cath {
 					                                   ) {
 						const value_type &result = F()( prm_entry );
 #ifndef NDEBUG
-						if ( result < geom::zero_angle<angle_base_type>() || result >= geom::one_revolution<angle_base_type>() ) {
+						if ( result < geom::ZERO_ANGLE<angle_base_type> || result >= geom::ONE_REVOLUTION<angle_base_type> ) {
 							BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Unable to index entry with angle out of range [0, 2pi)"));
 						}
 #endif

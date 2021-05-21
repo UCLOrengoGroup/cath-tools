@@ -47,7 +47,7 @@ namespace cath {
 	static_assert( common::constexpr_is_uniq( all_distance_score_formulae ), "all_distance_score_formulae shouldn't contain repeated values" );
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr size_t num_distance_score_formulae = std::tuple_size_v< decltype( all_distance_score_formulae ) >;
+	inline constexpr size_t num_distance_score_formulae = std::tuple_size_v< decltype( all_distance_score_formulae ) >;
 
 	/// \brief TODOCUMENT
 	struct name_of_distance_score_formula final {

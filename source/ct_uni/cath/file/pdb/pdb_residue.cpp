@@ -225,8 +225,8 @@ doub_angle_doub_angle_pair cath::file::get_psi_of_this_and_phi_of_next(const pdb
 	const auto phi_of_next = dihedral_angle_between_four_points( this_c, next_n,  next_ca, next_c );
 
 	// Ensure angles are positive (ie between 0 and 2*pi, using 2*pi for endpoint values)
-	const auto shifted_psi_of_this = shift_copy( psi_of_this, zero_angle<double>(), angle_endpoint_loc::USE_UPPER );
-	const auto shifted_phi_of_next = shift_copy( phi_of_next, zero_angle<double>(), angle_endpoint_loc::USE_UPPER );
+	const auto shifted_psi_of_this = shift_copy( psi_of_this, ZERO_ANGLE<double>, angle_endpoint_loc::USE_UPPER );
+	const auto shifted_phi_of_next = shift_copy( phi_of_next, ZERO_ANGLE<double>, angle_endpoint_loc::USE_UPPER );
 
 	// Return the computed angles
 	return make_pair( shifted_psi_of_this, shifted_phi_of_next );

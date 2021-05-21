@@ -43,9 +43,9 @@ namespace cath {
 		///  * If combining both of the above, generate a sensible compile time error if 0
 		///    arguments are passed and no template parameter is specified
 		template <class T>
-		inline ::std::optional<T> make_optional_if(const bool &prm_condition, ///< TODOCUMENT
-		                                           const T    &prm_value      ///< TODOCUMENT
-		                                           ) {
+		constexpr ::std::optional<T> make_optional_if(const bool &prm_condition, ///< TODOCUMENT
+		                                              const T    &prm_value      ///< TODOCUMENT
+		                                              ) {
 			return prm_condition
 				? ::std::optional<T>{ prm_value }
 				: ::std::optional<T>{           };

@@ -73,13 +73,13 @@ namespace cath {
 			/// \brief Get the ID corresponding to the specified string
 			inline id_type operator[](const string_cref &prm_string ///< The string to lookup
 			                          ) const {
-				return the_map.find( prm_string )->second;
+				return the_map.find( detail::ref_wrap_uom_wrap( prm_string ) )->second;
 			}
 
 			/// \brief Return whether this contains the specified string_cref
 			inline bool contains(const string_cref &prm_string ///< The string to lookup
 			                     ) const {
-				return ( the_map.find( prm_string ) != ::std::cend( the_map ) );
+				return ( the_map.find( detail::ref_wrap_uom_wrap( prm_string ) ) != ::std::cend( the_map ) );
 			}
 
 			/// \brief Return whether this id_of_string_ref is empty

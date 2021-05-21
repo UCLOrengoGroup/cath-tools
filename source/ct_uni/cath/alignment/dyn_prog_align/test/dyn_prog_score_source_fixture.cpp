@@ -27,30 +27,31 @@ using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::std;
 
-/// \brief A first  sequence string for making an example sequence_string_dyn_prog_score_source
-const string dyn_prog_score_source_fixture::sequence_string_a( "CC" );
-/// \brief A second sequence string for making an example sequence_string_dyn_prog_score_source
-const string dyn_prog_score_source_fixture::sequence_string_b( "ACCD" );
+/// \brief An example score matrix for making an example old_matrix_dyn_prog_score_source
+static score_vec_of_vec example_old_score_matrix() {
+	return score_vec_of_vec{
+		{ 0, 0, 0, 0, 0 },
+		{ 0, 2, 6, 7, 1 },
+		{ 0, 8, 4, 3, 9 },
+	};
+}
 
 /// \brief An example score matrix for making an example old_matrix_dyn_prog_score_source
-const score_vec_of_vec dyn_prog_score_source_fixture::example_old_score_matrix{
-	{ 0, 0, 0, 0, 0 },
-	{ 0, 2, 6, 7, 1 },
-	{ 0, 8, 4, 3, 9 }
-};
-
-/// \brief An example score matrix for making an example old_matrix_dyn_prog_score_source
-const float_score_vec_vec dyn_prog_score_source_fixture::example_new_score_matrix = {
-	{ 2.0, 6.0, 7.0, 1.0 },
-	{ 8.0, 4.0, 3.0, 9.0 }
-};
+static float_score_vec_vec example_new_score_matrix() {
+	return {
+		{ 2.0, 6.0, 7.0, 1.0 },
+		{ 8.0, 4.0, 3.0, 9.0 },
+	};
+}
 
 /// \brief An example mask matrix for making an example mask_dyn_prog_score_source
-const bool_vec_of_vec dyn_prog_score_source_fixture::example_mask_matrix{
-	{ false, false, false, false, false },
-	{ false,  true, false,  true, false },
-	{ false, false,  true, false,  true }
-};
+static bool_vec_of_vec example_mask_matrix() {
+	return bool_vec_of_vec{
+		{ false, false, false, false, false },
+		{ false,  true, false,  true, false },
+		{ false, false,  true, false,  true },
+	};
+}
 
 ///// \brief Make an example entry_querier_dyn_prog_score_source for testing
 //const entry_querier_dyn_prog_score_source dyn_prog_score_source_fixture::make_example_entry_querier_dyn_prog_score_source() {
@@ -65,8 +66,9 @@ const bool_vec_of_vec dyn_prog_score_source_fixture::example_mask_matrix{
 
 /// \brief Make an example mask_dyn_prog_score_source for testing
 const mask_dyn_prog_score_source & dyn_prog_score_source_fixture::make_example_mask_dyn_prog_score_source() {
+	static const bool_vec_of_vec static_example_mask_matrix = example_mask_matrix();
 	static const mask_dyn_prog_score_source the_mask_dyn_prog_score_source(
-		example_mask_matrix,
+		static_example_mask_matrix,
 		make_example_old_matrix_dyn_prog_score_source()
 	);
 	return the_mask_dyn_prog_score_source;
@@ -74,8 +76,9 @@ const mask_dyn_prog_score_source & dyn_prog_score_source_fixture::make_example_m
 
 /// \brief Make an example old_matrix_dyn_prog_score_source for testing
 const old_matrix_dyn_prog_score_source & dyn_prog_score_source_fixture::make_example_old_matrix_dyn_prog_score_source() {
+	static const score_vec_of_vec static_example_old_score_matrix = example_old_score_matrix();
 	static const old_matrix_dyn_prog_score_source the_old_matrix_dyn_prog_score_source(
-		example_old_score_matrix,
+		static_example_old_score_matrix,
 		2,
 		4,
 		4
@@ -86,7 +89,7 @@ const old_matrix_dyn_prog_score_source & dyn_prog_score_source_fixture::make_exa
 /// \brief Make an example new_matrix_dyn_prog_score_source for testing
 const new_matrix_dyn_prog_score_source & dyn_prog_score_source_fixture::make_example_new_matrix_dyn_prog_score_source() {
 	static const new_matrix_dyn_prog_score_source the_new_matrix_dyn_prog_score_source(
-		example_new_score_matrix,
+		example_new_score_matrix(),
 		2,
 		4
 	);
@@ -96,8 +99,8 @@ const new_matrix_dyn_prog_score_source & dyn_prog_score_source_fixture::make_exa
 /// \brief Make an example sequence_string_dyn_prog_score_source for testing
 const sequence_string_dyn_prog_score_source & dyn_prog_score_source_fixture::make_example_sequence_string_dyn_prog_score_source() {
 	static const sequence_string_dyn_prog_score_source the_sequence_string_dyn_prog_score_source(
-		sequence_string_a,
-		sequence_string_b
+		string{ SEQUENCE_STRING_A },
+		string{ SEQUENCE_STRING_B }
 	);
 	return the_sequence_string_dyn_prog_score_source;
 }

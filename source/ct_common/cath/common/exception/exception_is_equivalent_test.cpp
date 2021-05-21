@@ -26,20 +26,22 @@
 
 using namespace ::cath::common;
 using namespace ::cath::test;
-using namespace ::std;
 
-const string DEFAULT_EXCEPTION_STRING = "defaultExceptionString";
-const string equivalent_to_exception_with_default_string = "otherExceptionString";
+using ::std::string;
+using ::std::string_view;
+
+constexpr string_view DEFAULT_EXCEPTION_STRING = "defaultExceptionString";
+constexpr string_view EQUIVALENT_TO_EXCEPTION_WITH_DEFAULT_STRING = "otherExceptionString";
 
 BOOST_AUTO_TEST_SUITE(exception_is_equivalentTestSuite)
 
 BOOST_AUTO_TEST_CASE(TypeCheck) {
-	const out_of_range_exception out_of_range_exception1(DEFAULT_EXCEPTION_STRING);
-	const out_of_range_exception out_of_range_exception2(DEFAULT_EXCEPTION_STRING);
+	const out_of_range_exception out_of_range_exception1( string{ DEFAULT_EXCEPTION_STRING } );
+	const out_of_range_exception out_of_range_exception2( string{ DEFAULT_EXCEPTION_STRING } );
 	exception_is_equivalent<out_of_range_exception> equivalent_to_out_of_range_exception1(out_of_range_exception1);
 
-	const invalid_argument_exception invalid_argument_exception1(DEFAULT_EXCEPTION_STRING);
-	const invalid_argument_exception invalid_argument_exception2(DEFAULT_EXCEPTION_STRING);
+	const invalid_argument_exception invalid_argument_exception1( string{ DEFAULT_EXCEPTION_STRING } );
+	const invalid_argument_exception invalid_argument_exception2( string{ DEFAULT_EXCEPTION_STRING } );
 	exception_is_equivalent<invalid_argument_exception> equivalent_to_invalid_argument_exception1(invalid_argument_exception1);
 
 	BOOST_CHECK(equivalent_to_out_of_range_exception1(out_of_range_exception1));
@@ -54,13 +56,13 @@ BOOST_AUTO_TEST_CASE(TypeCheck) {
 }
 
 BOOST_AUTO_TEST_CASE(StringCheck) {
-	const invalid_argument_exception exception_with_default_string(DEFAULT_EXCEPTION_STRING);
-	const invalid_argument_exception exception_with_other_string(equivalent_to_exception_with_default_string);
-	exception_is_equivalent<invalid_argument_exception> equivalent_to_exception_with_default_string(exception_with_default_string);
+	const invalid_argument_exception exception_with_default_string( string{ DEFAULT_EXCEPTION_STRING } );
+	const invalid_argument_exception exception_with_other_string( string{ EQUIVALENT_TO_EXCEPTION_WITH_DEFAULT_STRING } );
+	exception_is_equivalent<invalid_argument_exception> EQUIVALENT_TO_EXCEPTION_WITH_DEFAULT_STRING(exception_with_default_string);
 	exception_is_equivalent<invalid_argument_exception> equivalent_to_exception_with_other_string(exception_with_other_string);
 
-	BOOST_CHECK(equivalent_to_exception_with_default_string(exception_with_default_string));
-	BOOST_CHECK(!equivalent_to_exception_with_default_string(exception_with_other_string));
+	BOOST_CHECK(EQUIVALENT_TO_EXCEPTION_WITH_DEFAULT_STRING(exception_with_default_string));
+	BOOST_CHECK(!EQUIVALENT_TO_EXCEPTION_WITH_DEFAULT_STRING(exception_with_other_string));
 	BOOST_CHECK(!equivalent_to_exception_with_other_string(exception_with_default_string));
 	BOOST_CHECK(equivalent_to_exception_with_other_string(exception_with_other_string));
 

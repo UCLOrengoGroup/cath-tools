@@ -23,10 +23,13 @@
 #include <filesystem>
 #include <fstream>
 #include <regex>
+#include <string_view>
 #include <unordered_set>
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
@@ -36,21 +39,21 @@
 using namespace ::cath::common;
 using namespace ::cath::homcheck;
 using namespace ::cath::homcheck::detail;
-using namespace ::std;
 
 using ::boost::algorithm::contains;
 using ::boost::algorithm::is_space;
 using ::boost::token_compress_on;
 using ::std::filesystem::path;
-
-/// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
-const regex is_valid_superfamily_id::SUPERFAMILY_ID_REGEX{ R"(^\d+\.\d+\.\d+\.\d+$)" };
-
-/// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
-const regex is_valid_cath_node_id::NODE_ID_REGEX{ R"(^\d+(\.\d+){0,3}$)" };
+using ::std::ifstream;
+using ::std::istream;
+using ::std::istringstream;
+using ::std::regex;
+using ::std::string;
+using ::std::string_view;
+using ::std::unordered_set;
 
 /// \brief The string to use in between the fold of a new superfamily and the ID of the domain for which it's being created
-const string superfamily_of_domain::NEW_SF_CORE_STRING = ".new_sf_in_fold_of_";
+constexpr string_view NEW_SF_CORE_STRING = ".new_sf_in_fold_of_";
 
 /// \brief Extract the fold from the specified superfamily ID string
 ///
@@ -63,7 +66,7 @@ string cath::homcheck::detail::fold_of_superfamily_id(const string &prm_superfam
 /// \brief Return whether the specified superfamily is a new superfamily created in this run (rather than a real, original superfamily)
 bool superfamily_of_domain::is_created_sf(const string &prm_superfamily ///< The superfamily to query
                                           ) {
-	return contains( prm_superfamily, superfamily_of_domain::NEW_SF_CORE_STRING );
+	return contains( prm_superfamily, NEW_SF_CORE_STRING );
 }
 
 /// \brief Ctor from a vector<pair<string, string>> where each pair contains domain ID and the corresponding superfamily ID
@@ -129,7 +132,7 @@ void superfamily_of_domain::add_domain_in_new_sf_in_fold_of_domain(const string 
 			+ "\" into superfamily_of_domain because there it already has an entry"
 		));
 	}
-	sf_of_dom.emplace( prm_new_domain_id, fold_id + NEW_SF_CORE_STRING + prm_match_domain_id );
+	sf_of_dom.emplace( prm_new_domain_id, ::fmt::format( "{}{}{}", fold_id, NEW_SF_CORE_STRING, prm_match_domain_id ) );
 }
 
 /// \brief Parse the superfamily_of_domain information from the specified istream

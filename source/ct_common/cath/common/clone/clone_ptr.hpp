@@ -81,13 +81,13 @@ namespace cath {
 			clone_ptr(clone_ptr &&) noexcept = default;
 
 			/// \brief Ctor from a unique_ptr const lvalue reference, which takes a clone from it
-			clone_ptr(const std::unique_ptr<cloneable_pointee_type> &prm_unique_ptr ///< TODOCUMENT
-			          ) : ptr( detail::make_clone( *prm_unique_ptr ) ) {
+			explicit clone_ptr(const std::unique_ptr<cloneable_pointee_type> &prm_unique_ptr ///< TODOCUMENT
+			                   ) : ptr( detail::make_clone( *prm_unique_ptr ) ) {
 			}
 
 			/// \brief Ctor from a unique_ptr rvalue reference, which moves it
-			clone_ptr(std::unique_ptr<cloneable_pointee_type> &&prm_unique_ptr ///< TODOCUMENT
-			          ) noexcept : ptr( std::move( prm_unique_ptr ) ) {
+			explicit clone_ptr(std::unique_ptr<cloneable_pointee_type> &&prm_unique_ptr ///< TODOCUMENT
+			                   ) noexcept : ptr( std::move( prm_unique_ptr ) ) {
 			}
 
 			/// \brief An assignment operator which uses the clone method of cloneable_pointee_type

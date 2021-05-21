@@ -49,16 +49,19 @@ namespace cath {
 			static_assert( std::is_arithmetic_v<Num>,
 				"prog_opt_num_range can only be instantiated for arithmetic types (eg int, double)");
 
-		public:
+		  public:
 			/// \brief Ctor from Num
-			constexpr prog_opt_num_range(const Num &prm_value ///< The value to set
-			                             ) : value( prm_value ) {
+			///
+			/// \param prm_value The value to set
+			// clang-format off
+			constexpr prog_opt_num_range( const Num &prm_value ) :value( prm_value ) { // NOLINT(google-explicit-constructor)
 			}
 
 			/// \brief Num conversion operator
-			constexpr operator Num() const {
+			constexpr operator Num() const { // NOLINT(google-explicit-constructor)
 				return value;
 			}
+			// clang-format on
 		};
 
 		/// \brief Provide Boost program_options validation for prog_opt_num_range

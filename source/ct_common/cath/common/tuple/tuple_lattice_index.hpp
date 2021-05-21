@@ -85,7 +85,7 @@ namespace cath {
 
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::tuple_lattice_index_fn tuple_lattice_index{};
+		inline constexpr detail::tuple_lattice_index_fn tuple_lattice_index{};
 
 	} // namespace common
 } // namespace cath

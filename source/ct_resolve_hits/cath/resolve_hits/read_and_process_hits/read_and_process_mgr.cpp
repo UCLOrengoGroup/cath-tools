@@ -108,7 +108,7 @@ read_and_process_mgr cath::rslv::make_read_and_process_mgr(const hits_processor 
                                                            const crh_input_spec   &prm_input_spec        ///< The crh_input_spec to specify how hits should be read in
                                                            ) {
 	return read_and_process_mgr{
-		hits_processor_list{ prm_crh_score_spec, prm_crh_segment_spec, { prm_hits_processor.clone() } },
+		hits_processor_list{ prm_crh_score_spec, prm_crh_segment_spec, { hits_processor_clptr{ prm_hits_processor.clone() } } },
 		prm_filter_spec,
 		prm_input_spec.get_input_hits_are_grouped()
 	};

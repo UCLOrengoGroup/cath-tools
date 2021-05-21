@@ -135,7 +135,7 @@ namespace cath {
 
 
 		/// \brief The initial score before any hits have been added
-		[[maybe_unused]] constexpr resscr_t INIT_SCORE = 0.0;
+		inline constexpr resscr_t INIT_SCORE = 0.0;
 
 		namespace detail {
 

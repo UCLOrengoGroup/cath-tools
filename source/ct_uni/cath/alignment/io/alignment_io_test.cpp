@@ -189,8 +189,8 @@ BOOST_AUTO_TEST_CASE(writing_aln_ssap_legacy_file_to_slash_does_not_fail) {
 BOOST_AUTO_TEST_CASE(alignment_legacy_input_output) {
 	ostringstream err_ss;
 
-	const protein protein_a = read_protein_from_dssp_and_pdb( EXAMPLE_A_DSSP_FILENAME(), EXAMPLE_A_PDB_FILENAME(), dssp_skip_policy::SKIP__BREAK_ANGLES, EXAMPLE_A_PDB_STEMNAME(), ostream_ref{ err_ss } );
-	const protein protein_b = read_protein_from_dssp_and_pdb( EXAMPLE_B_DSSP_FILENAME(), EXAMPLE_B_PDB_FILENAME(), dssp_skip_policy::SKIP__BREAK_ANGLES, EXAMPLE_B_PDB_STEMNAME(), ostream_ref{ err_ss } );
+	const protein protein_a = read_protein_from_dssp_and_pdb( EXAMPLE_A_DSSP_FILENAME(), EXAMPLE_A_PDB_FILENAME(), dssp_skip_policy::SKIP__BREAK_ANGLES, string( EXAMPLE_A_PDB_STEMNAME ), ostream_ref{ err_ss } );
+	const protein protein_b = read_protein_from_dssp_and_pdb( EXAMPLE_B_DSSP_FILENAME(), EXAMPLE_B_PDB_FILENAME(), dssp_skip_policy::SKIP__BREAK_ANGLES, string( EXAMPLE_B_PDB_STEMNAME ), ostream_ref{ err_ss } );
 
 	// Read the alignment file into a stringstream which can be used both as expected output
 	// and as the istream for the parsing of the alignment

@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_BIOCORE_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_BIOCORE_TYPE_ALIASES_HPP
 
+#include <array>
 #include <map>
 #include <optional>
 #include <set>
@@ -33,9 +34,6 @@ namespace cath { class residue_name; }
 // clang-format on
 
 namespace cath {
-
-	/// \brief Type alias for a vector of chain_label objects
-	using chain_label_vec                 = ::std::vector<chain_label>;
 
 	/// \brief Type alias for a set of chain_label objects
 	using chain_label_set                 = ::std::set<chain_label>;

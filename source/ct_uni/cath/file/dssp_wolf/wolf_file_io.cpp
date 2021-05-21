@@ -224,8 +224,8 @@ wolf_file cath::file::read_wolf(const path &prm_wolf_filename ///< TODOCUMENT
 		const coord carbon_beta_coord  ( cb_x, cb_y, cb_z );
 
 		// Set backbone and torsional angles
-		const auto shifted_phi = shift_copy( make_angle_from_degrees<double>( numeric_cast<int>( phi_in_degrees ) ), zero_angle<double>(), angle_endpoint_loc::USE_EITHER );
-		const auto shifted_psi = shift_copy( make_angle_from_degrees<double>( numeric_cast<int>( psi_in_degrees ) ), zero_angle<double>(), angle_endpoint_loc::USE_EITHER );
+		const auto shifted_phi = shift_copy( make_angle_from_degrees<double>( numeric_cast<int>( phi_in_degrees ) ), ZERO_ANGLE<double>, angle_endpoint_loc::USE_EITHER );
+		const auto shifted_psi = shift_copy( make_angle_from_degrees<double>( numeric_cast<int>( psi_in_degrees ) ), ZERO_ANGLE<double>, angle_endpoint_loc::USE_EITHER );
 //		dummy_alpha = (dummy_alpha <   0) ? (360 + dummy_alpha) : dummy_alpha;
 //		dummy_kappa = (dummy_kappa <   0) ? (360 + dummy_kappa) : dummy_kappa;
 //		dummy_kappa = (dummy_kappa > 180) ? (360 - dummy_kappa) : dummy_kappa;

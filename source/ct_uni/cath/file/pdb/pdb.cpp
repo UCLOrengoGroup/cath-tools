@@ -26,6 +26,7 @@
 #include <optional>
 #include <set>
 #include <sstream>
+#include <string_view>
 #include <tuple>
 
 #include <boost/algorithm/cxx11/any_of.hpp>
@@ -101,11 +102,12 @@ using ::std::set;
 using ::std::setw;
 using ::std::strerror;
 using ::std::string;
+using ::std::string_view;
 using ::std::stringstream;
 using ::std::tuple;
 using ::std::vector;
 
-const string pdb::PDB_RECORD_STRING_TER ( "TER   " );
+constexpr string_view PDB_RECORD_STRING_TER( "TER   " );
 
 /// \brief TODOCUMENT
 void pdb::read_file(const path &prm_filename ///< TODOCUMENT
@@ -759,7 +761,7 @@ ostream & cath::file::write_pdb_file(ostream              &prm_os,            //
 	const string residue_name_with_insert_or_space = make_residue_name_string_with_insert_or_space(
 		get<0>( *last_atom_details ).get_residue_name()
 	);
-	prm_os << pdb::PDB_RECORD_STRING_TER
+	prm_os << PDB_RECORD_STRING_TER
 		<< right
 		<< setw( 5 ) << ( get<1>( *last_atom_details ) + 1 )
 		<< "      "
@@ -952,10 +954,9 @@ doub_angle_doub_angle_pair_vec cath::file::get_phi_and_psi_angles(const pdb     
 	// The gap between consecutive residues' carbon and nitrogen atoms respectively,
 	// above which the residues are not treated as neighbours
 	constexpr double INTER_C_TO_N_DIST_FOR_NEIGHBOURS = 2.5;
-	
-	const     auto   DEFAULT_PHI_PSI              = residue::DEFAULT_PHI_PSI();
-	const     auto   DEFAULT_PHI_PSI_PAIR         = make_pair( DEFAULT_PHI_PSI, DEFAULT_PHI_PSI );
-	const     size_t num_residues                 = prm_pdb.get_num_residues();
+	constexpr pair   DEFAULT_PHI_PSI_PAIR( residue::DEFAULT_PHI_PSI, residue::DEFAULT_PHI_PSI );
+
+	const size_t num_residues = prm_pdb.get_num_residues();
 
 	// Build a range of indices of the residues to be considered
 	//

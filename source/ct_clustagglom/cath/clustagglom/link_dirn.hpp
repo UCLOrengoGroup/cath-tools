@@ -46,7 +46,7 @@ namespace cath {
 		static_assert( common::constexpr_is_uniq( all_link_dirns ), "all_link_dirns shouldn't contain repeated values" );
 
 		/// \brief Store a constexpr record of the number of link_dirns
-		[[maybe_unused]] constexpr size_t num_link_dirns = std::tuple_size_v< decltype( all_link_dirns ) >;
+		inline constexpr size_t num_link_dirns = std::tuple_size_v< decltype( all_link_dirns ) >;
 
 		namespace detail {
 

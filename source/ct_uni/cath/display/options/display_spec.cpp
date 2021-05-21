@@ -33,13 +33,6 @@ using ::std::make_optional;
 using ::std::nullopt;
 using ::std::string;
 
-/// \brief A string value to use internally to indicate colours haven't been specified
-///
-/// This is used (rather than, say, making display_colours_string an optional<string>) so that
-/// display_colours_string can passed to Boost program_options and handled correctly and so that
-/// unspecified can easily be distinguished from specified as empty.
-const string display_spec::COLOURS_UNSPECIFIED = "this string is used internally to indicate the colours haven't been specified";
-
 /// \brief Ctor for display_spec
 display_spec::display_spec(string      prm_display_colours_string,    ///< TODOCUMENT
                            const bool &prm_gradient_colour_alignment, ///< Whether to display a gradient of colours

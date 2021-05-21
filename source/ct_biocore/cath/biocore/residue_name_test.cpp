@@ -43,6 +43,8 @@ BOOST_AUTO_TEST_CASE(negative_number_check_works) {
 	static_assert( ! has_strictly_negative_residue_number( residue_name(  1, 'A' ) ) );
 
 	static_assert( ! has_strictly_negative_residue_number( residue_name(         ) ) );
+
+	BOOST_TEST( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

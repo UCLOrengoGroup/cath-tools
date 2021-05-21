@@ -74,7 +74,7 @@ namespace cath {
 			}
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::equal_grouped_forwarder equal_grouped{};
+		inline constexpr detail::equal_grouped_forwarder equal_grouped{};
 
 	} // namespace common
 } // namespace cath

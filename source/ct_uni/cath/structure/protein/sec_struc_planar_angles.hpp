@@ -25,6 +25,8 @@ namespace cath { namespace file { class sec_file_record; } }
 
 #include <string>
 
+#include "cath/common/exception/invalid_argument_exception.hpp"
+
 namespace cath {
 
 	// Planar angles between secondary structures as used in sec files
@@ -44,16 +46,49 @@ namespace cath {
 		/// \brief The x-y planar angle from the vector through the source sec_struc to the axis through the destination sec_struc
 		double planar_angle_z;
 
-	public:
-		sec_struc_planar_angles(const double &,
-		                        const double &,
-		                        const double &);
-		[[nodiscard]] double get_planar_angle_x() const;
-		[[nodiscard]] double get_planar_angle_minus_y() const;
-		[[nodiscard]] double get_planar_angle_z() const;
-
-		static const sec_struc_planar_angles NULL_SEC_STRUC_PLANAR_ANGLES;
+	  public:
+		constexpr sec_struc_planar_angles( const double &, const double &, const double & );
+		[[nodiscard]] constexpr double get_planar_angle_x() const;
+		[[nodiscard]] constexpr double get_planar_angle_minus_y() const;
+		[[nodiscard]] constexpr double get_planar_angle_z() const;
 	};
+
+	/// \brief Ctor for sec_struc_planar_angles
+	///
+	/// \param prm_angle_x       The angle on the plane defined by the x-axis
+	/// \param prm_angle_minus_y The angle on the plane defined by the negative y-axis
+	/// \param prm_angle_z       The angle on the plane defined by the z-axis
+	constexpr sec_struc_planar_angles::sec_struc_planar_angles( const double &prm_angle_x,
+	                                                            const double &prm_angle_minus_y,
+	                                                            const double &prm_angle_z ) :
+	        planar_angle_x( prm_angle_x ), planar_angle_minus_y( prm_angle_minus_y ), planar_angle_z( prm_angle_z ) {
+		if ( !( planar_angle_x > ::std::numeric_limits<double>::lowest()
+		        && planar_angle_x < ::std::numeric_limits<double>::max() )
+		     || !( planar_angle_minus_y > ::std::numeric_limits<double>::lowest()
+		           && planar_angle_minus_y < ::std::numeric_limits<double>::max() )
+		     || !( planar_angle_z > ::std::numeric_limits<double>::lowest()
+		           && planar_angle_z < ::std::numeric_limits<double>::max() ) ) {
+			BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+			  "Arguments angle_x, angle_y and angle_z must be a normal, finite floating-point numbers" ) );
+		}
+	}
+
+	/// \brief Getter for the angle on the plane defined by the x-axis
+	constexpr double sec_struc_planar_angles::get_planar_angle_x() const {
+		return planar_angle_x;
+	}
+
+	/// \brief Getter for the angle on the plane defined by the negative y-axis
+	constexpr double sec_struc_planar_angles::get_planar_angle_minus_y() const {
+		return planar_angle_minus_y;
+	}
+
+	/// \brief Getter for the angle on the plane defined by the z-axis
+	constexpr double sec_struc_planar_angles::get_planar_angle_z() const {
+		return planar_angle_z;
+	}
+
+	inline constexpr sec_struc_planar_angles NULL_SEC_STRUC_PLANAR_ANGLES( 0.0, 0.0, 0.0 );
 
 	std::string to_string(const sec_struc_planar_angles &);
 

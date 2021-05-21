@@ -67,13 +67,6 @@ using ::std::setprecision;
 using ::std::strerror;
 using ::std::string;
 
-const string superposition_io_consts::ENTRIES_KEY         = "entries";
-const string superposition_io_consts::NAME_KEY            = "name";
-const string superposition_io_consts::ROTATION_KEY        = "rotation";
-const string superposition_io_consts::TRANSFORMATION_KEY  = "transformation";
-const string superposition_io_consts::TRANSFORMATIONS_KEY = "transformations";
-const string superposition_io_consts::TRANSLATION_KEY     = "translation";
-
 /// \brief TODOCUMENT
 ///
 /// \relates superposition
@@ -218,7 +211,7 @@ ostream & cath::sup::write_superposed_pdb_to_ostream(ostream                    
 			                superposition_output_options_block::PO_SUP_FILES_DIR );
 		}
 
-		prm_pdb.set_chain_label( superposition::SUPERPOSITION_CHAIN_LABELS[ prm_chain_index ] );
+		prm_pdb.set_chain_label( superposition::SUPERPOSITION_CHAIN_LABELS.at( prm_chain_index ) );
 	}
 
 	write_pdb_file( prm_os, prm_pdb, prm_regions, prm_pdb_write_mode );
@@ -445,16 +438,16 @@ void cath::sup::write_superposed_pdb_from_files(const superposition          &pr
 superposition cath::sup::superposition_from_ptree(const ptree &prm_ptree ///< The ptree from which the superposition should be read
                                                   ) {
 	// Sanity check the ptree
-	const auto tranformations      = prm_ptree.get_child( superposition_io_consts::TRANSFORMATIONS_KEY );
+	const auto tranformations      = prm_ptree.get_child( string( superposition_io_consts::TRANSFORMATIONS_KEY ) );
 	const auto num_transformations = tranformations.size();
 	if ( num_transformations != tranformations.count( "" ) ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse superposition from property_tree with any unrecognised transformations fields"));
 	}
 	const auto transformation_entry_is_invalid = [] (const ptree &x) {
 		return (
-			   x.size ()                                           != 2
-			|| x.count( superposition_io_consts::TRANSLATION_KEY ) != 1
-			|| x.count( superposition_io_consts::ROTATION_KEY    ) != 1
+			   x.size ()                                                     != 2
+			|| x.count( string( superposition_io_consts::TRANSLATION_KEY ) ) != 1
+			|| x.count( string( superposition_io_consts::ROTATION_KEY    ) ) != 1
 		);
 	};
 	if ( any_of( tranformations | map_values, transformation_entry_is_invalid ) ) {
@@ -465,7 +458,7 @@ superposition cath::sup::superposition_from_ptree(const ptree &prm_ptree ///< Th
 	const auto translations = transform_build<coord_vec>(
 		tranformations | map_values,
 		[] (const ptree &x) {
-			return coord_from_ptree( x.get_child( superposition_io_consts::TRANSLATION_KEY ) );
+			return coord_from_ptree( x.get_child( string( superposition_io_consts::TRANSLATION_KEY ) ) );
 		}
 	);
 
@@ -473,7 +466,7 @@ superposition cath::sup::superposition_from_ptree(const ptree &prm_ptree ///< Th
 	const auto rotations = transform_build<rotation_vec>(
 		tranformations | map_values,
 		[] (const ptree &x) {
-			return rotation_from_ptree( x.get_child( superposition_io_consts::ROTATION_KEY ) );
+			return rotation_from_ptree( x.get_child( string( superposition_io_consts::ROTATION_KEY ) ) );
 		}
 	);
 
@@ -493,8 +486,8 @@ void cath::sup::save_to_ptree(ptree               &prm_ptree,        ///< The pt
 
 	for (const size_t &index : indices( prm_superposition.get_num_entries() ) ) {
 		ptree transformation_ptree;
-		transformation_ptree.put_child( superposition_io_consts::TRANSLATION_KEY, make_ptree_of( prm_superposition.get_translation_of_index( index ) ) );
-		transformation_ptree.put_child( superposition_io_consts::ROTATION_KEY,    make_ptree_of( prm_superposition.get_rotation_of_index   ( index ) ) );
+		transformation_ptree.put_child( string( superposition_io_consts::TRANSLATION_KEY ), make_ptree_of( prm_superposition.get_translation_of_index( index ) ) );
+		transformation_ptree.put_child( string( superposition_io_consts::ROTATION_KEY ),    make_ptree_of( prm_superposition.get_rotation_of_index   ( index ) ) );
 		transformations_ptree.push_back( make_pair( "", transformation_ptree ) );
 	}
 }

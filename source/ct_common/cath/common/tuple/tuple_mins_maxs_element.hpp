@@ -113,7 +113,7 @@ namespace cath {
 
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::tuple_mins_maxs_element_fn tuple_mins_maxs_element{};
+		inline constexpr detail::tuple_mins_maxs_element_fn tuple_mins_maxs_element{};
 
 	} // namespace common
 } // namespace cath

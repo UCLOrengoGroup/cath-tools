@@ -61,7 +61,7 @@ predicate_result string_matches_file::operator()(const string &prm_got_string, /
 		prm_got_string,
 		got_name,
 		expected_file,
-		files_equal::FILENAME_NAME_PREFIX + prm_filename.string(),
+		string( files_equal::FILENAME_NAME_PREFIX ) + prm_filename.string(),
 		diff_half_width
 	);
 

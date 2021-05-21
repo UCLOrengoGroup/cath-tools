@@ -58,9 +58,6 @@ namespace cath {
 
 				[[nodiscard]] const double &get_filter_score() const;
 				[[nodiscard]] const double &get_full_score() const;
-
-				static const std::string STRING_PREFIX;
-				static const std::string STRING_SUFFIX;
 			};
 
 			bool operator==(const filter_vs_full_score &,

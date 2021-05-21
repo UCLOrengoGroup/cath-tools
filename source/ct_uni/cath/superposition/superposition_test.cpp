@@ -18,6 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <array>
+#include <vector>
+
 #include <boost/test/tools/output_test_stream.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -28,9 +31,6 @@
 #include "cath/superposition/superposition.hpp"
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/test_tools.hpp"
-
-//#include <iostream> // *** TEMPORARY ***
-#include <vector>
 
 using namespace ::cath;
 using namespace ::cath::common::test;
@@ -167,16 +167,16 @@ BOOST_AUTO_TEST_CASE(rmsd) {
 	BOOST_CHECK_CLOSE(
 		rmsd_between_1_and_2,
 		calc_pairwise_superposition_rmsd(coord_list_1, coord_list_2),
-		ACCURACY_PERCENTAGE()
+		ACCURACY_PERCENTAGE
 	);
 }
 
 BOOST_AUTO_TEST_CASE(post_translate_and_rotate_work) {
-	const auto rotations = {
-		rotation::ROTATE_X_TO_Y_TO_Z_TO_X(),
-		rotation::ROTATE_X_TO_Z_TO_Y_TO_X(),
+	constexpr array rotations = {
+		ROTATE_X_TO_Y_TO_Z_TO_X,
+		ROTATE_X_TO_Z_TO_Y_TO_X,
 	};
-	const auto translations = {
+	constexpr array translations = {
 		coord{ 1.0, 2.0, 3.0 },
 		coord{ 3.0, 1.0, 2.0 },
 		coord{ 2.0, 3.0, 1.0 },

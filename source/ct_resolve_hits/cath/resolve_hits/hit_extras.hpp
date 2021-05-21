@@ -106,8 +106,8 @@ namespace cath {
 				std::reference_wrapper<std::string> result_string;
 
 				/// \brief Ctor to pass the string to be populated into result_string 
-				info_stringifier(std::string &prm_string ///< The string to be populated
-				                 ) : result_string{ prm_string } {
+				explicit info_stringifier(std::string &prm_string ///< The string to be populated
+				                          ) : result_string{ prm_string } {
 				}
 
 				/// \brief Stringify the specified value to result_string

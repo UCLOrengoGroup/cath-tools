@@ -47,6 +47,8 @@ BOOST_AUTO_TEST_CASE(negative_number_check_works) {
 	static_assert( ! has_strictly_negative_residue_number( make_residue_id( 'A',  1, 'A' ) ) );
 
 	static_assert( ! has_strictly_negative_residue_number( make_residue_id( 'A'          ) ) );
+
+	BOOST_TEST( true );
 }
 
 BOOST_AUTO_TEST_CASE(any_negative_number_check_works) {

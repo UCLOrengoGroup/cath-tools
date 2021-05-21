@@ -57,7 +57,7 @@ namespace cath {
 			//
 			/// \todo Consider whether there are better ways to get the dir/ids here
 			///
-			/// These are just EXAMPLE_A_PDB_STEMNAME(), EXAMPLE_B_PDB_STEMNAME() and TEST_SOURCE_DATA_DIR()
+			/// These are just EXAMPLE_A_PDB_STEMNAME, EXAMPLE_B_PDB_STEMNAME and TEST_SOURCE_DATA_DIR()
 			/// from global_test_constants 
 			const path   &the_dir = path{ "build-test-data" } / "snap_judgement_pdbs";
 //			const string &name_a  = "1c0pA01";

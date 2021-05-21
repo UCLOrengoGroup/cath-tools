@@ -48,8 +48,8 @@ namespace cath {
 			                           const size_t &prm_x_2,
 			                           const double       &prm_y_2
 			                           ) {
-				BOOST_CHECK_CLOSE( prm_y_1, pymol_tools::pymol_size(prm_x_1, prm_y_1, prm_x_2, prm_y_2, prm_x_1    ), ACCURACY_PERCENTAGE() );
-				BOOST_CHECK_CLOSE( prm_y_2, pymol_tools::pymol_size(prm_x_1, prm_y_1, prm_x_2, prm_y_2, prm_x_2    ), ACCURACY_PERCENTAGE() );
+				BOOST_CHECK_CLOSE( prm_y_1, pymol_tools::pymol_size(prm_x_1, prm_y_1, prm_x_2, prm_y_2, prm_x_1    ), ACCURACY_PERCENTAGE );
+				BOOST_CHECK_CLOSE( prm_y_2, pymol_tools::pymol_size(prm_x_1, prm_y_1, prm_x_2, prm_y_2, prm_x_2    ), ACCURACY_PERCENTAGE );
 				BOOST_CHECK_LT   ( 0.0,     pymol_tools::pymol_size(prm_x_1, prm_y_1, prm_x_2, prm_y_2, 10000000_z )                        );
 			}
 		};

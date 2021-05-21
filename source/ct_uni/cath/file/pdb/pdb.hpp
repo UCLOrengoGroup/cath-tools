@@ -83,8 +83,6 @@ namespace cath {
 
 			[[nodiscard]] const_iterator begin() const;
 			[[nodiscard]] const_iterator end() const;
-
-			static const std::string PDB_RECORD_STRING_TER;
 		};
 
 		backbone_complete_indices get_backbone_complete_indices(const pdb &);

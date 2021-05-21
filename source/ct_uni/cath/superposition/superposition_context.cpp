@@ -353,20 +353,20 @@ superposition_context cath::sup::superposition_context_from_ptree(const ptree &p
 	// Define a lambda for checking whether an entry ptree is invalid
 	const auto entry_is_invalid = [] (const ptree &x) {
 		return ( x.size() != 2
-			  || x.count( superposition_io_consts::NAME_KEY           ) != 1
-			  || x.count( superposition_io_consts::TRANSFORMATION_KEY ) != 1 );
+			  || x.count( string( superposition_io_consts::NAME_KEY           ) ) != 1
+			  || x.count( string( superposition_io_consts::TRANSFORMATION_KEY ) ) != 1 );
 	};
 
 	// Define a lambda for returning an entry ptree's transformation ptree child
 	const auto get_transformation_child = [] (const ptree &x) {
-		return x.get_child( superposition_io_consts::TRANSFORMATION_KEY );
+		return x.get_child( string( superposition_io_consts::TRANSFORMATION_KEY ) );
 	};
 
 	// Sanity check the ptree [ Step 1: check there's one key, which is entries ]
-	if ( prm_ptree.size() != 1 || prm_ptree.count( superposition_io_consts::ENTRIES_KEY ) != 1 ) {
+	if ( prm_ptree.size() != 1 || prm_ptree.count( string( superposition_io_consts::ENTRIES_KEY ) ) != 1 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse a superposition_context from ptree data that doesn't have one entries key and no other keys"));
 	}
-	const auto entries = prm_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
+	const auto entries = prm_ptree.get_child( string( superposition_io_consts::ENTRIES_KEY ) );
 
 	// Sanity check the ptree [ Step 2: check that all entries have empty keys ]
 	if ( entries.size() != entries.count( "" ) ) {
@@ -382,7 +382,7 @@ superposition_context cath::sup::superposition_context_from_ptree(const ptree &p
 	const name_set_list names { transform_build<name_set_vec>(
 		entries | map_values,
 		[] (const ptree &x) {
-			return name_set{ x.get<string>( superposition_io_consts::NAME_KEY ) };
+			return name_set{ x.get<string>( string( superposition_io_consts::NAME_KEY ) ) };
 		}
 	) };
 
@@ -390,7 +390,7 @@ superposition_context cath::sup::superposition_context_from_ptree(const ptree &p
 	const auto translations = transform_build<coord_vec>(
 		entries | map_values | transformed( get_transformation_child ),
 		[] (const ptree &x) {
-			return coord_from_ptree( x.get_child( superposition_io_consts::TRANSLATION_KEY ) );
+			return coord_from_ptree( x.get_child( string( superposition_io_consts::TRANSLATION_KEY ) ) );
 		}
 	);
 
@@ -398,7 +398,7 @@ superposition_context cath::sup::superposition_context_from_ptree(const ptree &p
 	const auto rotations = transform_build<rotation_vec>(
 		entries | map_values | transformed( get_transformation_child ),
 		[] (const ptree &x) {
-			return rotation_from_ptree( x.get_child( superposition_io_consts::ROTATION_KEY ) );
+			return rotation_from_ptree( x.get_child( string( superposition_io_consts::ROTATION_KEY ) ) );
 		}
 	);
 
@@ -426,18 +426,18 @@ void cath::sup::save_to_ptree(ptree                       &prm_ptree,      ///< 
 	}
 
 	const auto supn_ptree          = make_ptree_of( prm_sup_context.get_superposition() );
-	const auto trans_ptrees        = supn_ptree.get_child( superposition_io_consts::TRANSFORMATIONS_KEY );
+	const auto trans_ptrees        = supn_ptree.get_child( string( superposition_io_consts::TRANSFORMATIONS_KEY ) );
 
-	prm_ptree.put_child( superposition_io_consts::ENTRIES_KEY, ptree{} );
-	auto &entries_ptree = prm_ptree.get_child( superposition_io_consts::ENTRIES_KEY );
+	prm_ptree.put_child( string( superposition_io_consts::ENTRIES_KEY ), ptree{} );
+	auto &entries_ptree = prm_ptree.get_child( string( superposition_io_consts::ENTRIES_KEY ) );
 
 	for_each(
 		get_supn_json_names( get_name_sets( prm_sup_context ) ),
 		trans_ptrees,
 		[&] (const string &name, const pair<string, ptree> &trans_ptree) {
 			ptree entry_ptree;
-			entry_ptree.put      ( superposition_io_consts::NAME_KEY,           name               );
-			entry_ptree.put_child( superposition_io_consts::TRANSFORMATION_KEY, trans_ptree.second );
+			entry_ptree.put      ( string( superposition_io_consts::NAME_KEY ),           name               );
+			entry_ptree.put_child( string( superposition_io_consts::TRANSFORMATION_KEY ), trans_ptree.second );
 			entries_ptree.push_back( make_pair( "", entry_ptree ) );
 		}
 	);

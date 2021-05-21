@@ -51,44 +51,16 @@ using ::boost::algorithm::token_compress_on;
 using ::boost::lexical_cast;
 using ::std::filesystem::path;
 
-/// \brief Default values of each of the options (path, prefix, suffix) for each of the file types
-const data_dirs_spec::file_option_str_map_map data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS = {
-	{ data_file::PDB,  data_option_str_map{ { data_option::PATH,   "."     },
-	                                        { data_option::PREFIX, ""      },
-	                                        { data_option::SUFFIX, ""      } } },
-	{ data_file::DSSP, data_option_str_map{ { data_option::PATH,   "."     },
-	                                        { data_option::PREFIX, ""      },
-	                                        { data_option::SUFFIX, ".dssp" } } },
-	{ data_file::WOLF, data_option_str_map{ { data_option::PATH,   "."     },
-	                                        { data_option::PREFIX, ""      },
-	                                        { data_option::SUFFIX, ".wolf" } } },
-	{ data_file::SEC,  data_option_str_map{ { data_option::PATH,   "."     },
-	                                        { data_option::PREFIX, ""      },
-	                                        { data_option::SUFFIX, ".sec"  } } }
-};
-
-/// \brief The names for each of the data file types
-///
-/// These names are used for:
-///  - referring to the file types in the options descriptions
-///  - constructing the options names (after being lower-cased and having spaces and underscores replaced with hyphens)
-const data_file_str_map data_dirs_spec::DATA_FILE_NAMES = {
-	{ data_file::PDB,  "PDB"  },
-	{ data_file::DSSP, "DSSP" },
-	{ data_file::WOLF, "wolf" },
-	{ data_file::SEC,  "sec"  }
-};
-
-/// \brief The default sub-directory name to append to a cath-root-dir to get the file type's directory
-const data_file_str_map data_dirs_spec::DEFAULT_SUBDIR_NAME = {
-	{ data_file::PDB,  "pdb"  },
-	{ data_file::DSSP, "dssp" },
-	{ data_file::WOLF, "wolf" },
-	{ data_file::SEC,  "sec"  }
-};
+file_option_str_map_map cath::opts::data_file_type_option_defaults_map() {
+	file_option_str_map_map result;
+	for ( const auto &[ file, option_type, option_value ] : data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS ) {
+		result[ file ][ option_type ] = option_value;
+	}
+	return result;
+}
 
 /// \brief Ctor for data_dirs_spec
-data_dirs_spec::data_dirs_spec() : values( DATA_FILE_TYPE_OPTION_DEFAULTS ) {
+data_dirs_spec::data_dirs_spec() : values( data_file_type_option_defaults_map() ) {
 }
 
 /// \brief Get the value of an option type and data type
@@ -122,9 +94,9 @@ string data_dirs_spec::get_value_of_option_and_data_file(const data_option &prm_
 /// \brief Getter for the name of a given data type
 ///
 /// This is static because the name of each data type is static.
-string data_dirs_spec::get_name_of_data_file(const data_file &prm_data_file ///< The data type to query
-                                             ) {
-	return DATA_FILE_NAMES.at( prm_data_file );
+string_view data_dirs_spec::get_name_of_data_file(const data_file &prm_data_file ///< The data type to query
+                                                  ) {
+	return name_of_data_file( prm_data_file );
 }
 
 /// \brief Getter for cath_root_dir
@@ -212,7 +184,7 @@ path_vec cath::opts::get_paths_of_data_file(const data_dirs_spec &prm_data_dirs_
 	const string  path_string   = get_path_of_data_file( prm_data_dirs_options, prm_data_file );
 	path_vec      path_dirs     = split_path_into_directories( path_string );
 	if ( ! cath_root_dir.empty() ) {
-		path_dirs.push_back( cath_root_dir / data_dirs_spec::DEFAULT_SUBDIR_NAME.at( prm_data_file ) );
+		path_dirs.push_back( cath_root_dir / default_subdir_name_of_data_file( prm_data_file ) );
 	}
 	return path_dirs;
 }
@@ -228,9 +200,9 @@ path cath::opts::find_file(const data_dirs_spec &prm_data_dirs_options, ///< The
                            ) {
 	const path_vec path_dirs       = get_paths_of_data_file( prm_data_dirs_options,  prm_data_file );
 
-	const string   file_type_name  = prm_data_dirs_options.get_name_of_data_file  ( prm_data_file );
-	const string   prefix          = get_prefix_of_data_file( prm_data_dirs_options, prm_data_file );
-	const string   suffix          = get_suffix_of_data_file( prm_data_dirs_options, prm_data_file );
+	const string_view file_type_name = prm_data_dirs_options.get_name_of_data_file( prm_data_file );
+	const string      prefix         = get_prefix_of_data_file( prm_data_dirs_options, prm_data_file );
+	const string      suffix         = get_suffix_of_data_file( prm_data_dirs_options, prm_data_file );
 
 	const string   basename        = prefix + prm_name + suffix;
 

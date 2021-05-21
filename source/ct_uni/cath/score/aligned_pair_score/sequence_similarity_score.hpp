@@ -59,7 +59,7 @@ namespace cath {
 			substitution_matrix scores;
 
 			/// \brief The length getter with which the normalisation length should be acquired
-			common::clone_ptr<const length_getter> length_getter_ptr = { common::make_unique<length_of_longer_getter>() };
+			common::clone_ptr<const length_getter> length_getter_ptr{ common::make_unique<length_of_longer_getter>() };
 
 			[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
 

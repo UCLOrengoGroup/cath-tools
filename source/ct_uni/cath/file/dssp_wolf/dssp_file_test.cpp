@@ -181,11 +181,11 @@ void cath::test::dssp_wolf_file_test_suite_fixture::compare_phi_psi_from_pdb_vs_
 		// so the test needs to do the same to match
 		const doub_angle dssp_phi = dssp_residue.get_phi_angle();
 		const doub_angle dssp_psi = dssp_residue.get_psi_angle();
-		if ( dssp_phi != residue::DEFAULT_PHI_PSI() ) {
-			BOOST_CHECK_CLOSE( angle_in_degrees( dssp_phi ), round( round( 10.0 * angle_in_degrees( pdb_prot_residue.get_phi_angle() ) ) / 10.0 ), ACCURACY_PERCENTAGE() );
+		if ( dssp_phi != residue::DEFAULT_PHI_PSI ) {
+			BOOST_CHECK_CLOSE( angle_in_degrees( dssp_phi ), round( round( 10.0 * angle_in_degrees( pdb_prot_residue.get_phi_angle() ) ) / 10.0 ), ACCURACY_PERCENTAGE );
 		}
-		if ( dssp_psi != residue::DEFAULT_PHI_PSI() ) {
-			BOOST_CHECK_CLOSE( angle_in_degrees( dssp_psi ), round( round( 10.0 * angle_in_degrees( pdb_prot_residue.get_psi_angle() ) ) / 10.0 ), ACCURACY_PERCENTAGE() );
+		if ( dssp_psi != residue::DEFAULT_PHI_PSI ) {
+			BOOST_CHECK_CLOSE( angle_in_degrees( dssp_psi ), round( round( 10.0 * angle_in_degrees( pdb_prot_residue.get_psi_angle() ) ) / 10.0 ), ACCURACY_PERCENTAGE );
 		}
 	}
 }
@@ -336,7 +336,7 @@ BOOST_AUTO_TEST_CASE(null_dssp_residue) {
 		"   36        !              0   0    0      0, 0.0     0, 0.0     0, 0.0     0, 0.0   0.000 360.0 360.0 360.0 360.0    0.0    0.0    0.0"
 	);
 	BOOST_CHECK_EQUAL(                   0_z, parsed_line.first  );
-	BOOST_CHECK_EQUAL( residue::NULL_RESIDUE, parsed_line.second );
+	BOOST_CHECK_EQUAL( NULL_RESIDUE, parsed_line.second );
 }
 
 BOOST_AUTO_TEST_CASE(handles_lower_case_amino_acid_for_disulfide_bridge_between_cysteines) {

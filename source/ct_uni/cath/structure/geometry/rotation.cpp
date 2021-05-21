@@ -43,47 +43,6 @@ using ::boost::algorithm::any_of;
 using ::boost::lexical_cast;
 using ::boost::property_tree::ptree;
 
-/// \brief The identity rotation
-const rotation & rotation::IDENTITY_ROTATION() {
-	static const rotation identity_rotation(1.0, 0.0, 0.0,
-	                                        0.0, 1.0, 0.0,
-	                                        0.0, 0.0, 1.0);
-	return identity_rotation;
-}
-
-/// \brief TODOCUMENT
-const rotation & rotation::ROTATE_X_TO_Y_TO_Z_TO_X() {
-	static const rotation rotate_x_to_y_to_z_to_x(0.0, 0.0, 1.0,
-	                                              1.0, 0.0, 0.0,
-	                                              0.0, 1.0, 0.0);
-	return rotate_x_to_y_to_z_to_x;
-}
-
-/// \brief TODOCUMENT
-const rotation & rotation::ROTATE_X_TO_Z_TO_Y_TO_X() {
-	static const rotation rotate_x_to_z_to_y_to_x(0.0, 1.0, 0.0,
-	                                              0.0, 0.0, 1.0,
-	                                              1.0, 0.0, 0.0);
-	return rotate_x_to_z_to_y_to_x;
-}
-
-/// \brief Non-member equality operator for the rotation class
-///
-/// \relates rotation
-bool cath::geom::operator==(const rotation &prm_rot_a, ///< TODOCUMENT
-                            const rotation &prm_rot_b  ///< TODOCUMENT
-                            ) {
-	for (const size_t &new_row_ctr : indices( coord::NUM_DIMS ) ) {
-		for (const size_t &new_col_ctr : indices( coord::NUM_DIMS ) ) {
-			if ( difference( prm_rot_a.get_value( new_row_ctr, new_col_ctr ), prm_rot_b.get_value( new_row_ctr, new_col_ctr ) ) > rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS ) {
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-
 /// \brief TODOCUMENT
 ///
 /// \relates rotation

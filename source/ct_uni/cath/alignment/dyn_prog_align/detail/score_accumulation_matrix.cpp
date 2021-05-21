@@ -175,7 +175,7 @@ path_step_score_map cath::align::detail::get_total_scores_of_path_steps_from_poi
                                                                                    const size_t                    &prm_index_b                    ///< TODOCUMENT
                                                                                    ) {
 	path_step_score_map score_of_path_step;
-	for (const path_step &the_path_step : path_step_helper::ALL_PATH_STEPS) {
+	for (const path_step &the_path_step : ALL_PATH_STEPS) {
 		const score_type step_gap_penalty = get_gap_penalty_for_path_step_from_point(
 			prm_return_path_matrix,
 			prm_gap_penalty,

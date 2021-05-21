@@ -60,7 +60,7 @@ namespace cath {
 	protein read_protein_from_dssp_and_pdb(const ::std::filesystem::path &,
 	                                       const ::std::filesystem::path &,
 	                                       const file::dssp_skip_policy &,
-	                                       const std::string & = "",
+	                                       ::std::string = "",
 	                                       const ostream_ref_opt & = ::std::nullopt );
 
 	protein read_protein_from_pdb(const ::std::filesystem::path &,

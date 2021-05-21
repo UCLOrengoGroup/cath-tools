@@ -73,7 +73,7 @@ namespace cath {
 
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::tuple_increment_fn tuple_increment{};
+		inline constexpr detail::tuple_increment_fn tuple_increment{};
 
 	} // namespace common
 } // namespace cath

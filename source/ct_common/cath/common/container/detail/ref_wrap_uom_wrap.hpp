@@ -40,7 +40,7 @@ namespace cath {
 
 			public:
 				/// \brief Ctor from a reference
-				ref_wrap_uom_wrap(T &prm_value ///< The value from which to construct
+				explicit ref_wrap_uom_wrap(T &prm_value ///< The value from which to construct
 				                  ) : value{ prm_value } {
 				}
 
@@ -48,8 +48,8 @@ namespace cath {
 				ref_wrap_uom_wrap(T&& x ) = delete;
 
 				/// \brief Ctor from a reference_wrapper<T>
-				ref_wrap_uom_wrap(const std::reference_wrapper<T> &prm_value ///< The reference_wrapper<T> from which this should be constructed
-				                  ) : value{ prm_value } {
+				explicit ref_wrap_uom_wrap(const std::reference_wrapper<T> &prm_value ///< The reference_wrapper<T> from which this should be constructed
+				                           ) : value{ prm_value } {
 				}
 				/// \brief Copy ctor
 				ref_wrap_uom_wrap(const ref_wrap_uom_wrap<T> &prm_value ///< The ref_wrap_uom_wrap from which this should be constructed
@@ -75,7 +75,7 @@ namespace cath {
 				}
 
 				/// \brief Conversion to a reference to T
-				operator T & () const {
+				explicit operator T & () const {
 					return value.get();
 				}
 

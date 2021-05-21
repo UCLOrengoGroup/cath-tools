@@ -31,6 +31,7 @@
 #include <fmt/core.h>
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/common/make_type_of_first_n.hpp"
 #include "cath/common/type_aliases.hpp"
 
 namespace cath {
@@ -112,53 +113,61 @@ namespace cath {
 		return b;
 	}
 
+	/// \brief TODOCUMENT
+	///
+	/// \relates display_colour
+	///
+	/// \param prm_components TODOCUMENT
+	constexpr display_colour display_colour_from_components( const ::std::array<double, 3> &prm_components ) {
+		return common::make_type_of_first_n<display_colour, 3>( prm_components );
+	}
+
 	display_colour display_colour_from_string( const std::string & );
-	display_colour display_colour_from_components( const doub_vec & );
 	std::string    hex_string_of_colour( const display_colour & );
 	std::string    comma_separated_string_of_display_colour( const display_colour & );
 	std::ostream & operator<<( std::ostream &, const display_colour & );
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour BLACK{ 0.00, 0.00, 0.00 };
+	inline constexpr display_colour BLACK{ 0.00, 0.00, 0.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour WHITE        { 1.00, 1.00, 1.00 };
+	inline constexpr display_colour WHITE        { 1.00, 1.00, 1.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour RED          { 1.00, 0.00, 0.00 };
+	inline constexpr display_colour RED          { 1.00, 0.00, 0.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour LIGHT_RED    { 1.00, 0.30, 0.30 };
+	inline constexpr display_colour LIGHT_RED    { 1.00, 0.30, 0.30 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour YELLOW       { 1.00, 1.00, 0.00 };
+	inline constexpr display_colour YELLOW       { 1.00, 1.00, 0.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour DARK_YELLOW  { 0.70, 0.70, 0.00 };
+	inline constexpr display_colour DARK_YELLOW  { 0.70, 0.70, 0.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour GREEN        { 0.00, 1.00, 0.00 };
+	inline constexpr display_colour GREEN        { 0.00, 1.00, 0.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour LIGHT_GREEN  { 0.30, 1.00, 0.30 };
+	inline constexpr display_colour LIGHT_GREEN  { 0.30, 1.00, 0.30 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour CYAN         { 0.00, 1.00, 1.00 };
+	inline constexpr display_colour CYAN         { 0.00, 1.00, 1.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour DARK_CYAN    { 0.00, 0.70, 0.70 };
+	inline constexpr display_colour DARK_CYAN    { 0.00, 0.70, 0.70 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour BLUE         { 0.00, 0.00, 1.00 };
+	inline constexpr display_colour BLUE         { 0.00, 0.00, 1.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour LIGHT_BLUE   { 0.30, 0.30, 1.00 };
+	inline constexpr display_colour LIGHT_BLUE   { 0.30, 0.30, 1.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour MAGENTA      { 1.00, 0.00, 1.00 };
+	inline constexpr display_colour MAGENTA      { 1.00, 0.00, 1.00 };
 
 	/// \brief TODOCUMENT
-	[[maybe_unused]] constexpr display_colour DARK_MAGENTA { 0.70, 0.00, 0.70 };
+	inline constexpr display_colour DARK_MAGENTA { 0.70, 0.00, 0.70 };
 
 	/// \brief TODOCUMENT
 	///

@@ -23,6 +23,8 @@
 
 #include <filesystem>
 #include <fstream>
+#include <string>
+#include <string_view>
 
 #include <boost/concept/assert.hpp>
 #include <boost/concept_archetype.hpp>
@@ -294,13 +296,24 @@ namespace cath {
 
 		/// \brief Write a single string to a file
 		inline void write_file(const ::std::filesystem::path &prm_file,  ///< The file to which the string should be written
-		                       const std::string             &prm_string ///< The string to write
+		                       const ::std::string           &prm_string ///< The string to write
 		                       ) {
 			cath::common::write_file(
 				prm_file,
 				str_vec{ { prm_string } }
 			);
 		}
+
+		/// \brief Write a single string to a file
+		inline void write_file(const ::std::filesystem::path &prm_file,       ///< The file to which the string should be written
+		                       const ::std::string_view      &prm_string_view ///< The string_view to write
+		                       ) {
+			cath::common::write_file(
+				prm_file,
+				str_vec{ { ::std::string( prm_string_view ) } }
+			);
+		}
+
 	} // namespace common
 } // namespace cath
 

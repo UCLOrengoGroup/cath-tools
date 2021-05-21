@@ -33,11 +33,6 @@ using namespace ::cath::align::detail;
 using namespace ::std;
 
 /// \brief TODOCUMENT
-const path_step_vec path_step_helper::ALL_PATH_STEPS = { path_step::ALIGN_PAIR,
-                                                         path_step::INSERT_INTO_FIRST,
-                                                         path_step::INSERT_INTO_SECOND };
-
-/// \brief TODOCUMENT
 ///
 /// \relates path_step
 ostream & cath::align::detail::operator<<(ostream         &prm_os,       ///< TODOCUMENT
@@ -91,7 +86,7 @@ map<path_step, size_size_pair> cath::align::detail::indices_of_point_by_path_ste
                                                                                   const size_t &prm_index_b  ///< TODOCUMENT
                                                                                   ) {
 	map<path_step, size_size_pair> results;
-	for (const path_step &the_path_step : path_step_helper::ALL_PATH_STEPS) {
+	for (const path_step &the_path_step : ALL_PATH_STEPS) {
 		results[ the_path_step ] = indices_of_point_after_path_step(
 			the_path_step,
 			prm_index_a,

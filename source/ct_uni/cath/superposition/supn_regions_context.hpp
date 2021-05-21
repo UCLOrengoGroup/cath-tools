@@ -50,7 +50,7 @@ namespace cath {
 		static_assert( common::constexpr_is_uniq( all_supn_regions_contexts ), "all_supn_regions_contexts shouldn't contain repeated values" );
 
 		/// \brief Store a constexpr record of the number of supn_regions_contexts
-		[[maybe_unused]] constexpr size_t num_supn_regions_contexts = std::tuple_size_v< decltype( all_supn_regions_contexts ) >;
+		inline constexpr size_t num_supn_regions_contexts = std::tuple_size_v< decltype( all_supn_regions_contexts ) >;
 
 		namespace detail {
 

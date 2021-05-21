@@ -46,30 +46,30 @@ BOOST_AUTO_TEST_CASE(throws_given_zero_scaffold_strings) {
 }
 
 BOOST_AUTO_TEST_CASE(constructs_aln_a_b_from_scaffold_lines) {
-	BOOST_CHECK_EQUAL( alignment_of_scaffold_lines( { "XXXX", "XXX " } ), aln_a_b );
+	BOOST_CHECK_EQUAL( alignment_of_scaffold_lines( { "XXXX", "XXX " } ), aln_a_b() );
 }
 
 BOOST_AUTO_TEST_CASE(constructs_aln_a_b_from_scaffold_lines_with_dashes) {
-	BOOST_CHECK_EQUAL( alignment_of_scaffold_lines( { "XXXX", "XXX-" } ), aln_a_b );
+	BOOST_CHECK_EQUAL( alignment_of_scaffold_lines( { "XXXX", "XXX-" } ), aln_a_b() );
 }
 
 BOOST_AUTO_TEST_CASE(constructs_aln_a_b_from_scaffold_lines_with_dots) {
-	BOOST_CHECK_EQUAL( alignment_of_scaffold_lines( { "XXXX", "XXX." } ), aln_a_b );
+	BOOST_CHECK_EQUAL( alignment_of_scaffold_lines( { "XXXX", "XXX." } ), aln_a_b() );
 }
 
 BOOST_AUTO_TEST_CASE(constructs_aln_a_b_from_scaffold) {
-	BOOST_CHECK_EQUAL( alignment_of_scaffold( "XXXX\nXXX " ), aln_a_b );
+	BOOST_CHECK_EQUAL( alignment_of_scaffold( "XXXX\nXXX " ), aln_a_b() );
 }
 
 BOOST_AUTO_TEST_CASE(makes_correct_scaffold_lines) {
-	BOOST_REQUIRE    ( ! scaffold_lines_of_alignment( aln_a_b ).empty()         );
-	BOOST_CHECK_EQUAL(   scaffold_lines_of_alignment( aln_a_b ).size(),  2      );
-	BOOST_CHECK_EQUAL(   scaffold_lines_of_alignment( aln_a_b ).front(), "XXXX" );
-	BOOST_CHECK_EQUAL(   scaffold_lines_of_alignment( aln_a_b ).back(),  "XXX " );
+	BOOST_REQUIRE    ( ! scaffold_lines_of_alignment( aln_a_b() ).empty()         );
+	BOOST_CHECK_EQUAL(   scaffold_lines_of_alignment( aln_a_b() ).size(),  2      );
+	BOOST_CHECK_EQUAL(   scaffold_lines_of_alignment( aln_a_b() ).front(), "XXXX" );
+	BOOST_CHECK_EQUAL(   scaffold_lines_of_alignment( aln_a_b() ).back(),  "XXX " );
 }
 
 BOOST_AUTO_TEST_CASE(scaffold_of_alignment_works_for_aln_a_b) {
-	BOOST_CHECK_EQUAL( scaffold_of_alignment( aln_a_b ), "XXXX\nXXX " );
+	BOOST_CHECK_EQUAL( scaffold_of_alignment( aln_a_b() ), "XXXX\nXXX " );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

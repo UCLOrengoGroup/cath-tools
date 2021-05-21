@@ -51,7 +51,7 @@ namespace cath {
 
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::tuple_multiply_args_fn tuple_multiply_args{};
+		inline constexpr detail::tuple_multiply_args_fn tuple_multiply_args{};
 
 	} // namespace common
 } // namespace cath

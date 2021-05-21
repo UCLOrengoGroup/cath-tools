@@ -55,7 +55,7 @@ namespace cath {
 BOOST_FIXTURE_TEST_SUITE(hit_resolver_test_suite, hit_resolver_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(basic) {
-	istringstream test_iss{ example_input_raw };
+	istringstream test_iss{ string( EXAMPLE_INPUT_RAW ) };
 	ostringstream test_oss;
 	ofstream_list ofstreams{ test_oss };
 	read_and_process_mgr the_read_and_process_mgr = make_read_and_process_mgr(
@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(basic) {
 	);
 	read_hit_list_from_istream( the_read_and_process_mgr, test_iss, hit_score_type::CRH_SCORE );
 
-	BOOST_CHECK_EQUAL( blank_vrsn( test_oss ), example_output );
+	BOOST_CHECK_EQUAL( blank_vrsn( test_oss ), EXAMPLE_OUTPUT );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

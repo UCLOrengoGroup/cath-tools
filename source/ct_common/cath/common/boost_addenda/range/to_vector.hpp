@@ -49,12 +49,12 @@ namespace cath::common {
 	/// Make a string from a range
 	///
 	/// Use by piping the range through to_string
-	[[maybe_unused]] constexpr detail::to_container_of_fn<::std::basic_string> to_string;
+	inline constexpr detail::to_container_of_fn<::std::basic_string> to_string;
 
 	/// Make a vector from a range
 	///
 	/// Use by piping the range through to_string
-	[[maybe_unused]] constexpr detail::to_container_of_fn<::std::vector> to_vector;
+	inline constexpr detail::to_container_of_fn<::std::vector> to_vector;
 
 } // namespace cath::common
 

@@ -28,7 +28,9 @@
 #include <boost/operators.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/json_style.hpp"
 #include "cath/common/property_tree/read_from_ptree.hpp"
 
@@ -68,20 +70,20 @@ namespace cath {
 			                const double &);
 
 			template <typename T>
-			explicit coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &);
+			explicit constexpr coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &);
 
 			[[nodiscard]] constexpr const double &get_x() const;
 			[[nodiscard]] constexpr const double &get_y() const;
 			[[nodiscard]] constexpr const double &get_z() const;
 
-			coord & operator-=(const coord &);
-			coord & operator+=(const coord &);
-			coord & operator*=(const double &);
-			coord & operator/=(const double &);
+			constexpr coord & operator-=(const coord &);
+			constexpr coord & operator+=(const coord &);
+			constexpr coord & operator*=(const double &);
+			constexpr coord & operator/=(const double &);
 
 			/// \brief TODOCUMENT
 			template <typename T>
-			operator boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian>() const {
+			explicit constexpr operator boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian>() const {
 				return boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian>{
 					boost::numeric_cast<T>( get_x() ),
 					boost::numeric_cast<T>( get_y() ),
@@ -97,41 +99,42 @@ namespace cath {
 		                              ) : x ( prm_x ),
 		                                  y ( prm_y ),
 		                                  z ( prm_z ) {
-	// #ifndef NDEBUG
-	// 		if ( ! boost::math::isfinite( prm_x ) || ! boost::math::isfinite( prm_y ) || ! boost::math::isfinite( prm_z ) ) {
-	// 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Arguments x, y and z must be a normal, finite floating-point numbers"));
-	// 		}
-	// #endif
+			// if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			// 	if ( !boost::math::isfinite( prm_x ) || !boost::math::isfinite( prm_y ) || !boost::math::isfinite( prm_z ) ) {
+			// 		BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception(
+			// 		  "Arguments x, y and z must be a normal, finite floating-point numbers" ) );
+			// 	}
+			// }
 		}
 
 		/// \brief TODOCUMENT
 		template <typename T>
-		inline coord::coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &prm_point /// \brief TODOCUMENT
-		                    ) : coord(
-		                        	boost::numeric_cast<double>( prm_point.template get<0>() ),
-		                        	boost::numeric_cast<double>( prm_point.template get<1>() ),
-		                        	boost::numeric_cast<double>( prm_point.template get<2>() )
-		                        ) {
+		constexpr coord::coord(const boost::geometry::model::point<T, 3, boost::geometry::cs::cartesian> &prm_point /// \brief TODOCUMENT
+		                       ) : coord(
+		                           	boost::numeric_cast<double>( prm_point.template get<0>() ),
+		                           	boost::numeric_cast<double>( prm_point.template get<1>() ),
+		                           	boost::numeric_cast<double>( prm_point.template get<2>() )
+		                           ) {
 		}
 
 		/// \brief TODOCUMENT
-		inline constexpr const double & coord::get_x() const {
+		constexpr const double & coord::get_x() const {
 			return x;
 		}
 
 		/// \brief TODOCUMENT
-		inline constexpr const double & coord::get_y() const {
+		constexpr const double & coord::get_y() const {
 			return y;
 		}
 
 		/// \brief TODOCUMENT
-		inline constexpr const double & coord::get_z() const {
+		constexpr const double & coord::get_z() const {
 			return z;
 		}
 
 		/// \brief TODOCUMENT
-		inline coord & coord::operator-=(const coord &prm_coord ///< TODOCUMENT
-		                                 ) {
+		constexpr coord & coord::operator-=(const coord &prm_coord ///< TODOCUMENT
+		                                   ) {
 			x -= prm_coord.get_x();
 			y -= prm_coord.get_y();
 			z -= prm_coord.get_z();
@@ -139,8 +142,8 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline coord & coord::operator+=(const coord &prm_coord ///< TODOCUMENT
-		                                  ) {
+		constexpr coord & coord::operator+=(const coord &prm_coord ///< TODOCUMENT
+		                                    ) {
 			x += prm_coord.get_x();
 			y += prm_coord.get_y();
 			z += prm_coord.get_z();
@@ -148,13 +151,14 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline coord & coord::operator*=(const double &prm_factor ///< TODOCUMENT
-		                                 ) {
-	#ifndef NDEBUG
-			if ( boost::math::isnan( prm_factor ) ) {
-				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("InvalidcoordFactor"));
+		constexpr coord & coord::operator*=(const double &prm_factor ///< TODOCUMENT
+		                                   ) {
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				if ( !( prm_factor > ::std::numeric_limits<double>::lowest()
+				        && prm_factor < ::std::numeric_limits<double>::max() ) ) {
+					BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception( "InvalidcoordFactor" ) );
+				}
 			}
-	#endif
 			x *= prm_factor;
 			y *= prm_factor;
 			z *= prm_factor;
@@ -162,27 +166,28 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
-		inline coord & coord::operator/=(const double &prm_factor ///< TODOCUMENT
-		                                 ) {
-	#ifndef NDEBUG
-			if ( ! boost::math::isnormal(prm_factor) ) {
-				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("InvalidcoordFactor"));
+		constexpr coord & coord::operator/=(const double &prm_factor ///< TODOCUMENT
+		                                    ) {
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				if ( !( prm_factor > ::std::numeric_limits<double>::lowest()
+				        && prm_factor < ::std::numeric_limits<double>::max() ) ) {
+					BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception( "InvalidcoordFactor" ) );
+				}
 			}
-	#endif
 			return operator*=( 1.0 / prm_factor );
 		}
 
 		/// \brief TODOCUMENT
-		constexpr coord  ORIGIN_COORD { 0.0, 0.0, 0.0 };
+		inline constexpr coord  ORIGIN_COORD { 0.0, 0.0, 0.0 };
 
 		/// \brief TODOCUMENT
-		[[maybe_unused]] constexpr coord  UNIT_X_COORD { 1.0, 0.0, 0.0 };
+		inline constexpr coord  UNIT_X_COORD { 1.0, 0.0, 0.0 };
 
 		/// \brief TODOCUMENT
-		[[maybe_unused]] constexpr coord  UNIT_Y_COORD { 0.0, 1.0, 0.0 };
+		inline constexpr coord  UNIT_Y_COORD { 0.0, 1.0, 0.0 };
 
 		/// \brief TODOCUMENT
-		[[maybe_unused]] constexpr coord  UNIT_Z_COORD { 0.0, 0.0, 1.0 };
+		inline constexpr coord  UNIT_Z_COORD { 0.0, 0.0, 1.0 };
 
 
 		/// \brief TODOCUMENT
@@ -191,9 +196,9 @@ namespace cath {
 		///       implement this using boost::additive<>
 		///
 		/// \relates coord
-		inline constexpr coord operator-(const coord &prm_coord_lhs, ///< TODOCUMENT
-		                                 const coord &prm_coord_rhs  ///< TODOCUMENT
-		                                 ) {
+		constexpr coord operator-(const coord &prm_coord_lhs, ///< TODOCUMENT
+		                          const coord &prm_coord_rhs  ///< TODOCUMENT
+		                          ) {
 			return {
 				prm_coord_lhs.get_x() - prm_coord_rhs.get_x(),
 				prm_coord_lhs.get_y() - prm_coord_rhs.get_y(),
@@ -207,9 +212,9 @@ namespace cath {
 		///       implement this using boost::additive<>
 		///
 		/// \relates coord
-		inline constexpr coord operator+(const coord &prm_coord_lhs, ///< TODOCUMENT
-		                                 const coord &prm_coord_rhs  ///< TODOCUMENT
-		                                 ) {
+		constexpr coord operator+(const coord &prm_coord_lhs, ///< TODOCUMENT
+		                          const coord &prm_coord_rhs  ///< TODOCUMENT
+		                          ) {
 			return {
 				prm_coord_lhs.get_x() + prm_coord_rhs.get_x(),
 				prm_coord_lhs.get_y() + prm_coord_rhs.get_y(),
@@ -223,9 +228,9 @@ namespace cath {
 		///       implement this using boost::multiplicative<>
 		///
 		/// \relates coord
-		inline constexpr coord operator*(const coord  &prm_coord, ///< TODOCUMENT
-		                                 const double &prm_factor ///< TODOCUMENT
-		                                 ) {
+		constexpr coord operator*(const coord  &prm_coord, ///< TODOCUMENT
+		                          const double &prm_factor ///< TODOCUMENT
+		                          ) {
 			return {
 				prm_coord.get_x() * prm_factor,
 				prm_coord.get_y() * prm_factor,
@@ -239,9 +244,9 @@ namespace cath {
 		///       implement this using boost::multiplicative<>
 		///
 		/// \relates coord
-		inline constexpr coord operator*(const double &prm_factor, ///< TODOCUMENT
-		                                 const coord  &prm_coord   ///< TODOCUMENT
-		                                 ) {
+		constexpr coord operator*(const double &prm_factor, ///< TODOCUMENT
+		                          const coord  &prm_coord   ///< TODOCUMENT
+		                          ) {
 			return {
 				prm_coord.get_x() * prm_factor,
 				prm_coord.get_y() * prm_factor,
@@ -255,9 +260,9 @@ namespace cath {
 		///       implement this using boost::multiplicative<>
 		///
 		/// \relates coord
-		inline constexpr coord operator/(const coord  &prm_coord, ///< TODOCUMENT
-		                                 const double &prm_factor ///< TODOCUMENT
-		                                 ) {
+		constexpr coord operator/(const coord  &prm_coord, ///< TODOCUMENT
+		                          const double &prm_factor ///< TODOCUMENT
+		                          ) {
 			return {
 				prm_coord.get_x() / prm_factor,
 				prm_coord.get_y() / prm_factor,
@@ -271,9 +276,9 @@ namespace cath {
 		///       implement this using boost::multiplicative<>
 		///
 		/// \relates coord
-		inline constexpr coord operator/(const double &prm_factor, ///< TODOCUMENT
-		                                 const coord  &prm_coord   ///< TODOCUMENT
-		                                 ) {
+		constexpr coord operator/(const double &prm_factor, ///< TODOCUMENT
+		                          const coord  &prm_coord   ///< TODOCUMENT
+		                          ) {
 			return {
 				prm_coord.get_x() / prm_factor,
 				prm_coord.get_y() / prm_factor,
@@ -281,73 +286,11 @@ namespace cath {
 			};
 		}
 
-
-
-
-		constexpr bool operator==(const coord &,
-		                          const coord &);
-		coord operator-(const coord &);
-
-		bool not_zero(const coord &);
-		double dot_product(const coord &,
-		                   const coord &);
-		coord cross_product(const coord &,
-		                    const coord &);
-		coord int_cast_copy(const coord &);
-
-		coord normalise_copy(const coord &);
-		coord parallel_component_copy(const coord &,
-		                              const coord &);
-		coord perpendicular_component_copy(const coord &,
-		                                   const coord &);
-		double length(const coord &);
-		double distance_between_points(const coord &,
-		                               const coord &);
-
-		doub_angle angle_between_two_vectors(const coord &,
-		                                     const coord &);
-
-		doub_angle angle_between_three_points(const coord &,
-		                                      const coord &,
-		                                      const coord &);
-
-		doub_angle dihedral_angle_between_four_points(const coord &,
-		                                              const coord &,
-		                                              const coord &,
-		                                              const coord &);
-
-		template <typename T>
-		angle<T> angle_between_two_vectors(const coord &,
-		                                   const coord &);
-
-		template <typename T>
-		angle<T> angle_between_three_points(const coord &,
-		                                    const coord &,
-		                                    const coord &);
-
-		template <typename T>
-		angle<T> dihedral_angle_between_four_points(const coord &,
-		                                            const coord &,
-		                                            const coord &,
-		                                            const coord &);
-
-		doub_angle planar_angle_between(const coord &,
-		                                const coord &,
-		                                const coord &);
-
-		std::string to_string(const coord &);
-		std::ostream & operator<<(std::ostream &,
-		                          const coord &);
-
-		coord coord_from_ptree(const boost::property_tree::ptree &);
-		void save_to_ptree(boost::property_tree::ptree &,
-		                   const coord &);
-
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline constexpr double squared_length(const coord &prm_coord ///< TODOCUMENT
-		                                       ) {
+		constexpr double squared_length(const coord &prm_coord ///< TODOCUMENT
+		                                ) {
 			return (
 				prm_coord.get_x() * prm_coord.get_x() +
 				prm_coord.get_y() * prm_coord.get_y() +
@@ -357,6 +300,8 @@ namespace cath {
 
 		/// \brief TODOCUMENT
 		///
+		/// \TODO Come constexpr sqrt(), make this constexpr
+		///
 		/// \relates coord
 		inline double length(const coord &prm_coord ///< TODOCUMENT
 		                     ) {
@@ -364,6 +309,8 @@ namespace cath {
 		}
 
 		/// \brief TODOCUMENT
+		///
+		/// \TODO Come constexpr sqrt(), make this constexpr
 		///
 		/// \relates coord
 		inline double distance_between_points(const coord &prm_coord1, ///< TODOCUMENT
@@ -379,18 +326,18 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline constexpr double squared_distance_between_points(const coord &prm_coord1, ///< TODOCUMENT
-		                                                        const coord &prm_coord2  ///< TODOCUMENT
-		                                                        ) {
+		constexpr double squared_distance_between_points(const coord &prm_coord1, ///< TODOCUMENT
+		                                                 const coord &prm_coord2  ///< TODOCUMENT
+		                                                 ) {
 			return squared_length( prm_coord2 - prm_coord1 );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline constexpr bool operator==(const coord &prm_coord1, ///< TODOCUMENT
-		                                 const coord &prm_coord2  ///< TODOCUMENT
-		                                 ) {
+		constexpr bool operator==(const coord &prm_coord1, ///< TODOCUMENT
+		                          const coord &prm_coord2  ///< TODOCUMENT
+		                          ) {
 			return (
 				squared_distance_between_points( prm_coord1, prm_coord2 )
 				<
@@ -401,16 +348,16 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline coord operator-(const coord &prm_coord ///< TODOCUMENT
-		                       ) {
+		constexpr coord operator-(const coord &prm_coord ///< TODOCUMENT
+		                          ) {
 			return ( ORIGIN_COORD - prm_coord );
 		}
 
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline bool not_zero(const coord &prm_coord ///< TODOCUMENT
-		                     ) {
+		constexpr bool not_zero(const coord &prm_coord ///< TODOCUMENT
+		                        ) {
 			if ( prm_coord.get_x() != 0.0 ) {
 				return true;
 			}
@@ -426,9 +373,9 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline double dot_product(const coord &prm_coord1, ///< TODOCUMENT
-		                          const coord &prm_coord2  ///< TODOCUMENT
-		                          ) {
+		constexpr double dot_product(const coord &prm_coord1, ///< TODOCUMENT
+		                             const coord &prm_coord2  ///< TODOCUMENT
+		                             ) {
 			return (
 				prm_coord1.get_x() * prm_coord2.get_x() +
 				prm_coord1.get_y() * prm_coord2.get_y() +
@@ -439,9 +386,9 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline coord cross_product(const coord &prm_coord1, ///< TODOCUMENT
-		                           const coord &prm_coord2  ///< TODOCUMENT
-		                           ) {
+		constexpr coord cross_product(const coord &prm_coord1, ///< TODOCUMENT
+		                              const coord &prm_coord2  ///< TODOCUMENT
+		                              ) {
 			return coord(
 				prm_coord1.get_y() * prm_coord2.get_z() - prm_coord1.get_z() * prm_coord2.get_y(),
 				prm_coord1.get_z() * prm_coord2.get_x() - prm_coord1.get_x() * prm_coord2.get_z(),
@@ -452,17 +399,38 @@ namespace cath {
 		/// \brief TODOCUMENT
 		///
 		/// \relates coord
-		inline coord int_cast_copy(const coord &prm_coord ///< TODOCUMENT
-		                           ) {
+		constexpr coord int_cast_copy(const coord &prm_coord ///< TODOCUMENT
+		                              ) {
 			return coord(
-				boost::numeric_cast<int>( prm_coord.get_x() ),
-				boost::numeric_cast<int>( prm_coord.get_y() ),
-				boost::numeric_cast<int>( prm_coord.get_z() )
+				static_cast<int>( prm_coord.get_x() ),
+				static_cast<int>( prm_coord.get_y() ),
+				static_cast<int>( prm_coord.get_z() )
 			);
 			return prm_coord;
 		}
 
+		/// \brief TODOCUMENT
+		///
+		/// \relates coord
+		///
+		/// \TODO Come constexpr sqrt(), make this constexpr
+		///
+		/// \param prm_coord TODOCUMENT
+		inline coord normalise_copy( const coord &prm_coord ) {
+			const double coord_length( length( prm_coord ) );
+
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				using ::boost::math::isnormal;
+				if ( !isnormal( coord_length ) ) {
+					BOOST_THROW_EXCEPTION( common::out_of_range_exception( "Invalid coord factor" ) );
+				}
+			}
+			return ( prm_coord / coord_length );
+		}
+
 		/// \brief Return the scalar component of the first specified coord in the direction of the second
+		///
+		/// \TODO Come constexpr sqrt(), make this constexpr
 		///
 		/// \relates coord
 		inline double scalar_component(const coord &prm_source_coord, ///< The coord of which to return the scalar component
@@ -473,6 +441,8 @@ namespace cath {
 
 		/// \brief Return the parallel component of the first specified coord in the direction of the second
 		///
+		/// \TODO Come constexpr sqrt(), make this constexpr
+		///
 		/// \relates coord
 		inline coord parallel_component_copy(const coord &prm_source_coord, ///< The coord of which to return the parallel component
 		                                     const coord &prm_dirn          ///< The direction in which the component should be taken (does not have to be normalised)
@@ -481,6 +451,8 @@ namespace cath {
 		}
 
 		/// \brief Return the perpendicular component of the first specified coord in the direction perpendicular to the second
+		///
+		/// \TODO Come constexpr sqrt(), make this constexpr
 		///
 		/// \relates coord
 		inline coord perpendicular_component_copy(const coord &prm_source_coord, ///< The coord of which to return the perpendicular component
@@ -491,18 +463,33 @@ namespace cath {
 			return prm_source_coord - ( factor * unit_dirn );
 		}
 
+		doub_angle angle_between_two_vectors( const coord &, const coord & );
+
+		doub_angle angle_between_three_points( const coord &, const coord &, const coord & );
+
+		doub_angle dihedral_angle_between_four_points( const coord &, const coord &, const coord &, const coord & );
+
+		doub_angle planar_angle_between( const coord &, const coord &, const coord & );
+
+		std::string to_string( const coord & );
+
+		std::ostream &operator<<( std::ostream &, const coord & );
+
+		coord coord_from_ptree( const boost::property_tree::ptree & );
+
+		void save_to_ptree( boost::property_tree::ptree &, const coord & );
 
 	} // namespace geom
-	
+
 	namespace common {
-	
+
 		/// \brief Specialisation of cath::common::read_from_ptree for coord
 		template <>
-		inline geom::coord read_from_ptree<geom::coord>(const boost::property_tree::ptree &prm_ptree ///< The ptree from which to read the coord
-		                                                ) {
+		inline geom::coord read_from_ptree<geom::coord>( const boost::property_tree::ptree &prm_ptree ///< The ptree from which to read the coord
+		                                                 ) {
 			return geom::coord_from_ptree( prm_ptree );
 		}
-	
+
 	} // namespace common
 } // namespace cath
 

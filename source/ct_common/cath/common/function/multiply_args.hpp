@@ -61,7 +61,7 @@ namespace cath {
 
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::multiply_args_fn multiply_args{};
+		inline constexpr detail::multiply_args_fn multiply_args{};
 
 	} // namespace common
 } // namespace cath

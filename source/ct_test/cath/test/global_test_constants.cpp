@@ -21,6 +21,8 @@
 #include <filesystem>
 #include <limits>
 
+#include <fmt/core.h>
+
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/external_info/cath_tools_cmake_dirs.hpp"
 #include "cath/test/global_test_constants.hpp"
@@ -178,62 +180,50 @@ const path & global_test_constants::NONEXISTENT_FILE() {
 }
 
 /// \brief TODOCUMENT
-const string & global_test_constants::EXAMPLE_A_PDB_STEMNAME() {
-	static const string example_a_pdb_stemname( "1c0pA01" );
-	return example_a_pdb_stemname;
-}
-
-/// \brief TODOCUMENT
-const string & global_test_constants::EXAMPLE_B_PDB_STEMNAME() {
-	static const string example_b_pdb_stemname( "1hdoA00" );
-	return example_b_pdb_stemname;
-}
-
-/// \brief TODOCUMENT
 const path & global_test_constants::EXAMPLE_A_PDB_FILENAME() {
-	static const path example_a_pdb_filename  ( TEST_SOURCE_DATA_DIR()  / EXAMPLE_A_PDB_STEMNAME()               );
+	static const path example_a_pdb_filename  ( TEST_SOURCE_DATA_DIR()  / EXAMPLE_A_PDB_STEMNAME               );
 	return example_a_pdb_filename;
 }
 
 /// \brief TODOCUMENT
 const path & global_test_constants::EXAMPLE_B_PDB_FILENAME() {
-	static const path example_b_pdb_filename  ( TEST_SOURCE_DATA_DIR()  / EXAMPLE_B_PDB_STEMNAME()               );
+	static const path example_b_pdb_filename  ( TEST_SOURCE_DATA_DIR()  / EXAMPLE_B_PDB_STEMNAME               );
 	return example_b_pdb_filename;
 }
 
 /// \brief TODOCUMENT
 const path & global_test_constants::EXAMPLE_A_DSSP_FILENAME() {
-	static const path example_a_dssp_filename  ( TEST_SOURCE_DATA_DIR()  / ( EXAMPLE_A_PDB_STEMNAME() + ".dssp" ) );
+	static const path example_a_dssp_filename  ( TEST_SOURCE_DATA_DIR()  / ::fmt::format( "{}.dssp", EXAMPLE_A_PDB_STEMNAME ) );
 	return example_a_dssp_filename;
 }
 
 /// \brief TODOCUMENT
 const path & global_test_constants::EXAMPLE_B_DSSP_FILENAME() {
-	static const path example_b_dssp_filename  ( TEST_SOURCE_DATA_DIR()  / ( EXAMPLE_B_PDB_STEMNAME() + ".dssp" ) );
+	static const path example_b_dssp_filename  ( TEST_SOURCE_DATA_DIR()  / ::fmt::format( "{}.dssp", EXAMPLE_B_PDB_STEMNAME ) );
 	return example_b_dssp_filename;
 }
 
 /// \brief TODOCUMENT
 const path & global_test_constants::EXAMPLE_A_WOLF_FILENAME() {
-	static const path example_a_wolf_filename ( TEST_SOURCE_DATA_DIR()  / ( EXAMPLE_A_PDB_STEMNAME() + ".wolf" ) );
+	static const path example_a_wolf_filename ( TEST_SOURCE_DATA_DIR()  / ::fmt::format( "{}.wolf", EXAMPLE_A_PDB_STEMNAME ) );
 	return example_a_wolf_filename;
 }
 
 /// \brief TODOCUMENT
 const path & global_test_constants::EXAMPLE_B_WOLF_FILENAME() {
-	static const path example_b_wolf_filename ( TEST_SOURCE_DATA_DIR()  / ( EXAMPLE_B_PDB_STEMNAME() + ".wolf" ) );
+	static const path example_b_wolf_filename ( TEST_SOURCE_DATA_DIR()  / ::fmt::format( "{}.wolf", EXAMPLE_B_PDB_STEMNAME ) );
 	return example_b_wolf_filename;
 }
 
 /// \brief TODOCUMENT
 const path & global_test_constants::EXAMPLE_A_SEC_FILENAME() {
-	static const path example_a_sec_filename  ( TEST_SOURCE_DATA_DIR()  / ( EXAMPLE_A_PDB_STEMNAME() + ".sec"  ) );
+	static const path example_a_sec_filename  ( TEST_SOURCE_DATA_DIR()  / ::fmt::format( "{}.sec", EXAMPLE_A_PDB_STEMNAME  ) );
 	return example_a_sec_filename;
 }
 
 /// \brief TODOCUMENT
 const path & global_test_constants::EXAMPLE_B_SEC_FILENAME() {
-	static const path example_b_sec_filename  ( TEST_SOURCE_DATA_DIR()  / ( EXAMPLE_B_PDB_STEMNAME() + ".sec"  ) );
+	static const path example_b_sec_filename  ( TEST_SOURCE_DATA_DIR()  / ::fmt::format( "{}.sec", EXAMPLE_B_PDB_STEMNAME  ) );
 	return example_b_sec_filename;
 }
 
@@ -396,68 +386,6 @@ const path & global_test_constants::CRH_EG_RAW_SCORE_OUT_FILENAME() {
 const path & global_test_constants::CRH_EG_RAW_SCORE_LIMIT_2_OUT_FILENAME() {
 	static const path crh_eg_raw_sc_lim2_out_filename( CRH_TEST_DATA_DIR() / "eg_raw_score.limit_2.out"            );
 	return crh_eg_raw_sc_lim2_out_filename;
-}
-
-/// \brief TODOCUMENT
-const double & global_test_constants::LOOSER_ACCURACY_PERCENTAGE() {
-	return LOOSER_ACCURACY_PERCENTAGE_TMPL<double>();
-}
-
-/// \brief TODOCUMENT
-const double & global_test_constants::ACCURACY_PERCENTAGE() {
-	return ACCURACY_PERCENTAGE_TMPL<double>();
-}
-
-/// \brief TODOCUMENT
-template <>
-const float & global_test_constants::LOOSER_ACCURACY_PERCENTAGE_TMPL<float>() {
-	static constexpr float looser_accuracy_percentage_float = static_cast<float>( 1.0 );
-	return looser_accuracy_percentage_float;
-}
-
-/// \brief TODOCUMENT
-template <>
-const double & global_test_constants::LOOSER_ACCURACY_PERCENTAGE_TMPL<double>() {
-	static constexpr double looser_accuracy_percentage_double ( 0.0001 );
-	return looser_accuracy_percentage_double;
-}
-
-/// \brief TODOCUMENT
-template <>
-const long double & global_test_constants::LOOSER_ACCURACY_PERCENTAGE_TMPL<long double>() {
-	static constexpr long double looser_accuracy_percentage_long_double ( 0.00001 );
-	return looser_accuracy_percentage_long_double;
-}
-
-/// \brief TODOCUMENT
-template <>
-const float & global_test_constants::ACCURACY_PERCENTAGE_TMPL<float>() {
-	static constexpr float accuracy_percentage = static_cast<float>( 0.0000001 );
-	return accuracy_percentage;
-}
-
-/// \brief TODOCUMENT
-template <>
-const double & global_test_constants::ACCURACY_PERCENTAGE_TMPL<double>() {
-	static constexpr double accuracy_percentage  ( 0.000000001                             );
-	return accuracy_percentage;
-}
-
-/// \brief TODOCUMENT
-template <>
-const long double & global_test_constants::ACCURACY_PERCENTAGE_TMPL<long double>() {
-	static constexpr long double accuracy_percentage  ( 0.00000000001                             );
-	return accuracy_percentage;
-}
-
-/// \brief TODOCUMENT
-const doub_vec & global_test_constants::INVALID_DOUBLES() {
-	static const doub_vec invalid_doubles = {
-		DOUBLE_INFINITY,
-		DOUBLE_QUIET_NAN,
-		DOUBLE_SIGNALING_NAN
-	};
-	return invalid_doubles;
 }
 
 /// \brief TODOCUMENT

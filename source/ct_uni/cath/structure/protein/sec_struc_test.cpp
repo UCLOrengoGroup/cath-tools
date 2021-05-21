@@ -53,8 +53,7 @@ BOOST_FIXTURE_TEST_SUITE(sec_struc_test_suite, cath::test::sec_struc_test_suite_
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(sec_struc_planar_angles_throws_on_invalid) {
-	const doub_vec &invalid_doubles = INVALID_DOUBLES();
-	for (const double &invalid_double : invalid_doubles) {
+	for (const double &invalid_double : INVALID_DOUBLES) {
 		BOOST_CHECK_THROW(         sec_struc_planar_angles( invalid_double,            0.0,            0.0 ), invalid_argument_exception );
 		BOOST_CHECK_THROW(         sec_struc_planar_angles(            0.0, invalid_double,            0.0 ), invalid_argument_exception );
 		BOOST_CHECK_THROW(         sec_struc_planar_angles(            0.0,            0.0, invalid_double ), invalid_argument_exception );

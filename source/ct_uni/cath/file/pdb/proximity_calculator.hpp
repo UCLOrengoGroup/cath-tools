@@ -92,8 +92,8 @@ namespace cath {
 			                                                                                     const chop::region_vec_opt &);
 
 		public:
-			proximity_calculator(const pdb &,
-			                     const chop::region_vec_opt & = ::std::nullopt);
+			explicit proximity_calculator(const pdb &,
+			                              const chop::region_vec_opt & = ::std::nullopt);
 
 			proximity_calculator(const proximity_calculator &) = default;
 			proximity_calculator(proximity_calculator &&) noexcept = default;

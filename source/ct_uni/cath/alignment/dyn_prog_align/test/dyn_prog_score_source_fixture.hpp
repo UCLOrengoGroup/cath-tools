@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_TEST_DYN_PROG_SCORE_SOURCE_FIXTURE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_TEST_DYN_PROG_SCORE_SOURCE_FIXTURE_HPP
 
+#include <string_view>
+
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/mask_dyn_prog_score_source.hpp"
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source.hpp"
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/old_matrix_dyn_prog_score_source.hpp"
@@ -40,11 +42,11 @@ namespace cath {
 			const align::new_matrix_dyn_prog_score_source &      make_example_new_matrix_dyn_prog_score_source();
 			const align::sequence_string_dyn_prog_score_source & make_example_sequence_string_dyn_prog_score_source();
 
-			static const std::string             sequence_string_a;
-			static const std::string             sequence_string_b;
-			static const score_vec_of_vec        example_old_score_matrix;
-			static const float_score_vec_vec     example_new_score_matrix;
-			static const common::bool_vec_of_vec example_mask_matrix;
+			/// \brief A first  sequence string for making an example sequence_string_dyn_prog_score_source
+			static constexpr ::std::string_view SEQUENCE_STRING_A = "CC";
+
+			/// \brief A second sequence string for making an example sequence_string_dyn_prog_score_source
+			static constexpr ::std::string_view SEQUENCE_STRING_B = "ACCD";
 
 		public:
 			template <typename DPSS>

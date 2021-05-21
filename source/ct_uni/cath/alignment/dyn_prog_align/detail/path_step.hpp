@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_PATH_STEP_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_PATH_STEP_HPP
 
+#include <array>
+
 #include "cath/common/type_aliases.hpp"
 
 namespace cath {
@@ -40,9 +42,10 @@ namespace cath {
 			/// \brief TODOCUMENT
 			using path_step_vec_vec = std::vector<path_step_vec>;
 
-			struct path_step_helper final {
-				static const path_step_vec ALL_PATH_STEPS;
-			};
+			/// \brief TODOCUMENT
+			inline constexpr ::std::array ALL_PATH_STEPS = { path_step::ALIGN_PAIR,
+				                                             path_step::INSERT_INTO_FIRST,
+				                                             path_step::INSERT_INTO_SECOND };
 
 			std::ostream & operator<<(std::ostream &,
 			                          const path_step &);

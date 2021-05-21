@@ -41,7 +41,7 @@ namespace cath {
 			[[nodiscard]] std::string do_get_name() const final;
 
 		  public:
-			ostream_superposition_outputter(sup::superposition_content_spec);
+			explicit ostream_superposition_outputter(sup::superposition_content_spec);
 		};
 
 	} // namespace opts

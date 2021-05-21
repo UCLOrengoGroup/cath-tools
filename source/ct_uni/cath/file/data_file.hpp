@@ -26,6 +26,8 @@
 
 #include "cath/common/algorithm/constexpr_is_uniq.hpp"
 #include "cath/common/cpp20/make_array.hpp"
+#include "cath/common/exception/out_of_range_exception.hpp"
+#include "cath/common/lookup_arr_of_range_and_transform.hpp"
 
 namespace cath {
 	namespace file {
@@ -41,23 +43,52 @@ namespace cath {
 		namespace detail {
 
 			/// \brief All the data_file values
-			static constexpr auto all_data_file_types = common::make_array(
-				data_file::PDB,
-				data_file::DSSP,
-				data_file::WOLF,
-				data_file::SEC
-			);
+			static constexpr auto all_data_file_types =
+			  common::make_array( data_file::PDB, data_file::DSSP, data_file::WOLF, data_file::SEC );
 
-			static_assert( common::constexpr_is_uniq( all_data_file_types ), "all_data_file_types shouldn't contain repeated values" );
+			static_assert( common::constexpr_is_uniq( all_data_file_types ),
+			               "all_data_file_types shouldn't contain repeated values" );
 
 		} // namespace detail
 
-		std::string to_string(const data_file &);
+		/// \brief The names for each of the data file types
+		///
+		/// These names are used for:
+		///  - referring to the file types in the options descriptions
+		///  - constructing the options names (after being lower-cased and having spaces and underscores replaced with hyphens)
+		constexpr ::std::string_view name_of_data_file( const data_file &prm_data_file ) {
+			// clang-format off
+			switch ( prm_data_file ) {
+				case ( data_file::PDB  ) : { return ::std::string_view{ "PDB"  }; }
+				case ( data_file::DSSP ) : { return ::std::string_view{ "DSSP" }; }
+				case ( data_file::WOLF ) : { return ::std::string_view{ "wolf" }; }
+				case ( data_file::SEC  ) : { return ::std::string_view{ "sec"  }; }
+			}
+			// clang-format on
+			BOOST_THROW_EXCEPTION( common::out_of_range_exception( "Unhandled data_option" ) );
+		}
 
-		std::ostream & operator<<(std::ostream &,
-		                          const data_file &);
+		/// \brief The default sub-directory name to append to a cath-root-dir to get the file type's directory
+		constexpr ::std::string_view default_subdir_name_of_data_file( const data_file &prm_data_file ) {
+			// clang-format off
+			switch ( prm_data_file ) {
+				case ( data_file::PDB  ) : { return ::std::string_view{ "pdb"  }; }
+				case ( data_file::DSSP ) : { return ::std::string_view{ "dssp" }; }
+				case ( data_file::WOLF ) : { return ::std::string_view{ "wolf" }; }
+				case ( data_file::SEC  ) : { return ::std::string_view{ "sec"  }; }
+			}
+			// clang-format on
+			BOOST_THROW_EXCEPTION( common::out_of_range_exception( "Unhandled data_option" ) );
+		}
 
-		size_t str_length_of_data_file(const data_file &);
+		inline constexpr auto DATA_FILE_NAMES =
+		  common::lookup_arr_of_range_and_transform( detail::all_data_file_types, name_of_data_file );
+
+		::std::string to_string( const data_file & );
+
+		::std::ostream &operator<<( ::std::ostream &, const data_file & );
+
+		size_t str_length_of_data_file( const data_file & );
 
 		size_t max_data_file_str_length();
 	} // namespace file

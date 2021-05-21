@@ -20,6 +20,8 @@
 
 #include "coord.hpp"
 
+#include <algorithm>
+
 #include <boost/algorithm/clamp.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
@@ -34,29 +36,14 @@
 
 using namespace ::cath::common;
 using namespace ::cath::geom;
-using namespace ::std;
 
 using ::boost::format;
 using ::boost::property_tree::ptree;
+using ::std::clamp;
+using ::std::ostream;
+using ::std::string;
 
 //const double LENGTH_CHECK_PRECISION_PERCENTAGE_TOLERANCE( 1E-10 );
-
-/// \brief TODOCUMENT
-///
-/// \relates coord
-coord cath::geom::normalise_copy(const coord &prm_coord ///< TODOCUMENT
-                                 ) {
-	const double coord_length( length( prm_coord ) );
-
-#ifndef NDEBUG
-	using ::boost::math::isnormal;
-	if ( ! isnormal( coord_length ) ) {
-		BOOST_THROW_EXCEPTION(out_of_range_exception("Invalid coord factor"));
-	}
-#endif
-	return ( prm_coord / coord_length );
-}
-
 
 /// \brief Compute the angle (in radians) between two vectors (represented as coord objects)
 ///
@@ -66,22 +53,14 @@ coord cath::geom::normalise_copy(const coord &prm_coord ///< TODOCUMENT
 doub_angle cath::geom::angle_between_two_vectors(const coord &prm_vector_1, ///< TODOCUMENT
                                                  const coord &prm_vector_2  ///< TODOCUMENT
                                                  ) {
-#ifndef NDEBUG
-	using ::boost::math::isnormal;
-	if ( ! isnormal( length( prm_vector_1 ) ) || ! isnormal( length( prm_vector_2 ) ) ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("AngleBetweenZeroLengthVectorsRequested"));
+	if constexpr ( common::IS_IN_DEBUG_MODE ) {
+		using ::boost::math::isnormal;
+		if ( !isnormal( length( prm_vector_1 ) ) || !isnormal( length( prm_vector_2 ) ) ) {
+			BOOST_THROW_EXCEPTION( invalid_argument_exception( "AngleBetweenZeroLengthVectorsRequested" ) );
+		}
 	}
-#endif
-	return make_angle_from_radians<double>( acos(
-		clamp(
-			dot_product(
-				normalise_copy( prm_vector_1 ),
-				normalise_copy( prm_vector_2 )
-			),
-			-1.0,
-			 1.0
-		)
-	) );
+	return make_angle_from_radians<double>(
+	  acos( clamp( dot_product( normalise_copy( prm_vector_1 ), normalise_copy( prm_vector_2 ) ), -1.0, 1.0 ) ) );
 }
 
 /// \brief Compute the angle (in radians) determined by three points

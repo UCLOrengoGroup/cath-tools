@@ -114,7 +114,7 @@ sec_struc_vec cath::file::make_sec_struc_list(const sec_file &prm_sec_file ///< 
 	// each sec_struc:
 	//  - as expected, for the sec_struc_planar_angles to later sec_strucs, use the entries read from the sec file
 	//  - for the sec_struc_planar_angles to the sec_struc in question, use a dummy sec_struc_planar_angles
-	//    (sec_struc_planar_angles::NULL_SEC_STRUC_PLANAR_ANGLES)
+	//    (NULL_SEC_STRUC_PLANAR_ANGLES)
 	//  - for the sec_struc_planar_angles to preceding sec_strucs, just copy (without alteration) the sec_struc_planar_angles from
 	//    that sec_struc to this
 	for (const size_t &sec_struc_ctr_a : indices( new_sec_strucs.size() ) ) {
@@ -122,7 +122,7 @@ sec_struc_vec cath::file::make_sec_struc_list(const sec_file &prm_sec_file ///< 
 		new_planar_angles.reserve(new_sec_strucs.size());
 		for (const size_t &sec_struc_ctr_b : indices( new_sec_strucs.size() ) ) {
 			if (sec_struc_ctr_a == sec_struc_ctr_b) {
-				new_planar_angles.push_back(sec_struc_planar_angles::NULL_SEC_STRUC_PLANAR_ANGLES);
+				new_planar_angles.push_back(NULL_SEC_STRUC_PLANAR_ANGLES);
 			}
 			else {
 				new_planar_angles.push_back(prm_sec_file.get_planar_angles_of_indices(

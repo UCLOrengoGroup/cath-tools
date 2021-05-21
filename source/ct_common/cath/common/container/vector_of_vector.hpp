@@ -63,7 +63,7 @@ namespace cath {
 			using const_reference = typename vec_t::const_reference;
 
 			vector_of_vector() = default;
-			explicit vector_of_vector(const std::initializer_list<std::initializer_list<T>> &);
+			vector_of_vector(const std::initializer_list<std::initializer_list<T>> &);
 			vector_of_vector(const size_t &,
 			                 const size_t &,
 			                 const T & = T{});

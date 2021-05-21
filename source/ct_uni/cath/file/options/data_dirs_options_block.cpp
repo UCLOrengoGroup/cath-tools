@@ -76,7 +76,7 @@ static constexpr string_view data_option_varname( const data_option &prm_data_op
 		case( data_option::SUFFIX ) : { return DATA_OPTION_SUFFIX_VARNAME ; }
 	};
 	// clang-format on
-	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option in data_option_varname()" ) );
+	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option" ) );
 }
 
 /// \brief For each of the options (path, prefix, suffix), the start of the description up to the point of the data type name
@@ -88,7 +88,7 @@ static string data_option_description_start( const data_option &prm_data_option 
 		case( data_option::SUFFIX ) : { return ::fmt::format( "Append the suffix {} to a protein's name to form its ",  DATA_OPTION_SUFFIX_VARNAME ); }
 	};
 	// clang-format on
-	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option in data_option_description_start()" ) );
+	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option" ) );
 }
 
 /// \brief For each of the options (path, prefix, suffix), the end of the description from the point of the data type name
@@ -100,7 +100,7 @@ static string data_option_description_end( const data_option &prm_data_option ) 
 		case( data_option::SUFFIX ) : { return                " filename"                                           ; }
 	};
 	// clang-format on
-	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option in data_option_description_end()" ) );
+	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled data_option" ) );
 }
 
 /// \brief A standard do_clone method
@@ -120,25 +120,30 @@ void data_dirs_options_block::do_add_visible_options_to_description(options_desc
                                                                     const size_t        &/*prm_line_length*/ ///< The line length to be used when outputting the description (not very clearly documented in Boost)
                                                                     ) {
 	// Loop over each of the data option types (path, prefix, suffix) and grab the data_option and suffix string
-	for (const data_option_str_pair &data_option_suffix_pair : DATA_OPTION_SUFFIXES()) {
-		const data_option &the_data_option    = data_option_suffix_pair.first;
-		const string      &data_option_suffix = data_option_suffix_pair.second;
+	for ( const auto &[ the_data_option, data_option_suffix ] : DATA_OPTION_SUFFIXES() ) {
+		// TODO: Come C++20, skip this reference to a structured binding
+		const auto &the_data_option_ref = the_data_option;
 
 		// Loop over each of the data file types and grab the data_file and name string
-		for (const data_file_str_pair &data_file_name_pair : data_dirs_spec::DATA_FILE_NAMES) {
-			const data_file &the_data_file  = data_file_name_pair.first;
-			const string    &data_file_name = data_file_name_pair.second;
+		for ( const auto &[ the_data_file, data_file_name ] : DATA_FILE_NAMES ) {
+			// TODO: Come C++20, skip this reference to a structured binding
+			const auto &the_data_file_ref = the_data_file;
 
 			// Tidy up the file type name and append the option suffix to get the full option name (eg "PDB" -> "pdb", "pdb" + "-path" -> "pdb-path")
-			const string     tidy_file_name = replace_all_copy(replace_all_copy(to_lower_copy(data_file_name), "_", "-"), " ", "-");
-			const string     option_name    = tidy_file_name + data_option_suffix;
+			const string tidy_file_name =
+			  replace_all_copy( replace_all_copy( to_lower_copy( string( data_file_name ) ), "_", "-" ), " ", "-" );
+			const string option_name = tidy_file_name + data_option_suffix;
 
 			// Make a notifier function object that will take a string and set it in the correct part of the_data_dirs_spec
-			const auto the_notifier = [&] (const string &x) { the_data_dirs_spec.set_value_of_option_and_data_file( the_data_option, the_data_file, x ); };
+			//
+			// This will be stored and called later so the_data_option and the_data_file must be captured by value
+			// *this can can be captured by reference (ie this is captured)
+			const auto the_notifier = [ this, the_data_option_ref, the_data_file_ref ]( const string &x ) {
+				the_data_dirs_spec.set_value_of_option_and_data_file( the_data_option_ref, the_data_file_ref, x );
+			};
 
 			// Grab the default, description start and description end and join them together to get a description for the option
-			const string default_value =
-			  data_dirs_spec::DATA_FILE_TYPE_OPTION_DEFAULTS.at( the_data_file ).at( the_data_option );
+			const string default_value = data_file_type_option_defaults_map().at( the_data_file ).at( the_data_option );
 			const string      description = ::fmt::format( "{}{}{}",
 			                                               data_option_description_start( the_data_option ),
 			                                               data_file_name,

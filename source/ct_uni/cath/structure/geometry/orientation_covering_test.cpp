@@ -33,10 +33,13 @@
 
 #include <random>
 
+using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::common::literals;
 using namespace ::cath::geom;
-using namespace ::std;
+
+using ::std::cerr;
+using ::std::get;
 
 namespace cath {
 	namespace test {
@@ -132,9 +135,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mid_point_is_halfway, quat_rot_type, all_quat_rot_
 		const auto angle_a_to_b    = angle_in_degrees( angle_between_quat_rots( orientation_a, orientation_b ) );
 		const auto angle_mid_to_a  = angle_in_degrees( angle_between_quat_rots( orientation_a, the_mid_point ) );
 		const auto angle_mid_to_b  = angle_in_degrees( angle_between_quat_rots( orientation_b, the_mid_point ) );
-		BOOST_CHECK_CLOSE( abs_of_midpoint, 1.0,                             LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
-		BOOST_CHECK_CLOSE( angle_mid_to_a,  angle_mid_to_b,                  LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
-		BOOST_CHECK_CLOSE( angle_a_to_b,    angle_mid_to_a + angle_mid_to_b, LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
+		BOOST_CHECK_CLOSE( abs_of_midpoint, 1.0,                             LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
+		BOOST_CHECK_CLOSE( angle_mid_to_a,  angle_mid_to_b,                  LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
+		BOOST_CHECK_CLOSE( angle_a_to_b,    angle_mid_to_a + angle_mid_to_b, LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
 //		cerr << "a : "                  << orientation_a
 //		     << "; mp : "               << the_mid_point
 //		     << "; b : "                << orientation_b

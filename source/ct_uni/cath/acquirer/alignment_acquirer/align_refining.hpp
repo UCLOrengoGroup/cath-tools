@@ -41,7 +41,7 @@ namespace cath {
 		};
 
 		/// \brief A constexpr list of all align_refinings
-		[[maybe_unused]] constexpr auto all_align_refinings = common::make_array(
+		inline constexpr auto all_align_refinings = common::make_array(
 			align_refining::NO,
 			align_refining::LIGHT,
 			align_refining::HEAVY

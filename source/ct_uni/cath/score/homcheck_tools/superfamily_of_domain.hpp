@@ -35,7 +35,9 @@ namespace cath {
 			/// \brief Simple predicate function object to return whether a string is a valid superfamily_id
 			class is_valid_superfamily_id final {
 			private:
-				static const std::regex SUPERFAMILY_ID_REGEX;
+				/// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
+				::std::regex SUPERFAMILY_ID_REGEX{ R"(^\d+\.\d+\.\d+\.\d+$)" };
+
 			public:
 				/// \brief Simple predicate function operator to return whether a string is a valid superfamily_id
 				inline bool operator()(const std::string &prm_superfamily_id_string ///< The string to check
@@ -46,7 +48,9 @@ namespace cath {
 
 			class is_valid_cath_node_id final {
 			private:
-				static const std::regex NODE_ID_REGEX;
+				/// \brief The regular expression used to determine whether a string is a valid CATH superfamily ID
+				::std::regex NODE_ID_REGEX{ R"(^\d+(\.\d+){0,3}$)" };
+
 			public:
 				/// \brief Simple predicate function operator to return whether a string is a valid cath_node_id
 				inline bool operator()(const std::string &prm_cath_node_id_string ///< The string to check
@@ -54,7 +58,9 @@ namespace cath {
 					return regex_search( prm_cath_node_id_string, NODE_ID_REGEX );
 				}
 			};
+
 			std::string fold_of_superfamily_id(const std::string &);
+
 		} // namespace detail
 
 		/// \brief A lookup from domain_id to the superfamily in which that domain is currently classified
@@ -70,8 +76,6 @@ namespace cath {
 			static bool is_created_sf(const std::string &);
 
 		public:
-			static const std::string NEW_SF_CORE_STRING;
-
 			superfamily_of_domain() = default;
 			explicit superfamily_of_domain(const str_str_pair_vec &);
 

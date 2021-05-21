@@ -112,7 +112,7 @@ view_cache_index_entry cath::index::detail::make_view_cache_index_entry(const pr
 	return view_cache_index_entry(
 		numeric_cast<index_type>( prm_from_index ),
 		numeric_cast<index_type>( prm_to_index   ),
-		view_vector( prm_protein, prm_from_index, prm_to_index ),
+		view_type( view_vector( prm_protein, prm_from_index, prm_to_index ) ),
 		view_frame ( prm_protein, prm_from_index, prm_to_index ),
 		convert_angle_type<angle_base_type>( prm_protein.get_residue_ref_of_index( prm_from_index ).get_phi_angle() ),
 		convert_angle_type<angle_base_type>( prm_protein.get_residue_ref_of_index( prm_from_index ).get_psi_angle() ),

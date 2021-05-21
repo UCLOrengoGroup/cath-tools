@@ -66,7 +66,7 @@ namespace cath {
 
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::tuple_subtract_fn tuple_subtract{};
+		inline constexpr detail::tuple_subtract_fn tuple_subtract{};
 
 	} // namespace common
 } // namespace cath

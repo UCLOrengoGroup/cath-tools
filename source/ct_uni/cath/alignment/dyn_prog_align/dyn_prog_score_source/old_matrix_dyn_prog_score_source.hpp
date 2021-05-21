@@ -54,6 +54,10 @@ namespace cath {
 			                                 const size_t &,
 			                                 const size_t &,
 			                                 const size_t &);
+			old_matrix_dyn_prog_score_source(const score_vec_of_vec &&,
+			                                 const size_t &,
+			                                 const size_t &,
+			                                 const size_t &) = delete;
 		};
 
 	} // namespace align

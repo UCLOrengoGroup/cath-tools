@@ -169,33 +169,33 @@ void cath::test::aligned_pair_score_fixture::check_ssap_scores(const alignment  
 	BOOST_CHECK_CLOSE(
 		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		the_ssap_scores.get_ssap_score_over_larger(),
-		ACCURACY_PERCENTAGE()
+		ACCURACY_PERCENTAGE
 	);
 	BOOST_CHECK_CLOSE(
 		ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		the_ssap_scores.get_ssap_score_over_smaller(),
-		ACCURACY_PERCENTAGE()
+		ACCURACY_PERCENTAGE
 	);
 	BOOST_CHECK_CLOSE(
 		ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		the_ssap_scores.get_ssap_score_over_compared(),
-		ACCURACY_PERCENTAGE()
+		ACCURACY_PERCENTAGE
 	);
 
 	BOOST_CHECK_CLOSE(
 		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		prm_accurate_score_over_longer,
-		ACCURACY_PERCENTAGE()
+		ACCURACY_PERCENTAGE
 	);
 	BOOST_CHECK_CLOSE(
 		ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		prm_accurate_score_over_shorter,
-		ACCURACY_PERCENTAGE()
+		ACCURACY_PERCENTAGE
 	);
 	BOOST_CHECK_CLOSE(
 		ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
 		prm_accurate_score_over_num_aligned,
-		ACCURACY_PERCENTAGE()
+		ACCURACY_PERCENTAGE
 	);
 }
 
@@ -246,20 +246,20 @@ BOOST_AUTO_TEST_SUITE(sequence_similarities_on_known)
 
 /// \brief Check the sequence_similarities for 1c55A/1c55A are correct
 BOOST_AUTO_TEST_CASE(seq_sims_1c55A_1c55A) {
-	BOOST_CHECK_CLOSE( sequence_similarity_score(                          ).calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( sequence_similarity_score( make_subs_matrix_match() ).calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE()  );
+	BOOST_CHECK_CLOSE( sequence_similarity_score(                          ).calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( sequence_similarity_score( make_subs_matrix_match() ).calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE  );
 }
 
 /// \brief Check the sequence_similarities for 1c55A/1wmtA are correct
 BOOST_AUTO_TEST_CASE(seq_sims_1c55A_1wmtA) {
-	BOOST_CHECK_CLOSE( sequence_similarity_score(                          ).calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ),  35.0,          ACCURACY_PERCENTAGE()  ); // 14 out of 40
-	BOOST_CHECK_CLOSE( sequence_similarity_score( make_subs_matrix_match() ).calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), -20.0,          ACCURACY_PERCENTAGE()  ); // -8 out of 40
+	BOOST_CHECK_CLOSE( sequence_similarity_score(                          ).calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ),  35.0,          ACCURACY_PERCENTAGE  ); // 14 out of 40
+	BOOST_CHECK_CLOSE( sequence_similarity_score( make_subs_matrix_match() ).calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), -20.0,          ACCURACY_PERCENTAGE  ); // -8 out of 40
 }
 
 /// \brief Check the sequence_similarities for 1c55A/1wt7A are correct
 BOOST_AUTO_TEST_CASE(seq_sims_1c55A_1wt7A) {
-	BOOST_CHECK_CLOSE( sequence_similarity_score(                          ).calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 56.0975609756,  ACCURACY_PERCENTAGE()  ); // 23 out of 41
-	BOOST_CHECK_CLOSE( sequence_similarity_score( make_subs_matrix_match() ).calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 14.6341463415,  ACCURACY_PERCENTAGE()  ); //  6 out of 41
+	BOOST_CHECK_CLOSE( sequence_similarity_score(                          ).calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 56.0975609756,  ACCURACY_PERCENTAGE  ); // 23 out of 41
+	BOOST_CHECK_CLOSE( sequence_similarity_score( make_subs_matrix_match() ).calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 14.6341463415,  ACCURACY_PERCENTAGE  ); //  6 out of 41
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -268,38 +268,38 @@ BOOST_AUTO_TEST_SUITE(overlaps_on_known)
 
 /// \brief Check the overlaps for 1c55A/1c55A is correct
 BOOST_AUTO_TEST_CASE(overlaps_1c55A_1c55A) {
-	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE()  );
+	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ), 100.0,          ACCURACY_PERCENTAGE  );
 }
 
 /// \brief Check the overlaps for 1c55A/1c56A is correct
 BOOST_AUTO_TEST_CASE(overlaps_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 100.0,          ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 100.0,          ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 100.0,          ACCURACY_PERCENTAGE()  );
+	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 100.0,          ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 100.0,          ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 100.0,          ACCURACY_PERCENTAGE  );
 }
 
 /// \brief Check the overlaps for 1c55A/1wt7A is correct
 BOOST_AUTO_TEST_CASE(overlaps_1c55A_1wt7A) {
-	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ),  97.5609756098, ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 100.0000000000, ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ),  97.5609756098, ACCURACY_PERCENTAGE()  );
+	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ),  97.5609756098, ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 100.0000000000, ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ),  97.5609756098, ACCURACY_PERCENTAGE  );
 }
 
 /// \brief Check the overlaps for 1c55A/1wmtA is correct
 BOOST_AUTO_TEST_CASE(overlaps_1c55A_1wmtA) {
-	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), 100.0,          ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ),  90.0,          ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ),  90.0,          ACCURACY_PERCENTAGE()  );
+	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), 100.0,          ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ),  90.0,          ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ),  90.0,          ACCURACY_PERCENTAGE  );
 }
 
 /// \brief Check the overlaps for 1c55A/1hykA is correct
 BOOST_AUTO_TEST_CASE(overlaps_1c55A_1hykA) {
 //	cerr << precision (50)
-	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ),  86.9565217391, ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ),  77.5,          ACCURACY_PERCENTAGE()  );
-	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ),  67.3913043478, ACCURACY_PERCENTAGE()  );
+	BOOST_CHECK_CLOSE( naive_overlap ().calculate( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ),  86.9565217391, ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( local_overlap ().calculate( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ),  77.5,          ACCURACY_PERCENTAGE  );
+	BOOST_CHECK_CLOSE( global_overlap().calculate( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ),  67.3913043478, ACCURACY_PERCENTAGE  );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -309,27 +309,27 @@ BOOST_AUTO_TEST_SUITE(rmsd_on_known)
 
 /// \brief Check the RMSD for 1c55A/1c55A is correct (TM-score webserver gave RMSD of 0.0)
 BOOST_AUTO_TEST_CASE(rmsd_1c55A_1c55A) {
-	BOOST_CHECK_SMALL( rmsd_score().calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ),                     ACCURACY_PERCENTAGE()  );
+	BOOST_CHECK_SMALL( rmsd_score().calculate( aln_1c55A_1c55A, protein_1c55A, protein_1c55A ),                     ACCURACY_PERCENTAGE  );
 }
 
 /// \brief Check the RMSD for 1c55A/1c56A is correct (TM-score webserver gave RMSD of 0.605)
 BOOST_AUTO_TEST_CASE(rmsd_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE( rmsd_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.60524408098498938546327963194926269352436065673828,  ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( rmsd_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.60524408098498938546327963194926269352436065673828,  ACCURACY_PERCENTAGE );
 }
 
 /// \brief Check the RMSD for 1c55A/1wt7A is correct (TM-score webserver gave RMSD of 1.99)
 BOOST_AUTO_TEST_CASE(rmsd_1c55A_1wt7A) {
-	BOOST_CHECK_CLOSE( rmsd_score().calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 4.9863504664588501, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( rmsd_score().calculate( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 4.9863504664588501, ACCURACY_PERCENTAGE );
 }
 
 /// \brief Check the RMSD for 1c55A/1wmtA is correct (TM-score webserver gave RMSD of 1.76)
 BOOST_AUTO_TEST_CASE(rmsd_1c55A_1wmtA) {
-	BOOST_CHECK_CLOSE( rmsd_score().calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), 2.040888817288554, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( rmsd_score().calculate( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), 2.040888817288554, ACCURACY_PERCENTAGE );
 }
 
 /// \brief Check the RMSD for 1c55A/1hykA is correct (TM-score webserver gave RMSD of 0.605)
 BOOST_AUTO_TEST_CASE(rmsd_1c55A_1hykA) {
-	BOOST_CHECK_CLOSE( rmsd_score().calculate( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ), 5.1230997129218308, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( rmsd_score().calculate( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ), 5.1230997129218308, ACCURACY_PERCENTAGE );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -344,24 +344,24 @@ BOOST_AUTO_TEST_CASE(tm_score_1c55A_1c55A) {
 
 /// \brief Check the TM-score for 1c55A/1c56A is correct
 BOOST_AUTO_TEST_CASE(tm_score_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE( tm_score().calculate  ( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.9131980677380123, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( tm_score().calculate  ( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.9131980677380123, ACCURACY_PERCENTAGE );
 }
 
 /// \brief Check the TM-score for 1c55A/1wt7A is correct
 BOOST_AUTO_TEST_CASE(tm_score_1c55A_1wt7A) {
-	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 0.58304,            ACCURACY_PERCENTAGE() );
+	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1wt7A, protein_1c55A, protein_1wt7A ), 0.58304,            ACCURACY_PERCENTAGE );
 	BOOST_CHECK( true );
 }
 
 /// \brief Check the TM-score for 1c55A/1wmtA is correct
 BOOST_AUTO_TEST_CASE(tm_score_1c55A_1wmtA) {
-	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), 0.54228,            ACCURACY_PERCENTAGE() );
+	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1wmtA, protein_1c55A, protein_1wmtA ), 0.54228,            ACCURACY_PERCENTAGE );
 	BOOST_CHECK( true );
 }
 
 /// \brief Check the TM-score for 1c55A/1hykA is correct
 BOOST_AUTO_TEST_CASE(tm_score_1c55A_1hykA) {
-	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ), 0.34689,            ACCURACY_PERCENTAGE() );
+	BOOST_WARN_CLOSE( tm_score().calculate  ( aln_1c55A_1hykA, protein_1c55A, protein_1hykA ), 0.34689,            ACCURACY_PERCENTAGE );
 	BOOST_CHECK( true );
 }
 
@@ -376,38 +376,38 @@ BOOST_AUTO_TEST_SUITE(regression_suite)
 
 /// \brief Check that the
 BOOST_AUTO_TEST_CASE(drmsd_score_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE( drmsd_score(                                                                                   ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.452877184244952935011, ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_all_policy(),                common_atom_select_ca_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.452877184244952935011, ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_all_policy(),                common_atom_select_cb_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.506673194154965700342, ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_best_score_percent_policy(), common_atom_select_ca_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.258779215015056851534, ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_best_score_percent_policy(), common_atom_select_cb_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.291026502291049260496, ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_min_score_policy(),          common_atom_select_ca_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.452877184244952935011, ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_min_score_policy(),          common_atom_select_cb_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.506673194154965700342, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( drmsd_score(                                                                                   ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.452877184244952935011, ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_all_policy(),                common_atom_select_ca_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.452877184244952935011, ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_all_policy(),                common_atom_select_cb_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.506673194154965700342, ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_best_score_percent_policy(), common_atom_select_ca_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.258779215015056851534, ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_best_score_percent_policy(), common_atom_select_cb_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.291026502291049260496, ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_min_score_policy(),          common_atom_select_ca_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.452877184244952935011, ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( drmsd_score( common_residue_select_min_score_policy(),          common_atom_select_cb_policy() ).calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.506673194154965700342, ACCURACY_PERCENTAGE );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(gsas_score_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE(  gsas_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 1.513110202462473408147, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE(  gsas_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 1.513110202462473408147, ACCURACY_PERCENTAGE );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(lddt_score_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE(  lddt_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.944196428571428603149, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE(  lddt_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.944196428571428603149, ACCURACY_PERCENTAGE );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(mi_score_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE(    mi_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.287493543599852463544, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE(    mi_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.287493543599852463544, ACCURACY_PERCENTAGE );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(sas_score_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE(   sas_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 1.513110202462473408147, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE(   sas_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 1.513110202462473408147, ACCURACY_PERCENTAGE );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(si_score_1c55A_1c56A) {
-	BOOST_CHECK_CLOSE(    si_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.605244080984989385463, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE(    si_score().calculate( aln_1c55A_1c56A, protein_1c55A, protein_1c56A ), 0.605244080984989385463, ACCURACY_PERCENTAGE );
 }
 
 /// \brief TODOCUMENT

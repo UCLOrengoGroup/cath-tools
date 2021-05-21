@@ -63,14 +63,14 @@ const crh_segment_spec & hits_processor_list::get_segment_spec() const {
 /// \brief Add a processor to the list
 hits_processor_list & hits_processor_list::add_processor(const hits_processor &prm_hits_processor ///< The processor to add
                                                          ) {
-	processors.push_back( prm_hits_processor.clone() );
+	processors.push_back( hits_processor_clptr{ prm_hits_processor.clone() } );
 	return *this;
 }
 
 /// \brief Add a processor to the list
 hits_processor_list & hits_processor_list::add_processor(hits_processor_uptr prm_hits_processor_uptr ///< (A pointer to) the processor to add
                                                          ) {
-	processors.push_back( std::move( prm_hits_processor_uptr ) );
+	processors.push_back( hits_processor_clptr{ std::move( prm_hits_processor_uptr ) } );
 	return *this;
 }
 

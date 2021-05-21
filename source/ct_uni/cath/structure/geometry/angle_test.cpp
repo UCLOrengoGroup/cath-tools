@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <array>
+
 #include <boost/math/constants/constants.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/test/unit_test.hpp>
@@ -36,6 +38,7 @@ using namespace ::cath::common::test;
 using namespace ::cath::geom;
 
 using ::boost::math::constants::pi;
+using ::std::array;
 
 namespace cath {
 	namespace test {
@@ -56,20 +59,21 @@ using angle_value_types = boost::mpl::vector<double, float>;
 
 /// \brief Check that the ctor does not throw
 BOOST_AUTO_TEST_CASE_TEMPLATE(ctor_does_not_throw, T, angle_value_types) {
-//	BOOST_CHECK_NO_THROW_DIAG( angle the_angle( 1.0 * boost::units::si::radian ) );
-	BOOST_CHECK_NO_THROW_DIAG( angle<T> the_angle( 1.0 ) );
+	[[maybe_unused]] constexpr auto a = angle<T>( 1.0 );
+	BOOST_TEST (true );
 }
 
 /// \brief Check that the factories do not throw
 BOOST_AUTO_TEST_CASE_TEMPLATE(factories_do_not_throw, T, angle_value_types) {
-	BOOST_CHECK_NO_THROW_DIAG( make_angle_from_degrees    <T>( 1.0 ) );
-	BOOST_CHECK_NO_THROW_DIAG( make_angle_from_radians    <T>( 1.0 ) );
-	BOOST_CHECK_NO_THROW_DIAG( make_angle_from_revolutions<T>( 1.0 ) );
+	[[maybe_unused]] constexpr auto a1 = make_angle_from_degrees    <T>( 1.0 );
+	[[maybe_unused]] constexpr auto a2 = make_angle_from_radians    <T>( 1.0 );
+	[[maybe_unused]] constexpr auto a3 = make_angle_from_revolutions<T>( 1.0 );
+	BOOST_TEST (true );
 }
 
 /// \brief Check that equality/inequality works
 BOOST_AUTO_TEST_CASE_TEMPLATE(equality_works, T, angle_value_types) {
-	const auto angles = {
+	constexpr array angles = {
 		make_angle_from_degrees    <T>( 1.0 ),
 		make_angle_from_radians    <T>( 1.0 ),
 		make_angle_from_revolutions<T>( 1.0 )
@@ -79,63 +83,67 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(equality_works, T, angle_value_types) {
 
 /// \brief Check that sensible things are equal
 BOOST_AUTO_TEST_CASE_TEMPLATE(angle_values, T, angle_value_types) {
-	BOOST_CHECK_EQUAL( make_angle_from_degrees    <T>(                 0.0 ), zero_angle<T>()     );
-	BOOST_CHECK_EQUAL( make_angle_from_degrees    <T>(               360.0 ), one_revolution<T>() );
+	static_assert( make_angle_from_degrees    <T>(                 0.0 ) == ZERO_ANGLE<T>     );
+	static_assert( make_angle_from_degrees    <T>(               360.0 ) == ONE_REVOLUTION<T> );
 
-	BOOST_CHECK_EQUAL( make_angle_from_degrees    <T>(              -360.0 ), make_angle_from_radians    <T>( pi<double>() * -2.0 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_radians    <T>( pi<double>() * -2.0 ), make_angle_from_revolutions<T>(                -1.0 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_revolutions<T>(                -1.0 ), make_angle_from_degrees    <T>(              -360.0 ) );
+	static_assert( make_angle_from_degrees    <T>(              -360.0 ) == make_angle_from_radians    <T>( pi<double>() * -2.0 ) );
+	static_assert( make_angle_from_radians    <T>( pi<double>() * -2.0 ) == make_angle_from_revolutions<T>(                -1.0 ) );
+	static_assert( make_angle_from_revolutions<T>(                -1.0 ) == make_angle_from_degrees    <T>(              -360.0 ) );
 
-	BOOST_CHECK_EQUAL( make_angle_from_degrees    <T>(              -180.0 ), make_angle_from_radians    <T>( pi<double>() * -1.0 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_radians    <T>( pi<double>() * -1.0 ), make_angle_from_revolutions<T>(                -0.5 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_revolutions<T>(                -0.5 ), make_angle_from_degrees    <T>(              -180.0 ) );
+	static_assert( make_angle_from_degrees    <T>(              -180.0 ) == make_angle_from_radians    <T>( pi<double>() * -1.0 ) );
+	static_assert( make_angle_from_radians    <T>( pi<double>() * -1.0 ) == make_angle_from_revolutions<T>(                -0.5 ) );
+	static_assert( make_angle_from_revolutions<T>(                -0.5 ) == make_angle_from_degrees    <T>(              -180.0 ) );
 
-	BOOST_CHECK_EQUAL( make_angle_from_degrees    <T>(                 0.0 ), make_angle_from_radians    <T>(                 0.0 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_radians    <T>(                 0.0 ), make_angle_from_revolutions<T>(                 0.0 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_revolutions<T>(                 0.0 ), make_angle_from_degrees    <T>(                 0.0 ) );
+	static_assert( make_angle_from_degrees    <T>(                 0.0 ) == make_angle_from_radians    <T>(                 0.0 ) );
+	static_assert( make_angle_from_radians    <T>(                 0.0 ) == make_angle_from_revolutions<T>(                 0.0 ) );
+	static_assert( make_angle_from_revolutions<T>(                 0.0 ) == make_angle_from_degrees    <T>(                 0.0 ) );
 
-	BOOST_CHECK_EQUAL( make_angle_from_degrees    <T>(               180.0 ), make_angle_from_radians    <T>(  pi<double>() * 1.0 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_radians    <T>(  pi<double>() * 1.0 ), make_angle_from_revolutions<T>(                 0.5 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_revolutions<T>(                 0.5 ), make_angle_from_degrees    <T>(               180.0 ) );
+	static_assert( make_angle_from_degrees    <T>(               180.0 ) == make_angle_from_radians    <T>(  pi<double>() * 1.0 ) );
+	static_assert( make_angle_from_radians    <T>(  pi<double>() * 1.0 ) == make_angle_from_revolutions<T>(                 0.5 ) );
+	static_assert( make_angle_from_revolutions<T>(                 0.5 ) == make_angle_from_degrees    <T>(               180.0 ) );
 
-	BOOST_CHECK_EQUAL( make_angle_from_degrees    <T>(               360.0 ), make_angle_from_radians    <T>(  pi<double>() * 2.0 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_radians    <T>(  pi<double>() * 2.0 ), make_angle_from_revolutions<T>(                 1.0 ) );
-	BOOST_CHECK_EQUAL( make_angle_from_revolutions<T>(                 1.0 ), make_angle_from_degrees    <T>(               360.0 ) );
+	static_assert( make_angle_from_degrees    <T>(               360.0 ) == make_angle_from_radians    <T>(  pi<double>() * 2.0 ) );
+	static_assert( make_angle_from_radians    <T>(  pi<double>() * 2.0 ) == make_angle_from_revolutions<T>(                 1.0 ) );
+	static_assert( make_angle_from_revolutions<T>(                 1.0 ) == make_angle_from_degrees    <T>(               360.0 ) );
+
+	BOOST_TEST (true );
 }
 
 /// \brief Check that sensible things are equal
 BOOST_AUTO_TEST_CASE_TEMPLATE(shift_works, T, angle_value_types) {
-	BOOST_CHECK_EQUAL( shift_copy(     zero_angle<T>()                                                  ), zero_angle<T>()     );
-	BOOST_CHECK_EQUAL( shift_copy(     zero_angle<T>(), zero_angle<T>()                                 ), zero_angle<T>()     );
-	BOOST_CHECK_EQUAL( shift_copy(     zero_angle<T>(), zero_angle<T>(), angle_endpoint_loc::USE_LOWER  ), zero_angle<T>()     );
-	BOOST_CHECK_EQUAL( shift_copy(     zero_angle<T>(), zero_angle<T>(), angle_endpoint_loc::USE_UPPER  ), one_revolution<T>() );
-	BOOST_CHECK_EQUAL( shift_copy(     zero_angle<T>(), zero_angle<T>(), angle_endpoint_loc::USE_EITHER ), zero_angle<T>()     );
+	static_assert( shift_copy(     ZERO_ANGLE<T>                                                ) ==  ZERO_ANGLE<T>     );
+	static_assert( shift_copy(     ZERO_ANGLE<T>, ZERO_ANGLE<T>                                 ) ==  ZERO_ANGLE<T>     );
+	static_assert( shift_copy(     ZERO_ANGLE<T>, ZERO_ANGLE<T>, angle_endpoint_loc::USE_LOWER  ) ==  ZERO_ANGLE<T>     );
+	static_assert( shift_copy(     ZERO_ANGLE<T>, ZERO_ANGLE<T>, angle_endpoint_loc::USE_UPPER  ) ==  ONE_REVOLUTION<T> );
+	static_assert( shift_copy(     ZERO_ANGLE<T>, ZERO_ANGLE<T>, angle_endpoint_loc::USE_EITHER ) ==  ZERO_ANGLE<T>     );
 
-	BOOST_CHECK_EQUAL( shift_copy( one_revolution<T>()                                                  ), zero_angle<T>()     );
-	BOOST_CHECK_EQUAL( shift_copy( one_revolution<T>(), zero_angle<T>()                                 ), zero_angle<T>()     );
-	BOOST_CHECK_EQUAL( shift_copy( one_revolution<T>(), zero_angle<T>(), angle_endpoint_loc::USE_LOWER  ), zero_angle<T>()     );
-	BOOST_CHECK_EQUAL( shift_copy( one_revolution<T>(), zero_angle<T>(), angle_endpoint_loc::USE_UPPER  ), one_revolution<T>() );
+	static_assert( shift_copy( ONE_REVOLUTION<T>                                                ) ==  ZERO_ANGLE<T>     );
+	static_assert( shift_copy( ONE_REVOLUTION<T>, ZERO_ANGLE<T>                                 ) ==  ZERO_ANGLE<T>     );
+	static_assert( shift_copy( ONE_REVOLUTION<T>, ZERO_ANGLE<T>, angle_endpoint_loc::USE_LOWER  ) ==  ZERO_ANGLE<T>     );
+	static_assert( shift_copy( ONE_REVOLUTION<T>, ZERO_ANGLE<T>, angle_endpoint_loc::USE_UPPER  ) ==  ONE_REVOLUTION<T> );
 
 //	cerr << "*********** About to enter troublesome case ***********" << endl;
-	BOOST_CHECK_EQUAL( shift_copy( one_revolution<T>(), zero_angle<T>(), angle_endpoint_loc::USE_EITHER ), one_revolution<T>() );
+	static_assert( shift_copy( ONE_REVOLUTION<T>, ZERO_ANGLE<T>, angle_endpoint_loc::USE_EITHER ) ==  ONE_REVOLUTION<T> );
 //	cerr << "*********** Finished troublesome case ***********" << endl;
 
-	BOOST_CHECK_EQUAL( shift_copy( make_angle_from_revolutions<double>( -0.5 )                 ), make_angle_from_revolutions<double>( 0.5) );
-	BOOST_CHECK_EQUAL( shift_copy( make_angle_from_revolutions<double>(  1.5 )                 ), make_angle_from_revolutions<double>( 0.5) );
+	static_assert( shift_copy( make_angle_from_revolutions<double>( -0.5 )                      ) ==  make_angle_from_revolutions<double>( 0.5) );
+	static_assert( shift_copy( make_angle_from_revolutions<double>(  1.5 )                      ) ==  make_angle_from_revolutions<double>( 0.5) );
+
+	BOOST_TEST (true );
 }
 
 /// \brief Check that sensible things are equal
 BOOST_AUTO_TEST_CASE_TEMPLATE(difference_and_wrapped_difference, T, angle_value_types) {
-	const auto one_quarter_turn    = make_angle_from_revolutions<T>( 0.25  );
-	const auto three_quarters_turn = make_angle_from_revolutions<T>( 0.75  );
+	constexpr auto one_quarter_turn    = make_angle_from_revolutions<T>( 0.25  );
+	constexpr auto three_quarters_turn = make_angle_from_revolutions<T>( 0.75  );
 
-	const auto one_eighth_turn     = make_angle_from_revolutions<T>( 0.875 );
-	const auto seven_eighths_turn  = make_angle_from_revolutions<T>( 0.125 );
+	constexpr auto one_eighth_turn     = make_angle_from_revolutions<T>( 0.875 );
+	constexpr auto seven_eighths_turn  = make_angle_from_revolutions<T>( 0.125 );
 
-	BOOST_CHECK_EQUAL(                           difference( seven_eighths_turn,    one_eighth_turn ),                     three_quarters_turn                          );
-	BOOST_CHECK_EQUAL(                           difference(    one_eighth_turn, seven_eighths_turn ),                     three_quarters_turn                          );
-	BOOST_CHECK_CLOSE( angle_in_degrees( wrapped_difference( seven_eighths_turn,    one_eighth_turn ) ), angle_in_degrees(    one_quarter_turn ), LOOSER_ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( angle_in_degrees( wrapped_difference(    one_eighth_turn, seven_eighths_turn ) ), angle_in_degrees(    one_quarter_turn ), LOOSER_ACCURACY_PERCENTAGE() );
+	static_assert( difference( seven_eighths_turn,    one_eighth_turn ) == three_quarters_turn );
+	static_assert( difference(    one_eighth_turn, seven_eighths_turn ) == three_quarters_turn );
+	BOOST_CHECK_CLOSE( angle_in_degrees( wrapped_difference( seven_eighths_turn,    one_eighth_turn ) ), angle_in_degrees(    one_quarter_turn ), LOOSER_ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( angle_in_degrees( wrapped_difference(    one_eighth_turn, seven_eighths_turn ) ), angle_in_degrees(    one_quarter_turn ), LOOSER_ACCURACY_PERCENTAGE );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

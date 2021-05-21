@@ -59,6 +59,8 @@ BOOST_AUTO_TEST_CASE( basic ) {
 	static_assert(   is_not_false         ( eg_tb_indet ) );
 	static_assert(   indeterminate        ( eg_tb_indet ) );
 	static_assert( ! is_not_indeterminate ( eg_tb_indet ) );
+
+	BOOST_TEST( true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

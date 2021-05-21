@@ -54,7 +54,7 @@ namespace cath {
 			}
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::gen_forwarder<detail::limited_holder> limited{};
+		inline constexpr detail::gen_forwarder<detail::limited_holder> limited{};
 
 	} // namespace common
 } // namespace cath

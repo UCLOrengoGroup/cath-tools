@@ -20,6 +20,9 @@
 
 #include "filter_vs_full_score.hpp"
 
+#include <iostream> // ***** TEMPORARY *****
+#include <string_view>
+
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/finder.hpp>
 #include <boost/algorithm/string/predicate.hpp>
@@ -29,8 +32,6 @@
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <iostream> // ***** TEMPORARY *****
 
 using namespace ::cath::common;
 using namespace ::cath::index::filter;
@@ -42,9 +43,10 @@ using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::starts_with;
 using ::boost::algorithm::token_compress_on;
 using ::boost::algorithm::trim;
+using ::std::string_view;
 
-const string filter_vs_full_score::STRING_PREFIX( "filter_vs_full_score[" );
-const string filter_vs_full_score::STRING_SUFFIX( "]"                     );
+static constexpr string_view STRING_PREFIX{ "filter_vs_full_score[" };
+static constexpr string_view STRING_SUFFIX{ "]"                     };
 
 /// \brief Ctor for filter_vs_full_score
 filter_vs_full_score::filter_vs_full_score(const double &prm_filter_score, ///< The filter score with which this should be constructed
@@ -101,11 +103,11 @@ istream & cath::index::filter::operator>>(istream              &prm_istream,    
 	getline( prm_istream,  input_string );
 
 	// Trim off any prefix/suffix at the start/end
-	if ( starts_with( input_string, filter_vs_full_score::STRING_PREFIX ) && ends_with( input_string, filter_vs_full_score::STRING_SUFFIX ) ) {
-		const size_t prefix_length        = filter_vs_full_score::STRING_PREFIX.length();
-		const size_t prefix_suffix_length = filter_vs_full_score::STRING_SUFFIX.length() + prefix_length;
+	if ( starts_with( input_string, STRING_PREFIX ) && ends_with( input_string, STRING_SUFFIX ) ) {
+		const size_t prefix_length        = STRING_PREFIX.length();
+		const size_t prefix_suffix_length = STRING_SUFFIX.length() + prefix_length;
 		input_string = input_string.substr(
-			filter_vs_full_score::STRING_PREFIX.length(),
+			STRING_PREFIX.length(),
 			input_string.length() - min( input_string.length(), prefix_suffix_length )
 		);
 	}
@@ -148,11 +150,11 @@ ostream & cath::index::filter::operator<<(ostream                    &prm_os,   
                                           const filter_vs_full_score &prm_filter_vs_full_score ///< The filter_vs_full_score to output
                                           ) {
 	ostringstream temp_ss;
-	temp_ss << filter_vs_full_score::STRING_PREFIX;
+	temp_ss << STRING_PREFIX;
 	temp_ss << right << setw( 7 ) << prm_filter_vs_full_score.get_filter_score();
 	temp_ss << ",";
 	temp_ss << right << setw( 7 ) << prm_filter_vs_full_score.get_full_score();
-	temp_ss << filter_vs_full_score::STRING_SUFFIX;
+	temp_ss << STRING_SUFFIX;
 	prm_os << temp_ss.str();
 	return prm_os;
 }

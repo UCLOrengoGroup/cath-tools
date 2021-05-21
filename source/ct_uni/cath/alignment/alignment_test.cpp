@@ -28,6 +28,7 @@
 #include "cath/alignment/pair_alignment.hpp"
 #include "cath/alignment/test/alignment_fixture.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -180,26 +181,26 @@ BOOST_AUTO_TEST_CASE(fixture_constructions_work) {
 
 /// \brief Check that the list constructor throws if passed lists of differing lengths
 BOOST_AUTO_TEST_CASE(different_size_throws) {
-	BOOST_CHECK_THROW( alignment test_aln( { aln_list_a  , aln_list_long } ), invalid_argument_exception );
-	BOOST_CHECK_THROW( alignment test_aln( { aln_list_b  , aln_list_long } ), invalid_argument_exception );
-	BOOST_CHECK_THROW( alignment test_aln( {aln_list_long, aln_list_a    } ), invalid_argument_exception );
-	BOOST_CHECK_THROW( alignment test_aln( {aln_list_long, aln_list_b    } ), invalid_argument_exception );
+	BOOST_CHECK_THROW( alignment test_aln( { aln_list_a | to_vector  , aln_list_long | to_vector } ), invalid_argument_exception );
+	BOOST_CHECK_THROW( alignment test_aln( { aln_list_b | to_vector  , aln_list_long | to_vector } ), invalid_argument_exception );
+	BOOST_CHECK_THROW( alignment test_aln( {aln_list_long | to_vector, aln_list_a | to_vector    } ), invalid_argument_exception );
+	BOOST_CHECK_THROW( alignment test_aln( {aln_list_long | to_vector, aln_list_b | to_vector    } ), invalid_argument_exception );
 }
 
 /// \brief Check that the size method works as expected for pair alignments
 BOOST_AUTO_TEST_CASE(size) {
-	BOOST_CHECK_EQUAL( aln_list_a.size(), aln_a_a.length() );
+	BOOST_CHECK_EQUAL( aln_list_a.size(), aln_a_a().length() );
 
-	BOOST_CHECK_EQUAL( aln_list_a.size(), aln_a_b.length() );
-	BOOST_CHECK_EQUAL( aln_list_b.size(), aln_a_b.length() );
+	BOOST_CHECK_EQUAL( aln_list_a.size(), aln_a_b().length() );
+	BOOST_CHECK_EQUAL( aln_list_b.size(), aln_a_b().length() );
 
-	BOOST_CHECK_EQUAL( aln_list_a.size(), aln_b_a.length() );
-	BOOST_CHECK_EQUAL( aln_list_b.size(), aln_b_a.length() );
+	BOOST_CHECK_EQUAL( aln_list_a.size(), aln_b_a().length() );
+	BOOST_CHECK_EQUAL( aln_list_b.size(), aln_b_a().length() );
 }
 
 /// \brief Check that the equality operator works as expected for pair alignments
 BOOST_AUTO_TEST_CASE(equality) {
-	const auto alignments = { aln_a_a, aln_a_b, aln_b_a, aln_long_long };
+	const auto alignments = { aln_a_a(), aln_a_b(), aln_b_a(), aln_long_long() };
 	check_equality_operators_on_diff_vals_range( alignments );
 }
 
@@ -229,30 +230,30 @@ BOOST_AUTO_TEST_CASE(append_a_b_and_both) {
 		}
 	}
 
-	BOOST_CHECK_EQUAL( aln_a_b, new_aln_a_b );
-	BOOST_CHECK_EQUAL( aln_b_a, new_aln_b_a );
+	BOOST_CHECK_EQUAL( aln_a_b(), new_aln_a_b );
+	BOOST_CHECK_EQUAL( aln_b_a(), new_aln_b_a );
 }
 
 /// \brief Check that the three append_operators for a pair alignment
 BOOST_AUTO_TEST_CASE(has_position_and_get_position_a_a) {
-	check_details_match_lists(aln_a_a, { aln_list_a, aln_list_a } );
+	check_details_match_lists(aln_a_a(), { aln_list_a | to_vector, aln_list_a | to_vector } );
 }
 BOOST_AUTO_TEST_CASE(has_position_and_get_position_a_b) {
-	check_details_match_lists(aln_a_b, { aln_list_a, aln_list_b } );
+	check_details_match_lists(aln_a_b(), { aln_list_a | to_vector, aln_list_b | to_vector } );
 }
 BOOST_AUTO_TEST_CASE(has_position_and_get_position_b_a) {
-	check_details_match_lists(aln_b_a, { aln_list_b, aln_list_a } );
+	check_details_match_lists(aln_b_a(), { aln_list_b | to_vector, aln_list_a | to_vector } );
 }
 
 /// \brief Check that the scores behave as expected
 BOOST_AUTO_TEST_CASE(scores) {
-	// Can't do aln_a_a because that requires 4 scored positions
-	const vector<alignment> test_alignments = { aln_a_b, aln_b_a };
+	// Can't do aln_a_a() because that requires 4 scored positions
+	const vector<alignment> test_alignments = { aln_a_b(), aln_b_a() };
 	for (const alignment &test_alignment : test_alignments) {
 		BOOST_CHECK(!test_alignment.is_scored());
 		alignment copy_alignment(test_alignment);
 		BOOST_CHECK(!copy_alignment.is_scored());
-		set_pair_alignment_duplicate_scores( copy_alignment, example_scores );
+		set_pair_alignment_duplicate_scores( copy_alignment, example_scores | to_vector );
 		BOOST_CHECK(copy_alignment.is_scored());
 		size_t score_ctr = 0;
 		for (const size_t &aln_ctr : indices( example_scores.size() ) ) {
@@ -276,20 +277,20 @@ BOOST_AUTO_TEST_CASE(scores) {
 /// \brief Check that the insertion operator summarises alignments as expected
 BOOST_AUTO_TEST_CASE(insertion_operator) {
 	output_test_stream output;
-	output << aln_a_a;
+	output << aln_a_a();
 	BOOST_CHECK( output.is_equal( "alignment[4 positions: 0 <-> 0; 1 <-> 1; 2 <-> 2; 3 <-> 3]" ) );
-	output << aln_a_b;
+	output << aln_a_b();
 	BOOST_CHECK( output.is_equal( "alignment[4 positions: 0 <-> 0; 1 <-> 1; 2 <-> 2; 3 <-> ]"  ) );
-	output << aln_b_a;
+	output << aln_b_a();
 	BOOST_CHECK( output.is_equal( "alignment[4 positions: 0 <-> 0; 1 <-> 1; 2 <-> 2;  <-> 3]"  ) );
 }
 
 /// \brief Check that get_last_present_position_of_entry() works as expected
 BOOST_AUTO_TEST_CASE( get_last_present_position_of_entry_works ) {
-	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_a_a       ).value() );
-	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_a_b       ).value() );
-	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_b_a       ).value() );
-	BOOST_CHECK_EQUAL( 5_z, get_max_last_present_position( aln_long_long ).value() );
+	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_a_a()       ).value() );
+	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_a_b()       ).value() );
+	BOOST_CHECK_EQUAL( 3_z, get_max_last_present_position( aln_b_a()       ).value() );
+	BOOST_CHECK_EQUAL( 5_z, get_max_last_present_position( aln_long_long() ).value() );
 }
 
 /// \brief Check that first_non_consecutive_entry_positions works as expected

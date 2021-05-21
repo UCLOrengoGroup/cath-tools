@@ -123,30 +123,30 @@ BOOST_AUTO_TEST_CASE(fails_on_attempt_to_mix_deprecated_options_with_new) {
 
 BOOST_AUTO_TEST_CASE(processes_from_stdin_to_stdout) {
 	// Given an input stream containing the input
-	input_ss.str( example_input_raw );
+	input_ss.str( string( EXAMPLE_INPUT_RAW ) );
 
 	// When calling perform_resolve_hits with options: - (a dash to read from the input stream)
 	execute_perform_resolve_hits( { "-" } );
 
 	// Then expect the correct results in the output stream
-	BOOST_CHECK_EQUAL( blank_vrsn( output_ss ), example_output );
+	BOOST_CHECK_EQUAL( blank_vrsn( output_ss ), EXAMPLE_OUTPUT );
 }
 
 
 BOOST_AUTO_TEST_CASE(processes_from_file_to_stdout) {
 	// Given an input file containing the input data
-	write_file( TEMP_TEST_FILE_FILENAME, example_input_raw );
+	write_file( TEMP_TEST_FILE_FILENAME, EXAMPLE_INPUT_RAW );
 
 	// When calling perform_resolve_hits with options: the input file
 	execute_perform_resolve_hits( { TEMP_TEST_FILE_FILENAME.string() } );
 
 	// Then expect the correct results in the output stream
-	BOOST_CHECK_EQUAL( blank_vrsn( output_ss ), example_output );
+	BOOST_CHECK_EQUAL( blank_vrsn( output_ss ), EXAMPLE_OUTPUT );
 }
 
 BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file) {
 	// Given an input stream containing the input
-	input_ss.str( example_input_raw );
+	input_ss.str( string( EXAMPLE_INPUT_RAW ) );
 
 	// When calling perform_resolve_hits with options: - (a dash to read from the input stream), the output file option and an output file
 	execute_perform_resolve_hits( {
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file) {
 	//
 	// \todo Add a better test tool for comparing a got file to an expected string
 	BOOST_CHECK_EQUAL( output_ss.str(), "" );
-	BOOST_CHECK_STRING_MATCHES_FILE( example_output, blank_vrsn( TEMP_TEST_FILE_FILENAME ) );
+	BOOST_CHECK_STRING_MATCHES_FILE( string( EXAMPLE_OUTPUT ), blank_vrsn( TEMP_TEST_FILE_FILENAME ) );
 }
 
 BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file__deprecated_opts) {
@@ -168,7 +168,7 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file__deprecated_opts) {
 	stringstream_log_sink log_sink;
 
 	// Given an input stream containing the input
-	input_ss.str( example_input_raw );
+	input_ss.str( string( EXAMPLE_INPUT_RAW ) );
 
 	// When calling perform_resolve_hits with options: - (a dash to read from the input stream), the output file option and an output file
 	execute_perform_resolve_hits( { "-", ::fmt::format( "--{}", crh_single_output_options_block::PO_OUTPUT_FILE ), TEMP_TEST_FILE_FILENAME.string() } );
@@ -179,7 +179,7 @@ BOOST_AUTO_TEST_CASE(processes_from_stdin_to_output_file__deprecated_opts) {
 	//
 	// \todo Add a better test tool for comparing a got file to an expected string
 	BOOST_CHECK_EQUAL( output_ss.str(), "" );
-	BOOST_CHECK_STRING_MATCHES_FILE( example_output, blank_vrsn( TEMP_TEST_FILE_FILENAME ) );
+	BOOST_CHECK_STRING_MATCHES_FILE( string( EXAMPLE_OUTPUT ), blank_vrsn( TEMP_TEST_FILE_FILENAME ) );
 
 	BOOST_CHECK( regex_search( log_sink.str(), regex{ R"(deprecated.* \-\-quiet \-\-hits\-text\-to\-file )" } ) );
 }

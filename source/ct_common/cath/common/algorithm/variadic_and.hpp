@@ -61,7 +61,7 @@ namespace cath {
 
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::variadic_and_fn variadic_and{};
+		inline constexpr detail::variadic_and_fn variadic_and{};
 
 	} // namespace common
 } // namespace cath

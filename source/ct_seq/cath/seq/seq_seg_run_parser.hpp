@@ -86,7 +86,7 @@ namespace cath {
 			}
 
 			// Return the result of building a seq_seg_run from bounds
-			return segments_from_bounds( bounds );
+			return seq_seg_run{ segments_from_bounds( bounds ) };
 		}
 
 	} // namespace seq

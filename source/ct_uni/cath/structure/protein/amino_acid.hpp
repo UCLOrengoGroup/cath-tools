@@ -42,6 +42,7 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/function/ident.hpp"
+#include "cath/common/make_type_of_first_n.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 #include "cath/common/string/string_view_of_char_arr.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -259,7 +260,7 @@ namespace cath {
 			}
 
 			// Must be three characters
-			return atom_aa_or_dna_of_id( ::std::array{ prm_id[ 0 ], prm_id[ 1 ], prm_id[ 2 ] } );
+			return atom_aa_or_dna_of_id( common::make_array_of_first_n<3>( prm_id ) );
 		}
 
 		/// \brief TODOCUMENT
@@ -300,7 +301,7 @@ namespace cath {
 						BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
 						  "Cannot create a HETATM amino acid from a string that is not 3 characters long" ) );
 					}
-					const ::std::array str_as_arr = { prm_id[ 0 ], prm_id[ 1 ], prm_id[ 2 ] };
+					const ::std::array str_as_arr = common::make_array_of_first_n<3>( prm_id );
 					const ::std::optional<uint> index_opt = index_opt_of_code( str_as_arr );
 					return index_opt ? aa_data{ *index_opt } : aa_data{ str_as_arr };
 				}
@@ -390,7 +391,7 @@ namespace cath {
 		/// \brief The data for the amino acid, one of three different types in the variant
 		detail::aa_data data;
 
-		[[nodiscard]] const detail::aa_aa_repn &check_is_proper_amino_acid() const;
+		[[nodiscard]] constexpr const detail::aa_aa_repn &check_is_proper_amino_acid() const;
 
 	  public:
 		constexpr amino_acid( const char_3_arr &, const file::pdb_record & );
@@ -403,17 +404,17 @@ namespace cath {
 
 		[[nodiscard]] constexpr const char_3_arr &get_hetatm_chars() const;
 
-		[[nodiscard]] constexpr char_opt   get_letter_if_amino_acid() const;
-		[[nodiscard]] constexpr char       get_letter_tolerantly() const;
-		[[nodiscard]] constexpr char_3_arr get_code() const;
-		[[nodiscard]] ::std::string_view   get_name() const;
+		[[nodiscard]] constexpr char_opt           get_letter_if_amino_acid() const;
+		[[nodiscard]] constexpr char               get_letter_tolerantly() const;
+		[[nodiscard]] constexpr char_3_arr         get_code() const;
+		[[nodiscard]] constexpr ::std::string_view get_name() const;
 	};
 
 	amino_acid_vec make_amino_acids_of_chars(const char_vec &);
 
 	/// \brief Check that this is a proper amino acid (rather than a HETATM record or DNA/RNA pseudo-amino-acid)
 	///        and throw an exception if not, otherwise return the index value
-	inline auto amino_acid::check_is_proper_amino_acid() const -> const detail::aa_aa_repn & {
+	constexpr auto amino_acid::check_is_proper_amino_acid() const -> const detail::aa_aa_repn & {
 		const detail::aa_aa_repn * const aa_ptr = ::std::get_if<detail::aa_aa_repn>( &data );
 		if ( aa_ptr == nullptr ) {
 			const auto code = get_code();
@@ -500,7 +501,7 @@ namespace cath {
 	}
 
 	/// \brief TODOCUMENT
-	inline ::std::string_view amino_acid::get_name() const {
+	constexpr ::std::string_view amino_acid::get_name() const {
 		return get_letter_code_or_name<::std::string_view>( check_is_proper_amino_acid() );
 	}
 

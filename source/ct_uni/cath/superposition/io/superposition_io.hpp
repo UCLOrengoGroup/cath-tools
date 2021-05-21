@@ -24,6 +24,7 @@
 #include <filesystem>
 #include <iosfwd>
 #include <optional>
+#include <string_view>
 #include <vector>
 
 #include "cath/chopping/region/region.hpp"
@@ -43,12 +44,13 @@ namespace cath {
 
 			/// \brief Store constants to be used in superposition I/O code
 			struct superposition_io_consts final {
-				static const std::string ENTRIES_KEY;
-				static const std::string NAME_KEY;
-				static const std::string ROTATION_KEY;
-				static const std::string TRANSFORMATION_KEY;
-				static const std::string TRANSFORMATIONS_KEY;
-				static const std::string TRANSLATION_KEY;
+
+				static constexpr ::std::string_view ENTRIES_KEY         = "entries";
+				static constexpr ::std::string_view NAME_KEY            = "name";
+				static constexpr ::std::string_view ROTATION_KEY        = "rotation";
+				static constexpr ::std::string_view TRANSFORMATION_KEY  = "transformation";
+				static constexpr ::std::string_view TRANSFORMATIONS_KEY = "transformations";
+				static constexpr ::std::string_view TRANSLATION_KEY     = "translation";
 			};
 
 		} // namespace detail

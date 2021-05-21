@@ -47,7 +47,7 @@ BOOST_FIXTURE_TEST_SUITE(horiz_align_outputter_test_suite, cath::test::horiz_ali
 /// \brief Check that horiz_align_outputter produces the expected output on aln_a_b
 BOOST_AUTO_TEST_CASE(horiz_align_outputter_on_aln_a_b) {
 	ostringstream got_ss;
-	got_ss << horiz_align_outputter( aln_a_b );
+	got_ss << horiz_align_outputter( aln_a_b() );
 	BOOST_CHECK_EQUAL( "alignment[\n\t 0 1 2 3\n\t 0 1 2 -\n]", got_ss.str() );
 }
 

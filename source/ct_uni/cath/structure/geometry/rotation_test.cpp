@@ -69,21 +69,21 @@ BOOST_AUTO_TEST_CASE(rotation_to_x_axis_and_x_y_plane_works) {
 }
 
 BOOST_AUTO_TEST_CASE(rotate_x_to_y_to_z_to_x_is_correct) {
-	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), UNIT_X_COORD ) == UNIT_Y_COORD );
-	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), UNIT_Y_COORD ) == UNIT_Z_COORD );
-	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), UNIT_Z_COORD ) == UNIT_X_COORD );
+	BOOST_TEST( rotate_copy( ROTATE_X_TO_Y_TO_Z_TO_X, UNIT_X_COORD ) == UNIT_Y_COORD );
+	BOOST_TEST( rotate_copy( ROTATE_X_TO_Y_TO_Z_TO_X, UNIT_Y_COORD ) == UNIT_Z_COORD );
+	BOOST_TEST( rotate_copy( ROTATE_X_TO_Y_TO_Z_TO_X, UNIT_Z_COORD ) == UNIT_X_COORD );
 }
 
 BOOST_AUTO_TEST_CASE(rotate_x_to_z_to_y_to_x_is_correct) {
-	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), UNIT_X_COORD ) == UNIT_Z_COORD );
-	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), UNIT_Z_COORD ) == UNIT_Y_COORD );
-	BOOST_TEST( rotate_copy( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), UNIT_Y_COORD ) == UNIT_X_COORD );
+	BOOST_TEST( rotate_copy( ROTATE_X_TO_Z_TO_Y_TO_X, UNIT_X_COORD ) == UNIT_Z_COORD );
+	BOOST_TEST( rotate_copy( ROTATE_X_TO_Z_TO_Y_TO_X, UNIT_Z_COORD ) == UNIT_Y_COORD );
+	BOOST_TEST( rotate_copy( ROTATE_X_TO_Z_TO_Y_TO_X, UNIT_Y_COORD ) == UNIT_X_COORD );
 }
 
 BOOST_AUTO_TEST_CASE(identity_rotation_is_correct) {
-	BOOST_TEST( rotate_copy( rotation::IDENTITY_ROTATION(), UNIT_X_COORD ) == UNIT_X_COORD );
-	BOOST_TEST( rotate_copy( rotation::IDENTITY_ROTATION(), UNIT_Y_COORD ) == UNIT_Y_COORD );
-	BOOST_TEST( rotate_copy( rotation::IDENTITY_ROTATION(), UNIT_Z_COORD ) == UNIT_Z_COORD );
+	BOOST_TEST( rotate_copy( IDENTITY_ROTATION, UNIT_X_COORD ) == UNIT_X_COORD );
+	BOOST_TEST( rotate_copy( IDENTITY_ROTATION, UNIT_Y_COORD ) == UNIT_Y_COORD );
+	BOOST_TEST( rotate_copy( IDENTITY_ROTATION, UNIT_Z_COORD ) == UNIT_Z_COORD );
 }
 
 /// \brief Check that this example (1c0pA01, residue 999) can be used to produce a similar but more accurate rotation
@@ -112,35 +112,35 @@ BOOST_AUTO_TEST_CASE(tidy_rotation_can_fail) {
 
 /// \brief Check that tidy_copy() returns exact copies of standard, tidy rotations
 BOOST_AUTO_TEST_CASE(tidy_copy_works) {
-	BOOST_CHECK_EQUAL( rotation::IDENTITY_ROTATION(),       tidy_copy( rotation::IDENTITY_ROTATION()       ) );
-	BOOST_CHECK_EQUAL( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), tidy_copy( rotation::ROTATE_X_TO_Y_TO_Z_TO_X() ) );
-	BOOST_CHECK_EQUAL( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), tidy_copy( rotation::ROTATE_X_TO_Z_TO_Y_TO_X() ) );
+	BOOST_CHECK_EQUAL( IDENTITY_ROTATION,       tidy_copy( IDENTITY_ROTATION       ) );
+	BOOST_CHECK_EQUAL( ROTATE_X_TO_Y_TO_Z_TO_X, tidy_copy( ROTATE_X_TO_Y_TO_Z_TO_X ) );
+	BOOST_CHECK_EQUAL( ROTATE_X_TO_Z_TO_Y_TO_X, tidy_copy( ROTATE_X_TO_Z_TO_Y_TO_X ) );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(rotation_angle_works) {
-	BOOST_CHECK_EQUAL(                               zero_angle<double>(),                   angle_of_rotation( rotation::IDENTITY_ROTATION()       )                          );
-	BOOST_CHECK_CLOSE( angle_in_degrees( one_revolution<double>() / 3.0 ), angle_in_degrees( angle_of_rotation( rotation::ROTATE_X_TO_Y_TO_Z_TO_X() ) ), ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( angle_in_degrees( one_revolution<double>() / 3.0 ), angle_in_degrees( angle_of_rotation( rotation::ROTATE_X_TO_Z_TO_Y_TO_X() ) ), ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_of_rotation( IDENTITY_ROTATION       )                          );
+	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_of_rotation( ROTATE_X_TO_Y_TO_Z_TO_X ) ), ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_of_rotation( ROTATE_X_TO_Z_TO_Y_TO_X ) ), ACCURACY_PERCENTAGE );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(angle_between_rotations_works) {
-	BOOST_CHECK_EQUAL(                               zero_angle<double>(),                   angle_between_rotations( rotation::IDENTITY_ROTATION(),       rotation::IDENTITY_ROTATION()          )                          );
-	BOOST_CHECK_CLOSE( angle_in_degrees( one_revolution<double>() / 3.0 ), angle_in_degrees( angle_between_rotations( rotation::IDENTITY_ROTATION(),       rotation::ROTATE_X_TO_Y_TO_Z_TO_X()    ) ), ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( angle_in_degrees( one_revolution<double>() / 3.0 ), angle_in_degrees( angle_between_rotations( rotation::IDENTITY_ROTATION(),       rotation::ROTATE_X_TO_Z_TO_Y_TO_X()    ) ), ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( IDENTITY_ROTATION,       IDENTITY_ROTATION          )                          );
+	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( IDENTITY_ROTATION,       ROTATE_X_TO_Y_TO_Z_TO_X    ) ), ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( IDENTITY_ROTATION,       ROTATE_X_TO_Z_TO_Y_TO_X    ) ), ACCURACY_PERCENTAGE );
 
-	BOOST_CHECK_CLOSE( angle_in_degrees( one_revolution<double>() / 3.0 ), angle_in_degrees( angle_between_rotations( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), rotation::IDENTITY_ROTATION()          ) ), ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_EQUAL(                               zero_angle<double>(),                   angle_between_rotations( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), rotation::ROTATE_X_TO_Y_TO_Z_TO_X()    )                          );
-	BOOST_CHECK_CLOSE( angle_in_degrees( one_revolution<double>() / 3.0 ), angle_in_degrees( angle_between_rotations( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), rotation::ROTATE_X_TO_Z_TO_Y_TO_X()    ) ), ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, IDENTITY_ROTATION          ) ), ACCURACY_PERCENTAGE );
+	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, ROTATE_X_TO_Y_TO_Z_TO_X    )                          );
+	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, ROTATE_X_TO_Z_TO_Y_TO_X    ) ), ACCURACY_PERCENTAGE );
 
-	BOOST_CHECK_CLOSE( angle_in_degrees( one_revolution<double>() / 3.0 ), angle_in_degrees( angle_between_rotations( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), rotation::IDENTITY_ROTATION()          ) ), ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_CLOSE( angle_in_degrees( one_revolution<double>() / 3.0 ), angle_in_degrees( angle_between_rotations( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), rotation::ROTATE_X_TO_Y_TO_Z_TO_X()    ) ), ACCURACY_PERCENTAGE() );
-	BOOST_CHECK_EQUAL(                               zero_angle<double>(),                   angle_between_rotations( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), rotation::ROTATE_X_TO_Z_TO_Y_TO_X()    )                          );
+	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( ROTATE_X_TO_Z_TO_Y_TO_X, IDENTITY_ROTATION          ) ), ACCURACY_PERCENTAGE );
+	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( ROTATE_X_TO_Z_TO_Y_TO_X, ROTATE_X_TO_Y_TO_Z_TO_X    ) ), ACCURACY_PERCENTAGE );
+	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( ROTATE_X_TO_Z_TO_Y_TO_X, ROTATE_X_TO_Z_TO_Y_TO_X    )                          );
 
-	BOOST_CHECK_EQUAL(                   one_revolution<double>() / 2.0  ,                   angle_between_rotations( rotation::IDENTITY_ROTATION(),       rotation(0, -1, 0, -1, 0, 0, 0, 0, -1) )                          );
-	BOOST_CHECK_EQUAL(                   one_revolution<double>() / 2.0  ,                   angle_between_rotations( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), rotation(0, -1, 0, -1, 0, 0, 0, 0, -1) )                          );
-	BOOST_CHECK_EQUAL(                   one_revolution<double>() / 2.0  ,                   angle_between_rotations( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), rotation(0, -1, 0, -1, 0, 0, 0, 0, -1) )                          );
+	BOOST_CHECK_EQUAL(                   ONE_REVOLUTION<double> / 2.0  ,                   angle_between_rotations( IDENTITY_ROTATION,       rotation(0, -1, 0, -1, 0, 0, 0, 0, -1) )                          );
+	BOOST_CHECK_EQUAL(                   ONE_REVOLUTION<double> / 2.0  ,                   angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, rotation(0, -1, 0, -1, 0, 0, 0, 0, -1) )                          );
+	BOOST_CHECK_EQUAL(                   ONE_REVOLUTION<double> / 2.0  ,                   angle_between_rotations( ROTATE_X_TO_Z_TO_Y_TO_X, rotation(0, -1, 0, -1, 0, 0, 0, 0, -1) )                          );
 }
 
 /// \brief TODOCUMENT
@@ -155,7 +155,7 @@ BOOST_AUTO_TEST_CASE(rotation_of_angle_works) {
 	                                make_angle_from_radians<double>    ( 1.000 ),
 	                                make_angle_from_radians<double>    ( 2.000 ) };
 	for (const auto &the_angle : angles) {
-		BOOST_CHECK_CLOSE( angle_in_degrees( the_angle ), angle_in_degrees( angle_of_rotation( rotation_of_angle( the_angle ) ) ), ACCURACY_PERCENTAGE() );
+		BOOST_CHECK_CLOSE( angle_in_degrees( the_angle ), angle_in_degrees( angle_of_rotation( rotation_of_angle( the_angle ) ) ), ACCURACY_PERCENTAGE );
 	}
 }
 
@@ -164,15 +164,15 @@ BOOST_AUTO_TEST_SUITE(json)
 BOOST_AUTO_TEST_SUITE(write)
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_identity) {
-	BOOST_CHECK_EQUAL( to_json_string( rotation::IDENTITY_ROTATION(),       json_style::COMPACT ), R"({"":["1","0","0"],"":["0","1","0"],"":["0","0","1"]})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( IDENTITY_ROTATION,       json_style::COMPACT ), R"({"":["1","0","0"],"":["0","1","0"],"":["0","0","1"]})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_x_to_y_to_z_to_x) {
-	BOOST_CHECK_EQUAL( to_json_string( rotation::ROTATE_X_TO_Y_TO_Z_TO_X(), json_style::COMPACT ), R"({"":["0","0","1"],"":["1","0","0"],"":["0","1","0"]})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( ROTATE_X_TO_Y_TO_Z_TO_X, json_style::COMPACT ), R"({"":["0","0","1"],"":["1","0","0"],"":["0","1","0"]})" "\n" );
 }
 
 BOOST_AUTO_TEST_CASE(to_json_string_works_for_x_to_z_to_y_to_x) {
-	BOOST_CHECK_EQUAL( to_json_string( rotation::ROTATE_X_TO_Z_TO_Y_TO_X(), json_style::COMPACT ), R"({"":["0","1","0"],"":["0","0","1"],"":["1","0","0"]})" "\n" );
+	BOOST_CHECK_EQUAL( to_json_string( ROTATE_X_TO_Z_TO_Y_TO_X, json_style::COMPACT ), R"({"":["0","1","0"],"":["0","0","1"],"":["1","0","0"]})" "\n" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -192,15 +192,15 @@ BOOST_AUTO_TEST_CASE(throws_on_from_json_string_with_spurious_label) {
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_identity) {
-	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["1","0","0"],"":["0","1","0"],"":["0","0","1"]})" "\n" ), rotation::IDENTITY_ROTATION()       );
+	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["1","0","0"],"":["0","1","0"],"":["0","0","1"]})" "\n" ), IDENTITY_ROTATION       );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_x_to_y_to_z_to_x) {
-	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["0","0","1"],"":["1","0","0"],"":["0","1","0"]})" "\n" ), rotation::ROTATE_X_TO_Y_TO_Z_TO_X() );
+	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["0","0","1"],"":["1","0","0"],"":["0","1","0"]})" "\n" ), ROTATE_X_TO_Y_TO_Z_TO_X );
 }
 
 BOOST_AUTO_TEST_CASE(from_json_string_works_for_x_to_z_to_y_to_x) {
-	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["0","1","0"],"":["0","0","1"],"":["1","0","0"]})" "\n" ), rotation::ROTATE_X_TO_Z_TO_Y_TO_X() );
+	BOOST_CHECK_EQUAL( from_json_string<rotation>( R"({"":["0","1","0"],"":["0","0","1"],"":["1","0","0"]})" "\n" ), ROTATE_X_TO_Z_TO_Y_TO_X );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

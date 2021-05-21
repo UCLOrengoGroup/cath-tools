@@ -61,25 +61,16 @@ display_colour cath::display_colour_from_string(const string &prm_colour ///< TO
 		//
 		// ...now trying to switch to stod instead
 		//
-		/// \todo If stod() appears to be an adeqate replacement, then drop lexical_cast_stringstream()
+		/// \todo If stod() appears to be an adequate replacement, then drop lexical_cast_stringstream()
 		component_numbers.push_back( stod( component_string ) );
 	}
-	return display_colour_from_components(component_numbers);
-}
 
-/// \brief TODOCUMENT
-///
-/// \relates display_colour
-display_colour cath::display_colour_from_components(const doub_vec &prm_components ///< TODOCUMENT
-                                                    ) {
-	if (prm_components.size() != 3) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot construct viewer colour from component values because there aren't three of them"));
+	if ( component_numbers.size() != 3 ) {
+		BOOST_THROW_EXCEPTION( invalid_argument_exception(
+		  "Cannot construct display_colour from component values from string because there aren't three of them" ) );
 	}
-	return display_colour(
-		prm_components[ 0 ],
-		prm_components[ 1 ],
-		prm_components[ 2 ]
-	);
+
+	return display_colour_from_components( make_array_of_first_n<3>( component_numbers ) );
 }
 
 /// \brief TODOCUMENT

@@ -21,10 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_OPTIONS_DISPLAY_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_OPTIONS_DISPLAY_SPEC_HPP
 
-#include "cath/common/type_aliases.hpp"
-
 #include <memory>
 #include <string>
+#include <string_view>
+
+#include "cath/common/type_aliases.hpp"
 
 namespace cath { class display_colour_list; }
 
@@ -33,10 +34,16 @@ namespace cath {
 	/// \brief TODOCUMENT
 	class display_spec final {
 	private:
-		static const std::string COLOURS_UNSPECIFIED;
+
+		/// \brief A string value to use internally to indicate colours haven't been specified
+		///
+		/// This is used (rather than, say, making display_colours_string an optional<string>) so that
+		/// display_colours_string can passed to Boost program_options and handled correctly and so that
+		/// unspecified can easily be distinguished from specified as empty.
+		static constexpr ::std::string_view COLOURS_UNSPECIFIED = "this string is used internally to indicate the colours haven't been specified";
 
 		/// \brief A string describing the colours to use
-		std::string display_colours_string = COLOURS_UNSPECIFIED;
+		std::string display_colours_string { COLOURS_UNSPECIFIED };
 
 		/// \brief Whether to display a gradient of colours
 		bool gradient_colour_alignment = DEFAULT_GRADIENT_COLOUR_ALIGNMENT;

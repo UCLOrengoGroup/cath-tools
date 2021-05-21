@@ -40,8 +40,8 @@ namespace cath {
 				gsl_permutation_wrp() = delete;
 
 				/// \brief Ctor that wraps call to gsl_permutation_calloc() (which allocates *and* initialises)
-				gsl_permutation_wrp(const size_t &prm_n ///< The dimension of the permutation
-				                    ) : ptr{ gsl_permutation_calloc( prm_n ) } {
+				explicit gsl_permutation_wrp(const size_t &prm_n ///< The dimension of the permutation
+				                             ) : ptr{ gsl_permutation_calloc( prm_n ) } {
 					if ( ptr == nullptr ) {
 						BOOST_THROW_EXCEPTION(common::runtime_error_exception("Was unable to allocate+initialise gsl_permutation"));
 					}

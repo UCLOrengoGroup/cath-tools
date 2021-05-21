@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(parsed_model_calculates_correct_score) {
 
 	const auto the_prc_scores_entry  = prc_scores_entry_from_line ( "1by5A02     2       554     554     1       1xkhA02 7       543     543      223.8   215.5  3.1e-185" );
 	const auto the_ssap_scores_entry = ssap_scores_entry_from_line( "1by5A02 1xkhA02 554 535 79.16 511 92 17 3.11" );
-	BOOST_CHECK_CLOSE( get_score( the_model, the_prc_scores_entry, the_ssap_scores_entry ), 8.3668143327915736, ACCURACY_PERCENTAGE() );
+	BOOST_CHECK_CLOSE( get_score( the_model, the_prc_scores_entry, the_ssap_scores_entry ), 8.3668143327915736, ACCURACY_PERCENTAGE );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -25,6 +25,7 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/join.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 #include "cath/structure/geometry/angle.hpp"
 
@@ -89,16 +90,20 @@ namespace cath {
 				[[nodiscard]] cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The res_pair whose matches' key parts should be generated
 				                                  const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 				                                  ) const {
-#ifndef NDEBUG
-					// In debug mode, sanity check the inputs
-					/// \todo Create a `bool is_shifted(const angle &, ...)` helper function for angle and use it here
-					if ( prm_value < geom::zero_angle<angle_base_type>() || prm_value >= geom::one_revolution<angle_base_type>() ) {
-						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot extract key_part for a value that isn't in ( 0, 2pi ]"));
+					if constexpr ( common::IS_IN_DEBUG_MODE ) {
+						// In debug mode, sanity check the inputs
+						/// \todo Create a `bool is_shifted(const angle &, ...)` helper function for angle and use it here
+						if ( prm_value < geom::ZERO_ANGLE<angle_base_type> || prm_value >= geom::ONE_REVOLUTION<angle_base_type> ) {
+							BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+							  "Cannot extract key_part for a value that isn't in ( 0, 2pi ]" ) );
+						}
+						if ( prm_search_radius
+						       <= geom::ZERO_ANGLE<angle_base_type> || prm_search_radius >= geom::HALF_REVOLUTION<angle_base_type> ) {
+							BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+							  "Cannot search with an angle radius that isn't in ( 0, pi )" ) );
+						}
 					}
-					if ( prm_search_radius <= geom::zero_angle<angle_base_type>() || prm_search_radius >= geom::half_revolution<angle_base_type>() ) {
-						BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot search with an angle radius that isn't in ( 0, pi )"));
-					}
-#endif
+
 					// Calculate:
 					//  * the shifted start and stop
 					//  * whether this start and stop imply a wrap past 0 degrees
@@ -108,7 +113,7 @@ namespace cath {
 					const auto wraps           = ( start > stop );
 					const cell_index_t begin   = key_part( start );
 					const cell_index_t end     = static_cast<cell_index_t>( key_part( stop  ) + 1 );
-					const cell_index_t end_all = static_cast<cell_index_t>( std::ceil( geom::one_revolution<angle_base_type>() / cell_width ) );
+					const cell_index_t end_all = static_cast<cell_index_t>( std::ceil( geom::ONE_REVOLUTION<angle_base_type> / cell_width ) );
 
 					// Create a range that will cover the correct cells by joining two integer_ranges.
 					// Where the relevant cells wrap past 0 degrees, this looks like [ begin, end_all ) U [ 0, end )

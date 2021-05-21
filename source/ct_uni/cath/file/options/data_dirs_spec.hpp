@@ -21,7 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_OPTIONS_DATA_DIRS_SPEC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_OPTIONS_DATA_DIRS_SPEC_HPP
 
+#include <array>
 #include <filesystem>
+#include <string_view>
+#include <tuple>
 #include <map>
 
 #include "cath/common/path_type_aliases.hpp"
@@ -33,9 +36,10 @@ namespace cath { namespace file { class name_set; } }
 namespace cath {
 	namespace opts {
 		using data_file_str_map    = std::map<file::data_file, std::string>;
-		using data_file_str_pair   = data_file_str_map::value_type;
+		// using data_file_str_pair   = data_file_str_map::value_type;
 		using data_option_str_map  = std::map<detail::data_option, std::string>;
-		using data_option_str_pair = data_option_str_map::value_type;
+		// using data_option_str_pair = data_option_str_map::value_type;
+		using file_option_str_map_map = std::map<file::data_file, data_option_str_map>;
 
 		/// \brief Store the program options required to find various different types of file from a name
 		///        (eg find a DSSP file from the name 1c0pA01)
@@ -54,7 +58,6 @@ namespace cath {
 		///       don't leave an empty name). For example, this would generate the name 1c0pA01 from a dssp filename "/cath/data/current/dssp/1c0pA01.dssp").
 		class data_dirs_spec final {
 		private:
-			using file_option_str_map_map = std::map<file::data_file, data_option_str_map>;
 
 			/// \brief Store the actual values by data_file and then data_option
 			file_option_str_map_map values;
@@ -68,7 +71,7 @@ namespace cath {
 			[[nodiscard]] std::string get_value_of_option_and_data_file( const detail::data_option &,
 			                                                             const file::data_file & ) const;
 
-			static std::string get_name_of_data_file(const file::data_file &);
+			static std::string_view get_name_of_data_file(const file::data_file &);
 
 			[[nodiscard]] const ::std::filesystem::path &get_cath_root_dir() const;
 
@@ -81,12 +84,26 @@ namespace cath {
 
 			data_dirs_spec & set_cath_root_dir(const ::std::filesystem::path &);
 
-
-
-			static const file_option_str_map_map DATA_FILE_TYPE_OPTION_DEFAULTS;
-			static const data_file_str_map DATA_FILE_NAMES;
-			static const data_file_str_map DEFAULT_SUBDIR_NAME;
+			/// \brief Default values of each of the options (path, prefix, suffix) for each of the file types
+			static constexpr ::std::array DATA_FILE_TYPE_OPTION_DEFAULTS = {
+				// clang-format off
+				::std::tuple{ file::data_file::PDB,  detail::data_option::PATH,   ::std::string_view{ "."     } },
+				::std::tuple{ file::data_file::PDB,  detail::data_option::PREFIX, ::std::string_view{ ""      } },
+				::std::tuple{ file::data_file::PDB,  detail::data_option::SUFFIX, ::std::string_view{ ""      } },
+				::std::tuple{ file::data_file::DSSP, detail::data_option::PATH,   ::std::string_view{ "."     } },
+				::std::tuple{ file::data_file::DSSP, detail::data_option::PREFIX, ::std::string_view{ ""      } },
+				::std::tuple{ file::data_file::DSSP, detail::data_option::SUFFIX, ::std::string_view{ ".dssp" } },
+				::std::tuple{ file::data_file::WOLF, detail::data_option::PATH,   ::std::string_view{ "."     } },
+				::std::tuple{ file::data_file::WOLF, detail::data_option::PREFIX, ::std::string_view{ ""      } },
+				::std::tuple{ file::data_file::WOLF, detail::data_option::SUFFIX, ::std::string_view{ ".wolf" } },
+				::std::tuple{ file::data_file::SEC,  detail::data_option::PATH,   ::std::string_view{ "."     } },
+				::std::tuple{ file::data_file::SEC,  detail::data_option::PREFIX, ::std::string_view{ ""      } },
+				::std::tuple{ file::data_file::SEC,  detail::data_option::SUFFIX, ::std::string_view{ ".sec"  } },
+				// clang-format on
+			};
 		};
+
+		file_option_str_map_map data_file_type_option_defaults_map();
 
 		std::string get_path_of_data_file(const data_dirs_spec &,
 		                                  const file::data_file &);

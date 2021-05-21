@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP
 
 #include <filesystem>
+#include <string_view>
 
 #include <boost/test/test_tools.hpp>
 
@@ -52,7 +53,8 @@ namespace cath {
 			boost::test_tools::predicate_result operator()(const ::std::filesystem::path &,
 			                                               const ::std::filesystem::path &) const;
 
-			static const std::string FILENAME_NAME_PREFIX;
+			/// \brief TODOCUMENT
+			static constexpr ::std::string_view FILENAME_NAME_PREFIX = "file ";
 		};
 
 	} // namespace test

@@ -60,7 +60,7 @@ predicate_result istream_and_file_equal::operator()(istream      &prm_istream, /
 		prm_istream,
 		prm_name,
 		file_ifstream,
-		files_equal::FILENAME_NAME_PREFIX + prm_filename.string()
+		string( files_equal::FILENAME_NAME_PREFIX ) + prm_filename.string()
 	);
 
 	// If `should_overwrite( bootstrapping )` and the result is negative,

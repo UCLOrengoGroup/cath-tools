@@ -34,9 +34,6 @@ using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::string;
 
-/// \brief TODOCUMENT
-const string files_equal::FILENAME_NAME_PREFIX{ "file " };
-
 /// \brief Ctor for files_equal
 files_equal::files_equal(const bootstrap_mode &prm_bootstrapping,  ///< TODOCUMENT
                          const str_size_type  &prm_diff_half_width ///< TODOCUMENT
@@ -67,7 +64,7 @@ predicate_result files_equal::operator()(const path &prm_filename1, ///< TODOCUM
 	// ...and then just use a istream_and_file_equal
 	const predicate_result the_result = istream_and_file_equal{ bootstrapping, diff_half_width }(
 		file_ifstream1,
-		FILENAME_NAME_PREFIX + prm_filename1.string(),
+		string( FILENAME_NAME_PREFIX ) + prm_filename1.string(),
 		prm_filename2
 	);
 

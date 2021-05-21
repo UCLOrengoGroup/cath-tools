@@ -18,9 +18,13 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <array>
+#include <tuple>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_type_aliases.hpp"
@@ -31,62 +35,68 @@
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::common::test;
-using namespace ::std;
 
 using ::boost::lexical_cast;
+using ::std::apply;
+using ::std::array;
+using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The display_colour_test_suite_fixture to assist in testing display_colour_test
-		struct display_colour_test_suite_fixture : protected global_test_constants {
-		  private:
-			[[nodiscard]] doub_vec get_invalid_component_values() const {
-				// The standard invalid doubles
-				doub_vec invalid_doubles = INVALID_DOUBLES();
-				// -0.1 should be invalid because colour components must be >= 0.0
-				invalid_doubles.push_back( -0.1 );
-				//  1.1 should be invalid because colour components must be <= 1.0
-				return invalid_doubles;
-			}
+	namespace detail {
 
-		  protected:
-			~display_colour_test_suite_fixture() noexcept = default;
+		/// Make a copy of the specified array with Extra extra slots at the end
+		template <size_t Extra, typename T, size_t N>
+		constexpr array<T, N + Extra> with_n_more_at_end( const ::std::array<T, N> &prm_array ) {
+			return apply( []( const auto &...x ) { return array<T, N + Extra>{ x... }; }, prm_array );
+		}
 
-		  public:
-			/// \brief Check that the r, g and b component values of a viewer colour are as expected
-			void check_r_g_b_of_display_colour(const display_colour &prm_display_colour, ///< The display_colour to check
-			                                  const double        &prm_expected_r,    ///< The expected r component value
-			                                  const double        &prm_expected_g,    ///< The expected g component value
-			                                  const double        &prm_expected_b     ///< The expected b component value
-			                                  ) {
-				BOOST_CHECK_EQUAL( prm_expected_r, prm_display_colour.get_r() );
-				BOOST_CHECK_EQUAL( prm_expected_g, prm_display_colour.get_g() );
-				BOOST_CHECK_EQUAL( prm_expected_b, prm_display_colour.get_b() );
-			}
+		constexpr array<double, global_test_constants::INVALID_DOUBLES.size() + 2> make_invalid_components() {
+			auto invalid_components = with_n_more_at_end<2>( global_test_constants::INVALID_DOUBLES );
 
-			const double   EXPECTED_R               = { 0.684 };
-			const double   EXPECTED_G               = { 0.334 };
-			const double   EXPECTED_B               = { 0.638 };
-			const doub_vec EXPECTED_RGB             = { EXPECTED_R, EXPECTED_G, EXPECTED_B };
-			const doub_vec INVALID_COMPONENT_VALUES = { get_invalid_component_values() };
-			const string   EXPECTED_RGB_STRING      = {
-				lexical_cast<string>( EXPECTED_R ) + "," +
-				lexical_cast<string>( EXPECTED_G ) + "," +
-				lexical_cast<string>( EXPECTED_B )
-			};
-		};
+			// -0.1 should be invalid because colour components must be >= 0.0
+			invalid_components.at( global_test_constants::INVALID_DOUBLES.size() ) = -0.1;
+			//  1.1 should be invalid because colour components must be <= 1.0
+			invalid_components.at( global_test_constants::INVALID_DOUBLES.size() + 1 ) = 1.1;
+			return invalid_components;
+		}
 
-	}  // namespace test
-}  // namespace cath
+	} // namespace detail
 
-BOOST_FIXTURE_TEST_SUITE(display_colour_test_suite, cath::test::display_colour_test_suite_fixture)
+	/// \brief The display_colour_test_suite_fixture to assist in testing display_colour_test
+	struct display_colour_test_suite_fixture : protected global_test_constants {
+	  protected:
+		~display_colour_test_suite_fixture() noexcept = default;
+
+	  public:
+		/// \brief Check that the r, g and b component values of a viewer colour are as expected
+		void check_r_g_b_of_display_colour( const display_colour &prm_display_colour, ///< The display_colour to check
+		                                    const double &        prm_expected_r, ///< The expected r component value
+		                                    const double &        prm_expected_g, ///< The expected g component value
+		                                    const double &        prm_expected_b  ///< The expected b component value
+		                                    ) {
+			BOOST_CHECK_EQUAL( prm_expected_r, prm_display_colour.get_r() );
+			BOOST_CHECK_EQUAL( prm_expected_g, prm_display_colour.get_g() );
+			BOOST_CHECK_EQUAL( prm_expected_b, prm_display_colour.get_b() );
+		}
+
+		static constexpr double EXPECTED_R   = 0.684;
+		static constexpr double EXPECTED_G   = 0.334;
+		static constexpr double EXPECTED_B   = 0.638;
+		static constexpr array  EXPECTED_RGB = { EXPECTED_R, EXPECTED_G, EXPECTED_B };
+
+		static constexpr auto INVALID_COMPONENT_VALUES = detail::make_invalid_components();
+
+		const string EXPECTED_RGB_STRING = { lexical_cast<string>( EXPECTED_R ) + "," + lexical_cast<string>( EXPECTED_G )
+			                                 + "," + lexical_cast<string>( EXPECTED_B ) };
+	};
+
+}
+
+BOOST_FIXTURE_TEST_SUITE(display_colour_test_suite, display_colour_test_suite_fixture)
 
 /// \brief Check that the ctor throws an invalid_argument_exception if given any invalid value
 BOOST_AUTO_TEST_CASE(ctor_rejects_invalid_values) {
-	doub_vec invalid_doubles = INVALID_DOUBLES();
-	invalid_doubles.push_back(-0.1);
-	invalid_doubles.push_back( 0.1);
 	for (const double &invalid_value : INVALID_COMPONENT_VALUES) {
 		BOOST_CHECK_THROW(display_colour( invalid_value, EXPECTED_G,    EXPECTED_B    ), invalid_argument_exception);
 		BOOST_CHECK_THROW(display_colour( EXPECTED_R,    invalid_value, EXPECTED_B    ), invalid_argument_exception);

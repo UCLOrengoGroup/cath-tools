@@ -139,14 +139,14 @@ protein cath::read_protein_from_dssp_and_pdb_and_calc_sec(const path            
 protein cath::read_protein_from_dssp_and_pdb(const path             &prm_dssp,             ///< A DSSP file
                                              const path             &prm_pdb,              ///< A PDB file
                                              const dssp_skip_policy &prm_dssp_skip_policy, ///< Whether to limit the protein to those residues that were present in the DSSP
-                                             const string           &prm_name,             ///< The name to set as the title of the protein
+                                             string                  prm_name,             ///< The name to set as the title of the protein
                                              const ostream_ref_opt  &prm_ostream           ///< An optional reference to an ostream to which any logging should be sent
                                              ) {
 	return protein_from_dssp_and_pdb(
 		read_dssp_file( prm_dssp ),
 		read_pdb_file ( prm_pdb  ),
 		prm_dssp_skip_policy,
-		name_set{ prm_pdb, prm_name },
+		name_set{ prm_pdb, ::std::move( prm_name ) },
 		prm_ostream
 	);
 }

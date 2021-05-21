@@ -1,5 +1,5 @@
 /// \file
-/// \brief The config header
+/// \brief The lookup_arr_of_range_and_transform header
 
 /// \copyright
 /// Tony Lewis's Common C++ Library Code (here imported into the CATH Tools project and then tweaked, eg namespaced in cath)
@@ -18,19 +18,26 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONFIG_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONFIG_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOOKUP_ARR_OF_RANGE_AND_TRANSFORM_HPP
+#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOOKUP_ARR_OF_RANGE_AND_TRANSFORM_HPP
+
+#include <array>
+#include <tuple>
+#include <utility>
+
+#include "cath/common/cpp17/constexpr_invoke.hpp"
 
 namespace cath::common {
 
-	inline constexpr bool IS_IN_DEBUG_MODE =
-#ifndef NDEBUG
-	  false
-#else
-	  true
-#endif
-	  ;
+	template <typename Rng, typename Fn>
+	constexpr auto lookup_arr_of_range_and_transform( Rng &&prm_rng, Fn &&prm_fn ) {
+		return ::std::apply(
+		  [ & ]( auto &&...prms ) {
+			  return ::std::array{ ::std::pair{ prms, constexpr_invoke( prm_fn, prms ) }... };
+		  },
+		  prm_rng );
+	}
 
 } // namespace cath::common
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONFIG_HPP
+#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOOKUP_ARR_OF_RANGE_AND_TRANSFORM_HPP

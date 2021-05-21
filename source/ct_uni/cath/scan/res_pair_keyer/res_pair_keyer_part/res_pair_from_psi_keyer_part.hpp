@@ -39,7 +39,7 @@ namespace cath {
 				static angle_type sanity_check_cell_width(const angle_type &prm_cell_width ///< The cell width to be sanity-checked
 				                                          ) {
 					/// \todo Create a `bool is_shifted(const angle &, ...)` helper function for angle and use it here
-					return ( prm_cell_width <= geom::zero_angle<angle_base_type>() || prm_cell_width > geom::one_revolution<angle_base_type>() )
+					return ( prm_cell_width <= geom::ZERO_ANGLE<angle_base_type> || prm_cell_width > geom::ONE_REVOLUTION<angle_base_type> )
 						? throw std::logic_error( "Cannot create an angle-based res_pair keyer_part with a cell_width that isn't in ( 0, 2pi ]" )
 						: prm_cell_width;
 				}

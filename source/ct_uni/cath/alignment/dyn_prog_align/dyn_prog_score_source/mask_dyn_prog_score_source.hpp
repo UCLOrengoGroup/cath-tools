@@ -43,6 +43,12 @@ namespace cath {
 		  public:
 			mask_dyn_prog_score_source(const common::bool_vec_of_vec &,
 			                           const dyn_prog_score_source &);
+			mask_dyn_prog_score_source(const common::bool_vec_of_vec &&,
+			                           const dyn_prog_score_source &&) = delete;
+			mask_dyn_prog_score_source(const common::bool_vec_of_vec &,
+			                           const dyn_prog_score_source &&) = delete;
+			mask_dyn_prog_score_source(const common::bool_vec_of_vec &&,
+			                           const dyn_prog_score_source &) = delete;
 		};
 	} // namespace align
 } // namespace cath

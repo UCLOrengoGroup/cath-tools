@@ -46,7 +46,7 @@ namespace cath {
 			}
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::adjacented_forwarder adjacented{};
+		inline constexpr detail::adjacented_forwarder adjacented{};
 
 	} // namespace common
 } // namespace cath

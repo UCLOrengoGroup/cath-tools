@@ -66,7 +66,7 @@ namespace cath {
 
 		} // namespace detail
 
-		[[maybe_unused]] constexpr detail::tuple_within_range_fn tuple_within_range{};
+		inline constexpr detail::tuple_within_range_fn tuple_within_range{};
 
 	} // namespace common
 } // namespace cath

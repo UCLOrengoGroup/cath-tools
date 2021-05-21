@@ -42,6 +42,7 @@ BOOST_AUTO_TEST_CASE(get_coarse_element_type_works) {
 	static_assert( get_coarse_element_type( ""    ) == coarse_element_type::NON_CORE     );
 	static_assert( get_coarse_element_type( "CAA" ) == coarse_element_type::NON_CORE     );
 	static_assert( get_coarse_element_type( "BR"  ) == coarse_element_type::NON_CORE     );
+	BOOST_TEST (true );
 }
 
 BOOST_AUTO_TEST_CASE(get_coarse_element_type_of_element_type_string) {
@@ -55,6 +56,7 @@ BOOST_AUTO_TEST_CASE(get_coarse_element_type_of_element_type_string) {
 
 	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " CAA" ) } ) == coarse_element_type::NON_CORE     );
 	static_assert( get_coarse_element_type( element_type_string{ make_char_arr( " BR " ) } ) == coarse_element_type::NON_CORE     );
+	BOOST_TEST (true );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

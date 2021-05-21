@@ -29,6 +29,8 @@
 #include <boost/tuple/tuple.hpp>
 
 #include "cath/biocore/biocore_type_aliases.hpp"
+#include "cath/biocore/chain_label.hpp"
+#include "cath/common/algorithm/constexpr_is_uniq.hpp"
 #include "cath/common/cpp20/make_array.hpp"
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/rotation.hpp"
@@ -66,7 +68,7 @@ namespace cath {
 			explicit superposition(const std::vector<indices_and_coord_lists_type> &,
 			                       const size_t         & = 0,
 			                       const geom::coord    & = geom::ORIGIN_COORD,
-			                       const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
+			                       const geom::rotation & = geom::IDENTITY_ROTATION);
 			superposition(geom::coord_vec,
 			              geom::rotation_vec);
 
@@ -77,23 +79,34 @@ namespace cath {
 			superposition & post_translate(const geom::coord &);
 			superposition & post_rotate(const geom::rotation &);
 
-			static constexpr size_t          NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION     = 2;
-			static constexpr size_t          INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION  = 0;
-			static constexpr size_t          INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION = 1;
-			static constexpr auto            SUPERPOSITION_CHAIN_CHARS = common::make_array(
-				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-				'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-			);
-			static const     chain_label_vec SUPERPOSITION_CHAIN_LABELS;
+			static constexpr size_t NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION     = 2;
+			static constexpr size_t INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION  = 0;
+			static constexpr size_t INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION = 1;
+
+			static constexpr ::std::array SUPERPOSITION_CHAIN_CHARS = {
+				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+				'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+				'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+			};
+
+			/// \brief The list of standard chain labels to use if relabelling the chains of the structures in a superposition
+			static constexpr auto SUPERPOSITION_CHAIN_LABELS =
+			  ::std::apply( []( auto &&...chars ) { return ::std::array{ chain_label{ chars }... }; },
+			                SUPERPOSITION_CHAIN_CHARS );
+
+			static_assert( common::constexpr_is_uniq( SUPERPOSITION_CHAIN_CHARS ),
+			               "The list of superposition chain characters should not have any repeats" );
+			static_assert( common::constexpr_is_uniq( SUPERPOSITION_CHAIN_LABELS ),
+			               "The list of superposition chain_labels should not have any repeats" );
 		};
 
 		void post_translate_and_rotate(superposition &,
 		                               const geom::coord &,
-		                               const geom::rotation & = geom::rotation::IDENTITY_ROTATION() );
+		                               const geom::rotation & = geom::IDENTITY_ROTATION );
 
 		superposition post_translate_and_rotate_copy(superposition,
 		                                             const geom::coord &,
-		                                             const geom::rotation & = geom::rotation::IDENTITY_ROTATION() );
+		                                             const geom::rotation & = geom::IDENTITY_ROTATION );
 
 		void transform(const superposition &,
 		               const size_t &,
@@ -149,7 +162,7 @@ namespace cath {
 		                                            const geom::coord_list &,
 		                                            const bool           & = true,
 		                                            const geom::coord    & = geom::ORIGIN_COORD,
-		                                            const geom::rotation & = geom::rotation::IDENTITY_ROTATION());
+		                                            const geom::rotation & = geom::IDENTITY_ROTATION);
 
 		void superpose_second_coords_to_first(const geom::coord_list &,
 		                                      geom::coord_list &);

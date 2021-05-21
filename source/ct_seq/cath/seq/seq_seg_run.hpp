@@ -68,7 +68,7 @@ namespace cath {
 			seq_seg_run(seq_arrow,
 			            seq_arrow);
 
-			seq_seg_run(const seq_seg_vec &);
+			explicit seq_seg_run(const seq_seg_vec &);
 
 			seq_seg_run(seq_arrow,
 			            seq_arrow,
@@ -417,7 +417,7 @@ namespace cath {
 			static_assert( ( ... && std::is_integral_v<common::remove_cvref_t<Ts>> ),
 				"make_seq_seg_run_from_res_indices() requires all parameters to by of integral type" );
 
-			return {
+			return seq_seg_run{
 				detail::make_seq_seg_run_from_res_indices_impl(
 					std::array<residx_t, sizeof...( Ts )>{ { debug_numeric_cast<residx_t>( prm_res_idcs )... } },
 					std::make_index_sequence< sizeof...( Ts ) / 2 >{}
@@ -443,7 +443,7 @@ namespace cath {
 		/// \relates seq_seg_run
 		inline seq_seg_run make_seq_seg_run_from_res_indices(const residx_residx_pair_vec &prm_residue_index_segments ///< The residue index start/stop pairs of the seq_seg_run's segments
 		                                                     ) {
-			return {
+			return seq_seg_run{
 				common::transform_build<seq_seg_vec>(
 					prm_residue_index_segments,
 					seq_seg_of_res_idx_pair

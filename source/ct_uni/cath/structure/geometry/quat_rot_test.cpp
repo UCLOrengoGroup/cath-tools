@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(simple, quat_rot_type, all_quat_rot_types) {
 	const rotation                     simple_rot_matx = rotation_to_x_axis_and_x_y_plane( coord( 0, 0, 1), coord( 0, 1, 0) );
 	const quat_rot_impl<quat_rot_type> simple_quat_rot = make_quat_rot_from_rotation<quat_rot_type>( simple_rot_matx );
 	BOOST_CHECK_EQUAL( simple_rot_matx, make_rotation_from_quat_rot( simple_quat_rot ) );
-	BOOST_CHECK_CLOSE( angle_in_degrees( angle_of_rotation( simple_rot_matx ) ), angle_in_degrees( angle_of_quat_rot( simple_quat_rot ) ), LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
+	BOOST_CHECK_CLOSE( angle_in_degrees( angle_of_rotation( simple_rot_matx ) ), angle_in_degrees( angle_of_quat_rot( simple_quat_rot ) ), LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
 }
 
 /// \brief TODOCUMENT
@@ -174,7 +174,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(distance, quat_rot_type, all_quat_rot_types) {
 		BOOST_CHECK_CLOSE(
 			boost::numeric_cast<double>( distance_1_of_angle<quat_rot_type>( make_angle_from_degrees<double>( num_degrees ) ) ),
 			distance_1,
-			LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>()
+			LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type>
 		);
 	}
 }
@@ -203,7 +203,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(from_first_toward_second_at_angle_works, quat_rot_
 		const auto &quat_rot_b   = get<1>( x );
 		const auto angle_between = angle_between_quat_rots( quat_rot_a, quat_rot_b );
 		const bool small_angle   = ( angle_between <= make_angle_from_degrees<quat_rot_type>( 2.0 ) );
-		const auto accuracy      = ( small_angle ? 100.0 : 1.0 ) * LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>();
+		const auto accuracy      = ( small_angle ? 100.0 : 1.0 ) * LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type>;
 		for (const double &frac : { 0.1, 0.25, 0.5, 0.75, 0.9 } ) {
 			const auto expected_angle = static_cast<quat_rot_type>( frac ) * angle_between;
 			const auto new_quat_rot   = from_first_toward_second_at_angle( quat_rot_a, quat_rot_b, expected_angle );
@@ -242,7 +242,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotation_between_quat_rots, quat_rot_type, all_qua
 			const auto quat_answer = rotation_between_rotations( get<0>( y ), get<1>( y ) );
 			const auto rotq_answer = make_quat_rot_from_rotation<quat_rot_type>( rotn_answer );
 			const auto distance    = distance_1_between_quat_rots( rotq_answer, quat_answer);
-			if ( distance >= LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() ) {
+			if ( distance >= LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> ) {
 				cerr << "Source.rotn.first  : " << get<0>( x ) << "\n";
 				cerr << "Source.rotn.second : " << get<1>( x ) << "\n";
 				cerr << "Source.quat.first  : " << get<0>( y ) << " - length : " << abs( get<0>( y ) ) << "\n";
@@ -286,7 +286,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotation_between_quat_rots, quat_rot_type, all_qua
 				cerr << "Distance           : " << distance << "\n";
 				cerr << "\n";
 			}
-			BOOST_CHECK_LT( distance, LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
+			BOOST_CHECK_LT( distance, LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
 		}
 	);
 }
@@ -365,7 +365,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotation_between_quat_rots_example_1, quat_rot_typ
 	const auto expected = quat_rot_impl<quat_rot_type>( oort,  0.0, oort,  0.0 );
 	const auto got      = rotation_between_rotations  ( quat_a, quat_b );
 	const auto distance = distance_1_between_quat_rots( expected, got  );
-	if ( distance >= ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() ) {
+	if ( distance >= ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> ) {
 		cerr << "Quat_a   : " << quat_a   << "\n";
 		cerr << "Quat_b   : " << quat_b   << "\n";
 		cerr << "Expected : " << expected << "\n";
@@ -373,7 +373,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotation_between_quat_rots_example_1, quat_rot_typ
 		cerr << "Distance : " << distance << "\n";
 		cerr << "\n";
 	}
-	BOOST_CHECK_LT( distance, ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
+	BOOST_CHECK_LT( distance, ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
 }
 
 /// \brief TODOCUMENT
@@ -389,13 +389,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotate_point_by_quat_rots, quat_rot_type, all_quat
 				const auto rotn_answer = rotate_copy( x, the_coord );
 				const auto quat_answer = rotate_copy( y, bg_coord  );
 				const auto distance    = distance_between_points( rotn_answer, coord{ quat_answer } );
-				if ( distance >= LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() ) {
+				if ( distance >= LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> ) {
 					cerr << rotn_answer << "\n";
 					cerr << coord{ quat_answer } << "\n";
 					cerr << distance_between_points( rotn_answer, coord{ quat_answer } ) << "\n";
 					cerr << "\n";
 				}
-				BOOST_CHECK_LT( distance, LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
+				BOOST_CHECK_LT( distance, LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
 			}
 		}
 	);
@@ -521,7 +521,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotate_point_by_quat_rots, quat_rot_type, all_quat
 //	for (const rotation &the_rot_matx : rotns) {
 //		const quat_rot_impl<quat_rot_type> the_quat_rot = make_quat_rot_from_rotation<quat_rot_type>( the_rot_matx );
 //		BOOST_CHECK_EQUAL( the_rot_matx, make_rotation_from_quat_rot( the_quat_rot ) );
-//		BOOST_CHECK_CLOSE( angle_in_degrees( angle_of_rotation( the_rot_matx ) ), angle_in_degrees( angle_of_quat_rot( the_quat_rot ) ), ACCURACY_PERCENTAGE() );
+//		BOOST_CHECK_CLOSE( angle_in_degrees( angle_of_rotation( the_rot_matx ) ), angle_in_degrees( angle_of_quat_rot( the_quat_rot ) ), ACCURACY_PERCENTAGE );
 //	}
 //}
 
@@ -543,8 +543,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rotate_point_by_quat_rots, quat_rot_type, all_quat
 //    		const angle rotn_angle_b_to_a = angle_between_rotations( rotns[ ctr_b ], rotns[ ctr_a ] );
 //    		const angle quat_angle_a_to_b = angle_between_quat_rots( quats[ ctr_a ], quats[ ctr_b ] );
 //    		const angle quat_angle_b_to_a = angle_between_quat_rots( quats[ ctr_b ], quats[ ctr_a ] );
-//			BOOST_CHECK_CLOSE( angle_in_degrees( rotn_angle_a_to_b ), angle_in_degrees( quat_angle_a_to_b ), LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
-//			BOOST_CHECK_CLOSE( angle_in_degrees( rotn_angle_b_to_a ), angle_in_degrees( quat_angle_b_to_a ), LOOSER_ACCURACY_PERCENTAGE_TMPL<quat_rot_type>() );
+//			BOOST_CHECK_CLOSE( angle_in_degrees( rotn_angle_a_to_b ), angle_in_degrees( quat_angle_a_to_b ), LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
+//			BOOST_CHECK_CLOSE( angle_in_degrees( rotn_angle_b_to_a ), angle_in_degrees( quat_angle_b_to_a ), LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<quat_rot_type> );
 //    	}
 //	}
 //}

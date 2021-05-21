@@ -162,7 +162,7 @@ namespace cath {
 			                                        const residue &prm_to_residue    ///< TODOCUMENT
 			                                        ) {
 				return {
-					view_vector_of_residue_pair( prm_from_residue, prm_to_residue ),
+					view_type{ view_vector_of_residue_pair( prm_from_residue, prm_to_residue ) },
 					geom::make_quat_rot_from_rotation<frame_quat_rot_type>(
 						view_frame( prm_from_residue, prm_to_residue )
 					),

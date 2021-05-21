@@ -86,7 +86,7 @@ namespace cath {
 			detail::score_common_coord_handler the_coord_handler;
 
 			/// \brief The method to use for generating the normalisation length
-			common::clone_ptr<const length_getter> length_getter_ptr = { common::make_unique<length_of_longer_getter>() };
+			common::clone_ptr<const length_getter> length_getter_ptr { common::make_unique<length_of_longer_getter>() };
 
 			/// \brief How to post process the basic score once it has been calculated
 			ssap_score_post_processing post_processing = default_post_processing;

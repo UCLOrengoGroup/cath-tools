@@ -123,13 +123,13 @@ namespace cath {
 			/// \brief Make a seq_seg_run of the first seq_seg in the specified pair
 			seq_seg_run sngl_run_1(const seq_seg_seq_seg_pair &prm_seq_segs ///< The pair of single seq_segs to query
 			                       ) {
-				return { { prm_seq_segs.first } };
+				return seq_seg_run{ { prm_seq_segs.first } };
 			}
 
 			/// \brief Make a seq_seg_run of the second seq_seg in the specified pair
 			seq_seg_run sngl_run_2(const seq_seg_seq_seg_pair &prm_seq_segs ///< The pair of single seq_segs to query
 			                      ) {
-				return { { prm_seq_segs.second } };
+				return seq_seg_run{ { prm_seq_segs.second } };
 			}
 		};
 

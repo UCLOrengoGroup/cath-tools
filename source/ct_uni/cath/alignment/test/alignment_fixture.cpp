@@ -21,6 +21,7 @@
 #include "alignment_fixture.hpp"
 
 #include "cath/alignment/align_type_aliases.hpp"
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/structure/entry_querier/residue_querier.hpp"
 
@@ -31,14 +32,18 @@ using namespace ::std;
 
 using ::std::nullopt;
 
-const aln_posn_opt_vec alignment_fixture::aln_list_a     = { size_opt( 0_z ), 1, 2, 3       };
-const aln_posn_opt_vec alignment_fixture::aln_list_b     = { size_opt( 0_z ), 1, 2, nullopt };
-const aln_posn_opt_vec alignment_fixture::aln_list_long  = { size_opt( 0_z ), 1, 2, 3, 4, 5 };
+alignment alignment_fixture::aln_a_a() {
+	return alignment{ { aln_list_a | to_vector, aln_list_a | to_vector } };
+}
 
-const alignment        alignment_fixture::aln_a_a        ( { aln_list_a,    aln_list_a    } );
-const alignment        alignment_fixture::aln_a_b        ( { aln_list_a,    aln_list_b    } );
-const alignment        alignment_fixture::aln_b_a        ( { aln_list_b,    aln_list_a    } );
-const alignment        alignment_fixture::aln_long_long  ( { aln_list_long, aln_list_long } );
+alignment alignment_fixture::aln_a_b() {
+	return alignment{ { aln_list_a | to_vector, aln_list_b | to_vector } };
+}
 
-const score_opt_vec    alignment_fixture::example_scores = { 3.6, 6.8, 2.1, 999.999 };
+alignment alignment_fixture::aln_b_a() {
+	return alignment{ { aln_list_b | to_vector, aln_list_a | to_vector } };
+}
 
+alignment alignment_fixture::aln_long_long() {
+	return alignment{ { aln_list_long | to_vector, aln_list_long | to_vector } };
+}

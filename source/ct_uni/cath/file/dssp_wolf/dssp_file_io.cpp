@@ -99,7 +99,7 @@ dssp_file cath::file::read_dssp(istream &prm_istream ///< The istream from which
 		// If this line indicates a problem residue, then increment the residue counter and skip it
 //		if (dssp_entry_is_null) {
 ////			cerr << "Chain ? : " << residue::null_residue << endl;
-//			new_residues.push_back(residue::NULL_RESIDUE);
+//			new_residues.push_back(NULL_RESIDUE);
 //			++residue_ctr;
 //			continue;
 //		}
@@ -142,7 +142,7 @@ size_residue_pair cath::file::parse_dssp_residue_line(const string &prm_dssp_res
 	try {
 		const bool dssp_entry_is_null = ( prm_dssp_residue_line.at( 13 ) == '!' );
 		if ( dssp_entry_is_null ) {
-			return { 0_z, residue::NULL_RESIDUE };
+			return { 0_z, NULL_RESIDUE };
 		}
 		                                                                                         // Comments with DSSP format documentation
 		                                                                                         // (http://swift.cmbi.ru.nl/gv/dssp/)
@@ -222,7 +222,7 @@ size_residue_pair cath::file::parse_dssp_residue_line(const string &prm_dssp_res
 				ORIGIN_COORD,
 				0,
 				sec_struc,
-				rotation::IDENTITY_ROTATION(),
+				IDENTITY_ROTATION,
 				shifted_phi,
 				shifted_psi,
 				solv_access

@@ -28,7 +28,6 @@
 #include <boost/range/algorithm/for_each.hpp>
 #include <boost/range/combine.hpp>
 
-#include "cath/common/algorithm/constexpr_is_uniq.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
@@ -67,15 +66,6 @@ constexpr size_t          superposition::NUM_ENTRIES_IN_PAIRWISE_SUPERPOSITION;
 constexpr size_t          superposition::INDEX_OF_FIRST_IN_PAIRWISE_SUPERPOSITION;
 constexpr size_t          superposition::INDEX_OF_SECOND_IN_PAIRWISE_SUPERPOSITION;
 constexpr array<char, 52> superposition::SUPERPOSITION_CHAIN_CHARS;
-
-/// \brief The list of standard chain labels to use if relabelling the chains of the structures in a superposition
-///
-/// \todo Can chain_label be made constexpr and this be converted to an array<chain_label, 52>?
-const chain_label_vec     superposition::SUPERPOSITION_CHAIN_LABELS = transform_build<chain_label_vec>(
-	SUPERPOSITION_CHAIN_CHARS,
-	[] (const char &x) { return chain_label{ x }; }
-);
-static_assert( constexpr_is_uniq( superposition::SUPERPOSITION_CHAIN_CHARS ), "The list of superposition chain characters should not have any repeats" ) ;
 
 /// \brief Find the translation and rotation that will make the second coord_list best fit the first in the first's current position
 ///
@@ -149,7 +139,7 @@ superposition::superposition(const vector<indices_and_coord_lists_type> &prm_ind
 //	rmsds.assign(num_entries - 1, INVALID_RMSD);
 
 	translations.assign( num_entries, ORIGIN_COORD                  );
-	rotations.assign   ( num_entries, rotation::IDENTITY_ROTATION() );
+	rotations.assign   ( num_entries, IDENTITY_ROTATION );
 	translations[ prm_base_index ] = prm_base_translation;
 	rotations   [ prm_base_index ] = prm_base_rotation;
 
@@ -623,6 +613,6 @@ superposition cath::sup::make_identity_superposition(const size_t &prm_num_entri
                                                      ) {
 	return {
 		coord_vec   ( prm_num_entries, ORIGIN_COORD           ),
-		rotation_vec( prm_num_entries, rotation::IDENTITY_ROTATION() )
+		rotation_vec( prm_num_entries, IDENTITY_ROTATION )
 	};
 }
