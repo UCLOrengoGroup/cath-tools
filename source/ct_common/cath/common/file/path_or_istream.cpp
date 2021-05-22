@@ -41,6 +41,9 @@ path_or_istream & path_or_istream::set_path(const path &prm_file ///< The path t
                                             ) {
 	if ( input_file_stream ) {
 		input_file_stream->close();
+
+		// https://bugs.llvm.org/show_bug.cgi?id=50445
+		input_file_stream.reset();
 	}
 	if ( prm_file != get_flag() || ! standard_instream ) {
 		input_file_stream = open_ifstream( prm_file );
