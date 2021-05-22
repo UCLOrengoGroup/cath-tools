@@ -81,7 +81,7 @@ namespace cath {
 		                                                                  const chop::region_vec_opt_vec &,
 		                                                                  const ostream_ref_opt & = ::std::nullopt);
 
-		protein_list build_protein_list_of_pdb_list(const pdb_list &);
+		protein_list build_protein_list_of_pdb_list( const pdb_list &, const ostream_ref_opt & = ::std::nullopt );
 
 		protein_list build_protein_list_of_pdb_list_and_names(const pdb_list &,
 		                                                      const name_set_list &);

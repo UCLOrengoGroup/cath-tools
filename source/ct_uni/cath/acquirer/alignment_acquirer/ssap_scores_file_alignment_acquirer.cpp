@@ -88,8 +88,9 @@ static_assert( aln_glue_style_of_align_refining( align_refining::LIGHT ) == aln_
 static_assert( aln_glue_style_of_align_refining( align_refining::HEAVY ) == aln_glue_style::WITH_HEAVY_REFINING              );
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< TODOCUMENT
-                                                                                                            const align_refining &prm_align_refining  ///< How much refining should be done to the alignment
+pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context  &prm_strucs_context, ///< TODOCUMENT
+                                                                                                            const align_refining  &prm_align_refining, ///< How much refining should be done to the alignment
+                                                                                                            const ostream_ref_opt &prm_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                                                             ) const {
 	// Parse the SSAP scores file
 	const pdb_list &the_pdbs         = prm_strucs_context.get_pdbs();
@@ -120,7 +121,7 @@ pair<alignment, size_size_pair_vec> ssap_scores_file_alignment_acquirer::do_get_
 		scores,
 		ssaps_filename.parent_path(),
 		aln_glue_style_of_align_refining( prm_align_refining ),
-		ostream_ref{ cerr }
+		prm_ostream
 	);
 	const alignment          &new_alignment = aln_and_spantree.first;
 	const size_size_pair_vec &spanning_tree = aln_and_spantree.second;
@@ -168,7 +169,7 @@ pair<alignment, size_size_pair_vec> cath::align::build_multi_alignment(const pdb
                                                                        const aln_glue_style         &prm_aln_glue_style, ///< The approach that should be used for glueing alignments together
                                                                        const ostream_ref_opt        &prm_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                        ) {
-	const protein_list prots = build_protein_list_of_pdb_list( prm_pdbs );
+	const protein_list prots = build_protein_list_of_pdb_list( prm_pdbs, prm_ostream );
 	auto aln_and_spantree = build_alignment(
 		prots,
 		prm_scores,

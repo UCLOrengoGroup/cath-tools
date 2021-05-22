@@ -62,13 +62,14 @@ bool cora_aln_file_alignment_acquirer::do_requires_backbone_complete_input() con
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> cora_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context  &prm_strucs_context, ///< TODOCUMENT
+                                                                                                         const ostream_ref_opt &prm_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                                                          ) const {
 	// Construct an alignment from the CORA alignment file
 	const auto   &the_pdbs = prm_strucs_context.get_pdbs();
 	const size_t  num_pdbs = the_pdbs.size();
 	ifstream my_aln_stream = open_ifstream( get_cora_alignment_file() );
-	const alignment     new_alignment = read_alignment_from_cath_cora_legacy_format( my_aln_stream, the_pdbs, ostream_ref{ cerr } );
+	const alignment     new_alignment = read_alignment_from_cath_cora_legacy_format( my_aln_stream, the_pdbs, prm_ostream );
 	my_aln_stream.close();
 
 	const protein_list proteins_of_pdbs = build_protein_list( prm_strucs_context );

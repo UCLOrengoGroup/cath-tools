@@ -54,7 +54,7 @@ using namespace ::std;
 void cath_align_scorer::score(const cath_score_align_options &prm_cath_score_align_options, ///< The details of the cath-score-align job to perform
                               istream                         &prm_istream,                 ///< The istream from which any stdin-like input should be read
                               ostream                         &prm_stdout,                  ///< The ostream to which any stdout-like output should be written
-                              ostream                         &/*prm_stderr*/               ///< The ostream to which any stderr-like output should be written
+                              ostream                         &prm_stderr                   ///< The ostream to which any stderr-like output should be written
                               ) {
 	// If the options are invalid or specify to do_nothing, then just return
 	const auto &error_or_help_string = prm_cath_score_align_options.get_error_or_help_string();
@@ -69,7 +69,8 @@ void cath_align_scorer::score(const cath_score_align_options &prm_cath_score_ali
 
 	// An alignment is required but this should have been checked elsewhere
 	const auto       alignment_acq_ptr  = get_alignment_acquirer( prm_cath_score_align_options );
-	const auto       alignment_and_tree = alignment_acq_ptr->get_alignment_and_spanning_tree( context );
+	const auto       alignment_and_tree =
+	  alignment_acq_ptr->get_alignment_and_spanning_tree( context, align_refining::NO, ostream_ref_opt{ prm_stderr } );
 	const alignment &the_alignment      = alignment_and_tree.first;
 	// const auto      &spanning_tree      = alignment_and_tree.second;
 

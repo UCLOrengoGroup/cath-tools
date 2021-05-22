@@ -40,10 +40,12 @@ namespace cath { namespace align {
 		/// \brief Where the magic shall happen
 		path_opt directory_of_joy;
 
-		[[nodiscard]] std::unique_ptr<alignment_acquirer> do_clone() const final;
-		[[nodiscard]] bool                                do_requires_backbone_complete_input() const final;
-		[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree( const file::strucs_context &,
-			                                                                                       const align_refining & ) const final;
+		[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
+		[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
+		[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+		  const file::strucs_context &,
+		  const align_refining &,
+		  const ostream_ref_opt & = ::std::nullopt ) const final;
 
 	  public:
 		explicit do_the_ssaps_alignment_acquirer( path_opt = ::std::nullopt );

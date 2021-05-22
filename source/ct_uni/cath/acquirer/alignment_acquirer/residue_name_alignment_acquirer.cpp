@@ -64,8 +64,13 @@ bool residue_name_alignment_acquirer::do_requires_backbone_complete_input() cons
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context ///< TODOCUMENT
-                                                                                                        ) const {
+///
+/// prm_strucs_context TODOCUMENT
+/// prm_ostream        An (optional reference_wrapper of an) ostream to which warnings/errors should be written
+pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alignment_and_spanning_tree(
+  const strucs_context & prm_strucs_context,
+  const ostream_ref_opt &prm_ostream ) const {
+
 	const protein_list  proteins_of_pdbs = build_protein_list( prm_strucs_context );
 	const auto         &the_pdbs         = prm_strucs_context.get_pdbs();
 	const size_t        num_pdbs         = the_pdbs.size();
@@ -104,7 +109,8 @@ pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alig
 				common_residue_select_all_policy(),
 				common_atom_select_ca_policy(),
 				pdb_ctr_1,
-				pdb_ctr_2
+				pdb_ctr_2,
+				prm_ostream
 			);
 			const size_t num_common_coords = all_common_coords.first.size();
 			if ( num_common_coords > MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR ) {
@@ -131,4 +137,3 @@ pair<alignment, size_size_pair_vec> residue_name_alignment_acquirer::do_get_alig
 		get_edges_of_spanning_tree( calc_max_spanning_tree( edges, num_pdbs ) )
 	);
 }
-

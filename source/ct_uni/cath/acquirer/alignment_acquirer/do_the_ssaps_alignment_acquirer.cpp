@@ -20,7 +20,9 @@
 
 #include "do_the_ssaps_alignment_acquirer.hpp"
 
+#include <array>
 #include <filesystem>
+#include <sstream>
 #include <utility>
 
 #include <boost/algorithm/string/join.hpp>
@@ -63,10 +65,12 @@ using ::boost::algorithm::join;
 using ::boost::algorithm::trim_right_copy;
 using ::boost::format;
 using ::boost::irange;
+using ::std::array;
 using ::std::filesystem::path;
 using ::std::filesystem::temp_directory_path;
 using ::std::max;
 using ::std::ofstream;
+using ::std::ostringstream;
 using ::std::pair;
 using ::std::string;
 using ::std::unique_ptr;
@@ -82,8 +86,9 @@ bool do_the_ssaps_alignment_acquirer::do_requires_backbone_complete_input() cons
 }
 
 /// \brief Run the necessary cath-ssaps and then use them to get the alignment and spanning tree
-pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< The details of the structures for which the alignment and spanning tree is required
-                                                                                                        const align_refining &prm_align_refining  ///< How much refining should be done to the alignment
+pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context  &prm_strucs_context, ///< The details of the structures for which the alignment and spanning tree is required
+                                                                                                        const align_refining  &prm_align_refining, ///< How much refining should be done to the alignment
+                                                                                                        const ostream_ref_opt &prm_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                                                         ) const {
 	using ::std::to_string;
 
@@ -157,6 +162,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 				                join( cath_ssap_args, " " ),
 				                scores_file.string() );
 				ofstream out_scores_ofstream = open_ofstream( scores_file );
+				array<ostringstream, 2> ssap_stdout_and_stderr;
 				run_ssap(
 					make_and_parse_options<cath_ssap_options>(
 						cath_ssap_args,
@@ -164,11 +170,16 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 							? parse_sources::CMND_LINE_ONLY
 							: parse_sources::CMND_ENV_AND_FILE
 					),
-					std::cout,
-					std::cerr,
+					prm_ostream ? prm_ostream->get() : ssap_stdout_and_stderr.front(),
+					prm_ostream ? prm_ostream->get() : ssap_stdout_and_stderr.back(),
 					ostream_ref( out_scores_ofstream )
 				);
 				out_scores_ofstream.close();
+				for ( const ostringstream &ssap_output_stream : ssap_stdout_and_stderr ) {
+					if ( !ssap_output_stream.str().empty() ) {
+						::spdlog::info( "SSAP output : {}", ssap_output_stream.str() );
+					}
+				}
 			}
 			else {
 				::spdlog::info( "[{}] Skipping {} versus {} - non-empty data files already exist", progress_str, id_1, id_2 );
@@ -189,7 +200,7 @@ pair<alignment, size_size_pair_vec> do_the_ssaps_alignment_acquirer::do_get_alig
 
 	// Use the ssap_scores_file_alignment_acquirer on the directory of data
 	return ssap_scores_file_alignment_acquirer{ scores_file }
-		.get_alignment_and_spanning_tree( prm_strucs_context, prm_align_refining );
+		.get_alignment_and_spanning_tree( prm_strucs_context, prm_align_refining, prm_ostream );
 }
 
 /// \brief Ctor for do_the_ssaps_alignment_acquirer

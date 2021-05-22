@@ -78,21 +78,23 @@ namespace cath {
 			                                                                                          const alignment::size_type            & = alignment::PAIR_A_IDX,
 			                                                                                          const alignment::size_type            & = alignment::PAIR_B_IDX);
 
-			static geom::coord_list_coord_list_pair get_common_coords(const alignment &,
-			                                                          const protein &,
-			                                                          const protein &,
-			                                                          const common_residue_selection_policy & = common_residue_select_all_policy(),
-			                                                          const common_atom_selection_policy    & = common_atom_select_ca_policy(),
-			                                                          const alignment::size_type            & = alignment::PAIR_A_IDX,
-			                                                          const alignment::size_type            & = alignment::PAIR_B_IDX);
+			static geom::coord_list_coord_list_pair get_common_coords( const alignment &,
+			                                                           const protein &,
+			                                                           const protein &,
+			                                                           const common_residue_selection_policy & = common_residue_select_all_policy(),
+			                                                           const common_atom_selection_policy &    = common_atom_select_ca_policy(),
+			                                                           const alignment::size_type &            = alignment::PAIR_A_IDX,
+			                                                           const alignment::size_type &            = alignment::PAIR_B_IDX );
 
-			static geom::coord_list_coord_list_pair get_common_coords(const alignment &,
-			                                                          const file::pdb &,
-			                                                          const file::pdb &,
-			                                                          const common_residue_selection_policy & = common_residue_select_all_policy(),
-			                                                          const common_atom_selection_policy    & = common_atom_select_ca_policy(),
-			                                                          const alignment::size_type            & = alignment::PAIR_A_IDX,
-			                                                          const alignment::size_type            & = alignment::PAIR_B_IDX);
+			static geom::coord_list_coord_list_pair get_common_coords( const alignment &,
+			                                                           const file::pdb &,
+			                                                           const file::pdb &,
+			                                                           const common_residue_selection_policy & = common_residue_select_all_policy(),
+			                                                           const common_atom_selection_policy &    = common_atom_select_ca_policy(),
+			                                                           const alignment::size_type &            = alignment::PAIR_A_IDX,
+			                                                           const alignment::size_type &            = alignment::PAIR_B_IDX,
+			                                                           const ostream_ref_opt &                 = ::std::nullopt );
+
 		};
 	} // namespace align
 } // namespace cath

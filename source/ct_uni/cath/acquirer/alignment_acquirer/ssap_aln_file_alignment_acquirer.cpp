@@ -65,7 +65,8 @@ bool ssap_aln_file_alignment_acquirer::do_requires_backbone_complete_input() con
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context  &prm_strucs_context, ///< TODOCUMENT
+                                                                                                         const ostream_ref_opt &prm_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                                                          ) const {
 	const auto   &the_pdbs = prm_strucs_context.get_pdbs();
 	const size_t  num_pdbs = the_pdbs.size();
@@ -79,7 +80,7 @@ pair<alignment, size_size_pair_vec> ssap_aln_file_alignment_acquirer::do_get_ali
 			my_aln_stream,
 			the_pdbs[alignment::PAIR_A_IDX],
 			the_pdbs[alignment::PAIR_B_IDX],
-			ostream_ref{ cerr }
+			prm_ostream
 		);
 		my_aln_stream.close();
 	}

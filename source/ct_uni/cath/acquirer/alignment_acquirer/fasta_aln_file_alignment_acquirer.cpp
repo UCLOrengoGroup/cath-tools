@@ -58,14 +58,15 @@ bool fasta_aln_file_alignment_acquirer::do_requires_backbone_complete_input() co
 }
 
 /// \brief TODOCUMENT
-pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context ///< TODOCUMENT
+pair<alignment, size_size_pair_vec> fasta_aln_file_alignment_acquirer::do_get_alignment_and_spanning_tree(const strucs_context  &prm_strucs_context, ///< TODOCUMENT
+                                                                                                          const ostream_ref_opt &prm_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                                                           ) const {
 	// Construct an alignment from the FASTA alignment file
 	const alignment new_alignment = read_alignment_from_fasta_file(
 		get_fasta_alignment_file(),
 		prm_strucs_context.get_pdbs(),
 		get_domain_or_specified_or_from_acq_names( prm_strucs_context.get_name_sets() ),
-		cerr
+		prm_ostream ? prm_ostream->get() : cerr
 	);
 
 	const protein_list proteins_of_pdbs     = build_protein_list( prm_strucs_context );

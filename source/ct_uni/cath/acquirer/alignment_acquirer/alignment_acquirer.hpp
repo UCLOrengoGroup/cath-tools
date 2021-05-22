@@ -48,7 +48,8 @@ namespace cath {
 			/// \brief TODOCUMENT
 			[[nodiscard]] virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
 			  const file::strucs_context &,
-			  const align_refining & ) const = 0;
+			  const align_refining &,
+			  const ostream_ref_opt & = ::std::nullopt ) const = 0;
 
 		  protected:
 			/// \brief The minimum number of residues that are required in "residue name" aligning
@@ -71,7 +72,8 @@ namespace cath {
 
 			[[nodiscard]] std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(
 			  const file::strucs_context &,
-			  const align_refining & = align_refining::NO ) const;
+			  const align_refining &  = align_refining::NO,
+			  const ostream_ref_opt & = ::std::nullopt ) const;
 		};
 
 		uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_spec &);

@@ -181,12 +181,13 @@ pdb_list cath::file::pdb_list_of_backbone_complete_region_limited_subset_pdbs(co
 ///
 /// \TODO Consider taking an ostream_ref_opt argument rather than assuming cerr
 ///       (fix all errors, *then* provide default of ::std::nullopt)
-protein_list cath::file::build_protein_list_of_pdb_list(const pdb_list &prm_pdb_list ///< TODOCUMENT
+protein_list cath::file::build_protein_list_of_pdb_list(const pdb_list        &prm_pdb_list, ///< TODOCUMENT
+                                                        const ostream_ref_opt &prm_ostream   ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                         ) {
 	protein_list new_protein_list;
 	new_protein_list.reserve(prm_pdb_list.size());
 	for (const pdb &the_pdb : prm_pdb_list) {
-		new_protein_list.push_back( build_protein_of_pdb( the_pdb, ref( cerr ) ).first );
+		new_protein_list.push_back( build_protein_of_pdb( the_pdb, prm_ostream ).first );
 	}
 	return new_protein_list;
 }

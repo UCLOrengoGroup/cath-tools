@@ -38,7 +38,8 @@ namespace cath {
 			[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
 			[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
 			[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
-			  const file::strucs_context & ) const final;
+			  const file::strucs_context &,
+			  const ostream_ref_opt & = ::std::nullopt ) const final;
 
 		  public:
 			explicit ssap_aln_file_alignment_acquirer( ::std::filesystem::path );

@@ -179,12 +179,13 @@ pair<coord_list, coord_list> alignment_coord_extractor::get_common_coords(const 
                                                                           const common_residue_selection_policy &prm_res_seln_policy,  ///< TODOCUMENT
                                                                           const common_atom_selection_policy    &prm_atom_seln_policy, ///< TODOCUMENT
                                                                           const alignment::size_type            &prm_entry_index_a,    ///< TODOCUMENT
-                                                                          const alignment::size_type            &prm_entry_index_b     ///< TODOCUMENT
+                                                                          const alignment::size_type            &prm_entry_index_b,    ///< TODOCUMENT
+                                                                          const ostream_ref_opt                 &prm_ostream           ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                           ) {
 	return get_common_coords(
 		prm_alignment,
-		build_protein_of_pdb( prm_pdb_a, ref( cerr ) ).first,
-		build_protein_of_pdb( prm_pdb_b, ref( cerr ) ).first,
+		build_protein_of_pdb( prm_pdb_a, prm_ostream ).first,
+		build_protein_of_pdb( prm_pdb_b, prm_ostream ).first,
 		prm_res_seln_policy,
 		prm_atom_seln_policy,
 		prm_entry_index_a,

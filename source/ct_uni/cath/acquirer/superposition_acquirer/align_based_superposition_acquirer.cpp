@@ -89,7 +89,8 @@ superposition_context align_based_superposition_acquirer::do_get_superposition(o
 			common_residue_select_all_policy(),
 			common_atom_select_ca_policy(),
 			index_1,
-			index_2
+			index_2,
+			ostream_ref_opt{ prm_stderr }
 		);
 //		const double standard_rmsd_of_original_posns = calc_rmsd(      all_common_coords.first, all_common_coords.second);
 		const double standard_rmsd = calc_pairwise_superposition_rmsd( all_common_coords.first, all_common_coords.second);

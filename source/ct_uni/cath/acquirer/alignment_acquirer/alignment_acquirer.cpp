@@ -61,8 +61,9 @@ unique_ptr<alignment_acquirer> alignment_acquirer::clone() const {
 ///
 /// The order of the edges in the spanning tree doesn't matter and the scores are discarded
 /// because none of that matters for superposing
-pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const strucs_context &prm_strucs_context, ///< The structures to which the alignment should correspond
-                                                                                        const align_refining &prm_align_refining  ///< How much refining should be done to the alignment
+pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanning_tree(const strucs_context  &prm_strucs_context, ///< The structures to which the alignment should correspond
+                                                                                        const align_refining  &prm_align_refining, ///< How much refining should be done to the alignment
+                                                                                        const ostream_ref_opt &prm_ostream         ///< An (optional reference_wrapper of an) ostream to which warnings/errors should be written
                                                                                         ) const {
 	using ::std::to_string;
 
@@ -71,7 +72,8 @@ pair<alignment, size_size_pair_vec> alignment_acquirer::get_alignment_and_spanni
 		do_requires_backbone_complete_input()
 			? strucs_context_of_backbone_complete_subset_pdbs( prm_strucs_context )
 			: prm_strucs_context,
-		prm_align_refining
+		prm_align_refining,
+		prm_ostream
 	);
 
 	const size_t num_alignment_entries = alignment_and_orderer.first.num_entries();

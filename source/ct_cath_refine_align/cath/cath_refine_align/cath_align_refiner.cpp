@@ -83,8 +83,8 @@ void cath_align_refiner::refine(const cath_refine_align_options &prm_cath_refine
 	const auto          aln_acq_ptr        = get_alignment_acquirer( prm_cath_refine_align_options );
 	const auto          alignment_and_tree = aln_acq_ptr->get_alignment_and_spanning_tree(
 		restrict_pdbs_copy( context ),
-		get_align_refining( prm_cath_refine_align_options )
-		// ref( prm_stderr )
+		get_align_refining( prm_cath_refine_align_options ),
+		ostream_ref_opt( prm_stderr )
 	);
 	const alignment    &the_alignment      = alignment_and_tree.first;
 	const auto         &spanning_tree      = alignment_and_tree.second;
