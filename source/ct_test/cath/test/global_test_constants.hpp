@@ -33,16 +33,16 @@ namespace cath {
 	template <typename T>
 	inline constexpr T ACCURACY_PERCENTAGE_VAR_TMPL;
 	template <>
-	inline constexpr float ACCURACY_PERCENTAGE_VAR_TMPL<float> = static_cast<float>( 0.0000001 );
+	inline constexpr float ACCURACY_PERCENTAGE_VAR_TMPL<float> = 0.0000001F;
 	template <>
-	inline constexpr double ACCURACY_PERCENTAGE_VAR_TMPL<double> = static_cast<double>( 0.000000001 );
+	inline constexpr double ACCURACY_PERCENTAGE_VAR_TMPL<double> = 0.000000001;
 	template <>
 	inline constexpr long double ACCURACY_PERCENTAGE_VAR_TMPL<long double> = static_cast<long double>( 0.00000000001 );
 
 	template <typename T>
 	inline constexpr T LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL;
 	template <>
-	inline constexpr float LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<float> = static_cast<float>( 1.0 );
+	inline constexpr float LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<float> = 1.0F;
 	template <>
 	inline constexpr double LOOSER_ACCURACY_PERCENTAGE_VAR_TMPL<double> = 0.0001;
 	template <>
