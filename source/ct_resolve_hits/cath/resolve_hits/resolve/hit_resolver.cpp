@@ -56,13 +56,13 @@ using ::std::numeric_limits;
 ///        specified indices have differing stop points
 ///
 /// This is used to group hits that stop at the same boundary
-auto hit_resolver::get_hit_stops_differ_fn(const calc_hit_list &prm_calc_hit_list ///< The list of hits to which the indices will refer
-                                           ) {
-	return [&] (const hitidx_t &x, const hitidx_t &y) {
+///
+/// \param prm_calc_hit_list The list of hits to which the indices will refer
+static auto get_hit_stops_differ_fn( const calc_hit_list &prm_calc_hit_list ) {
+	return [ & ]( const hitidx_t &x, const hitidx_t &y ) {
 		return ( get_stop_arrow( prm_calc_hit_list[ x ] ) != get_stop_arrow( prm_calc_hit_list[ y ] ) );
 	};
 }
-
 
 /// \brief Sanity check the best result seen so far doesn't conflict with any of the mask
 ///

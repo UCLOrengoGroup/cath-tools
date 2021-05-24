@@ -50,8 +50,6 @@ namespace cath {
 			/// and is hence unsuitable for use with raw PDB residue numbers.
 			class hit_resolver final {
 			private:
-				static auto get_hit_stops_differ_fn(const calc_hit_list &);
-
 				static void update_best_if_hit_improves(scored_arch_proxy_opt &,
 				                                        const resscr_t &,
 			                                            const hitidx_t &,
