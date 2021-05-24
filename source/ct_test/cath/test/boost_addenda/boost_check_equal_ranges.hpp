@@ -26,31 +26,28 @@
 
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		///
-		/// \todo Consider is it worth making this into a macro so that the test output
-		///       provides the line numbers and variable names from the caller's context
-		///       rather than from here?
-		template <typename RNG1, typename RNG2>
-		void BOOST_CHECK_EQUAL_RANGES(const RNG1 &prm_rng_1, ///< TODOCUMENT
-		                              const RNG2 &prm_rng_2  ///< TODOCUMENT
-		                              ) {
-			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const RNG1 > ));
-			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const RNG2 > ));
+	/// \brief TODOCUMENT
+	///
+	/// \todo Consider is it worth making this into a macro so that the test output
+	///       provides the line numbers and variable names from the caller's context
+	///       rather than from here?
+	template <typename RNG1, typename RNG2>
+	void BOOST_CHECK_EQUAL_RANGES(const RNG1 &prm_rng_1, ///< TODOCUMENT
+	                              const RNG2 &prm_rng_2  ///< TODOCUMENT
+	                              ) {
+		BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const RNG1 > ));
+		BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const RNG2 > ));
 
-			BOOST_CHECK_EQUAL_COLLECTIONS(
-				::std::cbegin( prm_rng_1 ),
-				::std::cend  ( prm_rng_1 ),
-				::std::cbegin( prm_rng_2 ),
-				::std::cend  ( prm_rng_2 )
-			);
-		}
+		BOOST_CHECK_EQUAL_COLLECTIONS(
+			::std::cbegin( prm_rng_1 ),
+			::std::cend  ( prm_rng_1 ),
+			::std::cbegin( prm_rng_2 ),
+			::std::cend  ( prm_rng_2 )
+		);
+	}
 
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_BOOST_ADDENDA_BOOST_CHECK_EQUAL_RANGES_HPP

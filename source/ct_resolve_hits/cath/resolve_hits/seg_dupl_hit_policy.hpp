@@ -21,16 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_SEG_DUPL_HIT_POLICY_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_SEG_DUPL_HIT_POLICY_HPP
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief What to do with pairs of hits with identical segments
-		enum class seg_dupl_hit_policy : bool {
-			PRESERVE, ///< Preserve both hits
-			PRUNE     ///< Prune the worse (non-better) of the two hits
-		};
+	/// \brief What to do with pairs of hits with identical segments
+	enum class seg_dupl_hit_policy : bool {
+		PRESERVE, ///< Preserve both hits
+		PRUNE     ///< Prune the worse (non-better) of the two hits
+	};
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_SEG_DUPL_HIT_POLICY_HPP

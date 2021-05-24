@@ -28,18 +28,7 @@
 
 using namespace ::cath;
 
-namespace cath {
-	namespace test {
-
-		struct display_spec_fixture {
-		protected:
-			~display_spec_fixture() noexcept = default;
-		};
-
-	} // namespace test
-} // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(display_spec_test_suite, cath::test::display_spec_fixture)
+BOOST_AUTO_TEST_SUITE(display_spec_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

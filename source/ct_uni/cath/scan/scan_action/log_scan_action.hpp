@@ -23,33 +23,30 @@
 
 #include "cath/scan/detail/res_pair/single_struc_res_pair.hpp"
 
-namespace cath {
-	namespace scan {
+namespace cath::scan {
 
-		/// \brief TODOCUMENT
-		template <typename T> class TD;
-		struct log_scan_action final {
-			long long unsigned int num_matches = 0;
-			void operator()(const detail::single_struc_res_pair &/*prm_res_pair_a*/,  ///< TODOCUMENT
-			                const detail::single_struc_res_pair &/*prm_res_pair_b*/,  ///< TODOCUMENT
-			                const index_type                    &/*prm_structure_a*/, ///< TODOCUMENT
-			                const index_type                    &/*prm_structure_b*/  ///< TODOCUMENT
-			                ) {
-				++num_matches;
-//				std::cerr << "For query residue pair [query_structure: ";
-//				std::cerr << prm_structure_a;
-//				std::cerr << "; ";
-//				std::cerr << prm_res_pair_a;
-//				std::cerr << "], found match [match_structure: ";
-//				std::cerr << prm_structure_b;
-//				std::cerr << "; ";
-//				std::cerr << prm_res_pair_b;
-//				std::cerr << "]\n";
-			}
-		};
+	/// \brief TODOCUMENT
+	template <typename T> class TD;
+	struct log_scan_action final {
+		long long unsigned int num_matches = 0;
+		void operator()(const detail::single_struc_res_pair &/*prm_res_pair_a*/,  ///< TODOCUMENT
+		                const detail::single_struc_res_pair &/*prm_res_pair_b*/,  ///< TODOCUMENT
+		                const index_type                    &/*prm_structure_a*/, ///< TODOCUMENT
+		                const index_type                    &/*prm_structure_b*/  ///< TODOCUMENT
+		                ) {
+			++num_matches;
+//			std::cerr << "For query residue pair [query_structure: ";
+//			std::cerr << prm_structure_a;
+//			std::cerr << "; ";
+//			std::cerr << prm_res_pair_a;
+//			std::cerr << "], found match [match_structure: ";
+//			std::cerr << prm_structure_b;
+//			std::cerr << "; ";
+//			std::cerr << prm_res_pair_b;
+//			std::cerr << "]\n";
+		}
+	};
 
-
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_ACTION_LOG_SCAN_ACTION_HPP

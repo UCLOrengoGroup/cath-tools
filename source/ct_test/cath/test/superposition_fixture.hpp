@@ -32,51 +32,50 @@
 
 using namespace ::std::literals::string_literals;
 
-namespace cath {
-	namespace sup {
+namespace cath::sup {
 
-		/// \brief A test fixture for superposition tests that adds some extras to global_test_constants
-		class superposition_fixture : protected global_test_constants {
-		protected:
-			static constexpr size_t NUM_ENTRIES = 2;
+	/// \brief A test fixture for superposition tests that adds some extras to global_test_constants
+	class superposition_fixture : protected global_test_constants {
+	protected:
+		static constexpr size_t NUM_ENTRIES = 2;
 
-			const geom::coord_list      coord_list_1{ { geom::coord{  0.0,  2.0, -1.0 }, geom::coord{  0.0,  2.0,  1.0 }, geom::coord{  0.0, -4.0,  0.0 } } };
-			const geom::coord_list      coord_list_2{ { geom::coord{ -1.0,  0.0, -2.0 }, geom::coord{  1.0,  0.0, -2.0 }, geom::coord{  0.0,  0.0,  4.0 } } };
+		const geom::coord_list      coord_list_1{ { geom::coord{  0.0,  2.0, -1.0 }, geom::coord{  0.0,  2.0,  1.0 }, geom::coord{  0.0, -4.0,  0.0 } } };
+		const geom::coord_list      coord_list_2{ { geom::coord{ -1.0,  0.0, -2.0 }, geom::coord{  1.0,  0.0, -2.0 }, geom::coord{  0.0,  0.0,  4.0 } } };
 
-			const file::pdb_list        pdbs{ file::pdb_vec{ NUM_ENTRIES, file::pdb{} } };
-			const file::name_set_list   names{ file::name_set_vec{ { file::name_set{ "1c0pA01"s }, file::name_set{ "1hdoA00"s } } } };
-			const superposition         the_sup{ create_pairwise_superposition( coord_list_1, coord_list_2 ) };
-			const superposition_context the_sup_con{ the_sup, pdbs, names, cath::chop::region_vec_opt_vec( NUM_ENTRIES ) };
+		const file::pdb_list        pdbs{ file::pdb_vec{ NUM_ENTRIES, file::pdb{} } };
+		const file::name_set_list   names{ file::name_set_vec{ { file::name_set{ "1c0pA01"s }, file::name_set{ "1hdoA00"s } } } };
+		const superposition         the_sup{ create_pairwise_superposition( coord_list_1, coord_list_2 ) };
+		const superposition_context the_sup_con{ the_sup, pdbs, names, cath::chop::region_vec_opt_vec( NUM_ENTRIES ) };
 
-			const std::string sup_json_str = R"({"transformations":[{"translation":)"
-				R"({"x":"0","y":"0","z":"0"},)"
-				R"("rotation":)"
-				R"([["1","0","0"],)"
-				R"(["0","1","0"],)"
-				R"(["0","0","1"])"
-				R"(]},{"translation":)"
-				R"({"x":"0","y":"0","z":"0"},)"
-				R"("rotation":)"
-				R"([["0","-1","0"],)"
-				R"(["0","0","-1"],)"
-				R"(["1","0","0"])"
-				R"(]}]})"
-				"\n";
-			const std::string sup_context_json_str = R"({"entries":[{"name":"1c0pA01","transformation":{"translation":)"
-				R"({"x":"0","y":"0","z":"0"},)"
-				R"("rotation":)"
-				R"([["1","0","0"],)"
-				R"(["0","1","0"],)"
-				R"(["0","0","1"])"
-				R"(]}},{"name":"1hdoA00","transformation":{"translation":)"
-				R"({"x":"0","y":"0","z":"0"},)"
-				R"("rotation":)"
-				R"([["0","-1","0"],)"
-				R"(["0","0","-1"],)"
-				R"(["1","0","0"])"
-				R"(]}}]})" "\n";
-		};
+		const std::string sup_json_str = R"({"transformations":[{"translation":)"
+			R"({"x":"0","y":"0","z":"0"},)"
+			R"("rotation":)"
+			R"([["1","0","0"],)"
+			R"(["0","1","0"],)"
+			R"(["0","0","1"])"
+			R"(]},{"translation":)"
+			R"({"x":"0","y":"0","z":"0"},)"
+			R"("rotation":)"
+			R"([["0","-1","0"],)"
+			R"(["0","0","-1"],)"
+			R"(["1","0","0"])"
+			R"(]}]})"
+			"\n";
+		const std::string sup_context_json_str = R"({"entries":[{"name":"1c0pA01","transformation":{"translation":)"
+			R"({"x":"0","y":"0","z":"0"},)"
+			R"("rotation":)"
+			R"([["1","0","0"],)"
+			R"(["0","1","0"],)"
+			R"(["0","0","1"])"
+			R"(]}},{"name":"1hdoA00","transformation":{"translation":)"
+			R"({"x":"0","y":"0","z":"0"},)"
+			R"("rotation":)"
+			R"([["0","-1","0"],)"
+			R"(["0","0","-1"],)"
+			R"(["1","0","0"])"
+			R"(]}}]})" "\n";
+	};
 
-	} // namespace sup
-} // namespace cath
+} // namespace cath::sup
+
 #endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_SUPERPOSITION_FIXTURE_HPP

@@ -23,24 +23,22 @@
 
 #include "cath/score/length_getter/sym_protein_only_length_getter.hpp"
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief TODOCUMENT
-		class geometric_mean_length_getter final : public sym_protein_only_length_getter {
-		  private:
-			[[nodiscard]] std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const final;
+	/// \brief TODOCUMENT
+	class geometric_mean_length_getter final : public sym_protein_only_length_getter {
+	  private:
+		[[nodiscard]] std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const final;
 
-			[[nodiscard]] size_t do_get_length( const protein &, const protein & ) const final;
+		[[nodiscard]] size_t do_get_length( const protein &, const protein & ) const final;
 
-			[[nodiscard]] length_getter_category do_get_length_getter_category() const final;
+		[[nodiscard]] length_getter_category do_get_length_getter_category() const final;
 
-			[[nodiscard]] std::string do_get_choice_adjective() const final;
+		[[nodiscard]] std::string do_get_choice_adjective() const final;
 
-			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const length_getter & ) const final;
-		};
+		[[nodiscard]] bool do_less_than_with_same_dynamic_type( const length_getter & ) const final;
+	};
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_GEOMETRIC_MEAN_LENGTH_GETTER_HPP

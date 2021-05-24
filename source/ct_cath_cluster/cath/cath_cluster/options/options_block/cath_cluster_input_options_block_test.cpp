@@ -20,12 +20,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-namespace cath { namespace test { } }
-
-using namespace ::cath::test;
-
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The cath_cluster_input_options_block_test_suite_fixture to assist in testing cath_cluster_input_options_block
 		struct cath_cluster_input_options_block_test_suite_fixture {
@@ -33,8 +28,7 @@ namespace cath {
 			~cath_cluster_input_options_block_test_suite_fixture() noexcept = default;
 		};
 
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(cath_cluster_input_options_block_test_suite, cath_cluster_input_options_block_test_suite_fixture)
 

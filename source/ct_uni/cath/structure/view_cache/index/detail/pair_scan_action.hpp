@@ -21,53 +21,51 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_PAIR_SCAN_ACTION_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_PAIR_SCAN_ACTION_HPP
 
-namespace cath { namespace index { namespace detail { class vcie_match_criteria; } } }
-namespace cath { namespace index { class quad_find_action; } }
-namespace cath { namespace index { class view_cache_index_entry; } }
+// clang-format off
+namespace cath::index::detail { class vcie_match_criteria; }
+namespace cath::index { class quad_find_action; }
+namespace cath::index { class view_cache_index_entry; }
+// clang-format on
 
-namespace cath {
-	namespace index {
-		namespace detail {
+namespace cath::index::detail {
 
-			/// \brief TODOCUMENT
-			template <typename IDX>
-			class pair_scan_action final {
-			private:
-				/// \brief TODOCUMENT
-				const IDX &index;
+	/// \brief TODOCUMENT
+	template <typename IDX>
+	class pair_scan_action final {
+	private:
+		/// \brief TODOCUMENT
+		const IDX &index;
 
-				/// \brief TODOCUMENT
-				const vcie_match_criteria &criteria;
+		/// \brief TODOCUMENT
+		const vcie_match_criteria &criteria;
 
-				/// \brief TODOCUMENT
-				quad_find_action &quad_action;
+		/// \brief TODOCUMENT
+		quad_find_action &quad_action;
 
-			public:
-				pair_scan_action(const IDX &,
-				                 const vcie_match_criteria &,
-				                 quad_find_action &);
-				void operator()(const view_cache_index_entry &) const;
-			};
+	public:
+		pair_scan_action(const IDX &,
+		                 const vcie_match_criteria &,
+		                 quad_find_action &);
+		void operator()(const view_cache_index_entry &) const;
+	};
 
-			/// \brief TODOCUMENT
-			template <typename IDX>
-			pair_scan_action<IDX>::pair_scan_action(const IDX                 &prm_index,      ///< TODOCUMENT
-			                                        const vcie_match_criteria &prm_criteria,   ///< TODOCUMENT
-			                                        quad_find_action          &prm_quad_action ///< TODOCUMENT
-			                                        ) : index      ( prm_index       ),
-			                                            criteria   ( prm_criteria    ),
-			                                            quad_action( prm_quad_action ) {
-			}
+	/// \brief TODOCUMENT
+	template <typename IDX>
+	pair_scan_action<IDX>::pair_scan_action(const IDX                 &prm_index,      ///< TODOCUMENT
+	                                        const vcie_match_criteria &prm_criteria,   ///< TODOCUMENT
+	                                        quad_find_action          &prm_quad_action ///< TODOCUMENT
+	                                        ) : index      ( prm_index       ),
+	                                            criteria   ( prm_criteria    ),
+	                                            quad_action( prm_quad_action ) {
+	}
 
-			/// \brief TODOCUMENT
-			template <typename IDX>
-			inline void pair_scan_action<IDX>::operator()(const view_cache_index_entry &prm_entry ///< TODOCUMENT
-			                                              ) const {
-				index.perform_action_on_matches( prm_entry, criteria, quad_action );
-			}
+	/// \brief TODOCUMENT
+	template <typename IDX>
+	inline void pair_scan_action<IDX>::operator()(const view_cache_index_entry &prm_entry ///< TODOCUMENT
+	                                              ) const {
+		index.perform_action_on_matches( prm_entry, criteria, quad_action );
+	}
 
-		} // namespace detail
-	} // namespace index
-} // namespace cath
+} // namespace cath::index::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_PAIR_SCAN_ACTION_HPP

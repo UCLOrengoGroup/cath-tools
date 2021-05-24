@@ -37,19 +37,7 @@ using namespace ::cath::opts;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The superposition_output_options_block_test_suite_fixture to assist in testing superposition_output_options_block
-		struct superposition_output_options_block_test_suite_fixture : protected options_block_tester {
-		protected:
-			~superposition_output_options_block_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(superposition_output_options_block_test_suite, cath::test::superposition_output_options_block_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(superposition_output_options_block_test_suite, options_block_tester)
 
 BOOST_AUTO_TEST_CASE(unparsed_has_no_json_file) {
 	BOOST_CHECK( superposition_output_options_block{}.get_json_file().empty() );

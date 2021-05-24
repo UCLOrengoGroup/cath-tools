@@ -25,23 +25,21 @@
 
 #include "cath/acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
+	/// \brief TODOCUMENT
+	class domain_defn_pdbs_acquirer final : public pdbs_acquirer {
+	private:
 		/// \brief TODOCUMENT
-		class domain_defn_pdbs_acquirer final : public pdbs_acquirer {
-		private:
-			/// \brief TODOCUMENT
-			::std::filesystem::path domain_defn_file;
+		::std::filesystem::path domain_defn_file;
 
-			[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
-			file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const final;
+		[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
+		file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const final;
 
-		  public:
-			explicit domain_defn_pdbs_acquirer( ::std::filesystem::path );
-		};
+	  public:
+		explicit domain_defn_pdbs_acquirer( ::std::filesystem::path );
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_DOMAIN_DEFN_PDBS_ACQUIRER_HPP

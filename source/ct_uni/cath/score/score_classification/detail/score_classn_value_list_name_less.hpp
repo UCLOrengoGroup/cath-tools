@@ -23,24 +23,22 @@
 
 #include <string>
 
-namespace cath { namespace score { class score_classn_value_list; } }
+// clang-format off
+namespace cath::score { class score_classn_value_list; }
+// clang-format on
 
-namespace cath {
-	namespace score {
-		namespace detail {
+namespace cath::score::detail {
 
-			/// \brief TODOCUMENT
-			class score_classn_value_list_name_less final {
-			public:
-				bool operator()(const score_classn_value_list &,
-				                const score_classn_value_list &) const;
+	/// \brief TODOCUMENT
+	class score_classn_value_list_name_less final {
+	public:
+		bool operator()(const score_classn_value_list &,
+		                const score_classn_value_list &) const;
 
-				bool operator()(const score_classn_value_list &,
-				                const std::string &) const;
-			};
+		bool operator()(const score_classn_value_list &,
+		                const std::string &) const;
+	};
 
-		} // namespace detail
-	} // namespace score
-} // namespace cath
+} // namespace cath::score::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_DETAIL_SCORE_CLASSN_VALUE_LIST_NAME_LESS_HPP

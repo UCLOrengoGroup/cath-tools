@@ -46,20 +46,8 @@ using namespace ::cath::geom;
 using namespace ::cath::scan;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The scan_index_test_suite_fixture to assist in testing scan_index
-		struct scan_index_test_suite_fixture : protected global_test_constants {
-		protected:
-			~scan_index_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(scan_index_test_suite, cath::test::scan_index_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(scan_index_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

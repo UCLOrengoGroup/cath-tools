@@ -40,58 +40,56 @@ using ::boost::algorithm::erase_all_copy;
 using ::boost::numeric_cast;
 using ::std::nullopt;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The alignment_gap_test_suite_fixture to assist in testing alignment_gap
-		struct alignment_gap_test_suite_fixture {
-		protected:
-			~alignment_gap_test_suite_fixture() noexcept = default;
+	/// \brief The alignment_gap_test_suite_fixture to assist in testing alignment_gap
+	struct alignment_gap_test_suite_fixture {
+	protected:
+		~alignment_gap_test_suite_fixture() noexcept = default;
 
-		public:
-			alignment make_gap_alignment_of_strings(const str_vec &);
+	public:
+		alignment make_gap_alignment_of_strings(const str_vec &);
 
-			score_type  open_penalty    = { 100 };
-			score_type  extend_penalty  = {   1 };
-			gap_penalty the_gap_penalty = { open_penalty, extend_penalty };
-		};
+		score_type  open_penalty    = { 100 };
+		score_type  extend_penalty  = {   1 };
+		gap_penalty the_gap_penalty = { open_penalty, extend_penalty };
+	};
 
-	}  // namespace test
-}  // namespace cath
-
-/// \brief Build an alignment from strings of 'x's for positions and '-'s for gaps (and ignored spaces for formatting)
-alignment cath::test::alignment_gap_test_suite_fixture::make_gap_alignment_of_strings(const str_vec &prm_strings ///< The strings from which to make the alignment entries
-                                                                                      ) {
-	aln_posn_opt_vec_vec entries;
-	entries.reserve( prm_strings.size() );
-	for (const string &the_string : prm_strings) {
-		const string stripped_string = erase_all_copy( the_string, " " );
-		aln_posn_opt_vec positions;
-		positions.reserve( stripped_string.length() );
-		size_t counter = 0;
-		for (const char &character : stripped_string) {
-			if ( character == 'x' ) {
-				positions.push_back( counter );
-				++counter;
+	/// \brief Build an alignment from strings of 'x's for positions and '-'s for gaps (and ignored spaces for formatting)
+	alignment alignment_gap_test_suite_fixture::make_gap_alignment_of_strings(const str_vec &prm_strings ///< The strings from which to make the alignment entries
+	                                                                          ) {
+		aln_posn_opt_vec_vec entries;
+		entries.reserve( prm_strings.size() );
+		for (const string &the_string : prm_strings) {
+			const string stripped_string = erase_all_copy( the_string, " " );
+			aln_posn_opt_vec positions;
+			positions.reserve( stripped_string.length() );
+			size_t counter = 0;
+			for (const char &character : stripped_string) {
+				if ( character == 'x' ) {
+					positions.push_back( counter );
+					++counter;
+				}
+				else if ( character == '-' ) {
+					positions.push_back( nullopt );
+				}
+				else {
+					BOOST_THROW_EXCEPTION(invalid_argument_exception(
+						"Unable to recognise character "
+						+ string{ character }
+						+ " in gap alignment string"
+					));
+				}
 			}
-			else if ( character == '-' ) {
-				positions.push_back( nullopt );
-			}
-			else {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception(
-					"Unable to recognise character "
-					+ string{ character }
-					+ " in gap alignment string"
-				));
-			}
+			entries.push_back( positions );
 		}
-		entries.push_back( positions );
+		return alignment( entries );
 	}
-	return alignment( entries );
-}
+
+} // namespace
 
 /// \brief Test the code the calculate gap penalties for alignments
-BOOST_FIXTURE_TEST_SUITE(alignment_gap_test_suite, cath::test::alignment_gap_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(alignment_gap_test_suite, alignment_gap_test_suite_fixture)
 
 /// \brief Check that gap_penalty_value_of_alignment() works for a simple alignment with a mix of issues
 BOOST_AUTO_TEST_CASE(pair_bounce) {

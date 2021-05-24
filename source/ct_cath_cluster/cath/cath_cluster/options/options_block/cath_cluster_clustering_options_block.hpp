@@ -26,32 +26,30 @@
 #include "cath/cath_cluster/options/spec/cath_cluster_clustering_spec.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief Define an options_block for options specifying how cath-cluster should write the output
-		class cath_cluster_clustering_options_block final : public opts::options_block {
-		private:
-			using super = opts::options_block;
+	/// \brief Define an options_block for options specifying how cath-cluster should write the output
+	class cath_cluster_clustering_options_block final : public opts::options_block {
+	private:
+		using super = opts::options_block;
 
-			/// \brief The spec this options_block configures
-			cath_cluster_clustering_spec the_spec;
+		/// \brief The spec this options_block configures
+		cath_cluster_clustering_spec the_spec;
 
-			[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
-			[[nodiscard]] std::string                          do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
+		[[nodiscard]] std::string                          do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-		  public:
-			[[nodiscard]] const cath_cluster_clustering_spec &get_cath_cluster_clustering_spec() const;
+	  public:
+		[[nodiscard]] const cath_cluster_clustering_spec &get_cath_cluster_clustering_spec() const;
 
-			/// \brief The option name for the levels at which the clustering should be performed
-			static constexpr ::std::string_view PO_LEVELS{ "levels" };
-		};
+		/// \brief The option name for the levels at which the clustering should be performed
+		static constexpr ::std::string_view PO_LEVELS{ "levels" };
+	};
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CATH_CLUSTER_CLUSTERING_OPTIONS_BLOCK_HPP

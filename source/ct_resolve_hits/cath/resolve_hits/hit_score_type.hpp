@@ -23,21 +23,19 @@
 
 #include <string>
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		enum class hit_score_type : short unsigned int {
-			FULL_EVALUE,
-			BITSCORE,
-			CRH_SCORE
-		};
+	enum class hit_score_type : short unsigned int {
+		FULL_EVALUE,
+		BITSCORE,
+		CRH_SCORE
+	};
 
-		std::string to_string(const hit_score_type &);
+	std::string to_string(const hit_score_type &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const hit_score_type &);
+	std::ostream & operator<<(std::ostream &,
+	                          const hit_score_type &);
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HIT_SCORE_TYPE_HPP

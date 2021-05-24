@@ -36,21 +36,17 @@
 
 #include "cath/common/clone/detail/make_clone.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief TODOCUMENT
-			template <typename X>
-			struct is_cloneable final {
-				BOOST_CONCEPT_USAGE(is_cloneable) {
-					std::unique_ptr<X> new_ptr( make_clone( value ) );
-				}
-				const X &value;
-			};
+	/// \brief TODOCUMENT
+	template <typename X>
+	struct is_cloneable final {
+		BOOST_CONCEPT_USAGE(is_cloneable) {
+			std::unique_ptr<X> new_ptr( make_clone( value ) );
+		}
+		const X &value;
+	};
 
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CLONE_DETAIL_IS_CLONEABLE_HPP

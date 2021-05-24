@@ -25,37 +25,36 @@
 
 #include <random>
 
-namespace cath {
-	namespace common {
-		
-		/// \brief Randomly pick a pair of distinct integers in the specified range
-		///
-		/// To ensure distinctness, this picks the second value from a one-smaller range and
-		/// then increments if the result's >= the first value.
-		///
-		/// If there's reason, this could be generalised in a few ways:
-		///  * add a version that selects n-values without replacement
-		///  * add a version that takes a range and returns a vector of
-		///    (references to?) values in the range
-		template <typename T>
-		inline std::pair<T, T> pick_random_pair(const T      &prm_min, ///< TODOCUMENT
-		                                        const T      &prm_max, ///< TODOCUMENT
-		                                        std::mt19937 &prm_rng  ///< TODOCUMENT
-		                                        ) {
-			if ( ! ( prm_max > prm_min ) ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot pick random pair if the max isn't greater than the min"));
-			}
+namespace cath::common {
 
-			const T value_a = std::uniform_int_distribution<T>{ prm_min, prm_max     }( prm_rng );
-			const T raw_b   = std::uniform_int_distribution<T>{ prm_min, prm_max - 1 }( prm_rng );
-			const T value_b = ( raw_b >= value_a ) ? raw_b + 1 : raw_b;
-
-			return {
-				value_a,
-				value_b
-			};
+	/// \brief Randomly pick a pair of distinct integers in the specified range
+	///
+	/// To ensure distinctness, this picks the second value from a one-smaller range and
+	/// then increments if the result's >= the first value.
+	///
+	/// If there's reason, this could be generalised in a few ways:
+	///  * add a version that selects n-values without replacement
+	///  * add a version that takes a range and returns a vector of
+	///    (references to?) values in the range
+	template <typename T>
+	inline std::pair<T, T> pick_random_pair(const T      &prm_min, ///< TODOCUMENT
+	                                        const T      &prm_max, ///< TODOCUMENT
+	                                        std::mt19937 &prm_rng  ///< TODOCUMENT
+	                                        ) {
+		if ( ! ( prm_max > prm_min ) ) {
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot pick random pair if the max isn't greater than the min"));
 		}
-	} // namespace common
-} // namespace cath
+
+		const T value_a = std::uniform_int_distribution<T>{ prm_min, prm_max     }( prm_rng );
+		const T raw_b   = std::uniform_int_distribution<T>{ prm_min, prm_max - 1 }( prm_rng );
+		const T value_b = ( raw_b >= value_a ) ? raw_b + 1 : raw_b;
+
+		return {
+			value_a,
+			value_b
+		};
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_RANDOM_PICK_RANDOM_PAIR_HPP

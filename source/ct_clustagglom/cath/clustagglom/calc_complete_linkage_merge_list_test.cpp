@@ -33,17 +33,16 @@
 #include "cath/common/file/temp_file.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
+using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
-using namespace ::cath::test;
 
 using ::boost::test_tools::per_element;
 using ::std::filesystem::path;
 using ::std::move;
 using ::std::numeric_limits;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The calc_complete_linkage_merge_list_test_suite_fixture to assist in testing calc_complete_linkage_merge_list
 		struct calc_complete_linkage_merge_list_test_suite_fixture : protected clustagglom_fixture {
@@ -81,8 +80,7 @@ namespace cath {
 			}
 
 		};
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(calc_complete_linkage_merge_list_test_suite, calc_complete_linkage_merge_list_test_suite_fixture)
 

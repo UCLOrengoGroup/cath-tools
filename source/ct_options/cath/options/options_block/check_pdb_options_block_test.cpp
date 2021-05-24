@@ -35,22 +35,20 @@ using namespace ::std;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The check_pdb_options_block_test_suite_fixture to assist in testing check_pdb_options_block
-		struct check_pdb_options_block_test_suite_fixture : protected options_block_tester {
-		protected:
-			~check_pdb_options_block_test_suite_fixture() noexcept = default;
+	/// \brief The check_pdb_options_block_test_suite_fixture to assist in testing check_pdb_options_block
+	struct check_pdb_options_block_test_suite_fixture : protected options_block_tester {
+	protected:
+		~check_pdb_options_block_test_suite_fixture() noexcept = default;
 
-			check_pdb_options_block the_options_block;
-			const string IGNORE_OPT = { "positional-that-should-be-ignored" };
-		};
+		check_pdb_options_block the_options_block;
+		const string IGNORE_OPT = { "positional-that-should-be-ignored" };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(check_pdb_options_block_test_suite, cath::test::check_pdb_options_block_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(check_pdb_options_block_test_suite, check_pdb_options_block_test_suite_fixture)
 
 /// \brief Check that if permit_atoms is requested, then that is handled correctly
 BOOST_AUTO_TEST_CASE(handles_permit_atoms) {

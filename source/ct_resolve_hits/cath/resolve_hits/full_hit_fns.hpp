@@ -32,53 +32,51 @@
 #include "cath/resolve_hits/score_functions.hpp"
 #include "cath/resolve_hits/trim/trim_spec.hpp"
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		seq::seq_seg_vec get_segments(const full_hit &,
-		                              const trim_spec_opt & = ::std::nullopt);
+	seq::seq_seg_vec get_segments(const full_hit &,
+	                              const trim_spec_opt & = ::std::nullopt);
 
-		std::string get_segments_string(const full_hit &,
-		                                const trim_spec_opt & = ::std::nullopt);
+	std::string get_segments_string(const full_hit &,
+	                                const trim_spec_opt & = ::std::nullopt);
 
-		cath::str_vec get_field_headers(const full_hit &,
-		                                const bool &,
-		                                const bool &);
+	cath::str_vec get_field_headers(const full_hit &,
+	                                const bool &,
+	                                const bool &);
 
-		std::string to_string(const full_hit &,
-		                      const hit_output_format & = hit_output_format::CLASS,
-		                      const std::string & = std::string{},
-		                      const crh_segment_spec_opt & = ::std::nullopt,
-		                      const full_hit_list_opt & = ::std::nullopt,
-		                      const hit_boundary_output & = hit_boundary_output::ORIG);
+	std::string to_string(const full_hit &,
+	                      const hit_output_format & = hit_output_format::CLASS,
+	                      const std::string & = std::string{},
+	                      const crh_segment_spec_opt & = ::std::nullopt,
+	                      const full_hit_list_opt & = ::std::nullopt,
+	                      const hit_boundary_output & = hit_boundary_output::ORIG);
 
-		/// \brief Get the crh-score associated with the specified hit, calculated according to the specified crh_score_spec
-		inline resscr_t get_crh_score(const full_hit       &prm_full_hit,  ///< The full_hit to query
-		                              const crh_score_spec &prm_score_spec ///< The crh_score_spec to use in any score calculations that are required
-		                              ) {
-			switch ( prm_full_hit.get_score_type() ) {
-				case( hit_score_type::FULL_EVALUE ) : {
-					return crh_score_of_evalue(
-						prm_full_hit.get_score(),
-						get_total_length( prm_full_hit ),
-						prm_score_spec
-					);
-				}
-				case( hit_score_type::BITSCORE    ) : {
-					return crh_score_of_pseudo_bitscore(
-						prm_full_hit.get_score(),
-						get_total_length( prm_full_hit ),
-						prm_score_spec
-					);
-				}
-				case( hit_score_type::CRH_SCORE   ) : {
-					return debug_numeric_cast<resscr_t>( prm_full_hit.get_score() );
-				}
+	/// \brief Get the crh-score associated with the specified hit, calculated according to the specified crh_score_spec
+	inline resscr_t get_crh_score(const full_hit       &prm_full_hit,  ///< The full_hit to query
+	                              const crh_score_spec &prm_score_spec ///< The crh_score_spec to use in any score calculations that are required
+	                              ) {
+		switch ( prm_full_hit.get_score_type() ) {
+			case( hit_score_type::FULL_EVALUE ) : {
+				return crh_score_of_evalue(
+					prm_full_hit.get_score(),
+					get_total_length( prm_full_hit ),
+					prm_score_spec
+				);
 			}
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst getting crh_score from full_hit"));
+			case( hit_score_type::BITSCORE    ) : {
+				return crh_score_of_pseudo_bitscore(
+					prm_full_hit.get_score(),
+					get_total_length( prm_full_hit ),
+					prm_score_spec
+				);
+			}
+			case( hit_score_type::CRH_SCORE   ) : {
+				return debug_numeric_cast<resscr_t>( prm_full_hit.get_score() );
+			}
 		}
+		BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Value of hit_score_type not recognised whilst getting crh_score from full_hit"));
+	}
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_FNS_HPP

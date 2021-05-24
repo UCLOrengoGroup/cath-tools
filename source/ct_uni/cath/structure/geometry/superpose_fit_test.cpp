@@ -20,8 +20,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-namespace cath { namespace test { } }
-
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/coord_list.hpp"
 #include "cath/structure/geometry/rotation.hpp"
@@ -29,10 +27,8 @@ namespace cath { namespace test { } }
 
 using namespace ::cath;
 using namespace ::cath::geom;
-using namespace ::cath::test;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The superpose_fit_test_suite_fixture to assist in testing superpose_fit
 		struct superpose_fit_test_suite_fixture {
@@ -43,8 +39,7 @@ namespace cath {
 
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(superpose_fit_test_suite, superpose_fit_test_suite_fixture)
 

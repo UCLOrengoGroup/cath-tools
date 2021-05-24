@@ -21,32 +21,30 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_CHANGE_TEMPLATE_WRAPPER_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_CHANGE_TEMPLATE_WRAPPER_HPP
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Primary template for implementation of change_template_wrapper_t
-			template <typename T,
-			          template <typename...> class NewWrppr>
-			struct change_template_wrapper final {};
+		/// \brief Primary template for implementation of change_template_wrapper_t
+		template <typename T,
+		          template <typename...> class NewWrppr>
+		struct change_template_wrapper final {};
 
-			/// \brief Specialisation of template for implementation of change_template_wrapper_t
-			template <template <typename...> class OldWrppr,
-			          typename... Prms,
-			          template <typename...> class NewWrppr>
-			struct change_template_wrapper<OldWrppr<Prms...>, NewWrppr> final {
-				using type = NewWrppr<Prms...>;
-			};
+		/// \brief Specialisation of template for implementation of change_template_wrapper_t
+		template <template <typename...> class OldWrppr,
+		          typename... Prms,
+		          template <typename...> class NewWrppr>
+		struct change_template_wrapper<OldWrppr<Prms...>, NewWrppr> final {
+			using type = NewWrppr<Prms...>;
+		};
 
-		} // namespace detail
+	} // namespace detail
 
-		/// \brief The type created by wrapping the specified type's template parameters in the template wrapper
-		///
-		/// Eg Given `tuple<int>` and `vector` this returns `vector<int>`
-		template <typename T, template <typename...> class NewWrppr>
-		using change_template_wrapper_t = typename detail::change_template_wrapper<T, NewWrppr>::type;
+	/// \brief The type created by wrapping the specified type's template parameters in the template wrapper
+	///
+	/// Eg Given `tuple<int>` and `vector` this returns `vector<int>`
+	template <typename T, template <typename...> class NewWrppr>
+	using change_template_wrapper_t = typename detail::change_template_wrapper<T, NewWrppr>::type;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_CHANGE_TEMPLATE_WRAPPER_HPP

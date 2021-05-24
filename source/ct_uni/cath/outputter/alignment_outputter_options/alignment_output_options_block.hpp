@@ -28,50 +28,50 @@
 
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath { namespace opts { class alignment_outputter; } }
-namespace cath { namespace opts { class alignment_outputter_list; } }
+// clang-format off
 namespace cath { class display_spec; }
+namespace cath::opts { class alignment_outputter; }
+namespace cath::opts { class alignment_outputter_list; }
+// clang-format on
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief TODOCUMENT
-		class alignment_output_options_block final : public options_block {
-		private:
-			using alner = options_block;
+	/// \brief TODOCUMENT
+	class alignment_output_options_block final : public options_block {
+	private:
+		using alner = options_block;
 
-			::std::filesystem::path aln_to_cath_aln_file;
-			bool aln_to_cath_aln_stdout;
-			::std::filesystem::path aln_to_fasta_file;
-			bool aln_to_fasta_stdout;
-			::std::filesystem::path aln_to_ssap_file;
-			bool aln_to_ssap_stdout;
-			::std::filesystem::path aln_to_html_file;
-			bool aln_to_html_stdout;
+		::std::filesystem::path aln_to_cath_aln_file;
+		bool aln_to_cath_aln_stdout;
+		::std::filesystem::path aln_to_fasta_file;
+		bool aln_to_fasta_stdout;
+		::std::filesystem::path aln_to_ssap_file;
+		bool aln_to_ssap_stdout;
+		::std::filesystem::path aln_to_html_file;
+		bool aln_to_html_stdout;
 
-			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
-			[[nodiscard]] std::string                    do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+		[[nodiscard]] std::string                    do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-			[[nodiscard]] ::std::filesystem::path get_aln_to_cath_aln_file() const;
-			[[nodiscard]] bool                    get_aln_to_cath_aln_stdout() const;
-			[[nodiscard]] ::std::filesystem::path get_aln_to_fasta_file() const;
-			[[nodiscard]] bool                    get_aln_to_fasta_stdout() const;
-			[[nodiscard]] ::std::filesystem::path get_aln_to_ssap_file() const;
-			[[nodiscard]] bool                    get_aln_to_ssap_stdout() const;
-			[[nodiscard]] ::std::filesystem::path get_aln_to_html_file() const;
-			[[nodiscard]] bool                    get_aln_to_html_stdout() const;
+		[[nodiscard]] ::std::filesystem::path get_aln_to_cath_aln_file() const;
+		[[nodiscard]] bool                    get_aln_to_cath_aln_stdout() const;
+		[[nodiscard]] ::std::filesystem::path get_aln_to_fasta_file() const;
+		[[nodiscard]] bool                    get_aln_to_fasta_stdout() const;
+		[[nodiscard]] ::std::filesystem::path get_aln_to_ssap_file() const;
+		[[nodiscard]] bool                    get_aln_to_ssap_stdout() const;
+		[[nodiscard]] ::std::filesystem::path get_aln_to_html_file() const;
+		[[nodiscard]] bool                    get_aln_to_html_stdout() const;
 
-		  public:
-			[[nodiscard]] alignment_outputter_list get_alignment_outputters( const display_spec & ) const;
+	  public:
+		[[nodiscard]] alignment_outputter_list get_alignment_outputters( const display_spec & ) const;
 
-			[[nodiscard]] bool outputs_to_stdout() const;
-		};
+		[[nodiscard]] bool outputs_to_stdout() const;
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS_ALIGNMENT_OUTPUT_OPTIONS_BLOCK_HPP

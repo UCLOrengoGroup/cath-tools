@@ -219,7 +219,6 @@ set(
 
 set(
 	NORMSOURCES_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY
-		ct_clustagglom/cath/clustagglom/hierarchy/hierarchy_fn.cpp
 		ct_clustagglom/cath/clustagglom/hierarchy/hierarchy_group.cpp
 		ct_clustagglom/cath/clustagglom/hierarchy/hierarchy_layer.cpp
 		ct_clustagglom/cath/clustagglom/hierarchy/hierarchy_value.cpp
@@ -276,9 +275,7 @@ set(
 
 set(
 	NORMSOURCES_CT_CLUSTER_CATH_CLUSTER_OPTIONS_SPEC
-		ct_cluster/cath/cluster/options/spec/clust_mapping_spec.cpp
 		ct_cluster/cath/cluster/options/spec/clustmap_input_spec.cpp
-		ct_cluster/cath/cluster/options/spec/clustmap_output_spec.cpp
 )
 
 set(
@@ -469,16 +466,9 @@ set(
 )
 
 set(
-	NORMSOURCES_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_DETAIL
-		ct_resolve_hits/cath/resolve_hits/file/detail/hmmer_aln.cpp
-		ct_resolve_hits/cath/resolve_hits/file/detail/hmmer_parser.cpp
-)
-
-set(
 	NORMSOURCES_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE
 		ct_resolve_hits/cath/resolve_hits/file/alnd_rgn.cpp
 		ct_resolve_hits/cath/resolve_hits/file/cath_id_score_category.cpp
-		${NORMSOURCES_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_DETAIL}
 		ct_resolve_hits/cath/resolve_hits/file/hits_input_format_tag.cpp
 		ct_resolve_hits/cath/resolve_hits/file/parse_domain_hits_table.cpp
 		ct_resolve_hits/cath/resolve_hits/file/parse_hmmer_out.cpp
@@ -1186,7 +1176,6 @@ set(
 set(
 	NORMSOURCES_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG
 		ct_uni/cath/score/true_pos_false_neg/classn_outcome.cpp
-		ct_uni/cath/score/true_pos_false_neg/classn_rate_stat.cpp
 		ct_uni/cath/score/true_pos_false_neg/classn_stat.cpp
 		ct_uni/cath/score/true_pos_false_neg/classn_stat_pair_series.cpp
 		ct_uni/cath/score/true_pos_false_neg/classn_stat_pair_series_list.cpp
@@ -1499,30 +1488,8 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS
-		ct_cath_assign_domains/cath/cath_assign_domains/options/cath_assign_domains_options_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS
-		${TESTSOURCES_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS}
-)
-
-set(
-	TESTSOURCES_CT_CATH_ASSIGN_DOMAINS_CATH
-		${TESTSOURCES_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS}
-)
-
-set(
-	TESTSOURCES_CT_CATH_ASSIGN_DOMAINS
-		${TESTSOURCES_CT_CATH_ASSIGN_DOMAINS_CATH}
-)
-
-set(
 	TESTSOURCES_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK
-		ct_cath_cluster/cath/cath_cluster/options/options_block/cath_cluster_clustering_options_block_test.cpp
 		ct_cath_cluster/cath/cath_cluster/options/options_block/cath_cluster_input_options_block_test.cpp
-		ct_cath_cluster/cath/cath_cluster/options/options_block/cath_cluster_output_options_block_test.cpp
 )
 
 set(
@@ -1532,14 +1499,12 @@ set(
 
 set(
 	TESTSOURCES_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS
-		ct_cath_cluster/cath/cath_cluster/options/cath_cluster_options_test.cpp
 		${TESTSOURCES_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK}
 		${TESTSOURCES_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_SPEC}
 )
 
 set(
 	TESTSOURCES_CT_CATH_CLUSTER_CATH_CATH_CLUSTER
-		ct_cath_cluster/cath/cath_cluster/cath_clusterer_test.cpp
 		${TESTSOURCES_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS}
 )
 
@@ -1554,14 +1519,8 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_CATH_REFINE_ALIGN_CATH_CATH_REFINE_ALIGN_OPTIONS
-		ct_cath_refine_align/cath/cath_refine_align/options/cath_refine_align_options_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_CATH_REFINE_ALIGN_CATH_CATH_REFINE_ALIGN
 		ct_cath_refine_align/cath/cath_refine_align/cath_align_refiner_test.cpp
-		${TESTSOURCES_CT_CATH_REFINE_ALIGN_CATH_CATH_REFINE_ALIGN_OPTIONS}
 )
 
 set(
@@ -1575,35 +1534,8 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_CATH_SCORE_ALIGN_CATH_CATH_SCORE_ALIGN_OPTIONS
-		ct_cath_score_align/cath/cath_score_align/options/cath_score_align_options_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_CATH_SCORE_ALIGN_CATH_CATH_SCORE_ALIGN
-		ct_cath_score_align/cath/cath_score_align/cath_align_scorer_test.cpp
-		${TESTSOURCES_CT_CATH_SCORE_ALIGN_CATH_CATH_SCORE_ALIGN_OPTIONS}
-)
-
-set(
-	TESTSOURCES_CT_CATH_SCORE_ALIGN_CATH
-		${TESTSOURCES_CT_CATH_SCORE_ALIGN_CATH_CATH_SCORE_ALIGN}
-)
-
-set(
-	TESTSOURCES_CT_CATH_SCORE_ALIGN
-		${TESTSOURCES_CT_CATH_SCORE_ALIGN_CATH}
-)
-
-set(
-	TESTSOURCES_CT_CATH_SUPERPOSE_CATH_CATH_SUPERPOSE_OPTIONS
-		ct_cath_superpose/cath/cath_superpose/options/cath_superpose_options_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_CATH_SUPERPOSE_CATH_CATH_SUPERPOSE
 		ct_cath_superpose/cath/cath_superpose/cath_superposer_test.cpp
-		${TESTSOURCES_CT_CATH_SUPERPOSE_CATH_CATH_SUPERPOSE_OPTIONS}
 )
 
 set(
@@ -1618,7 +1550,6 @@ set(
 
 set(
 	TESTSOURCES_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT
-		ct_chopping/cath/chopping/chopping_format/chopping_format_test.cpp
 		ct_chopping/cath/chopping/chopping_format/sillitoe_chopping_format_test.cpp
 		ct_chopping/cath/chopping/chopping_format/simple_chopping_format_test.cpp
 )
@@ -1713,18 +1644,6 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK
-		ct_cluster/cath/cluster/options/options_block/clust_mapping_options_block_test.cpp
-		ct_cluster/cath/cluster/options/options_block/clustmap_input_options_block_test.cpp
-		ct_cluster/cath/cluster/options/options_block/clustmap_output_options_block_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_CLUSTER_CATH_CLUSTER_OPTIONS
-		${TESTSOURCES_CT_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK}
-)
-
-set(
 	TESTSOURCES_CT_CLUSTER_CATH_CLUSTER_TEST
 		ct_cluster/cath/cluster/test/map_clusters_fixture.cpp
 )
@@ -1735,7 +1654,6 @@ set(
 		ct_cluster/cath/cluster/cluster_entry_test.cpp
 		ct_cluster/cath/cluster/cluster_info_test.cpp
 		ct_cluster/cath/cluster/clusters_info_test.cpp
-		ct_cluster/cath/cluster/clustmap_options_test.cpp
 		${TESTSOURCES_CT_CLUSTER_CATH_CLUSTER_DETAIL}
 		ct_cluster/cath/cluster/domain_cluster_ids_by_seq_test.cpp
 		ct_cluster/cath/cluster/domain_cluster_ids_test.cpp
@@ -1744,7 +1662,6 @@ set(
 		ct_cluster/cath/cluster/mapping_tool_test.cpp
 		ct_cluster/cath/cluster/new_cluster_data_test.cpp
 		ct_cluster/cath/cluster/old_cluster_data_test.cpp
-		${TESTSOURCES_CT_CLUSTER_CATH_CLUSTER_OPTIONS}
 		${TESTSOURCES_CT_CLUSTER_CATH_CLUSTER_TEST}
 )
 
@@ -1879,7 +1796,6 @@ set(
 		ct_common/cath/common/string/booled_to_string_test.cpp
 		ct_common/cath/common/string/cath_to_string_test.cpp
 		ct_common/cath/common/string/string_parse_tools_test.cpp
-		ct_common/cath/common/string/sub_string_parser_test.cpp
 )
 
 set(
@@ -1905,7 +1821,6 @@ set(
 		ct_common/cath/common/argc_argv_faker_test.cpp
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_BOOST_ADDENDA}
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_CLONE}
-		ct_common/cath/common/command_executer_test.cpp
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_CONTAINER}
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_CPP17}
 		ct_common/cath/common/difference_test.cpp
@@ -1915,7 +1830,6 @@ set(
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_GSL}
 		ct_common/cath/common/invert_permutation_test.cpp
 		ct_common/cath/common/less_than_helper_test.cpp
-		ct_common/cath/common/logger_test.cpp
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_MATRIX}
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_METAPROGRAMMING}
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_OPTIONAL}
@@ -1958,7 +1872,6 @@ set(
 set(
 	TESTSOURCES_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE
 		ct_options/cath/options/executable/env_var_option_name_handler_test.cpp
-		ct_options/cath/options/executable/executable_options_test.cpp
 )
 
 set(
@@ -1968,8 +1881,6 @@ set(
 		ct_options/cath/options/options_block/extract_pdb_options_block_test.cpp
 		ct_options/cath/options/options_block/misc_help_version_options_block_test.cpp
 		ct_options/cath/options/options_block/options_block_test.cpp
-		ct_options/cath/options/options_block/pdb_input_options_block_test.cpp
-		ct_options/cath/options/options_block/superposition_input_options_block_test.cpp
 )
 
 set(
@@ -2010,17 +1921,6 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK
-		ct_resolve_hits/cath/resolve_hits/options/options_block/crh_filter_options_block_test.cpp
-		ct_resolve_hits/cath/resolve_hits/options/options_block/crh_html_options_block_test.cpp
-		ct_resolve_hits/cath/resolve_hits/options/options_block/crh_input_options_block_test.cpp
-		ct_resolve_hits/cath/resolve_hits/options/options_block/crh_output_options_block_test.cpp
-		ct_resolve_hits/cath/resolve_hits/options/options_block/crh_score_options_block_test.cpp
-		ct_resolve_hits/cath/resolve_hits/options/options_block/crh_segment_options_block_test.cpp
-		ct_resolve_hits/cath/resolve_hits/options/options_block/crh_single_output_options_block_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC
 		ct_resolve_hits/cath/resolve_hits/options/spec/crh_filter_spec_test.cpp
 		ct_resolve_hits/cath/resolve_hits/options/spec/crh_single_output_spec_test.cpp
@@ -2028,8 +1928,6 @@ set(
 
 set(
 	TESTSOURCES_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS
-		ct_resolve_hits/cath/resolve_hits/options/crh_options_test.cpp
-		${TESTSOURCES_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_OPTIONS_BLOCK}
 		${TESTSOURCES_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC}
 )
 
@@ -2115,7 +2013,6 @@ set(
 set(
 	TESTSOURCES_CT_TEST_CATH_TEST
 		${TESTSOURCES_CT_TEST_CATH_TEST_PREDICATE}
-		ct_test/cath/test/superposition_fixture.cpp
 )
 
 set(
@@ -2131,40 +2028,19 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER
 		ct_uni/cath/acquirer/alignment_acquirer/align_refining_test.cpp
-		ct_uni/cath/acquirer/alignment_acquirer/alignment_acquirer_test.cpp
-		ct_uni/cath/acquirer/alignment_acquirer/cora_aln_file_alignment_acquirer_test.cpp
 		ct_uni/cath/acquirer/alignment_acquirer/do_the_ssaps_alignment_acquirer_test.cpp
-		ct_uni/cath/acquirer/alignment_acquirer/fasta_aln_file_alignment_acquirer_test.cpp
-		ct_uni/cath/acquirer/alignment_acquirer/post_refine_alignment_acquirer_test.cpp
-		ct_uni/cath/acquirer/alignment_acquirer/residue_name_alignment_acquirer_test.cpp
-		ct_uni/cath/acquirer/alignment_acquirer/ssap_aln_file_alignment_acquirer_test.cpp
 		ct_uni/cath/acquirer/alignment_acquirer/ssap_scores_file_alignment_acquirer_test.cpp
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER
-		ct_uni/cath/acquirer/pdbs_acquirer/file_list_pdbs_acquirer_test.cpp
-		ct_uni/cath/acquirer/pdbs_acquirer/istream_pdbs_acquirer_test.cpp
 		ct_uni/cath/acquirer/pdbs_acquirer/pdbs_acquirer_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_UNI_CATH_ACQUIRER_SELECTION_POLICY_ACQUIRER
-		ct_uni/cath/acquirer/selection_policy_acquirer/selection_policy_acquirer_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_UNI_CATH_ACQUIRER_SUPERPOSITION_ACQUIRER
-		ct_uni/cath/acquirer/superposition_acquirer/align_based_superposition_acquirer_test.cpp
-		ct_uni/cath/acquirer/superposition_acquirer/superposition_acquirer_test.cpp
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_ACQUIRER
 		${TESTSOURCES_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER}
 		${TESTSOURCES_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER}
-		${TESTSOURCES_CT_UNI_CATH_ACQUIRER_SELECTION_POLICY_ACQUIRER}
-		${TESTSOURCES_CT_UNI_CATH_ACQUIRER_SUPERPOSITION_ACQUIRER}
 )
 
 set(
@@ -2180,18 +2056,12 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL
 		ct_uni/cath/alignment/dyn_prog_align/detail/return_path_matrix_test.cpp
-		ct_uni/cath/alignment/dyn_prog_align/detail/score_accumulation_matrix_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_STRING_ALIGNER}
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE
 		ct_uni/cath/alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source_test.cpp
-		ct_uni/cath/alignment/dyn_prog_align/dyn_prog_score_source/entry_querier_dyn_prog_score_source_test.cpp
-		ct_uni/cath/alignment/dyn_prog_align/dyn_prog_score_source/mask_dyn_prog_score_source_test.cpp
-		ct_uni/cath/alignment/dyn_prog_align/dyn_prog_score_source/new_matrix_dyn_prog_score_source_test.cpp
-		ct_uni/cath/alignment/dyn_prog_align/dyn_prog_score_source/old_matrix_dyn_prog_score_source_test.cpp
-		ct_uni/cath/alignment/dyn_prog_align/dyn_prog_score_source/sequence_string_dyn_prog_score_source_test.cpp
 )
 
 set(
@@ -2203,21 +2073,17 @@ set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL}
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE}
-		ct_uni/cath/alignment/dyn_prog_align/ssap_code_dyn_prog_aligner_test.cpp
-		ct_uni/cath/alignment/dyn_prog_align/std_dyn_prog_aligner_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_TEST}
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_GAP
 		ct_uni/cath/alignment/gap/alignment_gap_test.cpp
-		ct_uni/cath/alignment/gap/gap_penalty_test.cpp
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_IO_OUTPUTTER
 		ct_uni/cath/alignment/io/outputter/horiz_align_outputter_test.cpp
-		ct_uni/cath/alignment/io/outputter/html_align_outputter_test.cpp
 )
 
 set(
@@ -2228,22 +2094,13 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_OPTIONS_BLOCK
-		ct_uni/cath/alignment/options_block/alignment_input_options_block_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL
-		ct_uni/cath/alignment/refiner/detail/alignment_split_list_test.cpp
 		ct_uni/cath/alignment/refiner/detail/alignment_split_mapping_test.cpp
-		ct_uni/cath/alignment/refiner/detail/alignment_split_test.cpp
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_REFINER
-		ct_uni/cath/alignment/refiner/alignment_refiner_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL}
-		ct_uni/cath/alignment/refiner/indexed_refiner_test.cpp
 )
 
 set(
@@ -2255,12 +2112,6 @@ set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_RESIDUE_NAME_ALIGN
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_RESIDUE_NAME_ALIGN_DETAIL}
 		ct_uni/cath/alignment/residue_name_align/residue_name_aligner_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_UNI_CATH_ALIGNMENT_RESIDUE_SCORE
-		ct_uni/cath/alignment/residue_score/alignment_residue_scores_test.cpp
-		ct_uni/cath/alignment/residue_score/residue_scorer_test.cpp
 )
 
 set(
@@ -2276,18 +2127,14 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_ALIGNMENT
 		ct_uni/cath/alignment/alignment_action_test.cpp
-		ct_uni/cath/alignment/alignment_context_test.cpp
 		ct_uni/cath/alignment/alignment_coord_extractor_test.cpp
-		ct_uni/cath/alignment/alignment_row_test.cpp
 		ct_uni/cath/alignment/alignment_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY}
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN}
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_GAP}
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_IO}
-		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_OPTIONS_BLOCK}
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_REFINER}
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_RESIDUE_NAME_ALIGN}
-		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_RESIDUE_SCORE}
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_TEST}
 		${TESTSOURCES_CT_UNI_CATH_ALIGNMENT_TOOLS}
 )
@@ -2299,13 +2146,7 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER
-		ct_uni/cath/display/display_colourer/display_colourer_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_UNI_CATH_DISPLAY_OPTIONS
-		ct_uni/cath/display/options/display_options_block_test.cpp
 		ct_uni/cath/display/options/display_spec_test.cpp
 )
 
@@ -2316,18 +2157,13 @@ set(
 
 set(
 	TESTSOURCES_CT_UNI_CATH_DISPLAY_VIEWER
-		ct_uni/cath/display/viewer/jmol_viewer_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_DISPLAY_VIEWER_PYMOL}
 		ct_uni/cath/display/viewer/pymol_viewer_test.cpp
-		ct_uni/cath/display/viewer/rasmol_style_viewer_test.cpp
-		ct_uni/cath/display/viewer/rasmol_viewer_test.cpp
-		ct_uni/cath/display/viewer/viewer_test.cpp
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_DISPLAY
 		${TESTSOURCES_CT_UNI_CATH_DISPLAY_DISPLAY_COLOUR_SPEC}
-		${TESTSOURCES_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER}
 		${TESTSOURCES_CT_UNI_CATH_DISPLAY_OPTIONS}
 		${TESTSOURCES_CT_UNI_CATH_DISPLAY_VIEWER}
 )
@@ -2346,7 +2182,6 @@ set(
 
 set(
 	TESTSOURCES_CT_UNI_CATH_FILE_NAME_SET
-		ct_uni/cath/file/name_set/name_set_list_test.cpp
 		ct_uni/cath/file/name_set/name_set_test.cpp
 )
 
@@ -2361,8 +2196,6 @@ set(
 		ct_uni/cath/file/pdb/coarse_element_type_test.cpp
 		ct_uni/cath/file/pdb/element_type_string_test.cpp
 		ct_uni/cath/file/pdb/pdb_atom_test.cpp
-		ct_uni/cath/file/pdb/pdb_list_test.cpp
-		ct_uni/cath/file/pdb/pdb_residue_test.cpp
 		ct_uni/cath/file/pdb/pdb_test.cpp
 		ct_uni/cath/file/pdb/proximity_calculator_test.cpp
 )
@@ -2371,11 +2204,6 @@ set(
 	TESTSOURCES_CT_UNI_CATH_FILE_PRC_SCORES_FILE
 		ct_uni/cath/file/prc_scores_file/prc_scores_entry_test.cpp
 		ct_uni/cath/file/prc_scores_file/prc_scores_file_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_UNI_CATH_FILE_SEC
-		ct_uni/cath/file/sec/sec_file_test.cpp
 )
 
 set(
@@ -2392,7 +2220,6 @@ set(
 		${TESTSOURCES_CT_UNI_CATH_FILE_OPTIONS}
 		${TESTSOURCES_CT_UNI_CATH_FILE_PDB}
 		${TESTSOURCES_CT_UNI_CATH_FILE_PRC_SCORES_FILE}
-		${TESTSOURCES_CT_UNI_CATH_FILE_SEC}
 		${TESTSOURCES_CT_UNI_CATH_FILE_SSAP_SCORES_FILE}
 )
 
@@ -2403,14 +2230,8 @@ set(
 
 set(
 	TESTSOURCES_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER
-		ct_uni/cath/outputter/alignment_outputter/alignment_outputter_list_test.cpp
 		ct_uni/cath/outputter/alignment_outputter/ssap_ostream_alignment_outputter_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_TEST}
-)
-
-set(
-	TESTSOURCES_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS
-		ct_uni/cath/outputter/alignment_outputter_options/alignment_output_options_block_test.cpp
 )
 
 set(
@@ -2421,19 +2242,11 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER
 		ct_uni/cath/outputter/superposition_outputter/json_file_superposition_outputter_test.cpp
-		ct_uni/cath/outputter/superposition_outputter/ostream_superposition_outputter_test.cpp
-		ct_uni/cath/outputter/superposition_outputter/pdb_file_superposition_outputter_test.cpp
-		ct_uni/cath/outputter/superposition_outputter/pdb_files_superposition_outputter_test.cpp
-		ct_uni/cath/outputter/superposition_outputter/pymol_file_superposition_outputter_test.cpp
-		ct_uni/cath/outputter/superposition_outputter/pymol_view_superposition_outputter_test.cpp
-		ct_uni/cath/outputter/superposition_outputter/superposition_outputter_list_test.cpp
-		ct_uni/cath/outputter/superposition_outputter/superposition_outputter_test.cpp
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_OUTPUTTER
 		${TESTSOURCES_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER}
-		${TESTSOURCES_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_OPTIONS}
 		${TESTSOURCES_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUT_OPTIONS}
 		${TESTSOURCES_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER}
 )
@@ -2449,28 +2262,6 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR
-		ct_uni/cath/scan/detail/res_pair/multi_struc_res_rep_pair_list_test.cpp
-		ct_uni/cath/scan/detail/res_pair/multi_struc_res_rep_pair_test.cpp
-		ct_uni/cath/scan/detail/res_pair/res_pair_core_test.cpp
-		ct_uni/cath/scan/detail/res_pair/single_struc_res_pair_list_test.cpp
-		ct_uni/cath/scan/detail/res_pair/single_struc_res_pair_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_SCAN_ACTION
-		ct_uni/cath/scan/detail/scan_action/align_scan_action_test.cpp
-		ct_uni/cath/scan/detail/scan_action/scan_multi_action_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE
-		ct_uni/cath/scan/detail/scan_index_store/scan_index_hash_store_test.cpp
-		ct_uni/cath/scan/detail/scan_index_store/scan_index_lattice_store_test.cpp
-		ct_uni/cath/scan/detail/scan_index_store/scan_index_vector_store_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_STRIDE
 		ct_uni/cath/scan/detail/stride/co_stride_test.cpp
 		ct_uni/cath/scan/detail/stride/rep_strider_test.cpp
@@ -2480,23 +2271,12 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL
 		${TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_CHECK_SCAN}
-		${TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR}
-		${TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_SCAN_ACTION}
-		${TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE}
-		ct_uni/cath/scan/detail/scan_structure_data_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL_STRIDE}
-)
-
-set(
-	TESTSOURCES_CT_UNI_CATH_SCAN_RES_PAIR_KEYER
-		ct_uni/cath/scan/res_pair_keyer/res_pair_keyer_test.cpp
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_SCAN_SCAN_TOOLS
 		ct_uni/cath/scan/scan_tools/all_vs_all_test.cpp
-		ct_uni/cath/scan/scan_tools/load_and_scan_metrics_test.cpp
-		ct_uni/cath/scan/scan_tools/load_and_scan_test.cpp
 )
 
 set(
@@ -2508,10 +2288,7 @@ set(
 	TESTSOURCES_CT_UNI_CATH_SCAN
 		${TESTSOURCES_CT_UNI_CATH_SCAN_DETAIL}
 		ct_uni/cath/scan/quad_criteria_test.cpp
-		${TESTSOURCES_CT_UNI_CATH_SCAN_RES_PAIR_KEYER}
 		ct_uni/cath/scan/scan_index_test.cpp
-		ct_uni/cath/scan/scan_policy_test.cpp
-		ct_uni/cath/scan/scan_query_set_test.cpp
 		ct_uni/cath/scan/scan_stride_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_SCAN_SCAN_TOOLS}
 		${TESTSOURCES_CT_UNI_CATH_SCAN_SPATIAL_INDEX}
@@ -2545,7 +2322,6 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_LIST
 		ct_uni/cath/score/aligned_pair_score_list/aligned_pair_score_list_factory_test.cpp
-		ct_uni/cath/score/aligned_pair_score_list/aligned_pair_score_list_test.cpp
 )
 
 set(
@@ -2561,24 +2337,16 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_DETAIL
-		ct_uni/cath/score/score_classification/detail/score_classn_value_list_name_less_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_LABEL_PAIR_IS_POSITIVE
 		ct_uni/cath/score/score_classification/label_pair_is_positive/label_pair_is_positive_test.cpp
 )
 
 set(
 	TESTSOURCES_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION
-		${TESTSOURCES_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_DETAIL}
 		${TESTSOURCES_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_LABEL_PAIR_IS_POSITIVE}
 		ct_uni/cath/score/score_classification/rbf_model_test.cpp
 		ct_uni/cath/score/score_classification/score_classn_value_better_value_test.cpp
-		ct_uni/cath/score/score_classification/score_classn_value_list_test.cpp
 		ct_uni/cath/score/score_classification/score_classn_value_results_set_test.cpp
-		ct_uni/cath/score/score_classification/score_classn_value_test.cpp
 )
 
 set(
@@ -2589,13 +2357,8 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG
 		ct_uni/cath/score/true_pos_false_neg/classn_rate_stat_test.cpp
-		ct_uni/cath/score/true_pos_false_neg/classn_stat_pair_series_list_test.cpp
-		ct_uni/cath/score/true_pos_false_neg/classn_stat_pair_series_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PLOTTER}
 		ct_uni/cath/score/true_pos_false_neg/classn_stat_test.cpp
-		ct_uni/cath/score/true_pos_false_neg/named_true_false_pos_neg_list_test.cpp
-		ct_uni/cath/score/true_pos_false_neg/true_false_pos_neg_list_test.cpp
-		ct_uni/cath/score/true_pos_false_neg/true_false_pos_neg_test.cpp
 )
 
 set(
@@ -2609,17 +2372,9 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_UNI_CATH_SSAP_OPTIONS
-		ct_uni/cath/ssap/options/cath_ssap_options_test.cpp
-		ct_uni/cath/ssap/options/old_ssap_options_block_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_UNI_CATH_SSAP
 		ct_uni/cath/ssap/distance_score_formula_test.cpp
-		${TESTSOURCES_CT_UNI_CATH_SSAP_OPTIONS}
 		ct_uni/cath/ssap/selected_pair_test.cpp
-		ct_uni/cath/ssap/ssap_scores_test.cpp
 		ct_uni/cath/ssap/ssap_test.cpp
 		ct_uni/cath/ssap/windowed_matrix_test.cpp
 )
@@ -2656,11 +2411,8 @@ set(
 set(
 	TESTSOURCES_CT_UNI_CATH_STRUCTURE_PROTEIN
 		ct_uni/cath/structure/protein/amino_acid_test.cpp
-		ct_uni/cath/structure/protein/protein_list_test.cpp
 		${TESTSOURCES_CT_UNI_CATH_STRUCTURE_PROTEIN_PROTEIN_SOURCE_FILE_SET}
-		ct_uni/cath/structure/protein/protein_test.cpp
 		ct_uni/cath/structure/protein/residue_test.cpp
-		ct_uni/cath/structure/protein/sec_struc_planar_angles_test.cpp
 		ct_uni/cath/structure/protein/sec_struc_test.cpp
 		ct_uni/cath/structure/protein/sec_struc_type_test.cpp
 )
@@ -2691,7 +2443,6 @@ set(
 
 set(
 	TESTSOURCES_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_DETAIL_PLATE
-		ct_uni/cath/structure/view_cache/detail/plate/plate_scan_test.cpp
 		ct_uni/cath/structure/view_cache/detail/plate/rod_cache_test.cpp
 )
 
@@ -2701,13 +2452,7 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_DETAIL
-		ct_uni/cath/structure/view_cache/filter/detail/filter_vs_full_score_less_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER
-		${TESTSOURCES_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_DETAIL}
 		ct_uni/cath/structure/view_cache/filter/filter_vs_full_score_test.cpp
 )
 
@@ -2758,15 +2503,8 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_UNI_CATH_SUPERPOSITION_OPTIONS
-		ct_uni/cath/superposition/options/align_regions_options_block_test.cpp
-		ct_uni/cath/superposition/options/superposition_content_options_block_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_UNI_CATH_SUPERPOSITION
 		${TESTSOURCES_CT_UNI_CATH_SUPERPOSITION_IO}
-		${TESTSOURCES_CT_UNI_CATH_SUPERPOSITION_OPTIONS}
 		ct_uni/cath/superposition/superposition_context_test.cpp
 		ct_uni/cath/superposition/superposition_test.cpp
 )
@@ -2803,10 +2541,8 @@ set(
 set(
 	TESTSOURCES
 		${TESTSOURCES_CT_BIOCORE}
-		${TESTSOURCES_CT_CATH_ASSIGN_DOMAINS}
 		${TESTSOURCES_CT_CATH_CLUSTER}
 		${TESTSOURCES_CT_CATH_REFINE_ALIGN}
-		${TESTSOURCES_CT_CATH_SCORE_ALIGN}
 		${TESTSOURCES_CT_CATH_SUPERPOSE}
 		${TESTSOURCES_CT_CHOPPING}
 		${TESTSOURCES_CT_CLUSTAGGLOM}

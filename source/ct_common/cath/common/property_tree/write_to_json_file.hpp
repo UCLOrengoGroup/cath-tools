@@ -28,25 +28,22 @@
 #include "cath/common/json_style.hpp"
 #include "cath/common/property_tree/to_json_string.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Create a JSON string of the specified value (via a ptree)
-		///
-		/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
-		template <typename T>
-		void write_to_json_file(const ::std::filesystem::path &prm_json_out_file,                  ///< TODOCUMENT
-		                        const T                       &prm_val,                            ///< The value to represent in the JSON string
-		                        const json_style              &prm_json_style = json_style::PRETTY ///< The style in which the JSON should be written
-		                        ) {
-			std::ofstream json_file_ostream = open_ofstream( prm_json_out_file );
-			json_file_ostream << to_json_string( prm_val, prm_json_style );
-			json_file_ostream << std::flush;
-			json_file_ostream.close();
-		}
+	/// \brief Create a JSON string of the specified value (via a ptree)
+	///
+	/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
+	template <typename T>
+	void write_to_json_file(const ::std::filesystem::path &prm_json_out_file,                  ///< TODOCUMENT
+	                        const T                       &prm_val,                            ///< The value to represent in the JSON string
+	                        const json_style              &prm_json_style = json_style::PRETTY ///< The style in which the JSON should be written
+	                        ) {
+		std::ofstream json_file_ostream = open_ofstream( prm_json_out_file );
+		json_file_ostream << to_json_string( prm_val, prm_json_style );
+		json_file_ostream << std::flush;
+		json_file_ostream.close();
+	}
 
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_WRITE_TO_JSON_FILE_HPP

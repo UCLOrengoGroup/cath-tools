@@ -25,33 +25,32 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
+using namespace ::cath;
 using namespace ::cath::test;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		// \todo Refactor files_equal_test_suite and istreams_equal_test_suite into one
-		//       and make it also test istream_and_file_equal
+	// \todo Refactor files_equal_test_suite and istreams_equal_test_suite into one
+	//       and make it also test istream_and_file_equal
 
-		/// \brief The files_equal_test_suite_fixture to assist in testing files_equal
-		struct files_equal_test_suite_fixture : protected global_test_constants {
-		protected:
-			~files_equal_test_suite_fixture() noexcept = default;
+	/// \brief The files_equal_test_suite_fixture to assist in testing files_equal
+	struct files_equal_test_suite_fixture : protected global_test_constants {
+	protected:
+		~files_equal_test_suite_fixture() noexcept = default;
 
-		public:
-			const path compare_file        = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file"        };
-			const path compare_file_equal  = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file_equal"  };
+	public:
+		const path compare_file        = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file"        };
+		const path compare_file_equal  = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file_equal"  };
 
-			const path compare_file_longer = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file_longer" };
-			const path compare_file_diff   = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file_diff"   };
-		};
+		const path compare_file_longer = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file_longer" };
+		const path compare_file_diff   = { TEST_BASIC_FILE_TEST_DATA_DIR() / "compare_file_diff"   };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(files_equal_test_suite, cath::test::files_equal_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(files_equal_test_suite, files_equal_test_suite_fixture)
 
 /// \brief Check that equal files do compare as equal
 BOOST_AUTO_TEST_CASE(equal_files_compare_equal) {

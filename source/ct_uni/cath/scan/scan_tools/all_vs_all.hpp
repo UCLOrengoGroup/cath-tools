@@ -23,25 +23,25 @@
 
 #include "cath/scan/scan_tools/scan_type.hpp"
 
+// clang-format off
 namespace cath { class protein_list; }
-namespace cath { namespace scan { class record_scores_scan_action; } }
-namespace cath { namespace scan { class scan_metrics; } }
+namespace cath::scan { class record_scores_scan_action; }
+namespace cath::scan { class scan_metrics; }
+// clang-format on
 
 #include <utility>
 
-namespace cath {
-	namespace scan {
+namespace cath::scan {
 
-			/// \brief TODOCUMENT
-			class all_vs_all : public scan_type {
-			  private:
-				[[nodiscard]] std::unique_ptr<scan_type> do_clone() const final;
+	/// \brief TODOCUMENT
+	class all_vs_all : public scan_type {
+	  private:
+		[[nodiscard]] std::unique_ptr<scan_type> do_clone() const final;
 
-				[[nodiscard]] std::pair<record_scores_scan_action, scan_metrics> do_perform_scan( const protein_list &,
-				                                                                                  const protein_list & ) const final;
-			};
+		[[nodiscard]] std::pair<record_scores_scan_action, scan_metrics> do_perform_scan( const protein_list &,
+		                                                                                  const protein_list & ) const final;
+	};
 
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_ALL_VS_ALL_HPP

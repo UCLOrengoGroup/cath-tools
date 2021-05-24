@@ -39,15 +39,14 @@ using ::boost::range::find_if;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( size_size_doub_tpl_vec::const_iterator )
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The ssap_scores_file_test_suite_fixture to assist in testing ssap_scores_file
-		struct ssap_scores_file_test_suite_fixture {
-		protected:
-			~ssap_scores_file_test_suite_fixture() noexcept = default;
+	/// \brief The ssap_scores_file_test_suite_fixture to assist in testing ssap_scores_file
+	struct ssap_scores_file_test_suite_fixture {
+	protected:
+		~ssap_scores_file_test_suite_fixture() noexcept = default;
 
-			string DEFAULT_SSAP_SCORE_STRING = R"(# This is a comment line
+		string DEFAULT_SSAP_SCORE_STRING = R"(# This is a comment line
 1n0hA01  1ni4B01  188  186  81.01  162   86   11   3.86
 1n0hA01  1ozhA01  188  174  91.92  172   91   33   1.57
 1n0hA01  1pvdA01  188  179  87.90  176   93   20   3.12
@@ -80,13 +79,12 @@ namespace cath {
 # Last comment line
 
 )";
-			istringstream ssap_scores_iss{ DEFAULT_SSAP_SCORE_STRING };
-		};
+		istringstream ssap_scores_iss{ DEFAULT_SSAP_SCORE_STRING };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(ssap_scores_file_test_suite, cath::test::ssap_scores_file_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(ssap_scores_file_test_suite, ssap_scores_file_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(parse_into_ssap_scores_entries) {

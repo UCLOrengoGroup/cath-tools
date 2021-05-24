@@ -23,23 +23,21 @@
 
 #include <string>
 
-namespace cath {
-	namespace test {
+namespace cath::test {
 
-		/// \brief Whether a test file should be bootstrapped - ie replaced with the "got" content if mismatching
-		enum class bootstrap_mode : char {
-			ALWAYS, ///< Always bootstrap the files
-			IF_ENV, ///< Bootstrap the files if the get_bootstrap_env_var() environment variable is set
-			NEVER   ///< Never bootstrap the file
-		};
+	/// \brief Whether a test file should be bootstrapped - ie replaced with the "got" content if mismatching
+	enum class bootstrap_mode : char {
+		ALWAYS, ///< Always bootstrap the files
+		IF_ENV, ///< Bootstrap the files if the get_bootstrap_env_var() environment variable is set
+		NEVER   ///< Never bootstrap the file
+	};
 
-		std::string get_bootstrap_env_var();
+	std::string get_bootstrap_env_var();
 
-		bool bootstrap_env_var_is_set();
+	bool bootstrap_env_var_is_set();
 
-		bool should_overwrite(const bootstrap_mode &);
+	bool should_overwrite(const bootstrap_mode &);
 
-	} // namespace test
-} // namespace cath
+} // namespace cath::test
 
 #endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_BOOTSTRAP_MODE_HPP

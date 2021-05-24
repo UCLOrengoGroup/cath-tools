@@ -27,45 +27,45 @@
 
 #include <memory>
 
-namespace cath { namespace align { class dyn_prog_score_source; } }
-namespace cath { namespace align { namespace gap { class gap_penalty; } } }
+// clang-format off
+namespace cath::align { class dyn_prog_score_source; }
+namespace cath::align::gap { class gap_penalty; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief ABC defining interface for classes that align generic dyn_prog_score_sources with dynamic-programming
-		class dyn_prog_aligner {
-		  public:
-			/// \brief TODOCUMENT
-			using size_type = windowed_matrix::size_type;
+	/// \brief ABC defining interface for classes that align generic dyn_prog_score_sources with dynamic-programming
+	class dyn_prog_aligner {
+	  public:
+		/// \brief TODOCUMENT
+		using size_type = windowed_matrix::size_type;
 
-		  private:
-			/// \brief A standard do_clone() method to act as a virtual copy-ctor
-			///
-			/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
-			[[nodiscard]] virtual std::unique_ptr<dyn_prog_aligner> do_clone() const = 0;
+	  private:
+		/// \brief A standard do_clone() method to act as a virtual copy-ctor
+		///
+		/// This is a pure virtual function (so must be overridden by any concrete, derived classes).
+		[[nodiscard]] virtual std::unique_ptr<dyn_prog_aligner> do_clone() const = 0;
 
-			/// \brief TODOCUMENT
-			[[nodiscard]] virtual score_alignment_pair do_align( const dyn_prog_score_source &,
-			                                                     const gap::gap_penalty &,
-			                                                     const size_type & ) const = 0;
+		/// \brief TODOCUMENT
+		[[nodiscard]] virtual score_alignment_pair do_align( const dyn_prog_score_source &,
+		                                                     const gap::gap_penalty &,
+		                                                     const size_type & ) const = 0;
 
-		  public:
-			dyn_prog_aligner() = default;
-			[[nodiscard]] std::unique_ptr<dyn_prog_aligner> clone() const;
-			virtual ~dyn_prog_aligner() noexcept = default;
+	  public:
+		dyn_prog_aligner() = default;
+		[[nodiscard]] std::unique_ptr<dyn_prog_aligner> clone() const;
+		virtual ~dyn_prog_aligner() noexcept = default;
 
-			dyn_prog_aligner(const dyn_prog_aligner &) = default;
-			dyn_prog_aligner(dyn_prog_aligner &&) noexcept = default;
-			dyn_prog_aligner & operator=(const dyn_prog_aligner &) = default;
-			dyn_prog_aligner & operator=(dyn_prog_aligner &&) noexcept = default;
+		dyn_prog_aligner(const dyn_prog_aligner &) = default;
+		dyn_prog_aligner(dyn_prog_aligner &&) noexcept = default;
+		dyn_prog_aligner & operator=(const dyn_prog_aligner &) = default;
+		dyn_prog_aligner & operator=(dyn_prog_aligner &&) noexcept = default;
 
-			[[nodiscard]] score_alignment_pair align( const dyn_prog_score_source &,
-			                                          const gap::gap_penalty &,
-			                                          const size_type & ) const;
-		};
+		[[nodiscard]] score_alignment_pair align( const dyn_prog_score_source &,
+		                                          const gap::gap_penalty &,
+		                                          const size_type & ) const;
+	};
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_ALIGNER_HPP

@@ -32,12 +32,9 @@
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
-using namespace ::cath::test;
 using namespace ::std;
 
 using ::std::filesystem::path;
@@ -55,8 +52,7 @@ using ::std::filesystem::path;
 ///  - 1t63A: last residue has a high number and an insert code
 ///  - 1x0pJ: last residue has a high number
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief A simple enum for specifying whether the PDB code or the DSSP code is being tested
 		enum class get_residue_ids_test_filetype : bool {
@@ -121,8 +117,7 @@ namespace cath {
 			}
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief A test suite to check that getting a list of residue names from a pdb or a dssp works as expected
 ///

@@ -23,31 +23,29 @@
 
 #include <sstream>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// Commenting this out to see if it can be adequately replaced by std::stod()
-		///
-		/// \todo Check if this has been adequately replaced
-		//
-		// /// \brief Do a similar job to boost::lexical_cast<> but using a std::stringstream
-		// ///
-		// /// lexical_cast<double>() seems to (sometimes?) have problems when run under valgrind
-		// /// in that it converts "1.000" to a number that's a tiny bit bigger than 1
-		// /// (visible using std::setprecision(50))
-		// ///
-		// /// Might relate to this: https://bugzilla.redhat.com/show_bug.cgi?id=837650 ?
-		// template <typename T, typename F>
-		// T lexical_cast_stringstream(const F &prm_from ///< TODOCUMENT
-		//                             ) {
-		// 	std::stringstream the_ss;
-		// 	the_ss << prm_from;
-		// 	T result;
-		// 	the_ss >> result;
-		// 	return result;
-		// }
+	/// Commenting this out to see if it can be adequately replaced by std::stod()
+	///
+	/// \todo Check if this has been adequately replaced
+	//
+	// /// \brief Do a similar job to boost::lexical_cast<> but using a std::stringstream
+	// ///
+	// /// lexical_cast<double>() seems to (sometimes?) have problems when run under valgrind
+	// /// in that it converts "1.000" to a number that's a tiny bit bigger than 1
+	// /// (visible using std::setprecision(50))
+	// ///
+	// /// Might relate to this: https://bugzilla.redhat.com/show_bug.cgi?id=837650 ?
+	// template <typename T, typename F>
+	// T lexical_cast_stringstream(const F &prm_from ///< TODOCUMENT
+	//                             ) {
+	// 	std::stringstream the_ss;
+	// 	the_ss << prm_from;
+	// 	T result;
+	// 	the_ss >> result;
+	// 	return result;
+	// }
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_LEXICAL_CAST_STRINGSTREAM_HPP

@@ -42,13 +42,10 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/istreams_equal.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::cath::file;
-using namespace ::cath::test;
 using namespace ::std;
 
 //namespace std {
@@ -62,8 +59,7 @@ using namespace ::std;
 //	}
 //}
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The alignment_io_test_suite_fixture to assist in testing alignment_io
 		struct alignment_io_test_suite_fixture : protected global_test_constants {
@@ -89,8 +85,7 @@ namespace cath {
 			}
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(alignment_io_test_suite, alignment_io_test_suite_fixture)
 

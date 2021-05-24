@@ -23,40 +23,43 @@
 
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
 
-namespace cath {
-	class entry_querier;
-	class protein;
+// clang-format off
+namespace cath { class entry_querier; }
+namespace cath { class protein; }
+// clang-format on
 
-	namespace align {
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	class entry_querier_dyn_prog_score_source final : public dyn_prog_score_source {
+	private:
 		/// \brief TODOCUMENT
-		class entry_querier_dyn_prog_score_source final : public dyn_prog_score_source {
-		private:
-			/// \brief TODOCUMENT
-			const entry_querier &the_entry_querier;
+		const entry_querier &the_entry_querier;
 
-			/// \brief TODOCUMENT
-			const protein       &protein_a;
+		/// \brief TODOCUMENT
+		const protein       &protein_a;
 
-			/// \brief TODOCUMENT
-			const protein       &protein_b;
+		/// \brief TODOCUMENT
+		const protein       &protein_b;
 
-			/// \brief TODOCUMENT
-			const size_t         view_from_index_a;
+		/// \brief TODOCUMENT
+		const size_t         view_from_index_a;
 
-			/// \brief TODOCUMENT
-			const size_t         view_from_index_b;
+		/// \brief TODOCUMENT
+		const size_t         view_from_index_b;
 
-			[[nodiscard]] size_t     do_get_length_a() const final;
-			[[nodiscard]] size_t     do_get_length_b() const final;
-			[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
+		[[nodiscard]] size_t     do_get_length_a() const final;
+		[[nodiscard]] size_t     do_get_length_b() const final;
+		[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
 
-		  public:
-			entry_querier_dyn_prog_score_source(const entry_querier &,
-			                                    const protein &,
-			                                    const protein &,
-			                                    const size_t &,
-			                                    const size_t &);
-		};
-	} // namespace align
-} // namespace cath
+	  public:
+		entry_querier_dyn_prog_score_source(const entry_querier &,
+		                                    const protein &,
+		                                    const protein &,
+		                                    const size_t &,
+		                                    const size_t &);
+	};
+
+} // namespace cath::align
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_ENTRY_QUERIER_DYN_PROG_SCORE_SOURCE_HPP

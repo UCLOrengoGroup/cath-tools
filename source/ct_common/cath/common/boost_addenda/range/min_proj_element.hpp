@@ -26,45 +26,43 @@
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/function/ident.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Wrap boost::range::min_element() and add support for a projection function, a la Eric Niebler's range-v3 library
-		///
-		/// \todo Roll this out to simplify code
-		template <typename Rng,
-		          typename Pred = std::less<>,
-		          typename Proj = ident>
-		inline auto min_proj_element(Rng  &&prm_range,          ///< The range to query
-		                             Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
-		                             Proj &&prm_proj  = Proj{}  ///< The projection function
-		                             ) {
-			return boost::range::min_element(
-				prm_range,
-				[&] (const auto & x, const auto & y) {
-					return std::forward<Pred>( prm_pred )( prm_proj( x ), prm_proj( y ) );
-				}
-			);
-		}
+	/// \brief Wrap boost::range::min_element() and add support for a projection function, a la Eric Niebler's range-v3 library
+	///
+	/// \todo Roll this out to simplify code
+	template <typename Rng,
+	          typename Pred = std::less<>,
+	          typename Proj = ident>
+	inline auto min_proj_element(Rng  &&prm_range,          ///< The range to query
+	                             Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+	                             Proj &&prm_proj  = Proj{}  ///< The projection function
+	                             ) {
+		return boost::range::min_element(
+			prm_range,
+			[&] (const auto & x, const auto & y) {
+				return std::forward<Pred>( prm_pred )( prm_proj( x ), prm_proj( y ) );
+			}
+		);
+	}
 
-		/// \brief Return the projection of the min_proj_element() of the specified range
-		///
-		/// \todo Roll this out to simplify code
-		template <typename Rng,
-		          typename Pred = std::less<>,
-		          typename Proj = ident>
-		inline auto min_proj(Rng  &&prm_range,          ///< The range to query
-		                     Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
-		                     Proj &&prm_proj  = Proj{}  ///< The projection function
-		                     ) {
-			return prm_proj( *min_proj_element(
-				std::forward< Rng  >( prm_range ),
-				std::forward< Pred >( prm_pred  ),
-				std::forward< Proj >( prm_proj  )
-			) );
-		}
+	/// \brief Return the projection of the min_proj_element() of the specified range
+	///
+	/// \todo Roll this out to simplify code
+	template <typename Rng,
+	          typename Pred = std::less<>,
+	          typename Proj = ident>
+	inline auto min_proj(Rng  &&prm_range,          ///< The range to query
+	                     Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+	                     Proj &&prm_proj  = Proj{}  ///< The projection function
+	                     ) {
+		return prm_proj( *min_proj_element(
+			std::forward< Rng  >( prm_range ),
+			std::forward< Pred >( prm_pred  ),
+			std::forward< Proj >( prm_proj  )
+		) );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_MIN_PROJ_ELEMENT_HPP

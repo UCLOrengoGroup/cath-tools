@@ -34,22 +34,10 @@ using namespace ::cath::scan;
 using namespace ::cath::scan::detail;
 using namespace ::cath::geom;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The quad_criteria_test_suite_fixture to assist in testing quad_criteria
-		struct quad_criteria_test_suite_fixture {
-		protected:
-			~quad_criteria_test_suite_fixture() noexcept = default;
-
-		    const angle_type the_zero_angle = ZERO_ANGLE<angle_base_type>;
-		};
-
-	}  // namespace test
-}  // namespace cath
+constexpr auto THE_ZERO_ANGLE = ZERO_ANGLE<angle_base_type>;
 
 /// \brief Unit test quad_criteria
-BOOST_FIXTURE_TEST_SUITE(quad_criteria_test_suite, cath::test::quad_criteria_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(quad_criteria_test_suite)
 
 /// \brief Check that the default quad_criteria built by make_default_quad_criteria() returns the expected values from the getters
 BOOST_AUTO_TEST_CASE(make_default_works) {
@@ -71,8 +59,8 @@ BOOST_AUTO_TEST_CASE(get_standard_works) {
 /// \brief Check that the quad_criteria function operator for a single res_pair works as expected
 BOOST_AUTO_TEST_CASE(singe_res_pair_check_works) {
 	const auto default_quad_criteria = make_default_quad_criteria();
-	BOOST_CHECK_EQUAL( are_not_violated_by( default_quad_criteria, single_struc_res_pair( view_type{ ORIGIN_COORD }, make_identity_quat_rot<frame_quat_rot_type>(), the_zero_angle, the_zero_angle, the_zero_angle, the_zero_angle, 10, 20 ) ), false );
-	BOOST_CHECK_EQUAL( are_not_violated_by( default_quad_criteria, single_struc_res_pair( view_type{ ORIGIN_COORD }, make_identity_quat_rot<frame_quat_rot_type>(), the_zero_angle, the_zero_angle, the_zero_angle, the_zero_angle, 10, 21 ) ), true  );
+	BOOST_CHECK_EQUAL( are_not_violated_by( default_quad_criteria, single_struc_res_pair( view_type{ ORIGIN_COORD }, make_identity_quat_rot<frame_quat_rot_type>(), THE_ZERO_ANGLE, THE_ZERO_ANGLE, THE_ZERO_ANGLE, THE_ZERO_ANGLE, 10, 20 ) ), false );
+	BOOST_CHECK_EQUAL( are_not_violated_by( default_quad_criteria, single_struc_res_pair( view_type{ ORIGIN_COORD }, make_identity_quat_rot<frame_quat_rot_type>(), THE_ZERO_ANGLE, THE_ZERO_ANGLE, THE_ZERO_ANGLE, THE_ZERO_ANGLE, 10, 21 ) ), true  );
 }
 
 /// \todo Test the quad_criteria function operator that tests pairs of res_pairs

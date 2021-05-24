@@ -25,15 +25,12 @@
 
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath { namespace test { } }
-
+using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::cath::test;
 
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The string_parse_tool_test_suite_fixture to assist in testing string_parse_tools
 		struct string_parse_tool_test_suite_fixture : protected global_test_constants {
@@ -43,8 +40,7 @@ namespace cath {
 			const string pdb_line = "ATOM    189  CZ2 TRP A 584       5.401  40.241  -4.793  1.00 10.59";
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(string_parse_tool_test_suite, string_parse_tool_test_suite_fixture)
 

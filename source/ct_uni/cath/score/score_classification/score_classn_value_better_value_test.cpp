@@ -25,24 +25,22 @@
 
 using namespace ::cath::score;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The score_classn_value_better_value_test_suite_fixture to assist in testing score_classn_value_better_value
-		struct score_classn_value_better_value_test_suite_fixture {
-		protected:
-			~score_classn_value_better_value_test_suite_fixture() noexcept = default;
+	/// \brief The score_classn_value_better_value_test_suite_fixture to assist in testing score_classn_value_better_value
+	struct score_classn_value_better_value_test_suite_fixture {
+	protected:
+		~score_classn_value_better_value_test_suite_fixture() noexcept = default;
 
-			const score_classn_value one_false_a = { 1.0, false, "a"};
-			const score_classn_value two_false_a = { 2.0, false, "a"};
-			const score_classn_value one_true_b  = { 1.0, true,  "b"};
-			const score_classn_value two_true_b  = { 2.0, true,  "b"};
-		};
-	}  // namespace test
-}  // namespace cath
+		const score_classn_value one_false_a = { 1.0, false, "a"};
+		const score_classn_value two_false_a = { 2.0, false, "a"};
+		const score_classn_value one_true_b  = { 1.0, true,  "b"};
+		const score_classn_value two_true_b  = { 2.0, true,  "b"};
+	};
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(score_classn_value_better_value_test_suite, cath::test::score_classn_value_better_value_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(score_classn_value_better_value_test_suite, score_classn_value_better_value_test_suite_fixture)
 
 /// \brief Check score_classn_value_better_value acts as expected for higher_is_better (ie higher_is_better of true)
 BOOST_AUTO_TEST_CASE(higher_is_better) {

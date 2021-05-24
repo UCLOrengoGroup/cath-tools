@@ -27,7 +27,9 @@
 
 #include "cath/common/type_aliases.hpp"
 
+// clang-format off
 namespace cath { class display_colour_list; }
+// clang-format on
 
 namespace cath {
 

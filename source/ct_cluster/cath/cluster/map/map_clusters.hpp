@@ -28,22 +28,22 @@
 #include "cath/cluster/cluster_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace clust { class clust_mapping_spec; } }
-namespace cath { namespace clust { class new_cluster_data; } }
-namespace cath { namespace clust { struct map_results; } }
+// clang-format off
+namespace cath::clust { class clust_mapping_spec; }
+namespace cath::clust { class new_cluster_data; }
+namespace cath::clust { struct map_results; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		map_results map_clusters(const old_cluster_data_opt &,
-		                         const new_cluster_data &,
-		                         const clust_mapping_spec &,
-		                         const ostream_ref_opt & = ::std::nullopt );
+	map_results map_clusters(const old_cluster_data_opt &,
+	                         const new_cluster_data &,
+	                         const clust_mapping_spec &,
+	                         const ostream_ref_opt & = ::std::nullopt );
 
-		size_vec get_info_ordered_indices_of_unmapped_new_clusters(const potential_map_vec &,
-		                                                           const new_cluster_data &);
+	size_vec get_info_ordered_indices_of_unmapped_new_clusters(const potential_map_vec &,
+	                                                           const new_cluster_data &);
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_MAP_CLUSTERS_HPP

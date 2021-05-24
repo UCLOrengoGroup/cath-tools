@@ -28,20 +28,7 @@
 using namespace ::cath;
 using namespace ::cath::common;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The temp_check_offset_1_test_suite_fixture to assist in testing check_offset_1
-		struct temp_check_offset_1_test_suite_fixture {
-		protected:
-			~temp_check_offset_1_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(temp_check_offset_1_test_suite, cath::test::temp_check_offset_1_test_suite_fixture)
-
+BOOST_AUTO_TEST_SUITE(temp_check_offset_1_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(zero_throws) {

@@ -26,56 +26,57 @@
 
 #include <memory>
 
-namespace cath { namespace align { class common_atom_selection_policy; } }
-namespace cath { namespace align { class common_residue_selection_policy; } }
+// clang-format off
+namespace cath::align { class common_atom_selection_policy; }
+namespace cath::align { class common_residue_selection_policy; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief Calculate (and represent) dRMSD, a measure based on the
-		///        root of the mean of the squared deviation between the equivalent inter-atom distances.
-		class drmsd_score : public aligned_pair_score {
-		private:
-			friend class boost::serialization::access;
+	/// \brief Calculate (and represent) dRMSD, a measure based on the
+	///        root of the mean of the squared deviation between the equivalent inter-atom distances.
+	class drmsd_score : public aligned_pair_score {
+	private:
+		friend class boost::serialization::access;
 
-			template<class archive> void serialize(archive &ar,
-			                                       const size_t /*version*/
-			                                       ) {
-				ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP( aligned_pair_score );
-				ar & BOOST_SERIALIZATION_NVP( the_coord_handler );
-			}
+		template<class archive> void serialize(archive &ar,
+		                                       const size_t /*version*/
+		                                       ) {
+			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP( aligned_pair_score );
+			ar & BOOST_SERIALIZATION_NVP( the_coord_handler );
+		}
 
-			/// \brief TODOCUMENT
-			detail::score_common_coord_handler the_coord_handler;
+		/// \brief TODOCUMENT
+		detail::score_common_coord_handler the_coord_handler;
 
-			[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
 
-			[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
-			[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
-			[[nodiscard]] std::string       do_description() const final;
-			[[nodiscard]] std::string       do_id_name() const final;
-			[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
-			[[nodiscard]] std::string       do_long_name() const final;
+		[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
+		[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
+		[[nodiscard]] std::string       do_description() const final;
+		[[nodiscard]] std::string       do_id_name() const final;
+		[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
+		[[nodiscard]] std::string       do_long_name() const final;
 
-			// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
+		// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
 
-			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
+		[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
 
-		  public:
-			drmsd_score() = default;
-			drmsd_score(const align::common_residue_selection_policy &,
-			            const align::common_atom_selection_policy &);
+	  public:
+		drmsd_score() = default;
+		drmsd_score(const align::common_residue_selection_policy &,
+		            const align::common_atom_selection_policy &);
 
-			[[nodiscard]] std::string short_suffix_string() const;
-			[[nodiscard]] std::string long_suffix_string() const;
-			[[nodiscard]] std::string description_brackets_string() const;
+		[[nodiscard]] std::string short_suffix_string() const;
+		[[nodiscard]] std::string long_suffix_string() const;
+		[[nodiscard]] std::string description_brackets_string() const;
 
-			[[nodiscard]] const detail::score_common_coord_handler &get_score_common_coord_handler() const;
-		};
+		[[nodiscard]] const detail::score_common_coord_handler &get_score_common_coord_handler() const;
+	};
 
-		bool operator<(const drmsd_score &,
-		               const drmsd_score &);
+	bool operator<(const drmsd_score &,
+	               const drmsd_score &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_DRMSD_SCORE_HPP

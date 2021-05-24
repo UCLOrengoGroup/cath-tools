@@ -23,21 +23,16 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan::detail {
 
-			/// \brief Whether a res_pair's from-residue comes before or after its to-residue
-			enum class res_pair_dirn : bool {
-				INCREASE, ///< The from-residue comes before the to-residue
-				DECREASE  ///< The from-residue comes after  the to-residue
-			};
+	/// \brief Whether a res_pair's from-residue comes before or after its to-residue
+	enum class res_pair_dirn : bool {
+		INCREASE, ///< The from-residue comes before the to-residue
+		DECREASE  ///< The from-residue comes after  the to-residue
+	};
 
-			std::ostream & operator<<(std::ostream &,
-			                          const res_pair_dirn &);
+	::std::ostream &operator<<( ::std::ostream &, const res_pair_dirn & );
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_DIRN_RES_PAIR_DIRN_HPP

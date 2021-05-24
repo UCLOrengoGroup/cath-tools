@@ -24,54 +24,53 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief A reusable options_block for defining blocks of detailed help options
+	/// \brief A reusable options_block for defining blocks of detailed help options
+	///
+	/// The client specifies the list of help options.
+	///
+	/// This is done by passing the ctor a map<string, pair<string, string> > in which
+	///  * each key is a strings containing a help option name
+	///  * each value's first entry is a string containing the option's description for the
+	///    options_description output
+	///  * each value's second entry is a string containing the help that should be output
+	///    if that option is specified
+	class detail_help_options_block final : public options_block {
+	private:
+		using super = options_block;
+
+		using str_str_str_pair_map = std::map<std::string, str_str_pair>;
+		using str_str_str_pair_pair = str_str_str_pair_map::value_type;
+
+		/// \brief The map from option name (string) to pair of description (string) and help (string) that define
+		///        the behaviour of this detail_help_options_block
+		str_str_str_pair_map desc_and_help_of_option_name;
+
+		using str_bool_map = std::map<std::string, bool>;
+		using str_bool_pair = str_bool_map::value_type;
+
+		/// \brief The bool values recording which help options are requested
 		///
-		/// The client specifies the list of help options.
-		///
-		/// This is done by passing the ctor a map<string, pair<string, string> > in which
-		///  * each key is a strings containing a help option name
-		///  * each value's first entry is a string containing the option's description for the
-		///    options_description output
-		///  * each value's second entry is a string containing the help that should be output
-		///    if that option is specified
-		class detail_help_options_block final : public options_block {
-		private:
-			using super = options_block;
+		/// Note that the ctor doesn't have to populate this map with the correct keys
+		/// because that is done automatically by do_add_options_to_description() when
+		/// adding the references to the options_description.
+		str_bool_map values;
 
-			using str_str_str_pair_map = std::map<std::string, str_str_pair>;
-			using str_str_str_pair_pair = str_str_str_pair_map::value_type;
+		[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+		[[nodiscard]] std::string                    do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-			/// \brief The map from option name (string) to pair of description (string) and help (string) that define
-			///        the behaviour of this detail_help_options_block
-			str_str_str_pair_map desc_and_help_of_option_name;
+	  public:
+		explicit detail_help_options_block(str_str_str_pair_map);
 
-			using str_bool_map = std::map<std::string, bool>;
-			using str_bool_pair = str_bool_map::value_type;
+		[[nodiscard]] bool        has_help_string() const;
+		[[nodiscard]] std::string help_string() const;
+	};
 
-			/// \brief The bool values recording which help options are requested
-			///
-			/// Note that the ctor doesn't have to populate this map with the correct keys
-			/// because that is done automatically by do_add_options_to_description() when
-			/// adding the references to the options_description.
-			str_bool_map values;
-
-			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
-			[[nodiscard]] std::string                    do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
-
-		  public:
-			explicit detail_help_options_block(str_str_str_pair_map);
-
-			[[nodiscard]] bool        has_help_string() const;
-			[[nodiscard]] std::string help_string() const;
-		};
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_DETAIL_HELP_OPTIONS_BLOCK_HPP

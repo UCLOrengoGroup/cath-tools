@@ -24,34 +24,32 @@
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 #include "cath/seq/seq_arrow.hpp"
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Represent a continuous region of (sequence) residues that are aligned to each other
-		struct alnd_rgn {
-			/// \brief The start of the aligned region in the first  sequence
-			seq::seq_arrow start_res_a;
+	/// \brief Represent a continuous region of (sequence) residues that are aligned to each other
+	struct alnd_rgn {
+		/// \brief The start of the aligned region in the first  sequence
+		seq::seq_arrow start_res_a;
 
-			/// \brief The start of the aligned region in the second sequence
-			seq::seq_arrow start_res_b;
+		/// \brief The start of the aligned region in the second sequence
+		seq::seq_arrow start_res_b;
 
-			/// \brief The length of the aligned region
-			seq::residx_t length;
+		/// \brief The length of the aligned region
+		seq::residx_t length;
 
-		public:
-			alnd_rgn(seq::seq_arrow,
-			         seq::seq_arrow,
-			         const seq::residx_t &) noexcept;
+	public:
+		alnd_rgn(seq::seq_arrow,
+		         seq::seq_arrow,
+		         const seq::residx_t &) noexcept;
 
-			[[nodiscard]] const seq::seq_arrow &get_start_res_a() const;
-			[[nodiscard]] const seq::seq_arrow &get_start_res_b() const;
-			[[nodiscard]] const seq::residx_t & get_length() const;
-		};
+		[[nodiscard]] const seq::seq_arrow &get_start_res_a() const;
+		[[nodiscard]] const seq::seq_arrow &get_start_res_b() const;
+		[[nodiscard]] const seq::residx_t & get_length() const;
+	};
 
-		std::string to_string(const alnd_rgn &);
-		std::string to_string(const alnd_rgn_vec &);
+	std::string to_string(const alnd_rgn &);
+	std::string to_string(const alnd_rgn_vec &);
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_ALND_RGN_HPP

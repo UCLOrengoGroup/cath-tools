@@ -23,57 +23,55 @@
 
 #include "cath/structure/geometry/coord.hpp"
 
-namespace cath {
-	namespace geom {
+namespace cath::geom {
 
-		/// \brief A simple line class
-		///
-		/// \todo This could be much improved, in particular
-		///
-		/// \todo Come relaxed constexpr support in all supported compilers,
-		///       Improve this class (eg consider: setters, checking dirn has non-zero length)
-		class line final {
-		private:
-			/// \brief A point on the line
-			coord point_on_line;
+	/// \brief A simple line class
+	///
+	/// \todo This could be much improved, in particular
+	///
+	/// \todo Come relaxed constexpr support in all supported compilers,
+	///       Improve this class (eg consider: setters, checking dirn has non-zero length)
+	class line final {
+	private:
+		/// \brief A point on the line
+		coord point_on_line;
 
-			/// \brief A non-zero direction vector along the line (at present, this doesn't have to have length 1)
-			coord dirn;
+		/// \brief A non-zero direction vector along the line (at present, this doesn't have to have length 1)
+		coord dirn;
 
-		public:
-			line() = delete;
+	public:
+		line() = delete;
 
-			/// \brief Ctor
-			constexpr line(coord prm_point_on_line, ///< A point on the line
-			               coord prm_dirn           ///< A non-zero direction vector along the line (at present, this doesn't have to have length 1)
-			               ) : point_on_line{ std::move( prm_point_on_line ) },
-			                   dirn         { std::move( prm_dirn          ) } {
-			}
-
-			/// \brief Getter for point_on_line
-			[[nodiscard]] const coord &get_point_on_line() const {
-				return point_on_line;
-			}
-
-			/// \brief Getter for dirn
-			[[nodiscard]] const coord &get_dirn() const {
-				return dirn;
-			}
-		};
-
-		/// \brief Calculate the point on the specified line that is closest to the specified point
-		inline coord closest_point_on_line_to_point(const line  &prm_line, ///< The line on which to find the point
-		                                            const coord &prm_point ///< The point to get closest to
-		                                            ) {
-			return
-				prm_line.get_point_on_line()
-				+ parallel_component_copy(
-					prm_point - prm_line.get_point_on_line(),
-					prm_line.get_dirn()
-				);
+		/// \brief Ctor
+		constexpr line(coord prm_point_on_line, ///< A point on the line
+		               coord prm_dirn           ///< A non-zero direction vector along the line (at present, this doesn't have to have length 1)
+		               ) : point_on_line{ std::move( prm_point_on_line ) },
+		                   dirn         { std::move( prm_dirn          ) } {
 		}
 
-	} // namespace geom
-} // namespace cath
+		/// \brief Getter for point_on_line
+		[[nodiscard]] const coord &get_point_on_line() const {
+			return point_on_line;
+		}
+
+		/// \brief Getter for dirn
+		[[nodiscard]] const coord &get_dirn() const {
+			return dirn;
+		}
+	};
+
+	/// \brief Calculate the point on the specified line that is closest to the specified point
+	inline coord closest_point_on_line_to_point(const line  &prm_line, ///< The line on which to find the point
+	                                            const coord &prm_point ///< The point to get closest to
+	                                            ) {
+		return
+			prm_line.get_point_on_line()
+			+ parallel_component_copy(
+				prm_point - prm_line.get_point_on_line(),
+				prm_line.get_dirn()
+			);
+	}
+
+} // namespace cath::geom
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_LINE_HPP

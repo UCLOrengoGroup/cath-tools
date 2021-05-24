@@ -30,20 +30,8 @@ using namespace ::std;
 
 using ::boost::lexical_cast;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The ssap_score_accuracy_test_suite_fixture to assist in testing ssap_score_accuracy
-		struct ssap_score_accuracy_test_suite_fixture: protected global_test_constants {
-		protected:
-			~ssap_score_accuracy_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(ssap_score_accuracy_test_suite, cath::test::ssap_score_accuracy_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(ssap_score_accuracy_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

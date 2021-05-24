@@ -24,29 +24,27 @@
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief Handle options for reading in a superposition from a JSON file
-		class superposition_input_options_block final : public options_block {
-		private:
-			using super = options_block;
+	/// \brief Handle options for reading in a superposition from a JSON file
+	class superposition_input_options_block final : public options_block {
+	private:
+		using super = options_block;
 
-			/// \brief The optional JSON superposition input file
-			path_opt json_sup_infile;
+		/// \brief The optional JSON superposition input file
+		path_opt json_sup_infile;
 
-			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
-			[[nodiscard]] std::string                    do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+		[[nodiscard]] std::string                    do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-		  public:
-			[[nodiscard]] const path_opt &get_json_sup_infile() const;
-		};
+	  public:
+		[[nodiscard]] const path_opt &get_json_sup_infile() const;
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_SUPERPOSITION_INPUT_OPTIONS_BLOCK_HPP

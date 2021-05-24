@@ -25,23 +25,23 @@
 
 #include <boost/property_tree/ptree_fwd.hpp>
 
-namespace cath { namespace score { class aligned_pair_score_value_list; } }
+// clang-format off
+namespace cath::score { class aligned_pair_score_value_list; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief TODOCUMENT
-		class score_value_reader final {
-		private:
+	/// \brief TODOCUMENT
+	class score_value_reader final {
+	private:
 
-		public:
-			static aligned_pair_score_value_list read_aligned_pair_score_list_from_property_tree(const boost::property_tree::ptree &);
-			static aligned_pair_score_value_list read(std::istream &);
-			static aligned_pair_score_value_list read(const ::std::filesystem::path &);
-		};
+	public:
+		static aligned_pair_score_value_list read_aligned_pair_score_list_from_property_tree(const boost::property_tree::ptree &);
+		static aligned_pair_score_value_list read(std::istream &);
+		static aligned_pair_score_value_list read(const ::std::filesystem::path &);
+	};
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_LIST_SCORE_VALUE_LIST_READER_SCORE_VALUE_READER_HPP
 

@@ -32,22 +32,10 @@ using namespace ::cath::index;
 using namespace ::cath::index::detail;
 using namespace ::cath::geom;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The vcie_match_criteria_test_suite_fixture to assist in testing vcie_match_criteria
-		struct vcie_match_criteria_test_suite_fixture {
-		protected:
-			~vcie_match_criteria_test_suite_fixture() noexcept = default;
-
-		    const angle_type the_zero_angle = ZERO_ANGLE<angle_base_type>;
-		};
-
-	}  // namespace test
-}  // namespace cath
+constexpr auto THE_ZERO_ANGLE = ZERO_ANGLE<angle_base_type>;
 
 /// \brief Unit test vcie_match_criteria
-BOOST_FIXTURE_TEST_SUITE(vcie_match_criteria_test_suite, cath::test::vcie_match_criteria_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(vcie_match_criteria_test_suite)
 
 /// \brief Check that the default vcie_match_criteria built by make_default_vcie_match_criteria() returns the expected values from the getters
 BOOST_AUTO_TEST_CASE(make_default_works) {
@@ -69,8 +57,8 @@ BOOST_AUTO_TEST_CASE(get_standard_works) {
 /// \brief Check that the vcie_match_criteria function operator for a single view_cache_index_entry works as expected
 BOOST_AUTO_TEST_CASE(singe_view_cache_index_entry_check_works) {
 	const auto default_vcie_match_criteria = make_default_vcie_match_criteria();
-	BOOST_CHECK_EQUAL( default_vcie_match_criteria( view_cache_index_entry( 10, 20, view_type( ORIGIN_COORD ), IDENTITY_ROTATION, the_zero_angle, the_zero_angle, the_zero_angle, the_zero_angle ) ), false );
-	BOOST_CHECK_EQUAL( default_vcie_match_criteria( view_cache_index_entry( 10, 21, view_type( ORIGIN_COORD ), IDENTITY_ROTATION, the_zero_angle, the_zero_angle, the_zero_angle, the_zero_angle ) ), true  );
+	BOOST_CHECK_EQUAL( default_vcie_match_criteria( view_cache_index_entry( 10, 20, view_type( ORIGIN_COORD ), IDENTITY_ROTATION, THE_ZERO_ANGLE, THE_ZERO_ANGLE, THE_ZERO_ANGLE, THE_ZERO_ANGLE ) ), false );
+	BOOST_CHECK_EQUAL( default_vcie_match_criteria( view_cache_index_entry( 10, 21, view_type( ORIGIN_COORD ), IDENTITY_ROTATION, THE_ZERO_ANGLE, THE_ZERO_ANGLE, THE_ZERO_ANGLE, THE_ZERO_ANGLE ) ), true  );
 }
 
 /// \todo Test the vcie_match_criteria function operator that tests pairs of view_cache_index_entries

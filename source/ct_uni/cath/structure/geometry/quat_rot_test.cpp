@@ -54,108 +54,106 @@ static_assert(
 	"quaternion tests must be applied to the type used in scan code"
 );
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The quat_rot_test_suite_fixture to assist in testing quat_rot
-		struct quat_rot_test_suite_fixture : protected global_test_constants {
-		protected:
-			~quat_rot_test_suite_fixture() noexcept = default;
+	/// \brief The quat_rot_test_suite_fixture to assist in testing quat_rot
+	struct quat_rot_test_suite_fixture : protected global_test_constants {
+	protected:
+		~quat_rot_test_suite_fixture() noexcept = default;
 
-			[[nodiscard]] rotation_vec make_all_rotations_between_coords() const;
+		[[nodiscard]] rotation_vec make_all_rotations_between_coords() const;
 
-			template <typename T>
-			vector<quat_rot_impl<T> > speed_test() const;
+		template <typename T>
+		vector<quat_rot_impl<T> > speed_test() const;
 
-			template <typename T>
-			vector<quat_rot_impl<T> > make_all_quat_rots_between_coords() const;
-			[[nodiscard]] doub_doub_pair_vec get_num_degrees_and_distance_1s() const;
+		template <typename T>
+		vector<quat_rot_impl<T> > make_all_quat_rots_between_coords() const;
+		[[nodiscard]] doub_doub_pair_vec get_num_degrees_and_distance_1s() const;
 
-			const coord_list example_coords{ coord_vec{
-				{  1.0000000000000,  0.0000000000000,  0.0000000000000 },
-				{  0.0000000000000,  1.0000000000000,  0.0000000000000 },
-				{  0.0000000000000,  0.0000000000000,  1.0000000000000 },
-				{ 65.9858249434368, 63.9621735856966, 45.1548984813602 },
-		//		{ 66.4112292070971, 67.5423802415938, 31.4274822901101 },
-				{ 39.6225754478113, 96.5897020491870, 32.9884091233001 },
-		//		{ 43.8852218601788, 80.6365120744690, 59.7468007831253 },
-				{ 94.6450202323984, 82.4461683283836, 25.0011455817333 },
-		//		{ 58.3341608029187, 24.4223077180205, 41.2949279615525 },
-				{  9.9823139478932, 65.4564285568000,  9.6871266526090 },
-		//		{ 77.3463733867068, 74.2178851637863, 27.8122348907729 },
-				{ 87.8739995225285, 63.0594667719400, 11.7214853422045 },
-		//		{ 68.2096774515401, 50.1443867910421, 13.0103777419585 },
-				{ 87.3584607495264, 36.3240031030912, 25.2551886993555 },
-		//		{ 59.9520610852828, 91.5203650873085, 25.2456351180143 },
-				{ 24.3720382058324, 21.5176590983852, 84.5428300026544 },
-		//		{ 88.1958578037469, 98.8738986208173, 23.1059680458280 },
-				{ 84.8254493891918, 64.8183702718370, 60.8994132103174 },
-		//		{ 99.8331707398826, 35.5956607016186, 53.4450486217580 },
-				{ 37.0202959607465, 29.1249939081460, 77.1123204960364 },
-		//		{ 24.4687681399256, 15.5748340689978, 72.9988060733383 },
-				{ 94.9420279756755, 91.7826904592900, 74.7498247973137 },
-		//		{ 76.8498353657513, 84.6880307171180, 52.0741712352276 },
-				{ 53.6690233607356, 60.1760632757340,  0.9460322257655 },
-		//		{ 75.0650480194352, 35.0499657463669, 88.7813460811394 },
-				{ 57.8541927710493, 17.6036819051291, 23.2608820482493 },
-		//		{ 71.2773368028202, 42.7593543317659, 28.4354064240787 },
-				{ 23.9898632893496, 22.9157333000522, 48.4138086899325 },
-				{ 72.6671393488573,  4.6865190429724, 73.7396687671755 }
-			} };
+		const coord_list example_coords{ coord_vec{
+			{  1.0000000000000,  0.0000000000000,  0.0000000000000 },
+			{  0.0000000000000,  1.0000000000000,  0.0000000000000 },
+			{  0.0000000000000,  0.0000000000000,  1.0000000000000 },
+			{ 65.9858249434368, 63.9621735856966, 45.1548984813602 },
+	//		{ 66.4112292070971, 67.5423802415938, 31.4274822901101 },
+			{ 39.6225754478113, 96.5897020491870, 32.9884091233001 },
+	//		{ 43.8852218601788, 80.6365120744690, 59.7468007831253 },
+			{ 94.6450202323984, 82.4461683283836, 25.0011455817333 },
+	//		{ 58.3341608029187, 24.4223077180205, 41.2949279615525 },
+			{  9.9823139478932, 65.4564285568000,  9.6871266526090 },
+	//		{ 77.3463733867068, 74.2178851637863, 27.8122348907729 },
+			{ 87.8739995225285, 63.0594667719400, 11.7214853422045 },
+	//		{ 68.2096774515401, 50.1443867910421, 13.0103777419585 },
+			{ 87.3584607495264, 36.3240031030912, 25.2551886993555 },
+	//		{ 59.9520610852828, 91.5203650873085, 25.2456351180143 },
+			{ 24.3720382058324, 21.5176590983852, 84.5428300026544 },
+	//		{ 88.1958578037469, 98.8738986208173, 23.1059680458280 },
+			{ 84.8254493891918, 64.8183702718370, 60.8994132103174 },
+	//		{ 99.8331707398826, 35.5956607016186, 53.4450486217580 },
+			{ 37.0202959607465, 29.1249939081460, 77.1123204960364 },
+	//		{ 24.4687681399256, 15.5748340689978, 72.9988060733383 },
+			{ 94.9420279756755, 91.7826904592900, 74.7498247973137 },
+	//		{ 76.8498353657513, 84.6880307171180, 52.0741712352276 },
+			{ 53.6690233607356, 60.1760632757340,  0.9460322257655 },
+	//		{ 75.0650480194352, 35.0499657463669, 88.7813460811394 },
+			{ 57.8541927710493, 17.6036819051291, 23.2608820482493 },
+	//		{ 71.2773368028202, 42.7593543317659, 28.4354064240787 },
+			{ 23.9898632893496, 22.9157333000522, 48.4138086899325 },
+			{ 72.6671393488573,  4.6865190429724, 73.7396687671755 }
+		} };
 
-		};
+	};
 
-	}  // namespace test
-}  // namespace cath
-
-/// \brief TODOCUMENT
-rotation_vec cath::test::quat_rot_test_suite_fixture::make_all_rotations_between_coords() const {
-	rotation_vec rotations;
-	for (const coord &coord_1 : example_coords) {
-		for (const coord &coord_2 : example_coords) {
-			if ( coord_1 != coord_2 ) {
-				rotations.push_back( rotation_to_x_axis_and_x_y_plane( coord_1, coord_2 ) );
+	/// \brief TODOCUMENT
+	rotation_vec quat_rot_test_suite_fixture::make_all_rotations_between_coords() const {
+		rotation_vec rotations;
+		for (const coord &coord_1 : example_coords) {
+			for (const coord &coord_2 : example_coords) {
+				if ( coord_1 != coord_2 ) {
+					rotations.push_back( rotation_to_x_axis_and_x_y_plane( coord_1, coord_2 ) );
+				}
 			}
 		}
+		return rotations;
 	}
-	return rotations;
-}
 
-/// \brief TODOCUMENT
-template <typename T>
-vector<quat_rot_impl<T> > cath::test::quat_rot_test_suite_fixture::make_all_quat_rots_between_coords() const {
-	const rotation_vec rotations = make_all_rotations_between_coords();
-	vector<quat_rot_impl<T> > quat_rots;
-	for (const rotation &the_rotn : rotations) {
-		quat_rots.push_back( make_quat_rot_from_rotation<T>( the_rotn ) );
+	/// \brief TODOCUMENT
+	template <typename T>
+	vector<quat_rot_impl<T> > quat_rot_test_suite_fixture::make_all_quat_rots_between_coords() const {
+		const rotation_vec rotations = make_all_rotations_between_coords();
+		vector<quat_rot_impl<T> > quat_rots;
+		for (const rotation &the_rotn : rotations) {
+			quat_rots.push_back( make_quat_rot_from_rotation<T>( the_rotn ) );
+		}
+		return quat_rots;
 	}
-	return quat_rots;
-}
+
+	/// \brief TODOCUMENT
+	doub_doub_pair_vec quat_rot_test_suite_fixture::get_num_degrees_and_distance_1s() const {
+		return { {   0.0, 0.00000000000000000000000000000000 },
+		         {  10.0, 0.00380530190825447729848982070244 },
+		         {  20.0, 0.01519224698779192943157503870030 },
+		         {  30.0, 0.03407417371093169748989468170740 },
+		         {  40.0, 0.06030737921409161828197043053730 },
+		         {  50.0, 0.09369221296335002668008440362970 },
+		         {  60.0, 0.13397459621556132117496315525600 },
+		         {  70.0, 0.18084795571100817981055955407900 },
+		         {  80.0, 0.23395555688102194149971882475300 },
+		         {  90.0, 0.29289321881345245393406251377400 },
+		         { 100.0, 0.35721239031346066359002069945400 },
+		         { 110.0, 0.42642356364895389511226325707200 },
+		         { 120.0, 0.49999999999999992367216705702000 },
+		         { 130.0, 0.57738173825930058549304318971100 },
+		         { 140.0, 0.65797985667433116988966207427900 },
+		         { 150.0, 0.74118095489747929641068807660200 },
+		         { 160.0, 0.82635182233306971912034644134300 },
+		         { 170.0, 0.91284425725234203530386242753100 } };
+	}
+
+} // namespace
 
 /// \brief TODOCUMENT
-doub_doub_pair_vec cath::test::quat_rot_test_suite_fixture::get_num_degrees_and_distance_1s() const {
-	return { {   0.0, 0.00000000000000000000000000000000 },
-	         {  10.0, 0.00380530190825447729848982070244 },
-	         {  20.0, 0.01519224698779192943157503870030 },
-	         {  30.0, 0.03407417371093169748989468170740 },
-	         {  40.0, 0.06030737921409161828197043053730 },
-	         {  50.0, 0.09369221296335002668008440362970 },
-	         {  60.0, 0.13397459621556132117496315525600 },
-	         {  70.0, 0.18084795571100817981055955407900 },
-	         {  80.0, 0.23395555688102194149971882475300 },
-	         {  90.0, 0.29289321881345245393406251377400 },
-	         { 100.0, 0.35721239031346066359002069945400 },
-	         { 110.0, 0.42642356364895389511226325707200 },
-	         { 120.0, 0.49999999999999992367216705702000 },
-	         { 130.0, 0.57738173825930058549304318971100 },
-	         { 140.0, 0.65797985667433116988966207427900 },
-	         { 150.0, 0.74118095489747929641068807660200 },
-	         { 160.0, 0.82635182233306971912034644134300 },
-	         { 170.0, 0.91284425725234203530386242753100 } };
-}
-
-/// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(quat_rot_test_suite, cath::test::quat_rot_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(quat_rot_test_suite, quat_rot_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE_TEMPLATE(simple, quat_rot_type, all_quat_rot_types) {

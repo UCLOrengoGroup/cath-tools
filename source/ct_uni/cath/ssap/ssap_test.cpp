@@ -151,7 +151,7 @@ namespace {
 		BOOST_CHECK_EQUAL_RANGES( expected_residues_similar, got_residues_similar );
 	}
 
-}
+} // namespace
 
 /// \todo Should add further regression tests (not least for context_res() )
 //

@@ -28,19 +28,15 @@
 #include "cath/resolve_hits/options/spec/crh_score_spec.hpp"
 #include "cath/resolve_hits/options/spec/crh_segment_spec.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::cath::test;
 
 using ::boost::lexical_cast;
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The full_hit_list_test_suite_fixture to assist in testing full_hit_list
 		struct full_hit_list_test_suite_fixture {
@@ -64,8 +60,7 @@ namespace cath {
 			const full_hit_list eg_full_hit_list = make_eg_full_hit_list();
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(full_hit_list_test_suite, full_hit_list_test_suite_fixture)
 

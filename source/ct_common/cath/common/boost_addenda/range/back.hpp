@@ -24,33 +24,31 @@
 #include <boost/range.hpp>
 //#include <boost/range/begin.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return a non-const reference to the last element of a range
-		///
-		/// This is a non-member function for ranges that don't provide their own back method.
-		/// This is useful for non-member ranges
-		///
-		/// \todo Come C++14 (in GCC > v4.8), switch to std::rbegin in <iterator>
-		template <typename T>
-		inline typename boost::range_reference<T>::type back(T &prm_range ///< The range to query
-		                                                     ) {
-			return * boost::rbegin( prm_range );
-		}
+	/// \brief Return a non-const reference to the last element of a range
+	///
+	/// This is a non-member function for ranges that don't provide their own back method.
+	/// This is useful for non-member ranges
+	///
+	/// \todo Come C++14 (in GCC > v4.8), switch to std::rbegin in <iterator>
+	template <typename T>
+	inline typename boost::range_reference<T>::type back(T &prm_range ///< The range to query
+	                                                     ) {
+		return * boost::rbegin( prm_range );
+	}
 
-		/// \brief Return a const reference to the first element of a range
-		///
-		/// \copydetails back()
-		///
-		/// \todo Come C++14 (in GCC > v4.8), switch to std::crbegin in <iterator>
-		template <typename T>
-		inline typename boost::range_reference<const T>::type back(const T &prm_range ///< The range to query
-		                                                           ) {
-			return * boost::const_rbegin( prm_range );
-		}
+	/// \brief Return a const reference to the first element of a range
+	///
+	/// \copydetails back()
+	///
+	/// \todo Come C++14 (in GCC > v4.8), switch to std::crbegin in <iterator>
+	template <typename T>
+	inline typename boost::range_reference<const T>::type back(const T &prm_range ///< The range to query
+	                                                           ) {
+		return * boost::const_rbegin( prm_range );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_BACK_HPP

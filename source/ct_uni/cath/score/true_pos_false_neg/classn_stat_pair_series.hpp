@@ -23,44 +23,46 @@
 
 #include "cath/score/true_pos_false_neg/classn_stat.hpp"
 
-namespace cath {
-	namespace score {
-		class classn_stat_plotter;
+// clang-format off
+namespace cath::score { class classn_stat_plotter; }
+// clang-format on
+
+namespace cath::score {
+
+	/// \brief TODOCUMENT
+	class classn_stat_pair_series final {
+	private:
+		friend class classn_stat_plotter;
 
 		/// \brief TODOCUMENT
-		class classn_stat_pair_series final {
-		private:
-			friend class classn_stat_plotter;
+		doub_doub_pair_vec data;
 
-			/// \brief TODOCUMENT
-			doub_doub_pair_vec data;
+		/// \brief Name for this series of data
+		///
+		/// This will often be the algorithm or scoring-scheme that generated the scores
+		std::string name;
 
-			/// \brief Name for this series of data
-			///
-			/// This will often be the algorithm or scoring-scheme that generated the scores
-			std::string name;
+	public:
+		using const_iterator = doub_doub_pair_vec_citr;
 
-		public:
-			using const_iterator = doub_doub_pair_vec_citr;
+		explicit classn_stat_pair_series(doub_doub_pair_vec,
+		                                 std::string);
 
-			explicit classn_stat_pair_series(doub_doub_pair_vec,
-			                                 std::string);
+		[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
 
-			[[nodiscard]] bool   empty() const;
-			[[nodiscard]] size_t size() const;
+		const doub_doub_pair & operator[](const size_t &) const;
 
-			const doub_doub_pair & operator[](const size_t &) const;
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
 
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
+		// const doub_doub_pair_vec & get_doub_doub_data() const;
 
-			// const doub_doub_pair_vec & get_doub_doub_data() const;
+		[[nodiscard]] const std::string &get_name() const;
+	};
 
-			[[nodiscard]] const std::string &get_name() const;
-		};
+	double area_under_curve(const classn_stat_pair_series &);
 
-		double area_under_curve(const classn_stat_pair_series &);
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PAIR_SERIES_HPP

@@ -25,36 +25,34 @@
 
 #include "cath/common/debug_numeric_cast.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Make a string_ref from the specified begin and end string iterators
-		inline boost::string_ref make_string_ref(const std::string::const_iterator &prm_begin, ///< A string iterator the start              of the region of string to which the string_ref should refer
-		                                         const std::string::const_iterator &prm_end    ///< A string iterator the end (one-past-end) of the region of string to which the string_ref should refer
-		                                         ) {
-			return {
-				&*prm_begin,
-				debug_numeric_cast<size_t>( std::distance( prm_begin, prm_end ) )
-			};
-		}
+	/// \brief Make a string_ref from the specified begin and end string iterators
+	inline boost::string_ref make_string_ref(const std::string::const_iterator &prm_begin, ///< A string iterator the start              of the region of string to which the string_ref should refer
+	                                         const std::string::const_iterator &prm_end    ///< A string iterator the end (one-past-end) of the region of string to which the string_ref should refer
+	                                         ) {
+		return {
+			&*prm_begin,
+			debug_numeric_cast<size_t>( std::distance( prm_begin, prm_end ) )
+		};
+	}
 
-		/// \brief Make a string_ref from the specified pair of begin and end string iterators
-		inline boost::string_ref make_string_ref(const std::pair<std::string::const_iterator, std::string::const_iterator> &prm_itrs ///< String iterators to the start and end (one-past-end) the region of string to which the string_ref should refer
-		                                         ) {
-			return make_string_ref( prm_itrs.first, prm_itrs.second );
-		}
+	/// \brief Make a string_ref from the specified pair of begin and end string iterators
+	inline boost::string_ref make_string_ref(const std::pair<std::string::const_iterator, std::string::const_iterator> &prm_itrs ///< String iterators to the start and end (one-past-end) the region of string to which the string_ref should refer
+	                                         ) {
+		return make_string_ref( prm_itrs.first, prm_itrs.second );
+	}
 
-		/// \brief Make a string_ref from the specified begin and end string_ref iterators
-		inline boost::string_ref make_string_ref(const boost::string_ref::const_iterator &prm_begin, ///< A string_ref iterator the start              of the region of string_ref to which the string_ref should refer
-		                                         const boost::string_ref::const_iterator &prm_end    ///< A string_ref iterator the end (one-past-end) of the region of string_ref to which the string_ref should refer
-		                                         ) {
-			return {
-				&*prm_begin,
-				debug_numeric_cast<size_t>( std::distance( prm_begin, prm_end ) )
-			};
-		}
+	/// \brief Make a string_ref from the specified begin and end string_ref iterators
+	inline boost::string_ref make_string_ref(const boost::string_ref::const_iterator &prm_begin, ///< A string_ref iterator the start              of the region of string_ref to which the string_ref should refer
+	                                         const boost::string_ref::const_iterator &prm_end    ///< A string_ref iterator the end (one-past-end) of the region of string_ref to which the string_ref should refer
+	                                         ) {
+		return {
+			&*prm_begin,
+			debug_numeric_cast<size_t>( std::distance( prm_begin, prm_end ) )
+		};
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_MAKE_STRING_REF_HPP

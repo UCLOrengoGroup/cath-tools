@@ -23,19 +23,17 @@
 
 #include <filesystem>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return a copy of the specified path in which the extension has been
-		///        replaced with the specified replacement
-		inline ::std::filesystem::path replace_extension_copy(::std::filesystem::path        prm_file,
-		                                                      const ::std::filesystem::path &prm_replacement = ::std::filesystem::path()
-		                                                      ) {
-			prm_file.replace_extension( prm_replacement );
-			return prm_file;
-		}
+	/// \brief Return a copy of the specified path in which the extension has been
+	///        replaced with the specified replacement
+	inline ::std::filesystem::path replace_extension_copy(::std::filesystem::path        prm_file,
+	                                                      const ::std::filesystem::path &prm_replacement = ::std::filesystem::path()
+	                                                      ) {
+		prm_file.replace_extension( prm_replacement );
+		return prm_file;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_FILESYSTEM_REPLACE_EXTENSION_COPY_HPP

@@ -21,17 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HIERARCHY_REF_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HIERARCHY_REF_HPP
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief Whether an hierarchy_value in a hierarchy refers to
-		///        an entry or a cluster in the next-deepest layer
-		enum class hierarchy_ref : bool {
-			ENTRY,  ///< Refers to an entry (ie a leaf node)
-			CLUSTER ///< Refers to a cluster in the next deepest layer
-		};
+	/// \brief Whether an hierarchy_value in a hierarchy refers to
+	///        an entry or a cluster in the next-deepest layer
+	enum class hierarchy_ref : bool {
+		ENTRY,  ///< Refers to an entry (ie a leaf node)
+		CLUSTER ///< Refers to a cluster in the next deepest layer
+	};
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HIERARCHY_REF_HPP

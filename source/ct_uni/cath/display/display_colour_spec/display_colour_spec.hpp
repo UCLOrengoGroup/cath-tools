@@ -25,7 +25,9 @@
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_type_aliases.hpp"
 
-namespace cath { namespace align { class alignment_context; } } 
+// clang-format off
+namespace cath::align { class alignment_context; }
+// clang-format on
 
 namespace cath {
 

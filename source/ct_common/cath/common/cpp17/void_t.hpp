@@ -21,22 +21,18 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_VOID_T_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_VOID_T_HPP
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief Implementation for void_t, below
-			template <typename... Ts>
-			struct make_void {
-				using type = void;
-			};
+	/// \brief Implementation for void_t, below
+	template <typename... Ts>
+	struct make_void {
+		using type = void;
+	};
 
-			/// \brief The standard `void_t` to be added to std in C++17
-			template <typename... Ts>
-			using void_t = typename make_void<Ts...>::type;
+	/// \brief The standard `void_t` to be added to std in C++17
+	template <typename... Ts>
+	using void_t = typename make_void<Ts...>::type;
 
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_VOID_T_HPP

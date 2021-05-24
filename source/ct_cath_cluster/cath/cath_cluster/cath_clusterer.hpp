@@ -26,21 +26,21 @@
 
 #include <iostream>
 
-namespace cath { namespace clust { class cath_cluster_options; } }
+// clang-format off
+namespace cath::clust { class cath_cluster_options; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		void perform_cluster(const str_vec &,
-		                     std::istream & = std::cin,
-		                     std::ostream & = std::cout,
-		                     const opts::parse_sources & = opts::parse_sources::CMND_ENV_AND_FILE);
+	void perform_cluster(const str_vec &,
+	                     std::istream & = std::cin,
+	                     std::ostream & = std::cout,
+	                     const opts::parse_sources & = opts::parse_sources::CMND_ENV_AND_FILE);
 
-		void perform_cluster(const cath_cluster_options &,
-		                     std::istream & = std::cin,
-		                     std::ostream & = std::cout);
+	void perform_cluster(const cath_cluster_options &,
+	                     std::istream & = std::cin,
+	                     std::ostream & = std::cout);
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_CATH_CLUSTERER_HPP

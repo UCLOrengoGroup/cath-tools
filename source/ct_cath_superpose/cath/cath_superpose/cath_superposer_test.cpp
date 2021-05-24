@@ -55,115 +55,114 @@ using ::std::regex;
 using ::std::string;
 using ::std::stringstream;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The cath_superposer_test_suite_fixture to assist in testing cath_superposer
-		struct cath_superposer_test_suite_fixture : protected global_test_constants {
-		protected:
-			~cath_superposer_test_suite_fixture() noexcept = default;
+	/// \brief The cath_superposer_test_suite_fixture to assist in testing cath_superposer
+	struct cath_superposer_test_suite_fixture : protected global_test_constants {
+	protected:
+		~cath_superposer_test_suite_fixture() noexcept = default;
 
-		public:
-			const path MULTIPLE_B4DXN4_MODELS_FILE          { TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.multiple_END_separated_models.pdb" };
-			const path CORRECT_B4DXN4_STDOUT_SUP_FILE       { TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.multiple_superposed_models.pdb"    };
-			const path CORRECT_B4DXN4_SINGLE_GRAD_PYMOL_FILE{ TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.single_gradient_colour.pml"        };
-			const path MULTIPLE_E9PB15_MODELS_FILE          { TEST_RESIDUE_IDS_DATA_DIR()   / "E9PB15.multiple_END_separated_models.pdb" };
-			const path CORRECT_E9PB15_PYMOL_SUP_FILE        { TEST_RESIDUE_IDS_DATA_DIR()   / "E9PB15.multiple_superposed_models.pml"    };
-			const path CORRECT_Q9HAU8_PYMOL_SUP_FILE        { TEST_RESIDUE_IDS_DATA_DIR()   / "Q9HAU8.multiple_superposed_models.pml"    };
-			const path CORRECT_3_90_400_10_PYMOL_SUP_FILE   { TEST_MULTI_SSAP_SUPERPOSE_DIR() / "3.90.400.10.pml"                          };
+	public:
+		const path MULTIPLE_B4DXN4_MODELS_FILE          { TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.multiple_END_separated_models.pdb" };
+		const path CORRECT_B4DXN4_STDOUT_SUP_FILE       { TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.multiple_superposed_models.pdb"    };
+		const path CORRECT_B4DXN4_SINGLE_GRAD_PYMOL_FILE{ TEST_RESIDUE_IDS_DATA_DIR()   / "B4DXN4.single_gradient_colour.pml"        };
+		const path MULTIPLE_E9PB15_MODELS_FILE          { TEST_RESIDUE_IDS_DATA_DIR()   / "E9PB15.multiple_END_separated_models.pdb" };
+		const path CORRECT_E9PB15_PYMOL_SUP_FILE        { TEST_RESIDUE_IDS_DATA_DIR()   / "E9PB15.multiple_superposed_models.pml"    };
+		const path CORRECT_Q9HAU8_PYMOL_SUP_FILE        { TEST_RESIDUE_IDS_DATA_DIR()   / "Q9HAU8.multiple_superposed_models.pml"    };
+		const path CORRECT_3_90_400_10_PYMOL_SUP_FILE   { TEST_MULTI_SSAP_SUPERPOSE_DIR() / "3.90.400.10.pml"                          };
 
-			/// \brief The temporary output file
-			const temp_file temp_cath_superposer_output_file{ ".temp_cath_superposer_test_file.%%%%-%%%%-%%%%-%%%%" };
+		/// \brief The temporary output file
+		const temp_file temp_cath_superposer_output_file{ ".temp_cath_superposer_test_file.%%%%-%%%%-%%%%-%%%%" };
 
-			/// \brief The path of temporary output file
-			const path temp_output_filename = get_filename( temp_cath_superposer_output_file );
+		/// \brief The path of temporary output file
+		const path temp_output_filename = get_filename( temp_cath_superposer_output_file );
 
-			/// \brief The name of the cath_superpose executable
-			///
-			/// This doesn't really matter much and is just a dummy value in the tests
-			const string CATH_SUPERPOSE_EXE = "cath-superpose";
+		/// \brief The name of the cath_superpose executable
+		///
+		/// This doesn't really matter much and is just a dummy value in the tests
+		const string CATH_SUPERPOSE_EXE = "cath-superpose";
 
-			/// \brief An empty stdin stream
-			istringstream empty_stdin;
+		/// \brief An empty stdin stream
+		istringstream empty_stdin;
 
-			/// \brief One of the test directories
-			const path orient_backbone_test_dir = TEST_SOURCE_DATA_DIR() / "orient" / "backbone_complete";
+		/// \brief One of the test directories
+		const path orient_backbone_test_dir = TEST_SOURCE_DATA_DIR() / "orient" / "backbone_complete";
 
-			void check_cath_superposer_use_case(const str_vec &,
-			                                    istream &,
-			                                    const path &,
-			                                    const bool &);
+		void check_cath_superposer_use_case(const str_vec &,
+		                                    istream &,
+		                                    const path &,
+		                                    const bool &);
 
-			void check_cath_superposer_std_in_use_case(const str_vec &,
-			                                           const path &,
-			                                           const path &,
-			                                           const bool &);
-		};
+		void check_cath_superposer_std_in_use_case(const str_vec &,
+		                                           const path &,
+		                                           const path &,
+		                                           const bool &);
+	};
 
-	}  // namespace test
-}  // namespace cath
 
-void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
-                                                                                    istream       &prm_istream,              ///< TODOCUMENT
-                                                                                    const path    &prm_expected_output_file, ///< TODOCUMENT
-                                                                                    const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
-                                                                                    ) {
-	argc_argv_faker faked_argc_and_argv(prm_command_line_args);
+	void cath_superposer_test_suite_fixture::check_cath_superposer_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
+	                                                                        istream       &prm_istream,              ///< TODOCUMENT
+	                                                                        const path    &prm_expected_output_file, ///< TODOCUMENT
+	                                                                        const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
+	                                                                        ) {
+		argc_argv_faker faked_argc_and_argv(prm_command_line_args);
 
-	const auto my_cath_superpose_options = make_and_parse_options<cath_superpose_options>(
-		faked_argc_and_argv.get_argc(),
-		faked_argc_and_argv.get_argv(),
-		parse_sources::CMND_LINE_ONLY
-	);
-
-	// Prepare an ostringstream to capture the output
-	stringstream test_stdout;
-	stringstream test_stderr;
-
-	// Perform the superposition and then close the input file
-	cath_superposer::superpose(my_cath_superpose_options, prm_istream, test_stdout, test_stderr);
-
-	if ( prm_outputs_to_temp_file ) {
-		const auto output_file = temp_output_filename;
-		if ( ! exists( output_file ) )  {
-			::spdlog::error( R"(cath-superpose command did not produce output file. Got stdout is: "{}". Got stderr is: "{}")",
-			                 test_stdout.str(),
-			                 test_stderr.str() );
-		}
-
-		// Blank out the version number in the superposition
-		regex_replace_file(
-			output_file,
-			regex{ R"(cath-superpose \((v\d+\.\d+\.\d+\-\d+\-g?\w{8})?\))" },
-			"cath-superpose (vX.X.X-X-XXXXXXXX)"
+		const auto my_cath_superpose_options = make_and_parse_options<cath_superpose_options>(
+			faked_argc_and_argv.get_argc(),
+			faked_argc_and_argv.get_argv(),
+			parse_sources::CMND_LINE_ONLY
 		);
 
-		BOOST_CHECK_FILES_EQUAL(              output_file, prm_expected_output_file );
-	}
-	else {
-		BOOST_CHECK_ISTREAM_AND_FILE_EQUAL(              test_stdout, "stdout_from_cath_superpose", prm_expected_output_file );
-	}
-}
+		// Prepare an ostringstream to capture the output
+		stringstream test_stdout;
+		stringstream test_stderr;
 
-void cath::test::cath_superposer_test_suite_fixture::check_cath_superposer_std_in_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
-                                                                                           const path    &prm_input_file,           ///< TODOCUMENT
-                                                                                           const path    &prm_expected_output_file, ///< TODOCUMENT
-                                                                                           const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
-                                                                                           ) {
-	// Prepare an ifstream to read input from the input file
-	ifstream stdin_like_ifstream = open_ifstream( prm_input_file );
-	check_cath_superposer_use_case(
-		prm_command_line_args,
-		stdin_like_ifstream,
-		prm_expected_output_file,
-		prm_outputs_to_temp_file
-	);
-	stdin_like_ifstream.close();
-}
+		// Perform the superposition and then close the input file
+		cath_superposer::superpose(my_cath_superpose_options, prm_istream, test_stdout, test_stderr);
+
+		if ( prm_outputs_to_temp_file ) {
+			const auto output_file = temp_output_filename;
+			if ( ! exists( output_file ) )  {
+				::spdlog::error( R"(cath-superpose command did not produce output file. Got stdout is: "{}". Got stderr is: "{}")",
+				                 test_stdout.str(),
+				                 test_stderr.str() );
+			}
+
+			// Blank out the version number in the superposition
+			regex_replace_file(
+				output_file,
+				regex{ R"(cath-superpose \((v\d+\.\d+\.\d+\-\d+\-g?\w{8})?\))" },
+				"cath-superpose (vX.X.X-X-XXXXXXXX)"
+			);
+
+			BOOST_CHECK_FILES_EQUAL(              output_file, prm_expected_output_file );
+		}
+		else {
+			BOOST_CHECK_ISTREAM_AND_FILE_EQUAL(              test_stdout, "stdout_from_cath_superpose", prm_expected_output_file );
+		}
+	}
+
+	void cath_superposer_test_suite_fixture::check_cath_superposer_std_in_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
+	                                                                               const path    &prm_input_file,           ///< TODOCUMENT
+	                                                                               const path    &prm_expected_output_file, ///< TODOCUMENT
+	                                                                               const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
+	                                                                               ) {
+		// Prepare an ifstream to read input from the input file
+		ifstream stdin_like_ifstream = open_ifstream( prm_input_file );
+		check_cath_superposer_use_case(
+			prm_command_line_args,
+			stdin_like_ifstream,
+			prm_expected_output_file,
+			prm_outputs_to_temp_file
+		);
+		stdin_like_ifstream.close();
+	}
+
+} // namespace
 
 /// \TODO Remove hard-coded option name strings
 
-BOOST_FIXTURE_TEST_SUITE(cath_superposer_test_suite, cath::test::cath_superposer_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(cath_superposer_test_suite, cath_superposer_test_suite_fixture)
 
 /// \brief
 BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {

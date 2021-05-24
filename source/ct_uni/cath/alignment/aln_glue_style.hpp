@@ -21,17 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALN_GLUE_STYLE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALN_GLUE_STYLE_HPP
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief The style of approach to glueing alignments together
-		enum class aln_glue_style : char {
-			INCREMENTALLY_WITH_PAIR_REFINING, ///< Incrementally glue in alignments that add one entry and then refine just that new alignment
-			SIMPLY,                           ///< Just glue the alignments together
-			WITH_HEAVY_REFINING               ///< Do oodles of really heavy alignment
-		};
+	/// \brief The style of approach to glueing alignments together
+	enum class aln_glue_style : char {
+		INCREMENTALLY_WITH_PAIR_REFINING, ///< Incrementally glue in alignments that add one entry and then refine just that new alignment
+		SIMPLY,                           ///< Just glue the alignments together
+		WITH_HEAVY_REFINING               ///< Do oodles of really heavy alignment
+	};
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALN_GLUE_STYLE_HPP

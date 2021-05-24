@@ -23,24 +23,22 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief The outcome of trying to classify positives/negatives
-		enum class classn_outcome : char {
-			TRUE_POSITIVE,  ///< A correct    identification of a positive as a positive
-			TRUE_NEGATIVE,  ///< A correct    identification of a negative as a negative
-			FALSE_NEGATIVE, ///< An incorrect identification of a positive as a negative
-			FALSE_POSITIVE  ///< An incorrect identification of a negative as a positive
-		};
+	/// \brief The outcome of trying to classify positives/negatives
+	enum class classn_outcome : char {
+		TRUE_POSITIVE,  ///< A correct    identification of a positive as a positive
+		TRUE_NEGATIVE,  ///< A correct    identification of a negative as a negative
+		FALSE_NEGATIVE, ///< An incorrect identification of a positive as a negative
+		FALSE_POSITIVE  ///< An incorrect identification of a negative as a positive
+	};
 
-		classn_outcome outcome_of_correct_and_decision(const bool &,
-		                                               const bool &);
+	classn_outcome outcome_of_correct_and_decision(const bool &,
+	                                               const bool &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const classn_outcome &);
+	std::ostream & operator<<(std::ostream &,
+	                          const classn_outcome &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_OUTCOME_HPP

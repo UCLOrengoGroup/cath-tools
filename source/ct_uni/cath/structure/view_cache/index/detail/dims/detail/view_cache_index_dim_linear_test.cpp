@@ -52,20 +52,8 @@ using namespace ::std;
 
 /// \todonow Tidy up this file
 
-namespace cath {
-	namespace test {
-
-		/// \brief The view_cache_index_dim_linear_test_suite_fixture to assist in testing view_cache_index_dim_linear
-		struct view_cache_index_dim_linear_test_suite_fixture {
-		protected:
-			~view_cache_index_dim_linear_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(view_cache_index_dim_linear_test_suite, cath::test::view_cache_index_dim_linear_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(view_cache_index_dim_linear_test_suite)
 
 // template <size_t N> class TNS;
 // template <int    N> class TNI;

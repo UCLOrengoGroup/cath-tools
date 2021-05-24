@@ -36,59 +36,57 @@ using namespace ::std;
 
 using ::boost::irange;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The less_than_helper_test_suite_fixture to assist in testing less_than_helper
-		struct less_than_helper_test_suite_fixture : protected global_test_constants {
-		protected:
-			~less_than_helper_test_suite_fixture() noexcept = default;
-
-			/// \brief TODOCUMENT
-			using test_type     = std::tuple<size_t, size_t, size_t>;
-
-			/// \brief TODOCUMENT
-			using test_type_vec = std::vector<test_type>;
-
-			/// \brief TODOCUMENT
-			[[nodiscard]] bool less_than_using_helper( const test_type &prm_helper_test_type_a, ///< TODOCUMENT
-			                                           const test_type &prm_helper_test_type_b  ///< TODOCUMENT
-			) const;
-
-			/// \brief TODOCUMENT
-			[[nodiscard]] test_type_vec make_examples() const;
-		};
+	/// \brief The less_than_helper_test_suite_fixture to assist in testing less_than_helper
+	struct less_than_helper_test_suite_fixture : protected global_test_constants {
+	protected:
+		~less_than_helper_test_suite_fixture() noexcept = default;
 
 		/// \brief TODOCUMENT
-		bool less_than_helper_test_suite_fixture::less_than_using_helper(const test_type &prm_helper_test_type_a, ///< TODOCUMENT
-		                                                                 const test_type &prm_helper_test_type_b  ///< TODOCUMENT
-		                                                                 ) const {
-			auto the_helper = make_less_than_helper( prm_helper_test_type_a, prm_helper_test_type_b );
-			the_helper.register_comparison_field( [] (const test_type &x) { return get<0>( x ); } );
-			the_helper.register_comparison_field( [] (const test_type &x) { return get<1>( x ); } );
-			the_helper.register_comparison_field( [] (const test_type &x) { return get<2>( x ); } );
-			return final_less_than_result( the_helper );
-		}
-
+		using test_type     = std::tuple<size_t, size_t, size_t>;
 
 		/// \brief TODOCUMENT
-		less_than_helper_test_suite_fixture::test_type_vec less_than_helper_test_suite_fixture::make_examples() const {
-			test_type_vec examples;
-			for (const size_t ctr_1 : irange( 4_z, 6_z) ) {
-				for (const size_t ctr_2 : irange( 4_z, 6_z) ) {
-					for (const size_t ctr_3 : irange( 4_z, 6_z) ) {
-						examples.emplace_back( ctr_1, ctr_2, ctr_3 );
-					}
+		using test_type_vec = std::vector<test_type>;
+
+		/// \brief TODOCUMENT
+		[[nodiscard]] bool less_than_using_helper( const test_type &prm_helper_test_type_a, ///< TODOCUMENT
+		                                           const test_type &prm_helper_test_type_b  ///< TODOCUMENT
+		) const;
+
+		/// \brief TODOCUMENT
+		[[nodiscard]] test_type_vec make_examples() const;
+	};
+
+	/// \brief TODOCUMENT
+	bool less_than_helper_test_suite_fixture::less_than_using_helper(const test_type &prm_helper_test_type_a, ///< TODOCUMENT
+	                                                                 const test_type &prm_helper_test_type_b  ///< TODOCUMENT
+	                                                                 ) const {
+		auto the_helper = make_less_than_helper( prm_helper_test_type_a, prm_helper_test_type_b );
+		the_helper.register_comparison_field( [] (const test_type &x) { return get<0>( x ); } );
+		the_helper.register_comparison_field( [] (const test_type &x) { return get<1>( x ); } );
+		the_helper.register_comparison_field( [] (const test_type &x) { return get<2>( x ); } );
+		return final_less_than_result( the_helper );
+	}
+
+
+	/// \brief TODOCUMENT
+	less_than_helper_test_suite_fixture::test_type_vec less_than_helper_test_suite_fixture::make_examples() const {
+		test_type_vec examples;
+		for (const size_t ctr_1 : irange( 4_z, 6_z) ) {
+			for (const size_t ctr_2 : irange( 4_z, 6_z) ) {
+				for (const size_t ctr_3 : irange( 4_z, 6_z) ) {
+					examples.emplace_back( ctr_1, ctr_2, ctr_3 );
 				}
 			}
-			return examples;
 		}
+		return examples;
+	}
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(less_than_helper_test_suite, cath::test::less_than_helper_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(less_than_helper_test_suite, less_than_helper_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

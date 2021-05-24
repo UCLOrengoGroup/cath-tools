@@ -23,17 +23,17 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace common { class id_of_str_bidirnl; } }
+// clang-format off
+namespace cath::common { class id_of_str_bidirnl; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		size_vec get_sorting_scores(const common::id_of_str_bidirnl &,
-		                            const doub_vec &);
+	size_vec get_sorting_scores(const common::id_of_str_bidirnl &,
+	                            const doub_vec &);
 
-		size_vec get_sorting_scores(const common::id_of_str_bidirnl &);
+	size_vec get_sorting_scores(const common::id_of_str_bidirnl &);
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_GET_SORTING_SCORES_HPP

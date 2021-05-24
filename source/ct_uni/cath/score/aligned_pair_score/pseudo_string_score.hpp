@@ -24,52 +24,51 @@
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
 #include "cath/score/aligned_pair_score/detail/score_common_coord_handler.hpp"
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief .
-		///
-		/// \ingroup cath_score_aligned_pair_score_group
-		class pseudo_string_score : public aligned_pair_score {
-		private:
-			friend class boost::serialization::access;
+	/// \brief .
+	///
+	/// \ingroup cath_score_aligned_pair_score_group
+	class pseudo_string_score : public aligned_pair_score {
+	private:
+		friend class boost::serialization::access;
 
-			template<class archive> void serialize(archive &ar,
-			                                       const size_t /*version*/
-			                                       ) {
-				ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP( aligned_pair_score );
-				ar & BOOST_SERIALIZATION_NVP( score_name             );
-				ar & BOOST_SERIALIZATION_NVP( higher_is_better_value );
-			}
+		template<class archive> void serialize(archive &ar,
+		                                       const size_t /*version*/
+		                                       ) {
+			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP( aligned_pair_score );
+			ar & BOOST_SERIALIZATION_NVP( score_name             );
+			ar & BOOST_SERIALIZATION_NVP( higher_is_better_value );
+		}
 
-			/// \brief TODOCUMENT
-			std::string score_name;
+		/// \brief TODOCUMENT
+		std::string score_name;
 
-			/// \brief TODOCUMENT
-			boost::logic::tribool higher_is_better_value;
+		/// \brief TODOCUMENT
+		boost::logic::tribool higher_is_better_value;
 
-			[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
 
-			[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
-			[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
-			[[nodiscard]] std::string       do_description() const final;
-			[[nodiscard]] std::string       do_id_name() const final;
-			[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
-			[[nodiscard]] std::string       do_long_name() const final;
-			[[nodiscard]] std::string       do_reference() const final;
+		[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
+		[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
+		[[nodiscard]] std::string       do_description() const final;
+		[[nodiscard]] std::string       do_id_name() const final;
+		[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
+		[[nodiscard]] std::string       do_long_name() const final;
+		[[nodiscard]] std::string       do_reference() const final;
 
-			// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
+		// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
 
-			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
+		[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
 
-		  public:
-			explicit pseudo_string_score(std::string,
-			                             boost::logic::tribool);
-		};
+	  public:
+		explicit pseudo_string_score(std::string,
+		                             boost::logic::tribool);
+	};
 
-		bool operator<(const pseudo_string_score &,
-		               const pseudo_string_score &);
+	bool operator<(const pseudo_string_score &,
+	               const pseudo_string_score &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_PSEUDO_STRING_SCORE_HPP

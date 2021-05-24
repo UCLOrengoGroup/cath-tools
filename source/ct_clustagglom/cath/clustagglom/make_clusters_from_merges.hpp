@@ -26,33 +26,33 @@
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace clust { struct hierarchy; } }
-namespace cath { namespace common { class id_of_str_bidirnl; } }
+// clang-format off
+namespace cath::clust { struct hierarchy; }
+namespace cath::common { class id_of_str_bidirnl; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
-		namespace detail {
+namespace cath::clust {
+	namespace detail {
 
-			merge_vec_citr_vec calc_merge_cutoff_boundaries(const merge_vec &,
-			                                                const strength_vec &);
+		merge_vec_citr_vec calc_merge_cutoff_boundaries(const merge_vec &,
+		                                                const strength_vec &);
 
-		} // namespace detail
+	} // namespace detail
 
-		hierarchy make_clusters_from_merges(const merge_vec &,
-		                                    const item_idx &,
-		                                    const strength_vec &);
+	hierarchy make_clusters_from_merges(const merge_vec &,
+	                                    const item_idx &,
+	                                    const strength_vec &);
 
-		hierarchy make_clusters_from_merges_and_sort(const merge_vec &,
-		                                             const size_vec &,
-		                                             const strength_vec &);
-
-
-		void write_cluster(const ::std::filesystem::path &,
-		                   const hierarchy &,
-		                   const common::id_of_str_bidirnl &);
+	hierarchy make_clusters_from_merges_and_sort(const merge_vec &,
+	                                             const size_vec &,
+	                                             const strength_vec &);
 
 
-	} // namespace clust
-} // namespace cath
+	void write_cluster(const ::std::filesystem::path &,
+	                   const hierarchy &,
+	                   const common::id_of_str_bidirnl &);
+
+
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_MAKE_CLUSTERS_FROM_MERGES_HPP

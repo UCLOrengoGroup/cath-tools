@@ -23,13 +23,9 @@
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_list.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
-using namespace ::cath::test;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The display_colour_list_test_suite_fixture to assist in testing display_colour_list_test
 		struct display_colour_list_test_suite_fixture {
@@ -40,8 +36,7 @@ namespace cath {
 			static constexpr size_t NUM_COLOURS_IN_DEFAULT_COLOURS_STRING = 23;
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(display_colour_list_test_suite, display_colour_list_test_suite_fixture)
 

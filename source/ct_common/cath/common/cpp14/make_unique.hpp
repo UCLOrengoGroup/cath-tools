@@ -23,27 +23,26 @@
 
 #include <memory>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		template <typename T, typename... Args>
-		std::unique_ptr<T> make_unique(Args&&... args
-		                               ) {
-			return std::unique_ptr<T>(
-				new T( std::forward<Args>( args ) ... )
-			);
-		}
-		
-		/// \brief TODOCUMENT
-		template <typename B, typename T, typename... Args>
-		std::unique_ptr<B> make_base_unique(Args&&... args
-		                                    ) {
-			return std::unique_ptr<B>(
-				new T( std::forward<Args>( args ) ... )
-			);
-		}
-	} // namespace common
-} // namespace cath
+	/// \brief TODOCUMENT
+	template <typename T, typename... Args>
+	std::unique_ptr<T> make_unique(Args&&... args
+	                               ) {
+		return std::unique_ptr<T>(
+			new T( std::forward<Args>( args ) ... )
+		);
+	}
+	
+	/// \brief TODOCUMENT
+	template <typename B, typename T, typename... Args>
+	std::unique_ptr<B> make_base_unique(Args&&... args
+	                                    ) {
+		return std::unique_ptr<B>(
+			new T( std::forward<Args>( args ) ... )
+		);
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP14_MAKE_UNIQUE_HPP

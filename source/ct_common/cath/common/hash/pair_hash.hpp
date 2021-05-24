@@ -23,22 +23,20 @@
 
 #include <functional>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Hashing for pairs of elements
-		struct pair_hash {
-		public:
-			/// \brief Generic function operator for hashing a pair by
-			///        combining the results of a standard hash of each value
-			template <typename T, typename U>
-			size_t operator()(const std::pair<T, U> &prm_pair ///< The
-			                  ) const {
-				return std::hash<T>()( prm_pair.first ) ^ std::hash<U>()( prm_pair.second );
-			}
-		};
+	/// \brief Hashing for pairs of elements
+	struct pair_hash {
+	public:
+		/// \brief Generic function operator for hashing a pair by
+		///        combining the results of a standard hash of each value
+		template <typename T, typename U>
+		size_t operator()(const std::pair<T, U> &prm_pair ///< The
+		                  ) const {
+			return std::hash<T>()( prm_pair.first ) ^ std::hash<U>()( prm_pair.second );
+		}
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_HASH_PAIR_HASH_HPP

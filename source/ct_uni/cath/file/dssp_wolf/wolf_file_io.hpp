@@ -24,13 +24,13 @@
 #include <filesystem>
 #include <vector>
 
-namespace cath { namespace file { class wolf_file; } }
+// clang-format off
+namespace cath::file { class wolf_file; }
+// clang-format on
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		wolf_file read_wolf(const ::std::filesystem::path &);
+	wolf_file read_wolf(const ::std::filesystem::path &);
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP

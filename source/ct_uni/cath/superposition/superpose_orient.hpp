@@ -23,46 +23,48 @@
 
 #include "cath/structure/structure_type_aliases.hpp"
 
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace file { class pdb_list; } }
-namespace cath { namespace geom { class coord_list; } }
-namespace cath { namespace sup { class superposition; } }
+// clang-format off
+namespace cath::align { class alignment; }
+namespace cath::file { class pdb_list; }
+namespace cath::geom { class coord_list; }
+namespace cath::sup { class superposition; }
+// clang-format on
 
-namespace cath {
-	namespace sup {
-		namespace detail {
+namespace cath::sup {
 
-			template <typename Fn>
-			geom::coord_list get_superposed_filtered_coords_in_aln_order(const superposition &,
-			                                                             const align::alignment &,
-			                                                             const file::pdb_list &,
-			                                                             Fn &&);
+	namespace detail {
 
-		} // namespace detail
+		template <typename Fn>
+		geom::coord_list get_superposed_filtered_coords_in_aln_order(const superposition &,
+		                                                             const align::alignment &,
+		                                                             const file::pdb_list &,
+		                                                             Fn &&);
 
-		geom::coord_list get_coords_to_orient(const superposition &,
-		                                      const align::alignment &,
-		                                      const file::pdb_list &);
+	} // namespace detail
 
-		geom::coord_rot_pair get_orienting_transformation(const superposition &,
-		                                                  const align::alignment &,
-		                                                  const file::pdb_list &);
+	geom::coord_list get_coords_to_orient(const superposition &,
+	                                      const align::alignment &,
+	                                      const file::pdb_list &);
 
-		void orient_superposition(superposition &,
-		                          const geom::coord_list &);
+	geom::coord_rot_pair get_orienting_transformation(const superposition &,
+	                                                  const align::alignment &,
+	                                                  const file::pdb_list &);
 
-		superposition orient_superposition_copy(superposition,
-		                                        const geom::coord_list &);
+	void orient_superposition(superposition &,
+	                          const geom::coord_list &);
+
+	superposition orient_superposition_copy(superposition,
+	                                        const geom::coord_list &);
 
 
-		void orient_superposition(superposition &,
-		                          const align::alignment &,
-		                          const file::pdb_list &);
+	void orient_superposition(superposition &,
+	                          const align::alignment &,
+	                          const file::pdb_list &);
 
-		superposition orient_superposition_copy(superposition,
-		                                        const align::alignment &,
-		                                        const file::pdb_list &);
+	superposition orient_superposition_copy(superposition,
+	                                        const align::alignment &,
+	                                        const file::pdb_list &);
 
-	} // namespace sup
-} // namespace cath
+} // namespace cath::sup
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSE_ORIENT_HPP

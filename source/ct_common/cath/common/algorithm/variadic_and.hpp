@@ -21,49 +21,47 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_VARIADIC_AND_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_VARIADIC_AND_HPP
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief One argument implementation for and-ing together all arguments
-			constexpr bool variadic_and_impl(const bool &arg ///< The argument to and together
-			                                 ) {
-				return arg;
+		/// \brief One argument implementation for and-ing together all arguments
+		constexpr bool variadic_and_impl(const bool &arg ///< The argument to and together
+		                                 ) {
+			return arg;
+		}
+
+		/// \brief Two+ argument implementation for and-ing together all arguments
+		template <typename T, typename U, typename... Vs>
+		constexpr bool variadic_and_impl(const T  &prm_1,  ///< The first argument to and together
+		                                 const U  &prm_2,  ///< The second argument to and together
+		                                 const Vs &...args ///< Any remaining arguments to and together
+		                                 ) {
+			return prm_1 && variadic_and_impl( prm_2, args... );
+		}
+
+		/// \brief Function object to logically "and" all the arguments
+		///
+		/// This isn't very smart about the arguments being bools - just use bools
+		///
+		/// \todo Come C++17, remove this and replace all uses with a suitable fold expression
+		struct variadic_and_fn final {
+
+			/// \brief Logically "and" all the arguments
+			template <typename... Ts>
+			constexpr bool operator()(const Ts &...args ///< The arguments to logically "and"
+			                          ) const {
+				return variadic_and_impl( args... );
 			}
 
-			/// \brief Two+ argument implementation for and-ing together all arguments
-			template <typename T, typename U, typename... Vs>
-			constexpr bool variadic_and_impl(const T  &prm_1,  ///< The first argument to and together
-			                                 const U  &prm_2,  ///< The second argument to and together
-			                                 const Vs &...args ///< Any remaining arguments to and together
-			                                 ) {
-				return prm_1 && variadic_and_impl( prm_2, args... );
-			}
+			variadic_and_fn()                        = delete;
+			variadic_and_fn(const variadic_and_fn &) = delete;
+			void operator=(const variadic_and_fn &)  = delete;
+		};
 
-			/// \brief Function object to logically "and" all the arguments
-			///
-			/// This isn't very smart about the arguments being bools - just use bools
-			///
-			/// \todo Come C++17, remove this and replace all uses with a suitable fold expression
-			struct variadic_and_fn final {
+	} // namespace detail
 
-				/// \brief Logically "and" all the arguments
-				template <typename... Ts>
-				constexpr bool operator()(const Ts &...args ///< The arguments to logically "and"
-				                          ) const {
-					return variadic_and_impl( args... );
-				}
+	inline constexpr detail::variadic_and_fn variadic_and{};
 
-				variadic_and_fn()                        = delete;
-				variadic_and_fn(const variadic_and_fn &) = delete;
-				void operator=(const variadic_and_fn &)  = delete;
-			};
-
-		} // namespace detail
-
-		inline constexpr detail::variadic_and_fn variadic_and{};
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_VARIADIC_AND_HPP

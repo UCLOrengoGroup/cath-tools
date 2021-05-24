@@ -26,46 +26,44 @@
 
 #include <map>
 
-namespace cath {
-	namespace scan {
+namespace cath::scan {
 
-			/// \brief TODOCUMENT
-			class scan_metrics final {
-			private:
-				/// \brief TODOCUMENT
-				enum class scan_build_type : char {
-					QUERY_STRUCS, ///< TODOCUMENT
-					QUERY_INDEX,  ///< TODOCUMENT
-					INDEX_STRUCS, ///< TODOCUMENT
-					INDEX_INDEX   ///< TODOCUMENT
-				};
+	/// \brief TODOCUMENT
+	class scan_metrics final {
+	private:
+		/// \brief TODOCUMENT
+		enum class scan_build_type : char {
+			QUERY_STRUCS, ///< TODOCUMENT
+			QUERY_INDEX,  ///< TODOCUMENT
+			INDEX_STRUCS, ///< TODOCUMENT
+			INDEX_INDEX   ///< TODOCUMENT
+		};
 
-				/// \brief TODOCUMENT
-				std::map<scan_build_type, durn_mem_pair> build_durns_and_sizes;
+		/// \brief TODOCUMENT
+		std::map<scan_build_type, durn_mem_pair> build_durns_and_sizes;
 
-				/// \brief TODOCUMENT
-				hrc_duration scan_durn;
+		/// \brief TODOCUMENT
+		hrc_duration scan_durn;
 
-				/// \brief TODOCUMENT
-				// hrc_duration_opt  align_all_durn;
+		/// \brief TODOCUMENT
+		// hrc_duration_opt  align_all_durn;
 
-				[[nodiscard]] const durn_mem_pair &get_build_durn_and_size( const scan_build_type & ) const;
+		[[nodiscard]] const durn_mem_pair &get_build_durn_and_size( const scan_build_type & ) const;
 
-			public:
-				scan_metrics(const durn_mem_pair &,
-				             const durn_mem_pair &,
-				             const durn_mem_pair &,
-				             const durn_mem_pair &,
-				             const hrc_duration &);
+	public:
+		scan_metrics(const durn_mem_pair &,
+		             const durn_mem_pair &,
+		             const durn_mem_pair &,
+		             const durn_mem_pair &,
+		             const hrc_duration &);
 
-				[[nodiscard]] const durn_mem_pair &get_query_strucs_metrics() const;
-				[[nodiscard]] const durn_mem_pair &get_query_index_metrics() const;
-				[[nodiscard]] const durn_mem_pair &get_index_strucs_metrics() const;
-				[[nodiscard]] const durn_mem_pair &get_index_index_metrics() const;
-				[[nodiscard]] const hrc_duration & get_scan_durn() const;
-			};
+		[[nodiscard]] const durn_mem_pair &get_query_strucs_metrics() const;
+		[[nodiscard]] const durn_mem_pair &get_query_index_metrics() const;
+		[[nodiscard]] const durn_mem_pair &get_index_strucs_metrics() const;
+		[[nodiscard]] const durn_mem_pair &get_index_index_metrics() const;
+		[[nodiscard]] const hrc_duration & get_scan_durn() const;
+	};
 
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_SCAN_METRICS_HPP

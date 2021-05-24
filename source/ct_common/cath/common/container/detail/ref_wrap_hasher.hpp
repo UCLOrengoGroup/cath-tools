@@ -25,26 +25,23 @@
 
 #include "cath/common/type_traits.hpp"
 
-namespace cath { namespace common { namespace detail { template <typename T> class ref_wrap_uom_wrap; } } }
+// clang-format off
+namespace cath::common::detail { template <typename T> class ref_wrap_uom_wrap; }
+// clang-format on
 
-namespace cath {
-	namespace common {
+namespace cath::common::detail {
 
-		namespace detail {
+	/// \brief Hasher for a ref_wrap_uom_wrap<T>
+	template <typename T>
+	struct ref_wrap_hasher final {
+		/// \brief The function operator that performs the hash on the T value
+		///        using std::hash<remove_cvref_t<T>>
+		size_t operator()(const ref_wrap_uom_wrap<T> &prm_value
+		                  ) const {
+			return std::hash<common::remove_cvref_t<T>>{}( prm_value.get() );
+		}
+	};
 
-			/// \brief Hasher for a ref_wrap_uom_wrap<T>
-			template <typename T>
-			struct ref_wrap_hasher final {
-				/// \brief The function operator that performs the hash on the T value
-				///        using std::hash<remove_cvref_t<T>>
-				size_t operator()(const ref_wrap_uom_wrap<T> &prm_value
-				                  ) const {
-					return std::hash<common::remove_cvref_t<T>>{}( prm_value.get() );
-				}
-			};
-		} // namespace detail
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_DETAIL_REF_WRAP_HASHER_HPP

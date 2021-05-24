@@ -32,18 +32,20 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/ssap/compare_upper_cell_result.hpp"
 
-namespace cath { struct clique;                 }
-namespace cath { class entry_querier;           }
-namespace cath { class protein;                 }
+// clang-format off
+namespace cath { class entry_querier; }
+namespace cath { class protein; }
 namespace cath { class protein_source_file_set; }
-namespace cath { class residue;                 }
-namespace cath { class sec_struc;               }
-namespace cath { class selected_pair;           }
-namespace cath { class ssap_scores;             }
-namespace cath { namespace geom { class coord; } }
-namespace cath { namespace opts { class cath_ssap_options; } }
-namespace cath { namespace opts { class data_dirs_spec; } }
-namespace cath { namespace opts { class old_ssap_options_block; } }
+namespace cath { class residue; }
+namespace cath { class sec_struc; }
+namespace cath { class selected_pair; }
+namespace cath { class ssap_scores; }
+namespace cath { struct clique; }
+namespace cath::geom { class coord; }
+namespace cath::opts { class cath_ssap_options; }
+namespace cath::opts { class data_dirs_spec; }
+namespace cath::opts { class old_ssap_options_block; }
+// clang-format on
 
 namespace cath {
 	void reset_ssap_global_variables();

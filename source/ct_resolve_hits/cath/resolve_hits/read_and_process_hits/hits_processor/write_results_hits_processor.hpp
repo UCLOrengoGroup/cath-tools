@@ -24,43 +24,39 @@
 #include "cath/resolve_hits/options/spec/hit_boundary_output.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/hits_processor.hpp"
 
-namespace cath {
-	namespace rslv {
-		namespace detail {
+namespace cath::rslv::detail {
 
-			/// \brief Hits processor that writes results output to the hits_processor's ostream
-			class write_results_hits_processor final : public hits_processor {
-			private:
-				/// \brief Convenience type alias for the parent class
-				using super = hits_processor;
+	/// \brief Hits processor that writes results output to the hits_processor's ostream
+	class write_results_hits_processor final : public hits_processor {
+	private:
+		/// \brief Convenience type alias for the parent class
+		using super = hits_processor;
 
-				/// \brief Whether to trim the boundaries before outputting them
-				hit_boundary_output boundary_output;
+		/// \brief Whether to trim the boundaries before outputting them
+		hit_boundary_output boundary_output;
 
-				/// \brief Whether the header has yet been written
-				bool written_header = false;
+		/// \brief Whether the header has yet been written
+		bool written_header = false;
 
-				[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
 
-				void do_process_hits_for_query(const std::string &,
-				                               const crh_filter_spec &,
-				                               const crh_score_spec &,
-				                               const crh_segment_spec &,
-				                               const calc_hit_list &) final;
+		void do_process_hits_for_query(const std::string &,
+		                               const crh_filter_spec &,
+		                               const crh_score_spec &,
+		                               const crh_segment_spec &,
+		                               const calc_hit_list &) final;
 
-				void do_finish_work() final;
+		void do_finish_work() final;
 
-				[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
+		[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
 
-				[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
+		[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
 
-			  public:
-				explicit write_results_hits_processor(ref_vec<std::ostream>,
-				                                      const hit_boundary_output & = hit_boundary_output{}) noexcept;
-			};
+	  public:
+		explicit write_results_hits_processor(ref_vec<std::ostream>,
+		                                      const hit_boundary_output & = hit_boundary_output{}) noexcept;
+	};
 
-		} // namespace detail
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR_WRITE_RESULTS_HITS_PROCESSOR_HPP

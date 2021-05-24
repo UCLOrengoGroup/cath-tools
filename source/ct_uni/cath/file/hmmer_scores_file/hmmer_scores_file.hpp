@@ -26,29 +26,27 @@
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/file/hmmer_scores_file/hmmer_name_handling.hpp"
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief TODOCUMENT
-		class hmmer_scores_file final {
-		private:
-			hmmer_scores_file() = delete;
+	/// \brief TODOCUMENT
+	class hmmer_scores_file final {
+	private:
+		hmmer_scores_file() = delete;
 
-		public:
-			static hmmer_scores_entry_vec remove_duplicates(const hmmer_scores_entry_vec &);
+	public:
+		static hmmer_scores_entry_vec remove_duplicates(const hmmer_scores_entry_vec &);
 
-			static hmmer_scores_entry_vec parse_hmmer_scores_file(std::istream &,
-			                                                      const hmmer_name_handling & = hmmer_name_handling::STRIP);
+		static hmmer_scores_entry_vec parse_hmmer_scores_file(std::istream &,
+		                                                      const hmmer_name_handling & = hmmer_name_handling::STRIP);
 
-			static hmmer_scores_entry_vec parse_hmmer_scores_file(const ::std::filesystem::path &,
-			                                                      const hmmer_name_handling & = hmmer_name_handling::STRIP);
+		static hmmer_scores_entry_vec parse_hmmer_scores_file(const ::std::filesystem::path &,
+		                                                      const hmmer_name_handling & = hmmer_name_handling::STRIP);
 
-//			static hmmer_scores_entry_vec parse_hmmer_scores_file_fancy(std::istream &);
+//		static hmmer_scores_entry_vec parse_hmmer_scores_file_fancy(std::istream &);
 
-//			static hmmer_scores_entry_vec parse_hmmer_scores_file_fancy(const ::std::filesystem::path &);
-		};
+//		static hmmer_scores_entry_vec parse_hmmer_scores_file_fancy(const ::std::filesystem::path &);
+	};
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_HMMER_SCORES_FILE_HMMER_SCORES_FILE_HPP

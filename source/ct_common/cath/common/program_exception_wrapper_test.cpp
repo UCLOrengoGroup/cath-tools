@@ -37,64 +37,62 @@ using namespace ::std;
 using ::boost::test_tools::output_test_stream;
 using ::boost::algorithm::contains;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief A concrete program_exception_wrapper that throws requested exceptions to allow testing of program_exception_wrapper
-		class test_program_exception_wrapper final : public program_exception_wrapper {
-			[[nodiscard]] string_view do_get_program_name() const final {
-				return "test_program_exception_wrapper";
+	/// \brief A concrete program_exception_wrapper that throws requested exceptions to allow testing of program_exception_wrapper
+	class test_program_exception_wrapper final : public program_exception_wrapper {
+		[[nodiscard]] string_view do_get_program_name() const final {
+			return "test_program_exception_wrapper";
+		}
+
+		/// \brief Throw the sort of argument requested (or none at all)
+		void do_run_program(int argc,
+		                    char * argv[]
+		                    ) final {
+			BOOST_REQUIRE_GE(argc, 1);
+			const string first_argument_str( argv[ 0 ] );
+			if (first_argument_str == "boost") {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("test_program_exception_wrapper-test-boost-exception"));
 			}
-
-			/// \brief Throw the sort of argument requested (or none at all)
-			void do_run_program(int argc,
-			                    char * argv[]
-			                    ) final {
-				BOOST_REQUIRE_GE(argc, 1);
-				const string first_argument_str( argv[ 0 ] );
-				if (first_argument_str == "boost") {
-					BOOST_THROW_EXCEPTION(invalid_argument_exception("test_program_exception_wrapper-test-boost-exception"));
-				}
-				else if (first_argument_str == "std") {
-					throw std::exception();
-				}
-				else if (first_argument_str == "other") {
-					throw "test_program_exception_wrapper-test-bare_string-exception";
-				}
+			else if (first_argument_str == "std") {
+				throw std::exception();
 			}
-		};
-
-		/// \brief The program_exception_wrapper_test_suite_fixture to assist in testing program_exception_wrapper
-		struct program_exception_wrapper_test_suite_fixture {
-		protected:
-			~program_exception_wrapper_test_suite_fixture() noexcept = default;
-
-		public:
-			void test_arg(const string &prm_string,
-			              const string &prm_throw_regexp
-			              ) {
-				output_test_stream output_stream;
-				const str_vec arguments(1, prm_string);
-				argc_argv_faker my_argc_argv_faker(arguments);
-
-				test_program_exception_wrapper().run_program(
-					my_argc_argv_faker.get_argc(),
-					my_argc_argv_faker.get_argv(),
-					output_stream
-				);
-				if ( ! prm_throw_regexp.empty() ) {
-					BOOST_CHECK( contains( output_stream.str(), prm_throw_regexp ) );
-				}
-				else {
-					BOOST_CHECK(output_stream.is_empty(true));
-				}
+			else if (first_argument_str == "other") {
+				throw "test_program_exception_wrapper-test-bare_string-exception";
 			}
-		};
+		}
+	};
 
-	}  // namespace test
-}  // namespace cath
+	/// \brief The program_exception_wrapper_test_suite_fixture to assist in testing program_exception_wrapper
+	struct program_exception_wrapper_test_suite_fixture {
+	protected:
+		~program_exception_wrapper_test_suite_fixture() noexcept = default;
 
-BOOST_FIXTURE_TEST_SUITE(program_exception_wrapper_test_suite, cath::test::program_exception_wrapper_test_suite_fixture)
+	public:
+		void test_arg(const string &prm_string,
+		              const string &prm_throw_regexp
+		              ) {
+			output_test_stream output_stream;
+			const str_vec arguments(1, prm_string);
+			argc_argv_faker my_argc_argv_faker(arguments);
+
+			test_program_exception_wrapper().run_program(
+				my_argc_argv_faker.get_argc(),
+				my_argc_argv_faker.get_argv(),
+				output_stream
+			);
+			if ( ! prm_throw_regexp.empty() ) {
+				BOOST_CHECK( contains( output_stream.str(), prm_throw_regexp ) );
+			}
+			else {
+				BOOST_CHECK(output_stream.is_empty(true));
+			}
+		}
+	};
+
+} // namespace
+
+BOOST_FIXTURE_TEST_SUITE(program_exception_wrapper_test_suite, program_exception_wrapper_test_suite_fixture)
 
 /// \brief Test that a boost::exception is caught and described correctly
 BOOST_AUTO_TEST_CASE(boost_exception) {

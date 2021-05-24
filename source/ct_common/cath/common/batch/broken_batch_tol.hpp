@@ -21,16 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BATCH_BROKEN_BATCH_TOL_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BATCH_BROKEN_BATCH_TOL_HPP
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		enum class broken_batch_tol : bool {
-			FORBID, ///< TODOCUMENT
-			PERMIT  ///< TODOCUMENT
-		};
+	/// \brief TODOCUMENT
+	enum class broken_batch_tol : bool {
+		FORBID, ///< TODOCUMENT
+		PERMIT  ///< TODOCUMENT
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BATCH_BROKEN_BATCH_TOL_HPP

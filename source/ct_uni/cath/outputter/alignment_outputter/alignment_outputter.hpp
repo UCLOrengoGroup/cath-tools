@@ -25,58 +25,59 @@
 #include <memory>
 #include <string>
 
-namespace cath { namespace align { class alignment_context; } }
+// clang-format off
+namespace cath::align { class alignment_context; }
+// clang-format on
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief TODOCUMENT
-		class alignment_outputter {
-		  private:
-			/// \brief Pure virtual method with which each concrete alignment_outputter must define how to create a clone of itself
-			[[nodiscard]] virtual std::unique_ptr<alignment_outputter> do_clone() const = 0;
+	/// \brief TODOCUMENT
+	class alignment_outputter {
+	  private:
+		/// \brief Pure virtual method with which each concrete alignment_outputter must define how to create a clone of itself
+		[[nodiscard]] virtual std::unique_ptr<alignment_outputter> do_clone() const = 0;
 
-			virtual void do_output_alignment( const align::alignment_context &, std::ostream & ) const = 0;
+		virtual void do_output_alignment( const align::alignment_context &, std::ostream & ) const = 0;
 
-			[[nodiscard]] virtual bool do_involves_display_spec() const = 0;
+		[[nodiscard]] virtual bool do_involves_display_spec() const = 0;
 
-			[[nodiscard]] virtual std::string do_get_name() const = 0;
+		[[nodiscard]] virtual std::string do_get_name() const = 0;
 
-		public:
-			alignment_outputter() = default;
-			[[nodiscard]] std::unique_ptr<alignment_outputter> clone() const;
-			virtual ~alignment_outputter() noexcept = default;
+	public:
+		alignment_outputter() = default;
+		[[nodiscard]] std::unique_ptr<alignment_outputter> clone() const;
+		virtual ~alignment_outputter() noexcept = default;
 
-			alignment_outputter(const alignment_outputter &) = default;
-			alignment_outputter(alignment_outputter &&) noexcept = default;
-			alignment_outputter & operator=(const alignment_outputter &) = default;
-			alignment_outputter & operator=(alignment_outputter &&) noexcept = default;
+		alignment_outputter(const alignment_outputter &) = default;
+		alignment_outputter(alignment_outputter &&) noexcept = default;
+		alignment_outputter & operator=(const alignment_outputter &) = default;
+		alignment_outputter & operator=(alignment_outputter &&) noexcept = default;
 
-			void output_alignment(const align::alignment_context &,
-			                      std::ostream &) const;
-			[[nodiscard]] bool        involves_display_spec() const;
-			[[nodiscard]] std::string get_name() const;
-		};
+		void output_alignment(const align::alignment_context &,
+		                      std::ostream &) const;
+		[[nodiscard]] bool        involves_display_spec() const;
+		[[nodiscard]] std::string get_name() const;
+	};
 
-		/// \brief NVI pass-through to the concrete alignment_outputter's do_get_name(), which defines a name
-		inline std::string alignment_outputter::get_name() const {
-			return do_get_name();
-		}
+	/// \brief NVI pass-through to the concrete alignment_outputter's do_get_name(), which defines a name
+	inline std::string alignment_outputter::get_name() const {
+		return do_get_name();
+	}
 
-		/// \brief Function to make alignment_outputter meet the Clonable concept (used in ptr_container)
-		///
-		/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
-		///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
-		///
-		/// This gets the smart pointer from the clone() method and then calls release on it.
-		///
-		/// \returns A raw pointer to a new copy of the alignment_outputter argument, with the same dynamic type.
-		///          The caller is responsible for deleting this new object.
-		inline alignment_outputter * new_clone(const alignment_outputter &prm_alignment_outputter ///< The alignment_outputter to clone
-		                                       ) {
-			return prm_alignment_outputter.clone().release();
-		}
-	} // namespace opts
-} // namespace cath
+	/// \brief Function to make alignment_outputter meet the Clonable concept (used in ptr_container)
+	///
+	/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
+	///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
+	///
+	/// This gets the smart pointer from the clone() method and then calls release on it.
+	///
+	/// \returns A raw pointer to a new copy of the alignment_outputter argument, with the same dynamic type.
+	///          The caller is responsible for deleting this new object.
+	inline alignment_outputter * new_clone(const alignment_outputter &prm_alignment_outputter ///< The alignment_outputter to clone
+	                                       ) {
+		return prm_alignment_outputter.clone().release();
+	}
+
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_ALIGNMENT_OUTPUTTER_HPP

@@ -24,60 +24,60 @@
 #include "cath/score/score_type_aliases.hpp"
 #include "cath/score/true_pos_false_neg/classn_stat.hpp"
 
-namespace cath { namespace score { class classn_stat_pair_series; } }
+// clang-format off
+namespace cath::score { class classn_stat_pair_series; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief A list of true_false_pos_neg entries, typically associated with the
-		///        results
-		///
-		/// A ROC curve can be directly derived from a true_false_pos_neg_list but
-		/// that involves a loss of information (because the true_false_pos_neg_list
-		/// contains all absolute TP/FP/TN/FN counts)
-		class true_false_pos_neg_list final {
-		private:
-			/// \brief The list of true_false_pos_neg objects
-			true_false_pos_neg_vec tfpns;
+	/// \brief A list of true_false_pos_neg entries, typically associated with the
+	///        results
+	///
+	/// A ROC curve can be directly derived from a true_false_pos_neg_list but
+	/// that involves a loss of information (because the true_false_pos_neg_list
+	/// contains all absolute TP/FP/TN/FN counts)
+	class true_false_pos_neg_list final {
+	private:
+		/// \brief The list of true_false_pos_neg objects
+		true_false_pos_neg_vec tfpns;
 
-		public:
-			using const_iterator = true_false_pos_neg_vec_citr;
+	public:
+		using const_iterator = true_false_pos_neg_vec_citr;
 
-			explicit true_false_pos_neg_list(true_false_pos_neg_vec);
+		explicit true_false_pos_neg_list(true_false_pos_neg_vec);
 
-			[[nodiscard]] bool   empty() const;
-			[[nodiscard]] size_t size() const;
+		[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
 
-			void push_back(const true_false_pos_neg &);
+		void push_back(const true_false_pos_neg &);
 
-			const true_false_pos_neg & operator[](const size_t &) const;
+		const true_false_pos_neg & operator[](const size_t &) const;
 
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		size_rational get_classn_stat_val_of_index(const true_false_pos_neg_list &,
-		                                           const classn_stat &,
-		                                           const size_t &);
+	size_rational get_classn_stat_val_of_index(const true_false_pos_neg_list &,
+	                                           const classn_stat &,
+	                                           const size_t &);
 
-		size_rational_vec get_classn_stat_vals(const true_false_pos_neg_list &,
-		                                       const classn_stat &);
+	size_rational_vec get_classn_stat_vals(const true_false_pos_neg_list &,
+	                                       const classn_stat &);
 
-		classn_stat_pair_series get_classn_stat_pair_series(const true_false_pos_neg_list &,
-		                                                    const std::string &,
-		                                                    const classn_stat &,
-		                                                    const classn_stat &);
+	classn_stat_pair_series get_classn_stat_pair_series(const true_false_pos_neg_list &,
+	                                                    const std::string &,
+	                                                    const classn_stat &,
+	                                                    const classn_stat &);
 
-		double area_under_curve(const true_false_pos_neg_list &,
-		                        const classn_stat &,
-		                        const classn_stat &);
+	double area_under_curve(const true_false_pos_neg_list &,
+	                        const classn_stat &,
+	                        const classn_stat &);
 
-		classn_stat_pair_series get_roc_series(const true_false_pos_neg_list &,
-		                                       const std::string &);
+	classn_stat_pair_series get_roc_series(const true_false_pos_neg_list &,
+	                                       const std::string &);
 
-		double area_under_roc_curve(const true_false_pos_neg_list &);
+	double area_under_roc_curve(const true_false_pos_neg_list &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_TRUE_FALSE_POS_NEG_LIST_HPP

@@ -21,32 +21,30 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_FLOOR_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_FLOOR_HPP
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Provide a constexpr implementation of floor whilst there's none in the standard
-		///
-		/// C++14 doesn't appear to offer a constexpr floor function. libstdc++'s (GCC) floor() is constexpr
-		/// but libc++'s (Clang) isn't and it looks as though libc++ is better representing the standard.
-		///
-		/// Even if future standards don't make the standard math functions constexpr, it seems very likely
-		/// that constexpr complementes will be provided. In the meantime, this provides a rough and ready
-		/// constexpr floor.
-		///
-		/// \todo If/when the standard makes floor() constexpr or adds a new constexpr floor function,
-		///       replace this with that.
-		template <typename T>
-		constexpr T constexpr_floor(const T &prm_value ///< The value for which the floor should be calculated
-		                            ) {
-			//      If ( this is a non-negative number ) then ( return the result of casting to int and back )
-			// Else if ( is a whole, negative number   ) then ( return it as is )
-			// Else                                           ( return the result of: negating, adding 1.0, constexpr_floor()ing and negating again)
-			return ( prm_value >= 0.0 )                                              ? static_cast<T>( static_cast<int>(  prm_value ) ) :
-			       ( prm_value == static_cast<T>( static_cast<int>(  prm_value ) ) ) ? prm_value                                        :
-			                                                                           -constexpr_floor( static_cast<T>( 1.0 ) - prm_value );
-		}
+	/// \brief Provide a constexpr implementation of floor whilst there's none in the standard
+	///
+	/// C++14 doesn't appear to offer a constexpr floor function. libstdc++'s (GCC) floor() is constexpr
+	/// but libc++'s (Clang) isn't and it looks as though libc++ is better representing the standard.
+	///
+	/// Even if future standards don't make the standard math functions constexpr, it seems very likely
+	/// that constexpr complementes will be provided. In the meantime, this provides a rough and ready
+	/// constexpr floor.
+	///
+	/// \todo If/when the standard makes floor() constexpr or adds a new constexpr floor function,
+	///       replace this with that.
+	template <typename T>
+	constexpr T constexpr_floor(const T &prm_value ///< The value for which the floor should be calculated
+	                            ) {
+		//      If ( this is a non-negative number ) then ( return the result of casting to int and back )
+		// Else if ( is a whole, negative number   ) then ( return it as is )
+		// Else                                           ( return the result of: negating, adding 1.0, constexpr_floor()ing and negating again)
+		return ( prm_value >= 0.0 )                                              ? static_cast<T>( static_cast<int>(  prm_value ) ) :
+		       ( prm_value == static_cast<T>( static_cast<int>(  prm_value ) ) ) ? prm_value                                        :
+		                                                                           -constexpr_floor( static_cast<T>( 1.0 ) - prm_value );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_FLOOR_HPP

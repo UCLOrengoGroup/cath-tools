@@ -24,14 +24,9 @@
 #include "cath/common/container/id_of_string.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::common;
-using namespace ::cath::test;
 
-
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The id_of_string_test_suite_fixture to assist in testing id_of_string
 		struct id_of_string_test_suite_fixture {
@@ -45,8 +40,7 @@ namespace cath {
 			const std::string example_string_three = "this is three" ;
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(id_of_string_test_suite, id_of_string_test_suite_fixture)
 

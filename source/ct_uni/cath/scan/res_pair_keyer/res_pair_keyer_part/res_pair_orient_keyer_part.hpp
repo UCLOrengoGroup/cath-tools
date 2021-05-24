@@ -44,72 +44,68 @@
 #include "cath/scan/detail/scan_type_aliases.hpp"
 #include "cath/structure/geometry/orientation_covering.hpp"
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan::detail {
 
-			/// \brief Key part generator for multi_struc_res_rep_pair that indexes the view's x-dimension
-			///
-			/// !!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!
-			/// !!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!
-			/// !!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!
-			class res_pair_orient_keyer_part final {
-			private:
-				// /// \brief TODOCUMENT
-				// geom::orientation_covering_impl<quat_rot_type> the_orientation_covering;
+	/// \brief Key part generator for multi_struc_res_rep_pair that indexes the view's x-dimension
+	///
+	/// !!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!
+	/// !!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!
+	/// !!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!
+	class res_pair_orient_keyer_part final {
+	private:
+		// /// \brief TODOCUMENT
+		// geom::orientation_covering_impl<quat_rot_type> the_orientation_covering;
 
-				/// \brief TODOCUMENT
-				using value_t           = frame_quat_rot;
+		/// \brief TODOCUMENT
+		using value_t           = frame_quat_rot;
 
-				/// \brief TODOCUMENT
-				using cell_index_t      = key_orient_index_type;
+		/// \brief TODOCUMENT
+		using cell_index_t      = key_orient_index_type;
 
-				/// \brief TODOCUMENT
-				using cell_index_list_t = std::vector<key_orient_index_type>;
+		/// \brief TODOCUMENT
+		using cell_index_list_t = std::vector<key_orient_index_type>;
 
-				/// \brief TODOCUMENT
-				using search_radius_t   = frame_quat_rot_type;
+		/// \brief TODOCUMENT
+		using search_radius_t   = frame_quat_rot_type;
 
-				/// \brief The cell width to use for the view's x-dimension
-				view_base_type cell_width;
+		/// \brief The cell width to use for the view's x-dimension
+		view_base_type cell_width;
 
-				/// \brief Calculate the key part (ie cell index) for the specified value
-				[[nodiscard]] key_view_index_type get_key_part_of_value(const view_base_type &prm_value ///< The value for which the key part should be calculated
-				                                          ) const {
-					BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
-					return static_cast<key_view_index_type>( floor( prm_value / cell_width ) );
-				}
+		/// \brief Calculate the key part (ie cell index) for the specified value
+		[[nodiscard]] key_view_index_type get_key_part_of_value(const view_base_type &prm_value ///< The value for which the key part should be calculated
+		                                          ) const {
+			BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
+			return static_cast<key_view_index_type>( floor( prm_value / cell_width ) );
+		}
 
-				/// \brief Extract the relevant value from the specified res_pair
-				[[nodiscard]] view_base_type get_value(const multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
-				                         ) const {
-					BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
-					return get_view_x( prm_res_pair.get_res_pair_core() );
-				}
+		/// \brief Extract the relevant value from the specified res_pair
+		[[nodiscard]] view_base_type get_value(const multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
+		                         ) const {
+			BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
+			return get_view_x( prm_res_pair.get_res_pair_core() );
+		}
 
-			public:
-				/// \brief Generate the key part for the specified res_pair
-				[[nodiscard]] key_view_index_type key_part(const view_base_type &prm_value ///< The value for which the key_part should be extracted
-				                             // const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
-				                             ) const {
-					BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
-					return get_key_part_of_value( prm_value );
-				}
+	public:
+		/// \brief Generate the key part for the specified res_pair
+		[[nodiscard]] key_view_index_type key_part(const view_base_type &prm_value ///< The value for which the key_part should be extracted
+		                             // const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
+		                             ) const {
+			BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
+			return get_key_part_of_value( prm_value );
+		}
 
-				/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified res_pair
-				[[nodiscard]] boost::integer_range<key_view_index_type> close_key_parts(const multi_struc_res_rep_pair &prm_res_pair,     ///< The res_pair whose matches' key parts should be generated
-				                                                          const search_radius_t          &prm_search_radius ///< The criteria defining what is considered a match
-				                                                          ) const {
-					BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
-					return boost::irange<key_view_index_type>(
-						                                         get_key_part_of_value( get_value( prm_res_pair ) - prm_search_radius ),
-						debug_numeric_cast<key_view_index_type>( get_key_part_of_value( get_value( prm_res_pair ) + prm_search_radius ) + 1 )
-					);
-				}
-			};
+		/// \brief Generate a list of all key parts for all conceivable res_pairs that would match the specified res_pair
+		[[nodiscard]] boost::integer_range<key_view_index_type> close_key_parts(const multi_struc_res_rep_pair &prm_res_pair,     ///< The res_pair whose matches' key parts should be generated
+		                                                          const search_radius_t          &prm_search_radius ///< The criteria defining what is considered a match
+		                                                          ) const {
+			BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
+			return boost::irange<key_view_index_type>(
+				                                         get_key_part_of_value( get_value( prm_res_pair ) - prm_search_radius ),
+				debug_numeric_cast<key_view_index_type>( get_key_part_of_value( get_value( prm_res_pair ) + prm_search_radius ) + 1 )
+			);
+		}
+	};
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_ORIENT_KEYER_PART_HPP

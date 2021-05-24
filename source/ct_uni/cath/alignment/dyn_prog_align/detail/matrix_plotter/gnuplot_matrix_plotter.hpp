@@ -26,47 +26,43 @@
 
 #include "cath/alignment/dyn_prog_align/detail/matrix_plotter/matrix_plotter.hpp"
 
-namespace cath {
-	namespace align {
-		namespace detail {
+namespace cath::align::detail {
 
-			/// \brief TODOCUMENT
-			class gnuplot_matrix_plotter final : public matrix_plotter  {
-			private:
-				void do_plot_scores(doub_vec_vec &,
-				                    const double &,
-				                    const double &) final;
-				void do_plot_minor_corner_arrow(const size_t &,
-				                                const size_t &,
-				                                const size_t &,
-				                                const size_t &) final;
-				void do_write_centre_score(const size_t &,
-				                           const size_t &,
-				                           const double &) final;
-				void do_write_corner_score(const size_t &,
-				                           const size_t &,
-				                           const double &) final;
-				void do_finish(const ::std::filesystem::path &) const final;
+	/// \brief TODOCUMENT
+	class gnuplot_matrix_plotter final : public matrix_plotter  {
+	private:
+		void do_plot_scores(doub_vec_vec &,
+		                    const double &,
+		                    const double &) final;
+		void do_plot_minor_corner_arrow(const size_t &,
+		                                const size_t &,
+		                                const size_t &,
+		                                const size_t &) final;
+		void do_write_centre_score(const size_t &,
+		                           const size_t &,
+		                           const double &) final;
+		void do_write_corner_score(const size_t &,
+		                           const size_t &,
+		                           const double &) final;
+		void do_finish(const ::std::filesystem::path &) const final;
 
-				/// \brief TODOCUMENT
-				std::ostringstream preplot_commands;
+		/// \brief TODOCUMENT
+		std::ostringstream preplot_commands;
 
-				/// \brief TODOCUMENT
-				doub_vec_vec       scores;
+		/// \brief TODOCUMENT
+		doub_vec_vec       scores;
 
-				/// \brief TODOCUMENT
-				size_t             counter = 1;
+		/// \brief TODOCUMENT
+		size_t             counter = 1;
 
-			public:
-				gnuplot_matrix_plotter(const size_t &,
-				                       const size_t &,
-				                       const size_t &);
-				gnuplot_matrix_plotter(const size_t &,
-				                       const size_t &);
-			};
+	public:
+		gnuplot_matrix_plotter(const size_t &,
+		                       const size_t &,
+		                       const size_t &);
+		gnuplot_matrix_plotter(const size_t &,
+		                       const size_t &);
+	};
 
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+} // namespace cath::align::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_GNUPLOT_MATRIX_PLOTTER_HPP

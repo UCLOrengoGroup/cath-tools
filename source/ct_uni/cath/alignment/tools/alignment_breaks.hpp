@@ -23,35 +23,36 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace align { class alignment; } }
+// clang-format off
+namespace cath::align { class alignment; }
+// clang-format on
 
-namespace cath {
-	namespace align {
-		namespace detail {
-			/// \brief TODOCUMENT
-			enum class break_pair_validity : bool {
-				GOOD,
-				BAD
-			};
+namespace cath::align {
+	namespace detail {
 
-			/// \brief TODOCUMENT
-			enum class break_pair_future : bool {
-				NEVER_AGAIN,
-				MAYBE_LATER
-			};
+		/// \brief TODOCUMENT
+		enum class break_pair_validity : bool {
+			GOOD,
+			BAD
+		};
 
-			/// \brief TODOCUMENT
-			using break_pair_validity_and_future = std::pair<break_pair_validity, break_pair_future>;
+		/// \brief TODOCUMENT
+		enum class break_pair_future : bool {
+			NEVER_AGAIN,
+			MAYBE_LATER
+		};
 
-			break_pair_validity_and_future check_pair(const alignment &,
-			                                          const size_t &,
-			                                          const size_t &);
-		} // namespace detail
+		/// \brief TODOCUMENT
+		using break_pair_validity_and_future = std::pair<break_pair_validity, break_pair_future>;
 
-		size_vec get_alignment_breaks(const alignment &);
-		size_size_pair_vec get_alignment_break_pairs(const alignment &);
+		break_pair_validity_and_future check_pair(const alignment &,
+		                                          const size_t &,
+		                                          const size_t &);
+	} // namespace detail
 
-	} // namespace align
-} // namespace cath
+	size_vec get_alignment_breaks(const alignment &);
+	size_size_pair_vec get_alignment_break_pairs(const alignment &);
+
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_TOOLS_ALIGNMENT_BREAKS_HPP

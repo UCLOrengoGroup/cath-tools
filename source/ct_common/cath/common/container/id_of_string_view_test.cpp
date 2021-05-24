@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <string>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -26,19 +28,13 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/test/boost_test_print_type.hpp"
 
-#include <string>
-
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::cath::test;
 
 using ::std::make_optional;
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The id_of_string_view_test_suite_fixture to assist in testing id_of_string_view
 		struct id_of_string_view_test_suite_fixture {
@@ -52,8 +48,7 @@ namespace cath {
 			const string example_string_three = "this is three" ;
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(id_of_string_view_test_suite, id_of_string_view_test_suite_fixture)
 

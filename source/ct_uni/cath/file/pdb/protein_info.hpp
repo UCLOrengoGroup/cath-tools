@@ -25,17 +25,15 @@
 
 #include <vector>
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Represent extra information about a protein from the process of building it
-		struct protein_info final {
+	/// \brief Represent extra information about a protein from the process of building it
+	struct protein_info final {
 
-			/// \brief The residue_makeup of each residue in the protein
-			std::vector<residue_makeup> residue_makeups;
-		};
+		/// \brief The residue_makeup of each residue in the protein
+		std::vector<residue_makeup> residue_makeups;
+	};
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PROTEIN_INFO_HPP

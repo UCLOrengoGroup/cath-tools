@@ -25,87 +25,85 @@
 
 #include <string>
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Represent data from a line of PRC data
-		class prc_scores_entry final : private boost::equality_comparable<prc_scores_entry> {
-		private:
-			/// \brief Name of protein 1
-			std::string name_1;
+	/// \brief Represent data from a line of PRC data
+	class prc_scores_entry final : private boost::equality_comparable<prc_scores_entry> {
+	private:
+		/// \brief Name of protein 1
+		std::string name_1;
 
-			/// \brief Start (of match?) on protein 1
-			size_t start_1;
+		/// \brief Start (of match?) on protein 1
+		size_t start_1;
 
-			/// \brief End (of match?) on protein 1
-			size_t end_1;
+		/// \brief End (of match?) on protein 1
+		size_t end_1;
 
-			/// \brief Length of protein 1
-			size_t length_1;
+		/// \brief Length of protein 1
+		size_t length_1;
 
-			/// \brief Number of this particular hit
-			size_t hit_num;
+		/// \brief Number of this particular hit
+		size_t hit_num;
 
-			/// \brief Name of protein 2
-			std::string name_2;
+		/// \brief Name of protein 2
+		std::string name_2;
 
-			/// \brief Start (of match?) on protein 2
-			size_t start_2;
+		/// \brief Start (of match?) on protein 2
+		size_t start_2;
 
-			/// \brief End (of match?) on protein 2
-			size_t end_2;
+		/// \brief End (of match?) on protein 2
+		size_t end_2;
 
-			/// \brief Length of protein 2
-			size_t length_2;
+		/// \brief Length of protein 2
+		size_t length_2;
 
-			/// \brief Simple score
-			double simple;
+		/// \brief Simple score
+		double simple;
 
-			/// \brief Reverse score
-			double reverse;
+		/// \brief Reverse score
+		double reverse;
 
-			/// \brief E-value
-			double evalue;
+		/// \brief E-value
+		double evalue;
 
-		public:
-			prc_scores_entry(std::string,
-			                 const size_t &,
-			                 const size_t &,
-			                 const size_t &,
-			                 const size_t &,
-			                 std::string,
-			                 const size_t &,
-			                 const size_t &,
-			                 const size_t &,
-			                 const double &,
-			                 const double &,
-			                 const double &);
+	public:
+		prc_scores_entry(std::string,
+		                 const size_t &,
+		                 const size_t &,
+		                 const size_t &,
+		                 const size_t &,
+		                 std::string,
+		                 const size_t &,
+		                 const size_t &,
+		                 const size_t &,
+		                 const double &,
+		                 const double &,
+		                 const double &);
 
-			[[nodiscard]] const std::string &get_name_1() const;
-			[[nodiscard]] const size_t &     get_start_1() const;
-			[[nodiscard]] const size_t &     get_end_1() const;
-			[[nodiscard]] const size_t &     get_length_1() const;
-			[[nodiscard]] const size_t &     get_hit_num() const;
-			[[nodiscard]] const std::string &get_name_2() const;
-			[[nodiscard]] const size_t &     get_start_2() const;
-			[[nodiscard]] const size_t &     get_end_2() const;
-			[[nodiscard]] const size_t &     get_length_2() const;
-			[[nodiscard]] const double &     get_simple() const;
-			[[nodiscard]] const double &     get_reverse() const;
-			[[nodiscard]] const double &     get_evalue() const;
-		};
+		[[nodiscard]] const std::string &get_name_1() const;
+		[[nodiscard]] const size_t &     get_start_1() const;
+		[[nodiscard]] const size_t &     get_end_1() const;
+		[[nodiscard]] const size_t &     get_length_1() const;
+		[[nodiscard]] const size_t &     get_hit_num() const;
+		[[nodiscard]] const std::string &get_name_2() const;
+		[[nodiscard]] const size_t &     get_start_2() const;
+		[[nodiscard]] const size_t &     get_end_2() const;
+		[[nodiscard]] const size_t &     get_length_2() const;
+		[[nodiscard]] const double &     get_simple() const;
+		[[nodiscard]] const double &     get_reverse() const;
+		[[nodiscard]] const double &     get_evalue() const;
+	};
 
-		bool operator==(const prc_scores_entry &,
-		                const prc_scores_entry &);
+	bool operator==(const prc_scores_entry &,
+	                const prc_scores_entry &);
 
-		prc_scores_entry prc_scores_entry_from_line(const std::string &);
+	prc_scores_entry prc_scores_entry_from_line(const std::string &);
 
-		std::string to_string(const prc_scores_entry &);
+	std::string to_string(const prc_scores_entry &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const prc_scores_entry &);
+	std::ostream & operator<<(std::ostream &,
+	                          const prc_scores_entry &);
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PRC_SCORES_FILE_PRC_SCORES_ENTRY_HPP

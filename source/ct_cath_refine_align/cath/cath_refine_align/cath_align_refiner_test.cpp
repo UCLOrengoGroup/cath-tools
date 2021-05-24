@@ -35,83 +35,82 @@
 #include "cath/test/predicate/files_equal.hpp"
 #include "cath/test/predicate/istream_and_file_equal.hpp"
 
+using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The cath_align_refiner_test_suite_fixture to assist in testing cath_align_refiner
-		struct cath_align_refiner_test_suite_fixture : protected global_test_constants {
-		protected:
-			~cath_align_refiner_test_suite_fixture() noexcept = default;
+	/// \brief The cath_align_refiner_test_suite_fixture to assist in testing cath_align_refiner
+	struct cath_align_refiner_test_suite_fixture : protected global_test_constants {
+	protected:
+		~cath_align_refiner_test_suite_fixture() noexcept = default;
 
-			const path B4DXN4_MULTIPLE_MODELS_FILE    { TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.multiple_END_separated_models.pdb" };
-			const path B4DXN4_CORRECT_STDOUT_SUP_FILE { TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.multiple_superposed_models.pdb"    };
-			const path E9PB15_MULTIPLE_MODELS_FILE    { TEST_RESIDUE_IDS_DATA_DIR() / "E9PB15.multiple_END_separated_models.pdb" };
-			const path E9PB15_CORRECT_PYMOL_SUP_FILE  { TEST_RESIDUE_IDS_DATA_DIR() / "E9PB15.multiple_superposed_models.pml"    };
+		const path B4DXN4_MULTIPLE_MODELS_FILE    { TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.multiple_END_separated_models.pdb" };
+		const path B4DXN4_CORRECT_STDOUT_SUP_FILE { TEST_RESIDUE_IDS_DATA_DIR() / "B4DXN4.multiple_superposed_models.pdb"    };
+		const path E9PB15_MULTIPLE_MODELS_FILE    { TEST_RESIDUE_IDS_DATA_DIR() / "E9PB15.multiple_END_separated_models.pdb" };
+		const path E9PB15_CORRECT_PYMOL_SUP_FILE  { TEST_RESIDUE_IDS_DATA_DIR() / "E9PB15.multiple_superposed_models.pml"    };
 
-			const temp_file temp_cath_align_refiner_output_file{ ".temp_cath_align_refiner_test_file.%%%%-%%%%-%%%%-%%%%" };
+		const temp_file temp_cath_align_refiner_output_file{ ".temp_cath_align_refiner_test_file.%%%%-%%%%-%%%%-%%%%" };
 
-			void check_cath_align_refiner_use_case(const str_vec &,
-			                                       istream &,
-			                                       const path &,
-			                                       const bool &);
+		// void check_cath_align_refiner_use_case(const str_vec &,
+		//                                        istream &,
+		//                                        const path &,
+		//                                        const bool &);
 
-			void check_cath_align_refiner_std_in_use_case(const str_vec &,
-			                                              const path &,
-			                                              const path &,
-			                                              const bool &);
-		};
+		// void check_cath_align_refiner_std_in_use_case(const str_vec &,
+		//                                               const path &,
+		//                                               const path &,
+		//                                               const bool &);
+	};
 
-	}  // namespace test
-}  // namespace cath
+	// void cath_align_refiner_test_suite_fixture::check_cath_align_refiner_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
+	//                                                                               istream       &prm_istream,              ///< TODOCUMENT
+	//                                                                               const path    &prm_expected_output_file, ///< TODOCUMENT
+	//                                                                               const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
+	//                                                                               ) {
+	// 	argc_argv_faker faked_argc_and_argv( prm_command_line_args );
+	// 	const auto my_cath_refine_align_options = make_and_parse_options<cath_refine_align_options>(
+	// 		faked_argc_and_argv.get_argc(),
+	// 		faked_argc_and_argv.get_argv()
+	// 	);
 
-void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
-                                                                                          istream       &prm_istream,              ///< TODOCUMENT
-                                                                                          const path    &prm_expected_output_file, ///< TODOCUMENT
-                                                                                          const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
-                                                                                          ) {
-		argc_argv_faker faked_argc_and_argv( prm_command_line_args );
-		const auto my_cath_refine_align_options = make_and_parse_options<cath_refine_align_options>(
-			faked_argc_and_argv.get_argc(),
-			faked_argc_and_argv.get_argv()
-		);
+	// 	// Prepare an ostringstream to capture the output
+	// 	stringstream test_ostream;
 
-		// Prepare an ostringstream to capture the output
-		stringstream test_ostream;
+	// 	// Perform the superposition and then close the input file
+	// 	cath_align_refiner::refine( my_cath_refine_align_options, prm_istream, test_ostream );
 
-		// Perform the superposition and then close the input file
-		cath_align_refiner::refine( my_cath_refine_align_options, prm_istream, test_ostream );
+	// 	if (prm_outputs_to_temp_file) {
+	// 		BOOST_CHECK_FILES_EQUAL( get_filename( temp_cath_align_refiner_output_file ), prm_expected_output_file);
+	// 	}
+	// 	else {
+	// 		BOOST_CHECK_ISTREAM_AND_FILE_EQUAL(test_ostream, "stdout_from_cath_align_refine", prm_expected_output_file);
+	// 	}
+	// }
+	
+	// void cath_align_refiner_test_suite_fixture::check_cath_align_refiner_std_in_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
+	//                                                                                      const path    &prm_input_file,           ///< TODOCUMENT
+	//                                                                                      const path    &prm_expected_output_file, ///< TODOCUMENT
+	//                                                                                      const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
+	//                                                                                      ) {
+	// 	// Prepare an ifstream to read input from the input file
+	// 	ifstream stdin_like_ifstream = open_ifstream( prm_input_file );
+	// 	check_cath_align_refiner_use_case(
+	// 		prm_command_line_args,
+	// 		stdin_like_ifstream,
+	// 		prm_expected_output_file,
+	// 		prm_outputs_to_temp_file
+	// 	);
+	// 	stdin_like_ifstream.close();
+	// }
 
-		if (prm_outputs_to_temp_file) {
-			BOOST_CHECK_FILES_EQUAL( get_filename( temp_cath_align_refiner_output_file ), prm_expected_output_file);
-		}
-		else {
-			BOOST_CHECK_ISTREAM_AND_FILE_EQUAL(test_ostream, "stdout_from_cath_align_refine", prm_expected_output_file);
-		}
-	}
+} // namespace
 
-void cath::test::cath_align_refiner_test_suite_fixture::check_cath_align_refiner_std_in_use_case(const str_vec &prm_command_line_args,    ///< TODOCUMENT
-                                                                                                 const path    &prm_input_file,           ///< TODOCUMENT
-                                                                                                 const path    &prm_expected_output_file, ///< TODOCUMENT
-                                                                                                 const bool    &prm_outputs_to_temp_file  ///< TODOCUMENT
-                                                                                                 ) {
-	// Prepare an ifstream to read input from the input file
-	ifstream stdin_like_ifstream = open_ifstream( prm_input_file );
-	check_cath_align_refiner_use_case(
-		prm_command_line_args,
-		stdin_like_ifstream,
-		prm_expected_output_file,
-		prm_outputs_to_temp_file
-	);
-	stdin_like_ifstream.close();
-}
-
-BOOST_FIXTURE_TEST_SUITE(cath_align_refiner_test_suite, cath::test::cath_align_refiner_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(cath_align_refiner_test_suite)
 
 // /// \brief
 // BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {

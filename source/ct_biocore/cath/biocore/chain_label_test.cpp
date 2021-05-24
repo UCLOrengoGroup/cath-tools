@@ -26,20 +26,8 @@
 
 using namespace ::cath;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The chain_label_test_suite_fixture to assist in testing chain_label
-		struct chain_label_test_suite_fixture: protected global_test_constants {
-		protected:
-			~chain_label_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(chain_label_test_suite, cath::test::chain_label_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(chain_label_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

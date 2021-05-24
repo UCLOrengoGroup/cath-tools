@@ -24,19 +24,17 @@
 #include "cath/chopping/chopping_format/chopping_format.hpp"
 #include "cath/common/clone/clone_ptr.hpp"
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
 
-		/// \brief TODOCUMENT
-		class std_region_io_spec final {
-		private:
-			common::clone_ptr<chopping_format> chopping_format_ptr;
+	/// \brief TODOCUMENT
+	class std_region_io_spec final {
+	private:
+		common::clone_ptr<chopping_format> chopping_format_ptr;
 
-		public:
-			explicit std_region_io_spec(const chopping_format &);
-		};
+	public:
+		explicit std_region_io_spec(const chopping_format &);
+	};
 
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_IO_REGION_IO_STD_REGION_IO_SPEC_HPP

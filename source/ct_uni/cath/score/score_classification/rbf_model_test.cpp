@@ -34,24 +34,13 @@
 #include <fstream>
 #include <utility>
 
+using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::score;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The rbf_model_test_suite_fixture to assist in testing rbf_model
-		struct rbf_model_test_suite_fixture : protected global_test_constants {
-		protected:
-			~rbf_model_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(rbf_model_test_suite, cath::test::rbf_model_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(rbf_model_test_suite, global_test_constants)
 
 BOOST_AUTO_TEST_CASE(parsed_model_calculates_correct_score) {
 	const auto the_model = parse_rbf_model( TEST_SVM_DIR() / "cath_svm.rbf_gamma_1_c_5.model" );

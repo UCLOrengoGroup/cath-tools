@@ -26,66 +26,64 @@
 
 #include <random>
 
+using namespace ::cath;
 using namespace ::cath::align::detail;
 using namespace ::cath::common;
 using namespace ::std;
 
 using ::boost::irange;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The return_path_matrix_test_suite_fixture to assist in testing return_path_matrix
-		struct return_path_matrix_test_suite_fixture {
-		protected:
-			~return_path_matrix_test_suite_fixture() noexcept = default;
+	// /// \brief The return_path_matrix_test_suite_fixture to assist in testing return_path_matrix
+	// struct return_path_matrix_test_suite_fixture {
+	// protected:
+	// 	~return_path_matrix_test_suite_fixture() noexcept = default;
 
-			[[nodiscard]] path_step make_random_step() const;
+	// 	[[nodiscard]] path_step make_random_step() const;
 
-			/// \brief TODOCUMENT
-			[[nodiscard]] return_path_matrix make_random_return_path_matrix( const size_t &, const size_t &, const size_t & ) const;
-		};
+	// 	[[nodiscard]] return_path_matrix make_random_return_path_matrix( const size_t &, const size_t &, const size_t & ) const;
+	// };
 
-	}  // namespace test
-}  // namespace cath
+	// /// \brief TODOCUMENT
+	// path_step return_path_matrix_test_suite_fixture::make_random_step() const {
+	// 	auto       rng           = default_random_engine{ random_device{}() };
+	// 	const auto random_triple = uniform_int_distribution<size_t>{ 0, 2 }( rng );
+	// 	switch ( random_triple ) {
+	// 		case ( 0 ) : { return path_step::ALIGN_PAIR;         }
+	// 		case ( 1 ) : { return path_step::INSERT_INTO_FIRST;  }
+	// 		default    : { return path_step::INSERT_INTO_SECOND; }
+	// 	}
+	// }
 
-/// \brief TODOCUMENT
-path_step cath::test::return_path_matrix_test_suite_fixture::make_random_step() const {
-	auto       rng           = default_random_engine{ random_device{}() };
-	const auto random_triple = uniform_int_distribution<size_t>{ 0, 2 }( rng );
-	switch ( random_triple ) {
-		case ( 0 ) : { return path_step::ALIGN_PAIR;         }
-		case ( 1 ) : { return path_step::INSERT_INTO_FIRST;  }
-		default    : { return path_step::INSERT_INTO_SECOND; }
-	}
-}
+	// /// \brief TODOCUMENT
+	// return_path_matrix return_path_matrix_test_suite_fixture::make_random_return_path_matrix(const size_t &prm_length_a,    ///< TODOCUMENT
+	//                                                                                          const size_t &prm_length_b,    ///< TODOCUMENT
+	//                                                                                          const size_t &prm_window_width ///< TODOCUMENT
+	//                                                                                          ) const {
+	// 	return_path_matrix new_path(prm_length_a, prm_length_b, prm_window_width);
+	// 	for (const size_t &ctr_a : indices( prm_length_a ) ) {
+	// 		const size_size_pair b_window_start_and_stop = get_b_window_start_and_stop_for_a_index(
+	// 			new_path,
+	// 			ctr_a
+	// 		);
+	// 		const size_t &start = b_window_start_and_stop.first;
+	// 		const size_t &stop  = b_window_start_and_stop.second;
+	// 		for (const size_t &ctr_b : irange( start, stop + 1 ) ) {
+	// 			path_step possible_random_step = make_random_step();
+	// 			while ( ( possible_random_step == path_step::INSERT_INTO_FIRST && ctr_b == start ) || ( possible_random_step == path_step::INSERT_INTO_SECOND && ctr_b == stop ) ) {
+	// 				possible_random_step = make_random_step();
+	// 			}
+	// 			new_path.set_path_step_towards_end_at_point(ctr_a, ctr_b, possible_random_step);
+	// 		}
+	// 	}
+	// 	return new_path;
+	// }
 
-/// \brief TODOCUMENT
-return_path_matrix cath::test::return_path_matrix_test_suite_fixture::make_random_return_path_matrix(const size_t &prm_length_a,    ///< TODOCUMENT
-                                                                                                     const size_t &prm_length_b,    ///< TODOCUMENT
-                                                                                                     const size_t &prm_window_width ///< TODOCUMENT
-                                                                                                     ) const {
-	return_path_matrix new_path(prm_length_a, prm_length_b, prm_window_width);
-	for (const size_t &ctr_a : indices( prm_length_a ) ) {
-		const size_size_pair b_window_start_and_stop = get_b_window_start_and_stop_for_a_index(
-			new_path,
-			ctr_a
-		);
-		const size_t &start = b_window_start_and_stop.first;
-		const size_t &stop  = b_window_start_and_stop.second;
-		for (const size_t &ctr_b : irange( start, stop + 1 ) ) {
-			path_step possible_random_step = make_random_step();
-			while ( ( possible_random_step == path_step::INSERT_INTO_FIRST && ctr_b == start ) || ( possible_random_step == path_step::INSERT_INTO_SECOND && ctr_b == stop ) ) {
-				possible_random_step = make_random_step();
-			}
-			new_path.set_path_step_towards_end_at_point(ctr_a, ctr_b, possible_random_step);
-		}
-	}
-	return new_path;
-}
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(return_path_matrix_test_suite, cath::test::return_path_matrix_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(return_path_matrix_test_suite)
 
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(basic) {

@@ -23,22 +23,22 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace geom { class coord; } }
-namespace cath { namespace geom { class coord_list; } }
-namespace cath { namespace geom { class line; } }
-namespace cath { namespace geom { namespace detail { class gsl_matrix_wrp; } } }
+// clang-format off
+namespace cath::geom { class coord; }
+namespace cath::geom { class coord_list; }
+namespace cath::geom { class line; }
+namespace cath::geom::detail { class gsl_matrix_wrp; }
+// clang-format on
 
-namespace cath {
-	namespace geom {
+namespace cath::geom {
 
-		namespace detail {
-			doub_vec build_matrix_of_coords(const coord_list &,
-			                                const coord &);
-		} // namespace detail
+	namespace detail {
+		doub_vec build_matrix_of_coords(const coord_list &,
+		                                const coord &);
+	} // namespace detail
 
-		line line_of_best_fit(const coord_list &);
+	line line_of_best_fit(const coord_list &);
 
-	} // namespace geom
-} // namespace cath
+} // namespace cath::geom
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_PCA_HPP

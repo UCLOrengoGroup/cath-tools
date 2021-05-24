@@ -25,36 +25,33 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace align { namespace gap { class gap_penalty; } } }
+// clang-format off
+namespace cath::align { class alignment; }
+namespace cath::align::gap { class gap_penalty; }
+// clang-format on
 
-namespace cath {
-	namespace align {
-		namespace gap {
+namespace cath::align::gap {
 
-			namespace detail {
+	namespace detail {
 
-				size_t get_naive_num_gaps_of_entry(const alignment &,
-				                                   const size_t &);
+		size_t get_naive_num_gaps_of_entry(const alignment &,
+											const size_t &);
 
-				size_size_pair gap_open_and_extend_counts_of_pair_in_alignment(const alignment &,
-				                                                               const size_t &,
-				                                                               const size_t &);
+		size_size_pair gap_open_and_extend_counts_of_pair_in_alignment(const alignment &,
+																		const size_t &,
+																		const size_t &);
 
-			} // namespace detail
+	} // namespace detail
 
-			float_score_type gap_count_of_alignment(const alignment &);
+	float_score_type gap_count_of_alignment(const alignment &);
 
-			float_score_float_score_pair gap_open_and_extend_counts_of_alignment(const alignment &);
+	float_score_float_score_pair gap_open_and_extend_counts_of_alignment(const alignment &);
 
-			float_score_type gap_penalty_value_of_alignment(const alignment &,
-			                                                const gap_penalty &);
+	float_score_type gap_penalty_value_of_alignment(const alignment &,
+													const gap_penalty &);
 
-			size_t get_naive_num_gaps(const alignment &);
+	size_t get_naive_num_gaps(const alignment &);
 
-		} // namespace gap
-	} // namespace align
-
-} // namespace cath
+} // namespace cath::align::gap
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_GAP_ALIGNMENT_GAP_HPP

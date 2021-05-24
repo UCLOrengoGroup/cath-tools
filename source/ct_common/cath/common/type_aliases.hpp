@@ -32,8 +32,10 @@
 #include <utility>
 #include <vector>
 
-namespace cath { namespace common { template <typename> class clone_ptr; } }
-namespace cath { namespace common { template <typename T> class vector_of_vector; } }
+// clang-format off
+namespace cath::common { template <typename> class clone_ptr; }
+namespace cath::common { template <typename T> class vector_of_vector; }
+// clang-format on
 
 namespace cath {
 
@@ -183,17 +185,15 @@ namespace cath {
 	using size_size_size_size_tpl       = ::std::tuple<size_t, size_t, size_t, size_t>;
 } // namespace cath
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		using bool_vec_of_vec = vector_of_vector<bool>; // WARNING: Remember std has a stupid template specialisation for vector<bool>
+	using bool_vec_of_vec = vector_of_vector<bool>; // WARNING: Remember std has a stupid template specialisation for vector<bool>
 
-		/// \brief Alias template for a vector of clone_ptr of T
-		template <typename T>
-		using clptr_vec = ::std::vector< common::clone_ptr< T > >;
+	/// \brief Alias template for a vector of clone_ptr of T
+	template <typename T>
+	using clptr_vec = ::std::vector< common::clone_ptr< T > >;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 namespace cath {
 	class protein;

@@ -61,61 +61,59 @@ using ::boost::sub_range;
 //   index_iteratored;
 //   permuted;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The adaptor test_suite_fixture to assist in testing adaptors
-		struct adaptor_test_suite_fixture {
-		protected:
-			~adaptor_test_suite_fixture() noexcept = default;
+	/// \brief The adaptor test_suite_fixture to assist in testing adaptors
+	struct adaptor_test_suite_fixture {
+	protected:
+		~adaptor_test_suite_fixture() noexcept = default;
 
-			/// \brief TODOCUMENT
-			const str_vec            strings            = { "5", "3", "7", "1", "6", "8", "0", "9", "2" };
+		/// \brief TODOCUMENT
+		const str_vec            strings            = { "5", "3", "7", "1", "6", "8", "0", "9", "2" };
 
-			/// \brief TODOCUMENT
-			const size_vec           numbers            = {  5,   3,   7,   1,   6,   8,   0,   9,   2  };
+		/// \brief TODOCUMENT
+		const size_vec           numbers            = {  5,   3,   7,   1,   6,   8,   0,   9,   2  };
 
-			/// \brief TODOCUMENT
-			const size_vec           first_four_numbers = {  5,   3,   7,   1 };
+		/// \brief TODOCUMENT
+		const size_vec           first_four_numbers = {  5,   3,   7,   1 };
 
-			/// \brief TODOCUMENT
-			const size_size_pair_vec adjacented_numbers = {
-				{ 5, 3 },
-				{ 3, 7 },
-				{ 7, 1 },
-				{ 1, 6 },
-				{ 6, 8 },
-				{ 8, 0 },
-				{ 0, 9 },
-				{ 9, 2 },
-			};
-
-			/// \brief TODOCUMENT
-			const size_vec equivalents = { 5, 5, 3, 3, 3, 7, 7, 7 };
-
-			/// \brief TODOCUMENT
-			const size_vec_vec grouped_equivalents = {
-				{ 5, 5 },
-				{ 3, 3, 3 },
-				{ 7, 7, 7 }
-			};
-
-			/// \brief TODOCUMENT
-			const size_vec sorted_equivalents = { 3, 3, 3, 5, 5, 7, 7, 7 };
-
-			/// \brief TODOCUMENT
-			const size_vec_vec grouped_sorted_equivalents = {
-				{ 3, 3, 3 },
-				{ 5, 5 },
-				{ 7, 7, 7 }
-			};
+		/// \brief TODOCUMENT
+		const size_size_pair_vec adjacented_numbers = {
+			{ 5, 3 },
+			{ 3, 7 },
+			{ 7, 1 },
+			{ 1, 6 },
+			{ 6, 8 },
+			{ 8, 0 },
+			{ 0, 9 },
+			{ 9, 2 },
 		};
 
-	} // namespace test
-} // namespace cath
+		/// \brief TODOCUMENT
+		const size_vec equivalents = { 5, 5, 3, 3, 3, 7, 7, 7 };
+
+		/// \brief TODOCUMENT
+		const size_vec_vec grouped_equivalents = {
+			{ 5, 5 },
+			{ 3, 3, 3 },
+			{ 7, 7, 7 }
+		};
+
+		/// \brief TODOCUMENT
+		const size_vec sorted_equivalents = { 3, 3, 3, 5, 5, 7, 7, 7 };
+
+		/// \brief TODOCUMENT
+		const size_vec_vec grouped_sorted_equivalents = {
+			{ 3, 3, 3 },
+			{ 5, 5 },
+			{ 7, 7, 7 }
+		};
+	};
+
+} // namespace
 
 /// \brief Test suite to perform basic checks of the adaptors
-BOOST_FIXTURE_TEST_SUITE(adaptor_test_suite, cath::test::adaptor_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(adaptor_test_suite, adaptor_test_suite_fixture)
 
 /// \brief Check that lexical_casted correctly converts between string/size_t range values
 BOOST_AUTO_TEST_CASE(lexical_casted_works) {

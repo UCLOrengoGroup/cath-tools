@@ -23,30 +23,28 @@
 
 #include "cath/common/boost_addenda/range/adaptor/range/lexical_casted_range.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		template <typename T>
-		class lexical_casted final {};
+	/// \brief TODOCUMENT
+	template <typename T>
+	class lexical_casted final {};
 
-		/// \brief Non-const range overload of operator| for lexical_casted range adaptor
-		template <typename T, typename ForwardRng>
-		inline detail::lexical_casted_range<T, ForwardRng> operator|(ForwardRng              &prm_range, ///< The range to which the lexical_casted adaptor should be applied
-		                                                             const lexical_casted<T> &           ///< A dummy lexical_casted parameter for determining which adaptor should be applied
-		                                                             ) {
-			return detail::lexical_casted_range<T, ForwardRng>( prm_range );
-		}
+	/// \brief Non-const range overload of operator| for lexical_casted range adaptor
+	template <typename T, typename ForwardRng>
+	inline detail::lexical_casted_range<T, ForwardRng> operator|(ForwardRng              &prm_range, ///< The range to which the lexical_casted adaptor should be applied
+	                                                             const lexical_casted<T> &           ///< A dummy lexical_casted parameter for determining which adaptor should be applied
+	                                                             ) {
+		return detail::lexical_casted_range<T, ForwardRng>( prm_range );
+	}
 
-		/// \brief Const range overload of operator| for lexical_casted range adaptor
-		template <typename T, typename ForwardRng>
-		inline detail::lexical_casted_range<T, const ForwardRng> operator|(const ForwardRng        &prm_range, ///< The range to which the lexical_casted adaptor should be applied
-		                                                                   const lexical_casted<T> &           ///< A dummy lexical_casted parameter for determining which adaptor should be applied
-		                                                                   ) {
-			return detail::lexical_casted_range<T, const ForwardRng>( prm_range );
-		}
+	/// \brief Const range overload of operator| for lexical_casted range adaptor
+	template <typename T, typename ForwardRng>
+	inline detail::lexical_casted_range<T, const ForwardRng> operator|(const ForwardRng        &prm_range, ///< The range to which the lexical_casted adaptor should be applied
+	                                                                   const lexical_casted<T> &           ///< A dummy lexical_casted parameter for determining which adaptor should be applied
+	                                                                   ) {
+		return detail::lexical_casted_range<T, const ForwardRng>( prm_range );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_LEXICAL_CASTED_HPP

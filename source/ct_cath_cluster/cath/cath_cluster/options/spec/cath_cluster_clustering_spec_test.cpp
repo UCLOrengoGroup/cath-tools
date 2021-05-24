@@ -25,45 +25,40 @@
 #include "cath/cath_cluster/options/spec/cath_cluster_clustering_spec.hpp"
 #include "cath/test/boost_test_print_type.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::clust;
-using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
 using ::boost::test_tools::per_element;
 using ::std::nullopt;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The cath_cluster_clustering_spec_test_suite_fixture to assist in testing cath_cluster_clustering_spec
-		struct cath_cluster_clustering_spec_test_suite_fixture {
-		protected:
-			~cath_cluster_clustering_spec_test_suite_fixture() noexcept = default;
+	/// \brief The cath_cluster_clustering_spec_test_suite_fixture to assist in testing cath_cluster_clustering_spec
+	struct cath_cluster_clustering_spec_test_suite_fixture {
+	protected:
+		~cath_cluster_clustering_spec_test_suite_fixture() noexcept = default;
 
-			/// \brief link_dirn::STRENGTH levels that are in the correct order so they should induce a warning
-			const strength_vec jumbled_strength_levels         {   35,   95,   60,  100 };
+		/// \brief link_dirn::STRENGTH levels that are in the correct order so they should induce a warning
+		const strength_vec jumbled_strength_levels         {   35,   95,   60,  100 };
 
-			/// \brief Valid link_dirn::STRENGTH levels
-			const strength_vec valid_strength_levels           {   35,   60,   95,  100 };
+		/// \brief Valid link_dirn::STRENGTH levels
+		const strength_vec valid_strength_levels           {   35,   60,   95,  100 };
 
-			/// \brief The expected result of sorting the valid link_dirn::STRENGTH levels
-			const strength_vec expected_strength_levels_result { -100,  -95,  -60,  -35 };
+		/// \brief The expected result of sorting the valid link_dirn::STRENGTH levels
+		const strength_vec expected_strength_levels_result { -100,  -95,  -60,  -35 };
 
 
-			/// \brief link_dirn::DISSIMILARITY levels that are in the correct order so they should induce a warning
-			const strength_vec jumbled_distance_levels         {    4,    2,    3,    1 };
+		/// \brief link_dirn::DISSIMILARITY levels that are in the correct order so they should induce a warning
+		const strength_vec jumbled_distance_levels         {    4,    2,    3,    1 };
 
-			/// \brief Valid link_dirn::DISSIMILARITY levels
-			const strength_vec valid_distance_levels           {    4,    3,    2,    1 };
+		/// \brief Valid link_dirn::DISSIMILARITY levels
+		const strength_vec valid_distance_levels           {    4,    3,    2,    1 };
 
-			/// \brief The expected result of sorting the valid link_dirn::DISSIMILARITY levels
-			const strength_vec expected_distance_levels_result {    1,    2,    3,    4 };
-		};
+		/// \brief The expected result of sorting the valid link_dirn::DISSIMILARITY levels
+		const strength_vec expected_distance_levels_result {    1,    2,    3,    4 };
+	};
 
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(cath_cluster_clustering_spec_test_suite, cath_cluster_clustering_spec_test_suite_fixture)
 

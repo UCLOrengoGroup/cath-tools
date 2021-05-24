@@ -32,7 +32,9 @@
 #include "cath/structure/protein/protein_list.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_file_combn.hpp"
 
-namespace cath { namespace opts { class data_dirs_spec; } }
+// clang-format off
+namespace cath::opts { class data_dirs_spec; }
+// clang-format on
 
 namespace cath {
 

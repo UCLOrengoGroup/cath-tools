@@ -27,54 +27,54 @@
 
 #include <iosfwd>
 
+// clang-format off
 namespace cath { class display_colourer; }
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace file { class pdb_list; } }
-namespace cath { namespace align { class alignment_context; } }
+namespace cath::align { class alignment; }
+namespace cath::align { class alignment_context; }
+namespace cath::file { class pdb_list; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief Simple wrapper class for outputting an alignment to an ostream in horizontal format
-		///
-		/// Use like this:
-		///
-		///    cerr << html_align_outputter( my_alignment, pdbs, names, colourer ) << endl;
-		///
-		/// This provides a convenient way for the user to choose a different format
-		/// when outputting an alignment to an ostream via the insertion operator
-		class html_align_outputter final {
-		private:
-			/// \brief A const-reference to the alignment to be output
-			std::reference_wrapper<const alignment            > the_alignment;
+	/// \brief Simple wrapper class for outputting an alignment to an ostream in horizontal format
+	///
+	/// Use like this:
+	///
+	///    cerr << html_align_outputter( my_alignment, pdbs, names, colourer ) << endl;
+	///
+	/// This provides a convenient way for the user to choose a different format
+	/// when outputting an alignment to an ostream via the insertion operator
+	class html_align_outputter final {
+	private:
+		/// \brief A const-reference to the alignment to be output
+		std::reference_wrapper<const alignment            > the_alignment;
 
-			/// \brief TODOCUMENT
-			std::reference_wrapper<const file::strucs_context > context;
+		/// \brief TODOCUMENT
+		std::reference_wrapper<const file::strucs_context > context;
 
-			/// \brief TODOCUMENT
-			std::reference_wrapper<const display_colourer     > colourer;
+		/// \brief TODOCUMENT
+		std::reference_wrapper<const display_colourer     > colourer;
 
-		public:
-			html_align_outputter(const alignment &,
-			                     const file::strucs_context &,
-			                     const display_colourer &);
+	public:
+		html_align_outputter(const alignment &,
+		                     const file::strucs_context &,
+		                     const display_colourer &);
 
-			[[nodiscard]] const alignment &           get_alignment() const;
-			[[nodiscard]] const file::strucs_context &get_strucs_context() const;
-			[[nodiscard]] const display_colourer &    get_display_colourer() const;
-		};
+		[[nodiscard]] const alignment &           get_alignment() const;
+		[[nodiscard]] const file::strucs_context &get_strucs_context() const;
+		[[nodiscard]] const display_colourer &    get_display_colourer() const;
+	};
 
-		const file::pdb_list & get_pdbs(const html_align_outputter &);
-		const file::name_set_list & get_name_sets(const html_align_outputter &);
-		const chop::region_vec_opt_vec & get_regions(const html_align_outputter &);
+	const file::pdb_list & get_pdbs(const html_align_outputter &);
+	const file::name_set_list & get_name_sets(const html_align_outputter &);
+	const chop::region_vec_opt_vec & get_regions(const html_align_outputter &);
 
-		html_align_outputter make_html_align_outputter(const alignment_context &,
-		                                               const display_colourer &);
+	html_align_outputter make_html_align_outputter(const alignment_context &,
+	                                               const display_colourer &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const html_align_outputter &);
+	std::ostream & operator<<(std::ostream &,
+	                          const html_align_outputter &);
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_IO_OUTPUTTER_HTML_ALIGN_OUTPUTTER_HPP

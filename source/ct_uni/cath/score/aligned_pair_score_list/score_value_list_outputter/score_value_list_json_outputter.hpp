@@ -26,46 +26,42 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace score {
-		class aligned_pair_score_value_list;
-	} // namespace score
-} // namespace cath
+// clang-format off
+namespace cath::score { class aligned_pair_score_value_list; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief Simple wrapper class for outputting an aligned_pair_score_value_list to an ostream in JSON format
-		///
-		/// Use like this:
-		///
-		///    cerr << score_value_list_json_outputter( my_score_value_list ) << endl;
-		///
-		/// This provides a convenient way for the user to choose a different format
-		/// when outputting an aligned_pair_score_value_list to an ostream via the insertion operator
-		class score_value_list_json_outputter final {
-		private:
-			/// \brief TODOCUMENT
-			const aligned_pair_score_value_list &the_aligned_pair_score_value_list;
+	/// \brief Simple wrapper class for outputting an aligned_pair_score_value_list to an ostream in JSON format
+	///
+	/// Use like this:
+	///
+	///    cerr << score_value_list_json_outputter( my_score_value_list ) << endl;
+	///
+	/// This provides a convenient way for the user to choose a different format
+	/// when outputting an aligned_pair_score_value_list to an ostream via the insertion operator
+	class score_value_list_json_outputter final {
+	private:
+		/// \brief TODOCUMENT
+		const aligned_pair_score_value_list &the_aligned_pair_score_value_list;
 
-			/// \brief TODOCUMENT
-			const common::json_style the_json_style = DEFAULT_JSON_STYLE;
+		/// \brief TODOCUMENT
+		const common::json_style the_json_style = DEFAULT_JSON_STYLE;
 
-		public:
-			explicit score_value_list_json_outputter(const aligned_pair_score_value_list &,
-			                                         const common::json_style & = DEFAULT_JSON_STYLE);
+	public:
+		explicit score_value_list_json_outputter(const aligned_pair_score_value_list &,
+		                                         const common::json_style & = DEFAULT_JSON_STYLE);
 
-			/// \brief Default value for the style in which to output the JSON
-			static constexpr common::json_style DEFAULT_JSON_STYLE = common::json_style::PRETTY;
+		/// \brief Default value for the style in which to output the JSON
+		static constexpr common::json_style DEFAULT_JSON_STYLE = common::json_style::PRETTY;
 
-			[[nodiscard]] const aligned_pair_score_value_list &get_aligned_pair_score_value_list() const;
-			[[nodiscard]] const common::json_style &           get_json_style() const;
-		};
+		[[nodiscard]] const aligned_pair_score_value_list &get_aligned_pair_score_value_list() const;
+		[[nodiscard]] const common::json_style &           get_json_style() const;
+	};
 
-		std::ostream & operator<<(std::ostream &,
-		                          const score_value_list_json_outputter &);
+	std::ostream & operator<<(std::ostream &,
+	                          const score_value_list_json_outputter &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_LIST_SCORE_VALUE_LIST_OUTPUTTER_SCORE_VALUE_LIST_JSON_OUTPUTTER_HPP

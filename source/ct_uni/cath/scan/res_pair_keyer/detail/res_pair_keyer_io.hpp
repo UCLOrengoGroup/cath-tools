@@ -30,73 +30,69 @@
 #include <iomanip>
 #include <sstream>
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan::detail {
 
-			/// \brief TODOCUMENT
-			template <typename T>
-			inline std::string output_key_part_impl(const T &prm_value ///< TODOCUMENT
-			                                        ) {
-				std::ostringstream out_ss;
-				out_ss << std::right << std::setw( 3 ) << prm_value;
-				return out_ss.str();
-			}
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline std::string output_key_part_impl(const T &prm_value ///< TODOCUMENT
+	                                        ) {
+		std::ostringstream out_ss;
+		out_ss << std::right << std::setw( 3 ) << prm_value;
+		return out_ss.str();
+	}
 
-			/// \brief TODOCUMENT
-			template <typename T>
-			inline std::string output_key_part(const T &prm_value ///< TODOCUMENT
-			                                   ) {
-				return output_key_part_impl( prm_value );
-			}
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline std::string output_key_part(const T &prm_value ///< TODOCUMENT
+	                                   ) {
+		return output_key_part_impl( prm_value );
+	}
 
-			/// \brief TODOCUMENT
-			template <>
-			inline std::string output_key_part<uint8_t>(const uint8_t &prm_value ///< TODOCUMENT
-			                                            ) {
-				return output_key_part_impl( static_cast<size_t>( prm_value ) );
-			}
+	/// \brief TODOCUMENT
+	template <>
+	inline std::string output_key_part<uint8_t>(const uint8_t &prm_value ///< TODOCUMENT
+	                                            ) {
+		return output_key_part_impl( static_cast<size_t>( prm_value ) );
+	}
 
-			struct key_parts_outputter final {
-				/// \brief TODOCUMENT
-				template <typename... Ks>
-				std::string operator()(const Ks &... prm_key_parts ///< TODOCUMENT
-				                       ) {
-					const str_vec key_part_strings = { output_key_part( prm_key_parts )... };
-					return "res_pair_key[ " + boost::algorithm::join( key_part_strings, ", " ) + " ]";
-				}
-			};
+	struct key_parts_outputter final {
+		/// \brief TODOCUMENT
+		template <typename... Ks>
+		std::string operator()(const Ks &... prm_key_parts ///< TODOCUMENT
+		                       ) {
+			const str_vec key_part_strings = { output_key_part( prm_key_parts )... };
+			return "res_pair_key[ " + boost::algorithm::join( key_part_strings, ", " ) + " ]";
+		}
+	};
 
-			/// \brief TODOCUMENT
-			template <typename... Ks>
-			std::string output_key(const std::tuple<Ks...> &prm_key ///< TODOCUMENT
-			                       ) {
-				return common::apply( key_parts_outputter(), prm_key );
-			}
+	/// \brief TODOCUMENT
+	template <typename... Ks>
+	std::string output_key(const std::tuple<Ks...> &prm_key ///< TODOCUMENT
+	                       ) {
+		return common::apply( key_parts_outputter(), prm_key );
+	}
 
 
 
-			/// \brief TODOCUMENT
-			struct keyer_parts_outputter final {
-				/// \brief TODOCUMENT
-				template <typename... KPs>
-				std::string operator()(const KPs &... prm_keyer_parts ///< TODOCUMENT
-				                       ) {
-					const str_vec keyer_part_strings = { prm_keyer_parts.get_name()... };
-					return boost::algorithm::join( keyer_part_strings, ", " );
-				}
-			};
+	/// \brief TODOCUMENT
+	struct keyer_parts_outputter final {
+		/// \brief TODOCUMENT
+		template <typename... KPs>
+		std::string operator()(const KPs &... prm_keyer_parts ///< TODOCUMENT
+		                       ) {
+			const str_vec keyer_part_strings = { prm_keyer_parts.get_name()... };
+			return boost::algorithm::join( keyer_part_strings, ", " );
+		}
+	};
 
-			/// \brief TODOCUMENT
-			template <typename... KPs>
-			std::string output_keyer_parts(const std::tuple<KPs...> &prm_keyer_parts ///< TODOCUMENT
-			                               ) {
-				return common::apply( keyer_parts_outputter(), prm_keyer_parts );
-			}
+	/// \brief TODOCUMENT
+	template <typename... KPs>
+	std::string output_keyer_parts(const std::tuple<KPs...> &prm_keyer_parts ///< TODOCUMENT
+	                               ) {
+		return common::apply( keyer_parts_outputter(), prm_keyer_parts );
+	}
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_IO_HPP
 

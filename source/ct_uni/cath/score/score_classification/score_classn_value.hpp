@@ -23,35 +23,33 @@
 
 #include <string>
 
-namespace cath {
-	namespace score {
+namespace cath::score {
+
+	/// \brief TODOCUMENT
+	class score_classn_value final {
+	private:
+		/// \brief TODOCUMENT
+		double score_value;
 
 		/// \brief TODOCUMENT
-		class score_classn_value final {
-		private:
-			/// \brief TODOCUMENT
-			double score_value;
+		bool instance_is_positive;
 
-			/// \brief TODOCUMENT
-			bool instance_is_positive;
+		/// \brief TODOCUMENT
+		std::string instance_label;
 
-			/// \brief TODOCUMENT
-			std::string instance_label;
+	public:
+		score_classn_value(const double &,
+		                   const bool &,
+		                   std::string = {} );
 
-		public:
-			score_classn_value(const double &,
-			                   const bool &,
-			                   std::string = {} );
+		[[nodiscard]] const double &     get_score_value() const;
+		[[nodiscard]] const bool &       get_instance_is_positive() const;
+		[[nodiscard]] const std::string &get_instance_label() const;
+	};
 
-			[[nodiscard]] const double &     get_score_value() const;
-			[[nodiscard]] const bool &       get_instance_is_positive() const;
-			[[nodiscard]] const std::string &get_instance_label() const;
-		};
+	std::ostream & operator<<(std::ostream &,
+	                          const score_classn_value &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const score_classn_value &);
-
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_HPP

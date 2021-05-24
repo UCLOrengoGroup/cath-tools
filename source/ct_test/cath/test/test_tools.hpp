@@ -24,151 +24,148 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP
 #define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP
 
-#include <boost/test/unit_test.hpp>
-
-
 #include <iostream> // ***** TEMPORARY *****
 
-namespace cath {
-	namespace common {
-		namespace test {
+#include <boost/test/unit_test.hpp>
 
-			namespace detail {
+namespace cath::common::test {
 
-				/// \brief Helper to check that equality/inequality operators return opposite values that are both correct
-				///
-				/// This requires that T and U are equality/inequality comparable (with T on the LHS and U on the RHS).
-				///
-				/// Note. This does not check the symmetric operations (U == T, U != T) so it can be used if there is some
-				/// situation where the reverse ==, != operations are forbidden. This is probably rare and the code below
-				/// that uses this function always uses it in both directions
-				///
-				/// \todo This currently also requires that T and U provide ostream insertion operator overloads so that Boost Test
-				///       can output comprehensive errors on failure. That's normally quite useful but it may be worth
-				///       providing an option to only perform the comparisons with bool values for use on types for
-				///       which it isn't worth providing an insertion operator overload. If motivated, this could probably be done
-				///       with a compile-time check for whether T and U both have ostream insertion operator overloads.
-				template <typename T, typename U>
-				void check_equality_and_inequality_are_consistent(const T    &prm_value_1,        ///< The first argument to compare
-				                                                  const U    &prm_value_2,        ///< The second argument to compare
-				                                                  const bool &prm_should_be_equal ///< Whether the two arguments should compare equal
-				                                                  ) {
-					const bool are_equal     = ( prm_value_1 == prm_value_2 );
-					const bool are_not_equal = ( prm_value_1 != prm_value_2 );
-					BOOST_REQUIRE_NE( are_equal, are_not_equal );
-					if ( prm_should_be_equal ) {
-						BOOST_CHECK_EQUAL( prm_value_1, prm_value_2 );
-					}
-					else {
-						BOOST_CHECK_NE( prm_value_1, prm_value_2 );
-					}
-					BOOST_CHECK_EQUAL( are_equal, prm_should_be_equal );
-				}
+	namespace detail {
 
-				/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
-				///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
-				///
-				/// Requirements on T:
-				///  * T is equality/inequality comparable with itself
-				///  * (Currently) T has an ostream insertion operator overload
-				template <bool T_is_copy_constructible>
-				struct check_equality_operators_on_value_impl final {
-					template <typename T>
-					static void check(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
-					                  ) {
-						detail::check_equality_and_inequality_are_consistent(    prm_value,      prm_value,   true );
-					}
-				};
+		/// \brief Helper to check that equality/inequality operators return opposite values that are both correct
+		///
+		/// This requires that T and U are equality/inequality comparable (with T on the LHS and U on the RHS).
+		///
+		/// Note. This does not check the symmetric operations (U == T, U != T) so it can be used if there is some
+		/// situation where the reverse ==, != operations are forbidden. This is probably rare and the code below
+		/// that uses this function always uses it in both directions
+		///
+		/// \todo This currently also requires that T and U provide ostream insertion operator overloads so that Boost Test
+		///       can output comprehensive errors on failure. That's normally quite useful but it may be worth
+		///       providing an option to only perform the comparisons with bool values for use on types for
+		///       which it isn't worth providing an insertion operator overload. If motivated, this could probably be done
+		///       with a compile-time check for whether T and U both have ostream insertion operator overloads.
+		template <typename T, typename U>
+		void check_equality_and_inequality_are_consistent(const T    &prm_value_1,        ///< The first argument to compare
+		                                                  const U    &prm_value_2,        ///< The second argument to compare
+		                                                  const bool &prm_should_be_equal ///< Whether the two arguments should compare equal
+		                                                  ) {
+			const bool are_equal     = ( prm_value_1 == prm_value_2 );
+			const bool are_not_equal = ( prm_value_1 != prm_value_2 );
+			BOOST_REQUIRE_NE( are_equal, are_not_equal );
+			if ( prm_should_be_equal ) {
+				BOOST_CHECK_EQUAL( prm_value_1, prm_value_2 );
+			}
+			else {
+				BOOST_CHECK_NE( prm_value_1, prm_value_2 );
+			}
+			BOOST_CHECK_EQUAL( are_equal, prm_should_be_equal );
+		}
 
-				/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
-				///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
-				///
-				/// Requirements on T:
-				///  * T is equality/inequality comparable with itself
-				///  * (Currently) T has an ostream insertion operator overload
-				template <>
-				struct check_equality_operators_on_value_impl<true> final {
-					template <typename T>
-					static void check(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
-					                  ) {
-						detail::check_equality_and_inequality_are_consistent( T( prm_value ),    prm_value,   true );
-						detail::check_equality_and_inequality_are_consistent(    prm_value,   T( prm_value ), true );
-						detail::check_equality_and_inequality_are_consistent(    prm_value,      prm_value,   true );
-					}
-				};
-			} // namespace detail
-
-			/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
-			///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
-			///
-			/// Requirements on T:
-			///  * T is equality/inequality comparable with itself
-			///  * (Currently) T has an ostream insertion operator overload
+		/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
+		///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
+		///
+		/// Requirements on T:
+		///  * T is equality/inequality comparable with itself
+		///  * (Currently) T has an ostream insertion operator overload
+		template <bool T_is_copy_constructible>
+		struct check_equality_operators_on_value_impl final {
 			template <typename T>
-			void check_equality_operators_on_value(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
-			                                       ) {
-				detail::check_equality_operators_on_value_impl<std::is_copy_constructible_v<T>>::check( prm_value );
+			static void check(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
+			                  ) {
+				detail::check_equality_and_inequality_are_consistent(    prm_value,      prm_value,   true );
 			}
+		};
 
-			/// \brief Boost Test that the equality/inequality operators give correct values for two different objects
-			///
-			/// Requirements on T, U:
-			///  * T, U are equality/inequality comparable with themselves and each other (in both directions)
-			///  * (Currently) T, U are both copy constructible
-			///  * (Currently) T, U both have ostream insertion operator overloads
-			///
-			/// Tests:
-			///  - The equality/inequality operators both give correct results for arg1 versus arg2
-			///  - Equality/inequality are also both correct if arguments are swapped (ie arg2 == arg2, arg2 != arg1)
-			///  - The equality/inequality operators are both correct for comparing each argument to itself
-			///    or to a copy-constructed copy of itself (in either direction)
-			template <bool EQUAL, typename T, typename U>
-			void check_equality_operators_on_vals(const T &arg1, ///< The first value to compare
-			                                      const U &arg2  ///< The second value to compare
-												  ) {
-				// arg1 == arg1, arg2 == arg2
-				check_equality_operators_on_value( arg1 );
-				check_equality_operators_on_value( arg2 );
-
-				// arg1 == arg2, arg2 == arg1
-				detail::check_equality_and_inequality_are_consistent( arg1, arg2, EQUAL );
-				detail::check_equality_and_inequality_are_consistent( arg2, arg1, EQUAL );
+		/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
+		///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
+		///
+		/// Requirements on T:
+		///  * T is equality/inequality comparable with itself
+		///  * (Currently) T has an ostream insertion operator overload
+		template <>
+		struct check_equality_operators_on_value_impl<true> final {
+			template <typename T>
+			static void check(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
+			                  ) {
+				detail::check_equality_and_inequality_are_consistent( T( prm_value ),    prm_value,   true );
+				detail::check_equality_and_inequality_are_consistent(    prm_value,   T( prm_value ), true );
+				detail::check_equality_and_inequality_are_consistent(    prm_value,      prm_value,   true );
 			}
+		};
 
-			/// \brief Boost Test that the equality/inequality operators give correct values for two unequal objects
-			///
-			/// This is just a convenience interface that wraps check_equality_operators_on_vals
-			template <typename T, typename U>
-			void check_equality_operators_on_diff_vals(const T &arg1, ///< The first  value to compare
-			                                           const U &arg2  ///< The second value to compare
-			                                           ) {
-				check_equality_operators_on_vals<false>( arg1, arg2 );
-			}
+	} // namespace detail
 
-			/// \brief Boost Test that the equality/inequality operators give correct values for two equal objects
-			///
-			/// This is just a convenience interface that wraps check_equality_operators_on_vals
-			template <typename T, typename U>
-			void check_equality_operators_on_equal_vals(const T &arg1, ///< The first value to compare
-			                                            const U &arg2  ///< The second value to compare
-			                                            ) {
-				check_equality_operators_on_vals<true>( arg1, arg2 );
-			}
+	/// \brief Boost Test that the equality/inequality operators are correct for comparing prm_value against itself
+	///        and, if copy-constructible, against a copy-constructed copy of itself (in both directions)
+	///
+	/// Requirements on T:
+	///  * T is equality/inequality comparable with itself
+	///  * (Currently) T has an ostream insertion operator overload
+	template <typename T>
+	void check_equality_operators_on_value(const T &prm_value ///< The value to be compared with itself and copy-constructed copies of itself
+	                                       ) {
+		detail::check_equality_operators_on_value_impl<std::is_copy_constructible_v<T>>::check( prm_value );
+	}
 
-			/// \brief
-			template <typename R>
-			void check_equality_operators_on_diff_vals_range(const R &prm_range ///< The range of values to compare
-			                                                 ) {
-				for (auto itr_a = ::std::cbegin( prm_range ); itr_a != ::std::cend( prm_range ); ++itr_a) {
-					for (auto itr_b = ::std::cbegin( prm_range ); itr_b != ::std::cend( prm_range ); ++itr_b) {
-						if ( itr_a != itr_b ) {
-							check_equality_operators_on_diff_vals( *itr_a, *itr_b );
-						}
-					}
+	/// \brief Boost Test that the equality/inequality operators give correct values for two different objects
+	///
+	/// Requirements on T, U:
+	///  * T, U are equality/inequality comparable with themselves and each other (in both directions)
+	///  * (Currently) T, U are both copy constructible
+	///  * (Currently) T, U both have ostream insertion operator overloads
+	///
+	/// Tests:
+	///  - The equality/inequality operators both give correct results for arg1 versus arg2
+	///  - Equality/inequality are also both correct if arguments are swapped (ie arg2 == arg2, arg2 != arg1)
+	///  - The equality/inequality operators are both correct for comparing each argument to itself
+	///    or to a copy-constructed copy of itself (in either direction)
+	template <bool EQUAL, typename T, typename U>
+	void check_equality_operators_on_vals(const T &arg1, ///< The first value to compare
+	                                      const U &arg2  ///< The second value to compare
+										  ) {
+		// arg1 == arg1, arg2 == arg2
+		check_equality_operators_on_value( arg1 );
+		check_equality_operators_on_value( arg2 );
+
+		// arg1 == arg2, arg2 == arg1
+		detail::check_equality_and_inequality_are_consistent( arg1, arg2, EQUAL );
+		detail::check_equality_and_inequality_are_consistent( arg2, arg1, EQUAL );
+	}
+
+	/// \brief Boost Test that the equality/inequality operators give correct values for two unequal objects
+	///
+	/// This is just a convenience interface that wraps check_equality_operators_on_vals
+	template <typename T, typename U>
+	void check_equality_operators_on_diff_vals(const T &arg1, ///< The first  value to compare
+	                                           const U &arg2  ///< The second value to compare
+	                                           ) {
+		check_equality_operators_on_vals<false>( arg1, arg2 );
+	}
+
+	/// \brief Boost Test that the equality/inequality operators give correct values for two equal objects
+	///
+	/// This is just a convenience interface that wraps check_equality_operators_on_vals
+	template <typename T, typename U>
+	void check_equality_operators_on_equal_vals(const T &arg1, ///< The first value to compare
+	                                            const U &arg2  ///< The second value to compare
+	                                            ) {
+		check_equality_operators_on_vals<true>( arg1, arg2 );
+	}
+
+	/// \brief
+	template <typename R>
+	void check_equality_operators_on_diff_vals_range(const R &prm_range ///< The range of values to compare
+	                                                 ) {
+		for (auto itr_a = ::std::cbegin( prm_range ); itr_a != ::std::cend( prm_range ); ++itr_a) {
+			for (auto itr_b = ::std::cbegin( prm_range ); itr_b != ::std::cend( prm_range ); ++itr_b) {
+				if ( itr_a != itr_b ) {
+					check_equality_operators_on_diff_vals( *itr_a, *itr_b );
 				}
 			}
-		} // namespace test
-	} // namespace common
-} // namespace cath
+		}
+	}
+
+} // namespace cath::common::test
 
 #endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP

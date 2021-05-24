@@ -25,18 +25,16 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace align {
-		namespace detail {
+namespace cath::align::detail {
 
-			/// \brief TODOCUMENT
-			class benchmark_dyn_prog_string_aligner final : public string_aligner {
-			private:
-				static void make_ends_spaces(std::string &);
+	/// \brief TODOCUMENT
+	class benchmark_dyn_prog_string_aligner final : public string_aligner {
+	private:
+		static void make_ends_spaces(std::string &);
 
-				[[nodiscard]] str_str_pair do_align( const std::string &, const std::string &, const gap::gap_penalty & ) const final;
-			};
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+		[[nodiscard]] str_str_pair do_align( const std::string &, const std::string &, const gap::gap_penalty & ) const final;
+	};
+
+} // namespace cath::align::detail
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_STRING_ALIGNER_BENCHMARK_DYN_PROG_STRING_ALIGNER_HPP

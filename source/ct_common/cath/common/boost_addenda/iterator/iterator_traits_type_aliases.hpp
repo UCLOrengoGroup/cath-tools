@@ -23,25 +23,23 @@
 
 #include <boost/iterator/iterator_traits.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		template <typename T>
-		using iterator_value_t      = typename boost::iterator_value     <T>::type;
+	template <typename T>
+	using iterator_value_t      = typename boost::iterator_value     <T>::type;
 
-		template <typename T>
-		using iterator_reference_t  = typename boost::iterator_reference <T>::type;
+	template <typename T>
+	using iterator_reference_t  = typename boost::iterator_reference <T>::type;
 
-		template <typename T>
-		using iterator_pointer_t    = typename boost::iterator_pointer   <T>::type;
+	template <typename T>
+	using iterator_pointer_t    = typename boost::iterator_pointer   <T>::type;
 
-		template <typename T>
-		using iterator_difference_t = typename boost::iterator_difference<T>::type;
+	template <typename T>
+	using iterator_difference_t = typename boost::iterator_difference<T>::type;
 
-		template <typename T>
-		using iterator_category_t   = typename boost::iterator_category  <T>::type;
+	template <typename T>
+	using iterator_category_t   = typename boost::iterator_category  <T>::type;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_ITERATOR_ITERATOR_TRAITS_TYPE_ALIASES_HPP

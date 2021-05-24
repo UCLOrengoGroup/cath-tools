@@ -29,46 +29,45 @@
 #include "cath/score/length_getter/num_aligned_length_getter.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief Calculate (and represent) match index (MI), a measure that attempts to
-		///        balance the RMSD according to fraction of residues that have been aligned
-		///
-		/// \todo The structal_score and si_score classes should probably be merged into one
-		class structal_score : public aligned_pair_score {
-		private:
-			/// \brief TODOCUMENT
-			detail::score_common_coord_handler the_coord_handler;
+	/// \brief Calculate (and represent) match index (MI), a measure that attempts to
+	///        balance the RMSD according to fraction of residues that have been aligned
+	///
+	/// \todo The structal_score and si_score classes should probably be merged into one
+	class structal_score : public aligned_pair_score {
+	private:
+		/// \brief TODOCUMENT
+		detail::score_common_coord_handler the_coord_handler;
 
-			[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
 
-			[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
-			[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
-			[[nodiscard]] std::string       do_description() const final;
-			[[nodiscard]] std::string       do_id_name() const final;
-			[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
-			[[nodiscard]] std::string       do_long_name() const final;
-			[[nodiscard]] std::string       do_reference() const final;
+		[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
+		[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
+		[[nodiscard]] std::string       do_description() const final;
+		[[nodiscard]] std::string       do_id_name() const final;
+		[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
+		[[nodiscard]] std::string       do_long_name() const final;
+		[[nodiscard]] std::string       do_reference() const final;
 
-			// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
+		// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
 
-			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
+		[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
 
-			static score_value score_for_target_length(const std::pair<geom::coord_list_vec, geom::coord_list_vec> &,
-			                                           const score_value &);
+		static score_value score_for_target_length(const std::pair<geom::coord_list_vec, geom::coord_list_vec> &,
+		                                           const score_value &);
 
-		public:
-			structal_score() = default;
-			structal_score(const align::common_residue_selection_policy &,
-			               const align::common_atom_selection_policy &);
+	public:
+		structal_score() = default;
+		structal_score(const align::common_residue_selection_policy &,
+		               const align::common_atom_selection_policy &);
 
-			[[nodiscard]] const detail::score_common_coord_handler &get_score_common_coord_handler() const;
-		};
+		[[nodiscard]] const detail::score_common_coord_handler &get_score_common_coord_handler() const;
+	};
 
-		bool operator<(const structal_score &,
-		               const structal_score &);
+	bool operator<(const structal_score &,
+	               const structal_score &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_STRUCTAL_SCORE_HPP

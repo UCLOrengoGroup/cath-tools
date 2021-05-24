@@ -28,37 +28,35 @@
 #include <iosfwd>
 #include <map>
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
-		///
-		/// The low accuracy option is mainly provided to permit regression testing against the old SSAP score code.
-		enum class ssap_score_accuracy : bool {
-			LOW, ///< Use high accuracy calculations (floating point numbers; no explicit rounding)
-			HIGH ///< Use low accuracy calculations (ints)
-		};
+	/// \brief Whether to use high accuracy (floating point numbers; no explicit rounding) or low accuracy (ints)
+	///
+	/// The low accuracy option is mainly provided to permit regression testing against the old SSAP score code.
+	enum class ssap_score_accuracy : bool {
+		LOW, ///< Use high accuracy calculations (floating point numbers; no explicit rounding)
+		HIGH ///< Use low accuracy calculations (ints)
+	};
 
-		/// \brief TODOCUMENT
-		static constexpr auto all_ssap_score_accuracies = common::make_array(
-			ssap_score_accuracy::LOW,
-			ssap_score_accuracy::HIGH
-		);
+	/// \brief TODOCUMENT
+	static constexpr auto all_ssap_score_accuracies = common::make_array(
+		ssap_score_accuracy::LOW,
+		ssap_score_accuracy::HIGH
+	);
 
-		static_assert( common::constexpr_is_uniq( all_ssap_score_accuracies ), "all_ssap_score_accuracies shouldn't contain repeated values" );
+	static_assert( common::constexpr_is_uniq( all_ssap_score_accuracies ), "all_ssap_score_accuracies shouldn't contain repeated values" );
 
-		/// \brief TODOCUMENT
-		inline constexpr size_t num_ssap_score_accuracies = std::tuple_size_v< decltype( all_ssap_score_accuracies ) >;
+	/// \brief TODOCUMENT
+	inline constexpr size_t num_ssap_score_accuracies = std::tuple_size_v< decltype( all_ssap_score_accuracies ) >;
 
-		/// \brief TODOCUMENT
-		struct name_of_ssap_score_accuracy final {
-			static std::map<ssap_score_accuracy, std::string> get();
-		};
+	/// \brief TODOCUMENT
+	struct name_of_ssap_score_accuracy final {
+		static std::map<ssap_score_accuracy, std::string> get();
+	};
 
-		std::ostream & operator<<(std::ostream &,
-		                          const ssap_score_accuracy &);
+	std::ostream & operator<<(std::ostream &,
+	                          const ssap_score_accuracy &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SSAP_SCORE_SSAP_SCORE_ACCURACY_HPP

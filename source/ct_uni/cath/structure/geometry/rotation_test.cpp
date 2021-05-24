@@ -15,7 +15,7 @@
 /// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 /// GNU General Public License for more details.
 ///
-/// You should have received a copy of the GNU General Public License
+/// You should have received A copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/lexical_cast.hpp>
@@ -36,35 +36,23 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::geom;
 
-namespace cath {
-	namespace test {
+constexpr coord A = { 3, 7, 9 };
+constexpr coord B = { 8, 5, 1 };
 
-		/// \brief The rotation_test_suite_fixture to assist in testing rotation
-		struct rotation_test_suite_fixture : protected global_test_constants {
-		protected:
-			~rotation_test_suite_fixture() noexcept = default;
-
-			const coord a = { 3, 7, 9 };
-			const coord b = { 8, 5, 1 };
-		};
-
-	}  // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(rotation_test_suite, cath::test::rotation_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(rotation_test_suite, global_test_constants)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(rotation_to_x_axis_and_x_y_plane_works) {
-	const rotation test_rotation = rotation_to_x_axis_and_x_y_plane(a, b);
-	const coord    rotated_a     = rotate_copy(test_rotation, a);
-	const coord    rotated_b     = rotate_copy(test_rotation, b);
+	const rotation test_rotation = rotation_to_x_axis_and_x_y_plane(A, B);
+	const coord    rotated_a     = rotate_copy(test_rotation, A);
+	const coord    rotated_b     = rotate_copy(test_rotation, B);
 
-	// Check that a's length has been preserved and that it has been rotated onto the x axis
-	BOOST_CHECK_CLOSE( length(a), length(rotated_a),                             100.0 * rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
-	BOOST_CHECK_CLOSE( length(a), dot_product( coord(1.0, 0.0, 0.0), rotated_a), 100.0 * rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
+	// Check that A's length has been preserved and that it has been rotated onto the x axis
+	BOOST_CHECK_CLOSE( length(A), length(rotated_a),                             100.0 * rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
+	BOOST_CHECK_CLOSE( length(A), dot_product( coord(1.0, 0.0, 0.0), rotated_a), 100.0 * rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
 
-	// Check that b's length has been preserved and that it has been rotated onto the x-y plane
-	BOOST_CHECK_EQUAL( length(b), length(rotated_b) );
+	// Check that B's length has been preserved and that it has been rotated onto the x-y plane
+	BOOST_CHECK_EQUAL( length(B), length(rotated_b) );
 	BOOST_CHECK_LE   ( dot_product( coord(0.0, 0.0, 1.0), rotated_b), rotation::DEFAULT_TOLERANCE_FOR_ROTATION_CLOSENESS_CHECKS );
 }
 
@@ -86,7 +74,7 @@ BOOST_AUTO_TEST_CASE(identity_rotation_is_correct) {
 	BOOST_TEST( rotate_copy( IDENTITY_ROTATION, UNIT_Z_COORD ) == UNIT_Z_COORD );
 }
 
-/// \brief Check that this example (1c0pA01, residue 999) can be used to produce a similar but more accurate rotation
+/// \brief Check that this example (1c0pA01, residue 999) can be used to produce A similar but more accurate rotation
 BOOST_AUTO_TEST_CASE(tidy_rotation_does_not_always_throw) {
 	BOOST_CHECK_NO_THROW_DIAG(
 		tidy_rotation( 0.0631, -0.9000, -0.4312,
@@ -97,7 +85,7 @@ BOOST_AUTO_TEST_CASE(tidy_rotation_does_not_always_throw) {
 	);
 }
 
-/// \brief Check that an attempt to find a similar but more rotation for this example (1c0pA01, residue 999) can
+/// \brief Check that an attempt to find A similar but more rotation for this example (1c0pA01, residue 999) can
 ///        fail if the tolerance is too strict
 BOOST_AUTO_TEST_CASE(tidy_rotation_can_fail) {
 	BOOST_CHECK_THROW(
@@ -119,24 +107,24 @@ BOOST_AUTO_TEST_CASE(tidy_copy_works) {
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(rotation_angle_works) {
-	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_of_rotation( IDENTITY_ROTATION       )                          );
+	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_of_rotation( IDENTITY_ROTATION       )                        );
 	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_of_rotation( ROTATE_X_TO_Y_TO_Z_TO_X ) ), ACCURACY_PERCENTAGE );
 	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_of_rotation( ROTATE_X_TO_Z_TO_Y_TO_X ) ), ACCURACY_PERCENTAGE );
 }
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(angle_between_rotations_works) {
-	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( IDENTITY_ROTATION,       IDENTITY_ROTATION          )                          );
+	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( IDENTITY_ROTATION,       IDENTITY_ROTATION          )                        );
 	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( IDENTITY_ROTATION,       ROTATE_X_TO_Y_TO_Z_TO_X    ) ), ACCURACY_PERCENTAGE );
 	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( IDENTITY_ROTATION,       ROTATE_X_TO_Z_TO_Y_TO_X    ) ), ACCURACY_PERCENTAGE );
 
 	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, IDENTITY_ROTATION          ) ), ACCURACY_PERCENTAGE );
-	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, ROTATE_X_TO_Y_TO_Z_TO_X    )                          );
+	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, ROTATE_X_TO_Y_TO_Z_TO_X    )                        );
 	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, ROTATE_X_TO_Z_TO_Y_TO_X    ) ), ACCURACY_PERCENTAGE );
 
 	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( ROTATE_X_TO_Z_TO_Y_TO_X, IDENTITY_ROTATION          ) ), ACCURACY_PERCENTAGE );
 	BOOST_CHECK_CLOSE( angle_in_degrees( ONE_REVOLUTION<double> / 3.0 ), angle_in_degrees( angle_between_rotations( ROTATE_X_TO_Z_TO_Y_TO_X, ROTATE_X_TO_Y_TO_Z_TO_X    ) ), ACCURACY_PERCENTAGE );
-	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( ROTATE_X_TO_Z_TO_Y_TO_X, ROTATE_X_TO_Z_TO_Y_TO_X    )                          );
+	BOOST_CHECK_EQUAL(                               ZERO_ANGLE<double>,                   angle_between_rotations( ROTATE_X_TO_Z_TO_Y_TO_X, ROTATE_X_TO_Z_TO_Y_TO_X    )                        );
 
 	BOOST_CHECK_EQUAL(                   ONE_REVOLUTION<double> / 2.0  ,                   angle_between_rotations( IDENTITY_ROTATION,       rotation(0, -1, 0, -1, 0, 0, 0, 0, -1) )                          );
 	BOOST_CHECK_EQUAL(                   ONE_REVOLUTION<double> / 2.0  ,                   angle_between_rotations( ROTATE_X_TO_Y_TO_Z_TO_X, rotation(0, -1, 0, -1, 0, 0, 0, 0, -1) )                          );

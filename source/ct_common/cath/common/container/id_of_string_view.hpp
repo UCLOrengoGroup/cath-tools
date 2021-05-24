@@ -29,110 +29,108 @@
 
 #include "cath/common/optional/make_optional_if.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Hasher for boost::string_ref
-			struct string_view_hasher final {
-				/// \brief The function operator that hashes the character range referred to by the string_ref
-				size_t operator()(const boost::string_ref &prm_value ///< The string_ref value to hash
-				                  ) const {
-					return boost::hash_range( prm_value.begin(), prm_value.end() );
-				}
-			};
-		} // namespace detail
-
-		/// \brief Map boost:string_ref to numeric IDs that count incrementally from 0
-		///
-		/// Note: this is an unordered_map of boost::string_ref / std::string_view not
-		/// of reference_wrapper<string>.
-		///
-		/// It's called id_of_string_view to differentiate it from id_of_string_ref
-		/// and because boost::string_ref will migrate to std::string_view
-		///
-		/// This class isn't thread-safe
-		///
-		/// \TODO Consider adding (or changing this into) id_of_string_view_ref / id_of_string_view_view.
-		///       The Boost string_view currently has a std::hash specialisation
-		///       but it's #if-ed out (#if 0).
-		///
-		/// \TODO Alternatively consider using Boost.MultiIndex as discussed in
-		///       "Why You Should Use Boost MultiIndex (Part II)"
-		class id_of_string_view final {
-		private:
-			/// \brief Type alias for the type of the IDs
-			using id_type = size_t;
-
-			/// \brief Type alias for the map type
-			using map_type = std::unordered_map<boost::string_ref, id_type, detail::string_view_hasher>;
-
-			/// \brief The unordered_map that stores the string_view-to-id lookup map
-			map_type the_map;
-
-		public:
-			/// \brief A type alias for the const_iterator type as part of making this a range
-			using const_iterator = map_type::const_iterator;
-
-			id_of_string_view() = default;
-
-			/// \brief Insert a new string and return its new ID
-			///
-			/// Can be used if the name already exists
-			inline const std::pair<const boost::string_ref, id_type> & emplace(const boost::string_ref &prm_string ///< The string to insert
-			                                                                   ) {
-				return *( the_map.emplace( prm_string, the_map.size() ).first );
-			}
-
-			/// \brief Get the ID corresponding to the specified string
-			inline ::std::optional<id_type> operator[](const boost::string_ref &prm_string ///< The string to lookup
-			                                           ) const {
-				const auto find_itr = the_map.find( prm_string );
-				return if_then_optional(
-					find_itr != ::std::cend( the_map ),
-					find_itr->second
-				);
-			}
-
-			/// \brief Return whether this contains the specified boost::string_ref
-			inline bool contains(const boost::string_ref &prm_string ///< The string to lookup
-			                     ) const {
-				return ( the_map.find( prm_string ) != ::std::cend( the_map ) );
-			}
-
-			/// \brief Return whether this id_of_string_view is empty
-			inline bool empty() const {
-				return the_map.empty();
-			}
-
-			/// \brief Return the number of strings that are stored
-			inline size_t size() const {
-				return the_map.size();
-			}
-
-			/// \brief Reserve space for the specified number of strings
-			inline void reserve(const size_t &prm_count ///< The number of strings for which space should be reserved
-			                    ) {
-				the_map.reserve( prm_count );
-			}
-
-			/// \brief Clear the id_of_string_view of all strings
-			inline void clear() {
-				the_map.clear();
-			}
-
-			/// \brief Standard const begin() operator to make id_of_string_view into a range
-			inline const_iterator begin() const {
-				return ::std::cbegin( the_map );
-			}
-
-			/// \brief Standard const end() operator to make id_of_string_view into a range
-			inline const_iterator end() const {
-				return ::std::cend( the_map );
+		/// \brief Hasher for boost::string_ref
+		struct string_view_hasher final {
+			/// \brief The function operator that hashes the character range referred to by the string_ref
+			size_t operator()(const boost::string_ref &prm_value ///< The string_ref value to hash
+			                  ) const {
+				return boost::hash_range( prm_value.begin(), prm_value.end() );
 			}
 		};
+	} // namespace detail
 
-	} // namespace common
-} // namespace cath
+	/// \brief Map boost:string_ref to numeric IDs that count incrementally from 0
+	///
+	/// Note: this is an unordered_map of boost::string_ref / std::string_view not
+	/// of reference_wrapper<string>.
+	///
+	/// It's called id_of_string_view to differentiate it from id_of_string_ref
+	/// and because boost::string_ref will migrate to std::string_view
+	///
+	/// This class isn't thread-safe
+	///
+	/// \TODO Consider adding (or changing this into) id_of_string_view_ref / id_of_string_view_view.
+	///       The Boost string_view currently has a std::hash specialisation
+	///       but it's #if-ed out (#if 0).
+	///
+	/// \TODO Alternatively consider using Boost.MultiIndex as discussed in
+	///       "Why You Should Use Boost MultiIndex (Part II)"
+	class id_of_string_view final {
+	private:
+		/// \brief Type alias for the type of the IDs
+		using id_type = size_t;
+
+		/// \brief Type alias for the map type
+		using map_type = std::unordered_map<boost::string_ref, id_type, detail::string_view_hasher>;
+
+		/// \brief The unordered_map that stores the string_view-to-id lookup map
+		map_type the_map;
+
+	public:
+		/// \brief A type alias for the const_iterator type as part of making this a range
+		using const_iterator = map_type::const_iterator;
+
+		id_of_string_view() = default;
+
+		/// \brief Insert a new string and return its new ID
+		///
+		/// Can be used if the name already exists
+		inline const std::pair<const boost::string_ref, id_type> & emplace(const boost::string_ref &prm_string ///< The string to insert
+		                                                                   ) {
+			return *( the_map.emplace( prm_string, the_map.size() ).first );
+		}
+
+		/// \brief Get the ID corresponding to the specified string
+		inline ::std::optional<id_type> operator[](const boost::string_ref &prm_string ///< The string to lookup
+		                                           ) const {
+			const auto find_itr = the_map.find( prm_string );
+			return if_then_optional(
+				find_itr != ::std::cend( the_map ),
+				find_itr->second
+			);
+		}
+
+		/// \brief Return whether this contains the specified boost::string_ref
+		inline bool contains(const boost::string_ref &prm_string ///< The string to lookup
+		                     ) const {
+			return ( the_map.find( prm_string ) != ::std::cend( the_map ) );
+		}
+
+		/// \brief Return whether this id_of_string_view is empty
+		inline bool empty() const {
+			return the_map.empty();
+		}
+
+		/// \brief Return the number of strings that are stored
+		inline size_t size() const {
+			return the_map.size();
+		}
+
+		/// \brief Reserve space for the specified number of strings
+		inline void reserve(const size_t &prm_count ///< The number of strings for which space should be reserved
+		                    ) {
+			the_map.reserve( prm_count );
+		}
+
+		/// \brief Clear the id_of_string_view of all strings
+		inline void clear() {
+			the_map.clear();
+		}
+
+		/// \brief Standard const begin() operator to make id_of_string_view into a range
+		inline const_iterator begin() const {
+			return ::std::cbegin( the_map );
+		}
+
+		/// \brief Standard const end() operator to make id_of_string_view into a range
+		inline const_iterator end() const {
+			return ::std::cend( the_map );
+		}
+	};
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_ID_OF_STRING_VIEW_HPP

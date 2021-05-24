@@ -22,25 +22,10 @@
 
 #include "cath/scan/detail/stride/rep_strider.hpp"
 
-// #include "cath/test/global_test_constants.hpp"
-
 using namespace ::cath::scan::detail;
-//using namespace ::std;
-
-namespace cath {
-	namespace test {
-
-		/// \brief The rep_strider_test_suite_fixture to assist in testing rep_strider
-		struct rep_strider_test_suite_fixture {
-		protected:
-			~rep_strider_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
 
 /// \brief Test suite to test the functionality of rep_strider
-BOOST_FIXTURE_TEST_SUITE(rep_strider_test_suite, cath::test::rep_strider_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(rep_strider_test_suite)
 
 /// \brief Test the ctor and getter with static_asserts
 BOOST_AUTO_TEST_CASE(ctor_and_getter) {

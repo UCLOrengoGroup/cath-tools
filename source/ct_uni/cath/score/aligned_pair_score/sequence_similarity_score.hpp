@@ -33,59 +33,60 @@
 
 #include <memory>
 
-namespace cath { namespace score { class length_getter; } }
+// clang-format off
+namespace cath::score { class length_getter; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief Concrete aligned_pair_score to calculate the sequence similarity between an aligned pair
-		///
-		/// This can be configured on:
-		///  * the length over which the score is normalised (eg first, second, longest, shortest, mean, geometric_mean, aligned etc)
-		///  * the substitution matrix to use to calculate the score (eg identity, dayhoff, pam70, blosum62)
-		class sequence_similarity_score final : public aligned_pair_score {
-		private:
-//			friend class boost::serialization::access;
+	/// \brief Concrete aligned_pair_score to calculate the sequence similarity between an aligned pair
+	///
+	/// This can be configured on:
+	///  * the length over which the score is normalised (eg first, second, longest, shortest, mean, geometric_mean, aligned etc)
+	///  * the substitution matrix to use to calculate the score (eg identity, dayhoff, pam70, blosum62)
+	class sequence_similarity_score final : public aligned_pair_score {
+	private:
+//		friend class boost::serialization::access;
 
-//			template<class archive> void serialize(archive &ar,
-//			                                       const size_t /*version*/
-//			                                       ) {
-//				ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP( aligned_pair_score );
-//				ar & BOOST_SERIALIZATION_NVP( scores );
-//				ar & BOOST_SERIALIZATION_NVP( length_getter_ptr );
-//			}
+//		template<class archive> void serialize(archive &ar,
+//		                                       const size_t /*version*/
+//		                                       ) {
+//			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP( aligned_pair_score );
+//			ar & BOOST_SERIALIZATION_NVP( scores );
+//			ar & BOOST_SERIALIZATION_NVP( length_getter_ptr );
+//		}
 
-			/// \brief The substitution matrix with which the sequence similarity should be scored
-			substitution_matrix scores;
+		/// \brief The substitution matrix with which the sequence similarity should be scored
+		substitution_matrix scores;
 
-			/// \brief The length getter with which the normalisation length should be acquired
-			common::clone_ptr<const length_getter> length_getter_ptr{ common::make_unique<length_of_longer_getter>() };
+		/// \brief The length getter with which the normalisation length should be acquired
+		common::clone_ptr<const length_getter> length_getter_ptr{ common::make_unique<length_of_longer_getter>() };
 
-			[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
 
-			[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
-			[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
-			[[nodiscard]] std::string       do_description() const final;
-			[[nodiscard]] std::string       do_id_name() const final;
-			[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
-			[[nodiscard]] std::string       do_long_name() const final;
+		[[nodiscard]] boost::logic::tribool do_higher_is_better() const final;
+		[[nodiscard]] score_value do_calculate( const align::alignment &, const protein &, const protein & ) const final;
+		[[nodiscard]] std::string       do_description() const final;
+		[[nodiscard]] std::string       do_id_name() const final;
+		[[nodiscard]] str_bool_pair_vec do_short_name_suffixes() const final;
+		[[nodiscard]] std::string       do_long_name() const final;
 
-			// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
+		// std::unique_ptr<aligned_pair_score> do_build_from_short_name_spec(const std::string &) const final;
 
-			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
+		[[nodiscard]] bool do_less_than_with_same_dynamic_type( const aligned_pair_score & ) const final;
 
-		  public:
-			explicit sequence_similarity_score(substitution_matrix = make_subs_matrix_identity());
-			explicit sequence_similarity_score(const length_getter &,
-			                                   substitution_matrix = make_subs_matrix_identity());
+	  public:
+		explicit sequence_similarity_score(substitution_matrix = make_subs_matrix_identity());
+		explicit sequence_similarity_score(const length_getter &,
+		                                   substitution_matrix = make_subs_matrix_identity());
 
-			[[nodiscard]] const substitution_matrix &get_substitution_matrix() const;
-			[[nodiscard]] const length_getter &      get_length_getter() const;
-		};
+		[[nodiscard]] const substitution_matrix &get_substitution_matrix() const;
+		[[nodiscard]] const length_getter &      get_length_getter() const;
+	};
 
-		bool operator<(const sequence_similarity_score &,
-		               const sequence_similarity_score &);
+	bool operator<(const sequence_similarity_score &,
+	               const sequence_similarity_score &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SEQUENCE_SIMILARITY_SCORE_HPP

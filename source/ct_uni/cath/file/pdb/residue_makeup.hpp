@@ -21,17 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_RESIDUE_MAKEUP_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_RESIDUE_MAKEUP_HPP
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Represent whether the records for a residue included non-proper amino-acids
-		///        (say in HETATM records in a PDB file)
-		enum class residue_makeup : bool {
-			ALL_PROPER_AMINO_ACIDS,     ///< All records for this residue had proper amino-acids
-			SOME_NON_PROPER_AMINO_ACIDS ///< Some (or all) records for this residue had non-proper amino-acids
-		};
+	/// \brief Represent whether the records for a residue included non-proper amino-acids
+	///        (say in HETATM records in a PDB file)
+	enum class residue_makeup : bool {
+		ALL_PROPER_AMINO_ACIDS,     ///< All records for this residue had proper amino-acids
+		SOME_NON_PROPER_AMINO_ACIDS ///< Some (or all) records for this residue had non-proper amino-acids
+	};
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_RESIDUE_MAKEUP_HPP

@@ -17,6 +17,7 @@
 ///
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #include "entry_querier.hpp"
 
 #include <boost/test/unit_test.hpp>
@@ -26,14 +27,10 @@
 #include "cath/structure/entry_querier/residue_querier.hpp"
 #include "cath/structure/entry_querier/sec_struc_querier.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::cath::test;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		struct entry_querier_test_suite_fixture {
 		protected:
@@ -45,8 +42,7 @@ namespace cath {
 			const sec_struc_querier example_sec_struc_querier{};
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(entry_querier_test_suite, entry_querier_test_suite_fixture)
 

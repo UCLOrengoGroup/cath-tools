@@ -25,36 +25,36 @@
 
 #include <iosfwd>
 
-namespace cath { namespace align { class alignment_context; } }
-namespace cath { namespace opts { class alignment_outputter; } }
+// clang-format off
+namespace cath::align { class alignment_context; }
+namespace cath::opts { class alignment_outputter; }
+// clang-format on
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief TODOCUMENT
-		class alignment_outputter_list final {
-		private:
-			/// \brief A list of the outputters
-			boost::ptr_vector<alignment_outputter> outputters;
+	/// \brief TODOCUMENT
+	class alignment_outputter_list final {
+	private:
+		/// \brief A list of the outputters
+		boost::ptr_vector<alignment_outputter> outputters;
 
-		public:
-			void push_back(const alignment_outputter &);
-			[[nodiscard]] bool empty() const;
+	public:
+		void push_back(const alignment_outputter &);
+		[[nodiscard]] bool empty() const;
 
-			// Provide iterators
-			using const_iterator = boost::ptr_vector<alignment_outputter>::const_iterator;
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		// Provide iterators
+		using const_iterator = boost::ptr_vector<alignment_outputter>::const_iterator;
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		void use_all_alignment_outputters(const alignment_outputter_list &,
-		                                  const align::alignment_context &,
-		                                  std::ostream &,
-		                                  std::ostream &);
+	void use_all_alignment_outputters(const alignment_outputter_list &,
+	                                  const align::alignment_context &,
+	                                  std::ostream &,
+	                                  std::ostream &);
 
-		bool any_alignment_outputters_involve_display_spec(const alignment_outputter_list &);
+	bool any_alignment_outputters_involve_display_spec(const alignment_outputter_list &);
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_ALIGNMENT_OUTPUTTER_LIST_HPP

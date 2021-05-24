@@ -23,16 +23,14 @@
 
 #include <filesystem>
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief A test fixture for clustagglom tests that adds some extras to global_test_constants
-		class clustagglom_fixture {
-		protected:
-			static ::std::filesystem::path CLUSTAGGLOM_DIR();
-		};
+	/// \brief A test fixture for clustagglom tests that adds some extras to global_test_constants
+	class clustagglom_fixture {
+	protected:
+		static ::std::filesystem::path CLUSTAGGLOM_DIR();
+	};
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_CLUSTAGGLOM_FIXTURE_HPP

@@ -23,42 +23,42 @@
 
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 
-namespace cath { namespace rslv { class trim_spec; } }
+// clang-format off
+namespace cath::rslv { class trim_spec; }
+// clang-format on
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		namespace detail {
+	namespace detail {
 
-			/// \brief Represent which boundary is being requested
-			enum class boundary_wanted : bool {
-				START, ///< The start boundary is wanted
-				STOP   ///< The stop boundary is wanted
-			};
+		/// \brief Represent which boundary is being requested
+		enum class boundary_wanted : bool {
+			START, ///< The start boundary is wanted
+			STOP   ///< The stop boundary is wanted
+		};
 
-			seq::res_arrow_opt get_boundary_impl(const boundary_wanted &,
-			                                     const seq::seq_seg &,
-			                                     const seq::seq_seg_vec &,
-			                                     const crh_segment_spec &);
-		} // namespace detail
-
-		seq::res_arrow_opt get_start_boundary(const seq::seq_seg &,
-		                                      const seq::seq_seg_vec &,
-		                                      const crh_segment_spec &);
-
-		seq::res_arrow_opt get_stop_boundary(const seq::seq_seg &,
+		seq::res_arrow_opt get_boundary_impl(const boundary_wanted &,
+		                                     const seq::seq_seg &,
 		                                     const seq::seq_seg_vec &,
 		                                     const crh_segment_spec &);
+	} // namespace detail
 
-		seg_boundary_pair get_boundary_pair(const seq::seq_seg &,
-		                                    const seq::seq_seg_vec &,
-		                                    const crh_segment_spec &);
+	seq::res_arrow_opt get_start_boundary(const seq::seq_seg &,
+	                                      const seq::seq_seg_vec &,
+	                                      const crh_segment_spec &);
 
-		seq::res_arrow_opt calc_resolved_boundary(const seq::seq_seg &,
-		                                          const seq::seq_seg &,
-		                                          const trim_spec &);
+	seq::res_arrow_opt get_stop_boundary(const seq::seq_seg &,
+	                                     const seq::seq_seg_vec &,
+	                                     const crh_segment_spec &);
 
-	} // namespace rslv
-} // namespace cath
+	seg_boundary_pair get_boundary_pair(const seq::seq_seg &,
+	                                    const seq::seq_seg_vec &,
+	                                    const crh_segment_spec &);
+
+	seq::res_arrow_opt calc_resolved_boundary(const seq::seq_seg &,
+	                                          const seq::seq_seg &,
+	                                          const trim_spec &);
+
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_TRIM_SEQ_SEG_BOUNDARY_FNS_HPP

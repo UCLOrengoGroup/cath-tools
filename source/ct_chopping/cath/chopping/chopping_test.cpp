@@ -67,20 +67,8 @@ using namespace ::cath::chop;
 // d2pjr.1 2pjr    A:319-548,B:    c.37.1.19       32396   cl=51349,cf=52539,sf=52540,fa=81268,dm=52701,sp=52702,px=32396
 // d2pjr.2 2pjr    F:1019-1247,G:  c.37.1.19       32398   cl=51349,cf=52539,sf=52540,fa=81268,dm=52701,sp=52702,px=32398
 
-namespace cath {
-	namespace test {
-
-		/// \brief The chopping_test_suite_fixture to assist in testing chopping
-		struct chopping_test_suite_fixture: protected global_test_constants {
-		protected:
-			~chopping_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(chopping_test_suite, cath::test::chopping_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(chopping_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

@@ -26,54 +26,52 @@
 #include "cath/common/cpp17/constexpr_invoke.hpp"
 #include "cath/common/function/ident.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return whether all elements in the specified range are equal (evaluate true under the specified binary predicate)
-		///        after being projected by the specified function, if any
-		///
-		///
-		/// \todo Constrain this function so that it isn't ambiguous with the range version
-		template <typename BeginItr,
-		          typename EndItr,
-		          typename Eq   = ::std::equal_to<>,
-		          typename Proj = ident
-		          >
-		constexpr bool are_same_itr(BeginItr &&prm_begin_itr,     ///< The begin of the range to query
-		                            EndItr   &&prm_end_itr,       ///< The end of the range to query
-		                            Eq       &&prm_equal = Eq{},  ///< The binary predicate to use as the equality operator
-		                            Proj     &&prm_proj  = Proj{} ///< The function to use to project the elements
-		                            ) {
-			if ( prm_begin_itr != prm_end_itr ) {
-				const auto &first = ::cath::common::constexpr_invoke( prm_proj, *prm_begin_itr );
-				for (auto start_itr = prm_begin_itr; start_itr != prm_end_itr; ++start_itr) {
-					if ( ! ::cath::common::constexpr_invoke( prm_equal, first, ::cath::common::constexpr_invoke( prm_proj, *start_itr ) ) ) {
-						return false;
-					}
+	/// \brief Return whether all elements in the specified range are equal (evaluate true under the specified binary predicate)
+	///        after being projected by the specified function, if any
+	///
+	///
+	/// \todo Constrain this function so that it isn't ambiguous with the range version
+	template <typename BeginItr,
+	          typename EndItr,
+	          typename Eq   = ::std::equal_to<>,
+	          typename Proj = ident
+	          >
+	constexpr bool are_same_itr(BeginItr &&prm_begin_itr,     ///< The begin of the range to query
+	                            EndItr   &&prm_end_itr,       ///< The end of the range to query
+	                            Eq       &&prm_equal = Eq{},  ///< The binary predicate to use as the equality operator
+	                            Proj     &&prm_proj  = Proj{} ///< The function to use to project the elements
+	                            ) {
+		if ( prm_begin_itr != prm_end_itr ) {
+			const auto &first = ::cath::common::constexpr_invoke( prm_proj, *prm_begin_itr );
+			for (auto start_itr = prm_begin_itr; start_itr != prm_end_itr; ++start_itr) {
+				if ( ! ::cath::common::constexpr_invoke( prm_equal, first, ::cath::common::constexpr_invoke( prm_proj, *start_itr ) ) ) {
+					return false;
 				}
 			}
-			return true;
 		}
+		return true;
+	}
 
-		/// \brief Return whether all elements in the specified range are equal (evaluate true under the specified binary predicate)
-		///        after being projected by the specified function, if any
-		template <typename Rng,
-		          typename Eq   = std::equal_to<>,
-		          typename Proj = ident
-		          >
-		bool are_same(Rng  &&prm_rng,           ///< The range to query
-		              Eq   &&prm_equal = Eq{},  ///< The binary predicate to use as the equality operator
-		              Proj &&prm_proj  = Proj{} ///< The function to use to project the elements
-		              ) {
-			return are_same_itr(
-				::std::cbegin       ( prm_rng   ),
-				::std::cend         ( prm_rng   ),
-				std::forward< Eq   >( prm_equal ),
-				std::forward< Proj >( prm_proj  )
-			);
-		}
+	/// \brief Return whether all elements in the specified range are equal (evaluate true under the specified binary predicate)
+	///        after being projected by the specified function, if any
+	template <typename Rng,
+	          typename Eq   = std::equal_to<>,
+	          typename Proj = ident
+	          >
+	bool are_same(Rng  &&prm_rng,           ///< The range to query
+	              Eq   &&prm_equal = Eq{},  ///< The binary predicate to use as the equality operator
+	              Proj &&prm_proj  = Proj{} ///< The function to use to project the elements
+	              ) {
+		return are_same_itr(
+			::std::cbegin       ( prm_rng   ),
+			::std::cend         ( prm_rng   ),
+			std::forward< Eq   >( prm_equal ),
+			std::forward< Proj >( prm_proj  )
+		);
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_ARE_SAME_HPP

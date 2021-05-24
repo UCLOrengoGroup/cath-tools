@@ -21,40 +21,40 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_SCAN_TYPE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_SCAN_TYPE_HPP
 
+// clang-format off
 namespace cath { class protein_list; }
-namespace cath { namespace scan { class record_scores_scan_action; } }
-namespace cath { namespace scan { class scan_metrics; } }
+namespace cath::scan { class record_scores_scan_action; }
+namespace cath::scan { class scan_metrics; }
+// clang-format on
 
 #include <memory>
 #include <utility>
 
-namespace cath {
-	namespace scan {
+namespace cath::scan {
 
-			/// \brief TODOCUMENT
-			class scan_type {
-			private:
-				[[nodiscard]] virtual std::unique_ptr<scan_type> do_clone() const = 0;
+	/// \brief TODOCUMENT
+	class scan_type {
+	private:
+		[[nodiscard]] virtual std::unique_ptr<scan_type> do_clone() const = 0;
 
-				[[nodiscard]] virtual std::pair<record_scores_scan_action, scan_metrics> do_perform_scan( const protein_list &,
-				                                                                                          const protein_list & ) const = 0;
+		[[nodiscard]] virtual std::pair<record_scores_scan_action, scan_metrics> do_perform_scan( const protein_list &,
+		                                                                                          const protein_list & ) const = 0;
 
-			public:
-				scan_type() = default;
-				virtual ~scan_type() noexcept = default;
+	public:
+		scan_type() = default;
+		virtual ~scan_type() noexcept = default;
 
-				scan_type(const scan_type &) = default;
-				scan_type(scan_type &&) noexcept = default;
-				scan_type & operator=(const scan_type &) = default;
-				scan_type & operator=(scan_type &&) noexcept = default;
+		scan_type(const scan_type &) = default;
+		scan_type(scan_type &&) noexcept = default;
+		scan_type & operator=(const scan_type &) = default;
+		scan_type & operator=(scan_type &&) noexcept = default;
 
-				[[nodiscard]] std::unique_ptr<scan_type> clone() const;
+		[[nodiscard]] std::unique_ptr<scan_type> clone() const;
 
-				std::pair<record_scores_scan_action, scan_metrics> perform_scan(const protein_list &,
-				                                                                const protein_list &);
-			};
+		std::pair<record_scores_scan_action, scan_metrics> perform_scan(const protein_list &,
+		                                                                const protein_list &);
+	};
 
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_SCAN_TYPE_HPP

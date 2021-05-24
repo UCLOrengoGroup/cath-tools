@@ -21,13 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SUBSTITUTION_MATRIX_IDENTITY_SUBSTITUTION_MATRIX_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SUBSTITUTION_MATRIX_IDENTITY_SUBSTITUTION_MATRIX_HPP
 
-namespace cath { namespace score { class substitution_matrix; } }
+// clang-format off
+namespace cath::score { class substitution_matrix; }
+// clang-format on
 
-namespace cath {
-	namespace score {
-		substitution_matrix make_subs_matrix_identity();
-	} // namespace score
-} // namespace cath
+namespace cath::score {
+
+	substitution_matrix make_subs_matrix_identity();
+
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SUBSTITUTION_MATRIX_IDENTITY_SUBSTITUTION_MATRIX_HPP
 

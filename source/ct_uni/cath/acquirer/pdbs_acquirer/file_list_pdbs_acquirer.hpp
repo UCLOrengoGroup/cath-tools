@@ -24,23 +24,21 @@
 #include "cath/acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
 #include "cath/common/path_type_aliases.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
+	/// \brief TODOCUMENT
+	class file_list_pdbs_acquirer final : public pdbs_acquirer  {
+	private:
 		/// \brief TODOCUMENT
-		class file_list_pdbs_acquirer final : public pdbs_acquirer  {
-		private:
-			/// \brief TODOCUMENT
-			path_vec files;
+		path_vec files;
 
-			[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
-			file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const final;
+		[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
+		file::pdb_list_name_set_list_pair do_get_pdbs_and_names(std::istream &) const final;
 
-		public:
-			explicit file_list_pdbs_acquirer(path_vec);
-		};
+	public:
+		explicit file_list_pdbs_acquirer(path_vec);
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_FILE_LIST_PDBS_ACQUIRER_HPP

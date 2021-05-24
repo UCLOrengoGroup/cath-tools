@@ -26,23 +26,21 @@
 
 #include "cath/common/file/open_fstream.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Read the contents of the specified file into a string
-		inline std::string read_string_from_file(const ::std::filesystem::path &prm_file ///< The file from which the string should be read
-		                                         ) {
-			std::ifstream input_stream = open_ifstream( prm_file );
+	/// \brief Read the contents of the specified file into a string
+	inline std::string read_string_from_file(const ::std::filesystem::path &prm_file ///< The file from which the string should be read
+	                                         ) {
+		std::ifstream input_stream = open_ifstream( prm_file );
 
-			const std::string result{
-				std::istreambuf_iterator<char>( input_stream ),
-				std::istreambuf_iterator<char>(              )
-			};
-			input_stream.close();
-			return result;
-		}
+		const std::string result{
+			std::istreambuf_iterator<char>( input_stream ),
+			std::istreambuf_iterator<char>(              )
+		};
+		input_stream.close();
+		return result;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_READ_STRING_FROM_FILE_HPP

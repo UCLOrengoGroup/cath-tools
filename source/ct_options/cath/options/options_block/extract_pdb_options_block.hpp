@@ -28,43 +28,41 @@
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief Handle the options specific to extract-pdb
-		class extract_pdb_options_block final : public options_block {
-		private:
-			using super = options_block;
+	/// \brief Handle the options specific to extract-pdb
+	class extract_pdb_options_block final : public options_block {
+	private:
+		using super = options_block;
 
-			/// \brief The PDB file to extract
-			::std::filesystem::path input_pdb_file;
+		/// \brief The PDB file to extract
+		::std::filesystem::path input_pdb_file;
 
-			/// \brief TODOCUMENT
-			path_opt output_pdb_file;
+		/// \brief TODOCUMENT
+		path_opt output_pdb_file;
 
-			/// \brief TODOCUMENT
-			chop::domain_opt regions;
+		/// \brief TODOCUMENT
+		chop::domain_opt regions;
 
-			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
-			[[nodiscard]] std::string                    do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			void do_add_hidden_options_to_description(boost::program_options::options_description &,
-			                                          const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+		[[nodiscard]] std::string                    do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		void do_add_hidden_options_to_description(boost::program_options::options_description &,
+		                                          const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-		  public:
-			[[nodiscard]] const ::std::filesystem::path &get_input_pdb_file() const;
-			[[nodiscard]] const path_opt &               get_output_pdb_file() const;
-			[[nodiscard]] const chop::domain_opt &       get_regions() const;
+	  public:
+		[[nodiscard]] const ::std::filesystem::path &get_input_pdb_file() const;
+		[[nodiscard]] const path_opt &               get_output_pdb_file() const;
+		[[nodiscard]] const chop::domain_opt &       get_regions() const;
 
-			static constexpr ::std::string_view PO_INPUT_PDB_FILE{ "input-pdb-file" };
-			static constexpr ::std::string_view PO_OUTPUT_PDB_FILE{ "output-pdb-file" };
-			static constexpr ::std::string_view PO_REGIONS{ "regions" };
-		};
+		static constexpr ::std::string_view PO_INPUT_PDB_FILE{ "input-pdb-file" };
+		static constexpr ::std::string_view PO_OUTPUT_PDB_FILE{ "output-pdb-file" };
+		static constexpr ::std::string_view PO_REGIONS{ "regions" };
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_EXTRACT_PDB_OPTIONS_BLOCK_HPP

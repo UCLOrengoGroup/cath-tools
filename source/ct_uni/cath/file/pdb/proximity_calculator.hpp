@@ -33,109 +33,110 @@
 #include "cath/structure/geometry/coord_linkage.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-namespace cath { namespace file { class pdb; } }
-namespace cath { namespace file { class pdb_residue; } }
+// clang-format off
+namespace cath::file { class pdb; }
+namespace cath::file { class pdb_residue; }
+// clang-format on
 
-namespace cath {
-	namespace file {
-		namespace detail {
+namespace cath::file {
 
-			/// \brief Represent a residue's index, key coord and maximum distance from the key coord to
-			///        any of the other atoms
-			///
-			/// This struct is used in the proximity calculator
-			struct res_index_key_coord_and_dist final {
-				/// \brief The index of the residue in the source pdb
-				size_t res_index;
+	namespace detail {
 
-				/// \brief The key coord (the CA atom where present or the first atom otherwise)
-				geom::coord key_coord;
-
-				/// \brief The furthest distance from the key_coord to any of the other atoms
-				double furthest_atom_dist;
-
-				/// \brief Standard ctor
-				///
-				/// This is defined (rather than just using aggregate initialisation) to
-				/// allow the use of emplace_back in a vector of res_index_key_coord_and_dist
-				res_index_key_coord_and_dist(const size_t &prm_res_index,         ///< The index of the residue in the source pdb
-				                             geom::coord   prm_key_coord,         ///< The key coord (the CA atom where present or the first atom otherwise)
-				                             const double &prm_furthest_atom_dist ///< The furthest distance from the key_coord to any of the other atoms
-				                             ) : res_index          { prm_res_index              },
-				                                 key_coord          { std::move( prm_key_coord ) },
-				                                 furthest_atom_dist { prm_furthest_atom_dist     } {}
-			};
-
-			/// \brief Type alias for a vector of res_index_key_coord_and_dist values
-			using res_index_key_coord_and_dist_vec = std::vector<res_index_key_coord_and_dist>;
-
-		} // namespace detail
-
-
-		/// \brief Index a PDB by storing a key coordinate for each residue and the maximum
-		///        distance from that point to the other atoms in the residue to make it a bit
-		///        faster to identify whether a point is close to the PDB
+		/// \brief Represent a residue's index, key coord and maximum distance from the key coord to
+		///        any of the other atoms
 		///
-		/// If necessary, it should be possible to further optimise this sort of calculation,
-		/// eg if the proximity_calculator returns a distance rather than a bool, one large distance
-		/// value could be used to rule out large chunks of the data that's spatially close
-		/// to that query point (using spatial cells)
-		class proximity_calculator final {
-		private:
-			/// \brief A reference to the source PDB
-			std::reference_wrapper<const pdb> source_pdb;
+		/// This struct is used in the proximity calculator
+		struct res_index_key_coord_and_dist final {
+			/// \brief The index of the residue in the source pdb
+			size_t res_index;
 
-			/// \brief The res_index_key_coord_and_dist values calculated for the PDB's residues
-			detail::res_index_key_coord_and_dist_vec obj_res_indices_key_coords_and_dists;
+			/// \brief The key coord (the CA atom where present or the first atom otherwise)
+			geom::coord key_coord;
 
-			static detail::res_index_key_coord_and_dist_vec get_res_indices_key_coords_and_dists(const pdb &,
-			                                                                                     const chop::region_vec_opt &);
+			/// \brief The furthest distance from the key_coord to any of the other atoms
+			double furthest_atom_dist;
 
-		public:
-			explicit proximity_calculator(const pdb &,
-			                              const chop::region_vec_opt & = ::std::nullopt);
-
-			proximity_calculator(const proximity_calculator &) = default;
-			proximity_calculator(proximity_calculator &&) noexcept = default;
-			proximity_calculator & operator=(const proximity_calculator &) = default;
-			proximity_calculator & operator=(proximity_calculator &&) noexcept = default;
-
-			[[nodiscard]] bool is_within_distance( const geom::coord &, const double & ) const;
+			/// \brief Standard ctor
+			///
+			/// This is defined (rather than just using aggregate initialisation) to
+			/// allow the use of emplace_back in a vector of res_index_key_coord_and_dist
+			res_index_key_coord_and_dist(const size_t &prm_res_index,         ///< The index of the residue in the source pdb
+			                             geom::coord   prm_key_coord,         ///< The key coord (the CA atom where present or the first atom otherwise)
+			                             const double &prm_furthest_atom_dist ///< The furthest distance from the key_coord to any of the other atoms
+			                             ) : res_index          { prm_res_index              },
+			                                 key_coord          { std::move( prm_key_coord ) },
+			                                 furthest_atom_dist { prm_furthest_atom_dist     } {}
 		};
 
-		bool is_within_distance(const proximity_calculator &,
-		                        const pdb_residue &,
-		                        const double &);
+		/// \brief Type alias for a vector of res_index_key_coord_and_dist values
+		using res_index_key_coord_and_dist_vec = std::vector<res_index_key_coord_and_dist>;
 
-		chain_label_set nearby_dna_rna_chain_labels(const pdb &,
-		                                            const proximity_calculator &,
-		                                            const double &);
+	} // namespace detail
 
-		chain_label_set nearby_dna_rna_chain_labels(const pdb &,
-		                                            const proximity_calculator &,
-		                                            const doub_opt &);
 
-		void restrict_to_linkage_proximate(geom::coord_coord_linkage_pair_vec &,
-		                                   const proximity_calculator &,
-		                                   const double &,
-		                                   const double &);
+	/// \brief Index a PDB by storing a key coordinate for each residue and the maximum
+	///        distance from that point to the other atoms in the residue to make it a bit
+	///        faster to identify whether a point is close to the PDB
+	///
+	/// If necessary, it should be possible to further optimise this sort of calculation,
+	/// eg if the proximity_calculator returns a distance rather than a bool, one large distance
+	/// value could be used to rule out large chunks of the data that's spatially close
+	/// to that query point (using spatial cells)
+	class proximity_calculator final {
+	private:
+		/// \brief A reference to the source PDB
+		std::reference_wrapper<const pdb> source_pdb;
 
-		geom::coord_coord_linkage_pair_vec restrict_to_linkage_proximate_copy(geom::coord_coord_linkage_pair_vec,
-		                                                                      const proximity_calculator &,
-		                                                                      const double &,
-		                                                                      const double &);
+		/// \brief The res_index_key_coord_and_dist values calculated for the PDB's residues
+		detail::res_index_key_coord_and_dist_vec obj_res_indices_key_coords_and_dists;
 
-		pdb_residue_vec get_nearby_post_ter_res_atoms(const pdb &,
-		                                              const proximity_calculator &,
-		                                              const double &,
-		                                              const double &);
+		static detail::res_index_key_coord_and_dist_vec get_res_indices_key_coords_and_dists(const pdb &,
+		                                                                                     const chop::region_vec_opt &);
 
-		pdb_residue_vec get_nearby_post_ter_res_atoms(const pdb &,
-		                                              const proximity_calculator &,
-		                                              const doub_opt &,
-		                                              const double &);
+	public:
+		explicit proximity_calculator(const pdb &,
+		                              const chop::region_vec_opt & = ::std::nullopt);
 
-	} // namespace file
-} // namespace cath
+		proximity_calculator(const proximity_calculator &) = default;
+		proximity_calculator(proximity_calculator &&) noexcept = default;
+		proximity_calculator & operator=(const proximity_calculator &) = default;
+		proximity_calculator & operator=(proximity_calculator &&) noexcept = default;
+
+		[[nodiscard]] bool is_within_distance( const geom::coord &, const double & ) const;
+	};
+
+	bool is_within_distance(const proximity_calculator &,
+	                        const pdb_residue &,
+	                        const double &);
+
+	chain_label_set nearby_dna_rna_chain_labels(const pdb &,
+	                                            const proximity_calculator &,
+	                                            const double &);
+
+	chain_label_set nearby_dna_rna_chain_labels(const pdb &,
+	                                            const proximity_calculator &,
+	                                            const doub_opt &);
+
+	void restrict_to_linkage_proximate(geom::coord_coord_linkage_pair_vec &,
+	                                   const proximity_calculator &,
+	                                   const double &,
+	                                   const double &);
+
+	geom::coord_coord_linkage_pair_vec restrict_to_linkage_proximate_copy(geom::coord_coord_linkage_pair_vec,
+	                                                                      const proximity_calculator &,
+	                                                                      const double &,
+	                                                                      const double &);
+
+	pdb_residue_vec get_nearby_post_ter_res_atoms(const pdb &,
+	                                              const proximity_calculator &,
+	                                              const double &,
+	                                              const double &);
+
+	pdb_residue_vec get_nearby_post_ter_res_atoms(const pdb &,
+	                                              const proximity_calculator &,
+	                                              const doub_opt &,
+	                                              const double &);
+
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PROXIMITY_CALCULATOR_HPP

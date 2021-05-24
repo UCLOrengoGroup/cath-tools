@@ -84,120 +84,118 @@ using namespace ::std;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief Fixture for the aligned_pair_score tests
-		struct aligned_pair_score_fixture : protected global_test_constants {
-		protected:
-			~aligned_pair_score_fixture() noexcept = default;
+	/// \brief Fixture for the aligned_pair_score tests
+	struct aligned_pair_score_fixture : protected global_test_constants {
+	protected:
+		~aligned_pair_score_fixture() noexcept = default;
 
-		public:
-			void check_ssap_scores(const alignment &,
-			                       const protein &,
-			                       const protein &,
-			                       const score_value &,
-			                       const score_value &,
-			                       const score_value &) const;
+	public:
+		void check_ssap_scores(const alignment &,
+		                       const protein &,
+		                       const protein &,
+		                       const score_value &,
+		                       const score_value &,
+		                       const score_value &) const;
 
-			/// \brief TODOCUMENT
-			const string NAME_1C55A               { "1c55A" };
+		/// \brief TODOCUMENT
+		const string NAME_1C55A               { "1c55A" };
 
-			/// \brief TODOCUMENT
-			const string NAME_1C56A               { "1c56A" };
+		/// \brief TODOCUMENT
+		const string NAME_1C56A               { "1c56A" };
 
-			/// \brief TODOCUMENT
-			const string NAME_1WMTA               { "1wmtA" };
+		/// \brief TODOCUMENT
+		const string NAME_1WMTA               { "1wmtA" };
 
-			/// \brief TODOCUMENT
-			const string NAME_1WT7A               { "1wt7A" };
+		/// \brief TODOCUMENT
+		const string NAME_1WT7A               { "1wt7A" };
 
-			/// \brief TODOCUMENT
-			const string NAME_1HYKA               { "1hykA" };
+		/// \brief TODOCUMENT
+		const string NAME_1HYKA               { "1hykA" };
 
-			/// \brief TODOCUMENT
-			const path   ALIGN_PAIR_SCORE_TEST_DIR{ TEST_SOURCE_DATA_DIR() / "aligned_pair_score" };
+		/// \brief TODOCUMENT
+		const path   ALIGN_PAIR_SCORE_TEST_DIR{ TEST_SOURCE_DATA_DIR() / "aligned_pair_score" };
 
-			/// \brief TODOCUMENT
-			const path   FASTA_ALN_1C55A_1C55A    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1C55A + ".aln.fa" ) };
+		/// \brief TODOCUMENT
+		const path   FASTA_ALN_1C55A_1C55A    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1C55A + ".aln.fa" ) };
 
-			/// \brief TODOCUMENT
-			const path   FASTA_ALN_1C55A_1C56A    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1C56A + ".aln.fa" ) };
+		/// \brief TODOCUMENT
+		const path   FASTA_ALN_1C55A_1C56A    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1C56A + ".aln.fa" ) };
 
-			/// \brief TODOCUMENT
-			const path   FASTA_ALN_1C55A_1WMTA    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1WMTA + ".aln.fa" ) };
+		/// \brief TODOCUMENT
+		const path   FASTA_ALN_1C55A_1WMTA    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1WMTA + ".aln.fa" ) };
 
-			/// \brief TODOCUMENT
-			const path   FASTA_ALN_1C55A_1WT7A    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1WT7A + ".aln.fa" ) };
+		/// \brief TODOCUMENT
+		const path   FASTA_ALN_1C55A_1WT7A    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1WT7A + ".aln.fa" ) };
 
-			/// \brief TODOCUMENT
-			const path   FASTA_ALN_1C55A_1HYKA    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1HYKA + ".aln.fa" ) };
+		/// \brief TODOCUMENT
+		const path   FASTA_ALN_1C55A_1HYKA    { ALIGN_PAIR_SCORE_TEST_DIR / ( NAME_1C55A + "_" + NAME_1HYKA + ".aln.fa" ) };
 
-			ostringstream              parse_ss;
-			const log_to_ostream_guard parse_log_guard      { parse_ss };
+		ostringstream              parse_ss;
+		const log_to_ostream_guard parse_log_guard      { parse_ss };
 
-			const protein        protein_1c55A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1c55A" ) };
-			const protein        protein_1c56A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1c56A" ) };
-			const protein        protein_1hykA        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1hykA" ) };
-			const protein        protein_1wmtA        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1wmtA" ) };
-			const protein        protein_1wt7A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1wt7A" ) };
-			const protein_list   prot_list_1c55A_1c55A{ make_protein_list( { protein_1c55A, protein_1c55A } ) };
-			const protein_list   prot_list_1c55A_1c56A{ make_protein_list( { protein_1c55A, protein_1c56A } ) };
-			const protein_list   prot_list_1c55A_1hykA{ make_protein_list( { protein_1c55A, protein_1hykA } ) };
-			const protein_list   prot_list_1c55A_1wmtA{ make_protein_list( { protein_1c55A, protein_1wmtA } ) };
-			const protein_list   prot_list_1c55A_1wt7A{ make_protein_list( { protein_1c55A, protein_1wt7A } ) };
-			const alignment      aln_1c55A_1c55A      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1C55A, prot_list_1c55A_1c55A, residue_scorer(), parse_ss ) };
-			const alignment      aln_1c55A_1c56A      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1C56A, prot_list_1c55A_1c56A, residue_scorer(), parse_ss ) };
-			const alignment      aln_1c55A_1hykA      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1HYKA, prot_list_1c55A_1hykA, residue_scorer(), parse_ss ) };
-			const alignment      aln_1c55A_1wmtA      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1WMTA, prot_list_1c55A_1wmtA, residue_scorer(), parse_ss ) };
-			const alignment      aln_1c55A_1wt7A      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1WT7A, prot_list_1c55A_1wt7A, residue_scorer(), parse_ss ) };
-		};
+		const protein        protein_1c55A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1c55A" ) };
+		const protein        protein_1c56A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1c56A" ) };
+		const protein        protein_1hykA        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1hykA" ) };
+		const protein        protein_1wmtA        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1wmtA" ) };
+		const protein        protein_1wt7A        { read_protein_from_files( protein_from_pdb(), ALIGN_PAIR_SCORE_TEST_DIR, "1wt7A" ) };
+		const protein_list   prot_list_1c55A_1c55A{ make_protein_list( { protein_1c55A, protein_1c55A } ) };
+		const protein_list   prot_list_1c55A_1c56A{ make_protein_list( { protein_1c55A, protein_1c56A } ) };
+		const protein_list   prot_list_1c55A_1hykA{ make_protein_list( { protein_1c55A, protein_1hykA } ) };
+		const protein_list   prot_list_1c55A_1wmtA{ make_protein_list( { protein_1c55A, protein_1wmtA } ) };
+		const protein_list   prot_list_1c55A_1wt7A{ make_protein_list( { protein_1c55A, protein_1wt7A } ) };
+		const alignment      aln_1c55A_1c55A      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1C55A, prot_list_1c55A_1c55A, residue_scorer(), parse_ss ) };
+		const alignment      aln_1c55A_1c56A      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1C56A, prot_list_1c55A_1c56A, residue_scorer(), parse_ss ) };
+		const alignment      aln_1c55A_1hykA      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1HYKA, prot_list_1c55A_1hykA, residue_scorer(), parse_ss ) };
+		const alignment      aln_1c55A_1wmtA      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1WMTA, prot_list_1c55A_1wmtA, residue_scorer(), parse_ss ) };
+		const alignment      aln_1c55A_1wt7A      { read_and_rescore_fasta_alignment( FASTA_ALN_1C55A_1WT7A, prot_list_1c55A_1wt7A, residue_scorer(), parse_ss ) };
+	};
 
-	}  // namespace test
-}  // namespace cath
+	/// \brief TODOCUMENT
+	void aligned_pair_score_fixture::check_ssap_scores(const alignment   &prm_alignment,                      ///< TODOCUMENT
+	                                                   const protein     &prm_protein_a,                      ///< TODOCUMENT
+	                                                   const protein     &prm_protein_b,                      ///< TODOCUMENT
+	                                                   const score_value &prm_accurate_score_over_longer,     ///< TODOCUMENT
+	                                                   const score_value &prm_accurate_score_over_shorter,    ///< TODOCUMENT
+	                                                   const score_value &prm_accurate_score_over_num_aligned ///< TODOCUMENT
+	                                                   ) const {
+		const ssap_scores the_ssap_scores = calculate_log_score( prm_alignment, prm_protein_a, prm_protein_b, residue_querier() );
+		constexpr size_t exclude = 5;
+		BOOST_CHECK_CLOSE(
+			ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+			the_ssap_scores.get_ssap_score_over_larger(),
+			ACCURACY_PERCENTAGE
+		);
+		BOOST_CHECK_CLOSE(
+			ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+			the_ssap_scores.get_ssap_score_over_smaller(),
+			ACCURACY_PERCENTAGE
+		);
+		BOOST_CHECK_CLOSE(
+			ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+			the_ssap_scores.get_ssap_score_over_compared(),
+			ACCURACY_PERCENTAGE
+		);
 
-/// \brief TODOCUMENT
-void cath::test::aligned_pair_score_fixture::check_ssap_scores(const alignment   &prm_alignment,                      ///< TODOCUMENT
-                                                               const protein     &prm_protein_a,                      ///< TODOCUMENT
-                                                               const protein     &prm_protein_b,                      ///< TODOCUMENT
-                                                               const score_value &prm_accurate_score_over_longer,     ///< TODOCUMENT
-                                                               const score_value &prm_accurate_score_over_shorter,    ///< TODOCUMENT
-                                                               const score_value &prm_accurate_score_over_num_aligned ///< TODOCUMENT
-                                                               ) const {
-	const ssap_scores the_ssap_scores = calculate_log_score( prm_alignment, prm_protein_a, prm_protein_b, residue_querier() );
-	constexpr size_t exclude = 5;
-	BOOST_CHECK_CLOSE(
-		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
-		the_ssap_scores.get_ssap_score_over_larger(),
-		ACCURACY_PERCENTAGE
-	);
-	BOOST_CHECK_CLOSE(
-		ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
-		the_ssap_scores.get_ssap_score_over_smaller(),
-		ACCURACY_PERCENTAGE
-	);
-	BOOST_CHECK_CLOSE(
-		ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG,  ssap_score_accuracy::LOW, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
-		the_ssap_scores.get_ssap_score_over_compared(),
-		ACCURACY_PERCENTAGE
-	);
+		BOOST_CHECK_CLOSE(
+			ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+			prm_accurate_score_over_longer,
+			ACCURACY_PERCENTAGE
+		);
+		BOOST_CHECK_CLOSE(
+			ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+			prm_accurate_score_over_shorter,
+			ACCURACY_PERCENTAGE
+		);
+		BOOST_CHECK_CLOSE(
+			ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
+			prm_accurate_score_over_num_aligned,
+			ACCURACY_PERCENTAGE
+		);
+	}
 
-	BOOST_CHECK_CLOSE(
-		ssap_score( length_of_longer_getter(),   ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
-		prm_accurate_score_over_longer,
-		ACCURACY_PERCENTAGE
-	);
-	BOOST_CHECK_CLOSE(
-		ssap_score( length_of_shorter_getter(),  ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
-		prm_accurate_score_over_shorter,
-		ACCURACY_PERCENTAGE
-	);
-	BOOST_CHECK_CLOSE(
-		ssap_score( num_aligned_length_getter(), ssap_score_post_processing::COMPLX_NORMLS_THEN_LOG, ssap_score_accuracy::HIGH, exclude ).calculate( prm_alignment, prm_protein_a, prm_protein_b ),
-		prm_accurate_score_over_num_aligned,
-		ACCURACY_PERCENTAGE
-	);
-}
+} // namespace
 
 /// \brief Test suite for testing various aligned pair scores
 ///
@@ -237,7 +235,7 @@ void cath::test::aligned_pair_score_fixture::check_ssap_scores(const alignment  
 ///  * similar?????????????,
 ///  * alignment with gaps in both sequences
 
-BOOST_FIXTURE_TEST_SUITE(aligned_pair_score_test_suite, cath::test::aligned_pair_score_fixture)
+BOOST_FIXTURE_TEST_SUITE(aligned_pair_score_test_suite, aligned_pair_score_fixture)
 
 /// \brief Sub test suite for values where the correct answer is known from some independent source
 BOOST_AUTO_TEST_SUITE(known_correct_answers_suite)

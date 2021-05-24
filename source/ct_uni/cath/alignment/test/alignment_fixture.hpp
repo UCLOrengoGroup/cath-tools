@@ -30,29 +30,27 @@
 // Add a template factory function, make_example_alignment(), that is specialised
 // for constructing each of these types.
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief A test fixture for alignment tests that adds some extras to global_test_constants
-		class alignment_fixture {
-		  protected:
-			// A normal list
-			static constexpr auto aln_list_a = common::make_array<aln_posn_opt>( 0, 1, 2, 3 );
+	/// \brief A test fixture for alignment tests that adds some extras to global_test_constants
+	class alignment_fixture {
+	  protected:
+		// A normal list
+		static constexpr auto aln_list_a = common::make_array<aln_posn_opt>( 0, 1, 2, 3 );
 
-			// A normal list
-			static constexpr auto aln_list_b = common::make_array<aln_posn_opt>( 0, 1, 2, ::std::nullopt );
+		// A normal list
+		static constexpr auto aln_list_b = common::make_array<aln_posn_opt>( 0, 1, 2, ::std::nullopt );
 
-			// A list that is longer than the normal lists
-			static constexpr auto aln_list_long = common::make_array<aln_posn_opt>( 0, 1, 2, 3, 4, 5 );
+		// A list that is longer than the normal lists
+		static constexpr auto aln_list_long = common::make_array<aln_posn_opt>( 0, 1, 2, 3, 4, 5 );
 
-			static constexpr auto example_scores = common::make_array<score_opt>( 3.6, 6.8, 2.1, 999.999 );
+		static constexpr auto example_scores = common::make_array<score_opt>( 3.6, 6.8, 2.1, 999.999 );
 
-			static alignment aln_a_a();
-			static alignment aln_a_b();
-			static alignment aln_b_a();
-			static alignment aln_long_long();
-		};
+		static alignment aln_a_a();
+		static alignment aln_a_b();
+		static alignment aln_b_a();
+		static alignment aln_long_long();
+	};
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_TEST_ALIGNMENT_FIXTURE_HPP

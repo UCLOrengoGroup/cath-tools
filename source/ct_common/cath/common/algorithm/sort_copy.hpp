@@ -23,27 +23,25 @@
 
 #include <boost/range/algorithm/sort.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Convenience function for making a sorted copy of a range
-		template <typename R>
-		R sort_copy(R prm_range ///< The range on which the sorted copy should be based
-		            ) {
-			boost::range::sort( prm_range );
-			return prm_range;
-		}
+	/// \brief Convenience function for making a sorted copy of a range
+	template <typename R>
+	R sort_copy(R prm_range ///< The range on which the sorted copy should be based
+	            ) {
+		boost::range::sort( prm_range );
+		return prm_range;
+	}
 
-		/// \overload
-		template <typename R, typename P>
-		R sort_copy(R prm_range,   ///< The range on which the sorted copy should be based
-		            P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
-		            ) {
-			boost::range::sort( prm_range, prm_bin_pred );
-			return prm_range;
-		}
+	/// \overload
+	template <typename R, typename P>
+	R sort_copy(R prm_range,   ///< The range on which the sorted copy should be based
+	            P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+	            ) {
+		boost::range::sort( prm_range, prm_bin_pred );
+		return prm_range;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_COPY_HPP

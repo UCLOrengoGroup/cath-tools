@@ -25,32 +25,32 @@
 
 #include <algorithm>
 
-namespace cath {
-	namespace common {
-		/// \brief TODOCUMENT
-		template <typename ForwardItr>
-		inline bool is_uniq_for_unordered(const ForwardItr &prm_begin, ///< TODOCUMENT
-		                                  const ForwardItr &prm_end    ///< TODOCUMENT
-		                                  ) {
-			for (ForwardItr itr( prm_begin ); itr != prm_end; ++itr ) {
-				if ( std::count( itr, prm_end, *itr ) > 1 ) {
-					return false;
-				}
-			}
-			return true;
-		}
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		template <typename ForwardRange>
-		inline bool is_uniq_for_unordered(const ForwardRange &prm_rng ///< TODOCUMENT
-		                                  ) {
-			BOOST_RANGE_CONCEPT_ASSERT((boost::ForwardRangeConcept<ForwardRange>));
-			return is_uniq_for_unordered(
-				::std::cbegin( prm_rng ),
-				::std::cend  ( prm_rng )
-			);
+	/// \brief TODOCUMENT
+	template <typename ForwardItr>
+	inline bool is_uniq_for_unordered(const ForwardItr &prm_begin, ///< TODOCUMENT
+	                                  const ForwardItr &prm_end    ///< TODOCUMENT
+	                                  ) {
+		for (ForwardItr itr( prm_begin ); itr != prm_end; ++itr ) {
+			if ( std::count( itr, prm_end, *itr ) > 1 ) {
+				return false;
+			}
 		}
-	} // namespace common
-} // namespace cath
+		return true;
+	}
+
+	/// \brief TODOCUMENT
+	template <typename ForwardRange>
+	inline bool is_uniq_for_unordered(const ForwardRange &prm_rng ///< TODOCUMENT
+	                                  ) {
+		BOOST_RANGE_CONCEPT_ASSERT((boost::ForwardRangeConcept<ForwardRange>));
+		return is_uniq_for_unordered(
+			::std::cbegin( prm_rng ),
+			::std::cend  ( prm_rng )
+		);
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_IS_UNIQ_FOR_UNORDERED_HPP

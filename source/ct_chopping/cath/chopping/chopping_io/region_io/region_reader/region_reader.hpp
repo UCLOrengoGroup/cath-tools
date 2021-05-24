@@ -23,29 +23,29 @@
 
 #include <string>
 
-namespace cath { namespace chop { class region; } }
+// clang-format off
+namespace cath::chop { class region; }
+// clang-format on
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
 
-		/// \brief TODOCUMENT
-		class region_reader {
-		  private:
-			[[nodiscard]] virtual region do_read_region( const std::string & ) const = 0;
+	/// \brief TODOCUMENT
+	class region_reader {
+	  private:
+		[[nodiscard]] virtual region do_read_region( const std::string & ) const = 0;
 
-		  public:
-			region_reader() = default;
-			virtual ~region_reader() noexcept = default;
+	  public:
+		region_reader() = default;
+		virtual ~region_reader() noexcept = default;
 
-			region_reader(const region_reader &) = default;
-			region_reader(region_reader &&) noexcept = default;
-			region_reader & operator=(const region_reader &) = default;
-			region_reader & operator=(region_reader &&) noexcept = default;
+		region_reader(const region_reader &) = default;
+		region_reader(region_reader &&) noexcept = default;
+		region_reader & operator=(const region_reader &) = default;
+		region_reader & operator=(region_reader &&) noexcept = default;
 
-			[[nodiscard]] region read_region( const std::string & ) const;
-		};
+		[[nodiscard]] region read_region( const std::string & ) const;
+	};
 
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_IO_REGION_IO_REGION_READER_REGION_READER_HPP

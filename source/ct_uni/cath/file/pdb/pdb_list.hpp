@@ -35,67 +35,68 @@
 #include "cath/file/file_type_aliases.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
+// clang-format off
 namespace cath { class protein_list; }
-namespace cath { namespace file { class name_set_list; } }
-namespace cath { namespace file { class pdb; } }
+namespace cath::file { class name_set_list; }
+namespace cath::file { class pdb; }
+// clang-format on
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
+	/// \brief TODOCUMENT
+	class pdb_list final {
+	private:
 		/// \brief TODOCUMENT
-		class pdb_list final {
-		private:
-			/// \brief TODOCUMENT
-			pdb_vec pdbs;
+		pdb_vec pdbs;
 
-		public:
-			pdb_list() = default;
-			explicit pdb_list(pdb_vec);
+	public:
+		pdb_list() = default;
+		explicit pdb_list(pdb_vec);
 
-			void push_back(const pdb &);
-			void reserve(const size_t &);
+		void push_back(const pdb &);
+		void reserve(const size_t &);
 
-			[[nodiscard]] size_t size() const;
-			[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
+		[[nodiscard]] bool   empty() const;
 
-			pdb & operator[](const size_t &);
-			const pdb & operator[](const size_t &) const;
+		pdb & operator[](const size_t &);
+		const pdb & operator[](const size_t &) const;
 
-			// Provide iterators to make this into a range
-			using const_iterator = std::vector<pdb>::const_iterator;
-			using iterator       = const_iterator;
-//			iterator begin();
-//			iterator end();
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		// Provide iterators to make this into a range
+		using const_iterator = std::vector<pdb>::const_iterator;
+		using iterator       = const_iterator;
+//		iterator begin();
+//		iterator end();
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		pdb_list read_pdb_files(const path_vec &);
+	pdb_list read_pdb_files(const path_vec &);
 
-		pdb_list make_pdb_list(const pdb_vec &);
+	pdb_list make_pdb_list(const pdb_vec &);
 
-		pdb_list pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &,
-		                                                   const ostream_ref_opt & = ::std::nullopt);
+	pdb_list pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &,
+	                                                   const ostream_ref_opt & = ::std::nullopt);
 
-		pdb_list pdb_list_of_backbone_complete_region_limited_subset_pdbs(const pdb_list &,
-		                                                                  const chop::region_vec_opt_vec &,
-		                                                                  const ostream_ref_opt & = ::std::nullopt);
+	pdb_list pdb_list_of_backbone_complete_region_limited_subset_pdbs(const pdb_list &,
+	                                                                  const chop::region_vec_opt_vec &,
+	                                                                  const ostream_ref_opt & = ::std::nullopt);
 
-		protein_list build_protein_list_of_pdb_list( const pdb_list &, const ostream_ref_opt & = ::std::nullopt );
+	protein_list build_protein_list_of_pdb_list( const pdb_list &, const ostream_ref_opt & = ::std::nullopt );
 
-		protein_list build_protein_list_of_pdb_list_and_names(const pdb_list &,
-		                                                      const name_set_list &);
+	protein_list build_protein_list_of_pdb_list_and_names(const pdb_list &,
+	                                                      const name_set_list &);
 
-		amino_acid_vec_vec get_amino_acid_lists(const pdb_list &);
+	amino_acid_vec_vec get_amino_acid_lists(const pdb_list &);
 
-		residue_id_vec_vec get_residue_ids_of_first_chains__backbone_unchecked(const pdb_list &);
+	residue_id_vec_vec get_residue_ids_of_first_chains__backbone_unchecked(const pdb_list &);
 
-		backbone_complete_indices_vec get_backbone_complete_indices(const pdb_list &);
+	backbone_complete_indices_vec get_backbone_complete_indices(const pdb_list &);
 
-		residue_id_vec_vec get_backbone_complete_residue_ids(const pdb_list &);
+	residue_id_vec_vec get_backbone_complete_residue_ids(const pdb_list &);
 
-		residue_id_vec_vec get_backbone_complete_residue_ids_of_first_chains(const pdb_list &);
-	} // namespace file
-} // namespace cath
+	residue_id_vec_vec get_backbone_complete_residue_ids_of_first_chains(const pdb_list &);
+
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_LIST_HPP

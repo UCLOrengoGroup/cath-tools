@@ -23,40 +23,37 @@
 
 #include "cath/common/boost_addenda/range/adaptor/iterator/lexical_cast_itr.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief Range wrapper over RNG whose dereference operator returns the result of performing lexical_cast<T>() on the
-			///        dereferenced value from the original value
-			///
-			/// For a const lexical_casted_range, use a const RNG type.
-			///
-			/// This is implemented as an iterator_range of transform_iterator using lexical_cast_value
-			template <typename T, typename RNG>
-			class lexical_casted_range final : public boost::iterator_range<lexical_cast_itr<T, RNG> > {
-			private:
-				/// \brief Convenience type alias for lexical_cast_itr for T and RNG
-				using lex_casted_iterator = lexical_cast_itr<T, RNG>;
+	/// \brief Range wrapper over RNG whose dereference operator returns the result of performing lexical_cast<T>() on the
+	///        dereferenced value from the original value
+	///
+	/// For a const lexical_casted_range, use a const RNG type.
+	///
+	/// This is implemented as an iterator_range of transform_iterator using lexical_cast_value
+	template <typename T, typename RNG>
+	class lexical_casted_range final : public boost::iterator_range<lexical_cast_itr<T, RNG> > {
+	private:
+		/// \brief Convenience type alias for lexical_cast_itr for T and RNG
+		using lex_casted_iterator = lexical_cast_itr<T, RNG>;
 
-				/// \brief Convenience type alias for the parent iterator_range class through which this is implemented
-				using super               = boost::iterator_range<lex_casted_iterator>;
+		/// \brief Convenience type alias for the parent iterator_range class through which this is implemented
+		using super               = boost::iterator_range<lex_casted_iterator>;
 
-			public:
-				explicit lexical_casted_range(const RNG &);
-			 };
+	public:
+		explicit lexical_casted_range(const RNG &);
+	 };
 
-			/// \brief Ctor from a range
-			template <typename T, typename RNG>
-			lexical_casted_range<T, RNG>::lexical_casted_range(const RNG &prm_range ///< The range over which to apply this lexical_casted_range
-			                                                   ) : super(
-			                                                       	lex_casted_iterator( std::begin( prm_range ) ),
-			                                                       	lex_casted_iterator( std::end  ( prm_range ) )
-			                                                       ) {
-			}
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+	/// \brief Ctor from a range
+	template <typename T, typename RNG>
+	lexical_casted_range<T, RNG>::lexical_casted_range(const RNG &prm_range ///< The range over which to apply this lexical_casted_range
+	                                                   ) : super(
+	                                                       	lex_casted_iterator( std::begin( prm_range ) ),
+	                                                       	lex_casted_iterator( std::end  ( prm_range ) )
+	                                                       ) {
+	}
+
+} // namespace cath::common::detail
 
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_LEXICAL_CASTED_RANGE_HPP

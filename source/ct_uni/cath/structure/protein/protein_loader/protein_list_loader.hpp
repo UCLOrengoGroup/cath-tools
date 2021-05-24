@@ -30,7 +30,9 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_source_file_set.hpp"
 
+// clang-format off
 namespace cath { class protein_list; }
+// clang-format on
 
 namespace cath {
 

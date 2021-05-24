@@ -28,38 +28,34 @@
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace clust {
-		namespace detail {
+namespace cath::clust::detail {
 
-			/// \brief Represent a single mapping job to be performed
-			///
-			/// This is useful for doing batches of mapping (and in a common way)
-			/// as for a single job
-			class mapping_job final {
-			private:
-				/// \brief An optional identifier of the batch
-				str_opt  batch_id;
+	/// \brief Represent a single mapping job to be performed
+	///
+	/// This is useful for doing batches of mapping (and in a common way)
+	/// as for a single job
+	class mapping_job final {
+	private:
+		/// \brief An optional identifier of the batch
+		str_opt  batch_id;
 
-				/// \brief The file describing the cluster membership of the clusters to be mapped/renumbered
-				::std::filesystem::path new_cluster_membership_file;
+		/// \brief The file describing the cluster membership of the clusters to be mapped/renumbered
+		::std::filesystem::path new_cluster_membership_file;
 
-				/// \brief An optional file describing map-from cluster membership
-				path_opt old_cluster_membership_file;
+		/// \brief An optional file describing map-from cluster membership
+		path_opt old_cluster_membership_file;
 
-			  public:
-				explicit mapping_job( str_opt, ::std::filesystem::path, path_opt = ::std::nullopt );
+	  public:
+		explicit mapping_job( str_opt, ::std::filesystem::path, path_opt = ::std::nullopt );
 
-				[[nodiscard]] const str_opt &                get_batch_id() const;
-				[[nodiscard]] const ::std::filesystem::path &get_new_cluster_membership_file() const;
-				[[nodiscard]] const path_opt &               get_old_cluster_membership_file() const;
-			};
+		[[nodiscard]] const str_opt &                get_batch_id() const;
+		[[nodiscard]] const ::std::filesystem::path &get_new_cluster_membership_file() const;
+		[[nodiscard]] const path_opt &               get_old_cluster_membership_file() const;
+	};
 
-			mapping_job_vec read_batch_mapping_file(std::istream &);
-			mapping_job_vec read_batch_mapping_file(const ::std::filesystem::path &);
+	mapping_job_vec read_batch_mapping_file(std::istream &);
+	mapping_job_vec read_batch_mapping_file(const ::std::filesystem::path &);
 
-		} // namespace detail
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_DETAIL_MAPPING_JOB_HPP

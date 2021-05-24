@@ -23,16 +23,14 @@
 
 #include <type_traits>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief C++17 helper to return a const lvalue ref to the specified lvalue argument
-		template <class T>
-		constexpr std::add_const_t<T> & as_const(T& t) noexcept {
-			return t;
-		}
+	/// \brief C++17 helper to return a const lvalue ref to the specified lvalue argument
+	template <class T>
+	constexpr std::add_const_t<T> & as_const(T& t) noexcept {
+		return t;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_AS_CONST_HPP

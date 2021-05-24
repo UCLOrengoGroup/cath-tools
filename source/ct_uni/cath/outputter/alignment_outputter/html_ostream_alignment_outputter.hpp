@@ -25,30 +25,30 @@
 #include "cath/display/display_colourer/display_colourer.hpp"
 #include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
 
+// clang-format off
 namespace cath { class display_spec; }
+// clang-format on
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
+	/// \brief TODOCUMENT
+	class html_ostream_alignment_outputter final : public alignment_outputter {
+	private:
 		/// \brief TODOCUMENT
-		class html_ostream_alignment_outputter final : public alignment_outputter {
-		private:
-			/// \brief TODOCUMENT
-			common::clone_ptr<display_colourer> colourer_ptr;
+		common::clone_ptr<display_colourer> colourer_ptr;
 
-			[[nodiscard]] std::unique_ptr<alignment_outputter> do_clone() const final;
-			void do_output_alignment(const align::alignment_context &,
-			                         std::ostream &) const final;
-			[[nodiscard]] bool                                 do_involves_display_spec() const final;
-			[[nodiscard]] std::string                          do_get_name() const final;
+		[[nodiscard]] std::unique_ptr<alignment_outputter> do_clone() const final;
+		void do_output_alignment(const align::alignment_context &,
+		                         std::ostream &) const final;
+		[[nodiscard]] bool                                 do_involves_display_spec() const final;
+		[[nodiscard]] std::string                          do_get_name() const final;
 
-		  public:
-			explicit html_ostream_alignment_outputter(const display_colourer &);
-		};
+	  public:
+		explicit html_ostream_alignment_outputter(const display_colourer &);
+	};
 
-		html_ostream_alignment_outputter make_html_ostream_alignment_outputter(const display_spec &);
+	html_ostream_alignment_outputter make_html_ostream_alignment_outputter(const display_spec &);
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_HTML_OSTREAM_ALIGNMENT_OUTPUTTER_HPP

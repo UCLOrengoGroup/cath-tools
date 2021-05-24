@@ -23,22 +23,20 @@
 
 #include <stdexcept>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return the result of clamping prm_value within the range [ prm_low, prm_high ]
-		template <typename T, typename U>
-		constexpr T constexpr_clamp( const T &prm_value, ///< The value to be clamped
-		                             const U &prm_low,   ///< The minimum value to which the prm_value must be clamped
-		                             const U &prm_high   ///< The maximum value to which the prm_value must be clamped
-		                             ) {
-			return ( prm_low > prm_high ) ? throw std::logic_error("Unable to clamp to invalid range")
-			                              : ( prm_value < prm_low  ) ? prm_low  :
-			                                ( prm_value > prm_high ) ? prm_high :
-			                                                           prm_value;
-		}
+	/// \brief Return the result of clamping prm_value within the range [ prm_low, prm_high ]
+	template <typename T, typename U>
+	constexpr T constexpr_clamp( const T &prm_value, ///< The value to be clamped
+	                             const U &prm_low,   ///< The minimum value to which the prm_value must be clamped
+	                             const U &prm_high   ///< The maximum value to which the prm_value must be clamped
+	                             ) {
+		return ( prm_low > prm_high ) ? throw std::logic_error("Unable to clamp to invalid range")
+		                              : ( prm_value < prm_low  ) ? prm_low  :
+		                                ( prm_value > prm_high ) ? prm_high :
+		                                                           prm_value;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_CLAMP_HPP

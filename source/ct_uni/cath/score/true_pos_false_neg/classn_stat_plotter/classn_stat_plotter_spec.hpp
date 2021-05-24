@@ -25,43 +25,43 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace score { class classn_stat_pair_series_list; } }
+// clang-format off
+namespace cath::score { class classn_stat_pair_series_list; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
+
+	/// \brief TODOCUMENT
+	///
+	/// \todo Consider allowing this to be configured via named parameters the Boost Parameter Library
+	class classn_stat_plotter_spec final {
+	private:
+		/// \brief TODOCUMENT
+		str_vec pre_plot_strs;
 
 		/// \brief TODOCUMENT
-		///
-		/// \todo Consider allowing this to be configured via named parameters the Boost Parameter Library
-		class classn_stat_plotter_spec final {
-		private:
-			/// \brief TODOCUMENT
-			str_vec pre_plot_strs;
+//		::std::optional<size_bool_pair_vec> series_to_plot;
+		std::vector<std::pair<std::string, str_opt>> series_to_plot;
 
-			/// \brief TODOCUMENT
-//			::std::optional<size_bool_pair_vec> series_to_plot;
-			std::vector<std::pair<std::string, str_opt>> series_to_plot;
+		/// \brief TODOCUMENT
+		bool tidy_up_score_based_legends = true;
 
-			/// \brief TODOCUMENT
-			bool tidy_up_score_based_legends = true;
+	public:
+		classn_stat_plotter_spec(str_vec,
+		                         std::vector<std::pair<std::string, str_opt>>,
+		                         const bool &);
 
-		public:
-			classn_stat_plotter_spec(str_vec,
-			                         std::vector<std::pair<std::string, str_opt>>,
-			                         const bool &);
+		[[nodiscard]] const str_vec &                                     get_pre_plot_strs() const;
+		[[nodiscard]] const std::vector<std::pair<std::string, str_opt>> &get_series_to_plot() const;
+		[[nodiscard]] const bool &                                        get_tidy_up_score_based_legends() const;
+	};
 
-			[[nodiscard]] const str_vec &                                     get_pre_plot_strs() const;
-			[[nodiscard]] const std::vector<std::pair<std::string, str_opt>> &get_series_to_plot() const;
-			[[nodiscard]] const bool &                                        get_tidy_up_score_based_legends() const;
-		};
+	std::vector<std::pair<std::string, str_opt>> get_series_to_plot_or_make_default(const classn_stat_plotter_spec &,
+	                                                                                const classn_stat_pair_series_list &);
 
-		std::vector<std::pair<std::string, str_opt>> get_series_to_plot_or_make_default(const classn_stat_plotter_spec &,
-		                                                                                const classn_stat_pair_series_list &);
+	classn_stat_plotter_spec make_standard_score_roc_plotter_spec(const std::vector<std::pair<std::string, str_opt>> &);
+	classn_stat_plotter_spec make_standard_score_precision_recall_plotter_spec(const std::vector<std::pair<std::string, str_opt>> &);
 
-		classn_stat_plotter_spec make_standard_score_roc_plotter_spec(const std::vector<std::pair<std::string, str_opt>> &);
-		classn_stat_plotter_spec make_standard_score_precision_recall_plotter_spec(const std::vector<std::pair<std::string, str_opt>> &);
-
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PLOTTER_CLASSN_STAT_PLOTTER_SPEC_HPP

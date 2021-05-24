@@ -27,20 +27,8 @@
 using namespace ::cath;
 using namespace ::cath::score;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The classn_stat_test_suite_fixture to assist in testing classn_stat
-		struct classn_stat_test_suite_fixture {
-		protected:
-			~classn_stat_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(classn_stat_test_suite, cath::test::classn_stat_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(classn_stat_test_suite)
 
 /// \brief Check the basic classification statistics for an example true_false_pos_neg
 ///
@@ -77,4 +65,3 @@ BOOST_AUTO_TEST_CASE(basic) {
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-

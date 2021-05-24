@@ -26,18 +26,14 @@
 #include "cath/structure/geometry/restrict_to_single_linkage_extension.hpp"
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::common;
 using namespace ::cath::geom;
-using namespace ::cath::test;
 
 using ::boost::adaptors::transformed;
 using ::std::make_pair;
 using ::std::tie;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The restrict_to_single_linkage_extension_test_suite_fixture to assist in testing restrict_to_single_linkage_extension
 		struct restrict_to_single_linkage_extension_test_suite_fixture {
@@ -75,8 +71,7 @@ namespace cath {
 
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(restrict_to_single_linkage_extension_test_suite, restrict_to_single_linkage_extension_test_suite_fixture)
 

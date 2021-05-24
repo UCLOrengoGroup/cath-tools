@@ -41,14 +41,11 @@
 #include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::geom;
 using namespace ::cath::sec;
-using namespace ::cath::test;
 
 using ::boost::range::sort;
 using ::std::filesystem::directory_entry;
@@ -57,8 +54,7 @@ using ::std::filesystem::path;
 using ::std::nullopt;
 using ::std::ostringstream;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The dssp_hbond_calc_test_suite_fixture to assist in testing dssp_hbond_calc
 		struct dssp_hbond_calc_test_suite_fixture : protected dssp_dupl_fixture {
@@ -144,8 +140,7 @@ namespace cath {
 			}
 		}
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(dssp_hbond_calc_test_suite, dssp_hbond_calc_test_suite_fixture)
 

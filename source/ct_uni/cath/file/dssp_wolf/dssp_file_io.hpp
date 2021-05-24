@@ -24,23 +24,22 @@
 #include <filesystem>
 #include <utility>
 
+// clang-format off
 namespace cath { class chain_label; }
 namespace cath { class dssp_struc_planar_angles; }
 namespace cath { class residue; }
+namespace cath::file { class dssp_file; }
+namespace cath::file { class dssp_file_record; }
+// clang-format on
 
-namespace cath { namespace file { class dssp_file_record; } }
-namespace cath { namespace file { class dssp_file; } }
+namespace cath::file {
 
-namespace cath {
-	namespace file {
+	dssp_file read_dssp_file(const ::std::filesystem::path &);
+	dssp_file read_dssp(std::istream &);
 
-		dssp_file read_dssp_file(const ::std::filesystem::path &);
-		dssp_file read_dssp(std::istream &);
+	using size_residue_pair = std::pair<size_t, residue>;
+	size_residue_pair parse_dssp_residue_line(const std::string &);
 
-		using size_residue_pair = std::pair<size_t, residue>;
-		size_residue_pair parse_dssp_residue_line(const std::string &);
-
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_DSSP_FILE_IO_HPP

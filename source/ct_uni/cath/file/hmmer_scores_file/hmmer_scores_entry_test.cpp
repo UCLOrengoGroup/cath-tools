@@ -30,21 +30,19 @@ using namespace ::cath::file;
 using namespace ::cath::file::detail;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The hmmer_scores_entry_test_suite_fixture to assist in testing hmmer_scores_entry
-		struct hmmer_scores_entry_test_suite_fixture {
-		protected:
-			~hmmer_scores_entry_test_suite_fixture() noexcept = default;
+	/// \brief The hmmer_scores_entry_test_suite_fixture to assist in testing hmmer_scores_entry
+	struct hmmer_scores_entry_test_suite_fixture {
+	protected:
+		~hmmer_scores_entry_test_suite_fixture() noexcept = default;
 
-			const hmmer_scores_entry eg_entry{ "102mA00", "-", "3ixfA00", "-", 5.4e-09, 34.1, 0.1, 1.1e-08, 33.1, 0.1, 1.4, 1, 1, 0, 1, 1, 1, 1, "-" };
-		};
+		const hmmer_scores_entry eg_entry{ "102mA00", "-", "3ixfA00", "-", 5.4e-09, 34.1, 0.1, 1.1e-08, 33.1, 0.1, 1.4, 1, 1, 0, 1, 1, 1, 1, "-" };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(hmmer_scores_entry_test_suite, cath::test::hmmer_scores_entry_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(hmmer_scores_entry_test_suite, hmmer_scores_entry_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(strip_header_name_works) {
 	BOOST_CHECK_EQUAL( strip_header_name( "cath|4_0_0|102mA00/0-153-i5" ), "102mA00" );

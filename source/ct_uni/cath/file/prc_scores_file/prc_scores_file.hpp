@@ -25,31 +25,29 @@
 
 #include "cath/file/file_type_aliases.hpp"
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief TODOCUMENT
-		class prc_scores_file final {
-		private:
-			prc_scores_file() = delete;
+	/// \brief TODOCUMENT
+	class prc_scores_file final {
+	private:
+		prc_scores_file() = delete;
 
-		public:
-			static prc_scores_entry_vec remove_duplicates(const prc_scores_entry_vec &);
+	public:
+		static prc_scores_entry_vec remove_duplicates(const prc_scores_entry_vec &);
 
-			static prc_scores_entry_vec parse_prc_scores_file(std::istream &);
+		static prc_scores_entry_vec parse_prc_scores_file(std::istream &);
 
-			static prc_scores_entry_vec parse_prc_scores_file(const std::string &);
+		static prc_scores_entry_vec parse_prc_scores_file(const std::string &);
 
-			static prc_scores_entry_vec parse_prc_scores_file(const ::std::filesystem::path &);
+		static prc_scores_entry_vec parse_prc_scores_file(const ::std::filesystem::path &);
 
-			static prc_scores_entry_vec parse_prc_scores_file_fancy(std::istream &);
+		static prc_scores_entry_vec parse_prc_scores_file_fancy(std::istream &);
 
-			static prc_scores_entry_vec parse_prc_scores_file_fancy(const std::string &);
+		static prc_scores_entry_vec parse_prc_scores_file_fancy(const std::string &);
 
-			static prc_scores_entry_vec parse_prc_scores_file_fancy(const ::std::filesystem::path &);
-		};
+		static prc_scores_entry_vec parse_prc_scores_file_fancy(const ::std::filesystem::path &);
+	};
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PRC_SCORES_FILE_PRC_SCORES_FILE_HPP

@@ -25,16 +25,12 @@
 
 #include "cath/common/type_traits.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief Helper to get an index_sequence corresponding to the indices of a tuple type
-			template <typename Tpl>
-			using tuple_index_sequence = std::make_index_sequence< std::tuple_size_v< common::remove_cvref_t< Tpl > > >;
+	/// \brief Helper to get an index_sequence corresponding to the indices of a tuple type
+	template <typename Tpl>
+	using tuple_index_sequence = std::make_index_sequence< std::tuple_size_v< common::remove_cvref_t< Tpl > > >;
 
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_DETAIL_TUPLE_INDEX_SEQUENCE_HPP

@@ -26,29 +26,27 @@
 #include "cath/common/clone/clone_ptr.hpp"
 #include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
+
+	/// \brief TODOCUMENT
+	class file_alignment_outputter final : public alignment_outputter {
+	private:
+		/// \brief TODOCUMENT
+		const ::std::filesystem::path output_file;
 
 		/// \brief TODOCUMENT
-		class file_alignment_outputter final : public alignment_outputter {
-		private:
-			/// \brief TODOCUMENT
-			const ::std::filesystem::path output_file;
+		common::clone_ptr<alignment_outputter> ostream_alignment_outputter_ptr;
 
-			/// \brief TODOCUMENT
-			common::clone_ptr<alignment_outputter> ostream_alignment_outputter_ptr;
+		[[nodiscard]] std::unique_ptr<alignment_outputter> do_clone() const final;
+		void do_output_alignment(const align::alignment_context &,
+		                         std::ostream &) const final;
+		[[nodiscard]] bool                                 do_involves_display_spec() const final;
+		[[nodiscard]] std::string                          do_get_name() const final;
 
-			[[nodiscard]] std::unique_ptr<alignment_outputter> do_clone() const final;
-			void do_output_alignment(const align::alignment_context &,
-			                         std::ostream &) const final;
-			[[nodiscard]] bool                                 do_involves_display_spec() const final;
-			[[nodiscard]] std::string                          do_get_name() const final;
+	  public:
+		file_alignment_outputter( ::std::filesystem::path, const alignment_outputter & );
+	};
 
-		  public:
-			file_alignment_outputter( ::std::filesystem::path, const alignment_outputter & );
-		};
-
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_FILE_ALIGNMENT_OUTPUTTER_HPP

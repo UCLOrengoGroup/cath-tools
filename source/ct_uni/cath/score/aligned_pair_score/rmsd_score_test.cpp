@@ -25,18 +25,7 @@
 #include "cath/alignment/common_atom_selection_policy/common_atom_selection_policy.hpp"
 #include "cath/alignment/common_residue_selection_policy/common_residue_selection_policy.hpp"
 
-namespace cath {
-	namespace test {
-
-		struct rmsd_score_fixture {
-		protected:
-			~rmsd_score_fixture() noexcept = default;
-		};
-
-	} // namespace test
-} // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(rmsd_score_test_suite, cath::test::rmsd_score_fixture)
+BOOST_AUTO_TEST_SUITE(rmsd_score_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

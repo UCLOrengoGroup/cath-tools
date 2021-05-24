@@ -29,22 +29,20 @@
 using namespace ::cath::opts;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The misc_help_version_options_block_test_suite_fixture to assist in testing misc_help_version_options_block
-		struct misc_help_version_options_block_test_suite_fixture : protected options_block_tester {
-		protected:
-			~misc_help_version_options_block_test_suite_fixture() noexcept = default;
+	/// \brief The misc_help_version_options_block_test_suite_fixture to assist in testing misc_help_version_options_block
+	struct misc_help_version_options_block_test_suite_fixture : protected options_block_tester {
+	protected:
+		~misc_help_version_options_block_test_suite_fixture() noexcept = default;
 
-			misc_help_version_options_block the_options_block;
-			const string IGNORE_OPT = { "positional-that-should-be-ignored" };
-		};
+		misc_help_version_options_block the_options_block;
+		const string IGNORE_OPT = { "positional-that-should-be-ignored" };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(misc_help_version_options_block_test_suite, cath::test::misc_help_version_options_block_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(misc_help_version_options_block_test_suite, misc_help_version_options_block_test_suite_fixture)
 
 /// \brief Check that if nothing is requested then that is handled correctly
 BOOST_AUTO_TEST_CASE(handles_nothing_requested) {

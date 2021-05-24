@@ -34,18 +34,7 @@ using namespace ::cath::common::test;
 using namespace ::cath::score::detail;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		struct score_common_coord_handler_fixture {
-		protected:
-			~score_common_coord_handler_fixture() noexcept = default;
-		};
-
-	} // namespace test
-} // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(score_common_coord_handler_test_suite, cath::test::score_common_coord_handler_fixture)
+BOOST_AUTO_TEST_SUITE(score_common_coord_handler_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(default_ctor_does_not_throw) {

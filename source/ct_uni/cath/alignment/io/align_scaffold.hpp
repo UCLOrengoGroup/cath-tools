@@ -26,23 +26,24 @@
 
 #include <iosfwd>
 
-namespace cath { namespace align { class alignment; } }
+// clang-format off
+namespace cath::align { class alignment; }
+// clang-format on
 
-namespace cath {
-	namespace align {
-		namespace detail {
+namespace cath::align {
+	namespace detail {
 
-			aln_posn_opt_vec alignment_entry_of_scaffold_string(const std::string &);
-			std::string scaffold_line_of_alignment_entry(const alignment &,
-			                                             const size_t &);
+		aln_posn_opt_vec alignment_entry_of_scaffold_string(const std::string &);
+		std::string scaffold_line_of_alignment_entry(const alignment &,
+		                                             const size_t &);
 
-		} // namespace detail
+	} // namespace detail
 
-		alignment alignment_of_scaffold_lines(const str_vec &);
-		alignment alignment_of_scaffold(const std::string &);
-		str_vec scaffold_lines_of_alignment(const alignment &);
-		std::string scaffold_of_alignment(const alignment &);
-	} // namespace align
-} // namespace cath
+	alignment alignment_of_scaffold_lines(const str_vec &);
+	alignment alignment_of_scaffold(const std::string &);
+	str_vec scaffold_lines_of_alignment(const alignment &);
+	std::string scaffold_of_alignment(const alignment &);
+
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_IO_ALIGN_SCAFFOLD_HPP

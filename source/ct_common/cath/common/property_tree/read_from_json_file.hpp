@@ -28,19 +28,17 @@
 #include "cath/common/file/read_string_from_file.hpp"
 #include "cath/common/property_tree/from_json_string.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Build a T from a JSON string (via a ptree)
-		///
-		/// Requires that there is specialisation of read_from_ptree<> for T
-		template <typename T>
-		T read_from_json_file(const ::std::filesystem::path &prm_json_file ///< The JSON file to read
-		                      ) {
-			return from_json_string<T>( read_string_from_file( prm_json_file ) );
-		}
+	/// \brief Build a T from a JSON string (via a ptree)
+	///
+	/// Requires that there is specialisation of read_from_ptree<> for T
+	template <typename T>
+	T read_from_json_file(const ::std::filesystem::path &prm_json_file ///< The JSON file to read
+	                      ) {
+		return from_json_string<T>( read_string_from_file( prm_json_file ) );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_READ_FROM_JSON_FILE_HPP

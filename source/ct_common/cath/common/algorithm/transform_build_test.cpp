@@ -29,28 +29,26 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		struct transform_build_fixture {
-		protected:
-			~transform_build_fixture() noexcept = default;
+	struct transform_build_fixture {
+	protected:
+		~transform_build_fixture() noexcept = default;
 
-		public:
-			const size_deq      zero_to_ten_deque               = { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 };
-			//const size_size_map zero_to_ten_map                 = { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 };
-			const size_set      zero_to_ten_set                 = { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 };
-			const size_vec      zero_to_ten_vec                 = { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 };
-			const size_deq      zero_to_thirty_step_three_deque = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
-			//const size_size_map zero_to_thirty_step_three_map   = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
-			const size_set      zero_to_thirty_step_three_set   = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
-			const size_vec      zero_to_thirty_step_three_vec   = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
-		};
+	public:
+		const size_deq      zero_to_ten_deque               = { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 };
+		//const size_size_map zero_to_ten_map                 = { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 };
+		const size_set      zero_to_ten_set                 = { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 };
+		const size_vec      zero_to_ten_vec                 = { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 };
+		const size_deq      zero_to_thirty_step_three_deque = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
+		//const size_size_map zero_to_thirty_step_three_map   = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
+		const size_set      zero_to_thirty_step_three_set   = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
+		const size_vec      zero_to_thirty_step_three_vec   = { 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30 };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(transform_build_test_suite, cath::test::transform_build_fixture)
+BOOST_FIXTURE_TEST_SUITE(transform_build_test_suite, transform_build_fixture)
 
 /// \brief TODOCUMENT
 ///

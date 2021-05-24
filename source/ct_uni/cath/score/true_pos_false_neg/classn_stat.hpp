@@ -25,6 +25,7 @@
 
 #include "cath/common/type_aliases.hpp"
 
+// clang-format off
 namespace cath { using size_rational                             = boost::rational<size_t>;                              }
 namespace cath { using size_rational_vec                         = std::vector<size_rational>;                           }
 namespace cath { using size_rational_size_rational_pair          = std::pair<size_rational, size_rational>;              }
@@ -32,47 +33,46 @@ namespace cath { using size_rational_size_rational_pair_vec      = std::vector<s
 namespace cath { using size_rational_size_rational_pair_vec_itr  = size_rational_size_rational_pair_vec::iterator;       }
 namespace cath { using size_rational_size_rational_pair_vec_citr = size_rational_size_rational_pair_vec::const_iterator; }
 
-namespace cath { namespace common { class ratio; } }
-namespace cath { namespace score { class true_false_pos_neg; } }
+namespace cath::common { class ratio; }
+namespace cath::score { class true_false_pos_neg; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief ABC for classification statistics (eg sensitivity, specificity etc) for true_false_pos_neg
-		///
-		/// \todo Since all of the statistics like sensitivity, specificity, precision etc
-		///       are of the form A/(A+B) where A and B are one of {TP, TN, FP, FN}
-		///       and since true_false_pos_neg provides a getter templated on classn_outcome,
-		///       it'd be pretty easy to build a template that allows all of these statistics
-		///       to be specified with two classn_outcome template values.
-		///
-		/// \todo Consider changing the return type to
-		class classn_stat {
-		private:
-			/// \brief Pure virtual method with which each concrete classn_stat must define how
-			/// to calculate the numerator and denominator of the statistic
-			[[nodiscard]] virtual size_rational do_calculate( const true_false_pos_neg & ) const = 0;
+	/// \brief ABC for classification statistics (eg sensitivity, specificity etc) for true_false_pos_neg
+	///
+	/// \todo Since all of the statistics like sensitivity, specificity, precision etc
+	///       are of the form A/(A+B) where A and B are one of {TP, TN, FP, FN}
+	///       and since true_false_pos_neg provides a getter templated on classn_outcome,
+	///       it'd be pretty easy to build a template that allows all of these statistics
+	///       to be specified with two classn_outcome template values.
+	///
+	/// \todo Consider changing the return type to
+	class classn_stat {
+	private:
+		/// \brief Pure virtual method with which each concrete classn_stat must define how
+		/// to calculate the numerator and denominator of the statistic
+		[[nodiscard]] virtual size_rational do_calculate( const true_false_pos_neg & ) const = 0;
 
-			/// \brief TODOCUMENT
-			[[nodiscard]] virtual std::string do_get_name() const = 0;
+		/// \brief TODOCUMENT
+		[[nodiscard]] virtual std::string do_get_name() const = 0;
 
-		public:
-			classn_stat() = default;
-			virtual ~classn_stat() noexcept = default;
+	public:
+		classn_stat() = default;
+		virtual ~classn_stat() noexcept = default;
 
-			classn_stat(const classn_stat &) = default;
-			classn_stat(classn_stat &&) noexcept = default;
-			classn_stat & operator=(const classn_stat &) = default;
-			classn_stat & operator=(classn_stat &&) noexcept = default;
+		classn_stat(const classn_stat &) = default;
+		classn_stat(classn_stat &&) noexcept = default;
+		classn_stat & operator=(const classn_stat &) = default;
+		classn_stat & operator=(classn_stat &&) noexcept = default;
 
-			[[nodiscard]] size_rational calculate( const true_false_pos_neg & ) const;
-			[[nodiscard]] std::string   get_name() const;
-		};
+		[[nodiscard]] size_rational calculate( const true_false_pos_neg & ) const;
+		[[nodiscard]] std::string   get_name() const;
+	};
 
-		double calculate_and_convert(const classn_stat &,
-		                             const true_false_pos_neg &);
+	double calculate_and_convert(const classn_stat &,
+	                             const true_false_pos_neg &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_HPP

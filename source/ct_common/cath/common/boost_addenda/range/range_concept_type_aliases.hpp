@@ -27,67 +27,65 @@
 
 #include <vector>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Primary template for implementation of range_const_reference
-			///
-			/// By default, use range_reference<const T>
-			template <typename T, typename = detail::void_t<> >
-			struct range_const_reference_impl {
-				using type = typename boost::range_reference<const T>::type;
-			};
+		/// \brief Primary template for implementation of range_const_reference
+		///
+		/// By default, use range_reference<const T>
+		template <typename T, typename = detail::void_t<> >
+		struct range_const_reference_impl {
+			using type = typename boost::range_reference<const T>::type;
+		};
 
-			/// \brief Specialization of template for implementation of range_const_reference
-			///
-			/// If T has a const_reference member type, then prefer to use that
-			///
-			/// This uses the void_t trick to remove this specialisation if T doesn't contain a const_reference member type.
-			template <typename T>
-			struct range_const_reference_impl< T, detail::void_t< typename T::const_reference > > {
-				using type = typename T::const_reference;
-			};
-
-		} // namespace detail
-
+		/// \brief Specialization of template for implementation of range_const_reference
+		///
+		/// If T has a const_reference member type, then prefer to use that
+		///
+		/// This uses the void_t trick to remove this specialisation if T doesn't contain a const_reference member type.
 		template <typename T>
-		using range_iterator_t               = typename boost::range_iterator<T>::type;
+		struct range_const_reference_impl< T, detail::void_t< typename T::const_reference > > {
+			using type = typename T::const_reference;
+		};
 
-		template <typename T>
-		using range_const_iterator_t         = typename boost::range_iterator<const T>::type;
+	} // namespace detail
 
-		template <typename T>
-		using range_value_t                  = typename boost::range_value<T>::type;
+	template <typename T>
+	using range_iterator_t               = typename boost::range_iterator<T>::type;
 
-		template <typename T>
-		using range_reference_t              = typename boost::range_reference<T>::type;
+	template <typename T>
+	using range_const_iterator_t         = typename boost::range_iterator<const T>::type;
 
-		template <typename T>
-		using range_const_reference_t        = typename detail::range_const_reference_impl<T>::type;
+	template <typename T>
+	using range_value_t                  = typename boost::range_value<T>::type;
 
-		template <typename T>
-		using range_pointer_t                = typename boost::range_pointer<T>::type;
+	template <typename T>
+	using range_reference_t              = typename boost::range_reference<T>::type;
 
-		template <typename T>
-		using range_category_t               = typename boost::range_category<T>::type;
+	template <typename T>
+	using range_const_reference_t        = typename detail::range_const_reference_impl<T>::type;
 
-		template <typename T>
-		using range_difference_t             = typename boost::range_difference<T>::type;
+	template <typename T>
+	using range_pointer_t                = typename boost::range_pointer<T>::type;
 
-		template <typename T>
-		using range_reverse_iterator_t       = typename boost::range_reverse_iterator<T>::type;
+	template <typename T>
+	using range_category_t               = typename boost::range_category<T>::type;
 
-		template <typename T>
-		using range_reverse_const_iterator_t = typename boost::range_reverse_iterator<const T>::type;
+	template <typename T>
+	using range_difference_t             = typename boost::range_difference<T>::type;
 
-		template <typename T>
-		using has_range_iterator_t           = typename boost::has_range_iterator<T>::type;
+	template <typename T>
+	using range_reverse_iterator_t       = typename boost::range_reverse_iterator<T>::type;
 
-		template <typename T>
-		using has_range_const_iterator_t     = typename boost::has_range_const_iterator<T>::type;
+	template <typename T>
+	using range_reverse_const_iterator_t = typename boost::range_reverse_iterator<const T>::type;
 
-	} // namespace common
-} // namespace cath
+	template <typename T>
+	using has_range_iterator_t           = typename boost::has_range_iterator<T>::type;
+
+	template <typename T>
+	using has_range_const_iterator_t     = typename boost::has_range_const_iterator<T>::type;
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_RANGE_CONCEPT_TYPE_ALIASES_HPP

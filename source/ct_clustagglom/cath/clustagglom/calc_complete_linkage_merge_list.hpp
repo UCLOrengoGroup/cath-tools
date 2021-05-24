@@ -24,28 +24,28 @@
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace clust { class links; } }
+// clang-format off
+namespace cath::clust { class links; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		merge_vec calc_complete_linkage_merge_list(links,
-		                                           const size_vec &,
-		                                           const strength & = std::numeric_limits<strength>::infinity() );
+	merge_vec calc_complete_linkage_merge_list(links,
+	                                           const size_vec &,
+	                                           const strength & = std::numeric_limits<strength>::infinity() );
 
-		merge_vec calc_complete_linkage_merge_list(links,
-		                                           const size_t &,
-		                                           const strength & = std::numeric_limits<strength>::infinity() );
+	merge_vec calc_complete_linkage_merge_list(links,
+	                                           const size_t &,
+	                                           const strength & = std::numeric_limits<strength>::infinity() );
 
-		merge_vec calc_complete_linkage_merge_list(const item_item_strength_tpl_vec &,
-		                                           const size_vec &,
-		                                           const strength & = std::numeric_limits<strength>::infinity() );
+	merge_vec calc_complete_linkage_merge_list(const item_item_strength_tpl_vec &,
+	                                           const size_vec &,
+	                                           const strength & = std::numeric_limits<strength>::infinity() );
 
-		merge_vec calc_complete_linkage_merge_list(const item_item_strength_tpl_vec &,
-		                                           const size_t &,
-		                                           const strength & = std::numeric_limits<strength>::infinity() );
+	merge_vec calc_complete_linkage_merge_list(const item_item_strength_tpl_vec &,
+	                                           const size_t &,
+	                                           const strength & = std::numeric_limits<strength>::infinity() );
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_CALC_COMPLETE_LINKAGE_MERGE_LIST_HPP

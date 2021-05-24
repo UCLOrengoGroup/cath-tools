@@ -29,41 +29,38 @@
 #include "cath/test/predicate/bootstrap_mode.hpp"
 #include "cath/test/predicate/istreams_equal.hpp"
 
-namespace cath {
-	namespace test {
+namespace cath::test {
+
+	/// \brief TODOCUMENT
+	///
+	/// Note that the operator() will empty the string
+	class string_matches_file final {
+	  private:
+		/// \brief When to bootstrap the test file (ie replace it with the "got" content if mismatching)
+		bootstrap_mode bootstrapping = DEFAULT_BOOTSTRAPPING;
 
 		/// \brief TODOCUMENT
-		///
-		/// Note that the operator() will empty the string
-		class string_matches_file final {
-		private:
-			/// \brief When to bootstrap the test file (ie replace it with the "got" content if mismatching)
-			bootstrap_mode bootstrapping   = DEFAULT_BOOTSTRAPPING;
+		str_size_type diff_half_width = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 
-			/// \brief TODOCUMENT
-			str_size_type  diff_half_width = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
+		/// \brief Default value for when to bootstrap the test file (ie replace it with the "got" content if mismatching)
+		static constexpr bootstrap_mode DEFAULT_BOOTSTRAPPING = bootstrap_mode::IF_ENV;
 
+	  public:
+		/// \brief TODOCUMENT
+		static constexpr str_size_type DEFAULT_DIFF_HALF_WIDTH = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 
-			/// \brief Default value for when to bootstrap the test file (ie replace it with the "got" content if mismatching)
-			static constexpr bootstrap_mode DEFAULT_BOOTSTRAPPING = bootstrap_mode::IF_ENV;
+		string_matches_file() noexcept = default;
+		explicit string_matches_file( const bootstrap_mode &, const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH );
+		explicit string_matches_file( const str_size_type & );
+		boost::test_tools::predicate_result operator()( const std::string &, const ::std::filesystem::path & ) const;
+	};
 
-		public:
-			/// \brief TODOCUMENT
-			static constexpr str_size_type  DEFAULT_DIFF_HALF_WIDTH                  = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
+} // namespace cath::test
 
-			string_matches_file() noexcept = default;
-			explicit string_matches_file(const bootstrap_mode &,
-			                             const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
-			explicit string_matches_file(const str_size_type &);
-			boost::test_tools::predicate_result operator()(const std::string &,
-			                                               const ::std::filesystem::path &) const;
-		};
-
-	} // namespace test
-} // namespace cath
-
+// clang-format off
 #define BOOST_WARN_STRING_MATCHES_FILE(    F1, S1 ) BOOST_WARN   ( ( cath::test::string_matches_file( ) ( ( (F1) ), ( (S1) ) ) ) )
 #define BOOST_CHECK_STRING_MATCHES_FILE(   F1, S1 ) BOOST_CHECK  ( ( cath::test::string_matches_file( ) ( ( (F1) ), ( (S1) ) ) ) )
 #define BOOST_REQUIRE_STRING_MATCHES_FILE( F1, S1 ) BOOST_REQUIRE( ( cath::test::string_matches_file( ) ( ( (F1) ), ( (S1) ) ) ) )
+// clang-format on
 
 #endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_STRING_MATCHES_FILE_HPP

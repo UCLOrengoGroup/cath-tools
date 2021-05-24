@@ -23,39 +23,35 @@
 
 #include "cath/scan/detail/check_scan/test_only/quad_criteria_result.hpp"
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan::detail {
 
-			/// \brief TODOCUMENT
-			class quad_and_rep_criteria_result final {
-			private:
-				/// \brief TODOCUMENT
-				quad_criteria_result rep_status;
+	/// \brief TODOCUMENT
+	class quad_and_rep_criteria_result final {
+	private:
+		/// \brief TODOCUMENT
+		quad_criteria_result rep_status;
 
-				/// \brief TODOCUMENT
-				quad_criteria_result quad_status;
+		/// \brief TODOCUMENT
+		quad_criteria_result quad_status;
 
-				void sanity_check() const;
+		void sanity_check() const;
 
-			public:
-				quad_and_rep_criteria_result(const quad_criteria_result &,
-				                             const quad_criteria_result &);
-				[[nodiscard]] const quad_criteria_result &get_rep_status() const;
-				[[nodiscard]] const quad_criteria_result &get_quad_status() const;
-			};
+	public:
+		quad_and_rep_criteria_result(const quad_criteria_result &,
+		                             const quad_criteria_result &);
+		[[nodiscard]] const quad_criteria_result &get_rep_status() const;
+		[[nodiscard]] const quad_criteria_result &get_quad_status() const;
+	};
 
-			std::string to_string(const quad_and_rep_criteria_result &);
-			std::ostream & operator<<(std::ostream &,
-			                          const quad_and_rep_criteria_result &);
+	std::string to_string(const quad_and_rep_criteria_result &);
+	std::ostream & operator<<(std::ostream &,
+	                          const quad_and_rep_criteria_result &);
 
-			bool operator<(const quad_and_rep_criteria_result &,
-			               const quad_and_rep_criteria_result &);
+	bool operator<(const quad_and_rep_criteria_result &,
+	               const quad_and_rep_criteria_result &);
 
-			bool fully_passes(const quad_and_rep_criteria_result &);
+	bool fully_passes(const quad_and_rep_criteria_result &);
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_CHECK_SCAN_TEST_ONLY_QUAD_AND_REP_CRITERIA_RESULT_HPP

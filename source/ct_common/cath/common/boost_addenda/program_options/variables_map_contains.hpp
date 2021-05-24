@@ -23,17 +23,15 @@
 
 #include <boost/program_options.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return whether the specified key is in the specified variables_map
-		inline bool contains(const boost::program_options::variables_map &prm_vm, ///< The variables_map to query
-		                     const std::string                           &prm_key ///< The key to search for
-		                     ) {
-			return ( prm_vm.count( prm_key ) > 0 );
-		}
+	/// \brief Return whether the specified key is in the specified variables_map
+	inline bool contains(const boost::program_options::variables_map &prm_vm, ///< The variables_map to query
+	                     const std::string                           &prm_key ///< The key to search for
+	                     ) {
+		return ( prm_vm.count( prm_key ) > 0 );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_PROGRAM_OPTIONS_VARIABLES_MAP_CONTAINS_HPP

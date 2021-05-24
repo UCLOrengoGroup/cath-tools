@@ -29,57 +29,57 @@
 #include <memory>
 #include <utility>
 
-namespace cath { namespace file { class pdb_list; } }
-namespace cath { namespace file { class strucs_context; } }
-namespace cath { namespace opts { class cath_refine_align_options; } }
-namespace cath { namespace opts { class cath_score_align_options; } }
-namespace cath { namespace opts { class cath_superpose_options; } }
-namespace cath { namespace opts { class pdb_input_options_block; } }
-namespace cath { namespace opts { class pdb_input_spec; } }
+// clang-format off
+namespace cath::file { class pdb_list; }
+namespace cath::file { class strucs_context; }
+namespace cath::opts { class cath_refine_align_options; }
+namespace cath::opts { class cath_score_align_options; }
+namespace cath::opts { class cath_superpose_options; }
+namespace cath::opts { class pdb_input_options_block; }
+namespace cath::opts { class pdb_input_spec; }
+// clang-format on
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
+
+	/// \brief TODOCUMENT
+	class pdbs_acquirer {
+	  private:
+		/// \brief Pure virtual method with which each concrete pdbs_acquirer must define how to create a clone of itself
+		[[nodiscard]] virtual std::unique_ptr<pdbs_acquirer> do_clone() const = 0;
 
 		/// \brief TODOCUMENT
-		class pdbs_acquirer {
-		  private:
-			/// \brief Pure virtual method with which each concrete pdbs_acquirer must define how to create a clone of itself
-			[[nodiscard]] virtual std::unique_ptr<pdbs_acquirer> do_clone() const = 0;
+		virtual file::pdb_list_name_set_list_pair do_get_pdbs_and_names( std::istream & ) const = 0;
 
-			/// \brief TODOCUMENT
-			virtual file::pdb_list_name_set_list_pair do_get_pdbs_and_names( std::istream & ) const = 0;
+	  public:
+		pdbs_acquirer() = default;
+		[[nodiscard]] std::unique_ptr<pdbs_acquirer> clone() const;
+		virtual ~pdbs_acquirer() noexcept = default;
 
-		  public:
-			pdbs_acquirer() = default;
-			[[nodiscard]] std::unique_ptr<pdbs_acquirer> clone() const;
-			virtual ~pdbs_acquirer() noexcept = default;
+		pdbs_acquirer(const pdbs_acquirer &) = default;
+		pdbs_acquirer(pdbs_acquirer &&) noexcept = default;
+		pdbs_acquirer & operator=(const pdbs_acquirer &) = default;
+		pdbs_acquirer & operator=(pdbs_acquirer &&) noexcept = default;
 
-			pdbs_acquirer(const pdbs_acquirer &) = default;
-			pdbs_acquirer(pdbs_acquirer &&) noexcept = default;
-			pdbs_acquirer & operator=(const pdbs_acquirer &) = default;
-			pdbs_acquirer & operator=(pdbs_acquirer &&) noexcept = default;
+		file::pdb_list_name_set_list_pair get_pdbs_and_names(std::istream &,
+		                                                     const bool &) const;
+	};
 
-			file::pdb_list_name_set_list_pair get_pdbs_and_names(std::istream &,
-			                                                     const bool &) const;
-		};
+	uptr_vec<pdbs_acquirer> get_pdbs_acquirers(const pdb_input_spec &);
+	uptr_vec<pdbs_acquirer> get_pdbs_acquirers(const pdb_input_options_block &);
 
-		uptr_vec<pdbs_acquirer> get_pdbs_acquirers(const pdb_input_spec &);
-		uptr_vec<pdbs_acquirer> get_pdbs_acquirers(const pdb_input_options_block &);
+	std::unique_ptr<pdbs_acquirer> get_pdbs_acquirer(const pdb_input_spec &);
 
-		std::unique_ptr<pdbs_acquirer> get_pdbs_acquirer(const pdb_input_spec &);
+	file::strucs_context combine_acquired_pdbs_and_names_with_ids_and_domains( file::pdb_list,
+	                                                                           file::name_set_list,
+	                                                                           str_vec,
+	                                                                           const chop::domain_vec & );
 
-		file::strucs_context combine_acquired_pdbs_and_names_with_ids_and_domains( file::pdb_list,
-		                                                                           file::name_set_list,
-		                                                                           str_vec,
-		                                                                           const chop::domain_vec & );
+	file::strucs_context get_strucs_context(const pdbs_acquirer &,
+	                                        std::istream &,
+	                                        const bool &,
+	                                        const str_vec & = str_vec{},
+	                                        const chop::domain_vec & = chop::domain_vec{});
 
-		file::strucs_context get_strucs_context(const pdbs_acquirer &,
-		                                        std::istream &,
-		                                        const bool &,
-		                                        const str_vec & = str_vec{},
-		                                        const chop::domain_vec & = chop::domain_vec{});
-
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_HPP

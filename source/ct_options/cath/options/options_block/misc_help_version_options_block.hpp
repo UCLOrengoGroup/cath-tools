@@ -25,65 +25,63 @@
 
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief A standard options block for the miscellaneous help/version information to be used in most programs
-		///
-		/// Note: I previously made this class generate the strings as part of its do_invalid_string()
-		///       behaviour (which required altering all block_options classes to take an options_description argument
-		///       to do_invalid_string() and storing all necessary extra information (help_message_prefix, help_message_suffix,
-		///       program_name and version_program_description).
-		///       I wasn't fond of the result, in large part because the help/version messages ended up getting appended with:
-		///       > Try 'cath-superpose --help' for usage information.
-		///       or similar.
-		class misc_help_version_options_block final : public options_block {
-		private:
-			using super = options_block;
+	/// \brief A standard options block for the miscellaneous help/version information to be used in most programs
+	///
+	/// Note: I previously made this class generate the strings as part of its do_invalid_string()
+	///       behaviour (which required altering all block_options classes to take an options_description argument
+	///       to do_invalid_string() and storing all necessary extra information (help_message_prefix, help_message_suffix,
+	///       program_name and version_program_description).
+	///       I wasn't fond of the result, in large part because the help/version messages ended up getting appended with:
+	///       > Try 'cath-superpose --help' for usage information.
+	///       or similar.
+	class misc_help_version_options_block final : public options_block {
+	private:
+		using super = options_block;
 
-			/// \brief Whether hidden_help has been requested
-			bool hidden_help = false;
+		/// \brief Whether hidden_help has been requested
+		bool hidden_help = false;
 
-			/// \brief Whether help has been requested
-			bool help        = false;
+		/// \brief Whether help has been requested
+		bool help        = false;
 
-			/// \brief Whether version information has been requested
-			bool version     = false;
+		/// \brief Whether version information has been requested
+		bool version     = false;
 
-			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
-			[[nodiscard]] std::string                    do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			void do_add_hidden_options_to_description(boost::program_options::options_description &,
-			                                          const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+		[[nodiscard]] std::string                    do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		void do_add_hidden_options_to_description(boost::program_options::options_description &,
+		                                          const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-		  public:
-			[[nodiscard]] const bool &get_hidden_help() const;
-			[[nodiscard]] const bool &get_help() const;
-			[[nodiscard]] const bool &get_version() const;
+	  public:
+		[[nodiscard]] const bool &get_hidden_help() const;
+		[[nodiscard]] const bool &get_help() const;
+		[[nodiscard]] const bool &get_version() const;
 
-			static std::string get_help_string(const boost::program_options::options_description &,
-			                                   const std::string &,
-			                                   const std::string &);
-			static std::string get_version_string(const std::string &,
-			                                      const std::string &);
+		static std::string get_help_string(const boost::program_options::options_description &,
+		                                   const std::string &,
+		                                   const std::string &);
+		static std::string get_version_string(const std::string &,
+		                                      const std::string &);
 
-			static constexpr char PO_CHAR_HELP    = 'h';
-			static constexpr char PO_CHAR_VERSION = 'v';
+		static constexpr char PO_CHAR_HELP    = 'h';
+		static constexpr char PO_CHAR_VERSION = 'v';
 
-			/// \brief The option name for the hidden help option
-			static constexpr ::std::string_view PO_HIDDEN_HELP{ "hidden-help" };
+		/// \brief The option name for the hidden help option
+		static constexpr ::std::string_view PO_HIDDEN_HELP{ "hidden-help" };
 
-			/// \brief The option name for the help option
-			static constexpr ::std::string_view PO_HELP{ "help" };
+		/// \brief The option name for the help option
+		static constexpr ::std::string_view PO_HELP{ "help" };
 
-			/// \brief The option name for the version option
-			static constexpr ::std::string_view PO_VERSION{ "version" };
-		};
+		/// \brief The option name for the version option
+		static constexpr ::std::string_view PO_VERSION{ "version" };
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_MISC_HELP_VERSION_OPTIONS_BLOCK_HPP

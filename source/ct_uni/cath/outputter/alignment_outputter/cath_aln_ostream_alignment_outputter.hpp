@@ -23,19 +23,17 @@
 
 #include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief TODOCUMENT
-		class cath_aln_ostream_alignment_outputter final : public alignment_outputter {
-		  private:
-			[[nodiscard]] std::unique_ptr<alignment_outputter> do_clone() const final;
-			void               do_output_alignment( const align::alignment_context &, std::ostream & ) const final;
-			[[nodiscard]] bool do_involves_display_spec() const final;
-			[[nodiscard]] std::string do_get_name() const final;
-		};
+	/// \brief TODOCUMENT
+	class cath_aln_ostream_alignment_outputter final : public alignment_outputter {
+	  private:
+		[[nodiscard]] std::unique_ptr<alignment_outputter> do_clone() const final;
+		void               do_output_alignment( const align::alignment_context &, std::ostream & ) const final;
+		[[nodiscard]] bool do_involves_display_spec() const final;
+		[[nodiscard]] std::string do_get_name() const final;
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_ALIGNMENT_OUTPUTTER_CATH_ALN_OSTREAM_ALIGNMENT_OUTPUTTER_HPP

@@ -26,17 +26,15 @@
 
 #include "cath/common/boost_addenda/range/indices.hpp"
 
-namespace cath {
-	namespace common{
+namespace cath::common {
 
-		/// \brief Return an integer_range between zero and the specified value
-		template <typename T>
-		::boost::integer_range<T> indices(const T &prm_n ///< The (one-past-the) end value
-		                                  ) {
-			return ::boost::irange( static_cast<T>( 0 ), prm_n );
-		}
+	/// \brief Return an integer_range between zero and the specified value
+	template <typename T>
+	::boost::integer_range<T> indices(const T &prm_n ///< The (one-past-the) end value
+	                                  ) {
+		return ::boost::irange( static_cast<T>( 0 ), prm_n );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_INDICES_HPP

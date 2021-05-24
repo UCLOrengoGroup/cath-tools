@@ -23,20 +23,18 @@
 
 #include <regex>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return the number of matches to the specified regex in the specified string
-		///
-		/// \param prm_string The string to search
-		/// \param prm_regex  The regex to count matches for
-		inline size_t regex_count( const std::string &prm_string, const std::regex &prm_regex ) {
-			return static_cast<size_t>(
-			  std::distance( std::sregex_iterator{ ::std::cbegin( prm_string ), ::std::cend( prm_string ), prm_regex },
-			                 std::sregex_iterator{} ) );
-		}
+	/// \brief Return the number of matches to the specified regex in the specified string
+	///
+	/// \param prm_string The string to search
+	/// \param prm_regex  The regex to count matches for
+	inline size_t regex_count( const std::string &prm_string, const std::regex &prm_regex ) {
+		return static_cast<size_t>(
+		  std::distance( std::sregex_iterator{ ::std::cbegin( prm_string ), ::std::cend( prm_string ), prm_regex },
+		                 std::sregex_iterator{} ) );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_REGEX_REGEX_COUNT_HPP

@@ -31,38 +31,34 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/protein/protein_list.hpp"
 
-namespace cath {
-	namespace align {
-		class alignment;
-		class residue_scorer;
-	} // namespace align
-	class protein_list;
-} // namespace cath
+// clang-format off
+namespace cath { class protein_list; }
+namespace cath::align { class alignment; }
+namespace cath::align { class residue_scorer; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief A class with a public static method to construct an alignment by just pairing up residues with the same name
-		///
-		/// \todo Extend this code to work with more than two residue lists.
-		///       Look at residue_name_aligner_test.cpp for relevant notes.
-		class residue_name_aligner final {
-		private:
-			residue_name_aligner() = delete;
+	/// \brief A class with a public static method to construct an alignment by just pairing up residues with the same name
+	///
+	/// \todo Extend this code to work with more than two residue lists.
+	///       Look at residue_name_aligner_test.cpp for relevant notes.
+	class residue_name_aligner final {
+	private:
+		residue_name_aligner() = delete;
 
-		public:
-			static alignment residue_name_align(const residue_name_vec_vec &);
-		};
+	public:
+		static alignment residue_name_align(const residue_name_vec_vec &);
+	};
 
-		alignment residue_name_align_and_residue_score(const residue_name_vec_vec &,
-		                                               const residue_scorer &,
-		                                               const protein_list &);
+	alignment residue_name_align_and_residue_score(const residue_name_vec_vec &,
+	                                               const residue_scorer &,
+	                                               const protein_list &);
 
-		alignment residue_name_align_and_residue_score_if_multi(const residue_name_vec_vec &,
-		                                                        const residue_scorer &,
-		                                                        const protein_list &);
+	alignment residue_name_align_and_residue_score_if_multi(const residue_name_vec_vec &,
+	                                                        const residue_scorer &,
+	                                                        const protein_list &);
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_RESIDUE_NAME_ALIGN_RESIDUE_NAME_ALIGNER_HPP

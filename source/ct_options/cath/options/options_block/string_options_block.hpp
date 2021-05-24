@@ -25,34 +25,32 @@
 
 #include <string>
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief No-options options block that can be used to bung a string into the options usage text
-		///
-		/// The slight annoyance is that a ':' will be automatically appended to the string
-		class string_options_block final : public options_block {
-		private:
-			/// \brief A useful type alias for the parent class
-			using super = options_block;
+	/// \brief No-options options block that can be used to bung a string into the options usage text
+	///
+	/// The slight annoyance is that a ':' will be automatically appended to the string
+	class string_options_block final : public options_block {
+	private:
+		/// \brief A useful type alias for the parent class
+		using super = options_block;
 
-			/// \brief The string to insert into the options usage
-			std::string the_string;
+		/// \brief The string to insert into the options usage
+		std::string the_string;
 
-			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
-			[[nodiscard]] std::string                    do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+		[[nodiscard]] std::string                    do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-		  public:
-			explicit string_options_block(std::string);
+	  public:
+		explicit string_options_block(std::string);
 
-			[[nodiscard]] const std::string &get_string() const;
-		};
+		[[nodiscard]] const std::string &get_string() const;
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_STRING_OPTIONS_BLOCK_HPP

@@ -23,8 +23,7 @@
 
 #include <cstddef>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
 	/// \brief Simple constexpr min() function as workaround for GCC's min() not yet being constexpr
 	///
@@ -52,9 +51,6 @@ namespace cath {
 		return ( prm_lhs < prm_rhs ) ? prm_rhs : prm_lhs;
 	}
 
-} // namespace common
-
-
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP14_CONSTEXPR_MIN_MAX_HPP

@@ -23,20 +23,19 @@
 
 #include "cath/common/clone/detail/make_clone.hpp"
 
-namespace cath { namespace score { class protein_only_length_getter; } }
-namespace cath { namespace score { class sym_protein_only_length_getter; } }
+// clang-format off
+namespace cath::score { class protein_only_length_getter; }
+namespace cath::score { class sym_protein_only_length_getter; }
+// clang-format on
 
-namespace cath {
-	namespace common {
-		namespace detail {
-			
-			template <>
-			std::unique_ptr<score::protein_only_length_getter> make_clone(const score::protein_only_length_getter &);
+namespace cath::common::detail {
 
-			template <>
-			std::unique_ptr<score::sym_protein_only_length_getter> make_clone(const score::sym_protein_only_length_getter &);
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+	template <>
+	std::unique_ptr<score::protein_only_length_getter> make_clone( const score::protein_only_length_getter & );
+
+	template <>
+	std::unique_ptr<score::sym_protein_only_length_getter> make_clone( const score::sym_protein_only_length_getter & );
+
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_MAKE_CLONE_HPP

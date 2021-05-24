@@ -24,38 +24,35 @@
 #include "cath/resolve_hits/calc_hit.hpp"
 #include "cath/resolve_hits/calc_hit_list.hpp"
 
-namespace cath {
-	namespace rslv {
-		namespace detail {
+namespace cath::rslv::detail {
 
-			/// \brief Index the discontiguous hits in a calc_hit_list, ordering them by their starts
-			///
-			/// Calculating this once at the start a resolve() enables much faster calculation
-			/// of the discontiguous domains that right-intersperse a set of domains in a mask.
-			class discont_hits_index_by_start final {
-			private:
-				/// \brief A reference to the calc_hit_list this is indexing
-				std::reference_wrapper<const calc_hit_list> the_hits;
+	/// \brief Index the discontiguous hits in a calc_hit_list, ordering them by their starts
+	///
+	/// Calculating this once at the start a resolve() enables much faster calculation
+	/// of the discontiguous domains that right-intersperse a set of domains in a mask.
+	class discont_hits_index_by_start final {
+	  private:
+		/// \brief A reference to the calc_hit_list this is indexing
+		std::reference_wrapper<const calc_hit_list> the_hits;
 
-				/// \brief A list of the start's of the discontiguous hits and their indices in the calc_hit_list,
-				///        sorted by their starts
-				res_arr_idx_pair_vec disconts;
+		/// \brief A list of the start's of the discontiguous hits and their indices in the calc_hit_list,
+		///        sorted by their starts
+		res_arr_idx_pair_vec disconts;
 
-				static res_arr_idx_pair_vec calc_disconts(const calc_hit_list &);
+		static res_arr_idx_pair_vec calc_disconts( const calc_hit_list & );
 
-			public:
-				explicit discont_hits_index_by_start(const calc_hit_list &);
+	  public:
+		explicit discont_hits_index_by_start( const calc_hit_list & );
 
-				[[nodiscard]] boost::integer_range<size_t> get_index_indices_of_disconts_in_range( const seq::seq_arrow &,
-				                                                                                   const seq::seq_arrow & ) const;
+		[[nodiscard]] boost::integer_range<size_t> get_index_indices_of_disconts_in_range( const seq::seq_arrow &,
+		                                                                                   const seq::seq_arrow & ) const;
 
-				[[nodiscard]] size_t          size() const;
-				[[nodiscard]] const calc_hit &get_discont_hit_of_index_index( const size_t & ) const;
-			};
+		[[nodiscard]] size_t          size() const;
+		[[nodiscard]] const calc_hit &get_discont_hit_of_index_index( const size_t & ) const;
+	};
 
-			std::string to_string(const discont_hits_index_by_start &);
-		} // namespace detail
-	} // namespace rslv
-} // namespace cath
+	std::string to_string( const discont_hits_index_by_start & );
+
+} // namespace cath::rslv::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_ALGO_DISCONT_HITS_INDEX_BY_START_HPP

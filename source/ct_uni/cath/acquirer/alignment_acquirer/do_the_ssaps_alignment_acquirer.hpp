@@ -27,9 +27,11 @@
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 #include "cath/common/path_type_aliases.hpp"
 
-namespace cath { namespace align { class alignment; } }
+// clang-format off
+namespace cath::align { class alignment; }
+// clang-format on
 
-namespace cath { namespace align {
+namespace cath::align {
 
 	/// \brief Acquire the alignment by performing any necessary cath-ssaps in
 	///        a temp directory and then using ssap_scores_file_alignment_acquirer
@@ -55,7 +57,6 @@ namespace cath { namespace align {
 		static ::std::filesystem::path make_temp_dir_for_doing_ssaps(const file::strucs_context &);
 	};
 
-} // namespace align
- } // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_DO_THE_SSAPS_ALIGNMENT_ACQUIRER_HPP

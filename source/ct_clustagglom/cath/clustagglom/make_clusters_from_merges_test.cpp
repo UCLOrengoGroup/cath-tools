@@ -32,17 +32,13 @@
 #include "cath/common/file/temp_file.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
-using namespace ::cath::test;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The make_clusters_from_merges_test_suite_fixture to assist in testing make_clusters_from_merges
 		struct make_clusters_from_merges_test_suite_fixture : protected clustagglom_fixture {
@@ -81,8 +77,7 @@ namespace cath {
 				BOOST_CHECK_FILES_EQUAL( temp_clusters_file, prm_expected_file );
 			}
 		};
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(make_clusters_from_merges_test_suite, make_clusters_from_merges_test_suite_fixture)
 

@@ -25,29 +25,27 @@
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return a non-const reference to the first element of a range
-		///
-		/// This is a non-member function for ranges that don't provide their own front method.
-		/// This is useful for non-member ranges
-		template <typename T>
-		inline range_reference_t<T> front(T &prm_range ///< The range to query
-		                                  ) {
-			return * std::begin( prm_range );
-		}
+	/// \brief Return a non-const reference to the first element of a range
+	///
+	/// This is a non-member function for ranges that don't provide their own front method.
+	/// This is useful for non-member ranges
+	template <typename T>
+	inline range_reference_t<T> front(T &prm_range ///< The range to query
+	                                  ) {
+		return * std::begin( prm_range );
+	}
 
-		/// \brief Return a const reference to the first element of a range
-		///
-		/// \copydetails front()
-		template <typename T>
-		inline range_const_reference_t<T> front(const T &prm_range ///< The range to query
-		                                        ) {
-			return * ::std::cbegin( prm_range );
-		}
+	/// \brief Return a const reference to the first element of a range
+	///
+	/// \copydetails front()
+	template <typename T>
+	inline range_const_reference_t<T> front(const T &prm_range ///< The range to query
+	                                        ) {
+		return * ::std::cbegin( prm_range );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_FRONT_HPP

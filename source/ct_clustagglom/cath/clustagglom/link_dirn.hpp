@@ -27,50 +27,48 @@
 #include "cath/common/cpp20/make_array.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief Whether the link between items/clusters is a measure of dissimilarity or strength (ie similarity)
-		enum class link_dirn : bool {
-			DISSIMILARITY, ///< The link is a measure of dissimilarity
-			STRENGTH,      ///< The link is a measure of strength (ie similarity)
+	/// \brief Whether the link between items/clusters is a measure of dissimilarity or strength (ie similarity)
+	enum class link_dirn : bool {
+		DISSIMILARITY, ///< The link is a measure of dissimilarity
+		STRENGTH,      ///< The link is a measure of strength (ie similarity)
+	};
+
+	/// \brief A constexpr list of all link_dirns
+	static constexpr auto all_link_dirns = common::make_array(
+		link_dirn::DISSIMILARITY,
+		link_dirn::STRENGTH
+	);
+
+	// Compile-time check that there aren't any duplicates in all_link_dirns
+	static_assert( common::constexpr_is_uniq( all_link_dirns ), "all_link_dirns shouldn't contain repeated values" );
+
+	/// \brief Store a constexpr record of the number of link_dirns
+	inline constexpr size_t num_link_dirns = std::tuple_size_v< decltype( all_link_dirns ) >;
+
+	namespace detail {
+
+		/// \brief Class with static getter for a map from name to link_dirn
+		struct link_dirn_by_name final {
+			static std::map<std::string, link_dirn> get();
 		};
 
-		/// \brief A constexpr list of all link_dirns
-		static constexpr auto all_link_dirns = common::make_array(
-			link_dirn::DISSIMILARITY,
-			link_dirn::STRENGTH
-		);
+	} // namespace detail
 
-		// Compile-time check that there aren't any duplicates in all_link_dirns
-		static_assert( common::constexpr_is_uniq( all_link_dirns ), "all_link_dirns shouldn't contain repeated values" );
+	std::string to_string(const link_dirn &);
 
-		/// \brief Store a constexpr record of the number of link_dirns
-		inline constexpr size_t num_link_dirns = std::tuple_size_v< decltype( all_link_dirns ) >;
+	std::istream & operator>>(std::istream &,
+	                          link_dirn &);
 
-		namespace detail {
+	std::string description_of_link_dirn(const link_dirn &);
 
-			/// \brief Class with static getter for a map from name to link_dirn
-			struct link_dirn_by_name final {
-				static std::map<std::string, link_dirn> get();
-			};
+	void validate(boost::any &,
+	              const str_vec &,
+	              link_dirn *,
+	              int);
 
-		} // namespace detail
-
-		std::string to_string(const link_dirn &);
-
-		std::istream & operator>>(std::istream &,
-		                          link_dirn &);
-
-		std::string description_of_link_dirn(const link_dirn &);
-
-		void validate(boost::any &,
-		              const str_vec &,
-		              link_dirn *,
-		              int);
-
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_LINK_DIRN_HPP

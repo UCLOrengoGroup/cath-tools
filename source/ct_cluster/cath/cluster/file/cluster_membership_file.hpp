@@ -29,73 +29,73 @@
 #include "cath/cluster/new_cluster_data.hpp" // Required for the deleted function definitions
 #include "cath/cluster/old_cluster_data.hpp" // Required for the deleted function definitions
 
-namespace cath { namespace common { class id_of_str_bidirnl; } }
+// clang-format off
+namespace cath::common { class id_of_str_bidirnl; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		old_cluster_data parse_old_membership(std::istream &,
-		                                      common::id_of_str_bidirnl &,
-		                                      const ostream_ref_opt & = ::std::nullopt);
+	old_cluster_data parse_old_membership(std::istream &,
+	                                      common::id_of_str_bidirnl &,
+	                                      const ostream_ref_opt & = ::std::nullopt);
 
-		/// \brief Prevent calling with an rvalue id_of_str_bidirnl
-		old_cluster_data parse_old_membership(std::istream &,
-		                                      const common::id_of_str_bidirnl &&,
-		                                      const ostream_ref_opt & = ::std::nullopt) = delete;
-
-
-		old_cluster_data parse_old_membership(const std::string &,
-		                                      common::id_of_str_bidirnl &,
-		                                      const ostream_ref_opt & = ::std::nullopt);
-
-		/// \brief Prevent calling with an rvalue id_of_str_bidirnl
-		old_cluster_data parse_old_membership(const std::string &,
-		                                      const common::id_of_str_bidirnl &&,
-		                                      const ostream_ref_opt & = ::std::nullopt) = delete;
+	/// \brief Prevent calling with an rvalue id_of_str_bidirnl
+	old_cluster_data parse_old_membership(std::istream &,
+	                                      const common::id_of_str_bidirnl &&,
+	                                      const ostream_ref_opt & = ::std::nullopt) = delete;
 
 
-		old_cluster_data parse_old_membership(const ::std::filesystem::path &,
-		                                      common::id_of_str_bidirnl &,
-		                                      const ostream_ref_opt & = ::std::nullopt);
+	old_cluster_data parse_old_membership(const std::string &,
+	                                      common::id_of_str_bidirnl &,
+	                                      const ostream_ref_opt & = ::std::nullopt);
 
-		/// \brief Prevent calling with an rvalue id_of_str_bidirnl
-		old_cluster_data parse_old_membership(const ::std::filesystem::path &,
-		                                      const common::id_of_str_bidirnl &&,
-		                                      const ostream_ref_opt & = ::std::nullopt) = delete;
-
-
+	/// \brief Prevent calling with an rvalue id_of_str_bidirnl
+	old_cluster_data parse_old_membership(const std::string &,
+	                                      const common::id_of_str_bidirnl &&,
+	                                      const ostream_ref_opt & = ::std::nullopt) = delete;
 
 
-		new_cluster_data parse_new_membership(std::istream &,
-		                                      common::id_of_str_bidirnl &,
-		                                      const ostream_ref_opt & = ::std::nullopt);
+	old_cluster_data parse_old_membership(const ::std::filesystem::path &,
+	                                      common::id_of_str_bidirnl &,
+	                                      const ostream_ref_opt & = ::std::nullopt);
 
-		/// \brief Prevent calling with an rvalue id_of_str_bidirnl
-		new_cluster_data parse_new_membership(std::istream &,
-		                                      const common::id_of_str_bidirnl &&,
-		                                      const ostream_ref_opt & = ::std::nullopt) = delete;
-
-
-		new_cluster_data parse_new_membership(const std::string &,
-		                                      common::id_of_str_bidirnl &,
-		                                      const ostream_ref_opt & = ::std::nullopt);
-
-		/// \brief Prevent calling with an rvalue id_of_str_bidirnl
-		new_cluster_data parse_new_membership(const std::string &,
-		                                      const common::id_of_str_bidirnl &&,
-		                                      const ostream_ref_opt & = ::std::nullopt) = delete;
+	/// \brief Prevent calling with an rvalue id_of_str_bidirnl
+	old_cluster_data parse_old_membership(const ::std::filesystem::path &,
+	                                      const common::id_of_str_bidirnl &&,
+	                                      const ostream_ref_opt & = ::std::nullopt) = delete;
 
 
-		new_cluster_data parse_new_membership(const ::std::filesystem::path &,
-		                                      common::id_of_str_bidirnl &,
-		                                      const ostream_ref_opt & = ::std::nullopt);
 
-		/// \brief Prevent calling with an rvalue id_of_str_bidirnl
-		new_cluster_data parse_new_membership(const ::std::filesystem::path &,
-		                                      const common::id_of_str_bidirnl &&,
-		                                      const ostream_ref_opt & = ::std::nullopt) = delete;
 
-	} // namespace clust
-} // namespace cath
+	new_cluster_data parse_new_membership(std::istream &,
+	                                      common::id_of_str_bidirnl &,
+	                                      const ostream_ref_opt & = ::std::nullopt);
+
+	/// \brief Prevent calling with an rvalue id_of_str_bidirnl
+	new_cluster_data parse_new_membership(std::istream &,
+	                                      const common::id_of_str_bidirnl &&,
+	                                      const ostream_ref_opt & = ::std::nullopt) = delete;
+
+
+	new_cluster_data parse_new_membership(const std::string &,
+	                                      common::id_of_str_bidirnl &,
+	                                      const ostream_ref_opt & = ::std::nullopt);
+
+	/// \brief Prevent calling with an rvalue id_of_str_bidirnl
+	new_cluster_data parse_new_membership(const std::string &,
+	                                      const common::id_of_str_bidirnl &&,
+	                                      const ostream_ref_opt & = ::std::nullopt) = delete;
+
+
+	new_cluster_data parse_new_membership(const ::std::filesystem::path &,
+	                                      common::id_of_str_bidirnl &,
+	                                      const ostream_ref_opt & = ::std::nullopt);
+
+	/// \brief Prevent calling with an rvalue id_of_str_bidirnl
+	new_cluster_data parse_new_membership(const ::std::filesystem::path &,
+	                                      const common::id_of_str_bidirnl &&,
+	                                      const ostream_ref_opt & = ::std::nullopt) = delete;
+
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_FILE_CLUSTER_MEMBERSHIP_FILE_HPP

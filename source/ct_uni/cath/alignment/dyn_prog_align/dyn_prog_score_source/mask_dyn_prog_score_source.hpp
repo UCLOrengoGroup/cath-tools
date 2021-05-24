@@ -24,32 +24,32 @@
 #include "cath/alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
 #include "cath/common/container/vector_of_vector.hpp"
 
-namespace cath {
-	namespace align {
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	class mask_dyn_prog_score_source final : public dyn_prog_score_source {
+	private:
+		/// \brief TODOCUMENT
+		const common::bool_vec_of_vec &mask_matrix;
 
 		/// \brief TODOCUMENT
-		class mask_dyn_prog_score_source final : public dyn_prog_score_source {
-		private:
-			/// \brief TODOCUMENT
-			const common::bool_vec_of_vec &mask_matrix;
+		const dyn_prog_score_source &masked_score_source;
 
-			/// \brief TODOCUMENT
-			const dyn_prog_score_source &masked_score_source;
+		[[nodiscard]] size_t     do_get_length_a() const final;
+		[[nodiscard]] size_t     do_get_length_b() const final;
+		[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
 
-			[[nodiscard]] size_t     do_get_length_a() const final;
-			[[nodiscard]] size_t     do_get_length_b() const final;
-			[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
+	  public:
+		mask_dyn_prog_score_source(const common::bool_vec_of_vec &,
+		                           const dyn_prog_score_source &);
+		mask_dyn_prog_score_source(const common::bool_vec_of_vec &&,
+		                           const dyn_prog_score_source &&) = delete;
+		mask_dyn_prog_score_source(const common::bool_vec_of_vec &,
+		                           const dyn_prog_score_source &&) = delete;
+		mask_dyn_prog_score_source(const common::bool_vec_of_vec &&,
+		                           const dyn_prog_score_source &) = delete;
+	};
 
-		  public:
-			mask_dyn_prog_score_source(const common::bool_vec_of_vec &,
-			                           const dyn_prog_score_source &);
-			mask_dyn_prog_score_source(const common::bool_vec_of_vec &&,
-			                           const dyn_prog_score_source &&) = delete;
-			mask_dyn_prog_score_source(const common::bool_vec_of_vec &,
-			                           const dyn_prog_score_source &&) = delete;
-			mask_dyn_prog_score_source(const common::bool_vec_of_vec &&,
-			                           const dyn_prog_score_source &) = delete;
-		};
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_MASK_DYN_PROG_SCORE_SOURCE_HPP

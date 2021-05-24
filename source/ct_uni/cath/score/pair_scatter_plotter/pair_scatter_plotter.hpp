@@ -28,46 +28,44 @@
 #include "cath/common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-
+	/// \brief TODOCUMENT
+	class pair_scatter_plotter final {
+	private:
 		/// \brief TODOCUMENT
-		class pair_scatter_plotter final {
-		private:
-			/// \brief TODOCUMENT
-			bool suppress_execution = false;
+		bool suppress_execution = false;
 
-		public:
+	public:
 
-			template <typename T>
-			void plot(const ::std::filesystem::path &prm_output_file_stem, ///< TODOCUMENT
-			          const std::vector<T>          &prm_data,             ///< TODOCUMENT
-			          const std::string             &prm_x_axis_label,     ///< TODOCUMENT
-			          const std::string             &prm_y_axis_label      ///< TODOCUMENT
-			          ) const {
-				const auto gnuplot_file  = common::replace_extension_copy( prm_output_file_stem, ".gnuplot"  );
-				const auto eps_file      = common::replace_extension_copy( prm_output_file_stem, ".eps"      );
-				const auto the_data_file = common::replace_extension_copy( prm_output_file_stem, ".data.txt" );
+		template <typename T>
+		void plot(const ::std::filesystem::path &prm_output_file_stem, ///< TODOCUMENT
+		          const std::vector<T>          &prm_data,             ///< TODOCUMENT
+		          const std::string             &prm_x_axis_label,     ///< TODOCUMENT
+		          const std::string             &prm_y_axis_label      ///< TODOCUMENT
+		          ) const {
+			const auto gnuplot_file  = common::replace_extension_copy( prm_output_file_stem, ".gnuplot"  );
+			const auto eps_file      = common::replace_extension_copy( prm_output_file_stem, ".eps"      );
+			const auto the_data_file = common::replace_extension_copy( prm_output_file_stem, ".data.txt" );
 
-				const auto gnuplot_pipe = suppress_execution ? std::string( " > /dev/null " )
-				                                             : std::string( " | gnuplot "   );
-				gnuplotio::Gnuplot gp( "tee " + gnuplot_file.string() + gnuplot_pipe ); // Write to an intermediate gnuplot file
+			const auto gnuplot_pipe = suppress_execution ? std::string( " > /dev/null " )
+			                                             : std::string( " | gnuplot "   );
+			gnuplotio::Gnuplot gp( "tee " + gnuplot_file.string() + gnuplot_pipe ); // Write to an intermediate gnuplot file
 
-				gp << "set   terminal postscript eps enhanced color\n";
+			gp << "set   terminal postscript eps enhanced color\n";
 
-			//	{"#023FA5","#7D87B9","#BEC1D4","#D6BCC0","#BB7784","#FFFFFF"},
-			//	{"#4A6FE3","#8595E1","#B5BBE3","#E6AFB9","#E07B91","#D33F6A"},
-			//	{"#11C638","#8DD593","#C6DEC7","#EAD3C6","#F0B98D","#EF9708"},
-			//	{"#0FCFC0","#9CDED6","#D5EAE7","#F3E1EB","#F6C4E1","#F79CD4"}
+		//	{"#023FA5","#7D87B9","#BEC1D4","#D6BCC0","#BB7784","#FFFFFF"},
+		//	{"#4A6FE3","#8595E1","#B5BBE3","#E6AFB9","#E07B91","#D33F6A"},
+		//	{"#11C638","#8DD593","#C6DEC7","#EAD3C6","#F0B98D","#EF9708"},
+		//	{"#0FCFC0","#9CDED6","#D5EAE7","#F3E1EB","#F6C4E1","#F79CD4"}
 
-				gp << "set   output " << eps_file << "\n";
+			gp << "set   output " << eps_file << "\n";
 
-			//	gp << "set title  'Some ROC curves'\n";
-				gp << "set xlabel '" << prm_x_axis_label << R"(' font "Helvetica,20")" << "\n";
-				gp << "set ylabel '" << prm_y_axis_label << R"(' font "Helvetica,20")" << "\n";
+		//	gp << "set title  'Some ROC curves'\n";
+			gp << "set xlabel '" << prm_x_axis_label << R"(' font "Helvetica,20")" << "\n";
+			gp << "set ylabel '" << prm_y_axis_label << R"(' font "Helvetica,20")" << "\n";
 
-				gp << R"(
+			gp << R"(
 set size square 2,2
 # set xtics 0,0.1
 # set ytics 0,0.1
@@ -86,14 +84,13 @@ set key font ",11"
 set key spacing 0.7
 set xtics font "Helvetica,18"
 set ytics font "Helvetica,18"
-			)";
+		)";
 
-				gp << "plot " << gp.file1d( prm_data, the_data_file.string() ) + " with points \n";
-			}
+			gp << "plot " << gp.file1d( prm_data, the_data_file.string() ) + " with points \n";
+		}
 
-		};
+	};
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_PAIR_SCATTER_PLOTTER_PAIR_SCATTER_PLOTTER_HPP

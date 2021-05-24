@@ -24,46 +24,41 @@
 #include "cath/resolve_hits/full_hit.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/hits_processor.hpp"
 
-namespace cath {
-	namespace rslv {
-		namespace detail {
+namespace cath::rslv::detail {
 
-			/// \brief A hits_processor to summarise the input data
-			class summarise_hits_processor final : public hits_processor {
-			private:
-				/// \brief Convenience type alias for the parent class
-				using super = hits_processor;
+	/// \brief A hits_processor to summarise the input data
+	class summarise_hits_processor final : public hits_processor {
+	private:
+		/// \brief Convenience type alias for the parent class
+		using super = hits_processor;
 
-				/// \brief For each query, record the maximum stop of the hits
-				size_vec max_stops;
+		/// \brief For each query, record the maximum stop of the hits
+		size_vec max_stops;
 
-				/// \brief Record the number of hits
-				size_t num_hits = 0;
+		/// \brief Record the number of hits
+		size_t num_hits = 0;
 
-				/// \brief Record an example query_id/full_hit pair
-				str_full_hit_pair_opt example_query_id_and_hit;
+		/// \brief Record an example query_id/full_hit pair
+		str_full_hit_pair_opt example_query_id_and_hit;
 
-				[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
 
-				void do_process_hits_for_query(const std::string &,
-				                               const crh_filter_spec &,
-				                               const crh_score_spec &,
-				                               const crh_segment_spec &,
-				                               const calc_hit_list &) final;
+		void do_process_hits_for_query(const std::string &,
+		                               const crh_filter_spec &,
+		                               const crh_score_spec &,
+		                               const crh_segment_spec &,
+		                               const calc_hit_list &) final;
 
-				void do_finish_work() final;
+		void do_finish_work() final;
 
-				[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
+		[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
 
-				[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
+		[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
 
-			  public:
-				explicit summarise_hits_processor(ref_vec<std::ostream>) noexcept;
-			};
+	  public:
+		explicit summarise_hits_processor(ref_vec<std::ostream>) noexcept;
+	};
 
-
-		} // namespace detail
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR_SUMMARISE_HITS_PROCESSOR_HPP

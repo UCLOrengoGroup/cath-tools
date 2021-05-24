@@ -23,28 +23,24 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace score {
-		namespace detail {
+namespace cath::score::detail {
 
-			/// \brief TODOCUMENT
-			class score_name_helper final {
-			private:
-				score_name_helper() = delete;
+	/// \brief TODOCUMENT
+	class score_name_helper final {
+	private:
+		score_name_helper() = delete;
 
-			public:
-				static std::string build_short_name(const std::string &,
-				                                    const str_vec &);
+	public:
+		static std::string build_short_name(const std::string &,
+		                                    const str_vec &);
 
-				static std::string human_friendly_short_name(const std::string &,
-				                                             const str_bool_pair_vec &);
+		static std::string human_friendly_short_name(const std::string &,
+		                                             const str_bool_pair_vec &);
 
-				static std::string full_short_name(const std::string &,
-				                                   const str_bool_pair_vec &);
-			};
+		static std::string full_short_name(const std::string &,
+		                                   const str_bool_pair_vec &);
+	};
 
-		} // namespace detail
-	} // namespace score
-} // namespace cath
+} // namespace cath::score::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_DETAIL_SCORE_NAME_HELPER_HPP

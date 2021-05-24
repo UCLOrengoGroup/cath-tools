@@ -25,7 +25,9 @@
 
 #include <iostream>
 
-namespace cath { namespace opts { class cath_score_align_options; } }
+// clang-format off
+namespace cath::opts { class cath_score_align_options; }
+// clang-format on
 
 namespace cath {
 

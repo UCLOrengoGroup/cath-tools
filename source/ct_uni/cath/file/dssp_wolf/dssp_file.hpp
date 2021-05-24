@@ -31,43 +31,42 @@
 #include "cath/file/pdb/dssp_skip_policy.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
+// clang-format off
 namespace cath { class protein; }
 namespace cath { class residue; }
-namespace cath { namespace file { class pdb; } }
+namespace cath::file { class pdb; }
+// clang-format on
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Represent the data parsed from a DSSP file
-		class dssp_file final {
-		private:
-			residue_vec dssp_residues;
+	/// \brief Represent the data parsed from a DSSP file
+	class dssp_file final {
+	private:
+		residue_vec dssp_residues;
 
-		public:
-			using const_iterator = residue_vec_citr;
+	public:
+		using const_iterator = residue_vec_citr;
 
-			explicit dssp_file(residue_vec);
+		explicit dssp_file(residue_vec);
 
-			[[nodiscard]] size_t         get_num_residues() const;
-			[[nodiscard]] const residue &get_residue_of_index( const size_t & ) const;
+		[[nodiscard]] size_t         get_num_residues() const;
+		[[nodiscard]] const residue &get_residue_of_index( const size_t & ) const;
 
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		protein protein_from_dssp_and_pdb(const dssp_file &,
-		                                  const pdb &,
-		                                  const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES,
-		                                  const file::name_set & = file::name_set{},
-		                                  const ostream_ref_opt & = ::std::nullopt );
+	protein protein_from_dssp_and_pdb(const dssp_file &,
+	                                  const pdb &,
+	                                  const dssp_skip_policy & = dssp_skip_policy::DONT_SKIP__DONT_BREAK_ANGLES,
+	                                  const file::name_set & = file::name_set{},
+	                                  const ostream_ref_opt & = ::std::nullopt );
 
-		residue_id_vec get_residue_ids(const dssp_file &,
-		                               const bool &);
+	residue_id_vec get_residue_ids(const dssp_file &,
+	                               const bool &);
 
-		size_t get_num_non_null_residues(const dssp_file &);
+	size_t get_num_non_null_residues(const dssp_file &);
 
-	} // namespace file
-
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_DSSP_FILE_HPP

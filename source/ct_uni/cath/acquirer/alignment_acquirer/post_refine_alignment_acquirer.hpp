@@ -23,28 +23,26 @@
 
 #include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief Abstract alignment_acquirer that refines (and rescores) the alignment
-		///        after the concrete alignment_acquirer has done its work
-		class post_refine_alignment_acquirer : public alignment_acquirer {
-		private:
-			using super = alignment_acquirer;
+	/// \brief Abstract alignment_acquirer that refines (and rescores) the alignment
+	///        after the concrete alignment_acquirer has done its work
+	class post_refine_alignment_acquirer : public alignment_acquirer {
+	private:
+		using super = alignment_acquirer;
 
-			[[nodiscard]] virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
+		[[nodiscard]] virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
 
-			[[nodiscard]] virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
-			  const file::strucs_context &,
-			  const ostream_ref_opt & = ::std::nullopt ) const = 0;
+		[[nodiscard]] virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+		  const file::strucs_context &,
+		  const ostream_ref_opt & = ::std::nullopt ) const = 0;
 
-			[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
-			  const file::strucs_context &,
-			  const align_refining &,
-			  const ostream_ref_opt & = ::std::nullopt ) const final;
-		};
+		[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+		  const file::strucs_context &,
+		  const align_refining &,
+		  const ostream_ref_opt & = ::std::nullopt ) const final;
+	};
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_POST_REFINE_ALIGNMENT_ACQUIRER_HPP

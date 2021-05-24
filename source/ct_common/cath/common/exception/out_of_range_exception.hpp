@@ -23,17 +23,15 @@
 
 #include <boost/exception/all.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		class out_of_range_exception : public boost::exception,
-		                               public std::out_of_range {
-		public:
-			explicit out_of_range_exception(const std::string &);
-		};
+	/// \brief TODOCUMENT
+	class out_of_range_exception : public boost::exception,
+	                               public std::out_of_range {
+	public:
+		explicit out_of_range_exception(const std::string &);
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_EXCEPTION_OUT_OF_RANGE_EXCEPTION_HPP

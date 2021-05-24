@@ -23,33 +23,31 @@
 
 #include "cath/score/score_type_aliases.hpp"
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
+	/// \brief TODOCUMENT
+	class classn_stat_pair_series_list final {
+	private:
 		/// \brief TODOCUMENT
-		class classn_stat_pair_series_list final {
-		private:
-			/// \brief TODOCUMENT
-			classn_stat_pair_series_vec classn_stat_pair_serieses;
+		classn_stat_pair_series_vec classn_stat_pair_serieses;
 
-		public:
-			/// \brief TODOCUMENT
-			using const_iterator = classn_stat_pair_series_vec_citr;
+	public:
+		/// \brief TODOCUMENT
+		using const_iterator = classn_stat_pair_series_vec_citr;
 
-			explicit classn_stat_pair_series_list(classn_stat_pair_series_vec);
+		explicit classn_stat_pair_series_list(classn_stat_pair_series_vec);
 
-			[[nodiscard]] bool   empty() const;
-			[[nodiscard]] size_t size() const;
+		[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
 
-			const classn_stat_pair_series & operator[](const size_t &) const;
-			[[nodiscard]] const_iterator    begin() const;
-			[[nodiscard]] const_iterator    end() const;
-		};
+		const classn_stat_pair_series & operator[](const size_t &) const;
+		[[nodiscard]] const_iterator    begin() const;
+		[[nodiscard]] const_iterator    end() const;
+	};
 
-		const classn_stat_pair_series & classn_stat_pair_series_list_of_name(const classn_stat_pair_series_list &,
-		                                                                     const std::string &);
+	const classn_stat_pair_series & classn_stat_pair_series_list_of_name(const classn_stat_pair_series_list &,
+	                                                                     const std::string &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_CLASSN_STAT_PAIR_SERIES_LIST_HPP

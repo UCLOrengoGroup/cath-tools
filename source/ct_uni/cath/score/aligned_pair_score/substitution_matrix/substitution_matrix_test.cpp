@@ -29,29 +29,27 @@
 using namespace ::cath;
 using namespace ::cath::score;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The substitution_matrix_test_suite_fixture to assist in testing substitution_matrix
-		struct substitution_matrix_test_suite_fixture {
-		protected:
-			~substitution_matrix_test_suite_fixture() noexcept = default;
+	/// \brief The substitution_matrix_test_suite_fixture to assist in testing substitution_matrix
+	struct substitution_matrix_test_suite_fixture {
+	protected:
+		~substitution_matrix_test_suite_fixture() noexcept = default;
 
-		public:
-			/// \brief A vector of the normal amino acids (including extras like 'B', but not 'X')
-			const amino_acid_vec normal_amino_acids{ make_amino_acids_of_chars(
-				{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y', 'Z' }
-			) };
+	public:
+		/// \brief A vector of the normal amino acids (including extras like 'B', but not 'X')
+		const amino_acid_vec normal_amino_acids{ make_amino_acids_of_chars(
+			{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y', 'Z' }
+		) };
 
-			/// \brief The amino acid entry for letter 'X'
-			const amino_acid     amino_acid_x{ amino_acid( 'X' ) };
-		};
+		/// \brief The amino acid entry for letter 'X'
+		const amino_acid     amino_acid_x{ amino_acid( 'X' ) };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief Suite of tests to unit test substitution_matrix
-BOOST_FIXTURE_TEST_SUITE(substitution_matrix_test_suite, cath::test::substitution_matrix_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(substitution_matrix_test_suite, substitution_matrix_test_suite_fixture)
 
 /// \brief Check that the identity matrix behaves as expected
 BOOST_AUTO_TEST_CASE(identity) {

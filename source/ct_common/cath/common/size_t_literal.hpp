@@ -23,15 +23,13 @@
 
 #include <cstddef>
 
-namespace cath {
-	namespace common {
-		inline namespace literals {
+namespace cath::common {
+	inline namespace literals {
 
-			/// \brief TODOCUMENT
-			constexpr std::size_t operator "" _z ( unsigned long long n ) { return static_cast<size_t>( n ); }
+		/// \brief TODOCUMENT
+		constexpr std::size_t operator "" _z ( unsigned long long n ) { return static_cast<size_t>( n ); }
 
-		} // namespace literals
-	} // namespace common
-} // namespace cath
+	} // namespace literals
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_SIZE_T_LITERAL_HPP

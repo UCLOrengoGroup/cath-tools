@@ -28,35 +28,33 @@
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return strings, one corresponding to each of the values in the specified range, in which the strings returned from
-		///        the specified pair of functions for that value are laid out in columns with the specified separator
-		template <typename Rng,
-		          typename FnLhs,
-		          typename FnRhs>
-		str_vec layout_values_with_descs(const Rng              &prm_range,   ///< The range of values
-		                                 FnLhs                   prm_fn_lhs,  ///< The first,  left-hand  function which must return a string when given a value of the range
-		                                 FnRhs                   prm_fn_rhs,  ///< The second, right-hand function which must return a string when given a value of the range
-		                                 const std::string_view &prm_pair_sep ///< The separator with which to join the two functions' strings for each value
-		                                 ) {
-			const auto length_lhs_fn  = [&] (const auto &x) { return prm_fn_lhs( x ).length(); };
-			const auto max_length_lhs = common::max_proj( prm_range, std::less<>{}, length_lhs_fn );
+	/// \brief Return strings, one corresponding to each of the values in the specified range, in which the strings returned from
+	///        the specified pair of functions for that value are laid out in columns with the specified separator
+	template <typename Rng,
+	          typename FnLhs,
+	          typename FnRhs>
+	str_vec layout_values_with_descs(const Rng              &prm_range,   ///< The range of values
+	                                 FnLhs                   prm_fn_lhs,  ///< The first,  left-hand  function which must return a string when given a value of the range
+	                                 FnRhs                   prm_fn_rhs,  ///< The second, right-hand function which must return a string when given a value of the range
+	                                 const std::string_view &prm_pair_sep ///< The separator with which to join the two functions' strings for each value
+	                                 ) {
+		const auto length_lhs_fn  = [&] (const auto &x) { return prm_fn_lhs( x ).length(); };
+		const auto max_length_lhs = common::max_proj( prm_range, std::less<>{}, length_lhs_fn );
 
-			return transform_build<str_vec>(
-				prm_range,
-				[&] (const auto &x) {
-					return ::fmt::format( "{}{}{}{}",
-					                      prm_fn_lhs( x ),
-					                      std::string( max_length_lhs - length_lhs_fn( x ), ' ' ),
-					                      prm_pair_sep,
-					                      prm_fn_rhs( x ) );
-				}
-			);
-		}
+		return transform_build<str_vec>(
+			prm_range,
+			[&] (const auto &x) {
+				return ::fmt::format( "{}{}{}{}",
+				                      prm_fn_lhs( x ),
+				                      std::string( max_length_lhs - length_lhs_fn( x ), ' ' ),
+				                      prm_pair_sep,
+				                      prm_fn_rhs( x ) );
+			}
+		);
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_PROGRAM_OPTIONS_LAYOUT_VALUES_WITH_DESCS_HPP

@@ -23,91 +23,89 @@
 
 #include "cath/clustagglom/hierarchy/hierarchy_value.hpp"
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief A group of hierarchy_values within a hierarchy_layer, within a hierarchy
-		class hierarchy_group final {
-		private:
-			/// \brief The hierarchy_values
-			hierarchy_value_vec values;
+	/// \brief A group of hierarchy_values within a hierarchy_layer, within a hierarchy
+	class hierarchy_group final {
+	private:
+		/// \brief The hierarchy_values
+		hierarchy_value_vec values;
 
-		public:
-			/// \brief An iterator type alias as part of making this a range over hierarchy_values
-			using iterator       = hierarchy_value_vec::iterator;
+	public:
+		/// \brief An iterator type alias as part of making this a range over hierarchy_values
+		using iterator       = hierarchy_value_vec::iterator;
 
-			/// \brief A const_iterator type alias as part of making this a range over hierarchy_values
-			using const_iterator = hierarchy_value_vec::const_iterator;
+		/// \brief A const_iterator type alias as part of making this a range over hierarchy_values
+		using const_iterator = hierarchy_value_vec::const_iterator;
 
-			[[nodiscard]] bool   empty() const;
-			[[nodiscard]] size_t size() const;
+		[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
 
-			const hierarchy_value & operator[](const size_t &) const;
+		const hierarchy_value & operator[](const size_t &) const;
 
-			template <typename... Ts>
-			hierarchy_group & emplace_back(Ts &&...);
-
-			iterator begin();
-			iterator end();
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
-
-		/// \brief Return whether this is empty
-		inline bool hierarchy_group::empty() const {
-			return values.empty();
-		}
-
-		/// \brief Return the number of hierarchy_values
-		inline size_t hierarchy_group::size() const {
-			return values.size();
-		}
-
-		/// \brief Get the hierarchy_value associated with the sequence with the specified index
-		inline const hierarchy_value & hierarchy_group::operator[](const size_t &prm_index ///< The index of the hierarchy_value to retrieve
-		                                                           ) const {
-			return values[ prm_index ];
-		}
-
-		/// \brief Emplace a hierarchy_value to be constructed with the specified arguments
 		template <typename... Ts>
-		inline hierarchy_group & hierarchy_group::emplace_back(Ts &&...args ///< The arguments to perfect-forward to hierarchy_value's ctor
-		                                                       ) {
-			values.emplace_back( std::forward<Ts>( args )... );
-			return *this;
-		}
+		hierarchy_group & emplace_back(Ts &&...);
 
-		/// \brief Standard non-const begin() method, as part of making this into a range over the hierarchy_value entries
-		///
-		/// \TODO See if it makes more sense to drop the non-const begin()/end() and support whatever
-		///       currently uses that some other way
-		inline auto hierarchy_group::begin() -> iterator {
-			return std::begin( values );
-		}
+		iterator begin();
+		iterator end();
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		/// \brief Standard non-const end() method, as part of making this into a range over the hierarchy_value entries
-		///
-		/// \TODO See if it makes more sense to drop the non-const begin()/end() and support whatever
-		///       currently uses that some other way
-		inline auto hierarchy_group::end() -> iterator {
-			return std::end( values );
-		}
+	/// \brief Return whether this is empty
+	inline bool hierarchy_group::empty() const {
+		return values.empty();
+	}
 
-		/// \brief Standard const begin() method, as part of making this into a range over the hierarchy_value entries
-		inline auto hierarchy_group::begin() const -> const_iterator {
-			return ::std::cbegin( values );
-		}
+	/// \brief Return the number of hierarchy_values
+	inline size_t hierarchy_group::size() const {
+		return values.size();
+	}
 
-		/// \brief Standard const end() method, as part of making this into a range over the hierarchy_value entries
-		inline auto hierarchy_group::end() const -> const_iterator {
-			return ::std::cend( values );
-		}
+	/// \brief Get the hierarchy_value associated with the sequence with the specified index
+	inline const hierarchy_value & hierarchy_group::operator[](const size_t &prm_index ///< The index of the hierarchy_value to retrieve
+	                                                           ) const {
+		return values[ prm_index ];
+	}
 
-		std::string to_string(const hierarchy_group &);
-		std::ostream & operator<<(std::ostream &,
-		                          const hierarchy_group &);
+	/// \brief Emplace a hierarchy_value to be constructed with the specified arguments
+	template <typename... Ts>
+	inline hierarchy_group & hierarchy_group::emplace_back(Ts &&...args ///< The arguments to perfect-forward to hierarchy_value's ctor
+	                                                       ) {
+		values.emplace_back( std::forward<Ts>( args )... );
+		return *this;
+	}
 
-	} // namespace clust
-} // namespace cath
+	/// \brief Standard non-const begin() method, as part of making this into a range over the hierarchy_value entries
+	///
+	/// \TODO See if it makes more sense to drop the non-const begin()/end() and support whatever
+	///       currently uses that some other way
+	inline auto hierarchy_group::begin() -> iterator {
+		return std::begin( values );
+	}
+
+	/// \brief Standard non-const end() method, as part of making this into a range over the hierarchy_value entries
+	///
+	/// \TODO See if it makes more sense to drop the non-const begin()/end() and support whatever
+	///       currently uses that some other way
+	inline auto hierarchy_group::end() -> iterator {
+		return std::end( values );
+	}
+
+	/// \brief Standard const begin() method, as part of making this into a range over the hierarchy_value entries
+	inline auto hierarchy_group::begin() const -> const_iterator {
+		return ::std::cbegin( values );
+	}
+
+	/// \brief Standard const end() method, as part of making this into a range over the hierarchy_value entries
+	inline auto hierarchy_group::end() const -> const_iterator {
+		return ::std::cend( values );
+	}
+
+	std::string to_string(const hierarchy_group &);
+	std::ostream & operator<<(std::ostream &,
+	                          const hierarchy_group &);
+
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_HIERARCHY_HIERARCHY_GROUP_HPP

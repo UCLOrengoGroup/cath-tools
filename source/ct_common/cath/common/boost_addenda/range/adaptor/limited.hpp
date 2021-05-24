@@ -27,36 +27,34 @@
 #include "cath/common/boost_addenda/range/adaptor/detail/limited_holder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/range/limited_range.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Non-const range overload of operator| for limited range adaptor
-			template <typename RNG>
-			inline limited_range<RNG> operator|(RNG                  &prm_range, ///< The range to which the limited adaptor should be applied
-			                                    const limited_holder &prm_holder ///< An limited_holder parameter for holding the parameters (and for determining which adaptor should be applied)
-			                                    ) {
-				return {
-					prm_range,
-					prm_holder.get_max_num_elements()
-				};
-			}
+		/// \brief Non-const range overload of operator| for limited range adaptor
+		template <typename RNG>
+		inline limited_range<RNG> operator|(RNG                  &prm_range, ///< The range to which the limited adaptor should be applied
+		                                    const limited_holder &prm_holder ///< An limited_holder parameter for holding the parameters (and for determining which adaptor should be applied)
+		                                    ) {
+			return {
+				prm_range,
+				prm_holder.get_max_num_elements()
+			};
+		}
 
-			/// \brief Const range overload of operator| for limited range adaptor
-			template <typename RNG>
-			inline limited_range<const RNG> operator|(const RNG            &prm_range, ///< The range to which the limited adaptor should be applied
-			                                          const limited_holder &prm_holder ///< An limited_holder parameter for holding the parameters (and for determining which adaptor should be applied)
-			                                          ) {
-				return {
-					prm_range,
-					prm_holder.get_max_num_elements()
-				};
-			}
-		} // namespace detail
+		/// \brief Const range overload of operator| for limited range adaptor
+		template <typename RNG>
+		inline limited_range<const RNG> operator|(const RNG            &prm_range, ///< The range to which the limited adaptor should be applied
+		                                          const limited_holder &prm_holder ///< An limited_holder parameter for holding the parameters (and for determining which adaptor should be applied)
+		                                          ) {
+			return {
+				prm_range,
+				prm_holder.get_max_num_elements()
+			};
+		}
+	} // namespace detail
 
-		inline constexpr detail::gen_forwarder<detail::limited_holder> limited{};
+	inline constexpr detail::gen_forwarder<detail::limited_holder> limited{};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_LIMITED_HPP

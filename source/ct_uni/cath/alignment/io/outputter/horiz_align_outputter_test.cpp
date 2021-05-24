@@ -30,22 +30,10 @@ using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The horiz_align_outputter_test_suite_fixture to assist in testing horiz_align_outputter
-		struct horiz_align_outputter_test_suite_fixture : protected alignment_fixture {
-		protected:
-			~horiz_align_outputter_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(horiz_align_outputter_test_suite, cath::test::horiz_align_outputter_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(horiz_align_outputter_test_suite)
 
 /// \brief Check that horiz_align_outputter produces the expected output on aln_a_b
-BOOST_AUTO_TEST_CASE(horiz_align_outputter_on_aln_a_b) {
+BOOST_FIXTURE_TEST_CASE(horiz_align_outputter_on_aln_a_b, alignment_fixture) {
 	ostringstream got_ss;
 	got_ss << horiz_align_outputter( aln_a_b() );
 	BOOST_CHECK_EQUAL( "alignment[\n\t 0 1 2 3\n\t 0 1 2 -\n]", got_ss.str() );

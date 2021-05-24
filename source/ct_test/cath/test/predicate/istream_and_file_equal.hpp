@@ -29,38 +29,35 @@
 #include "cath/test/predicate/bootstrap_mode.hpp"
 #include "cath/test/predicate/istreams_equal.hpp"
 
-namespace cath {
-	namespace test {
+namespace cath::test {
+
+	/// \brief TODOCUMENT
+	///
+	/// Note that the operator() will empty the istream
+	class istream_and_file_equal final {
+	  private:
+		/// \brief When to bootstrap the test file (ie replace it with the "got" content if mismatching)
+		bootstrap_mode bootstrapping = DEFAULT_BOOTSTRAPPING;
 
 		/// \brief TODOCUMENT
-		///
-		/// Note that the operator() will empty the istream
-		class istream_and_file_equal final {
-		private:
-			/// \brief When to bootstrap the test file (ie replace it with the "got" content if mismatching)
-			bootstrap_mode bootstrapping   = DEFAULT_BOOTSTRAPPING;
+		str_size_type diff_half_width = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
 
-			/// \brief TODOCUMENT
-			str_size_type  diff_half_width = istreams_equal::DEFAULT_DIFF_HALF_WIDTH;
+		/// \brief Default value for when to bootstrap the test file (ie replace it with the "got" content if mismatching)
+		static constexpr bootstrap_mode DEFAULT_BOOTSTRAPPING = bootstrap_mode::IF_ENV;
 
+	  public:
+		explicit istream_and_file_equal( const bootstrap_mode &,
+		                                 const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH );
+		explicit istream_and_file_equal( const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH );
+		boost::test_tools::predicate_result operator()( std::istream &, const std::string &, const ::std::filesystem::path & ) const;
+	};
 
-			/// \brief Default value for when to bootstrap the test file (ie replace it with the "got" content if mismatching)
-			static constexpr bootstrap_mode DEFAULT_BOOTSTRAPPING = bootstrap_mode::IF_ENV;
+} // namespace cath::test
 
-		public:
-			explicit istream_and_file_equal(const bootstrap_mode &,
-			                                const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
-			explicit istream_and_file_equal(const str_size_type & = istreams_equal::DEFAULT_DIFF_HALF_WIDTH);
-			boost::test_tools::predicate_result operator()(std::istream &,
-			                                               const std::string &,
-			                                               const ::std::filesystem::path &) const;
-		};
-
-	} // namespace test
-} // namespace cath
-
+// clang-format off
 #define BOOST_WARN_ISTREAM_AND_FILE_EQUAL(    I1, S1, F2 ) BOOST_WARN(    ( cath::test::istream_and_file_equal( ) ( ( (I1) ), ( (S1) ), ( (F2) ) ) ) )
 #define BOOST_CHECK_ISTREAM_AND_FILE_EQUAL(   I1, S1, F2 ) BOOST_CHECK(   ( cath::test::istream_and_file_equal( ) ( ( (I1) ), ( (S1) ), ( (F2) ) ) ) )
 #define BOOST_REQUIRE_ISTREAM_AND_FILE_EQUAL( I1, S1, F2 ) BOOST_REQUIRE( ( cath::test::istream_and_file_equal( ) ( ( (I1) ), ( (S1) ), ( (F2) ) ) ) )
+// clang-format on
 
 #endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP

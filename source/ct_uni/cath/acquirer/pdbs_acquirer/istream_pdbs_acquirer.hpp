@@ -25,17 +25,15 @@
 
 #include <string>
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief TODOCUMENT
-		class istream_pdbs_acquirer final : public pdbs_acquirer {
-		  private:
-			[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
-			file::pdb_list_name_set_list_pair            do_get_pdbs_and_names( std::istream & ) const final;
-		};
+	/// \brief TODOCUMENT
+	class istream_pdbs_acquirer final : public pdbs_acquirer {
+	  private:
+		[[nodiscard]] std::unique_ptr<pdbs_acquirer> do_clone() const final;
+		file::pdb_list_name_set_list_pair            do_get_pdbs_and_names( std::istream & ) const final;
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_ISTREAM_PDBS_ACQUIRER_HPP

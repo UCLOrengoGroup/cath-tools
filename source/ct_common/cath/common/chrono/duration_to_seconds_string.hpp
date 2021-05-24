@@ -24,45 +24,43 @@
 #include <chrono>
 #include <string>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		template <typename DURN>
-		inline double durn_to_seconds_double(const DURN &prm_duration ///< The duration to convert
-		                                     ) {
-			return std::chrono::duration_cast<std::chrono::duration<double>>(
+	/// \brief TODOCUMENT
+	template <typename DURN>
+	inline double durn_to_seconds_double(const DURN &prm_duration ///< The duration to convert
+	                                     ) {
+		return std::chrono::duration_cast<std::chrono::duration<double>>(
+			prm_duration
+		).count();
+	}
+
+	/// \brief TODOCUMENT
+	template <typename DURN>
+	inline std::string durn_to_seconds_string(const DURN &prm_duration ///< The duration to convert
+	                                          ) {
+		return std::to_string(
+			std::chrono::duration_cast<std::chrono::duration<double>>(
 				prm_duration
-			).count();
-		}
+			).count()
+		) + " seconds";
+	}
 
-		/// \brief TODOCUMENT
-		template <typename DURN>
-		inline std::string durn_to_seconds_string(const DURN &prm_duration ///< The duration to convert
-		                                          ) {
-			return std::to_string(
-				std::chrono::duration_cast<std::chrono::duration<double>>(
-					prm_duration
-				).count()
-			) + " seconds";
-		}
+	/// \brief TODOCUMENT
+	template <typename DURN>
+	inline double durn_to_rate_per_second(const DURN &prm_duration ///< The duration to convert
+	                                      ) {
+		return 1.0 / durn_to_seconds_double( prm_duration );
+	}
 
-		/// \brief TODOCUMENT
-		template <typename DURN>
-		inline double durn_to_rate_per_second(const DURN &prm_duration ///< The duration to convert
-		                                      ) {
-			return 1.0 / durn_to_seconds_double( prm_duration );
-		}
+	/// \brief TODOCUMENT
+	template <typename DURN>
+	inline std::string durn_to_rate_per_second_string(const DURN &prm_duration ///< The duration to convert
+	                                                  ) {
+		return std::to_string( durn_to_rate_per_second( prm_duration ) ) + " / second";
+	}
 
-		/// \brief TODOCUMENT
-		template <typename DURN>
-		inline std::string durn_to_rate_per_second_string(const DURN &prm_duration ///< The duration to convert
-		                                                  ) {
-			return std::to_string( durn_to_rate_per_second( prm_duration ) ) + " / second";
-		}
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CHRONO_DURATION_TO_SECONDS_STRING_HPP
 

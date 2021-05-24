@@ -27,52 +27,51 @@
 
 #include <vector>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return whether the two set ranges are disjoint (ie have no elements in common)
-		///
-		/// \tparam RNG1 is a model of the SinglePassRangeConcept
-		/// \tparam RNG2 is a model of the SinglePassRangeConcept
-		///
-		/// \pre RNG1 and RNG2 have the same value type
-		///
-		/// Note that this is not the most efficient because:
-		///  * (a) it could (but does not) stop as soon as it finds any common value
-		///  * (b) it goes to the trouble of building vector of the intersection
-		///
-		/// Still, don't prematurely optimise this until a profiler demonstrates the need because:
-		///  (a) it's likely to be fairly quick as is
-		///  (b) this is the soft of thing that might end up in other libraries (Boost, std::, range-v3)
-		///  (c) rewriting could be quite involved and could involve duplicating quite a bit of std:: code
-		///
-		/// \todo Consider adding an iterator version
-		template <typename RNG1, typename RNG2>
-		bool sets_are_disjoint(const RNG1 &prm_range_1, ///< TODOCUMENT
-		                       const RNG2 &prm_range_2  ///< TODOCUMENT
-		                       ) {
-			// Grab the two ranges' value types
-			using value_type1 = range_value_t<RNG1>;
-			using value_type2 = range_value_t<RNG2>;
-			static_assert(
-				std::is_same_v<value_type1, value_type2 >,
-				"sets_are_disjoint() cannot operator on two ranges with different value types"
-			);
+	/// \brief Return whether the two set ranges are disjoint (ie have no elements in common)
+	///
+	/// \tparam RNG1 is a model of the SinglePassRangeConcept
+	/// \tparam RNG2 is a model of the SinglePassRangeConcept
+	///
+	/// \pre RNG1 and RNG2 have the same value type
+	///
+	/// Note that this is not the most efficient because:
+	///  * (a) it could (but does not) stop as soon as it finds any common value
+	///  * (b) it goes to the trouble of building vector of the intersection
+	///
+	/// Still, don't prematurely optimise this until a profiler demonstrates the need because:
+	///  (a) it's likely to be fairly quick as is
+	///  (b) this is the soft of thing that might end up in other libraries (Boost, std::, range-v3)
+	///  (c) rewriting could be quite involved and could involve duplicating quite a bit of std:: code
+	///
+	/// \todo Consider adding an iterator version
+	template <typename RNG1, typename RNG2>
+	bool sets_are_disjoint(const RNG1 &prm_range_1, ///< TODOCUMENT
+	                       const RNG2 &prm_range_2  ///< TODOCUMENT
+	                       ) {
+		// Grab the two ranges' value types
+		using value_type1 = range_value_t<RNG1>;
+		using value_type2 = range_value_t<RNG2>;
+		static_assert(
+			std::is_same_v<value_type1, value_type2 >,
+			"sets_are_disjoint() cannot operator on two ranges with different value types"
+		);
 
-			// Build a vector of the values in the intersection
-			//
-			/// \todo Write a set_intersection_build() and use it here
-			std::vector<value_type1> the_intersection;
-			boost::range::set_intersection(
-				prm_range_1,
-				prm_range_2,
-				back_inserter( the_intersection )
-			);
+		// Build a vector of the values in the intersection
+		//
+		/// \todo Write a set_intersection_build() and use it here
+		std::vector<value_type1> the_intersection;
+		boost::range::set_intersection(
+			prm_range_1,
+			prm_range_2,
+			back_inserter( the_intersection )
+		);
 
-			// Return whether the intersection is empty
-			return the_intersection.empty();
-		}
-	} // namespace common
-} // namespace cath
+		// Return whether the intersection is empty
+		return the_intersection.empty();
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SETS_ARE_DISJOINT_HPP

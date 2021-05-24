@@ -34,170 +34,161 @@
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/structure/view_cache/index/view_cache_index_entry.hpp"
 
-namespace cath {
-	namespace index {
-		namespace detail {
+namespace cath::index::detail {
 
-			/// \brief Manage one layer of the view_cache_index that indexes on the dimension DIM (eg view_cache_index_dim_linear_x)
-			///
-			/// T is the type of the next layer down (or view_cache_index_tail if this is the last layer).
-			///
-			/// The layer uses DIM to store view_cache_index_entry objects in bins and then when later searching
-			/// for similar entries to some query view_cache_index_entry, the DIM can identify the bins which
-			/// might possible contain matches so that all others can safely be ignored.
-			///
-			/// For example, view_cache_index_dim_linear_x puts view_cache_index_entry objects in bins according to the
-			/// x component of their view. Then a search with a given query view_cache_index_entry only needs to look in
-			/// bins covering ranges of x values that might be close enough to the query's to be interesting; all other
-			/// bins can be skipped.
-			template <typename DIM, typename T>
-			class view_cache_index_layer final {
-			private:
-				/// \brief An instance of the dimension with which this layer is organising Ts
-				DIM the_dimension;
+	/// \brief Manage one layer of the view_cache_index that indexes on the dimension DIM (eg view_cache_index_dim_linear_x)
+	///
+	/// T is the type of the next layer down (or view_cache_index_tail if this is the last layer).
+	///
+	/// The layer uses DIM to store view_cache_index_entry objects in bins and then when later searching
+	/// for similar entries to some query view_cache_index_entry, the DIM can identify the bins which
+	/// might possible contain matches so that all others can safely be ignored.
+	///
+	/// For example, view_cache_index_dim_linear_x puts view_cache_index_entry objects in bins according to the
+	/// x component of their view. Then a search with a given query view_cache_index_entry only needs to look in
+	/// bins covering ranges of x values that might be close enough to the query's to be interesting; all other
+	/// bins can be skipped.
+	template <typename DIM, typename T>
+	class view_cache_index_layer final {
+	private:
+		/// \brief An instance of the dimension with which this layer is organising Ts
+		DIM the_dimension;
 
-				/// \brief The cells into which the Ts are indexed by DIM
-				std::vector<T> cells;
+		/// \brief The cells into which the Ts are indexed by DIM
+		std::vector<T> cells;
 
-				[[nodiscard]] int cell_index_of_value_in_current( const double & ) const;
+		[[nodiscard]] int cell_index_of_value_in_current( const double & ) const;
 
-			  public:
-				explicit view_cache_index_layer(const DIM &);
+	  public:
+		explicit view_cache_index_layer(const DIM &);
 
-				// const double & get_cell_width() const;
-				[[nodiscard]] bool   empty() const;
-				[[nodiscard]] size_t get_num_cells() const;
+		// const double & get_cell_width() const;
+		[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t get_num_cells() const;
 
-				// const T & get_cell_entry(const size_t &) const;
-				// bool has_cell_at_value(const double &) const;
-				// T & cell_at_value(const double &);
-				// const T & cell_at_value(const double &) const;
+		// const T & get_cell_entry(const size_t &) const;
+		// bool has_cell_at_value(const double &) const;
+		// T & cell_at_value(const double &);
+		// const T & cell_at_value(const double &) const;
 
-				template <typename DEFAULTS>
-				void store(const view_cache_index_entry &,
-				           const DEFAULTS &);
+		template <typename DEFAULTS>
+		void store(const view_cache_index_entry &,
+		           const DEFAULTS &);
 
-				template <typename ACTN>
-				void perform_action_on_matches(const view_cache_index_entry &,
-				                               const vcie_match_criteria &,
-				                               ACTN &) const;
+		template <typename ACTN>
+		void perform_action_on_matches(const view_cache_index_entry &,
+		                               const vcie_match_criteria &,
+		                               ACTN &) const;
 
-				template <typename ACTN>
-				void perform_action_on_all_match_at_leaves(ACTN &) const;
+		template <typename ACTN>
+		void perform_action_on_all_match_at_leaves(ACTN &) const;
 
 
-				template <typename ACTN>
-				void perform_action_on_all_match_at_nodes(const view_cache_index_layer<DIM, T> &,
-				                                          const vcie_match_criteria &,
-				                                          ACTN &) const;
+		template <typename ACTN>
+		void perform_action_on_all_match_at_nodes(const view_cache_index_layer<DIM, T> &,
+		                                          const vcie_match_criteria &,
+		                                          ACTN &) const;
 
-				/// \brief TODOCUMENT
-				constexpr static size_t num_dims_remaining = T::num_dims_remaining + 1;
-			};
+		/// \brief TODOCUMENT
+		constexpr static size_t num_dims_remaining = T::num_dims_remaining + 1;
+	};
 
-			/// \brief Ctor to build a layer from a DIM 
-			template <typename DIM, typename T>
-			view_cache_index_layer<DIM, T>::view_cache_index_layer(const DIM &prm_dim ///< The DIM to use to index values in this layer
-			                                                       ) : the_dimension( prm_dim ) {
-			}
+	/// \brief Ctor to build a layer from a DIM 
+	template <typename DIM, typename T>
+	view_cache_index_layer<DIM, T>::view_cache_index_layer(const DIM &prm_dim ///< The DIM to use to index values in this layer
+	                                                       ) : the_dimension( prm_dim ) {
+	}
 
-			// /// \brief TODOCUMENT
-			// template <typename DIM, typename T>
-			// const double & view_cache_index_layer<DIM, T>::get_cell_width() const {
-			// 	return the_dimension.get_cell_width();
-			// }
+	// /// \brief TODOCUMENT
+	// template <typename DIM, typename T>
+	// const double & view_cache_index_layer<DIM, T>::get_cell_width() const {
+	// 	return the_dimension.get_cell_width();
+	// }
 
-			/// \brief TODOCUMENT
-			template <typename DIM, typename T>
-			bool view_cache_index_layer<DIM, T>::empty() const {
-				return cells.empty();
-			}
-	
-			/// \brief TODOCUMENT
-			template <typename DIM, typename T>
-			size_t view_cache_index_layer<DIM, T>::get_num_cells() const {
-				return cells.size();
-			}
-	
-			// /// \brief TODOCUMENT
-			// template <typename DIM, typename T>
-			// const T & view_cache_index_layer<DIM, T>::get_cell_entry(const size_t &prm_index ///< TODOCUMENT
-			//                                                        ) const {
-			// 	return cells[ prm_index ];
-			// }
-	
-			// /// \brief TODOCUMENT
-			// template <typename DIM, typename T>
-			// bool view_cache_index_layer<DIM, T>::has_cell_at_value(const double &prm_value ///< TODOCUMENT
-			//                                                      ) const {
-			// 	return the_dimension.has_cell_at_value( prm_value );
-			// }
-	
-			// /// \brief TODOCUMENT
-			// template <typename DIM, typename T>
-			// T & view_cache_index_layer<DIM, T>::cell_at_value(const double &prm_value ///< TODOCUMENT
-			//                                                 ) {
-			// 	return the_dimension.cell_at_value( cells, prm_value );
-			// }
-	
-			// /// \brief TODOCUMENT
-			// template <typename DIM, typename T>
-			// const T & view_cache_index_layer<DIM, T>::cell_at_value(const double &prm_value ///< TODOCUMENT
-			//                                                       ) const {
-			// 	return the_dimension.cell_at_value( cells, prm_value );
-			// }
+	/// \brief TODOCUMENT
+	template <typename DIM, typename T>
+	bool view_cache_index_layer<DIM, T>::empty() const {
+		return cells.empty();
+	}
+		/// \brief TODOCUMENT
+	template <typename DIM, typename T>
+	size_t view_cache_index_layer<DIM, T>::get_num_cells() const {
+		return cells.size();
+	}
+		// /// \brief TODOCUMENT
+	// template <typename DIM, typename T>
+	// const T & view_cache_index_layer<DIM, T>::get_cell_entry(const size_t &prm_index ///< TODOCUMENT
+	//                                                        ) const {
+	// 	return cells[ prm_index ];
+	// }
+		// /// \brief TODOCUMENT
+	// template <typename DIM, typename T>
+	// bool view_cache_index_layer<DIM, T>::has_cell_at_value(const double &prm_value ///< TODOCUMENT
+	//                                                      ) const {
+	// 	return the_dimension.has_cell_at_value( prm_value );
+	// }
+		// /// \brief TODOCUMENT
+	// template <typename DIM, typename T>
+	// T & view_cache_index_layer<DIM, T>::cell_at_value(const double &prm_value ///< TODOCUMENT
+	//                                                 ) {
+	// 	return the_dimension.cell_at_value( cells, prm_value );
+	// }
+		// /// \brief TODOCUMENT
+	// template <typename DIM, typename T>
+	// const T & view_cache_index_layer<DIM, T>::cell_at_value(const double &prm_value ///< TODOCUMENT
+	//                                                       ) const {
+	// 	return the_dimension.cell_at_value( cells, prm_value );
+	// }
 
 
-			/// \brief Store a view_cache_index_entry in this layer, using 
-			template <typename DIM, typename T>
-			template <typename DEFAULTS>
-			void view_cache_index_layer<DIM, T>::store(const view_cache_index_entry &prm_entry,   ///< TODOCUMENT
-			                                           const DEFAULTS               &prm_defaults ///< TODOCUMENT
-			                                           ) {
-				the_dimension.store( prm_entry, cells, prm_defaults );
-			}
+	/// \brief Store a view_cache_index_entry in this layer, using 
+	template <typename DIM, typename T>
+	template <typename DEFAULTS>
+	void view_cache_index_layer<DIM, T>::store(const view_cache_index_entry &prm_entry,   ///< TODOCUMENT
+	                                           const DEFAULTS               &prm_defaults ///< TODOCUMENT
+	                                           ) {
+		the_dimension.store( prm_entry, cells, prm_defaults );
+	}
 
-			/// \brief TODOCUMENT
-			template <typename DIM, typename T>
-			template <typename ACTN>
-			void view_cache_index_layer<DIM, T>::perform_action_on_matches(const view_cache_index_entry &prm_entry,    ///< TODOCUMENT
-			                                                               const vcie_match_criteria    &prm_criteria, ///< TODOCUMENT
-			                                                               ACTN                         &prm_action    ///< TODOCUMENT
-			                                                               ) const {
-				the_dimension.perform_action_on_matches( prm_entry, cells, prm_criteria, prm_action );
-			}
+	/// \brief TODOCUMENT
+	template <typename DIM, typename T>
+	template <typename ACTN>
+	void view_cache_index_layer<DIM, T>::perform_action_on_matches(const view_cache_index_entry &prm_entry,    ///< TODOCUMENT
+	                                                               const vcie_match_criteria    &prm_criteria, ///< TODOCUMENT
+	                                                               ACTN                         &prm_action    ///< TODOCUMENT
+	                                                               ) const {
+		the_dimension.perform_action_on_matches( prm_entry, cells, prm_criteria, prm_action );
+	}
 
-			/// \brief TODOCUMENT
-			template <typename DIM, typename T>
-			template <typename ACTN>
-			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_leaves(ACTN &prm_action ///< TODOCUMENT
-			                                                                           ) const {
-				::spdlog::trace( "{} : {}", ::boost::core::demangle( typeid( *this ).name() ), cells.size() );
-				for (const T &cell : cells) {
-					cell.perform_action_on_all_match_at_leaves( prm_action );
-				}
-			}
+	/// \brief TODOCUMENT
+	template <typename DIM, typename T>
+	template <typename ACTN>
+	void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_leaves(ACTN &prm_action ///< TODOCUMENT
+	                                                                           ) const {
+		::spdlog::trace( "{} : {}", ::boost::core::demangle( typeid( *this ).name() ), cells.size() );
+		for (const T &cell : cells) {
+			cell.perform_action_on_all_match_at_leaves( prm_action );
+		}
+	}
 
 
-			/// \brief TODOCUMENT
-			template <typename DIM, typename T>
-			template <typename ACTN>
-			void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_nodes(const view_cache_index_layer<DIM, T> &prm_match_layer, ///< TODOCUMENT
-			                                                                          const vcie_match_criteria            &prm_criteria,    ///< TODOCUMENT
-			                                                                          ACTN                                 &prm_action       ///< TODOCUMENT
-			                                                                          ) const {
-				the_dimension.perform_action_on_all_match_at_nodes(
-					cells,
-					prm_match_layer.the_dimension,
-					prm_match_layer.cells,
-					prm_criteria,
-					prm_action
-				);
-			}
+	/// \brief TODOCUMENT
+	template <typename DIM, typename T>
+	template <typename ACTN>
+	void view_cache_index_layer<DIM, T>::perform_action_on_all_match_at_nodes(const view_cache_index_layer<DIM, T> &prm_match_layer, ///< TODOCUMENT
+	                                                                          const vcie_match_criteria            &prm_criteria,    ///< TODOCUMENT
+	                                                                          ACTN                                 &prm_action       ///< TODOCUMENT
+	                                                                          ) const {
+		the_dimension.perform_action_on_all_match_at_nodes(
+			cells,
+			prm_match_layer.the_dimension,
+			prm_match_layer.cells,
+			prm_criteria,
+			prm_action
+		);
+	}
 
-		} // namespace detail
-	} // namespace index
-} // namespace cath
+} // namespace cath::index::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_SCAFFOLD_VIEW_CACHE_INDEX_LAYER_HPP
 

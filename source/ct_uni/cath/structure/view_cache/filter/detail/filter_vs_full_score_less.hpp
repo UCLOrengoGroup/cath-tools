@@ -21,36 +21,32 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_DETAIL_FILTER_VS_FULL_SCORE_LESS_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_DETAIL_FILTER_VS_FULL_SCORE_LESS_HPP
 
-namespace cath { namespace index { namespace filter { class filter_vs_full_score; } } }
+// clang-format off
+namespace cath::index::filter { class filter_vs_full_score; }
+// clang-format on
 
-namespace cath {
-	namespace index {
-		namespace filter {
-			namespace detail {
+namespace cath::index::filter::detail {
 
-				/// \brief A functor for sorting filter_vs_full_scores by filter_score
-				class filter_score_less {
-				public:
-					bool operator()(const filter_vs_full_score &,
-					                const filter_vs_full_score &) const;
+	/// \brief A functor for sorting filter_vs_full_scores by filter_score
+	class filter_score_less {
+	public:
+		bool operator()(const filter_vs_full_score &,
+		                const filter_vs_full_score &) const;
 
-					bool operator()(const filter_vs_full_score &,
-					                const double &) const;
-				};
+		bool operator()(const filter_vs_full_score &,
+		                const double &) const;
+	};
 
-				/// \brief A functor for sorting filter_vs_full_scores by full_score
-				class full_score_less {
-				public:
-					bool operator()(const filter_vs_full_score &,
-					                const filter_vs_full_score &) const;
+	/// \brief A functor for sorting filter_vs_full_scores by full_score
+	class full_score_less {
+	public:
+		bool operator()(const filter_vs_full_score &,
+		                const filter_vs_full_score &) const;
 
-					bool operator()(const filter_vs_full_score &,
-					                const double &) const;
-				};
+		bool operator()(const filter_vs_full_score &,
+		                const double &) const;
+	};
 
-			} // namespace detail
-		} // namespace filter
-	} // namespace index
-} // namespace cath
+} // namespace cath::index::filter::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_DETAIL_FILTER_VS_FULL_SCORE_LESS_HPP

@@ -27,33 +27,31 @@
 #include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
 #include "cath/superposition/superposition_content_spec.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
+
+	/// \brief TODOCUMENT
+	class pymol_file_superposition_outputter final : public superposition_outputter {
+	private:
+		/// \brief TODOCUMENT
+		::std::filesystem::path output_file;
 
 		/// \brief TODOCUMENT
-		class pymol_file_superposition_outputter final : public superposition_outputter {
-		private:
-			/// \brief TODOCUMENT
-			::std::filesystem::path output_file;
+		display_spec the_display_spec;
 
-			/// \brief TODOCUMENT
-			display_spec the_display_spec;
+		/// \brief The specification of what should be included in the superposition
+		sup::superposition_content_spec content_spec;
 
-			/// \brief The specification of what should be included in the superposition
-			sup::superposition_content_spec content_spec;
+		[[nodiscard]] std::unique_ptr<superposition_outputter> do_clone() const final;
 
-			[[nodiscard]] std::unique_ptr<superposition_outputter> do_clone() const final;
+		void do_output_superposition( const sup::superposition_context &, std::ostream & ) const final;
 
-			void do_output_superposition( const sup::superposition_context &, std::ostream & ) const final;
+		[[nodiscard]] bool        do_involves_display_spec() const final;
+		[[nodiscard]] std::string do_get_name() const final;
 
-			[[nodiscard]] bool        do_involves_display_spec() const final;
-			[[nodiscard]] std::string do_get_name() const final;
+	  public:
+		pymol_file_superposition_outputter( ::std::filesystem::path, display_spec, sup::superposition_content_spec );
+	};
 
-		  public:
-			pymol_file_superposition_outputter( ::std::filesystem::path, display_spec, sup::superposition_content_spec );
-		};
-
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_PYMOL_FILE_SUPERPOSITION_OUTPUTTER_HPP

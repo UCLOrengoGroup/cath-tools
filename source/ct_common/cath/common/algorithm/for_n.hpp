@@ -28,21 +28,19 @@
 
 #include <cstddef>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Invoke the specified callable the specified number of times
-		template <typename Fn>
-		void for_n(const size_t  &prm_n, ///< The number of time to invoke the callable
-		           Fn           &&prm_fn ///< The callable to invoke the specified number of times
-		           ) {
-			for (const auto &x : indices( prm_n ) ) {
-				boost::ignore_unused( x );
-				constexpr_invoke( std::forward<Fn>( prm_fn ) );
-			}
+	/// \brief Invoke the specified callable the specified number of times
+	template <typename Fn>
+	void for_n(const size_t  &prm_n, ///< The number of time to invoke the callable
+	           Fn           &&prm_fn ///< The callable to invoke the specified number of times
+	           ) {
+		for (const auto &x : indices( prm_n ) ) {
+			boost::ignore_unused( x );
+			constexpr_invoke( std::forward<Fn>( prm_fn ) );
 		}
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_FOR_N_HPP

@@ -21,15 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_IO_SUP_PDBS_SCRIPT_POLICY_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_IO_SUP_PDBS_SCRIPT_POLICY_HPP
 
-namespace cath {
-	namespace sup {
+namespace cath::sup {
 
-		enum class sup_pdbs_script_policy : bool {
-			WRITE_RASMOL_SCRIPT,
-			LEAVE_RAW_PDBS
-		};
+	enum class sup_pdbs_script_policy : bool {
+		WRITE_RASMOL_SCRIPT,
+		LEAVE_RAW_PDBS
+	};
 
-	} // namespace sup
-} // namespace cath
+} // namespace cath::sup
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_IO_SUP_PDBS_SCRIPT_POLICY_HPP

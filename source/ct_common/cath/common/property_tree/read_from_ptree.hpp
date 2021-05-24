@@ -23,14 +23,12 @@
 
 #include <boost/property_tree/ptree_fwd.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		template <typename T>
-		T read_from_ptree(const boost::property_tree::ptree &);
+	/// \brief TODOCUMENT
+	template <typename T>
+	T read_from_ptree(const boost::property_tree::ptree &);
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_READ_FROM_PTREE_HPP

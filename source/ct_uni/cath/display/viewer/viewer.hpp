@@ -30,15 +30,17 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/display/colour_category.hpp"
 
+// clang-format off
 namespace cath { class display_colour; }
 namespace cath { class display_colourer; }
 namespace cath { class display_spec; }
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace align { class alignment_context; } }
-namespace cath { namespace file { class pdb_list; } }
-namespace cath { namespace sup { class superposition; } }
-namespace cath { namespace sup { class superposition_content_spec; } }
-namespace cath { namespace sup { class superposition_context; } }
+namespace cath::align { class alignment; }
+namespace cath::align { class alignment_context; }
+namespace cath::file { class pdb_list; }
+namespace cath::sup { class superposition; }
+namespace cath::sup { class superposition_content_spec; }
+namespace cath::sup { class superposition_context; }
+// clang-format on
 
 namespace cath {
 	/// \brief TODOCUMENT

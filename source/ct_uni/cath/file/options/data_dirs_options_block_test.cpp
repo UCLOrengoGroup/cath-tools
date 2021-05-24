@@ -37,22 +37,20 @@ using namespace ::std;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The data_dirs_options_block_test_suite_fixture to assist in testing data_dirs_options_block
-		struct data_dirs_options_block_test_suite_fixture {
-		protected:
-			~data_dirs_options_block_test_suite_fixture() noexcept = default;
+	/// \brief The data_dirs_options_block_test_suite_fixture to assist in testing data_dirs_options_block
+	struct data_dirs_options_block_test_suite_fixture {
+	protected:
+		~data_dirs_options_block_test_suite_fixture() noexcept = default;
 
-			const string   EXAMPLE_PATH_STR    = ":/usr::/var:";
-			const path_vec EXAMPLE_DIRECTORIES = { "/usr", "/var" };
-		};
+		const string   EXAMPLE_PATH_STR    = ":/usr::/var:";
+		const path_vec EXAMPLE_DIRECTORIES = { "/usr", "/var" };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(data_dirs_options_block_test_suite, cath::test::data_dirs_options_block_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(data_dirs_options_block_test_suite, data_dirs_options_block_test_suite_fixture)
 
 /// \brief Check that split_path_into_directories() works as expected on a simple list
 ///        of directories (with a few spurious colons thrown in for fun)

@@ -28,41 +28,37 @@
 #include <utility>
 #include <vector>
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan::detail {
 
-			/// \brief TODOCUMENT
-			class alignment_scan_comparison final {
-			public:
-				/// \brief TODOCUMENT
-				using crit_res_doub_map = std::map<quad_and_rep_criteria_result, double>;
+	/// \brief TODOCUMENT
+	class alignment_scan_comparison final {
+	public:
+		/// \brief TODOCUMENT
+		using crit_res_doub_map = std::map<quad_and_rep_criteria_result, double>;
 
-				/// \brief TODOCUMENT
-				using const_iterator = crit_res_doub_map::const_iterator;
+		/// \brief TODOCUMENT
+		using const_iterator = crit_res_doub_map::const_iterator;
 
-			private:
-				/// \brief TODOCUMENT
-				crit_res_doub_map score_by_result;
+	private:
+		/// \brief TODOCUMENT
+		crit_res_doub_map score_by_result;
 
-			public:
-				alignment_scan_comparison & operator+=(const std::pair<quad_and_rep_criteria_result, double> &);
+	public:
+		alignment_scan_comparison & operator+=(const std::pair<quad_and_rep_criteria_result, double> &);
 
-				[[nodiscard]] bool   has_score_of_criteria_result( const quad_and_rep_criteria_result & ) const;
-				[[nodiscard]] double get_score_of_criteria_result( const quad_and_rep_criteria_result & ) const;
+		[[nodiscard]] bool   has_score_of_criteria_result( const quad_and_rep_criteria_result & ) const;
+		[[nodiscard]] double get_score_of_criteria_result( const quad_and_rep_criteria_result & ) const;
 
-				[[nodiscard]] const_iterator begin() const;
-				[[nodiscard]] const_iterator end() const;
-			};
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-			std::vector<quad_and_rep_criteria_result> get_criteria_results(const alignment_scan_comparison &);
-			std::vector<quad_and_rep_criteria_result> get_criteria_results_sorted_by_score_desc(const alignment_scan_comparison &);
+	std::vector<quad_and_rep_criteria_result> get_criteria_results(const alignment_scan_comparison &);
+	std::vector<quad_and_rep_criteria_result> get_criteria_results_sorted_by_score_desc(const alignment_scan_comparison &);
 
-			std::ostream & operator<<(std::ostream &,
-			                          const alignment_scan_comparison &);
+	std::ostream & operator<<(std::ostream &,
+	                          const alignment_scan_comparison &);
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_CHECK_SCAN_TEST_ONLY_ALIGNMENT_SCAN_COMPARISON_HPP

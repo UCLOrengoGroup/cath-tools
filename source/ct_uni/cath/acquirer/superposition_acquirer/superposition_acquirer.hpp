@@ -27,33 +27,33 @@
 
 #include <iostream>
 
-namespace cath { namespace opts { class cath_superpose_options; } }
-namespace cath { namespace sup { class superposition_context; } }
+// clang-format off
+namespace cath::opts { class cath_superpose_options; }
+namespace cath::sup { class superposition_context; }
+// clang-format on
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
+
+	/// \brief TODOCUMENT
+	class superposition_acquirer {
+	private:
+		virtual sup::superposition_context do_get_superposition(std::ostream &) const = 0;
+
+	public:
+		superposition_acquirer() = default;
+		virtual ~superposition_acquirer() noexcept = default;
+
+		superposition_acquirer(const superposition_acquirer &) = default;
+		superposition_acquirer(superposition_acquirer &&) noexcept = default;
+		superposition_acquirer & operator=(const superposition_acquirer &) = default;
+		superposition_acquirer & operator=(superposition_acquirer &&) noexcept = default;
+
+		sup::superposition_context get_superposition(std::ostream &) const;
 
 		/// \brief TODOCUMENT
-		class superposition_acquirer {
-		private:
-			virtual sup::superposition_context do_get_superposition(std::ostream &) const = 0;
+		static constexpr double TOLERANCE_FOR_EQUAL_RMSDS = 0.000001;
+	};
 
-		public:
-			superposition_acquirer() = default;
-			virtual ~superposition_acquirer() noexcept = default;
-
-			superposition_acquirer(const superposition_acquirer &) = default;
-			superposition_acquirer(superposition_acquirer &&) noexcept = default;
-			superposition_acquirer & operator=(const superposition_acquirer &) = default;
-			superposition_acquirer & operator=(superposition_acquirer &&) noexcept = default;
-
-			sup::superposition_context get_superposition(std::ostream &) const;
-
-			/// \brief TODOCUMENT
-			static constexpr double TOLERANCE_FOR_EQUAL_RMSDS = 0.000001;
-		};
-
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_SUPERPOSITION_ACQUIRER_SUPERPOSITION_ACQUIRER_HPP

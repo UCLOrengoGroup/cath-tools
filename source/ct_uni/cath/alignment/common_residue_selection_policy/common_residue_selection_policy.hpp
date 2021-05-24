@@ -30,74 +30,73 @@
 #include <string>
 #include <vector>
 
-namespace cath {
-	namespace align {
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	class common_residue_selection_policy
+	        : private cath::common::polymorphic_less_than_comparable<common_residue_selection_policy>
+	        , private boost::equivalent<common_residue_selection_policy, boost::totally_ordered<common_residue_selection_policy>> {
+	  private:
+		/// \brief TODOCUMENT
+		[[nodiscard]] virtual size_vec do_select_common_residues( const alignment &,
+		                                                          const std::vector<alignment::size_type> &,
+		                                                          const alignment::size_type &,
+		                                                          const alignment::size_type & ) const = 0;
 
 		/// \brief TODOCUMENT
-		class common_residue_selection_policy
-		        : private cath::common::polymorphic_less_than_comparable<common_residue_selection_policy>
-		        , private boost::equivalent<common_residue_selection_policy, boost::totally_ordered<common_residue_selection_policy>> {
-		  private:
-			/// \brief TODOCUMENT
-			[[nodiscard]] virtual size_vec do_select_common_residues( const alignment &,
-			                                                          const std::vector<alignment::size_type> &,
-			                                                          const alignment::size_type &,
-			                                                          const alignment::size_type & ) const = 0;
+		[[nodiscard]] virtual std::string do_get_descriptive_name() const = 0;
 
-			/// \brief TODOCUMENT
-			[[nodiscard]] virtual std::string do_get_descriptive_name() const = 0;
+		/// \brief Pure virtual method with which each concrete common_residue_selection_policy must define how to create a clone of itself
+		[[nodiscard]] virtual std::unique_ptr<common_residue_selection_policy> do_clone() const = 0;
 
-			/// \brief Pure virtual method with which each concrete common_residue_selection_policy must define how to create a clone of itself
-			[[nodiscard]] virtual std::unique_ptr<common_residue_selection_policy> do_clone() const = 0;
+		/// \brief TODOCUMENT
+		[[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const = 0;
 
-			/// \brief TODOCUMENT
-			[[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const = 0;
+	  public:
+		common_residue_selection_policy() = default;
+		virtual ~common_residue_selection_policy() noexcept = default;
 
-		  public:
-			common_residue_selection_policy() = default;
-			virtual ~common_residue_selection_policy() noexcept = default;
+		common_residue_selection_policy(const common_residue_selection_policy &) = default;
+		common_residue_selection_policy(common_residue_selection_policy &&) noexcept = default;
+		common_residue_selection_policy & operator=(const common_residue_selection_policy &) = default;
+		common_residue_selection_policy & operator=(common_residue_selection_policy &&) noexcept = default;
 
-			common_residue_selection_policy(const common_residue_selection_policy &) = default;
-			common_residue_selection_policy(common_residue_selection_policy &&) noexcept = default;
-			common_residue_selection_policy & operator=(const common_residue_selection_policy &) = default;
-			common_residue_selection_policy & operator=(common_residue_selection_policy &&) noexcept = default;
+		[[nodiscard]] std::vector<alignment::size_type> select_common_residues( const alignment &,
+		                                                                        const alignment::size_type &,
+		                                                                        const alignment::size_type & ) const;
+		[[nodiscard]] std::string                       get_descriptive_name() const;
 
-			[[nodiscard]] std::vector<alignment::size_type> select_common_residues( const alignment &,
-			                                                                        const alignment::size_type &,
-			                                                                        const alignment::size_type & ) const;
-			[[nodiscard]] std::string                       get_descriptive_name() const;
+		[[nodiscard]] std::unique_ptr<common_residue_selection_policy> clone() const;
 
-			[[nodiscard]] std::unique_ptr<common_residue_selection_policy> clone() const;
+		[[nodiscard]] bool less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const;
+	};
 
-			[[nodiscard]] bool less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const;
-		};
+	boost::ptr_vector<common_residue_selection_policy> get_all_common_residue_selection_policies();
 
-		boost::ptr_vector<common_residue_selection_policy> get_all_common_residue_selection_policies();
+	std::vector<alignment::size_type> select_common_residues_of_pair_alignment(const common_residue_selection_policy &,
+	                                                                           const alignment &);
 
-		std::vector<alignment::size_type> select_common_residues_of_pair_alignment(const common_residue_selection_policy &,
-		                                                                           const alignment &);
+	std::unique_ptr<common_residue_selection_policy> make_default_common_residue_selection_policy();
 
-		std::unique_ptr<common_residue_selection_policy> make_default_common_residue_selection_policy();
+	bool is_default_policy(const common_residue_selection_policy &);
 
-		bool is_default_policy(const common_residue_selection_policy &);
+	std::ostream & operator<<(std::ostream &,
+	                          const common_residue_selection_policy &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const common_residue_selection_policy &);
+	/// \brief Function to make common_residue_selection_policy meet the Clonable concept (used in ptr_container)
+	///
+	/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
+	///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
+	///
+	/// This gets the smart pointer from the clone() method and then calls release on it.
+	///
+	/// \returns A raw pointer to a new copy of the common_residue_selection_policy argument, with the same dynamic type.
+	///          The caller is responsible for deleting this new object.
+	inline common_residue_selection_policy * new_clone(const common_residue_selection_policy &prm_common_residue_selection_policy ///< The common_residue_selection_policy to clone
+	                                                ) {
+		return prm_common_residue_selection_policy.clone().release();
+	}
 
-		/// \brief Function to make common_residue_selection_policy meet the Clonable concept (used in ptr_container)
-		///
-		/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
-		///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
-		///
-		/// This gets the smart pointer from the clone() method and then calls release on it.
-		///
-		/// \returns A raw pointer to a new copy of the common_residue_selection_policy argument, with the same dynamic type.
-		///          The caller is responsible for deleting this new object.
-		inline common_residue_selection_policy * new_clone(const common_residue_selection_policy &prm_common_residue_selection_policy ///< The common_residue_selection_policy to clone
-		                                                ) {
-			return prm_common_residue_selection_policy.clone().release();
-		}
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY_COMMON_RESIDUE_SELECTION_POLICY_HPP

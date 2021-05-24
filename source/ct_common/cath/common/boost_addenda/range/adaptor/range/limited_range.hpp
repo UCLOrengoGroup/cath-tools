@@ -24,40 +24,38 @@
 #include "cath/common/algorithm/copy_build.hpp" // ***** TEMPORARY *****
 #include "cath/common/boost_addenda/range/adaptor/iterator/limit_itr.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief A range wrapper that limits to the first n elements of the underlying range.
-		///
-		/// For a const limited_range, use a const RNG type.
-		///
-		/// Invariants:
-		///  * The client must preserve the validity of the original range and its one-past-end iterator throughout the limited_range's lifetime
-		template <typename RNG>
-		class limited_range final : public boost::iterator_range<limit_itr<RNG>> {
-		private:
-			/// \brief The limit_itr that does the actual hard work of implementing the limit iterator
-			using limited_iterator = limit_itr<RNG>;
+	/// \brief A range wrapper that limits to the first n elements of the underlying range.
+	///
+	/// For a const limited_range, use a const RNG type.
+	///
+	/// Invariants:
+	///  * The client must preserve the validity of the original range and its one-past-end iterator throughout the limited_range's lifetime
+	template <typename RNG>
+	class limited_range final : public boost::iterator_range<limit_itr<RNG>> {
+	private:
+		/// \brief The limit_itr that does the actual hard work of implementing the limit iterator
+		using limited_iterator = limit_itr<RNG>;
 
-			/// \brief A convenience type-alias for the iterator_range through which this is implemented
-			using super            = boost::iterator_range<limited_iterator>;
+		/// \brief A convenience type-alias for the iterator_range through which this is implemented
+		using super            = boost::iterator_range<limited_iterator>;
 
-		public:
-			limited_range(const RNG &,
-			              const size_t &);
-		 };
+	public:
+		limited_range(const RNG &,
+		              const size_t &);
+	 };
 
-		/// \brief Ctor from a range
-		template <typename RNG>
-		limited_range<RNG>::limited_range(const RNG    &prm_range,           ///< The range over which to apply this limited_range
-		                                  const size_t &prm_max_num_elements ///< The maximum number of elements
-		                                  ) : super(
-		                                      	limited_iterator( ::std::cbegin( prm_range ), ::std::cend  ( prm_range ), prm_max_num_elements ),
-		                                      	limited_iterator( ::std::cend  ( prm_range ), ::std::cend  ( prm_range ), prm_max_num_elements )
-		                                      ) {
-		}
+	/// \brief Ctor from a range
+	template <typename RNG>
+	limited_range<RNG>::limited_range(const RNG    &prm_range,           ///< The range over which to apply this limited_range
+	                                  const size_t &prm_max_num_elements ///< The maximum number of elements
+	                                  ) : super(
+	                                      	limited_iterator( ::std::cbegin( prm_range ), ::std::cend  ( prm_range ), prm_max_num_elements ),
+	                                      	limited_iterator( ::std::cend  ( prm_range ), ::std::cend  ( prm_range ), prm_max_num_elements )
+	                                      ) {
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_LIMITED_RANGE_HPP

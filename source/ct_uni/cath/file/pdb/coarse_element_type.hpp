@@ -23,25 +23,23 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Coarsely represent an element type as one of the PDB core element types (C/CA/CB/N/O) or NON_CORE
-		enum class coarse_element_type : char {
-			CARBON,       ///< Represent a carbon atom
-			CARBON_ALPHA, ///< Represent a carbon_alpha atom
-			CARBON_BETA,  ///< Represent a carbon_beta atom
-			NITROGEN,     ///< Represent a nitrogen atom
-			OXYGEN,       ///< Represent a oxygen atom
-			NON_CORE      ///< Represent a non-core atom
-		};
+	/// \brief Coarsely represent an element type as one of the PDB core element types (C/CA/CB/N/O) or NON_CORE
+	enum class coarse_element_type : char {
+		CARBON,       ///< Represent a carbon atom
+		CARBON_ALPHA, ///< Represent a carbon_alpha atom
+		CARBON_BETA,  ///< Represent a carbon_beta atom
+		NITROGEN,     ///< Represent a nitrogen atom
+		OXYGEN,       ///< Represent a oxygen atom
+		NON_CORE      ///< Represent a non-core atom
+	};
 
-		std::string to_string(const coarse_element_type &);
+	std::string to_string(const coarse_element_type &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const coarse_element_type &);
+	std::ostream & operator<<(std::ostream &,
+	                          const coarse_element_type &);
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_COARSE_ELEMENT_TYPE_HPP

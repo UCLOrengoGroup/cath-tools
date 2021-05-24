@@ -21,17 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ANGLE_ENDPOINT_LOC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ANGLE_ENDPOINT_LOC_HPP
 
-namespace cath {
-	namespace geom {
+namespace cath::geom {
 
-		/// \brief TODOCUMENT
-		enum class angle_endpoint_loc : char {
-			USE_LOWER, ///< TODOCUMENT
-			USE_UPPER, ///< TODOCUMENT
-			USE_EITHER ///< TODOCUMENT
-		};
+	/// \brief TODOCUMENT
+	enum class angle_endpoint_loc : char {
+		USE_LOWER, ///< TODOCUMENT
+		USE_UPPER, ///< TODOCUMENT
+		USE_EITHER ///< TODOCUMENT
+	};
 
-	} // namespace geom
-} // namespace cath
+} // namespace cath::geom
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ANGLE_ENDPOINT_LOC_HPP

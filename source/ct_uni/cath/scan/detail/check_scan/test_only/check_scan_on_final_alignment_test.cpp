@@ -46,20 +46,8 @@ using namespace ::cath::scan;
 using namespace ::cath::scan::detail;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The check_scan_on_final_alignment_test_suite_fixture to assist in testing check_scan_on_final_alignment
-		struct check_scan_on_final_alignment_test_suite_fixture : protected global_test_constants {
-		protected:
-			~check_scan_on_final_alignment_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(check_scan_on_final_alignment_test_suite, cath::test::check_scan_on_final_alignment_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(check_scan_on_final_alignment_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

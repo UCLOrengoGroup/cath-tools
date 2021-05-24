@@ -30,21 +30,19 @@ using namespace ::cath::common::test;
 using namespace ::cath::file;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The prc_scores_entry_test_suite_fixture to assist in testing prc_scores_entry
-		struct prc_scores_entry_test_suite_fixture {
-		protected:
-			~prc_scores_entry_test_suite_fixture() noexcept = default;
+	/// \brief The prc_scores_entry_test_suite_fixture to assist in testing prc_scores_entry
+	struct prc_scores_entry_test_suite_fixture {
+	protected:
+		~prc_scores_entry_test_suite_fixture() noexcept = default;
 
-			const prc_scores_entry eg_entry{ "1i4dA00", 4, 199, 201, 1, "3cazA00", 15, 209, 219, 25.3, 16.3, 1.6e-11 };
-		};
+		const prc_scores_entry eg_entry{ "1i4dA00", 4, 199, 201, 1, "3cazA00", 15, 209, 219, 25.3, 16.3, 1.6e-11 };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(prc_scores_entry_test_suite, cath::test::prc_scores_entry_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(prc_scores_entry_test_suite, prc_scores_entry_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(equality_works) {
 	check_equality_operators_on_diff_vals_range( vector<prc_scores_entry>{

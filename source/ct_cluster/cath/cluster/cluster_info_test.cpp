@@ -24,12 +24,9 @@
 #include "cath/cluster/cluster_info.hpp"
 #include "cath/test/boost_test_print_type.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::seq;
-using namespace ::cath::test;
 
 using ::boost::algorithm::is_strictly_increasing;
 using ::std::nullopt;
@@ -37,8 +34,7 @@ using ::std::pair;
 using ::std::string;
 using ::std::vector;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The cluster_info_test_suite_fixture to assist in testing cluster_info
 		struct cluster_info_test_suite_fixture {
@@ -64,8 +60,7 @@ namespace cath {
 			}
 		};
 
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(cluster_info_test_suite, cluster_info_test_suite_fixture)
 

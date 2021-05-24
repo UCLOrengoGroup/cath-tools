@@ -24,27 +24,8 @@ using namespace ::cath::common;
 
 using ::std::make_tuple;
 
-namespace cath {
-	namespace test {
+static constexpr int fn_a( const int &x, const double &y ) {
+	return x + static_cast<int>( y );
+}
 
-		static constexpr int fn_a(const int &x, const double &y) { return x + static_cast<int>( y ); }
-
-		/// \brief The apply_test_suite_fixture to assist in testing apply
-		struct apply_test_suite_fixture {
-		protected:
-			~apply_test_suite_fixture() noexcept = default;
-
-			/// \totest type_apply_stepwise
-
-			/// \totest type_construct_and_apply_stepwise
-
-			/// \totest apply_stepwise
-
-			static_assert(
-				::cath::common::apply( fn_a, make_tuple( 1, 2.0 ) ) == 3,
-				"Failure in static_assert test of tuple apply()"
-			);
-
-		};
-	}  // namespace test
-}  // namespace cath
+static_assert( ::cath::common::apply( fn_a, make_tuple( 1, 2.0 ) ) == 3, "Failure in static_assert test of tuple apply()" );

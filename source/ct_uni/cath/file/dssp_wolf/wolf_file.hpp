@@ -26,28 +26,29 @@
 
 #include <vector>
 
-namespace cath { namespace file { class pdb; } }
+// clang-format off
+namespace cath::file { class pdb; }
 namespace cath { class protein; }
 namespace cath { class residue; }
+// clang-format on
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Represent the data parsed from a WOLF file
-		class wolf_file final {
-			residue_vec wolf_residues;
+	/// \brief Represent the data parsed from a WOLF file
+	class wolf_file final {
+		residue_vec wolf_residues;
 
-		public:
-			using size_type = residue_vec::size_type;
+	public:
+		using size_type = residue_vec::size_type;
 
-			explicit wolf_file(residue_vec);
+		explicit wolf_file(residue_vec);
 
-			[[nodiscard]] size_type      get_num_residues() const;
-			[[nodiscard]] const residue &get_residue_of_index( const size_type & ) const;
-		};
+		[[nodiscard]] size_type      get_num_residues() const;
+		[[nodiscard]] const residue &get_residue_of_index( const size_type & ) const;
+	};
 
-		protein protein_from_wolf(const wolf_file &);
-	} // namespace file
-} // namespace cath
+	protein protein_from_wolf(const wolf_file &);
+
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_HPP

@@ -21,33 +21,32 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_APPEND_TEMPLATE_PARAMS_INTO_FIRST_WRAPPER_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_APPEND_TEMPLATE_PARAMS_INTO_FIRST_WRAPPER_HPP
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Primary template for implementation of append_template_params_into_first_wrapper_t
-			template <typename... Ts>
-			struct append_template_params_into_first_wrapper final {};
+		/// \brief Primary template for implementation of append_template_params_into_first_wrapper_t
+		template <typename... Ts>
+		struct append_template_params_into_first_wrapper final {};
 
-			/// \brief Specialisation of template for implementation of append_template_params_into_first_wrapper_t
-			///        for single arguments
-			template <typename T>
-			struct append_template_params_into_first_wrapper<T> final {
-				using type = T;
-			};
+		/// \brief Specialisation of template for implementation of append_template_params_into_first_wrapper_t
+		///        for single arguments
+		template <typename T>
+		struct append_template_params_into_first_wrapper<T> final {
+			using type = T;
+		};
 
-			/// \brief Specialisation of template for implementation of append_template_params_into_first_wrapper_t
-			///        for two or more arguments (where both must be templates)
-			template <template <typename...> class Wrppr1,
-			          typename... Prms1,
-			          template <typename...> class Wrppr2,
-			          typename... Prms2,
-			          typename... Ts>
-			struct append_template_params_into_first_wrapper<Wrppr1<Prms1...>, Wrppr2<Prms2...>, Ts...> final {
-				using type = typename append_template_params_into_first_wrapper< Wrppr1< Prms1..., Prms2... >, Ts... >::type;
-			};
+		/// \brief Specialisation of template for implementation of append_template_params_into_first_wrapper_t
+		///        for two or more arguments (where both must be templates)
+		template <template <typename...> class Wrppr1,
+		          typename... Prms1,
+		          template <typename...> class Wrppr2,
+		          typename... Prms2,
+		          typename... Ts>
+		struct append_template_params_into_first_wrapper<Wrppr1<Prms1...>, Wrppr2<Prms2...>, Ts...> final {
+			using type = typename append_template_params_into_first_wrapper< Wrppr1< Prms1..., Prms2... >, Ts... >::type;
+		};
 
-		} // namespace detail
+	} // namespace detail
 
 	/// \brief The type created by wrapping the specified type's template parameters in the template wrapper
 	///
@@ -55,7 +54,6 @@ namespace cath {
 	template <typename... Ts>
 	using append_template_params_into_first_wrapper_t = typename detail::append_template_params_into_first_wrapper<Ts...>::type;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_APPEND_TEMPLATE_PARAMS_INTO_FIRST_WRAPPER_HPP

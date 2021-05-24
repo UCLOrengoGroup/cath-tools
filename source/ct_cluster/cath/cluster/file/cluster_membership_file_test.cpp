@@ -18,9 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/test/unit_test.hpp>
-
 #include <regex>
+
+#include <boost/test/unit_test.hpp>
 
 #include "cath/cluster/file/cluster_membership_file.hpp"
 #include "cath/cluster/map/map_clusters.hpp"
@@ -29,19 +29,15 @@
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "cath/test/boost_test_print_type.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::clust;
 using namespace ::cath::common;
-using namespace ::cath::test;
 
 using ::std::nullopt;
 using ::std::regex;
 using ::std::regex_search;
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The cluster_membership_file_test_suite_fixture to assist in testing cluster_membership_file
 		struct cluster_membership_file_test_suite_fixture {
@@ -89,8 +85,7 @@ namespace cath {
 			const string spurious_extra_column_input_str = "a 1\nb 2 x\nc 3 y\nd 4 z\n";
 
 		};
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(cluster_membership_file_test_suite, cluster_membership_file_test_suite_fixture)
 

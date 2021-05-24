@@ -24,44 +24,40 @@
 #include <boost/concept_check.hpp>
 #include <boost/core/ignore_unused.hpp>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief Check type provides a const equal_with_same_dynamic_type() method
-			///        whose return type is convertible to bool.
-			///
-			/// This uses the Boost Concept tools.
-			/// See the "Creating Concept Checking Classes" page for the Boost Concept Check Library pages
-			/// (currently http://www.boost.org/libs/concept_check/creating_concepts.htm)
-			template <typename X>
-			struct is_equal_with_same_dynamic_type_comparable {
-			public:
-				/// \brief The bit that does the actual concept-checking work
-				BOOST_CONCEPT_USAGE(is_equal_with_same_dynamic_type_comparable) {
-					bool answer(value_1.equal_with_same_dynamic_type(value_2));
-					boost::ignore_unused(answer);
-				}
+	/// \brief Check type provides a const equal_with_same_dynamic_type() method
+	///        whose return type is convertible to bool.
+	///
+	/// This uses the Boost Concept tools.
+	/// See the "Creating Concept Checking Classes" page for the Boost Concept Check Library pages
+	/// (currently http://www.boost.org/libs/concept_check/creating_concepts.htm)
+	template <typename X>
+	struct is_equal_with_same_dynamic_type_comparable {
+	public:
+		/// \brief The bit that does the actual concept-checking work
+		BOOST_CONCEPT_USAGE(is_equal_with_same_dynamic_type_comparable) {
+			bool answer(value_1.equal_with_same_dynamic_type(value_2));
+			boost::ignore_unused(answer);
+		}
 
-				/// \brief Ctor just to prevent compiler complaining that value references won't ever get initialised
-				is_equal_with_same_dynamic_type_comparable(const X &prm_value_1,
-				                                           const X &prm_value_2
-				                                           ) : value_1(prm_value_1),
-				                                               value_2(prm_value_2) {
-				}
+		/// \brief Ctor just to prevent compiler complaining that value references won't ever get initialised
+		is_equal_with_same_dynamic_type_comparable(const X &prm_value_1,
+		                                           const X &prm_value_2
+		                                           ) : value_1(prm_value_1),
+		                                               value_2(prm_value_2) {
+		}
 
-			private:
-				/// \brief Value stored as const reference to permit X to be abstract
-				///        (and to ensure equal_with_same_dynamic_type() doesn't require non-const)
-				const X &value_1;
+	private:
+		/// \brief Value stored as const reference to permit X to be abstract
+		///        (and to ensure equal_with_same_dynamic_type() doesn't require non-const)
+		const X &value_1;
 
-				/// \brief Value stored as const reference to permit X to be abstract
-				///        (and to ensure equal_with_same_dynamic_type() doesn't require non-const)
-				const X &value_2;
-			};
+		/// \brief Value stored as const reference to permit X to be abstract
+		///        (and to ensure equal_with_same_dynamic_type() doesn't require non-const)
+		const X &value_2;
+	};
 
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_POLYMORPHIC_COMPARISON_DETAIL_IS_EQUAL_WITH_SAME_DYNAMIC_TYPE_COMPARABLE_HPP

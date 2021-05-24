@@ -21,7 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_SEC_STRUC_PLANAR_ANGLES_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_SEC_STRUC_PLANAR_ANGLES_HPP
 
-namespace cath { namespace file { class sec_file_record; } }
+// clang-format off
+namespace cath::file { class sec_file_record; }
+// clang-format on
 
 #include <string>
 

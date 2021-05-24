@@ -21,18 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HALF_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HALF_HPP
 
-namespace cath {
-	namespace align {
-		namespace detail {
+namespace cath::align::detail {
 
-			/// \brief TODOCUMENT
-			enum class alignment_split_half : bool {
-				FIRST, ///< TODOCUMENT
-				SECOND ///< TODOCUMENT
-			};
+	/// \brief TODOCUMENT
+	enum class alignment_split_half : bool {
+		FIRST, ///< TODOCUMENT
+		SECOND ///< TODOCUMENT
+	};
 
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+} // namespace cath::align::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HALF_HPP

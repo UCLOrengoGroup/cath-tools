@@ -27,89 +27,90 @@
 #include "cath/score/score_type_aliases.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-namespace cath { namespace score { class substitution_matrix; } }
-namespace cath { namespace score { bool operator<(const substitution_matrix &, const substitution_matrix &); } }
+// clang-format off
+namespace cath::score { class substitution_matrix; }
+namespace cath::score { bool operator<(const substitution_matrix &, const substitution_matrix &); }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief Represent a substitution matrix of scores for a substitution of one amino acid for another
-		///
-		/// Invariants:
-		///  * amino_acids are sorted
-		///  * scores' indices correspond to those of amino_acids (for both dimensions)
-		///  * scores is symmetric
-		class substitution_matrix final {
-		private:
-			friend bool operator<(const substitution_matrix &,
-			                      const substitution_matrix &);
+	/// \brief Represent a substitution matrix of scores for a substitution of one amino acid for another
+	///
+	/// Invariants:
+	///  * amino_acids are sorted
+	///  * scores' indices correspond to those of amino_acids (for both dimensions)
+	///  * scores is symmetric
+	class substitution_matrix final {
+	private:
+		friend bool operator<(const substitution_matrix &,
+		                      const substitution_matrix &);
 
-//			friend class boost::serialization::access;
+//		friend class boost::serialization::access;
 //
-//			template<class archive> void serialize(archive &ar,
-//			                                       const size_t /*version*/
-//			                                       ) {
-//				ar & BOOST_SERIALIZATION_NVP( amino_acids );
-//				ar & BOOST_SERIALIZATION_NVP( scores );
-//				ar & BOOST_SERIALIZATION_NVP( score_for_one_unknown_aa );
-//				ar & BOOST_SERIALIZATION_NVP( score_for_two_unknown_aas );
-//				ar & BOOST_SERIALIZATION_NVP( name );
-//			}
+//		template<class archive> void serialize(archive &ar,
+//		                                       const size_t /*version*/
+//		                                       ) {
+//			ar & BOOST_SERIALIZATION_NVP( amino_acids );
+//			ar & BOOST_SERIALIZATION_NVP( scores );
+//			ar & BOOST_SERIALIZATION_NVP( score_for_one_unknown_aa );
+//			ar & BOOST_SERIALIZATION_NVP( score_for_two_unknown_aas );
+//			ar & BOOST_SERIALIZATION_NVP( name );
+//		}
 
-			/// \brief The sorted list of amino acids for which the substitution scores are provided
-			amino_acid_vec amino_acids;
+		/// \brief The sorted list of amino acids for which the substitution scores are provided
+		amino_acid_vec amino_acids;
 
-			/// \brief The all-against-all scores, with both dimensions sorted in the same order as the sorted amino_acids list
-			score_vec_vec scores;
+		/// \brief The all-against-all scores, with both dimensions sorted in the same order as the sorted amino_acids list
+		score_vec_vec scores;
 
-			/// \brief The score that's returned if one of the query amino acids is unrecognised
-			score_type score_for_one_unknown_aa;
+		/// \brief The score that's returned if one of the query amino acids is unrecognised
+		score_type score_for_one_unknown_aa;
 
-			/// \brief The score that's returned if both query amino acids are unrecognised
-			score_type score_for_two_unknown_aas;
+		/// \brief The score that's returned if both query amino acids are unrecognised
+		score_type score_for_two_unknown_aas;
 
-			/// \brief A name for the substitution matrix
-			std::string name;
+		/// \brief A name for the substitution matrix
+		std::string name;
 
-			[[nodiscard]] const amino_acid_vec &get_amino_acids() const;
-			[[nodiscard]] const score_vec_vec & get_scores() const;
-			[[nodiscard]] const score_type &    get_score_for_one_unknown_aa() const;
-			[[nodiscard]] const score_type &    get_score_for_two_unknown_aas() const;
+		[[nodiscard]] const amino_acid_vec &get_amino_acids() const;
+		[[nodiscard]] const score_vec_vec & get_scores() const;
+		[[nodiscard]] const score_type &    get_score_for_one_unknown_aa() const;
+		[[nodiscard]] const score_type &    get_score_for_two_unknown_aas() const;
 
-			static size_vec order_permutation(const amino_acid_vec &,
-			                                  const amino_acid_vec &);
+		static size_vec order_permutation(const amino_acid_vec &,
+		                                  const amino_acid_vec &);
 
-			static score_vec_vec reorder_scores(const amino_acid_vec &,
-			                                    const amino_acid_vec &,
-			                                    const score_vec_vec &);
+		static score_vec_vec reorder_scores(const amino_acid_vec &,
+		                                    const amino_acid_vec &,
+		                                    const score_vec_vec &);
 
-			static bool has_lower_highest_score(const score_vec &,
-			                                    const score_vec &);
-			static score_type highest_score_of_scores(const score_vec &);
+		static bool has_lower_highest_score(const score_vec &,
+		                                    const score_vec &);
+		static score_type highest_score_of_scores(const score_vec &);
 
-			void check_is_symmetric() const;
+		void check_is_symmetric() const;
 
-		public:
-			substitution_matrix(const amino_acid_vec &,
-			                    const score_vec_vec &,
-			                    const score_type &,
-			                    const score_type &,
-			                    std::string);
+	public:
+		substitution_matrix(const amino_acid_vec &,
+		                    const score_vec_vec &,
+		                    const score_type &,
+		                    const score_type &,
+		                    std::string);
 
-			[[nodiscard]] const std::string &get_name() const;
+		[[nodiscard]] const std::string &get_name() const;
 
-			[[nodiscard]] score_type get_highest_score() const;
+		[[nodiscard]] score_type get_highest_score() const;
 
-			[[nodiscard]] score_type get_score( const amino_acid &, const amino_acid & ) const;
-		};
+		[[nodiscard]] score_type get_score( const amino_acid &, const amino_acid & ) const;
+	};
 
-		bool operator<(const substitution_matrix &,
-		               const substitution_matrix &);
+	bool operator<(const substitution_matrix &,
+	               const substitution_matrix &);
 
-		amino_acid_vec get_standard_substitution_amino_acids();
+	amino_acid_vec get_standard_substitution_amino_acids();
 
-		substitution_matrix_vec get_all_substitution_matrices();
-	} // namespace score
-} // namespace cath
+	substitution_matrix_vec get_all_substitution_matrices();
+
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SUBSTITUTION_MATRIX_SUBSTITUTION_MATRIX_HPP

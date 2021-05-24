@@ -28,39 +28,37 @@
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/extract_pdb_options_block.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
+
+	/// \brief TODOCUMENT
+	class cath_extract_pdb_options final : public executable_options {
+	private:
+		using super = executable_options;
 
 		/// \brief TODOCUMENT
-		class cath_extract_pdb_options final : public executable_options {
-		private:
-			using super = executable_options;
+		extract_pdb_options_block the_extract_pdb_options_block;
 
-			/// \brief TODOCUMENT
-			extract_pdb_options_block the_extract_pdb_options_block;
+		[[nodiscard]] std::string_view                         do_get_program_name() const final;
+		boost::program_options::positional_options_description get_positional_options() final;
+		[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
 
-			[[nodiscard]] std::string_view                         do_get_program_name() const final;
-			boost::program_options::positional_options_description get_positional_options() final;
-			[[nodiscard]] str_opt                                  do_get_error_or_help_string() const final;
+		[[nodiscard]] std::string do_get_help_prefix_string() const final;
+		[[nodiscard]] std::string do_get_help_suffix_string() const final;
+		[[nodiscard]] std::string do_get_overview_string() const final;
 
-			[[nodiscard]] std::string do_get_help_prefix_string() const final;
-			[[nodiscard]] std::string do_get_help_suffix_string() const final;
-			[[nodiscard]] std::string do_get_overview_string() const final;
+	  public:
+		cath_extract_pdb_options();
 
-		  public:
-			cath_extract_pdb_options();
+		[[nodiscard]] const extract_pdb_options_block &get_extract_pdb_options_block() const;
 
-			[[nodiscard]] const extract_pdb_options_block &get_extract_pdb_options_block() const;
+		/// \brief The name of the program that uses this executable_options
+		static constexpr ::std::string_view PROGRAM_NAME{ "extract-pdb" };
+	};
 
-			/// \brief The name of the program that uses this executable_options
-			static constexpr ::std::string_view PROGRAM_NAME{ "extract-pdb" };
-		};
+	const ::std::filesystem::path & get_input_pdb_file(const cath_extract_pdb_options &);
+	const path_opt & get_output_pdb_file(const cath_extract_pdb_options &);
+	const chop::domain_opt & get_regions(const cath_extract_pdb_options &);
 
-		const ::std::filesystem::path & get_input_pdb_file(const cath_extract_pdb_options &);
-		const path_opt & get_output_pdb_file(const cath_extract_pdb_options &);
-		const chop::domain_opt & get_regions(const cath_extract_pdb_options &);
-
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_CATH_EXTRACT_PDB_OPTIONS_CATH_EXTRACT_PDB_OPTIONS_HPP

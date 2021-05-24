@@ -23,10 +23,7 @@
 #include "cath/resolve_hits/options/spec/crh_filter_spec.hpp"
 #include "cath/test/boost_test_print_type.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::rslv;
-using namespace ::cath::test;
 
 using ::std::make_optional;
 using ::std::nullopt;

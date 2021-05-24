@@ -23,18 +23,16 @@
 
 #include <type_traits>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief C++17 logical negation of the type trait B
-		template <typename B>
-		struct negation : std::integral_constant<bool, ! bool( B::value ) > {};
+	/// \brief C++17 logical negation of the type trait B
+	template <typename B>
+	struct negation : std::integral_constant<bool, ! bool( B::value ) > {};
 
-		// /// \brief C++17 variable template for logical negation of the type trait B
-		// template <typename B>
-		// constexpr bool negation_v = negation<B>::value;
+	// /// \brief C++17 variable template for logical negation of the type trait B
+	// template <typename B>
+	// constexpr bool negation_v = negation<B>::value;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_NEGATION_HPP

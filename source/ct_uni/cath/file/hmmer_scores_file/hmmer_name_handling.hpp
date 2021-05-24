@@ -21,16 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_HMMER_SCORES_FILE_HMMER_NAME_HANDLING_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_HMMER_SCORES_FILE_HMMER_NAME_HANDLING_HPP
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief TODOCUMENT
-		enum class hmmer_name_handling : bool {
-			STRIP, ///< TODOCUMENT
-			LEAVE  ///< TODOCUMENT
-		};
+	/// \brief TODOCUMENT
+	enum class hmmer_name_handling : bool {
+		STRIP, ///< TODOCUMENT
+		LEAVE  ///< TODOCUMENT
+	};
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_HMMER_SCORES_FILE_HMMER_NAME_HANDLING_HPP

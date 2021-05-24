@@ -24,34 +24,33 @@
 #include "cath/structure/view_cache/index/detail/dims/detail/vci_linear_dim_spec_view_axis.hpp"
 #include "cath/structure/view_cache/index/detail/dims/detail/view_cache_index_dim_linear.hpp"
 
-namespace cath {
-	namespace index {
-		namespace detail {
-			namespace detail {
+namespace cath::index::detail {
 
-				/// \brief TODOCUMENT
-				struct vci_linear_view_x_getter final {
+	namespace detail {
 
-					/// \brief TODOCUMENT
-					[[nodiscard]] std::string get_name() const {
-						return "x-axis";
-					}
-
-					/// \brief TODOCUMENT
-					auto operator()(const view_cache_index_entry &prm_entry ///< TODOCUMENT
-					                )->decltype( get_view_x( prm_entry ) ) {
-						return get_view_x( prm_entry );
-					}
-				};
-
-				using vci_linear_dim_spec_view_x = vci_linear_dim_spec_view_axis<vci_linear_view_x_getter>;
-			} // namespace detail
+		/// \brief TODOCUMENT
+		struct vci_linear_view_x_getter final {
 
 			/// \brief TODOCUMENT
-			using view_cache_index_dim_linear_x = detail::view_cache_index_dim_linear< detail::vci_linear_dim_spec_view_x >;
-		} // namespace detail
-	} // namespace index
-} // namespace cath
+			[[nodiscard]] std::string get_name() const {
+				return "x-axis";
+			}
+
+			/// \brief TODOCUMENT
+			auto operator()(const view_cache_index_entry &prm_entry ///< TODOCUMENT
+			                )->decltype( get_view_x( prm_entry ) ) {
+				return get_view_x( prm_entry );
+			}
+		};
+
+		using vci_linear_dim_spec_view_x = vci_linear_dim_spec_view_axis<vci_linear_view_x_getter>;
+
+	} // namespace detail
+
+	/// \brief TODOCUMENT
+	using view_cache_index_dim_linear_x = detail::view_cache_index_dim_linear< detail::vci_linear_dim_spec_view_x >;
+
+} // namespace cath::index::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_VIEW_CACHE_INDEX_DIM_LINEAR_X_HPP
 

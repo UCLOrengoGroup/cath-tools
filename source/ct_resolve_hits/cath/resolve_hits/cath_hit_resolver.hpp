@@ -26,26 +26,26 @@
 
 #include <iostream>
 
-namespace cath { namespace rslv { class crh_options; } }
-namespace cath { namespace rslv { class crh_spec; } }
+// clang-format off
+namespace cath::rslv { class crh_options; }
+namespace cath::rslv { class crh_spec; }
+// clang-format on
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		void perform_resolve_hits(const str_vec &,
-		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout,
-		                          const opts::parse_sources & = opts::parse_sources::CMND_ENV_AND_FILE);
+	void perform_resolve_hits(const str_vec &,
+	                          std::istream & = std::cin,
+	                          std::ostream & = std::cout,
+	                          const opts::parse_sources & = opts::parse_sources::CMND_ENV_AND_FILE);
 
-		void perform_resolve_hits(const crh_options &,
-		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout);
+	void perform_resolve_hits(const crh_options &,
+	                          std::istream & = std::cin,
+	                          std::ostream & = std::cout);
 
-		void perform_resolve_hits(const crh_spec &,
-		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout);
+	void perform_resolve_hits(const crh_spec &,
+	                          std::istream & = std::cin,
+	                          std::ostream & = std::cout);
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_CATH_HIT_RESOLVER_HPP

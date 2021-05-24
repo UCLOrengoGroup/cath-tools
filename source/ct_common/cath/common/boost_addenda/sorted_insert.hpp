@@ -23,39 +23,38 @@
 
 #include <boost/range/algorithm/lower_bound.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Insert a value into the correct place in a container that's already sorted
-		template <typename CTR>
-		inline void sorted_insert(CTR                            &prm_container, ///< The sorted container into which a value should be inserted
-		                          const typename CTR::value_type &prm_value      ///< The value to insert
-		                          ) {
-			prm_container.insert(
-				boost::range::lower_bound(
-					prm_container,
-					prm_value
-				),
+	/// \brief Insert a value into the correct place in a container that's already sorted
+	template <typename CTR>
+	inline void sorted_insert(CTR                            &prm_container, ///< The sorted container into which a value should be inserted
+	                          const typename CTR::value_type &prm_value      ///< The value to insert
+	                          ) {
+		prm_container.insert(
+			boost::range::lower_bound(
+				prm_container,
 				prm_value
-			);
-    	}
+			),
+			prm_value
+		);
+	}
 
-		/// \brief Insert a value into the correct place in a container that's already sorted with the specified less-than predicate
-		template <typename CTR, typename PRED>
-		inline void sorted_insert(CTR                            &prm_container, ///< The sorted container into which a value should be inserted
-		                          const typename CTR::value_type &prm_value,     ///< The value to insert
-		                          PRED                           prm_predicate   ///< The less-than predicate used for the sorting of the elements
-		                          ) {
-			prm_container.insert(
-				boost::range::lower_bound(
-					prm_container,
-					prm_value,
-					prm_predicate
-				),
-				prm_value
-			);
-    	}
-	} // namespace common
-} // namespace cath
+	/// \brief Insert a value into the correct place in a container that's already sorted with the specified less-than predicate
+	template <typename CTR, typename PRED>
+	inline void sorted_insert(CTR                            &prm_container, ///< The sorted container into which a value should be inserted
+	                          const typename CTR::value_type &prm_value,     ///< The value to insert
+	                          PRED                           prm_predicate   ///< The less-than predicate used for the sorting of the elements
+	                          ) {
+		prm_container.insert(
+			boost::range::lower_bound(
+				prm_container,
+				prm_value,
+				prm_predicate
+			),
+			prm_value
+		);
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_SORTED_INSERT_HPP

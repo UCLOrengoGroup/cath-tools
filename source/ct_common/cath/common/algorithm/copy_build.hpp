@@ -23,66 +23,64 @@
 
 #include <boost/range/algorithm/copy.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Constructs, populates and return an output container from a range
-		///
-		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_copy() sort_uniq_copy() transform_build() uniq_copy()
-		///
-		/// \tparam Container is a model of the Mutable_Container concept
-		/// \tparam ITER      is TODOCUMENT
-		template <typename Container,
-		          typename ITER>
-		inline Container copy_build(const ITER &prm_begin_itr, ///< TODOCUMENT
-		                            const ITER &prm_end_itr    ///< TODOCUMENT
-		                            ) {
-			// Static-check that Container is a Mutable_Container
-			BOOST_CONCEPT_ASSERT(( boost::Mutable_Container< Container > ));
+	/// \brief Constructs, populates and return an output container from a range
+	///
+	/// \sa copy_build() generate_n_build() random_sample_n_build() sort_copy() sort_uniq_copy() transform_build() uniq_copy()
+	///
+	/// \tparam Container is a model of the Mutable_Container concept
+	/// \tparam ITER      is TODOCUMENT
+	template <typename Container,
+	          typename ITER>
+	inline Container copy_build(const ITER &prm_begin_itr, ///< TODOCUMENT
+	                            const ITER &prm_end_itr    ///< TODOCUMENT
+	                            ) {
+		// Static-check that Container is a Mutable_Container
+		BOOST_CONCEPT_ASSERT(( boost::Mutable_Container< Container > ));
 
-			// Construct an instance of the container
-			Container container;
+		// Construct an instance of the container
+		Container container;
 
-			// Call the normal std::copy
-			std::copy(
-				prm_begin_itr,
-				prm_end_itr,
-				inserter( container, std::end( container ) )
-			);
+		// Call the normal std::copy
+		std::copy(
+			prm_begin_itr,
+			prm_end_itr,
+			inserter( container, std::end( container ) )
+		);
 
-			// Return the populated container
-			return container;
-		}
+		// Return the populated container
+		return container;
+	}
 
-		/// \brief Constructs, populates and return an output container from a range
-		///
-		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_copy() sort_uniq_copy() transform_build() uniq_copy()
-		///
-		/// \tparam Container        is a model of the Mutable_Container concept
-		/// \tparam SinglePassRange1 is a model of the SinglePassRangeConcept
-		template <typename Container,
-		          typename SinglePassRange1>
-		inline Container copy_build(const SinglePassRange1 &rng1 ///< A single-pass input range
-		                            ) {
-			// Static-check that Container is a Mutable_Container
-			BOOST_CONCEPT_ASSERT(( boost::Mutable_Container< Container > ));
+	/// \brief Constructs, populates and return an output container from a range
+	///
+	/// \sa copy_build() generate_n_build() random_sample_n_build() sort_copy() sort_uniq_copy() transform_build() uniq_copy()
+	///
+	/// \tparam Container        is a model of the Mutable_Container concept
+	/// \tparam SinglePassRange1 is a model of the SinglePassRangeConcept
+	template <typename Container,
+	          typename SinglePassRange1>
+	inline Container copy_build(const SinglePassRange1 &rng1 ///< A single-pass input range
+	                            ) {
+		// Static-check that Container is a Mutable_Container
+		BOOST_CONCEPT_ASSERT(( boost::Mutable_Container< Container > ));
 
-			// Check that SinglePassRange is a SinglePassRangeConcept
-			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< SinglePassRange1 > ));
+		// Check that SinglePassRange is a SinglePassRangeConcept
+		BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< SinglePassRange1 > ));
 
-			// Construct an instance of the container
-			Container container;
+		// Construct an instance of the container
+		Container container;
 
-			// Call the normal Boost Range copy()
-			boost::range::copy(
-				rng1,
-				inserter( container, std::end( container ) )
-			);
+		// Call the normal Boost Range copy()
+		boost::range::copy(
+			rng1,
+			inserter( container, std::end( container ) )
+		);
 
-			// Return the populated container
-			return container;
-		}
+		// Return the populated container
+		return container;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_COPY_BUILD_HPP

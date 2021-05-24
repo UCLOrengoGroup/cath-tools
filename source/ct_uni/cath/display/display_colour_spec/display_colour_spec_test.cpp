@@ -28,42 +28,39 @@
 using namespace ::cath;
 using namespace ::cath::common;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The display_colour_spec_test_suite_fixture to assist in testing display_colour_spec
-		struct display_colour_spec_test_suite_fixture : protected global_test_constants {
-		protected:
-			~display_colour_spec_test_suite_fixture() noexcept = default;
+	/// \brief The display_colour_spec_test_suite_fixture to assist in testing display_colour_spec
+	struct display_colour_spec_test_suite_fixture : protected global_test_constants {
+	protected:
+		~display_colour_spec_test_suite_fixture() noexcept = default;
 
-		  public:
-			[[nodiscard]] display_colour_spec get_spec() const;
+	  public:
+		[[nodiscard]] display_colour_spec get_spec() const;
 
-			const display_colour_spec the_spec{ get_spec() };
-			const display_colour_vec  pdb_colours{ { BLUE, RED } };
-			const display_colour_vec  residue_colours{ { YELLOW } };
-			const display_colour_vec all_colours{ { BLUE, RED, YELLOW } };
-			const size_vec           red_pdbs{ 1 };
-			const size_vec           blue_pdbs{ 3 };
-			const size_vec           pdb_two_residues{ { 4, 6 } };
-		};
+		const display_colour_spec the_spec{ get_spec() };
+		const display_colour_vec  pdb_colours{ { BLUE, RED } };
+		const display_colour_vec  residue_colours{ { YELLOW } };
+		const display_colour_vec all_colours{ { BLUE, RED, YELLOW } };
+		const size_vec           red_pdbs{ 1 };
+		const size_vec           blue_pdbs{ 3 };
+		const size_vec           pdb_two_residues{ { 4, 6 } };
+	};
 
-	}  // namespace test
-}  // namespace cath
+	/// \brief TODOCUMENT
+	display_colour_spec display_colour_spec_test_suite_fixture::get_spec() const {
+		display_colour_spec temp_spec;
+		temp_spec.colour_pdb        ( 1,    RED    );
+		temp_spec.colour_pdb        ( 3,    BLUE   );
+		temp_spec.colour_pdb_residue( 2, 4, YELLOW );
+		temp_spec.colour_pdb_residue( 2, 6, YELLOW );
+		return temp_spec;
+	}
 
-/// \brief TODOCUMENT
-display_colour_spec cath::test::display_colour_spec_test_suite_fixture::get_spec() const {
-	display_colour_spec temp_spec;
-	temp_spec.colour_pdb        ( 1,    RED    );
-	temp_spec.colour_pdb        ( 3,    BLUE   );
-	temp_spec.colour_pdb_residue( 2, 4, YELLOW );
-	temp_spec.colour_pdb_residue( 2, 6, YELLOW );
-	return temp_spec;
-}
-
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(display_colour_spec_test_suite, cath::test::display_colour_spec_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(display_colour_spec_test_suite, display_colour_spec_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(pdb_colours_works) {

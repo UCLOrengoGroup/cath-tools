@@ -45,44 +45,38 @@ using all_options_block_types = boost::mpl::list<alignment_input_options_block,
                                                  detail_help_options_block,
                                                  pdb_input_options_block>;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The options_block_test_suite_fixture to assist in testing options_block
-		struct options_block_test_suite_fixture : protected options_block_tester {
-		protected:
-			~options_block_test_suite_fixture() noexcept = default;
+	/// \brief The options_block_test_suite_fixture to assist in testing options_block
+	struct options_block_test_suite_fixture : protected options_block_tester {
+	protected:
+		~options_block_test_suite_fixture() noexcept = default;
 
-		public:
-			template <typename OB>
-			OB construct_options_block_for_testing();
-		};
-
-	}  // namespace test
-}  // namespace cath
-
-/// \brief Template method for constructing options_blocks
-///
-/// This is here to allow template specialisation for any options_block class that cannot be default constructed
-template <typename OB>
-OB cath::test::options_block_test_suite_fixture::construct_options_block_for_testing() {
-	return OB();
-}
-
-namespace cath {
-	namespace test {
-		/// \brief Specialisation of template method to construct a detail_help_options_block
-		///
-		/// This is needed because detail_help_options_block cannot be default constructed
-		template <>
-		detail_help_options_block options_block_test_suite_fixture::construct_options_block_for_testing<detail_help_options_block>() {
-			return detail_help_options_block( TEST_DESC_AND_HELP_OF_OPTION_NAME() );
-		}
-	} // namespace test
-}  // namespace cath
+	public:
+		template <typename OB>
+		OB construct_options_block_for_testing();
+	};
 
 
-BOOST_FIXTURE_TEST_SUITE(options_block_test_suite, cath::test::options_block_test_suite_fixture)
+	/// \brief Template method for constructing options_blocks
+	///
+	/// This is here to allow template specialisation for any options_block class that cannot be default constructed
+	template <typename OB>
+	OB options_block_test_suite_fixture::construct_options_block_for_testing() {
+		return OB();
+	}
+
+	/// \brief Specialisation of template method to construct a detail_help_options_block
+	///
+	/// This is needed because detail_help_options_block cannot be default constructed
+	template <>
+	detail_help_options_block options_block_test_suite_fixture::construct_options_block_for_testing<detail_help_options_block>() {
+		return detail_help_options_block( TEST_DESC_AND_HELP_OF_OPTION_NAME() );
+	}
+} // namespace
+
+
+BOOST_FIXTURE_TEST_SUITE(options_block_test_suite, options_block_test_suite_fixture)
 
 /// \brief Check that each type of options_block can be default constructed without throwing
 BOOST_AUTO_TEST_CASE_TEMPLATE(ctor_does_not_throw, options_block_type, all_options_block_types) {

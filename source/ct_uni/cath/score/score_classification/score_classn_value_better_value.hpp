@@ -21,45 +21,45 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_BETTER_VALUE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_BETTER_VALUE_HPP
 
-namespace cath { namespace score { class score_classn_value; } }
+// clang-format off
+namespace cath::score { class score_classn_value; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief Functor to return whether the first score_classn_value is "better" than the second
-		///
-		/// Better is defined based on the score_values using the direction specified on construction.
-		/// If higher_is_better is false, this acts like a standard less-than functor on the score_values
-		/// of the score_classn_values.
-		///
-		/// Used in a standard sort function, this sorts the best entries to the front.
-		class score_classn_value_better_value final {
-		private:
-			/// \brief Whether a higher score_value is "better" and should be treated as less-than
-			bool higher_is_better;
+	/// \brief Functor to return whether the first score_classn_value is "better" than the second
+	///
+	/// Better is defined based on the score_values using the direction specified on construction.
+	/// If higher_is_better is false, this acts like a standard less-than functor on the score_values
+	/// of the score_classn_values.
+	///
+	/// Used in a standard sort function, this sorts the best entries to the front.
+	class score_classn_value_better_value final {
+	private:
+		/// \brief Whether a higher score_value is "better" and should be treated as less-than
+		bool higher_is_better;
 
-		public:
-			/// \brief TODOCUMENT
-			using first_argument_type  = const score_classn_value &;
+	public:
+		/// \brief TODOCUMENT
+		using first_argument_type  = const score_classn_value &;
 
-			/// \brief TODOCUMENT
-			using second_argument_type = const score_classn_value &;
+		/// \brief TODOCUMENT
+		using second_argument_type = const score_classn_value &;
 
-			/// \brief TODOCUMENT
-			using result_type          = bool;
+		/// \brief TODOCUMENT
+		using result_type          = bool;
 
-			explicit score_classn_value_better_value(const bool &);
+		explicit score_classn_value_better_value(const bool &);
 
-			[[nodiscard]] const bool &get_higher_is_better() const;
+		[[nodiscard]] const bool &get_higher_is_better() const;
 
-			bool operator()(const score_classn_value &,
-			                const score_classn_value &) const;
-		};
+		bool operator()(const score_classn_value &,
+		                const score_classn_value &) const;
+	};
 
-		double get_worst_possible_score(const score_classn_value_better_value &);
-		double get_worst_possible_score(const bool &);
+	double get_worst_possible_score(const score_classn_value_better_value &);
+	double get_worst_possible_score(const bool &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_BETTER_VALUE_HPP

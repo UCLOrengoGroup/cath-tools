@@ -27,26 +27,24 @@
 
 #include <tuple>
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-		/// \brief TODOCUMENT
-		enum class overlap_type : char {
-			SHORTER_OVER_LONGER,      ///< TODOCUMENT
-			NUM_ALIGNED_OVER_SHORTER, ///< TODOCUMENT
-			NUM_ALIGNED_OVER_LONGER   ///< TODOCUMENT
-		};
+	/// \brief TODOCUMENT
+	enum class overlap_type : char {
+		SHORTER_OVER_LONGER,      ///< TODOCUMENT
+		NUM_ALIGNED_OVER_SHORTER, ///< TODOCUMENT
+		NUM_ALIGNED_OVER_LONGER   ///< TODOCUMENT
+	};
 
-		/// \brief TODOCUMENT
-		static constexpr auto all_overlap_types = common::make_array(
-			std::make_tuple( overlap_type::SHORTER_OVER_LONGER,      detail::length_getter_enum::SHORTER,     detail::length_getter_enum::LONGER  ),
-			std::make_tuple( overlap_type::NUM_ALIGNED_OVER_SHORTER, detail::length_getter_enum::NUM_ALIGNED, detail::length_getter_enum::SHORTER ),
-			std::make_tuple( overlap_type::NUM_ALIGNED_OVER_LONGER,  detail::length_getter_enum::NUM_ALIGNED, detail::length_getter_enum::LONGER  )
-		);
+	/// \brief TODOCUMENT
+	static constexpr auto all_overlap_types = common::make_array(
+		std::make_tuple( overlap_type::SHORTER_OVER_LONGER,      detail::length_getter_enum::SHORTER,     detail::length_getter_enum::LONGER  ),
+		std::make_tuple( overlap_type::NUM_ALIGNED_OVER_SHORTER, detail::length_getter_enum::NUM_ALIGNED, detail::length_getter_enum::SHORTER ),
+		std::make_tuple( overlap_type::NUM_ALIGNED_OVER_LONGER,  detail::length_getter_enum::NUM_ALIGNED, detail::length_getter_enum::LONGER  )
+	);
 
-		static_assert( cath::common::constexpr_is_uniq( all_overlap_types ), "all_overlap_types should not contain any repeated entries" );
+	static_assert( cath::common::constexpr_is_uniq( all_overlap_types ), "all_overlap_types should not contain any repeated entries" );
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_OVERLAP_TYPE_HPP

@@ -39,109 +39,107 @@ using namespace ::std;
 
 using ::boost::range::next_permutation;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The residue_name_aligner_test_suite_fixture to assist in testing residue_name_aligner
-		struct residue_name_aligner_test_suite_fixture {
-		private:
-			/// \brief Checks that residue_name_aligner::residue_name_align() does the correct thing for all permutations of the residue lists.
-			///
-			/// This should be accessed via check_residue_name_aligner_results() or check_residue_name_aligner_throws()
-			///
-			/// This subroutine is mostly ready to handle more than two lists.
-			///
-			/// \todo modify the actual call to residue_name_aligner::residue_name_align() to handle multiple lists
-			///       (after that subroutine has been altered to handle multiple lists)
-			void do_check_residue_name_aligner(const residue_name_vec_vec  &prm_residue_lists,
-			                                   const bool_deq_vec          &prm_correct_presence_lists,
-			                                   const size_vec_vec          &prm_correct_answer_lists,
-			                                   const bool                  &prm_should_throw
-			                                   ) {
-				const size_t num_lists = prm_residue_lists.size();
-				BOOST_REQUIRE_EQUAL(num_lists, 2_z); /// This code isn't yet able to process more than two at a time
-				if (!prm_should_throw) {
-					BOOST_REQUIRE_EQUAL(num_lists, prm_correct_presence_lists.size());
-					BOOST_REQUIRE_EQUAL(num_lists, prm_correct_answer_lists.size());
+	/// \brief The residue_name_aligner_test_suite_fixture to assist in testing residue_name_aligner
+	struct residue_name_aligner_test_suite_fixture {
+	private:
+		/// \brief Checks that residue_name_aligner::residue_name_align() does the correct thing for all permutations of the residue lists.
+		///
+		/// This should be accessed via check_residue_name_aligner_results() or check_residue_name_aligner_throws()
+		///
+		/// This subroutine is mostly ready to handle more than two lists.
+		///
+		/// \todo modify the actual call to residue_name_aligner::residue_name_align() to handle multiple lists
+		///       (after that subroutine has been altered to handle multiple lists)
+		void do_check_residue_name_aligner(const residue_name_vec_vec  &prm_residue_lists,
+		                                   const bool_deq_vec          &prm_correct_presence_lists,
+		                                   const size_vec_vec          &prm_correct_answer_lists,
+		                                   const bool                  &prm_should_throw
+		                                   ) {
+			const size_t num_lists = prm_residue_lists.size();
+			BOOST_REQUIRE_EQUAL(num_lists, 2_z); /// This code isn't yet able to process more than two at a time
+			if (!prm_should_throw) {
+				BOOST_REQUIRE_EQUAL(num_lists, prm_correct_presence_lists.size());
+				BOOST_REQUIRE_EQUAL(num_lists, prm_correct_answer_lists.size());
+			}
+
+			// Construct a vector containing the indices of the lists
+			size_vec permutation_indices(num_lists, 0);
+			for (const size_t &index_ctr : indices( num_lists ) ) {
+				permutation_indices[index_ctr] = index_ctr;
+			}
+
+			// Loop over the permutations of the indices
+			do {
+				// If these residue lists should cause residue_name_aligner::residue_name_align() to throw then check they do
+				if (prm_should_throw) {
+					BOOST_CHECK_THROW(
+						residue_name_aligner::residue_name_align(
+							{ prm_residue_lists[ permutation_indices[ 0 ] ],
+							  prm_residue_lists[ permutation_indices[ 1 ] ] }
+						),
+						invalid_argument_exception
+					);
 				}
+				// Otherwise check the results from residue_name_aligner::residue_name_align()
+				else {
+					// Construct an alignment from this permutation of residue lists
+					const alignment my_alignment = residue_name_aligner::residue_name_align(
+						{ prm_residue_lists[permutation_indices[ 0 ]],
+						  prm_residue_lists[permutation_indices[ 1 ]] }
+					);
+					const alignment::size_type num_positions = my_alignment.length();
 
-				// Construct a vector containing the indices of the lists
-				size_vec permutation_indices(num_lists, 0);
-				for (const size_t &index_ctr : indices( num_lists ) ) {
-					permutation_indices[index_ctr] = index_ctr;
-				}
+					// Check each of the alignment entries in turn
+					for (const size_t &index_ctr : indices( num_lists ) ) {
+						// Grab the correct answer list under the current permutation
+						const size_t permutation_index           = permutation_indices[index_ctr];
+						const bool_deq &correct_presence_list = prm_correct_presence_lists[permutation_index];
+						const size_vec &correct_answer_list      = prm_correct_answer_lists[permutation_index];
 
-				// Loop over the permutations of the indices
-				do {
-					// If these residue lists should cause residue_name_aligner::residue_name_align() to throw then check they do
-					if (prm_should_throw) {
-						BOOST_CHECK_THROW(
-							residue_name_aligner::residue_name_align(
-								{ prm_residue_lists[ permutation_indices[ 0 ] ],
-								  prm_residue_lists[ permutation_indices[ 1 ] ] }
-							),
-							invalid_argument_exception
-						);
-					}
-					// Otherwise check the results from residue_name_aligner::residue_name_align()
-					else {
-						// Construct an alignment from this permutation of residue lists
-						const alignment my_alignment = residue_name_aligner::residue_name_align(
-							{ prm_residue_lists[permutation_indices[ 0 ]],
-							  prm_residue_lists[permutation_indices[ 1 ]] }
-						);
-						const alignment::size_type num_positions = my_alignment.length();
+						const size_t correct_answer_size         = correct_answer_list.size();
 
-						// Check each of the alignment entries in turn
-						for (const size_t &index_ctr : indices( num_lists ) ) {
-							// Grab the correct answer list under the current permutation
-							const size_t permutation_index           = permutation_indices[index_ctr];
-							const bool_deq &correct_presence_list = prm_correct_presence_lists[permutation_index];
-							const size_vec &correct_answer_list      = prm_correct_answer_lists[permutation_index];
+						// Check that the number of positions match
+						BOOST_CHECK_EQUAL(correct_answer_size, num_positions);
 
-							const size_t correct_answer_size         = correct_answer_list.size();
+						// Check that each of the positions in the alignment match what is expected
+						for (const size_t &position_ctr : indices( min( correct_answer_size, num_positions ) ) ) {
+							const aln_posn_opt position     = my_alignment.position_of_entry_of_index( index_ctr, position_ctr );
+							const bool         has_position = static_cast<bool>( position );
+							BOOST_CHECK_EQUAL( correct_presence_list[position_ctr], has_position );
 
-							// Check that the number of positions match
-							BOOST_CHECK_EQUAL(correct_answer_size, num_positions);
-
-							// Check that each of the positions in the alignment match what is expected
-							for (const size_t &position_ctr : indices( min( correct_answer_size, num_positions ) ) ) {
-								const aln_posn_opt position     = my_alignment.position_of_entry_of_index( index_ctr, position_ctr );
-								const bool         has_position = static_cast<bool>( position );
-								BOOST_CHECK_EQUAL( correct_presence_list[position_ctr], has_position );
-
-								if ( position ) {
-									BOOST_CHECK_EQUAL(correct_answer_list[position_ctr], *position );
-								}
+							if ( position ) {
+								BOOST_CHECK_EQUAL(correct_answer_list[position_ctr], *position );
 							}
 						}
 					}
-				} while ( next_permutation( permutation_indices ) );
-			}
+				}
+			} while ( next_permutation( permutation_indices ) );
+		}
 
-		protected:
-			~residue_name_aligner_test_suite_fixture() noexcept = default;
+	protected:
+		~residue_name_aligner_test_suite_fixture() noexcept = default;
 
-		public:
-			/// Check that residue_name_aligner::residue_name_align() gives the correct results for all permutations of the residues lists
-			void check_residue_name_aligner_results(const residue_name_vec_vec &prm_residue_lists,
-			                                        const bool_deq_vec         &prm_correct_presence_lists,
-			                                        const size_vec_vec         &prm_correct_answer_lists
-			                                        ) {
-				do_check_residue_name_aligner( prm_residue_lists, prm_correct_presence_lists, prm_correct_answer_lists, false );
-			}
+	public:
+		/// Check that residue_name_aligner::residue_name_align() gives the correct results for all permutations of the residues lists
+		void check_residue_name_aligner_results(const residue_name_vec_vec &prm_residue_lists,
+		                                        const bool_deq_vec         &prm_correct_presence_lists,
+		                                        const size_vec_vec         &prm_correct_answer_lists
+		                                        ) {
+			do_check_residue_name_aligner( prm_residue_lists, prm_correct_presence_lists, prm_correct_answer_lists, false );
+		}
 
-			/// Check that residue_name_aligner::residue_name_align() throws an errro for all permutations of the residues lists
-			void check_residue_name_aligner_throws(const residue_name_vec_vec &prm_residue_lists
-			                                       ) {
-				do_check_residue_name_aligner(prm_residue_lists, bool_deq_vec(), size_vec_vec(), true);
-			}
-		};
+		/// Check that residue_name_aligner::residue_name_align() throws an errro for all permutations of the residues lists
+		void check_residue_name_aligner_throws(const residue_name_vec_vec &prm_residue_lists
+		                                       ) {
+			do_check_residue_name_aligner(prm_residue_lists, bool_deq_vec(), size_vec_vec(), true);
+		}
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(residue_name_aligner_test_suite, cath::test::residue_name_aligner_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(residue_name_aligner_test_suite, residue_name_aligner_test_suite_fixture)
 
 // * Issues to test for multiples (more than two):
 //    * do A-B, B-C, C-A, D [throw error]

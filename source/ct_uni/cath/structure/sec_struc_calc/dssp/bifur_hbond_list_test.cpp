@@ -23,15 +23,11 @@
 #include "cath/structure/sec_struc_calc/dssp/bifur_hbond_list.hpp"
 #include "cath/test/boost_test_print_type.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::sec;
-using namespace ::cath::test;
 
 using ::std::nullopt;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The bifur_hbond_list_test_suite_fixture to assist in testing bifur_hbond_list
 		struct bifur_hbond_list_test_suite_fixture {
@@ -56,8 +52,7 @@ namespace cath {
 			static constexpr hbond_half      c{ index, energy_c };
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(bifur_hbond_list_test_suite, bifur_hbond_list_test_suite_fixture)
 

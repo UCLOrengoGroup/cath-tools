@@ -25,41 +25,39 @@
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief Specify the input for cath-cluster
-		class cath_cluster_input_spec final {
-		private:
-			/// \brief An optional file from which links should be read
-			path_opt links_infile;
+	/// \brief Specify the input for cath-cluster
+	class cath_cluster_input_spec final {
+	private:
+		/// \brief An optional file from which links should be read
+		path_opt links_infile;
 
-			/// \brief The direction of links in the input
-			///        (ie whether a high number represents strong link or a high dissimilarity)
-			link_dirn the_link_dirn = link_dirn::STRENGTH;
+		/// \brief The direction of links in the input
+		///        (ie whether a high number represents strong link or a high dissimilarity)
+		link_dirn the_link_dirn = link_dirn::STRENGTH;
 
-			/// \brief The index of the column from which the link values are to be read
-			///        (offset 0; must be >= 2)
-			size_t column_idx       = 2;
+		/// \brief The index of the column from which the link values are to be read
+		///        (offset 0; must be >= 2)
+		size_t column_idx       = 2;
 
-			/// \brief An optional file from which names should be read
-			path_opt names_infile;
+		/// \brief An optional file from which names should be read
+		path_opt names_infile;
 
-		  public:
-			[[nodiscard]] const path_opt & get_links_infile() const;
-			[[nodiscard]] const link_dirn &get_link_dirn() const;
-			[[nodiscard]] const size_t &   get_column_idx() const;
-			[[nodiscard]] const path_opt & get_names_infile() const;
+	  public:
+		[[nodiscard]] const path_opt & get_links_infile() const;
+		[[nodiscard]] const link_dirn &get_link_dirn() const;
+		[[nodiscard]] const size_t &   get_column_idx() const;
+		[[nodiscard]] const path_opt & get_names_infile() const;
 
-			cath_cluster_input_spec &set_links_infile( const path_opt & );
-			cath_cluster_input_spec &set_link_dirn( const link_dirn & );
-			cath_cluster_input_spec &set_column_idx( const size_t & );
-			cath_cluster_input_spec &set_names_infile( const path_opt & );
-		};
+		cath_cluster_input_spec &set_links_infile( const path_opt & );
+		cath_cluster_input_spec &set_link_dirn( const link_dirn & );
+		cath_cluster_input_spec &set_column_idx( const size_t & );
+		cath_cluster_input_spec &set_names_infile( const path_opt & );
+	};
 
-		str_opt get_invalid_description(const cath_cluster_input_spec &);
+	str_opt get_invalid_description(const cath_cluster_input_spec &);
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_SPEC_CATH_CLUSTER_INPUT_SPEC_HPP

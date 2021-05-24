@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <sstream>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/summarise_hits_processor.hpp"
@@ -25,18 +27,13 @@
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/write_json_hits_processor.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/write_results_hits_processor.hpp"
 
-#include <sstream>
-
-namespace cath { namespace test { } }
-
+using namespace ::cath;
 using namespace ::cath::rslv::detail;
-using namespace ::cath::test;
 
 using ::std::ostream;
 using ::std::ostringstream;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The hits_processor_test_suite_fixture to assist in testing hits_processor
 		struct hits_processor_test_suite_fixture {
@@ -55,8 +52,7 @@ namespace cath {
 			ref_vec<ostream> ostreams{ { test_ss } };
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(hits_processor_test_suite, hits_processor_test_suite_fixture)
 

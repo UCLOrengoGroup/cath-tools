@@ -26,24 +26,22 @@
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief Wrap a strength_vec of clustering levels in a distinctive type for Boost program_ptions validation
-		struct clustering_levels final {
-			/// \brief The wrapped levels
-			strength_vec levels;
-		};
+	/// \brief Wrap a strength_vec of clustering levels in a distinctive type for Boost program_ptions validation
+	struct clustering_levels final {
+		/// \brief The wrapped levels
+		strength_vec levels;
+	};
 
-		std::istream & operator>>(std::istream &,
-		                          clustering_levels &);
+	std::istream & operator>>(std::istream &,
+	                          clustering_levels &);
 
-		void validate(boost::any &,
-		              const str_vec &,
-		              clustering_levels *,
-		              int);
+	void validate(boost::any &,
+	              const str_vec &,
+	              clustering_levels *,
+	              int);
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_SPEC_CLUSTERING_LEVELS_HPP

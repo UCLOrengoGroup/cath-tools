@@ -33,26 +33,24 @@
 #include <boost/test/tools/detail/fwd.hpp>
 #include <boost/test/tools/interface.hpp>
 
-namespace cath {
-	namespace test {
+namespace cath::test {
 
-		#define BOOST_CHECK_NO_THROW_DIAG_IMPL( S, TL )                                                      \
-		    try {                                                                                            \
-		        BOOST_TEST_PASSPOINT();                                                                      \
-		        S;                                                                                           \
-		        BOOST_TEST_TOOL_DIRECT_IMPL( true,  TL, "no exceptions thrown by " BOOST_STRINGIZE( S ) );   \
-		    }                                                                                                \
-		    catch( ... ) {                                                                                   \
-		        BOOST_TEST_TOOL_DIRECT_IMPL( false, TL, "exception thrown by "     BOOST_STRINGIZE( S ) );   \
-		        throw;                                                                                       \
-		    }                                                                                                \
-		    /**/
+	#define BOOST_CHECK_NO_THROW_DIAG_IMPL( S, TL )                                                      \
+	    try {                                                                                            \
+	        BOOST_TEST_PASSPOINT();                                                                      \
+	        S;                                                                                           \
+	        BOOST_TEST_TOOL_DIRECT_IMPL( true,  TL, "no exceptions thrown by " BOOST_STRINGIZE( S ) );   \
+	    }                                                                                                \
+	    catch( ... ) {                                                                                   \
+	        BOOST_TEST_TOOL_DIRECT_IMPL( false, TL, "exception thrown by "     BOOST_STRINGIZE( S ) );   \
+	        throw;                                                                                       \
+	    }                                                                                                \
+	    /**/
 
-		#define BOOST_WARN_NO_THROW_DIAG( S )            BOOST_CHECK_NO_THROW_DIAG_IMPL( S, WARN    )
-		#define BOOST_CHECK_NO_THROW_DIAG( S )           BOOST_CHECK_NO_THROW_DIAG_IMPL( S, CHECK   )
-		#define BOOST_REQUIRE_NO_THROW_DIAG( S )         BOOST_CHECK_NO_THROW_DIAG_IMPL( S, REQUIRE )
+	#define BOOST_WARN_NO_THROW_DIAG( S )            BOOST_CHECK_NO_THROW_DIAG_IMPL( S, WARN    )
+	#define BOOST_CHECK_NO_THROW_DIAG( S )           BOOST_CHECK_NO_THROW_DIAG_IMPL( S, CHECK   )
+	#define BOOST_REQUIRE_NO_THROW_DIAG( S )         BOOST_CHECK_NO_THROW_DIAG_IMPL( S, REQUIRE )
 
-	} // namespace test
-} // namespace cath
+} // namespace cath::test
 
 #endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_BOOST_ADDENDA_BOOST_CHECK_NO_THROW_DIAG_HPP

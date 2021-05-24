@@ -56,26 +56,10 @@ using ::std::regex;
 using ::std::string;
 using ::std::stringstream;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The pdb_test_suite_fixture to assist in testing pdb
-		struct pdb_test_suite_fixture : protected global_test_constants {
-		protected:
-			~pdb_test_suite_fixture() noexcept = default;
-
-			/// \brief Check that the number of atoms in a vector of PDBs matches the expected numbers
-			void check_nums_of_atoms(const pdb_list &,
-			                         const size_vec &) const;
-		};
-
-	}  // namespace test
-}  // namespace cath
-
 /// \brief Check that the number of atoms in a vector of PDBs matches the expected numbers
-void cath::test::pdb_test_suite_fixture::check_nums_of_atoms(const pdb_list &prm_pdbs,                  ///< TODOCUMENT
-                                                             const size_vec &prm_expected_nums_of_atoms ///< TODOCUMENT
-                                                             ) const {
+static void check_nums_of_atoms( const pdb_list &prm_pdbs,                  ///< TODOCUMENT
+                                 const size_vec &prm_expected_nums_of_atoms ///< TODOCUMENT
+                                 ) {
 	// Grab the numbers of atoms
 	size_vec got_nums_of_atoms;
 	got_nums_of_atoms.reserve(prm_pdbs.size());
@@ -87,7 +71,7 @@ void cath::test::pdb_test_suite_fixture::check_nums_of_atoms(const pdb_list &prm
 	BOOST_CHECK_EQUAL_RANGES( prm_expected_nums_of_atoms, got_nums_of_atoms );
 }
 
-BOOST_FIXTURE_TEST_SUITE(pdb_test_suite, cath::test::pdb_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(pdb_test_suite, global_test_constants)
 
 /// \brief Test the parsing of END separated pdbs by sticking every combination of 0-3 ENDS before, between and after two 1-atom PDBs
 ///        (except there must be at least one END between)

@@ -36,122 +36,123 @@
 #include "cath/structure/view_cache/index/detail/scaffold/view_cache_index_tail.hpp"
 #include "cath/structure/view_cache/index/view_cache_index_entry.hpp"
 
-namespace cath { namespace align { class alignment; } }
+// clang-format off
 namespace cath { class protein; }
-namespace cath { namespace index { class quad_find_action; } }
-namespace cath { namespace index { class quad_find_action_check; } }
+namespace cath::align { class alignment; }
+namespace cath::index { class quad_find_action; }
+namespace cath::index { class quad_find_action_check; }
+// clang-format on
 
-namespace cath {
-	namespace index {
-		namespace detail {
-
-			/// \brief TODOCUMENT
-			using standard_vci_nested_layers = 
-			                                   view_cache_index_layer< view_cache_index_dim_dirn,
-			                                   view_cache_index_layer< view_cache_index_dim_linear_from_phi,
-			                                   // view_cache_index_layer< view_cache_index_dim_linear_from_psi,
-			                                   // view_cache_index_layer< view_cache_index_dim_linear_to_phi,
-			                                   // view_cache_index_layer< view_cache_index_dim_linear_to_psi,
-			                                   view_cache_index_layer< view_cache_index_dim_linear_x,
-			                                   view_cache_index_layer< view_cache_index_dim_linear_y,
-			                                   view_cache_index_layer< view_cache_index_dim_linear_z,
-			                                   
-			                                   view_cache_index_tail
-			                                   > > > > >;
-		} // namespace detail
-
+namespace cath::index {
+	namespace detail {
 
 		/// \brief TODOCUMENT
-		class view_cache_index final {
-		public:
-			/// \brief TODOCUMENT
-			using dim_tuple = boost::tuple<
-			                                detail::view_cache_index_dim_dirn,
-			                                detail::view_cache_index_dim_linear_from_phi,
-			                                // detail::view_cache_index_dim_linear_from_psi,
-			                                // detail::view_cache_index_dim_linear_to_phi,
-			                                // detail::view_cache_index_dim_linear_to_psi,
-			                                detail::view_cache_index_dim_linear_x,
-			                                detail::view_cache_index_dim_linear_y,
-			                                detail::view_cache_index_dim_linear_z,
-			                                detail::view_cache_index_tail> ;
-		private:
+		using standard_vci_nested_layers = 
+		                                   view_cache_index_layer< view_cache_index_dim_dirn,
+		                                   view_cache_index_layer< view_cache_index_dim_linear_from_phi,
+		                                   // view_cache_index_layer< view_cache_index_dim_linear_from_psi,
+		                                   // view_cache_index_layer< view_cache_index_dim_linear_to_phi,
+		                                   // view_cache_index_layer< view_cache_index_dim_linear_to_psi,
+		                                   view_cache_index_layer< view_cache_index_dim_linear_x,
+		                                   view_cache_index_layer< view_cache_index_dim_linear_y,
+		                                   view_cache_index_layer< view_cache_index_dim_linear_z,
+		                                   
+		                                   view_cache_index_tail
+		                                   > > > > >;
+	} // namespace detail
 
-			/// \brief TODOCUMENT
-			dim_tuple dim_defaults;
 
-			/// \brief TODOCUMENT
-			detail::standard_vci_nested_layers the_index;
-
-		public:
-			explicit view_cache_index(dim_tuple);
-
-			void store(const view_cache_index_entry &);
-
-			template <typename ACTN>
-			void perform_action_on_matches(const view_cache_index_entry &,
-			                               const detail::vcie_match_criteria &,
-			                               ACTN &) const;
-
-			template <typename ACTN>
-			void perform_action_on_all_match_at_leaves(const view_cache_index &,
-			                                           const detail::vcie_match_criteria &,
-			                                           ACTN &) const;
-
-			template <typename ACTN>
-			void perform_action_on_all_match_at_nodes(const view_cache_index &,
-			                                          const detail::vcie_match_criteria &,
-			                                          ACTN &) const;
-		};
+	/// \brief TODOCUMENT
+	class view_cache_index final {
+	public:
+		/// \brief TODOCUMENT
+		using dim_tuple = boost::tuple<
+		                                detail::view_cache_index_dim_dirn,
+		                                detail::view_cache_index_dim_linear_from_phi,
+		                                // detail::view_cache_index_dim_linear_from_psi,
+		                                // detail::view_cache_index_dim_linear_to_phi,
+		                                // detail::view_cache_index_dim_linear_to_psi,
+		                                detail::view_cache_index_dim_linear_x,
+		                                detail::view_cache_index_dim_linear_y,
+		                                detail::view_cache_index_dim_linear_z,
+		                                detail::view_cache_index_tail> ;
+	private:
 
 		/// \brief TODOCUMENT
+		dim_tuple dim_defaults;
+
+		/// \brief TODOCUMENT
+		detail::standard_vci_nested_layers the_index;
+
+	public:
+		explicit view_cache_index(dim_tuple);
+
+		void store(const view_cache_index_entry &);
+
 		template <typename ACTN>
-		void view_cache_index::perform_action_on_matches(const view_cache_index_entry      &prm_entry,    ///< TODOCUMENT
-		                                                 const detail::vcie_match_criteria &prm_criteria, ///< TODOCUMENT
-		                                                 ACTN                              &prm_action    ///< TODOCUMENT
-		                                                 ) const {
-			the_index.perform_action_on_matches( prm_entry, prm_criteria, prm_action );
-		}
+		void perform_action_on_matches(const view_cache_index_entry &,
+		                               const detail::vcie_match_criteria &,
+		                               ACTN &) const;
 
-		/// \brief TODOCUMENT
 		template <typename ACTN>
-		void view_cache_index::perform_action_on_all_match_at_leaves(const view_cache_index            &prm_search_index, ///< TODOCUMENT
-		                                                             const detail::vcie_match_criteria &prm_criteria,     ///< TODOCUMENT
-		                                                             ACTN                              &prm_action        ///< TODOCUMENT
-		                                                             ) const {
-			const detail::pair_scan_action<view_cache_index> the_pair_scan_action( prm_search_index, prm_criteria, prm_action );
-			the_index.perform_action_on_all_match_at_leaves( the_pair_scan_action );
-		}
+		void perform_action_on_all_match_at_leaves(const view_cache_index &,
+		                                           const detail::vcie_match_criteria &,
+		                                           ACTN &) const;
 
-		/// \brief TODOCUMENT
 		template <typename ACTN>
-		void view_cache_index::perform_action_on_all_match_at_nodes(const view_cache_index            &prm_search_index, ///< TODOCUMENT
-		                                                            const detail::vcie_match_criteria &prm_criteria,     ///< TODOCUMENT
-		                                                            ACTN                              &prm_action        ///< TODOCUMENT
-		                                                            ) const {
-			the_index.perform_action_on_all_match_at_nodes( prm_search_index.the_index, prm_criteria, prm_action );
-		}
+		void perform_action_on_all_match_at_nodes(const view_cache_index &,
+		                                          const detail::vcie_match_criteria &,
+		                                          ACTN &) const;
+	};
 
-		view_cache_index build_view_cache_index(const double &,
-		                                        const detail::angle_type &,
-		                                        const detail::angle_type &,
-		                                        const protein &,
-		                                        const detail::vcie_match_criteria &);
+	/// \brief TODOCUMENT
+	template <typename ACTN>
+	void view_cache_index::perform_action_on_matches(const view_cache_index_entry      &prm_entry,    ///< TODOCUMENT
+	                                                 const detail::vcie_match_criteria &prm_criteria, ///< TODOCUMENT
+	                                                 ACTN                              &prm_action    ///< TODOCUMENT
+	                                                 ) const {
+		the_index.perform_action_on_matches( prm_entry, prm_criteria, prm_action );
+	}
 
-		std::chrono::high_resolution_clock::duration process_quads_indexed(const protein &,
-		                                                                   const protein &,
-		                                                                   const double &,
-		                                                                   const detail::angle_type &,
-		                                                                   const detail::angle_type &,
-		                                                                   const detail::vcie_match_criteria &,
-		                                                                   quad_find_action_check &);
+	/// \brief TODOCUMENT
+	template <typename ACTN>
+	void view_cache_index::perform_action_on_all_match_at_leaves(const view_cache_index            &prm_search_index, ///< TODOCUMENT
+	                                                             const detail::vcie_match_criteria &prm_criteria,     ///< TODOCUMENT
+	                                                             ACTN                              &prm_action        ///< TODOCUMENT
+	                                                             ) const {
+		const detail::pair_scan_action<view_cache_index> the_pair_scan_action( prm_search_index, prm_criteria, prm_action );
+		the_index.perform_action_on_all_match_at_leaves( the_pair_scan_action );
+	}
 
-		std::chrono::high_resolution_clock::duration process_quads_complete(const protein &,
-		                                                                    const protein &,
-		                                                                    const double &,
-		                                                                    const detail::vcie_match_criteria &,
-		                                                                    quad_find_action &);
-	} // namespace index
-} // namespace cath
+	/// \brief TODOCUMENT
+	template <typename ACTN>
+	void view_cache_index::perform_action_on_all_match_at_nodes(const view_cache_index            &prm_search_index, ///< TODOCUMENT
+	                                                            const detail::vcie_match_criteria &prm_criteria,     ///< TODOCUMENT
+	                                                            ACTN                              &prm_action        ///< TODOCUMENT
+	                                                            ) const {
+		the_index.perform_action_on_all_match_at_nodes( prm_search_index.the_index, prm_criteria, prm_action );
+	}
+
+	view_cache_index build_view_cache_index(const double &,
+	                                        const detail::angle_type &,
+	                                        const detail::angle_type &,
+	                                        const protein &,
+	                                        const detail::vcie_match_criteria &);
+
+	std::chrono::high_resolution_clock::duration process_quads_indexed(const protein &,
+	                                                                   const protein &,
+	                                                                   const double &,
+	                                                                   const detail::angle_type &,
+	                                                                   const detail::angle_type &,
+	                                                                   const detail::vcie_match_criteria &,
+	                                                                   quad_find_action_check &);
+
+	std::chrono::high_resolution_clock::duration process_quads_complete(const protein &,
+	                                                                    const protein &,
+	                                                                    const double &,
+	                                                                    const detail::vcie_match_criteria &,
+	                                                                    quad_find_action &);
+
+} // namespace cath::index
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_VIEW_CACHE_INDEX_HPP

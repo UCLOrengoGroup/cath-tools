@@ -27,42 +27,41 @@
 
 #include <vector>
 
+using namespace ::cath;
 using namespace ::cath::align::detail;
 using namespace ::cath::common;
 using namespace ::std;
 
 using ::boost::test_tools::output_test_stream;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The residue_name_align_map_test_suite_fixture to assist in testing residue_name_align_map
-		struct residue_name_align_map_test_suite_fixture {
-		protected:
-			~residue_name_align_map_test_suite_fixture() noexcept = default;
+	/// \brief The residue_name_align_map_test_suite_fixture to assist in testing residue_name_align_map
+	struct residue_name_align_map_test_suite_fixture {
+	protected:
+		~residue_name_align_map_test_suite_fixture() noexcept = default;
 
-			const str_vec valid_names = {
-				"my_zero",
-				"my_one",
-				"my_two",
-				"my_three",
-				"my_four",
-				"my_five",
-			};
-			const str_vec names_with_duplicate = {
-				"my_zero",
-				"my_one",
-				"my_two",
-				"my_three",
-				"my_one",
-				"my_four",
-			};
+		const str_vec valid_names = {
+			"my_zero",
+			"my_one",
+			"my_two",
+			"my_three",
+			"my_four",
+			"my_five",
 		};
+		const str_vec names_with_duplicate = {
+			"my_zero",
+			"my_one",
+			"my_two",
+			"my_three",
+			"my_one",
+			"my_four",
+		};
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(residue_name_align_map_test_suite, cath::test::residue_name_align_map_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(residue_name_align_map_test_suite, residue_name_align_map_test_suite_fixture)
 
 /// \brief Check that the residue_name_align_map does what you'd expect via its get_index_of_residue_name() and contains_residue_name() methods
 BOOST_AUTO_TEST_CASE(indexing_works) {

@@ -26,35 +26,33 @@
 #include "cath/options/options_block/options_block.hpp"
 #include "cath/options/options_block/pdb_input_spec.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief An options block for specifying how PDBs should be read in
-		class pdb_input_options_block final : public cath::opts::options_block {
-		private:
-			/// \brief The pdb_input_spec to be configured by this options block
-			pdb_input_spec the_pdb_input_spec;
+	/// \brief An options block for specifying how PDBs should be read in
+	class pdb_input_options_block final : public cath::opts::options_block {
+	private:
+		/// \brief The pdb_input_spec to be configured by this options block
+		pdb_input_spec the_pdb_input_spec;
 
-			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
-			[[nodiscard]] std::string                    do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+		[[nodiscard]] std::string                    do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-		  public:
-			[[nodiscard]] const pdb_input_spec &get_pdb_input_spec() const;
+	  public:
+		[[nodiscard]] const pdb_input_spec &get_pdb_input_spec() const;
 
-			/// \brief The option name for the a list of PDB files that should be read
-			static constexpr ::std::string_view PO_PDB_INFILE{ "pdb-infile" };
+		/// \brief The option name for the a list of PDB files that should be read
+		static constexpr ::std::string_view PO_PDB_INFILE{ "pdb-infile" };
 
-			/// \brief The option name for whether to read PDBs from stdin
-			static constexpr ::std::string_view PO_PDBS_FROM_STDIN{ "pdbs-from-stdin" };
-		};
+		/// \brief The option name for whether to read PDBs from stdin
+		static constexpr ::std::string_view PO_PDBS_FROM_STDIN{ "pdbs-from-stdin" };
+	};
 
-		size_t get_num_acquirers(const pdb_input_options_block &);
+	size_t get_num_acquirers(const pdb_input_options_block &);
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_OPTIONS_BLOCK_PDB_INPUT_OPTIONS_BLOCK_HPP

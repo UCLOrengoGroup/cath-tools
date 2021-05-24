@@ -40,20 +40,8 @@ using namespace ::cath::geom;
 using ::boost::math::constants::pi;
 using ::std::array;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The angle_test_suite_fixture to assist in testing test
-		struct angle_test_suite_fixture : protected global_test_constants {
-		protected:
-			~angle_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief Test suite for the angle
-BOOST_FIXTURE_TEST_SUITE(angle_test_suite, cath::test::angle_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(angle_test_suite, global_test_constants)
 
 using angle_value_types = boost::mpl::vector<double, float>;
 

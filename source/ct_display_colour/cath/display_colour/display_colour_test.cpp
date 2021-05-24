@@ -91,7 +91,7 @@ namespace {
 			                                 + "," + lexical_cast<string>( EXPECTED_B ) };
 	};
 
-}
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(display_colour_test_suite, display_colour_test_suite_fixture)
 

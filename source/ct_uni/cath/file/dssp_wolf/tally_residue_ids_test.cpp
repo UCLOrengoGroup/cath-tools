@@ -43,61 +43,59 @@ using namespace ::std;
 //	}
 //}
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The tally_residue_ids_test_suite_fixture to assist in testing tally_residue_ids
-		struct tally_residue_ids_test_suite_fixture {
-		protected:
-			~tally_residue_ids_test_suite_fixture() noexcept = default;
+	/// \brief The tally_residue_ids_test_suite_fixture to assist in testing tally_residue_ids
+	struct tally_residue_ids_test_suite_fixture {
+	protected:
+		~tally_residue_ids_test_suite_fixture() noexcept = default;
 
-		public:
-			static constexpr char        CHAIN_LABEL_CHAR{ 'A' };
+	public:
+		static constexpr char        CHAIN_LABEL_CHAR{ 'A' };
 
-			static constexpr chain_label CHAIN_LABEL{ CHAIN_LABEL_CHAR };
+		static constexpr chain_label CHAIN_LABEL{ CHAIN_LABEL_CHAR };
 
-			const residue_id_vec         STANDARD_RES_IDS = { make_residue_id( CHAIN_LABEL_CHAR, 2 ),
-			                                                  make_residue_id( CHAIN_LABEL_CHAR, 3 ),
-			                                                  make_residue_id( CHAIN_LABEL_CHAR, 4 ) };
-			const residue_id_vec         MISMATCH_RES_IDS = { make_residue_id( CHAIN_LABEL_CHAR, 5 ),
-			                                                  make_residue_id( CHAIN_LABEL_CHAR, 6 ),
-			                                                  make_residue_id( CHAIN_LABEL_CHAR, 7 ) };
+		const residue_id_vec         STANDARD_RES_IDS = { make_residue_id( CHAIN_LABEL_CHAR, 2 ),
+		                                                  make_residue_id( CHAIN_LABEL_CHAR, 3 ),
+		                                                  make_residue_id( CHAIN_LABEL_CHAR, 4 ) };
+		const residue_id_vec         MISMATCH_RES_IDS = { make_residue_id( CHAIN_LABEL_CHAR, 5 ),
+		                                                  make_residue_id( CHAIN_LABEL_CHAR, 6 ),
+		                                                  make_residue_id( CHAIN_LABEL_CHAR, 7 ) };
 
-			const size_size_pair_vec     STANDARD_MATCH   = { { 0, 0 },
-			                                                  { 1, 1 },
-			                                                  { 2, 2 } };
+		const size_size_pair_vec     STANDARD_MATCH   = { { 0, 0 },
+		                                                  { 1, 1 },
+		                                                  { 2, 2 } };
 
-			size_size_pair_vec tally_residue_ids_str(const residue_id_vec &,
-			                                         const chain_label &,
-			                                         const str_vec &,
-			                                         const bool &,
-			                                         const bool & = true);
-		};
+		size_size_pair_vec tally_residue_ids_str(const residue_id_vec &,
+		                                         const chain_label &,
+		                                         const str_vec &,
+		                                         const bool &,
+		                                         const bool & = true);
+	};
 
-		/// \brief Overload that converts the prm_dssp_or_wolf_residue_ids from strings to residue_ids
-		size_size_pair_vec tally_residue_ids_test_suite_fixture::tally_residue_ids_str(const residue_id_vec &prm_pdb_residue_ids,                       ///< A list of residue_ids parsed from the PDB file
-		                                                                               const chain_label    &prm_chain_label,                           ///< A chain_label to combine with the strings to make residue_ids
-		                                                                               const str_vec        &prm_dssp_or_wolf_residue_id_strings,       ///< A list of strings containing the residue names parsed from the DSSP/WOLF file (with a null residue represented with an empty string)
-		                                                                               const bool           &prm_permit_breaks_without_null_residues,   ///< (true for WOLF files and false for DSSP files (at least >= v2.0)
-		                                                                               const bool           &prm_permit_tail_break_without_null_residue ///< (true even for DSSP v2.0.4: file for chain A of 1bvs stops with neither residue 203 or null residue (verbose message: "ignoring incomplete residue ARG  (203)")
-		                                                                               ) {
-			residue_id_vec dssp_or_wolf_residue_ids;
-			dssp_or_wolf_residue_ids.reserve( prm_dssp_or_wolf_residue_id_strings.size()  );
-			for (const string &dssp_or_wolf_residue_id_string : prm_dssp_or_wolf_residue_id_strings) {
-				dssp_or_wolf_residue_ids.emplace_back( prm_chain_label, make_residue_name( dssp_or_wolf_residue_id_string ) );
-			}
-			return tally_residue_ids(
-				prm_pdb_residue_ids,
-				dssp_or_wolf_residue_ids,
-				prm_permit_breaks_without_null_residues,
-				prm_permit_tail_break_without_null_residue
-			);
+	/// \brief Overload that converts the prm_dssp_or_wolf_residue_ids from strings to residue_ids
+	size_size_pair_vec tally_residue_ids_test_suite_fixture::tally_residue_ids_str(const residue_id_vec &prm_pdb_residue_ids,                       ///< A list of residue_ids parsed from the PDB file
+	                                                                               const chain_label    &prm_chain_label,                           ///< A chain_label to combine with the strings to make residue_ids
+	                                                                               const str_vec        &prm_dssp_or_wolf_residue_id_strings,       ///< A list of strings containing the residue names parsed from the DSSP/WOLF file (with a null residue represented with an empty string)
+	                                                                               const bool           &prm_permit_breaks_without_null_residues,   ///< (true for WOLF files and false for DSSP files (at least >= v2.0)
+	                                                                               const bool           &prm_permit_tail_break_without_null_residue ///< (true even for DSSP v2.0.4: file for chain A of 1bvs stops with neither residue 203 or null residue (verbose message: "ignoring incomplete residue ARG  (203)")
+	                                                                               ) {
+		residue_id_vec dssp_or_wolf_residue_ids;
+		dssp_or_wolf_residue_ids.reserve( prm_dssp_or_wolf_residue_id_strings.size()  );
+		for (const string &dssp_or_wolf_residue_id_string : prm_dssp_or_wolf_residue_id_strings) {
+			dssp_or_wolf_residue_ids.emplace_back( prm_chain_label, make_residue_name( dssp_or_wolf_residue_id_string ) );
 		}
+		return tally_residue_ids(
+			prm_pdb_residue_ids,
+			dssp_or_wolf_residue_ids,
+			prm_permit_breaks_without_null_residues,
+			prm_permit_tail_break_without_null_residue
+		);
+	}
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(tally_residue_ids_test_suite, cath::test::tally_residue_ids_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(tally_residue_ids_test_suite, tally_residue_ids_test_suite_fixture)
 
 
 /// \brief Check that tally_residue_ids() works as expected on simple, completely matching lists

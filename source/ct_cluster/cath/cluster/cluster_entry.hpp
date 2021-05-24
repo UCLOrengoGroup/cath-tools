@@ -25,31 +25,29 @@
 
 #include <string>
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief Store the data of a cluster entry
-		class cluster_entry final {
-		private:
-			/// \brief The name of the cluster_entry
-			std::string name;
+	/// \brief Store the data of a cluster entry
+	class cluster_entry final {
+	private:
+		/// \brief The name of the cluster_entry
+		std::string name;
 
-			/// \brief The segments of the cluster_entry
-			seq::seq_seg_run segments;
+		/// \brief The segments of the cluster_entry
+		seq::seq_seg_run segments;
 
-		public:
-			/// \brief No default ctor for now (because seq_seg_run doesn't default construct)
-			cluster_entry() = delete;
+	public:
+		/// \brief No default ctor for now (because seq_seg_run doesn't default construct)
+		cluster_entry() = delete;
 
-			/// \brief Ctor from name and segments
-			explicit cluster_entry(std::string      prm_name, ///< The name of the cluster_entry
-			                       seq::seq_seg_run prm_segs  ///< The segments of the cluster_entry
-			                       ) : name    { std::move( prm_name ) },
-			                           segments{ std::move( prm_segs ) } {
-			}
-		};
+		/// \brief Ctor from name and segments
+		explicit cluster_entry(std::string      prm_name, ///< The name of the cluster_entry
+		                       seq::seq_seg_run prm_segs  ///< The segments of the cluster_entry
+		                       ) : name    { std::move( prm_name ) },
+		                           segments{ std::move( prm_segs ) } {
+		}
+	};
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_ENTRY_HPP

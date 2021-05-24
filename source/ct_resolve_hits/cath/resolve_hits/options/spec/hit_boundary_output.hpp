@@ -21,34 +21,32 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_HIT_BOUNDARY_OUTPUT_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_HIT_BOUNDARY_OUTPUT_HPP
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Whether the output of the hits' boundaries should have them trimmed
-		enum class hit_boundary_output : bool {
-			TRIMMED, ///< Output the trimmed version of the boundaries
-			ORIG     ///< Output the original, untrimmed version of the boundaries
-		};
+	/// \brief Whether the output of the hits' boundaries should have them trimmed
+	enum class hit_boundary_output : bool {
+		TRIMMED, ///< Output the trimmed version of the boundaries
+		ORIG     ///< Output the original, untrimmed version of the boundaries
+	};
 
-		/// \brief Convert the specified bool output-trimmed-hits to the equivalent hit_boundary_output
-		///
-		/// \relates hit_boundary_output
-		inline constexpr hit_boundary_output hit_boundary_output_of_output_trimmed_hits(const bool &prm_output_trimmed_hits ///< Whether the output of the hits' boundaries should have them trimmed
-		                                                                                ) {
-			return prm_output_trimmed_hits ? hit_boundary_output::TRIMMED
-			                               : hit_boundary_output::ORIG;
-		}
+	/// \brief Convert the specified bool output-trimmed-hits to the equivalent hit_boundary_output
+	///
+	/// \relates hit_boundary_output
+	inline constexpr hit_boundary_output hit_boundary_output_of_output_trimmed_hits(const bool &prm_output_trimmed_hits ///< Whether the output of the hits' boundaries should have them trimmed
+	                                                                                ) {
+		return prm_output_trimmed_hits ? hit_boundary_output::TRIMMED
+		                               : hit_boundary_output::ORIG;
+	}
 
-		/// \brief Convert the specified hit_boundary_output to a bool representing denoting
-		///        whether the output of the hits' boundaries should have them trimmed
-		///
-		/// \relates hit_boundary_output
-		inline constexpr bool means_output_trimmed_hits(const hit_boundary_output &prm_hit_boundary_output ///< The hit_boundary_output to query
-		                                                ) {
-			return ( prm_hit_boundary_output == hit_boundary_output::TRIMMED );
-		}
+	/// \brief Convert the specified hit_boundary_output to a bool representing denoting
+	///        whether the output of the hits' boundaries should have them trimmed
+	///
+	/// \relates hit_boundary_output
+	inline constexpr bool means_output_trimmed_hits(const hit_boundary_output &prm_hit_boundary_output ///< The hit_boundary_output to query
+	                                                ) {
+		return ( prm_hit_boundary_output == hit_boundary_output::TRIMMED );
+	}
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_HIT_BOUNDARY_OUTPUT_HPP

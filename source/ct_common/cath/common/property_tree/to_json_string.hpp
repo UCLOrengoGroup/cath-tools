@@ -29,27 +29,24 @@
 #include "cath/common/json_style.hpp"
 #include "cath/common/property_tree/make_ptree_of.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Create a JSON string of the specified value (via a ptree)
-		///
-		/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
-		template <typename T>
-		std::string to_json_string(const T          &prm_val,                            ///< The value to represent in the JSON string
-		                           const json_style &prm_json_style = json_style::PRETTY ///< The style in which the JSON should be written
-		                           ) {
-			std::ostringstream json_ss;
-			write_json(
-				json_ss,
-				make_ptree_of( prm_val ),
-				( prm_json_style == json_style::PRETTY )
-			);
-			return json_ss.str();
-		}
+	/// \brief Create a JSON string of the specified value (via a ptree)
+	///
+	/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
+	template <typename T>
+	std::string to_json_string(const T          &prm_val,                            ///< The value to represent in the JSON string
+	                           const json_style &prm_json_style = json_style::PRETTY ///< The style in which the JSON should be written
+	                           ) {
+		std::ostringstream json_ss;
+		write_json(
+			json_ss,
+			make_ptree_of( prm_val ),
+			( prm_json_style == json_style::PRETTY )
+		);
+		return json_ss.str();
+	}
 
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_TO_JSON_STRING_HPP

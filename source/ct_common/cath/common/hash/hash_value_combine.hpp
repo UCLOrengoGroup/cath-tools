@@ -23,17 +23,15 @@
 
 #include <functional>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Add a new hash value into an existing hash seed
-		inline void hash_value_combine(size_t       &prm_seed,      ///< The seed into which the hash value should be incorporated
-		                               const size_t &prm_hash_value ///< The new hash value
-		                               ) {
-			prm_seed ^= prm_hash_value + 0x9e3779b9 + ( prm_seed << 6 ) + ( prm_seed >> 2 );
-		}
+	/// \brief Add a new hash value into an existing hash seed
+	inline void hash_value_combine(size_t       &prm_seed,      ///< The seed into which the hash value should be incorporated
+	                               const size_t &prm_hash_value ///< The new hash value
+	                               ) {
+		prm_seed ^= prm_hash_value + 0x9e3779b9 + ( prm_seed << 6 ) + ( prm_seed >> 2 );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_HASH_HASH_VALUE_COMBINE_HPP

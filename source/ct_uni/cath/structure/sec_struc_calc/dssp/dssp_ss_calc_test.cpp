@@ -37,21 +37,17 @@
 #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::sec;
-using namespace ::cath::test;
 
 using ::boost::range::sort;
 using ::std::filesystem::directory_entry;
 using ::std::filesystem::directory_iterator;
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		struct dssp_ss_calc_test_suite_fixture : protected dssp_dupl_fixture {
 		protected:
@@ -108,8 +104,7 @@ namespace cath {
 			}
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(dssp_ss_calc_test_suite, dssp_ss_calc_test_suite_fixture)
 

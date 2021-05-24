@@ -30,23 +30,9 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The argc_argv_faker_test_suite_fixture to assist in testing argc_argv_faker
-		struct argc_argv_faker_test_suite_fixture {
-		protected:
-			~argc_argv_faker_test_suite_fixture() noexcept = default;
-
-			void test_args(const str_vec &) const;
-		};
-
-	}  // namespace test
-}  // namespace cath
-
 /// \brief A method to test that argc_argv_faker does what it should for a given list of arguments
-void cath::test::argc_argv_faker_test_suite_fixture::test_args(const str_vec &prm_args ///< The vector of arguments to be tested
-                                                               ) const {
+static void test_args(const str_vec &prm_args ///< The vector of arguments to be tested
+                      ) {
 	// Grab the number of arguments
 	const auto num_args = prm_args.size();
 
@@ -69,7 +55,7 @@ void cath::test::argc_argv_faker_test_suite_fixture::test_args(const str_vec &pr
 	BOOST_CHECK_EQUAL(args_ptr[num_args], static_cast<char *>( nullptr ));
 }
 
-BOOST_FIXTURE_TEST_SUITE(argc_argv_faker_test_suite, cath::test::argc_argv_faker_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(argc_argv_faker_test_suite)
 
 /// \brief Check that argc_argv_faker correctly throws with zero arguments
 BOOST_AUTO_TEST_CASE(zero_args) {

@@ -23,31 +23,27 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace align {
-		namespace gap {
+namespace cath::align::gap {
 
-			/// \brief TODOCUMENT
-			///
-			/// This is an affine gap penalty (ie permits a penalty for opening and another for extending)
-			class gap_penalty final {
-			private:
-				/// \brief TODOCUMENT
-				score_type open_gap_penalty;
+	/// \brief TODOCUMENT
+	///
+	/// This is an affine gap penalty (ie permits a penalty for opening and another for extending)
+	class gap_penalty final {
+	private:
+		/// \brief TODOCUMENT
+		score_type open_gap_penalty;
 
-				/// \brief TODOCUMENT
-				score_type extend_gap_penalty;
+		/// \brief TODOCUMENT
+		score_type extend_gap_penalty;
 
-			public:
-				gap_penalty(const score_type &,
-				            const score_type &);
+	public:
+		gap_penalty(const score_type &,
+		            const score_type &);
 
-				[[nodiscard]] score_type get_open_gap_penalty() const;
-				[[nodiscard]] score_type get_extend_gap_penalty() const;
-			};
+		[[nodiscard]] score_type get_open_gap_penalty() const;
+		[[nodiscard]] score_type get_extend_gap_penalty() const;
+	};
 
-		} // namespace gap
-	} // namespace align
-} // namespace cath
+} // namespace cath::align::gap
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_GAP_GAP_PENALTY_HPP

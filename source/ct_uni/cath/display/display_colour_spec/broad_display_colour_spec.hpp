@@ -25,8 +25,10 @@
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_type_aliases.hpp"
 
+// clang-format off
 namespace cath { class viewer; }
-namespace cath { namespace file { class pdb_list; } }
+namespace cath::file { class pdb_list; }
+// clang-format on
 
 namespace cath {
 

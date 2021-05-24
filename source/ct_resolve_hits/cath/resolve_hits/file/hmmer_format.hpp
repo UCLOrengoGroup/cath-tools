@@ -21,16 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_HMMER_FORMAT_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_HMMER_FORMAT_HPP
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Represent the HMMER formats that can be parsed
-		enum class hmmer_format : bool {
-			HMMSEARCH,  ///< The format output by hmmsearch
-			HMMSCAN     ///< The format output by hmmscan
-		};
+	/// \brief Represent the HMMER formats that can be parsed
+	enum class hmmer_format : bool {
+		HMMSEARCH,  ///< The format output by hmmsearch
+		HMMSCAN     ///< The format output by hmmscan
+	};
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_HMMER_FORMAT_HPP

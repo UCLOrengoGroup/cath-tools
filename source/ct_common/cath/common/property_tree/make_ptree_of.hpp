@@ -23,22 +23,19 @@
 
 #include <boost/property_tree/ptree.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Make a ptree of the specified value
-		///
-		/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
-		template <typename T>
-		boost::property_tree::ptree make_ptree_of(const T &prm_val ///< The value to represent in the ptree
-		                                          ) {
-			boost::property_tree::ptree new_ptree;
-			save_to_ptree( new_ptree, prm_val );
-			return new_ptree;
-		}
+	/// \brief Make a ptree of the specified value
+	///
+	/// \tparam T must have an associated `save_to_ptree(ptree &, const T &)` non-member function
+	template <typename T>
+	boost::property_tree::ptree make_ptree_of(const T &prm_val ///< The value to represent in the ptree
+	                                          ) {
+		boost::property_tree::ptree new_ptree;
+		save_to_ptree( new_ptree, prm_val );
+		return new_ptree;
+	}
 
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_MAKE_PTREE_OF_HPP

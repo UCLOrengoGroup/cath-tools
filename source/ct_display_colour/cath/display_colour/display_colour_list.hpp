@@ -27,7 +27,9 @@
 #include <string>
 #include <vector>
 
+// clang-format off
 namespace cath { class display_colour; }
+// clang-format on
 
 namespace cath {
 

@@ -27,50 +27,43 @@
 #include "cath/test/global_test_constants.hpp"
 #include "cath/test/predicate/files_equal.hpp"
 
+using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-		using test_tuple_t   = std::tuple<double, size_t, bool, int, string>;
-		using test_tuple_vec = std::vector<test_tuple_t>;
-	} // namespace test
-} // namespace cath
+namespace {
 
-namespace cath {
-	namespace test {
+	using test_tuple_t   = std::tuple<double, size_t, bool, int, string>;
+	using test_tuple_vec = std::vector<test_tuple_t>;
 
-		/// \brief The simple_file_read_write_test_suite_fixture to assist in testing simple_file_read_write
-		struct simple_file_read_write_test_suite_fixture : protected global_test_constants {
-		protected:
-			~simple_file_read_write_test_suite_fixture() noexcept = default;
+	/// \brief The simple_file_read_write_test_suite_fixture to assist in testing simple_file_read_write
+	struct simple_file_read_write_test_suite_fixture : protected global_test_constants {
+	protected:
+		~simple_file_read_write_test_suite_fixture() noexcept = default;
 
-			/// \brief A list of example numbers to test simple file reading / writing
-			const doub_vec EXAMPLE_DOUBLES = {
-				1.20206,
-				1.41421,
-				1.61803,
-				2.71828,
-				3.14159
-			};
-
-			/// \brief A list of example tuples to test simple file reading / writing
-			const test_tuple_vec EXAMPLE_TUPLES = {
-				make_tuple( 2.3, 1_z, true, -2, string( "hello" ) ),
-				make_tuple( 2.3, 0_z, true, -1, string( "there" ) ),
-				make_tuple( 2.3, 2_z, true,  0, string( "how"   ) ),
-				make_tuple( 2.3, 0_z, true,  1, string( "are"   ) ),
-				make_tuple( 2.3, 3_z, true,  2, string( "you"   ) )
-			};
+		/// \brief A list of example numbers to test simple file reading / writing
+		const doub_vec EXAMPLE_DOUBLES = {
+			1.20206,
+			1.41421,
+			1.61803,
+			2.71828,
+			3.14159
 		};
 
-	}  // namespace test
-}  // namespace cath
+		/// \brief A list of example tuples to test simple file reading / writing
+		const test_tuple_vec EXAMPLE_TUPLES = {
+			make_tuple( 2.3, 1_z, true, -2, string( "hello" ) ),
+			make_tuple( 2.3, 0_z, true, -1, string( "there" ) ),
+			make_tuple( 2.3, 2_z, true,  0, string( "how"   ) ),
+			make_tuple( 2.3, 0_z, true,  1, string( "are"   ) ),
+			make_tuple( 2.3, 3_z, true,  2, string( "you"   ) )
+		};
+	};
+
+} // namespace
 
 /// \brief Some basic unit tests for the simple read_file()/write_file() functions
-BOOST_FIXTURE_TEST_SUITE(simple_file_read_write_test_suite, cath::test::simple_file_read_write_test_suite_fixture)
-
-
+BOOST_FIXTURE_TEST_SUITE(simple_file_read_write_test_suite, simple_file_read_write_test_suite_fixture)
 
 BOOST_AUTO_TEST_SUITE(doubles)
 
@@ -95,7 +88,7 @@ BOOST_AUTO_TEST_SUITE(tuples)
 
 /// \brief Test that reading tuples from an existing file gives the expected result
 BOOST_AUTO_TEST_CASE(read_tuples) {
-	const auto got = read_file<cath::test::test_tuple_t>( EXAMPLE_TUPLES_FILENAME() );
+	const auto got = read_file<test_tuple_t>( EXAMPLE_TUPLES_FILENAME() );
 	BOOST_TEST( EXAMPLE_TUPLES == got );
 }
 

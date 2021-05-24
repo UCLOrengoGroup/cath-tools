@@ -30,46 +30,45 @@
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 #include "cath/test/global_test_constants.hpp"
 
+using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::score;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The classn_stat_plotter_test_suite_fixture to assist in testing classn_stat_plotter
-		struct classn_stat_plotter_test_suite_fixture: protected global_test_constants {
-		protected:
-			~classn_stat_plotter_test_suite_fixture() noexcept = default;
+	/// \brief The classn_stat_plotter_test_suite_fixture to assist in testing classn_stat_plotter
+	struct classn_stat_plotter_test_suite_fixture: protected global_test_constants {
+	protected:
+		~classn_stat_plotter_test_suite_fixture() noexcept = default;
 
-			/// \brief TODOCUMENT
-			temp_file temp_base_file{ ".classn_stat_plotter_test_file.%%%%-%%%%-%%%%-%%%%" };
+		/// \brief TODOCUMENT
+		temp_file temp_base_file{ ".classn_stat_plotter_test_file.%%%%-%%%%-%%%%-%%%%" };
 
-			/// \brief TODOCUMENT
-			const score_classn_value_list the_score_classn_values{ make_score_classn_value_list(
-				{
-					score_classn_value{ 3.0,  true,  "a" },
-					score_classn_value{ 3.1, false,  "b" },
-					score_classn_value{ 3.2,  true,  "c" },
-					score_classn_value{ 3.3,  true,  "d" },
-					score_classn_value{ 3.4,  true, "e1" },
-					score_classn_value{ 3.4, false, "e2" },
-					score_classn_value{ 3.5,  true,  "f" },
-					score_classn_value{ 3.6, false,  "g" },
-					score_classn_value{ 3.7, false,  "h" },
-					score_classn_value{ 3.8,  true,  "i" },
-					score_classn_value{ 3.9, false,  "j" }
-				},
-				false,
-				"Test Series"
-			) };
+		/// \brief TODOCUMENT
+		const score_classn_value_list the_score_classn_values{ make_score_classn_value_list(
+			{
+				score_classn_value{ 3.0,  true,  "a" },
+				score_classn_value{ 3.1, false,  "b" },
+				score_classn_value{ 3.2,  true,  "c" },
+				score_classn_value{ 3.3,  true,  "d" },
+				score_classn_value{ 3.4,  true, "e1" },
+				score_classn_value{ 3.4, false, "e2" },
+				score_classn_value{ 3.5,  true,  "f" },
+				score_classn_value{ 3.6, false,  "g" },
+				score_classn_value{ 3.7, false,  "h" },
+				score_classn_value{ 3.8,  true,  "i" },
+				score_classn_value{ 3.9, false,  "j" }
+			},
+			false,
+			"Test Series"
+		) };
 
-		};
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(classn_stat_plotter_test_suite, cath::test::classn_stat_plotter_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(classn_stat_plotter_test_suite, classn_stat_plotter_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(check_area_under_roc_curve) {

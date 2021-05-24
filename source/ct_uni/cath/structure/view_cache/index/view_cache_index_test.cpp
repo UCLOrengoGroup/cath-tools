@@ -20,46 +20,34 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "cath/alignment/alignment.hpp"
-#include "cath/alignment/io/alignment_io.hpp"
-#include "cath/file/pdb/pdb.hpp"
-#include "cath/file/pdb/pdb_atom.hpp"
-#include "cath/file/pdb/pdb_list.hpp"
-#include "cath/file/pdb/pdb_residue.hpp"
-#include "cath/ssap/ssap.hpp"
-#include "cath/structure/geometry/angle.hpp"
-#include "cath/structure/protein/protein.hpp"
-#include "cath/structure/protein/protein_source_file_set/protein_from_pdb.hpp"
-#include "cath/structure/protein/sec_struc.hpp"
-#include "cath/structure/protein/sec_struc_planar_angles.hpp"
-#include "cath/structure/view_cache/index/detail/vcie_match_criteria.hpp"
-#include "cath/structure/view_cache/index/quad_find_action.hpp"
-#include "cath/structure/view_cache/index/quad_find_action_check.hpp"
-#include "cath/structure/view_cache/index/view_cache_index.hpp"
-#include "cath/test/global_test_constants.hpp"
+// #include "cath/alignment/alignment.hpp"
+// #include "cath/alignment/io/alignment_io.hpp"
+// #include "cath/file/pdb/pdb.hpp"
+// #include "cath/file/pdb/pdb_atom.hpp"
+// #include "cath/file/pdb/pdb_list.hpp"
+// #include "cath/file/pdb/pdb_residue.hpp"
+// #include "cath/ssap/ssap.hpp"
+// #include "cath/structure/geometry/angle.hpp"
+// #include "cath/structure/protein/protein.hpp"
+// #include "cath/structure/protein/protein_source_file_set/protein_from_pdb.hpp"
+// #include "cath/structure/protein/sec_struc.hpp"
+// #include "cath/structure/protein/sec_struc_planar_angles.hpp"
+// #include "cath/structure/view_cache/index/detail/vcie_match_criteria.hpp"
+// #include "cath/structure/view_cache/index/quad_find_action.hpp"
+// #include "cath/structure/view_cache/index/quad_find_action_check.hpp"
+// #include "cath/structure/view_cache/index/view_cache_index.hpp"
+// #include "cath/test/global_test_constants.hpp"
 
-using namespace ::cath;
-using namespace ::cath::align;
-using namespace ::cath::common;
-using namespace ::cath::index;
-using namespace ::cath::index::detail;
-using namespace ::cath::geom;
-using namespace ::std;
-
-namespace cath {
-	namespace test {
-
-		/// \brief The view_cache_index_test_suite_fixture to assist in testing view_cache_index
-		struct view_cache_index_test_suite_fixture : protected global_test_constants {
-		protected:
-			~view_cache_index_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
+// using namespace ::cath;
+// using namespace ::cath::align;
+// using namespace ::cath::common;
+// using namespace ::cath::index;
+// using namespace ::cath::index::detail;
+// using namespace ::cath::geom;
+// using namespace ::std;
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(view_cache_index_test_suite, cath::test::view_cache_index_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(view_cache_index_test_suite)
 
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(basic) {

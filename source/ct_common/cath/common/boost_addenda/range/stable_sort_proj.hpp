@@ -28,56 +28,54 @@
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/function/ident.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Wrap boost::range::stable_sort() and add support for a projection function, a la Eric Niebler's range-v3 library
-		///
-		/// \todo Roll this out to simplify code
-		template <typename Rng,
-		          typename Pred = std::less<>,
-		          typename Proj = ident>
-		inline auto stable_sort_proj(Rng  &&prm_range,          ///< The range to stable_sort
-		                             Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
-		                             Proj &&prm_proj  = Proj{}  ///< The projection function
-		                             ) {
-			return boost::range::stable_sort(
-				prm_range,
-				[&] (const auto &x, const auto &y) {
-					return ::std::invoke(
-						std::forward<Pred>( prm_pred ),
-						::std::invoke(
-							std::forward< Proj >( prm_proj ),
-							x
-						),
-						::std::invoke(
-							std::forward< Proj >( prm_proj ),
-							y
-						)
-					);
-				}
-			);
-		}
+	/// \brief Wrap boost::range::stable_sort() and add support for a projection function, a la Eric Niebler's range-v3 library
+	///
+	/// \todo Roll this out to simplify code
+	template <typename Rng,
+	          typename Pred = std::less<>,
+	          typename Proj = ident>
+	inline auto stable_sort_proj(Rng  &&prm_range,          ///< The range to stable_sort
+	                             Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+	                             Proj &&prm_proj  = Proj{}  ///< The projection function
+	                             ) {
+		return boost::range::stable_sort(
+			prm_range,
+			[&] (const auto &x, const auto &y) {
+				return ::std::invoke(
+					std::forward<Pred>( prm_pred ),
+					::std::invoke(
+						std::forward< Proj >( prm_proj ),
+						x
+					),
+					::std::invoke(
+						std::forward< Proj >( prm_proj ),
+						y
+					)
+				);
+			}
+		);
+	}
 
-		/// \brief Return a copy of the specified range after stably-sorting using the specified less-than predicate and projection function
-		///
-		/// \todo Roll this out to simplify code
-		template <typename Rng,
-		          typename Pred = std::less<>,
-		          typename Proj = ident>
-		inline auto stable_sort_proj_copy(Rng    prm_range,          ///< The range to stable_sort
-		                                  Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
-		                                  Proj &&prm_proj  = Proj{}  ///< The projection function
-		                                  ) {
-			stable_sort_proj(
-				prm_range,
-				std::forward<Pred>( prm_pred ),
-				std::forward<Proj>( prm_proj )
-			);
-			return prm_range;
-		}
+	/// \brief Return a copy of the specified range after stably-sorting using the specified less-than predicate and projection function
+	///
+	/// \todo Roll this out to simplify code
+	template <typename Rng,
+	          typename Pred = std::less<>,
+	          typename Proj = ident>
+	inline auto stable_sort_proj_copy(Rng    prm_range,          ///< The range to stable_sort
+	                                  Pred &&prm_pred  = Pred{}, ///< The less-than predicate function
+	                                  Proj &&prm_proj  = Proj{}  ///< The projection function
+	                                  ) {
+		stable_sort_proj(
+			prm_range,
+			std::forward<Pred>( prm_pred ),
+			std::forward<Proj>( prm_proj )
+		);
+		return prm_range;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_STABLE_SORT_PROJ_HPP

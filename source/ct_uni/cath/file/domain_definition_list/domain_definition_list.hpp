@@ -26,35 +26,35 @@
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/file/file_type_aliases.hpp"
 
-namespace cath { namespace opts { class data_dirs_spec; } }
+// clang-format off
+namespace cath::opts { class data_dirs_spec; }
+// clang-format on
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
+	/// \brief TODOCUMENT
+	class domain_definition_list final {
+	private:
 		/// \brief TODOCUMENT
-		class domain_definition_list final {
-		private:
-			/// \brief TODOCUMENT
-			chop::domain_definition_vec domain_definitions;
+		chop::domain_definition_vec domain_definitions;
 
-		public:
-			using const_iterator = chop::domain_definition_vec::const_iterator;
+	public:
+		using const_iterator = chop::domain_definition_vec::const_iterator;
 
-			explicit domain_definition_list(chop::domain_definition_vec);
+		explicit domain_definition_list(chop::domain_definition_vec);
 
-			[[nodiscard]] size_t size() const;
+		[[nodiscard]] size_t size() const;
 
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		domain_definition_list parse_domain_definition_file(const ::std::filesystem::path &);
-		domain_definition_list parse_domain_definition_file(std::istream &);
+	domain_definition_list parse_domain_definition_file(const ::std::filesystem::path &);
+	domain_definition_list parse_domain_definition_file(std::istream &);
 
-		pdb_list_name_set_list_pair read_domains_from_pdbs(const domain_definition_list &,
-		                                                   const opts::data_dirs_spec &);
+	pdb_list_name_set_list_pair read_domains_from_pdbs(const domain_definition_list &,
+	                                                   const opts::data_dirs_spec &);
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DOMAIN_DEFINITION_LIST_DOMAIN_DEFINITION_LIST_HPP

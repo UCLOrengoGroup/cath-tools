@@ -34,30 +34,28 @@ using namespace ::std;
 
 using ::boost::lexical_cast;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The filter_vs_full_score_test_suite_fixture to assist in testing filter_vs_full_score
-		struct filter_vs_full_score_test_suite_fixture {
-		protected:
-			~filter_vs_full_score_test_suite_fixture() noexcept = default;
-			
-		public:
-			/// \brief A standard filter score to use throughout the tests
-			static constexpr double STD_FILTER_SCORE = 4.0;
+	/// \brief The filter_vs_full_score_test_suite_fixture to assist in testing filter_vs_full_score
+	struct filter_vs_full_score_test_suite_fixture {
+	protected:
+		~filter_vs_full_score_test_suite_fixture() noexcept = default;
+		
+	public:
+		/// \brief A standard filter score to use throughout the tests
+		static constexpr double STD_FILTER_SCORE = 4.0;
 
-			/// \brief A standard full score to use throughout the tests
-			static constexpr double STD_FULL_SCORE   = 6.0;
+		/// \brief A standard full score to use throughout the tests
+		static constexpr double STD_FULL_SCORE   = 6.0;
 
-			/// \brief An example filter_vs_full_score to be used in the tests
-			filter_vs_full_score std_score_pair = { STD_FILTER_SCORE, STD_FULL_SCORE };
-		};
+		/// \brief An example filter_vs_full_score to be used in the tests
+		filter_vs_full_score std_score_pair = { STD_FILTER_SCORE, STD_FULL_SCORE };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief A test suite to unit test filter_vs_full_score
-BOOST_FIXTURE_TEST_SUITE(filter_vs_full_score_test_suite, cath::test::filter_vs_full_score_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(filter_vs_full_score_test_suite, filter_vs_full_score_test_suite_fixture)
 
 /// \brief Check the equality/inequality operators work as expected for filter_vs_full_score
 BOOST_AUTO_TEST_CASE(equality) {

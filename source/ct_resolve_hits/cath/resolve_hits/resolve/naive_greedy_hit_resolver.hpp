@@ -25,14 +25,14 @@
 
 #include <functional>
 
-namespace cath { namespace rslv { class scored_hit_arch; } }
+// clang-format off
+namespace cath::rslv { class scored_hit_arch; }
+// clang-format on
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		scored_hit_arch naive_greedy_resolve_hits(const calc_hit_list &);
+	scored_hit_arch naive_greedy_resolve_hits(const calc_hit_list &);
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_RESOLVE_NAIVE_GREEDY_HIT_RESOLVER_HPP

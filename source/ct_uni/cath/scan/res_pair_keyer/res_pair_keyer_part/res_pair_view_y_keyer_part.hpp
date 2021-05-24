@@ -26,53 +26,53 @@
 #include "cath/scan/quad_criteria.hpp"
 #include "cath/scan/res_pair_keyer/res_pair_keyer_part/detail/axis_keyer_part.hpp"
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan {
 
-			/// \brief Specification for a res_pair_view_axis_keyer_part for the view's y-dimension
-			template <typename Stored, typename Crit>
-			class res_pair_view_y_keyer_part_spec final {
-			public:
-				/// \brief TODOCUMENT
-				using stored_t   = Stored;
+	namespace detail {
 
-				/// \brief TODOCUMENT
-				using criteria_t = Crit;
+		/// \brief Specification for a res_pair_view_axis_keyer_part for the view's y-dimension
+		template <typename Stored, typename Crit>
+		class res_pair_view_y_keyer_part_spec final {
+		public:
+			/// \brief TODOCUMENT
+			using stored_t   = Stored;
 
-				/// \brief TODOCUMENT
-				using value_t    = view_base_type;
+			/// \brief TODOCUMENT
+			using criteria_t = Crit;
 
-				/// \brief Sanity check the specified cell width
-				static constexpr value_t sanity_check_cell_width(const value_t &prm_cell_width ///< The cell width to be sanity-checked
-				                                                 ) {
-					return ( prm_cell_width <= 0.0 || prm_cell_width > 16384.0 ) ? throw std::logic_error( "Cannot create an axis-based res_pair keyer_part with a cell_width that isn't a sensible, strictly-positive value" )
-					                                                             : prm_cell_width;
-				}
+			/// \brief TODOCUMENT
+			using value_t    = view_base_type;
 
-				/// \brief Get a short name that describes this key part
-				static std::string get_name() {
-					return "view_y";
-				}
+			/// \brief Sanity check the specified cell width
+			static constexpr value_t sanity_check_cell_width(const value_t &prm_cell_width ///< The cell width to be sanity-checked
+			                                                 ) {
+				return ( prm_cell_width <= 0.0 || prm_cell_width > 16384.0 ) ? throw std::logic_error( "Cannot create an axis-based res_pair keyer_part with a cell_width that isn't a sensible, strictly-positive value" )
+				                                                             : prm_cell_width;
+			}
 
-				/// \brief Extract the relevant value from the specified res_pair
-				static constexpr value_t get_value(const stored_t &prm_res_pair ///< The res_pair from which the relevant value should be extracted
-				                                   ) {
-					return get_view_y( prm_res_pair );
-				}
+			/// \brief Get a short name that describes this key part
+			static std::string get_name() {
+				return "view_y";
+			}
 
-				/// \brief Extract the search radius from the specified quad_criteria
-				static constexpr value_t get_search_radius(const criteria_t &prm_criteria ///< The criteria defining what is considered a match
-				                                           ) {
-					return get_maximum_distance( prm_criteria );
-				}
-			};
+			/// \brief Extract the relevant value from the specified res_pair
+			static constexpr value_t get_value(const stored_t &prm_res_pair ///< The res_pair from which the relevant value should be extracted
+			                                   ) {
+				return get_view_y( prm_res_pair );
+			}
 
-		} // namespace detail
+			/// \brief Extract the search radius from the specified quad_criteria
+			static constexpr value_t get_search_radius(const criteria_t &prm_criteria ///< The criteria defining what is considered a match
+			                                           ) {
+				return get_maximum_distance( prm_criteria );
+			}
+		};
 
-		/// \brief Type alias for keyer_part for y-axis of view
-		using res_pair_view_y_keyer_part = detail::axis_keyer_part<detail::res_pair_view_y_keyer_part_spec< detail::multi_struc_res_rep_pair, quad_criteria > >;
-	} // namespace scan
-} // namespace cath
+	} // namespace detail
+
+	/// \brief Type alias for keyer_part for y-axis of view
+	using res_pair_view_y_keyer_part = detail::axis_keyer_part<detail::res_pair_view_y_keyer_part_spec< detail::multi_struc_res_rep_pair, quad_criteria > >;
+
+} // namespace cath::scan
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_VIEW_Y_KEYER_PART_HPP

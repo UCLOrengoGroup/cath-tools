@@ -23,42 +23,41 @@
 
 #include "cath/alignment/common_residue_selection_policy/common_residue_score_based_selection_policy.hpp"
 
-namespace cath {
-	namespace align {
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	class common_residue_select_min_score_policy final : public common_residue_score_based_selection_policy {
+	private:
+		/// \brief TODOCUMENT
+		double score_cutoff;
+
+		[[nodiscard]] double get_score_cutoff() const;
+
+		[[nodiscard]] size_vec    do_select_common_residues_with_scores( const doub_doub_pair_vec & ) const final;
+		[[nodiscard]] std::string do_get_descriptive_name() const final;
+		[[nodiscard]] std::unique_ptr<common_residue_selection_policy> do_clone() const final;
+
+		[[nodiscard]] bool do_less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const final;
+
+	  public:
+		explicit common_residue_select_min_score_policy(const double & = DEFAULT_CUTOFF);
+
+		/// \brief The minimum permitted value for the score_cutoff
+		///
+		/// Since the score must be strictly greater than the cutoff, this cutoff value
+		/// is permitted to fall to -0.25 rather than 0 to allow the class to implement
+		/// including all.
+		///
+		/// (I've used -0.25 rather than -0.1 because -0.1 is recurring when represented as a binary float).
+		static constexpr double MIN_CUTOFF     =  -0.25 ;
 
 		/// \brief TODOCUMENT
-		class common_residue_select_min_score_policy final : public common_residue_score_based_selection_policy {
-		private:
-			/// \brief TODOCUMENT
-			double score_cutoff;
+		static constexpr double MAX_CUTOFF     = 100.00 ;
 
-			[[nodiscard]] double get_score_cutoff() const;
+		/// \brief TODOCUMENT
+		static constexpr double DEFAULT_CUTOFF = MIN_CUTOFF;
+	};
 
-			[[nodiscard]] size_vec    do_select_common_residues_with_scores( const doub_doub_pair_vec & ) const final;
-			[[nodiscard]] std::string do_get_descriptive_name() const final;
-			[[nodiscard]] std::unique_ptr<common_residue_selection_policy> do_clone() const final;
-
-			[[nodiscard]] bool do_less_than_with_same_dynamic_type( const common_residue_selection_policy & ) const final;
-
-		  public:
-			explicit common_residue_select_min_score_policy(const double & = DEFAULT_CUTOFF);
-
-			/// \brief The minimum permitted value for the score_cutoff
-			///
-			/// Since the score must be strictly greater than the cutoff, this cutoff value
-			/// is permitted to fall to -0.25 rather than 0 to allow the class to implement
-			/// including all.
-			///
-			/// (I've used -0.25 rather than -0.1 because -0.1 is recurring when represented as a binary float).
-			static constexpr double MIN_CUTOFF     =  -0.25 ;
-
-			/// \brief TODOCUMENT
-			static constexpr double MAX_CUTOFF     = 100.00 ;
-
-			/// \brief TODOCUMENT
-			static constexpr double DEFAULT_CUTOFF = MIN_CUTOFF;
-		};
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_COMMON_RESIDUE_SELECTION_POLICY_COMMON_RESIDUE_SELECT_MIN_SCORE_POLICY_HPP

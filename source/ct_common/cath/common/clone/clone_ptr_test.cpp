@@ -38,18 +38,17 @@
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-namespace cath { namespace test { } }
+namespace cath::clone_ptr_test_ns {}
 
 using namespace ::cath::common;
 using namespace ::cath::common::detail;
-using namespace ::cath::test;
+using namespace ::cath::clone_ptr_test_ns;
 using namespace ::std;
 
 constexpr size_t CONCRETE1_METHOD_RESULT = 3984756;
 constexpr size_t CONCRETE2_METHOD_RESULT =     836;
 
-namespace cath {
-	namespace test {
+namespace cath::clone_ptr_test_ns {
 
 		class clone_ptr_test_abstract_base {
 		private:
@@ -112,8 +111,7 @@ namespace cath {
 			}
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace cath::clone_ptr_test_ns
 
 //bool operator==(const clone_ptr_test_abstract_base &prm_obj1, ///< TODOCUMENT
 //                const clone_ptr_test_abstract_base &prm_obj2  ///< TODOCUMENT

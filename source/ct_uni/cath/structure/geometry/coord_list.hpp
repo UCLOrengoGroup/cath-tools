@@ -28,56 +28,55 @@
 
 #include <vector>
 
-namespace cath {
-	namespace geom {
+namespace cath::geom {
 
+	/// \brief TODOCUMENT
+	class coord_list final : boost::additive<coord_list, coord> {
+	private:
 		/// \brief TODOCUMENT
-		class coord_list final : boost::additive<coord_list, coord> {
-		private:
-			/// \brief TODOCUMENT
-			coord_vec coords;
+		coord_vec coords;
 
-		public:
-			coord_list() = default;
-			explicit coord_list(coord_vec);
+	public:
+		coord_list() = default;
+		explicit coord_list(coord_vec);
 
-			void reserve(const size_t &);
-			[[nodiscard]] bool   empty() const noexcept;
-			[[nodiscard]] size_t size() const;
-			void push_back(const coord &);
-			coord & operator[](const size_t &);
-			const coord & operator[](const size_t &) const;
+		void reserve(const size_t &);
+		[[nodiscard]] bool   empty() const noexcept;
+		[[nodiscard]] size_t size() const;
+		void push_back(const coord &);
+		coord & operator[](const size_t &);
+		const coord & operator[](const size_t &) const;
 
-			void operator+=(const coord &);
-			void operator-=(const coord &);
+		void operator+=(const coord &);
+		void operator-=(const coord &);
 
-			// Provide iterators to make this into a range
-			using iterator = coord_vec::iterator;
-			using const_iterator = coord_vec::const_iterator;
-			iterator begin();
-			iterator end();
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		// Provide iterators to make this into a range
+		using iterator = coord_vec::iterator;
+		using const_iterator = coord_vec::const_iterator;
+		iterator begin();
+		iterator end();
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		coord_list flatten_coord_lists(const coord_list_vec &);
+	coord_list flatten_coord_lists(const coord_list_vec &);
 
-		coord sum(const coord_list &);
+	coord sum(const coord_list &);
 
-		size_t check_non_empty_and_equal_size(const coord_list &,
-		                                      const coord_list &);
+	size_t check_non_empty_and_equal_size(const coord_list &,
+	                                      const coord_list &);
 
-		coord centre_of_gravity(const coord_list &);
+	coord centre_of_gravity(const coord_list &);
 
-		double calc_mean_deviation(const coord_list &,
-		                           const coord_list &);
+	double calc_mean_deviation(const coord_list &,
+	                           const coord_list &);
 
-		double calc_rmsd(const coord_list &,
-		                 const coord_list &);
+	double calc_rmsd(const coord_list &,
+	                 const coord_list &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const coord_list &);
-	} // namespace geom
-} // namespace cath
+	std::ostream & operator<<(std::ostream &,
+	                          const coord_list &);
+
+} // namespace cath::geom
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_COORD_LIST_HPP

@@ -23,23 +23,21 @@
 
 #include "cath/common/cpp14/make_unique.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Make a unique_ptr clone of the specified object using its copy-ctor
-		///
-		/// This allows do_clone() methods to be implemented in one line:
-		///
-		/// ~~~~~.cpp
-		/// return { make_uptr_clone( *this ) };
-		/// ~~~~~
-		template <typename T>
-		inline auto make_uptr_clone(const T &prm_clonee ///< The object to be cloned (via its copy-ctor) into a unique_ptr
-		                            )->decltype( make_unique< T >( prm_clonee) ) {
-			return make_unique<T>( prm_clonee );
-		}
+	/// \brief Make a unique_ptr clone of the specified object using its copy-ctor
+	///
+	/// This allows do_clone() methods to be implemented in one line:
+	///
+	/// ~~~~~.cpp
+	/// return { make_uptr_clone( *this ) };
+	/// ~~~~~
+	template <typename T>
+	inline auto make_uptr_clone(const T &prm_clonee ///< The object to be cloned (via its copy-ctor) into a unique_ptr
+	                            )->decltype( make_unique< T >( prm_clonee) ) {
+		return make_unique<T>( prm_clonee );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CLONE_MAKE_UPTR_CLONE_HPP

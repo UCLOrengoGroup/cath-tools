@@ -29,40 +29,38 @@
 #include <array>
 #include <string>
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief Represent how much refining should be done to an alignment
-		///        (typically as part of the alignment being acquired or immediately afterwards)
-		enum class align_refining {
-			NO,    ///< No refining should be performed
-			LIGHT, ///< At most, light refining should be performed
-			HEAVY  ///< Heavy, slow, expensive refining should be performed
-		};
+	/// \brief Represent how much refining should be done to an alignment
+	///        (typically as part of the alignment being acquired or immediately afterwards)
+	enum class align_refining {
+		NO,    ///< No refining should be performed
+		LIGHT, ///< At most, light refining should be performed
+		HEAVY  ///< Heavy, slow, expensive refining should be performed
+	};
 
-		/// \brief A constexpr list of all align_refinings
-		inline constexpr auto all_align_refinings = common::make_array(
-			align_refining::NO,
-			align_refining::LIGHT,
-			align_refining::HEAVY
-		);
+	/// \brief A constexpr list of all align_refinings
+	inline constexpr auto all_align_refinings = common::make_array(
+		align_refining::NO,
+		align_refining::LIGHT,
+		align_refining::HEAVY
+	);
 
-		std::string to_string(const align_refining &);
+	std::string to_string(const align_refining &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const align_refining &);
+	std::ostream & operator<<(std::ostream &,
+	                          const align_refining &);
 
-		std::istream & operator>>(std::istream &,
-		                          align_refining &);
+	std::istream & operator>>(std::istream &,
+	                          align_refining &);
 
-		std::string description_of_align_refining(const align_refining &);
+	std::string description_of_align_refining(const align_refining &);
 
-		void validate(boost::any &,
-		              const str_vec &,
-		              align_refining*,
-		              int);
+	void validate(boost::any &,
+	              const str_vec &,
+	              align_refining*,
+	              int);
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGN_REFINING_HPP

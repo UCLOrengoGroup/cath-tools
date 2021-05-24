@@ -27,21 +27,23 @@
 
 #include "cath/structure/structure_type_aliases.hpp"
 
-namespace cath { namespace file { class sec_file_record; } }
-namespace cath { namespace file { class sec_file; } }
+// clang-format off
 namespace cath { class sec_struc_planar_angles; }
+namespace cath::file { class sec_file; }
+namespace cath::file { class sec_file_record; }
+// clang-format on
 
-namespace cath {
-	namespace file {
-		sec_file read_sec(const ::std::filesystem::path &);
-		sec_file read_sec(std::istream &);
+namespace cath::file {
 
-		namespace detail {
-			std::pair<size_t, sec_file_record> parse_sec_main_line(const std::string &);
-		} // namespace detail
+	sec_file read_sec(const ::std::filesystem::path &);
+	sec_file read_sec(std::istream &);
 
-		sec_struc_planar_angles_vec parse_sec_angles_line(const std::string &);
+	namespace detail {
+		std::pair<size_t, sec_file_record> parse_sec_main_line(const std::string &);
+	} // namespace detail
 
-	} // namespace file
-} // namespace cath
+	sec_struc_planar_angles_vec parse_sec_angles_line(const std::string &);
+
+} // namespace cath::file
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_IO_HPP

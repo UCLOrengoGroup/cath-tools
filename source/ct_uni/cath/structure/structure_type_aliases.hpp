@@ -29,6 +29,7 @@
 #include <set>
 #include <vector>
 
+// clang-format off
 namespace cath { class amino_acid; }
 namespace cath { class chain_label; }
 namespace cath { class protein; }
@@ -38,17 +39,21 @@ namespace cath { class residue_name; }
 namespace cath { class sec_struc; }
 namespace cath { class sec_struc_planar_angles; }
 namespace cath { enum class sec_struc_type : char; }
-namespace cath { namespace geom { class coord; } }
-namespace cath { namespace geom { class coord_list; } }
-namespace cath { namespace geom { class rotation; } }
-namespace cath { namespace geom { template <typename T> class angle; } }
-namespace cath { namespace geom { template <typename T> class quat_rot_impl; } }
-namespace cath { namespace index { class view_cache; } }
+namespace cath::geom { class coord; }
+namespace cath::geom { class coord_list; }
+namespace cath::geom { class rotation; }
+namespace cath::geom { template <typename T> class angle; }
+namespace cath::geom { template <typename T> class quat_rot_impl; }
+namespace cath::index { class view_cache; }
+// clang-format on
 
 namespace cath {
 	using sec_struc_type_vec = std::vector<sec_struc_type>;
+} // namespace cath
 
+namespace cath {
 	namespace index {
+
 		namespace detail {
 			class vcie_match_criteria;
 
@@ -67,10 +72,12 @@ namespace cath {
 
 			/// \brief Type alias for filter_vs_full_score_vec's const_iterator
 			using filter_vs_full_score_vec_citr = filter_vs_full_score_vec::const_iterator;
+
 		} // namespace filter
 
 		/// \brief TODOCUMENT
 		using view_cache_vec = std::vector<view_cache>;
+
 	} // namespace index
 
 	namespace geom {
@@ -185,6 +192,7 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	using amino_diff_vec_pair_vec         = std::vector<amino_diff_vec_pair>;
+
 } // namespace cath
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_STRUCTURE_TYPE_ALIASES_HPP

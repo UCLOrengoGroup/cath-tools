@@ -22,14 +22,10 @@
 
 #include "cath/file/name_set/name_set.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::file;
-using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The name_set_test_suite_fixture to assist in testing name_set
 		struct name_set_test_suite_fixture {
@@ -37,8 +33,7 @@ namespace cath {
 			~name_set_test_suite_fixture() noexcept = default;
 		};
 
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(name_set_test_suite, name_set_test_suite_fixture)
 

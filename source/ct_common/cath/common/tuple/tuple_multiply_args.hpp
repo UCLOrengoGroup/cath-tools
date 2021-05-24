@@ -27,33 +27,31 @@
 
 #include <tuple>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Function object to return the result of multiply_argsing all the members of the specified tuple
-			struct tuple_multiply_args_fn final {
+		/// \brief Function object to return the result of multiply_argsing all the members of the specified tuple
+		struct tuple_multiply_args_fn final {
 
-				/// \brief Return the result of multiply_argsing all the members of the specified tuple
-				///
-				/// \todo Tidy up the enable_if / decltype()
-				template <typename Tpl, typename = std::enable_if< is_tuple_v< Tpl > > >
-				constexpr auto operator()(const Tpl &prm_tuple ///< The tuple from which a copy should be taken, its members multiply_argsed and returned
-				                          ) const -> decltype( ::cath::common::apply( multiply_args, prm_tuple ) ) {
-					/// \TODO Come C++17, use ::std::apply
-					return ::cath::common::apply( multiply_args, prm_tuple );
-				}
+			/// \brief Return the result of multiply_argsing all the members of the specified tuple
+			///
+			/// \todo Tidy up the enable_if / decltype()
+			template <typename Tpl, typename = std::enable_if< is_tuple_v< Tpl > > >
+			constexpr auto operator()(const Tpl &prm_tuple ///< The tuple from which a copy should be taken, its members multiply_argsed and returned
+			                          ) const -> decltype( ::cath::common::apply( multiply_args, prm_tuple ) ) {
+				/// \TODO Come C++17, use ::std::apply
+				return ::cath::common::apply( multiply_args, prm_tuple );
+			}
 
-				tuple_multiply_args_fn()                           = delete;
-				tuple_multiply_args_fn(const tuple_multiply_args_fn &) = delete;
-				void operator=(const tuple_multiply_args_fn &)     = delete;
-			};
+			tuple_multiply_args_fn()                           = delete;
+			tuple_multiply_args_fn(const tuple_multiply_args_fn &) = delete;
+			void operator=(const tuple_multiply_args_fn &)     = delete;
+		};
 
-		} // namespace detail
+	} // namespace detail
 
-		inline constexpr detail::tuple_multiply_args_fn tuple_multiply_args{};
+	inline constexpr detail::tuple_multiply_args_fn tuple_multiply_args{};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_MULTIPLY_ARGS_HPP

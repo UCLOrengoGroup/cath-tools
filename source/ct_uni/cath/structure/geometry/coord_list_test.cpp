@@ -29,30 +29,28 @@ using namespace ::cath;
 using namespace ::cath::geom;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The coord_list_test_suite_fixture to assist in testing coord_list
-		struct coord_list_test_suite_fixture {
-		protected:
-			~coord_list_test_suite_fixture() noexcept = default;
+	/// \brief The coord_list_test_suite_fixture to assist in testing coord_list
+	struct coord_list_test_suite_fixture {
+	protected:
+		~coord_list_test_suite_fixture() noexcept = default;
 
-			coord_list coord_list_1 { coord_vec{
-				{ 1.0, 2.0, 3.0 },
-				{ 1.0, 2.0, 3.0 },
-				{ 1.0, 2.0, 3.0 }
-			} };
-			coord_list coord_list_2 { coord_vec{
-				{ 3.0, 2.0, 3.0 },
-				{ 1.0, 4.0, 3.0 },
-				{ 1.0, 2.0, 5.0 }
-			} };
-		};
+		coord_list coord_list_1 { coord_vec{
+			{ 1.0, 2.0, 3.0 },
+			{ 1.0, 2.0, 3.0 },
+			{ 1.0, 2.0, 3.0 }
+		} };
+		coord_list coord_list_2 { coord_vec{
+			{ 3.0, 2.0, 3.0 },
+			{ 1.0, 4.0, 3.0 },
+			{ 1.0, 2.0, 5.0 }
+		} };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(coord_list_test_suite, cath::test::coord_list_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(coord_list_test_suite, coord_list_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(rmsd) {

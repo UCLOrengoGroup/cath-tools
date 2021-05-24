@@ -24,39 +24,37 @@
 #include <boost/range/algorithm/adjacent_find.hpp>
 #include <boost/range/concepts.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
 		/// \brief Template function is_uniq()
 		///
-		/// Returns true iff no to adjacent elements evaluate as equal
-		///
-		/// Iterator-based algorithm checking whether std::adjacent_find() returns end().
-		///
-		/// \pre ForwardItr is a model of the Forward Iterator Concept
-		template<typename ForwardItr>
-		inline bool is_uniq(const ForwardItr &prm_begin, ///< TODOCUMENT
-		                    const ForwardItr &prm_end    ///< TODOCUMENT
-		                    ) {
-			return ( std::adjacent_find( prm_begin, prm_end ) == prm_end );
-		}
+	/// Returns true iff no to adjacent elements evaluate as equal
+	///
+	/// Iterator-based algorithm checking whether std::adjacent_find() returns end().
+	///
+	/// \pre ForwardItr is a model of the Forward Iterator Concept
+	template<typename ForwardItr>
+	inline bool is_uniq(const ForwardItr &prm_begin, ///< TODOCUMENT
+	                    const ForwardItr &prm_end    ///< TODOCUMENT
+	                    ) {
+		return ( std::adjacent_find( prm_begin, prm_end ) == prm_end );
+	}
 
-		/// \brief Template function is_uniq()
-		///
-		/// Range-based version of the common::is_uniq algorithm, above
-		///
-		/// \pre ForwardRange is a model of the ForwardRangeConcept
-		template <typename ForwardRange>
-		inline bool is_uniq(const ForwardRange &prm_rng ///< A single-pass input range
-		                    ) {
-			BOOST_RANGE_CONCEPT_ASSERT((boost::ForwardRangeConcept<ForwardRange>));
-			return is_uniq(
-				::std::cbegin( prm_rng ),
-				::std::cend  ( prm_rng )
-			);
-		}
+	/// \brief Template function is_uniq()
+	///
+	/// Range-based version of the common::is_uniq algorithm, above
+	///
+	/// \pre ForwardRange is a model of the ForwardRangeConcept
+	template <typename ForwardRange>
+	inline bool is_uniq(const ForwardRange &prm_rng ///< A single-pass input range
+	                    ) {
+		BOOST_RANGE_CONCEPT_ASSERT((boost::ForwardRangeConcept<ForwardRange>));
+		return is_uniq(
+			::std::cbegin( prm_rng ),
+			::std::cend  ( prm_rng )
+		);
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_IS_UNIQ_HPP

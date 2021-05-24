@@ -26,49 +26,47 @@
 
 #include "cath/common/type_traits.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Implementation of tuple_subtract
-			template <typename TplA, typename TplB, size_t... Index>
-			constexpr auto tuple_subtract_impl(const TplA &prm_tuple_a,      ///< The tuple from which the other should be subtracted
-			                                   const TplB &prm_tuple_b,      ///< The tuple to subtract from the other
-			                                   std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
-			                                   ) {
-				return std::make_tuple(
-					static_cast<std::common_type_t<std::tuple_element_t<Index, TplA>, std::tuple_element_t<Index, TplA>>>(
-						std::get<Index>( prm_tuple_a ) - std::get<Index>( prm_tuple_b )
-					)...
+		/// \brief Implementation of tuple_subtract
+		template <typename TplA, typename TplB, size_t... Index>
+		constexpr auto tuple_subtract_impl(const TplA &prm_tuple_a,      ///< The tuple from which the other should be subtracted
+		                                   const TplB &prm_tuple_b,      ///< The tuple to subtract from the other
+		                                   std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
+		                                   ) {
+			return std::make_tuple(
+				static_cast<std::common_type_t<std::tuple_element_t<Index, TplA>, std::tuple_element_t<Index, TplA>>>(
+					std::get<Index>( prm_tuple_a ) - std::get<Index>( prm_tuple_b )
+				)...
+			);
+		}
+
+		/// \brief Function object to return the result of element-wise subtracting one tuple from another
+		struct tuple_subtract_fn final {
+
+			/// \brief Return the result of element-wise subtracting one tuple from another
+			template <typename TplA,
+			          typename TplB>
+			constexpr auto operator()(const TplA &prm_tuple_a, ///< The tuple from which the other should be subtracted
+			                          const TplB &prm_tuple_b  ///< The tuple to subtract from the other
+			                          ) const {
+				static_assert(
+					std::tuple_size_v< common::remove_cvref_t< TplA > > == std::tuple_size_v< common::remove_cvref_t< TplB > >,
+					"tuple_subtract() can only be used on tuples of equal size"
+				);
+				return tuple_subtract_impl(
+					prm_tuple_a,
+					prm_tuple_b,
+					std::make_index_sequence< std::tuple_size_v< common::remove_cvref_t< TplA > > >{}
 				);
 			}
+		};
 
-			/// \brief Function object to return the result of element-wise subtracting one tuple from another
-			struct tuple_subtract_fn final {
+	} // namespace detail
 
-				/// \brief Return the result of element-wise subtracting one tuple from another
-				template <typename TplA,
-				          typename TplB>
-				constexpr auto operator()(const TplA &prm_tuple_a, ///< The tuple from which the other should be subtracted
-				                          const TplB &prm_tuple_b  ///< The tuple to subtract from the other
-				                          ) const {
-					static_assert(
-						std::tuple_size_v< common::remove_cvref_t< TplA > > == std::tuple_size_v< common::remove_cvref_t< TplB > >,
-						"tuple_subtract() can only be used on tuples of equal size"
-					);
-					return tuple_subtract_impl(
-						prm_tuple_a,
-						prm_tuple_b,
-						std::make_index_sequence< std::tuple_size_v< common::remove_cvref_t< TplA > > >{}
-					);
-				}
-			};
+	inline constexpr detail::tuple_subtract_fn tuple_subtract{};
 
-		} // namespace detail
-
-		inline constexpr detail::tuple_subtract_fn tuple_subtract{};
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_SUBTRACT_HPP

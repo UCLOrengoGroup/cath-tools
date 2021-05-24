@@ -18,6 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cmath>
+#include <iostream>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -30,19 +33,12 @@
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 #include "cath/resolve_hits/trim/trim_spec.hpp"
 
-#include <cmath>
-#include <iostream>
-
-namespace cath { namespace test { } }
-
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The resolve_hits_html_outputter_test_suite_fixture to assist in testing resolve_hits_html_outputter
 		struct resolve_hits_html_outputter_test_suite_fixture {
@@ -77,8 +73,7 @@ namespace cath {
 			const full_hit_list eg_full_hit_list = make_eg_full_hit_list();
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(resolve_hits_html_outputter_test_suite, resolve_hits_html_outputter_test_suite_fixture)
 

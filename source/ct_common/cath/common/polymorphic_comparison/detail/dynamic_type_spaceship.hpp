@@ -26,46 +26,42 @@
 #include <cassert>
 #include <typeinfo>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief Class containing public static function for performing a spaceship-style less-than
-			///        comparison on the dynamic type of two objects of matching static type
-			class dynamic_type_spaceship final {
-			private:
-				dynamic_type_spaceship() = delete;
+	/// \brief Class containing public static function for performing a spaceship-style less-than
+	///        comparison on the dynamic type of two objects of matching static type
+	class dynamic_type_spaceship final {
+	private:
+		dynamic_type_spaceship() = delete;
 
-			public:
-				template <typename T>
-				static boost::logic::tribool compare_lt(const T &,
-				                                        const T &);
-			};
+	public:
+		template <typename T>
+		static boost::logic::tribool compare_lt(const T &,
+		                                        const T &);
+	};
 
-			/// \brief Perform a spaceship-style less-than comparison on the dynamic type of two objects of matching static type
-			///
-			/// This returns:
-			///  * true          if the first object's dynamic type compares strictly less    than the second object's,
-			///  * false         if the first object's dynamic type compares strictly greater than the second object's or
-			///  * indeterminate otherwise.
-			template <typename T>
-			boost::logic::tribool dynamic_type_spaceship::compare_lt(const T &prm_object1, ///< The first  object whose dynamic type should be compared
-			                                                         const T &prm_object2  ///< The second object whose dynamic type should be compared
-			                                                         ) {
-				if ( typeid( prm_object1 ).before( typeid( prm_object2 ) ) ) {
-					return true;
-				}
-				if ( typeid( prm_object2 ).before( typeid( prm_object1 ) ) ) {
-					return false;
-				}
+	/// \brief Perform a spaceship-style less-than comparison on the dynamic type of two objects of matching static type
+	///
+	/// This returns:
+	///  * true          if the first object's dynamic type compares strictly less    than the second object's,
+	///  * false         if the first object's dynamic type compares strictly greater than the second object's or
+	///  * indeterminate otherwise.
+	template <typename T>
+	boost::logic::tribool dynamic_type_spaceship::compare_lt(const T &prm_object1, ///< The first  object whose dynamic type should be compared
+	                                                         const T &prm_object2  ///< The second object whose dynamic type should be compared
+	                                                         ) {
+		if ( typeid( prm_object1 ).before( typeid( prm_object2 ) ) ) {
+			return true;
+		}
+		if ( typeid( prm_object2 ).before( typeid( prm_object1 ) ) ) {
+			return false;
+		}
 #ifndef NDEBUG
-				assert ( typeid( prm_object1 ) == typeid( prm_object2 ) ); // Neither dynamic type compares before the other but nor do they compare equal
+		assert ( typeid( prm_object1 ) == typeid( prm_object2 ) ); // Neither dynamic type compares before the other but nor do they compare equal
 #endif
-				return boost::logic::indeterminate;
-			}
+		return boost::logic::indeterminate;
+	}
 
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_POLYMORPHIC_COMPARISON_DETAIL_DYNAMIC_TYPE_SPACESHIP_HPP

@@ -25,49 +25,51 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace score {
-		class aligned_pair_score;
+// clang-format off
+namespace cath::score { class aligned_pair_score; }
+// clang-format on
 
-		/// \brief Store a list of aligned_pair_scores
-		class aligned_pair_score_list final {
-		private:
-			/// \brief TODOCUMENT
-			using aligned_pair_score_ptr_vec = boost::ptr_vector<aligned_pair_score>;
+namespace cath::score {
 
-			/// \brief The list of the scores
-			aligned_pair_score_ptr_vec scores;
+	/// \brief Store a list of aligned_pair_scores
+	class aligned_pair_score_list final {
+	private:
+		/// \brief TODOCUMENT
+		using aligned_pair_score_ptr_vec = boost::ptr_vector<aligned_pair_score>;
 
-		public:
-			/// \brief TODOCUMENT
-			using const_iterator = aligned_pair_score_ptr_vec::const_iterator;
+		/// \brief The list of the scores
+		aligned_pair_score_ptr_vec scores;
 
-			/// @{
-			aligned_pair_score_list() = default;
-			explicit aligned_pair_score_list(const boost::ptr_vector<aligned_pair_score> &);
-			/// @}
+	public:
+		/// \brief TODOCUMENT
+		using const_iterator = aligned_pair_score_ptr_vec::const_iterator;
 
-			void add_aligned_pair_score(const aligned_pair_score &);
+		/// @{
+		aligned_pair_score_list() = default;
+		explicit aligned_pair_score_list(const boost::ptr_vector<aligned_pair_score> &);
+		/// @}
 
-			/// @{
-			[[nodiscard]] size_t       size() const;
-			aligned_pair_score & operator[](const size_t &);
-			const aligned_pair_score & operator[](const size_t &) const;
-			/// @}
+		void add_aligned_pair_score(const aligned_pair_score &);
 
-			/// @{
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-			/// @}
-		};
+		/// @{
+		[[nodiscard]] size_t       size() const;
+		aligned_pair_score & operator[](const size_t &);
+		const aligned_pair_score & operator[](const size_t &) const;
+		/// @}
 
-		void warn_on_duplicate_human_friendly_names(const aligned_pair_score_list &);
+		/// @{
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+		/// @}
+	};
 
-		str_vec get_short_names(const aligned_pair_score_list &);
-		str_vec get_long_names(const aligned_pair_score_list &);
-		str_vec get_descriptions(const aligned_pair_score_list &);
-		str_vec get_references(const aligned_pair_score_list &);
-	} // namespace score
-} // namespace cath
+	void warn_on_duplicate_human_friendly_names(const aligned_pair_score_list &);
+
+	str_vec get_short_names(const aligned_pair_score_list &);
+	str_vec get_long_names(const aligned_pair_score_list &);
+	str_vec get_descriptions(const aligned_pair_score_list &);
+	str_vec get_references(const aligned_pair_score_list &);
+
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_LIST_ALIGNED_PAIR_SCORE_LIST_HPP

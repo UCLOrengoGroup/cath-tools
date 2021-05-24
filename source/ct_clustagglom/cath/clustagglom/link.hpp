@@ -23,29 +23,27 @@
 
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief Represent a (half) link in a clustering to an item (from some other implied item)
-		struct link final {
-			/// \brief The index of the item linked to
-			item_idx node;
+	/// \brief Represent a (half) link in a clustering to an item (from some other implied item)
+	struct link final {
+		/// \brief The index of the item linked to
+		item_idx node;
 
-			/// \brief The degree of dissimilarity between the two items
-			strength dissim;
+		/// \brief The degree of dissimilarity between the two items
+		strength dissim;
 
-			link(const item_idx &,
-			     const strength &);
-		};
+		link(const item_idx &,
+		     const strength &);
+	};
 
-		/// \brief Construct from an index and a dissimilarity
-		inline link::link(const item_idx &prm_node,  ///< The index of the item linked to
-		                  const strength &prm_dissim ///< The degree of dissimilarity between the two items
-		                  ) : node   { prm_node   },
-		                      dissim { prm_dissim } {
-		}
+	/// \brief Construct from an index and a dissimilarity
+	inline link::link(const item_idx &prm_node,  ///< The index of the item linked to
+	                  const strength &prm_dissim ///< The degree of dissimilarity between the two items
+	                  ) : node   { prm_node   },
+	                      dissim { prm_dissim } {
+	}
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_LINK_HPP

@@ -23,17 +23,15 @@
 
 #include <boost/exception/all.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		class invalid_argument_exception : public boost::exception,
-		                                   public std::invalid_argument {
-		public:
-			explicit invalid_argument_exception(const std::string &);
-		};
+	/// \brief TODOCUMENT
+	class invalid_argument_exception : public boost::exception,
+	                                   public std::invalid_argument {
+	public:
+		explicit invalid_argument_exception(const std::string &);
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_EXCEPTION_INVALID_ARGUMENT_EXCEPTION_HPP

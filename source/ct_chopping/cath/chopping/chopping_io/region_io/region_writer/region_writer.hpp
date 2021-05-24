@@ -23,30 +23,30 @@
 
 #include <string>
 
-namespace cath { namespace chop { class region; } }
+// clang-format off
+namespace cath::chop { class region; }
+// clang-format on
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
 
-		/// \brief TODOCUMENT
-		class region_writer {
-		  public:
-			[[nodiscard]] virtual std::string do_write_region( const region & ) const = 0;
+	/// \brief TODOCUMENT
+	class region_writer {
+	  public:
+		[[nodiscard]] virtual std::string do_write_region( const region & ) const = 0;
 
-		  protected:
-			region_writer() = default;
-			virtual ~region_writer() noexcept = default;
+	  protected:
+		region_writer() = default;
+		virtual ~region_writer() noexcept = default;
 
-			region_writer(const region_writer &) = default;
-			region_writer(region_writer &&) noexcept = default;
-			region_writer & operator=(const region_writer &) = default;
-			region_writer & operator=(region_writer &&) noexcept = default;
+		region_writer(const region_writer &) = default;
+		region_writer(region_writer &&) noexcept = default;
+		region_writer & operator=(const region_writer &) = default;
+		region_writer & operator=(region_writer &&) noexcept = default;
 
-		  public:
-			[[nodiscard]] std::string write_region( const region & ) const;
-		};
+	  public:
+		[[nodiscard]] std::string write_region( const region & ) const;
+	};
 
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_IO_REGION_IO_REGION_WRITER_REGION_WRITER_HPP

@@ -24,83 +24,81 @@
 #include <array>
 #include <cstddef>
 
-namespace cath {
-	namespace common {
-		namespace detail {
-
-			/// \brief TODOCUMENT
-			template <size_t A, size_t N>
-			constexpr size_t constexpr_is_uniq_impl_next_index() {
-				return ( A + 1 < N ) ? A + 1 : A;
-			}
-
-			/// \brief TODOCUMENT
-			template <size_t I = 0,size_t J = 0, typename T, size_t N>
-			constexpr bool constexpr_is_uniq_impl_impl(const std::array<T, N> &prm_array ///< The array to be searched
-			                                           ) {
-				return (
-					( I == J || prm_array[ I ] != prm_array [ J ] )
-					&&
-					(
-						( J + 1 >= N )
-						||
-						constexpr_is_uniq_impl_impl< I, constexpr_is_uniq_impl_next_index<J, N>() >( prm_array )
-					)
-				);
-			}
-
-			/// \brief TODOCUMENT
-			template <size_t I = 0, typename T, size_t N>
-			constexpr bool constexpr_is_uniq_impl(const std::array<T, N> &prm_array ///< The array to be searched
-			                                      ) {
-				return (
-					constexpr_is_uniq_impl_impl<I, 0>( prm_array )
-					&&
-					(
-						( I + 1 >= N )
-						||
-						constexpr_is_uniq_impl<constexpr_is_uniq_impl_next_index<I, N>()>( prm_array )
-					)
-				);
-			}
-
-		} // namespace detail
+namespace cath::common {
+	namespace detail {
 
 		/// \brief TODOCUMENT
-		template <typename T, size_t N>
-		constexpr bool constexpr_is_uniq(const std::array<T, N> &prm_array ///< The array to be searched
-		                                 ) {
-			return detail::constexpr_is_uniq_impl( prm_array );
+		template <size_t A, size_t N>
+		constexpr size_t constexpr_is_uniq_impl_next_index() {
+			return ( A + 1 < N ) ? A + 1 : A;
 		}
 
+		/// \brief TODOCUMENT
+		template <size_t I = 0,size_t J = 0, typename T, size_t N>
+		constexpr bool constexpr_is_uniq_impl_impl(const std::array<T, N> &prm_array ///< The array to be searched
+		                                           ) {
+			return (
+				( I == J || prm_array[ I ] != prm_array [ J ] )
+				&&
+				(
+					( J + 1 >= N )
+					||
+					constexpr_is_uniq_impl_impl< I, constexpr_is_uniq_impl_next_index<J, N>() >( prm_array )
+				)
+			);
+		}
+
+		/// \brief TODOCUMENT
+		template <size_t I = 0, typename T, size_t N>
+		constexpr bool constexpr_is_uniq_impl(const std::array<T, N> &prm_array ///< The array to be searched
+		                                      ) {
+			return (
+				constexpr_is_uniq_impl_impl<I, 0>( prm_array )
+				&&
+				(
+					( I + 1 >= N )
+					||
+					constexpr_is_uniq_impl<constexpr_is_uniq_impl_next_index<I, N>()>( prm_array )
+				)
+			);
+		}
+
+	} // namespace detail
+
+	/// \brief TODOCUMENT
+	template <typename T, size_t N>
+	constexpr bool constexpr_is_uniq(const std::array<T, N> &prm_array ///< The array to be searched
+	                                 ) {
+		return detail::constexpr_is_uniq_impl( prm_array );
+	}
+
 
 //
-//			/// \brief TODOCUMENT
-//			template <size_t I, size_t J, size_t N>
-//			constexpr size_t constexpr_is_uniq_impl_next_i() {
-//				return ( J + 1 >= N && I + 1 <  N )  ?  I + 1
-//				                                     :  I;
-//			}
+//		/// \brief TODOCUMENT
+//		template <size_t I, size_t J, size_t N>
+//		constexpr size_t constexpr_is_uniq_impl_next_i() {
+//			return ( J + 1 >= N && I + 1 <  N )  ?  I + 1
+//			                                     :  I;
+//		}
 //
-//			/// \brief TODOCUMENT
-//			template <size_t I, size_t J, size_t N>
-//			constexpr size_t constexpr_is_uniq_impl_next_j() {
-//				return ( I + 1 >= N && J + 1 >= N )  ?  J      :
-//				       (               J + 1 >= N )  ?  0      :
-//				                                        J + 1;
-//			}
+//		/// \brief TODOCUMENT
+//		template <size_t I, size_t J, size_t N>
+//		constexpr size_t constexpr_is_uniq_impl_next_j() {
+//			return ( I + 1 >= N && J + 1 >= N )  ?  J      :
+//			       (               J + 1 >= N )  ?  0      :
+//			                                        J + 1;
+//		}
 //
-//			/// \brief TODOCUMENT
-//			template <size_t I = 0, size_t J = 0, typename T, size_t N>
-//			constexpr bool constexpr_is_uniq_impl(const std::array<T, N> &prm_array ///< The array to be searched
-//			                                      ) {
-//				return ( I != J && prm_array[ I ] == prm_array [ J ] ) ? false :
-//				       ( I + 1 >= N && J + 1 >= N                    ) ? true  :
-//				                                                         constexpr_is_uniq_impl< constexpr_is_uniq_impl_next_i<I, J, N>(),
-//				                                                                                 constexpr_is_uniq_impl_next_j<I, J, N>() >( prm_array );
-//			}
+//		/// \brief TODOCUMENT
+//		template <size_t I = 0, size_t J = 0, typename T, size_t N>
+//		constexpr bool constexpr_is_uniq_impl(const std::array<T, N> &prm_array ///< The array to be searched
+//		                                      ) {
+//			return ( I != J && prm_array[ I ] == prm_array [ J ] ) ? false :
+//			       ( I + 1 >= N && J + 1 >= N                    ) ? true  :
+//			                                                         constexpr_is_uniq_impl< constexpr_is_uniq_impl_next_i<I, J, N>(),
+//			                                                                                 constexpr_is_uniq_impl_next_j<I, J, N>() >( prm_array );
+//		}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_IS_UNIQ_HPP

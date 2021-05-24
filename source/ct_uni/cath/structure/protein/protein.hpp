@@ -37,9 +37,11 @@
 #include <iosfwd>
 #include <string>
 
+// clang-format off
 namespace cath { class residue; }
 namespace cath { class residue_id; }
 namespace cath { class sec_struc; }
+// clang-format on
 
 namespace cath {
 

@@ -28,22 +28,20 @@
 
 #include "cath/common/property_tree/read_from_ptree.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Build a T from a JSON string (via a ptree)
-		///
-		/// Requires that there is specialisation of read_from_ptree<> for T
-		template <typename T>
-		T from_json_string(const std::string &prm_json_string ///< The JSON string from which the T should be read
-		                   ) {
-			boost::property_tree::ptree tree;
-			std::istringstream in_ss( prm_json_string );
-			boost::property_tree::json_parser::read_json( in_ss, tree );
-			return ::cath::common::read_from_ptree<T>( tree );
-		}
+	/// \brief Build a T from a JSON string (via a ptree)
+	///
+	/// Requires that there is specialisation of read_from_ptree<> for T
+	template <typename T>
+	T from_json_string(const std::string &prm_json_string ///< The JSON string from which the T should be read
+	                   ) {
+		boost::property_tree::ptree tree;
+		std::istringstream in_ss( prm_json_string );
+		boost::property_tree::json_parser::read_json( in_ss, tree );
+		return ::cath::common::read_from_ptree<T>( tree );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROPERTY_TREE_FROM_JSON_STRING_HPP

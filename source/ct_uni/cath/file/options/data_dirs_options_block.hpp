@@ -24,34 +24,33 @@
 #include "cath/file/options/data_dirs_spec.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief Manage the program options to populate a data_dirs_spec
-		///
-		/// Note that there are two different uses of the word 'path' around this code:
-		///  * the Boost filesystem type that is used to store the location of a file or directory
-		///  * a prioritised list of directories to search for some sort of file
-		class data_dirs_options_block final : public cath::opts::options_block {
-		private:
-			[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
-			[[nodiscard]] std::string                    do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			void do_add_hidden_options_to_description(boost::program_options::options_description &,
-			                                          const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+	/// \brief Manage the program options to populate a data_dirs_spec
+	///
+	/// Note that there are two different uses of the word 'path' around this code:
+	///  * the Boost filesystem type that is used to store the location of a file or directory
+	///  * a prioritised list of directories to search for some sort of file
+	class data_dirs_options_block final : public cath::opts::options_block {
+	private:
+		[[nodiscard]] std::unique_ptr<options_block> do_clone() const final;
+		[[nodiscard]] std::string                    do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		void do_add_hidden_options_to_description(boost::program_options::options_description &,
+		                                          const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-			/// \brief The data_dirs_spec into which to parse options
-			data_dirs_spec the_data_dirs_spec;
+		/// \brief The data_dirs_spec into which to parse options
+		data_dirs_spec the_data_dirs_spec;
 
-		public:
-			data_dirs_options_block() = default;
+	public:
+		data_dirs_options_block() = default;
 
-			[[nodiscard]] const data_dirs_spec &get_data_dirs_spec() const;
-		};
-	} // namespace opts
-} // namespace cath
+		[[nodiscard]] const data_dirs_spec &get_data_dirs_spec() const;
+	};
+
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_OPTIONS_DATA_DIRS_OPTIONS_BLOCK_HPP

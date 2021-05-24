@@ -24,37 +24,33 @@
 #include <optional>
 #include <vector>
 
-namespace cath {
-	namespace clust {
-		namespace detail {
+namespace cath::clust::detail {
 
-			/// \brief Represent the information on a cluster (ie a root node within a cutoff level)
-			struct node_info {
-				/// \brief The location of the cluster (ie the index under which it's being accessed)
-				size_t locn;
+	/// \brief Represent the information on a cluster (ie a root node within a cutoff level)
+	struct node_info {
+		/// \brief The location of the cluster (ie the index under which it's being accessed)
+		size_t locn;
 
-				/// \brief The layer of the cluster
-				size_t layer;
+		/// \brief The layer of the cluster
+		size_t layer;
 
-				constexpr node_info(const size_t &,
-				                    const size_t &) noexcept;
-			};
+		constexpr node_info(const size_t &,
+		                    const size_t &) noexcept;
+	};
 
-			/// \brief Standard ctor like aggregate initialisation
-			inline constexpr node_info::node_info(const size_t &prm_locn, ///< The location of the cluster (ie the index under which it's being accessed)
-			                                      const size_t &prm_layer ///< The layer of the cluster
-			                                      ) noexcept : locn  { prm_locn  },
-			                                                   layer { prm_layer } {
-			}
+	/// \brief Standard ctor like aggregate initialisation
+	inline constexpr node_info::node_info(const size_t &prm_locn, ///< The location of the cluster (ie the index under which it's being accessed)
+	                                      const size_t &prm_layer ///< The layer of the cluster
+	                                      ) noexcept : locn  { prm_locn  },
+	                                                   layer { prm_layer } {
+	}
 
-			/// \brief Type alias for an optional node_info
-			using node_info_opt     = ::std::optional<node_info>;
+	/// \brief Type alias for an optional node_info
+	using node_info_opt     = ::std::optional<node_info>;
 
-			/// \brief Type alias for a vector of node_info_opt values
-			using node_info_opt_vec = std::vector<node_info_opt>;
+	/// \brief Type alias for a vector of node_info_opt values
+	using node_info_opt_vec = std::vector<node_info_opt>;
 
-		} // namespace detail
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_DETAIL_NODE_INFO_HPP

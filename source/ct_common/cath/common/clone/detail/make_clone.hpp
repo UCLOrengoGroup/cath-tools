@@ -23,21 +23,18 @@
 
 #include <memory>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief Template for generating clones from a value
-			///
-			/// This allows specialisation for types that need to use a method name other than "clone",
-			/// if clone() has already been used for producing a clone at an earlier level in the hierarchy.
-			template <typename T>
-			std::unique_ptr<T> make_clone(const T &prm_value ///< TODOCUMENT
-			                              ) {
-				return prm_value.clone();
-			}
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+	/// \brief Template for generating clones from a value
+	///
+	/// This allows specialisation for types that need to use a method name other than "clone",
+	/// if clone() has already been used for producing a clone at an earlier level in the hierarchy.
+	template <typename T>
+	std::unique_ptr<T> make_clone(const T &prm_value ///< TODOCUMENT
+	                              ) {
+		return prm_value.clone();
+	}
+
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CLONE_DETAIL_MAKE_CLONE_HPP

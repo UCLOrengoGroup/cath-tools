@@ -29,40 +29,40 @@
 #include "cath/resolve_hits/options/spec/crh_segment_spec.hpp"
 #include "cath/resolve_hits/options/spec/hit_boundary_output.hpp"
 
-namespace cath { namespace rslv { class read_and_process_mgr; } }
+// clang-format off
+namespace cath::rslv { class read_and_process_mgr; }
+// clang-format on
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		std::string to_output_string(const full_hit_list &,
-		                             const crh_segment_spec &,
-		                             const hit_output_format & = hit_output_format::CLASS,
-		                             const std::string & = std::string{},
-		                             const hit_boundary_output & = hit_boundary_output::ORIG);
-		resscr_opt get_best_crh_score(const full_hit_list &,
-		                              const crh_score_spec &);
+	std::string to_output_string(const full_hit_list &,
+	                             const crh_segment_spec &,
+	                             const hit_output_format & = hit_output_format::CLASS,
+	                             const std::string & = std::string{},
+	                             const hit_boundary_output & = hit_boundary_output::ORIG);
+	resscr_opt get_best_crh_score(const full_hit_list &,
+	                              const crh_score_spec &);
 
-		seg_boundary_pair_vec resolved_boundaries(const full_hit &,
-		                                          const full_hit_list &,
-		                                          const crh_segment_spec &);
+	seg_boundary_pair_vec resolved_boundaries(const full_hit &,
+	                                          const full_hit_list &,
+	                                          const crh_segment_spec &);
 
-		seq::seq_seg_opt_vec merge_boundaries(const seq::seq_seg_vec &,
-		                                      const seg_boundary_pair_vec &,
-		                                      const crh_segment_spec &);
+	seq::seq_seg_opt_vec merge_boundaries(const seq::seq_seg_vec &,
+	                                      const seg_boundary_pair_vec &,
+	                                      const crh_segment_spec &);
 
-		seq::seq_seg_opt_vec resolve_all_boundaries(const full_hit &,
-		                                            const full_hit_list &,
-		                                            const crh_segment_spec &);
+	seq::seq_seg_opt_vec resolve_all_boundaries(const full_hit &,
+	                                            const full_hit_list &,
+	                                            const crh_segment_spec &);
 
-		std::string get_all_resolved_segments_string(const full_hit &,
-		                                             const full_hit_list &,
-		                                             const crh_segment_spec &);
+	std::string get_all_resolved_segments_string(const full_hit &,
+	                                             const full_hit_list &,
+	                                             const crh_segment_spec &);
 
-		std::string to_json_string_with_compact_fullhits(const full_hit_list &,
-		                                                 const crh_segment_spec_opt & = ::std::nullopt,
-		                                                 const size_t & = 0);
+	std::string to_json_string_with_compact_fullhits(const full_hit_list &,
+	                                                 const crh_segment_spec_opt & = ::std::nullopt,
+	                                                 const size_t & = 0);
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FULL_HIT_LIST_FNS_HPP

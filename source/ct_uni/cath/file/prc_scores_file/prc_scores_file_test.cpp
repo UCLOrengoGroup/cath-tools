@@ -29,16 +29,15 @@
 using namespace ::cath::file;
 using namespace ::std;
 
-namespace cath {
-    namespace test {
+namespace {
 
-        /// \brief The prc_scores_file_test_suite_fixture to assist in testing prc_scores_file
-        struct prc_scores_file_test_suite_fixture {
-        protected:
-            ~prc_scores_file_test_suite_fixture() noexcept = default;
+	/// \brief The prc_scores_file_test_suite_fixture to assist in testing prc_scores_file
+	struct prc_scores_file_test_suite_fixture {
+	protected:
+		~prc_scores_file_test_suite_fixture() noexcept = default;
 
-            /// The first 15 results for a PRC results file that has duplicate hits in it
-            const string example_file_string = R"(# PRC 1.5.3 (PLAN9, SPACE5, ALL_TRANS), compiled on Mar 28 2007
+		/// The first 15 results for a PRC results file that has duplicate hits in it
+		const string example_file_string = R"(# PRC 1.5.3 (PLAN9, SPACE5, ALL_TRANS), compiled on Mar 28 2007
 # Copyright (C) 2002-5 Martin Madera and MRC LMB, Cambridge, UK
 # Freely distributed under the GNU General Public License
 # 
@@ -74,27 +73,26 @@ namespace cath {
 1x3zA01 4       25      26      2       1w09A00 34      55      92         3.6    -0.0   7.2e+03
 1x3zA01 2       16      26      3       2uxwA04 46      60      130        3.2    -0.0   7.4e+03
 # END)";
-            istringstream the_iss{ example_file_string };
-        };
+		istringstream the_iss{ example_file_string };
+	};
 
-    }  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(prc_scores_file_test_suite, cath::test::prc_scores_file_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(prc_scores_file_test_suite, prc_scores_file_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(parses_raw_results_correctly) {
-    const auto the_entries = prc_scores_file::parse_prc_scores_file( the_iss );
-    BOOST_REQUIRE_EQUAL( the_entries.size(), 15 );
-    BOOST_CHECK_EQUAL( the_entries.front().get_name_1(), "1x3zA01" );
+	const auto the_entries = prc_scores_file::parse_prc_scores_file( the_iss );
+	BOOST_REQUIRE_EQUAL( the_entries.size(), 15 );
+	BOOST_CHECK_EQUAL( the_entries.front().get_name_1(), "1x3zA01" );
 	BOOST_CHECK_EQUAL( the_entries.front().get_name_2(), "1x3zA01" );
 	BOOST_CHECK_EQUAL( the_entries.back().get_name_1(),  "1x3zA01" );
 	BOOST_CHECK_EQUAL( the_entries.back().get_name_2(),  "2uxwA04" );
 }
 
 BOOST_AUTO_TEST_CASE(parses_uniqued_results_correctly) {
-    const auto the_entries = prc_scores_file::parse_prc_scores_file_fancy( the_iss );
-    BOOST_REQUIRE_EQUAL( the_entries.size(), 5 );
-    BOOST_CHECK_EQUAL( the_entries.front().get_name_1(), "1x3zA01" );
+	const auto the_entries = prc_scores_file::parse_prc_scores_file_fancy( the_iss );
+	BOOST_REQUIRE_EQUAL( the_entries.size(), 5 );
+	BOOST_CHECK_EQUAL( the_entries.front().get_name_1(), "1x3zA01" );
 	BOOST_CHECK_EQUAL( the_entries.front().get_name_2(), "1x3zA01" );
 	BOOST_CHECK_EQUAL( the_entries.back().get_name_1(),  "1x3zA01" );
 	BOOST_CHECK_EQUAL( the_entries.back().get_name_2(),  "1gvjA00" );

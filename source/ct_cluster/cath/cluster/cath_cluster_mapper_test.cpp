@@ -43,8 +43,6 @@
 #include "cath/test/predicate/files_equal.hpp"
 #include "cath/test/predicate/string_matches_file.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
@@ -61,57 +59,55 @@ using ::std::regex;
 using ::std::smatch;
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The cluster_mapper_test_suite_fixture to assist in testing calc_hit_list
-		struct cluster_mapper_test_suite_fixture : protected map_clusters_fixture {
-		protected:
-			~cluster_mapper_test_suite_fixture() noexcept {
-				try {
-					BOOST_CHECK_EQUAL( err_ss.str(), "" );
-				}
-				catch (...) {
-				}
+	/// \brief The cluster_mapper_test_suite_fixture to assist in testing calc_hit_list
+	struct cluster_mapper_test_suite_fixture : protected map_clusters_fixture {
+	protected:
+		~cluster_mapper_test_suite_fixture() noexcept {
+			try {
+				BOOST_CHECK_EQUAL( err_ss.str(), "" );
 			}
-
-			/// \brief Call perform_map_clusters() with the specified arguments preceded by a pseudo-program-name
-			///        and the fixture's i/o streams.
-			void execute_perform_map_clusters(const str_vec &prm_arguments ///< The arguments to pass to perform_map_clusters(), preceded by a pseudo-program-name
-			                                  ) {
-				// std::cerr << "Options are :\n\t\"" << boost::algorithm::join( prm_arguments, "\"\n\t\"" ) << "\n";
-
-				const auto progname_rng = { "pseudo_program_name"s };
-				perform_map_clusters(
-					copy_build<str_vec>( join(
-						progname_rng,
-						prm_arguments
-					) ),
-					input_ss, output_ss, err_ss, parse_sources::CMND_LINE_ONLY
-				);
+			catch (...) {
 			}
+		}
 
-			/// \brief The input stream to use in the tests
-			istringstream   input_ss;
+		/// \brief Call perform_map_clusters() with the specified arguments preceded by a pseudo-program-name
+		///        and the fixture's i/o streams.
+		void execute_perform_map_clusters(const str_vec &prm_arguments ///< The arguments to pass to perform_map_clusters(), preceded by a pseudo-program-name
+		                                  ) {
+			// std::cerr << "Options are :\n\t\"" << boost::algorithm::join( prm_arguments, "\"\n\t\"" ) << "\n";
 
-			/// \brief The output stream to use in the tests
-			ostringstream   output_ss;
+			const auto progname_rng = { "pseudo_program_name"s };
+			perform_map_clusters(
+				copy_build<str_vec>( join(
+					progname_rng,
+					prm_arguments
+				) ),
+				input_ss, output_ss, err_ss, parse_sources::CMND_LINE_ONLY
+			);
+		}
 
-			/// \brief The error stream to use in the tests
-			ostringstream   err_ss;
+		/// \brief The input stream to use in the tests
+		istringstream   input_ss;
 
-			// /// \brief An output stream to which logging can be sent
-			// ostringstream   log_ss;
+		/// \brief The output stream to use in the tests
+		ostringstream   output_ss;
 
-			/// \brief A temporary temp_file
-			const temp_file TEMP_TEST_FILE{ ".cath_cluster_mapper__test_file.%%%%-%%%%-%%%%-%%%%" };
+		/// \brief The error stream to use in the tests
+		ostringstream   err_ss;
 
-			/// \brief The path of the TEMP_TEST_FILE
-			const path      TEMP_TEST_FILE_FILENAME = get_filename( TEMP_TEST_FILE );
-		};
+		// /// \brief An output stream to which logging can be sent
+		// ostringstream   log_ss;
 
-	}  // namespace test
-}  // namespace cath
+		/// \brief A temporary temp_file
+		const temp_file TEMP_TEST_FILE{ ".cath_cluster_mapper__test_file.%%%%-%%%%-%%%%-%%%%" };
+
+		/// \brief The path of the TEMP_TEST_FILE
+		const path      TEMP_TEST_FILE_FILENAME = get_filename( TEMP_TEST_FILE );
+	};
+
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(cath_cluster_mapper_test_suite, cluster_mapper_test_suite_fixture)
 

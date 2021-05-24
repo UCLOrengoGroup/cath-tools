@@ -23,24 +23,23 @@
 
 #include "cath/common/metaprogramming/change_template_wrapper.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Primary template for implementation of change_template_subwrappers_t
-			template <typename T,
-			          template <typename...> class NewWrppr>
-			struct change_template_subwrappers final {};
+		/// \brief Primary template for implementation of change_template_subwrappers_t
+		template <typename T,
+		          template <typename...> class NewWrppr>
+		struct change_template_subwrappers final {};
 
-			/// \brief Specialisation of template for implementation of change_template_subwrappers_t
-			template <template <typename...> class OuterWrppr,
-			          typename... Prms,
-			          template <typename...> class NewWrppr>
-			struct change_template_subwrappers<OuterWrppr<Prms...>, NewWrppr> final {
-				using type = OuterWrppr< change_template_wrapper_t<Prms, NewWrppr>... >;
-			};
+		/// \brief Specialisation of template for implementation of change_template_subwrappers_t
+		template <template <typename...> class OuterWrppr,
+		          typename... Prms,
+		          template <typename...> class NewWrppr>
+		struct change_template_subwrappers<OuterWrppr<Prms...>, NewWrppr> final {
+			using type = OuterWrppr< change_template_wrapper_t<Prms, NewWrppr>... >;
+		};
 
-		} // namespace detail
+	} // namespace detail
 
 	/// \brief The type created by wrapping the specified type's template parameters in the template wrapper
 	///
@@ -48,7 +47,6 @@ namespace cath {
 	template <typename T, template <typename...> class Tmplt>
 	using change_template_subwrappers_t = typename detail::change_template_subwrappers<T, Tmplt>::type;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_CHANGE_TEMPLATE_SUBWRAPPERS_HPP

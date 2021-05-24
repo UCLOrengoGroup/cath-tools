@@ -31,12 +31,10 @@
 #include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath { namespace test { } }
-
+using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
 using ::boost::test_tools::per_element;
@@ -46,55 +44,53 @@ using ::std::pair;
 using ::std::string;
 using ::std::vector;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief Type alias for a pair of string and full_hit_list
-		using str_full_hit_list_pair     = pair<string, full_hit_list>;
+	/// \brief Type alias for a pair of string and full_hit_list
+	using str_full_hit_list_pair     = pair<string, full_hit_list>;
 
-		/// \brief Type alias for a vector of str_full_hit_list_pair values
-		using str_full_hit_list_pair_vec = vector<str_full_hit_list_pair>;
+	/// \brief Type alias for a vector of str_full_hit_list_pair values
+	using str_full_hit_list_pair_vec = vector<str_full_hit_list_pair>;
 
-		/// \brief The hmmer_parser_test_suite_fixture to assist in testing full_hit
-		struct hmmer_parser_test_suite_fixture : protected global_test_constants {
-		protected:
-			~hmmer_parser_test_suite_fixture() noexcept = default;
+	/// \brief The hmmer_parser_test_suite_fixture to assist in testing full_hit
+	struct hmmer_parser_test_suite_fixture : protected global_test_constants {
+	protected:
+		~hmmer_parser_test_suite_fixture() noexcept = default;
 
-			/// \brief Whether to apply CATH-specific policies
-			static constexpr bool APPLY_CATH_POLICIES = false;
+		/// \brief Whether to apply CATH-specific policies
+		static constexpr bool APPLY_CATH_POLICIES = false;
 
-			/// \brief The minimum length that an alignment gap can have to be considered a gap
-			static constexpr residx_t MIN_GAP_LENGTH = 3;
+		/// \brief The minimum length that an alignment gap can have to be considered a gap
+		static constexpr residx_t MIN_GAP_LENGTH = 3;
 
-			/// \brief Whether to parse/output hmmsearch output alignment information
-			static constexpr bool OUTPUT_HMMER_ALN = true;
+		/// \brief Whether to parse/output hmmsearch output alignment information
+		static constexpr bool OUTPUT_HMMER_ALN = true;
 
-			/// \brief Test whether the result of parsing the specified type of HMMER data from
-			///        the specified file matches the specified data
-			void test_parse(const path                       &prm_input_file,   ///< The file to parse
-			                const hmmer_format               &prm_hmmer_format, ///< The type of HMMER data to expect
-			                const str_full_hit_list_pair_vec &prm_expected      ///< The expected results
-			                ) {
-				const auto got = transform_build<str_full_hit_list_pair_vec>(
-					parse_hmmer_out_file(
-						prm_input_file,
-						prm_hmmer_format,
-						APPLY_CATH_POLICIES,
-						MIN_GAP_LENGTH,
-						OUTPUT_HMMER_ALN
-					),
-					[] (const str_calc_hit_list_pair &x) {
-						return make_pair( x.first, x.second.get_full_hits() );
-					}
-				);
+		/// \brief Test whether the result of parsing the specified type of HMMER data from
+		///        the specified file matches the specified data
+		void test_parse(const path                       &prm_input_file,   ///< The file to parse
+		                const hmmer_format               &prm_hmmer_format, ///< The type of HMMER data to expect
+		                const str_full_hit_list_pair_vec &prm_expected      ///< The expected results
+		                ) {
+			const auto got = transform_build<str_full_hit_list_pair_vec>(
+				parse_hmmer_out_file(
+					prm_input_file,
+					prm_hmmer_format,
+					APPLY_CATH_POLICIES,
+					MIN_GAP_LENGTH,
+					OUTPUT_HMMER_ALN
+				),
+				[] (const str_calc_hit_list_pair &x) {
+					return make_pair( x.first, x.second.get_full_hits() );
+				}
+			);
 
-				BOOST_TEST( got == prm_expected, per_element{} );
-			}
+			BOOST_TEST( got == prm_expected, per_element{} );
+		}
 
-		};
+	};
 
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(hmmer_parser_test_suite, hmmer_parser_test_suite_fixture)
 

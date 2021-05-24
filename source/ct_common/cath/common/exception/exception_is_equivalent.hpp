@@ -23,8 +23,7 @@
 
 #include <boost/exception/all.hpp>
 
-namespace cath {
-	namespace test {
+namespace cath::test {
 
 		/// \brief A simple predicate to establish whether a boost::exception is equivalent to this one
 		///       (can be cast to this one's type and same what() string).
@@ -58,7 +57,6 @@ namespace cath {
 			}
 		};
 
-	} // namespace test
-} // namespace cath
+} // namespace cath::test
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_EXCEPTION_EXCEPTION_IS_EQUIVALENT_HPP

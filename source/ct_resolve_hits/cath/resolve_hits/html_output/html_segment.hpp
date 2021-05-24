@@ -25,77 +25,75 @@
 #include "cath/display_colour/display_colour_type_aliases.hpp"
 #include "cath/seq/seq_arrow.hpp"
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Represent a segment to be rendered in HTML
-		struct html_segment final {
-		private:
+	/// \brief Represent a segment to be rendered in HTML
+	struct html_segment final {
+	private:
 
-			/// \brief The sides on which a pill should be rounded on
-			enum class pill_rounding : char {
-				NEITHER,    ///< Round the pill on neither side
-				LEFT_ONLY,  ///< Round the pill on the left side
-				RIGHT_ONLY, ///< Round the pill on the right side
-				BOTH        ///< Round the pill on both sides
-			};
-
-			static std::string get_html_string(const seq::seq_arrow &,
-			                                   const seq::res_arrow_opt &,
-			                                   const std::string &,
-			                                   const str_str_pair_vec &,
-			                                   const display_colour_opt &,
-			                                   const display_colour &,
-			                                   const size_t &,
-			                                   const pill_rounding & = pill_rounding::BOTH);
-
-			static std::string get_resolve_boundary_html_string(const seq::seq_arrow &,
-			                                                    const display_colour &,
-			                                                    const size_t &);
-
-		public:
-			/// \brief The position of the segment's start
-			seq::seq_arrow start;
-
-			/// \brief The position of the segment's trimmed start
-			///        (or nullopt if this is so short it isn't counted as a segment)
-			seq::res_arrow_opt trimmed_start;
-
-			/// \brief The position of the segment's trimmed stop
-			///        (or nullopt if this is so short it isn't counted as a segment)
-			seq::res_arrow_opt trimmed_stop;
-
-			/// \brief The position of the segment's stop
-			seq::seq_arrow stop;
-
-
-			/// \brief The position of any resolved boundary start
-			///        (ie the meeting point between this segment's start and some other overlapping segment's end)
-			seq::res_arrow_opt resolved_start;
-
-			/// \brief The position of any resolved boundary end
-			///        (ie the meeting point between this segment's end and some other overlapping segment's start)
-			seq::res_arrow_opt resolved_stop;
-
-
-			/// \brief The colour in which the hit should be rendered
-			display_colour colour;
-
-			/// \brief A set of key/value pairs to be inserted as data attributes in the span (keys are prefixed with "data-" if not already)
-			str_str_pair_vec data_key_values;
-
-			/// \brief The full length of the sequence on which this hit appears
-			size_t full_seq_length;
-
-			[[nodiscard]] std::string get_grey_back_html_string() const;
-			[[nodiscard]] std::string get_lightened_back_html_string() const;
-			[[nodiscard]] std::string get_full_result_html_string() const;
-			[[nodiscard]] std::string get_strong_front_html_string() const;
-
-			[[nodiscard]] str_vec get_all_span_html_strs( const bool & = true ) const;
+		/// \brief The sides on which a pill should be rounded on
+		enum class pill_rounding : char {
+			NEITHER,    ///< Round the pill on neither side
+			LEFT_ONLY,  ///< Round the pill on the left side
+			RIGHT_ONLY, ///< Round the pill on the right side
+			BOTH        ///< Round the pill on both sides
 		};
 
-	} // namespace rslv
-} // namespace cath
+		static std::string get_html_string(const seq::seq_arrow &,
+		                                   const seq::res_arrow_opt &,
+		                                   const std::string &,
+		                                   const str_str_pair_vec &,
+		                                   const display_colour_opt &,
+		                                   const display_colour &,
+		                                   const size_t &,
+		                                   const pill_rounding & = pill_rounding::BOTH);
+
+		static std::string get_resolve_boundary_html_string(const seq::seq_arrow &,
+		                                                    const display_colour &,
+		                                                    const size_t &);
+
+	public:
+		/// \brief The position of the segment's start
+		seq::seq_arrow start;
+
+		/// \brief The position of the segment's trimmed start
+		///        (or nullopt if this is so short it isn't counted as a segment)
+		seq::res_arrow_opt trimmed_start;
+
+		/// \brief The position of the segment's trimmed stop
+		///        (or nullopt if this is so short it isn't counted as a segment)
+		seq::res_arrow_opt trimmed_stop;
+
+		/// \brief The position of the segment's stop
+		seq::seq_arrow stop;
+
+
+		/// \brief The position of any resolved boundary start
+		///        (ie the meeting point between this segment's start and some other overlapping segment's end)
+		seq::res_arrow_opt resolved_start;
+
+		/// \brief The position of any resolved boundary end
+		///        (ie the meeting point between this segment's end and some other overlapping segment's start)
+		seq::res_arrow_opt resolved_stop;
+
+
+		/// \brief The colour in which the hit should be rendered
+		display_colour colour;
+
+		/// \brief A set of key/value pairs to be inserted as data attributes in the span (keys are prefixed with "data-" if not already)
+		str_str_pair_vec data_key_values;
+
+		/// \brief The full length of the sequence on which this hit appears
+		size_t full_seq_length;
+
+		[[nodiscard]] std::string get_grey_back_html_string() const;
+		[[nodiscard]] std::string get_lightened_back_html_string() const;
+		[[nodiscard]] std::string get_full_result_html_string() const;
+		[[nodiscard]] std::string get_strong_front_html_string() const;
+
+		[[nodiscard]] str_vec get_all_span_html_strs( const bool & = true ) const;
+	};
+
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HTML_OUTPUT_HTML_SEGMENT_HPP

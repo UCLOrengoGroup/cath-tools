@@ -29,19 +29,7 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The display_colour_gradient_test_suite_fixture to assist in testing display_colour_gradient
-		struct display_colour_gradient_test_suite_fixture {
-		protected:
-			~display_colour_gradient_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(display_colour_gradient_test_suite, cath::test::display_colour_gradient_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(display_colour_gradient_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ctor_works) {

@@ -26,32 +26,30 @@
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief Define an options_block for options specifying how cath-resolve-hits should handle the segments
-		class align_regions_options_block final : public opts::options_block {
-		private:
-			using super = opts::options_block;
+	/// \brief Define an options_block for options specifying how cath-resolve-hits should handle the segments
+	class align_regions_options_block final : public opts::options_block {
+	private:
+		using super = opts::options_block;
 
-			/// \brief The regions this options_block configures
-			chop::domain_vec align_domains;
+		/// \brief The regions this options_block configures
+		chop::domain_vec align_domains;
 
-			[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
-			[[nodiscard]] std::string                          do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
+		[[nodiscard]] std::string                          do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-		  public:
-			[[nodiscard]] const chop::domain_vec &get_align_domains() const;
+	  public:
+		[[nodiscard]] const chop::domain_vec &get_align_domains() const;
 
-			/// \brief The option name for the regions of the alignment (either to align or that have been aligned)
-			static constexpr ::std::string_view PO_ALN_REGIONS{ "align-regions" };
-		};
+		/// \brief The option name for the regions of the alignment (either to align or that have been aligned)
+		static constexpr ::std::string_view PO_ALN_REGIONS{ "align-regions" };
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_OPTIONS_ALIGN_REGIONS_OPTIONS_BLOCK_HPP

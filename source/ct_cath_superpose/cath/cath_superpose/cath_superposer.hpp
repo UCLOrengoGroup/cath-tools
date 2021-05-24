@@ -23,8 +23,10 @@
 
 #include <iostream>
 
-namespace cath { namespace opts { class cath_superpose_options; } }
-namespace cath { namespace sup { class superposition_context; } }
+// clang-format off
+namespace cath::opts { class cath_superpose_options; }
+namespace cath::sup { class superposition_context; }
+// clang-format on
 
 namespace cath {
 

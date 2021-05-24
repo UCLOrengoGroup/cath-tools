@@ -27,25 +27,23 @@
 #include "cath/common/file/slurp.hpp"
 #include "cath/common/file/spew.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Perform an in-place find/replace on the specified file
-		inline void regex_replace_file(const ::std::filesystem::path &prm_file,  ///< The file to modify
-		                               const std::regex              &prm_regex, ///< The find regex, to be passed to std::regex_replace()
-		                               const std::string             &prm_string ///< The replace string, to be passed to std::regex_replace()
-		                               ) {
-			spew(
-				prm_file,
-				std::regex_replace(
-					slurp( prm_file ),
-					prm_regex,
-					prm_string
-				)
-			);
-		}
+	/// \brief Perform an in-place find/replace on the specified file
+	inline void regex_replace_file(const ::std::filesystem::path &prm_file,  ///< The file to modify
+	                               const std::regex              &prm_regex, ///< The find regex, to be passed to std::regex_replace()
+	                               const std::string             &prm_string ///< The replace string, to be passed to std::regex_replace()
+	                               ) {
+		spew(
+			prm_file,
+			std::regex_replace(
+				slurp( prm_file ),
+				prm_regex,
+				prm_string
+			)
+		);
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_REGEX_REGEX_REPLACE_FILE_HPP

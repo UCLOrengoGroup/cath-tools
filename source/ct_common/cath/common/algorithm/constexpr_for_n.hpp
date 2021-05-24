@@ -25,38 +25,34 @@
 
 #include <utility>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
+	namespace detail {
 
-		namespace detail {
+		/// \brief Recursive implementation of constexpr_for_n to execute the function operator of F<I>()
+		///        for all size_t values in half-open range [ 0, TO )
+		template <template <size_t> class F, size_t FROM, size_t TO, typename ...Args>
+		void constexpr_for_n_impl(Args && ...args) {
+			// Execute the function operator of F<FROM>()
+			F<FROM>()( std::forward<Args>( args )... );
 
-			/// \brief Recursive implementation of constexpr_for_n to execute the function operator of F<I>()
-			///        for all size_t values in half-open range [ 0, TO )
-			template <template <size_t> class F, size_t FROM, size_t TO, typename ...Args>
-			void constexpr_for_n_impl(Args && ...args) {
-				// Execute the function operator of F<FROM>()
-				F<FROM>()( std::forward<Args>( args )... );
-
-				// If FROM + 1 is still less than TO, recursively call constexpr_for_n_impl() for FROM + 1
-				if ( FROM + 1 < TO ) {
-					constexpr_for_n_impl<F, cath::common::constexpr_min( FROM + 1, TO - 1 ), TO>( std::forward<Args>( args )... );
-				}
+			// If FROM + 1 is still less than TO, recursively call constexpr_for_n_impl() for FROM + 1
+			if ( FROM + 1 < TO ) {
+				constexpr_for_n_impl<F, cath::common::constexpr_min( FROM + 1, TO - 1 ), TO>( std::forward<Args>( args )... );
 			}
-
-		} // namespace detail
-
-		/// \brief Execute the function operator of F<I>() for all size_t values in half-open range [ 0, TO )
-		///
-		/// This is useful for executing some code for each entry of a std::array with the value as a constexpr
-		///
-		/// This is implemented in terms of the recursive constexpr_for_n_impl()
-		template <template <size_t> class F, size_t TO,typename ...Args>
-		void constexpr_for_n(Args && ...args) {
-			detail::constexpr_for_n_impl<F, 0, TO>( std::forward<Args>( args )... );
 		}
 
-	} // namespace common
+	} // namespace detail
 
-} // namespace cath
+	/// \brief Execute the function operator of F<I>() for all size_t values in half-open range [ 0, TO )
+	///
+	/// This is useful for executing some code for each entry of a std::array with the value as a constexpr
+	///
+	/// This is implemented in terms of the recursive constexpr_for_n_impl()
+	template <template <size_t> class F, size_t TO,typename ...Args>
+	void constexpr_for_n(Args && ...args) {
+		detail::constexpr_for_n_impl<F, 0, TO>( std::forward<Args>( args )... );
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_FOR_N_HPP

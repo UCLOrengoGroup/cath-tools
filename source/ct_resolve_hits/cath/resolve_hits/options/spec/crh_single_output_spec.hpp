@@ -28,77 +28,75 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/resolve_hits/options/spec/hit_boundary_output.hpp"
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Represent the different cath-resolve-hits output formats
-		enum class crh_out_format : char {
-			STANDARD,
-			SUMMARY,
-			HTML,
-			JSON
-		};
+	/// \brief Represent the different cath-resolve-hits output formats
+	enum class crh_out_format : char {
+		STANDARD,
+		SUMMARY,
+		HTML,
+		JSON
+	};
 
-		/// \brief Type alias for an optional crh_out_format
-		using crh_out_format_vec = std::vector<crh_out_format>;
+	/// \brief Type alias for an optional crh_out_format
+	using crh_out_format_vec = std::vector<crh_out_format>;
 
-		/// \brief Type alias for an optional crh_out_format
-		using crh_out_format_opt = ::std::optional<crh_out_format>;
+	/// \brief Type alias for an optional crh_out_format
+	using crh_out_format_opt = ::std::optional<crh_out_format>;
 
-		/// \brief Type alias for a vector of crh_out_format_opt
-		using crh_out_format_opt_vec = std::vector<crh_out_format_opt>;
+	/// \brief Type alias for a vector of crh_out_format_opt
+	using crh_out_format_opt_vec = std::vector<crh_out_format_opt>;
 
-		std::string to_string(const crh_out_format &);
+	std::string to_string(const crh_out_format &);
 
-		/// \brief Specify the output for cath-resolve-hits
-		class crh_single_output_spec final {
-		private:
-			/// \brief The output file to which data should be written
-			path_opt            output_file;
+	/// \brief Specify the output for cath-resolve-hits
+	class crh_single_output_spec final {
+	private:
+		/// \brief The output file to which data should be written
+		path_opt            output_file;
 
-			/// \brief Whether to output a summary of the input data
-			bool                summarise            = DEFAULT_SUMMARISE;
+		/// \brief Whether to output a summary of the input data
+		bool                summarise            = DEFAULT_SUMMARISE;
 
-			/// \brief Whether to output HTML describing the hits and the results
-			bool                generate_html_output = DEFAULT_GENERATE_HTML_OUTPUT;
+		/// \brief Whether to output HTML describing the hits and the results
+		bool                generate_html_output = DEFAULT_GENERATE_HTML_OUTPUT;
 
-			/// \brief Whether to output the results in JSON format
-			bool                json_output          = DEFAULT_JSON_OUTPUT;
+		/// \brief Whether to output the results in JSON format
+		bool                json_output          = DEFAULT_JSON_OUTPUT;
 
-		public:
-			/// \brief The default value for whether to output a summary of the input data
-			static constexpr bool                DEFAULT_SUMMARISE            = false;
+	public:
+		/// \brief The default value for whether to output a summary of the input data
+		static constexpr bool                DEFAULT_SUMMARISE            = false;
 
-			/// \brief The default value for whether to output HTML describing the hits and the results
-			static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT = false;
+		/// \brief The default value for whether to output HTML describing the hits and the results
+		static constexpr bool                DEFAULT_GENERATE_HTML_OUTPUT = false;
 
-			/// \brief The default value for whether to output the results in JSON format
-			static constexpr bool                DEFAULT_JSON_OUTPUT          = false;
+		/// \brief The default value for whether to output the results in JSON format
+		static constexpr bool                DEFAULT_JSON_OUTPUT          = false;
 
-			[[nodiscard]] const path_opt &get_output_file() const;
-			[[nodiscard]] const bool &    get_summarise() const;
-			[[nodiscard]] const bool &    get_generate_html_output() const;
-			[[nodiscard]] const bool &    get_json_output() const;
+		[[nodiscard]] const path_opt &get_output_file() const;
+		[[nodiscard]] const bool &    get_summarise() const;
+		[[nodiscard]] const bool &    get_generate_html_output() const;
+		[[nodiscard]] const bool &    get_json_output() const;
 
-			crh_single_output_spec & set_output_file(const ::std::filesystem::path &);
-			crh_single_output_spec & set_summarise(const bool &);
-			crh_single_output_spec & set_generate_html_output(const bool &);
-			crh_single_output_spec & set_json_output(const bool &);
-		};
+		crh_single_output_spec & set_output_file(const ::std::filesystem::path &);
+		crh_single_output_spec & set_summarise(const bool &);
+		crh_single_output_spec & set_generate_html_output(const bool &);
+		crh_single_output_spec & set_json_output(const bool &);
+	};
 
-		bool is_default(const crh_single_output_spec &);
+	bool is_default(const crh_single_output_spec &);
 
-		str_vec get_deprecated_suggestion(const crh_single_output_spec &);
-		std::string get_deprecated_suggestion_str(const crh_single_output_spec &);
+	str_vec get_deprecated_suggestion(const crh_single_output_spec &);
+	std::string get_deprecated_suggestion_str(const crh_single_output_spec &);
 
-		crh_out_format get_out_format(const crh_single_output_spec &);
+	crh_out_format get_out_format(const crh_single_output_spec &);
 
-		str_opt get_invalid_description(const crh_single_output_spec &);
+	str_opt get_invalid_description(const crh_single_output_spec &);
 
-		crh_single_output_spec & set_output_trimmed_hits(crh_single_output_spec &,
-		                                                 const bool &);
+	crh_single_output_spec & set_output_trimmed_hits(crh_single_output_spec &,
+	                                                 const bool &);
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SINGLE_OUTPUT_SPEC_HPP

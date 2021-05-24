@@ -21,17 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP
 
-namespace cath { namespace geom { class coord_list; } }
-namespace cath { namespace geom { namespace detail { class gsl_matrix_wrp; } } }
+// clang-format off
+namespace cath::geom { class coord_list; }
+namespace cath::geom::detail { class gsl_matrix_wrp; }
+// clang-format on
 
-namespace cath {
-	namespace geom {
-		namespace detail {
+namespace cath::geom::detail {
 
-			geom::detail::gsl_matrix_wrp cross_covariance_matrix(const geom::coord_list &,
-			                                                     const geom::coord_list &);
+	geom::detail::gsl_matrix_wrp cross_covariance_matrix(const geom::coord_list &,
+	                                                     const geom::coord_list &);
 
-		} // namespace detail
-	} // namespace geom
-} // namespace cath
+} // namespace cath::geom::detail
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP

@@ -23,30 +23,30 @@
 
 #include "cath/chopping/domain/domain.hpp"
 
-namespace cath { namespace file { class pdb; } }
-namespace cath { namespace opts { class data_dirs_spec; } }
+// clang-format off
+namespace cath::file { class pdb; }
+namespace cath::opts { class data_dirs_spec; }
+// clang-format on
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
 
+	/// \brief TODOCUMENT
+	class domain_definition final {
+	private:
 		/// \brief TODOCUMENT
-		class domain_definition final {
-		private:
-			/// \brief TODOCUMENT
-			chop::domain the_domain;
+		chop::domain the_domain;
 
-			/// \brief STODOCUMENT
-			std::string pdb_name;
+		/// \brief STODOCUMENT
+		std::string pdb_name;
 
-		public:
-			domain_definition(chop::domain,
-			                  std::string);
+	public:
+		domain_definition(chop::domain,
+		                  std::string);
 
-			[[nodiscard]] const chop::domain &get_domain() const;
-			[[nodiscard]] const std::string & get_pdb_name() const;
-		};
+		[[nodiscard]] const chop::domain &get_domain() const;
+		[[nodiscard]] const std::string & get_pdb_name() const;
+	};
 
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_DOMAIN_DOMAIN_DEFINITION_HPP

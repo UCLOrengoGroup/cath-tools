@@ -37,153 +37,154 @@
 #include "cath/score/score_classification/score_classn_value_better_value.hpp"
 #include "cath/score/score_type_aliases.hpp"
 
-namespace cath { namespace score { class classn_stat; } }
-namespace cath { namespace score { class score_classn_value_list; } }
-namespace cath { namespace score { class named_true_false_pos_neg_list; } }
+// clang-format off
+namespace cath::score { class classn_stat; }
+namespace cath::score { class score_classn_value_list; }
+namespace cath::score { class named_true_false_pos_neg_list; }
+// clang-format on
 
-namespace cath {
-	namespace score {
-		score_classn_value_list make_score_classn_value_list(const score_classn_value_vec &,
-		                                                     const bool &,
-		                                                     const std::string &);
+namespace cath::score {
 
-		/// \brief TODOCUMENT
+	score_classn_value_list make_score_classn_value_list(const score_classn_value_vec &,
+	                                                     const bool &,
+	                                                     const std::string &);
+
+	/// \brief TODOCUMENT
+	///
+	/// Invariants:
+	///  * score_classn_values is kept sorted at all times, from best to worst
+	class score_classn_value_list final {
+	private:
+		friend score_classn_value_list cath::score::make_score_classn_value_list(const score_classn_value_vec &,
+		                                                                         const bool &,
+		                                                                         const std::string &);
+
+		/// \brief A vector of score_classn_value objects
 		///
-		/// Invariants:
-		///  * score_classn_values is kept sorted at all times, from best to worst
-		class score_classn_value_list final {
-		private:
-			friend score_classn_value_list cath::score::make_score_classn_value_list(const score_classn_value_vec &,
-			                                                                         const bool &,
-			                                                                         const std::string &);
+		/// (ie scores for instances, each with an label and a flag for whether it's positive)
+		score_classn_value_vec score_classn_values;
 
-			/// \brief A vector of score_classn_value objects
-			///
-			/// (ie scores for instances, each with an label and a flag for whether it's positive)
-			score_classn_value_vec score_classn_values;
+		/// \brief A functor that defines which of two score_classn_value objects is better
+		score_classn_value_better_value better_than;
 
-			/// \brief A functor that defines which of two score_classn_value objects is better
-			score_classn_value_better_value better_than;
-
-			/// \brief Name for this series of data
-			///
-			/// This will often be the algorithm or scoring-scheme that generated the scores
-			std::string name;
-
-			void sort_values();
-
-			score_classn_value_list(score_classn_value_vec,
-			                        const bool &,
-			                        std::string);
-
-		public:
-			using const_iterator = score_classn_value_vec_citr;
-			using iterator       = score_classn_value_vec_citr;
-
-			[[nodiscard]] bool   empty() const;
-			[[nodiscard]] size_t size() const;
-
-			const score_classn_value & operator[](const size_t &) const;
-
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-
-			[[nodiscard]] std::string get_name() const;
-
-			[[nodiscard]] const score_classn_value_better_value &get_better_than() const;
-
-			void add_score_classn_value(const score_classn_value &);
-		};
-
-//		void fill_missing_instance_labels_with_score(score_classn_value_list &);
-
-		double best_score(const score_classn_value_list &);
-		double worst_score(const score_classn_value_list &);
-
-		value_list_scaling get_scaling(const score_classn_value_list &);
-
-		const score_classn_value & best_scoring_actual_positive(const score_classn_value_list &);
-		const score_classn_value & best_scoring_actual_negative(const score_classn_value_list &);
-		const score_classn_value & worst_scoring_actual_positive(const score_classn_value_list &);
-		const score_classn_value & worst_scoring_actual_negative(const score_classn_value_list &);
-
-		std::ostream & summarise_score_classn_value_list(std::ostream &,
-		                                                 const score_classn_value_list &);
-
-		str_set get_sorted_instance_labels(const score_classn_value_list &);
-		str_vec get_instance_labels(const score_classn_value_list &);
-		str_size_pair_vec get_sorted_instance_labels_and_indices(const score_classn_value_list &);
-
-		score_classn_value_vec get_score_classn_values_of_instance_labels(const score_classn_value_list &,
-		                                                                  const str_vec &);
-
-		bool instance_labels_match(const score_classn_value_list &,
-		                           const score_classn_value_list &);
-
-		const bool & get_higher_is_better(const score_classn_value_list &);
-
-		double worst_possible_score(const score_classn_value_list &);
-
-		score_classn_value_list make_score_classn_value_list(const score_classn_value_vec &,
-		                                                     const bool &,
-		                                                     const std::string &);
-
-		doub_doub_pair_vec correlated_data(const score_classn_value_list &,
-		                                   const score_classn_value_list &);
-
-		/// \brief TODOCUMENT
+		/// \brief Name for this series of data
 		///
-		/// \relates score_classn_value_list
-		template <typename FN>
-		score_classn_value_list read_score_classn_value_list(const ::std::filesystem::path &prm_path,             ///< TODOCUMENT
-		                                                     const bool                    &prm_higher_is_better, ///< TODOCUMENT
-		                                                     const std::string             &prm_name,             ///< TODOCUMENT
-		                                                     FN                             prm_is_positive_fn    ///< TODOCUMENT
-		                                                     ) {
-			std::ifstream input_stream = common::open_ifstream( prm_path );
+		/// This will often be the algorithm or scoring-scheme that generated the scores
+		std::string name;
 
-			score_classn_value_vec score_classn_values;
-			std::string line_string;
+		void sort_values();
 
-			while ( std::getline( input_stream, line_string ) ) {
-				// Use an istringstream rather than lexical_cast to allow setting boolalpha
-				const auto line_parts = common::split_build<str_vec>( line_string, boost::algorithm::is_space(), boost::algorithm::token_compress_on );
-				if ( line_parts.size() < 2 ) {
-					BOOST_THROW_EXCEPTION(common::runtime_error_exception("Unable to read score_classn_value_list entry from line that doesn't have at least two parts"));
-				}
-				// This used to
-				const std::string &id1         = line_parts[ 0 ];
-				const std::string &id2         = line_parts[ 1 ];
-				const double       score       = std::stod( line_parts[ 2 ] );
-				const bool         is_positive = prm_is_positive_fn( line_parts );
+		score_classn_value_list(score_classn_value_vec,
+		                        const bool &,
+		                        std::string);
 
-				score_classn_values.emplace_back( score, is_positive, ::fmt::format("{} {}", id1, id2 ) );
+	public:
+		using const_iterator = score_classn_value_vec_citr;
+		using iterator       = score_classn_value_vec_citr;
 
-//				std::istringstream line_ss( line_string );
-//				line_ss >> std::boolalpha;
-//				T t;
-//				line_ss >> t;
-//				line_entries.push_back( t );
+		[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
+
+		const score_classn_value & operator[](const size_t &) const;
+
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+
+		[[nodiscard]] std::string get_name() const;
+
+		[[nodiscard]] const score_classn_value_better_value &get_better_than() const;
+
+		void add_score_classn_value(const score_classn_value &);
+	};
+
+//	void fill_missing_instance_labels_with_score(score_classn_value_list &);
+
+	double best_score(const score_classn_value_list &);
+	double worst_score(const score_classn_value_list &);
+
+	value_list_scaling get_scaling(const score_classn_value_list &);
+
+	const score_classn_value & best_scoring_actual_positive(const score_classn_value_list &);
+	const score_classn_value & best_scoring_actual_negative(const score_classn_value_list &);
+	const score_classn_value & worst_scoring_actual_positive(const score_classn_value_list &);
+	const score_classn_value & worst_scoring_actual_negative(const score_classn_value_list &);
+
+	std::ostream & summarise_score_classn_value_list(std::ostream &,
+	                                                 const score_classn_value_list &);
+
+	str_set get_sorted_instance_labels(const score_classn_value_list &);
+	str_vec get_instance_labels(const score_classn_value_list &);
+	str_size_pair_vec get_sorted_instance_labels_and_indices(const score_classn_value_list &);
+
+	score_classn_value_vec get_score_classn_values_of_instance_labels(const score_classn_value_list &,
+	                                                                  const str_vec &);
+
+	bool instance_labels_match(const score_classn_value_list &,
+	                           const score_classn_value_list &);
+
+	const bool & get_higher_is_better(const score_classn_value_list &);
+
+	double worst_possible_score(const score_classn_value_list &);
+
+	score_classn_value_list make_score_classn_value_list(const score_classn_value_vec &,
+	                                                     const bool &,
+	                                                     const std::string &);
+
+	doub_doub_pair_vec correlated_data(const score_classn_value_list &,
+	                                   const score_classn_value_list &);
+
+	/// \brief TODOCUMENT
+	///
+	/// \relates score_classn_value_list
+	template <typename FN>
+	score_classn_value_list read_score_classn_value_list(const ::std::filesystem::path &prm_path,             ///< TODOCUMENT
+	                                                     const bool                    &prm_higher_is_better, ///< TODOCUMENT
+	                                                     const std::string             &prm_name,             ///< TODOCUMENT
+	                                                     FN                             prm_is_positive_fn    ///< TODOCUMENT
+	                                                     ) {
+		std::ifstream input_stream = common::open_ifstream( prm_path );
+
+		score_classn_value_vec score_classn_values;
+		std::string line_string;
+
+		while ( std::getline( input_stream, line_string ) ) {
+			// Use an istringstream rather than lexical_cast to allow setting boolalpha
+			const auto line_parts = common::split_build<str_vec>( line_string, boost::algorithm::is_space(), boost::algorithm::token_compress_on );
+			if ( line_parts.size() < 2 ) {
+				BOOST_THROW_EXCEPTION(common::runtime_error_exception("Unable to read score_classn_value_list entry from line that doesn't have at least two parts"));
 			}
-			input_stream.close();
+			// This used to
+			const std::string &id1         = line_parts[ 0 ];
+			const std::string &id2         = line_parts[ 1 ];
+			const double       score       = std::stod( line_parts[ 2 ] );
+			const bool         is_positive = prm_is_positive_fn( line_parts );
 
-			return make_score_classn_value_list( score_classn_values, prm_higher_is_better, prm_name );
+			score_classn_values.emplace_back( score, is_positive, ::fmt::format("{} {}", id1, id2 ) );
+
+//			std::istringstream line_ss( line_string );
+//			line_ss >> std::boolalpha;
+//			T t;
+//			line_ss >> t;
+//			line_entries.push_back( t );
 		}
+		input_stream.close();
 
-		score_classn_value_list read_svmlight_predictions_file(const ::std::filesystem::path &,
-		                                                       const std::string &);
+		return make_score_classn_value_list( score_classn_values, prm_higher_is_better, prm_name );
+	}
 
-		score_classn_value_list_vec read_svmlight_predictions_files(const std::vector<std::pair<::std::filesystem::path, std::string>> &);
+	score_classn_value_list read_svmlight_predictions_file(const ::std::filesystem::path &,
+	                                                       const std::string &);
 
-		named_true_false_pos_neg_list make_named_true_false_pos_neg_list(const score_classn_value_list &);
+	score_classn_value_list_vec read_svmlight_predictions_files(const std::vector<std::pair<::std::filesystem::path, std::string>> &);
 
-		double area_under_curve(const score_classn_value_list &,
-		                        const classn_stat &,
-		                        const classn_stat &);
+	named_true_false_pos_neg_list make_named_true_false_pos_neg_list(const score_classn_value_list &);
 
-		double area_under_roc_curve(const score_classn_value_list &);
+	double area_under_curve(const score_classn_value_list &,
+	                        const classn_stat &,
+	                        const classn_stat &);
 
-	} // namespace score
-} // namespace cath
+	double area_under_roc_curve(const score_classn_value_list &);
+
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_CLASSIFICATION_SCORE_CLASSN_VALUE_LIST_HPP

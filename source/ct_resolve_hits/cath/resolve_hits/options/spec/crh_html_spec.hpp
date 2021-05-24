@@ -26,41 +26,39 @@
 #include "cath/resolve_hits/options/spec/crh_html_spec.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Specify the HTML rendering for cath-resolve-hits
-		class crh_html_spec final {
-		private:
-			/// \brief Whether to restrict HTML output to the contents of the body tag
-			bool   restrict_html_within_body = DEFAULT_RESTRICT_HTML_WITHIN_BODY;
+	/// \brief Specify the HTML rendering for cath-resolve-hits
+	class crh_html_spec final {
+	private:
+		/// \brief Whether to restrict HTML output to the contents of the body tag
+		bool   restrict_html_within_body = DEFAULT_RESTRICT_HTML_WITHIN_BODY;
 
-			/// \brief The maximum number of non-solution hits to display in the HTML
-			size_t max_num_non_soln_hits     = DEFAULT_MAX_NUM_NON_SOLN_HITS;
+		/// \brief The maximum number of non-solution hits to display in the HTML
+		size_t max_num_non_soln_hits     = DEFAULT_MAX_NUM_NON_SOLN_HITS;
 
-			/// \brief Whether to exclude hits rejected by the score filters from the HTML
-			bool   exclude_rejected_hits     = DEFAULT_EXCLUDE_REJECTED_HITS;
+		/// \brief Whether to exclude hits rejected by the score filters from the HTML
+		bool   exclude_rejected_hits     = DEFAULT_EXCLUDE_REJECTED_HITS;
 
-		public:
-			/// \brief The default value for whether to restrict HTML output to the contents of the body tag
-			static constexpr bool   DEFAULT_RESTRICT_HTML_WITHIN_BODY = false;
+	public:
+		/// \brief The default value for whether to restrict HTML output to the contents of the body tag
+		static constexpr bool   DEFAULT_RESTRICT_HTML_WITHIN_BODY = false;
 
-			/// \brief The default value for the maximum number of non-solution hits to display in the HTML
-			static constexpr size_t DEFAULT_MAX_NUM_NON_SOLN_HITS     = 80;
+		/// \brief The default value for the maximum number of non-solution hits to display in the HTML
+		static constexpr size_t DEFAULT_MAX_NUM_NON_SOLN_HITS     = 80;
 
-			/// \brief The default value for whether to exclude hits rejected by the score filters from the HTML
-			static constexpr bool   DEFAULT_EXCLUDE_REJECTED_HITS     = false;
+		/// \brief The default value for whether to exclude hits rejected by the score filters from the HTML
+		static constexpr bool   DEFAULT_EXCLUDE_REJECTED_HITS     = false;
 
-			[[nodiscard]] const bool &  get_restrict_html_within_body() const;
-			[[nodiscard]] const size_t &get_max_num_non_soln_hits() const;
-			[[nodiscard]] const bool &  get_exclude_rejected_hits() const;
+		[[nodiscard]] const bool &  get_restrict_html_within_body() const;
+		[[nodiscard]] const size_t &get_max_num_non_soln_hits() const;
+		[[nodiscard]] const bool &  get_exclude_rejected_hits() const;
 
-			crh_html_spec & set_restrict_html_within_body(const bool &);
-			crh_html_spec & set_max_num_non_soln_hits(const size_t &);
-			crh_html_spec & set_exclude_rejected_hits(const bool &);
-		};
+		crh_html_spec & set_restrict_html_within_body(const bool &);
+		crh_html_spec & set_max_num_non_soln_hits(const size_t &);
+		crh_html_spec & set_exclude_rejected_hits(const bool &);
+	};
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_HTML_SPEC_HPP

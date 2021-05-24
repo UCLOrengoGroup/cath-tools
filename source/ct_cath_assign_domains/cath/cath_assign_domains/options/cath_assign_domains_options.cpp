@@ -47,8 +47,6 @@
 #include "cath/outputter/superposition_outputter/superposition_outputter_list.hpp"
 #include "cath/superposition/superposition_context.hpp"
 
-namespace boost { namespace program_options { class variables_map; } }
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::common;

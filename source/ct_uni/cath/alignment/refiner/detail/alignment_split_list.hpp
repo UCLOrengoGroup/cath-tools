@@ -25,41 +25,40 @@
 
 #include <set>
 
-namespace cath { namespace align { class alignment; } }
+// clang-format off
+namespace cath::align { class alignment; }
+// clang-format on
 
-namespace cath {
-	namespace align {
-		namespace detail {
+namespace cath::align::detail {
 
-			/// \brief TODOCUMENT
-			class alignment_split_list final {
-			private:
-				using alignment_split_set = std::set<alignment_split>;
+	/// \brief TODOCUMENT
+	class alignment_split_list final {
+	private:
+		using alignment_split_set = std::set<alignment_split>;
 
-				alignment_split_set splits;
+		alignment_split_set splits;
 
-			public:
-				void insert(const alignment_split &);
+	public:
+		void insert(const alignment_split &);
 
-				using iterator = alignment_split_set::iterator;
-				using const_iterator = alignment_split_set::const_iterator;
-				iterator begin();
-				iterator end();
-				[[nodiscard]] const_iterator begin() const;
-				[[nodiscard]] const_iterator end() const;
-			};
+		using iterator = alignment_split_set::iterator;
+		using const_iterator = alignment_split_set::const_iterator;
+		iterator begin();
+		iterator end();
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-			alignment_split_list make_list_of_alignment_split(const alignment &,
-			                                                  const size_vec &);
-			alignment_split_list get_all_single_alignment_splits(const alignment &);
-			alignment_split_list get_preexisting_alignment_splits(const alignment &);
-			alignment_split_list get_standard_alignment_splits(const alignment &);
-			void add_alignment_splits(alignment_split_list &,
-			                          const alignment_split_list &);
-			alignment_split_list add_alignment_splits_copy(alignment_split_list,
-			                                               const alignment_split_list &);
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+	alignment_split_list make_list_of_alignment_split(const alignment &,
+	                                                  const size_vec &);
+	alignment_split_list get_all_single_alignment_splits(const alignment &);
+	alignment_split_list get_preexisting_alignment_splits(const alignment &);
+	alignment_split_list get_standard_alignment_splits(const alignment &);
+	void add_alignment_splits(alignment_split_list &,
+	                          const alignment_split_list &);
+	alignment_split_list add_alignment_splits_copy(alignment_split_list,
+	                                               const alignment_split_list &);
+
+} // namespace cath::align::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_LIST_HPP

@@ -23,24 +23,22 @@
 
 #include "cath/chopping/chopping_format/chopping_format.hpp"
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
 
-		/// \brief TODOCUMENT
-		class scop_chopping_format final : public chopping_format {
-		  private:
-			[[nodiscard]] std::unique_ptr<chopping_format> do_clone() const final;
+	/// \brief TODOCUMENT
+	class scop_chopping_format final : public chopping_format {
+	  private:
+		[[nodiscard]] std::unique_ptr<chopping_format> do_clone() const final;
 
-			[[nodiscard]] bool do_represents_fragments() const final;
+		[[nodiscard]] bool do_represents_fragments() const final;
 
-			[[nodiscard]] domain do_parse_domain( const std::string & ) const final;
+		[[nodiscard]] domain do_parse_domain( const std::string & ) const final;
 
-			[[nodiscard]] std::string do_write_region( const region & ) const final;
+		[[nodiscard]] std::string do_write_region( const region & ) const final;
 
-			[[nodiscard]] std::string do_write_domain( const domain & ) const final;
-		};
+		[[nodiscard]] std::string do_write_domain( const domain & ) const final;
+	};
 
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_SCOP_CHOPPING_FORMAT_HPP

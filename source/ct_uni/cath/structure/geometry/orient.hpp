@@ -24,19 +24,21 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-namespace cath { namespace geom { class coord_list; } }
-namespace cath { namespace geom { namespace detail { class gsl_matrix_wrp; } } }
+// clang-format off
+namespace cath::geom { class coord_list; }
+namespace cath::geom::detail { class gsl_matrix_wrp; }
+// clang-format on
 
-namespace cath {
-	namespace geom {
-		namespace detail {
+namespace cath::geom {
 
-			doub_doub_pair x_and_y_of_later_weighted_cog(const coord_list &a);
+	namespace detail {
 
-		} // namespace detail
+		doub_doub_pair x_and_y_of_later_weighted_cog( const coord_list &a );
 
-		coord_rot_pair get_orienting_transformation(const coord_list &);
+	} // namespace detail
 
-	} // namespace geom
-} // namespace cath
+	coord_rot_pair get_orienting_transformation( const coord_list & );
+
+} // namespace cath::geom
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ORIENT_HPP

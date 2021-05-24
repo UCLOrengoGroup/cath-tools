@@ -21,18 +21,16 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONSTEXPR_IGNORE_UNUSED_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONSTEXPR_IGNORE_UNUSED_HPP
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Like Boost's ignore unused but constexpr
-		///
-		/// See http://www.boost.org/libs/core/doc/html/core/ignore_unused.html
-		template <typename... Ts>
-		constexpr bool constexpr_ignore_unused(const Ts &...) {
-			return true;
-		}
-		
-	} // namespace common
-} // namespace cath
+	/// \brief Like Boost's ignore unused but constexpr
+	///
+	/// See http://www.boost.org/libs/core/doc/html/core/ignore_unused.html
+	template <typename... Ts>
+	constexpr bool constexpr_ignore_unused(const Ts &...) {
+		return true;
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONSTEXPR_IGNORE_UNUSED_HPP

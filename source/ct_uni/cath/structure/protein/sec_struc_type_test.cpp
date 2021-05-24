@@ -33,19 +33,7 @@ using namespace ::std;
 
 using ::boost::lexical_cast;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The sec_struc_type_test_suite_fixture to assist in testing sec_struc_type
-		struct sec_struc_type_test_suite_fixture {
-		protected:
-			~sec_struc_type_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(sec_struc_type_test_suite, cath::test::sec_struc_type_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(sec_struc_type_test_suite)
 
 /// \brief Test that parsing from an "H" works
 BOOST_AUTO_TEST_CASE(input_helix) {

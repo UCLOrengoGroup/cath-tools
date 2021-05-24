@@ -21,24 +21,22 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TEST_OR_EXE_RUN_MODE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TEST_OR_EXE_RUN_MODE_HPP
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Represent whether running as part of a normal executable or a test
-		enum class run_mode : bool {
-			TEST, ///< Running as part of a test suite
-			EXE   ///< Running in normal executable
-		};
+	/// \brief Represent whether running as part of a normal executable or a test
+	enum class run_mode : bool {
+		TEST, ///< Running as part of a test suite
+		EXE   ///< Running in normal executable
+	};
 
-		/// \brief Store a static flag that acts as a global variable ( :o ) to record whether
-		///        running as part of a normal binary or a test
-		///
-		/// The default value is run_mode::EXE; test executables are responsible for setting to run_mode::TEST
-		struct run_mode_flag final {
-			static run_mode value;
-		};
+	/// \brief Store a static flag that acts as a global variable ( :o ) to record whether
+	///        running as part of a normal binary or a test
+	///
+	/// The default value is run_mode::EXE; test executables are responsible for setting to run_mode::TEST
+	struct run_mode_flag final {
+		static run_mode value;
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TEST_OR_EXE_RUN_MODE_HPP

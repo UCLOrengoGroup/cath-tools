@@ -26,13 +26,11 @@
 
 #include "cath/common/path_type_aliases.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		::std::filesystem::path find_file(const path_vec &,
-		                                  const std::string &);
+	::std::filesystem::path find_file(const path_vec &,
+	                                  const std::string &);
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_FIND_FILE_HPP

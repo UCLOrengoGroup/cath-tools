@@ -23,57 +23,55 @@
 
 #include <boost/range/concepts.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Accumulate the results of executing a binary function on the pairs of adjacent values in a range
-		///
-		/// \pre Container        is a model of the Mutable_Container concept
-		/// \pre SinglePassRange1 is a model of the SinglePassRangeConcept
-		template <typename SinglePassItr,
-		          typename Value,
-		          typename BinaryOperation>
-		inline Value adjacent_accumulate(SinglePassItr        prm_begin, ///< Iterator to the beginning of a single-pass input range
-		                                 const SinglePassItr &prm_end,   ///< Iterator to the end of a single-pass input range
-		                                 Value                prm_init,  ///< An initial value
-		                                 BinaryOperation      prm_fun    ///< A binary function to execute on the adjacent pairs of elements of the range
-		                                 ) {
-			while ( std::next( prm_begin ) != prm_end ) {
-				prm_init += prm_fun( *prm_begin, *std::next( prm_begin ) );
-				++prm_begin;
-			}
-			return prm_init;
+	/// \brief Accumulate the results of executing a binary function on the pairs of adjacent values in a range
+	///
+	/// \pre Container        is a model of the Mutable_Container concept
+	/// \pre SinglePassRange1 is a model of the SinglePassRangeConcept
+	template <typename SinglePassItr,
+	          typename Value,
+	          typename BinaryOperation>
+	inline Value adjacent_accumulate(SinglePassItr        prm_begin, ///< Iterator to the beginning of a single-pass input range
+	                                 const SinglePassItr &prm_end,   ///< Iterator to the end of a single-pass input range
+	                                 Value                prm_init,  ///< An initial value
+	                                 BinaryOperation      prm_fun    ///< A binary function to execute on the adjacent pairs of elements of the range
+	                                 ) {
+		while ( std::next( prm_begin ) != prm_end ) {
+			prm_init += prm_fun( *prm_begin, *std::next( prm_begin ) );
+			++prm_begin;
 		}
+		return prm_init;
+	}
 
-		/// \brief Accumulate the results of executing a binary function on the pairs of adjacent values in a range
-		///
-		/// WARNING: adjacent_difference() is a bit rubbish - it copies the first element of the input range into
-		///          the output range before doing calculating the adjacent_differences. In practice, this means
-		///          the output range must have the same value type and the input range.
-		///
-		/// \sa adjacent_accumulate() generate_n_build() random_sample_n_build() sort_adjacent_difference() sort_uniq_adjacent_difference() transform_build() uniq_adjacent_difference()
-		///
-		/// \pre Container        is a model of the Mutable_Container concept
-		/// \pre SinglePassRange1 is a model of the SinglePassRangeConcept
-		template <typename SinglePassRange,
-		          typename Value,
-		          typename BinaryOperation>
-		inline Value adjacent_accumulate(const SinglePassRange &prm_rng, ///< A single-pass input range
-		                                 Value                  prm_init, ///< An initial value
-		                                 BinaryOperation        fun       ///< A binary function to execute on the adjacent pairs of elements of the range
-		                                 ) {
-			// Check that SinglePassRange is a SinglePassRangeConcept
-			BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const SinglePassRange > ));
+	/// \brief Accumulate the results of executing a binary function on the pairs of adjacent values in a range
+	///
+	/// WARNING: adjacent_difference() is a bit rubbish - it copies the first element of the input range into
+	///          the output range before doing calculating the adjacent_differences. In practice, this means
+	///          the output range must have the same value type and the input range.
+	///
+	/// \sa adjacent_accumulate() generate_n_build() random_sample_n_build() sort_adjacent_difference() sort_uniq_adjacent_difference() transform_build() uniq_adjacent_difference()
+	///
+	/// \pre Container        is a model of the Mutable_Container concept
+	/// \pre SinglePassRange1 is a model of the SinglePassRangeConcept
+	template <typename SinglePassRange,
+	          typename Value,
+	          typename BinaryOperation>
+	inline Value adjacent_accumulate(const SinglePassRange &prm_rng, ///< A single-pass input range
+	                                 Value                  prm_init, ///< An initial value
+	                                 BinaryOperation        fun       ///< A binary function to execute on the adjacent pairs of elements of the range
+	                                 ) {
+		// Check that SinglePassRange is a SinglePassRangeConcept
+		BOOST_RANGE_CONCEPT_ASSERT(( boost::SinglePassRangeConcept< const SinglePassRange > ));
 
-			return adjacent_accumulate(
-				::std::cbegin( prm_rng ),
-				::std::cend  ( prm_rng ),
-				std::move( prm_init ),
-				fun
-			);
-		}
+		return adjacent_accumulate(
+			::std::cbegin( prm_rng ),
+			::std::cend  ( prm_rng ),
+			std::move( prm_init ),
+			fun
+		);
+	}
 
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_ADJACENT_ACCUMULATE_HPP

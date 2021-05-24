@@ -29,20 +29,8 @@ using namespace ::cath::scan::detail;
 using namespace ::cath::scan::detail::detail;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The _test_suite_fixture to assist in testing 
-		struct co_stride_test_suite_fixture {
-		protected:
-			~co_stride_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(co_stride_test_suite, cath::test::co_stride_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(co_stride_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(co_stride_works) {

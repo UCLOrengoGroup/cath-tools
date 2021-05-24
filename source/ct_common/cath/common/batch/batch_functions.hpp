@@ -26,69 +26,67 @@
 #include "cath/common/batch/broken_batch_tol.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		size_t batch_size(const size_t &,
-		                  const size_t &,
-		                  const broken_batch_tol &);
+	size_t batch_size(const size_t &,
+	                  const size_t &,
+	                  const broken_batch_tol &);
 
-		size_t num_batches(const size_t &,
-		                   const size_t &,
-		                   const broken_batch_tol &);
+	size_t num_batches(const size_t &,
+	                   const size_t &,
+	                   const broken_batch_tol &);
 
-		void check_batch_index(const size_t &,
-		                       const size_t &,
-		                       const size_t &,
-		                       const broken_batch_tol &);
+	void check_batch_index(const size_t &,
+	                       const size_t &,
+	                       const size_t &,
+	                       const broken_batch_tol &);
 
-		size_t batch_begin(const size_t &,
-		                   const size_t &,
-		                   const size_t &,
-		                   const broken_batch_tol &);
+	size_t batch_begin(const size_t &,
+	                   const size_t &,
+	                   const size_t &,
+	                   const broken_batch_tol &);
 
-		size_t batch_end(const size_t &,
-		                 const size_t &,
-		                 const size_t &,
-		                 const broken_batch_tol &);
+	size_t batch_end(const size_t &,
+	                 const size_t &,
+	                 const size_t &,
+	                 const broken_batch_tol &);
 
-		size_size_pair batch_begin_and_end(const size_t &,
-		                                   const size_t &,
-		                                   const size_t &,
-		                                   const broken_batch_tol &);
+	size_size_pair batch_begin_and_end(const size_t &,
+	                                   const size_t &,
+	                                   const size_t &,
+	                                   const broken_batch_tol &);
 
-		size_size_pair batch_start_and_stop(const size_t &,
-		                                    const size_t &,
-		                                    const size_t &,
-		                                    const broken_batch_tol &);
+	size_size_pair batch_start_and_stop(const size_t &,
+	                                    const size_t &,
+	                                    const size_t &,
+	                                    const broken_batch_tol &);
 
-		boost::integer_range<size_t> batch_irange(const size_t &,
-		                                          const size_t &,
-		                                          const size_t &,
-		                                          const broken_batch_tol &);
+	boost::integer_range<size_t> batch_irange(const size_t &,
+	                                          const size_t &,
+	                                          const size_t &,
+	                                          const broken_batch_tol &);
 
-		/// \brief Return a batch sub-range of the specified range for the specified batch settings
-		///
-		/// \tparam Rng must be a random-access range
-		template <typename Rng>
-		boost::sub_range<Rng> batch_subrange(Rng                    &prm_rng,             ///< The range to batch up
-		                                     const size_t           &prm_batch_size,      ///< The size of the batch
-		                                     const size_t           &prm_batch_index,     ///< The index of the batch to return
-		                                     const broken_batch_tol &prm_broken_batch_tol ///< Whether to tolerate a broken batch at the end
-		                                     ) {
-			const auto begin_and_end = batch_begin_and_end(
-				boost::size( prm_rng ),
-				prm_batch_size,
-				prm_batch_index,
-				prm_broken_batch_tol
-			);
-			return {
-				std::begin( prm_rng ) + static_cast<ptrdiff_t>( begin_and_end.first  ),
-				std::begin( prm_rng ) + static_cast<ptrdiff_t>( begin_and_end.second )
-			};
-		}
+	/// \brief Return a batch sub-range of the specified range for the specified batch settings
+	///
+	/// \tparam Rng must be a random-access range
+	template <typename Rng>
+	boost::sub_range<Rng> batch_subrange(Rng                    &prm_rng,             ///< The range to batch up
+	                                     const size_t           &prm_batch_size,      ///< The size of the batch
+	                                     const size_t           &prm_batch_index,     ///< The index of the batch to return
+	                                     const broken_batch_tol &prm_broken_batch_tol ///< Whether to tolerate a broken batch at the end
+	                                     ) {
+		const auto begin_and_end = batch_begin_and_end(
+			boost::size( prm_rng ),
+			prm_batch_size,
+			prm_batch_index,
+			prm_broken_batch_tol
+		);
+		return {
+			std::begin( prm_rng ) + static_cast<ptrdiff_t>( begin_and_end.first  ),
+			std::begin( prm_rng ) + static_cast<ptrdiff_t>( begin_and_end.second )
+		};
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BATCH_BATCH_FUNCTIONS_HPP

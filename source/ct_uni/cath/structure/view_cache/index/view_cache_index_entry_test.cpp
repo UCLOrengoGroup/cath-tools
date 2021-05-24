@@ -52,183 +52,179 @@ using namespace ::std;
 using ::boost::ignore_unused;
 using ::std::chrono::high_resolution_clock;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The view_cache_index_entry_test_suite_fixture to assist in testing
-		struct view_cache_index_entry_test_suite_fixture : protected global_test_constants {
-		private:
-			static float_score_type compare(const view_cache_index_entry_vec &,
-			                                const view_cache_index_entry_vec &,
-											const vcie_match_criteria &);
-			static hrc_duration time_comparison(const vcie_vcie_vec_pair &);
-			static view_cache_index_entry_vec build_random_vcies(const size_t  &,
-			                                                     const protein &,
-			                                                     mt19937 &);
-		protected:
-			~view_cache_index_entry_test_suite_fixture() noexcept = default;
+	/// \brief The view_cache_index_entry_test_suite_fixture to assist in testing
+	struct view_cache_index_entry_test_suite_fixture : protected global_test_constants {
+	private:
+		// static float_score_type compare(const view_cache_index_entry_vec &,
+		//                                 const view_cache_index_entry_vec &,
+		// 								const vcie_match_criteria &);
+		// static hrc_duration time_comparison(const vcie_vcie_vec_pair &);
+		// static view_cache_index_entry_vec build_random_vcies(const size_t  &,
+		//                                                      const protein &,
+		//                                                      mt19937 &);
+	protected:
+		~view_cache_index_entry_test_suite_fixture() noexcept = default;
 
-			static vcie_vcie_vec_pair build_random_vcies_pair(const size_t &,
-			                                                  const protein &,
-			                                                  const protein &,
-			                                                  mt19937 &);
+		// static vcie_vcie_vec_pair build_random_vcies_pair(const size_t &,
+		//                                                   const protein &,
+		//                                                   const protein &,
+		//                                                   mt19937 &);
 
-			static vcie_vcie_vec_pair build_alignment_vcies_pair(const size_t &,
-			                                                     const protein &,
-			                                                     const protein &,
-			                                                     const alignment &,
-			                                                     mt19937 &);
+		// static vcie_vcie_vec_pair build_alignment_vcies_pair(const size_t &,
+		//                                                      const protein &,
+		//                                                      const protein &,
+		//                                                      const alignment &,
+		//                                                      mt19937 &);
 
-			hrc_duration_vec time_comparisons(const vcie_vcie_vec_pair &,
-		                                      const size_t &);
+		// hrc_duration_vec time_comparisons(const vcie_vcie_vec_pair &,
+	    //                                   const size_t &);
 
-			static constexpr size_t NUM_ENTRIES = 1000000;
-//			static constexpr size_t NUM_ENTRIES =  500000;
-			static constexpr size_t NUM_REPEATS =      50;
-		};
+	};
 
-		/// \brief TODOCUMENT
-		float_score_type view_cache_index_entry_test_suite_fixture::compare(const view_cache_index_entry_vec &prm_vcies_a,  ///< TODOCUMENT
-		                                                                    const view_cache_index_entry_vec &prm_vcies_b,  ///< TODOCUMENT
-								                                            const vcie_match_criteria        &prm_criteria ///< TODOCUMENT
-								                                            ) {
-			float_score_type total_score = 0.0;
-			auto vcies_a_itr = cbegin( prm_vcies_a );
-			auto vcies_b_itr = cbegin( prm_vcies_b );
-			const auto vcies_end_itr = cend( prm_vcies_a );
-			while ( vcies_a_itr != vcies_end_itr ) {
-				if ( prm_criteria( *vcies_a_itr, *vcies_b_itr ) ) {
-					const float_score_type distance = sqrt( squared_distance( *vcies_a_itr, *vcies_b_itr ) );
-					const float_score_type score    = 1.0 - (distance / 7.0 );
-					if ( score > 0 ) {
-						total_score += score;
-					}
-				}
-				++vcies_a_itr;
-				++vcies_b_itr;
-			}
-			return total_score;
+// 	/// \brief TODOCUMENT
+// 	float_score_type view_cache_index_entry_test_suite_fixture::compare(const view_cache_index_entry_vec &prm_vcies_a,  ///< TODOCUMENT
+// 	                                                                    const view_cache_index_entry_vec &prm_vcies_b,  ///< TODOCUMENT
+// 							                                            const vcie_match_criteria        &prm_criteria ///< TODOCUMENT
+// 							                                            ) {
+// 		float_score_type total_score = 0.0;
+// 		auto vcies_a_itr = cbegin( prm_vcies_a );
+// 		auto vcies_b_itr = cbegin( prm_vcies_b );
+// 		const auto vcies_end_itr = cend( prm_vcies_a );
+// 		while ( vcies_a_itr != vcies_end_itr ) {
+// 			if ( prm_criteria( *vcies_a_itr, *vcies_b_itr ) ) {
+// 				const float_score_type distance = sqrt( squared_distance( *vcies_a_itr, *vcies_b_itr ) );
+// 				const float_score_type score    = 1.0 - (distance / 7.0 );
+// 				if ( score > 0 ) {
+// 					total_score += score;
+// 				}
+// 			}
+// 			++vcies_a_itr;
+// 			++vcies_b_itr;
+// 		}
+// 		return total_score;
 
-//			return accumulate(
-//				combine( prm_vcies_a, prm_vcies_b ),
-//				static_cast<float_score_type>( 0.0 ),
-//				[&] (const float_score_type &x, const boost::tuple<const view_cache_index_entry &, const view_cache_index_entry &> &y) {
-//					if ( ! prm_criteria( y.get<0>(), y.get<1>() ) ) {
-//						return x;
-//					}
-//					const float_score_type distance = sqrt( squared_distance( y.get<0>(), y.get<1>() ) );
-//					return x + std::max(
-//						static_cast<float_score_type>( 0.0 ),
-//						static_cast<float_score_type>( 1.0 ) - (distance / static_cast<float_score_type>( 7.0 ) )
-//					);
-//				}
-//			);
-		}
+// //		return accumulate(
+// //			combine( prm_vcies_a, prm_vcies_b ),
+// //			static_cast<float_score_type>( 0.0 ),
+// //			[&] (const float_score_type &x, const boost::tuple<const view_cache_index_entry &, const view_cache_index_entry &> &y) {
+// //				if ( ! prm_criteria( y.get<0>(), y.get<1>() ) ) {
+// //					return x;
+// //				}
+// //				const float_score_type distance = sqrt( squared_distance( y.get<0>(), y.get<1>() ) );
+// //				return x + std::max(
+// //					static_cast<float_score_type>( 0.0 ),
+// //					static_cast<float_score_type>( 1.0 ) - (distance / static_cast<float_score_type>( 7.0 ) )
+// //				);
+// //			}
+// //		);
+// 	}
 
-		/// \brief TODOCUMENT
-		hrc_duration view_cache_index_entry_test_suite_fixture::time_comparison(const vcie_vcie_vec_pair &prm_vcies_pair ///< TODOCUMENT
-		                                                                        ) {
-			const auto &vcies_1 = prm_vcies_pair.first;
-			const auto &vcies_2 = prm_vcies_pair.second;
+	// /// \brief TODOCUMENT
+	// hrc_duration view_cache_index_entry_test_suite_fixture::time_comparison(const vcie_vcie_vec_pair &prm_vcies_pair ///< TODOCUMENT
+	//                                                                         ) {
+	// 	const auto &vcies_1 = prm_vcies_pair.first;
+	// 	const auto &vcies_2 = prm_vcies_pair.second;
 
-			if ( vcies_1.size() != vcies_2.size() ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
-			}
+	// 	if ( vcies_1.size() != vcies_2.size() ) {
+	// 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
+	// 	}
 
-			const hrc_time_point before_time_point = high_resolution_clock::now();
-			compare( vcies_1, vcies_2, make_default_vcie_match_criteria() );
-			return high_resolution_clock::now() - before_time_point;
-		}
+	// 	const hrc_time_point before_time_point = high_resolution_clock::now();
+	// 	compare( vcies_1, vcies_2, make_default_vcie_match_criteria() );
+	// 	return high_resolution_clock::now() - before_time_point;
+	// }
 
-		/// \brief TODOCUMENT
-		view_cache_index_entry_vec view_cache_index_entry_test_suite_fixture::build_random_vcies(const size_t  &prm_num_entries, ///< TODOCUMENT
-		                                                                                         const protein &prm_protein,     ///< TODOCUMENT
-		                                                                                         mt19937       &prm_rng          ///< TODOCUMENT
-		                                                                                         ) {
-			if ( prm_protein.get_length() < 2 ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot build random vcies if the protein has fewer than two residues"));
-			}
-			const auto &length = prm_protein.get_length();
-			return generate_n_build<view_cache_index_entry_vec>(
-				prm_num_entries,
-				[&] {
-					const auto index_pair = pick_random_pair( 0_z, length - 1, prm_rng );
-					return make_view_cache_index_entry(
-						prm_protein,
-						index_pair.first,
-						index_pair.second
-					);
-				}
-			);
-		}
+	// /// \brief TODOCUMENT
+	// view_cache_index_entry_vec view_cache_index_entry_test_suite_fixture::build_random_vcies(const size_t  &prm_num_entries, ///< TODOCUMENT
+	//                                                                                          const protein &prm_protein,     ///< TODOCUMENT
+	//                                                                                          mt19937       &prm_rng          ///< TODOCUMENT
+	//                                                                                          ) {
+	// 	if ( prm_protein.get_length() < 2 ) {
+	// 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot build random vcies if the protein has fewer than two residues"));
+	// 	}
+	// 	const auto &length = prm_protein.get_length();
+	// 	return generate_n_build<view_cache_index_entry_vec>(
+	// 		prm_num_entries,
+	// 		[&] {
+	// 			const auto index_pair = pick_random_pair( 0_z, length - 1, prm_rng );
+	// 			return make_view_cache_index_entry(
+	// 				prm_protein,
+	// 				index_pair.first,
+	// 				index_pair.second
+	// 			);
+	// 		}
+	// 	);
+	// }
 
-		/// \brief TODOCUMENT
-		vcie_vcie_vec_pair view_cache_index_entry_test_suite_fixture::build_random_vcies_pair(const size_t  &prm_num_entries, ///< TODOCUMENT
-		                                                                                      const protein &prm_protein_a,   ///< TODOCUMENT
-		                                                                                      const protein &prm_protein_b,   ///< TODOCUMENT
-		                                                                                      mt19937       &prm_rng          ///< TODOCUMENT
-		                                                                                      ) {
-			return make_pair(
-				build_random_vcies( prm_num_entries, prm_protein_a, prm_rng ),
-				build_random_vcies( prm_num_entries, prm_protein_b, prm_rng )
-			);
-		}
+	// /// \brief TODOCUMENT
+	// vcie_vcie_vec_pair view_cache_index_entry_test_suite_fixture::build_random_vcies_pair(const size_t  &prm_num_entries, ///< TODOCUMENT
+	//                                                                                       const protein &prm_protein_a,   ///< TODOCUMENT
+	//                                                                                       const protein &prm_protein_b,   ///< TODOCUMENT
+	//                                                                                       mt19937       &prm_rng          ///< TODOCUMENT
+	//                                                                                       ) {
+	// 	return make_pair(
+	// 		build_random_vcies( prm_num_entries, prm_protein_a, prm_rng ),
+	// 		build_random_vcies( prm_num_entries, prm_protein_b, prm_rng )
+	// 	);
+	// }
 
-		/// \brief TODOCUMENT
-		vcie_vcie_vec_pair view_cache_index_entry_test_suite_fixture::build_alignment_vcies_pair(const size_t    &prm_num_entries, ///< TODOCUMENT
-		                                                                                         const protein   &prm_protein_a,   ///< TODOCUMENT
-		                                                                                         const protein   &prm_protein_b,   ///< TODOCUMENT
-		                                                                                         const alignment &prm_alignment,   ///< TODOCUMENT
-		                                                                                         mt19937         &prm_rng          ///< TODOCUMENT
-		                                                                                         ) {
-			const auto &present_posn_indices     = indices_of_present_positions_of_both_entries( prm_alignment );
-			const auto  num_present_posn_indices = present_posn_indices.size();
-			if ( num_present_posn_indices < 2 ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot build random_vcie pairs if the alignment has fewer than two residues"));
-			}
-			vcie_vcie_vec_pair results;
-			for (const auto &entry_ctr : indices( prm_num_entries ) ) {
-				ignore_unused( entry_ctr );
-				const auto  index_pair = pick_random_pair( 0_z, num_present_posn_indices - 1, prm_rng );
-				const auto &index_1    = present_posn_indices[ index_pair.first  ];
-				const auto &index_2    = present_posn_indices[ index_pair.second ];
-				results.first.push_back( make_view_cache_index_entry(
-					prm_protein_a,
-					get_a_position_of_index( prm_alignment, index_1 ),
-					get_a_position_of_index( prm_alignment, index_2 )
-				) );
-				results.second.push_back( make_view_cache_index_entry(
-					prm_protein_b,
-					get_b_position_of_index( prm_alignment, index_1 ),
-					get_b_position_of_index( prm_alignment, index_2 )
-				) );
-			}
-			return results;
-		}
+	// /// \brief TODOCUMENT
+	// vcie_vcie_vec_pair view_cache_index_entry_test_suite_fixture::build_alignment_vcies_pair(const size_t    &prm_num_entries, ///< TODOCUMENT
+	//                                                                                          const protein   &prm_protein_a,   ///< TODOCUMENT
+	//                                                                                          const protein   &prm_protein_b,   ///< TODOCUMENT
+	//                                                                                          const alignment &prm_alignment,   ///< TODOCUMENT
+	//                                                                                          mt19937         &prm_rng          ///< TODOCUMENT
+	//                                                                                          ) {
+	// 	const auto &present_posn_indices     = indices_of_present_positions_of_both_entries( prm_alignment );
+	// 	const auto  num_present_posn_indices = present_posn_indices.size();
+	// 	if ( num_present_posn_indices < 2 ) {
+	// 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot build random_vcie pairs if the alignment has fewer than two residues"));
+	// 	}
+	// 	vcie_vcie_vec_pair results;
+	// 	for (const auto &entry_ctr : indices( prm_num_entries ) ) {
+	// 		ignore_unused( entry_ctr );
+	// 		const auto  index_pair = pick_random_pair( 0_z, num_present_posn_indices - 1, prm_rng );
+	// 		const auto &index_1    = present_posn_indices[ index_pair.first  ];
+	// 		const auto &index_2    = present_posn_indices[ index_pair.second ];
+	// 		results.first.push_back( make_view_cache_index_entry(
+	// 			prm_protein_a,
+	// 			get_a_position_of_index( prm_alignment, index_1 ),
+	// 			get_a_position_of_index( prm_alignment, index_2 )
+	// 		) );
+	// 		results.second.push_back( make_view_cache_index_entry(
+	// 			prm_protein_b,
+	// 			get_b_position_of_index( prm_alignment, index_1 ),
+	// 			get_b_position_of_index( prm_alignment, index_2 )
+	// 		) );
+	// 	}
+	// 	return results;
+	// }
 
-		/// \brief TODOCUMENT
-		hrc_duration_vec view_cache_index_entry_test_suite_fixture::time_comparisons(const vcie_vcie_vec_pair &prm_vcies_pair, ///< TODOCUMENT
-		                                                                             const size_t             &prm_num_repeats ///< TODOCUMENT
-		                                                                             ) {
-			const auto vcies_1 = prm_vcies_pair.first;
-			const auto vcies_2 = prm_vcies_pair.second;
+	// /// \brief TODOCUMENT
+	// hrc_duration_vec view_cache_index_entry_test_suite_fixture::time_comparisons(const vcie_vcie_vec_pair &prm_vcies_pair, ///< TODOCUMENT
+	//                                                                              const size_t             &prm_num_repeats ///< TODOCUMENT
+	//                                                                              ) {
+	// 	const auto vcies_1 = prm_vcies_pair.first;
+	// 	const auto vcies_2 = prm_vcies_pair.second;
 
-			if ( vcies_1.size() != vcies_1.size() ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
-			}
-			return generate_n_build<hrc_duration_vec>(
-				prm_num_repeats,
-				[&] { return time_comparison( prm_vcies_pair ); }
-			);
-		}
-	}  // namespace test
-}  // namespace cath
+	// 	if ( vcies_1.size() != vcies_1.size() ) {
+	// 		BOOST_THROW_EXCEPTION(invalid_argument_exception(""));
+	// 	}
+	// 	return generate_n_build<hrc_duration_vec>(
+	// 		prm_num_repeats,
+	// 		[&] { return time_comparison( prm_vcies_pair ); }
+	// 	);
+	// }
+} // namespace
 
-constexpr size_t cath::test::view_cache_index_entry_test_suite_fixture::NUM_ENTRIES;
-constexpr size_t cath::test::view_cache_index_entry_test_suite_fixture::NUM_REPEATS;
+[[maybe_unused]] constexpr size_t NUM_ENTRIES = 1000000;
+// [[maybe_unused]] constexpr size_t NUM_ENTRIES =  500000;
+[[maybe_unused]] constexpr size_t NUM_REPEATS =      50;
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(view_cache_index_entry_test_suite, cath::test::view_cache_index_entry_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(view_cache_index_entry_test_suite, view_cache_index_entry_test_suite_fixture)
 
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(basic) {

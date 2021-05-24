@@ -29,54 +29,52 @@
 
 #include <cassert>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Do Boost.Operators-like supplying of sensible operator==() for comparing objects within a class hierarchy
-		///
-		/// This is very similar to polymorphic_less_than_comparable and so the rest of the documentation is copied from that...
-		///
-		/// /// \copydetails polymorphic_less_than_comparable
-		template <typename T>
-		class polymorphic_equality_comparable {
-		private:
-			friend class boost::serialization::access;
+	/// \brief Do Boost.Operators-like supplying of sensible operator==() for comparing objects within a class hierarchy
+	///
+	/// This is very similar to polymorphic_less_than_comparable and so the rest of the documentation is copied from that...
+	///
+	/// /// \copydetails polymorphic_less_than_comparable
+	template <typename T>
+	class polymorphic_equality_comparable {
+	private:
+		friend class boost::serialization::access;
 
-			/// \brief Friend, non-member operator<() that uses dynamic type first, and then T's equal_with_same_dynamic_type()
-			friend bool operator==(const T &prm_object1, ///< The first T to compare
-			                       const T &prm_object2  ///< The first T to compare
-			                       ) {
-				// Make the compiler output sensible errors on any attempt to instantiate polymorphic_equality_comparable<>
-				// on a type that doesn't provide a const `equal_with_same_dynamic_type(const T &)` method returning a bool-convertible type.
-				BOOST_CONCEPT_ASSERT(( detail::is_equal_with_same_dynamic_type_comparable<T> ));
+		/// \brief Friend, non-member operator<() that uses dynamic type first, and then T's equal_with_same_dynamic_type()
+		friend bool operator==(const T &prm_object1, ///< The first T to compare
+		                       const T &prm_object2  ///< The first T to compare
+		                       ) {
+			// Make the compiler output sensible errors on any attempt to instantiate polymorphic_equality_comparable<>
+			// on a type that doesn't provide a const `equal_with_same_dynamic_type(const T &)` method returning a bool-convertible type.
+			BOOST_CONCEPT_ASSERT(( detail::is_equal_with_same_dynamic_type_comparable<T> ));
 
-				// Perform a spaceship-style less-than comparison on the dynamic types of the two objects
-				// which returns a tribool (true, false or indeterminate)
-				const boost::logic::tribool dyn_type_cmp = detail::dynamic_type_spaceship::compare_lt( prm_object1, prm_object2 );
+			// Perform a spaceship-style less-than comparison on the dynamic types of the two objects
+			// which returns a tribool (true, false or indeterminate)
+			const boost::logic::tribool dyn_type_cmp = detail::dynamic_type_spaceship::compare_lt( prm_object1, prm_object2 );
 
-				// * If the result is either true (first object's dynamic type compares strictly less-than) or false (strictly greater-than), then
-				//    * return false;
-				// * otherwise:
-				//    * return the result of calling equal_with_same_dynamic_type().
-				return ! boost::logic::indeterminate( dyn_type_cmp  )
-					? false
-					: prm_object1.equal_with_same_dynamic_type( prm_object2 );
-			}
+			// * If the result is either true (first object's dynamic type compares strictly less-than) or false (strictly greater-than), then
+			//    * return false;
+			// * otherwise:
+			//    * return the result of calling equal_with_same_dynamic_type().
+			return ! boost::logic::indeterminate( dyn_type_cmp  )
+				? false
+				: prm_object1.equal_with_same_dynamic_type( prm_object2 );
+		}
 
-			template<class archive> void serialize(archive &/*ar*/,
-			                                       const unsigned int /*version*/) {
-			}
+		template<class archive> void serialize(archive &/*ar*/,
+		                                       const unsigned int /*version*/) {
+		}
 
-		protected:
-			polymorphic_equality_comparable() noexcept = default;
-			~polymorphic_equality_comparable() noexcept = default;
-			polymorphic_equality_comparable(const polymorphic_equality_comparable &) noexcept = default;
-			polymorphic_equality_comparable(polymorphic_equality_comparable &&) noexcept = default;
-			polymorphic_equality_comparable & operator=(const polymorphic_equality_comparable &) noexcept = default;
-			polymorphic_equality_comparable & operator=(polymorphic_equality_comparable &&) noexcept = default;
-		};
+	protected:
+		polymorphic_equality_comparable() noexcept = default;
+		~polymorphic_equality_comparable() noexcept = default;
+		polymorphic_equality_comparable(const polymorphic_equality_comparable &) noexcept = default;
+		polymorphic_equality_comparable(polymorphic_equality_comparable &&) noexcept = default;
+		polymorphic_equality_comparable & operator=(const polymorphic_equality_comparable &) noexcept = default;
+		polymorphic_equality_comparable & operator=(polymorphic_equality_comparable &&) noexcept = default;
+	};
 	
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_POLYMORPHIC_COMPARISON_POLYMORPHIC_EQUALITY_COMPARABLE_HPP

@@ -24,16 +24,12 @@
 #include "cath/resolve_hits/full_hit.hpp"
 #include "cath/resolve_hits/full_hit_rapidjson.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::cath::test;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The full_hit_test_suite_fixture to assist in testing full_hit
 		struct full_hit_test_suite_fixture {
@@ -45,8 +41,7 @@ namespace cath {
 			const full_hit eg_full_hit_b{ { seq_seg{ 1272, 1320 }, seq_seg{ 1398, 1437 } }, "pangolin", 1.0 };
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 
 BOOST_FIXTURE_TEST_SUITE(full_hit_test_suite, full_hit_test_suite_fixture)

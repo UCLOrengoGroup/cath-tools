@@ -42,45 +42,43 @@ using namespace ::cath::score::detail;
 
 using ::std::is_same_v;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The length_getter_test_suite_fixture to assist in testing length_getter
-		struct length_getter_test_suite_fixture {
-		protected:
-			~length_getter_test_suite_fixture() noexcept = default;
+	/// \brief The length_getter_test_suite_fixture to assist in testing length_getter
+	struct length_getter_test_suite_fixture {
+	protected:
+		~length_getter_test_suite_fixture() noexcept = default;
 
-			protein make_dummy_protein_of_n_residues(const size_t &);
+		protein make_dummy_protein_of_n_residues(const size_t &);
 
-			protein dummy_protein_10 = make_dummy_protein_of_n_residues( 10 );
-			protein dummy_protein_90 = make_dummy_protein_of_n_residues( 90 );
-		};
+		protein dummy_protein_10 = make_dummy_protein_of_n_residues( 10 );
+		protein dummy_protein_90 = make_dummy_protein_of_n_residues( 90 );
+	};
 
-		/// \brief TODOCUMENT
-		protein length_getter_test_suite_fixture::make_dummy_protein_of_n_residues(const size_t &prm_index ///< TODOCUMENT
-		                                                                           ) {
-			return build_protein( residue_vec{ prm_index, NULL_RESIDUE } );
-		}
+	/// \brief TODOCUMENT
+	protein length_getter_test_suite_fixture::make_dummy_protein_of_n_residues(const size_t &prm_index ///< TODOCUMENT
+	                                                                           ) {
+		return build_protein( residue_vec{ prm_index, NULL_RESIDUE } );
+	}
 
+//	/// \brief TODOCUMENT
+//	template <size_t I>
+//	class length_getter_enum_tester final {
+//	public:
 //		/// \brief TODOCUMENT
-//		template <size_t I>
-//		class length_getter_enum_tester final {
-//		public:
-//			/// \brief TODOCUMENT
-//			void operator()() {
-//				constexpr length_getter_enum the_enum = get<I>( all_length_getter_enums );
-//				using the_length_getter = typename length_getter_of_length_getter_enum<the_enum>::type;
-//				static_assert( boost::mpl::contains< length_getter_types, the_length_getter>::value, "length_getter_types does not contain one of the length_getter types" );
-//				constexpr length_getter_enum orig_enum = the_length_getter::enum_val;
-//				static_assert( orig_enum == the_enum, "Length_getter enum round trip produced different enum value" );
-//			}
-//		};
+//		void operator()() {
+//			constexpr length_getter_enum the_enum = get<I>( all_length_getter_enums );
+//			using the_length_getter = typename length_getter_of_length_getter_enum<the_enum>::type;
+//			static_assert( boost::mpl::contains< length_getter_types, the_length_getter>::value, "length_getter_types does not contain one of the length_getter types" );
+//			constexpr length_getter_enum orig_enum = the_length_getter::enum_val;
+//			static_assert( orig_enum == the_enum, "Length_getter enum round trip produced different enum value" );
+//		}
+//	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(length_getter_test_suite, cath::test::length_getter_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(length_getter_test_suite, length_getter_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE_TEMPLATE(ctor_works, length_getter_type, length_getter_types) {
@@ -96,7 +94,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( prot_only_get_length_does_not_throw, length_gette
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(static__length_getter_type_checks) {
 //	BOOST_CHECK( true );
-//	constexpr_for_n<cath::test::length_getter_enum_tester, num_length_getter_enums>();
+//	constexpr_for_n<length_getter_enum_tester, num_length_getter_enums>();
 //}
 
 /// \brief TODOCUMENT

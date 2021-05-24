@@ -25,76 +25,74 @@
 #include "cath/common/temp_check_offset_1.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief Provide ABC interface for classes that provide scores to be used for aligning with dynamic-programming
-		///
-		/// Note: Consider whether this dynamic-polymorphism approach may be scrapped in favour of
-		///       static-polymorphism. The main motivation for switching would probably be if the run-time approach
-		///       turned out to be too slow.
-		class dyn_prog_score_source {
-		  private:
-			/// \brief Return the number of elements in the first entry to by aligned with dynamic-programming
-			[[nodiscard]] virtual size_t do_get_length_a() const = 0;
+	/// \brief Provide ABC interface for classes that provide scores to be used for aligning with dynamic-programming
+	///
+	/// Note: Consider whether this dynamic-polymorphism approach may be scrapped in favour of
+	///       static-polymorphism. The main motivation for switching would probably be if the run-time approach
+	///       turned out to be too slow.
+	class dyn_prog_score_source {
+	  private:
+		/// \brief Return the number of elements in the first entry to by aligned with dynamic-programming
+		[[nodiscard]] virtual size_t do_get_length_a() const = 0;
 
-			/// \brief Return the number of elements in the second entry to by aligned with dynamic-programming
-			[[nodiscard]] virtual size_t do_get_length_b() const = 0;
+		/// \brief Return the number of elements in the second entry to by aligned with dynamic-programming
+		[[nodiscard]] virtual size_t do_get_length_b() const = 0;
 
-			/// \brief Return the score the number of elements in the first entry to by aligned with dynamic-programming
-			[[nodiscard]] virtual score_type do_get_score( const size_t &, const size_t & ) const = 0;
+		/// \brief Return the score the number of elements in the first entry to by aligned with dynamic-programming
+		[[nodiscard]] virtual score_type do_get_score( const size_t &, const size_t & ) const = 0;
 
-		  public:
-			dyn_prog_score_source()                   = default;
-			virtual ~dyn_prog_score_source() noexcept = default;
+	  public:
+		dyn_prog_score_source()                   = default;
+		virtual ~dyn_prog_score_source() noexcept = default;
 
-			dyn_prog_score_source( const dyn_prog_score_source & )     = default;
-			dyn_prog_score_source( dyn_prog_score_source && ) noexcept = default;
-			dyn_prog_score_source &operator=( const dyn_prog_score_source & ) = default;
-			dyn_prog_score_source &operator=( dyn_prog_score_source && ) noexcept = default;
+		dyn_prog_score_source( const dyn_prog_score_source & )     = default;
+		dyn_prog_score_source( dyn_prog_score_source && ) noexcept = default;
+		dyn_prog_score_source &operator=( const dyn_prog_score_source & ) = default;
+		dyn_prog_score_source &operator=( dyn_prog_score_source && ) noexcept = default;
 
-			[[nodiscard]] size_t     get_length_a() const;
-			[[nodiscard]] size_t     get_length_b() const;
-			[[nodiscard]] score_type get_score( const size_t &, const size_t & ) const;
-		};
+		[[nodiscard]] size_t     get_length_a() const;
+		[[nodiscard]] size_t     get_length_b() const;
+		[[nodiscard]] score_type get_score( const size_t &, const size_t & ) const;
+	};
 
-		score_type get_score__offset_1(const dyn_prog_score_source &,
-		                               const size_t &,
-		                               const size_t &);
+	score_type get_score__offset_1(const dyn_prog_score_source &,
+	                               const size_t &,
+	                               const size_t &);
 
-		/// \brief An NVI pass-through method to get the score for the specified indices to be used for aligning with dynamic-programming
-		inline score_type dyn_prog_score_source::get_score(const size_t &prm_index_a, ///< The index of the element of interest in the first sequence
-		                                                   const size_t &prm_index_b  ///< The index of the element of interest in the second sequence
-		                                                   ) const {
+	/// \brief An NVI pass-through method to get the score for the specified indices to be used for aligning with dynamic-programming
+	inline score_type dyn_prog_score_source::get_score(const size_t &prm_index_a, ///< The index of the element of interest in the first sequence
+	                                                   const size_t &prm_index_b  ///< The index of the element of interest in the second sequence
+	                                                   ) const {
 #ifndef NDEBUG
-			// Check that the two indices are valid
-			if ( prm_index_a >= get_length_a() ) {
-				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("First index is out of range when getting score for aligning with dynamic-programming"));
-			}
-			if ( prm_index_b >= get_length_b() ) {
-				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Second index is out of range when getting score for aligning with dynamic-programming"));
-			}
+		// Check that the two indices are valid
+		if ( prm_index_a >= get_length_a() ) {
+			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("First index is out of range when getting score for aligning with dynamic-programming"));
+		}
+		if ( prm_index_b >= get_length_b() ) {
+			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Second index is out of range when getting score for aligning with dynamic-programming"));
+		}
 #endif
 
-			// Pass-through to the concrete do_get_score() to do the real work
-			return do_get_score( prm_index_a, prm_index_b );
-		}
+		// Pass-through to the concrete do_get_score() to do the real work
+		return do_get_score( prm_index_a, prm_index_b );
+	}
 
-		/// \brief A non-member, non-friend helper function that gets a score from dyn_prog_score_source objects with offset_1 indices
-		inline score_type get_score__offset_1(const dyn_prog_score_source &prm_dyn_prog_score_source, ///< The dyn_prog_score_source from which to get the score
-		                                      const size_t                &prm_index_a__offset_1,     ///< The index of the element of interest in the first  sequence (using offset 1)
-		                                      const size_t                &prm_index_b__offset_1      ///< The index of the element of interest in the second sequence (using offset 1)
-		                                      ) {
-			// Check the offsets are valid
-			check_offset_1( prm_index_a__offset_1 );
-			check_offset_1( prm_index_b__offset_1 );
+	/// \brief A non-member, non-friend helper function that gets a score from dyn_prog_score_source objects with offset_1 indices
+	inline score_type get_score__offset_1(const dyn_prog_score_source &prm_dyn_prog_score_source, ///< The dyn_prog_score_source from which to get the score
+	                                      const size_t                &prm_index_a__offset_1,     ///< The index of the element of interest in the first  sequence (using offset 1)
+	                                      const size_t                &prm_index_b__offset_1      ///< The index of the element of interest in the second sequence (using offset 1)
+	                                      ) {
+		// Check the offsets are valid
+		check_offset_1( prm_index_a__offset_1 );
+		check_offset_1( prm_index_b__offset_1 );
 
-			// Call the member get_score() function with adjusted indices
-			return prm_dyn_prog_score_source.get_score( prm_index_a__offset_1 - 1,
-			                                            prm_index_b__offset_1 - 1 );
-		}
-	} // namespace align
+		// Call the member get_score() function with adjusted indices
+		return prm_dyn_prog_score_source.get_score( prm_index_a__offset_1 - 1,
+		                                            prm_index_b__offset_1 - 1 );
+	}
 
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_DYN_PROG_SCORE_SOURCE_HPP

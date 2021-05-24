@@ -26,51 +26,49 @@
 #include "cath/common/cpp17/constexpr_invoke.hpp"
 #include "cath/common/type_traits.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Make an optional value from a bool and a value
-		///
-		/// This should be used over ::std::make_optional to make it easy to switch
-		/// to std::optional (which doesn't provide this bool version of make_optional)
-		///
-		/// \todo Apply this across the code base
-		///
-		/// This could be enhanced:
-		///  * Allow 0 or more values after the bool and perfect-forward them to the relevant ctor
-		///  * Allow the resulting optional's value_type to be specified but have it default to the
-		///    (remove_cvref_t<> of the) type of the (first) value after the bool
-		///  * If combining both of the above, generate a sensible compile time error if 0
-		///    arguments are passed and no template parameter is specified
-		template <class T>
-		constexpr ::std::optional<T> make_optional_if(const bool &prm_condition, ///< TODOCUMENT
-		                                              const T    &prm_value      ///< TODOCUMENT
-		                                              ) {
-			return prm_condition
-				? ::std::optional<T>{ prm_value }
-				: ::std::optional<T>{           };
-		}
+	/// \brief Make an optional value from a bool and a value
+	///
+	/// This should be used over ::std::make_optional to make it easy to switch
+	/// to std::optional (which doesn't provide this bool version of make_optional)
+	///
+	/// \todo Apply this across the code base
+	///
+	/// This could be enhanced:
+	///  * Allow 0 or more values after the bool and perfect-forward them to the relevant ctor
+	///  * Allow the resulting optional's value_type to be specified but have it default to the
+	///    (remove_cvref_t<> of the) type of the (first) value after the bool
+	///  * If combining both of the above, generate a sensible compile time error if 0
+	///    arguments are passed and no template parameter is specified
+	template <class T>
+	constexpr ::std::optional<T> make_optional_if(const bool &prm_condition, ///< TODOCUMENT
+	                                              const T    &prm_value      ///< TODOCUMENT
+	                                              ) {
+		return prm_condition
+			? ::std::optional<T>{ prm_value }
+			: ::std::optional<T>{           };
+	}
 
-		/// \brief Make an optional from a bool and an nullary invokable, which is only invoked
-		///        if the bool value is true
-		///
-		/// \todo Apply this across the code base
-		///
-		/// This could be enhanced:
-		///  * Allow the resulting optional's value_type to be specified but have it default to the type
-		///    of the common::remove_cvref_t< std::result_of_t<> > of the Fn
-		template <class Fn>
-		constexpr auto make_optional_if_fn(const bool  &prm_condition, ///< TODOCUMENT
-		                                   Fn         &&prm_fn         ///< TODOCUMENT
-		                                   ) {
-			using return_type = ::std::optional< common::remove_cvref_t< std::result_of_t< Fn && () > > >;
-			return prm_condition
-				? return_type{ constexpr_invoke( std::forward<Fn>( prm_fn ) ) }
-				: return_type{                                                };
-		}
+	/// \brief Make an optional from a bool and an nullary invokable, which is only invoked
+	///        if the bool value is true
+	///
+	/// \todo Apply this across the code base
+	///
+	/// This could be enhanced:
+	///  * Allow the resulting optional's value_type to be specified but have it default to the type
+	///    of the common::remove_cvref_t< std::result_of_t<> > of the Fn
+	template <class Fn>
+	constexpr auto make_optional_if_fn(const bool  &prm_condition, ///< TODOCUMENT
+	                                   Fn         &&prm_fn         ///< TODOCUMENT
+	                                   ) {
+		using return_type = ::std::optional< common::remove_cvref_t< std::result_of_t< Fn && () > > >;
+		return prm_condition
+			? return_type{ constexpr_invoke( std::forward<Fn>( prm_fn ) ) }
+			: return_type{                                                };
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #define if_then_optional( pred, expr ) ( ( pred ) ? ::std::make_optional( ( expr ) ) : ::std::nullopt )
 

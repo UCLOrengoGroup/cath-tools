@@ -31,25 +31,15 @@
 
 #include <ostream>
 
-namespace cath { namespace common { class invalid_argument_exception; } }
+// clang-format off
+namespace cath::common { class invalid_argument_exception; }
+// clang-format on
 
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The sec_struc_test_suite_fixture to assist in testing sec_struc
-		struct sec_struc_test_suite_fixture : protected global_test_constants {
-		protected:
-			~sec_struc_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(sec_struc_test_suite, cath::test::sec_struc_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(sec_struc_test_suite, global_test_constants)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(sec_struc_planar_angles_throws_on_invalid) {

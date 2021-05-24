@@ -32,15 +32,17 @@
 #include "cath/display_colour/display_colour_gradient.hpp"
 #include "cath/display_colour/display_colour_list.hpp"
 
+// clang-format off
 namespace cath { class alignment_free_display_colourer; }
 namespace cath { class display_colour_spec; }
 namespace cath { class display_spec; }
 namespace cath { class viewer; }
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace align { class alignment_context; } }
-namespace cath { namespace file { class pdb_list; } }
-namespace cath { namespace file { class strucs_context; } }
-namespace cath { namespace sup { class superposition_context; } }
+namespace cath::align { class alignment; }
+namespace cath::align { class alignment_context; }
+namespace cath::file { class pdb_list; }
+namespace cath::file { class strucs_context; }
+namespace cath::sup { class superposition_context; }
+// clang-format on
 
 namespace cath {
 

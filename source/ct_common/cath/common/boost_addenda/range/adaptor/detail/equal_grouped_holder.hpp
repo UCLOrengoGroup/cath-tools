@@ -25,50 +25,46 @@
 
 #include <functional>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief TODOCUMENT
-			template <typename FN>
-			class equal_grouped_holder final {
-			private:
-				/// \brief TODOCUMENT
-				FN unequal_function;
+	/// \brief TODOCUMENT
+	template <typename FN>
+	class equal_grouped_holder final {
+	private:
+		/// \brief TODOCUMENT
+		FN unequal_function;
 
-			public:
-				explicit equal_grouped_holder(FN);
-				equal_grouped_holder() = default;
+	public:
+		explicit equal_grouped_holder(FN);
+		equal_grouped_holder() = default;
 
-				template <typename RNG>
-				std::function<bool(const range_value_t<RNG> &, const range_value_t<RNG> &)> get_function() const;
-			};
-			/// \brief TODOCUMENT
-			template <typename FN>
-			equal_grouped_holder<FN>::equal_grouped_holder(FN prm_unequal_function ///< TODOCUMENT
-			                                               ) : unequal_function( prm_unequal_function ) {
-			}
+		template <typename RNG>
+		std::function<bool(const range_value_t<RNG> &, const range_value_t<RNG> &)> get_function() const;
+	};
+	/// \brief TODOCUMENT
+	template <typename FN>
+	equal_grouped_holder<FN>::equal_grouped_holder(FN prm_unequal_function ///< TODOCUMENT
+	                                               ) : unequal_function( prm_unequal_function ) {
+	}
 
-			/// \brief TODOCUMENT
-			///
-			/// Will probably need to make this a compile-time switch based on whether FN is of type nullptr_t
-			template <typename FN>
-			template <typename RNG>
-			std::function<bool(const range_value_t<RNG> &, const range_value_t<RNG> &)> equal_grouped_holder<FN>::get_function() const {
-				return { unequal_function };
-			}
+	/// \brief TODOCUMENT
+	///
+	/// Will probably need to make this a compile-time switch based on whether FN is of type nullptr_t
+	template <typename FN>
+	template <typename RNG>
+	std::function<bool(const range_value_t<RNG> &, const range_value_t<RNG> &)> equal_grouped_holder<FN>::get_function() const {
+		return { unequal_function };
+	}
 
-			/// \brief TODOCUMENT
-			///
-			/// Will probably need to make this a compile-time switch based on whether FN is of type nullptr_t
-			template <>
-			template <typename RNG>
-			std::function<bool(const range_value_t<RNG> &, const range_value_t<RNG> &)> equal_grouped_holder<std::nullptr_t>::get_function() const {
-				return { std::not_equal_to<range_value_t<RNG>>() };
-			}
+	/// \brief TODOCUMENT
+	///
+	/// Will probably need to make this a compile-time switch based on whether FN is of type nullptr_t
+	template <>
+	template <typename RNG>
+	std::function<bool(const range_value_t<RNG> &, const range_value_t<RNG> &)> equal_grouped_holder<std::nullptr_t>::get_function() const {
+		return { std::not_equal_to<range_value_t<RNG>>() };
+	}
 
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_DETAIL_EQUAL_GROUPED_HOLDER_HPP

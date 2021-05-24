@@ -31,126 +31,123 @@
 #include <initializer_list>
 #include <utility>
 
-namespace cath { namespace common { class ofstream_list; } }
-namespace cath { namespace rslv { class crh_output_spec; } }
+// clang-format off
+namespace cath::common { class ofstream_list; }
+namespace cath::rslv { class crh_output_spec; }
+// clang-format on
 
-namespace cath {
-	namespace rslv {
-		namespace detail {
+namespace cath::rslv::detail {
 
-			/// \brief A list of hits_processors to process hits
-			///
-			/// Be careful: this has an initializer_list ctor
-			class hits_processor_list final {
-			private:
-				/// \brief A vector of (clone_ptrs to) hits_processors
-				hits_processor_clptr_vec processors;
+	/// \brief A list of hits_processors to process hits
+	///
+	/// Be careful: this has an initializer_list ctor
+	class hits_processor_list final {
+	private:
+		/// \brief A vector of (clone_ptrs to) hits_processors
+		hits_processor_clptr_vec processors;
 
-				/// \brief The score spec to apply to incoming hits
-				crh_score_spec the_score_spec;
+		/// \brief The score spec to apply to incoming hits
+		crh_score_spec the_score_spec;
 
-				/// \brief The segment spec to apply to incoming hits
-				crh_segment_spec the_segment_spec;
+		/// \brief The segment spec to apply to incoming hits
+		crh_segment_spec the_segment_spec;
 
-				[[nodiscard]] const crh_score_spec &  get_score_spec() const;
-				[[nodiscard]] const crh_segment_spec &get_segment_spec() const;
+		[[nodiscard]] const crh_score_spec &  get_score_spec() const;
+		[[nodiscard]] const crh_segment_spec &get_segment_spec() const;
 
-			  public:
-				/// \brief A const_iterator type alias as part of making this a range
-				///
-				/// Note that this pipes through boost::indirected_range so the range is
-				/// over elements of type `const hits_processor &` rather than `clone_ptr<const hits_processor>`
-				using const_iterator = common::range_const_iterator_t< boost::indirected_range<const hits_processor_clptr_vec> >;
+	  public:
+		/// \brief A const_iterator type alias as part of making this a range
+		///
+		/// Note that this pipes through boost::indirected_range so the range is
+		/// over elements of type `const hits_processor &` rather than `clone_ptr<const hits_processor>`
+		using const_iterator = common::range_const_iterator_t< boost::indirected_range<const hits_processor_clptr_vec> >;
 
-				hits_processor_list() = default;
+		hits_processor_list() = default;
 
-				explicit hits_processor_list(const crh_score_spec &,
-				                             const crh_segment_spec & = crh_segment_spec{},
-				                             std::initializer_list<hits_processor_clptr> = {});
+		explicit hits_processor_list(const crh_score_spec &,
+		                             const crh_segment_spec & = crh_segment_spec{},
+		                             std::initializer_list<hits_processor_clptr> = {});
 
-				hits_processor_list(const hits_processor_list &) = default;
-				hits_processor_list(hits_processor_list &&) = default;
-				hits_processor_list & operator=(const hits_processor_list &) = default;
-				hits_processor_list & operator=(hits_processor_list &&) = default;
+		hits_processor_list(const hits_processor_list &) = default;
+		hits_processor_list(hits_processor_list &&) = default;
+		hits_processor_list & operator=(const hits_processor_list &) = default;
+		hits_processor_list & operator=(hits_processor_list &&) = default;
 
-				hits_processor_list & add_processor(const hits_processor &);
-				hits_processor_list & add_processor(hits_processor_uptr);
-				hits_processor_list & add_processor(hits_processor_clptr);
+		hits_processor_list & add_processor(const hits_processor &);
+		hits_processor_list & add_processor(hits_processor_uptr);
+		hits_processor_list & add_processor(hits_processor_clptr);
 
-				[[nodiscard]] bool   empty() const;
-				[[nodiscard]] size_t size() const;
+		[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
 
-				const hits_processor & operator[](const size_t &) const;
+		const hits_processor & operator[](const size_t &) const;
 
-				[[nodiscard]] bool wants_hits_that_fail_score_filter() const;
+		[[nodiscard]] bool wants_hits_that_fail_score_filter() const;
 
-				[[nodiscard]] bool requires_strictly_worse_hits() const;
+		[[nodiscard]] bool requires_strictly_worse_hits() const;
 
-				void process_hits_for_query(const std::string &,
-				                            const crh_filter_spec &,
-				                            full_hit_list);
-				void finish_work();
+		void process_hits_for_query(const std::string &,
+		                            const crh_filter_spec &,
+		                            full_hit_list);
+		void finish_work();
 
-				[[nodiscard]] const_iterator begin() const;
-				[[nodiscard]] const_iterator end() const;
-			};
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-			hits_processor_list make_hits_processors(common::ofstream_list &,
-			                                         const crh_single_output_spec &,
-			                                         const crh_output_spec &,
-			                                         const crh_score_spec &,
-			                                         const crh_segment_spec &,
-			                                         const crh_html_spec &);
+	hits_processor_list make_hits_processors(common::ofstream_list &,
+	                                         const crh_single_output_spec &,
+	                                         const crh_output_spec &,
+	                                         const crh_score_spec &,
+	                                         const crh_segment_spec &,
+	                                         const crh_html_spec &);
 
 
-			/// \brief Process the specified full_hit_list for the specified query using the specified crh_filter_spec
-			///
-			/// This builds a calc_hit_list from the specified full_hit_list once and then passes it to each of the hits_processors
-			inline void hits_processor_list::process_hits_for_query(const std::string     &prm_query_id,    ///< The query_protein_id string
-			                                                        const crh_filter_spec &prm_filter_spec, ///< The filter spec to apply to hits
-			                                                        full_hit_list          prm_full_hits    ///< The full hits to be processed
-			                                                        ) {
-				const calc_hit_list the_calc_hit_list{
-					std::move( prm_full_hits ),
+	/// \brief Process the specified full_hit_list for the specified query using the specified crh_filter_spec
+	///
+	/// This builds a calc_hit_list from the specified full_hit_list once and then passes it to each of the hits_processors
+	inline void hits_processor_list::process_hits_for_query(const std::string     &prm_query_id,    ///< The query_protein_id string
+	                                                        const crh_filter_spec &prm_filter_spec, ///< The filter spec to apply to hits
+	                                                        full_hit_list          prm_full_hits    ///< The full hits to be processed
+	                                                        ) {
+		const calc_hit_list the_calc_hit_list{
+			std::move( prm_full_hits ),
+			get_score_spec(),
+			get_segment_spec(),
+			prm_filter_spec,
+			(
+				// If strictly worse hits were required in the full_hits, then it's worth pruning them out now,
+				// otherwise don't (because that'd just be wasted effort)
+				requires_strictly_worse_hits()
+					? seg_dupl_hit_policy::PRUNE
+					: seg_dupl_hit_policy::PRESERVE
+			)
+		};
+		prm_full_hits = full_hit_list{};
+		boost::for_each(
+			processors,
+			[&] (common::clone_ptr<hits_processor> &x) {
+				x->process_hits_for_query(
+					prm_query_id,
+					prm_filter_spec,
 					get_score_spec(),
 					get_segment_spec(),
-					prm_filter_spec,
-					(
-						// If strictly worse hits were required in the full_hits, then it's worth pruning them out now,
-						// otherwise don't (because that'd just be wasted effort)
-						requires_strictly_worse_hits()
-							? seg_dupl_hit_policy::PRUNE
-							: seg_dupl_hit_policy::PRESERVE
-					)
-				};
-				prm_full_hits = full_hit_list{};
-				boost::for_each(
-					processors,
-					[&] (common::clone_ptr<hits_processor> &x) {
-						x->process_hits_for_query(
-							prm_query_id,
-							prm_filter_spec,
-							get_score_spec(),
-							get_segment_spec(),
-							the_calc_hit_list
-						);
-					}
+					the_calc_hit_list
 				);
 			}
+		);
+	}
 
-			/// \brief Get each of the hits_processors in the list to finish any work they've started
-			inline void hits_processor_list::finish_work() {
-				boost::for_each(
-					processors,
-					[] (common::clone_ptr<hits_processor> &x) {
-						x->finish_work();
-					}
-				);
+	/// \brief Get each of the hits_processors in the list to finish any work they've started
+	inline void hits_processor_list::finish_work() {
+		boost::for_each(
+			processors,
+			[] (common::clone_ptr<hits_processor> &x) {
+				x->finish_work();
 			}
+		);
+	}
 
-
-		} // namespace detail
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR_HITS_PROCESSOR_LIST_HPP

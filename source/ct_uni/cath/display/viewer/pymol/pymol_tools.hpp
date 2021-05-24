@@ -28,7 +28,9 @@
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
+// clang-format off
 namespace cath { class residue_id; }
+// clang-format on
 
 namespace cath {
 

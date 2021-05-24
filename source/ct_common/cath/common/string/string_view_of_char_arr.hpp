@@ -27,44 +27,42 @@
 
 #include <boost/range/algorithm/find_if.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Make a string_view from the specified array of chars
-		template <size_t N>
-		constexpr ::std::string_view string_view_of_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string_view
-		                                                     ) {
-			return { ::std::cbegin( prm_char_arr ), N };
-		}
+	/// \brief Make a string_view from the specified array of chars
+	template <size_t N>
+	constexpr ::std::string_view string_view_of_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string_view
+	                                                     ) {
+		return { ::std::cbegin( prm_char_arr ), N };
+	}
 
-		/// \brief Make a string from the specified array of chars that
-		///        may use a null to specify the end of the string
-		template <size_t N>
-		constexpr ::std::string_view string_view_of_null_term_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string
-		                                                               ) {
-			return {
+	/// \brief Make a string from the specified array of chars that
+	///        may use a null to specify the end of the string
+	template <size_t N>
+	constexpr ::std::string_view string_view_of_null_term_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string
+	                                                               ) {
+		return {
+			::std::cbegin( prm_char_arr ),
+			static_cast<size_t>( std::distance(
 				::std::cbegin( prm_char_arr ),
-				static_cast<size_t>( std::distance(
-					::std::cbegin( prm_char_arr ),
-					boost::range::find_if(
-						prm_char_arr,
-						[] (const char &x) { return ( x == 0 ); }
-					)
-				) )
-			};
-		}
+				boost::range::find_if(
+					prm_char_arr,
+					[] (const char &x) { return ( x == 0 ); }
+				)
+			) )
+		};
+	}
 
-		/// \brief Make a string from the specified array of chars
-		template <size_t N>
-		inline std::string string_of_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string
-		                                      ) {
-			return {
-				::std::cbegin( prm_char_arr ),
-				::std::cend  ( prm_char_arr )
-			};
-		}
+	/// \brief Make a string from the specified array of chars
+	template <size_t N>
+	inline std::string string_of_char_arr(const std::array<char, N> &prm_char_arr ///< The array of chars from which to make the string
+	                                      ) {
+		return {
+			::std::cbegin( prm_char_arr ),
+			::std::cend  ( prm_char_arr )
+		};
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_STRING_STRING_VIEW_OF_CHAR_ARR_HPP

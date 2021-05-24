@@ -23,50 +23,46 @@
 
 #include <cstddef>
 
-namespace cath {
-	namespace index {
-		namespace detail {
+namespace cath::index::detail {
 
-			/// \brief TODOCUMENT
-			///
-			/// \todo This should be an iterator
-			class plate_scan final {
-			private:
-				/// \brief TODOCUMENT
-				size_t from_a;
+	/// \brief TODOCUMENT
+	///
+	/// \todo This should be an iterator
+	class plate_scan final {
+	private:
+		/// \brief TODOCUMENT
+		size_t from_a;
 
-				/// \brief TODOCUMENT
-				size_t to_a;
+		/// \brief TODOCUMENT
+		size_t to_a;
 
-				/// \brief TODOCUMENT
-				size_t size_a;
+		/// \brief TODOCUMENT
+		size_t size_a;
 
 
-				/// \brief TODOCUMENT
-				size_t from_b;
+		/// \brief TODOCUMENT
+		size_t from_b;
 
-				/// \brief TODOCUMENT
-				size_t to_b;
+		/// \brief TODOCUMENT
+		size_t to_b;
 
-				/// \brief TODOCUMENT
-				size_t size_b;
+		/// \brief TODOCUMENT
+		size_t size_b;
 
 
-				/// \brief TODOCUMENT
-				size_t from_step_size;
+		/// \brief TODOCUMENT
+		size_t from_step_size;
 
-				/// \brief TODOCUMENT
-				size_t to_step_size;
+		/// \brief TODOCUMENT
+		size_t to_step_size;
 
-			public:
-				bool operator()() const;
+	public:
+		bool operator()() const;
 
-				// operator++();
-				// operator*();
-			};
+		// operator++();
+		// operator*();
+	};
 
-		} // namespace detail
-	} // namespace index
-} // namespace cath
+} // namespace cath::index::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_DETAIL_PLATE_PLATE_SCAN_HPP

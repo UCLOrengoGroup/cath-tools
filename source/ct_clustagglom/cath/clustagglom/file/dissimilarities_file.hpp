@@ -26,28 +26,28 @@
 #include "cath/clustagglom/link_dirn.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace clust { class links; } }
-namespace cath { namespace common { class id_of_str_bidirnl; } }
+// clang-format off
+namespace cath::clust { class links; }
+namespace cath::common { class id_of_str_bidirnl; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		links parse_dissimilarities(std::istream &,
-		                            common::id_of_str_bidirnl &,
-		                            const link_dirn &,
-		                            const size_t & = 2);
+	links parse_dissimilarities(std::istream &,
+	                            common::id_of_str_bidirnl &,
+	                            const link_dirn &,
+	                            const size_t & = 2);
 
-		links parse_dissimilarities(const std::string &,
-		                            common::id_of_str_bidirnl &,
-		                            const link_dirn &,
-		                            const size_t & = 2);
+	links parse_dissimilarities(const std::string &,
+	                            common::id_of_str_bidirnl &,
+	                            const link_dirn &,
+	                            const size_t & = 2);
 
-		links parse_dissimilarities(const ::std::filesystem::path &,
-		                            common::id_of_str_bidirnl &,
-		                            const link_dirn &,
-		                            const size_t & = 2);
+	links parse_dissimilarities(const ::std::filesystem::path &,
+	                            common::id_of_str_bidirnl &,
+	                            const link_dirn &,
+	                            const size_t & = 2);
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_FILE_DISSIMILARITIES_FILE_HPP

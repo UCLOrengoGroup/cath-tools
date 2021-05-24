@@ -26,18 +26,14 @@
 #include "cath/file/strucs_context.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath{ namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::file;
 using namespace ::cath::opts;
-using namespace ::cath::test;
 
 using ::std::istringstream;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The pdbs_acquirer_test_suite_fixture to assist in testing pdbs_acquirer
 		struct pdbs_acquirer_test_suite_fixture {
@@ -47,8 +43,7 @@ namespace cath {
 			istringstream input_ss;
 		};
 
-	} // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(pdbs_acquirer_test_suite, pdbs_acquirer_test_suite_fixture)
 

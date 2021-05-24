@@ -22,26 +22,11 @@
 
 #include "cath/scan/detail/stride/roled_scan_stride.hpp"
 
-//#include "cath/test/global_test_constants.hpp"
-
 using namespace ::cath::scan;
 using namespace ::cath::scan::detail;
-//using namespace ::std;
-
-namespace cath {
-	namespace test {
-
-		/// \brief The roled_scan_stride_test_suite_fixture to assist in testing roled_scan_stride
-		struct roled_scan_stride_test_suite_fixture {
-		protected:
-			~roled_scan_stride_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(roled_scan_stride_test_suite, cath::test::roled_scan_stride_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(roled_scan_stride_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ctor_and_getters_work) {

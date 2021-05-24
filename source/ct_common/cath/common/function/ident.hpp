@@ -23,24 +23,22 @@
 
 #include <utility>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Function object to return the argument
-		class ident final {
-		public:
-			/// \brief Return the argument using perfect-forwarding
-			template <typename T>
-			T && operator()(T &&prm_value
-			                ) const noexcept {
-				return std::forward<T>( prm_value );
-			}
+	/// \brief Function object to return the argument
+	class ident final {
+	public:
+		/// \brief Return the argument using perfect-forwarding
+		template <typename T>
+		T && operator()(T &&prm_value
+		                ) const noexcept {
+			return std::forward<T>( prm_value );
+		}
 
-			/// \brief Indicate that this can be used in any smart, heterogeneous-lookup magic
-			using is_transparent = void;
-		};
+		/// \brief Indicate that this can be used in any smart, heterogeneous-lookup magic
+		using is_transparent = void;
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FUNCTION_IDENT_HPP

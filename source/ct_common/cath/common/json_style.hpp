@@ -21,19 +21,17 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_JSON_STYLE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_JSON_STYLE_HPP
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief The style in which superposition JSON should be written
-		///
-		/// \todo This should be used in more superposition/JSON code rather than just in json_style.
-		///       Extend the use of this all the way to the call to the Boost code.
-		enum class json_style : bool {
-			PRETTY, ///< Insert white-space characters to format the JSON in a more human-readable layout
-			COMPACT ///< Suppress superfluous white-space characters to keep the JSON compact
-		};
+	/// \brief The style in which superposition JSON should be written
+	///
+	/// \todo This should be used in more superposition/JSON code rather than just in json_style.
+	///       Extend the use of this all the way to the call to the Boost code.
+	enum class json_style : bool {
+		PRETTY, ///< Insert white-space characters to format the JSON in a more human-readable layout
+		COMPACT ///< Suppress superfluous white-space characters to keep the JSON compact
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_JSON_STYLE_HPP

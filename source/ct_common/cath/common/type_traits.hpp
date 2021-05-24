@@ -23,21 +23,19 @@
 
 #include <type_traits>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// Type alias for the specified type with any cvref qualifiers removed
-		///
-		/// This is like ::std::decay but it doesn't also decay arrays to pointers etc
-		///
-		/// TODO: Come C++20, retire this in favour of ::std::remove_cvref_t
-		template <typename T>
-		using remove_cvref_t = ::std::remove_cv_t<::std::remove_reference_t<T>>;
+	/// Type alias for the specified type with any cvref qualifiers removed
+	///
+	/// This is like ::std::decay but it doesn't also decay arrays to pointers etc
+	///
+	/// TODO: Come C++20, retire this in favour of ::std::remove_cvref_t
+	template <typename T>
+	using remove_cvref_t = ::std::remove_cv_t<::std::remove_reference_t<T>>;
 
-		template <typename T, typename U>
-		constexpr bool is_same_modulo_cvref_v = ::std::is_same_v<remove_cvref_t<T>, remove_cvref_t<U>>;
+	template <typename T, typename U>
+	constexpr bool is_same_modulo_cvref_v = ::std::is_same_v<remove_cvref_t<T>, remove_cvref_t<U>>;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_TRAITS_HPP

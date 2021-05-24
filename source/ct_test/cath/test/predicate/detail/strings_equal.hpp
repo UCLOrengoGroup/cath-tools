@@ -25,22 +25,16 @@
 
 #include <string>
 
-namespace cath {
-	namespace test {
-		namespace detail {
+namespace cath::test::detail {
 
-			size_t index_of_first_difference(const std::string &,
-			                                 const std::string &);
+	size_t index_of_first_difference( const std::string &, const std::string & );
 
-			boost::test_tools::predicate_result strings_equal(const std::string &,
-			                                                  const std::string &,
-			                                                  const std::string &,
-			                                                  const std::string &,
-			                                                  const size_t &);
+	boost::test_tools::predicate_result strings_equal( const std::string &,
+	                                                   const std::string &,
+	                                                   const std::string &,
+	                                                   const std::string &,
+	                                                   const size_t & );
 
-		} // namespace detail
-	} // namespace test
-} // namespace cath
-
+} // namespace cath::test::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_DETAIL_STRINGS_EQUAL_HPP

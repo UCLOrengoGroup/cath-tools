@@ -32,19 +32,7 @@ using namespace ::std;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The temp_file_test_suite_fixture to assist in testing temp_file
-		struct temp_file_test_suite_fixture {
-		protected:
-			~temp_file_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(temp_file_test_suite, cath::test::temp_file_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(temp_file_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(construct_empty) {

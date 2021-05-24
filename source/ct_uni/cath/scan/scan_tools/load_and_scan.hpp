@@ -29,50 +29,50 @@
 #include "cath/scan/scan_tools/scan_type.hpp"
 #include "cath/structure/protein/protein_loader/protein_list_loader.hpp"
 
-namespace cath { namespace scan { class load_and_scan_metrics; } }
+// clang-format off
+namespace cath::scan { class load_and_scan_metrics; }
+// clang-format on
 
-namespace cath {
-	namespace scan {
+namespace cath::scan {
+
+	/// \brief TODOCUMENT
+	class load_and_scan final {
+	private:
+		/// \brief TODOCUMENT
+		protein_list_loader query_protein_loader;
 
 		/// \brief TODOCUMENT
-		class load_and_scan final {
-		private:
-			/// \brief TODOCUMENT
-			protein_list_loader query_protein_loader;
+		protein_list_loader match_protein_loader;
 
-			/// \brief TODOCUMENT
-			protein_list_loader match_protein_loader;
+		/// \brief TODOCUMENT
+		common::clone_ptr<scan_type> scan_ptr;
 
-			/// \brief TODOCUMENT
-			common::clone_ptr<scan_type> scan_ptr;
+		/// \brief TODOCUMENT
+		::std::optional<protein_list> query_proteins;
 
-			/// \brief TODOCUMENT
-			::std::optional<protein_list> query_proteins;
+		/// \brief TODOCUMENT
+		::std::optional<protein_list> match_proteins;
 
-			/// \brief TODOCUMENT
-			::std::optional<protein_list> match_proteins;
+		/// \brief TODOCUMENT
+		hrc_duration_opt load_files_duration;
 
-			/// \brief TODOCUMENT
-			hrc_duration_opt load_files_duration;
+		/// \brief TODOCUMENT
+		::std::optional<scan_metrics> the_scan_metrics;
 
-			/// \brief TODOCUMENT
-			::std::optional<scan_metrics> the_scan_metrics;
+		void perform_load();
+		void perform_scan();
 
-			void perform_load();
-			void perform_scan();
+	public:
+		load_and_scan(protein_list_loader,
+		              protein_list_loader,
+		              const scan_type &);
 
-		public:
-			load_and_scan(protein_list_loader,
-			              protein_list_loader,
-			              const scan_type &);
+		[[nodiscard]] const protein_list &  get_query_proteins() const;
+		[[nodiscard]] const protein_list &  get_match_proteins() const;
+		[[nodiscard]] load_and_scan_metrics get_load_and_scan_metrics() const;
+	};
 
-			[[nodiscard]] const protein_list &  get_query_proteins() const;
-			[[nodiscard]] const protein_list &  get_match_proteins() const;
-			[[nodiscard]] load_and_scan_metrics get_load_and_scan_metrics() const;
-		};
-
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_LOAD_AND_SCAN_HPP
 

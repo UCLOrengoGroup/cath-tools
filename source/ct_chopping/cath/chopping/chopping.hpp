@@ -27,39 +27,37 @@
 #include <cstddef>
 #include <vector>
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
+
+	/// \brief TODOCUMENT
+	class chopping final {
+	private:
+		/// \brief TODOCUMENT
+		domain_vec domains;
 
 		/// \brief TODOCUMENT
-		class chopping final {
-		private:
-			/// \brief TODOCUMENT
-			domain_vec domains;
+		region_vec fragments;
 
-			/// \brief TODOCUMENT
-			region_vec fragments;
+		void sanity_check() const;
 
-			void sanity_check() const;
+	public:
+		using iterator = domain_vec::iterator;
+		using const_iterator = domain_vec::const_iterator;
 
-		public:
-			using iterator = domain_vec::iterator;
-			using const_iterator = domain_vec::const_iterator;
+		explicit chopping(domain_vec,
+		                  region_vec = region_vec());
 
-			explicit chopping(domain_vec,
-			                  region_vec = region_vec());
+		[[nodiscard]] size_t num_domains() const;
+		[[nodiscard]] size_t num_fragments() const;
 
-			[[nodiscard]] size_t num_domains() const;
-			[[nodiscard]] size_t num_fragments() const;
+		[[nodiscard]] const region &get_fragment_of_index( const size_t & ) const;
 
-			[[nodiscard]] const region &get_fragment_of_index( const size_t & ) const;
+		const domain & operator[](const size_t &prm_index) const;
 
-			const domain & operator[](const size_t &prm_index) const;
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
-
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_HPP

@@ -49,45 +49,43 @@ using namespace ::std;
 
 using ::boost::numeric_cast;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The all_vs_all_test_suite_fixture to assist in testing all_vs_all
-		struct all_vs_all_test_suite_fixture : protected global_test_constants {
-		protected:
-			~all_vs_all_test_suite_fixture() noexcept = default;
+	/// \brief The all_vs_all_test_suite_fixture to assist in testing all_vs_all
+	struct all_vs_all_test_suite_fixture : protected global_test_constants {
+	protected:
+		~all_vs_all_test_suite_fixture() noexcept = default;
 
-			[[nodiscard]] str_str_pair_doub_map read_ssap_scores() const {
-				const auto raw_scores = read_file<str_str_pair_doub_pair>( "ssap_score_summary_file.txt" );
-				str_str_pair_doub_map ssap_scores;
-				for (const auto &x : raw_scores) {
-					ssap_scores.insert( x );
-				}
-				return ssap_scores;
+		[[nodiscard]] str_str_pair_doub_map read_ssap_scores() const {
+			const auto raw_scores = read_file<str_str_pair_doub_pair>( "ssap_score_summary_file.txt" );
+			str_str_pair_doub_map ssap_scores;
+			for (const auto &x : raw_scores) {
+				ssap_scores.insert( x );
+			}
+			return ssap_scores;
+		}
+
+		/// \brief TODOCUMENT
+		double calc_plot_colour_component(const size_size_pair &prm_length_range,
+		                                  const size_t         &prm_length
+		                                  ) {
+			const auto &min = prm_length_range.first;
+			const auto &max = prm_length_range.second;
+			if ( min > max || prm_length < min || prm_length > max ) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot calc_plot_colour_component() for invalid length/range"));
 			}
 
-			/// \brief TODOCUMENT
-			double calc_plot_colour_component(const size_size_pair &prm_length_range,
-			                                  const size_t         &prm_length
-			                                  ) {
-				const auto &min = prm_length_range.first;
-				const auto &max = prm_length_range.second;
-				if ( min > max || prm_length < min || prm_length > max ) {
-					BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot calc_plot_colour_component() for invalid length/range"));
-				}
+			const auto length_less_min = numeric_cast<double>( prm_length - min );
+			const auto max_less_min    = numeric_cast<double>(        max - min );
+			return ( max == min) ? 0.0
+			                     : ( length_less_min / max_less_min );
+		}
+	};
 
-				const auto length_less_min = numeric_cast<double>( prm_length - min );
-				const auto max_less_min    = numeric_cast<double>(        max - min );
-				return ( max == min) ? 0.0
-				                     : ( length_less_min / max_less_min );
-			}
-		};
-
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(all_vs_all_test_suite, cath::test::all_vs_all_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(all_vs_all_test_suite, all_vs_all_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

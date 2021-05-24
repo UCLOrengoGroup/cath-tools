@@ -28,93 +28,91 @@
 #include <string>
 #include <unordered_map>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Map reference_wrapper<const string> to numeric IDs that count incrementally from 0
+	/// \brief Map reference_wrapper<const string> to numeric IDs that count incrementally from 0
+	///
+	/// Note: this is an unordered_map of reference_wrapper<string> not of boost::string_ref / std::string_view
+	///
+	/// This makes lookups easier
+	///
+	/// This class isn't thread-safe
+	///
+	/// \TODO Consider adding (or changing this into) id_of_string_ref_ref / id_of_string_ref_view.
+	///       The Boost string_ref currently has a std::hash specialisation
+	///       but it's #if-ed out (#if 0).
+	///
+	/// \TODO Alternatively consider using Boost.MultiIndex as discussed in
+	///       "Why You Should Use Boost MultiIndex (Part II)"
+	class id_of_string_ref final {
+	private:
+		/// \brief Type alias for the type of the IDs
+		using id_type = size_t;
+
+		/// \brief Type alias for the map type
+		using map_type = std::unordered_map<detail::ref_wrap_uom_wrap<const std::string>, id_type, detail::ref_wrap_hasher<const std::string>>;
+
+		/// \brief The unordered_map that stores the string_ref-to-id lookup map
+		map_type the_map;
+
+	public:
+		/// \brief A type alias for the const_iterator type as part of making this a range
+		using const_iterator = map_type::const_iterator;
+
+		id_of_string_ref() = default;
+
+		/// \brief Insert a new string and return its new ID
 		///
-		/// Note: this is an unordered_map of reference_wrapper<string> not of boost::string_ref / std::string_view
-		///
-		/// This makes lookups easier
-		///
-		/// This class isn't thread-safe
-		///
-		/// \TODO Consider adding (or changing this into) id_of_string_ref_ref / id_of_string_ref_view.
-		///       The Boost string_ref currently has a std::hash specialisation
-		///       but it's #if-ed out (#if 0).
-		///
-		/// \TODO Alternatively consider using Boost.MultiIndex as discussed in
-		///       "Why You Should Use Boost MultiIndex (Part II)"
-		class id_of_string_ref final {
-		private:
-			/// \brief Type alias for the type of the IDs
-			using id_type = size_t;
+		/// Can be used if the name already exists
+		inline const std::pair<const detail::ref_wrap_uom_wrap<const std::string>, id_type> & emplace(const string_cref &prm_string ///< The string to insert
+		                                                                                              ) {
+			return *( the_map.emplace( prm_string, the_map.size() ).first );
+		}
 
-			/// \brief Type alias for the map type
-			using map_type = std::unordered_map<detail::ref_wrap_uom_wrap<const std::string>, id_type, detail::ref_wrap_hasher<const std::string>>;
+		/// \brief Get the ID corresponding to the specified string
+		inline id_type operator[](const string_cref &prm_string ///< The string to lookup
+		                          ) const {
+			return the_map.find( detail::ref_wrap_uom_wrap( prm_string ) )->second;
+		}
 
-			/// \brief The unordered_map that stores the string_ref-to-id lookup map
-			map_type the_map;
+		/// \brief Return whether this contains the specified string_cref
+		inline bool contains(const string_cref &prm_string ///< The string to lookup
+		                     ) const {
+			return ( the_map.find( detail::ref_wrap_uom_wrap( prm_string ) ) != ::std::cend( the_map ) );
+		}
 
-		public:
-			/// \brief A type alias for the const_iterator type as part of making this a range
-			using const_iterator = map_type::const_iterator;
+		/// \brief Return whether this id_of_string_ref is empty
+		inline bool empty() const {
+			return the_map.empty();
+		}
 
-			id_of_string_ref() = default;
+		/// \brief Return the number of strings that are stored
+		inline size_t size() const {
+			return the_map.size();
+		}
 
-			/// \brief Insert a new string and return its new ID
-			///
-			/// Can be used if the name already exists
-			inline const std::pair<const detail::ref_wrap_uom_wrap<const std::string>, id_type> & emplace(const string_cref &prm_string ///< The string to insert
-			                                                                                              ) {
-				return *( the_map.emplace( prm_string, the_map.size() ).first );
-			}
+		/// \brief Reserve space for the specified number of strings
+		inline void reserve(const size_t &prm_count ///< The number of strings for which space should be reserved
+		                    ) {
+			the_map.reserve( prm_count );
+		}
 
-			/// \brief Get the ID corresponding to the specified string
-			inline id_type operator[](const string_cref &prm_string ///< The string to lookup
-			                          ) const {
-				return the_map.find( detail::ref_wrap_uom_wrap( prm_string ) )->second;
-			}
+		/// \brief Clear the id_of_string_ref of all strings
+		inline void clear() {
+			the_map.clear();
+		}
 
-			/// \brief Return whether this contains the specified string_cref
-			inline bool contains(const string_cref &prm_string ///< The string to lookup
-			                     ) const {
-				return ( the_map.find( detail::ref_wrap_uom_wrap( prm_string ) ) != ::std::cend( the_map ) );
-			}
+		/// \brief Standard const begin() operator to make id_of_string_ref into a range
+		inline const_iterator begin() const {
+			return ::std::cbegin( the_map );
+		}
 
-			/// \brief Return whether this id_of_string_ref is empty
-			inline bool empty() const {
-				return the_map.empty();
-			}
+		/// \brief Standard const end() operator to make id_of_string_ref into a range
+		inline const_iterator end() const {
+			return ::std::cend( the_map );
+		}
+	};
 
-			/// \brief Return the number of strings that are stored
-			inline size_t size() const {
-				return the_map.size();
-			}
-
-			/// \brief Reserve space for the specified number of strings
-			inline void reserve(const size_t &prm_count ///< The number of strings for which space should be reserved
-			                    ) {
-				the_map.reserve( prm_count );
-			}
-
-			/// \brief Clear the id_of_string_ref of all strings
-			inline void clear() {
-				the_map.clear();
-			}
-
-			/// \brief Standard const begin() operator to make id_of_string_ref into a range
-			inline const_iterator begin() const {
-				return ::std::cbegin( the_map );
-			}
-
-			/// \brief Standard const end() operator to make id_of_string_ref into a range
-			inline const_iterator end() const {
-				return ::std::cend( the_map );
-			}
-		};
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONTAINER_ID_OF_STRING_REF_HPP

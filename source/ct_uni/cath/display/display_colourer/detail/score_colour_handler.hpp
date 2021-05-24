@@ -25,59 +25,60 @@
 
 #include "cath/common/type_aliases.hpp"
 
+// clang-format off
 namespace cath { class display_colour; }
 namespace cath { class display_colour_spec; }
-namespace cath { namespace align { class alignment; } }
+namespace cath::align { class alignment; }
+// clang-format on
 
-namespace cath {
-	namespace detail {
+namespace cath::detail {
+
+	/// \brief TODOCUMENT
+	class score_colour_handler final {
+	private:
+		/// \brief TODOCUMENT
+		bool show_scores_if_present;
 
 		/// \brief TODOCUMENT
-		class score_colour_handler final {
-		private:
-			/// \brief TODOCUMENT
-			bool show_scores_if_present;
+		bool scores_to_equivs;
 
-			/// \brief TODOCUMENT
-			bool scores_to_equivs;
+		/// \brief TODOCUMENT
+		bool normalise_scores;
 
-			/// \brief TODOCUMENT
-			bool normalise_scores;
+	public:
+		score_colour_handler(const bool &,
+		                     const bool &,
+		                     const bool &);
 
-		public:
-			score_colour_handler(const bool &,
-			                     const bool &,
-			                     const bool &);
+		[[nodiscard]] bool get_show_scores_if_present() const;
+		[[nodiscard]] bool get_scores_to_equivs() const;
+		[[nodiscard]] bool get_normalise_scores() const;
 
-			[[nodiscard]] bool get_show_scores_if_present() const;
-			[[nodiscard]] bool get_scores_to_equivs() const;
-			[[nodiscard]] bool get_normalise_scores() const;
+		[[nodiscard]] float_score_type get_score_of_position( const align::alignment &, const size_t &, const size_t & ) const;
+	};
 
-			[[nodiscard]] float_score_type get_score_of_position( const align::alignment &, const size_t &, const size_t & ) const;
-		};
+	using score_colour_handler_opt = ::std::optional<score_colour_handler>;
 
-		using score_colour_handler_opt = ::std::optional<score_colour_handler>;
+	void score_colour(const score_colour_handler &,
+	                  const align::alignment &,
+	                  const size_t &,
+	                  const size_t &,
+	                  display_colour &);
 
-		void score_colour(const score_colour_handler &,
-		                  const align::alignment &,
-		                  const size_t &,
-		                  const size_t &,
-		                  display_colour &);
+	display_colour score_colour_copy(const score_colour_handler &,
+	                                 const align::alignment &,
+	                                 const size_t &,
+	                                 const size_t &,
+	                                 display_colour);
 
-		display_colour score_colour_copy(const score_colour_handler &,
-		                                 const align::alignment &,
-		                                 const size_t &,
-		                                 const size_t &,
-		                                 display_colour);
+	void adjust_display_colour_spec(display_colour_spec &,
+	                                const score_colour_handler &,
+	                                const align::alignment &);
 
-		void adjust_display_colour_spec(display_colour_spec &,
-		                                const score_colour_handler &,
-		                                const align::alignment &);
+	display_colour_spec adjust_display_colour_spec_copy(display_colour_spec,
+	                                                    const score_colour_handler &,
+	                                                    const align::alignment &);
 
-		display_colour_spec adjust_display_colour_spec_copy(display_colour_spec,
-		                                                    const score_colour_handler &,
-		                                                    const align::alignment &);
-	} // namespace detail
-} // namespace cath
+} // namespace cath::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DETAIL_SCORE_COLOUR_HANDLER_HPP

@@ -30,21 +30,14 @@
 #include "cath/common/container/id_of_str_bidirnl.hpp"
 #include "cath/common/file/temp_file.hpp"
 #include "cath/test/predicate/files_equal.hpp"
-// #include "cath/clustagglom/hierarchy.hpp"
-// #include "cath/clustagglom/make_clusters_from_merges.hpp"
-// #include "cath/clustagglom/merge.hpp"
 
-namespace cath { namespace test { } }
-
-// using namespace ::cath;
+using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
-using namespace ::cath::test;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The links_test_suite_test_suite_fixture to assist in testing links_test_suite
 		struct links_test_suite_test_suite_fixture : protected clustagglom_fixture {
@@ -74,8 +67,7 @@ namespace cath {
 				BOOST_CHECK_FILES_EQUAL( temp_links_file, prm_expected_file );
 			}
 		};
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(links_test_suite, links_test_suite_test_suite_fixture)
 

@@ -24,16 +24,14 @@
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		size_size_pair_vec tally_residue_ids(const residue_id_vec &,
-		                                     const residue_id_vec &,
-		                                     const bool &,
-		                                     const bool & = true,
-		                                     const size_set & = size_set{} );
+	size_size_pair_vec tally_residue_ids(const residue_id_vec &,
+	                                     const residue_id_vec &,
+	                                     const bool &,
+	                                     const bool & = true,
+	                                     const size_set & = size_set{} );
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_TALLY_RESIDUE_IDS_HPP

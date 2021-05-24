@@ -46,74 +46,72 @@ using namespace ::cath::align::gap;
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		struct string_aligner_fixture {
-		protected:
-			~string_aligner_fixture() noexcept = default;
+	// struct string_aligner_fixture {
+	// protected:
+	// 	~string_aligner_fixture() noexcept = default;
 
-			string make_random_sequence(const size_t &,
-			                            const size_t &) const;
+	// 	string make_random_sequence(const size_t &,
+	// 	                            const size_t &) const;
 
-			void check_second_no_better(const str_str_score_tpl &,
-			                            const str_str_score_tpl &,
-			                            const gap_penalty &);
+	// 	void check_second_no_better(const str_str_score_tpl &,
+	// 	                            const str_str_score_tpl &,
+	// 	                            const gap_penalty &);
 
-			const char_vec AA_TEST_ALPHABET = { 'A', 'C', 'D', 'E', 'F' };
+	// 	const char_vec AA_TEST_ALPHABET = { 'A', 'C', 'D', 'E', 'F' };
 
-			const ssap_code_dyn_prog_aligner        the_ssap_code_dyn_prog_aligner{};
-			const std_dyn_prog_aligner              the_std_dyn_prog_aligner{};
+	// 	const ssap_code_dyn_prog_aligner        the_ssap_code_dyn_prog_aligner{};
+	// 	const std_dyn_prog_aligner              the_std_dyn_prog_aligner{};
 
-			const benchmark_dyn_prog_string_aligner benchmark_string_aligner{};
-			const gen_dyn_prog_string_aligner       ssap_code_string_aligner   { the_ssap_code_dyn_prog_aligner };
-			const gen_dyn_prog_string_aligner       std_dyn_prog_string_aligner{ the_std_dyn_prog_aligner       };
-		};
+	// 	const benchmark_dyn_prog_string_aligner benchmark_string_aligner{};
+	// 	const gen_dyn_prog_string_aligner       ssap_code_string_aligner   { the_ssap_code_dyn_prog_aligner };
+	// 	const gen_dyn_prog_string_aligner       std_dyn_prog_string_aligner{ the_std_dyn_prog_aligner       };
+	// };
 
-	}  // namespace test
-}  // namespace cath
+	// /// \brief TODOCUMENT
+	// string string_aligner_fixture::make_random_sequence(const size_t &prm_min_length, ///< TODOCUMENT
+	//                                                     const size_t &prm_max_length  ///< TODOCUMENT
+	//                                                     ) const {
+	// 	BOOST_REQUIRE_GE(prm_max_length, prm_min_length);
 
-/// \brief TODOCUMENT
-string cath::test::string_aligner_fixture::make_random_sequence(const size_t &prm_min_length, ///< TODOCUMENT
-                                                                const size_t &prm_max_length  ///< TODOCUMENT
-                                                                ) const {
-	BOOST_REQUIRE_GE(prm_max_length, prm_min_length);
+	// 	auto       rng    = default_random_engine{ random_device{}() };
+	// 	const auto length = uniform_int_distribution<size_t>{ prm_min_length, prm_max_length }( rng );
 
-	auto       rng    = default_random_engine{ random_device{}() };
-	const auto length = uniform_int_distribution<size_t>{ prm_min_length, prm_max_length }( rng );
+	// 	string new_sequence;
+	// 	new_sequence.reserve(length);
+	// 	for_n(
+	// 		length,
+	// 		[&] {
+	// 			const auto random_alphabet_index = uniform_int_distribution<size_t>{ 0, AA_TEST_ALPHABET.size() - 1 }( rng );
+	// 			new_sequence.push_back( AA_TEST_ALPHABET[ random_alphabet_index ] );
+	// 		}
+	// 	);
+	// 	return new_sequence;
+	// }
 
-	string new_sequence;
-	new_sequence.reserve(length);
-	for_n(
-		length,
-		[&] {
-			const auto random_alphabet_index = uniform_int_distribution<size_t>{ 0, AA_TEST_ALPHABET.size() - 1 }( rng );
-			new_sequence.push_back( AA_TEST_ALPHABET[ random_alphabet_index ] );
-		}
-	);
-	return new_sequence;
-}
+	// /// \brief TODOCUMENT
+	// void string_aligner_fixture::check_second_no_better(const str_str_score_tpl &prm_align_result_a, ///< TODOCUMENT
+	//                                                     const str_str_score_tpl &prm_align_result_b, ///< TODOCUMENT
+	//                                                     const gap_penalty       &prm_gap_penalty     ///< TODOCUMENT
+	//                                                     ) {
+	// 	const score_type rescore_a = get_score_of_aligned_sequence_strings(
+	// 		get<0>( prm_align_result_a ),
+	// 		get<1>( prm_align_result_a ),
+	// 		prm_gap_penalty
+	// 	);
+	// 	const score_type rescore_b = get_score_of_aligned_sequence_strings(
+	// 		get<0>( prm_align_result_b ),
+	// 		get<1>( prm_align_result_b ),
+	// 		prm_gap_penalty
+	// 	);
+	// 	BOOST_REQUIRE_EQUAL( rescore_a, get<2>( prm_align_result_a ) );
+	// 	BOOST_CHECK_LE(      rescore_b, rescore_a );
+	// }
 
-/// \brief TODOCUMENT
-void cath::test::string_aligner_fixture::check_second_no_better(const str_str_score_tpl &prm_align_result_a, ///< TODOCUMENT
-                                                                const str_str_score_tpl &prm_align_result_b, ///< TODOCUMENT
-                                                                const gap_penalty       &prm_gap_penalty     ///< TODOCUMENT
-                                                                ) {
-	const score_type rescore_a = get_score_of_aligned_sequence_strings(
-		get<0>( prm_align_result_a ),
-		get<1>( prm_align_result_a ),
-		prm_gap_penalty
-	);
-	const score_type rescore_b = get_score_of_aligned_sequence_strings(
-		get<0>( prm_align_result_b ),
-		get<1>( prm_align_result_b ),
-		prm_gap_penalty
-	);
-	BOOST_REQUIRE_EQUAL( rescore_a, get<2>( prm_align_result_a ) );
-	BOOST_CHECK_LE(      rescore_b, rescore_a );
-}
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(string_aligner_test_suite, cath::test::string_aligner_fixture)
+BOOST_AUTO_TEST_SUITE(string_aligner_test_suite)
 
 /// Problems :
 ///  * ssap_code : if either of the sequences has length 1, this causes a crash

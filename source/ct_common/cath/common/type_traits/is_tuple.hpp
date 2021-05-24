@@ -26,18 +26,16 @@
 #include "cath/common/type_traits.hpp"
 #include "cath/common/type_traits/is_template_of_type.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief A type_trait for checking whether T is exactly a std::tuple<> of zero or more types
-		template <typename T>
-		constexpr bool is_tuple_v = is_template_of_type_v<T, ::std::tuple>;
+	/// \brief A type_trait for checking whether T is exactly a std::tuple<> of zero or more types
+	template <typename T>
+	constexpr bool is_tuple_v = is_template_of_type_v<T, ::std::tuple>;
 
-		/// \brief A type_trait for checking whether the decayed version of T is a std::tuple<> of zero or more types
-		template <typename T>
-		constexpr bool is_tuple_mod_cvref_v = is_template_of_type_v<common::remove_cvref_t<T>, ::std::tuple>;
+	/// \brief A type_trait for checking whether the decayed version of T is a std::tuple<> of zero or more types
+	template <typename T>
+	constexpr bool is_tuple_mod_cvref_v = is_template_of_type_v<common::remove_cvref_t<T>, ::std::tuple>;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_TRAITS_IS_TUPLE_HPP

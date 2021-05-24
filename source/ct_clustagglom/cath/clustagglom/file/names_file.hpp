@@ -26,28 +26,27 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace common { class id_of_str_bidirnl; } }
+// clang-format off
+namespace cath::common { class id_of_str_bidirnl; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		doub_vec parse_names(std::istream &,
-		                     common::id_of_str_bidirnl &);
+	doub_vec parse_names(std::istream &,
+	                     common::id_of_str_bidirnl &);
 
-		doub_vec parse_names(const std::string &,
-		                     common::id_of_str_bidirnl &);
+	doub_vec parse_names(const std::string &,
+	                     common::id_of_str_bidirnl &);
 
-		doub_vec parse_names(const ::std::filesystem::path &,
-		                     common::id_of_str_bidirnl &);
+	doub_vec parse_names(const ::std::filesystem::path &,
+	                     common::id_of_str_bidirnl &);
 
-		std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(std::istream &);
+	std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(std::istream &);
 
-		std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(const std::string &);
+	std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(const std::string &);
 
-		std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(const ::std::filesystem::path &);
+	std::pair<doub_vec, common::id_of_str_bidirnl> parse_names(const ::std::filesystem::path &);
 
-
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_FILE_NAMES_FILE_HPP

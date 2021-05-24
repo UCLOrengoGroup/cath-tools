@@ -29,110 +29,83 @@
 #include <set>
 #include <string>
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief A record of the query IDs that have been seen to implement limit_queries
-		///
-		/// This only needs to be updated when limit_queries has been requested
-		///
-		/// Use should_skip_query_and_update() rather than calling add_query_id() directly
-		///
-		/// This uses heterogeneous lookup in an attempt to support lookup with string_ref
-		/// without having to construct a string
-		class query_id_recorder final {
-		private:
-			std::set<std::string, std::less<>> seen_query_ids;
+	/// \brief A record of the query IDs that have been seen to implement limit_queries
+	///
+	/// This only needs to be updated when limit_queries has been requested
+	///
+	/// Use should_skip_query_and_update() rather than calling add_query_id() directly
+	///
+	/// This uses heterogeneous lookup in an attempt to support lookup with string_ref
+	/// without having to construct a string
+	class query_id_recorder final {
+	private:
+		std::set<std::string, std::less<>> seen_query_ids;
 
-		public:
-			query_id_recorder() = default;
+	public:
+		query_id_recorder() = default;
 
-			[[nodiscard]] size_t size() const;
-			[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
+		[[nodiscard]] bool   empty() const;
 
-			[[nodiscard]] bool seen_query_id( const std::string & ) const;
-			[[nodiscard]] bool seen_query_id( const boost::string_ref & ) const;
+		[[nodiscard]] bool seen_query_id( const std::string & ) const;
+		[[nodiscard]] bool seen_query_id( const boost::string_ref & ) const;
 
-			query_id_recorder & add_query_id(const std::string &);
-			query_id_recorder & add_query_id(const boost::string_ref &);
-		};
+		query_id_recorder & add_query_id(const std::string &);
+		query_id_recorder & add_query_id(const boost::string_ref &);
+	};
 
-		/// \brief Return the number of query IDs
-		inline size_t query_id_recorder::size() const {
-			return seen_query_ids.size();
-		}
+	/// \brief Return the number of query IDs
+	inline size_t query_id_recorder::size() const {
+		return seen_query_ids.size();
+	}
 
-		/// \brief Return whether this is empty (ie has 0 query IDs)
-		inline bool query_id_recorder::empty() const {
-			return seen_query_ids.empty();
-		}
+	/// \brief Return whether this is empty (ie has 0 query IDs)
+	inline bool query_id_recorder::empty() const {
+		return seen_query_ids.empty();
+	}
 
-		/// \brief Return whether the specified query ID has already been seen
-		inline bool query_id_recorder::seen_query_id(const std::string &prm_query_id ///< The query ID for which to search
-		                                             ) const {
-			return common::contains( seen_query_ids, prm_query_id );
-		}
+	/// \brief Return whether the specified query ID has already been seen
+	inline bool query_id_recorder::seen_query_id(const std::string &prm_query_id ///< The query ID for which to search
+	                                             ) const {
+		return common::contains( seen_query_ids, prm_query_id );
+	}
 
-		/// \brief Return whether the specified query ID has already been seen
-		inline bool query_id_recorder::seen_query_id(const boost::string_ref &prm_query_id ///< The query ID for which to search
-		                                             ) const {
-			return common::contains( seen_query_ids, prm_query_id );
-		}
+	/// \brief Return whether the specified query ID has already been seen
+	inline bool query_id_recorder::seen_query_id(const boost::string_ref &prm_query_id ///< The query ID for which to search
+	                                             ) const {
+		return common::contains( seen_query_ids, prm_query_id );
+	}
 
-		/// \brief Add the specified query ID to those that have been seen
-		///
-		/// Consider using should_skip_query_and_update() rather than calling this method directly
-		inline query_id_recorder & query_id_recorder::add_query_id(const std::string &prm_query_id ///< The query ID to add
-		                                                           ) {
-			seen_query_ids.insert( prm_query_id );
-			return *this;
-		}
+	/// \brief Add the specified query ID to those that have been seen
+	///
+	/// Consider using should_skip_query_and_update() rather than calling this method directly
+	inline query_id_recorder & query_id_recorder::add_query_id(const std::string &prm_query_id ///< The query ID to add
+	                                                           ) {
+		seen_query_ids.insert( prm_query_id );
+		return *this;
+	}
 
-// #define STR_HELPER(x) #x
-// #define STR(x) STR_HELPER(x)
+	/// \brief Add the specified query ID to those that have been seen
+	///
+	/// Consider using should_skip_query_and_update() rather than calling this method directly
+	inline query_id_recorder & query_id_recorder::add_query_id(const boost::string_ref &prm_query_id ///< The query ID to add
+	                                                           ) {
+		// Find the place where query ID would go
+		const auto lower_bound_itr = seen_query_ids.lower_bound( prm_query_id );
 
-// #ifdef __GLIBCPP__
-// #pragma message "content of __GLIBCPP__: " STR(__GLIBCPP__)
-// #endif
-
-// #ifdef __GLIBCXX__
-// #pragma message "content of __GLIBCXX__: " STR(__GLIBCXX__)
-// #endif
-
-		/// \brief Add the specified query ID to those that have been seen
-		///
-		/// Consider using should_skip_query_and_update() rather than calling this method directly
-		inline query_id_recorder & query_id_recorder::add_query_id(const boost::string_ref &prm_query_id ///< The query ID to add
-		                                                           ) {
-			// Find the place where query ID would go
-			const auto lower_bound_itr = seen_query_ids.lower_bound(
-// workaround absence of hetergeneous lookup in old libstdc++
-#ifdef __GLIBCXX__
-#if __GLIBCXX__ < 20160801
-				static_cast<std::string>(
-#endif
-#endif
-				prm_query_id
-#ifdef __GLIBCXX__
-#if __GLIBCXX__ < 20160801
-				)
-#endif
-#endif
+		// If the query ID should be added, then emplace directly
+		if ( lower_bound_itr == ::std::cend( seen_query_ids ) || *lower_bound_itr != prm_query_id ) {
+			seen_query_ids.emplace_hint(
+				lower_bound_itr,
+				::std::cbegin( prm_query_id ),
+				::std::cend  ( prm_query_id )
 			);
-
-			// If the query ID should be added, then emplace directly
-			if ( lower_bound_itr == ::std::cend( seen_query_ids ) || *lower_bound_itr != prm_query_id ) {
-				seen_query_ids.emplace_hint(
-					lower_bound_itr,
-					::std::cbegin( prm_query_id ),
-					::std::cend  ( prm_query_id )
-				);
-			}
-			return *this;
 		}
+		return *this;
+	}
 
-
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_QUERY_ID_RECORDER_HPP

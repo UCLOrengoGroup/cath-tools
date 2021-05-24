@@ -23,17 +23,15 @@
 
 #include <boost/exception/all.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		class not_implemented_exception : public boost::exception,
-		                                  public std::logic_error {
-		public:
-			explicit not_implemented_exception(const std::string &);
-		};
+	/// \brief TODOCUMENT
+	class not_implemented_exception : public boost::exception,
+	                                  public std::logic_error {
+	public:
+		explicit not_implemented_exception(const std::string &);
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_EXCEPTION_NOT_IMPLEMENTED_EXCEPTION_HPP

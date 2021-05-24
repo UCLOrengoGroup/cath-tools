@@ -27,71 +27,69 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
+
+	/// \brief TODOCUMENT
+	///
+	/// Invariants:
+	///  * all segments must have the same residue_locating
+	///     (ie whether they locate their residues by names and/or indices)
+	///
+	/// \todo Should a domain be allowed to have no segments and if so, should that mean
+	///       that the domain covers everything (eg the whole PDB)?
+	class domain final : private boost::equality_comparable<domain>  {
+	private:
+		/// \brief TODOCUMENT
+		region_vec segments;
 
 		/// \brief TODOCUMENT
+		str_opt domain_id;
+
+		void sanity_check() const;
+
+	public:
+//		using iterator = region_vec::iterator;
+		using const_iterator = region_vec::const_iterator;
+
+		/// \brief Type alias for the value_type
 		///
-		/// Invariants:
-		///  * all segments must have the same residue_locating
-		///     (ie whether they locate their residues by names and/or indices)
-		///
-		/// \todo Should a domain be allowed to have no segments and if so, should that mean
-		///       that the domain covers everything (eg the whole PDB)?
-		class domain final : private boost::equality_comparable<domain>  {
-		private:
-			/// \brief TODOCUMENT
-			region_vec segments;
+		/// This is added because otherwise the Travis-CI Mac build fails to compile
+		/// due to a use of value_type in `boost/test/utils/is_forward_iterable.hpp`
+		/// that gets invoked by the `BOOST_TEST( [...] == [...] )` comparisons of
+		/// domain in sillitoe_chopping_format_test.cpp
+		using value_type     = region_vec::value_type;
 
-			/// \brief TODOCUMENT
-			str_opt domain_id;
+		explicit domain(region_vec);
+		explicit domain(region_vec,
+		                std::string);
 
-			void sanity_check() const;
+		[[nodiscard]] size_t num_segments() const;
+		// region operator[](const size_t &);
+		const region & operator[](const size_t &) const;
 
-		public:
-//			using iterator = region_vec::iterator;
-			using const_iterator = region_vec::const_iterator;
+		void set_opt_domain_id(const str_opt &);
+		[[nodiscard]] const str_opt &get_opt_domain_id() const;
 
-			/// \brief Type alias for the value_type
-			///
-			/// This is added because otherwise the Travis-CI Mac build fails to compile
-			/// due to a use of value_type in `boost/test/utils/is_forward_iterable.hpp`
-			/// that gets invoked by the `BOOST_TEST( [...] == [...] )` comparisons of
-			/// domain in sillitoe_chopping_format_test.cpp
-			using value_type     = region_vec::value_type;
+		// iterator begin();
+		// iterator end();
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-			explicit domain(region_vec);
-			explicit domain(region_vec,
-			                std::string);
+	region_vec_opt get_regions_opt(const domain_opt &);
 
-			[[nodiscard]] size_t num_segments() const;
-			// region operator[](const size_t &);
-			const region & operator[](const size_t &) const;
+	bool operator==(const domain &,
+	                const domain &);
 
-			void set_opt_domain_id(const str_opt &);
-			[[nodiscard]] const str_opt &get_opt_domain_id() const;
+	bool has_domain_id(const domain &);
+	std::string get_domain_id(const domain &);
 
-			// iterator begin();
-			// iterator end();
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+	residue_locating_opt get_residue_locating(const domain &);
 
-		region_vec_opt get_regions_opt(const domain_opt &);
+	std::string to_string(const domain &);
+	std::ostream & operator<<(std::ostream &,
+	                          const domain &);
 
-		bool operator==(const domain &,
-		                const domain &);
-
-		bool has_domain_id(const domain &);
-		std::string get_domain_id(const domain &);
-
-		residue_locating_opt get_residue_locating(const domain &);
-
-		std::string to_string(const domain &);
-		std::ostream & operator<<(std::ostream &,
-		                          const domain &);
-
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_DOMAIN_DOMAIN_HPP

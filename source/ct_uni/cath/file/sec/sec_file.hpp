@@ -27,44 +27,44 @@
 #include <cstddef>
 #include <vector>
 
-namespace cath { namespace file { class sec_file_record; } }
+// clang-format off
+namespace cath::file { class sec_file_record; }
 namespace cath { class sec_struc; }
 namespace cath { class sec_struc_planar_angles; }
+// clang-format on
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Represent the data parsed out of a sec file
-		class sec_file final {
-		private:
-			/// \brief The list of sec_file_records
-			sec_file_record_vec records;
+	/// \brief Represent the data parsed out of a sec file
+	class sec_file final {
+	private:
+		/// \brief The list of sec_file_records
+		sec_file_record_vec records;
 
-			/// \brief The list of planar_angle_lists
-			///        (as in the sec file, each entry contains the angles between that secondary structure and
-			///         all of the following secondary structures)
-			sec_struc_planar_angles_vec_vec inter_planar_angles;
+		/// \brief The list of planar_angle_lists
+		///        (as in the sec file, each entry contains the angles between that secondary structure and
+		///         all of the following secondary structures)
+		sec_struc_planar_angles_vec_vec inter_planar_angles;
 
-		public:
-			sec_file(sec_file_record_vec,
-			         sec_struc_planar_angles_vec_vec);
+	public:
+		sec_file(sec_file_record_vec,
+		         sec_struc_planar_angles_vec_vec);
 
-			using iterator       = sec_file_record_vec::const_iterator;
-			using const_iterator = sec_file_record_vec::const_iterator;
-			using size_type      = sec_file_record_vec::size_type;
+		using iterator       = sec_file_record_vec::const_iterator;
+		using const_iterator = sec_file_record_vec::const_iterator;
+		using size_type      = sec_file_record_vec::size_type;
 
-			[[nodiscard]] size_type                      size() const;
-			[[nodiscard]] const sec_struc_planar_angles &get_planar_angles_of_indices( const size_t &, const size_t & ) const;
+		[[nodiscard]] size_type                      size() const;
+		[[nodiscard]] const sec_struc_planar_angles &get_planar_angles_of_indices( const size_t &, const size_t & ) const;
 
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		sec_struc_vec make_sec_struc_list(const sec_file &);
-		sec_struc_planar_angles_vec_vec calc_planar_angles(const sec_file_record_vec &);
-		sec_file make_sec_file_with_calced_planar_angles(const sec_file_record_vec &);
+	sec_struc_vec make_sec_struc_list(const sec_file &);
+	sec_struc_planar_angles_vec_vec calc_planar_angles(const sec_file_record_vec &);
+	sec_file make_sec_file_with_calced_planar_angles(const sec_file_record_vec &);
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_HPP

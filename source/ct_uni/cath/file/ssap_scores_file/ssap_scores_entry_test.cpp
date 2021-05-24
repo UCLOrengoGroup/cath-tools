@@ -30,21 +30,19 @@ using namespace ::cath::common::test;
 using namespace ::cath::file;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The ssap_scores_entry_test_suite_fixture to assist in testing ssap_scores_entry
-		struct ssap_scores_entry_test_suite_fixture {
-		protected:
-			~ssap_scores_entry_test_suite_fixture() noexcept = default;
+	/// \brief The ssap_scores_entry_test_suite_fixture to assist in testing ssap_scores_entry
+	struct ssap_scores_entry_test_suite_fixture {
+	protected:
+		~ssap_scores_entry_test_suite_fixture() noexcept = default;
 
-			const ssap_scores_entry eg_entry{ "1cukA03", "1hjpA03", 48, 44, 94.92, 44, 91, 97, 0.71 };
-		};
+		const ssap_scores_entry eg_entry{ "1cukA03", "1hjpA03", 48, 44, 94.92, 44, 91, 97, 0.71 };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(ssap_scores_entry_test_suite, cath::test::ssap_scores_entry_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(ssap_scores_entry_test_suite, ssap_scores_entry_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(equality_works) {
 	check_equality_operators_on_diff_vals_range( vector<ssap_scores_entry>{

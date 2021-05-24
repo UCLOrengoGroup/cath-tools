@@ -30,48 +30,50 @@
 
 #include "cath/alignment/dyn_prog_align/detail/path_step.hpp"
 
-namespace cath {
-	namespace align {
-		class alignment;
+// clang-format off
+namespace cath::align { class alignment; }
+// clang-format on
+
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	using aln_posn_type = size_t;
+	/// \brief TODOCUMENT
+	using aln_posn_vec = std::vector<aln_posn_type>;
+	/// \brief TODOCUMENT
+	using aln_posn_vec_vec = std::vector<aln_posn_vec>;
+	/// \brief TODOCUMENT
+	using aln_posn_opt = ::std::optional<aln_posn_type>;
+	/// \brief TODOCUMENT
+	using aln_posn_opt_vec = std::vector<aln_posn_opt>;
+	/// \brief TODOCUMENT
+	using aln_posn_opt_vec_vec = std::vector<aln_posn_opt_vec>;
+
+	namespace detail {
+		/// \brief TODOCUMENT
+		using path_step_score_map = std::map<  path_step, score_type >;
+		/// \brief TODOCUMENT
+		using path_step_score_pair = std::pair< path_step, score_type >;
 
 		/// \brief TODOCUMENT
-		using aln_posn_type = size_t;
-		/// \brief TODOCUMENT
-		using aln_posn_vec = std::vector<aln_posn_type>;
-		/// \brief TODOCUMENT
-		using aln_posn_vec_vec = std::vector<aln_posn_vec>;
-		/// \brief TODOCUMENT
-		using aln_posn_opt = ::std::optional<aln_posn_type>;
-		/// \brief TODOCUMENT
-		using aln_posn_opt_vec = std::vector<aln_posn_opt>;
-		/// \brief TODOCUMENT
-		using aln_posn_opt_vec_vec = std::vector<aln_posn_opt_vec>;
+		using bool_aln_pair = std::pair<bool, alignment>;
+	} // namespace detail
 
-		namespace detail {
-			/// \brief TODOCUMENT
-			using path_step_score_map = std::map<  path_step, score_type >;
-			/// \brief TODOCUMENT
-			using path_step_score_pair = std::pair< path_step, score_type >;
+	/// \brief TODOCUMENT
+	using score_alignment_pair = std::pair<score_type, align::alignment>;
 
-			/// \brief TODOCUMENT
-			using bool_aln_pair = std::pair<bool, alignment>;
-		} // namespace detail
+	/// \brief TODOCUMENT
+	using size_size_alignment_tuple = std::tuple<size_t, size_t, alignment>;
+	/// \brief TODOCUMENT
+	using size_size_alignment_tuple_vec = std::vector<size_size_alignment_tuple>;
 
-		/// \brief TODOCUMENT
-		using score_alignment_pair = std::pair<score_type, align::alignment>;
+	/// \brief TODOCUMENT
+	using alignment_opt = ::std::optional<alignment>;
 
-		/// \brief TODOCUMENT
-		using size_size_alignment_tuple = std::tuple<size_t, size_t, alignment>;
-		/// \brief TODOCUMENT
-		using size_size_alignment_tuple_vec = std::vector<size_size_alignment_tuple>;
+	/// \brief TODOCUMENT
+	using alignment_vec = std::vector<alignment>;
 
-		/// \brief TODOCUMENT
-		using alignment_opt = ::std::optional<alignment>;
-
-		/// \brief TODOCUMENT
-		using alignment_vec = std::vector<alignment>;
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGN_TYPE_ALIASES_HPP

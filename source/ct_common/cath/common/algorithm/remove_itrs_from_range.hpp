@@ -26,48 +26,47 @@
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/size_t_literal.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Remove the elements at the specified positions from the specified range
-		///
-		/// \returns The new end of the range (a la std::range)
-		template <typename Rng,
-		          typename RmvRng>
-		range_iterator_t<Rng> remove_itrs_from_range(Rng          &prm_range,  ///< The range from which the elements should be removed
-		                                             const RmvRng &prm_removes ///< A range of (possibly const_iterator) iterators into prm_range, which are to be removed
-		                                             ) {
-			if ( prm_removes.empty() ) {
-				return std::end( prm_range );
-			}
-
-			auto write_itr = next(
-				std::begin( prm_range ),
-				distance( ::std::cbegin( prm_range ), prm_removes.front() )
-			);
-
-			const auto move_range_fn = [&] (auto begin_itr, const auto end_itr) {
-				while ( begin_itr != end_itr ) {
-					*write_itr = std::move( *begin_itr );
-					++write_itr;
-					++begin_itr;
-				}
-			};
-			for (const size_t remove_ctr : boost::irange( 1_z, prm_removes.size() ) ) {
-				move_range_fn(
-					next( prm_removes[ remove_ctr - 1 ] ),
-					      prm_removes[ remove_ctr     ]
-				);
-			}
-
-			move_range_fn(
-				next( prm_removes.back() ),
-				::std::cend( prm_range )
-			);
-
-			return write_itr;
+	/// \brief Remove the elements at the specified positions from the specified range
+	///
+	/// \returns The new end of the range (a la std::range)
+	template <typename Rng,
+	          typename RmvRng>
+	range_iterator_t<Rng> remove_itrs_from_range(Rng          &prm_range,  ///< The range from which the elements should be removed
+	                                             const RmvRng &prm_removes ///< A range of (possibly const_iterator) iterators into prm_range, which are to be removed
+	                                             ) {
+		if ( prm_removes.empty() ) {
+			return std::end( prm_range );
 		}
 
-	} // namespace common
-} // namespace cath
+		auto write_itr = next(
+			std::begin( prm_range ),
+			distance( ::std::cbegin( prm_range ), prm_removes.front() )
+		);
+
+		const auto move_range_fn = [&] (auto begin_itr, const auto end_itr) {
+			while ( begin_itr != end_itr ) {
+				*write_itr = std::move( *begin_itr );
+				++write_itr;
+				++begin_itr;
+			}
+		};
+		for (const size_t remove_ctr : boost::irange( 1_z, prm_removes.size() ) ) {
+			move_range_fn(
+				next( prm_removes[ remove_ctr - 1 ] ),
+				      prm_removes[ remove_ctr     ]
+			);
+		}
+
+		move_range_fn(
+			next( prm_removes.back() ),
+			::std::cend( prm_range )
+		);
+
+		return write_itr;
+	}
+
+} // namespace cath::common
+
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_REMOVE_ITRS_FROM_RANGE_HPP

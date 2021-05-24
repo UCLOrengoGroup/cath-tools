@@ -27,17 +27,13 @@
 #include "cath/file/strucs_context.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::file;
-using namespace ::cath::test;
 
 using ::std::ostringstream;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The ssap_scores_file_alignment_acquirer_test_suite_fixture to assist in testing ssap_scores_file_alignment_acquirer
 		struct ssap_scores_file_alignment_acquirer_test_suite_fixture : protected global_test_constants {
@@ -45,8 +41,7 @@ namespace cath {
 			~ssap_scores_file_alignment_acquirer_test_suite_fixture() noexcept = default;
 		};
 
-	} // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(ssap_scores_file_alignment_acquirer_test_suite, ssap_scores_file_alignment_acquirer_test_suite_fixture)
 

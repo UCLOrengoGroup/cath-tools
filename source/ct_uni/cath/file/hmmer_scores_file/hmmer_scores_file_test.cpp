@@ -28,16 +28,15 @@
 using namespace ::cath::file;
 using namespace ::std;
 
-namespace cath {
-    namespace test {
+namespace {
 
-        /// \brief The hmmer_scores_file_test_suite_fixture to assist in testing hmmer_scores_file
-        struct hmmer_scores_file_test_suite_fixture {
-        protected:
-            ~hmmer_scores_file_test_suite_fixture() noexcept = default;
+	/// \brief The hmmer_scores_file_test_suite_fixture to assist in testing hmmer_scores_file
+	struct hmmer_scores_file_test_suite_fixture {
+	protected:
+		~hmmer_scores_file_test_suite_fixture() noexcept = default;
 
-            /// The first 15 results for a PRC results file that has duplicate hits in it
-            const string example_file_string = R"(#                                                                                                            --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
+		/// The first 15 results for a PRC results file that has duplicate hits in it
+		const string example_file_string = R"(#                                                                                                            --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
 # target name                                                 accession  query name               accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target
 #                                         ------------------- ----------     -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------
 cath|4_0_0|3ixfA00/1-137-i5                                   -          cath|4_0_0|102mA00/0-153 -            6.4e-18   63.3   0.8   7.3e-18   63.1   0.8   1.0   1   0   0   1   1   1   1 -
@@ -66,18 +65,17 @@ cath|4_0_0|1tk1A00/8-265-i5                                   -          cath|4_
 # Date:            Tue Aug 11 13:41:06 2015
 # [ok]
 )";
-            istringstream the_iss{ example_file_string };
-        };
+		istringstream the_iss{ example_file_string };
+	};
 
-    }  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(hmmer_scores_file_test_suite, cath::test::hmmer_scores_file_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(hmmer_scores_file_test_suite, hmmer_scores_file_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(parses_raw_results_correctly) {
-    const auto the_entries = hmmer_scores_file::parse_hmmer_scores_file( the_iss );
-    BOOST_REQUIRE_EQUAL( the_entries.size(), 15 );
-    BOOST_CHECK_EQUAL( the_entries.front().get_name_1(), "3ixfA00" );
+	const auto the_entries = hmmer_scores_file::parse_hmmer_scores_file( the_iss );
+	BOOST_REQUIRE_EQUAL( the_entries.size(), 15 );
+	BOOST_CHECK_EQUAL( the_entries.front().get_name_1(), "3ixfA00" );
 	BOOST_CHECK_EQUAL( the_entries.front().get_name_2(), "102mA00" );
 	BOOST_CHECK_EQUAL( the_entries.back().get_name_1(),  "1tk1A00" );
 	BOOST_CHECK_EQUAL( the_entries.back().get_name_2(),  "102mA00" );

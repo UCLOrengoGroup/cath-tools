@@ -23,24 +23,22 @@
 
 #include <type_traits>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief C++17 logical conjunction of the type traits Bs
-		template <typename...> struct conjunction : std::true_type {};
+	/// \brief C++17 logical conjunction of the type traits Bs
+	template <typename...> struct conjunction : std::true_type {};
 
-		/// \brief C++17 logical conjunction of the type traits Bs
-		template <typename B1> struct conjunction<B1> : B1 {};
+	/// \brief C++17 logical conjunction of the type traits Bs
+	template <typename B1> struct conjunction<B1> : B1 {};
 
-		/// \brief C++17 logical conjunction of the type traits Bs
-		template <typename B1, typename... Bn>
-		struct conjunction<B1, Bn...>  : std::conditional_t< bool( B1::value ), conjunction<Bn...>, B1> {};
+	/// \brief C++17 logical conjunction of the type traits Bs
+	template <typename B1, typename... Bn>
+	struct conjunction<B1, Bn...>  : std::conditional_t< bool( B1::value ), conjunction<Bn...>, B1> {};
 
-		// /// \brief C++17 variable template for logical conjunction of the type traits Bs
-		// template <typename... B>
-		// constexpr bool conjunction_v = conjunction<B...>::value;
+	// /// \brief C++17 variable template for logical conjunction of the type traits Bs
+	// template <typename... B>
+	// constexpr bool conjunction_v = conjunction<B...>::value;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_CONJUNCTION_HPP

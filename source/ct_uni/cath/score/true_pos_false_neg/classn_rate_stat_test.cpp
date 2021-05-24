@@ -30,38 +30,30 @@ using namespace ::cath::score;
 using namespace ::cath::score::detail;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The classn_rate_stat_test_suite_fixture to assist in testing classn_rate_stat
-		struct classn_rate_stat_test_suite_fixture : protected global_test_constants {
-		protected:
-			~classn_rate_stat_test_suite_fixture() noexcept = default;
-		};
-
+	/// \brief TODOCUMENT
+	template <size_t I>
+	class std_classn_rate_stat_tester final {
+	public:
 		/// \brief TODOCUMENT
-		template <size_t I>
-		class std_classn_rate_stat_tester final {
-		public:
-			/// \brief TODOCUMENT
-			void operator()() {
-				constexpr std_classn_rate_stat to_test = get<0>( get<I>( properties_of_classn_rate_stat::numerator_and_denominator_of_stat ) );
-				BOOST_CHECK_NO_THROW_DIAG( classn_rate_stat<to_test>() );
-				classn_rate_stat<to_test> stat;
-				BOOST_CHECK_NO_THROW_DIAG( [[maybe_unused]] auto &&x = stat.get_name() );
-				BOOST_CHECK_GT( stat.get_name().length(), 0 );
-			}
-		};
+		void operator()() {
+			constexpr std_classn_rate_stat to_test = get<0>( get<I>( properties_of_classn_rate_stat::numerator_and_denominator_of_stat ) );
+			BOOST_CHECK_NO_THROW_DIAG( classn_rate_stat<to_test>() );
+			classn_rate_stat<to_test> stat;
+			BOOST_CHECK_NO_THROW_DIAG( [[maybe_unused]] auto &&x = stat.get_name() );
+			BOOST_CHECK_GT( stat.get_name().length(), 0 );
+		}
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(classn_rate_stat_test_suite, cath::test::classn_rate_stat_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(classn_rate_stat_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ctor_does_not_throw_and_has_non_empty_name) {
-	constexpr_for_n<cath::test::std_classn_rate_stat_tester, properties_of_classn_rate_stat::num_std_classn_rate_stats>();
+	constexpr_for_n<std_classn_rate_stat_tester, properties_of_classn_rate_stat::num_std_classn_rate_stats>();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

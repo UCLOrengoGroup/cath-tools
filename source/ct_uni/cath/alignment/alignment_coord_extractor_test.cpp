@@ -33,26 +33,24 @@ using namespace ::cath::file;
 using namespace ::cath::geom;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The alignment_coord_extractor_test_suite_fixture to assist in testing alignment_coord_extractor
-		struct alignment_coord_extractor_test_suite_fixture : protected global_test_constants {
-		protected:
-			~alignment_coord_extractor_test_suite_fixture() noexcept = default;
+	/// \brief The alignment_coord_extractor_test_suite_fixture to assist in testing alignment_coord_extractor
+	struct alignment_coord_extractor_test_suite_fixture : protected global_test_constants {
+	protected:
+		~alignment_coord_extractor_test_suite_fixture() noexcept = default;
 
-			const size_t    NUM_RESIDUES_TO_CHECK = { 5 };
-			const coord_vec EXPECTED_FIRST_CA_COORDS = {
-				{ 0.374, 147.376, 55.166 },
-				{ 1.193, 145.597, 51.902 },
-				{ 1.645, 141.900, 51.218 },
-				{ 5.337, 141.415, 50.367 },
-				{ 7.108, 138.545, 48.773 },
-			};
+		const size_t    NUM_RESIDUES_TO_CHECK = { 5 };
+		const coord_vec EXPECTED_FIRST_CA_COORDS = {
+			{ 0.374, 147.376, 55.166 },
+			{ 1.193, 145.597, 51.902 },
+			{ 1.645, 141.900, 51.218 },
+			{ 5.337, 141.415, 50.367 },
+			{ 7.108, 138.545, 48.773 },
 		};
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief Check that alignment_coord_extractor does as expected
 ///
@@ -74,7 +72,7 @@ namespace cath {
 /// \todo Write a proper test that checks At present, this doesn't really test alignment_coord_extractor but that the checks
 ///       manually
 
-BOOST_FIXTURE_TEST_SUITE(alignment_coord_extractor_test_suite, cath::test::alignment_coord_extractor_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(alignment_coord_extractor_test_suite, alignment_coord_extractor_test_suite_fixture)
 
 /// \brief Check that grabbing the first few carbon alpha coordinates from a test file produces the expected results
 BOOST_AUTO_TEST_CASE(pdb_ca_coord_querying) {

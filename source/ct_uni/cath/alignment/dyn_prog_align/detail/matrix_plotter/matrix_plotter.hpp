@@ -26,74 +26,72 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace align {
-		class dyn_prog_score_source;
+// clang-format off
+namespace cath::align { class dyn_prog_score_source; }
+namespace cath::align::detail { class return_path_matrix; }
+namespace cath::align::detail { class score_accumulation_matrix; }
+// clang-format on
 
-		namespace detail {
-			class return_path_matrix;
-			class score_accumulation_matrix;
+namespace cath::align::detail {
 
-			/// \brief Provide ABC interface for classes that provide concrete details for specific ways of outputting (eg to Gnuplot)
-			class matrix_plotter {
-			private:
-				/// \brief The length of the first  entry (the number of rows    in the matrix)
-				size_t length_a;
+	/// \brief Provide ABC interface for classes that provide concrete details for specific ways of outputting (eg to Gnuplot)
+	class matrix_plotter {
+	private:
+		/// \brief The length of the first  entry (the number of rows    in the matrix)
+		size_t length_a;
 
-				/// \brief The length of the second entry (the number of columns in the matrix)
-				size_t length_b;
+		/// \brief The length of the second entry (the number of columns in the matrix)
+		size_t length_b;
 
-				bool simplified_windowless = false;
+		bool simplified_windowless = false;
 
-				/// \brief The window width to use when plotting
-				size_t window_width = 0;
+		/// \brief The window width to use when plotting
+		size_t window_width = 0;
 
-				virtual void do_plot_scores(doub_vec_vec &,
-				                            const double &,
-				                            const double &) = 0;
-				virtual void do_plot_minor_corner_arrow(const size_t &,
-				                                        const size_t &,
-				                                        const size_t &,
-				                                        const size_t &) = 0;
-				virtual void do_write_centre_score(const size_t &,
-				                                   const size_t &,
-				                                   const double &) = 0;
-				virtual void do_write_corner_score(const size_t &,
-				                                   const size_t &,
-				                                   const double &) = 0;
-				virtual void do_finish(const ::std::filesystem::path &) const = 0;
+		virtual void do_plot_scores(doub_vec_vec &,
+		                            const double &,
+		                            const double &) = 0;
+		virtual void do_plot_minor_corner_arrow(const size_t &,
+		                                        const size_t &,
+		                                        const size_t &,
+		                                        const size_t &) = 0;
+		virtual void do_write_centre_score(const size_t &,
+		                                   const size_t &,
+		                                   const double &) = 0;
+		virtual void do_write_corner_score(const size_t &,
+		                                   const size_t &,
+		                                   const double &) = 0;
+		virtual void do_finish(const ::std::filesystem::path &) const = 0;
 
-				void check_lengths_match(const size_t &,
-				                         const size_t &) const;
-				void check_window_width_matches(const size_t &);
+		void check_lengths_match(const size_t &,
+		                         const size_t &) const;
+		void check_window_width_matches(const size_t &);
 
-			  protected:
-				[[nodiscard]] size_t get_length_a() const;
-				[[nodiscard]] size_t get_length_b() const;
-				[[nodiscard]] size_t get_window_width() const;
+	  protected:
+		[[nodiscard]] size_t get_length_a() const;
+		[[nodiscard]] size_t get_length_b() const;
+		[[nodiscard]] size_t get_window_width() const;
 
-			  public:
-				matrix_plotter(const size_t &,
-				               const size_t &);
+	  public:
+		matrix_plotter(const size_t &,
+		               const size_t &);
 
-				matrix_plotter(const size_t &,
-				               const size_t &,
-				               const size_t &);
-				virtual ~matrix_plotter() noexcept = default;
+		matrix_plotter(const size_t &,
+		               const size_t &,
+		               const size_t &);
+		virtual ~matrix_plotter() noexcept = default;
 
-				matrix_plotter(const matrix_plotter &) = default;
-				matrix_plotter(matrix_plotter &&) noexcept = default;
-				matrix_plotter & operator=(const matrix_plotter &) = default;
-				matrix_plotter & operator=(matrix_plotter &&) noexcept = default;
+		matrix_plotter(const matrix_plotter &) = default;
+		matrix_plotter(matrix_plotter &&) noexcept = default;
+		matrix_plotter & operator=(const matrix_plotter &) = default;
+		matrix_plotter & operator=(matrix_plotter &&) noexcept = default;
 
-				void plot_scores(const dyn_prog_score_source &);
-				void plot_return_path_matrix(const return_path_matrix &);
-				void plot_accumulated_scores(const score_accumulation_matrix &);
-				void finish(const ::std::filesystem::path &) const;
-			};
+		void plot_scores(const dyn_prog_score_source &);
+		void plot_return_path_matrix(const return_path_matrix &);
+		void plot_accumulated_scores(const score_accumulation_matrix &);
+		void finish(const ::std::filesystem::path &) const;
+	};
 
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+} // namespace cath::align::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_MATRIX_PLOTTER_MATRIX_PLOTTER_HPP

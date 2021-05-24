@@ -30,92 +30,90 @@
 #include <cassert>
 #include <tuple>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Update a min and max with a new value
-			template <typename T>
-			inline int update_min_max_with_value_impl(T       &prm_min,  ///< The min value
-			                                          T       &prm_max,  ///< The max value
-			                                          const T &prm_value ///< The new value
-			                                          ) {
-				if ( prm_value < prm_min ) { prm_min = prm_value; }
-				if ( prm_value > prm_max ) { prm_max = prm_value; }
-				return 0;
-			}
+		/// \brief Update a min and max with a new value
+		template <typename T>
+		inline int update_min_max_with_value_impl(T       &prm_min,  ///< The min value
+		                                          T       &prm_max,  ///< The max value
+		                                          const T &prm_value ///< The new value
+		                                          ) {
+			if ( prm_value < prm_min ) { prm_min = prm_value; }
+			if ( prm_value > prm_max ) { prm_max = prm_value; }
+			return 0;
+		}
 
-			/// \brief Implementation for update_mins_maxs_with_value
-			template <typename Tpl, size_t... Index>
-			inline void update_mins_maxs_with_value_impl(Tpl       &prm_mins,          ///< The min tuple
-			                                             Tpl       &prm_maxs,          ///< The max tuple
-			                                             const Tpl &prm_value,         ///< The new tuple
-			                                             std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
-			                                             ) {
-				auto dummy_list = {
-					update_min_max_with_value_impl(
-						std::get<Index>( prm_mins  ),
-						std::get<Index>( prm_maxs  ),
-						std::get<Index>( prm_value )
-					)...
-				};
-				boost::ignore_unused( dummy_list );
-			}
-
-			/// \brief Element-wise update a min tuple and a max tuple with a new tuple
-			template <typename Tpl>
-			inline void update_mins_maxs_with_value(Tpl       &prm_mins, ///< The min tuple
-			                                        Tpl       &prm_maxs, ///< The max tuple
-			                                        const Tpl &prm_value ///< The new tuple
-			                                        ) {
-				return update_mins_maxs_with_value_impl(
-					prm_mins,
-					prm_maxs,
-					prm_value,
-					tuple_index_sequence<Tpl>{}
-				);
-			}
-
-			/// \brief Function object to find the element-wise mins and maxs tuples of a range of tuples
-			struct tuple_mins_maxs_element_fn final {
-
-				/// \brief Find the element-wise mins and maxs tuples of a range of tuples
-				template <typename Rng>
-				inline auto operator()(Rng &&prm_rng ///< A range of tuples
-				                       ) const {
-					using value_t = common::range_value_t<Rng>;
-
-					static_assert( is_tuple_v< value_t >, "tuple_mins_maxs_element requires a range of tuples" );
-
-					auto       begin_itr     = ::std::cbegin( prm_rng );
-					const auto end_itr       = ::std::cend  ( prm_rng );
-
-					assert( begin_itr != end_itr ); // prm_rng mustn't be empty
-
-					// Set the mins and maxs to the element
-					value_t mins = *begin_itr;
-					value_t maxs = mins;
-
-					// Update the mins and maxs over the rest of the range
-					++begin_itr;
-					std::for_each(
-						begin_itr,
-						end_itr,
-						[&] (const value_t &x) { update_mins_maxs_with_value( mins, maxs, x ); }
-					);
-					return make_pair( mins, maxs );
-				}
-
-				tuple_mins_maxs_element_fn()                                   = delete;
-				tuple_mins_maxs_element_fn(const tuple_mins_maxs_element_fn &) = delete;
-				void operator=(const tuple_mins_maxs_element_fn &)             = delete;
+		/// \brief Implementation for update_mins_maxs_with_value
+		template <typename Tpl, size_t... Index>
+		inline void update_mins_maxs_with_value_impl(Tpl       &prm_mins,          ///< The min tuple
+		                                             Tpl       &prm_maxs,          ///< The max tuple
+		                                             const Tpl &prm_value,         ///< The new tuple
+		                                             std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
+		                                             ) {
+			auto dummy_list = {
+				update_min_max_with_value_impl(
+					std::get<Index>( prm_mins  ),
+					std::get<Index>( prm_maxs  ),
+					std::get<Index>( prm_value )
+				)...
 			};
+			boost::ignore_unused( dummy_list );
+		}
 
-		} // namespace detail
+		/// \brief Element-wise update a min tuple and a max tuple with a new tuple
+		template <typename Tpl>
+		inline void update_mins_maxs_with_value(Tpl       &prm_mins, ///< The min tuple
+		                                        Tpl       &prm_maxs, ///< The max tuple
+		                                        const Tpl &prm_value ///< The new tuple
+		                                        ) {
+			return update_mins_maxs_with_value_impl(
+				prm_mins,
+				prm_maxs,
+				prm_value,
+				tuple_index_sequence<Tpl>{}
+			);
+		}
 
-		inline constexpr detail::tuple_mins_maxs_element_fn tuple_mins_maxs_element{};
+		/// \brief Function object to find the element-wise mins and maxs tuples of a range of tuples
+		struct tuple_mins_maxs_element_fn final {
 
-	} // namespace common
-} // namespace cath
+			/// \brief Find the element-wise mins and maxs tuples of a range of tuples
+			template <typename Rng>
+			inline auto operator()(Rng &&prm_rng ///< A range of tuples
+			                       ) const {
+				using value_t = common::range_value_t<Rng>;
+
+				static_assert( is_tuple_v< value_t >, "tuple_mins_maxs_element requires a range of tuples" );
+
+				auto       begin_itr     = ::std::cbegin( prm_rng );
+				const auto end_itr       = ::std::cend  ( prm_rng );
+
+				assert( begin_itr != end_itr ); // prm_rng mustn't be empty
+
+				// Set the mins and maxs to the element
+				value_t mins = *begin_itr;
+				value_t maxs = mins;
+
+				// Update the mins and maxs over the rest of the range
+				++begin_itr;
+				std::for_each(
+					begin_itr,
+					end_itr,
+					[&] (const value_t &x) { update_mins_maxs_with_value( mins, maxs, x ); }
+				);
+				return make_pair( mins, maxs );
+			}
+
+			tuple_mins_maxs_element_fn()                                   = delete;
+			tuple_mins_maxs_element_fn(const tuple_mins_maxs_element_fn &) = delete;
+			void operator=(const tuple_mins_maxs_element_fn &)             = delete;
+		};
+
+	} // namespace detail
+
+	inline constexpr detail::tuple_mins_maxs_element_fn tuple_mins_maxs_element{};
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_MINS_MAXS_ELEMENT_HPP

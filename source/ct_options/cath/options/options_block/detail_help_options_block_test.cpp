@@ -30,23 +30,21 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The detail_help_options_block_test_suite_fixture to assist in testing detail_help_options_block
-		struct detail_help_options_block_test_suite_fixture : protected options_block_tester {
-		protected:
-			~detail_help_options_block_test_suite_fixture() noexcept = default;
+	/// \brief The detail_help_options_block_test_suite_fixture to assist in testing detail_help_options_block
+	struct detail_help_options_block_test_suite_fixture : protected options_block_tester {
+	protected:
+		~detail_help_options_block_test_suite_fixture() noexcept = default;
 
-		public:
-			detail_help_options_block the_options_block{ TEST_DESC_AND_HELP_OF_OPTION_NAME() };
-			const string              IGNORE_OPT       { "positional-that-should-be-ignored" };
-		};
+	public:
+		detail_help_options_block the_options_block{ TEST_DESC_AND_HELP_OF_OPTION_NAME() };
+		const string              IGNORE_OPT       { "positional-that-should-be-ignored" };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(detail_help_options_block_test_suite, cath::test::detail_help_options_block_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(detail_help_options_block_test_suite, detail_help_options_block_test_suite_fixture)
 
 /// \brief Check that if no help is requested then no help is given (and an attempt to retrieve it throws)
 BOOST_AUTO_TEST_CASE( handles_no_help_requested ) {

@@ -41,45 +41,43 @@ using namespace ::cath::common;
 using namespace ::cath::common::test;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The common_residue_selection_policy_test_suite_fixture to assist in testing common_residue_selection_policy
-		struct common_residue_selection_policy_test_suite_fixture : protected global_test_constants {
-		protected:
-			~common_residue_selection_policy_test_suite_fixture() noexcept = default;
+	/// \brief The common_residue_selection_policy_test_suite_fixture to assist in testing common_residue_selection_policy
+	struct common_residue_selection_policy_test_suite_fixture : protected global_test_constants {
+	protected:
+		~common_residue_selection_policy_test_suite_fixture() noexcept = default;
 
-		public:
-			void check_policy_on_score_aln(const common_residue_selection_policy &,
-			                               const size_vec &) const;
+	public:
+		void check_policy_on_score_aln(const common_residue_selection_policy &,
+		                               const size_vec &) const;
 
-			const aln_posn_opt_vec aln_list_a       = {  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
-			                                            11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+		const aln_posn_opt_vec aln_list_a       = {  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
+		                                            11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
-			const aln_posn_opt_vec aln_list_b       = {  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
-			                                            11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+		const aln_posn_opt_vec aln_list_b       = {  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
+		                                            11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
-			const alignment        unscored_aln     = { alignment_offset_1_factory( { aln_list_a, aln_list_b } ) };
+		const alignment        unscored_aln     = { alignment_offset_1_factory( { aln_list_a, aln_list_b } ) };
 
-			const score_opt_vec    alignment_scores = { 47.7, 1, 94.2, 94.9, 52.8, 35.2, 67.3, 29, 12.8, 30.9,
-			                                            27.6, 79.9, 35, 8.3, 21.6,88.1, 4.4, 45.7, 9.1, 95.9 };
+		const score_opt_vec    alignment_scores = { 47.7, 1, 94.2, 94.9, 52.8, 35.2, 67.3, 29, 12.8, 30.9,
+		                                            27.6, 79.9, 35, 8.3, 21.6,88.1, 4.4, 45.7, 9.1, 95.9 };
 
-			alignment              scored_aln       = { set_pair_alignment_duplicate_scores_copy(unscored_aln, alignment_scores) };
-		};
+		alignment              scored_aln       = { set_pair_alignment_duplicate_scores_copy(unscored_aln, alignment_scores) };
+	};
 
-	}  // namespace test
-}  // namespace cath
+	/// \brief TODOCUMENT
+	void common_residue_selection_policy_test_suite_fixture::check_policy_on_score_aln(const common_residue_selection_policy &prm_policy,          ///< TODOCUMENT
+	                                                                                   const size_vec                        &prm_expected_indices ///< TODOCUMENT
+	                                                                                   ) const {
+		const alignment &aln_const_ref(scored_aln);
+		const size_vec   got_indices = select_common_residues_of_pair_alignment( prm_policy, aln_const_ref );
+		BOOST_CHECK_EQUAL_RANGES( prm_expected_indices, got_indices );
+	}
+	
+} // namespace
 
-/// \brief TODOCUMENT
-void cath::test::common_residue_selection_policy_test_suite_fixture::check_policy_on_score_aln(const common_residue_selection_policy &prm_policy,          ///< TODOCUMENT
-                                                                                               const size_vec                        &prm_expected_indices ///< TODOCUMENT
-                                                                                               ) const {
-	const alignment &aln_const_ref(scored_aln);
-	const size_vec   got_indices = select_common_residues_of_pair_alignment( prm_policy, aln_const_ref );
-	BOOST_CHECK_EQUAL_RANGES( prm_expected_indices, got_indices );
-}
-
-BOOST_FIXTURE_TEST_SUITE(common_residue_selection_policy_test_suite, cath::test::common_residue_selection_policy_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(common_residue_selection_policy_test_suite, common_residue_selection_policy_test_suite_fixture)
 
 /// \brief A type-list containing all common_residue_selection_policy types that don't use scores.
 using all_common_coord_non_score_based_selection_policy_types = boost::mpl::list<common_residue_select_all_policy>;

@@ -24,24 +24,18 @@
 #include "cath/common/algorithm/is_uniq_for_unordered.hpp"
 #include "cath/seq/seq_seg_run.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::common;
 using namespace ::cath::seq;
-using namespace ::cath::test;
 
 using ::boost::lexical_cast;
 using ::std::pair;
 using ::std::string;
 
-namespace cath {
-	namespace seq {
-		using seq_seg_seq_seg_pair = pair< seq_seg, seq_seg >;
-	} // namespace seq
-} // namespace cath
+// clang-format off
+namespace cath::seq { using seq_seg_seq_seg_pair = pair< seq_seg, seq_seg >; }
+// clang-format on
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The seq_seg_run_test_suite_fixture to assist in testing seq_seg_run
 		struct seq_seg_run_test_suite_fixture {
@@ -133,8 +127,7 @@ namespace cath {
 			}
 		};
 
-	} // namespace test
-} // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(seq_seg_run_test_suite, seq_seg_run_test_suite_fixture)
 

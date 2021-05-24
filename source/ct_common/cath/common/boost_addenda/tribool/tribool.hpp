@@ -23,40 +23,38 @@
 
 #include <boost/logic/tribool.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return whether the specified tribool is true
-		constexpr bool is_true(const boost::logic::tribool &prm_tribool ///< The tribool to query
-		                       ) {
-			return static_cast<bool>(   prm_tribool );
-		}
+	/// \brief Return whether the specified tribool is true
+	constexpr bool is_true(const boost::logic::tribool &prm_tribool ///< The tribool to query
+	                       ) {
+		return static_cast<bool>(   prm_tribool );
+	}
 
-		/// \brief Return whether the specified tribool is false
-		constexpr bool is_false(const boost::logic::tribool &prm_tribool ///< The tribool to query
-		                        ) {
-			return static_cast<bool>( ! prm_tribool );
-		}
+	/// \brief Return whether the specified tribool is false
+	constexpr bool is_false(const boost::logic::tribool &prm_tribool ///< The tribool to query
+	                        ) {
+		return static_cast<bool>( ! prm_tribool );
+	}
 
-		/// \brief Return whether the specified tribool is not true
-		constexpr bool is_not_true(const boost::logic::tribool &prm_tribool ///< The tribool to query
-		                           ) {
-			return ! is_true( prm_tribool );
-		}
+	/// \brief Return whether the specified tribool is not true
+	constexpr bool is_not_true(const boost::logic::tribool &prm_tribool ///< The tribool to query
+	                           ) {
+		return ! is_true( prm_tribool );
+	}
 
-		/// \brief Return whether the specified tribool is not false
-		constexpr bool is_not_false(const boost::logic::tribool &prm_tribool ///< The tribool to query
-		                            ) {
-			return ! is_false( prm_tribool );
-		}
+	/// \brief Return whether the specified tribool is not false
+	constexpr bool is_not_false(const boost::logic::tribool &prm_tribool ///< The tribool to query
+	                            ) {
+		return ! is_false( prm_tribool );
+	}
 
-		/// \brief Return whether the specified tribool is not indeterminate
-		constexpr bool is_not_indeterminate(const boost::logic::tribool &prm_tribool ///< The tribool to query
-		                                    ) {
-			return ! boost::logic::indeterminate( prm_tribool );
-		}
+	/// \brief Return whether the specified tribool is not indeterminate
+	constexpr bool is_not_indeterminate(const boost::logic::tribool &prm_tribool ///< The tribool to query
+	                                    ) {
+		return ! boost::logic::indeterminate( prm_tribool );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_TRIBOOL_TRIBOOL_HPP

@@ -27,49 +27,47 @@ using namespace ::cath::test;
 using ::std::istringstream;
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The istreams_equal_test_suite_fixture to assist in testing istreams_equal
-		struct istreams_equal_test_suite_fixture {
-		protected:
-			~istreams_equal_test_suite_fixture() noexcept = default;
-			istreams_equal_test_suite_fixture();
-			
-			void reset_stringstreams();
-
-			istringstream test_ss;
-			istringstream compare_ss;
-			istringstream compare_ss_equal;
-			istringstream compare_ss_longer;
-			istringstream compare_ss_diff;
-
-			const string test_str           = "This is Tony's test string";
-
-			const string compare_str        = "This is a string that will be compared";
-			const string compare_str_equal  = "This is a string that will be compared";
-
-			const string compare_str_longer = "This is a string that will be compared and this version has extra stuff at the end";
-			const string compare_str_diff   = "This is a string WOW TEXT INSERTED HERE WOW that will be compared";
-		};
-
-		/// \brief TODOCUMENT
-		istreams_equal_test_suite_fixture::istreams_equal_test_suite_fixture() {
-			reset_stringstreams();
-		}
+	/// \brief The istreams_equal_test_suite_fixture to assist in testing istreams_equal
+	struct istreams_equal_test_suite_fixture {
+	protected:
+		~istreams_equal_test_suite_fixture() noexcept = default;
+		istreams_equal_test_suite_fixture();
 		
-		/// \brief TODOCUMENT
-		void istreams_equal_test_suite_fixture::reset_stringstreams() {
-			compare_ss.str        ( compare_str        );
-			compare_ss_equal.str  ( compare_str_equal  );
-			compare_ss_longer.str ( compare_str_longer );
-			compare_ss_diff.str   ( compare_str_diff   );
-		}
+		void reset_stringstreams();
 
-	}  // namespace test
-}  // namespace cath
+		istringstream test_ss;
+		istringstream compare_ss;
+		istringstream compare_ss_equal;
+		istringstream compare_ss_longer;
+		istringstream compare_ss_diff;
 
-BOOST_FIXTURE_TEST_SUITE(istreams_equal_test_suite, cath::test::istreams_equal_test_suite_fixture)
+		const string test_str           = "This is Tony's test string";
+
+		const string compare_str        = "This is a string that will be compared";
+		const string compare_str_equal  = "This is a string that will be compared";
+
+		const string compare_str_longer = "This is a string that will be compared and this version has extra stuff at the end";
+		const string compare_str_diff   = "This is a string WOW TEXT INSERTED HERE WOW that will be compared";
+	};
+
+	/// \brief TODOCUMENT
+	istreams_equal_test_suite_fixture::istreams_equal_test_suite_fixture() {
+		reset_stringstreams();
+	}
+	
+	/// \brief TODOCUMENT
+	void istreams_equal_test_suite_fixture::reset_stringstreams() {
+		compare_ss.str        ( compare_str        );
+		compare_ss_equal.str  ( compare_str_equal  );
+		compare_ss_longer.str ( compare_str_longer );
+		compare_ss_diff.str   ( compare_str_diff   );
+	}
+
+} // namespace
+
+BOOST_FIXTURE_TEST_SUITE(istreams_equal_test_suite, istreams_equal_test_suite_fixture)
 
 /// \brief Check that equal istreams do compare as equal
 BOOST_AUTO_TEST_CASE(equal_files_compare_equal) {

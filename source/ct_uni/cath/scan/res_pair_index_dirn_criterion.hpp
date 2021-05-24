@@ -23,19 +23,17 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace scan {
+namespace cath::scan {
 
-		/// \brief Represent whether two res_pairs' directions of indices (increasing/decreasing) must match
-		enum class res_pair_index_dirn_criterion : bool {
-			MUST_MATCH,    ///< Two res_pairs' directions of indices (increasing/decreasing) must match
-			NEED_NOT_MATCH ///< Two res_pairs' directions of indices (increasing/decreasing) need not match
-		};
+	/// \brief Represent whether two res_pairs' directions of indices (increasing/decreasing) must match
+	enum class res_pair_index_dirn_criterion : bool {
+		MUST_MATCH,    ///< Two res_pairs' directions of indices (increasing/decreasing) must match
+		NEED_NOT_MATCH ///< Two res_pairs' directions of indices (increasing/decreasing) need not match
+	};
 
-		std::ostream & operator<<(std::ostream &,
-		                          const res_pair_index_dirn_criterion &);
+	std::ostream & operator<<(std::ostream &,
+	                          const res_pair_index_dirn_criterion &);
 
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_INDEX_DIRN_CRITERION_HPP

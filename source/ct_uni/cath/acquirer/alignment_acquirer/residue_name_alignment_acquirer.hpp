@@ -23,25 +23,23 @@
 
 #include "cath/acquirer/alignment_acquirer/post_refine_alignment_acquirer.hpp"
 
-namespace cath {
-	namespace align {
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	class residue_name_alignment_acquirer final : public post_refine_alignment_acquirer {
+	private:
+		using super = post_refine_alignment_acquirer;
 
 		/// \brief TODOCUMENT
-		class residue_name_alignment_acquirer final : public post_refine_alignment_acquirer {
-		private:
-			using super = post_refine_alignment_acquirer;
+		static constexpr double RES_ALIGN_SCORE_CONSTANT = 10.0;
 
-			/// \brief TODOCUMENT
-			static constexpr double RES_ALIGN_SCORE_CONSTANT = 10.0;
+		[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
+		[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
+		[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+		  const file::strucs_context &,
+		  const ostream_ref_opt & = ::std::nullopt ) const final;
+	};
 
-			[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
-			[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
-			[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
-			  const file::strucs_context &,
-			  const ostream_ref_opt & = ::std::nullopt ) const final;
-		};
-
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_RESIDUE_NAME_ALIGNMENT_ACQUIRER_HPP

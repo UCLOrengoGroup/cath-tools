@@ -42,18 +42,7 @@ using namespace ::cath::sup;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The superposition_context_test_suite_fixture to assist in testing superposition_context
-		struct superposition_context_test_suite_fixture : protected superposition_fixture {
-		protected:
-			~superposition_context_test_suite_fixture() noexcept = default;
-		};
-	} // namespace test
-} // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(superposition_context_test_suite, cath::test::superposition_context_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(superposition_context_test_suite, superposition_fixture)
 
 BOOST_AUTO_TEST_CASE(load_pdbs_from_names_copy_leaves_orig_empty_pdbs) {
 	const auto loaded_sup_con = load_pdbs_from_names_copy( the_sup_con, build_data_dirs_spec_of_dir( TEST_SOURCE_DATA_DIR() ) );

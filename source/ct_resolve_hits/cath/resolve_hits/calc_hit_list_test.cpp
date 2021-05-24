@@ -25,13 +25,10 @@
 #include "cath/resolve_hits/calc_hit_list.hpp"
 #include "cath/resolve_hits/options/spec/crh_segment_spec.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::cath::test;
 
 using ::boost::lexical_cast;
 using ::std::cend;
@@ -39,8 +36,7 @@ using ::std::string;
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE( calc_hit_list::const_iterator )
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The hit_list_test_suite_fixture to assist in testing calc_hit_list
 		struct hit_list_test_suite_fixture {
@@ -66,8 +62,7 @@ namespace cath {
 			const calc_hit_list eg_hit_list = make_eg_hit_list();
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(hit_list_test_suite, hit_list_test_suite_fixture)
 

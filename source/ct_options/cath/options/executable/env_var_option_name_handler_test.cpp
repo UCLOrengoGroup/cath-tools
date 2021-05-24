@@ -27,37 +27,35 @@ using namespace ::std;
 
 using ::boost::program_options::options_description;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The env_var_option_name_handler_test_suite_fixture to assist in testing env_var_option_name_handler
-		struct env_var_option_name_handler_test_suite_fixture {
-		  protected:
-			~env_var_option_name_handler_test_suite_fixture() noexcept = default;
+	/// \brief The env_var_option_name_handler_test_suite_fixture to assist in testing env_var_option_name_handler
+	struct env_var_option_name_handler_test_suite_fixture {
+	  protected:
+		~env_var_option_name_handler_test_suite_fixture() noexcept = default;
 
-		  public:
-			[[nodiscard]] options_description get_options_description() const {
-				options_description temp_od;
-				temp_od.add_options()( RECOGNISED_OPTION.c_str(), "a dummy options description" );
-				return temp_od;
-			}
+	  public:
+		[[nodiscard]] options_description get_options_description() const {
+			options_description temp_od;
+			temp_od.add_options()( RECOGNISED_OPTION.c_str(), "a dummy options description" );
+			return temp_od;
+		}
 
-			const string PREFIX               = { "MY_PREFIX_"                   };
-			const string CATH_BIN_PREFIX      = { "CATH_TOOLS_"               };
-			const string RECOGNISED_ENV_VAR   = { PREFIX + "RECOGNISED_OPTION"   };
-			const string RECOGNISED_OPTION    = { "recognised-option"            };
-			const string UNRECOGNISED_ENV_VAR = { PREFIX + "UNRECOGNISED_OPTION" };
-			const string UNRECOGNISED_OPTION  = { "unrecognised-option"          };
+		const string PREFIX               = { "MY_PREFIX_"                   };
+		const string CATH_BIN_PREFIX      = { "CATH_TOOLS_"                  };
+		const string RECOGNISED_ENV_VAR   = { PREFIX + "RECOGNISED_OPTION"   };
+		const string RECOGNISED_OPTION    = { "recognised-option"            };
+		const string UNRECOGNISED_ENV_VAR = { PREFIX + "UNRECOGNISED_OPTION" };
+		const string UNRECOGNISED_OPTION  = { "unrecognised-option"          };
 
-			const options_description         OPTS               = get_options_description();
-			const env_var_option_name_handler TEST_HANDLER_TRUE  = { PREFIX, true,  OPTS };
-			const env_var_option_name_handler TEST_HANDLER_FALSE = { PREFIX, false, OPTS };
-		};
+		const options_description         OPTS               = get_options_description();
+		const env_var_option_name_handler TEST_HANDLER_TRUE  = { PREFIX, true,  OPTS };
+		const env_var_option_name_handler TEST_HANDLER_FALSE = { PREFIX, false, OPTS };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(env_var_option_name_handler_test_suite, cath::test::env_var_option_name_handler_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(env_var_option_name_handler_test_suite, env_var_option_name_handler_test_suite_fixture)
 
 /// \brief Check that the operator() always returns empty strings when the prefix is unrecognised
 BOOST_AUTO_TEST_CASE(returns_empty_with_mismatching_prefix) {

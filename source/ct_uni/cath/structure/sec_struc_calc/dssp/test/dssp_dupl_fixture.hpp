@@ -29,78 +29,79 @@
 #include "cath/biocore/residue_name.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace sec { class bifur_hbond; } }
-namespace cath { namespace sec { class bifur_hbond_list; } }
-namespace cath { namespace sec { struct hbond_half; } }
-namespace cath { namespace sec { using hbond_half_opt = ::std::optional<hbond_half>; } }
+// clang-format off
+namespace cath::sec { class bifur_hbond; }
+namespace cath::sec { class bifur_hbond_list; }
+namespace cath::sec { struct hbond_half; }
+namespace cath::sec { using hbond_half_opt = ::std::optional<hbond_half>; }
+// clang-format on
 
-namespace cath {
-	namespace sec {
+namespace cath::sec {
 
-		/// \brief Represent an h-bond as parsed from a DSSP file
-		using dsspfile_hbond     = std::pair<int, double>;
+	/// \brief Represent an h-bond as parsed from a DSSP file
+	using dsspfile_hbond     = std::pair<int, double>;
 
-		/// \brief Type alias for an optional dsspfile_hbond
-		using dsspfile_hbond_opt = ::std::optional<dsspfile_hbond>;
+	/// \brief Type alias for an optional dsspfile_hbond
+	using dsspfile_hbond_opt = ::std::optional<dsspfile_hbond>;
 
-		/// \brief Represent the hbond information stored on one DSSP line for one residue
-		struct dssp_dupl_res final {
+	/// \brief Represent the hbond information stored on one DSSP line for one residue
+	struct dssp_dupl_res final {
 
-			/// \brief The first and second best hbonds from the NH of this residue
-			std::pair<dsspfile_hbond_opt, dsspfile_hbond_opt> hbonds_this_nh_1st_2nd;
+		/// \brief The first and second best hbonds from the NH of this residue
+		std::pair<dsspfile_hbond_opt, dsspfile_hbond_opt> hbonds_this_nh_1st_2nd;
 
-			/// \brief The first and second best hbonds from the CO of this residue
-			std::pair<dsspfile_hbond_opt, dsspfile_hbond_opt> hbonds_this_co_1st_2nd;
+		/// \brief The first and second best hbonds from the CO of this residue
+		std::pair<dsspfile_hbond_opt, dsspfile_hbond_opt> hbonds_this_co_1st_2nd;
 
-			/// \brief The index of this residue in the DSSP file
-			size_t residue_index;
+		/// \brief The index of this residue in the DSSP file
+		size_t residue_index;
 
-			/// \brief The residue_name of this residue
-			residue_name pdb_residue_name;
+		/// \brief The residue_name of this residue
+		residue_name pdb_residue_name;
+	};
+
+	/// \brief Make a null dssp_dupl_res
+	inline dssp_dupl_res make_null_dssp_dupl_res() {
+		return {
+			std::make_pair( ::std::nullopt, ::std::nullopt ),
+			std::make_pair( ::std::nullopt, ::std::nullopt ),
+			0,
+			residue_name{},
 		};
+	}
 
-		/// \brief Make a null dssp_dupl_res
-		inline dssp_dupl_res make_null_dssp_dupl_res() {
-			return {
-				std::make_pair( ::std::nullopt, ::std::nullopt ),
-				std::make_pair( ::std::nullopt, ::std::nullopt ),
-				0,
-				residue_name{},
-			};
-		}
+	/// \brief Type alias for a vector of dssp_dupl_res
+	using dssp_dupl_res_vec = std::vector<dssp_dupl_res>;
 
-		/// \brief Type alias for a vector of dssp_dupl_res
-		using dssp_dupl_res_vec = std::vector<dssp_dupl_res>;
+	hbond_half_opt mapped_dsspfile_hbond(const dsspfile_hbond_opt &,
+	                                     const size_t &,
+	                                     const size_vec &);
 
-		hbond_half_opt mapped_dsspfile_hbond(const dsspfile_hbond_opt &,
-		                                     const size_t &,
-		                                     const size_vec &);
+	str_opt difference_string(const std::string &,
+	                          const hbond_half_opt &,
+	                          const hbond_half_opt &);
+	str_opt difference_string(const dssp_dupl_res &,
+	                          const bifur_hbond &,
+	                          const size_vec &);
+	str_opt difference_string(const dssp_dupl_res_vec &,
+	                          const bifur_hbond_list &);
 
-		str_opt difference_string(const std::string &,
-		                          const hbond_half_opt &,
-		                          const hbond_half_opt &);
-		str_opt difference_string(const dssp_dupl_res &,
-		                          const bifur_hbond &,
-		                          const size_vec &);
-		str_opt difference_string(const dssp_dupl_res_vec &,
-		                          const bifur_hbond_list &);
+	/// \brief Fixture to assist in testing duplication of DSSP functionality
+	class dssp_dupl_fixture {
+	protected:
+		~dssp_dupl_fixture() noexcept = default;
 
-		/// \brief Fixture to assist in testing duplication of DSSP functionality
-		class dssp_dupl_fixture {
-		protected:
-			~dssp_dupl_fixture() noexcept = default;
+		dssp_dupl_res_vec parse_dssp_for_calc_testing(const ::std::filesystem::path &);
+		dssp_dupl_res_vec parse_dssp_for_calc_testing(std::istream &);
+		std::pair<size_t, dssp_dupl_res> parse_dssp_residue_line(const std::string &);
 
-			dssp_dupl_res_vec parse_dssp_for_calc_testing(const ::std::filesystem::path &);
-			dssp_dupl_res_vec parse_dssp_for_calc_testing(std::istream &);
-			std::pair<size_t, dssp_dupl_res> parse_dssp_residue_line(const std::string &);
+		dsspfile_hbond_opt parse_dsspfile_bond(const std::string &);
 
-			dsspfile_hbond_opt parse_dsspfile_bond(const std::string &);
+		static const ::std::filesystem::path & DSSP_ROOT_TEST_DATA_DIR();
+		static const ::std::filesystem::path & DSSP_HBOND_TEST_DATA_DIR();
+		static const ::std::filesystem::path & DSSP_SS_TEST_DATA_DIR();
+	};
 
-			static const ::std::filesystem::path & DSSP_ROOT_TEST_DATA_DIR();
-			static const ::std::filesystem::path & DSSP_HBOND_TEST_DATA_DIR();
-			static const ::std::filesystem::path & DSSP_SS_TEST_DATA_DIR();
-		};
+} // namespace cath::sec
 
-	} // namespace sec
-} // namespace cath
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_TEST_DSSP_DUPL_FIXTURE_HPP

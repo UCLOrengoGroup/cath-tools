@@ -23,12 +23,10 @@
 
 #include <filesystem>
 
-namespace cath {
-	namespace view {
+namespace cath::view {
 
-		void run_pymol( const ::std::filesystem::path &, const ::std::filesystem::path & = { "pymol" } );
+	void run_pymol( const ::std::filesystem::path &, const ::std::filesystem::path & = { "pymol" } );
 
-	} // namespace view
-} // namespace cath
+} // namespace cath::view
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_RUN_PYMOL_HPP

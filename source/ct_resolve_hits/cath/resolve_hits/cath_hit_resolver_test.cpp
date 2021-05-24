@@ -19,6 +19,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <filesystem>
+#include <regex>
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/range/join.hpp>
@@ -45,15 +46,10 @@
 #include "cath/test/predicate/files_equal.hpp"
 #include "cath/test/predicate/string_matches_file.hpp"
 
-#include <regex>
-
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::rslv;
-using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
 using ::boost::algorithm::contains;
@@ -67,8 +63,7 @@ using ::std::ostringstream;
 using ::std::regex;
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The hit_resolver_test_suite_fixture to assist in testing calc_hit_list
 		struct hit_resolver_test_suite_fixture : protected resolve_hits_fixture, protected global_test_constants {
@@ -102,8 +97,7 @@ namespace cath {
 			const path      TEMP_TEST_FILE_FILENAME = get_filename( TEMP_TEST_FILE );
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(cath_hit_resolver_test_suite, hit_resolver_test_suite_fixture)
 

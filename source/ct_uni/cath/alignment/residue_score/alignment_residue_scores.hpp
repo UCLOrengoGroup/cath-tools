@@ -23,78 +23,79 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace align {
-		class alignment;
+// clang-format off
+namespace cath::align { class alignment; }
+// clang-format on
+
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	///
+	/// TODOCUMENT other_present_entries / all_other_entries
+	///
+	/// TODOCUMENT Doesn't manage presence
+	class alignment_residue_scores final {
+	private:
+		/// \brief TODOCUMENT
+		size_t            num_entries;
 
 		/// \brief TODOCUMENT
-		///
-		/// TODOCUMENT other_present_entries / all_other_entries
-		///
-		/// TODOCUMENT Doesn't manage presence
-		class alignment_residue_scores final {
-		private:
-			/// \brief TODOCUMENT
-			size_t            num_entries;
+		size_vec          num_present_entries_by_index;
 
-			/// \brief TODOCUMENT
-			size_vec          num_present_entries_by_index;
+		/// \brief TODOCUMENT
+		score_opt_vec_vec scores_to_other_present_entries;
 
-			/// \brief TODOCUMENT
-			score_opt_vec_vec scores_to_other_present_entries;
+		void sanity_check() const;
 
-			void sanity_check() const;
+	public:
+		alignment_residue_scores(const size_t &,
+		                         size_vec,
+		                         score_opt_vec_vec);
 
-		public:
-			alignment_residue_scores(const size_t &,
-			                         size_vec,
-			                         score_opt_vec_vec);
+		[[nodiscard]] size_t get_num_entries() const;
+		[[nodiscard]] size_t get_length() const;
+		[[nodiscard]] size_t get_num_present_entries_of_index( const size_t & ) const;
 
-			[[nodiscard]] size_t get_num_entries() const;
-			[[nodiscard]] size_t get_length() const;
-			[[nodiscard]] size_t get_num_present_entries_of_index( const size_t & ) const;
+		[[nodiscard]] score_opt get_opt_score_to_other_present_entries( const size_t &, const size_t & ) const;
+	};
 
-			[[nodiscard]] score_opt get_opt_score_to_other_present_entries( const size_t &, const size_t & ) const;
-		};
+	bool has_score(const alignment_residue_scores &,
+	               const size_t &,
+	               const size_t &);
 
-		bool has_score(const alignment_residue_scores &,
-		               const size_t &,
-		               const size_t &);
+	float_score_type get_unnormalised_score(const alignment_residue_scores &,
+	                                        const size_t &,
+	                                        const size_t &,
+	                                        const bool &);
 
-		float_score_type get_unnormalised_score(const alignment_residue_scores &,
-		                                        const size_t &,
-		                                        const size_t &,
-		                                        const bool &);
+	float_score_type get_max_score(const alignment_residue_scores &,
+	                               const bool &);
 
-		float_score_type get_max_score(const alignment_residue_scores &,
-		                               const bool &);
+	float_score_type get_score(const alignment_residue_scores &,
+	                           const size_t &,
+	                           const size_t &,
+	                           const bool &,
+	                           const bool &);
 
-		float_score_type get_score(const alignment_residue_scores &,
-		                           const size_t &,
-		                           const size_t &,
-		                           const bool &,
-		                           const bool &);
+	float_score_type get_score_to_present_entries_of_index(const alignment_residue_scores &,
+	                                                       const size_t &,
+	                                                       const size_t &);
 
-		float_score_type get_score_to_present_entries_of_index(const alignment_residue_scores &,
-		                                                       const size_t &,
-		                                                       const size_t &);
+	float_score_type get_score_to_all_entries(const alignment_residue_scores &,
+	                                          const size_t &,
+	                                          const size_t &);
 
-		float_score_type get_score_to_all_entries(const alignment_residue_scores &,
-		                                          const size_t &,
-		                                          const size_t &);
+	float_score_type get_normalised_score_to_present_entries_of_index(const alignment_residue_scores &,
+	                                                                  const size_t &,
+	                                                                  const size_t &);
 
-		float_score_type get_normalised_score_to_present_entries_of_index(const alignment_residue_scores &,
-		                                                                  const size_t &,
-		                                                                  const size_t &);
+	float_score_type get_normalised_score_to_all_entries(const alignment_residue_scores &,
+	                                                     const size_t &,
+	                                                     const size_t &);
 
-		float_score_type get_normalised_score_to_all_entries(const alignment_residue_scores &,
-		                                                     const size_t &,
-		                                                     const size_t &);
+	alignment_residue_scores make_alignment_residue_scores(const alignment &,
+	                                                       const score_opt_vec_vec &);
 
-		alignment_residue_scores make_alignment_residue_scores(const alignment &,
-		                                                       const score_opt_vec_vec &);
-
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_RESIDUE_SCORE_ALIGNMENT_RESIDUE_SCORES_HPP

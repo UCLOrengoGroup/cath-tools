@@ -23,27 +23,26 @@
 
 #include <boost/algorithm/string/split.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		template <typename OutputContainer,
-		          typename RangeT,
-		          typename PredicateT>
-		inline OutputContainer split_build(const RangeT                               &prm_input,                                          ///< TODOCUMENT
-		                                   PredicateT                                  prm_pred,                                           ///< TODOCUMENT
-		                                   boost::algorithm::token_compress_mode_type  prm_compress = boost::algorithm::token_compress_off ///< TODOCUMENT
-		                                   ) {
-			OutputContainer output_container;
-			boost::algorithm::split(
-				output_container,
-				prm_input,
-				prm_pred,
-				prm_compress
-			);
-			return output_container;
-		}
-	} // namespace common
-} // namespace cath
+	/// \brief TODOCUMENT
+	template <typename OutputContainer,
+	          typename RangeT,
+	          typename PredicateT>
+	inline OutputContainer split_build(const RangeT                               &prm_input,                                          ///< TODOCUMENT
+	                                   PredicateT                                  prm_pred,                                           ///< TODOCUMENT
+	                                   boost::algorithm::token_compress_mode_type  prm_compress = boost::algorithm::token_compress_off ///< TODOCUMENT
+	                                   ) {
+		OutputContainer output_container;
+		boost::algorithm::split(
+			output_container,
+			prm_input,
+			prm_pred,
+			prm_compress
+		);
+		return output_container;
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_STRING_ALGORITHM_SPLIT_BUILD_HPP

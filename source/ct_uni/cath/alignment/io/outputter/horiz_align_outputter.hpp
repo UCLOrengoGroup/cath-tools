@@ -23,42 +23,38 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace align {
-		class alignment;
-	} // namespace align
-} // namespace cath
+// clang-format off
+namespace cath::align { class alignment; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief Simple wrapper class for outputting an alignment to an ostream in horizontal format
-		///
-		/// Use like this:
-		///
-		///    cerr << horiz_align_outputter( my_alignment ) << endl;
-		///
-		/// This provides a convenient way for the user to choose a different format
-		/// when outputting an alignment to an ostream via the insertion operator
-		///
-		/// \todo Consider writing a human_readable_align_outputter that could display:
-		///        * pair scores with extended ASCII codes ' ', '░', '▒', '▓' and '█'
-		///        * secondary structures with '\' for helix, '=' for strand and '—' for coil, eg: '———————=====————\\\\\\\\—————'
-		class horiz_align_outputter final {
-		private:
-			/// \brief A const-reference to the alignment to be output
-			const alignment &the_alignment;
+	/// \brief Simple wrapper class for outputting an alignment to an ostream in horizontal format
+	///
+	/// Use like this:
+	///
+	///    cerr << horiz_align_outputter( my_alignment ) << endl;
+	///
+	/// This provides a convenient way for the user to choose a different format
+	/// when outputting an alignment to an ostream via the insertion operator
+	///
+	/// \todo Consider writing a human_readable_align_outputter that could display:
+	///        * pair scores with extended ASCII codes ' ', '░', '▒', '▓' and '█'
+	///        * secondary structures with '\' for helix, '=' for strand and '—' for coil, eg: '———————=====————\\\\\\\\—————'
+	class horiz_align_outputter final {
+	private:
+		/// \brief A const-reference to the alignment to be output
+		const alignment &the_alignment;
 
-		public:
-			explicit horiz_align_outputter(const alignment &);
+	public:
+		explicit horiz_align_outputter(const alignment &);
 
-			[[nodiscard]] const alignment &get_alignment() const;
-		};
+		[[nodiscard]] const alignment &get_alignment() const;
+	};
 
-		std::ostream & operator<<(std::ostream &,
-		                          const horiz_align_outputter &);
+	std::ostream & operator<<(std::ostream &,
+	                          const horiz_align_outputter &);
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_IO_OUTPUTTER_HORIZ_ALIGN_OUTPUTTER_HPP

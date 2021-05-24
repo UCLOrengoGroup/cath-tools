@@ -25,15 +25,13 @@
 
 #include <random>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		size_vec_size_vec_pair random_split(std::mt19937 &,
-		                                    const size_t &,
-		                                    const double &);
+	size_vec_size_vec_pair random_split(std::mt19937 &,
+	                                    const size_t &,
+	                                    const double &);
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_RANDOM_SPLIT_HPP
 

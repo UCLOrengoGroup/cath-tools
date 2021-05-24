@@ -24,16 +24,12 @@
 
 #include "cath/common/string/booled_to_string.hpp"
 
-namespace cath { namespace test {} }
-
 using namespace ::cath::common;
-using namespace ::cath::test;
 
 using ::boost::irange;
 using ::std::to_string;
 
-namespace cath {
-	namespace test {
+namespace {
 		/// \brief A bunch of type for which booled_to_string should handle
 		using booled_to_string_int_types = boost::mpl::vector<char,
 		                                                      short int,
@@ -42,8 +38,7 @@ namespace cath {
 		                                                      unsigned int,
 		                                                      long int,
 		                                                      long unsigned int>;
-	} // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_AUTO_TEST_SUITE(booled_to_string_test_suite)
 

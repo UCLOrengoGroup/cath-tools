@@ -26,47 +26,45 @@
 #include <iostream>
 #include <string>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief This is an ABC from which programs can derive to get standard last-chance exception handling
-		///
-		/// If you're writing a new program, create a class that derives from this one
-		/// and put the actions of the program inside the do_run_program() method.
-		/// Then just make your main() function call run_program() on an instance of your class
-		/// to get standard last-chance exception handling for free
-		///
-		/// Note that this design won't catch any exceptions that are thrown before do_run_program() is called.
-		class program_exception_wrapper {
-		  private:
-			/// A holder for the default_logger that gets switched out during the lifetime of the run
-			::std::shared_ptr<::spdlog::logger> logger_shptr;
+	/// \brief This is an ABC from which programs can derive to get standard last-chance exception handling
+	///
+	/// If you're writing a new program, create a class that derives from this one
+	/// and put the actions of the program inside the do_run_program() method.
+	/// Then just make your main() function call run_program() on an instance of your class
+	/// to get standard last-chance exception handling for free
+	///
+	/// Note that this design won't catch any exceptions that are thrown before do_run_program() is called.
+	class program_exception_wrapper {
+	  private:
+		/// A holder for the default_logger that gets switched out during the lifetime of the run
+		::std::shared_ptr<::spdlog::logger> logger_shptr;
 
-			void output_catch_context( ::std::ostream &, const char * ) const;
+		void output_catch_context( ::std::ostream &, const char * ) const;
 
-			[[nodiscard]] virtual ::std::string_view do_get_program_name() const = 0;
+		[[nodiscard]] virtual ::std::string_view do_get_program_name() const = 0;
 
-			virtual void do_run_program( int, char *[] ) = 0;
+		virtual void do_run_program( int, char *[] ) = 0;
 
-			void reset_default_logger() noexcept;
+		void reset_default_logger() noexcept;
 
-		  public:
-			program_exception_wrapper() = default;
-			virtual ~program_exception_wrapper() noexcept;
+	  public:
+		program_exception_wrapper() = default;
+		virtual ~program_exception_wrapper() noexcept;
 
-			/// \brief Block the copy-ctor
-			program_exception_wrapper( const program_exception_wrapper & ) = delete;
-			/// \brief Block the move-ctor
-			program_exception_wrapper( program_exception_wrapper && ) = delete;
-			/// \brief Block the copy-assign
-			program_exception_wrapper &operator=( const program_exception_wrapper & ) = delete;
-			/// \brief Block the move-assign
-			program_exception_wrapper &operator=( program_exception_wrapper && ) = delete;
+		/// \brief Block the copy-ctor
+		program_exception_wrapper( const program_exception_wrapper & ) = delete;
+		/// \brief Block the move-ctor
+		program_exception_wrapper( program_exception_wrapper && ) = delete;
+		/// \brief Block the copy-assign
+		program_exception_wrapper &operator=( const program_exception_wrapper & ) = delete;
+		/// \brief Block the move-assign
+		program_exception_wrapper &operator=( program_exception_wrapper && ) = delete;
 
-			int run_program( int, char *[], ::std::ostream & = ::std::cerr );
-		};
+		int run_program( int, char *[], ::std::ostream & = ::std::cerr );
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_EXCEPTION_WRAPPER_HPP

@@ -26,33 +26,33 @@
 
 #include <iostream>
 
-namespace cath { namespace clust { class clust_mapping_spec; } }
-namespace cath { namespace clust { class clustmap_input_spec; } }
-namespace cath { namespace clust { class clustmap_options; } }
-namespace cath { namespace clust { class clustmap_output_spec; } }
+// clang-format off
+namespace cath::clust { class clust_mapping_spec; }
+namespace cath::clust { class clustmap_input_spec; }
+namespace cath::clust { class clustmap_options; }
+namespace cath::clust { class clustmap_output_spec; }
+// clang-format on
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		void perform_map_clusters(const str_vec &,
-		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout,
-		                          std::ostream & = std::cerr,
-		                          const opts::parse_sources & = opts::parse_sources::CMND_ENV_AND_FILE);
+	void perform_map_clusters(const str_vec &,
+	                          std::istream & = std::cin,
+	                          std::ostream & = std::cout,
+	                          std::ostream & = std::cerr,
+	                          const opts::parse_sources & = opts::parse_sources::CMND_ENV_AND_FILE);
 
-		void perform_map_clusters(const clustmap_options &,
-		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout,
-		                          std::ostream & = std::cerr);
+	void perform_map_clusters(const clustmap_options &,
+	                          std::istream & = std::cin,
+	                          std::ostream & = std::cout,
+	                          std::ostream & = std::cerr);
 
-		void perform_map_clusters(const clustmap_input_spec &,
-		                          const clust_mapping_spec &,
-		                          const clustmap_output_spec &,
-		                          std::istream & = std::cin,
-		                          std::ostream & = std::cout,
-		                          std::ostream & = std::cerr);
+	void perform_map_clusters(const clustmap_input_spec &,
+	                          const clust_mapping_spec &,
+	                          const clustmap_output_spec &,
+	                          std::istream & = std::cin,
+	                          std::ostream & = std::cout,
+	                          std::ostream & = std::cerr);
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CATH_CLUSTER_MAPPER_HPP

@@ -21,31 +21,30 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_NEW_MATRIX_DYN_PROG_SCORE_SOURCE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_NEW_MATRIX_DYN_PROG_SCORE_SOURCE_HPP
 
-#include "cath/alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
-
 #include <vector>
 
-namespace cath {
-	namespace align {
+#include "cath/alignment/dyn_prog_align/dyn_prog_score_source/dyn_prog_score_source.hpp"
 
-		/// \brief Concrete class that provides scores for dynamic-programming aligning by
-		///        retrieving them from a matrix
-		class new_matrix_dyn_prog_score_source final : public dyn_prog_score_source {
-		private:
-			const float_score_vec_vec &matrix;
-			const size_t               length_a;
-			const size_t               length_b;
+namespace cath::align {
 
-			[[nodiscard]] size_t     do_get_length_a() const final;
-			[[nodiscard]] size_t     do_get_length_b() const final;
-			[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
+	/// \brief Concrete class that provides scores for dynamic-programming aligning by
+	///        retrieving them from a matrix
+	class new_matrix_dyn_prog_score_source final : public dyn_prog_score_source {
+	private:
+		const float_score_vec_vec &matrix;
+		const size_t               length_a;
+		const size_t               length_b;
 
-		  public:
-			new_matrix_dyn_prog_score_source(const float_score_vec_vec &,
-			                                 const size_t &,
-			                                 const size_t &);
-		};
+		[[nodiscard]] size_t     do_get_length_a() const final;
+		[[nodiscard]] size_t     do_get_length_b() const final;
+		[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
 
-	} // namespace align
-} // namespace cath
+	  public:
+		new_matrix_dyn_prog_score_source(const float_score_vec_vec &,
+		                                 const size_t &,
+		                                 const size_t &);
+	};
+
+} // namespace cath::align
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_NEW_MATRIX_DYN_PROG_SCORE_SOURCE_HPP

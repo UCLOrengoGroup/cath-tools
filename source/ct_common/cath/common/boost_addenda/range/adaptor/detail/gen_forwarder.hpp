@@ -21,25 +21,21 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_DETAIL_GEN_FORWARDER_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_DETAIL_GEN_FORWARDER_HPP
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief gen_forwarder used to implement range adaptors
-			///
-			/// This is a variadic template version of the forwarder classes used in the Boost Range adaptor implementations
-			template <typename Holder>
-			struct gen_forwarder final {
+	/// \brief gen_forwarder used to implement range adaptors
+	///
+	/// This is a variadic template version of the forwarder classes used in the Boost Range adaptor implementations
+	template <typename Holder>
+	struct gen_forwarder final {
 
-				/// \brief Return the result of forwarding the parameters to the relevant Holder ctor
-				template <typename... T>
-				Holder operator()(T ...t) const {
-					return Holder( t... );
-				}
-			};
+		/// \brief Return the result of forwarding the parameters to the relevant Holder ctor
+		template <typename... T>
+		Holder operator()(T ...t) const {
+			return Holder( t... );
+		}
+	};
 
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_DETAIL_GEN_FORWARDER_HPP

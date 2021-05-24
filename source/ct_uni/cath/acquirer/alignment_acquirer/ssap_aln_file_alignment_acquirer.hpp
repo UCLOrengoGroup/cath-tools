@@ -25,29 +25,27 @@
 
 #include "cath/acquirer/alignment_acquirer/post_refine_alignment_acquirer.hpp"
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief TODOCUMENT
-		class ssap_aln_file_alignment_acquirer final : public post_refine_alignment_acquirer {
-		private:
-			using super = post_refine_alignment_acquirer;
+	/// \brief TODOCUMENT
+	class ssap_aln_file_alignment_acquirer final : public post_refine_alignment_acquirer {
+	private:
+		using super = post_refine_alignment_acquirer;
 
-			::std::filesystem::path ssap_alignment_file;
+		::std::filesystem::path ssap_alignment_file;
 
-			[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
-			[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
-			[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
-			  const file::strucs_context &,
-			  const ostream_ref_opt & = ::std::nullopt ) const final;
+		[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
+		[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
+		[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+		  const file::strucs_context &,
+		  const ostream_ref_opt & = ::std::nullopt ) const final;
 
-		  public:
-			explicit ssap_aln_file_alignment_acquirer( ::std::filesystem::path );
+	  public:
+		explicit ssap_aln_file_alignment_acquirer( ::std::filesystem::path );
 
-			[[nodiscard]] ::std::filesystem::path get_ssap_alignment_file() const;
-		};
+		[[nodiscard]] ::std::filesystem::path get_ssap_alignment_file() const;
+	};
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_SSAP_ALN_FILE_ALIGNMENT_ACQUIRER_HPP

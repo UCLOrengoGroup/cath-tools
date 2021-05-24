@@ -26,115 +26,114 @@
 
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
 
-namespace cath {
-	namespace align {
-		class alignment;
-	} // namespace align
-	class protein;
+// clang-format off
+namespace cath { class protein; }
+namespace cath::align { class alignment; }
+// clang-format on
 
-	namespace score {
+namespace cath::score {
 
-		/// \brief TODOCUMENT
-		enum class length_getter_category : char {
-			LONGER,  ///< TODOCUMENT
-			SHORTER, ///< TODOCUMENT
-			OTHER    ///< TODOCUMENT
-		};
+	/// \brief TODOCUMENT
+	enum class length_getter_category : char {
+		LONGER,  ///< TODOCUMENT
+		SHORTER, ///< TODOCUMENT
+		OTHER    ///< TODOCUMENT
+	};
 
-		/// \brief TODOCUMENT
-		using length_getter_category_vec = std::vector<length_getter_category>;
-
+	/// \brief TODOCUMENT
+	using length_getter_category_vec = std::vector<length_getter_category>;
 
 
-		/// \brief TODOCUMENT
-		class length_getter : private cath::common::polymorphic_less_than_comparable<length_getter>,
-		                      private boost::equivalent<length_getter,
-		                              boost::totally_ordered<length_getter> > {
-		private:
-			/// \brief Pure virtual method with which each concrete length_getter must define how to create a clone of itself
-		  [[nodiscard]] virtual std::unique_ptr<length_getter> do_clone() const = 0;
 
-		  [[nodiscard]] virtual boost::logic::tribool do_higher_is_better() const = 0;
+	/// \brief TODOCUMENT
+	class length_getter : private cath::common::polymorphic_less_than_comparable<length_getter>,
+	                      private boost::equivalent<length_getter,
+	                              boost::totally_ordered<length_getter> > {
+	private:
+		/// \brief Pure virtual method with which each concrete length_getter must define how to create a clone of itself
+	  [[nodiscard]] virtual std::unique_ptr<length_getter> do_clone() const = 0;
 
-		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual size_t do_get_length( const align::alignment &, const protein &, const protein & ) const = 0;
+	  [[nodiscard]] virtual boost::logic::tribool do_higher_is_better() const = 0;
 
-		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual length_getter_category do_get_length_getter_category() const = 0;
+	  /// \brief TODOCUMENT
+	  [[nodiscard]] virtual size_t do_get_length( const align::alignment &, const protein &, const protein & ) const = 0;
 
-		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual std::string do_id_name() const = 0;
+	  /// \brief TODOCUMENT
+	  [[nodiscard]] virtual length_getter_category do_get_length_getter_category() const = 0;
 
-		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual str_bool_pair_vec do_short_name_suffixes() const = 0;
+	  /// \brief TODOCUMENT
+	  [[nodiscard]] virtual std::string do_id_name() const = 0;
 
-		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual std::string do_long_name() const = 0;
+	  /// \brief TODOCUMENT
+	  [[nodiscard]] virtual str_bool_pair_vec do_short_name_suffixes() const = 0;
 
-		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual std::string do_description() const = 0;
+	  /// \brief TODOCUMENT
+	  [[nodiscard]] virtual std::string do_long_name() const = 0;
 
-		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual std::string do_description_brackets_string() const = 0;
+	  /// \brief TODOCUMENT
+	  [[nodiscard]] virtual std::string do_description() const = 0;
 
-		  /// \brief TODOCUMENT
-		  [[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const length_getter & ) const = 0;
+	  /// \brief TODOCUMENT
+	  [[nodiscard]] virtual std::string do_description_brackets_string() const = 0;
 
-		public:
-			length_getter() = default;
-			virtual ~length_getter() noexcept = default;
+	  /// \brief TODOCUMENT
+	  [[nodiscard]] virtual bool do_less_than_with_same_dynamic_type( const length_getter & ) const = 0;
 
-			length_getter(const length_getter &) = default;
-			length_getter(length_getter &&) noexcept = default;
-			length_getter & operator=(const length_getter &) = default;
-			length_getter & operator=(length_getter &&) noexcept = default;
+	public:
+		length_getter() = default;
+		virtual ~length_getter() noexcept = default;
 
-			[[nodiscard]] std::unique_ptr<length_getter> clone() const;
+		length_getter(const length_getter &) = default;
+		length_getter(length_getter &&) noexcept = default;
+		length_getter & operator=(const length_getter &) = default;
+		length_getter & operator=(length_getter &&) noexcept = default;
 
-			[[nodiscard]] boost::logic::tribool higher_is_better() const;
+		[[nodiscard]] std::unique_ptr<length_getter> clone() const;
 
-			[[nodiscard]] size_t get_length( const align::alignment &, const protein &, const protein & ) const;
+		[[nodiscard]] boost::logic::tribool higher_is_better() const;
 
-			[[nodiscard]] length_getter_category get_length_getter_category() const;
+		[[nodiscard]] size_t get_length( const align::alignment &, const protein &, const protein & ) const;
 
-			[[nodiscard]] std::string human_friendly_short_name() const;
-			[[nodiscard]] std::string full_short_name() const;
+		[[nodiscard]] length_getter_category get_length_getter_category() const;
 
-			[[nodiscard]] std::string       id_name() const;
-			[[nodiscard]] str_bool_pair_vec short_name_suffixes() const;
-			[[nodiscard]] std::string       long_name() const;
-			[[nodiscard]] std::string       description() const;
-			[[nodiscard]] std::string       description_brackets_string() const;
+		[[nodiscard]] std::string human_friendly_short_name() const;
+		[[nodiscard]] std::string full_short_name() const;
 
-			[[nodiscard]] bool less_than_with_same_dynamic_type( const length_getter & ) const;
-		};
+		[[nodiscard]] std::string       id_name() const;
+		[[nodiscard]] str_bool_pair_vec short_name_suffixes() const;
+		[[nodiscard]] std::string       long_name() const;
+		[[nodiscard]] std::string       description() const;
+		[[nodiscard]] std::string       description_brackets_string() const;
 
-		str_bool_pair_vec length_getter_as_short_name_suffixes(const length_getter &,
-		                                                       const bool & = true);
-		str_bool_pair_vec length_getter_as_short_name_suffixes(const length_getter &,
-		                                                       const length_getter_category_vec &);
+		[[nodiscard]] bool less_than_with_same_dynamic_type( const length_getter & ) const;
+	};
 
-		boost::ptr_vector<length_getter> get_all_length_getters();
+	str_bool_pair_vec length_getter_as_short_name_suffixes(const length_getter &,
+	                                                       const bool & = true);
+	str_bool_pair_vec length_getter_as_short_name_suffixes(const length_getter &,
+	                                                       const length_getter_category_vec &);
 
-		score_value get_length_score(const length_getter &,
-		                             const align::alignment &,
-		                             const protein &,
-		                             const protein &);
+	boost::ptr_vector<length_getter> get_all_length_getters();
 
-		/// \brief Function to make length_getter meet the Clonable concept (used in ptr_container)
-        ///
-        /// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
-        ///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
-        ///
-        /// This gets the smart pointer from the clone() method and then calls release on it.
-        ///
-        /// \returns A raw pointer to a new copy of the length_getter argument, with the same dynamic type.
-        ///          The caller is responsible for deleting this new object.
-        inline length_getter * new_clone(const length_getter &prm_length_getter ///< The length_getter to clone
-                                         ) {
-                return prm_length_getter.clone().release();
-        }
-	} // namespace score
-} // namespace cath
+	score_value get_length_score(const length_getter &,
+	                             const align::alignment &,
+	                             const protein &,
+	                             const protein &);
+
+	/// \brief Function to make length_getter meet the Clonable concept (used in ptr_container)
+	///
+	/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
+	///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
+	///
+	/// This gets the smart pointer from the clone() method and then calls release on it.
+	///
+	/// \returns A raw pointer to a new copy of the length_getter argument, with the same dynamic type.
+	///          The caller is responsible for deleting this new object.
+	inline length_getter * new_clone(const length_getter &prm_length_getter ///< The length_getter to clone
+	                                 ) {
+	        return prm_length_getter.clone().release();
+	}
+
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_HPP

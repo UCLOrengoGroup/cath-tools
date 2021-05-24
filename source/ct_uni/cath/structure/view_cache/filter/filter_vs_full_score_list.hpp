@@ -29,95 +29,94 @@
 
 #include <cstddef>
 
-namespace cath { namespace index { namespace filter { class filter_vs_full_score; } } }
-namespace cath { namespace score { class classn_stat; } }
-namespace cath { namespace score { class true_false_pos_neg;   } }
+// clang-format off
+namespace cath::index::filter { class filter_vs_full_score; }
+namespace cath::score { class classn_stat; }
+namespace cath::score { class true_false_pos_neg; }
+// clang-format on
 
-namespace cath {
-	namespace index {
-		namespace filter {
+namespace cath::index::filter {
 
-			/// \brief A list of filter_vs_full_score objects
-			///
-			/// At present, this isn't far from a `const filter_vs_full_score_vec` that keeps all entries
-			/// sorted by full_score.
-			///
-			/// Given a score that's slow to calculate for entries (eg SSAP score for previously unaligned
-			/// pairs of structures), it can be helpful to use a fast filter to generate a score that
-			/// identifies entries likely to get good scores. That are worth doing the slow calculations on.
-			///
-			/// Invariants:
-			///  * the vector of filter_vs_full_scores is kept sorted on full_score (ascending)
-			class filter_vs_full_score_list final {
-			private:
-				/// \brief The filter_vs_full_score objects, stored in a vector
-				filter_vs_full_score_vec filter_vs_full_scores;
+	/// \brief A list of filter_vs_full_score objects
+	///
+	/// At present, this isn't far from a `const filter_vs_full_score_vec` that keeps all entries
+	/// sorted by full_score.
+	///
+	/// Given a score that's slow to calculate for entries (eg SSAP score for previously unaligned
+	/// pairs of structures), it can be helpful to use a fast filter to generate a score that
+	/// identifies entries likely to get good scores. That are worth doing the slow calculations on.
+	///
+	/// Invariants:
+	///  * the vector of filter_vs_full_scores is kept sorted on full_score (ascending)
+	class filter_vs_full_score_list final {
+	private:
+		/// \brief The filter_vs_full_score objects, stored in a vector
+		filter_vs_full_score_vec filter_vs_full_scores;
 
-				void sort_filter_vs_full_scores();
+		void sort_filter_vs_full_scores();
 
-			public:
-				filter_vs_full_score_list();
-				explicit filter_vs_full_score_list(filter_vs_full_score_vec);
+	public:
+		filter_vs_full_score_list();
+		explicit filter_vs_full_score_list(filter_vs_full_score_vec);
 
-				void add_filter_vs_full_score(const filter_vs_full_score &);
-				[[nodiscard]] size_t         size() const;
-				const filter_vs_full_score & operator[](const size_t &) const;
+		void add_filter_vs_full_score(const filter_vs_full_score &);
+		[[nodiscard]] size_t         size() const;
+		const filter_vs_full_score & operator[](const size_t &) const;
 
-				/// \brief A const_iterator type alias as part of making filter_vs_full_score_list into a (const) range
-				using const_iterator = filter_vs_full_score_vec::const_iterator;
+		/// \brief A const_iterator type alias as part of making filter_vs_full_score_list into a (const) range
+		using const_iterator = filter_vs_full_score_vec::const_iterator;
 
-				/// \brief A iterator type alias. Though filter_vs_full_score_list doesn't currently offer a mutable cbegin()/end(),
-				///        this type alias is required by Boost's sub_range<>
-				using iterator = filter_vs_full_score_vec::const_iterator;
+		/// \brief A iterator type alias. Though filter_vs_full_score_list doesn't currently offer a mutable cbegin()/end(),
+		///        this type alias is required by Boost's sub_range<>
+		using iterator = filter_vs_full_score_vec::const_iterator;
 
-				[[nodiscard]] const_iterator begin() const;
-				[[nodiscard]] const_iterator end() const;
-			};
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-			/// \brief Type alias for filter_vs_full_score_list's const_iterator
-			using filter_vs_full_score_list_citr = filter_vs_full_score_list::const_iterator;
+	/// \brief Type alias for filter_vs_full_score_list's const_iterator
+	using filter_vs_full_score_list_citr = filter_vs_full_score_list::const_iterator;
 
-			double filter_score_full_score_with_sensitivity(const filter_vs_full_score_list &,
-			                                                const double &,
-			                                                const double &);
+	double filter_score_full_score_with_sensitivity(const filter_vs_full_score_list &,
+	                                                const double &,
+	                                                const double &);
 
-			filter_vs_full_score filter_attempt_full_score_with_sensitivity(const filter_vs_full_score_list &,
-			                                                                const double &,
-			                                                                const double &);
+	filter_vs_full_score filter_attempt_full_score_with_sensitivity(const filter_vs_full_score_list &,
+	                                                                const double &,
+	                                                                const double &);
 
-			score::true_false_pos_neg filter_result_full_score_with_sensitivity(const filter_vs_full_score_list &,
-			                                                                    const double &,
-			                                                                    const double &);
+	score::true_false_pos_neg filter_result_full_score_with_sensitivity(const filter_vs_full_score_list &,
+	                                                                    const double &,
+	                                                                    const double &);
 
-			filter_vs_full_score_vec filter_attempts_with_sensitivity(const filter_vs_full_score_list &,
-			                                                          const double &);
+	filter_vs_full_score_vec filter_attempts_with_sensitivity(const filter_vs_full_score_list &,
+	                                                          const double &);
 
-			score::doub_true_false_pos_neg_pair_vec filter_results_with_sensitivity(const filter_vs_full_score_list &,
-			                                                                        const double &);
+	score::doub_true_false_pos_neg_pair_vec filter_results_with_sensitivity(const filter_vs_full_score_list &,
+	                                                                        const double &);
 
-			// double filter_score_with_sensitivity(const filter_vs_full_score_list &,
-			//                                      const double &);
-	
-			// filter_vs_full_score filter_attempt_with_sensitivity(const filter_vs_full_score_list &,
-			//                                                      const double &);
+	// double filter_score_with_sensitivity(const filter_vs_full_score_list &,
+	//                                      const double &);
 
-			score::true_false_pos_neg assess_results_on_filter_attempt(const filter_vs_full_score_list &,
-			                                                           const filter_vs_full_score &);
+	// filter_vs_full_score filter_attempt_with_sensitivity(const filter_vs_full_score_list &,
+	//                                                      const double &);
 
-			void gnuplot_data(const filter_vs_full_score_list &,
-			                  const ::std::filesystem::path &,
-			                  const filter_vs_full_score_list & = filter_vs_full_score_list());
+	score::true_false_pos_neg assess_results_on_filter_attempt(const filter_vs_full_score_list &,
+	                                                           const filter_vs_full_score &);
 
-			void gnuplot_classsn_stat_for_recall(const filter_vs_full_score_list &,
-			                                     const ::std::filesystem::path &,
-			                                     const score::classn_stat &,
-			                                     const double &);
+	void gnuplot_data(const filter_vs_full_score_list &,
+	                  const ::std::filesystem::path &,
+	                  const filter_vs_full_score_list & = filter_vs_full_score_list());
 
-			void gnuplot_classsn_stat_for_recall(const score::doub_true_false_pos_neg_pair_vec &,
-			                                     const ::std::filesystem::path &,
-			                                     const score::classn_stat &);
-		} // namespace filter
-	} // namespace index
-} // namespace cath
+	void gnuplot_classsn_stat_for_recall(const filter_vs_full_score_list &,
+	                                     const ::std::filesystem::path &,
+	                                     const score::classn_stat &,
+	                                     const double &);
+
+	void gnuplot_classsn_stat_for_recall(const score::doub_true_false_pos_neg_pair_vec &,
+	                                     const ::std::filesystem::path &,
+	                                     const score::classn_stat &);
+
+} // namespace cath::index::filter
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_FILTER_FILTER_VS_FULL_SCORE_LIST_HPP

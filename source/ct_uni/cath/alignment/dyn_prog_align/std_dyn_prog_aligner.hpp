@@ -26,30 +26,30 @@
 #include "cath/alignment/dyn_prog_align/dyn_prog_aligner.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace align {
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	class std_dyn_prog_aligner final : public dyn_prog_aligner {
+	private:
+		/// \brief TODOCUMENT
+		mutable detail::return_path_matrix        the_return_path        = detail::make_uninitialised_return_path_matrix();
 
 		/// \brief TODOCUMENT
-		class std_dyn_prog_aligner final : public dyn_prog_aligner {
-		private:
-			/// \brief TODOCUMENT
-			mutable detail::return_path_matrix        the_return_path        = detail::make_uninitialised_return_path_matrix();
+		mutable detail::score_accumulation_matrix the_accumulated_scores = detail::make_uninitialised_score_accumulation_matrix();
 
-			/// \brief TODOCUMENT
-			mutable detail::score_accumulation_matrix the_accumulated_scores = detail::make_uninitialised_score_accumulation_matrix();
+		std::unique_ptr<dyn_prog_aligner> do_clone() const final;
 
-			std::unique_ptr<dyn_prog_aligner> do_clone() const final;
+		score_alignment_pair do_align(const dyn_prog_score_source &,
+		                              const gap::gap_penalty &,
+		                              const size_type &) const final;
 
-			score_alignment_pair do_align(const dyn_prog_score_source &,
-			                              const gap::gap_penalty &,
-			                              const size_type &) const final;
+		detail::path_step choose_path_step(const detail::path_step_score_map &,
+		                                   const size_t &,
+		                                   const size_t &,
+		                                   const size_t &,
+		                                   const size_t &) const;
+	};
 
-			detail::path_step choose_path_step(const detail::path_step_score_map &,
-			                                   const size_t &,
-			                                   const size_t &,
-			                                   const size_t &,
-			                                   const size_t &) const;
-		};
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_HPP

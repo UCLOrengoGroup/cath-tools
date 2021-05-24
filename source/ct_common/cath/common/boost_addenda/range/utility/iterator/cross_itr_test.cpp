@@ -36,89 +36,85 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The cross_itr test_suite_fixture to assist in testing cross_itrs
-		struct cross_itr_test_suite_fixture {
-		protected:
-			~cross_itr_test_suite_fixture() noexcept = default;
+	/// \brief The cross_itr test_suite_fixture to assist in testing cross_itrs
+	struct cross_itr_test_suite_fixture {
+	protected:
+		~cross_itr_test_suite_fixture() noexcept = default;
 
-			/// \brief TODOCUMENT
-			const bool_deq false_true        = { false, true, true };
+		/// \brief TODOCUMENT
+		const bool_deq false_true        = { false, true, true };
 
-			/// \brief TODOCUMENT
-			const size_vec numbers           = { 12, 11, 10 };
+		/// \brief TODOCUMENT
+		const size_vec numbers           = { 12, 11, 10 };
 
-			/// \brief TODOCUMENT
-			const str_vec  strings           = { "mary.........", "susan.........", "sally........." };
+		/// \brief TODOCUMENT
+		const str_vec  strings           = { "mary.........", "susan.........", "sally........." };
 
-			/// \brief TODOCUMENT
-			const bool_deq premod_false_true = { true, false, false };
+		/// \brief TODOCUMENT
+		const bool_deq premod_false_true = { true, false, false };
 
-			/// \brief TODOCUMENT
-			const size_vec premod_numbers    = { 3, 2, 1 };
+		/// \brief TODOCUMENT
+		const size_vec premod_numbers    = { 3, 2, 1 };
 
-			/// \brief TODOCUMENT
-			const str_vec  premod_strings    = { "mary", "susan", "sally" };
+		/// \brief TODOCUMENT
+		const str_vec  premod_strings    = { "mary", "susan", "sally" };
 
-			/// \brief TODOCUMENT
-			bool_deq mutable_false_true      = premod_false_true;
+		/// \brief TODOCUMENT
+		bool_deq mutable_false_true      = premod_false_true;
 
-			/// \brief TODOCUMENT
-			size_vec mutable_numbers         = premod_numbers;
+		/// \brief TODOCUMENT
+		size_vec mutable_numbers         = premod_numbers;
 
-			/// \brief TODOCUMENT
-			str_vec  mutable_strings         = premod_strings;
+		/// \brief TODOCUMENT
+		str_vec  mutable_strings         = premod_strings;
 
-			/// \brief TODOCUMENT
-			const bool_size_str_tpl_vec crossed = {
-				make_tuple( false, 12, "mary........."  ),
-				make_tuple( false, 12, "susan........." ),
-				make_tuple( false, 12, "sally........." ),
-				make_tuple( false, 11, "mary........."  ),
-				make_tuple( false, 11, "susan........." ),
-				make_tuple( false, 11, "sally........." ),
-				make_tuple( false, 10, "mary........."  ),
-				make_tuple( false, 10, "susan........." ),
-				make_tuple( false, 10, "sally........." ),
-				make_tuple( true,  12, "mary........."  ),
-				make_tuple( true,  12, "susan........." ),
-				make_tuple( true,  12, "sally........." ),
-				make_tuple( true,  11, "mary........."  ),
-				make_tuple( true,  11, "susan........." ),
-				make_tuple( true,  11, "sally........." ),
-				make_tuple( true,  10, "mary........."  ),
-				make_tuple( true,  10, "susan........." ),
-				make_tuple( true,  10, "sally........." ),
-				make_tuple( true,  12, "mary........."  ),
-				make_tuple( true,  12, "susan........." ),
-				make_tuple( true,  12, "sally........." ),
-				make_tuple( true,  11, "mary........."  ),
-				make_tuple( true,  11, "susan........." ),
-				make_tuple( true,  11, "sally........." ),
-				make_tuple( true,  10, "mary........."  ),
-				make_tuple( true,  10, "susan........." ),
-				make_tuple( true,  10, "sally........." )
-			};
+		/// \brief TODOCUMENT
+		const bool_size_str_tpl_vec crossed = {
+			make_tuple( false, 12, "mary........."  ),
+			make_tuple( false, 12, "susan........." ),
+			make_tuple( false, 12, "sally........." ),
+			make_tuple( false, 11, "mary........."  ),
+			make_tuple( false, 11, "susan........." ),
+			make_tuple( false, 11, "sally........." ),
+			make_tuple( false, 10, "mary........."  ),
+			make_tuple( false, 10, "susan........." ),
+			make_tuple( false, 10, "sally........." ),
+			make_tuple( true,  12, "mary........."  ),
+			make_tuple( true,  12, "susan........." ),
+			make_tuple( true,  12, "sally........." ),
+			make_tuple( true,  11, "mary........."  ),
+			make_tuple( true,  11, "susan........." ),
+			make_tuple( true,  11, "sally........." ),
+			make_tuple( true,  10, "mary........."  ),
+			make_tuple( true,  10, "susan........." ),
+			make_tuple( true,  10, "sally........." ),
+			make_tuple( true,  12, "mary........."  ),
+			make_tuple( true,  12, "susan........." ),
+			make_tuple( true,  12, "sally........." ),
+			make_tuple( true,  11, "mary........."  ),
+			make_tuple( true,  11, "susan........." ),
+			make_tuple( true,  11, "sally........." ),
+			make_tuple( true,  10, "mary........."  ),
+			make_tuple( true,  10, "susan........." ),
+			make_tuple( true,  10, "sally........." )
 		};
+	};
 
-		struct modifier final {
-			void operator()(tuple<bool &, size_t &, string &> x
-			                ) const {
-				get<0>( x ) = ! get<0>( x );
-				get<1>( x ) += 1;
-				get<2>( x ) += ".";
-			}
-		};
+	struct modifier final {
+		void operator()(tuple<bool &, size_t &, string &> x
+		                ) const {
+			get<0>( x ) = ! get<0>( x );
+			get<1>( x ) += 1;
+			get<2>( x ) += ".";
+		}
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief Test suite to perform basic checks of the cross_itr
-BOOST_FIXTURE_TEST_SUITE(cross_itr_test_suite, cath::test::cross_itr_test_suite_fixture)
-
-
+BOOST_FIXTURE_TEST_SUITE(cross_itr_test_suite, cross_itr_test_suite_fixture)
 
 BOOST_AUTO_TEST_SUITE(iterator_ts)
 
@@ -133,7 +129,7 @@ BOOST_AUTO_TEST_CASE(itr) {
 BOOST_AUTO_TEST_CASE(itr_to_mutable) {
 	auto begin_itr = make_cross_itr    ( mutable_false_true, mutable_numbers, mutable_strings );
 	auto end_itr   = make_end_cross_itr( mutable_false_true, mutable_numbers, mutable_strings );
-	std::for_each( begin_itr, end_itr, cath::test::modifier() );
+	std::for_each( begin_itr, end_itr, modifier() );
 	BOOST_CHECK_EQUAL_RANGES( false_true, mutable_false_true );
 	BOOST_CHECK_EQUAL_RANGES( numbers,    mutable_numbers    );
 	BOOST_CHECK_EQUAL_RANGES( strings,    mutable_strings    );
@@ -154,7 +150,7 @@ BOOST_AUTO_TEST_CASE(range) {
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(mutable_range) {
 	auto the_range = cross( mutable_false_true, mutable_numbers, mutable_strings );
-	boost::range::for_each( the_range, cath::test::modifier() );
+	boost::range::for_each( the_range, modifier() );
 	BOOST_CHECK_EQUAL_RANGES( false_true, mutable_false_true );
 	BOOST_CHECK_EQUAL_RANGES( numbers,    mutable_numbers    );
 	BOOST_CHECK_EQUAL_RANGES( strings,    mutable_strings    );
@@ -203,7 +199,7 @@ BOOST_AUTO_TEST_SUITE(mutable_tuple_ts)
 BOOST_AUTO_TEST_CASE(tuple_of_refs_to_mutable) {
 	auto the_tuple = tie  ( mutable_false_true, mutable_numbers, mutable_strings );
 	auto the_cross = cross( the_tuple );
-	boost::range::for_each( the_cross, cath::test::modifier() );
+	boost::range::for_each( the_cross, modifier() );
 	BOOST_CHECK_EQUAL_RANGES( false_true, mutable_false_true );
 	BOOST_CHECK_EQUAL_RANGES( numbers,    mutable_numbers    );
 	BOOST_CHECK_EQUAL_RANGES( strings,    mutable_strings    );
@@ -213,7 +209,7 @@ BOOST_AUTO_TEST_CASE(tuple_of_refs_to_mutable) {
 BOOST_AUTO_TEST_CASE(tuple_of_mutable_vals) {
 	auto the_tuple = make_tuple( premod_false_true, premod_numbers, premod_strings );
 	auto the_cross = cross     ( the_tuple );
-	boost::range::for_each( the_cross, cath::test::modifier() );
+	boost::range::for_each( the_cross, modifier() );
 	BOOST_CHECK_EQUAL_RANGES( false_true, get<0>( the_tuple ) );
 	BOOST_CHECK_EQUAL_RANGES( numbers,    get<1>( the_tuple ) );
 	BOOST_CHECK_EQUAL_RANGES( strings,    get<2>( the_tuple ) );
@@ -222,7 +218,7 @@ BOOST_AUTO_TEST_CASE(tuple_of_mutable_vals) {
 /// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(const_tuple_of_refs_to_mutable) {
 //	const auto the_cross = cross( tie( mutable_false_true, mutable_numbers, mutable_strings ) );
-//	boost::range::for_each( the_cross, cath::test::modifier() );
+//	boost::range::for_each( the_cross, modifier() );
 //	BOOST_CHECK_EQUAL_RANGES( false_true, mutable_false_true );
 //	BOOST_CHECK_EQUAL_RANGES( numbers,    mutable_numbers    );
 //	BOOST_CHECK_EQUAL_RANGES( strings,    mutable_strings    );
@@ -232,7 +228,7 @@ BOOST_AUTO_TEST_CASE(tuple_of_mutable_vals) {
 //BOOST_AUTO_TEST_CASE(const_tuple_of_mutable_vals) {
 //	const auto the_tuple = make_tuple( premod_false_true, premod_numbers, premod_strings );
 //	auto       the_cross = cross     ( the_tuple );
-//	boost::range::for_each( the_cross, cath::test::modifier() );
+//	boost::range::for_each( the_cross, modifier() );
 //	BOOST_CHECK_EQUAL_RANGES( false_true, get<0>( the_tuple ) );
 //	BOOST_CHECK_EQUAL_RANGES( numbers,    get<1>( the_tuple ) );
 //	BOOST_CHECK_EQUAL_RANGES( strings,    get<2>( the_tuple ) );

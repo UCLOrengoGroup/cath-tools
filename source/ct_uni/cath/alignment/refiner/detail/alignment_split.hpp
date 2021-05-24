@@ -28,59 +28,55 @@
 
 #include <cstddef>
 
-namespace cath {
-	namespace align {
-		namespace detail {
+namespace cath::align::detail {
 
-			/// \brief TODOCUMENT
-			class alignment_split final : private boost::equivalent      < alignment_split,
-			                                      boost::totally_ordered < alignment_split > > {
-			private:
-				/// \brief TODOCUMENT
-				size_t num_entries;
+	/// \brief TODOCUMENT
+	class alignment_split final : private boost::equivalent      < alignment_split,
+	                                      boost::totally_ordered < alignment_split > > {
+	private:
+		/// \brief TODOCUMENT
+		size_t num_entries;
 
-				/// \brief TODOCUMENT
-				size_set first_half_entries;
+		/// \brief TODOCUMENT
+		size_set first_half_entries;
 
-			public:
-				explicit alignment_split(const size_t &);
+	public:
+		explicit alignment_split(const size_t &);
 
-				[[nodiscard]] size_t get_num_entries() const;
-				void add_first_half_entry(const size_t &);
+		[[nodiscard]] size_t get_num_entries() const;
+		void add_first_half_entry(const size_t &);
 
-				[[nodiscard]] size_t          get_num_first_half_entries() const;
-				[[nodiscard]] const size_set &get_first_half_entries() const;
+		[[nodiscard]] size_t          get_num_first_half_entries() const;
+		[[nodiscard]] const size_set &get_first_half_entries() const;
 
-				using const_iterator = size_set::const_iterator;
-				[[nodiscard]] const_iterator begin() const;
-				[[nodiscard]] const_iterator end() const;
-			};
+		using const_iterator = size_set::const_iterator;
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-			bool operator<(const alignment_split &,
-			               const alignment_split &);
+	bool operator<(const alignment_split &,
+	               const alignment_split &);
 
-			size_set entries_of_alignment_split_half(const alignment_split &,
-			                                         const alignment_split_half &);
+	size_set entries_of_alignment_split_half(const alignment_split &,
+	                                         const alignment_split_half &);
 
-			alignment_split make_opposite_version(const alignment_split &);
+	alignment_split make_opposite_version(const alignment_split &);
 
-			alignment_split get_least_version(const alignment_split &);
+	alignment_split get_least_version(const alignment_split &);
 
-			bool is_valid_split(const alignment_split &);
+	bool is_valid_split(const alignment_split &);
 
-			alignment_split make_single_alignment_split(const size_t &,
-			                                            const size_t &);
+	alignment_split make_single_alignment_split(const size_t &,
+	                                            const size_t &);
 
-			alignment_split make_alignment_split(const size_vec &,
-			                                     const size_t &);
+	alignment_split make_alignment_split(const size_vec &,
+	                                     const size_t &);
 
-//			size_t get_split_length(const alignment &,
-//			                        const protein_list &,
-//			                        const alignment_split &,
-//			                        const alignment_split_half &);
+//	size_t get_split_length(const alignment &,
+//	                        const protein_list &,
+//	                        const alignment_split &,
+//	                        const alignment_split_half &);
 
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+} // namespace cath::align::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HPP

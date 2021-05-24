@@ -23,82 +23,80 @@
 
 #include "cath/common/type_aliases.hpp"
 
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace align { namespace gap { class gap_penalty; } } }
+// clang-format off
+namespace cath::align { class alignment; }
+namespace cath::align::gap { class gap_penalty; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align::detail {
 
-		namespace detail {
+	/// \brief ABC-interface to define an interface for classes that align strings of upper-case letters
+	///
+	/// These are for simple string problems for which the identity substitution matrix is used.
+	///
+	/// These take pairs of strings like:
+	///
+	///     BFEDCBECB
+	///     AAFCEDFECF
+	///
+	/// ...and a gap penalty and return a pair of aligned strings like:
+	///
+	/// This is in cath::align::detail because it is currently only used in tests
+	class string_aligner {
+	  private:
+		[[nodiscard]] virtual str_str_pair do_align( const std::string &,
+		                                             const std::string &,
+		                                             const gap::gap_penalty & ) const = 0;
 
-			/// \brief ABC-interface to define an interface for classes that align strings of upper-case letters
-			///
-			/// These are for simple string problems for which the identity substitution matrix is used.
-			///
-			/// These take pairs of strings like:
-			///
-			///     BFEDCBECB
-			///     AAFCEDFECF
-			///
-			/// ...and a gap penalty and return a pair of aligned strings like:
-			///
-			/// This is in cath::align::detail because it is currently only used in tests
-			class string_aligner {
-			  private:
-				[[nodiscard]] virtual str_str_pair do_align( const std::string &,
-				                                             const std::string &,
-				                                             const gap::gap_penalty & ) const = 0;
+	  public:
+		string_aligner() = default;
+		virtual ~string_aligner() noexcept = default;
 
-			  public:
-				string_aligner() = default;
-				virtual ~string_aligner() noexcept = default;
+		string_aligner(const string_aligner &) = default;
+		string_aligner(string_aligner &&) noexcept = default;
+		string_aligner & operator=(const string_aligner &) = default;
+		string_aligner & operator=(string_aligner &&) noexcept = default;
 
-				string_aligner(const string_aligner &) = default;
-				string_aligner(string_aligner &&) noexcept = default;
-				string_aligner & operator=(const string_aligner &) = default;
-				string_aligner & operator=(string_aligner &&) noexcept = default;
+		[[nodiscard]] cath::str_str_score_tpl align( const std::string &,
+		                                             const std::string &,
+		                                             const gap::gap_penalty & ) const;
+	};
 
-				[[nodiscard]] cath::str_str_score_tpl align( const std::string &,
-				                                             const std::string &,
-				                                             const gap::gap_penalty & ) const;
-			};
+	void check_aligned_string_matches_original(const std::string &,
+	                                           const std::string &);
 
-			void check_aligned_string_matches_original(const std::string &,
-			                                           const std::string &);
+	void check_aligned_string_pair_is_valid(const std::string &,
+	                                        const std::string &);
 
-			void check_aligned_string_pair_is_valid(const std::string &,
-			                                        const std::string &);
+	void check_aligned_string_is_valid(const std::string &);
 
-			void check_aligned_string_is_valid(const std::string &);
+	size_size_pair get_num_gaps_and_extensions(const std::string &);
 
-			size_size_pair get_num_gaps_and_extensions(const std::string &);
+	score_type get_score_of_aligned_sequence_strings(const std::string &,
+	                                                 const std::string &,
+	                                                 const gap::gap_penalty &);
 
-			score_type get_score_of_aligned_sequence_strings(const std::string &,
-			                                                 const std::string &,
-			                                                 const gap::gap_penalty &);
+//	score_alignment_pair align_sequence_strings(const dyn_prog_aligner &,
+//	                                            const std::string &,
+//	                                            const std::string &,
+//	                                            const score_type &);
 
-//			score_alignment_pair align_sequence_strings(const dyn_prog_aligner &,
-//			                                            const std::string &,
-//			                                            const std::string &,
-//			                                            const score_type &);
+	str_vec format_alignment_strings(const alignment &,
+	                                 const str_vec &);
 
-			str_vec format_alignment_strings(const alignment &,
-			                                 const str_vec &);
+	str_str_pair format_alignment_strings(const alignment &,
+	                                      const std::string &,
+	                                      const std::string &);
 
-			str_str_pair format_alignment_strings(const alignment &,
-			                                      const std::string &,
-			                                      const std::string &);
+//	str_str_pair align_and_format_sequence_strings(const std::string &,
+//	                                               const std::string &,
+//	                                               const score_type &,
+//	                                               const size_t &);
 
-//			str_str_pair align_and_format_sequence_strings(const std::string &,
-//			                                               const std::string &,
-//			                                               const score_type &,
-//			                                               const size_t &);
+//	str_str_pair align_and_format_sequence_strings(const std::string &,
+//	                                               const std::string &,
+//	                                               const score_type &);
 
-//			str_str_pair align_and_format_sequence_strings(const std::string &,
-//			                                               const std::string &,
-//			                                               const score_type &);
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+} // namespace cath::align::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_STRING_ALIGNER_STRING_ALIGNER_HPP

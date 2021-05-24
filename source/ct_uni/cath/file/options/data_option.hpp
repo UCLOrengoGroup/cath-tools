@@ -23,21 +23,18 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace opts {
-		namespace detail {
+namespace cath::opts::detail {
 
-			/// \brief Represent the different options that a data_dirs_options_block supports for each file type
-			enum class data_option : char {
-				PATH,   ///< Enum value to denote a file type's path option
-				PREFIX, ///< Enum value to denote a file type's prefix option
-				SUFFIX  ///< Enum value to denote a file type's suffix option
-			};
+	/// \brief Represent the different options that a data_dirs_options_block supports for each file type
+	enum class data_option : char {
+		PATH,   ///< Enum value to denote a file type's path option
+		PREFIX, ///< Enum value to denote a file type's prefix option
+		SUFFIX  ///< Enum value to denote a file type's suffix option
+	};
 
-			std::ostream & operator<<(std::ostream &,
-			                          const data_option &);
-		} // namespace detail
-	} // namespace opts
-} // namespace cath
+	std::ostream & operator<<(std::ostream &,
+	                          const data_option &);
+
+} // namespace cath::opts::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_OPTIONS_DATA_OPTION_HPP

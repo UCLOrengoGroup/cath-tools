@@ -26,40 +26,39 @@
 
 #include <vector>
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief Concrete class that provides scores for dynamic-programming aligning by
-		///        retrieving them from a matrix
-		class old_matrix_dyn_prog_score_source final : public dyn_prog_score_source {
-		private:
-			/// \brief TODOCUMENT
-			std::reference_wrapper<const score_vec_of_vec> matrix;
+	/// \brief Concrete class that provides scores for dynamic-programming aligning by
+	///        retrieving them from a matrix
+	class old_matrix_dyn_prog_score_source final : public dyn_prog_score_source {
+	private:
+		/// \brief TODOCUMENT
+		std::reference_wrapper<const score_vec_of_vec> matrix;
 
-			/// \brief TODOCUMENT
-			const size_t         length_a;
+		/// \brief TODOCUMENT
+		const size_t         length_a;
 
-			/// \brief TODOCUMENT
-			const size_t         length_b;
+		/// \brief TODOCUMENT
+		const size_t         length_b;
 
-			/// \brief TODOCUMENT
-			const size_t         window;
+		/// \brief TODOCUMENT
+		const size_t         window;
 
-			[[nodiscard]] size_t     do_get_length_a() const final;
-			[[nodiscard]] size_t     do_get_length_b() const final;
-			[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
+		[[nodiscard]] size_t     do_get_length_a() const final;
+		[[nodiscard]] size_t     do_get_length_b() const final;
+		[[nodiscard]] score_type do_get_score( const size_t &, const size_t & ) const final;
 
-		  public:
-			old_matrix_dyn_prog_score_source(const score_vec_of_vec &,
-			                                 const size_t &,
-			                                 const size_t &,
-			                                 const size_t &);
-			old_matrix_dyn_prog_score_source(const score_vec_of_vec &&,
-			                                 const size_t &,
-			                                 const size_t &,
-			                                 const size_t &) = delete;
-		};
+	  public:
+		old_matrix_dyn_prog_score_source(const score_vec_of_vec &,
+		                                 const size_t &,
+		                                 const size_t &,
+		                                 const size_t &);
+		old_matrix_dyn_prog_score_source(const score_vec_of_vec &&,
+		                                 const size_t &,
+		                                 const size_t &,
+		                                 const size_t &) = delete;
+	};
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
+
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_OLD_MATRIX_DYN_PROG_SCORE_SOURCE_HPP

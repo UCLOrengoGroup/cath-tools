@@ -30,36 +30,35 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::homcheck;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The ssap_and_prc_test_suite_fixture to assist in testing ssap_and_prc
-		struct ssap_and_prc_test_suite_fixture {
-		protected:
-			~ssap_and_prc_test_suite_fixture() noexcept = default;
+	/// \brief The ssap_and_prc_test_suite_fixture to assist in testing ssap_and_prc
+	struct ssap_and_prc_test_suite_fixture {
+	protected:
+		~ssap_and_prc_test_suite_fixture() noexcept = default;
 
-			/// \brief An example PRC  result (with IDs that match those of the SSAP result)
-			const prc_scores_entry  the_prc     = prc_scores_entry_from_line( "1i4dA00 4       199     201     1       3cazA00 15      209     219       25.3    16.3   1.6e-11" );
+		/// \brief An example PRC  result (with IDs that match those of the SSAP result)
+		const prc_scores_entry  the_prc     = prc_scores_entry_from_line( "1i4dA00 4       199     201     1       3cazA00 15      209     219       25.3    16.3   1.6e-11" );
 
-			/// \brief An example SSAP result (with IDs that match those of the PRC  result)
-			const ssap_scores_entry the_ssap    = ssap_scores_entry_from_line( "1i4dA00  3cazA00  188  202  78.30  169   83   11   4.86" );
+		/// \brief An example SSAP result (with IDs that match those of the PRC  result)
+		const ssap_scores_entry the_ssap    = ssap_scores_entry_from_line( "1i4dA00  3cazA00  188  202  78.30  169   83   11   4.86" );
 
-			/// \brief An example SSAP result with a different query ID
-			const ssap_scores_entry ssap_diff_q = ssap_scores_entry_from_line( "1i4dB00  3cazA00  185  202  74.36  152   75    7   9.08" );
+		/// \brief An example SSAP result with a different query ID
+		const ssap_scores_entry ssap_diff_q = ssap_scores_entry_from_line( "1i4dB00  3cazA00  185  202  74.36  152   75    7   9.08" );
 
-			/// \brief An example SSAP result with a different match ID
-			const ssap_scores_entry ssap_diff_m = ssap_scores_entry_from_line( "1i4dA00  3cazB00  188  207  74.85  176   85    8   7.28" );
+		/// \brief An example SSAP result with a different match ID
+		const ssap_scores_entry ssap_diff_m = ssap_scores_entry_from_line( "1i4dA00  3cazB00  188  207  74.85  176   85    8   7.28" );
 
-			/// \brief An example SSAP result with a different query ID and a different match ID
-			const ssap_scores_entry ssap_diff_b = ssap_scores_entry_from_line( "1i4dB00  3cazB00  185  207  78.58  178   85   10   4.04" );
+		/// \brief An example SSAP result with a different query ID and a different match ID
+		const ssap_scores_entry ssap_diff_b = ssap_scores_entry_from_line( "1i4dB00  3cazB00  185  207  78.58  178   85   10   4.04" );
 
-			/// \brief The correct magic function value for the_prc and the_ssap
-			static constexpr double MAGIC_FUNCTION_VALUE = 89.095880017344072;
-		};
-	}  // namespace test
-}  // namespace cath
+	};
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(ssap_and_prc_test_suite, cath::test::ssap_and_prc_test_suite_fixture)
+// /// \brief The correct magic function value for the_prc and the_ssap
+// constexpr double MAGIC_FUNCTION_VALUE = 89.095880017344072;
+
+BOOST_FIXTURE_TEST_SUITE(ssap_and_prc_test_suite, ssap_and_prc_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(ctor_from_matching_pair_does_not_throw) {
 	BOOST_CHECK_NO_THROW_DIAG( ssap_and_prc tmp( the_ssap, the_prc ) );

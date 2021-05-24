@@ -28,39 +28,39 @@
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/aln_glue_style.hpp"
 
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace file { class pdb_list; } }
+// clang-format off
+namespace cath::align { class alignment; }
+namespace cath::file { class pdb_list; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief TODOCUMENT
-		class ssap_scores_file_alignment_acquirer final : public alignment_acquirer {
-		  private:
-			using super = alignment_acquirer;
-			::std::filesystem::path ssap_scores_filename;
+	/// \brief TODOCUMENT
+	class ssap_scores_file_alignment_acquirer final : public alignment_acquirer {
+	  private:
+		using super = alignment_acquirer;
+		::std::filesystem::path ssap_scores_filename;
 
-			[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
-			[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
-			[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
-			  const file::strucs_context &,
-			  const align_refining &,
-			  const ostream_ref_opt & = ::std::nullopt ) const final;
+		[[nodiscard]] std::unique_ptr<alignment_acquirer>      do_clone() const final;
+		[[nodiscard]] bool                                     do_requires_backbone_complete_input() const final;
+		[[nodiscard]] std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+		  const file::strucs_context &,
+		  const align_refining &,
+		  const ostream_ref_opt & = ::std::nullopt ) const final;
 
-		  public:
-			explicit ssap_scores_file_alignment_acquirer( ::std::filesystem::path );
+	  public:
+		explicit ssap_scores_file_alignment_acquirer( ::std::filesystem::path );
 
-			[[nodiscard]] ::std::filesystem::path get_ssap_scores_file() const;
-		};
+		[[nodiscard]] ::std::filesystem::path get_ssap_scores_file() const;
+	};
 
-		std::pair<alignment, size_size_pair_vec> build_multi_alignment(const file::pdb_list &,
-		                                                               const str_vec &,
-		                                                               const size_size_doub_tpl_vec &,
-		                                                               const ::std::filesystem::path &,
-		                                                               const aln_glue_style &,
-		                                                               const ostream_ref_opt & = ::std::nullopt);
+	std::pair<alignment, size_size_pair_vec> build_multi_alignment(const file::pdb_list &,
+	                                                               const str_vec &,
+	                                                               const size_size_doub_tpl_vec &,
+	                                                               const ::std::filesystem::path &,
+	                                                               const aln_glue_style &,
+	                                                               const ostream_ref_opt & = ::std::nullopt);
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_SSAP_SCORES_FILE_ALIGNMENT_ACQUIRER_HPP

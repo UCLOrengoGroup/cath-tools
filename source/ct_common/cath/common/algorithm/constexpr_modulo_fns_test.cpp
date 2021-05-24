@@ -39,54 +39,52 @@ using ::boost::algorithm::none_of;
 using ::boost::irange;
 using ::boost::range::combine;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The _test_suite_fixture to assist in testing 
-		struct constexpr_modulo_fns_test_suite_fixture {
-		protected:
-			~constexpr_modulo_fns_test_suite_fixture() noexcept = default;
+	/// \brief The _test_suite_fixture to assist in testing 
+	struct constexpr_modulo_fns_test_suite_fixture {
+	protected:
+		~constexpr_modulo_fns_test_suite_fixture() noexcept = default;
 
-			/// \brief TODOCUMENT
-			void check_crcp(const size_t &prm_result_a, ///< TODOCUMENT
-			                const size_t &prm_result_b, ///< TODOCUMENT
-			                const size_t &prm_index_a,  ///< TODOCUMENT
-			                const size_t &prm_index_b,  ///< TODOCUMENT
-			                const size_t &prm_mod_a,    ///< TODOCUMENT
-			                const size_t &prm_mod_b     ///< TODOCUMENT
-			                ) {
-				// Check that the result does indeed hit one of the representative pairs
-				BOOST_CHECK_EQUAL( prm_result_a % prm_mod_a, 0_z );
-				BOOST_CHECK_EQUAL( prm_result_b % prm_mod_b, 0_z );
+		/// \brief TODOCUMENT
+		void check_crcp(const size_t &prm_result_a, ///< TODOCUMENT
+		                const size_t &prm_result_b, ///< TODOCUMENT
+		                const size_t &prm_index_a,  ///< TODOCUMENT
+		                const size_t &prm_index_b,  ///< TODOCUMENT
+		                const size_t &prm_mod_a,    ///< TODOCUMENT
+		                const size_t &prm_mod_b     ///< TODOCUMENT
+		                ) {
+			// Check that the result does indeed hit one of the representative pairs
+			BOOST_CHECK_EQUAL( prm_result_a % prm_mod_a, 0_z );
+			BOOST_CHECK_EQUAL( prm_result_b % prm_mod_b, 0_z );
 
-				// Check that the result is on the same diagonal as the original point
-				// and is at least as far along it as the original point
-				BOOST_REQUIRE_GE ( prm_result_a, prm_index_a );
-				BOOST_REQUIRE_GE ( prm_result_b, prm_index_b );
-				BOOST_CHECK_EQUAL( prm_result_a - prm_index_a, prm_result_b - prm_index_b );
+			// Check that the result is on the same diagonal as the original point
+			// and is at least as far along it as the original point
+			BOOST_REQUIRE_GE ( prm_result_a, prm_index_a );
+			BOOST_REQUIRE_GE ( prm_result_b, prm_index_b );
+			BOOST_CHECK_EQUAL( prm_result_a - prm_index_a, prm_result_b - prm_index_b );
 
-				// Check that there isn't any earlier match (from the original point onwards)
-				// that hits a representative pair
-				const auto try_range_a = irange( prm_index_a, prm_result_a );
-				const auto try_range_b = irange( prm_index_b, prm_result_b );
-				BOOST_CHECK( none_of(
-					combine( try_range_a, try_range_b ),
-					[&] (const boost::tuple<size_t, size_t> &x) {
-						const auto &try_a = get<0>( x );
-						const auto &try_b = get<1>( x );
-						const bool correct_result = ( try_a % prm_mod_a == 0 && try_b % prm_mod_b == 0 );
-//						cerr << "Checking none_of [" << try_a << ", " << try_b << "] - result is " << boolalpha << correct_result << noboolalpha << "\n";
-						return correct_result;
-					}
-				) );
-			}
-		};
+			// Check that there isn't any earlier match (from the original point onwards)
+			// that hits a representative pair
+			const auto try_range_a = irange( prm_index_a, prm_result_a );
+			const auto try_range_b = irange( prm_index_b, prm_result_b );
+			BOOST_CHECK( none_of(
+				combine( try_range_a, try_range_b ),
+				[&] (const boost::tuple<size_t, size_t> &x) {
+					const auto &try_a = get<0>( x );
+					const auto &try_b = get<1>( x );
+					const bool correct_result = ( try_a % prm_mod_a == 0 && try_b % prm_mod_b == 0 );
+//					cerr << "Checking none_of [" << try_a << ", " << try_b << "] - result is " << boolalpha << correct_result << noboolalpha << "\n";
+					return correct_result;
+				}
+			) );
+		}
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(constexpr_modulo_fns_test_suite, cath::test::constexpr_modulo_fns_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(constexpr_modulo_fns_test_suite, constexpr_modulo_fns_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(constexpr_lcm_works) {

@@ -30,32 +30,30 @@
 
 #include <utility>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Wrap boost::accumulate() and add support for a projection function, a la Eric Niebler's range-v3 library
-		//
-		/// \todo Roll this out to simplify code
-		template <typename Rng,
-		          typename T,
-		          typename Op = std::plus<>,
-		          typename Proj = ident>
-		inline auto accumulate_proj(Rng  &&prm_range,          ///< The range to query
-		                            T    &&prm_init,           ///< The initial value from which to start the accumulation
-		                            Op   &&prm_op    = Op{},   ///< The operation to apply the value-so-far and new-value
-		                            Proj &&prm_proj  = Proj{}  ///< The projection function
-		                            ) {
-			return boost::accumulate(
-				std::forward<Rng>( prm_range )
-					| boost::adaptors::transformed( [&] (const auto &x) {
-						return constexpr_invoke( std::forward<Proj>( prm_proj ), x );
-					} ),
-				std::forward< T  >( prm_init ),
-				std::forward< Op >( prm_op   )
-			);
-		}
+	/// \brief Wrap boost::accumulate() and add support for a projection function, a la Eric Niebler's range-v3 library
+	//
+	/// \todo Roll this out to simplify code
+	template <typename Rng,
+	          typename T,
+	          typename Op = std::plus<>,
+	          typename Proj = ident>
+	inline auto accumulate_proj(Rng  &&prm_range,          ///< The range to query
+	                            T    &&prm_init,           ///< The initial value from which to start the accumulation
+	                            Op   &&prm_op    = Op{},   ///< The operation to apply the value-so-far and new-value
+	                            Proj &&prm_proj  = Proj{}  ///< The projection function
+	                            ) {
+		return boost::accumulate(
+			std::forward<Rng>( prm_range )
+				| boost::adaptors::transformed( [&] (const auto &x) {
+					return constexpr_invoke( std::forward<Proj>( prm_proj ), x );
+				} ),
+			std::forward< T  >( prm_init ),
+			std::forward< Op >( prm_op   )
+		);
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ACCUMULATE_PROJ_HPP

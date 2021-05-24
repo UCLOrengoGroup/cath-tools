@@ -24,29 +24,28 @@
 #include "cath/common/metaprogramming/append_template_params_into_first_wrapper.hpp"
 #include "cath/common/metaprogramming/change_template_subwrappers.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Primary template for implementation of combine_params_lists_with_template_list_t
-			template <typename T,
-			          typename U>
-			struct combine_params_lists_with_template_list final {};
+		/// \brief Primary template for implementation of combine_params_lists_with_template_list_t
+		template <typename T,
+		          typename U>
+		struct combine_params_lists_with_template_list final {};
 
-			/// \brief Specialisation of template for implementation of combine_params_lists_with_template_list_t
-			template <typename U,
-			          template <template <typename...> class...> class TmpltWrp,
-			          template <typename...> class... Tmplts
-			          >
-			struct combine_params_lists_with_template_list<U,
-			                                               TmpltWrp<Tmplts...>
-			                                               > final {
-				using type = append_template_params_into_first_wrapper_t<
-					change_template_subwrappers_t<U, Tmplts>...
-				>;
-			};
+		/// \brief Specialisation of template for implementation of combine_params_lists_with_template_list_t
+		template <typename U,
+		          template <template <typename...> class...> class TmpltWrp,
+		          template <typename...> class... Tmplts
+		          >
+		struct combine_params_lists_with_template_list<U,
+		                                               TmpltWrp<Tmplts...>
+		                                               > final {
+			using type = append_template_params_into_first_wrapper_t<
+				change_template_subwrappers_t<U, Tmplts>...
+			>;
+		};
 
-		} // namespace detail
+	} // namespace detail
 
 	/// \brief The type created by rewrapping each of the typelists types in the specified typelist with
 	///        each of the templates in the specified template list and then rewrapping the (flattened) list
@@ -58,7 +57,6 @@ namespace cath {
 	          typename U>
 	using combine_params_lists_with_template_list_t = typename detail::combine_params_lists_with_template_list<T, U>::type;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_COMBINE_PARAMS_LISTS_WITH_TEMPLATE_LIST_HPP

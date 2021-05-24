@@ -23,17 +23,15 @@
 
 #include <boost/exception/all.hpp>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		class runtime_error_exception : public boost::exception,
-		                                public std::runtime_error {
-		public:
-			explicit runtime_error_exception(const std::string &);
-		};
+	/// \brief TODOCUMENT
+	class runtime_error_exception : public boost::exception,
+	                                public std::runtime_error {
+	public:
+		explicit runtime_error_exception(const std::string &);
+	};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_EXCEPTION_RUNTIME_ERROR_EXCEPTION_HPP

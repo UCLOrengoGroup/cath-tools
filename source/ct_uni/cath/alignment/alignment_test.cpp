@@ -46,133 +46,130 @@ using namespace ::std;
 using ::boost::test_tools::output_test_stream;
 using ::std::nullopt;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The alignment_test_suite_fixture to assist in testing alignment
-		struct alignment_test_suite_fixture : protected alignment_fixture {
-			~alignment_test_suite_fixture() noexcept = default;
+	/// \brief The alignment_test_suite_fixture to assist in testing alignment
+	struct alignment_test_suite_fixture : protected alignment_fixture {
+		~alignment_test_suite_fixture() noexcept = default;
 
-			void check_consecutive_position(const alignment &,
-			                                const size_size_pair_opt &);
+		void check_consecutive_position(const alignment &,
+		                                const size_size_pair_opt &);
 
-			/// \brief Check that the has_position... and get_position methods work for an alignment by comparing to the lists from which it was made
-			void check_details_match_lists(const alignment            &prm_aln,
-			                               const aln_posn_opt_vec_vec &prm_lists
-			                               ) {
-				// Require that the sizes all match the length of the alignment
-				for (const aln_posn_opt_vec &list : prm_lists) {
-					BOOST_REQUIRE_EQUAL( prm_aln.length(), list.size() );
+		/// \brief Check that the has_position... and get_position methods work for an alignment by comparing to the lists from which it was made
+		void check_details_match_lists(const alignment            &prm_aln,
+		                               const aln_posn_opt_vec_vec &prm_lists
+		                               ) {
+			// Require that the sizes all match the length of the alignment
+			for (const aln_posn_opt_vec &list : prm_lists) {
+				BOOST_REQUIRE_EQUAL( prm_aln.length(), list.size() );
+			}
+
+			// Loop through the length of the alignment
+			for (const size_t &index_ctr : indices( prm_aln.length() ) ) {
+				// If this is a pair alignment, check has_both_positions_of_index()
+				const bool is_last  = (index_ctr +1 == prm_aln.length());
+				const bool is_pair_alignment = (prm_lists.size() == 2_z);
+				if ( is_pair_alignment ) {
+					BOOST_CHECK_EQUAL(
+						( prm_lists[alignment::PAIR_A_IDX][index_ctr] && prm_lists[alignment::PAIR_B_IDX][index_ctr] ),
+						has_both_positions_of_index(prm_aln, index_ctr )
+					);
 				}
 
-				// Loop through the length of the alignment
-				for (const size_t &index_ctr : indices( prm_aln.length() ) ) {
-					// If this is a pair alignment, check has_both_positions_of_index()
-					const bool is_last  = (index_ctr +1 == prm_aln.length());
-					const bool is_pair_alignment = (prm_lists.size() == 2_z);
-					if ( is_pair_alignment ) {
-						BOOST_CHECK_EQUAL(
-							( prm_lists[alignment::PAIR_A_IDX][index_ctr] && prm_lists[alignment::PAIR_B_IDX][index_ctr] ),
-							has_both_positions_of_index(prm_aln, index_ctr )
+				// Loop over the entries
+				for (const size_t &entry_ctr : indices( prm_lists.size() ) ) {
+					// Check has_position_of_index_of_entry()
+					const aln_posn_opt entry = prm_lists[entry_ctr][index_ctr];
+					BOOST_REQUIRE_EQUAL(
+						static_cast<bool>( entry ),
+						has_position_of_entry_of_index( prm_aln, entry_ctr, index_ctr )
+					);
+					if ( is_last ) {
+						BOOST_REQUIRE_EQUAL(
+							static_cast<bool>( entry ),
+							has_last_position_of_entry(prm_aln, entry_ctr)
 						);
 					}
 
-					// Loop over the entries
-					for (const size_t &entry_ctr : indices( prm_lists.size() ) ) {
-						// Check has_position_of_index_of_entry()
-						const aln_posn_opt entry = prm_lists[entry_ctr][index_ctr];
+					// If has_entry, check the get_position_of_index_of_entry() result
+					if ( entry ) {
+						BOOST_CHECK_EQUAL(
+							*entry,
+							get_position_of_entry_of_index( prm_aln, entry_ctr, index_ctr )
+						);
+						if (is_last) {
+							BOOST_CHECK_EQUAL(
+								*entry,
+								get_last_position_of_entry(prm_aln, entry_ctr)
+							);
+						}
+					}
+					// Otherwise check get_position_of_index_of_entry() throws
+					else {
+	//					BOOST_CHECK_THROW(prm_aln.get_position_of_entry_of_index(entry_ctr, index_ctr), invalid_argument_exception);
+						BOOST_CHECK_THROW( get_position_of_entry_of_index( prm_aln, entry_ctr, index_ctr ), invalid_argument_exception );
+						if ( is_last ) {
+							BOOST_CHECK_THROW(
+								get_last_position_of_entry(prm_aln, entry_ctr),
+								invalid_argument_exception
+							);
+						}
+					}
+
+					// If this is a pair alignment, check has_a_position_of_index() and get_a_position_of_index()
+					if ( is_pair_alignment ) {
 						BOOST_REQUIRE_EQUAL(
 							static_cast<bool>( entry ),
-							has_position_of_entry_of_index( prm_aln, entry_ctr, index_ctr )
+							(entry_ctr == alignment::PAIR_A_IDX) ? has_a_position_of_index(prm_aln, index_ctr) : has_b_position_of_index(prm_aln, index_ctr)
 						);
-						if ( is_last ) {
+						if (is_last) {
 							BOOST_REQUIRE_EQUAL(
 								static_cast<bool>( entry ),
-								has_last_position_of_entry(prm_aln, entry_ctr)
+								(entry_ctr == alignment::PAIR_A_IDX) ? has_last_a_position(prm_aln) : has_last_b_position(prm_aln)
 							);
 						}
 
-						// If has_entry, check the get_position_of_index_of_entry() result
 						if ( entry ) {
 							BOOST_CHECK_EQUAL(
 								*entry,
-								get_position_of_entry_of_index( prm_aln, entry_ctr, index_ctr )
-							);
-							if (is_last) {
-								BOOST_CHECK_EQUAL(
-									*entry,
-									get_last_position_of_entry(prm_aln, entry_ctr)
-								);
-							}
-						}
-						// Otherwise check get_position_of_index_of_entry() throws
-						else {
-		//					BOOST_CHECK_THROW(prm_aln.get_position_of_entry_of_index(entry_ctr, index_ctr), invalid_argument_exception);
-							BOOST_CHECK_THROW( get_position_of_entry_of_index( prm_aln, entry_ctr, index_ctr ), invalid_argument_exception );
-							if ( is_last ) {
-								BOOST_CHECK_THROW(
-									get_last_position_of_entry(prm_aln, entry_ctr),
-									invalid_argument_exception
-								);
-							}
-						}
-
-						// If this is a pair alignment, check has_a_position_of_index() and get_a_position_of_index()
-						if ( is_pair_alignment ) {
-							BOOST_REQUIRE_EQUAL(
-								static_cast<bool>( entry ),
-								(entry_ctr == alignment::PAIR_A_IDX) ? has_a_position_of_index(prm_aln, index_ctr) : has_b_position_of_index(prm_aln, index_ctr)
+								(entry_ctr == alignment::PAIR_A_IDX) ? get_a_position_of_index(prm_aln, index_ctr) : get_b_position_of_index(prm_aln, index_ctr)
 							);
 							if (is_last) {
 								BOOST_REQUIRE_EQUAL(
-									static_cast<bool>( entry ),
-									(entry_ctr == alignment::PAIR_A_IDX) ? has_last_a_position(prm_aln) : has_last_b_position(prm_aln)
-								);
-							}
-
-							if ( entry ) {
-								BOOST_CHECK_EQUAL(
 									*entry,
-									(entry_ctr == alignment::PAIR_A_IDX) ? get_a_position_of_index(prm_aln, index_ctr) : get_b_position_of_index(prm_aln, index_ctr)
-								);
-								if (is_last) {
-									BOOST_REQUIRE_EQUAL(
-										*entry,
-										(entry_ctr == alignment::PAIR_A_IDX) ? get_last_a_position(prm_aln) : get_last_b_position(prm_aln)
-									);
-								}
-							}
-							else {
-								BOOST_CHECK_THROW(
-									(entry_ctr == alignment::PAIR_A_IDX) ? get_a_position_of_index( prm_aln, index_ctr ) : get_b_position_of_index( prm_aln, index_ctr ),
-									invalid_argument_exception
+									(entry_ctr == alignment::PAIR_A_IDX) ? get_last_a_position(prm_aln) : get_last_b_position(prm_aln)
 								);
 							}
+						}
+						else {
+							BOOST_CHECK_THROW(
+								(entry_ctr == alignment::PAIR_A_IDX) ? get_a_position_of_index( prm_aln, index_ctr ) : get_b_position_of_index( prm_aln, index_ctr ),
+								invalid_argument_exception
+							);
 						}
 					}
 				}
 			}
-		};
+		}
+	};
 
-	}  // namespace test
-}  // namespace cath
-
-/// \brief Check the consecutive position functions get the same result for the specified alignment as specified
-void cath::test::alignment_test_suite_fixture::check_consecutive_position(const alignment          &prm_alignment, ///< The alignment to search
-                                                                          const size_size_pair_opt &prm_expected   ///< The correct result
-                                                                          ) {
-
-	if ( prm_expected ) {
-		BOOST_CHECK_EQUAL( first_non_consecutive_entry_positions( prm_alignment ), prm_expected               );
-		BOOST_CHECK_THROW( check_entry_positions_are_consecutive( prm_alignment ), invalid_argument_exception );
+	/// \brief Check the consecutive position functions get the same result for the specified alignment as specified
+	void alignment_test_suite_fixture::check_consecutive_position(const alignment          &prm_alignment, ///< The alignment to search
+	                                                              const size_size_pair_opt &prm_expected   ///< The correct result
+	                                                              ) {
+		if ( prm_expected ) {
+			BOOST_CHECK_EQUAL( first_non_consecutive_entry_positions( prm_alignment ), prm_expected               );
+			BOOST_CHECK_THROW( check_entry_positions_are_consecutive( prm_alignment ), invalid_argument_exception );
+		}
+		else {
+			BOOST_CHECK_EQUAL        ( first_non_consecutive_entry_positions( prm_alignment ), nullopt );
+			BOOST_CHECK_NO_THROW_DIAG( check_entry_positions_are_consecutive( prm_alignment )          );
+		}
 	}
-	else {
-		BOOST_CHECK_EQUAL        ( first_non_consecutive_entry_positions( prm_alignment ), nullopt );
-		BOOST_CHECK_NO_THROW_DIAG( check_entry_positions_are_consecutive( prm_alignment )          );
-	}
-}
 
-BOOST_FIXTURE_TEST_SUITE(alignment_test_suite, cath::test::alignment_test_suite_fixture)
+} // namespace
+
+BOOST_FIXTURE_TEST_SUITE(alignment_test_suite, alignment_test_suite_fixture)
 
 /// \brief Just test a trivially true equality to ensure that all the fixture's setup works OK
 BOOST_AUTO_TEST_CASE(fixture_constructions_work) {

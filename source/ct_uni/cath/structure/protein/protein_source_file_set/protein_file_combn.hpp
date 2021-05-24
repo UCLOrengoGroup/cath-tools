@@ -24,7 +24,9 @@
 #include <iosfwd>
 #include <memory>
 
+// clang-format off
 namespace cath { class protein_source_file_set; }
+// clang-format on
 
 namespace cath {
 	class protein_source_file_set;

@@ -27,93 +27,92 @@
 
 #include <vector>
 
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace align { namespace gap { class gap_penalty; } } }
+// clang-format off
+namespace cath::align { class alignment; }
+namespace cath::align::gap { class gap_penalty; }
+// clang-format on
 
-namespace cath {
-	namespace align {
-		namespace detail {
+namespace cath::align::detail {
 
-			/// \brief TODOCUMENT
-			///
-			/// NOTE: This is NOT symmetric: it always records return paths from each given point
-			///       *to the ends* of the two sequences, *not to their starts*.
-			///       (because, it uses the fact that there's a unique path leading out of each point towards the end
-			///        whereas there may be up to 3 different paths leading out from a given point to the start, as shown below)
-			///
-			///     #.....#
-			///     .\    |
-			///     . \   |
-			///     .  \  |
-			///     .   \ |
-			///     .    4V
-			///     #---->#
-			///
-			/// \todo Construct a space-efficient windowed matrix template and then implement
-			///       this class in terms of that
-			class return_path_matrix final {
-			public:
-				/// \brief TODOCUMENT
-				using size_type = path_step_vec_vec::size_type;
+	/// \brief TODOCUMENT
+	///
+	/// NOTE: This is NOT symmetric: it always records return paths from each given point
+	///       *to the ends* of the two sequences, *not to their starts*.
+	///       (because, it uses the fact that there's a unique path leading out of each point towards the end
+	///        whereas there may be up to 3 different paths leading out from a given point to the start, as shown below)
+	///
+	///     #.....#
+	///     .\    |
+	///     . \   |
+	///     .  \  |
+	///     .   \ |
+	///     .    4V
+	///     #---->#
+	///
+	/// \todo Construct a space-efficient windowed matrix template and then implement
+	///       this class in terms of that
+	class return_path_matrix final {
+	public:
+		/// \brief TODOCUMENT
+		using size_type = path_step_vec_vec::size_type;
 
-			private:
-				/// \brief TODOCUMENT
-				path_step_vec_vec return_path;
+	private:
+		/// \brief TODOCUMENT
+		path_step_vec_vec return_path;
 
-				/// \brief TODOCUMENT
-				size_type         window_width;
+		/// \brief TODOCUMENT
+		size_type         window_width;
 
-				static void check_length(const size_type &);
+		static void check_length(const size_type &);
 
-				void initialise(const size_type &,
-				                const size_type &,
-				                const size_type &);
+		void initialise(const size_type &,
+		                const size_type &,
+		                const size_type &);
 
-			public:
-				return_path_matrix(const size_type &,
-				                   const size_type &,
-				                   const size_type &);
+	public:
+		return_path_matrix(const size_type &,
+		                   const size_type &,
+		                   const size_type &);
 
-				void reset(const size_type &,
-				           const size_type &,
-				           const size_type &);
+		void reset(const size_type &,
+		           const size_type &,
+		           const size_type &);
 
-				[[nodiscard]] size_type get_length_a() const;
-				[[nodiscard]] size_type get_length_b() const;
-				[[nodiscard]] size_type get_window_width() const;
+		[[nodiscard]] size_type get_length_a() const;
+		[[nodiscard]] size_type get_length_b() const;
+		[[nodiscard]] size_type get_window_width() const;
 
-				void set_path_step_towards_end_at_point(const return_path_matrix::size_type &,
-				                                        const return_path_matrix::size_type &,
-				                                        const path_step &);
+		void set_path_step_towards_end_at_point(const return_path_matrix::size_type &,
+		                                        const return_path_matrix::size_type &,
+		                                        const path_step &);
 
-				[[nodiscard]] path_step get_path_step_towards_end_at_point( const return_path_matrix::size_type &,
-				                                                            const return_path_matrix::size_type & ) const;
-			};
+		[[nodiscard]] path_step get_path_step_towards_end_at_point( const return_path_matrix::size_type &,
+		                                                            const return_path_matrix::size_type & ) const;
+	};
 
-			return_path_matrix make_uninitialised_return_path_matrix();
+	return_path_matrix make_uninitialised_return_path_matrix();
 
-			alignment make_alignment(const return_path_matrix &);
+	alignment make_alignment(const return_path_matrix &);
 
-			path_step get_path_dirn_towards_end_from_point_plus_path_step(const return_path_matrix &,
-			                                                              const return_path_matrix::size_type &,
-			                                                              const return_path_matrix::size_type &,
-			                                                              const path_step &);
+	path_step get_path_dirn_towards_end_from_point_plus_path_step(const return_path_matrix &,
+	                                                              const return_path_matrix::size_type &,
+	                                                              const return_path_matrix::size_type &,
+	                                                              const path_step &);
 
-			score_type get_gap_penalty_for_path_step_from_point(const return_path_matrix &,
-			                                                    const gap::gap_penalty &,
-			                                                    const path_step &,
-			                                                    const return_path_matrix::size_type &,
-			                                                    const return_path_matrix::size_type &);
+	score_type get_gap_penalty_for_path_step_from_point(const return_path_matrix &,
+	                                                    const gap::gap_penalty &,
+	                                                    const path_step &,
+	                                                    const return_path_matrix::size_type &,
+	                                                    const return_path_matrix::size_type &);
 
-			size_size_pair get_b_window_start_and_stop_for_a_index(const return_path_matrix &,
-			                                                       const return_path_matrix::size_type &);
+	size_size_pair get_b_window_start_and_stop_for_a_index(const return_path_matrix &,
+	                                                       const return_path_matrix::size_type &);
 
-			std::ostream & operator<<(std::ostream &,
-			                          const return_path_matrix &);
+	std::ostream & operator<<(std::ostream &,
+	                          const return_path_matrix &);
 
-			score_type max_path_step_score(const path_step_score_map &);
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+	score_type max_path_step_score(const path_step_score_map &);
+
+} // namespace cath::align::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DETAIL_RETURN_PATH_MATRIX_HPP

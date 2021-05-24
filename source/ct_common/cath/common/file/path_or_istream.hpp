@@ -28,44 +28,42 @@
 
 #include "cath/common/file/open_fstream.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Type alias for a reference_wrapper of istream
-		using istream_ref = std::reference_wrapper<std::istream>;
+	/// \brief Type alias for a reference_wrapper of istream
+	using istream_ref = std::reference_wrapper<std::istream>;
 
-		/// \brief Type alias for an optional reference_wrapper of istream
-		using istream_ref_opt = ::std::optional<istream_ref>;
+	/// \brief Type alias for an optional reference_wrapper of istream
+	using istream_ref_opt = ::std::optional<istream_ref>;
 
-		/// \brief Handle opening a file and providing an istream, with support for
-		///        a special flag which indicates input from the istream optionally specified on construction
-		///
-		/// Note: this has substantial overlap with ofstream_list and could perhaps share a common implementation
-		class path_or_istream final {
-		private:
-			/// \brief An optional special istream from which input can be read (usually stdin)
-			istream_ref_opt standard_instream;
+	/// \brief Handle opening a file and providing an istream, with support for
+	///        a special flag which indicates input from the istream optionally specified on construction
+	///
+	/// Note: this has substantial overlap with ofstream_list and could perhaps share a common implementation
+	class path_or_istream final {
+	private:
+		/// \brief An optional special istream from which input can be read (usually stdin)
+		istream_ref_opt standard_instream;
 
-			/// \brief A flag that can be used when passing a path to indicate input should be read from the standard_instream
-			::std::filesystem::path standard_instream_flag = "-";
+		/// \brief A flag that can be used when passing a path to indicate input should be read from the standard_instream
+		::std::filesystem::path standard_instream_flag = "-";
 
-			/// \brief The ifstream from which file should be read
-			::std::optional<std::ifstream> input_file_stream;
+		/// \brief The ifstream from which file should be read
+		::std::optional<std::ifstream> input_file_stream;
 
-		public:
-			path_or_istream() = default;
-			explicit path_or_istream( std::istream &, ::std::filesystem::path = "-" );
+	public:
+		path_or_istream() = default;
+		explicit path_or_istream( std::istream &, ::std::filesystem::path = "-" );
 
-			path_or_istream & set_path(const ::std::filesystem::path &);
-			const ::std::filesystem::path & get_flag() const;
-			path_or_istream & close();
-			std::istream & get_istream();
-		};
+		path_or_istream & set_path(const ::std::filesystem::path &);
+		const ::std::filesystem::path & get_flag() const;
+		path_or_istream & close();
+		std::istream & get_istream();
+	};
 
-		bool file_is_missing(const path_or_istream &,
-		                     const ::std::filesystem::path &);
+	bool file_is_missing(const path_or_istream &,
+	                     const ::std::filesystem::path &);
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_PATH_OR_ISTREAM_HPP

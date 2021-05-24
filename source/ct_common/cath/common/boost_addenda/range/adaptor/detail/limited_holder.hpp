@@ -25,34 +25,30 @@
 
 #include <functional>
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common::detail {
 
-			/// \brief TODOCUMENT
-			class limited_holder final {
-			private:
-				/// \brief TODOCUMENT
-				size_t max_num_elements;
+	/// \brief TODOCUMENT
+	class limited_holder final {
+	private:
+		/// \brief TODOCUMENT
+		size_t max_num_elements;
 
-			public:
-				explicit limited_holder(const size_t &);
+	public:
+		explicit limited_holder(const size_t &);
 
-				[[nodiscard]] const size_t &get_max_num_elements() const;
-			};
+		[[nodiscard]] const size_t &get_max_num_elements() const;
+	};
 
-			/// \brief TODOCUMENT
-			inline limited_holder::limited_holder(const size_t &prm_max_num_elements ///< TODOCUMENT
-			                                      ) : max_num_elements( prm_max_num_elements ) {
-			}
+	/// \brief TODOCUMENT
+	inline limited_holder::limited_holder(const size_t &prm_max_num_elements ///< TODOCUMENT
+	                                      ) : max_num_elements( prm_max_num_elements ) {
+	}
 
-			/// \brief TODOCUMENT
-			inline const size_t & limited_holder::get_max_num_elements() const {
-				return max_num_elements;
-			}
+	/// \brief TODOCUMENT
+	inline const size_t & limited_holder::get_max_num_elements() const {
+		return max_num_elements;
+	}
 
-		} // namespace detail
-	} // namespace common
-} // namespace cath
+} // namespace cath::common::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_DETAIL_LIMITED_HOLDER_HPP

@@ -28,41 +28,39 @@
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Type alias for a vector of reference_wrapper of ostream
-		using ostream_ref_vec = std::vector<ostream_ref>;
+	/// \brief Type alias for a vector of reference_wrapper of ostream
+	using ostream_ref_vec = std::vector<ostream_ref>;
 
-		/// \brief A list of ostreams, with support for populating from paths, which get automatically opened,
-		///        and a special flag which indicates output to the ostream optionally specified on construction
-		///
-		/// Note: this has substantial overlap with path_or_istream and could perhaps share a common implementation
-		class ofstream_list {
-		private:
-			/// \brief An optional special ostream to which output can be sent (usually stdout)
-			ostream_ref_opt standard_outstream;
+	/// \brief A list of ostreams, with support for populating from paths, which get automatically opened,
+	///        and a special flag which indicates output to the ostream optionally specified on construction
+	///
+	/// Note: this has substantial overlap with path_or_istream and could perhaps share a common implementation
+	class ofstream_list {
+	private:
+		/// \brief An optional special ostream to which output can be sent (usually stdout)
+		ostream_ref_opt standard_outstream;
 
-			/// \brief A flag that can be used when passing a path to indicate output should be sent to the standard_outstream
-			::std::filesystem::path standard_outstream_flag = "-";
+		/// \brief A flag that can be used when passing a path to indicate output should be sent to the standard_outstream
+		::std::filesystem::path standard_outstream_flag = "-";
 
-			/// \brief The standard list of ofstreams to which output should be sent
-			std::deque<std::ofstream> ofstreams;
+		/// \brief The standard list of ofstreams to which output should be sent
+		std::deque<std::ofstream> ofstreams;
 
-		public:
-			ofstream_list() = default;
+	public:
+		ofstream_list() = default;
 
-			explicit ofstream_list( std::ostream &, ::std::filesystem::path = "-" );
+		explicit ofstream_list( std::ostream &, ::std::filesystem::path = "-" );
 
-			ostream_ref_vec open_ofstreams(const path_vec &);
-			[[nodiscard]] const ::std::filesystem::path &get_flag() const;
-			void close_all();
-		};
+		ostream_ref_vec open_ofstreams(const path_vec &);
+		[[nodiscard]] const ::std::filesystem::path &get_flag() const;
+		void close_all();
+	};
 
-		ostream_ref open_ofstream(ofstream_list &,
-		                          const ::std::filesystem::path &);
+	ostream_ref open_ofstream(ofstream_list &,
+	                          const ::std::filesystem::path &);
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_OFSTREAM_LIST_HPP

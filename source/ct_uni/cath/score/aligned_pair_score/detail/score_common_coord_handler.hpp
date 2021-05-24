@@ -32,108 +32,106 @@
 #include <memory>
 #include <string>
 
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace align { class common_atom_selection_policy; } }
-namespace cath { namespace align { class common_residue_selection_policy; } }
-namespace cath { namespace geom { class coord_list; } }
+// clang-format off
 namespace cath { class protein; }
+namespace cath::align { class alignment; }
+namespace cath::align { class common_atom_selection_policy; }
+namespace cath::align { class common_residue_selection_policy; }
+namespace cath::geom { class coord_list; }
+namespace cath::score::detail { class score_common_coord_handler; }
+// clang-format on
 
-namespace cath {
-	namespace score {
-		namespace detail {
+namespace cath::score::detail {
 
-			class score_common_coord_handler;
+	bool operator<(const score_common_coord_handler &,
+	               const score_common_coord_handler &);
 
-			bool operator<(const score_common_coord_handler &,
-			               const score_common_coord_handler &);
+	/// \brief A convenience class to be used in the implementation of aligned_pair_score classes
+	///        for handling the selection of common coordinates from an alignment and associated
+	///        proteins.
+	///
+	/// \todo Does this really need to be hidden away in cath::score::detail as if embarrassing?
+	///       Consider making this class more general and more generally accessible.
+	///
+	/// This can be parameterised by the common_residue_selection_policy to use to select the
+	/// common coordinates.
+	///
+	/// \todo Also parameterise this by the policy determining which common atoms to select
+	///       this should include options for:
+	///         * all backbone atoms
+	///         * nitrogen
+	///         * carbon_alpha
+	///         * carbon
+	///         * (carbon_beta?)
+	///         * (oxygen?)
+	///
+	/// \todo Provide methods for providing strings that can used to provide more details
+	///       in short names, long names and descriptions.
+	class score_common_coord_handler final : private boost::equivalent<score_common_coord_handler,
+	                                                 boost::totally_ordered<score_common_coord_handler> > {
+	private:
+		friend bool operator<(const score_common_coord_handler &,
+		                      const score_common_coord_handler &);
 
-			/// \brief A convenience class to be used in the implementation of aligned_pair_score classes
-			///        for handling the selection of common coordinates from an alignment and associated
-			///        proteins.
-			///
-			/// \todo Does this really need to be hidden away in cath::score::detail as if embarrassing?
-			///       Consider making this class more general and more generally accessible.
-			///
-			/// This can be parameterised by the common_residue_selection_policy to use to select the
-			/// common coordinates.
-			///
-			/// \todo Also parameterise this by the policy determining which common atoms to select
-			///       this should include options for:
-			///         * all backbone atoms
-			///         * nitrogen
-			///         * carbon_alpha
-			///         * carbon
-			///         * (carbon_beta?)
-			///         * (oxygen?)
-			///
-			/// \todo Provide methods for providing strings that can used to provide more details
-			///       in short names, long names and descriptions.
-			class score_common_coord_handler final : private boost::equivalent<score_common_coord_handler,
-			                                                 boost::totally_ordered<score_common_coord_handler> > {
-			private:
-				friend bool operator<(const score_common_coord_handler &,
-				                      const score_common_coord_handler &);
+		friend class boost::serialization::access;
 
-				friend class boost::serialization::access;
+		template<class archive> void serialize(archive &ar,
+		                                       const size_t /*version*/
+		                                       ) {
+			ar & BOOST_SERIALIZATION_NVP( comm_res_seln_pol_ptr  );
+			ar & BOOST_SERIALIZATION_NVP( comm_atom_seln_pol_ptr );
+		}
 
-				template<class archive> void serialize(archive &ar,
-				                                       const size_t /*version*/
-				                                       ) {
-					ar & BOOST_SERIALIZATION_NVP( comm_res_seln_pol_ptr  );
-					ar & BOOST_SERIALIZATION_NVP( comm_atom_seln_pol_ptr );
-				}
+		/// \brief The common_residue_selection_policy that should be used to select the common
+		///        coordinates from the alignment and associated proteins.
+		///
+		/// The default (as defined by the default ctor) is common_residue_select_all_policy.
+		common::clone_ptr<const align::common_residue_selection_policy> comm_res_seln_pol_ptr { align::common_residue_select_all_policy().clone() };
 
-				/// \brief The common_residue_selection_policy that should be used to select the common
-				///        coordinates from the alignment and associated proteins.
-				///
-				/// The default (as defined by the default ctor) is common_residue_select_all_policy.
-				common::clone_ptr<const align::common_residue_selection_policy> comm_res_seln_pol_ptr { align::common_residue_select_all_policy().clone() };
+		/// \brief The common_atom_selection_policy that should be used to select the common
+		///        atoms for the equivalent residues.
+		///
+		/// The default (as defined by the default ctor) is common_atom_select_ca_policy.
+		common::clone_ptr<const align::common_atom_selection_policy> comm_atom_seln_pol_ptr   { align::common_atom_select_ca_policy().clone()     };
 
-				/// \brief The common_atom_selection_policy that should be used to select the common
-				///        atoms for the equivalent residues.
-				///
-				/// The default (as defined by the default ctor) is common_atom_select_ca_policy.
-				common::clone_ptr<const align::common_atom_selection_policy> comm_atom_seln_pol_ptr   { align::common_atom_select_ca_policy().clone()     };
+		/// \todo Consider making these public
+		[[nodiscard]] const align::common_residue_selection_policy &get_comm_res_seln_pol() const;
 
-				/// \todo Consider making these public
-				[[nodiscard]] const align::common_residue_selection_policy &get_comm_res_seln_pol() const;
+		/// \todo Consider making these public
+		[[nodiscard]] const align::common_atom_selection_policy &get_comm_atom_seln_pol() const;
 
-				/// \todo Consider making these public
-				[[nodiscard]] const align::common_atom_selection_policy &get_comm_atom_seln_pol() const;
+		[[nodiscard]] str_str_pair get_policy_description_strings() const;
 
-				[[nodiscard]] str_str_pair get_policy_description_strings() const;
+	  public:
+		score_common_coord_handler() = default;
+		score_common_coord_handler(const align::common_residue_selection_policy &,
+		                           const align::common_atom_selection_policy &);
+		score_common_coord_handler(const score_common_coord_handler &) = default;
 
-			  public:
-				score_common_coord_handler() = default;
-				score_common_coord_handler(const align::common_residue_selection_policy &,
-				                           const align::common_atom_selection_policy &);
-				score_common_coord_handler(const score_common_coord_handler &) = default;
+		[[nodiscard]] std::string short_suffix_string() const;
+		[[nodiscard]] std::string long_suffix_string() const;
+		[[nodiscard]] std::string description_brackets_string() const;
 
-				[[nodiscard]] std::string short_suffix_string() const;
-				[[nodiscard]] std::string long_suffix_string() const;
-				[[nodiscard]] std::string description_brackets_string() const;
+		[[nodiscard]] str_bool_pair_vec short_name_suffixes() const;
 
-				[[nodiscard]] str_bool_pair_vec short_name_suffixes() const;
+		[[nodiscard]] geom::coord_list_coord_list_pair get_common_coords( const align::alignment &,
+		                                                                  const protein &,
+		                                                                  const protein & ) const;
 
-				[[nodiscard]] geom::coord_list_coord_list_pair get_common_coords( const align::alignment &,
-				                                                                  const protein &,
-				                                                                  const protein & ) const;
+		[[nodiscard]] std::pair<cath::geom::coord_list_vec, cath::geom::coord_list_vec> get_common_coords_by_residue(
+		  const align::alignment &,
+		  const protein &,
+		  const protein & ) const;
+	};
 
-				[[nodiscard]] std::pair<cath::geom::coord_list_vec, cath::geom::coord_list_vec> get_common_coords_by_residue(
-				  const align::alignment &,
-				  const protein &,
-				  const protein & ) const;
-			};
+	score_common_coord_handler_vec get_all_score_common_coord_handlers();
 
-			score_common_coord_handler_vec get_all_score_common_coord_handlers();
+	bool operator<(const score_common_coord_handler &,
+	               const score_common_coord_handler &);
 
-			bool operator<(const score_common_coord_handler &,
-			               const score_common_coord_handler &);
+	std::ostream & operator<<(std::ostream &,
+	                          const score_common_coord_handler &);
 
-			std::ostream & operator<<(std::ostream &,
-			                          const score_common_coord_handler &);
+} // namespace cath::score::detail
 
-		} // namespace detail
-	} // namespace score
-} // namespace cath
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_HPP

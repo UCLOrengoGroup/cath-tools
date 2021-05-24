@@ -21,17 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_COORD_LINKAGE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_COORD_LINKAGE_HPP
 
-namespace cath {
-	namespace geom {
+namespace cath::geom {
 
-		/// \brief Whether a coord can be used to link to further coord
-		///        (eg when deciding which non-protein atoms to include near a domain)
-		enum class coord_linkage : bool {
-			ADD_AND_LINK, ///< The coord can be used to link to other coords
-			ADD_ONLY      ///< The coord can only be added, not used to link to other coords
-		};
+	/// \brief Whether a coord can be used to link to further coord
+	///        (eg when deciding which non-protein atoms to include near a domain)
+	enum class coord_linkage : bool {
+		ADD_AND_LINK, ///< The coord can be used to link to other coords
+		ADD_ONLY      ///< The coord can only be added, not used to link to other coords
+	};
 
-	} // namespace geom
-} // namespace cath
+} // namespace cath::geom
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_COORD_LINKAGE_HPP

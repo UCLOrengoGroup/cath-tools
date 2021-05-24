@@ -37,78 +37,76 @@ using namespace ::std;
 
 using ::std::nullopt;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The alignment_split_mapping_test_suite_fixture to assist in testing alignment_split_mapping
-		struct alignment_split_mapping_test_suite_fixture {
-		protected:
-			~alignment_split_mapping_test_suite_fixture() noexcept = default;
+	/// \brief The alignment_split_mapping_test_suite_fixture to assist in testing alignment_split_mapping
+	struct alignment_split_mapping_test_suite_fixture {
+	protected:
+		~alignment_split_mapping_test_suite_fixture() noexcept = default;
 
-		public:
-			/// Source alignment:
-			///     -1245-
-			///     01--24
-			///     012345
-			///     01--34
-			const aln_posn_opt_vec_vec SRC_ALN_DATA = {
-				{ nullopt, 1,    2,       4,       5,    nullopt },
-				{ 0_z,     1,    nullopt, nullopt, 2,    4       },
-				{ 0_z,     1,    2,       3,       4,    5       },
-				{ 0_z,     1,    nullopt, nullopt, 3,    4       }
-			};
-			const alignment SRC_ALN{ SRC_ALN_DATA };
-
-			/// \brief TODOCUMENT
-			const size_vec SRC_CORR_LENGTHS = { 6, 5, 7, 5 };
-
-			/// Mapping a (from 0 and 2):
-			///     -012345--
-			///     0-12-3456
-			const size_set SPLIT_SET_A = { 0, 2 };
-
-			/// Mapping b (from 1 and 3):
-			///     01-234
-			///     0123-4
-			const size_set SPLIT_SET_B = { 1, 3 };
-
-			/// Source inter-mapping alignment:
-			///     -01.2345--
-			///     0-1.2-3456
-			///     ||  a   ||
-			///     vv      vv
-			///     012-345678
-			///     -012345---
-			///     ^^      ^^
-			///     ||  b   ||
-			///     .01-234...
-			///     .0123-4...
-			const aln_posn_opt_vec_vec INTER_ALN_DATA = {
-				{ 0_z,     1,    2,    nullopt, 3,    4,    5,    6,       7,       8       },
-				{ nullopt, 0_z,  1,    2,       3,    4,    5,    nullopt, nullopt, nullopt }
-			};
-			const alignment INTER_ALN{ INTER_ALN_DATA };
-
-			/// Final alignment:
-			///     -01-2345-
-			///     -01-234--
-			///     0-1-2-345
-			///     -0123-4--
-			const aln_posn_opt_vec_vec FINAL_ALN_DATA = {
-				{ nullopt, 0_z,     1, nullopt,       2,    3,             4,    5,       nullopt, nullopt },
-				{ nullopt, 0_z,     1, nullopt,       2,    3,             4,    nullopt, nullopt, nullopt },
-				{ 0_z,     nullopt, 1, nullopt,       2,    nullopt,       3,    4,       5,       6       },
-				{ nullopt, 0_z,     1,       2,       3,    nullopt,       4,    nullopt, nullopt, nullopt }
-			};
-			const alignment FINAL_ALN{ FINAL_ALN_DATA };
-
+	public:
+		/// Source alignment:
+		///     -1245-
+		///     01--24
+		///     012345
+		///     01--34
+		const aln_posn_opt_vec_vec SRC_ALN_DATA = {
+			{ nullopt, 1,    2,       4,       5,    nullopt },
+			{ 0_z,     1,    nullopt, nullopt, 2,    4       },
+			{ 0_z,     1,    2,       3,       4,    5       },
+			{ 0_z,     1,    nullopt, nullopt, 3,    4       }
 		};
+		const alignment SRC_ALN{ SRC_ALN_DATA };
 
-	}  // namespace test
-}  // namespace cath
+		/// \brief TODOCUMENT
+		const size_vec SRC_CORR_LENGTHS = { 6, 5, 7, 5 };
+
+		/// Mapping a (from 0 and 2):
+		///     -012345--
+		///     0-12-3456
+		const size_set SPLIT_SET_A = { 0, 2 };
+
+		/// Mapping b (from 1 and 3):
+		///     01-234
+		///     0123-4
+		const size_set SPLIT_SET_B = { 1, 3 };
+
+		/// Source inter-mapping alignment:
+		///     -01.2345--
+		///     0-1.2-3456
+		///     ||  a   ||
+		///     vv      vv
+		///     012-345678
+		///     -012345---
+		///     ^^      ^^
+		///     ||  b   ||
+		///     .01-234...
+		///     .0123-4...
+		const aln_posn_opt_vec_vec INTER_ALN_DATA = {
+			{ 0_z,     1,    2,    nullopt, 3,    4,    5,    6,       7,       8       },
+			{ nullopt, 0_z,  1,    2,       3,    4,    5,    nullopt, nullopt, nullopt }
+		};
+		const alignment INTER_ALN{ INTER_ALN_DATA };
+
+		/// Final alignment:
+		///     -01-2345-
+		///     -01-234--
+		///     0-1-2-345
+		///     -0123-4--
+		const aln_posn_opt_vec_vec FINAL_ALN_DATA = {
+			{ nullopt, 0_z,     1, nullopt,       2,    3,             4,    5,       nullopt, nullopt },
+			{ nullopt, 0_z,     1, nullopt,       2,    3,             4,    nullopt, nullopt, nullopt },
+			{ 0_z,     nullopt, 1, nullopt,       2,    nullopt,       3,    4,       5,       6       },
+			{ nullopt, 0_z,     1,       2,       3,    nullopt,       4,    nullopt, nullopt, nullopt }
+		};
+		const alignment FINAL_ALN{ FINAL_ALN_DATA };
+
+	};
+
+} // namespace
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(alignment_split_mapping_test_suite, cath::test::alignment_split_mapping_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(alignment_split_mapping_test_suite, alignment_split_mapping_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(ctor_does_not_throw) {

@@ -23,25 +23,23 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief The status arising from attempting to parse a pdb_atom from a string
-		enum class pdb_atom_parse_status : char {
-			OK,   ///< The record parses correctly
-			SKIP, ///< The record fails with a minor error; skip this record but process further records.
-			ABORT ///< The record fails with a major error; abort parse attempt.
-		};
+	/// \brief The status arising from attempting to parse a pdb_atom from a string
+	enum class pdb_atom_parse_status : char {
+		OK,   ///< The record parses correctly
+		SKIP, ///< The record fails with a minor error; skip this record but process further records.
+		ABORT ///< The record fails with a major error; abort parse attempt.
+	};
 
-//		pdb_atom_parse_status str_to_pdb_rec(const std::string &);
+//	pdb_atom_parse_status str_to_pdb_rec(const std::string &);
 //
-//		std::istream & operator>>(std::istream &,
-//		                          pdb_atom_parse_status &);
+//	std::istream & operator>>(std::istream &,
+//	                          pdb_atom_parse_status &);
 //
-//		std::ostream & operator<<(std::ostream &,
-//		                          const pdb_atom_parse_status &);
+//	std::ostream & operator<<(std::ostream &,
+//	                          const pdb_atom_parse_status &);
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_ATOM_PARSE_STATUS_HPP

@@ -26,38 +26,36 @@
 
 #include "cath/common/path_type_aliases.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief A simple wrapper for creating a temporary file and then automatically cleaning it up on destruction
+	/// \brief A simple wrapper for creating a temporary file and then automatically cleaning it up on destruction
+	///
+	/// This can be constructed with an empty string, in which case has_filename() will return false,
+	/// get_filename() will return an empty path and the destructor will do nothing.
+	class temp_file final {
+	private:
+		path_opt filename;
+
+		static ::std::filesystem::path temp_filename_of_basename_pattern(const std::string &);
+
+	public:
+		explicit temp_file(const std::string &);
+		~temp_file() noexcept;
+
+		/// \brief Specify that the copy-ctor shouldn't be used
 		///
-		/// This can be constructed with an empty string, in which case has_filename() will return false,
-		/// get_filename() will return an empty path and the destructor will do nothing.
-		class temp_file final {
-		private:
-			path_opt filename;
+		/// \todo Consider implementing a move-ctor that ensures the source filename gets wiped
+		temp_file(const temp_file &) = delete;
+		/// \brief Specify that the copy-assign shouldn't be used
+		///
+		/// \todo Consider implementing a move-assign that ensures the source filename gets wiped
+		temp_file & operator=(const temp_file &) = delete;
 
-			static ::std::filesystem::path temp_filename_of_basename_pattern(const std::string &);
+		[[nodiscard]] const path_opt &get_opt_filename() const;
+	};
 
-		public:
-			explicit temp_file(const std::string &);
-			~temp_file() noexcept;
-
-			/// \brief Specify that the copy-ctor shouldn't be used
-			///
-			/// \todo Consider implementing a move-ctor that ensures the source filename gets wiped
-			temp_file(const temp_file &) = delete;
-			/// \brief Specify that the copy-assign shouldn't be used
-			///
-			/// \todo Consider implementing a move-assign that ensures the source filename gets wiped
-			temp_file & operator=(const temp_file &) = delete;
-
-			[[nodiscard]] const path_opt &get_opt_filename() const;
-		};
-
-		bool has_filename(const temp_file &);
-		::std::filesystem::path get_filename(const temp_file &);
-	} // namespace common
-} // namespace cath
+	bool has_filename(const temp_file &);
+	::std::filesystem::path get_filename(const temp_file &);
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_TEMP_FILE_HPP

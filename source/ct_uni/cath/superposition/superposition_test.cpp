@@ -38,68 +38,66 @@ using namespace ::cath::geom;
 using namespace ::cath::sup;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The superposition_test_suite_fixture to assist in testing superposition
-		struct superposition_test_suite_fixture : protected global_test_constants {
-		protected:
-			~superposition_test_suite_fixture() noexcept = default;
+	/// \brief The superposition_test_suite_fixture to assist in testing superposition
+	struct superposition_test_suite_fixture : protected global_test_constants {
+	protected:
+		~superposition_test_suite_fixture() noexcept = default;
 
-		public:
-			const coord_list coord_list_1 { coord_vec{
-				{ 10.306, 134.301, 48.038 },
-				{ 13.342, 136.603, 47.735 },
-				{ 16.498, 135.180, 46.225 },
-				{ 19.855, 136.695, 45.235 },
-				{ 21.726, 135.373, 42.223 }
-			} };
+	public:
+		const coord_list coord_list_1 { coord_vec{
+			{ 10.306, 134.301, 48.038 },
+			{ 13.342, 136.603, 47.735 },
+			{ 16.498, 135.180, 46.225 },
+			{ 19.855, 136.695, 45.235 },
+			{ 21.726, 135.373, 42.223 }
+		} };
 
-			const coord_list coord_list_2 { coord_vec{
-				{ 21.222, 18.395, 14.116 },
-				{ 24.152, 16.183, 15.172 },
-				{ 23.817, 12.426, 14.864 },
-				{ 25.966,  9.358, 15.175 },
-				{ 25.362,  6.469, 12.836 }
-			} };
+		const coord_list coord_list_2 { coord_vec{
+			{ 21.222, 18.395, 14.116 },
+			{ 24.152, 16.183, 15.172 },
+			{ 23.817, 12.426, 14.864 },
+			{ 25.966,  9.358, 15.175 },
+			{ 25.362,  6.469, 12.836 }
+		} };
 
-			const coord_list coord_list_2_variation { coord_vec{
-				{ 21.222, 18.395, 14.116 },
-				{ 24.152, 16.183, 15.172 },
-				{ 23.817, 12.426, 14.864 },
-				{ 25.966,  9.358, 15.175 },
-				{ 15.000, 15.000, 15.000 }
-			} };
+		const coord_list coord_list_2_variation { coord_vec{
+			{ 21.222, 18.395, 14.116 },
+			{ 24.152, 16.183, 15.172 },
+			{ 23.817, 12.426, 14.864 },
+			{ 25.966,  9.358, 15.175 },
+			{ 15.000, 15.000, 15.000 }
+		} };
 
-			const double rmsd_between_1_and_2 = { 0.12978869963736103 };
+		const double rmsd_between_1_and_2 = { 0.12978869963736103 };
 
-			/// \brief Check that superposition returned by post_translate_and_rotate() has the
-			///        same effect on 7 key points as applying the parts separately
-			void check_post_translate_and_rotate(const coord    &prm_orig_supn_transltn, ///< The translation part of the original superposition to apply first
-			                                     const rotation &prm_orig_supn_rottn,    ///< The translation part of the original superposition to apply first
-			                                     const coord    &prm_translation,        ///< The translation to apply after the superposition
-			                                     const rotation &prm_rotation            ///< The rotation to apply last, after the translation
-			                                     ) {
-				constexpr size_t IDX = 0;
-				const superposition orig_supn{ { prm_orig_supn_transltn }, { prm_orig_supn_rottn } };
-				const superposition ptar_supn = post_translate_and_rotate_copy( orig_supn, prm_translation, prm_rotation );
-				for (const coord &x : {  ORIGIN_COORD,
-				                         UNIT_X_COORD,  UNIT_Y_COORD,  UNIT_Z_COORD,
-				                        -UNIT_X_COORD, -UNIT_Y_COORD, -UNIT_Z_COORD } ) {
-					BOOST_CHECK_EQUAL(
-						transform_copy( ptar_supn, IDX, x ),
-						rotate_copy(
-							prm_rotation,
-							transform_copy( orig_supn, IDX, x ) + prm_translation
-						)
-					);
-				}
+		/// \brief Check that superposition returned by post_translate_and_rotate() has the
+		///        same effect on 7 key points as applying the parts separately
+		void check_post_translate_and_rotate(const coord    &prm_orig_supn_transltn, ///< The translation part of the original superposition to apply first
+		                                     const rotation &prm_orig_supn_rottn,    ///< The translation part of the original superposition to apply first
+		                                     const coord    &prm_translation,        ///< The translation to apply after the superposition
+		                                     const rotation &prm_rotation            ///< The rotation to apply last, after the translation
+		                                     ) {
+			constexpr size_t IDX = 0;
+			const superposition orig_supn{ { prm_orig_supn_transltn }, { prm_orig_supn_rottn } };
+			const superposition ptar_supn = post_translate_and_rotate_copy( orig_supn, prm_translation, prm_rotation );
+			for (const coord &x : {  ORIGIN_COORD,
+			                         UNIT_X_COORD,  UNIT_Y_COORD,  UNIT_Z_COORD,
+			                        -UNIT_X_COORD, -UNIT_Y_COORD, -UNIT_Z_COORD } ) {
+				BOOST_CHECK_EQUAL(
+					transform_copy( ptar_supn, IDX, x ),
+					rotate_copy(
+						prm_rotation,
+						transform_copy( orig_supn, IDX, x ) + prm_translation
+					)
+				);
 			}
-		};
-	}  // namespace test
-}  // namespace cath
+		}
+	};
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(superposition_test_suite, cath::test::superposition_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(superposition_test_suite, superposition_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(equality) {

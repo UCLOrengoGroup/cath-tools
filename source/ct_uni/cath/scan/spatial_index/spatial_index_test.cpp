@@ -25,30 +25,14 @@
 #include "cath/test/boost_test_print_type.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath::scan;
-using namespace ::cath::test;
 
 using ::std::make_tuple;
 using ::std::tuple;
 
 using short_short_short_tuple = tuple<short int, short int, short int>;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The spatial_index_test_suite_fixture to assist in testing spatial_index
-		struct spatial_index_test_suite_fixture : protected global_test_constants {
-		protected:
-			~spatial_index_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-} // namespace cath
-
-
-BOOST_FIXTURE_TEST_SUITE(spatial_index_test_suite, spatial_index_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(spatial_index_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 	constexpr auto index_x_y_z_keyer = make_res_pair_keyer(

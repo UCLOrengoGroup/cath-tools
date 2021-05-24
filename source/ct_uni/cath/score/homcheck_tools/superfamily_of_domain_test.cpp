@@ -25,21 +25,21 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/score/homcheck_tools/superfamily_of_domain.hpp"
 
+using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::homcheck;
 using namespace ::cath::homcheck::detail;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The superfamily_of_domain_test_suite_fixture to assist in testing superfamily_of_domain
-		struct superfamily_of_domain_test_suite_fixture {
-		protected:
-			~superfamily_of_domain_test_suite_fixture() noexcept = default;
+	/// \brief The superfamily_of_domain_test_suite_fixture to assist in testing superfamily_of_domain
+	struct superfamily_of_domain_test_suite_fixture {
+	protected:
+		~superfamily_of_domain_test_suite_fixture() noexcept = default;
 
-			/// \brief Some example superfamily_of_domain text for testing parsing
-			const string superfamily_of_domain_text = R"(1qinA00 3.10.180.10
+		/// \brief Some example superfamily_of_domain text for testing parsing
+		const string superfamily_of_domain_text = R"(1qinA00 3.10.180.10
 1vkeD00 1.20.1290.10
 1yjwH00 3.90.1170.10
 2nx5G00 2.60.40.10
@@ -50,25 +50,24 @@ namespace cath {
 4n9f400 3.10.20.90
 6cscA01 1.10.580.10)";
 
-			/// \brief The superfamily of domain data implied by the above text
-			const str_str_map superfamily_of_domain_map = {
-				{ "1qinA00", "3.10.180.10"  },
-				{ "1vkeD00", "1.20.1290.10" },
-				{ "1yjwH00", "3.90.1170.10" },
-				{ "2nx5G00", "2.60.40.10"   },
-				{ "2x2jC01", "2.60.40.1760" },
-				{ "3i3eB01", "2.60.120.260" },
-				{ "3s27A04", "3.40.50.2000" },
-				{ "3x1iA00", "1.10.565.10"  },
-				{ "4n9f400", "3.10.20.90"   },
-				{ "6cscA01", "1.10.580.10"  }
-			};
-
+		/// \brief The superfamily of domain data implied by the above text
+		const str_str_map superfamily_of_domain_map = {
+			{ "1qinA00", "3.10.180.10"  },
+			{ "1vkeD00", "1.20.1290.10" },
+			{ "1yjwH00", "3.90.1170.10" },
+			{ "2nx5G00", "2.60.40.10"   },
+			{ "2x2jC01", "2.60.40.1760" },
+			{ "3i3eB01", "2.60.120.260" },
+			{ "3s27A04", "3.40.50.2000" },
+			{ "3x1iA00", "1.10.565.10"  },
+			{ "4n9f400", "3.10.20.90"   },
+			{ "6cscA01", "1.10.580.10"  }
 		};
-	}  // namespace test
-}  // namespace cath
 
-BOOST_FIXTURE_TEST_SUITE(superfamily_of_domain_test_suite, cath::test::superfamily_of_domain_test_suite_fixture)
+	};
+} // namespace
+
+BOOST_FIXTURE_TEST_SUITE(superfamily_of_domain_test_suite, superfamily_of_domain_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(is_valid_cath_node_id_works) {
 	BOOST_CHECK_EQUAL( is_valid_cath_node_id{}( "1"           ), true );

@@ -21,18 +21,18 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_SUPERPOSE_FIT_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_SUPERPOSE_FIT_HPP
 
-namespace cath { namespace geom { class coord_list; } }
-namespace cath { namespace geom { class rotation; } }
+// clang-format off
+namespace cath::geom { class coord_list; }
+namespace cath::geom { class rotation; }
+// clang-format on
 
-namespace cath {
-	namespace geom {
+namespace cath::geom {
 
-		geom::rotation superpose_fit_1st_to_2nd(const geom::coord_list &,
-		                                        const geom::coord_list &);
+	geom::rotation superpose_fit_1st_to_2nd(const geom::coord_list &,
+	                                        const geom::coord_list &);
 
-		geom::rotation superpose_fit_2nd_to_1st(const geom::coord_list &,
-		                                        const geom::coord_list &);
+	geom::rotation superpose_fit_2nd_to_1st(const geom::coord_list &,
+	                                        const geom::coord_list &);
 
-	} // namespace geom
-} // namespace cath
+} // namespace cath::geom
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_SUPERPOSE_FIT_HPP

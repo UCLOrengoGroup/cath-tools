@@ -25,38 +25,36 @@
 
 #include "cath/score/length_getter/protein_only_length_getter.hpp"
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
-
+	/// \brief TODOCUMENT
+	class sym_protein_only_length_getter : public protein_only_length_getter {
+	  private:
 		/// \brief TODOCUMENT
-		class sym_protein_only_length_getter : public protein_only_length_getter {
-		  private:
-			/// \brief TODOCUMENT
-			[[nodiscard]] virtual std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const = 0;
+		[[nodiscard]] virtual std::unique_ptr<sym_protein_only_length_getter> do_sym_protein_only_clone() const = 0;
 
-			[[nodiscard]] std::unique_ptr<protein_only_length_getter> do_protein_only_clone() const final;
+		[[nodiscard]] std::unique_ptr<protein_only_length_getter> do_protein_only_clone() const final;
 
-		  public:
-			[[nodiscard]] std::unique_ptr<sym_protein_only_length_getter> sym_protein_only_clone() const;
-		};
+	  public:
+		[[nodiscard]] std::unique_ptr<sym_protein_only_length_getter> sym_protein_only_clone() const;
+	};
 
-		boost::ptr_vector<sym_protein_only_length_getter> get_all_sym_protein_only_length_getters();
+	boost::ptr_vector<sym_protein_only_length_getter> get_all_sym_protein_only_length_getters();
 
-		/// \brief Function to make sym_protein_only_length_getter meet the protein_only_length_getter concept (used in ptr_container)
-        ///
-        /// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
-        ///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
-        ///
-        /// This gets the smart pointer from the clone() method and then calls release on it.
-        ///
-        /// \returns A raw pointer to a new copy of the sym_protein_only_length_getter argument, with the same dynamic type.
-        ///          The caller is responsible for deleting this new object.
-        inline sym_protein_only_length_getter * new_clone(const sym_protein_only_length_getter &prm_sym_protein_only_length_getter ///< The sym_protein_only_length_getter to clone
-                                                          ) {
-                return prm_sym_protein_only_length_getter.sym_protein_only_clone().release();
-        }
-	} // namespace score
-} // namespace cath
+	/// \brief Function to make sym_protein_only_length_getter meet the protein_only_length_getter concept (used in ptr_container)
+	///
+	/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
+	///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
+	///
+	/// This gets the smart pointer from the clone() method and then calls release on it.
+	///
+	/// \returns A raw pointer to a new copy of the sym_protein_only_length_getter argument, with the same dynamic type.
+	///          The caller is responsible for deleting this new object.
+	inline sym_protein_only_length_getter *new_clone( const sym_protein_only_length_getter &prm_sym_protein_only_length_getter ///< The sym_protein_only_length_getter to clone
+	) {
+		return prm_sym_protein_only_length_getter.sym_protein_only_clone().release();
+		}
+
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_SYM_PROTEIN_ONLY_LENGTH_GETTER_HPP

@@ -32,192 +32,190 @@
 
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		// prototypes to help anyone skimming this file
-		template <typename Container, typename R            > Container        sort_build     ( R        );
-		template <typename Container, typename R, typename P> Container        sort_build     ( R ,    P );
-		template <typename Container, typename I            > Container        sort_build     ( I , I    );
-		template <typename Container, typename I, typename P> Container        sort_build     ( I , I, P );
-		template <typename Container, typename R            > Container stable_sort_build     ( R        );
-		template <typename Container, typename R, typename P> Container stable_sort_build     ( R ,    P );
-		template <typename Container, typename R            > Container        uniq_build     ( R        );
-		template <typename Container, typename R            > Container        sort_uniq_build( R        );
-		template <typename Container, typename R            > Container stable_sort_uniq_build( R        );
+	// prototypes to help anyone skimming this file
+	template <typename Container, typename R            > Container        sort_build     ( R        );
+	template <typename Container, typename R, typename P> Container        sort_build     ( R ,    P );
+	template <typename Container, typename I            > Container        sort_build     ( I , I    );
+	template <typename Container, typename I, typename P> Container        sort_build     ( I , I, P );
+	template <typename Container, typename R            > Container stable_sort_build     ( R        );
+	template <typename Container, typename R, typename P> Container stable_sort_build     ( R ,    P );
+	template <typename Container, typename R            > Container        uniq_build     ( R        );
+	template <typename Container, typename R            > Container        sort_uniq_build( R        );
+	template <typename Container, typename R            > Container stable_sort_uniq_build( R        );
 
-		/// \brief Convenience function for making a sorted copy of a range
-		///
-		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
-		///
-		/// Note that the _build suffix is used to mean something quite different in names like
-		/// unique_build() in Boost and std (ie writing output to a specified output iterator).
-		///
-		/// Come C++11, this should be able to avoid making a copy when its passed an rvalue argument.
-		/// This is achieved by the argument being passed by non-const value
-		/// (rather than by const reference) so that the compiler handles making
-		/// the local, modifiable copy and can use a move ctor where appropriate.
-		///
-		/// \todo Write a test to check that these functions don't call needlessly
-		///       call copy ctors. Do this with a generalised test class that throws on attempts
-		///       to call its copy ctor. (Perhaps: `template <typename T> class copy_ctor_thrower final : public T { ... };` )
-		///
-		/// ATM, this doesn't perform any concept checks and leaves that to Boost Range's sort().
-		template <typename Container, typename R>
-		Container sort_build(R prm_range ///< The range on which the sorted copy should be based
-		                     ) {
-			return sort_build<Container>(
+	/// \brief Convenience function for making a sorted copy of a range
+	///
+	/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
+	///
+	/// Note that the _build suffix is used to mean something quite different in names like
+	/// unique_build() in Boost and std (ie writing output to a specified output iterator).
+	///
+	/// Come C++11, this should be able to avoid making a copy when its passed an rvalue argument.
+	/// This is achieved by the argument being passed by non-const value
+	/// (rather than by const reference) so that the compiler handles making
+	/// the local, modifiable copy and can use a move ctor where appropriate.
+	///
+	/// \todo Write a test to check that these functions don't call needlessly
+	///       call copy ctors. Do this with a generalised test class that throws on attempts
+	///       to call its copy ctor. (Perhaps: `template <typename T> class copy_ctor_thrower final : public T { ... };` )
+	///
+	/// ATM, this doesn't perform any concept checks and leaves that to Boost Range's sort().
+	template <typename Container, typename R>
+	Container sort_build(R prm_range ///< The range on which the sorted copy should be based
+	                     ) {
+		return sort_build<Container>(
+			::std::cbegin( prm_range ),
+			::std::cend  ( prm_range )
+		);
+	}
+
+	/// \overload
+	template <typename Container, typename R, typename P>
+	Container sort_build(R prm_range,   ///< The range on which the sorted copy should be based
+	                     P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+	                     ) {
+		return sort_build<Container>(
+			::std::cbegin( prm_range ),
+			::std::cend  ( prm_range ),
+			prm_bin_pred
+		);
+	}
+
+	template <typename Container, typename I>
+	Container sort_build(I prm_begin, ///< The begin iterator for the range on which the sorted copy should be based
+	                     I prm_end    ///< The begin iterator for the range on which the sorted copy should be based
+	                     ) {
+		return sort_copy(
+			Container{ prm_begin, prm_end }
+		);
+	}
+
+	/// \overload
+	template <typename Container, typename I, typename P>
+	Container sort_build(I prm_begin, ///< The begin iterator for the range on which the sorted copy should be based
+	                     I prm_end,   ///< The begin iterator for the range on which the sorted copy should be based
+	                     P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+	                     ) {
+		return sort_copy(
+			Container{ prm_begin, prm_end },
+			prm_bin_pred
+		);
+	}
+
+	/// \brief Convenience function for making a sorted copy of a range
+	///
+	/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
+	///
+	/// Note that the _build suffix is used to mean something quite different in names like
+	/// unique_build() in Boost and std (ie writing output to a specified output iterator).
+	///
+	/// Come C++11, this should be able to avoid making a copy when its passed an rvalue argument.
+	/// This is achieved by the argument being passed by non-const value
+	/// (rather than by const reference) so that the compiler handles making
+	/// the local, modifiable copy and can use a move ctor where appropriate.
+	///
+	/// \todo Write a test to check that these functions don't call needlessly
+	///       call copy ctors. Do this with a generalised test class that throws on attempts
+	///       to call its copy ctor. (Perhaps: `template <typename T> class copy_ctor_thrower final : public T { ... };` )
+	///
+	/// ATM, this doesn't perform any concept checks and leaves that to Boost Range's sort().
+	template <typename Container, typename R>
+	Container stable_sort_build(R prm_range ///< The range on which the sorted copy should be based
+	                            ) {
+		return stable_sort_copy(
+			Container(
 				::std::cbegin( prm_range ),
 				::std::cend  ( prm_range )
-			);
-		}
+			)
+		);
+	}
 
-		/// \overload
-		template <typename Container, typename R, typename P>
-		Container sort_build(R prm_range,   ///< The range on which the sorted copy should be based
-		                     P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
-		                     ) {
-			return sort_build<Container>(
+	/// \overload
+	template <typename Container, typename R, typename P>
+	Container stable_sort_build(R prm_range,   ///< The range on which the sorted copy should be based
+	                            P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+	                            ) {
+		return stable_sort_copy(
+			Container(
 				::std::cbegin( prm_range ),
-				::std::cend  ( prm_range ),
-				prm_bin_pred
-			);
-		}
+				::std::cend  ( prm_range )
+			),
+			prm_bin_pred
+		);
+	}
 
-		template <typename Container, typename I>
-		Container sort_build(I prm_begin, ///< The begin iterator for the range on which the sorted copy should be based
-		                     I prm_end    ///< The begin iterator for the range on which the sorted copy should be based
-		                     ) {
-			return sort_copy(
-				Container{ prm_begin, prm_end }
-			);
-		}
+	/// \brief Convenience function for making a uniqued copy of a range
+	///        (which, unlike the std/boost unique() functions, actually erases leftover elements)
+	///
+	/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
+	///
+	/// This is very similar to sort_build() so its details are copied here...
+	///
+	/// \copydetails sort_build()
+	template <typename Container, typename R>
+	Container uniq_build(R prm_range ///< The range on which the uniqued copy should be based
+	                     ) {
+		return uniq_copy(
+			Container(
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range )
+			)
+		);
+	}
 
-		/// \overload
-		template <typename Container, typename I, typename P>
-		Container sort_build(I prm_begin, ///< The begin iterator for the range on which the sorted copy should be based
-		                     I prm_end,   ///< The begin iterator for the range on which the sorted copy should be based
-		                     P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
-		                     ) {
-			return sort_copy(
-				Container{ prm_begin, prm_end },
-				prm_bin_pred
-			);
-		}
+	/// \brief Convenience function for making a sorted, uniqued copy of a range
+	///
+	/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
+	///
+	/// \copydetails sort_build()
+	template <typename Container, typename R>
+	Container sort_uniq_build(R prm_range ///< The range on which the sorted, uniqued copy should be based
+	                          ) {
+		return sort_uniq_copy(
+			Container(
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range )
+			)
+		);
+	}
 
-		/// \brief Convenience function for making a sorted copy of a range
-		///
-		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
-		///
-		/// Note that the _build suffix is used to mean something quite different in names like
-		/// unique_build() in Boost and std (ie writing output to a specified output iterator).
-		///
-		/// Come C++11, this should be able to avoid making a copy when its passed an rvalue argument.
-		/// This is achieved by the argument being passed by non-const value
-		/// (rather than by const reference) so that the compiler handles making
-		/// the local, modifiable copy and can use a move ctor where appropriate.
-		///
-		/// \todo Write a test to check that these functions don't call needlessly
-		///       call copy ctors. Do this with a generalised test class that throws on attempts
-		///       to call its copy ctor. (Perhaps: `template <typename T> class copy_ctor_thrower final : public T { ... };` )
-		///
-		/// ATM, this doesn't perform any concept checks and leaves that to Boost Range's sort().
-		template <typename Container, typename R>
-		Container stable_sort_build(R prm_range ///< The range on which the sorted copy should be based
-		                            ) {
-			return stable_sort_copy(
-				Container(
-					::std::cbegin( prm_range ),
-					::std::cend  ( prm_range )
-				)
-			);
-		}
-
-		/// \overload
-		template <typename Container, typename R, typename P>
-		Container stable_sort_build(R prm_range,   ///< The range on which the sorted copy should be based
-		                            P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
-		                            ) {
-			return stable_sort_copy(
-				Container(
-					::std::cbegin( prm_range ),
-					::std::cend  ( prm_range )
-				),
-				prm_bin_pred
-			);
-		}
-
-		/// \brief Convenience function for making a uniqued copy of a range
-		///        (which, unlike the std/boost unique() functions, actually erases leftover elements)
-		///
-		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
-		///
-		/// This is very similar to sort_build() so its details are copied here...
-		///
-		/// \copydetails sort_build()
-		template <typename Container, typename R>
-		Container uniq_build(R prm_range ///< The range on which the uniqued copy should be based
-		                     ) {
-			return uniq_copy(
-				Container(
-					::std::cbegin( prm_range ),
-					::std::cend  ( prm_range )
-				)
-			);
-		}
-
-		/// \brief Convenience function for making a sorted, uniqued copy of a range
-		///
-		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
-		///
-		/// \copydetails sort_build()
-		template <typename Container, typename R>
-		Container sort_uniq_build(R prm_range ///< The range on which the sorted, uniqued copy should be based
-		                          ) {
-			return sort_uniq_copy(
-				Container(
-					::std::cbegin( prm_range ),
-					::std::cend  ( prm_range )
-				)
-			);
-		}
-
-		/// \brief Convenience function for making a sorted, uniqued copy of a range
-		///
-		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
-		///
-		/// \copydetails sort_build()
-		template <typename Container, typename R, typename P>
-		Container sort_uniq_build(R prm_range,   ///< The range on which the sorted, uniqued copy should be based
-		                          P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
-		                          ) {
-			return sort_uniq_copy(
-				Container(
-					::std::cbegin( prm_range ),
-					::std::cend  ( prm_range )
-				),
-				prm_bin_pred
-			);
-		}
+	/// \brief Convenience function for making a sorted, uniqued copy of a range
+	///
+	/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
+	///
+	/// \copydetails sort_build()
+	template <typename Container, typename R, typename P>
+	Container sort_uniq_build(R prm_range,   ///< The range on which the sorted, uniqued copy should be based
+	                          P prm_bin_pred ///< The binary predicate to use as a less-than operator for sorting
+	                          ) {
+		return sort_uniq_copy(
+			Container(
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range )
+			),
+			prm_bin_pred
+		);
+	}
 
 
-		/// \brief Convenience function for making a stable_sorted, uniqued copy of a range
-		///
-		/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
-		///
-		/// \copydetails sort_build()
-		template <typename Container, typename R>
-		Container stable_sort_uniq_build(R prm_range ///< The range on which the stable_sorted, uniqued copy should be based
-		                                 ) {
-			return stable_sort_uniq_copy(
-				Container(
-					::std::cbegin( prm_range ),
-					::std::cend  ( prm_range )
-				)
-			);
-		}
+	/// \brief Convenience function for making a stable_sorted, uniqued copy of a range
+	///
+	/// \sa copy_build() generate_n_build() random_sample_n_build() sort_build() sort_uniq_build() transform_build() uniq_build()
+	///
+	/// \copydetails sort_build()
+	template <typename Container, typename R>
+	Container stable_sort_uniq_build(R prm_range ///< The range on which the stable_sorted, uniqued copy should be based
+	                                 ) {
+		return stable_sort_uniq_copy(
+			Container(
+				::std::cbegin( prm_range ),
+				::std::cend  ( prm_range )
+			)
+		);
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP

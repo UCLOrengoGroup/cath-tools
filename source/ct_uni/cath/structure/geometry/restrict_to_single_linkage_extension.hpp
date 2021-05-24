@@ -24,18 +24,16 @@
 #include "cath/structure/geometry/coord_linkage.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-namespace cath {
-	namespace geom {
+namespace cath::geom {
 
-		void restrict_to_single_linkage_extension(coord_coord_linkage_pair_vec &,
-		                                          const coord_coord_linkage_pair_vec_itr &,
-		                                          const double &);
+	void restrict_to_single_linkage_extension(coord_coord_linkage_pair_vec &,
+	                                          const coord_coord_linkage_pair_vec_itr &,
+	                                          const double &);
 
-		coord_coord_linkage_pair_vec restrict_to_single_linkage_extension_copy(coord_coord_linkage_pair_vec,
-		                                                                       const size_t &,
-		                                                                       const double &);
+	coord_coord_linkage_pair_vec restrict_to_single_linkage_extension_copy(coord_coord_linkage_pair_vec,
+	                                                                       const size_t &,
+	                                                                       const double &);
 
-	} // namespace geom
-} // namespace cath
+} // namespace cath::geom
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_RESTRICT_TO_SINGLE_LINKAGE_EXTENSION_HPP

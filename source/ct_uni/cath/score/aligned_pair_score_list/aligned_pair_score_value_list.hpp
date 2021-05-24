@@ -28,47 +28,45 @@
 
 #include <vector>
 
-namespace cath {
-	namespace align {
-		class alignment;
-	} // namespace align
+// clang-format off
+namespace cath::align { class alignment; }
+// clang-format on
 
-	namespace score {
+namespace cath::score {
+
+	/// \brief TODOCUMENT
+	class aligned_pair_score_value_list final {
+	private:
+		/// \brief TODOCUMENT
+		score_value_vec         score_values;
 
 		/// \brief TODOCUMENT
-		class aligned_pair_score_value_list final {
-		private:
-			/// \brief TODOCUMENT
-			score_value_vec         score_values;
+		aligned_pair_score_list scores;
 
-			/// \brief TODOCUMENT
-			aligned_pair_score_list scores;
+	public:
+		void add_score_and_value(const aligned_pair_score &,
+		                         const score_value &);
 
-		public:
-			void add_score_and_value(const aligned_pair_score &,
-			                         const score_value &);
+		[[nodiscard]] size_t                    size() const;
+		[[nodiscard]] score_value               get_value_of_index( const size_t & ) const;
+		[[nodiscard]] const aligned_pair_score &get_aligned_pair_score_of_index( const size_t & ) const;
+	};
 
-			[[nodiscard]] size_t                    size() const;
-			[[nodiscard]] score_value               get_value_of_index( const size_t & ) const;
-			[[nodiscard]] const aligned_pair_score &get_aligned_pair_score_of_index( const size_t & ) const;
-		};
+	void warn_on_duplicate_human_friendly_names(const aligned_pair_score_value_list &);
 
-		void warn_on_duplicate_human_friendly_names(const aligned_pair_score_value_list &);
+	str_vec get_all_names(const aligned_pair_score_value_list &);
 
-		str_vec get_all_names(const aligned_pair_score_value_list &);
+	void save_to_ptree(boost::property_tree::ptree &,
+	                   const aligned_pair_score_value_list &);
 
-		void save_to_ptree(boost::property_tree::ptree &,
-		                   const aligned_pair_score_value_list &);
+	aligned_pair_score_value_list make_aligned_pair_score_value_list(const aligned_pair_score_list &,
+	                                                                 const align::alignment &,
+	                                                                 const protein &,
+	                                                                 const protein &);
 
-		aligned_pair_score_value_list make_aligned_pair_score_value_list(const aligned_pair_score_list &,
-		                                                                 const align::alignment &,
-		                                                                 const protein &,
-		                                                                 const protein &);
+	std::ostream & operator<<(std::ostream &,
+	                          const aligned_pair_score_value_list &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const aligned_pair_score_value_list &);
-	} // namespace score
-
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_LIST_ALIGNED_PAIR_SCORE_VALUE_LIST_HPP

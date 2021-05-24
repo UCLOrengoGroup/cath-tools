@@ -29,66 +29,64 @@
 #include <array>
 #include <map>
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Represent the different formats in which resolve-hits input data can be read
-		enum class hits_input_format_tag : char {
-			HMMER_DOMTBLOUT, ///< HMMER domtblout format (must assume all hits are continuous)
-			HMMSCAN_OUT,     ///< HMMER hmmscan output format (can be used to deduce discontinuous hits)
-			HMMSEARCH_OUT,   ///< HMMER hmmsearch output format (can be used to deduce discontinuous hits)
-			RAW_WITH_SCORES, ///< "raw" format with scores
-			RAW_WITH_EVALUES ///< "raw" format with evalues
+	/// \brief Represent the different formats in which resolve-hits input data can be read
+	enum class hits_input_format_tag : char {
+		HMMER_DOMTBLOUT, ///< HMMER domtblout format (must assume all hits are continuous)
+		HMMSCAN_OUT,     ///< HMMER hmmscan output format (can be used to deduce discontinuous hits)
+		HMMSEARCH_OUT,   ///< HMMER hmmsearch output format (can be used to deduce discontinuous hits)
+		RAW_WITH_SCORES, ///< "raw" format with scores
+		RAW_WITH_EVALUES ///< "raw" format with evalues
+	};
+
+	/// \brief Type alias for vector of hits_input_format_tags
+	using hits_input_format_tag_vec = std::vector<hits_input_format_tag>;
+
+	/// \brief A constexpr list of all hits_input_format_tags
+	static constexpr std::array<hits_input_format_tag, 5> all_hits_input_format_tags { {
+		hits_input_format_tag::HMMER_DOMTBLOUT,
+		hits_input_format_tag::HMMSCAN_OUT,
+		hits_input_format_tag::HMMSEARCH_OUT,
+		hits_input_format_tag::RAW_WITH_SCORES,
+		hits_input_format_tag::RAW_WITH_EVALUES
+	} };
+
+	// Compile-time check that there aren't any duplicates in all_hits_input_format_tags
+	static_assert( common::constexpr_is_uniq( all_hits_input_format_tags ), "all_hits_input_format_tags shouldn't contain repeated values" );
+
+	/// \brief Store a constexpr record of the number of hits_input_format_tags
+	inline constexpr size_t num_hits_input_format_tags = std::tuple_size_v< decltype( all_hits_input_format_tags ) >;
+
+	namespace detail {
+
+		/// \brief Class with static getter for a map from name to hits_input_format_tag
+		struct hits_input_format_tag_by_name final {
+			static std::map<std::string, hits_input_format_tag> get();
 		};
 
-		/// \brief Type alias for vector of hits_input_format_tags
-		using hits_input_format_tag_vec = std::vector<hits_input_format_tag>;
+	} // namespace detail
 
-		/// \brief A constexpr list of all hits_input_format_tags
-		static constexpr std::array<hits_input_format_tag, 5> all_hits_input_format_tags { {
-			hits_input_format_tag::HMMER_DOMTBLOUT,
-			hits_input_format_tag::HMMSCAN_OUT,
-			hits_input_format_tag::HMMSEARCH_OUT,
-			hits_input_format_tag::RAW_WITH_SCORES,
-			hits_input_format_tag::RAW_WITH_EVALUES
-		} };
+	/// \brief Class with static getter for a list of all the hits_input_format_tag names
+	struct all_hits_input_format_tag_names final {
+		static str_vec get();
+	};
 
-		// Compile-time check that there aren't any duplicates in all_hits_input_format_tags
-		static_assert( common::constexpr_is_uniq( all_hits_input_format_tags ), "all_hits_input_format_tags shouldn't contain repeated values" );
+	std::string to_string(const hits_input_format_tag &);
 
-		/// \brief Store a constexpr record of the number of hits_input_format_tags
-		inline constexpr size_t num_hits_input_format_tags = std::tuple_size_v< decltype( all_hits_input_format_tags ) >;
+	std::ostream & operator<<(std::ostream &,
+	                          const hits_input_format_tag &);
 
-		namespace detail {
+	std::istream & operator>>(std::istream &,
+	                          hits_input_format_tag &);
 
-			/// \brief Class with static getter for a map from name to hits_input_format_tag
-			struct hits_input_format_tag_by_name final {
-				static std::map<std::string, hits_input_format_tag> get();
-			};
+	std::string description_of_input_format(const hits_input_format_tag &);
 
-		} // namespace detail
+	void validate(boost::any &,
+	              const str_vec &,
+	              hits_input_format_tag *,
+	              int);
 
-		/// \brief Class with static getter for a list of all the hits_input_format_tag names
-		struct all_hits_input_format_tag_names final {
-			static str_vec get();
-		};
-
-		std::string to_string(const hits_input_format_tag &);
-
-		std::ostream & operator<<(std::ostream &,
-		                          const hits_input_format_tag &);
-
-		std::istream & operator>>(std::istream &,
-		                          hits_input_format_tag &);
-
-		std::string description_of_input_format(const hits_input_format_tag &);
-
-		void validate(boost::any &,
-		              const str_vec &,
-		              hits_input_format_tag *,
-		              int);
-
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_HITS_INPUT_FORMAT_TAG_HPP

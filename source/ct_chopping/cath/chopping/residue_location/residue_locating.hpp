@@ -24,24 +24,22 @@
 #include <iosfwd>
 #include <string>
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
 
-		/// \brief TODOCUMENT
-		enum class residue_locating : char {
-			INDEX,         ///< TODOCUMENT
-			NAME,          ///< TODOCUMENT
-			NAME_AND_INDEX ///< TODOCUMENT
-		};
+	/// \brief TODOCUMENT
+	enum class residue_locating : char {
+		INDEX,         ///< TODOCUMENT
+		NAME,          ///< TODOCUMENT
+		NAME_AND_INDEX ///< TODOCUMENT
+	};
 
-		std::string to_string(const residue_locating &);
-		std::ostream & operator<<(std::ostream &,
-		                          const residue_locating &);
+	std::string to_string(const residue_locating &);
+	std::ostream & operator<<(std::ostream &,
+	                          const residue_locating &);
 
-		residue_locating make_residue_locating_of_has_name_and_has_index(const bool &,
-		                                                                 const bool &);
+	residue_locating make_residue_locating_of_has_name_and_has_index(const bool &,
+	                                                                 const bool &);
 
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_RESIDUE_LOCATION_RESIDUE_LOCATING_HPP

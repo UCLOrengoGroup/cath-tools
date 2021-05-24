@@ -27,19 +27,7 @@
 using namespace ::cath::align;
 using namespace ::cath::common;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The align_scaffold_test_suite_fixture to assist in testing align_scaffold
-		struct align_scaffold_test_suite_fixture : protected alignment_fixture {
-		protected:
-			~align_scaffold_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
-
-BOOST_FIXTURE_TEST_SUITE(align_scaffold_test_suite, cath::test::align_scaffold_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(align_scaffold_test_suite, alignment_fixture)
 
 BOOST_AUTO_TEST_CASE(throws_given_zero_scaffold_strings) {
 	BOOST_CHECK_THROW( alignment_of_scaffold_lines( { } ), invalid_argument_exception );

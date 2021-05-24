@@ -21,53 +21,49 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_TO_PHI_KEYER_PART_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_TO_PHI_KEYER_PART_HPP
 
-//#include <boost/range/join.hpp>
-
 #include "cath/scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
 #include "cath/scan/quad_criteria.hpp"
 #include "cath/scan/res_pair_keyer/res_pair_keyer_part/detail/res_pair_phi_psi_angle_keyer_part.hpp"
-//#include "cath/structure/geometry/angle.hpp"
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan {
 
-			/// \brief Specification for a res_pair_phi_psi_angle_keyer_part for the to_phi angle
-			class res_pair_to_phi_keyer_part_spec final {
-			public:
-				/// \brief Sanity check the specified cell width
-				static angle_type sanity_check_cell_width(const angle_type &prm_cell_width ///< The cell width to be sanity-checked
-				                                          ) {
-					/// \todo Create a `bool is_shifted(const angle &, ...)` helper function for angle and use it here
-					return ( prm_cell_width <= geom::ZERO_ANGLE<angle_base_type> || prm_cell_width > geom::ONE_REVOLUTION<angle_base_type> )
-						? throw std::logic_error( "Cannot create an angle-based res_pair keyer_part with a cell_width that isn't in ( 0, 2pi ]" )
-						: prm_cell_width;
-				}
+	namespace detail {
 
-				/// \brief Get a short name that describes this key part
-				static std::string get_name() {
-					return "to_phi";
-				}
+		/// \brief Specification for a res_pair_phi_psi_angle_keyer_part for the to_phi angle
+		class res_pair_to_phi_keyer_part_spec final {
+		public:
+			/// \brief Sanity check the specified cell width
+			static angle_type sanity_check_cell_width(const angle_type &prm_cell_width ///< The cell width to be sanity-checked
+			                                          ) {
+				/// \todo Create a `bool is_shifted(const angle &, ...)` helper function for angle and use it here
+				return ( prm_cell_width <= geom::ZERO_ANGLE<angle_base_type> || prm_cell_width > geom::ONE_REVOLUTION<angle_base_type> )
+					? throw std::logic_error( "Cannot create an angle-based res_pair keyer_part with a cell_width that isn't in ( 0, 2pi ]" )
+					: prm_cell_width;
+			}
 
-				/// \brief Extract the relevant value from the specified res_pair
-				static angle_type get_value(const multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
-				                            ) {
-					return prm_res_pair.get_res_pair_core().get_to_phi_angle();
-				}
+			/// \brief Get a short name that describes this key part
+			static std::string get_name() {
+				return "to_phi";
+			}
 
-				/// \brief Extract the search radius from the specified quad_criteria
-				static angle_type get_search_radius(const quad_criteria &prm_criteria   ///< The criteria defining what is considered a match
-				                                    ) {
-					return prm_criteria.get_maximum_phi_angle_difference();
-				}
-			};
+			/// \brief Extract the relevant value from the specified res_pair
+			static angle_type get_value(const multi_struc_res_rep_pair &prm_res_pair ///< The res_pair from which the relevant value should be extracted
+			                            ) {
+				return prm_res_pair.get_res_pair_core().get_to_phi_angle();
+			}
 
-		} // namespace detail
+			/// \brief Extract the search radius from the specified quad_criteria
+			static angle_type get_search_radius(const quad_criteria &prm_criteria   ///< The criteria defining what is considered a match
+			                                    ) {
+				return prm_criteria.get_maximum_phi_angle_difference();
+			}
+		};
 
-		/// \brief Type alias for keyer_part for from-phi angle
-		using res_pair_to_phi_keyer_part = detail::res_pair_phi_psi_angle_keyer_part<detail::res_pair_to_phi_keyer_part_spec>;
+	} // namespace detail
 
-	} // namespace scan
-} // namespace cath
+	/// \brief Type alias for keyer_part for from-phi angle
+	using res_pair_to_phi_keyer_part = detail::res_pair_phi_psi_angle_keyer_part<detail::res_pair_to_phi_keyer_part_spec>;
+
+} // namespace cath::scan
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_TO_PHI_KEYER_PART_HPP

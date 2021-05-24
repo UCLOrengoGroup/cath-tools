@@ -23,46 +23,42 @@
 
 #include <filesystem>
 
-namespace cath {
-	namespace align {
-		class alignment;
-		class alignment_residue_scores;
-	} // namespace align
-	class protein_list;
-} // namespace cath
+// clang-format off
+namespace cath { class protein_list; }
+namespace cath::align { class alignment; }
+namespace cath::align { class alignment_residue_scores; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief TODOCUMENT
-		class residue_scorer final {
-		  private:
-			// bool renormalise;
-			// bool from_to_or_both;
-			// bool best_twenty;
-			// bool atom_policy_ca_or_cb;
-			// bool score_function;
+	/// \brief TODOCUMENT
+	class residue_scorer final {
+	  private:
+		// bool renormalise;
+		// bool from_to_or_both;
+		// bool best_twenty;
+		// bool atom_policy_ca_or_cb;
+		// bool score_function;
 
-			// alignment_residue_scores should store the number of entries and the number of present entries in the position;
+		// alignment_residue_scores should store the number of entries and the number of present entries in the position;
 
-		  public:
-			[[nodiscard]] alignment_residue_scores get_alignment_residue_scores( const alignment &, const protein_list & ) const;
-		};
+	  public:
+		[[nodiscard]] alignment_residue_scores get_alignment_residue_scores( const alignment &, const protein_list & ) const;
+	};
 
-		void score_alignment(const residue_scorer &,
-		                     alignment &,
-		                     const protein_list &);
+	void score_alignment(const residue_scorer &,
+	                     alignment &,
+	                     const protein_list &);
 
-		alignment score_alignment_copy(const residue_scorer &,
-		                               alignment,
-		                               const protein_list &);
+	alignment score_alignment_copy(const residue_scorer &,
+	                               alignment,
+	                               const protein_list &);
 
-		alignment read_and_rescore_fasta_alignment(const ::std::filesystem::path &,
-		                                           const protein_list &,
-		                                           const residue_scorer &,
-		                                           std::ostream &);
+	alignment read_and_rescore_fasta_alignment(const ::std::filesystem::path &,
+	                                           const protein_list &,
+	                                           const residue_scorer &,
+	                                           std::ostream &);
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_RESIDUE_SCORE_RESIDUE_SCORER_HPP

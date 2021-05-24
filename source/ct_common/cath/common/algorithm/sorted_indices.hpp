@@ -28,25 +28,23 @@
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-			/// \brief Build a container of indices [0, prm_size), sorted by the specified less-than function
-			///
-			/// \pre prm_size > 0
-			template <typename Cont = std::vector<size_t>, typename Fn>
-			Cont sorted_indices(const size_t  &prm_size,    ///< The number of consecutive indices (starting from 0) to sort
-			                    Fn           &&prm_less_fn  ///< The less-than function with which to sort the indices
-			                    ) {
-				auto sorting_indices = common::copy_build<Cont>( common::indices( prm_size ) );
-				boost::range::sort(
-					sorting_indices,
-					std::forward<Fn>( prm_less_fn )
-				);
-				return sorting_indices;
-			}
+		/// \brief Build a container of indices [0, prm_size), sorted by the specified less-than function
+		///
+		/// \pre prm_size > 0
+		template <typename Cont = std::vector<size_t>, typename Fn>
+		Cont sorted_indices(const size_t  &prm_size,    ///< The number of consecutive indices (starting from 0) to sort
+		                    Fn           &&prm_less_fn  ///< The less-than function with which to sort the indices
+		                    ) {
+			auto sorting_indices = common::copy_build<Cont>( common::indices( prm_size ) );
+			boost::range::sort(
+				sorting_indices,
+				std::forward<Fn>( prm_less_fn )
+			);
+			return sorting_indices;
+		}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORTED_INDICES_HPP

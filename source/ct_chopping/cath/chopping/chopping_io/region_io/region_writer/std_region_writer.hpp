@@ -24,22 +24,20 @@
 #include "cath/chopping/chopping_io/region_io/region_writer/region_writer.hpp"
 #include "cath/chopping/chopping_io/region_io/std_region_io_spec.hpp"
 
-namespace cath {
-	namespace chop {
+namespace cath::chop {
 
+	/// \brief TODOCUMENT
+	class std_region_writer final : public region_writer {
+	private:
 		/// \brief TODOCUMENT
-		class std_region_writer final : public region_writer {
-		private:
-			/// \brief TODOCUMENT
-			std_region_io_spec region_io_spec;
+		std_region_io_spec region_io_spec;
 
-			[[nodiscard]] std::string do_write_region( const region & ) const final;
+		[[nodiscard]] std::string do_write_region( const region & ) const final;
 
-		  public:
-			explicit std_region_writer(std_region_io_spec);
-		};
+	  public:
+		explicit std_region_writer(std_region_io_spec);
+	};
 
-	} // namespace chop
-} // namespace cath
+} // namespace cath::chop
 
 #endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_IO_REGION_IO_REGION_WRITER_STD_REGION_WRITER_HPP

@@ -30,12 +30,14 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/name_set/name_set.hpp"
 
+// clang-format off
 namespace cath { class protein; }
-namespace cath { namespace file { class dssp_file; } }
-namespace cath { namespace file { class pdb; } }
-namespace cath { namespace file { class sec_file; } }
-namespace cath { namespace file { class wolf_file; } }
-namespace cath { namespace file { enum class dssp_skip_policy : char; } }
+namespace cath::file { class dssp_file; }
+namespace cath::file { class pdb; }
+namespace cath::file { class sec_file; }
+namespace cath::file { class wolf_file; }
+namespace cath::file { enum class dssp_skip_policy : char; }
+// clang-format on
 
 namespace cath {
 

@@ -26,39 +26,37 @@
 #include <string>
 #include <string_view>
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief Functor to be passed to Boost Program Options' parse_environment() function to do
-		///        the work of translating environment variable names to options names
-		///
-		/// This achieves two things that can't be achieved by just passing a prefix string
-		/// to parse_environment (at least, not at Boost 1.54.0) :
-		///  -# Converting underscores to hyphens
-		///  -# Optionally allowing unrecognised options
-		///     (by searching for each candidate option name and returning "" to parse_environment()
-		///      for each that's unrecognised)
-		///
-		/// Example usage: \snippet executable_options.cpp Using env_var_option_name_handler
-		class env_var_option_name_handler final {
-			::std::string_view prefix;
-			bool allow_unknown;
-			const boost::program_options::options_description &the_options;
+	/// \brief Functor to be passed to Boost Program Options' parse_environment() function to do
+	///        the work of translating environment variable names to options names
+	///
+	/// This achieves two things that can't be achieved by just passing a prefix string
+	/// to parse_environment (at least, not at Boost 1.54.0) :
+	///  -# Converting underscores to hyphens
+	///  -# Optionally allowing unrecognised options
+	///     (by searching for each candidate option name and returning "" to parse_environment()
+	///      for each that's unrecognised)
+	///
+	/// Example usage: \snippet executable_options.cpp Using env_var_option_name_handler
+	class env_var_option_name_handler final {
+		::std::string_view prefix;
+		bool allow_unknown;
+		const boost::program_options::options_description &the_options;
 
-		public:
-			env_var_option_name_handler(::std::string_view,
-			                            const bool &,
-			                            const boost::program_options::options_description & = boost::program_options::options_description());
+	public:
+		env_var_option_name_handler(::std::string_view,
+		                            const bool &,
+		                            const boost::program_options::options_description & = boost::program_options::options_description());
 
-			::std::string operator()(const ::std::string &) const;
-		};
+		::std::string operator()(const ::std::string &) const;
+	};
 
-		::std::string option_of_environment_variable_and_prefix(const ::std::string &,
-		                                                        const ::std::string_view &);
+	::std::string option_of_environment_variable_and_prefix(const ::std::string &,
+	                                                        const ::std::string_view &);
 
-		::std::string environment_variable_prefix_of_program_name(const ::std::string &);
+	::std::string environment_variable_prefix_of_program_name(const ::std::string &);
 		
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_ENV_VAR_OPTION_NAME_HANDLER_HPP

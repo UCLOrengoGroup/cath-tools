@@ -23,64 +23,62 @@
 
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Specify how the scores should be handled in cath-resolve-hits
-		class crh_score_spec final {
-		private:
-			/// \brief The degree to which long domains are preferred
-			resscr_t long_domains_preference = DEFAULT_LONG_DOMAINS_PREFERENCE;
+	/// \brief Specify how the scores should be handled in cath-resolve-hits
+	class crh_score_spec final {
+	private:
+		/// \brief The degree to which long domains are preferred
+		resscr_t long_domains_preference = DEFAULT_LONG_DOMAINS_PREFERENCE;
 
-			/// \brief The degree to which high scores are preferred
-			resscr_t high_scores_preference  = DEFAULT_HIGH_SCORES_PREFERENCE;
+		/// \brief The degree to which high scores are preferred
+		resscr_t high_scores_preference  = DEFAULT_HIGH_SCORES_PREFERENCE;
 
-			/// \brief Whether to apply rules specific to CATH-Gene3D
-			bool     apply_cath_rules        = DEFAULT_APPLY_CATH_RULES;
+		/// \brief Whether to apply rules specific to CATH-Gene3D
+		bool     apply_cath_rules        = DEFAULT_APPLY_CATH_RULES;
 
-			/// \brief Whether to use a naive, greedy approach to resolving
-			bool     naive_greedy            = DEFAULT_NAIVE_GREEDY;
+		/// \brief Whether to use a naive, greedy approach to resolving
+		bool     naive_greedy            = DEFAULT_NAIVE_GREEDY;
 
 
-		public:
-			/// \brief The default value for the degree to which long domains are preferred
-			static constexpr resscr_t DEFAULT_LONG_DOMAINS_PREFERENCE    =  0.0;
+	public:
+		/// \brief The default value for the degree to which long domains are preferred
+		static constexpr resscr_t DEFAULT_LONG_DOMAINS_PREFERENCE    =  0.0;
 
-			/// \brief The default value for the degree to which high scores are preferred
-			//
-			// // For Jon, want x such that `( sqrt( 2 ) ) ^ x = 3`, which gives `x = ln( 3 ) / ln ( sqrt( 2 ) ) = 3.16992500144`
-			// // \todo Come constexpr sqrt() and ln() or log(), make this be calculated at compile time
-			// //       based on a constexpr power_base value elsewhere in the code
-			// static constexpr resscr_t DEFAULT_HIGH_SCORES_PREFERENCE     = static_cast<resscr_t>( 3.17 );
-			static constexpr resscr_t DEFAULT_HIGH_SCORES_PREFERENCE     = 0.0;
+		/// \brief The default value for the degree to which high scores are preferred
+		//
+		// // For Jon, want x such that `( sqrt( 2 ) ) ^ x = 3`, which gives `x = ln( 3 ) / ln ( sqrt( 2 ) ) = 3.16992500144`
+		// // \todo Come constexpr sqrt() and ln() or log(), make this be calculated at compile time
+		// //       based on a constexpr power_base value elsewhere in the code
+		// static constexpr resscr_t DEFAULT_HIGH_SCORES_PREFERENCE     = static_cast<resscr_t>( 3.17 );
+		static constexpr resscr_t DEFAULT_HIGH_SCORES_PREFERENCE     = 0.0;
 
-			/// \brief The default value for whether to apply rules specific to CATH-Gene3D
-			static constexpr bool     DEFAULT_APPLY_CATH_RULES           = false;
+		/// \brief The default value for whether to apply rules specific to CATH-Gene3D
+		static constexpr bool     DEFAULT_APPLY_CATH_RULES           = false;
 
-			/// \brief The default value for whether to use a naive, greedy approach to resolving
-			static constexpr bool     DEFAULT_NAIVE_GREEDY               = false;
+		/// \brief The default value for whether to use a naive, greedy approach to resolving
+		static constexpr bool     DEFAULT_NAIVE_GREEDY               = false;
 
-			crh_score_spec() noexcept = default;
+		crh_score_spec() noexcept = default;
 
-			explicit crh_score_spec(const bool &,
-			                        const resscr_t & = DEFAULT_LONG_DOMAINS_PREFERENCE,
-			                        const resscr_t & = DEFAULT_HIGH_SCORES_PREFERENCE,
-			                        const bool & = DEFAULT_NAIVE_GREEDY);
+		explicit crh_score_spec(const bool &,
+		                        const resscr_t & = DEFAULT_LONG_DOMAINS_PREFERENCE,
+		                        const resscr_t & = DEFAULT_HIGH_SCORES_PREFERENCE,
+		                        const bool & = DEFAULT_NAIVE_GREEDY);
 
-			[[nodiscard]] const resscr_t &get_long_domains_preference() const;
-			[[nodiscard]] const resscr_t &get_high_scores_preference() const;
-			[[nodiscard]] const bool &    get_apply_cath_rules() const;
-			[[nodiscard]] const bool &    get_naive_greedy() const;
+		[[nodiscard]] const resscr_t &get_long_domains_preference() const;
+		[[nodiscard]] const resscr_t &get_high_scores_preference() const;
+		[[nodiscard]] const bool &    get_apply_cath_rules() const;
+		[[nodiscard]] const bool &    get_naive_greedy() const;
 
-			crh_score_spec & set_long_domains_preference(const resscr_t &);
-			crh_score_spec & set_high_scores_preference(const resscr_t &);
-			crh_score_spec & set_apply_cath_rules(const bool &);
-			crh_score_spec & set_naive_greedy(const bool &);
-		};
+		crh_score_spec & set_long_domains_preference(const resscr_t &);
+		crh_score_spec & set_high_scores_preference(const resscr_t &);
+		crh_score_spec & set_apply_cath_rules(const bool &);
+		crh_score_spec & set_naive_greedy(const bool &);
+	};
 
-		crh_score_spec make_neutral_score_spec();
+	crh_score_spec make_neutral_score_spec();
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_SCORE_SPEC_HPP

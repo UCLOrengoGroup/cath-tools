@@ -21,18 +21,16 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_TEMPLATE_LIST_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_TEMPLATE_LIST_HPP
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Hold a list of templates
-		///
-		/// Example:
-		///
-		///     using my_templates = template_list<vector, tuple, list>;
-		template <template <typename... > class... Ts>
-		struct template_list;
+	/// \brief Hold a list of templates
+	///
+	/// Example:
+	///
+	///     using my_templates = template_list<vector, tuple, list>;
+	template <template <typename... > class... Ts>
+	struct template_list;
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_METAPROGRAMMING_TEMPLATE_LIST_HPP

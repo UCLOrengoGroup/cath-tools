@@ -32,7 +32,6 @@
 #include "cath/common/test_or_exe_run_mode.hpp"
 #include "cath/test/predicate/bootstrap_mode.hpp"
 
-
 using namespace ::cath::common;
 using namespace ::cath::test;
 

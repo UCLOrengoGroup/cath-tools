@@ -27,44 +27,40 @@
 #include "cath/cath_assign_domains/options/cath_assign_domains_options_block.hpp"
 #include "cath/options/executable/executable_options.hpp"
 
-namespace boost { namespace program_options { class options_description; } }
+namespace cath::opts {
 
-namespace cath {
-	namespace opts {
+	/// \brief TODOCUMENT
+	///
+	/// \todo Add options to allow identifiable PDBs to be loaded from a directory
+	/// \todo Sort out the interaction between loading PDBs and loading an alignment
+	/// \todo Add options to write/read a superposition
+	class cath_assign_domains_options final : public executable_options {
+	private:
+		/// \brief Convenience type-alias for the parent class
+		using super = executable_options;
 
-		/// \brief TODOCUMENT
-		///
-		/// \todo Add options to allow identifiable PDBs to be loaded from a directory
-		/// \todo Sort out the interaction between loading PDBs and loading an alignment
-		/// \todo Add options to write/read a superposition
-		class cath_assign_domains_options final : public executable_options {
-		private:
-			/// \brief Convenience type-alias for the parent class
-			using super = executable_options;
+		/// \brief The cath-assign-domains options block
+		cath_assign_domains_options_block the_cath_assign_domains_options_block;
 
-			/// \brief The cath-assign-domains options block
-			cath_assign_domains_options_block the_cath_assign_domains_options_block;
+		[[nodiscard]] std::string_view do_get_program_name() const final;
+		[[nodiscard]] str_opt          do_get_error_or_help_string() const final;
 
-			[[nodiscard]] std::string_view do_get_program_name() const final;
-			[[nodiscard]] str_opt          do_get_error_or_help_string() const final;
+		[[nodiscard]] std::string do_get_help_prefix_string() const final;
+		[[nodiscard]] std::string do_get_help_suffix_string() const final;
+		[[nodiscard]] std::string do_get_overview_string() const final;
 
-			[[nodiscard]] std::string do_get_help_prefix_string() const final;
-			[[nodiscard]] std::string do_get_help_suffix_string() const final;
-			[[nodiscard]] std::string do_get_overview_string() const final;
+	  public:
+		cath_assign_domains_options();
 
-		  public:
-			cath_assign_domains_options();
+		[[nodiscard]] const ::std::filesystem::path &get_rbf_svm_file() const;
+		[[nodiscard]] const ::std::filesystem::path &get_data_data_file() const;
+		[[nodiscard]] const ::std::filesystem::path &get_sf_of_dom_file() const;
+		[[nodiscard]] const str_vec &                get_forbidden_nodes() const;
 
-			[[nodiscard]] const ::std::filesystem::path &get_rbf_svm_file() const;
-			[[nodiscard]] const ::std::filesystem::path &get_data_data_file() const;
-			[[nodiscard]] const ::std::filesystem::path &get_sf_of_dom_file() const;
-			[[nodiscard]] const str_vec &                get_forbidden_nodes() const;
+		/// \brief The name of the program that uses this executable_options
+		static constexpr ::std::string_view PROGRAM_NAME{ "cath-assign-domains" };
+	};
 
-			/// \brief The name of the program that uses this executable_options
-			static constexpr ::std::string_view PROGRAM_NAME{ "cath-assign-domains" };
-		};
-
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP

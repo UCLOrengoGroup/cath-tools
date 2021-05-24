@@ -27,39 +27,39 @@
 
 #include <functional>
 
-namespace cath { namespace rslv { class full_hit; } }
+// clang-format off
+namespace cath::rslv { class full_hit; }
+// clang-format on
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		/// \brief Represent a hit to be rendered in HTML
-		struct html_hit final {
+	/// \brief Represent a hit to be rendered in HTML
+	struct html_hit final {
 
-			/// \brief A const-reference to the full_hit to be rendered
-			std::reference_wrapper<const full_hit> hit_ref;
+		/// \brief A const-reference to the full_hit to be rendered
+		std::reference_wrapper<const full_hit> hit_ref;
 
-			/// \brief The index of the batch of data from which this hit came
-			///        (where a batch is the bunch of hits relating to one query ID;
-			///         the HTML can display multiple batches)
-			///
-			/// This is used to put a generate a unique ID for the hit in the HTML
-			size_t batch_idx;
+		/// \brief The index of the batch of data from which this hit came
+		///        (where a batch is the bunch of hits relating to one query ID;
+		///         the HTML can display multiple batches)
+		///
+		/// This is used to put a generate a unique ID for the hit in the HTML
+		size_t batch_idx;
 
-			/// \brief The index of this hit within its batch of data
-			///
-			/// This is used to put a generate a unique ID for the hit in the HTML
-			size_t hit_idx;
+		/// \brief The index of this hit within its batch of data
+		///
+		/// This is used to put a generate a unique ID for the hit in the HTML
+		size_t hit_idx;
 
-			/// \brief The colour in which the hit should be rendered
-			display_colour colour;
+		/// \brief The colour in which the hit should be rendered
+		display_colour colour;
 
-			/// \brief The resolved boundaries for the hit if this is being rendered as a result
-			///        or nullopt otherwise
-			seg_boundary_pair_vec_opt result_boundaries;
+		/// \brief The resolved boundaries for the hit if this is being rendered as a result
+		///        or nullopt otherwise
+		seg_boundary_pair_vec_opt result_boundaries;
 
-		};
+	};
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_HTML_OUTPUT_HTML_HIT_HPP

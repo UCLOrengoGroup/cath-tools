@@ -24,39 +24,39 @@
 #include "cath/common/type_aliases.hpp"
 #include "cath/score/score_type_aliases.hpp"
 
-namespace cath { namespace score { class classn_stat; } }
-namespace cath { namespace score { class classn_stat_pair_series_list; } }
+// clang-format off
+namespace cath::score { class classn_stat; }
+namespace cath::score { class classn_stat_pair_series_list; }
+// clang-format on
 
-namespace cath {
-	namespace score {
+namespace cath::score {
 
+	/// \brief TODOCUMENT
+	class named_true_false_pos_neg_list_list final {
+	private:
 		/// \brief TODOCUMENT
-		class named_true_false_pos_neg_list_list final {
-		private:
-			/// \brief TODOCUMENT
-			named_true_false_pos_neg_list_vec named_true_false_pos_neg_lists;
+		named_true_false_pos_neg_list_vec named_true_false_pos_neg_lists;
 
-		public:
-			using const_iterator = named_true_false_pos_neg_list_vec_citr;
+	public:
+		using const_iterator = named_true_false_pos_neg_list_vec_citr;
 
-			explicit named_true_false_pos_neg_list_list(named_true_false_pos_neg_list_vec);
+		explicit named_true_false_pos_neg_list_list(named_true_false_pos_neg_list_vec);
 
-			[[nodiscard]] bool   empty() const;
-			[[nodiscard]] size_t size() const;
+		[[nodiscard]] bool   empty() const;
+		[[nodiscard]] size_t size() const;
 
-			const named_true_false_pos_neg_list & operator[](const size_t &) const;
+		const named_true_false_pos_neg_list & operator[](const size_t &) const;
 
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		classn_stat_pair_series_list make_classn_stat_pair_series_list(const named_true_false_pos_neg_list_list &,
-		                                                               const classn_stat &,
-		                                                               const classn_stat &);
+	classn_stat_pair_series_list make_classn_stat_pair_series_list(const named_true_false_pos_neg_list_list &,
+	                                                               const classn_stat &,
+	                                                               const classn_stat &);
 
-		str_doub_pair_vec areas_under_roc_curves(const named_true_false_pos_neg_list_list &);
+	str_doub_pair_vec areas_under_roc_curves(const named_true_false_pos_neg_list_list &);
 
-	} // namespace score
-} // namespace cath
+} // namespace cath::score
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_TRUE_POS_FALSE_NEG_NAMED_TRUE_FALSE_POS_NEG_LIST_LIST_HPP

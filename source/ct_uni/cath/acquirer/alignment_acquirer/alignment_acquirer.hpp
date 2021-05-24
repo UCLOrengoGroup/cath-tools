@@ -27,60 +27,61 @@
 #include <memory>
 #include <utility>
 
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace file { class strucs_context; } }
-namespace cath { namespace opts { class alignment_input_options_block; } }
-namespace cath { namespace opts { class alignment_input_spec; } }
+// clang-format off
+namespace cath::align { class alignment; }
+namespace cath::file { class strucs_context; }
+namespace cath::opts { class alignment_input_options_block; }
+namespace cath::opts { class alignment_input_spec; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align {
+
+	/// \brief TODOCUMENT
+	class alignment_acquirer {
+	  private:
+		/// \brief Pure virtual method with which each concrete alignment_acquirer must define how to create a clone of itself
+		[[nodiscard]] virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
+
+		/// \brief Pure virtual method with which each concrete alignment_acquirer must define whether it requires its input to
+		///        be restricted to backbone-complete residues
+		[[nodiscard]] virtual bool do_requires_backbone_complete_input() const = 0;
 
 		/// \brief TODOCUMENT
-		class alignment_acquirer {
-		  private:
-			/// \brief Pure virtual method with which each concrete alignment_acquirer must define how to create a clone of itself
-			[[nodiscard]] virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
+		[[nodiscard]] virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
+		  const file::strucs_context &,
+		  const align_refining &,
+		  const ostream_ref_opt & = ::std::nullopt ) const = 0;
 
-			/// \brief Pure virtual method with which each concrete alignment_acquirer must define whether it requires its input to
-			///        be restricted to backbone-complete residues
-			[[nodiscard]] virtual bool do_requires_backbone_complete_input() const = 0;
+	  protected:
+		/// \brief The minimum number of residues that are required in "residue name" aligning
+		///
+		/// \todo Decide: Is it correct that this is currently stored here rather than in the residue_name_alignment_acquirer
+		///       so that it can be used in the error message when trying to construct the tree?
+		///       Would it be better for the residue_name_alignment_acquirer to identify if it has failed to make a tree
+		///       for this reason and then let the alignment_acquirer give a more generic message?
+		static constexpr size_t MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR = 10;
 
-			/// \brief TODOCUMENT
-			[[nodiscard]] virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
-			  const file::strucs_context &,
-			  const align_refining &,
-			  const ostream_ref_opt & = ::std::nullopt ) const = 0;
+	public:
+		alignment_acquirer() = default;
+		[[nodiscard]] std::unique_ptr<alignment_acquirer> clone() const;
+		virtual ~alignment_acquirer() noexcept = default;
 
-		  protected:
-			/// \brief The minimum number of residues that are required in "residue name" aligning
-			///
-			/// \todo Decide: Is it correct that this is currently stored here rather than in the residue_name_alignment_acquirer
-			///       so that it can be used in the error message when trying to construct the tree?
-			///       Would it be better for the residue_name_alignment_acquirer to identify if it has failed to make a tree
-			///       for this reason and then let the alignment_acquirer give a more generic message?
-			static constexpr size_t MIN_NUM_COMMON_RESIDUES_TO_SUPERPOSE_PAIR = 10;
+		alignment_acquirer(const alignment_acquirer &) = default;
+		alignment_acquirer(alignment_acquirer &&) noexcept = default;
+		alignment_acquirer & operator=(const alignment_acquirer &) = default;
+		alignment_acquirer & operator=(alignment_acquirer &&) noexcept = default;
 
-		public:
-			alignment_acquirer() = default;
-			[[nodiscard]] std::unique_ptr<alignment_acquirer> clone() const;
-			virtual ~alignment_acquirer() noexcept = default;
+		[[nodiscard]] std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(
+		  const file::strucs_context &,
+		  const align_refining &  = align_refining::NO,
+		  const ostream_ref_opt & = ::std::nullopt ) const;
+	};
 
-			alignment_acquirer(const alignment_acquirer &) = default;
-			alignment_acquirer(alignment_acquirer &&) noexcept = default;
-			alignment_acquirer & operator=(const alignment_acquirer &) = default;
-			alignment_acquirer & operator=(alignment_acquirer &&) noexcept = default;
+	uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_spec &);
+	uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_options_block &);
 
-			[[nodiscard]] std::pair<alignment, size_size_pair_vec> get_alignment_and_spanning_tree(
-			  const file::strucs_context &,
-			  const align_refining &  = align_refining::NO,
-			  const ostream_ref_opt & = ::std::nullopt ) const;
-		};
+	std::unique_ptr<alignment_acquirer> get_alignment_acquirer(const opts::alignment_input_spec &);
 
-		uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_spec &);
-		uptr_vec<alignment_acquirer> get_alignment_acquirers(const opts::alignment_input_options_block &);
-
-		std::unique_ptr<alignment_acquirer> get_alignment_acquirer(const opts::alignment_input_spec &);
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_ALIGNMENT_ACQUIRER_ALIGNMENT_ACQUIRER_HPP

@@ -28,29 +28,27 @@
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/type_aliases.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return an inverted copy of the specified permutation
-		///
-		/// A permutation is a reordered list of the integers from 0 to some number (inclusive)
-		///
-		/// Example: { 4, 1, 0, 3, 2 } inverts to { 2, 1, 4, 3, 0 } and vice versa
-		///
-		/// This is useful for converting (an ordering of indices) into
-		/// (a lookup from index to rank in the ordering)
-		template <typename Cont = std::vector<size_t>, typename Rng>
-		Cont invert_permutation(const Rng &prm_range ///< The range containing the permutation to invert
-		                        ) {
-			const size_t range_size = boost::size( prm_range );
-			Cont index_scores( range_size, range_size );
-			for (const auto &val : combine( common::indices( range_size ), prm_range ) ) {
-				index_scores[ static_cast<size_t>( boost::get<1>( val ) ) ] = boost::get<0>( val );
-			}
-			return index_scores;
+	/// \brief Return an inverted copy of the specified permutation
+	///
+	/// A permutation is a reordered list of the integers from 0 to some number (inclusive)
+	///
+	/// Example: { 4, 1, 0, 3, 2 } inverts to { 2, 1, 4, 3, 0 } and vice versa
+	///
+	/// This is useful for converting (an ordering of indices) into
+	/// (a lookup from index to rank in the ordering)
+	template <typename Cont = std::vector<size_t>, typename Rng>
+	Cont invert_permutation(const Rng &prm_range ///< The range containing the permutation to invert
+	                        ) {
+		const size_t range_size = boost::size( prm_range );
+		Cont index_scores( range_size, range_size );
+		for (const auto &val : combine( common::indices( range_size ), prm_range ) ) {
+			index_scores[ static_cast<size_t>( boost::get<1>( val ) ) ] = boost::get<0>( val );
 		}
+		return index_scores;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_INVERT_PERMUTATION_HPP

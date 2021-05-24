@@ -21,17 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_WRITE_MODE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_WRITE_MODE_HPP
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Whether a PDB to be written is the last/only part of the PDB or is one of several
-		///        (eg where multiple PDBs are being faked as different chains from the same PDB)
-		enum class pdb_write_mode : bool {
-			ONLY_OR_LAST_PDB, ///< The last/only part of the PDB
-			MORE_TO_FOLLOW    ///< To be followed by more parts in the PDB
-		};
+	/// \brief Whether a PDB to be written is the last/only part of the PDB or is one of several
+	///        (eg where multiple PDBs are being faked as different chains from the same PDB)
+	enum class pdb_write_mode : bool {
+		ONLY_OR_LAST_PDB, ///< The last/only part of the PDB
+		MORE_TO_FOLLOW    ///< To be followed by more parts in the PDB
+	};
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_WRITE_MODE_HPP

@@ -30,19 +30,8 @@ using namespace ::std;
 
 using ::boost::lexical_cast;
 
-namespace cath {
-	namespace test {
-
-		/// \brief The distance_score_formula_test_suite_fixture to assist in testing distance_score_formula
-		struct distance_score_formula_test_suite_fixture : protected global_test_constants {
-		protected:
-			~distance_score_formula_test_suite_fixture() noexcept = default;
-		};
-	} // namespace test
-} // namespace cath
-
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(distance_score_formula_test_suite, cath::test::distance_score_formula_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(distance_score_formula_test_suite)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(basic) {

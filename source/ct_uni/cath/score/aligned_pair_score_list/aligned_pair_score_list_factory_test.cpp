@@ -20,29 +20,17 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
-#include "cath/score/aligned_pair_score_list/aligned_pair_score_list.hpp"
-#include "cath/score/aligned_pair_score_list/aligned_pair_score_list_factory.hpp"
-#include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
+// #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
+// #include "cath/score/aligned_pair_score_list/aligned_pair_score_list.hpp"
+// #include "cath/score/aligned_pair_score_list/aligned_pair_score_list_factory.hpp"
+// #include "cath/test/boost_addenda/boost_check_equal_ranges.hpp"
 
-using namespace ::cath::common;
-using namespace ::cath::score;
-using namespace ::std;
-
-namespace cath {
-	namespace test {
-
-		/// \brief The aligned_pair_score_list_factory_test_suite_fixture to assist in testing aligned_pair_score_list_factory
-		struct aligned_pair_score_list_factory_test_suite_fixture {
-		protected:
-			~aligned_pair_score_list_factory_test_suite_fixture() noexcept = default;
-		};
-
-	} // namespace test
-}  // namespace cath
+// using namespace ::cath::common;
+// using namespace ::cath::score;
+// using namespace ::std;
 
 /// \brief TODOCUMENT
-BOOST_FIXTURE_TEST_SUITE(aligned_pair_score_list_factory_test_suite, cath::test::aligned_pair_score_list_factory_test_suite_fixture)
+BOOST_AUTO_TEST_SUITE(aligned_pair_score_list_factory_test_suite)
 
 ///// \brief TODOCUMENT
 //BOOST_AUTO_TEST_CASE(short_names) {

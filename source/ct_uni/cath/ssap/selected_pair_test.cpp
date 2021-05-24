@@ -23,13 +23,9 @@
 #include "cath/ssap/selected_pair.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
-using namespace ::cath::test;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The selected_pair_test_suite_fixture to assist in testing selected_pair
 		struct selected_pair_test_suite_fixture {
@@ -43,8 +39,7 @@ namespace cath {
 			static constexpr score_type TEST_HIGHER_SCORE = 20;
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(selected_pair_test_suite, selected_pair_test_suite_fixture)
 

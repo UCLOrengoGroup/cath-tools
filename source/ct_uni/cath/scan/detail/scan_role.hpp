@@ -21,27 +21,23 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_ROLE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_ROLE_HPP
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan::detail {
 
-			/// \brief The role in a scan of being either a query or an index
-			///
-			/// Motivation:
-			///  * scan_stride objects store the from/to stride for both the query and the index
-			///  * some code needs to know not only its own from/to stride but also that in its counterparts
-			///    (because two counterparts need to store the same pattern of neighbours around each rep)
-			///  * such code can conviently store four strides in a single scan_stride object but then
-			///    must also store whether their side is the query or index side
-			///
-			/// The scan_stride and scan_role are packaged together in the roled_scan_stride
-			enum class scan_role : bool {
-				QUERY, ///< The role of being a query that can be searched against indices
-				INDEX  ///< The role of being an index, against which queries can be scanned
-			};
+	/// \brief The role in a scan of being either a query or an index
+	///
+	/// Motivation:
+	///  * scan_stride objects store the from/to stride for both the query and the index
+	///  * some code needs to know not only its own from/to stride but also that in its counterparts
+	///    (because two counterparts need to store the same pattern of neighbours around each rep)
+	///  * such code can conviently store four strides in a single scan_stride object but then
+	///    must also store whether their side is the query or index side
+	///
+	/// The scan_stride and scan_role are packaged together in the roled_scan_stride
+	enum class scan_role : bool {
+		QUERY, ///< The role of being a query that can be searched against indices
+		INDEX  ///< The role of being an index, against which queries can be scanned
+	};
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_ROLE_HPP

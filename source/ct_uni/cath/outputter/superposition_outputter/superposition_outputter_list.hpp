@@ -26,40 +26,41 @@
 
 #include <iosfwd>
 
-namespace cath { namespace sup { class superposition_context; } }
-namespace cath { namespace opts { class superposition_outputter; } }
+// clang-format off
+namespace cath::sup { class superposition_context; }
+namespace cath::opts { class superposition_outputter; }
+// clang-format on
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief TODOCUMENT
-		class superposition_outputter_list final {
-		private:
-			boost::ptr_vector<superposition_outputter> outputters;
+	/// \brief TODOCUMENT
+	class superposition_outputter_list final {
+	private:
+		boost::ptr_vector<superposition_outputter> outputters;
 
-		public:
-			void push_back(const superposition_outputter &);
-			[[nodiscard]] size_t size() const;
-			[[nodiscard]] bool   empty() const;
+	public:
+		void push_back(const superposition_outputter &);
+		[[nodiscard]] size_t size() const;
+		[[nodiscard]] bool   empty() const;
 
-			// Provide iterators
-			using const_iterator = boost::ptr_vector<superposition_outputter>::const_iterator;
-			[[nodiscard]] const_iterator begin() const;
-			[[nodiscard]] const_iterator end() const;
-		};
+		// Provide iterators
+		using const_iterator = boost::ptr_vector<superposition_outputter>::const_iterator;
+		[[nodiscard]] const_iterator begin() const;
+		[[nodiscard]] const_iterator end() const;
+	};
 
-		std::string to_string(const superposition_outputter_list &);
+	std::string to_string(const superposition_outputter_list &);
 
-		std::ostream & operator<<(std::ostream &,
-		                          const superposition_outputter_list &);
+	std::ostream & operator<<(std::ostream &,
+	                          const superposition_outputter_list &);
 
-		void use_all_superposition_outputters( const superposition_outputter_list &,
-		                                       const sup::superposition_context &,
-		                                       std::ostream &,
-		                                       std::ostream & );
+	void use_all_superposition_outputters( const superposition_outputter_list &,
+	                                       const sup::superposition_context &,
+	                                       std::ostream &,
+	                                       std::ostream & );
 
-		bool any_superposition_outputters_involve_display_spec(const superposition_outputter_list &);
-	} // namespace opts
-} // namespace cath
+	bool any_superposition_outputters_involve_display_spec(const superposition_outputter_list &);
+
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_LIST_HPP

@@ -27,34 +27,32 @@
 #include "cath/display/options/display_spec.hpp"
 #include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief A superposition_outputter to write
-		class json_file_superposition_outputter final : public superposition_outputter {
-		private:
-			/// \brief The file to which the JSON representing the superposition should be written
-			::std::filesystem::path output_file;
+	/// \brief A superposition_outputter to write
+	class json_file_superposition_outputter final : public superposition_outputter {
+	private:
+		/// \brief The file to which the JSON representing the superposition should be written
+		::std::filesystem::path output_file;
 
-			/// \brief The style in which the JSON should be written
-			const common::json_style the_json_style = DEFAULT_JSON_STYLE;
+		/// \brief The style in which the JSON should be written
+		const common::json_style the_json_style = DEFAULT_JSON_STYLE;
 
-			[[nodiscard]] std::unique_ptr<superposition_outputter> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<superposition_outputter> do_clone() const final;
 
-			void do_output_superposition( const sup::superposition_context &, std::ostream & ) const final;
+		void do_output_superposition( const sup::superposition_context &, std::ostream & ) const final;
 
-			[[nodiscard]] bool        do_involves_display_spec() const final;
-			[[nodiscard]] std::string do_get_name() const final;
+		[[nodiscard]] bool        do_involves_display_spec() const final;
+		[[nodiscard]] std::string do_get_name() const final;
 
-		  public:
-			explicit json_file_superposition_outputter( ::std::filesystem::path,
-			                                            const common::json_style & = DEFAULT_JSON_STYLE );
+	  public:
+		explicit json_file_superposition_outputter( ::std::filesystem::path,
+		                                            const common::json_style & = DEFAULT_JSON_STYLE );
 
-			/// \brief The default style to use for outputting the JSON if it isn't specified
-			static constexpr common::json_style DEFAULT_JSON_STYLE = common::json_style::PRETTY;
-		};
+		/// \brief The default style to use for outputting the JSON if it isn't specified
+		static constexpr common::json_style DEFAULT_JSON_STYLE = common::json_style::PRETTY;
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_JSON_FILE_SUPERPOSITION_OUTPUTTER_HPP

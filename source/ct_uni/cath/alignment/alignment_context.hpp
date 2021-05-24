@@ -26,60 +26,60 @@
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/file/strucs_context.hpp"
 
-namespace cath { namespace align { class alignment_acquirer; } }
-namespace cath { namespace file { class name_set_list; } }
-namespace cath { namespace opts { class pdbs_acquirer; } }
-namespace cath { namespace sup { class superposition; } }
-namespace cath { namespace sup { class superposition_context; } }
+// clang-format off
+namespace cath::align { class alignment_acquirer; }
+namespace cath::file { class name_set_list; }
+namespace cath::opts { class pdbs_acquirer; }
+namespace cath::sup { class superposition; }
+namespace cath::sup { class superposition_context; }
+// clang-format on
 
-namespace cath {
-	namespace align {
+namespace cath::align {
 
-		/// \brief Store an alignment along with the context of the PDBs and ids of the actual structures being superposed
-		class alignment_context final {
-		private:
-			/// \brief TODOCUMENT
-			alignment            the_alignment;
+	/// \brief Store an alignment along with the context of the PDBs and ids of the actual structures being superposed
+	class alignment_context final {
+	private:
+		/// \brief TODOCUMENT
+		alignment            the_alignment;
 
-			/// \brief TODOCUMENT
-			file::strucs_context context;
+		/// \brief TODOCUMENT
+		file::strucs_context context;
 
-		public:
-			alignment_context(alignment,
-			                  file::strucs_context);
+	public:
+		alignment_context(alignment,
+		                  file::strucs_context);
 
-			alignment_context(alignment,
-			                  const file::pdb_list &,
-			                  const file::name_set_list &,
-			                  const chop::region_vec_opt_vec &);
+		alignment_context(alignment,
+		                  const file::pdb_list &,
+		                  const file::name_set_list &,
+		                  const chop::region_vec_opt_vec &);
 
-			[[nodiscard]] const alignment &           get_alignment() const;
-			[[nodiscard]] const file::strucs_context &get_strucs_context() const;
-		};
+		[[nodiscard]] const alignment &           get_alignment() const;
+		[[nodiscard]] const file::strucs_context &get_strucs_context() const;
+	};
 
-		alignment_context make_restricted_alignment_context(alignment,
-		                                                    file::strucs_context);
+	alignment_context make_restricted_alignment_context(alignment,
+	                                                    file::strucs_context);
 
-		const file::pdb_list & get_pdbs(const alignment_context &);
-		const file::name_set_list & get_name_sets(const alignment_context &);
-		const chop::region_vec_opt_vec & get_regions(const alignment_context &);
+	const file::pdb_list & get_pdbs(const alignment_context &);
+	const file::name_set_list & get_name_sets(const alignment_context &);
+	const chop::region_vec_opt_vec & get_regions(const alignment_context &);
 
-		size_t get_num_entries(const alignment_context &);
+	size_t get_num_entries(const alignment_context &);
 
-		file::pdb_list get_restricted_pdbs(const alignment_context &);
+	file::pdb_list get_restricted_pdbs(const alignment_context &);
 
-		sup::superposition_context make_superposition_context(const alignment_context &,
-		                                                      const sup::superposition &);
+	sup::superposition_context make_superposition_context(const alignment_context &,
+	                                                      const sup::superposition &);
 
-		alignment_context get_alignment_context(const alignment_acquirer &,
-		                                        const opts::pdbs_acquirer &,
-		                                        std::istream &,
-		                                        const bool &,
-		                                        const str_vec &,
-		                                        const chop::domain_vec &,
-		                                        const align_refining & = align_refining::NO);
+	alignment_context get_alignment_context(const alignment_acquirer &,
+	                                        const opts::pdbs_acquirer &,
+	                                        std::istream &,
+	                                        const bool &,
+	                                        const str_vec &,
+	                                        const chop::domain_vec &,
+	                                        const align_refining & = align_refining::NO);
 
-	} // namespace align
-} // namespace cath
+} // namespace cath::align
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGNMENT_CONTEXT_HPP

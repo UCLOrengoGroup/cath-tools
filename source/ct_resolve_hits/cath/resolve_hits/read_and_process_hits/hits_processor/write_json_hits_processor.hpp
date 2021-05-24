@@ -26,47 +26,43 @@
 #include "cath/common/rapidjson_addenda/rapidjson_writer_list.hpp"
 #include "cath/resolve_hits/read_and_process_hits/hits_processor/hits_processor.hpp"
 
-namespace cath {
-	namespace rslv {
-		namespace detail {
+namespace cath::rslv::detail {
 
-			/// \brief Hits processor that writes results output to the hits_processor's ostream
-			class write_json_hits_processor final : public hits_processor {
-			private:
-				/// \brief Convenience type alias for the parent class
-				using super = hits_processor;
+	/// \brief Hits processor that writes results output to the hits_processor's ostream
+	class write_json_hits_processor final : public hits_processor {
+	private:
+		/// \brief Convenience type alias for the parent class
+		using super = hits_processor;
 
-				/// \brief The JSON writer, which writes to an OStreamWrapper of the hits_processor's ostream
-				common::rapidjson_writer_list<common::json_style::PRETTY, rapidjson::OStreamWrapper> json_writers;
+		/// \brief The JSON writer, which writes to an OStreamWrapper of the hits_processor's ostream
+		common::rapidjson_writer_list<common::json_style::PRETTY, rapidjson::OStreamWrapper> json_writers;
 
-				/// \brief Whether anything has been written to this yet
-				bool has_started = false;
+		/// \brief Whether anything has been written to this yet
+		bool has_started = false;
 
-				[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
+		[[nodiscard]] std::unique_ptr<hits_processor> do_clone() const final;
 
-				void do_process_hits_for_query(const std::string &,
-				                               const crh_filter_spec &,
-				                               const crh_score_spec &,
-				                               const crh_segment_spec &,
-				                               const calc_hit_list &) final;
+		void do_process_hits_for_query(const std::string &,
+		                               const crh_filter_spec &,
+		                               const crh_score_spec &,
+		                               const crh_segment_spec &,
+		                               const calc_hit_list &) final;
 
-				void do_finish_work() final;
+		void do_finish_work() final;
 
-				[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
+		[[nodiscard]] bool do_wants_hits_that_fail_score_filter() const final;
 
-				[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
+		[[nodiscard]] bool do_requires_strictly_worse_hits() const final;
 
-			  public:
-				explicit write_json_hits_processor(ref_vec<std::ostream>) noexcept;
+	  public:
+		explicit write_json_hits_processor(ref_vec<std::ostream>) noexcept;
 
-				write_json_hits_processor(const write_json_hits_processor &);
-				write_json_hits_processor(write_json_hits_processor &&);
-				write_json_hits_processor & operator=(const write_json_hits_processor &) = delete;
-				write_json_hits_processor & operator=(write_json_hits_processor &&) = delete;
-			};
+		write_json_hits_processor(const write_json_hits_processor &);
+		write_json_hits_processor(write_json_hits_processor &&);
+		write_json_hits_processor & operator=(const write_json_hits_processor &) = delete;
+		write_json_hits_processor & operator=(write_json_hits_processor &&) = delete;
+	};
 
-		} // namespace detail
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_READ_AND_PROCESS_HITS_HITS_PROCESSOR_WRITE_JSON_HITS_PROCESSOR_HPP

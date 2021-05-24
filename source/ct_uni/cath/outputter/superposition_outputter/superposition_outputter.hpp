@@ -26,61 +26,62 @@
 #include <iosfwd>
 #include <memory>
 
-namespace cath { namespace sup { class superposition_context; } }
+// clang-format off
+namespace cath::sup { class superposition_context; }
+// clang-format on
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
+
+	/// \brief TODOCUMENT
+	class superposition_outputter {
+	private:
+		/// \brief Pure virtual method with which each concrete superposition_outputter must define how to create a clone of itself
+		[[nodiscard]] virtual std::unique_ptr<superposition_outputter> do_clone() const = 0;
 
 		/// \brief TODOCUMENT
-		class superposition_outputter {
-		private:
-			/// \brief Pure virtual method with which each concrete superposition_outputter must define how to create a clone of itself
-			[[nodiscard]] virtual std::unique_ptr<superposition_outputter> do_clone() const = 0;
+		virtual void do_output_superposition( const sup::superposition_context &, std::ostream & ) const = 0;
 
-			/// \brief TODOCUMENT
-			virtual void do_output_superposition( const sup::superposition_context &, std::ostream & ) const = 0;
+		/// \brief TODOCUMENT
+		[[nodiscard]] virtual bool do_involves_display_spec() const = 0;
 
-			/// \brief TODOCUMENT
-			[[nodiscard]] virtual bool do_involves_display_spec() const = 0;
+		/// \brief Pure virtual method with which each concrete superposition_outputter must define its name
+		[[nodiscard]] virtual std::string do_get_name() const = 0;
 
-			/// \brief Pure virtual method with which each concrete superposition_outputter must define its name
-			[[nodiscard]] virtual std::string do_get_name() const = 0;
+	public:
+		superposition_outputter() = default;
+		[[nodiscard]] std::unique_ptr<superposition_outputter> clone() const;
+		virtual ~superposition_outputter() noexcept = default;
 
-		public:
-			superposition_outputter() = default;
-			[[nodiscard]] std::unique_ptr<superposition_outputter> clone() const;
-			virtual ~superposition_outputter() noexcept = default;
+		superposition_outputter(const superposition_outputter &) = default;
+		superposition_outputter(superposition_outputter &&) noexcept = default;
+		superposition_outputter & operator=(const superposition_outputter &) = default;
+		superposition_outputter & operator=(superposition_outputter &&) noexcept = default;
 
-			superposition_outputter(const superposition_outputter &) = default;
-			superposition_outputter(superposition_outputter &&) noexcept = default;
-			superposition_outputter & operator=(const superposition_outputter &) = default;
-			superposition_outputter & operator=(superposition_outputter &&) noexcept = default;
+		void output_superposition( const sup::superposition_context &, std::ostream & ) const;
+		[[nodiscard]] bool involves_display_spec() const;
 
-			void output_superposition( const sup::superposition_context &, std::ostream & ) const;
-			[[nodiscard]] bool involves_display_spec() const;
+		[[nodiscard]] std::string get_name() const;
+	};
 
-			[[nodiscard]] std::string get_name() const;
-		};
+	/// \brief NVI pass-through to get the concrete superposition_outputter's name
+	inline std::string superposition_outputter::get_name() const {
+		return do_get_name();
+	}
 
-		/// \brief NVI pass-through to get the concrete superposition_outputter's name
-		inline std::string superposition_outputter::get_name() const {
-			return do_get_name();
-		}
+	/// \brief Function to make superposition_outputter meet the Clonable concept (used in ptr_container)
+	///
+	/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
+	///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
+	///
+	/// This gets the smart pointer from the clone() method and then calls release on it.
+	///
+	/// \returns A raw pointer to a new copy of the superposition_outputter argument, with the same dynamic type.
+	///          The caller is responsible for deleting this new object.
+	inline superposition_outputter * new_clone(const superposition_outputter &prm_superposition_outputter ///< The superposition_outputter to clone
+	                                           ) {
+		return prm_superposition_outputter.clone().release();
+	}
 
-		/// \brief Function to make superposition_outputter meet the Clonable concept (used in ptr_container)
-		///
-		/// NOTE: Don't call this yourself. Call the object's clone() method instead because that returns a
-		///       smart pointer rather than the raw pointer this has to return to meet the Clonable concept.
-		///
-		/// This gets the smart pointer from the clone() method and then calls release on it.
-		///
-		/// \returns A raw pointer to a new copy of the superposition_outputter argument, with the same dynamic type.
-		///          The caller is responsible for deleting this new object.
-		inline superposition_outputter * new_clone(const superposition_outputter &prm_superposition_outputter ///< The superposition_outputter to clone
-		                                           ) {
-			return prm_superposition_outputter.clone().release();
-		}
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_HPP

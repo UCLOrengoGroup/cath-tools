@@ -28,25 +28,23 @@
 using namespace ::cath;
 using namespace ::cath::common;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief The invert_permutation_test_suite_fixture to assist in testing invert_permutation
-		struct invert_permutation_test_suite_fixture : protected global_test_constants {
-		protected:
-			~invert_permutation_test_suite_fixture() noexcept = default;
+	/// \brief The invert_permutation_test_suite_fixture to assist in testing invert_permutation
+	struct invert_permutation_test_suite_fixture : protected global_test_constants {
+	protected:
+		~invert_permutation_test_suite_fixture() noexcept = default;
 
-			/// \brief A simple permutation, forwards
-			const size_vec permutation_forward  = { 4, 1, 0, 3, 2 };
+		/// \brief A simple permutation, forwards
+		const size_vec permutation_forward  = { 4, 1, 0, 3, 2 };
 
-			/// \brief The same simple permutation, backwards
-			const size_vec permutation_backward = { 2, 1, 4, 3, 0 };
-		};
+		/// \brief The same simple permutation, backwards
+		const size_vec permutation_backward = { 2, 1, 4, 3, 0 };
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(invert_permutation_test_suite, cath::test::invert_permutation_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(invert_permutation_test_suite, invert_permutation_test_suite_fixture)
 
 /// \brief Check that inverting a simple forward permutation correctly generates the backward permutation
 BOOST_AUTO_TEST_CASE(invert_forward) {

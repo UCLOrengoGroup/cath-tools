@@ -35,31 +35,29 @@ using namespace ::std;
 
 using ::std::filesystem::path;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief Assist in testing json_file_superposition_outputter
-		struct json_file_superposition_outputter_test_suite_fixture : protected superposition_fixture {
-		protected:
-			~json_file_superposition_outputter_test_suite_fixture() noexcept = default;
+	/// \brief Assist in testing json_file_superposition_outputter
+	struct json_file_superposition_outputter_test_suite_fixture : protected superposition_fixture {
+	protected:
+		~json_file_superposition_outputter_test_suite_fixture() noexcept = default;
 
-			const temp_file temp_json_file{ "cath_tools_test_temp_file.json_file_superposition_outputter.%%%%" };
-			const path temp_json_filename = get_filename( temp_json_file );
+		const temp_file temp_json_file{ "cath_tools_test_temp_file.json_file_superposition_outputter.%%%%" };
+		const path temp_json_filename = get_filename( temp_json_file );
 
-			ostringstream err_ss;
+		ostringstream err_ss;
 
-			const string json_file_base = "1c0pA01_1hdoA00";
-			const string suffix         = ".sup_json";
+		const string json_file_base = "1c0pA01_1hdoA00";
+		const string suffix         = ".sup_json";
 
-			const path expected_pretty_file  = TEST_SUP_JSON_DIR() / ( json_file_base + ".pretty"  + suffix );
-			const path expected_compact_file = TEST_SUP_JSON_DIR() / ( json_file_base + ".compact" + suffix );
+		const path expected_pretty_file  = TEST_SUP_JSON_DIR() / ( json_file_base + ".pretty"  + suffix );
+		const path expected_compact_file = TEST_SUP_JSON_DIR() / ( json_file_base + ".compact" + suffix );
 
-		};
+	};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
-BOOST_FIXTURE_TEST_SUITE(json_file_superposition_outputter_test_suite, cath::test::json_file_superposition_outputter_test_suite_fixture)
+BOOST_FIXTURE_TEST_SUITE(json_file_superposition_outputter_test_suite, json_file_superposition_outputter_test_suite_fixture)
 
 BOOST_AUTO_TEST_CASE(writes_correct_pretty_style_json_file_without_errors) {
 	json_file_superposition_outputter{ temp_json_filename, json_style::PRETTY }.output_superposition( the_sup_con, err_ss );

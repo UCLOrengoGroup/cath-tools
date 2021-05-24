@@ -23,41 +23,39 @@
 
 #include "cath/common/boost_addenda/range/adaptor/iterator/adjacent_itr.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief A range wrapper that dereferences to the consecutive pairs of adjacent elements.
-		///
-		/// For a const adjacented_range, use a const RNG type.
-		///
-		/// \todo If there is need, this could possibly be extended to allow compile-time specification of the number
-		///       of elements to return at once (via a tuple)
-		///
-		/// Invariants:
-		///  * The client must preserve the validity of the original range and its one-past-end iterator throughout the adjacented_range's lifetime
-		template <typename RNG>
-		class adjacented_range final : public boost::iterator_range<adjacent_itr<RNG>> {
-		private:
-			/// \brief The adjacent_itr that does the actual hard work of implementing the adjacent iterator
-			using adjacented_iterator = adjacent_itr<RNG>;
+	/// \brief A range wrapper that dereferences to the consecutive pairs of adjacent elements.
+	///
+	/// For a const adjacented_range, use a const RNG type.
+	///
+	/// \todo If there is need, this could possibly be extended to allow compile-time specification of the number
+	///       of elements to return at once (via a tuple)
+	///
+	/// Invariants:
+	///  * The client must preserve the validity of the original range and its one-past-end iterator throughout the adjacented_range's lifetime
+	template <typename RNG>
+	class adjacented_range final : public boost::iterator_range<adjacent_itr<RNG>> {
+	private:
+		/// \brief The adjacent_itr that does the actual hard work of implementing the adjacent iterator
+		using adjacented_iterator = adjacent_itr<RNG>;
 
-			/// \brief A convenience type-alias for the iterator_range through which this is implemented
-			using super               = boost::iterator_range<adjacented_iterator>;
+		/// \brief A convenience type-alias for the iterator_range through which this is implemented
+		using super               = boost::iterator_range<adjacented_iterator>;
 
-		public:
-			explicit adjacented_range(const RNG &);
-		 };
+	public:
+		explicit adjacented_range(const RNG &);
+	 };
 
-		/// \brief Ctor from a range
-		template <typename RNG>
-		adjacented_range<RNG>::adjacented_range(const RNG &prm_range ///< The range over which to apply this adjacented_range
-		                                        ) : super(
-		                                            	adjacented_iterator( ::std::cbegin( prm_range ), ::std::cend  ( prm_range ) ),
-		                                            	adjacented_iterator( ::std::cend  ( prm_range ), ::std::cend  ( prm_range ) )
-		                                            ) {
-		}
+	/// \brief Ctor from a range
+	template <typename RNG>
+	adjacented_range<RNG>::adjacented_range(const RNG &prm_range ///< The range over which to apply this adjacented_range
+	                                        ) : super(
+	                                            	adjacented_iterator( ::std::cbegin( prm_range ), ::std::cend  ( prm_range ) ),
+	                                            	adjacented_iterator( ::std::cend  ( prm_range ), ::std::cend  ( prm_range ) )
+	                                            ) {
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_RANGE_ADJACENTED_RANGE_HPP

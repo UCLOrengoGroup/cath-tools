@@ -23,39 +23,38 @@
 
 #include <type_traits>
 	
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief TODOCUMENT
-		template <typename T>
-		inline constexpr T round_div_up(T a, ///< TODOCUMENT
-		                                T b  ///< TODOCUMENT
-		                                ) {
-			static_assert( std::is_integral_v<T>, "round_div_down() must be performed on an integral type" );
-			return ( a < 0 || b < 0 ) ? throw("round_div_down() currently only implemented for non-negative values")
-			                          : ( a / b ) + ( ( a % b != 0 ) ? 1 : 0);
-		}
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline constexpr T round_div_up(T a, ///< TODOCUMENT
+	                                T b  ///< TODOCUMENT
+	                                ) {
+		static_assert( std::is_integral_v<T>, "round_div_down() must be performed on an integral type" );
+		return ( a < 0 || b < 0 ) ? throw("round_div_down() currently only implemented for non-negative values")
+		                          : ( a / b ) + ( ( a % b != 0 ) ? 1 : 0);
+	}
 
-		/// \brief TODOCUMENT
-		template <typename T>
-		inline constexpr T round_down_mod(T a, ///< TODOCUMENT
-		                                  T b  ///< TODOCUMENT
-		                                  ) {
-			static_assert( std::is_integral_v<T>, "round_down_mod() must be performed on an integral type" );
-			return ( a < 0 || b < 0 ) ? throw("round_down_mod() currently only implemented for non-negative values")
-			                          : b * ( a / b );
-		}
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline constexpr T round_down_mod(T a, ///< TODOCUMENT
+	                                  T b  ///< TODOCUMENT
+	                                  ) {
+		static_assert( std::is_integral_v<T>, "round_down_mod() must be performed on an integral type" );
+		return ( a < 0 || b < 0 ) ? throw("round_down_mod() currently only implemented for non-negative values")
+		                          : b * ( a / b );
+	}
 
-		/// \brief TODOCUMENT
-		template <typename T>
-		inline constexpr T round_up_mod(T a, ///< TODOCUMENT
-		                                T b  ///< TODOCUMENT
-		                                ) {
-			static_assert( std::is_integral_v<T>, "round_up_mod() must be performed on an integral type" );
-			return ( a < 0 || b < 0 ) ? throw("round_up_mod() currently only implemented for non-negative values")
-			                          : b * round_div_up( a, b );
-		}
-	} // namespace common
-} // namespace cath
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline constexpr T round_up_mod(T a, ///< TODOCUMENT
+	                                T b  ///< TODOCUMENT
+	                                ) {
+		static_assert( std::is_integral_v<T>, "round_up_mod() must be performed on an integral type" );
+		return ( a < 0 || b < 0 ) ? throw("round_up_mod() currently only implemented for non-negative values")
+		                          : b * round_div_up( a, b );
+	}
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_INTEGER_ROUNDING_HPP

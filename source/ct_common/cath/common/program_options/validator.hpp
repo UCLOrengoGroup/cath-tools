@@ -30,49 +30,47 @@
 #include <string>
 #include <vector>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Contain a function for validating lexical_cast-able types
-		template <typename T, typename U = T>
-		class lex_castable_validator final {
-		public:
-			static boost::any perform_validate(const boost::any &,
-			                                   const str_vec &);
-		};
+	/// \brief Contain a function for validating lexical_cast-able types
+	template <typename T, typename U = T>
+	class lex_castable_validator final {
+	public:
+		static boost::any perform_validate(const boost::any &,
+		                                   const str_vec &);
+	};
 
-		/// \brief Validate a lexical_cast-able type by attempting to lexical_cast it and throwing an invalid_option_value
-		///        if any exception is thrown
-		///
-		/// This can cut out a lot of the boiler-plate code for types so the validate fn only need contain:
-		///
-		/// ~~~~~.cpp
-		/// prm_value = lex_castable_validator<my_type>::perform_validate( prm_value, prm_value_strings );
-		/// ~~~~~
-		template <typename T, typename U>
-		boost::any lex_castable_validator<T, U>::perform_validate(const boost::any &prm_prev_value,   ///< The previous value (if any)
-		                                                          const str_vec    &prm_value_strings ///< The value strings
-		                                                          ) {
-			// Standard validate boilerplate:
-			//  * Make sure no previous assignment to 'a' was made.
-			//  * Extract the first string from 'prm_value_strings'.
-			//    (If there is more than one string, it's an error, and exception will be thrown.)
-			boost::program_options::validators::check_first_occurrence( prm_prev_value );
-			const std::string &value_string = boost::program_options::validators::get_single_string( prm_value_strings );
+	/// \brief Validate a lexical_cast-able type by attempting to lexical_cast it and throwing an invalid_option_value
+	///        if any exception is thrown
+	///
+	/// This can cut out a lot of the boiler-plate code for types so the validate fn only need contain:
+	///
+	/// ~~~~~.cpp
+	/// prm_value = lex_castable_validator<my_type>::perform_validate( prm_value, prm_value_strings );
+	/// ~~~~~
+	template <typename T, typename U>
+	boost::any lex_castable_validator<T, U>::perform_validate(const boost::any &prm_prev_value,   ///< The previous value (if any)
+	                                                          const str_vec    &prm_value_strings ///< The value strings
+	                                                          ) {
+		// Standard validate boilerplate:
+		//  * Make sure no previous assignment to 'a' was made.
+		//  * Extract the first string from 'prm_value_strings'.
+		//    (If there is more than one string, it's an error, and exception will be thrown.)
+		boost::program_options::validators::check_first_occurrence( prm_prev_value );
+		const std::string &value_string = boost::program_options::validators::get_single_string( prm_value_strings );
 
-			// Attempt to lexical_cast value_string and if it fails, throw an invalid_option_value exception
-			try {
-				// Come all GCC versions > 4.9, just use `U{  }` rather than the `static_cast`
-				// which appears to confuse older GCCs to try aggregate initialization over copy
-				// construction in some cases
-				return static_cast<U>( boost::lexical_cast<T>( value_string ) );
-			}
-			catch (...) {
-				BOOST_THROW_EXCEPTION( boost::program_options::invalid_option_value( value_string ) );
-			}
+		// Attempt to lexical_cast value_string and if it fails, throw an invalid_option_value exception
+		try {
+			// Come all GCC versions > 4.9, just use `U{  }` rather than the `static_cast`
+			// which appears to confuse older GCCs to try aggregate initialization over copy
+			// construction in some cases
+			return static_cast<U>( boost::lexical_cast<T>( value_string ) );
 		}
+		catch (...) {
+			BOOST_THROW_EXCEPTION( boost::program_options::invalid_option_value( value_string ) );
+		}
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_PROGRAM_OPTIONS_VALIDATOR_HPP

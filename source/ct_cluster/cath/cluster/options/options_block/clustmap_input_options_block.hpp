@@ -26,40 +26,38 @@
 #include "cath/cluster/options/spec/clustmap_input_spec.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
-namespace cath {
-	namespace clust {
+namespace cath::clust {
 
-		/// \brief Define an options_block for options specifying how cath-map-clusters should read the input
-		class clustmap_input_options_block final : public opts::options_block {
-		private:
-			using super = opts::options_block;
+	/// \brief Define an options_block for options specifying how cath-map-clusters should read the input
+	class clustmap_input_options_block final : public opts::options_block {
+	private:
+		using super = opts::options_block;
 
-			/// \brief The spec this options_block configures
-			clustmap_input_spec the_spec;
+		/// \brief The spec this options_block configures
+		clustmap_input_spec the_spec;
 
-			[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
-			[[nodiscard]] std::string                          do_get_block_name() const final;
-			void do_add_visible_options_to_description(boost::program_options::options_description &,
-			                                           const size_t &) final;
-			void do_add_hidden_options_to_description(boost::program_options::options_description &,
-			                                          const size_t &) final;
-			[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
-			[[nodiscard]] str_view_vec do_get_all_options_names() const final;
+		[[nodiscard]] std::unique_ptr<opts::options_block> do_clone() const final;
+		[[nodiscard]] std::string                          do_get_block_name() const final;
+		void do_add_visible_options_to_description(boost::program_options::options_description &,
+		                                           const size_t &) final;
+		void do_add_hidden_options_to_description(boost::program_options::options_description &,
+		                                          const size_t &) final;
+		[[nodiscard]] str_opt do_invalid_string( const boost::program_options::variables_map & ) const final;
+		[[nodiscard]] str_view_vec do_get_all_options_names() const final;
 
-		  public:
-			[[nodiscard]] const clustmap_input_spec &get_clustmap_input_spec() const;
+	  public:
+		[[nodiscard]] const clustmap_input_spec &get_clustmap_input_spec() const;
 
-			/// \brief The option name for the cluster-membership file for the working clusters
-			static constexpr ::std::string_view PO_WORKING_CLUSTMEMB_FILE{ "working-clustmemb-file" };
+		/// \brief The option name for the cluster-membership file for the working clusters
+		static constexpr ::std::string_view PO_WORKING_CLUSTMEMB_FILE{ "working-clustmemb-file" };
 
-			/// \brief The option name for an optional file specify a cluster-membership file for map-from clusters
-			static constexpr ::std::string_view PO_MAP_FROM_CLUSTMEMB_FILE{ "map-from-clustmemb-file" };
+		/// \brief The option name for an optional file specify a cluster-membership file for map-from clusters
+		static constexpr ::std::string_view PO_MAP_FROM_CLUSTMEMB_FILE{ "map-from-clustmemb-file" };
 
-			/// \brief The option name for whether to read batches from working_clustmemb_file (rather than cluster membership directly)
-			static constexpr ::std::string_view PO_READ_BATCHES_FROM_INPUT{ "read-batches-from-input" };
-		};
+		/// \brief The option name for whether to read batches from working_clustmemb_file (rather than cluster membership directly)
+		static constexpr ::std::string_view PO_READ_BATCHES_FROM_INPUT{ "read-batches-from-input" };
+	};
 
-	} // namespace clust
-} // namespace cath
+} // namespace cath::clust
 
 #endif // _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CLUSTMAP_INPUT_OPTIONS_BLOCK_HPP

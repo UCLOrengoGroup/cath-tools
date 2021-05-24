@@ -21,16 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_PARSE_SOURCES_HPP
 #define _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_PARSE_SOURCES_HPP
 
-namespace cath {
-	namespace opts {
+namespace cath::opts {
 
-		/// \brief Represent the sources from which options should be parsed
-		enum class parse_sources : bool {
-			CMND_LINE_ONLY,   ///< Only parse options from the command-line
-			CMND_ENV_AND_FILE ///< Parse options from the command-line, environment-variables and configuration file
-		};
+	/// \brief Represent the sources from which options should be parsed
+	enum class parse_sources : bool {
+		CMND_LINE_ONLY,   ///< Only parse options from the command-line
+		CMND_ENV_AND_FILE ///< Parse options from the command-line, environment-variables and configuration file
+	};
 
-	} // namespace opts
-} // namespace cath
+} // namespace cath::opts
 
 #endif // _CATH_TOOLS_SOURCE_CT_OPTIONS_CATH_OPTIONS_EXECUTABLE_PARSE_SOURCES_HPP

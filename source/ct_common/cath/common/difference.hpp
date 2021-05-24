@@ -23,24 +23,22 @@
 
 #include <algorithm>
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Return the difference of two values
-		///
-		/// This is helpful for comparing two values of an unsigned integral type because
-		/// the natural approach of `abs( val_a - val_b )` can hit problems if both are unsigned
-		/// and val_b is bigger than val_a and silly answers can result.
-		///
-		/// That problem doesn't even necessarily get picked up by the compiler. Hence this is a better approach.
-		template <typename T>
-		constexpr T difference( const T &prm_value_a, ///< The first value to be compared
-		                        const T &prm_value_b  ///< The second value to be compared
-		                        ) {
-			return std::max( prm_value_a, prm_value_b ) - std::min( prm_value_a, prm_value_b );
-		}
+	/// \brief Return the difference of two values
+	///
+	/// This is helpful for comparing two values of an unsigned integral type because
+	/// the natural approach of `abs( val_a - val_b )` can hit problems if both are unsigned
+	/// and val_b is bigger than val_a and silly answers can result.
+	///
+	/// That problem doesn't even necessarily get picked up by the compiler. Hence this is a better approach.
+	template <typename T>
+	constexpr T difference( const T &prm_value_a, ///< The first value to be compared
+	                        const T &prm_value_b  ///< The second value to be compared
+	                        ) {
+		return std::max( prm_value_a, prm_value_b ) - std::min( prm_value_a, prm_value_b );
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_DIFFERENCE_HPP

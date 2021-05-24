@@ -37,128 +37,126 @@
 #include "cath/scan/detail/scan_index_store/detail/hash_tuple.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 
-namespace cath {
-	namespace scan {
-		namespace detail {
-			namespace detail {
+namespace cath::scan::detail {
 
-				/// \brief TODOCUMENT
-				struct empty_key_maker final {
-					/// \brief TODOCUMENT
-					template <typename... Ts>
-					constexpr auto operator()(const Ts &...
-					                          ) const {
-						return std::make_tuple( std::numeric_limits<Ts>::max()... );
-					}
-				};
-			} // namespace detail
+	namespace detail {
 
+		/// \brief TODOCUMENT
+		struct empty_key_maker final {
 			/// \brief TODOCUMENT
-			template <typename Key, typename Cell>
-			class scan_index_hash_store final {
-			private:
-				/// \brief TODOCUMENT
-				using key_hash = hash_tuple::hash<Key>;
-
-				/// \brief TODOCUMENT
-				using value_t = common::range_value_t<Cell>;
-
-				/// \brief TODOCUMENT
-				std::unordered_map<Key, Cell, key_hash> the_store;
-
-				/// \brief TODOCUMENT
-				Cell empty_cell{};
-
-				long long unsigned int num_adds = 0;
-
-			public:
-				using const_iterator = typename std::unordered_map<Key, Cell, key_hash>::const_iterator;
-
-				scan_index_hash_store() {
-//					const auto empty_key = common::apply( detail::empty_key_maker(), Key() );
-//					the_store.set_empty_key( empty_key );
-
-					// the_store.rehash( 131072 );
-					// std::cerr << "scan_index_hash_store's ctor currently uses a hard-coded rehash to 131072 buckets!\n";
-				}
-
-				template <typename T>
-				inline void push_back_entry_to_cell(const Key  &,
-				                                    T  &&);
-
-				template <typename... Ts>
-				inline void emplace_back_entry_to_cell(const Key  &,
-				                                       Ts &&...);
-
-				const Cell & find_matches(const Key &) const;
-
-				[[nodiscard]] info_quantity get_info_size() const;
-
-				const_iterator begin() const;
-				const_iterator end() const;
-
-				void summarize() const {
-					// ::spdlog::warn( "scan_index_hash_store : size is            : {}", the_store.size() );
-					// ::spdlog::warn( "scan_index_hash_store : max_size is        : {}", the_store.max_size() );
-					// ::spdlog::warn( "scan_index_hash_store : bucket_count is    : {}", the_store.bucket_count() );
-					// ::spdlog::warn( "scan_index_hash_store : load_factor is     : {}", the_store.load_factor() );
-					// ::spdlog::warn( "scan_index_hash_store : max_load_factor is : {}", the_store.max_load_factor() );
-					// ::spdlog::warn( "scan_index_hash_store : num_adds is        : {}", num_adds );
-				}
-			};
-
-			/// \brief TODOCUMENT
-			template <typename Key, typename Cell>
-			template <typename T>
-			inline void scan_index_hash_store<Key, Cell>::push_back_entry_to_cell(const Key  &prm_key, ///< TODOCUMENT
-			                                                                      T         &&prm_data ///< TODOCUMENT
-			                                                                      ) {
-				the_store[ prm_key ].push_back( std::forward<T>( prm_data ) );
-				++num_adds;
-			}
-
-			/// \brief TODOCUMENT
-			template <typename Key, typename Cell>
 			template <typename... Ts>
-			inline void scan_index_hash_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    prm_key, ///< TODOCUMENT
-			                                                                         Ts        &&... prm_data ///< TODOCUMENT
-			                                                                         ) {
-				the_store[ prm_key ].emplace_back( std::forward<Ts>( prm_data )... );
-				++num_adds;
+			constexpr auto operator()(const Ts &...
+			                          ) const {
+				return std::make_tuple( std::numeric_limits<Ts>::max()... );
 			}
+		};
 
-			/// \brief TODOCUMENT
-			template <typename Key, typename Cell>
-			inline const Cell & scan_index_hash_store<Key, Cell>::find_matches(const Key &prm_key ///< TODOCUMENT
-			                                                                   ) const {
-				const auto &cell_itr = the_store.find( prm_key );
-				return ( cell_itr == ::std::cend( the_store ) ) ? empty_cell : cell_itr->second;
-			}
+	} // namespace detail
 
-			/// \brief TODOCUMENT
-			template <typename Key, typename Cell>
-			info_quantity scan_index_hash_store<Key, Cell>::get_info_size() const {
-				const auto num_bytes =
-					  sizeof( common::remove_cvref_t< decltype( *this ) > )
-					+ sizeof( Cell    ) * the_store.size()
-					+ sizeof( value_t ) * num_adds;
-				return num_bytes * boost::units::information::bytes;
-			}
+	/// \brief TODOCUMENT
+	template <typename Key, typename Cell>
+	class scan_index_hash_store final {
+	private:
+		/// \brief TODOCUMENT
+		using key_hash = hash_tuple::hash<Key>;
 
-			/// \brief TODOCUMENT
-			template <typename Key, typename Cell>
-			auto scan_index_hash_store<Key, Cell>::begin() const -> const_iterator {
-				return ::std::cbegin( the_store );
-			}
+		/// \brief TODOCUMENT
+		using value_t = common::range_value_t<Cell>;
 
-			/// \brief TODOCUMENT
-			template <typename Key, typename Cell>
-			auto scan_index_hash_store<Key, Cell>::end() const -> const_iterator {
-				return ::std::cend  ( the_store );
-			}
+		/// \brief TODOCUMENT
+		std::unordered_map<Key, Cell, key_hash> the_store;
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+		/// \brief TODOCUMENT
+		Cell empty_cell{};
+
+		long long unsigned int num_adds = 0;
+
+	public:
+		using const_iterator = typename std::unordered_map<Key, Cell, key_hash>::const_iterator;
+
+		scan_index_hash_store() {
+//			const auto empty_key = common::apply( detail::empty_key_maker(), Key() );
+//			the_store.set_empty_key( empty_key );
+
+			// the_store.rehash( 131072 );
+			// std::cerr << "scan_index_hash_store's ctor currently uses a hard-coded rehash to 131072 buckets!\n";
+		}
+
+		template <typename T>
+		inline void push_back_entry_to_cell(const Key  &,
+		                                    T  &&);
+
+		template <typename... Ts>
+		inline void emplace_back_entry_to_cell(const Key  &,
+		                                       Ts &&...);
+
+		const Cell & find_matches(const Key &) const;
+
+		[[nodiscard]] info_quantity get_info_size() const;
+
+		const_iterator begin() const;
+		const_iterator end() const;
+
+		void summarize() const {
+			// ::spdlog::warn( "scan_index_hash_store : size is            : {}", the_store.size() );
+			// ::spdlog::warn( "scan_index_hash_store : max_size is        : {}", the_store.max_size() );
+			// ::spdlog::warn( "scan_index_hash_store : bucket_count is    : {}", the_store.bucket_count() );
+			// ::spdlog::warn( "scan_index_hash_store : load_factor is     : {}", the_store.load_factor() );
+			// ::spdlog::warn( "scan_index_hash_store : max_load_factor is : {}", the_store.max_load_factor() );
+			// ::spdlog::warn( "scan_index_hash_store : num_adds is        : {}", num_adds );
+		}
+	};
+
+	/// \brief TODOCUMENT
+	template <typename Key, typename Cell>
+	template <typename T>
+	inline void scan_index_hash_store<Key, Cell>::push_back_entry_to_cell(const Key  &prm_key, ///< TODOCUMENT
+	                                                                      T         &&prm_data ///< TODOCUMENT
+	                                                                      ) {
+		the_store[ prm_key ].push_back( std::forward<T>( prm_data ) );
+		++num_adds;
+	}
+
+	/// \brief TODOCUMENT
+	template <typename Key, typename Cell>
+	template <typename... Ts>
+	inline void scan_index_hash_store<Key, Cell>::emplace_back_entry_to_cell(const Key  &    prm_key, ///< TODOCUMENT
+	                                                                         Ts        &&... prm_data ///< TODOCUMENT
+	                                                                         ) {
+		the_store[ prm_key ].emplace_back( std::forward<Ts>( prm_data )... );
+		++num_adds;
+	}
+
+	/// \brief TODOCUMENT
+	template <typename Key, typename Cell>
+	inline const Cell & scan_index_hash_store<Key, Cell>::find_matches(const Key &prm_key ///< TODOCUMENT
+	                                                                   ) const {
+		const auto &cell_itr = the_store.find( prm_key );
+		return ( cell_itr == ::std::cend( the_store ) ) ? empty_cell : cell_itr->second;
+	}
+
+	/// \brief TODOCUMENT
+	template <typename Key, typename Cell>
+	info_quantity scan_index_hash_store<Key, Cell>::get_info_size() const {
+		const auto num_bytes =
+			  sizeof( common::remove_cvref_t< decltype( *this ) > )
+			+ sizeof( Cell    ) * the_store.size()
+			+ sizeof( value_t ) * num_adds;
+		return num_bytes * boost::units::information::bytes;
+	}
+
+	/// \brief TODOCUMENT
+	template <typename Key, typename Cell>
+	auto scan_index_hash_store<Key, Cell>::begin() const -> const_iterator {
+		return ::std::cbegin( the_store );
+	}
+
+	/// \brief TODOCUMENT
+	template <typename Key, typename Cell>
+	auto scan_index_hash_store<Key, Cell>::end() const -> const_iterator {
+		return ::std::cend  ( the_store );
+	}
+
+} // namespace cath::scan::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_HASH_STORE_HPP

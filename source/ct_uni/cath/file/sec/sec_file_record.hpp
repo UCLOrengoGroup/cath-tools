@@ -25,51 +25,51 @@
 #include "cath/structure/geometry/rotation.hpp"
 #include "cath/structure/protein/sec_struc_type.hpp"
 
+// clang-format off
 namespace cath { class sec_struc; }
+// clang-format on
 
-namespace cath {
-	namespace file {
+namespace cath::file {
 
-		/// \brief Represent the data for a single secondary structure, as parsed out of the main line of a sec file
-		class sec_file_record final {
-		private:
-			/// \brief The start residue of the secondary structure (\todo sequential number? offset?)
-			size_t         start_residue_num;
-			/// \brief The stop residue of the secondary structure (\todo sequential number? offset?)
-			size_t         stop_residue_num;
-			/// \brief The type of secondary structure: sec_struc_type::ALPHA_HELIX or sec_struc_type::BETA_STRAND (represented as 'H' or 'S' respectively in sec files)
-			sec_struc_type type;
-			/// \brief The coordinates of the secondary structure's midpoint
-			geom::coord    midpoint;
-			/// \brief A unit vector along the secondary structure (\todo towards the start of the secondary structure?)
-			geom::coord    unit_dirn;
+	/// \brief Represent the data for a single secondary structure, as parsed out of the main line of a sec file
+	class sec_file_record final {
+	private:
+		/// \brief The start residue of the secondary structure (\todo sequential number? offset?)
+		size_t         start_residue_num;
+		/// \brief The stop residue of the secondary structure (\todo sequential number? offset?)
+		size_t         stop_residue_num;
+		/// \brief The type of secondary structure: sec_struc_type::ALPHA_HELIX or sec_struc_type::BETA_STRAND (represented as 'H' or 'S' respectively in sec files)
+		sec_struc_type type;
+		/// \brief The coordinates of the secondary structure's midpoint
+		geom::coord    midpoint;
+		/// \brief A unit vector along the secondary structure (\todo towards the start of the secondary structure?)
+		geom::coord    unit_dirn;
 
-			void check_unit_dirn_length() const;
-			void check_sec_struc_type() const;
+		void check_unit_dirn_length() const;
+		void check_sec_struc_type() const;
 
-		public:
-			sec_file_record(const size_t &,
-			                const size_t &,
-			                const sec_struc_type &,
-			                geom::coord,
-			                geom::coord);
+	public:
+		sec_file_record(const size_t &,
+		                const size_t &,
+		                const sec_struc_type &,
+		                geom::coord,
+		                geom::coord);
 
-			[[nodiscard]] size_t         get_start_residue_num() const;
-			[[nodiscard]] size_t         get_stop_residue_num() const;
-			[[nodiscard]] sec_struc_type get_type() const;
-			[[nodiscard]] geom::coord    get_midpoint() const;
-			[[nodiscard]] geom::coord    get_unit_dirn() const;
-		};
+		[[nodiscard]] size_t         get_start_residue_num() const;
+		[[nodiscard]] size_t         get_stop_residue_num() const;
+		[[nodiscard]] sec_struc_type get_type() const;
+		[[nodiscard]] geom::coord    get_midpoint() const;
+		[[nodiscard]] geom::coord    get_unit_dirn() const;
+	};
 
-		bool operator==(const sec_file_record &,
-		                const sec_file_record &);
+	bool operator==(const sec_file_record &,
+	                const sec_file_record &);
 
-		std::string to_string(const sec_file_record &);
-		std::ostream & operator<<(std::ostream &,
-		                          const sec_file_record &);
+	std::string to_string(const sec_file_record &);
+	std::ostream & operator<<(std::ostream &,
+	                          const sec_file_record &);
 
-		sec_struc make_sec_struc(const sec_file_record &);
+	sec_struc make_sec_struc(const sec_file_record &);
 
-	} // namespace file
-} // namespace cath
+} // namespace cath::file
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_RECORD_HPP

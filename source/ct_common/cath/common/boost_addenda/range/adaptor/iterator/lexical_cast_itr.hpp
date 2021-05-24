@@ -26,37 +26,36 @@
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Simple functor to lexical_cast from type F to type T
-			template <typename F, typename T>
-			class lexical_cast_value final {
-			public:
-				T operator()(const F &) const;
-			};
+		/// \brief Simple functor to lexical_cast from type F to type T
+		template <typename F, typename T>
+		class lexical_cast_value final {
+		public:
+			T operator()(const F &) const;
+		};
 
-			/// \brief Function operator to lexical_cast from type F to type F
-			template <typename F, typename T>
-			T lexical_cast_value<F, T>::operator()(const F &prm_value ///< The value to lexical_cast
-			                                       ) const {
-				return boost::lexical_cast<T>( prm_value );
-			}
-		} // namespace detail
+		/// \brief Function operator to lexical_cast from type F to type F
+		template <typename F, typename T>
+		T lexical_cast_value<F, T>::operator()(const F &prm_value ///< The value to lexical_cast
+		                                       ) const {
+			return boost::lexical_cast<T>( prm_value );
+		}
 
-		/// \brief Type alias for a lexical_cast_itr for a given destination type, T, and range, RNG.
-		///
-		/// For a const_iterator, use a const RNG type.
-		///
-		/// This  is implemented as a boost::transform_iterator<> using lexical_cast_value
-		template <typename T, typename RNG>
-		using lexical_cast_itr = boost::transform_iterator<
-			detail::lexical_cast_value<range_value_t<RNG>, T>,
-			range_iterator_t<RNG>
-		>;
+	} // namespace detail
 
-	} // namespace common
-} // namespace cath
+	/// \brief Type alias for a lexical_cast_itr for a given destination type, T, and range, RNG.
+	///
+	/// For a const_iterator, use a const RNG type.
+	///
+	/// This  is implemented as a boost::transform_iterator<> using lexical_cast_value
+	template <typename T, typename RNG>
+	using lexical_cast_itr = boost::transform_iterator<
+		detail::lexical_cast_value<range_value_t<RNG>, T>,
+		range_iterator_t<RNG>
+	>;
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ITERATOR_LEXICAL_CAST_ITR_HPP

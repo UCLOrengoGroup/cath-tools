@@ -23,31 +23,27 @@
 
 #include <iosfwd>
 
-namespace cath {
-	namespace scan {
-		namespace detail {
+namespace cath::scan::detail {
 
-			/// \brief TODOCUMENT
-			///
-			/// This includes whether the quad in quest
-			enum class quad_criteria_result : unsigned int {
-				PASS,                      ///< TODOCUMENT
-				QUERY_FAILS_SINGLE_CHECKS, ///< TODOCUMENT
-				INDEX_FAILS_SINGLE_CHECKS, ///< TODOCUMENT
-				FAILS_VIEW_CHECK,          ///< TODOCUMENT
-				FAILS_PHI_CHECK,           ///< TODOCUMENT
-				FAILS_PSI_CHECK,           ///< TODOCUMENT
-				FAILS_FRAME_CHECK,         ///< TODOCUMENT
-				FAILS_QUAD_CHECKS,         ///< TODOCUMENT
-				HAS_NO_REP                 ///< TODOCUMENT
-			};
+	/// \brief TODOCUMENT
+	///
+	/// This includes whether the quad in quest
+	enum class quad_criteria_result : unsigned int {
+		PASS,                      ///< TODOCUMENT
+		QUERY_FAILS_SINGLE_CHECKS, ///< TODOCUMENT
+		INDEX_FAILS_SINGLE_CHECKS, ///< TODOCUMENT
+		FAILS_VIEW_CHECK,          ///< TODOCUMENT
+		FAILS_PHI_CHECK,           ///< TODOCUMENT
+		FAILS_PSI_CHECK,           ///< TODOCUMENT
+		FAILS_FRAME_CHECK,         ///< TODOCUMENT
+		FAILS_QUAD_CHECKS,         ///< TODOCUMENT
+		HAS_NO_REP                 ///< TODOCUMENT
+	};
 
-			std::string to_string(const quad_criteria_result &);
-			std::ostream & operator<<(std::ostream &,
-			                          const quad_criteria_result &);
+	std::string to_string(const quad_criteria_result &);
+	std::ostream & operator<<(std::ostream &,
+	                          const quad_criteria_result &);
 
-		} // namespace detail
-	} // namespace scan
-} // namespace cath
+} // namespace cath::scan::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_CHECK_SCAN_TEST_ONLY_QUAD_CRITERIA_RESULT_HPP

@@ -25,58 +25,56 @@
 #include "cath/common/boost_addenda/range/adaptor/detail/gen_forwarder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/range/equal_grouped_range.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		namespace detail {
+	namespace detail {
 
-			/// \brief TODOCUMENT
-			class equal_grouped_forwarder final {
-			public:
-				template <typename FN>
-				detail::equal_grouped_holder<FN> operator()(FN) const;
-
-				detail::equal_grouped_holder<std::nullptr_t> operator()() const;
-			};
-
-			/// \brief TODOCUMENT
+		/// \brief TODOCUMENT
+		class equal_grouped_forwarder final {
+		public:
 			template <typename FN>
-			detail::equal_grouped_holder<FN> equal_grouped_forwarder::operator()(FN prm_unequal_function
-																				) const {
-				return detail::equal_grouped_holder<FN>{ prm_unequal_function };
-			}
+			detail::equal_grouped_holder<FN> operator()(FN) const;
 
-			/// \brief TODOCUMENT
-			inline detail::equal_grouped_holder<std::nullptr_t> equal_grouped_forwarder::operator()() const {
-				return detail::equal_grouped_holder<std::nullptr_t>{ nullptr };
-			}
+			detail::equal_grouped_holder<std::nullptr_t> operator()() const;
+		};
 
-			/// \brief Non-const range overload of operator| for equal_grouped range adaptor
-			template <typename RNG, typename FN>
-			inline equal_grouped_range<RNG> operator|(RNG                            &prm_range, ///< The range to which the equal_grouped adaptor should be applied
-			                                          const equal_grouped_holder<FN> &prm_holder ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
-			                                          ) {
-				return equal_grouped_range<RNG>{
-					prm_range,
-					prm_holder.template get_function<RNG>()
-				};
-			}
+		/// \brief TODOCUMENT
+		template <typename FN>
+		detail::equal_grouped_holder<FN> equal_grouped_forwarder::operator()(FN prm_unequal_function
+																			) const {
+			return detail::equal_grouped_holder<FN>{ prm_unequal_function };
+		}
 
-			/// \brief Const range overload of operator| for equal_grouped range adaptor
-			template <typename RNG, typename FN>
-			inline equal_grouped_range<const RNG> operator|(const RNG                      &prm_range, ///< The range to which the equal_grouped adaptor should be applied
-			                                                const equal_grouped_holder<FN> &prm_holder ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
-			                                                ) {
-				return equal_grouped_range<const RNG>{
-					prm_range,
-					prm_holder.template get_function<const RNG>()
-				};
-			}
-		} // namespace detail
+		/// \brief TODOCUMENT
+		inline detail::equal_grouped_holder<std::nullptr_t> equal_grouped_forwarder::operator()() const {
+			return detail::equal_grouped_holder<std::nullptr_t>{ nullptr };
+		}
 
-		inline constexpr detail::equal_grouped_forwarder equal_grouped{};
+		/// \brief Non-const range overload of operator| for equal_grouped range adaptor
+		template <typename RNG, typename FN>
+		inline equal_grouped_range<RNG> operator|(RNG                            &prm_range, ///< The range to which the equal_grouped adaptor should be applied
+		                                          const equal_grouped_holder<FN> &prm_holder ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
+		                                          ) {
+			return equal_grouped_range<RNG>{
+				prm_range,
+				prm_holder.template get_function<RNG>()
+			};
+		}
 
-	} // namespace common
-} // namespace cath
+		/// \brief Const range overload of operator| for equal_grouped range adaptor
+		template <typename RNG, typename FN>
+		inline equal_grouped_range<const RNG> operator|(const RNG                      &prm_range, ///< The range to which the equal_grouped adaptor should be applied
+		                                                const equal_grouped_holder<FN> &prm_holder ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
+		                                                ) {
+			return equal_grouped_range<const RNG>{
+				prm_range,
+				prm_holder.template get_function<const RNG>()
+			};
+		}
+	} // namespace detail
+
+	inline constexpr detail::equal_grouped_forwarder equal_grouped{};
+
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_HPP

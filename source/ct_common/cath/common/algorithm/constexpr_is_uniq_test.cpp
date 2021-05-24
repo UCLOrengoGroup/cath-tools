@@ -26,11 +26,11 @@
 
 #include <array>
 
+using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The constexpr_is_uniq_test_suite_fixture to assist in testing constexpr_is_uniq
 		struct constexpr_is_uniq_test_suite_fixture : protected global_test_constants {
@@ -66,5 +66,4 @@ namespace cath {
 			static_assert( ! constexpr_is_uniq( split_match_multi      ), "Failure in static_assert() test of constexpr_is_uniq()" );
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace

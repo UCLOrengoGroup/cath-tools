@@ -28,20 +28,16 @@
 #include "cath/resolve_hits/test/resolve_hits_fixture.hpp"
 #include "cath/test/predicate/istreams_equal.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::rslv::detail;
-using namespace ::cath::test;
 
 using ::std::istringstream;
 using ::std::ostringstream;
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The hit_resolver_test_suite_fixture to assist in testing calc_hit_list
 		struct hit_resolver_test_suite_fixture : protected resolve_hits_fixture {
@@ -49,8 +45,7 @@ namespace cath {
 			~hit_resolver_test_suite_fixture() noexcept = default;
 		};
 
-	} // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(hit_resolver_test_suite, hit_resolver_test_suite_fixture)
 

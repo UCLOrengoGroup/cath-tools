@@ -25,8 +25,7 @@
 using namespace ::cath::common;
 using namespace ::std;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The constexpr_floor_test_suite_fixture to assist in testing constexpr_floor
 		struct constexpr_floor_test_suite_fixture {
@@ -55,5 +54,4 @@ namespace cath {
 			static_assert( constexpr_floor(  2.00 ) ==  2.00, "constexpr_floor(  2.00 ) should return  2.00" );
 
 		};
-	}  // namespace test
-}  // namespace cath
+} // namespace

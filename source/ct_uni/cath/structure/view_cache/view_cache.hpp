@@ -24,34 +24,34 @@
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
+// clang-format off
 namespace cath { class protein; }
+// clang-format on
 
-namespace cath {
-	namespace index {
+namespace cath::index {
 
-		/// \brief Cache of views (ie vectors implemented as coords) between pairs of residues in a particular list
-		///        (most likely a protein)
-		class view_cache final {
-		private:
-			/// \brief The views - coords indexed by the from-residue and then by the to-residue
-			geom::coord_vec_vec views;
+	/// \brief Cache of views (ie vectors implemented as coords) between pairs of residues in a particular list
+	///        (most likely a protein)
+	class view_cache final {
+	private:
+		/// \brief The views - coords indexed by the from-residue and then by the to-residue
+		geom::coord_vec_vec views;
 
-			static geom::coord_vec_vec build_views(const protein &);
+		static geom::coord_vec_vec build_views(const protein &);
 
-		public:
-			explicit view_cache(const protein &);
+	public:
+		explicit view_cache(const protein &);
 
-			[[nodiscard]] const geom::coord &get_view( const size_t &, const size_t & ) const;
-		};
+		[[nodiscard]] const geom::coord &get_view( const size_t &, const size_t & ) const;
+	};
 
-		/// \brief Getter for the view from residue with the specified from-index to the residue with the specified to-index
-		inline const geom::coord & view_cache::get_view(const size_t &prm_from_index, ///< The index of the from-residue of the view to be retrieved
-		                                                const size_t &prm_to_index    ///< The index of the to-residue   of the view to be retrieved
-		                                                ) const {
-			return views[ prm_from_index ][ prm_to_index   ];
-		}
+	/// \brief Getter for the view from residue with the specified from-index to the residue with the specified to-index
+	inline const geom::coord & view_cache::get_view(const size_t &prm_from_index, ///< The index of the from-residue of the view to be retrieved
+	                                                const size_t &prm_to_index    ///< The index of the to-residue   of the view to be retrieved
+	                                                ) const {
+		return views[ prm_from_index ][ prm_to_index   ];
+	}
 
-	} // namespace index
-} // namespace cath
+} // namespace cath::index
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_VIEW_CACHE_HPP

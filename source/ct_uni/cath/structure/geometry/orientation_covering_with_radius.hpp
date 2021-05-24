@@ -49,66 +49,64 @@
 // #include <fstream>
 
 
-namespace cath {
-	namespace geom {
+namespace cath::geom {
+
+	/// \brief TODOCUMENT
+	using uint8_vec     = std::vector<uint8_t>;
+
+	/// \brief TODOCUMENT
+	using uint8_vec_vec = std::vector<uint8_vec>;
+
+	/// \brief TODOCUMENT
+	template <typename T>
+	class orientation_covering_with_radius final {
+	private:
+		/// \brief The covering set
+		orientation_covering_impl<T> the_covering;
 
 		/// \brief TODOCUMENT
-		using uint8_vec     = std::vector<uint8_t>;
+		angle<T> search_radius;
 
 		/// \brief TODOCUMENT
-		using uint8_vec_vec = std::vector<uint8_vec>;
+		uint8_vec_vec cell_neighbours;
 
-		/// \brief TODOCUMENT
-		template <typename T>
-		class orientation_covering_with_radius final {
-		private:
-			/// \brief The covering set
-			orientation_covering_impl<T> the_covering;
+	public:
+		explicit orientation_covering_with_radius(const angle<T> &);
 
-			/// \brief TODOCUMENT
-			angle<T> search_radius;
+		uint8_t get_closest_neighbour(const quat_rot_impl<T> &) const;
+		uint8_vec get_closest_neighbours(const quat_rot_impl<T> &) const;
 
-			/// \brief TODOCUMENT
-			uint8_vec_vec cell_neighbours;
+		const angle<T> & get_search_radius() const;
+	};
 
-		public:
-			explicit orientation_covering_with_radius(const angle<T> &);
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline orientation_covering_with_radius<T>::orientation_covering_with_radius(const angle<T> &prm_search_radius ///< TODOCUMENT
+	                                                                             ) : search_radius   ( prm_search_radius ),
+	                                                                                 cell_neighbours ( calc_neighbours( the_covering, search_radius ) ) {
+	}
 
-			uint8_t get_closest_neighbour(const quat_rot_impl<T> &) const;
-			uint8_vec get_closest_neighbours(const quat_rot_impl<T> &) const;
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline uint8_t orientation_covering_with_radius<T>::get_closest_neighbour(const quat_rot_impl<T> &prm_orientation ///< TODOCUMENT
+	                                                                          ) const {
+		return get_closest_neighbour( the_covering, prm_orientation );
+	}
 
-			const angle<T> & get_search_radius() const;
-		};
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline uint8_vec orientation_covering_with_radius<T>::get_closest_neighbours(const quat_rot_impl<T> &prm_orientation ///< TODOCUMENT
+	                                                                             ) const {
+		return get_closest_neighbours( the_covering, prm_orientation, cell_neighbours, search_radius );
+	}
 
-		/// \brief TODOCUMENT
-		template <typename T>
-		inline orientation_covering_with_radius<T>::orientation_covering_with_radius(const angle<T> &prm_search_radius ///< TODOCUMENT
-		                                                                             ) : search_radius   ( prm_search_radius ),
-		                                                                                 cell_neighbours ( calc_neighbours( the_covering, search_radius ) ) {
-		}
-
-		/// \brief TODOCUMENT
-		template <typename T>
-		inline uint8_t orientation_covering_with_radius<T>::get_closest_neighbour(const quat_rot_impl<T> &prm_orientation ///< TODOCUMENT
-		                                                                          ) const {
-			return get_closest_neighbour( the_covering, prm_orientation );
-		}
-
-		/// \brief TODOCUMENT
-		template <typename T>
-		inline uint8_vec orientation_covering_with_radius<T>::get_closest_neighbours(const quat_rot_impl<T> &prm_orientation ///< TODOCUMENT
-		                                                                             ) const {
-			return get_closest_neighbours( the_covering, prm_orientation, cell_neighbours, search_radius );
-		}
-
-		/// \brief TODOCUMENT
-		template <typename T>
-		inline const angle<T> & orientation_covering_with_radius<T>::get_search_radius() const {
-			return search_radius;
-		}
+	/// \brief TODOCUMENT
+	template <typename T>
+	inline const angle<T> & orientation_covering_with_radius<T>::get_search_radius() const {
+		return search_radius;
+	}
 
 
-	} // namespace geom
-} // namespace cath
+} // namespace cath::geom
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ORIENTATION_COVERING_WITH_RADIUS_HPP

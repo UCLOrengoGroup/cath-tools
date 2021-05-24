@@ -28,59 +28,58 @@
 
 #include <vector>
 
-namespace cath { namespace align { class alignment; } }
-namespace cath { namespace file { class pdb_list; } }
+// clang-format off
+namespace cath::align { class alignment; }
+namespace cath::file { class pdb_list; }
+// clang-format on
 
-namespace cath {
-	namespace align {
-		namespace detail {
+namespace cath::align::detail {
 
-			/// \brief Build up a full alignment by gluing together alignments based on a spanning tree
-			///
-			/// This is an implementation class for build_alignment_from_parts()
-			class multi_align_builder final {
-			private:
-				/// \brief A vector of the group that are being built
-				///
-				/// Note that this may contain inactive groups - remnants of data that
-				/// has now been merged into another group. Use group_index_of_entry
-				/// to find active groups
-				std::vector<multi_align_group> groups;
+	/// \brief Build up a full alignment by gluing together alignments based on a spanning tree
+	///
+	/// This is an implementation class for build_alignment_from_parts()
+	class multi_align_builder final {
+	private:
+		/// \brief A vector of the group that are being built
+		///
+		/// Note that this may contain inactive groups - remnants of data that
+		/// has now been merged into another group. Use group_index_of_entry
+		/// to find active groups
+		std::vector<multi_align_group> groups;
 
-				/// \brief A mapping from each entry's index to the index of the group
-				///        in which it now resides
-				size_vec                       group_index_of_entry;
+		/// \brief A mapping from each entry's index to the index of the group
+		///        in which it now resides
+		size_vec                       group_index_of_entry;
 
-				/// \brief An alignment_refiner with which to refine the alignments being built
-				alignment_refiner              the_refiner;
+		/// \brief An alignment_refiner with which to refine the alignments being built
+		alignment_refiner              the_refiner;
 
-				[[nodiscard]] size_t find_group_of_entry( const size_t & ) const;
-				void update_group_index_of_entry(const size_t &);
+		[[nodiscard]] size_t find_group_of_entry( const size_t & ) const;
+		void update_group_index_of_entry(const size_t &);
 
-			public:
-				explicit multi_align_builder(const size_t &);
+	public:
+		explicit multi_align_builder(const size_t &);
 
-				[[nodiscard]] size_set                 get_active_groups() const;
-				[[nodiscard]] const multi_align_group &get_group_of_index( const size_t & ) const;
+		[[nodiscard]] size_set                 get_active_groups() const;
+		[[nodiscard]] const multi_align_group &get_group_of_index( const size_t & ) const;
 
-				void add_alignment_branch(const size_t &,
-				                          const size_t &,
-				                          const alignment &,
-				                          const protein_list &,
-				                          const aln_glue_style &);
+		void add_alignment_branch(const size_t &,
+		                          const size_t &,
+		                          const alignment &,
+		                          const protein_list &,
+		                          const aln_glue_style &);
 
-				[[nodiscard]] alignment get_alignment() const;
-			};
+		[[nodiscard]] alignment get_alignment() const;
+	};
 
-			std::ostream & operator<<(std::ostream &,
-			                          const multi_align_builder &);
+	std::ostream & operator<<(std::ostream &,
+	                          const multi_align_builder &);
 
-			void add_alignment_branch(multi_align_builder &,
-			                          const size_size_alignment_tuple &,
-			                          const protein_list &,
-			                          const aln_glue_style &);
-		} // namespace detail
-	} // namespace align
-} // namespace cath
+	void add_alignment_branch(multi_align_builder &,
+	                          const size_size_alignment_tuple &,
+	                          const protein_list &,
+	                          const aln_glue_style &);
+
+} // namespace cath::align::detail
 
 #endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DETAIL_MULTI_ALIGN_BUILDER_HPP

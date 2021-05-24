@@ -28,66 +28,64 @@
 #include "cath/common/type_traits.hpp"
 #include "cath/common/type_traits/is_tuple.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			/// \brief Implementation of tuple_lattice_index
-			template <size_t Idx>
-			struct tuple_lattice_index_impl final {
+		/// \brief Implementation of tuple_lattice_index
+		template <size_t Idx>
+		struct tuple_lattice_index_impl final {
 
-				/// \brief Function for implementation of tuple_lattice_index
-				template <typename Tpl>
-				static constexpr auto fn(const Tpl &prm_indices, ///< The indices of the cell
-				                         const Tpl &prm_sizes    ///< The dimensions of the lattice
-				                         ) {
-					return
-						tuple_lattice_index_impl<Idx - 1>::fn( prm_indices, prm_sizes )
-						* std::get<Idx>( prm_sizes   )
-						+ std::get<Idx>( prm_indices );
-				}
-			};
+			/// \brief Function for implementation of tuple_lattice_index
+			template <typename Tpl>
+			static constexpr auto fn(const Tpl &prm_indices, ///< The indices of the cell
+			                         const Tpl &prm_sizes    ///< The dimensions of the lattice
+			                         ) {
+				return
+					tuple_lattice_index_impl<Idx - 1>::fn( prm_indices, prm_sizes )
+					* std::get<Idx>( prm_sizes   )
+					+ std::get<Idx>( prm_indices );
+			}
+		};
 
-			/// \brief Specialisation of implementation of tuple_lattice_index
-			template <>
-			struct tuple_lattice_index_impl<0> final {
+		/// \brief Specialisation of implementation of tuple_lattice_index
+		template <>
+		struct tuple_lattice_index_impl<0> final {
 
-				/// \brief Function for specialisation of implementation of tuple_lattice_index
-				template <typename Tpl>
-				static constexpr auto fn(const Tpl &prm_indices,  ///< The indices of the cell
-				                         const Tpl &/*prm_sizes*/ ///< The dimensions of the lattice
-				                         ) {
-					return std::get<0>( prm_indices );
-				}
-			};
+			/// \brief Function for specialisation of implementation of tuple_lattice_index
+			template <typename Tpl>
+			static constexpr auto fn(const Tpl &prm_indices,  ///< The indices of the cell
+			                         const Tpl &/*prm_sizes*/ ///< The dimensions of the lattice
+			                         ) {
+				return std::get<0>( prm_indices );
+			}
+		};
 
-			/// \brief Function object to find the overall index of the cell with the specified indices
+		/// \brief Function object to find the overall index of the cell with the specified indices
+		///        in a lattice of the specified dimensions
+		struct tuple_lattice_index_fn final {
+
+			/// \brief Find the overall index of the cell with the specified indices
 			///        in a lattice of the specified dimensions
-			struct tuple_lattice_index_fn final {
+			template <typename Tpl, typename = std::enable_if< is_tuple_v< Tpl > > >
+			constexpr auto operator()(const Tpl &prm_indices, ///< The indices of the cell
+			                          const Tpl &prm_sizes    ///< The dimensions of the lattice
+			                          ) const {
+				static_assert( std::tuple_size_v< common::remove_cvref_t< Tpl > > > 0, "Can't use tuple_lattice_index on tuple with no elements" );
+				return tuple_lattice_index_impl<std::tuple_size_v< common::remove_cvref_t< Tpl > > - 1>::fn(
+					prm_indices,
+					prm_sizes
+				);
+			}
 
-				/// \brief Find the overall index of the cell with the specified indices
-				///        in a lattice of the specified dimensions
-				template <typename Tpl, typename = std::enable_if< is_tuple_v< Tpl > > >
-				constexpr auto operator()(const Tpl &prm_indices, ///< The indices of the cell
-				                          const Tpl &prm_sizes    ///< The dimensions of the lattice
-				                          ) const {
-					static_assert( std::tuple_size_v< common::remove_cvref_t< Tpl > > > 0, "Can't use tuple_lattice_index on tuple with no elements" );
-					return tuple_lattice_index_impl<std::tuple_size_v< common::remove_cvref_t< Tpl > > - 1>::fn(
-						prm_indices,
-						prm_sizes
-					);
-				}
+			tuple_lattice_index_fn()                               = delete;
+			tuple_lattice_index_fn(const tuple_lattice_index_fn &) = delete;
+			void operator=(const tuple_lattice_index_fn &)         = delete;
+		};
 
-				tuple_lattice_index_fn()                               = delete;
-				tuple_lattice_index_fn(const tuple_lattice_index_fn &) = delete;
-				void operator=(const tuple_lattice_index_fn &)         = delete;
-			};
+	} // namespace detail
 
-		} // namespace detail
+	inline constexpr detail::tuple_lattice_index_fn tuple_lattice_index{};
 
-		inline constexpr detail::tuple_lattice_index_fn tuple_lattice_index{};
-
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_LATTICE_INDEX_HPP

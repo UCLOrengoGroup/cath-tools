@@ -23,32 +23,30 @@
 
 #include "cath/common/boost_addenda/range/adaptor/range/adjacented_range.hpp"
 
-namespace cath {
-	namespace common {
-		namespace detail {
+namespace cath::common {
+	namespace detail {
 
-			struct adjacented_forwarder {};
+		struct adjacented_forwarder {};
 
-			/// \brief Non-const range overload of operator| for adjacented range adaptor
-			template <typename ForwardRng>
-			inline adjacented_range<ForwardRng> operator|(ForwardRng &prm_range, ///< The range to which the adjacented adaptor should be applied
-			                                              adjacented_forwarder   ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
-			                                              ) {
-				return adjacented_range<ForwardRng>( prm_range );
-			}
+		/// \brief Non-const range overload of operator| for adjacented range adaptor
+		template <typename ForwardRng>
+		inline adjacented_range<ForwardRng> operator|(ForwardRng &prm_range, ///< The range to which the adjacented adaptor should be applied
+		                                              adjacented_forwarder   ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
+		                                              ) {
+			return adjacented_range<ForwardRng>( prm_range );
+		}
 
-			/// \brief Const range overload of operator| for adjacented range adaptor
-			template <typename ForwardRng>
-			inline adjacented_range<const ForwardRng> operator|(const ForwardRng &prm_range, ///< The range to which the adjacented adaptor should be applied
-			                                                    adjacented_forwarder         ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
-			                                                    ) {
-				return adjacented_range<const ForwardRng>( prm_range );
-			}
-		} // namespace detail
+		/// \brief Const range overload of operator| for adjacented range adaptor
+		template <typename ForwardRng>
+		inline adjacented_range<const ForwardRng> operator|(const ForwardRng &prm_range, ///< The range to which the adjacented adaptor should be applied
+		                                                    adjacented_forwarder         ///< An equal_grouped_holder parameter for holding the parameters (and for determining which adaptor should be applied)
+		                                                    ) {
+			return adjacented_range<const ForwardRng>( prm_range );
+		}
+	} // namespace detail
 
-		inline constexpr detail::adjacented_forwarder adjacented{};
+	inline constexpr detail::adjacented_forwarder adjacented{};
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_ADJACENTED_HPP

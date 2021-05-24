@@ -25,17 +25,13 @@
 #include "cath/display/viewer/pymol/pymol_tools.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-namespace cath { namespace test { } }
-
 using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::cath::test;
 using namespace ::std::literals::string_literals;
 
 using ::std::string;
 
-namespace cath {
-	namespace test {
+namespace {
 
 		/// \brief The pymol_tools_test_suite_fixture to assist in testing pymol_tools
 		struct pymol_tools_test_suite_fixture : protected global_test_constants {
@@ -54,8 +50,7 @@ namespace cath {
 			}
 		};
 
-	}  // namespace test
-}  // namespace cath
+} // namespace
 
 BOOST_FIXTURE_TEST_SUITE(pymol_tools_test_suite, pymol_tools_test_suite_fixture)
 

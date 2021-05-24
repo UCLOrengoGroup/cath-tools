@@ -41,159 +41,155 @@ using ::boost::range::find;
 using ::std::crbegin;
 using ::std::crend;
 
-namespace cath {
-	namespace test {
+namespace {
 
-		/// \brief A fixture for the windowed_matrix_test_suite
-		struct windowed_matrix_test_suite_fixture {
-		protected:
-			~windowed_matrix_test_suite_fixture() noexcept = default;
+	/// \brief A fixture for the windowed_matrix_test_suite
+	struct windowed_matrix_test_suite_fixture {
+	protected:
+		~windowed_matrix_test_suite_fixture() noexcept = default;
 
-		public:
+	public:
 
-			/// \brief Return the second dimensions size of a test matrix
-			///
-			/// \pre Matrix cannot be empty (ie first dimension size must be > 0) else an invalid_argument_exception will be thrown
-			///
-			/// \pre Matrix must have a consistent size of the second dimension else an invalid_argument_exception will be thrown
-			///
-			/// \returns The size of the second dimension
-			static size_t get_second_dimension_size(const bool_deq_vec &prm_test_matrix ///< The test matrix to query
-			                                              ) {
-				if (prm_test_matrix.empty()) {
-					BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get second dimension size for empty test matrix"));
-				}
-				const bool_deq::size_type second_dimension_size = prm_test_matrix.front().size();
-				for (const bool_deq &entry : prm_test_matrix) {
-					if (second_dimension_size != entry.size()) {
-						BOOST_THROW_EXCEPTION(invalid_argument_exception("Test matrix does not have a consistent second dimension size"));
-					}
-				}
-				return second_dimension_size;
+		/// \brief Return the second dimensions size of a test matrix
+		///
+		/// \pre Matrix cannot be empty (ie first dimension size must be > 0) else an invalid_argument_exception will be thrown
+		///
+		/// \pre Matrix must have a consistent size of the second dimension else an invalid_argument_exception will be thrown
+		///
+		/// \returns The size of the second dimension
+		static size_t get_second_dimension_size(const bool_deq_vec &prm_test_matrix ///< The test matrix to query
+		                                              ) {
+			if (prm_test_matrix.empty()) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot get second dimension size for empty test matrix"));
 			}
-
-			/// \brief Transpose one of the test matrices so that the transpose can be tested too
-			///
-			/// \returns A transposed_copy of the test matrix
-			static bool_deq_vec transpose_test_matrix(const bool_deq_vec &prm_test_matrix ///< The test matrix to transpose
-			                                                  ) {
-				const size_t second_dimension_size = get_second_dimension_size(prm_test_matrix);
-				bool_deq_vec transposed_matrix(second_dimension_size);
-				for (const bool_deq &entry : prm_test_matrix) {
-					for (const size_t &second_dim_ctr : indices( second_dimension_size ) ) {
-						transposed_matrix[second_dim_ctr].push_back(entry[second_dim_ctr]);
-					}
+			const bool_deq::size_type second_dimension_size = prm_test_matrix.front().size();
+			for (const bool_deq &entry : prm_test_matrix) {
+				if (second_dimension_size != entry.size()) {
+					BOOST_THROW_EXCEPTION(invalid_argument_exception("Test matrix does not have a consistent second dimension size"));
 				}
-				return transposed_matrix;
 			}
+			return second_dimension_size;
+		}
 
-			/// Return the indices (offset 0) of the first and last trues in the list of bools
-			///
-			/// \pre The deque<bool> must contain at least one true value
-			///
-			/// \returns A pair<size_t, size_t> containing the indices of the first and last true values respectively
-			static size_size_pair get_indices_of_first_and_last_trues(const bool_deq &prm_entry ///< The list of bools to query
-			                                                          ) {
-				if ( ! contains( prm_entry, true) ) {
-					BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot find indices of first and last true values because there are no true values"));
+		/// \brief Transpose one of the test matrices so that the transpose can be tested too
+		///
+		/// \returns A transposed_copy of the test matrix
+		static bool_deq_vec transpose_test_matrix(const bool_deq_vec &prm_test_matrix ///< The test matrix to transpose
+		                                                  ) {
+			const size_t second_dimension_size = get_second_dimension_size(prm_test_matrix);
+			bool_deq_vec transposed_matrix(second_dimension_size);
+			for (const bool_deq &entry : prm_test_matrix) {
+				for (const size_t &second_dim_ctr : indices( second_dimension_size ) ) {
+					transposed_matrix[second_dim_ctr].push_back(entry[second_dim_ctr]);
 				}
-				const size_t first_true_idx = numeric_cast<size_t>( distance( cbegin ( prm_entry ), find( prm_entry,            true ) ) );
-				const size_t last_true_ridx = numeric_cast<size_t>( distance( crbegin( prm_entry ), find( crbegin( prm_entry ), crend( prm_entry), true ) ) );
-				const size_t last_true_idx  = prm_entry.size() - last_true_ridx - 1;
-		//		cerr << "First and last indices for ";
-		//		for (const bool &value : prm_entry) {
-		//			cerr << " " << boolalpha << value;
-		//		}
-		//		cerr << " are " << first_true_idx << " and " << last_true_idx << endl;
-				return make_pair(first_true_idx, last_true_idx);
 			}
+			return transposed_matrix;
+		}
 
-			/// \brief Check that get_window_start_a_for_b() and get_window_stop_a_for_b() recreate the values in the matrix for the specified window size
-			void check_windowed_matrix(const bool_deq_vec &prm_test_matrix, ///< The test matrix to check
-			                           const size_t       &prm_window_size  ///< The window size to use
-			                           ) const {
-				const size_t first_dimension_size  = prm_test_matrix.size();
-				const size_t second_dimension_size = get_second_dimension_size(prm_test_matrix);
+		/// Return the indices (offset 0) of the first and last trues in the list of bools
+		///
+		/// \pre The deque<bool> must contain at least one true value
+		///
+		/// \returns A pair<size_t, size_t> containing the indices of the first and last true values respectively
+		static size_size_pair get_indices_of_first_and_last_trues(const bool_deq &prm_entry ///< The list of bools to query
+		                                                          ) {
+			if ( ! contains( prm_entry, true) ) {
+				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot find indices of first and last true values because there are no true values"));
+			}
+			const size_t first_true_idx = numeric_cast<size_t>( distance( cbegin ( prm_entry ), find( prm_entry,            true ) ) );
+			const size_t last_true_ridx = numeric_cast<size_t>( distance( crbegin( prm_entry ), find( crbegin( prm_entry ), crend( prm_entry), true ) ) );
+			const size_t last_true_idx  = prm_entry.size() - last_true_ridx - 1;
+	//		cerr << "First and last indices for ";
+	//		for (const bool &value : prm_entry) {
+	//			cerr << " " << boolalpha << value;
+	//		}
+	//		cerr << " are " << first_true_idx << " and " << last_true_idx << endl;
+			return make_pair(first_true_idx, last_true_idx);
+		}
 
-				for (const size_t &entry_ctr : indices( first_dimension_size ) ) {
-					const bool_deq       &entry            = prm_test_matrix[entry_ctr];
-					const size_size_pair  first_and_last   = get_indices_of_first_and_last_trues(entry);
-					const size_t         &first_true_index = first_and_last.first;
-					const size_t         &last_true_index  = first_and_last.second;
+		/// \brief Check that get_window_start_a_for_b() and get_window_stop_a_for_b() recreate the values in the matrix for the specified window size
+		void check_windowed_matrix(const bool_deq_vec &prm_test_matrix, ///< The test matrix to check
+		                           const size_t       &prm_window_size  ///< The window size to use
+		                           ) const {
+			const size_t first_dimension_size  = prm_test_matrix.size();
+			const size_t second_dimension_size = get_second_dimension_size(prm_test_matrix);
 
-					BOOST_CHECK_EQUAL(
-						first_true_index + 1,
-						get_window_start_a_for_b__offset_1(
-							second_dimension_size,
-							first_dimension_size,
+			for (const size_t &entry_ctr : indices( first_dimension_size ) ) {
+				const bool_deq       &entry            = prm_test_matrix[entry_ctr];
+				const size_size_pair  first_and_last   = get_indices_of_first_and_last_trues(entry);
+				const size_t         &first_true_index = first_and_last.first;
+				const size_t         &last_true_index  = first_and_last.second;
+
+				BOOST_CHECK_EQUAL(
+					first_true_index + 1,
+					get_window_start_a_for_b__offset_1(
+						second_dimension_size,
+						first_dimension_size,
+						prm_window_size,
+						entry_ctr + 1
+					)
+				);
+				BOOST_CHECK_EQUAL(
+					last_true_index + 1,
+					get_window_stop_a_for_b__offset_1(
+						second_dimension_size,
+						first_dimension_size,
+						prm_window_size,
+						entry_ctr + 1
+					)
+				);
+				if (first_true_index > 0 && last_true_index + 1 < second_dimension_size) {
+					if (first_dimension_size != second_dimension_size) {
+						BOOST_CHECK_EQUAL(
 							prm_window_size,
-							entry_ctr + 1
-						)
-					);
-					BOOST_CHECK_EQUAL(
-						last_true_index + 1,
-						get_window_stop_a_for_b__offset_1(
-							second_dimension_size,
-							first_dimension_size,
-							prm_window_size,
-							entry_ctr + 1
-						)
-					);
-					if (first_true_index > 0 && last_true_index + 1 < second_dimension_size) {
-						if (first_dimension_size != second_dimension_size) {
-							BOOST_CHECK_EQUAL(
-								prm_window_size,
-								last_true_index - first_true_index + 1
-							);
-						}
+							last_true_index - first_true_index + 1
+						);
 					}
 				}
 			}
+		}
 
-			const bool_deq_vec NORMAL_MATRIX = {
-				{ true,  true,  true,  true,  true,  false, false, false, false },
-				{ true,  true,  true,  true,  true,  true,  false, false, false },
-				{ true,  true,  true,  true,  true,  true,  true,  false, false },
-				{ false, true,  true,  true,  true,  true,  true,  true,  false },
-				{ false, false, true,  true,  true,  true,  true,  true,  true  },
-				{ false, false, false, true,  true,  true,  true,  true,  true  },
-				{ false, false, false, false, true,  true,  true,  true,  true  }
-			};
-
-			const bool_deq_vec SQUARE_MATRIX = {
-				{ true,  true,  false, false, false },
-				{ true,  true,  true,  false, false },
-				{ false, true,  true,  true,  false },
-				{ false, false, true,  true,  true  },
-				{ false, false, false, true,  true  }
-			};
-
-			const bool_deq_vec NARROWEST_SYM_WINDOW = {
-				{ true,  true,  true,  false, false },
-				{ false, true,  true,  true,  false },
-				{ false, false, true,  true,  true  }
-			};
-
-			const bool_deq_vec NARROWEST_ASYM_WINDOW = {
-				{ true,  true,  false, false, false },
-				{ true,  true,  true,  false, false },
-				{ false, true,  true,  true,  false },
-				{ false, false, true,  true,  true  }
-			};
-
-			const bool_deq_vec FULL = {
-				{ true , true , true , true },
-				{ true , true , true , true },
-				{ true , true , true , true }
-			};
+		const bool_deq_vec NORMAL_MATRIX = {
+			{ true,  true,  true,  true,  true,  false, false, false, false },
+			{ true,  true,  true,  true,  true,  true,  false, false, false },
+			{ true,  true,  true,  true,  true,  true,  true,  false, false },
+			{ false, true,  true,  true,  true,  true,  true,  true,  false },
+			{ false, false, true,  true,  true,  true,  true,  true,  true  },
+			{ false, false, false, true,  true,  true,  true,  true,  true  },
+			{ false, false, false, false, true,  true,  true,  true,  true  }
 		};
 
-	}  // namespace test
-}  // namespace cath
+		const bool_deq_vec SQUARE_MATRIX = {
+			{ true,  true,  false, false, false },
+			{ true,  true,  true,  false, false },
+			{ false, true,  true,  true,  false },
+			{ false, false, true,  true,  true  },
+			{ false, false, false, true,  true  }
+		};
 
+		const bool_deq_vec NARROWEST_SYM_WINDOW = {
+			{ true,  true,  true,  false, false },
+			{ false, true,  true,  true,  false },
+			{ false, false, true,  true,  true  }
+		};
 
+		const bool_deq_vec NARROWEST_ASYM_WINDOW = {
+			{ true,  true,  false, false, false },
+			{ true,  true,  true,  false, false },
+			{ false, true,  true,  true,  false },
+			{ false, false, true,  true,  true  }
+		};
 
-BOOST_FIXTURE_TEST_SUITE(windowed_matrix_test_suite, cath::test::windowed_matrix_test_suite_fixture)
+		const bool_deq_vec FULL = {
+			{ true , true , true , true },
+			{ true , true , true , true },
+			{ true , true , true , true }
+		};
+	};
+
+} // namespace
+
+BOOST_FIXTURE_TEST_SUITE(windowed_matrix_test_suite, windowed_matrix_test_suite_fixture)
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(normal) {

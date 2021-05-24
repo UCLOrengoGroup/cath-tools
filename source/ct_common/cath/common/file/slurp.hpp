@@ -26,27 +26,25 @@
 
 #include "cath/common/file/open_fstream.hpp"
 
-namespace cath {
-	namespace common {
+namespace cath::common {
 
-		/// \brief Read a string from the specified file
-		///
-		/// This is named after Perl's Path::Tiny / Path::Class::File slurp() method
-		inline std::string slurp(const ::std::filesystem::path &prm_file ///< The file from which the string should be read
-		                         ) {
-			std::ifstream input_stream = open_ifstream( prm_file );
+	/// \brief Read a string from the specified file
+	///
+	/// This is named after Perl's Path::Tiny / Path::Class::File slurp() method
+	inline std::string slurp(const ::std::filesystem::path &prm_file ///< The file from which the string should be read
+	                         ) {
+		std::ifstream input_stream = open_ifstream( prm_file );
 
-			std::string result_str;
-			input_stream.seekg( 0, std::ios::end );
-			result_str.resize( static_cast<size_t>( input_stream.tellg() ) );
-			input_stream.seekg( 0, std::ios::beg );
-			input_stream.read( &result_str[0], static_cast<ptrdiff_t>( result_str.size() ) );
+		std::string result_str;
+		input_stream.seekg( 0, std::ios::end );
+		result_str.resize( static_cast<size_t>( input_stream.tellg() ) );
+		input_stream.seekg( 0, std::ios::beg );
+		input_stream.read( &result_str[0], static_cast<ptrdiff_t>( result_str.size() ) );
 
-			input_stream.close();
-			return result_str;
-		}
+		input_stream.close();
+		return result_str;
+	}
 
-	} // namespace common
-} // namespace cath
+} // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_FILE_SLURP_HPP

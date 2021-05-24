@@ -27,33 +27,33 @@
 #include "cath/resolve_hits/file/hmmer_format.hpp"
 #include "cath/resolve_hits/resolve_hits_type_aliases.hpp"
 
-namespace cath { namespace rslv { class calc_hit_list; } }
-namespace cath { namespace rslv { class read_and_process_mgr; } }
+// clang-format off
+namespace cath::rslv { class calc_hit_list; }
+namespace cath::rslv { class read_and_process_mgr; }
+// clang-format on
 
-namespace cath {
-	namespace rslv {
+namespace cath::rslv {
 
-		void parse_hmmer_out_file(read_and_process_mgr &,
-		                          const ::std::filesystem::path &,
-		                          const hmmer_format &,
-		                          const bool &,
-		                          const seq::residx_t &,
-		                          const bool &);
+	void parse_hmmer_out_file(read_and_process_mgr &,
+	                          const ::std::filesystem::path &,
+	                          const hmmer_format &,
+	                          const bool &,
+	                          const seq::residx_t &,
+	                          const bool &);
 
-		void parse_hmmer_out(read_and_process_mgr &,
-		                     std::istream &,
-		                     const hmmer_format &,
-		                     const bool &,
-		                     const seq::residx_t &,
-		                     const bool &);
+	void parse_hmmer_out(read_and_process_mgr &,
+	                     std::istream &,
+	                     const hmmer_format &,
+	                     const bool &,
+	                     const seq::residx_t &,
+	                     const bool &);
 
-		str_calc_hit_list_pair_vec parse_hmmer_out_file(const ::std::filesystem::path &,
-		                                                const hmmer_format &,
-		                                                const bool &,
-		                                                const seq::residx_t &,
-		                                                const bool &);
+	str_calc_hit_list_pair_vec parse_hmmer_out_file(const ::std::filesystem::path &,
+	                                                const hmmer_format &,
+	                                                const bool &,
+	                                                const seq::residx_t &,
+	                                                const bool &);
 
-	} // namespace rslv
-} // namespace cath
+} // namespace cath::rslv
 
 #endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_PARSE_HMMER_OUT_HPP
