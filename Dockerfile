@@ -22,12 +22,12 @@ RUN conan profile new default --detect && conan profile update settings.compiler
 ARG CC=/usr/bin/gcc-10
 ARG CXX=/usr/bin/g++-10
 
-WORKDIR /cath-data
+WORKDIR /cath-tools
 ARG BUILD_EXTRA_CATH_TESTS=ON
 ARG BUILD_EXTRA_CATH_TOOLS=ON
 
-ADD . /cath-data
+ADD . /cath-tools
 RUN conan install --update --build outdated --build cascade --install-folder docker-build-dir . --profile .github/conan-profiles/ubuntu-20.04.gcc.release.conan-profile
-RUN cmake -GNinja -B docker-build-dir -S . -D CMAKE_TOOLCHAIN_FILE:FILEPATH=.github/cmake-toolchain-files/ubuntu-20.04.gcc.release.cmake -D CMAKE_MODULE_PATH:PATH=/cath-data/docker-build-dir
+RUN cmake -GNinja -B docker-build-dir -S . -D CMAKE_TOOLCHAIN_FILE:FILEPATH=.github/cmake-toolchain-files/ubuntu-20.04.gcc.release.cmake -D CMAKE_MODULE_PATH:PATH=/cath-tools/docker-build-dir
 RUN ninja -C docker-build-dir -k 0
 RUN ( cd docker-build-dir && ctest -j 6 --output-on-failure )
