@@ -112,6 +112,12 @@ namespace {
 
 BOOST_AUTO_TEST_SUITE(cath_align_refiner_test_suite)
 
+// At present this test is the only test in mod-test-cath-refine-align, so it is
+// required to prevent that test executable failing
+BOOST_AUTO_TEST_CASE( basic ) {
+	BOOST_TEST( true );
+}
+
 // /// \brief
 // BOOST_AUTO_TEST_CASE(basic_genome3d_use_case) {
 // 	check_cath_align_refiner_std_in_use_case(
