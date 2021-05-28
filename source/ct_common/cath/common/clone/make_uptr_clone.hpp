@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CLONE_MAKE_UPTR_CLONE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CLONE_MAKE_UPTR_CLONE_HPP
 
-#include "cath/common/cpp14/make_unique.hpp"
+#include <memory>
 
 namespace cath::common {
 
@@ -32,10 +32,11 @@ namespace cath::common {
 	/// ~~~~~.cpp
 	/// return { make_uptr_clone( *this ) };
 	/// ~~~~~
+	///
+	/// \param prm_clonee The object to be cloned (via its copy-ctor) into a unique_ptr
 	template <typename T>
-	inline auto make_uptr_clone(const T &prm_clonee ///< The object to be cloned (via its copy-ctor) into a unique_ptr
-	                            )->decltype( make_unique< T >( prm_clonee) ) {
-		return make_unique<T>( prm_clonee );
+	inline auto make_uptr_clone( const T &prm_clonee ) {
+		return ::std::make_unique<T>( prm_clonee );
 	}
 
 } // namespace cath::common

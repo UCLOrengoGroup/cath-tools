@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SSAP_SCORE_HPP
 
 #include "cath/common/clone/clone_ptr.hpp"
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
 #include "cath/score/aligned_pair_score/detail/score_common_coord_handler.hpp"
 #include "cath/score/aligned_pair_score/ssap_score/ssap_score_accuracy.hpp"
@@ -85,7 +84,7 @@ namespace cath::score {
 		detail::score_common_coord_handler the_coord_handler;
 
 		/// \brief The method to use for generating the normalisation length
-		common::clone_ptr<const length_getter> length_getter_ptr { common::make_unique<length_of_longer_getter>() };
+		common::clone_ptr<const length_getter> length_getter_ptr { ::std::make_unique<length_of_longer_getter>() };
 
 		/// \brief How to post process the basic score once it has been calculated
 		ssap_score_post_processing post_processing = default_post_processing;

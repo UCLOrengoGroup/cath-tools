@@ -141,7 +141,7 @@ namespace cath::common {
 				return itr;
 			}
 		}
-		/// TODO: Come GCC >= 10, remove this silly dance to appeas it about the unconditionally non-constexpr throwing after here
+		/// TODO: Come GCC >= 10, remove this silly dance to appease it about the unconditionally non-constexpr throwing after here
 		if ( !prm_substring.empty() && prm_substring.front() != ' ' && prm_substring.front() != '\t' ) {
 			return ::std::cbegin( prm_substring );
 		} else {
@@ -178,7 +178,7 @@ namespace cath::common {
 				return itr.base();
 			}
 		}
-		/// TODO: Come GCC >= 10, remove this silly dance to appeas it about the unconditionally non-constexpr throwing after here
+		/// TODO: Come GCC >= 10, remove this silly dance to appease it about the unconditionally non-constexpr throwing after here
 		if ( !prm_substring.empty() && prm_substring.back() != ' ' && prm_substring.back() != '\t' ) {
 			return ::std::crbegin( prm_substring ).base();
 		} else {

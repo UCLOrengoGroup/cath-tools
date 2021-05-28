@@ -21,14 +21,14 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_IO_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_IO_HPP
 
+#include <iomanip>
+#include <tuple>
+#include <sstream>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "cath/common/cpp17/apply.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <iomanip>
-#include <sstream>
 
 namespace cath::scan::detail {
 
@@ -69,7 +69,7 @@ namespace cath::scan::detail {
 	template <typename... Ks>
 	std::string output_key(const std::tuple<Ks...> &prm_key ///< TODOCUMENT
 	                       ) {
-		return common::apply( key_parts_outputter(), prm_key );
+		return ::std::apply( key_parts_outputter(), prm_key );
 	}
 
 
@@ -89,7 +89,7 @@ namespace cath::scan::detail {
 	template <typename... KPs>
 	std::string output_keyer_parts(const std::tuple<KPs...> &prm_keyer_parts ///< TODOCUMENT
 	                               ) {
-		return common::apply( keyer_parts_outputter(), prm_keyer_parts );
+		return ::std::apply( keyer_parts_outputter(), prm_keyer_parts );
 	}
 
 } // namespace cath::scan::detail

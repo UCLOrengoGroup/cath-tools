@@ -25,7 +25,7 @@
 #include <tuple>
 #include <utility>
 
-#include "cath/common/cpp17/constexpr_invoke.hpp"
+#include "cath/common/cpp20/constexpr_invoke.hpp"
 
 namespace cath::common {
 

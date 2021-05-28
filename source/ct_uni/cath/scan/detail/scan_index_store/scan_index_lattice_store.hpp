@@ -30,7 +30,6 @@
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
-#include "cath/common/cpp17/apply.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/tuple/mins_maxs_tuple_pair_mins_maxs_element.hpp"

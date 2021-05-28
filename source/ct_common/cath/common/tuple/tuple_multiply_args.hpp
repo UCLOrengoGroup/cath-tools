@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_MULTIPLY_ARGS_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_MULTIPLY_ARGS_HPP
 
-#include "cath/common/cpp17/apply.hpp"
-#include "cath/common/function/multiply_args.hpp"
 #include "cath/common/type_traits/is_tuple.hpp"
 
 #include <tuple>
@@ -38,14 +36,13 @@ namespace cath::common {
 			/// \todo Tidy up the enable_if / decltype()
 			template <typename Tpl, typename = std::enable_if< is_tuple_v< Tpl > > >
 			constexpr auto operator()(const Tpl &prm_tuple ///< The tuple from which a copy should be taken, its members multiply_argsed and returned
-			                          ) const -> decltype( ::cath::common::apply( multiply_args, prm_tuple ) ) {
-				/// \TODO Come C++17, use ::std::apply
-				return ::cath::common::apply( multiply_args, prm_tuple );
+			                          ) const {
+				return ::std::apply( [] (auto &&...xs) { return ( ... * xs ); }, prm_tuple );
 			}
 
-			tuple_multiply_args_fn()                           = delete;
-			tuple_multiply_args_fn(const tuple_multiply_args_fn &) = delete;
-			void operator=(const tuple_multiply_args_fn &)     = delete;
+			tuple_multiply_args_fn()                                 = delete;
+			tuple_multiply_args_fn( const tuple_multiply_args_fn & ) = delete;
+			void operator=( const tuple_multiply_args_fn & ) = delete;
 		};
 
 	} // namespace detail

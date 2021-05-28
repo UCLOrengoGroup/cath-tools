@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_MODULO_FNS_HPP
 
 #include "cath/common/algorithm/constexpr_integer_rounding.hpp"
-#include "cath/common/cpp14/constexpr_min_max.hpp"
 #include "cath/common/type_aliases.hpp"
 
 #include <type_traits>

@@ -24,12 +24,12 @@
 #include <algorithm>
 #include <filesystem>
 #include <functional>
+#include <tuple>
 
 #include "cath/clustagglom/link.hpp"
 #include "cath/clustagglom/link_dirn.hpp"
 #include "cath/clustagglom/link_list.hpp"
 #include "cath/common/algorithm/contains.hpp"
-#include "cath/common/cpp17/apply.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 
@@ -203,7 +203,7 @@ namespace cath::clust {
 	                                   const item_item_strength_tpl &prm_link   ///< The link specified as a tuple
 	                                   ) {
 		// Pass the parts of the tuple as arguments to the add_link_symmetrically() member function of prm_links
-		common::apply(
+		::std::apply(
 			[&] (auto...args) {
 				prm_links.add_link_symmetrically(
 					std::forward< decltype( args ) >( args )...

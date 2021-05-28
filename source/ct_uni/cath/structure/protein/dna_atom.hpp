@@ -112,7 +112,7 @@ namespace cath {
 				return code;
 			}
 		}
-		/// TODO: Come GCC >= 10, remove this silly dance to appeas it about the unconditionally non-constexpr throwing after here
+		/// TODO: Come GCC >= 10, remove this silly dance to appease it about the unconditionally non-constexpr throwing after here
 		if ( DNA_RNA_RESIDUE_NAMES.front().second != prm_dna_atom ) {
 			return DNA_RNA_RESIDUE_NAMES.front().first;
 		}

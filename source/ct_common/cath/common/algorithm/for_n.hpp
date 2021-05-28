@@ -22,7 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_FOR_N_HPP
 
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp17/constexpr_invoke.hpp"
+#include "cath/common/cpp20/constexpr_invoke.hpp"
 
 #include <cstddef>
 

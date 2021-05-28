@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_TRAITS_IS_TEMPLATE_OF_TYPE_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_TRAITS_IS_TEMPLATE_OF_TYPE_HPP
 
-#include "cath/common/cpp17/void_t.hpp"
-
 #include <tuple>
 #include <type_traits>
 
@@ -32,8 +30,8 @@ namespace cath::common {
 		/// \brief Type trait for whether the first type is a template of the second template type
 		///
 		/// This is the generic template, which matches all types that aren't template types
-		template <typename T, template <typename...> class U, typename = void_t<>>
-		struct is_template_of_type : std::false_type {};
+		template <typename T, template <typename...> class U, typename = ::std::void_t<>>
+		struct is_template_of_type : ::std::false_type {};
 
 		/// \brief Type trait for whether the first type is a template of the second template type
 		///
@@ -47,7 +45,7 @@ namespace cath::common {
 		/// (eg `is_template_of_type<set<int, less<int>, allocator<int>>, pair`),
 		/// which otherwise causes compiler errors
 		template <template <typename...> class TOut, typename... TIns, template <typename...> class U>
-		struct is_template_of_type<TOut<TIns...>, U, void_t<U<TIns...>>> : std::is_same<U<TIns...>, TOut<TIns...>> {};
+		struct is_template_of_type<TOut<TIns...>, U, ::std::void_t<U<TIns...>>> : ::std::is_same<U<TIns...>, TOut<TIns...>> {};
 
 	} // namespace detail
 

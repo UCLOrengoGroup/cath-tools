@@ -29,7 +29,7 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include "cath/common/cpp17/constexpr_invoke.hpp"
+#include "cath/common/cpp20/constexpr_invoke.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 namespace cath::rslv {

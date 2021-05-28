@@ -23,6 +23,7 @@
 
 #include <array>
 #include <iosfwd>
+#include <tuple>
 
 #include <boost/operators.hpp>
 #include <boost/range/size.hpp>

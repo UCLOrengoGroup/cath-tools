@@ -27,8 +27,6 @@
 #include <tuple>
 #include <utility>
 
-#include "cath/common/cpp14/constexpr_min_max.hpp"
-
 namespace cath::common {
 
 	namespace detail {
@@ -55,7 +53,7 @@ namespace cath::common {
 			//   (being careful to avoid even *instantiating* constexpr_find_impl() beyond the end of the array)
 			// * Else fail (using a throw statement that generates compiler errors iff it's invoked)
 			return found_constexpr_match<I, J>( prm_array, prm_value ) ? std::get<I>( prm_array ) :
-			       ( I + 1 < N                                       ) ? constexpr_find_impl<constexpr_min(N-1, I+1), J>( prm_array, prm_value ) :
+			       ( I + 1 < N                                       ) ? constexpr_find_impl<::std::min(N-1, I+1), J>( prm_array, prm_value ) :
 			                                                            ( throw std::logic_error( "Unable to constexpr_find() element in std::array" ), std::get<0>( prm_array ) );
 		}
 	} // namespace detail

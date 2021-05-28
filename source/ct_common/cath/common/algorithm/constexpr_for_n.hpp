@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_FOR_N_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_FOR_N_HPP
 
-#include "cath/common/cpp14/constexpr_min_max.hpp"
-
 #include <utility>
 
 namespace cath::common {
@@ -37,7 +35,7 @@ namespace cath::common {
 
 			// If FROM + 1 is still less than TO, recursively call constexpr_for_n_impl() for FROM + 1
 			if ( FROM + 1 < TO ) {
-				constexpr_for_n_impl<F, cath::common::constexpr_min( FROM + 1, TO - 1 ), TO>( std::forward<Args>( args )... );
+				constexpr_for_n_impl<F, ::std::min( FROM + 1, TO - 1 ), TO>( std::forward<Args>( args )... );
 			}
 		}
 

@@ -28,7 +28,6 @@
 #include <boost/range/numeric.hpp>
 
 #include "cath/common/boost_addenda/range/indices.hpp"
-#include "cath/common/cpp14/constexpr_min_max.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/hash/hash_value_combine.hpp"
 #include "cath/common/json_style.hpp"
@@ -83,8 +82,11 @@ namespace cath::seq {
 	constexpr seq_arr_seq_arr_pair seq_seg::sanity_check(const seq_arrow &prm_start, ///< The start position
 	                                                     const seq_arrow &prm_stop   ///< The stop position
 	                                                     ) {
-		return ( prm_start < prm_stop ) ? std::make_pair( prm_start, prm_stop )
-		                                : throw std::invalid_argument( "Cannot create seq_seg with start residue before the stop residue" );
+		if ( prm_start >= prm_stop ) {
+			BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+			  "Cannot create seq_seg with start residue before the stop residue" ) );
+		}
+		return std::make_pair( prm_start, prm_stop );
 	}
 
 	/// \brief Ctor seq_seg from a start and stop
@@ -213,23 +215,13 @@ namespace cath::seq {
 
 	/// \brief Return the number of residues by which the two specified seq_segs overlap (or 0 if they don't overlap)
 	///
-	/// \todo Come relaxed, constexpr use this (but keep constexpr_max() / constexpr_min() if they haven't been retired yet):
-	///     const auto max_start = std::max( prm_seq_seg_a.get_start_arrow(), prm_seq_seg_b.get_start_arrow() );
-	///     const auto min_stop  = std::min( prm_seq_seg_a.get_stop_arrow(),  prm_seq_seg_b.get_stop_arrow()  );
-	///     return ( std::max( min_stop, max_start ) - max_start );
-	///
 	/// \relates seq_seg
 	inline constexpr residx_t overlap_by(const seq_seg &prm_seq_seg_a, ///< The first  seq_seg to query
 	                                     const seq_seg &prm_seq_seg_b  ///< The second seq_seg to query
 	                                     ) {
-		return (
-			common::constexpr_max(
-				common::constexpr_min( prm_seq_seg_a.get_stop_arrow(),  prm_seq_seg_b.get_stop_arrow()  ),
-				common::constexpr_max( prm_seq_seg_a.get_start_arrow(), prm_seq_seg_b.get_start_arrow() )
-			)
-			-
-			common::constexpr_max( prm_seq_seg_a.get_start_arrow(), prm_seq_seg_b.get_start_arrow() )
-		);
+		const auto max_start = std::max( prm_seq_seg_a.get_start_arrow(), prm_seq_seg_b.get_start_arrow() );
+		const auto min_stop  = std::min( prm_seq_seg_a.get_stop_arrow(),  prm_seq_seg_b.get_stop_arrow()  );
+		return ( std::max( min_stop, max_start ) - max_start );
 	}
 
 	/// \brief Return the length of the shorter of the two specified seq_segs
@@ -238,7 +230,7 @@ namespace cath::seq {
 	inline constexpr residx_t shorter_length(const seq_seg &prm_seq_seg_a, ///< The first  seq_seg to query
 	                                         const seq_seg &prm_seq_seg_b  ///< The second seq_seg to query
 	                                         ) {
-		return static_cast<residx_t>( common::constexpr_min(
+		return static_cast<residx_t>( ::std::min(
 			get_length( prm_seq_seg_a ),
 			get_length( prm_seq_seg_b )
 		) );
@@ -250,7 +242,7 @@ namespace cath::seq {
 	inline constexpr residx_t longer_length(const seq_seg &prm_seq_seg_a, ///< The first  seq_seg to query
 	                                        const seq_seg &prm_seq_seg_b  ///< The second seq_seg to query
 	                                        ) {
-		return static_cast<residx_t>( common::constexpr_max(
+		return static_cast<residx_t>( ::std::max(
 			get_length( prm_seq_seg_a ),
 			get_length( prm_seq_seg_b )
 		) );

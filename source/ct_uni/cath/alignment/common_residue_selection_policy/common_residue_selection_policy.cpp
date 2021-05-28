@@ -31,7 +31,6 @@
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
@@ -45,6 +44,7 @@ using ::boost::assign::ptr_push_back;
 using ::boost::irange;
 using ::boost::lexical_cast;
 using ::boost::ptr_vector;
+using ::std::make_unique;
 
 /// \brief TODOCUMENT
 vector<alignment::size_type> common_residue_selection_policy::select_common_residues(const alignment            &prm_alignment, ///< TODOCUMENT
@@ -160,7 +160,7 @@ vector<alignment::size_type> cath::align::select_common_residues_of_pair_alignme
 ///
 /// \relates common_residue_selection_policy
 unique_ptr<common_residue_selection_policy> cath::align::make_default_common_residue_selection_policy() {
-	return { common::make_unique<common_residue_select_all_policy>() };
+	return { make_unique<common_residue_select_all_policy>() };
 }
 
 /// \brief Return whether the specified common_residue_selection_policy is of the default type

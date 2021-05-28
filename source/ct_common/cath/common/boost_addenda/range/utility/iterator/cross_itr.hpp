@@ -21,12 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_UTILITY_ITERATOR_CROSS_ITR_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_UTILITY_ITERATOR_CROSS_ITR_HPP
 
+#include <tuple>
+
 #include <boost/iterator/iterator_facade.hpp>
 
 #include "cath/common/boost_addenda/iterator/iterator_traits_type_aliases.hpp"
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/config.hpp"
-#include "cath/common/cpp17/apply.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 // clang-format off
@@ -176,8 +177,7 @@ namespace cath::common {
 	/// \brief TODOCUMENT
 	template <typename... RNGs>
 	auto cross_itr<RNGs...>::dereference() const -> reference_type {
-		/// \TODO Come C++17, use ::std::apply
-		return ::cath::common::apply( detail::dereferencer(), the_iterators );
+		return ::std::apply( detail::dereferencer(), the_iterators );
 	}
 
 	/// \brief TODOCUMENT
@@ -283,16 +283,14 @@ namespace cath::common {
 	cross_itr<std::remove_reference_t<RNGs>...> make_cross_itr(std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 	                                                           ) {
 
-		/// \TODO Come C++17, use ::std::apply
-		return ::cath::common::apply( detail::cross_itr_maker(), prm_tuple );
+		return ::std::apply( detail::cross_itr_maker(), prm_tuple );
 	}
 
 	/// \brief Ctor from a tuple of ranges
 	template <typename... RNGs>
 	cross_itr<std::remove_reference_t<RNGs>...> make_end_cross_itr(std::tuple<RNGs ...> &prm_tuple ///< The ranges over which this cross_itr should act
 	                                                               ) {
-		/// \TODO Come C++17, use ::std::apply
-		return ::cath::common::apply( detail::end_cross_itr_maker(), prm_tuple );
+		return ::std::apply( detail::end_cross_itr_maker(), prm_tuple );
 	}
 
 	/// \brief Ctor from a tuple of ranges
@@ -307,8 +305,7 @@ namespace cath::common {
 //		// So make a local, non-const tuple of references and build from that instead
 //		std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( prm_tuple );
 
-		/// \TODO Come C++17, use ::std::apply
-		return ::cath::common::apply( detail::const_cross_itr_maker(), prm_tuple );
+		return ::std::apply( detail::const_cross_itr_maker(), prm_tuple );
 	}
 
 	/// \brief Ctor from a tuple of ranges
@@ -323,8 +320,7 @@ namespace cath::common {
 //		// So make a local, non-const tuple of references and build from that instead
 //		std::tuple<std::add_lvalue_reference_t<RNGs>...> non_const_ref_copy( prm_tuple );
 
-		/// \TODO Come C++17, use ::std::apply
-		return ::cath::common::apply( detail::end_const_cross_itr_maker(), prm_tuple );
+		return ::std::apply( detail::end_const_cross_itr_maker(), prm_tuple );
 	}
 
 	template <typename... Ts>

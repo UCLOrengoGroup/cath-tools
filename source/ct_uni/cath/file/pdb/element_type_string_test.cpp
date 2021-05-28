@@ -20,7 +20,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/file/pdb/element_type_string.hpp"
 
 #include <memory>

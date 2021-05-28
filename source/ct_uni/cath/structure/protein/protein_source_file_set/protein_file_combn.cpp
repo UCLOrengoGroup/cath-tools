@@ -20,7 +20,6 @@
 
 #include "protein_file_combn.hpp"
 
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_from_pdb.hpp"
 #include "cath/structure/protein/protein_source_file_set/protein_from_pdb_and_calc.hpp"
@@ -38,11 +37,11 @@ using namespace ::std;
 unique_ptr<const protein_source_file_set> cath::get_protein_source_file_set(const protein_file_combn &prm_protein_file_combn /// The protein_file_combn to be converted
                                                                             ) {
 	switch ( prm_protein_file_combn ) {
-		case( protein_file_combn::WOLF_SEC          ) : { return { common::make_unique< protein_from_wolf_and_sec          >() }; break; }
-		case( protein_file_combn::PDB               ) : { return { common::make_unique< protein_from_pdb                   >() }; break; }
-		case( protein_file_combn::PDB_DSSP_SEC      ) : { return { common::make_unique< protein_from_pdb_dssp_and_sec      >() }; break; }
-		case( protein_file_combn::PDB_DSSP_AND_CALC ) : { return { common::make_unique< protein_from_pdb_and_dssp_and_calc >() }; break; }
-		case( protein_file_combn::PDB_AND_CALC      ) : { return { common::make_unique< protein_from_pdb_and_calc          >() }; break; }
+		case( protein_file_combn::WOLF_SEC          ) : { return { ::std::make_unique< protein_from_wolf_and_sec          >() }; break; }
+		case( protein_file_combn::PDB               ) : { return { ::std::make_unique< protein_from_pdb                   >() }; break; }
+		case( protein_file_combn::PDB_DSSP_SEC      ) : { return { ::std::make_unique< protein_from_pdb_dssp_and_sec      >() }; break; }
+		case( protein_file_combn::PDB_DSSP_AND_CALC ) : { return { ::std::make_unique< protein_from_pdb_and_dssp_and_calc >() }; break; }
+		case( protein_file_combn::PDB_AND_CALC      ) : { return { ::std::make_unique< protein_from_pdb_and_calc          >() }; break; }
 	}
 	BOOST_THROW_EXCEPTION(invalid_argument_exception("protein_file_combn is not recognised"));
 }

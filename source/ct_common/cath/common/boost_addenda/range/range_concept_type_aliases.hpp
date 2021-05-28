@@ -23,8 +23,6 @@
 
 #include <boost/range/metafunctions.hpp>
 
-#include "cath/common/cpp17/void_t.hpp"
-
 #include <vector>
 
 namespace cath::common {
@@ -33,7 +31,7 @@ namespace cath::common {
 		/// \brief Primary template for implementation of range_const_reference
 		///
 		/// By default, use range_reference<const T>
-		template <typename T, typename = detail::void_t<> >
+		template <typename T, typename = ::std::void_t<> >
 		struct range_const_reference_impl {
 			using type = typename boost::range_reference<const T>::type;
 		};
@@ -44,7 +42,7 @@ namespace cath::common {
 		///
 		/// This uses the void_t trick to remove this specialisation if T doesn't contain a const_reference member type.
 		template <typename T>
-		struct range_const_reference_impl< T, detail::void_t< typename T::const_reference > > {
+		struct range_const_reference_impl< T, ::std::void_t< typename T::const_reference > > {
 			using type = typename T::const_reference;
 		};
 

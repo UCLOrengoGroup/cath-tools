@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_ALIGNMENT_ACTION_HPP
 
 #include <functional>
+#include <utility>
 
 #include "cath/alignment/align_type_aliases.hpp"
 #include "cath/alignment/alignment.hpp"
@@ -30,7 +31,6 @@
 #include "cath/common/boost_addenda/graph/spanning_tree.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/boost_addenda/range/max_proj_element.hpp"
-#include "cath/common/cpp17/as_const.hpp"
 #include "cath/structure/protein/protein.hpp"
 #include "cath/structure/protein/protein_list.hpp"
 
@@ -100,7 +100,7 @@ namespace cath::align {
 				const size_t START_INDEX = boost::numeric_cast<size_t>( std::distance(
 					::std::cbegin( lcl_span_tree ),
 					common::max_proj_element(
-						common::as_const( lcl_span_tree ),
+						::std::as_const( lcl_span_tree ),
 						std::less<>{},
 						[] (const size_size_doub_tpl &x) { return get<2>( x ); }
 					)

@@ -23,7 +23,7 @@
 
 #include <optional>
 
-#include "cath/common/cpp17/constexpr_invoke.hpp"
+#include "cath/common/cpp20/constexpr_invoke.hpp"
 #include "cath/common/type_traits.hpp"
 
 namespace cath::common {

@@ -25,7 +25,7 @@
 #include <boost/range/numeric.hpp>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
-#include "cath/common/cpp17/constexpr_invoke.hpp"
+#include "cath/common/cpp20/constexpr_invoke.hpp"
 #include "cath/common/function/ident.hpp"
 
 #include <utility>

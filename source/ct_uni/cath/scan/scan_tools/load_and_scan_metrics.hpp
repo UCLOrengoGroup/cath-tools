@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_SCAN_TOOLS_LOAD_AND_SCAN_METRICS_HPP
 
 #include <filesystem>
+#include <tuple>
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/range/adaptor/sliced.hpp>
@@ -30,7 +31,6 @@
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/generate_n_build.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
-#include "cath/common/cpp17/apply.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/scan/scan_tools/scan_metrics.hpp"
 
@@ -72,7 +72,7 @@ namespace cath::scan {
 		std::string join_string_tuple(const std::tuple<STRs...> &prm_strings,  ///< TODOCUMENT
 		                              const std::string         &prm_separator ///< TODOCUMENT
 		                              ) {
-			return common::apply( string_joiner( prm_separator ), prm_strings );
+			return ::std::apply( string_joiner( prm_separator ), prm_strings );
 		}
 
 		/// \brief TODOCUMENT

@@ -27,7 +27,6 @@
 #include "cath/alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
 #include "cath/alignment/common_atom_selection_policy/common_atom_select_cb_policy.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/structure/geometry/coord.hpp"
@@ -41,6 +40,7 @@ using namespace ::std;
 
 using ::boost::assign::ptr_push_back;
 using ::boost::ptr_vector;
+using ::std::make_unique;
 
 /// \brief NVI pass-through method to the concrete class's do_select_common_atoms() which defines how the policy extracts common atoms from a pair of residues
 void common_atom_selection_policy::append_common_atoms_to_coord_lists(coord_list_coord_list_pair &prm_coord_lists, ///< The previous common coord_lists to which the new selections should be appended
@@ -105,7 +105,7 @@ ptr_vector<common_atom_selection_policy> cath::align::get_all_common_atom_select
 ///
 /// \relates common_atom_selection_policy
 unique_ptr<common_atom_selection_policy> cath::align::make_default_common_atom_selection_policy() {
-	return { common::make_unique<common_atom_select_ca_policy>() };
+	return { make_unique<common_atom_select_ca_policy>() };
 }
 
 /// \brief Return whether the specified common_atom_selection_policy is of the default type

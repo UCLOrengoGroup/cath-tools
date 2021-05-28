@@ -23,38 +23,39 @@
 
 #include <array>
 
-#include "cath/common/cpp17/conjunction.hpp"
-#include "cath/common/cpp17/negation.hpp"
 #include "cath/common/type_traits.hpp"
 
 namespace cath::common {
 	namespace detail {
 
-		template <typename> struct is_ref_wrapper : std::false_type {};
-
-		template <typename T> struct is_ref_wrapper<std::reference_wrapper<T>> : std::true_type {};
+		template <typename>
+		inline constexpr bool is_ref_wrapper_v = false;
 
 		template <typename T>
-		using not_ref_wrapper = negation<is_ref_wrapper<common::remove_cvref_t<T>>>;
+		inline constexpr bool is_ref_wrapper_v<::std::reference_wrapper<T>> = true;
 
+		template <typename T>
+		inline constexpr bool not_ref_wrapper_v = !is_ref_wrapper_v<common::remove_cvref_t<T>>;
 
-		template <typename D, typename...> struct return_type_helper { using type = D; };
-
+		template <typename D, typename...>
+		struct return_type_helper {
+			using type = D;
+		};
 
 		template <typename... Types>
-		struct return_type_helper<void, Types...> : std::common_type<Types...> {
-			static_assert(::std::conjunction_v<not_ref_wrapper<Types>...>,
-			"Types cannot contain reference_wrappers when D is void");
+		struct return_type_helper<void, Types...> : ::std::common_type<Types...> {
+			static_assert( (... && not_ref_wrapper_v<Types>), "Types cannot contain reference_wrappers when D is void" );
 		};
 
 		template <typename D, typename... Types>
-		using return_type = std::array<typename return_type_helper<D, Types...>::type, sizeof...(Types)>;
+		using return_type = ::std::array<typename return_type_helper<D, Types...>::type, sizeof...(Types)>;
+
 	} // namespace detail
 
 	/// \brief C++20? factory function for arrays
 	template <typename D = void, typename... Types>
 	constexpr detail::return_type<D, Types...> make_array(Types&&... t) {
-		return { { std::forward<Types>(t)... } };
+		return { { ::std::forward<Types>(t)... } };
 	}
 
 } // namespace cath::common

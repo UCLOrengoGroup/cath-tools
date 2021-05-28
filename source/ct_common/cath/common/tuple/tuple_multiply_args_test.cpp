@@ -30,8 +30,8 @@ BOOST_AUTO_TEST_SUITE(tuple_multiply_args_test_suite)
 
 BOOST_AUTO_TEST_CASE(basic) {
 
-	static_assert( tuple_multiply_args( make_tuple( 3,   7,   2   ) ) == 42,   "Multiplying these arguments should give this answer" );
-	static_assert( tuple_multiply_args( make_tuple( 3.0, 7.0, 2.0 ) ) == 42.0, "Multiplying these arguments should give this answer" );
+	static_assert( tuple_multiply_args( make_tuple( 3,   7,   2   ) ) == 42 );
+	static_assert( tuple_multiply_args( make_tuple( 3.0, 7.0, 2.0 ) ) == 42.0 );
 
 	// static_assert( tuple_multiply_args( ) == 0, "" ); // This should fail to compile with something like: `no matching function for call to object of type 'tuple_multiply_args_fn'`
 

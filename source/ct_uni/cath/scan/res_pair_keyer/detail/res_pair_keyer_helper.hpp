@@ -21,15 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_HELPER_HPP
 
-#include "cath/common/cpp17/apply.hpp"
+#include <tuple>
+#include <utility>
+
 #include "cath/common/tuple/make_tuple_with_skips.hpp"
 
 // clang-format off
 namespace cath::scan::detail { class multi_struc_res_rep_pair; }
 namespace cath::scan { class quad_criteria; }
 // clang-format on
-
-#include <utility>
 
 namespace cath::scan::detail {
 
@@ -264,7 +264,7 @@ namespace cath::scan::detail {
 	constexpr decltype(auto) make_value(const std::tuple<KPs...>  &prm_tuple, ///< The tuple of keyer_parts to be used to make the value
 	                                    const Data                &prm_data   ///< The data to be passed to the keyer_parts
 	                                    ) {
-		return common::apply( make_keyer_parts_value_maker( prm_data ), prm_tuple );
+		return ::std::apply( make_keyer_parts_value_maker( prm_data ), prm_tuple );
 	}
 
 	/// \brief Template function to emplace_back in a store the value components from a tuple of keyer_parts and an instance of their common data type
@@ -279,7 +279,7 @@ namespace cath::scan::detail {
 	                                const std::tuple<KPs...>  &prm_tuple, ///< The tuple of keyer_parts to apply to be used to make the close_keys
 	                                const Data                &prm_data   ///< The data to be passed to the keyer_parts
 	                                ) {
-		common::apply(
+		::std::apply(
 			[&] (const auto &...keyer_parts) {
 				prm_store.emplace_back_entry_to_cell(
 					prm_key,
@@ -300,7 +300,7 @@ namespace cath::scan::detail {
 	constexpr decltype(auto) make_key(const std::tuple<KPs...>  &prm_tuple, ///< The tuple of keyer_parts to be used to make the key
 	                                  const Data                &prm_data   ///< The data to be passed to the keyer_parts
 	                                  ) {
-		return common::apply( make_keyer_parts_key_maker( prm_data ), prm_tuple );
+		return ::std::apply( make_keyer_parts_key_maker( prm_data ), prm_tuple );
 	}
 
 	/// \brief Template function to make a close_keys tuple of ranges from a tuple of keyer_parts and an instance of their common data type
@@ -314,7 +314,7 @@ namespace cath::scan::detail {
 	                               const Data                &prm_data,  ///< The data to be passed to the keyer_parts
 	                               const Crit                &prm_crit   ///< The criteria defining what is considered a match
 	                               ) {
-		return common::apply(
+		return ::std::apply(
 			[&] (const auto &...keyer_parts) {
 				return common::make_tuple_with_skips( keyer_parts.close_key_parts(
 					keyer_parts.get_value        ( prm_data ),
@@ -343,7 +343,7 @@ namespace cath::scan::detail {
 	                                            const Data                &prm_data,  ///< The data to be passed to the keyer_parts
 	                                            const Crit                &prm_crit   ///< The criteria defining what is considered a match
 	                                            ) {
-		return common::apply( make_keyer_parts_min_close_key_maker( prm_data, prm_crit ), prm_tuple );
+		return ::std::apply( make_keyer_parts_min_close_key_maker( prm_data, prm_crit ), prm_tuple );
 	}
 
 	/// \brief Template function to make a max-close-key tuple from a tuple of keyer_parts and an instance of their common data type
@@ -364,7 +364,7 @@ namespace cath::scan::detail {
 	                                            const Data                &prm_data,  ///< The data to be passed to the keyer_parts
 	                                            const Crit                &prm_crit   ///< The criteria defining what is considered a match
 	                                            ) {
-		return common::apply( make_keyer_parts_max_close_key_maker( prm_data, prm_crit ), prm_tuple );
+		return ::std::apply( make_keyer_parts_max_close_key_maker( prm_data, prm_crit ), prm_tuple );
 	}
 
 } // namespace cath::scan::detail

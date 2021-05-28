@@ -27,7 +27,6 @@
 #include "cath/chopping/domain/domain.hpp"
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/logger.hpp"
@@ -104,10 +103,10 @@ uptr_vec<pdbs_acquirer> cath::opts::get_pdbs_acquirers(const pdb_input_spec &prm
                                                        ) {
 	vector<unique_ptr<pdbs_acquirer>> pdb_acquirers;
 	if ( prm_pdb_input_spec.get_read_from_stdin() ) {
-		pdb_acquirers.push_back( common::make_unique<istream_pdbs_acquirer>() );
+		pdb_acquirers.push_back( ::std::make_unique<istream_pdbs_acquirer>() );
 	}
 	if ( ! prm_pdb_input_spec.get_input_files().empty() ) {
-		pdb_acquirers.push_back( common::make_unique<file_list_pdbs_acquirer>( prm_pdb_input_spec.get_input_files() ) );
+		pdb_acquirers.push_back( ::std::make_unique<file_list_pdbs_acquirer>( prm_pdb_input_spec.get_input_files() ) );
 	}
 
 	if ( pdb_acquirers.size() != get_num_acquirers( prm_pdb_input_spec ) ) {

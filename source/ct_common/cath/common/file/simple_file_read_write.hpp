@@ -25,6 +25,7 @@
 #include <fstream>
 #include <string>
 #include <string_view>
+#include <tuple>
 
 #include <boost/concept/assert.hpp>
 #include <boost/concept_archetype.hpp>
@@ -32,7 +33,6 @@
 #include <boost/range.hpp>
 #include <boost/range/iterator_range.hpp>
 
-#include "cath/common/cpp17/apply.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -118,8 +118,7 @@ namespace cath::common {
 			static std::tuple<Ts...> read_line(std::istream &prm_is ///< The istream containing the line to be read
 			                                   ) {
 				std::tuple<Ts...> new_tuple;
-				/// \TODO Come C++17, use ::std::apply
-				::cath::common::apply( tuple_parts_istreamer( prm_is ), new_tuple );
+				::std::apply( tuple_parts_istreamer( prm_is ), new_tuple );
 				return new_tuple;
 			}
 		};
@@ -230,8 +229,7 @@ namespace cath::common {
 			void write_part(std::ostream            &prm_os,   ///< TODOCUMENT
 			                const std::tuple<Ts...> &prm_value ///< TODOCUMENT
 			                ) const {
-				/// \TODO Come C++17, use ::std::apply
-				::cath::common::apply( tuple_parts_ostreamer( prm_os ), prm_value );
+				::std::apply( tuple_parts_ostreamer( prm_os ), prm_value );
 			}
 
 		public:

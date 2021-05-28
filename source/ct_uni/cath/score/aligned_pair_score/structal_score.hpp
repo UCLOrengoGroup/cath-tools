@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_STRUCTAL_SCORE_HPP
 
 #include "cath/common/clone/clone_ptr.hpp"
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
 #include "cath/score/aligned_pair_score/rmsd_score.hpp"
 #include "cath/score/length_getter/length_of_shorter_getter.hpp"

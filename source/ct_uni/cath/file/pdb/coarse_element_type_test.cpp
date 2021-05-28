@@ -22,7 +22,6 @@
 
 #include <boost/lexical_cast.hpp>
 
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/file/pdb/coarse_element_type.hpp"
 
 #include <memory>

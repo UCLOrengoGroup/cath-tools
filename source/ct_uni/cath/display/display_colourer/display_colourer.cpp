@@ -28,7 +28,6 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/display/display_colour_spec/display_colour_spec.hpp"
 #include "cath/display/display_colourer/detail/score_colour_handler.hpp"
 #include "cath/display/display_colourer/display_colourer_alignment.hpp"
@@ -48,6 +47,7 @@ using namespace ::cath::detail;
 using namespace ::cath::file;
 using namespace ::cath::sup;
 
+using ::std::make_unique;
 using ::std::ostream;
 using ::std::reference_wrapper;
 using ::std::string;
@@ -125,9 +125,9 @@ unique_ptr<const display_colourer> cath::get_display_colourer(const display_spec
 		prm_display_spec.get_normalise_scores()
 	};
 	if ( prm_display_spec.get_gradient_colour_alignment() ) {
-		return { common::make_unique< display_colourer_alignment   >( prm_colour_gradient,                 colour_handler ) };
+		return { make_unique< display_colourer_alignment   >( prm_colour_gradient,                 colour_handler ) };
 	}
-	return { common::make_unique< display_colourer_consecutive >( get_colour_list( prm_display_spec ), colour_handler ) };
+	return { make_unique< display_colourer_consecutive >( get_colour_list( prm_display_spec ), colour_handler ) };
 }
 
 /// \brief TODOCUMENT

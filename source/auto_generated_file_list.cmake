@@ -1740,11 +1740,6 @@ set(
 )
 
 set(
-	TESTSOURCES_CT_COMMON_CATH_COMMON_CPP17
-		ct_common/cath/common/cpp17/apply_test.cpp
-)
-
-set(
 	TESTSOURCES_CT_COMMON_CATH_COMMON_EXCEPTION
 		ct_common/cath/common/exception/exception_is_equivalent_test.cpp
 )
@@ -1755,11 +1750,6 @@ set(
 		ct_common/cath/common/file/open_fstream_test.cpp
 		ct_common/cath/common/file/simple_file_read_write_test.cpp
 		ct_common/cath/common/file/temp_file_test.cpp
-)
-
-set(
-	TESTSOURCES_CT_COMMON_CATH_COMMON_FUNCTION
-		ct_common/cath/common/function/multiply_args_test.cpp
 )
 
 set(
@@ -1822,11 +1812,9 @@ set(
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_BOOST_ADDENDA}
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_CLONE}
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_CONTAINER}
-		${TESTSOURCES_CT_COMMON_CATH_COMMON_CPP17}
 		ct_common/cath/common/difference_test.cpp
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_EXCEPTION}
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_FILE}
-		${TESTSOURCES_CT_COMMON_CATH_COMMON_FUNCTION}
 		${TESTSOURCES_CT_COMMON_CATH_COMMON_GSL}
 		ct_common/cath/common/invert_permutation_test.cpp
 		ct_common/cath/common/less_than_helper_test.cpp

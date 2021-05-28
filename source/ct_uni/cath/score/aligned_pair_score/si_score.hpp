@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SI_SCORE_HPP
 
 #include "cath/common/clone/clone_ptr.hpp"
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
 #include "cath/score/aligned_pair_score/rmsd_score.hpp"
 #include "cath/score/length_getter/length_getter_make_clone.hpp"
@@ -55,7 +54,7 @@ namespace cath::score {
 		num_aligned_length_getter num_aligned_getter;
 
 		/// \brief TODOCUMENT
-		common::clone_ptr<const sym_protein_only_length_getter> full_length_getter_ptr { common::make_unique<length_of_shorter_getter>() };
+		common::clone_ptr<const sym_protein_only_length_getter> full_length_getter_ptr { ::std::make_unique<length_of_shorter_getter>() };
 
 		[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
 

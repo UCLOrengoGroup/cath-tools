@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_SEQUENCE_SIMILARITY_SCORE_HPP
 
 #include "cath/common/clone/clone_ptr.hpp"
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/score/aligned_pair_score/aligned_pair_score.hpp"
 #include "cath/score/aligned_pair_score/substitution_matrix/identity_substitution_matrix.hpp"
 #include "cath/score/aligned_pair_score/substitution_matrix/substitution_matrix.hpp"
@@ -60,7 +59,7 @@ namespace cath::score {
 		substitution_matrix scores;
 
 		/// \brief The length getter with which the normalisation length should be acquired
-		common::clone_ptr<const length_getter> length_getter_ptr{ common::make_unique<length_of_longer_getter>() };
+		common::clone_ptr<const length_getter> length_getter_ptr{ ::std::make_unique<length_of_longer_getter>() };
 
 		[[nodiscard]] std::unique_ptr<aligned_pair_score> do_clone() const final;
 

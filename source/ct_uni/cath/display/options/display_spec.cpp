@@ -22,7 +22,6 @@
 
 #include <boost/exception/diagnostic_information.hpp>
 
-#include "cath/common/cpp14/make_unique.hpp"
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_list.hpp"
 
