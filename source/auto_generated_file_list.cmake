@@ -1685,7 +1685,6 @@ set(
 		ct_common/cath/common/algorithm/constexpr_modulo_fns_test.cpp
 		ct_common/cath/common/algorithm/for_n_test.cpp
 		ct_common/cath/common/algorithm/transform_build_test.cpp
-		ct_common/cath/common/algorithm/variadic_and_test.cpp
 )
 
 set(

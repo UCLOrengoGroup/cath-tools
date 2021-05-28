@@ -27,7 +27,6 @@
 #include "cath/common/algorithm/append.hpp"
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
-#include "cath/common/algorithm/variadic_and.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/hash/hash_value_combine.hpp"
 #include "cath/common/type_traits.hpp"

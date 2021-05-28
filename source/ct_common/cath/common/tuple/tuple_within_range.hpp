@@ -24,7 +24,6 @@
 #include <cstddef>
 #include <tuple>
 
-#include "cath/common/algorithm/variadic_and.hpp"
 #include "cath/common/detail/tuple_index_sequence.hpp"
 
 namespace cath::common {
@@ -36,9 +35,9 @@ namespace cath::common {
 		                             const Tpl &prm_nums_cells,    ///< The tuple containing the values that the corresponding index values should be strictly less than
 		                             std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 		                             ) {
-			return variadic_and(
-				std::get<Index>( prm_indexes ) >= 0 && std::get<Index>( prm_indexes ) < std::get<Index>( prm_nums_cells )...
-			);
+			return ( ...
+			         && ( std::get<Index>( prm_indexes ) >= 0
+			              && std::get<Index>( prm_indexes ) < std::get<Index>( prm_nums_cells ) ) );
 		}
 
 		/// \brief Function object to check that each value in the specified index tuple is non-negative
