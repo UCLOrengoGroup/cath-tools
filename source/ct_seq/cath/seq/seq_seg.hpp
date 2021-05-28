@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
 #define _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
 
-#include <boost/core/ignore_unused.hpp>
 #include <boost/operators.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/sort.hpp>

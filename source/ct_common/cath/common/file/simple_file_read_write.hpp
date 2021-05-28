@@ -28,7 +28,6 @@
 
 #include <boost/concept/assert.hpp>
 #include <boost/concept_archetype.hpp>
-#include <boost/core/ignore_unused.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -73,8 +72,7 @@ namespace cath::common {
 				// (function calls don't guarantee evaluation order of parts and
 				//  though initializer_lists should, GCC had a bug undermining around
 				//  versions v4.7 and v4.8)
-				bool b[] = { true, ( istream_part( prm_parts ), true )... };
-				boost::ignore_unused( b );
+				[[maybe_unused]] bool b[] = { true, ( istream_part( prm_parts ), true )... };
 			}
 		};
 

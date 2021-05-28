@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_FOR_N_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_FOR_N_HPP
 
-#include <boost/core/ignore_unused.hpp>
-
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/cpp17/constexpr_invoke.hpp"
 
@@ -35,8 +33,7 @@ namespace cath::common {
 	void for_n(const size_t  &prm_n, ///< The number of time to invoke the callable
 	           Fn           &&prm_fn ///< The callable to invoke the specified number of times
 	           ) {
-		for (const auto &x : indices( prm_n ) ) {
-			boost::ignore_unused( x );
+		for ( [[maybe_unused]] const auto &x : indices( prm_n ) ) {
 			constexpr_invoke( std::forward<Fn>( prm_fn ) );
 		}
 	}

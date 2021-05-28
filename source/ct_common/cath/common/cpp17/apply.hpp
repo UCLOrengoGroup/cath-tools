@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_APPLY_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_APPLY_HPP
 
-#include <boost/core/ignore_unused.hpp> // for ignore_unused
-
 #include "cath/common/detail/tuple_index_sequence.hpp"
 
 #include <cstddef>     // for size_t
@@ -44,7 +42,6 @@ namespace cath::common {
 					std::forward<Fn>( prm_fn )
 				)...
 			};
-			boost::ignore_unused( dummy_list );
 		}
 
 		/// \brief Implementation function for apply

@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TEMP_CHECK_OFFSET_1_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TEMP_CHECK_OFFSET_1_HPP
 
-#include <boost/core/ignore_unused.hpp>
-
 #include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
@@ -39,8 +37,6 @@ namespace cath {
 				BOOST_THROW_EXCEPTION(
 				  cath::common::invalid_argument_exception( "Index specified with offset of 1 cannot be 0" ) );
 			}
-		} else {
-			boost::ignore_unused( prm_index_offset_1 );
 		}
 	}
 } // namespace cath

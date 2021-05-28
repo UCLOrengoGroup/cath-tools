@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_ALGO_BEST_SCAN_ARCHES_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_ALGO_BEST_SCAN_ARCHES_HPP
 
-#include <boost/core/ignore_unused.hpp>
-
 #include "cath/common/boost_addenda/range/back.hpp"
 #include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
@@ -136,8 +134,6 @@ namespace cath::rslv {
 				  "Arrow index " + ::std::to_string( prm_arrow.get_index() )
 				  + " doesn't go exactly one further than the last seen (" + ::std::to_string( bests.size() - 1 ) + ")" ) );
 			}
-		} else {
-			boost::ignore_unused( prm_arrow );
 		}
 		best_arches.push_back( prm_scored_arch );
 		bests.emplace_back( best_arches.size() - 1 );

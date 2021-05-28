@@ -24,7 +24,6 @@
 #include <filesystem>
 #include <iostream>
 
-#include <boost/core/ignore_unused.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -41,7 +40,6 @@ using namespace ::cath::common;
 using namespace ::cath::geom;
 using namespace ::std;
 
-using ::boost::ignore_unused;
 using ::boost::numeric_cast;
 using ::std::filesystem::path;
 
@@ -98,9 +96,7 @@ wolf_file cath::file::read_wolf(const path &prm_wolf_filename ///< TODOCUMENT
 	residue_vec residues;
 	residues.reserve(length);
 	// Read through file saving data for selected chain
-	for (const size_t &residue_ctr : indices( length ) ) {
-		ignore_unused( residue_ctr );
-
+	for ( [[maybe_unused]] const size_t &residue_ctr : indices( length ) ) {
 		int       number; // The number of the residue in the WOLF file perhaps?
 		int       pdb_name_number;
 		char      buffer[1000];

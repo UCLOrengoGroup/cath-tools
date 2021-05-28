@@ -25,7 +25,6 @@
 #include <string_view>
 
 #include <boost/core/demangle.hpp>
-#include <boost/core/ignore_unused.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/irange.hpp>
@@ -354,8 +353,7 @@ namespace cath::common {
 	                                              ) {
 		const auto end_itr = ::std::cend( prm_string );
 		auto field_itr = find_itr_before_first_non_space( prm_init_itr, end_itr );
-		for (const size_t field_ctr : boost::irange( prm_init_index, prm_field_index ) ) {
-			boost::ignore_unused( field_ctr );
+		for ( [[maybe_unused]] const size_t field_ctr : boost::irange( prm_init_index, prm_field_index ) ) {
 			field_itr = find_itr_before_first_space    ( field_itr, end_itr );
 			field_itr = find_itr_before_first_non_space( field_itr, end_itr );
 			if ( field_itr == end_itr ) {

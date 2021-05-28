@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_WINDOWED_MATRIX_HPP
 
 #include <boost/algorithm/clamp.hpp>
-#include <boost/core/ignore_unused.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 

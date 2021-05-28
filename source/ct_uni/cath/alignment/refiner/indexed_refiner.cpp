@@ -235,8 +235,7 @@ namespace {
 		                                                    const alignment &prm_alignment  ///< TODOCUMENT
 		                                                    ) {
 			vector<pair<string, doub_doub_pair_vec>> data;
-			const std::initializer_list<int> dummy_list = { process_index_type_pair< Ts, Ts >( data, prm_protein_a, prm_protein_b, prm_alignment )... };
-			boost::ignore_unused( dummy_list );
+			[[maybe_unused]] const std::initializer_list<int> dummy_list = { process_index_type_pair< Ts, Ts >( data, prm_protein_a, prm_protein_b, prm_alignment )... };
 			return data;
 		}
 	};

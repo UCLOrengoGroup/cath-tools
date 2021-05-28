@@ -18,7 +18,6 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/core/ignore_unused.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -227,7 +226,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mid_point_is_halfway, quat_rot_type, all_quat_rot_
 //	size_t repeat_ctr = 0;
 //	while ( repeat_ctr < num_repeats ) {
 ////	for (const auto &repeat_ctr : indices( num_repeats ) ) {
-////		ignore_unused( repeat_ctr );
 //		const auto quat_rot_1 = make_random_quat_rot<quat_rot_type>( the_rng );
 //		const auto quat_rot_2 = make_random_quat_rot<quat_rot_type>( the_rng );
 //		const auto the_angle  = angle_between_quat_rots( quat_rot_1, quat_rot_2 );

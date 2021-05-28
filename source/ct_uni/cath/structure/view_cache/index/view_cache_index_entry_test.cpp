@@ -18,7 +18,6 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/core/ignore_unused.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/combine.hpp>
 #include <boost/range/numeric.hpp>
@@ -49,7 +48,6 @@ using namespace ::cath::index;
 using namespace ::cath::index::detail;
 using namespace ::std;
 
-using ::boost::ignore_unused;
 using ::std::chrono::high_resolution_clock;
 
 namespace {
@@ -184,7 +182,6 @@ namespace {
 	// 	}
 	// 	vcie_vcie_vec_pair results;
 	// 	for (const auto &entry_ctr : indices( prm_num_entries ) ) {
-	// 		ignore_unused( entry_ctr );
 	// 		const auto  index_pair = pick_random_pair( 0_z, num_present_posn_indices - 1, prm_rng );
 	// 		const auto &index_1    = present_posn_indices[ index_pair.first  ];
 	// 		const auto &index_2    = present_posn_indices[ index_pair.second ];

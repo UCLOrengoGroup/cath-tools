@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_INDEX_DIRN_KEYER_PART_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_INDEX_DIRN_KEYER_PART_HPP
 
-#include <boost/core/ignore_unused.hpp>
-
 #include "cath/common/config.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/scan/detail/res_pair/multi_struc_res_rep_pair.hpp"

@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_POLYMORPHIC_COMPARISON_DETAIL_IS_EQUAL_WITH_SAME_DYNAMIC_TYPE_COMPARABLE_HPP
 
 #include <boost/concept_check.hpp>
-#include <boost/core/ignore_unused.hpp>
 
 namespace cath::common::detail {
 
@@ -38,7 +37,6 @@ namespace cath::common::detail {
 		/// \brief The bit that does the actual concept-checking work
 		BOOST_CONCEPT_USAGE(is_equal_with_same_dynamic_type_comparable) {
 			bool answer(value_1.equal_with_same_dynamic_type(value_2));
-			boost::ignore_unused(answer);
 		}
 
 		/// \brief Ctor just to prevent compiler complaining that value references won't ever get initialised

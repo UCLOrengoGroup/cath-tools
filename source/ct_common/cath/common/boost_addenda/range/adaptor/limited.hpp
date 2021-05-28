@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_LIMITED_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_LIMITED_HPP
 
-#include <boost/core/ignore_unused.hpp>
-
 #include "cath/common/boost_addenda/range/adaptor/detail/gen_forwarder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/detail/limited_holder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/range/limited_range.hpp"

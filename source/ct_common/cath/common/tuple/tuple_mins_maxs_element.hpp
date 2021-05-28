@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_MINS_MAXS_ELEMENT_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TUPLE_TUPLE_MINS_MAXS_ELEMENT_HPP
 
-#include <boost/core/ignore_unused.hpp>
-
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 #include "cath/common/detail/tuple_index_sequence.hpp"
 #include "cath/common/type_traits/is_tuple.hpp"
@@ -51,14 +49,13 @@ namespace cath::common {
 		                                             const Tpl &prm_value,         ///< The new tuple
 		                                             std::index_sequence<Index...> ///< An index_sequence matching the indices of Tpl
 		                                             ) {
-			auto dummy_list = {
+			[[maybe_unused]] auto dummy_list = {
 				update_min_max_with_value_impl(
 					std::get<Index>( prm_mins  ),
 					std::get<Index>( prm_maxs  ),
 					std::get<Index>( prm_value )
 				)...
 			};
-			boost::ignore_unused( dummy_list );
 		}
 
 		/// \brief Element-wise update a min tuple and a max tuple with a new tuple

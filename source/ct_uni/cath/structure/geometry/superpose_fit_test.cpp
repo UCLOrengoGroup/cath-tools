@@ -99,7 +99,6 @@ BOOST_AUTO_TEST_CASE(issue_34_test) {
 
 	// const auto svd_rot     = superpose_fit( a, b );
 
-	// // ignore_unused( svd_rot );
 	// std::cerr << "svd_rot     : " << svd_rot     << "\n";
 
 	// std::cerr << "a                         : " << a                         << "\n\n";

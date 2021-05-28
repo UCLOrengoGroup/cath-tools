@@ -20,7 +20,6 @@
 
 #include "hit_resolver.hpp"
 
-#include <boost/core/ignore_unused.hpp>
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/range/sub_range.hpp>
 
@@ -42,7 +41,6 @@ using namespace ::cath::rslv;
 using namespace ::cath::rslv::detail;
 using namespace ::cath::seq;
 
-using ::boost::ignore_unused;
 using ::std::numeric_limits;
 
 // POSSIBLY TODO:
@@ -73,7 +71,6 @@ static inline void sanity_check(const scored_arch_proxy &prm_scored_arch_proxy, 
                                 const calc_hit_list     &prm_hits,              ///< The list of hits to which the scored_arch_proxy corresponds
                                 const calc_hit_vec      &prm_mask               ///< The mask with which to check for conflicts
                                 ) {
-	ignore_unused( prm_scored_arch_proxy, prm_hits, prm_mask );
 	if constexpr ( IS_IN_DEBUG_MODE ) {
 		for ( const auto &arch_hit_idx : prm_scored_arch_proxy ) {
 			if ( hit_overlaps_with_any_of_hits( prm_hits[ arch_hit_idx ], prm_mask ) ) {
