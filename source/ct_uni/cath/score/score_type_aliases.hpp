@@ -25,7 +25,6 @@
 #include <optional>
 #include <vector>
 
-#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
 #include <boost/ptr_container/ptr_map.hpp>
 
 // clang-format off

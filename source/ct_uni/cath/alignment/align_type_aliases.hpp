@@ -26,8 +26,6 @@
 #include <utility>
 #include <vector>
 
-#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
-
 #include "cath/alignment/dyn_prog_align/detail/path_step.hpp"
 
 // clang-format off

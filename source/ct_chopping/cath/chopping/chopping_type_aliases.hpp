@@ -24,8 +24,6 @@
 #include <optional>
 #include <vector>
 
-#include <boost/config.hpp> /// \todo Come a resolution for Boost Trac tickets 12142 & 12179, remove this #include
-
 #include "cath/chopping/residue_location/residue_locating.hpp"
 
 // clang-format off
