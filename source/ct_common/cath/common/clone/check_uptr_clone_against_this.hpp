@@ -21,22 +21,18 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CLONE_CHECK_UPTR_CLONE_AGAINST_THIS_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CLONE_CHECK_UPTR_CLONE_AGAINST_THIS_HPP
 
-#include <boost/core/ignore_unused.hpp>
-
 #include <cassert>
 #include <memory>
 
 namespace cath::common {
 
 	/// \brief Standard approach to achieving a virtual copy-ctor
+	///
+	/// \param prm_clone  TODOCUMENT
+	/// \param prm_clonee TODOCUMENT
 	template <typename B, typename D>
-	inline std::unique_ptr<B> check_uptr_clone_against_this(std::unique_ptr<B>  prm_clone, ///< TODOCUMENT
-	                                                        const D            &prm_clonee ///< TODOCUMENT
-	                                                        ) {
+	inline std::unique_ptr<B> check_uptr_clone_against_this( std::unique_ptr<B> prm_clone, [[maybe_unused]] const D &prm_clonee ) {
 		assert( typeid( *prm_clone ) == typeid( prm_clonee ) );
-#ifdef NDEBUG
-		boost::ignore_unused( prm_clonee );
-#endif
 		return prm_clone;
 	}
 

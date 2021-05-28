@@ -23,6 +23,7 @@
 
 #include <boost/operators.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/seq/seq_type_aliases.hpp"
 
@@ -97,11 +98,12 @@ namespace cath::seq {
 
 	/// \brief Get the index of the residue immediately before the arrow
 	inline constexpr residx_t seq_arrow::res_before() const {
-#ifndef NDEBUG
-		return ( arrow > 0 ) ? ( arrow - 1 ) : throw( "Cannot return a residue before an arrow that precedes the first residue" );
-#else
-		return                 ( arrow - 1 );
-#endif
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			return ( arrow > 0 ) ? ( arrow - 1 )
+			                     : throw( "Cannot return a residue before an arrow that precedes the first residue" );
+		} else {
+			return ( arrow - 1 );
+		}
 	}
 
 	/// \brief Get the index of the residue immediately after the arrow
@@ -126,11 +128,11 @@ namespace cath::seq {
 	/// \brief Decrement the arrow by the specified offset
 	constexpr seq_arrow & seq_arrow::operator-=(const resarw_t &prm_offset ///< The offset by which to decrement the seq_arrow
 	                                            ) {
-#ifndef NDEBUG
-		if ( prm_offset > arrow ) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot decrement seq_arrow below 0"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_offset > arrow ) {
+				BOOST_THROW_EXCEPTION( common::invalid_argument_exception( "Cannot decrement seq_arrow below 0" ) );
+			}
 		}
-#endif
 		arrow -= prm_offset;
 		return *this;
 	}
@@ -144,16 +146,13 @@ namespace cath::seq {
 	inline constexpr seq_arrow operator-(const seq_arrow &prm_res_arrow, ///< The seq_arrow whose copy should be decremented and returned
 	                                     const residx_t  &prm_offset     ///< The offset by which to decrement the copy of the seq_arrow
 	                                     ) {
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_res_arrow.res_after() < prm_offset ) {
+				BOOST_THROW_EXCEPTION( common::invalid_argument_exception( "Cannot decrement seq_arrow beyond 0" ) );
+			}
+		}
 
-
-		return
-#ifndef NDEBUG
-			( prm_res_arrow.res_after() < prm_offset )
-			?
-				throw std::invalid_argument("Cannot decrement seq_arrow beyond 0")
-			:
-#endif
-				arrow_before_res( prm_res_arrow.res_after() - prm_offset );
+		return arrow_before_res( prm_res_arrow.res_after() - prm_offset );
 	}
 
 	/// \brief Return the result of incrementing the specified arrow by some specified offset

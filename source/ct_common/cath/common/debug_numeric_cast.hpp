@@ -23,6 +23,7 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/common/type_traits.hpp"
 
 namespace cath {
@@ -31,11 +32,11 @@ namespace cath {
 	template <typename Target, typename Source>
 	constexpr Target debug_unwarned_numeric_cast(const Source &prm_value ///< TODOCUMENT
 	                                             ) {
-#ifndef NDEBUG
-		return ::boost::numeric_cast<Target>( prm_value );
-#else
-		return static_cast<Target>( prm_value );
-#endif
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			return ::boost::numeric_cast<Target>( prm_value );
+		} else {
+			return static_cast<Target>( prm_value );
+		}
 	}
 
 	/// \brief TODOCUMENT

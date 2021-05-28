@@ -28,6 +28,7 @@
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/adaptor/adjacented.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 #include <iostream>
@@ -102,11 +103,12 @@ seq_seg_vec cath::seq::make_fragments_of_start_sorted_segments(const seq_seg_vec
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot make fragments from empty vector of segments"));
 	}
 
-#ifndef NDEBUG
-	if ( ! segments_are_start_sorted_and_non_overlapping( prm_segments ) ) {
-		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot make fragments from segments with misordered/overlapping invalid segments (start > stop)"));
+	if constexpr ( IS_IN_DEBUG_MODE ) {
+		if ( !segments_are_start_sorted_and_non_overlapping( prm_segments ) ) {
+			BOOST_THROW_EXCEPTION( invalid_argument_exception(
+			  "Cannot make fragments from segments with misordered/overlapping invalid segments (start > stop)" ) );
+		}
 	}
-#endif
 
 	return transform_build<seq_seg_vec>(
 		prm_segments | adjacented,

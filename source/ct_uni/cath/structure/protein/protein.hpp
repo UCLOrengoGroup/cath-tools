@@ -25,6 +25,7 @@
 #include <boost/range/sub_range.hpp>
 
 #include "cath/chopping/chopping_type_aliases.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/temp_check_offset_1.hpp"
 #include "cath/file/name_set/name_set.hpp"
@@ -97,36 +98,32 @@ namespace cath {
 	/// \brief TODOCUMENT
 	inline void protein::check_residue_index_is_valid(const size_t &prm_index ///< TODOCUMENT
 	                                                  ) const {
-#ifndef NDEBUG
-		if ( prm_index >= get_length() ) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
-				"Residue index "
-				+ boost::lexical_cast<std::string>( prm_index    )
-				+ " is out of range in protein of length "
-				+ boost::lexical_cast<std::string>( get_length() )
-			));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_index >= get_length() ) {
+				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
+					"Residue index "
+					+ boost::lexical_cast<std::string>( prm_index    )
+					+ " is out of range in protein of length "
+					+ boost::lexical_cast<std::string>( get_length() )
+				));
+			}
 		}
-#else
-		boost::ignore_unused( prm_index );
-#endif
 	}
 
 	/// \brief TODOCUMENT
 	inline void protein::check_sec_struc_is_valid(const size_t &prm_index ///< TODOCUMENT
 	                                              ) const {
-#ifndef NDEBUG
-		if (prm_index >= get_num_sec_strucs()) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
-				"Secondary structure index "
-				+ boost::lexical_cast<std::string>( prm_index            )
-				+ " is out of range in protein with "
-				+ boost::lexical_cast<std::string>( get_num_sec_strucs() )
-				+ " secondary structures"
-			));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if (prm_index >= get_num_sec_strucs()) {
+				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
+					"Secondary structure index "
+					+ boost::lexical_cast<std::string>( prm_index            )
+					+ " is out of range in protein with "
+					+ boost::lexical_cast<std::string>( get_num_sec_strucs() )
+					+ " secondary structures"
+				));
+			}
 		}
-#else
-		boost::ignore_unused( prm_index );
-#endif
 	}
 
 	/// \brief TODOCUMENT

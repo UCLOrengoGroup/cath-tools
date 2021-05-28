@@ -24,6 +24,7 @@
 #include <boost/core/ignore_unused.hpp>
 
 #include "cath/common/boost_addenda/range/back.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/resolve_hits/algo/scored_arch_proxy.hpp"
 #include "cath/resolve_hits/hit_arch.hpp"
@@ -87,11 +88,12 @@ namespace cath::rslv {
 	inline const scored_arch_proxy & best_scan_arches::get_best_scored_arch_up_to_arrow(const seq::seq_arrow &prm_arrow ///< The point at which we want to know the optimum solution
 	                                                                                    ) const {
 		const auto &index = prm_arrow.get_index();
-#ifndef NDEBUG
-		if ( index >= bests.size() ) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Index cannot go further than what has been seen"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( index >= bests.size() ) {
+				BOOST_THROW_EXCEPTION(
+				  common::invalid_argument_exception( "Index cannot go further than what has been seen" ) );
+			}
 		}
-#endif
 
 		return best_arches[ bests[ index ] ];
 	}
@@ -105,17 +107,13 @@ namespace cath::rslv {
 	inline resscr_t best_scan_arches::extend_up_to_arrow(const seq::seq_arrow &prm_arrow ///< The point up to which the previous best seen architecture is now known to still be the best
 	                                                     ) {
 		const auto &index = prm_arrow.get_index();
-#ifndef NDEBUG
-		if ( index + 1 < bests.size() ) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-				"Arrow index "
-				+ std::to_string( index )
-				+ " should be at least as high as the last seen ("
-				+ std::to_string( bests.size() - 1 )
-				+ ")"
-			));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( index + 1 < bests.size() ) {
+				BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+				  "Arrow index " + std::to_string( index ) + " should be at least as high as the last seen ("
+				  + std::to_string( bests.size() - 1 ) + ")" ) );
+			}
 		}
-#endif
 		bests.resize( index + 1, bests.back() );
 
 		return get_best_score_so_far( *this );
@@ -132,19 +130,15 @@ namespace cath::rslv {
 	inline void best_scan_arches::add_best_up_to_arrow(const seq::seq_arrow    &prm_arrow,      ///< The boundary associated with the new best
 	                                                   const scored_arch_proxy &prm_scored_arch ///< The new best architecture
 	                                                   ) {
-#ifndef NDEBUG
-		if ( prm_arrow.get_index() != bests.size() ) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-				"Arrow index "
-				+ ::std::to_string( prm_arrow.get_index() )
-				+ " doesn't go exactly one further than the last seen ("
-				+ ::std::to_string( bests.size() - 1 )
-				+ ")"
-			));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_arrow.get_index() != bests.size() ) {
+				BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+				  "Arrow index " + ::std::to_string( prm_arrow.get_index() )
+				  + " doesn't go exactly one further than the last seen (" + ::std::to_string( bests.size() - 1 ) + ")" ) );
+			}
+		} else {
+			boost::ignore_unused( prm_arrow );
 		}
-#else
-		boost::ignore_unused( prm_arrow );
-#endif
 		best_arches.push_back( prm_scored_arch );
 		bests.emplace_back( best_arches.size() - 1 );
 	}

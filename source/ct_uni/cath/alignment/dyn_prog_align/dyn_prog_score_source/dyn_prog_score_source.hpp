@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_DYN_PROG_SCORE_SOURCE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_DYN_PROG_SCORE_SOURCE_DYN_PROG_SCORE_SOURCE_HPP
 
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/temp_check_offset_1.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -65,15 +66,17 @@ namespace cath::align {
 	inline score_type dyn_prog_score_source::get_score(const size_t &prm_index_a, ///< The index of the element of interest in the first sequence
 	                                                   const size_t &prm_index_b  ///< The index of the element of interest in the second sequence
 	                                                   ) const {
-#ifndef NDEBUG
-		// Check that the two indices are valid
-		if ( prm_index_a >= get_length_a() ) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("First index is out of range when getting score for aligning with dynamic-programming"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			// Check that the two indices are valid
+			if ( prm_index_a >= get_length_a() ) {
+				BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception(
+				  "First index is out of range when getting score for aligning with dynamic-programming" ) );
+			}
+			if ( prm_index_b >= get_length_b() ) {
+				BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception(
+				  "Second index is out of range when getting score for aligning with dynamic-programming" ) );
+			}
 		}
-		if ( prm_index_b >= get_length_b() ) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Second index is out of range when getting score for aligning with dynamic-programming"));
-		}
-#endif
 
 		// Pass-through to the concrete do_get_score() to do the real work
 		return do_get_score( prm_index_a, prm_index_b );

@@ -31,6 +31,22 @@ namespace cath::common {
 #endif
 	  ;
 
+// Clang and GCC indicate the address sanitizer (ASAN) in different ways
+
+// clang-format off
+#if __SANITIZE_ADDRESS__
+	#define CATH_IS_USING_ASAN_IMPL true
+#else
+	#ifdef __clang__
+		#define CATH_IS_USING_ASAN_IMPL __has_feature( address_sanitizer )
+	#else
+		#define CATH_IS_USING_ASAN_IMPL false
+	#endif
+#endif
+	// clang-format on
+
+	inline constexpr bool CATH_IS_USING_ASAN = CATH_IS_USING_ASAN_IMPL;
+
 } // namespace cath::common
 
 #endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CONFIG_HPP

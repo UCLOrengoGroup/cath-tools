@@ -26,6 +26,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
@@ -180,52 +181,46 @@ namespace cath {
 	                                            const windowed_matrix::size_type &prm_index_a,          ///< TODOCUMENT
 	                                            const windowed_matrix::size_type &prm_index_b           ///< TODOCUMENT
 	                                            ) {
-#ifndef NDEBUG
-		check_lengths_and_window_size_are_valid(
-			prm_length_a,
-			prm_length_b,
-			prm_requested_window
-		);
-		const size_t window_start_a = get_window_start_a_for_b__offset_1(
-			prm_length_a,
-			prm_length_b,
-			prm_requested_window,
-			prm_index_b + 1
-		) - 1;
-		const size_t window_stop_a  = get_window_stop_a_for_b__offset_1(
-			prm_length_a,
-			prm_length_b,
-			prm_requested_window,
-			prm_index_b + 1
-		) - 1;
-		if (prm_index_a < window_start_a || prm_index_a > window_stop_a) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
-				"Indices "
-				+ boost::lexical_cast<std::string>(prm_index_a)
-				+ ", "
-				+ boost::lexical_cast<std::string>(prm_index_b)
-				+ " are not valid in a matrix of size "
-				+ boost::lexical_cast<std::string>(prm_length_a)
-				+ ", "
-				+ boost::lexical_cast<std::string>(prm_length_b)
-				+ " with a window width of "
-				+ boost::lexical_cast<std::string>(prm_requested_window)
-				+ " (window for a at b-index of "
-				+ boost::lexical_cast<std::string>(prm_index_b)
-				+ " is [ "
-				+ boost::lexical_cast<std::string>(window_start_a)
-				+ ", "
-				+ boost::lexical_cast<std::string>(window_stop_a)
-				+ "])"
-			));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			check_lengths_and_window_size_are_valid(
+				prm_length_a,
+				prm_length_b,
+				prm_requested_window
+			);
+			const size_t window_start_a = get_window_start_a_for_b__offset_1(
+				prm_length_a,
+				prm_length_b,
+				prm_requested_window,
+				prm_index_b + 1
+			) - 1;
+			const size_t window_stop_a  = get_window_stop_a_for_b__offset_1(
+				prm_length_a,
+				prm_length_b,
+				prm_requested_window,
+				prm_index_b + 1
+			) - 1;
+			if (prm_index_a < window_start_a || prm_index_a > window_stop_a) {
+				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
+					"Indices "
+					+ boost::lexical_cast<std::string>(prm_index_a)
+					+ ", "
+					+ boost::lexical_cast<std::string>(prm_index_b)
+					+ " are not valid in a matrix of size "
+					+ boost::lexical_cast<std::string>(prm_length_a)
+					+ ", "
+					+ boost::lexical_cast<std::string>(prm_length_b)
+					+ " with a window width of "
+					+ boost::lexical_cast<std::string>(prm_requested_window)
+					+ " (window for a at b-index of "
+					+ boost::lexical_cast<std::string>(prm_index_b)
+					+ " is [ "
+					+ boost::lexical_cast<std::string>(window_start_a)
+					+ ", "
+					+ boost::lexical_cast<std::string>(window_stop_a)
+					+ "])"
+				));
+			}
 		}
-#else
-		boost::ignore_unused( prm_length_a         );
-		boost::ignore_unused( prm_length_b         );
-		boost::ignore_unused( prm_requested_window );
-		boost::ignore_unused( prm_index_a         );
-		boost::ignore_unused( prm_index_b         );
-#endif
 	}
 
 	/// \brief TODOCUMENT
@@ -235,7 +230,6 @@ namespace cath {
 	                                                    const windowed_matrix::size_type &prm_length_b,        ///< The length of the second entry (or the number of columns in the matrix)
 	                                                    const windowed_matrix::size_type &prm_requested_window ///< The requested width (or equivalently, height) of the window
 	                                                    ) {
-//#ifndef NDEBUG
 		// Calculate the length difference and check that the window size is large enough to handle the length difference
 		const windowed_matrix::difference_type diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>( prm_length_a );
 		const windowed_matrix::difference_type diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>( prm_length_b );
@@ -252,11 +246,6 @@ namespace cath {
 				+ boost::lexical_cast<std::string>( labs( length_difference ) )
 				+ ")"));
 		}
-//#else
-//		boost::ignore_unused( prm_length_a         );
-//		boost::ignore_unused( prm_length_b         );
-//		boost::ignore_unused( prm_requested_window );
-//#endif
 	}
 
 	/// \brief Implementation function to calculate window to be added above and below the leading diagonal
@@ -386,11 +375,11 @@ namespace cath {
 	                                                 const windowed_matrix::size_type &prm_requested_window, ///< The requested width (or equivalently, height) of the window
 	                                                 const windowed_matrix::size_type &prm_index_b           ///< TODOCUMENT
 	                                                 ) {
-	#ifndef NDEBUG
-		if (prm_index_b < 1 || prm_index_b > prm_length_b) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index for B is out of range"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if (prm_index_b < 1 || prm_index_b > prm_length_b) {
+				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index for B is out of range"));
+			}
 		}
-	#endif
 		const size_size_pair window_upper_and_lower_part_widths = get_window_upper_and_lower_part_widths(
 			prm_length_a,
 			prm_length_b,
@@ -427,11 +416,11 @@ namespace cath {
 	                                                const windowed_matrix::size_type &prm_requested_window, ///< The requested width (or equivalently, height) of the window
 	                                                const windowed_matrix::size_type &prm_index_b           ///< TODOCUMENT
 	                                                ) {
-	#ifndef NDEBUG
-		if (prm_index_b < 1 || prm_index_b > prm_length_b) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index for B is out of range"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if (prm_index_b < 1 || prm_index_b > prm_length_b) {
+				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index for B is out of range"));
+			}
 		}
-	#endif
 
 		const size_size_pair window_upper_and_lower_part_widths = get_window_upper_and_lower_part_widths(
 			prm_length_a,

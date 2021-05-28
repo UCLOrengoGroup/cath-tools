@@ -21,8 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_SINGLE_STRUC_RES_PAIR_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_SINGLE_STRUC_RES_PAIR_HPP
 
-#include "cath/scan/detail/res_pair/res_pair_core.hpp"
+#include "cath/common/config.hpp"
 #include "cath/scan/detail/res_pair/functions/res_pair_core_functions.hpp"
+#include "cath/scan/detail/res_pair/res_pair_core.hpp"
 #include "cath/scan/detail/res_pair_dirn/res_pair_dirn.hpp"
 
 #include <iosfwd>
@@ -123,11 +124,12 @@ namespace cath::scan::detail {
 	/// \relates single_struc_res_pair
 	inline res_pair_dirn direction(const single_struc_res_pair &prm_res_pair ///< The single_struc_res_pair to query
 	                               ) {
-#ifndef NDEBUG
-		if ( prm_res_pair.get_from_res_idx() == prm_res_pair.get_to_res_idx() ) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("direction() cannot process res_pairs with matching to/from residues"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_res_pair.get_from_res_idx() == prm_res_pair.get_to_res_idx() ) {
+				BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+				  "direction() cannot process res_pairs with matching to/from residues" ) );
+			}
 		}
-#endif
 		return ( prm_res_pair.get_from_res_idx() < prm_res_pair.get_to_res_idx() ) ? res_pair_dirn::INCREASE
 		                                                                           : res_pair_dirn::DECREASE;
 	}

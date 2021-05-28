@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_DETAIL_PLATE_ROD_CACHE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_DETAIL_PLATE_ROD_CACHE_HPP
 
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/structure/view_cache/index/view_cache_index_entry.hpp"
@@ -92,15 +93,11 @@ namespace cath::index::detail {
 	///
 	/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 	///      else an invalid_argument_exception will be thrown
-	inline size_t get_rod_of_indices(const size_t &prm_index_a,      ///< The index in the first dimension
-	                                 const size_t &prm_index_b,      ///< The index in the second dimension
-	                                 const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
-	                                 const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
-#ifndef NDEBUG
-	                                 const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
-#else
-	                                 const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
-#endif
+	inline size_t get_rod_of_indices(const size_t &prm_index_a,                         ///< The index in the first dimension
+	                                 const size_t &prm_index_b,                         ///< The index in the second dimension
+	                                 const size_t &prm_size_a,                          ///< The size of the matrix in the first dimension
+	                                 const size_t &prm_size_b,                          ///< The size of the matrix in the second dimension
+	                                 const bool   &prm_check = common::IS_IN_DEBUG_MODE ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
 	                                 ) {
 		if ( prm_check ) {
 			detail::check_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b );
@@ -121,15 +118,11 @@ namespace cath::index::detail {
 	///
 	/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 	///      else an invalid_argument_exception will be thrown
-	inline size_t get_notch_of_indices(const size_t &prm_index_a,      ///< The index in the first dimension
-	                                   const size_t &prm_index_b,      ///< The index in the second dimension
-	                                   const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
-	                                   const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
-#ifndef NDEBUG
-	                                   const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
-#else
-	                                   const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
-#endif
+	inline size_t get_notch_of_indices(const size_t &prm_index_a,                         ///< The index in the first dimension
+	                                   const size_t &prm_index_b,                         ///< The index in the second dimension
+	                                   const size_t &prm_size_a,                          ///< The size of the matrix in the first dimension
+	                                   const size_t &prm_size_b,                          ///< The size of the matrix in the second dimension
+	                                   const bool   &prm_check = common::IS_IN_DEBUG_MODE ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 	                                   ) {
 		if ( prm_check ) {
 			detail::check_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b );
@@ -150,15 +143,11 @@ namespace cath::index::detail {
 	///
 	/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 	///      else an invalid_argument_exception will be thrown
-	inline size_size_pair get_rod_and_notch_of_indices(const size_t &prm_index_a,      ///< The index in the first dimension
-	                                                   const size_t &prm_index_b,      ///< The index in the second dimension
-	                                                   const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
-	                                                   const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
-#ifndef NDEBUG
-	                                                   const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
-#else
-	                                                   const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
-#endif
+	inline size_size_pair get_rod_and_notch_of_indices(const size_t &prm_index_a,                         ///< The index in the first dimension
+	                                                   const size_t &prm_index_b,                         ///< The index in the second dimension
+	                                                   const size_t &prm_size_a,                          ///< The size of the matrix in the first dimension
+	                                                   const size_t &prm_size_b,                          ///< The size of the matrix in the second dimension
+	                                                   const bool   &prm_check = common::IS_IN_DEBUG_MODE ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
 	                                                   ) {
 		if ( prm_check ) {
 			detail::check_indices( prm_index_a, prm_index_b, prm_size_a, prm_size_b );
@@ -182,15 +171,11 @@ namespace cath::index::detail {
 	///
 	/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 	///      else an invalid_argument_exception will be thrown
-	inline size_t get_index_a_of_rod_and_notch(const size_t &prm_rod_index,    ///< The rod of the element
-	                                           const size_t &prm_notch_index,  ///< The notch of the element
-	                                           const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
-	                                           const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
-#ifndef NDEBUG
-	                                           const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
-#else
-	                                           const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
-#endif
+	inline size_t get_index_a_of_rod_and_notch(const size_t &prm_rod_index,                       ///< The rod of the element
+	                                           const size_t &prm_notch_index,                     ///< The notch of the element
+	                                           const size_t &prm_size_a,                          ///< The size of the matrix in the first dimension
+	                                           const size_t &prm_size_b,                          ///< The size of the matrix in the second dimension
+	                                           const bool   &prm_check = common::IS_IN_DEBUG_MODE ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 	                                           ) {
 		const size_t index_a = detail::get_index_a_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
 		if ( prm_check ) {
@@ -213,15 +198,11 @@ namespace cath::index::detail {
 	///
 	/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 	///      else an invalid_argument_exception will be thrown
-	inline size_t get_index_b_of_rod_and_notch(const size_t &prm_rod_index,    ///< The rod of the element
-	                                           const size_t &prm_notch_index,  ///< The notch of the element
-	                                           const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
-	                                           const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
-#ifndef NDEBUG
-	                                           const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
-#else
-	                                           const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
-#endif
+	inline size_t get_index_b_of_rod_and_notch(const size_t &prm_rod_index,                       ///< The rod of the element
+	                                           const size_t &prm_notch_index,                     ///< The notch of the element
+	                                           const size_t &prm_size_a,                          ///< The size of the matrix in the first dimension
+	                                           const size_t &prm_size_b,                          ///< The size of the matrix in the second dimension
+	                                           const bool   &prm_check = common::IS_IN_DEBUG_MODE ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 	                                           ) {
 		const size_t index_b = detail::get_index_b_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
 		if ( prm_check ) {
@@ -244,15 +225,11 @@ namespace cath::index::detail {
 	///
 	/// \pre If prm_check is true then the values must specify a valid position in the matrix,
 	///      else an invalid_argument_exception will be thrown
-	inline size_size_pair get_indices_of_rod_and_notch(const size_t &prm_rod_index,    ///< The rod of the element
-	                                                   const size_t &prm_notch_index,  ///< The notch of the element
-	                                                   const size_t &prm_size_a,       ///< The size of the matrix in the first dimension
-	                                                   const size_t &prm_size_b,       ///< The size of the matrix in the second dimension
-#ifndef NDEBUG
-	                                                   const bool   &prm_check = true  ///< Whether to check for out-of-range errors (default: true if NDEBUG not defined)
-#else
-	                                                   const bool   &prm_check = false ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
-#endif
+	inline size_size_pair get_indices_of_rod_and_notch(const size_t &prm_rod_index,                       ///< The rod of the element
+	                                                   const size_t &prm_notch_index,                     ///< The notch of the element
+	                                                   const size_t &prm_size_a,                          ///< The size of the matrix in the first dimension
+	                                                   const size_t &prm_size_b,                          ///< The size of the matrix in the second dimension
+	                                                   const bool   &prm_check = common::IS_IN_DEBUG_MODE ///< Whether to check for out-of-range errors (default: false if NDEBUG defined)
 	                                                   ) {
 		const size_t index_a = detail::get_index_a_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );
 		const size_t index_b = detail::get_index_b_of_rod_and_notch_unchecked( prm_rod_index, prm_notch_index, prm_size_a );

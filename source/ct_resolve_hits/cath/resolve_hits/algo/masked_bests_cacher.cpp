@@ -29,6 +29,7 @@
 
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/resolve_hits/algo/discont_hits_index_by_start.hpp"
 #include "cath/resolve_hits/calc_hit_list.hpp"
@@ -77,12 +78,12 @@ res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_intersp
 		return {};
 	}
 
-#ifndef NDEBUG
 	// If in debug mode, check all hits in the mask are discontiguous, or throw otherwise
-	if ( ! all_of( prm_masks, [] (const calc_hit &x) { return is_discontig( x ); } ) ) {
-		BOOST_THROW_EXCEPTION(out_of_range_exception("Mask should only contain discontiguous domains"));
+	if constexpr ( IS_IN_DEBUG_MODE ) {
+		if ( !all_of( prm_masks, []( const calc_hit &x ) { return is_discontig( x ); } ) ) {
+			BOOST_THROW_EXCEPTION( out_of_range_exception( "Mask should only contain discontiguous domains" ) );
+		}
 	}
-#endif
 
 	// Grab the latest start point of the mask's hits' interiors
 	const seq_arrow &max_first_seg_stop = get_stop_of_first_segment( *max_element(
@@ -96,12 +97,13 @@ res_arrow_vec cath::rslv::detail::get_arrows_before_starts_of_doms_right_intersp
 		calc_hit::get_hit_last_seg_start_less()
 	));
 
-#ifndef NDEBUG
 	// If in debug mode, check that the latest gap start is strictly before the earliest gap stop, or throw otherwise
-	if ( max_first_seg_stop >= min_last_seg_start ) {
-		BOOST_THROW_EXCEPTION(out_of_range_exception("Mask's hits' interiors should have a non-empty common region"));
+	if constexpr ( IS_IN_DEBUG_MODE ) {
+		if ( max_first_seg_stop >= min_last_seg_start ) {
+			BOOST_THROW_EXCEPTION(
+			  out_of_range_exception( "Mask's hits' interiors should have a non-empty common region" ) );
+		}
 	}
-#endif
 
 	// Use the discont_hits_index_by_start to find the discontiguous domains that start
 	// in this region - ask it to return the relevant indices in its own index

@@ -67,29 +67,6 @@ using ::std::string;
 using ::std::tuple;
 using ::std::vector;
 
-// Temporarily suppress a false-positive GCC compiler warning
-//
-// It seems GCC has a problem that's currently making it
-// falsely warn about parsed_gamma and parsed_b in parse_rbf_model()
-// (two ::std::optional<double> variables) being passed to this ctor
-// when it can't confirm their values are initialised.
-//
-// That code does an explicit check they're both initialised and throws before
-// calling this ctor if not.
-//
-// This comment appears to record the fix:
-//
-//     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=47679#c32
-//
-// Since that comment's dated 2015-09-20, the fix should have
-// made it into GCC 5.3 (2015-12-04) but not GCC 5.2 (2015-07-16).
-#ifdef  __GNUC__
-#ifndef __clang__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif
-#endif
-
 /// \brief TODOCUMENT
 rbf_model::rbf_model(const double                          &prm_gamma,       ///< The SVM RBF gamma parameter
                      const double                          &prm_b,           ///< The SVM RBF b parameter
@@ -98,13 +75,6 @@ rbf_model::rbf_model(const double                          &prm_gamma,       ///
                          b               { prm_b                         },
                          support_vectors { std::move( prm_model_values ) } {
 }
-
-// Stop suppressing the GCC warning again
-#ifdef  __GNUC__
-#ifndef __clang__
-#pragma GCC diagnostic pop
-#endif
-#endif
 
 /// \brief Make the standard list of scores for use with an rbf_model from the specified ssap_and_prc
 double_octuple rbf_model::make_standard_scores(const ssap_and_prc &prm_ssap_and_prc ///< The SSAP and PRC scores from which to make the scores to be used with an rbf_model

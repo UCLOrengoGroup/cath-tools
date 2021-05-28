@@ -29,6 +29,7 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/adaptor/equal_grouped.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
+#include "cath/common/config.hpp"
 #include "cath/resolve_hits/algo/masked_bests_cacher.hpp"
 #include "cath/resolve_hits/calc_hit_list.hpp"
 #include "cath/resolve_hits/resolve/naive_greedy_hit_resolver.hpp"
@@ -73,13 +74,14 @@ static inline void sanity_check(const scored_arch_proxy &prm_scored_arch_proxy, 
                                 const calc_hit_vec      &prm_mask               ///< The mask with which to check for conflicts
                                 ) {
 	ignore_unused( prm_scored_arch_proxy, prm_hits, prm_mask );
-#ifndef NDEBUG
-	for (const auto &arch_hit_idx : prm_scored_arch_proxy) {
-		if ( hit_overlaps_with_any_of_hits( prm_hits[ arch_hit_idx ], prm_mask ) ) {
-			BOOST_THROW_EXCEPTION(invalid_argument_exception("ERROR: Cannot assume that best architecture so far does not clash with masks"));
+	if constexpr ( IS_IN_DEBUG_MODE ) {
+		for ( const auto &arch_hit_idx : prm_scored_arch_proxy ) {
+			if ( hit_overlaps_with_any_of_hits( prm_hits[ arch_hit_idx ], prm_mask ) ) {
+				BOOST_THROW_EXCEPTION( invalid_argument_exception(
+				  "ERROR: Cannot assume that best architecture so far does not clash with masks" ) );
+			}
 		}
 	}
-#endif
 }
 
 /// \brief Get the best architecture (and score) of the specified regions given

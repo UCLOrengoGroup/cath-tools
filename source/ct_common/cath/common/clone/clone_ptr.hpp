@@ -29,10 +29,7 @@
 #include <cassert>
 #include <memory>
 #include <string>
-
-#ifndef NDEBUG
 #include <typeinfo>
-#endif
 
 namespace cath::common {
 

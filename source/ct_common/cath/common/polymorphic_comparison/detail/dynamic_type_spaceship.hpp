@@ -26,6 +26,8 @@
 #include <cassert>
 #include <typeinfo>
 
+#include "cath/common/config.hpp"
+
 namespace cath::common::detail {
 
 	/// \brief Class containing public static function for performing a spaceship-style less-than
@@ -56,9 +58,10 @@ namespace cath::common::detail {
 		if ( typeid( prm_object2 ).before( typeid( prm_object1 ) ) ) {
 			return false;
 		}
-#ifndef NDEBUG
-		assert ( typeid( prm_object1 ) == typeid( prm_object2 ) ); // Neither dynamic type compares before the other but nor do they compare equal
-#endif
+		if constexpr ( IS_IN_DEBUG_MODE ) {
+			// Neither dynamic type compares before the other but nor do they compare equal
+			assert( typeid( prm_object1 ) == typeid( prm_object2 ) );
+		}
 		return boost::logic::indeterminate;
 	}
 

@@ -31,6 +31,7 @@
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/sort_uniq_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/type_aliases.hpp"
 
 using namespace ::cath;
@@ -161,12 +162,13 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &prm_old_cluste
 							continue;
 						}
 
-#ifndef NDEBUG
-						// Check the old cluster ID is consistent
-						if ( old_cluster_idx != old_dom_clust_id.cluster_id ) {
-							BOOST_THROW_EXCEPTION(out_of_range_exception("Internal inconsistency detected in old cluster IDs"));
+						if constexpr ( IS_IN_DEBUG_MODE ) {
+							// Check the old cluster ID is consistent
+							if ( old_cluster_idx != old_dom_clust_id.cluster_id ) {
+								BOOST_THROW_EXCEPTION(
+								  out_of_range_exception( "Internal inconsistency detected in old cluster IDs" ) );
+							}
 						}
-#endif
 
 						// Check that the new_dom_clust_ids isn't empty
 						if ( new_dom_clust_ids.empty() ) {

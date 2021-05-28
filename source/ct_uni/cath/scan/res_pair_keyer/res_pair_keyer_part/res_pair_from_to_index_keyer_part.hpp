@@ -21,7 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_FROM_TO_INDEX_KEYER_PART_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_FROM_TO_INDEX_KEYER_PART_HPP
 
-#include "cath/common/constexpr_ignore_unused.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/common/tuple/make_tuple_with_skips.hpp"
 #include "cath/scan/spatial_index/simple_locn_index.hpp"
@@ -71,13 +71,12 @@ namespace cath::scan {
 		[[nodiscard]] cell_index_list_t close_key_parts(const value_t         &/*prm_value*/,        ///< The value for which the key_part should be extracted
 		                                                const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 		                                                ) const {
-#ifndef NDEBUG
-			if ( prm_search_radius != 0 ) {
-				BOOST_THROW_EXCEPTION(common::not_implemented_exception("res_pair_from_to_index_keyer_part currently requires that the search radius is 0"));
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				if ( prm_search_radius != 0 ) {
+					BOOST_THROW_EXCEPTION( common::not_implemented_exception(
+					  "res_pair_from_to_index_keyer_part currently requires that the search radius is 0" ) );
+				}
 			}
-#else
-			boost::ignore_unused( prm_search_radius );
-#endif
 			return {};
 		}
 
@@ -87,15 +86,13 @@ namespace cath::scan {
 		[[nodiscard]] constexpr cell_index_t min_close_key_part(const value_t         &/*prm_value*/,    ///< The value for which the key_part should be extracted
 		                                                        const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 		                                                        ) const {
-			return
-#ifndef NDEBUG
-				( prm_search_radius != 0 )
-				? throw std::logic_error("res_pair_from_to_index_keyer_part currently requires that the search radius is 0")
-#else
-				common::constexpr_ignore_unused( prm_search_radius )
-				? cell_index_t{}
-#endif
-				: cell_index_t{};
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				if ( prm_search_radius != 0 ) {
+					BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+					  "res_pair_from_to_index_keyer_part currently requires that the search radius is 0" ) );
+				}
+			}
+			return cell_index_t{};
 		}
 
 		/// \brief Generate the maximum key part within the specified search radius for the specified value
@@ -104,15 +101,13 @@ namespace cath::scan {
 		[[nodiscard]] constexpr cell_index_t max_close_key_part(const value_t         &/*prm_value*/,    ///< The value for which the key_part should be extracted
 		                                                        const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 		                                                        ) const {
-			return
-#ifndef NDEBUG
-				( prm_search_radius != 0 )
-				? throw std::logic_error("res_pair_from_to_index_keyer_part currently requires that the search radius is 0")
-#else
-				common::constexpr_ignore_unused( prm_search_radius )
-				? cell_index_t{}
-#endif
-				: cell_index_t{};
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				if ( prm_search_radius != 0 ) {
+					BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+					  "res_pair_from_to_index_keyer_part currently requires that the search radius is 0" ) );
+				}
+			}
+			return cell_index_t{};
 		}
 	};
 

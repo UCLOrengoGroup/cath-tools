@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_MULTI_STRUC_RES_REP_PAIR_HPP
 
+#include "cath/common/config.hpp"
 #include "cath/scan/detail/res_pair/res_pair_core.hpp"
 #include "cath/scan/detail/res_pair_dirn/res_pair_dirn.hpp"
 
@@ -106,11 +107,12 @@ namespace cath::scan::detail {
 	/// \relates multi_struc_res_rep_pair
 	inline res_pair_dirn direction(const multi_struc_res_rep_pair &prm_res_pair ///< The single_struc_res_pair to query
 	                               ) {
-#ifndef NDEBUG
-		if ( prm_res_pair.get_from_res_rep_index() == prm_res_pair.get_to_res_rep_index() ) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("direction() cannot process res_pairs with matching to/from rep residues"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_res_pair.get_from_res_rep_index() == prm_res_pair.get_to_res_rep_index() ) {
+				BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+				  "direction() cannot process res_pairs with matching to/from rep residues" ) );
+			}
 		}
-#endif
 		return ( prm_res_pair.get_from_res_rep_index() < prm_res_pair.get_to_res_rep_index() ) ? res_pair_dirn::INCREASE
 		                                                                                       : res_pair_dirn::DECREASE;
 	}

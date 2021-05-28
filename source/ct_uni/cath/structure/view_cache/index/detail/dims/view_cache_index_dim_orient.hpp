@@ -193,14 +193,14 @@ namespace cath::index::detail {
 	const typename CELLS::value_type & view_cache_index_dim_orient::cell_at_value(const CELLS      &prm_cells, ///< TODOCUMENT
 	                                                                              const value_type &prm_value  ///< TODOCUMENT
 	                                                                              ) const {
-#ifndef NDEBUG
-		if ( prm_cells.empty() ) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot get entry at_value() with no populated cells"));
+		if constexpr ( IS_IN_DEBUG_MODE ) {
+			if ( prm_cells.empty() ) {
+				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot get entry at_value() with no populated cells"));
+			}
+			if ( ! has_cell_at_value( prm_cells, prm_value ) ) {
+				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Value is not found in any of the cells"));
+			}
 		}
-		if ( ! has_cell_at_value( prm_cells, prm_value ) ) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Value is not found in any of the cells"));
-		}
-#endif
 		return prm_cells[ cell_index_of_value_in_current( prm_value ) ];
 	}
 

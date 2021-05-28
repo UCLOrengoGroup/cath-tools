@@ -25,6 +25,7 @@
 
 #include "cath/common/boost_addenda/iterator/iterator_traits_type_aliases.hpp"
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/cpp17/apply.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
@@ -65,11 +66,12 @@ namespace cath::common {
 		                              const I &prm_begin_itr, ///< TODOCUMENT
 		                              const I &prm_end_itr    ///< TODOCUMENT
 		                              ) {
-#ifndef NDEBUG
-			if ( prm_begin_itr == prm_end_itr ) {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to do performed cross iteration over ranges including an empty range"));
+			if constexpr ( IS_IN_DEBUG_MODE ) {
+				if ( prm_begin_itr == prm_end_itr ) {
+					BOOST_THROW_EXCEPTION( invalid_argument_exception(
+					  "Unable to do performed cross iteration over ranges including an empty range" ) );
+				}
 			}
-#endif
 			++prm_itr;
 			const bool wrapped = ( prm_itr == prm_end_itr );
 			if ( wrapped ) {

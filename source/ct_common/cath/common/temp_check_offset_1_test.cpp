@@ -22,6 +22,7 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/test/boost_addenda/boost_check_no_throw_diag.hpp"
 
@@ -31,14 +32,13 @@ using namespace ::cath::common;
 BOOST_AUTO_TEST_SUITE(temp_check_offset_1_test_suite)
 
 /// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(zero_throws) {
-#ifndef NDEBUG
-	BOOST_CHECK_THROW        ( check_offset_1( 0 ), invalid_argument_exception );
-#else
-	BOOST_CHECK_NO_THROW_DIAG( check_offset_1( 0 ) );
-#endif
+BOOST_AUTO_TEST_CASE( zero_throws ) {
+	if constexpr ( IS_IN_DEBUG_MODE ) {
+		BOOST_CHECK_THROW( check_offset_1( 0 ), invalid_argument_exception );
+	} else {
+		BOOST_CHECK_NO_THROW_DIAG( check_offset_1( 0 ) );
+	}
 }
-
 
 /// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(one_does_not_throw) {

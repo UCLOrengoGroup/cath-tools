@@ -200,16 +200,16 @@ namespace cath::index::detail {
 	                                            const protein        &prm_protein_a, ///< The first  protein
 	                                            const protein        &prm_protein_b  ///< The second protein
 	                                            ) const {
-// #ifndef NDEBUG
-// 		// Until the class's internal protein references get removed, check that they refer to the
-// 		// same objects as the ones passed as arguments here
-// 		if ( &prm_protein_a != &( protein_a.get() ) ) {
-// 			BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("vcie_match_criteria function operator called with different protein_a from the one used to initialise the vcie_match_criteria object"));
-// 		}
-// 		if ( &prm_protein_b != &( protein_b.get() ) ) {
-// 			BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("vcie_match_criteria function operator called with different protein_b from the one used to initialise the vcie_match_criteria object"));
-// 		}
-// #endif
+		// if constexpr ( IS_IN_DEBUG_MODE ) {
+		// 	// Until the class's internal protein references get removed, check that they refer to the
+		// 	// same objects as the ones passed as arguments here
+		// 	if ( &prm_protein_a != &( protein_a.get() ) ) {
+		// 		BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("vcie_match_criteria function operator called with different protein_a from the one used to initialise the vcie_match_criteria object"));
+		// 	}
+		// 	if ( &prm_protein_b != &( protein_b.get() ) ) {
+		// 		BOOST_THROW_EXCEPTION(cath::common::out_of_range_exception("vcie_match_criteria function operator called with different protein_b from the one used to initialise the vcie_match_criteria object"));
+		// 	}
+		// }
 		if ( get_require_matching_directions() && ! same_direction( prm_indices_a, prm_indices_b ) ) {
 			return false;
 		}

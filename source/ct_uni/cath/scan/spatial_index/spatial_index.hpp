@@ -24,7 +24,7 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
-#include "cath/common/constexpr_ignore_unused.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/common/size_t_literal.hpp"
 #include "cath/file/pdb/pdb.hpp"
@@ -238,14 +238,14 @@ namespace cath::scan {
 		[[nodiscard]] constexpr cell_index_list_t close_key_parts( const value_t &        prm_value,        ///< The value for which the key_part should be extracted
 		                                                           const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 		                                                           ) const {
-			return
-#ifndef NDEBUG
-				( prm_search_radius == 0 )
-#else
-				common::constexpr_ignore_unused( prm_search_radius )
-#endif
-					? cell_index_list_t{ { prm_value } }
-					: throw std::invalid_argument("simple_locn_index_keyer_part currently requires that the search radius is 0 (ie requires matching indices)");
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				if ( prm_search_radius != 0 ) {
+					BOOST_THROW_EXCEPTION(
+					  common::invalid_argument_exception( "simple_locn_index_keyer_part currently requires that the "
+					                                      "search radius is 0 (ie requires matching indices)" ) );
+				}
+			}
+			return cell_index_list_t{ { prm_value } };
 		}
 	};
 

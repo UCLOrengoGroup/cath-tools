@@ -31,6 +31,7 @@
 #include "cath/chopping/region/region.hpp"
 #include "cath/chopping/region/regions_limiter.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/file_type_aliases.hpp"
@@ -200,13 +201,12 @@ namespace cath::file {
 	///        (with no checking for which residues are backbone-complete)
 	inline const pdb_residue & pdb::get_residue_of_index__backbone_unchecked(const size_t &prm_index ///< The index of the residue to retun
 	                                                                         ) const {
-#ifndef NDEBUG
-		if ( prm_index >= get_num_residues() ) {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception(
-				"Unable to get_residue_ca_coord_of_index__backbone_unchecked() for index >= number of residues"
-			));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_index >= get_num_residues() ) {
+				BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+				  "Unable to get_residue_ca_coord_of_index__backbone_unchecked() for index >= number of residues" ) );
+			}
 		}
-#endif
 		return pdb_residues[ prm_index ];
 	}
 

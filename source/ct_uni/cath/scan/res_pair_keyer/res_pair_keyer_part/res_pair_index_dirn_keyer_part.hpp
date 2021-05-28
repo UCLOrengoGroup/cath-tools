@@ -23,6 +23,7 @@
 
 #include <boost/core/ignore_unused.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
 #include "cath/scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
 #include "cath/scan/detail/res_pair_dirn/res_pair_dirn.hpp"
@@ -74,13 +75,13 @@ namespace cath::scan {
 		[[nodiscard]] cell_index_list_t close_key_parts(const value_t         &prm_value,        ///< The value for which the key_part should be extracted
 		                                  const search_radius_t &prm_search_radius ///< The search radius defining what is considered a match
 		                                  ) const {
-#ifndef NDEBUG
-			if ( prm_search_radius != res_pair_index_dirn_criterion::MUST_MATCH ) {
-				BOOST_THROW_EXCEPTION(common::not_implemented_exception("res_pair_index_dirn_keyer_part currently requires that the search radius is false (ie require_matching_directions)"));
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				if ( prm_search_radius != res_pair_index_dirn_criterion::MUST_MATCH ) {
+					BOOST_THROW_EXCEPTION(
+					  common::not_implemented_exception( "res_pair_index_dirn_keyer_part currently requires that the "
+					                                     "search radius is false (ie require_matching_directions)" ) );
+				}
 			}
-#else
-			boost::ignore_unused( prm_search_radius );
-#endif
 			return { { prm_value } };
 		}
 	};

@@ -23,6 +23,7 @@
 
 #include <boost/core/ignore_unused.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 #include <cstddef>
@@ -33,13 +34,14 @@ namespace cath {
 	/// This should be temporary whilst transitioning from some old offset_1 code
 	inline void check_offset_1(const size_t &prm_index_offset_1 ///< The index (offset 1)
 	                           ) {
-#ifndef NDEBUG
-		if ( prm_index_offset_1 == 0 ) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index specified with offset of 1 cannot be 0"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_index_offset_1 == 0 ) {
+				BOOST_THROW_EXCEPTION(
+				  cath::common::invalid_argument_exception( "Index specified with offset of 1 cannot be 0" ) );
+			}
+		} else {
+			boost::ignore_unused( prm_index_offset_1 );
 		}
-#else
-		boost::ignore_unused(prm_index_offset_1);
-#endif
 	}
 } // namespace cath
 

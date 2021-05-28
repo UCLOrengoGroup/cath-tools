@@ -24,6 +24,7 @@
 #include <filesystem>
 #include <numeric>
 
+#include <boost/algorithm/cxx11/is_sorted.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/range/algorithm.hpp>
@@ -43,12 +44,7 @@
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 #include "cath/structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"
 #include "cath/structure/view_cache/filter/filter_vs_full_score.hpp"
-
-/// \todo Write some decent unit tests for sorted_insert and then remove this code
-#ifndef NDEBUG
-#include <boost/algorithm/cxx11/is_sorted.hpp>
-using ::boost::algorithm::is_sorted;
-#endif
+#include "cath/common/config.hpp"
 
 using namespace ::cath::common;
 using namespace ::cath::index::filter;
@@ -56,6 +52,7 @@ using namespace ::cath::index::filter::detail;
 using namespace ::cath::score;
 
 using ::boost::accumulate;
+using ::boost::algorithm::is_sorted;
 using ::boost::distance;
 using ::boost::numeric_cast;
 using ::boost::range::lower_bound;
@@ -94,11 +91,11 @@ void filter_vs_full_score_list::add_filter_vs_full_score(const filter_vs_full_sc
 	sorted_insert( filter_vs_full_scores, prm_filter_vs_full_score, full_score_less() );
 
 	/// \todo Write some decent unit tests for sorted_insert and then remove this check
-#ifndef NDEBUG
-	if ( ! is_sorted( filter_vs_full_scores, full_score_less() ) ) {
-		BOOST_THROW_EXCEPTION(out_of_range_exception("Attempt to use sorted_insert failed"));
+	if constexpr ( IS_IN_DEBUG_MODE ) {
+		if ( !is_sorted( filter_vs_full_scores, full_score_less() ) ) {
+			BOOST_THROW_EXCEPTION( out_of_range_exception( "Attempt to use sorted_insert failed" ) );
+		}
 	}
-#endif
 }
 
 /// \brief Standard size method()

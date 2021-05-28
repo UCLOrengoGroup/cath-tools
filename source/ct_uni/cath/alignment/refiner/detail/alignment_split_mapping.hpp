@@ -23,6 +23,7 @@
 
 #include "cath/alignment/alignment.hpp"
 #include "cath/alignment/refiner/detail/alignment_split_half.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 
 #include <iostream>
@@ -93,26 +94,28 @@ namespace cath::align::detail {
 	inline size_t alignment_split_mapping::index_of_protein_index(const size_t &prm_entry, ///< TODOCUMENT
 	                                                              const size_t &prm_index  ///< TODOCUMENT
 	                                                              ) const {
-#ifndef NDEBUG
-		if ( prm_entry >= index_of_pdb_res_index.size() ) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Entry is out of range"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( prm_entry >= index_of_pdb_res_index.size() ) {
+				BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception( "Entry is out of range" ) );
+			}
 		}
-#endif
 		const size_vec &pdb_res_indices = index_of_pdb_res_index[ prm_entry ];
-#ifndef NDEBUG
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
 			if ( prm_index >= pdb_res_indices.size() ) {
-		//#warning This bit of code should be removed
+				//#warning This bit of code should be removed
 				std::cerr << "About to throw exception \"Index is out of range\"" << std::endl;
 				std::cerr << "prm_entry is : " << prm_entry << std::endl;
 				std::cerr << "prm_index is : " << prm_index << std::endl;
-				std::cerr << "There are " << index_of_pdb_res_index.size() << " entries in index_of_pdb_res_index : " << std::endl;
-				for (const size_vec &pdb_res_indices_local : index_of_pdb_res_index) {
-					std::cerr << "\t" << pdb_res_indices_local.size() << "\tentries, from\t" << pdb_res_indices_local.front() << "\tto\t" << pdb_res_indices_local.back() << std::endl;
+				std::cerr << "There are " << index_of_pdb_res_index.size()
+				          << " entries in index_of_pdb_res_index : " << std::endl;
+				for ( const size_vec &pdb_res_indices_local : index_of_pdb_res_index ) {
+					std::cerr << "\t" << pdb_res_indices_local.size() << "\tentries, from\t"
+					          << pdb_res_indices_local.front() << "\tto\t" << pdb_res_indices_local.back() << std::endl;
 				}
-		//		sleep(999999);
-				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Index is out of range"));
+				//		sleep(999999);
+				BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception( "Index is out of range" ) );
 			}
-#endif
+		}
 		return pdb_res_indices[ prm_index ];
 	}
 

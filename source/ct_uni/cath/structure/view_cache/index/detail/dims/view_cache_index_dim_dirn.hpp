@@ -24,6 +24,7 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/range/begin.hpp>
 
+#include "cath/common/config.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp"
@@ -53,11 +54,12 @@ namespace cath::index::detail {
 		                                    	const typename CELLS::value_type &,
 		                                    	typename CELLS::value_type &
 		                                    > {
-#ifndef NDEBUG
-			if ( prm_cells.empty() ) {
-				BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot get entry at_value() with no populated cells"));
+			if constexpr ( common::IS_IN_DEBUG_MODE ) {
+				if ( prm_cells.empty() ) {
+					BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception(
+					  "Cannot get entry at_value() with no populated cells" ) );
+				}
 			}
-#endif
 			return prm_increases ? prm_cells.back()
 			                     : prm_cells.front();
 		}
@@ -100,12 +102,15 @@ namespace cath::index::detail {
 		// Grab the from_index and to_index from the view_cache_index_entry
 		const size_t &from_index = prm_entry.get_from_index();
 		const size_t &to_index   = prm_entry.get_to_index();
-#ifndef NDEBUG
+
 		// If in debug mode, check that the from index and to index aren't equal
-		if ( from_index == to_index ) {
-			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception("Cannot handle view_cache_index_entry for which the from index equals the to index"));
+		if constexpr ( common::IS_IN_DEBUG_MODE ) {
+			if ( from_index == to_index ) {
+				BOOST_THROW_EXCEPTION( cath::common::invalid_argument_exception(
+				  "Cannot handle view_cache_index_entry for which the from index equals the to index" ) );
+			}
 		}
-#endif
+
 		// Return whether the to_index is greater than the from_index
 		return ( to_index > from_index );
 	}
