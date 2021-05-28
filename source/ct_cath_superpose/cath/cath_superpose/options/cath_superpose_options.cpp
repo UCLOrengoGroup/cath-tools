@@ -46,10 +46,10 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
-using namespace ::std::literals::string_literals;
 
 using ::boost::program_options::variables_map;
 using ::std::istream;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::pair;
 using ::std::string;

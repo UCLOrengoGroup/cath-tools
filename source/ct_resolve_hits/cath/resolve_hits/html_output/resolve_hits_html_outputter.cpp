@@ -53,7 +53,6 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
@@ -64,6 +63,7 @@ using ::boost::algorithm::to_lower_copy;
 using ::boost::algorithm::to_upper_copy;
 using ::boost::format;
 using ::boost::irange;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_optional;
 using ::std::make_pair;
 using ::std::nullopt;

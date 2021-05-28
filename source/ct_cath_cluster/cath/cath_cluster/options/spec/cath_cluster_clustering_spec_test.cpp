@@ -26,9 +26,9 @@
 #include "cath/test/boost_test_print_type.hpp"
 
 using namespace ::cath::clust;
-using namespace ::std::literals::string_literals;
 
 using ::boost::test_tools::per_element;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 
 namespace {

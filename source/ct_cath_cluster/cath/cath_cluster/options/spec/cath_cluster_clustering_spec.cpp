@@ -36,7 +36,6 @@
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::is_sorted;
@@ -46,6 +45,7 @@ using ::boost::lexical_cast;
 using ::boost::range::sort;
 using ::std::greater;
 using ::std::less;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 

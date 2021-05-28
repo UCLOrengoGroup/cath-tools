@@ -23,7 +23,8 @@
 #include "cath/file/name_set/name_set.hpp"
 
 using namespace ::cath::file;
-using namespace ::std::literals::string_literals;
+
+using ::std::literals::string_literals::operator""s;
 
 namespace {
 

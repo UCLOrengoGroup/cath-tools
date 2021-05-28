@@ -33,11 +33,11 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::algorithm::starts_with;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 

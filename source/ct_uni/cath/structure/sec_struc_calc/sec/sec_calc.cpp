@@ -44,7 +44,6 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::geom;
 using namespace ::cath::sec;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
@@ -53,6 +52,7 @@ using ::boost::format;
 using ::boost::integer_range;
 using ::boost::irange;
 using ::boost::sub_range;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_pair;
 using ::std::string;
 

@@ -34,13 +34,13 @@
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::string_ref;
 using ::std::find;
 using ::std::isdigit;
+using ::std::literals::string_literals::operator""s;
 using ::std::next;
 using ::std::pair;
 using ::std::prev;

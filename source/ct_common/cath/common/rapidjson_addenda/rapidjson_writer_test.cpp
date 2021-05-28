@@ -26,8 +26,8 @@
 #include <string>
 
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
+using ::std::literals::string_literals::operator""s;
 using ::std::sqrt;
 
 BOOST_AUTO_TEST_SUITE(rapidjson_writer_test_suite)

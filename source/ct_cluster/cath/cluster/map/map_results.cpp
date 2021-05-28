@@ -38,12 +38,12 @@
 #include "cath/common/file/open_fstream.hpp"
 
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::format;
 using ::std::filesystem::path;
+using ::std::literals::string_literals::operator""s;
 using ::std::ofstream;
 using ::std::string;
 

@@ -25,8 +25,8 @@
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 
 /// \brief Getter for an optional file from which links should be read

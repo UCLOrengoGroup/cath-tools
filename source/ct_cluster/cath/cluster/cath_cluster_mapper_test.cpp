@@ -48,12 +48,12 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::test;
-using namespace ::std::literals::string_literals;
 
 using ::boost::range::join;
 using ::std::filesystem::current_path;
 using ::std::filesystem::path;
 using ::std::istringstream;
+using ::std::literals::string_literals::operator""s;
 using ::std::ostringstream;
 using ::std::regex;
 using ::std::smatch;

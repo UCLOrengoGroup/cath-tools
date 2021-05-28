@@ -33,11 +33,11 @@
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
 using ::boost::numeric_cast;
 using ::boost::range::count;
 using ::std::filesystem::path;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_optional;
 using ::std::nullopt;
 

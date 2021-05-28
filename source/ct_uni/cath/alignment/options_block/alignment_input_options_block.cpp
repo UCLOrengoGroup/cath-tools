@@ -33,7 +33,6 @@ using namespace ::cath;
 using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::cath::opts;
-using namespace ::std::literals::string_literals;
 
 using ::boost::algorithm::join;
 using ::boost::numeric_cast;
@@ -42,6 +41,7 @@ using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
 using ::std::filesystem::path;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 using ::std::unique_ptr;

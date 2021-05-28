@@ -35,10 +35,10 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::std::literals::string_literals;
 
 using ::boost::test_tools::per_element;
 using ::std::filesystem::path;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_pair;
 using ::std::pair;
 using ::std::string;

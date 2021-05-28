@@ -25,9 +25,9 @@
 using namespace ::cath;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::std::literals::string_literals;
 
 using ::std::filesystem::path;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 
 /// \brief Getter for the input file from which data should be read

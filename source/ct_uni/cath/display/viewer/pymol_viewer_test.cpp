@@ -25,7 +25,7 @@
 
 using namespace ::cath;
 
-using namespace ::std::literals::string_literals;
+using ::std::literals::string_literals::operator""s;
 
 BOOST_AUTO_TEST_SUITE(pymol_viewer_test_suite)
 

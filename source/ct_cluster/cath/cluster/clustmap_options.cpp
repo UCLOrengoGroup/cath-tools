@@ -27,11 +27,11 @@
 using namespace ::cath;
 using namespace ::cath::clust;
 using namespace ::cath::opts;
-using namespace ::std::literals::string_literals;
 
 using ::boost::algorithm::join;
 using ::boost::program_options::positional_options_description;
 using ::boost::program_options::variables_map;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 using ::std::string_view;

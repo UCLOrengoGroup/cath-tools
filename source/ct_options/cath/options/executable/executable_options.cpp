@@ -42,7 +42,6 @@
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
-using namespace ::std::literals::string_literals;
 
 using ::boost::program_options::command_line_parser;
 using ::boost::program_options::options_description;
@@ -51,6 +50,7 @@ using ::boost::program_options::variables_map;
 using ::boost::trim_right_copy;
 using ::std::filesystem::path;
 using ::std::ifstream;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_optional;
 using ::std::string;
 using ::std::string_view;

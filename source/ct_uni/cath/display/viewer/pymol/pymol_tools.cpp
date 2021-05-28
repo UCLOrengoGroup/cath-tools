@@ -34,7 +34,6 @@
 
 using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::map_values;
@@ -42,6 +41,7 @@ using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::algorithm::replace_all_copy;
 using ::boost::numeric_cast;
+using ::std::literals::string_literals::operator""s;
 using ::std::string;
 using ::std::vector;
 

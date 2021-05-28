@@ -49,7 +49,6 @@
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::sec;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::filtered;
 using ::boost::algorithm::is_space;
@@ -66,6 +65,7 @@ using ::std::get;
 using ::std::getline;
 using ::std::ifstream;
 using ::std::istream;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_optional;
 using ::std::min;
 using ::std::nullopt;

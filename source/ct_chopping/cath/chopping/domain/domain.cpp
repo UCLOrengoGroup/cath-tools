@@ -35,12 +35,12 @@
 using namespace ::cath::chop;
 using namespace ::cath::common;
 using namespace ::cath;
-using namespace ::std::literals::string_literals;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::boost::range::equal;
 using ::std::equal_to;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_optional;
 using ::std::nullopt;
 using ::std::ostream;

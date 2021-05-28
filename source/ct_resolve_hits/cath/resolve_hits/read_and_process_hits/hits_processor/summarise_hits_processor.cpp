@@ -33,12 +33,12 @@
 using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv::detail;
-using namespace ::std::literals::string_literals;
 
 using ::boost::format;
 using ::boost::numeric_cast;
 using ::boost::range::max_element;
 using ::boost::range::min_element;
+using ::std::literals::string_literals::operator""s;
 using ::std::move;
 using ::std::ostream;
 using ::std::right;

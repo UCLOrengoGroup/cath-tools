@@ -50,7 +50,6 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::rslv;
-using namespace ::std::literals::string_literals;
 
 using ::boost::algorithm::contains;
 using ::boost::range::join;
@@ -59,6 +58,7 @@ using ::cath::common::temp_file;
 using ::cath::common::write_file;
 using ::std::filesystem::path;
 using ::std::istringstream;
+using ::std::literals::string_literals::operator""s;
 using ::std::ostringstream;
 using ::std::regex;
 using ::std::string;

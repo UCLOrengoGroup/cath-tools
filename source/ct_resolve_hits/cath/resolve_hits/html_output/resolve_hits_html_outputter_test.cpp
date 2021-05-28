@@ -36,7 +36,8 @@
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath::seq;
-using namespace ::std::literals::string_literals;
+
+using ::std::literals::string_literals::operator""s;
 
 namespace {
 

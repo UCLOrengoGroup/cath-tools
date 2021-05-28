@@ -27,8 +27,8 @@
 
 using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
+using ::std::literals::string_literals::operator""s;
 using ::std::string;
 
 namespace {

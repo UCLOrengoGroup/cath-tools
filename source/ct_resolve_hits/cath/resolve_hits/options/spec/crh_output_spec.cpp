@@ -36,11 +36,11 @@
 using namespace ::cath::common;
 using namespace ::cath::rslv;
 using namespace ::cath;
-using namespace ::std::literals::string_literals;
 
 using ::boost::numeric_cast;
 using ::boost::range::count;
 using ::std::filesystem::path;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 

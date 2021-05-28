@@ -33,9 +33,9 @@
 
 using namespace ::cath::common;
 using namespace ::cath::rslv::detail;
-using namespace ::std::literals::string_literals;
 
 using ::boost::algorithm::join;
+using ::std::literals::string_literals::operator""s;
 using ::std::move;
 using ::std::ostream;
 using ::std::string;

@@ -26,9 +26,9 @@
 #include <string>
 
 using namespace ::cath::common;
-using namespace ::std::literals::string_literals;
 
 using ::boost::string_ref;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_optional;
 using ::std::nullopt;
 using ::std::string;
