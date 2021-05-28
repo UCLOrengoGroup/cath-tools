@@ -21,6 +21,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include "cath/clustagglom/hierarchy.hpp"
+#include "cath/common/size_t_literal.hpp"
 
 using namespace ::cath::clust;
 using namespace ::cath::common;

@@ -90,6 +90,7 @@ using ::std::flush;
 using ::std::ifstream;
 using ::std::ios;
 using ::std::istream;
+using ::std::literals::string_literals::operator""s;
 using ::std::max;
 using ::std::min;
 using ::std::nullopt;

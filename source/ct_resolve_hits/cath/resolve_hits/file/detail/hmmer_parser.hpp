@@ -44,6 +44,8 @@
 
 namespace cath::rslv::detail {
 
+	using ::std::literals::string_literals::operator""s;
+
 	/// \brief Whether the hmm coverage is OK or has failed a required threshold
 	///
 	/// The hmm threshold is the fraction of the HMM involved in the hmmsearch hit

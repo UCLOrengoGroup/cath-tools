@@ -45,9 +45,9 @@
 
 #include <utility>
 
-using namespace ::cath::common::literals;
-
 namespace cath::scan::detail {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief TODOCUMENT
 	template <typename Key, typename Cell>

@@ -23,6 +23,7 @@
 
 #include <boost/operators.hpp>
 
+#include "cath/common/size_t_literal.hpp"
 #include "cath/resolve_hits/file/alnd_rgn.hpp"
 #include "cath/resolve_hits/hit_extras.hpp"
 #include "cath/resolve_hits/hit_score_type.hpp"
@@ -32,6 +33,8 @@
 #include <string>
 
 namespace cath::rslv {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief Represent a single full_hit (ie one domain) with a score, label and one or more segments
 	///

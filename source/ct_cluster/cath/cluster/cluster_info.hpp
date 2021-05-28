@@ -33,6 +33,8 @@
 
 namespace cath::clust {
 
+	using cath::common::literals::operator""_z;
+
 	/// \brief Store the summary information on cluster, which can be used for determining
 	///        the mapping threshold and for ordering unmapped, new clusters
 	class cluster_info final : private boost::less_than_comparable<cluster_info> {

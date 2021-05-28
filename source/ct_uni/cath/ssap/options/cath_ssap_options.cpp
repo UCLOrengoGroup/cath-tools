@@ -20,6 +20,7 @@
 #include "cath_ssap_options.hpp"
 
 #include <filesystem>
+#include <string>
 
 #include <boost/program_options.hpp>
 #include <boost/range/join.hpp>
@@ -60,6 +61,7 @@ using namespace ::cath::opts;
 using ::boost::program_options::positional_options_description;
 using ::boost::range::join;
 using ::std::filesystem::path;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 using ::std::string_view;

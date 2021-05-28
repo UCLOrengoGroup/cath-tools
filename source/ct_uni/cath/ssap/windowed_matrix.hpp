@@ -36,9 +36,9 @@
 #include <cstdlib>
 #include <iostream>
 
-using namespace ::cath::common::literals;
-
 namespace cath {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief A memory-efficient 2d matrix that's restricted to a window around the leading diagonal
 	///

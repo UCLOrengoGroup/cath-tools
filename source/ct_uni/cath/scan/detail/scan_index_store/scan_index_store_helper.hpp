@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_SCAN_INDEX_STORE_SCAN_INDEX_STORE_HELPER_HPP
 
+#include <string>
+
 #include <spdlog/spdlog.h>
 
 #include "cath/common/boost_addenda/range/utility/iterator/cross_itr.hpp"
@@ -33,9 +35,9 @@
 #include "cath/scan/scan_policy.hpp"
 #include "cath/structure/protein/protein.hpp"
 
-using namespace ::std::literals::string_literals;
-
 namespace cath::scan {
+
+	using ::std::literals::string_literals::operator""s;
 
 	/// \brief TODOCUMENT
 	enum class sod : bool {

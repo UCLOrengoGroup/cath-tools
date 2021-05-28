@@ -21,6 +21,7 @@
 #include "cath_assign_domains_options.hpp"
 
 #include <filesystem>
+#include <string>
 
 #include <boost/program_options.hpp>
 
@@ -55,6 +56,7 @@ using namespace ::cath::opts;
 using namespace ::cath::sup;
 
 using ::std::filesystem::path;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 using ::std::string_view;

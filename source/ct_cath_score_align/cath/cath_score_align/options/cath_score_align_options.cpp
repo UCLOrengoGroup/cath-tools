@@ -20,6 +20,8 @@
 
 #include "cath_score_align_options.hpp"
 
+#include <string>
+
 #include <boost/program_options.hpp>
 #include <boost/shared_array.hpp>
 
@@ -56,6 +58,7 @@ using namespace ::cath::file;
 using namespace ::cath::opts;
 
 using ::std::istream;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 using ::std::string_view;

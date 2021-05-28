@@ -20,6 +20,8 @@
 
 #include "chimera_viewer.hpp"
 
+#include <string>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/graph/adjacency_list.hpp>
@@ -67,6 +69,7 @@ using ::boost::property;
 using ::boost::string_ref;
 using ::boost::undirectedS;
 using ::boost::vecS;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_pair;
 using ::std::map;
 using ::std::min;

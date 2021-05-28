@@ -38,8 +38,6 @@
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace ::std::literals::string_literals;
-
 namespace cath {
 
 	/// \brief Type alias for boost::string_ref's const_iterator
@@ -52,6 +50,8 @@ namespace cath {
 
 namespace cath::common {
 	namespace detail {
+
+		using ::std::literals::string_literals::operator""s;
 
 		/// \brief Perform the actual spirit parse, throw if there's a problem and return the result
 		///

@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_SUPERPOSITION_FIXTURE_HPP
 #define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_SUPERPOSITION_FIXTURE_HPP
 
+#include <string>
+
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/file/pdb/pdb.hpp"
 #include "cath/file/pdb/pdb_atom.hpp"
@@ -30,9 +32,9 @@
 #include "cath/superposition/superposition_context.hpp"
 #include "cath/test/global_test_constants.hpp"
 
-using namespace ::std::literals::string_literals;
-
 namespace cath::sup {
+
+	using ::std::literals::string_literals::operator""s;
 
 	/// \brief A test fixture for superposition tests that adds some extras to global_test_constants
 	class superposition_fixture : protected global_test_constants {

@@ -40,11 +40,11 @@
 #include <cstddef>
 #include <vector>
 
-using namespace ::cath::common::literals;
-
 namespace cath::index::detail::detail {
 
 	namespace detail {
+
+		using cath::common::literals::operator""_z;
 
 		/// \brief TODOCUMENT
 		template <typename T>

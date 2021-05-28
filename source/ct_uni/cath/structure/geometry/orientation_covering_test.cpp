@@ -34,7 +34,6 @@
 
 using namespace ::cath;
 using namespace ::cath::common;
-using namespace ::cath::common::literals;
 using namespace ::cath::geom;
 
 using ::std::cerr;

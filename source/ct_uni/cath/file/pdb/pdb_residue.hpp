@@ -42,8 +42,6 @@
 #include "cath/structure/geometry/coord_linkage.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
-using namespace ::cath::common::literals;
-
 // clang-format off
 namespace cath { class amino_acid; }
 namespace cath { class residue; }
@@ -53,6 +51,8 @@ namespace cath::geom { class rotation; }
 // clang-format on
 
 namespace cath::file {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief Represent a batch of pdb_atoms all belonging to the same residue
 	///

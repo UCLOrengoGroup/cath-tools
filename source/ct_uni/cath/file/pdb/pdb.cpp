@@ -26,6 +26,7 @@
 #include <optional>
 #include <set>
 #include <sstream>
+#include <string>
 #include <string_view>
 #include <tuple>
 
@@ -89,6 +90,7 @@ using ::std::get;
 using ::std::ifstream;
 using ::std::istream;
 using ::std::istringstream;
+using ::std::literals::string_literals::operator""s;
 using ::std::make_pair;
 using ::std::make_tuple;
 using ::std::nullopt;

@@ -37,9 +37,9 @@
 #include "cath/scan/spatial_index/simple_locn_index.hpp"
 #include "cath/structure/protein/residue.hpp"
 
-using namespace ::cath::common::literals;
-
 namespace cath::scan {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief TODOCUMENT
 	inline simple_locn_index make_simple_locn_index_of_ca(const residue      &prm_res,   ///< TODOCUMENT

@@ -29,9 +29,9 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace ::cath::common::literals;
-
 namespace cath::clust {
+
+	using cath::common::literals::operator""_z;
 
 	namespace detail {
 

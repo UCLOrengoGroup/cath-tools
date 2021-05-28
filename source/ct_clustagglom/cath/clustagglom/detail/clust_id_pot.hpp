@@ -33,9 +33,9 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/type_aliases.hpp"
 
-using namespace ::cath::common::literals;
-
 namespace cath::clust::detail {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief Implements a pot of indices, ascending from 0, that supports O(1) versions of operations:
 	///         * add a new index that's one larger than any previous index

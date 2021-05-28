@@ -23,6 +23,7 @@
 #include <filesystem>
 #include <fstream>
 #include <sstream>
+#include <string>
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -66,6 +67,7 @@ using ::boost::lexical_cast;
 using ::boost::string_ref;
 using ::std::filesystem::path;
 using ::std::flush;
+using ::std::literals::string_literals::operator""s;
 using ::std::max;
 using ::std::ofstream;
 using ::std::ostream;

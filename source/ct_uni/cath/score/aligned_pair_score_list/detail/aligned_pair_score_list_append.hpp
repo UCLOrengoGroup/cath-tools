@@ -58,9 +58,9 @@ namespace cath::score { class structal_score; }
 namespace cath::score { class tm_score; }
 // clang-format on
 
-using namespace ::cath::common::literals;
-
 namespace cath::score::detail {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief TODOCUMENT
 	class score_variety_factory final {

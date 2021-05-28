@@ -36,9 +36,9 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/seq/seq_arrow.hpp"
 
-using namespace ::cath::common::literals;
-
 namespace cath::seq {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief Represent a single segment of a sequence hit (ie domain)
 	///

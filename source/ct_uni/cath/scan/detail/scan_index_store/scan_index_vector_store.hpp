@@ -32,9 +32,9 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/scan/detail/scan_type_aliases.hpp"
 
-using namespace ::cath::common::literals;
-
 namespace cath::scan::detail {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief TODOCUMENT
 	template <typename Key, typename Cell>

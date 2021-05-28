@@ -32,9 +32,9 @@
 #include "cath/score/true_pos_false_neg/classn_stat.hpp"
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 
-using namespace ::cath::common::literals;
-
 namespace cath::score {
+
+	using cath::common::literals::operator""_z;
 
 	/// \brief The standard types of classn_rate_stat that are available
 	enum class std_classn_rate_stat : char {

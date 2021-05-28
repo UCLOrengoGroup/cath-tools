@@ -20,6 +20,8 @@
 
 #include "cath_refine_align_options.hpp"
 
+#include <string>
+
 #include <boost/program_options.hpp>
 #include <boost/shared_array.hpp>
 
@@ -57,6 +59,7 @@ using namespace ::cath::opts;
 
 using ::boost::program_options::variables_map;
 using ::std::istream;
+using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 using ::std::string_view;
