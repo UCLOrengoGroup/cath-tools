@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_FOR_N_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_FOR_N_HPP
 
+#include <algorithm>
 #include <utility>
 
 namespace cath::common {

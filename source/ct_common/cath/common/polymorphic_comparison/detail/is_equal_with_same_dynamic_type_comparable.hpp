@@ -36,7 +36,7 @@ namespace cath::common::detail {
 	public:
 		/// \brief The bit that does the actual concept-checking work
 		BOOST_CONCEPT_USAGE(is_equal_with_same_dynamic_type_comparable) {
-			bool answer(value_1.equal_with_same_dynamic_type(value_2));
+			[[maybe_unused]] bool answer(value_1.equal_with_same_dynamic_type(value_2));
 		}
 
 		/// \brief Ctor just to prevent compiler complaining that value references won't ever get initialised
