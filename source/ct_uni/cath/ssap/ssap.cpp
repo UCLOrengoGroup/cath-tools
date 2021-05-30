@@ -823,11 +823,10 @@ protein cath::read_protein_data_from_ssap_options_files(const data_dirs_spec    
 		prm_protein_name
 	);
 
-	/// TODO: Come C++17, use a structured binding to make the names clearer here
-	for (const auto &filename_and_data_file : filename_of_data_file) {
-		const string file_str              = to_lower_copy( lexical_cast<string>( filename_and_data_file.first ) );
+	for ( const auto &[ data_file, filename ] : filename_of_data_file ) {
+		const string file_str              = to_lower_copy( lexical_cast<string>( data_file ) );
 		const string right_padded_file_str = string( max_data_file_str_length() - file_str.length(), ' ' );
-		::spdlog::debug( "Loading {}{} from {}", file_str, right_padded_file_str, filename_and_data_file.second.string() );
+		::spdlog::debug( "Loading {}{} from {}", file_str, right_padded_file_str, filename.string() );
 	}
 
 	// Create a protein object from the name, wolf file and sec file

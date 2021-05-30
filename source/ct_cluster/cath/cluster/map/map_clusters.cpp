@@ -127,9 +127,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &prm_old_cluste
 					const domain_cluster_ids &new_dom_clust_ids = get_domain_cluster_ids_of_seq_id( prm_new_clusters, seq_id );
 
 					/// Loop over the old entries on the sequence
-					// \TODO Come C++17 and structured bindings, use here
-					for (const domain_cluster_id &old_dom_clust_id : old_dom_cluster_ids) {
-						const seq_seg_run_opt &old_segments_opt = old_dom_clust_id.segments;
+					for ( const auto &[ old_segments_opt, old_dom_clust_id ] : old_dom_cluster_ids ) {
 
 						// If the entry doesn't have segments then...
 						if ( ! old_segments_opt ) {
@@ -151,7 +149,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &prm_old_cluste
 									<< " "
 									<< prm_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 									<< " "
-									<< get_name_of_cluster_of_id( *prm_old_clusters, old_dom_clust_id.cluster_id )
+									<< get_name_of_cluster_of_id( *prm_old_clusters, old_dom_clust_id )
 									<< " 100 "
 									<< prm_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 									<< " "
@@ -167,7 +165,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &prm_old_cluste
 
 						if constexpr ( IS_IN_DEBUG_MODE ) {
 							// Check the old cluster ID is consistent
-							if ( old_cluster_idx != old_dom_clust_id.cluster_id ) {
+							if ( old_cluster_idx != old_dom_clust_id ) {
 								BOOST_THROW_EXCEPTION(
 								  out_of_range_exception( "Internal inconsistency detected in old cluster IDs" ) );
 							}
@@ -187,8 +185,11 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &prm_old_cluste
 						}
 
 						// Make a closure for calculating the domain overlap with *old_segments_opt
+						//
+						// TODO: Come C++20, drop this silly reference (needed in C++17 to allow a structured binding to be captured by a lambda)
+						const auto &old_segments_opt_ref = old_segments_opt;
 						const auto get_dom_ol_fn = [&] (const domain_cluster_id &x) {
-							return fraction_overlap_over_longer( *old_segments_opt, *x.segments );
+							return fraction_overlap_over_longer( *old_segments_opt_ref, *x.segments );
 						};
 
 						// Find the new entry that maps to the old domain best (and its overlap)
@@ -209,7 +210,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &prm_old_cluste
 								<< prm_old_clusters->get_id_of_seq_name().get_name_of_id( seq_id )
 								<< get_segments_suffix_string( old_segments_opt )
 								<< " "
-								<< get_name_of_cluster_of_id( *prm_old_clusters, old_dom_clust_id.cluster_id )
+								<< get_name_of_cluster_of_id( *prm_old_clusters, old_dom_clust_id )
 								<< " "
 								<< ( 100.0 * best_ol )
 								<< " "

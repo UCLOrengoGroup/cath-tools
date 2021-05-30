@@ -279,17 +279,11 @@ void cath::detail::write_pymol_global_alignment(ostream                     &prm
 		}
 		prm_os << join(
 			core_res_ids_of_entry_name
-				// \TODO Come C++17 and structured bindings, use here
 				| transformed( [] (const pair<const coreness, str_res_id_vec_map> &core_data) {
-					const coreness           &is_core               = core_data.first;
-					const str_res_id_vec_map &res_ids_of_entry_name = core_data.second;
+					const auto &[ is_core, res_ids_of_entry_name ] = core_data;
 
-					// \TODO Come C++17 and structured bindings, use here
 					str_vec selection_strings;
-					for (const pair<const string, residue_id_vec> &entry_name_and_res_ids : res_ids_of_entry_name) {
-						const string         &entry_name = entry_name_and_res_ids.first;
-						const residue_id_vec &res_ids    = entry_name_and_res_ids.second;
-
+					for ( const auto &[ entry_name, res_ids ] : res_ids_of_entry_name ) {
 						const size_t num_res_ids     = res_ids.size();
 						const size_t num_res_batches = num_batches( num_res_ids, pymol_viewer::RESIDUE_BATCH_SIZE, broken_batch_tol::PERMIT );
 						for (const size_t &batch_ctr : indices( num_res_batches ) ) {

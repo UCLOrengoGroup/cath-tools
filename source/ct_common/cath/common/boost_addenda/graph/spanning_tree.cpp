@@ -129,11 +129,8 @@ size_size_doub_tpl_vec cath::common::order_spanning_tree_from_start(const size_s
 		vector<size_set> edge_indcs( prm_spanning_tree.size() + 1 );
 		const auto non_starting_edge_indices = indices( prm_spanning_tree.size() )
 			| filtered( [&] (const size_t &x) { return x != prm_index; } );
-		// \TODO Come C++17 and structured bindings, use here
 		for (const size_t &non_starting_edge_index : non_starting_edge_indices) {
-			const auto   &the_edge = prm_spanning_tree[ non_starting_edge_index ];
-			const size_t &node_a   = get<0>( the_edge );
-			const size_t &node_b   = get<1>( the_edge );
+			const auto &[ node_a, node_b, val ] = prm_spanning_tree[ non_starting_edge_index ];
 			edge_indcs[ node_a ].insert( non_starting_edge_index );
 			edge_indcs[ node_b ].insert( non_starting_edge_index );
 		}

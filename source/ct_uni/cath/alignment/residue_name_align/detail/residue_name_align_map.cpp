@@ -69,10 +69,9 @@ size_t residue_name_align_map::get_index_of_residue_name_string(const string &pr
 /// \brief Get a list of all the residue names (ie the keys)
 str_vec residue_name_align_map::get_residue_name_strings() const {
 	str_vec residue_names;
-	residue_names.reserve(index_of_residue_name.size());
-	/// TODO: Come C++17, use a structured binding to make the names clearer here
-	for (const auto &residue_name_index_pair : index_of_residue_name) {
-		residue_names.push_back(residue_name_index_pair.first);
+	residue_names.reserve( index_of_residue_name.size() );
+	for ( const auto &[ residue_name, index ] : index_of_residue_name ) {
+		residue_names.push_back( residue_name );
 	}
 	return residue_names;
 }

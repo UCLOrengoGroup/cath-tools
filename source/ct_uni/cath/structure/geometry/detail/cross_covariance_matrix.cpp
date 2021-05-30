@@ -40,11 +40,7 @@ gsl_matrix_wrp cath::geom::detail::cross_covariance_matrix(const coord_list &prm
 	gsl_matrix_wrp result{ 3, 3 };
 	gsl_matrix_set_zero( result.get_ptr() );
 
-	/// \TODO Come C++17 and structure bindings, use here
-	for (const auto &coord_pair : combine( prm_coords_a, prm_coords_b ) ) {
-		const coord &coord_a = coord_pair.get<0>();
-		const coord &coord_b = coord_pair.get<1>();
-
+	for ( const auto &[ coord_a, coord_b ] : combine( prm_coords_a, prm_coords_b ) ) {
 		gsl_matrix_wrp_increment( result, 0, 0, coord_a.get_x() * coord_b.get_x() );
 		gsl_matrix_wrp_increment( result, 0, 1, coord_a.get_x() * coord_b.get_y() );
 		gsl_matrix_wrp_increment( result, 0, 2, coord_a.get_x() * coord_b.get_z() );

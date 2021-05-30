@@ -24,6 +24,8 @@
 #include <fstream>
 #include <functional>
 
+#include <boost/range/adaptor/indexed.hpp>
+
 #include "cath/cluster/clustmap_options.hpp"
 #include "cath/cluster/detail/mapping_job.hpp"
 #include "cath/cluster/file/cluster_membership_file.hpp"
@@ -45,6 +47,7 @@ using namespace ::cath::clust::detail;
 using namespace ::cath::common;
 using namespace ::cath::opts;
 
+using ::boost::adaptors::indexed;
 using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
@@ -130,12 +133,10 @@ void cath::clust::perform_map_clusters(const clustmap_input_spec   &prm_input_sp
 		path_vec{ { prm_output_spec.get_output_to_file().value_or( out_list.get_flag() ) } }
 	);
 
-	// \TODO Come C++17 and structured bindings, use here
-	for (const size_t &job_idx : indices( jobs.size() ) ) {
-		const mapping_job &job                    = jobs[ job_idx ];
-		const auto        &job_batch_id           = job.get_batch_id();
-		const auto        &job_new_clustmemb_file = job.get_new_cluster_membership_file();
-		const auto        &job_old_clustmemb_file = job.get_old_cluster_membership_file();
+	for ( const auto &[ job_idx, job ] : jobs | indexed() ) {
+		const auto &job_batch_id           = job.get_batch_id();
+		const auto &job_new_clustmemb_file = job.get_new_cluster_membership_file();
+		const auto &job_old_clustmemb_file = job.get_old_cluster_membership_file();
 
 		id_of_str_bidirnl seq_ider;
 
