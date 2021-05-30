@@ -18,44 +18,44 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <string_view>
+
 #include <boost/test/unit_test.hpp>
-#include <boost/utility/string_ref.hpp>
 
 #include "cath/resolve_hits/file/cath_id_score_category.hpp"
 
 using namespace ::cath::rslv;
 
-using ::boost::string_ref;
-using ::std::string;
+using ::std::string_view;
 
 BOOST_AUTO_TEST_SUITE(cath_id_score_category_test_suite)
 
 BOOST_AUTO_TEST_CASE(ending_round_1_is_norm) {
-	const string id = "bob_round_1";
+	constexpr string_view id = "bob_round_1";
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, true  ), cath_id_score_category::NORMAL  );
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, false ), cath_id_score_category::NORMAL  );
 }
 
 BOOST_AUTO_TEST_CASE(ending_round_2_is_norm) {
-	const string id = "bob_round_2";
+	constexpr string_view id = "bob_round_2";
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, true  ), cath_id_score_category::NORMAL  );
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, false ), cath_id_score_category::NORMAL  );
 }
 
 BOOST_AUTO_TEST_CASE(ending_round_74_is_norm) {
-	const string id = "bob_round_74";
+	constexpr string_view id = "bob_round_74";
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, true  ), cath_id_score_category::NORMAL  );
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, false ), cath_id_score_category::NORMAL  );
 }
 
 BOOST_AUTO_TEST_CASE(id_1u5mA01_round_3_is_norm ) {
-	const string id = "1u5mA01_round_3";
+	constexpr string_view id = "1u5mA01_round_3";
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, true  ), cath_id_score_category::NORMAL  );
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, false ), cath_id_score_category::NORMAL  );
 }
 
 BOOST_AUTO_TEST_CASE(dc_example_is_dc_type) {
-	const string id = "dc_72a964d791dea7a3dd35a8bbf49385b8";
+	constexpr string_view id = "dc_72a964d791dea7a3dd35a8bbf49385b8";
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, true  ), cath_id_score_category::DC_TYPE );
 	BOOST_CHECK_EQUAL( cath_score_category_of_id( { id }, false ), cath_id_score_category::NORMAL  );
 }

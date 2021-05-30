@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_SILLITOE_CHOPPING_FORMAT_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_SILLITOE_CHOPPING_FORMAT_HPP
 
-#include <boost/utility/string_ref.hpp>
-
 #include "cath/chopping/chopping_format/chopping_format.hpp"
 
 namespace cath::chop {
@@ -34,7 +32,7 @@ namespace cath::chop {
 
 		[[nodiscard]] bool do_represents_fragments() const final;
 
-		static std::pair<boost::string_ref, str_citr> parse_to_start_of_regions( const std::string & );
+		static std::pair<::std::string_view, str_citr> parse_to_start_of_regions( const std::string & );
 
 		[[nodiscard]] domain do_parse_domain( const std::string & ) const final;
 
@@ -43,9 +41,9 @@ namespace cath::chop {
 		[[nodiscard]] std::string do_write_domain( const domain & ) const final;
 
 	  public:
-		[[nodiscard]] region parse_segment( const boost::string_ref & ) const;
+		[[nodiscard]] region parse_segment( const ::std::string_view & ) const;
 
-		[[nodiscard]] residue_name parse_residue( const boost::string_ref & ) const;
+		[[nodiscard]] residue_name parse_residue( const ::std::string_view & ) const;
 	};
 
 } // namespace cath::chop

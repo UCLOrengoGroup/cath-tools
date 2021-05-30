@@ -18,23 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <string>
+#include <string_view>
 
 #include "cath/external_info/cath_tools_cmake_dirs.hpp"
 #include "cath/external_info/cath_tools_cmake_dirs_impl.hpp"
 
-using ::std::string;
+using ::std::string_view;
 
 /// The CMAKE_BINARY_DIR (ie base build dir) of the CMake run that is building this
-///
-/// TODO: Come C++17, consider returning string_view
-string cath::cath_tools_cmake_binary_dir() {
+string_view cath::cath_tools_cmake_binary_dir() {
 	return CMAKE_BINARY_DIR;
 }
 
 /// The CMAKE_SOURCE_DIR (ie base source dir) of the CMake run that is building this
-///
-/// TODO: Come C++17, consider returning string_view
-string cath::cath_tools_cmake_source_dir() {
+string_view cath::cath_tools_cmake_source_dir() {
 	return CMAKE_SOURCE_DIR;
 }

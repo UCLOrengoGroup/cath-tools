@@ -43,9 +43,9 @@ namespace cath::rslv {
 
 	/// \brief Return whether the specified query ID should be skipped based limiting the number of queries
 	///        to the specified (optional) number given the specified record of previously seen query IDs
-	inline bool should_skip_query_by_num(const size_opt          &prm_limit_queries, ///< The (optional) number of queries to which processing should be limited
-	                                     const boost::string_ref &prm_query_id,      ///< The query ID string_ref to check
-	                                     const query_id_recorder &prm_seen_queries   ///< The query IDs that have already been seen
+	inline bool should_skip_query_by_num(const size_opt           &prm_limit_queries, ///< The (optional) number of queries to which processing should be limited
+	                                     const ::std::string_view &prm_query_id,      ///< The query ID string_view to check
+	                                     const query_id_recorder  &prm_seen_queries   ///< The query IDs that have already been seen
 	                                     ) {
 		return (
 			prm_limit_queries
@@ -72,9 +72,9 @@ namespace cath::rslv {
 	/// \brief Whether the data for the specified query ID should be skipped given the specified filter query IDs
 	///
 	/// \relates crh_filter_spec
-	inline bool should_skip_query(const crh_filter_spec   &prm_filter_spec, ///< The filter_spec to apply
-	                              const boost::string_ref &prm_query_id,    ///< The query ID string_ref to check
-	                              const query_id_recorder &prm_seen_queries ///< The query IDs that have already been seen
+	inline bool should_skip_query(const crh_filter_spec    &prm_filter_spec, ///< The filter_spec to apply
+	                              const ::std::string_view &prm_query_id,    ///< The query ID string_view to check
+	                              const query_id_recorder  &prm_seen_queries ///< The query IDs that have already been seen
 	                              ) {
 		return
 			should_skip_query_id    ( prm_filter_spec.get_filter_query_ids(), prm_query_id                   )
@@ -99,9 +99,9 @@ namespace cath::rslv {
 	///        that's required to implement the specified crh_filter_spec
 	///
 	/// \relates crh_filter_spec
-	inline void update_seen_queries_if_relevant(const crh_filter_spec   &prm_filter_spec, ///< The filter_spec to apply
-	                                            const boost::string_ref &prm_query_id,    ///< The query ID string_ref to check
-	                                            query_id_recorder       &prm_seen_queries ///< The query IDs that have already been seen
+	inline void update_seen_queries_if_relevant(const crh_filter_spec    &prm_filter_spec, ///< The filter_spec to apply
+	                                            const ::std::string_view &prm_query_id,    ///< The query ID string_view to check
+	                                            query_id_recorder        &prm_seen_queries ///< The query IDs that have already been seen
 	                                            ) {
 		if ( prm_filter_spec.get_limit_queries() ) {
 			prm_seen_queries.add_query_id( prm_query_id );
@@ -127,9 +127,9 @@ namespace cath::rslv {
 	///        and, if appropriate, update the specified list of seen query IDs
 	///
 	/// \relates crh_filter_spec
-	inline bool should_skip_query_and_update(const crh_filter_spec   &prm_filter_spec, ///< The filter_spec to apply
-	                                         const boost::string_ref &prm_query_id,    ///< The query ID string_ref to check
-	                                         query_id_recorder       &prm_seen_queries ///< The query IDs that have already been seen
+	inline bool should_skip_query_and_update(const crh_filter_spec    &prm_filter_spec, ///< The filter_spec to apply
+	                                         const ::std::string_view &prm_query_id,    ///< The query ID string_view to check
+	                                         query_id_recorder        &prm_seen_queries ///< The query IDs that have already been seen
 	                                         ) {
 		const bool should_skip = should_skip_query( prm_filter_spec, prm_query_id, prm_seen_queries );
 		if ( ! should_skip ) {

@@ -30,7 +30,7 @@
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
 
-#include "cath/common/boost_addenda/make_string_ref.hpp"
+#include "cath/common/boost_addenda/make_string_view.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
@@ -328,9 +328,9 @@ namespace cath::rslv::detail {
 					*std::prev( line_end ) != ']'
 					||
 					(
-						! boost::algorithm::starts_with( common::make_string_ref( length_pre_itr, line_end ), "[M=" )
+						! boost::algorithm::starts_with( common::make_string_view( length_pre_itr, line_end ), "[M=" )
 						&&
-						! boost::algorithm::starts_with( common::make_string_ref( length_pre_itr, line_end ), "[L=" )
+						! boost::algorithm::starts_with( common::make_string_view( length_pre_itr, line_end ), "[L=" )
 					)
 
 				) {

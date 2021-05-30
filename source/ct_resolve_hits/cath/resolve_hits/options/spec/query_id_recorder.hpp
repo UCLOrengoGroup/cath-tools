@@ -21,8 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_QUERY_ID_RECORDER_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_QUERY_ID_RECORDER_HPP
 
-#include <boost/utility/string_ref.hpp>
-
 #include "cath/common/algorithm/contains.hpp"
 
 #include <functional>
@@ -37,7 +35,7 @@ namespace cath::rslv {
 	///
 	/// Use should_skip_query_and_update() rather than calling add_query_id() directly
 	///
-	/// This uses heterogeneous lookup in an attempt to support lookup with string_ref
+	/// This uses heterogeneous lookup in an attempt to support lookup with string_view
 	/// without having to construct a string
 	class query_id_recorder final {
 	private:
@@ -50,10 +48,10 @@ namespace cath::rslv {
 		[[nodiscard]] bool   empty() const;
 
 		[[nodiscard]] bool seen_query_id( const std::string & ) const;
-		[[nodiscard]] bool seen_query_id( const boost::string_ref & ) const;
+		[[nodiscard]] bool seen_query_id( const ::std::string_view & ) const;
 
 		query_id_recorder & add_query_id(const std::string &);
-		query_id_recorder & add_query_id(const boost::string_ref &);
+		query_id_recorder & add_query_id(const ::std::string_view &);
 	};
 
 	/// \brief Return the number of query IDs
@@ -73,7 +71,7 @@ namespace cath::rslv {
 	}
 
 	/// \brief Return whether the specified query ID has already been seen
-	inline bool query_id_recorder::seen_query_id(const boost::string_ref &prm_query_id ///< The query ID for which to search
+	inline bool query_id_recorder::seen_query_id(const ::std::string_view &prm_query_id ///< The query ID for which to search
 	                                             ) const {
 		return common::contains( seen_query_ids, prm_query_id );
 	}
@@ -90,7 +88,7 @@ namespace cath::rslv {
 	/// \brief Add the specified query ID to those that have been seen
 	///
 	/// Consider using should_skip_query_and_update() rather than calling this method directly
-	inline query_id_recorder & query_id_recorder::add_query_id(const boost::string_ref &prm_query_id ///< The query ID to add
+	inline query_id_recorder & query_id_recorder::add_query_id(const ::std::string_view &prm_query_id ///< The query ID to add
 	                                                           ) {
 		// Find the place where query ID would go
 		const auto lower_bound_itr = seen_query_ids.lower_bound( prm_query_id );

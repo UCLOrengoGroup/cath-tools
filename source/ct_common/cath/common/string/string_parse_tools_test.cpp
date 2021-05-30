@@ -90,9 +90,9 @@ BOOST_AUTO_TEST_CASE(parses_unsigned_long_int) {
 	BOOST_CHECK_EQUAL( parse_ulong_from_substring ( pdb_line,   6,  5 ), 189_z   );
 }
 
-BOOST_AUTO_TEST_CASE(dumb_trim_string_ref_works) {
+BOOST_AUTO_TEST_CASE(dumb_trim_string_view_works) {
 	const string source = " billy bob  ";
-	BOOST_CHECK_EQUAL( dumb_trim_string_ref( source ), "billy bob" );
+	BOOST_CHECK_EQUAL( dumb_trim_string_view( source ), "billy bob" );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

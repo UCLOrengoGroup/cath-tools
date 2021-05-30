@@ -25,30 +25,24 @@
 #include <unordered_map>
 
 #include <boost/functional/hash.hpp>
-#include <boost/utility/string_ref.hpp>
 
 #include "cath/common/optional/make_optional_if.hpp"
 
 namespace cath::common {
 	namespace detail {
 
-		/// \brief Hasher for boost::string_ref
+		/// \brief Hasher for ::std::string_view
 		struct string_view_hasher final {
-			/// \brief The function operator that hashes the character range referred to by the string_ref
-			size_t operator()(const boost::string_ref &prm_value ///< The string_ref value to hash
+			/// \brief The function operator that hashes the character range referred to by the string_view
+			size_t operator()(const ::std::string_view &prm_value ///< The string_view value to hash
 			                  ) const {
 				return boost::hash_range( prm_value.begin(), prm_value.end() );
 			}
 		};
+
 	} // namespace detail
 
-	/// \brief Map boost:string_ref to numeric IDs that count incrementally from 0
-	///
-	/// Note: this is an unordered_map of boost::string_ref / std::string_view not
-	/// of reference_wrapper<string>.
-	///
-	/// It's called id_of_string_view to differentiate it from id_of_string_ref
-	/// and because boost::string_ref will migrate to std::string_view
+	/// \brief Map string_view to numeric IDs that count incrementally from 0
 	///
 	/// This class isn't thread-safe
 	///
@@ -64,7 +58,7 @@ namespace cath::common {
 		using id_type = size_t;
 
 		/// \brief Type alias for the map type
-		using map_type = std::unordered_map<boost::string_ref, id_type, detail::string_view_hasher>;
+		using map_type = std::unordered_map<::std::string_view, id_type, detail::string_view_hasher>;
 
 		/// \brief The unordered_map that stores the string_view-to-id lookup map
 		map_type the_map;
@@ -78,13 +72,13 @@ namespace cath::common {
 		/// \brief Insert a new string and return its new ID
 		///
 		/// Can be used if the name already exists
-		inline const std::pair<const boost::string_ref, id_type> & emplace(const boost::string_ref &prm_string ///< The string to insert
-		                                                                   ) {
+		inline const std::pair<const ::std::string_view, id_type> & emplace(const ::std::string_view &prm_string ///< The string to insert
+		                                                                    ) {
 			return *( the_map.emplace( prm_string, the_map.size() ).first );
 		}
 
 		/// \brief Get the ID corresponding to the specified string
-		inline ::std::optional<id_type> operator[](const boost::string_ref &prm_string ///< The string to lookup
+		inline ::std::optional<id_type> operator[](const ::std::string_view &prm_string ///< The string to lookup
 		                                           ) const {
 			const auto find_itr = the_map.find( prm_string );
 			return if_then_optional(
@@ -93,8 +87,8 @@ namespace cath::common {
 			);
 		}
 
-		/// \brief Return whether this contains the specified boost::string_ref
-		inline bool contains(const boost::string_ref &prm_string ///< The string to lookup
+		/// \brief Return whether this contains the specified ::std::string_view
+		inline bool contains(const ::std::string_view &prm_string ///< The string to lookup
 		                     ) const {
 			return ( the_map.find( prm_string ) != ::std::cend( the_map ) );
 		}

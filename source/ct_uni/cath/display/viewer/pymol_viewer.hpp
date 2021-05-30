@@ -68,7 +68,7 @@ namespace cath {
 		void do_write_alignment_extras(std::ostream &,
 		                               const sup::superposition_context &) const final;
 		void do_write_end(std::ostream &,
-		                  const boost::string_ref &) const final;
+		                  const ::std::string_view &) const final;
 
 	public:
 		/// \brief TODOCUMENT

@@ -21,13 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_EXTERNAL_INFO_CATH_EXTERNAL_INFO_CATH_TOOLS_CMAKE_DIRS_HPP
 #define _CATH_TOOLS_SOURCE_CT_EXTERNAL_INFO_CATH_EXTERNAL_INFO_CATH_TOOLS_CMAKE_DIRS_HPP
 
-#include <string>
+#include <string_view>
 
 namespace cath {
 
-	::std::string cath_tools_cmake_binary_dir();
+	::std::string_view cath_tools_cmake_binary_dir();
 
-	::std::string cath_tools_cmake_source_dir();
+	::std::string_view cath_tools_cmake_source_dir();
 
 } // namespace cath
 

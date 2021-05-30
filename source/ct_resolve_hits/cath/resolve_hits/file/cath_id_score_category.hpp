@@ -21,7 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_CATH_ID_SCORE_CATEGORY_HPP
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_FILE_CATH_ID_SCORE_CATEGORY_HPP
 
-#include <boost/utility/string_ref_fwd.hpp>
+#include <iosfwd>
+#include <string>
+#include <string_view>
 
 namespace cath::rslv {
 
@@ -31,7 +33,7 @@ namespace cath::rslv {
 		DC_TYPE ///< An ID like dc_c869189e57e572c71376c2f3dfe7dc9c that is handled differently
 	};
 
-	cath_id_score_category cath_score_category_of_id(const boost::string_ref &,
+	cath_id_score_category cath_score_category_of_id(const ::std::string_view &,
 	                                                 const bool &);
 
 	std::string to_string(const cath_id_score_category &);

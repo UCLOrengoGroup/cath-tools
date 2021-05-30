@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_DOMAIN_CLUSTER_IDS_BY_SEQ_HPP
 
 #include <boost/range/adaptor/transformed.hpp>
-#include <boost/utility/string_ref.hpp>
 
 #include "cath/cluster/domain_cluster_ids.hpp"
 #include "cath/common/container/id_of_str_bidirnl.hpp"
@@ -49,7 +48,7 @@ namespace cath::clust {
 		///        because this stores a reference
 		domain_cluster_ids_by_seq(const common::id_of_str_bidirnl &&) = delete;
 
-		clust_entry_problem add(const boost::string_ref &,
+		clust_entry_problem add(const ::std::string_view &,
 		                        domain_cluster_id);
 
 		[[nodiscard]] bool   empty() const;
@@ -72,10 +71,10 @@ namespace cath::clust {
 	///       and can avoid making a new string when it doesn't need to store.
 	///       That said, there's probably less reuse of IDs than for clusters
 	///       so it may make little difference.
-	inline clust_entry_problem domain_cluster_ids_by_seq::add(const boost::string_ref &prm_seq_id,           ///< The name of the sequence under which to store the domain_cluster_id
-	                                                          domain_cluster_id        prm_domain_cluster_id ///< The domain_cluster_id to store
+	inline clust_entry_problem domain_cluster_ids_by_seq::add(const ::std::string_view &prm_seq_id,           ///< The name of the sequence under which to store the domain_cluster_id
+	                                                          domain_cluster_id         prm_domain_cluster_id ///< The domain_cluster_id to store
 	                                                          ) {
-		const auto &id = id_of_seq_name.get().add_name( prm_seq_id.to_string() );
+		const auto &id = id_of_seq_name.get().add_name( ::std::string( prm_seq_id ) );
 		if ( id >= domain_cluster_ids_of_seq_id.size() ) {
 			domain_cluster_ids_of_seq_id.resize( id + 1 );
 		}

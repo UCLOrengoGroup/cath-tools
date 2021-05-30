@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <string_view>
 
 #include "cath/clustagglom/link.hpp"
 #include "cath/clustagglom/links.hpp"
@@ -37,6 +38,7 @@ using ::std::ifstream;
 using ::std::istream;
 using ::std::istringstream;
 using ::std::string;
+using ::std::string_view;
 
 /// \brief Parse the cluster dissimilarities/strengths (ie links) from the specified istream
 links cath::clust::parse_dissimilarities(istream           &prm_input,     ///< The istream from which the links should be read
@@ -51,11 +53,11 @@ links cath::clust::parse_dissimilarities(istream           &prm_input,     ///< 
 	static constexpr size_t ID2_OFFSET     = 1;
 
 	while ( getline( prm_input, line ) ) {
-		const auto     id1_itrs   = find_field_itrs( line, ID1_OFFSET                                      );
-		const auto     id2_itrs   = find_field_itrs( line, ID2_OFFSET,     1 + ID1_OFFSET, id1_itrs.second );
+		const auto     id1_itrs   = find_field_itrs( line, ID1_OFFSET );
+		const auto     id2_itrs   = find_field_itrs( line, ID2_OFFSET, 1 + ID1_OFFSET, id1_itrs.second );
 		const auto     value_itrs = find_field_itrs( line, prm_column_idx, 1 + ID2_OFFSET, id2_itrs.second );
-		const auto     id1        = make_string_ref( id1_itrs.first, id1_itrs.second );
-		const auto     id2        = make_string_ref( id2_itrs.first, id2_itrs.second );
+		const auto     id1        = make_string_view( id1_itrs.first, id1_itrs.second );
+		const auto     id2        = make_string_view( id2_itrs.first, id2_itrs.second );
 		const strength seq_id     = std::is_same_v<strength, float>
 		                              ? parse_float_from_field( value_itrs.first, value_itrs.second )
 		                              : static_cast<strength>( parse_double_from_field( value_itrs.first, value_itrs.second ) );

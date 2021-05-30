@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_OPTIONS_SPEC_CRH_FILTER_SPEC_HPP
 
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/utility/string_ref.hpp>
 
 #include "cath/common/algorithm/contains.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
@@ -118,8 +117,8 @@ namespace cath::rslv {
 	}
 
 	/// \brief Whether the data for the specified query ID should be specified given the specified filter query IDs
-	inline bool should_skip_query_id(const str_vec           &prm_filter_query_ids, ///< The list of query IDs to filter (or allow everything if this is empty)
-	                                 const boost::string_ref &prm_query_id          ///< The query ID string_ref to check
+	inline bool should_skip_query_id(const str_vec            &prm_filter_query_ids, ///< The list of query IDs to filter (or allow everything if this is empty)
+	                                 const ::std::string_view &prm_query_id          ///< The query ID string_view to check
 	                                 ) {
 		// If there are filter query IDs, then if this amongst them, skip this entry
 		return (

@@ -1733,7 +1733,6 @@ set(
 set(
 	TESTSOURCES_CT_COMMON_CATH_COMMON_CONTAINER
 		ct_common/cath/common/container/id_of_str_bidirnl_test.cpp
-		ct_common/cath/common/container/id_of_string_ref_test.cpp
 		ct_common/cath/common/container/id_of_string_test.cpp
 		ct_common/cath/common/container/id_of_string_view_test.cpp
 )

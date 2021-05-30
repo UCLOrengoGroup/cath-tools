@@ -126,18 +126,28 @@ string misc_help_version_options_block::get_help_string(const options_descriptio
 string misc_help_version_options_block::get_version_string(const string &prm_program_name,       ///< The name of the program
                                                            const string &prm_program_description ///< A description of the program
                                                            ) {
-	return "============\n"
-		+ prm_program_name + " " + cath_tools_git_version() + " [" + cath_tools_git_date() + "]\n"
-		+ "============\n"
-		+ "\n"
-		+ prm_program_description + "\n"
-		+ "\n"
-		+ "Build\n"
-		+ "-----\n"
-		+ "   "       + __DATE__ + " " + __TIME__  + "\n"
-		+ "   "       + BOOST_COMPILER
-		+ ( CATH_IS_USING_ASAN ? " [ASAN]" : "" )
-		                                           + "\n"
-		+ "   "       + BOOST_STDLIB               + "\n"
-		+ "   Boost " + BOOST_LIB_VERSION          + "\n";
+	return ::fmt::format(
+	  R"(============
+{} {} [{}]
+============
+
+{}
+
+Build
+-----
+   {} {}
+   {}{}
+   {}
+   Boost {}
+)",
+	  prm_program_name,
+	  cath_tools_git_version(),
+	  cath_tools_git_date(),
+	  prm_program_description,
+	  __DATE__,
+	  __TIME__,
+	  BOOST_COMPILER,
+	  ( CATH_IS_USING_ASAN ? " [ASAN]" : "" ),
+	  BOOST_STDLIB,
+	  BOOST_LIB_VERSION );
 }

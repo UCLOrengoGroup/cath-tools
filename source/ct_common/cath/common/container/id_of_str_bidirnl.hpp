@@ -58,12 +58,12 @@ namespace cath::common {
 
 		/// \brief Default ctor
 		id_of_str_bidirnl() = default;
-		inline size_t add_name(const boost::string_ref &);
+		inline size_t add_name(const ::std::string_view &);
 		inline size_t add_name(const std::string &);
 		inline size_t add_name(std::string &&);
 		inline const std::string & get_name_of_id(const size_t &) const;
 		inline size_t get_id_of_name(const std::string &) const;
-		inline size_t get_id_of_name(const boost::string_ref &) const;
+		inline size_t get_id_of_name(const ::std::string_view &) const;
 		inline bool empty() const;
 		inline size_t size() const;
 		inline id_of_str_bidirnl & clear();
@@ -85,13 +85,13 @@ namespace cath::common {
 	/// \brief Add the specified name and return its ID
 	///
 	/// Can be used if the name already exists
-	inline size_t id_of_str_bidirnl::add_name(const boost::string_ref &prm_name ///< The name to add
+	inline size_t id_of_str_bidirnl::add_name(const ::std::string_view &prm_name ///< The name to add
 	                                          ) {
 		if ( ids_by_name.contains( prm_name ) ) {
 			return *ids_by_name[ prm_name ];
 		}
-		names_by_id.push_back( prm_name.to_string() );
-		const size_t &id = ids_by_name.emplace( boost::string_ref{ names_by_id.back() } ).second;
+		names_by_id.push_back( ::std::string( prm_name ) );
+		const size_t &id = ids_by_name.emplace( ::std::string_view{ names_by_id.back() } ).second;
 		if ( id + 1 != names_by_id.size() ) {
 			BOOST_THROW_EXCEPTION(out_of_range_exception(
 				"id_of_str_bidirnl tried to add a name with ID "
@@ -109,7 +109,7 @@ namespace cath::common {
 	/// Can be used if the name already exists
 	inline size_t id_of_str_bidirnl::add_name(const std::string &prm_name ///< The name to add
 	                                          ) {
-		return add_name( boost::string_ref{ prm_name } );
+		return add_name( ::std::string_view{ prm_name } );
 	}
 
 	/// \brief Add the specified name and return its ID
@@ -121,7 +121,7 @@ namespace cath::common {
 			return *ids_by_name[ prm_name ];
 		}
 		names_by_id.push_back( std::move( prm_name ) );
-		const size_t &id = ids_by_name.emplace( boost::string_ref{ names_by_id.back() } ).second;
+		const size_t &id = ids_by_name.emplace( ::std::string_view{ names_by_id.back() } ).second;
 		if ( id + 1 != names_by_id.size() ) {
 			BOOST_THROW_EXCEPTION(out_of_range_exception(
 				"id_of_str_bidirnl tried to add a name with ID "
@@ -144,7 +144,7 @@ namespace cath::common {
 	}
 
 	/// \brief Get the ID associated with the specified name
-	inline auto id_of_str_bidirnl::get_id_of_name(const boost::string_ref &prm_name ///< The name to query
+	inline auto id_of_str_bidirnl::get_id_of_name(const ::std::string_view &prm_name ///< The name to query
 	                                              ) const -> size_t {
 		return *ids_by_name[ prm_name ];
 	}

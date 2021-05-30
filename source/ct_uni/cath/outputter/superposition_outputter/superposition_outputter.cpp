@@ -29,7 +29,6 @@ using namespace ::cath::common;
 using namespace ::cath::opts;
 using namespace ::cath::sup;
 
-using ::boost::string_ref;
 using ::std::ostream;
 using ::std::unique_ptr;
 

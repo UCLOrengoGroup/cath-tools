@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_INFO_HPP
 
 #include <boost/operators.hpp>
-#include <boost/utility/string_ref.hpp>
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
@@ -55,7 +54,7 @@ namespace cath::clust {
 		/// \brief Default ctor
 		cluster_info() = default;
 
-		cluster_info & add_entry(const boost::string_ref &,
+		cluster_info & add_entry(const ::std::string_view &,
 		                         const seq::seq_seg_run_opt &);
 
 		[[nodiscard]] const size_t &     get_size() const;
@@ -68,11 +67,11 @@ namespace cath::clust {
 	               const cluster_info &);
 
 	/// \brief Update the cluster to account for a new entry with the specified name and (optional) segments
-	inline cluster_info & cluster_info::add_entry(const boost::string_ref    &prm_name,    ///< The name of the new entry
+	inline cluster_info & cluster_info::add_entry(const ::std::string_view   &prm_name,    ///< The name of the new entry
 	                                              const seq::seq_seg_run_opt &prm_segments ///< The (optional) segments of the new entry
 	                                              ) {
 		if ( size == 0 ) {
-			lowest_domain_id = prm_name.to_string();
+			lowest_domain_id = ::std::string( prm_name );
 			if ( prm_segments ) {
 				total_sqrt_length     = 0.0;
 				total_mid_point_index = 0_z;
@@ -85,7 +84,7 @@ namespace cath::clust {
 		}
 		++size;
 		if ( prm_name < lowest_domain_id ) {
-			lowest_domain_id = prm_name.to_string();
+			lowest_domain_id = ::std::string( prm_name );
 		}
 		if ( prm_segments ) {
 			*total_sqrt_length     += sqrt( static_cast<double>( get_total_length( *prm_segments ) ) );

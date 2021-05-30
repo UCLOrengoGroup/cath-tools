@@ -26,8 +26,7 @@
 #include <optional>
 #include <sstream>
 #include <string>
-
-#include <boost/utility/string_ref.hpp>
+#include <string_view>
 
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
@@ -47,7 +46,6 @@ using namespace ::cath::clust;
 using namespace ::cath::common;
 using namespace ::cath::seq;
 
-using ::boost::string_ref;
 using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::istream;
@@ -56,6 +54,7 @@ using ::std::make_optional;
 using ::std::nullopt;
 using ::std::ostream;
 using ::std::string;
+using ::std::string_view;
 
 static constexpr size_t CLUSTER_ID_OFFSET = 0;
 static constexpr size_t DOMAIN_ID_OFFSET  = 1;
@@ -63,8 +62,8 @@ static constexpr size_t DOMAIN_ID_OFFSET  = 1;
 /// \brief Print any warnings to the specified (optional) ostream arising from the interaction (if any) of the new entry
 static inline void warn_if_necessary(const clust_entry_problem &prm_problem,                    ///< The type of problem encountered when reading the new entry
                                      const ostream_ref_opt     &prm_ostream_ref_opt,            ///< An optional ostream ref to which warnings about parsing (eg duplicates/clashes) can be written
-                                     const string_ref          &prm_cluster_name,               ///< A string_ref to the name of the cluster
-                                     const string_ref          &prm_entry_name,                 ///< A string_ref to the name of the entry
+                                     const string_view         &prm_cluster_name,               ///< A string_view to the name of the cluster
+                                     const string_view         &prm_entry_name,                 ///< A string_view to the name of the entry
                                      bool                      &prm_warned_duplicate,           ///< Whether a warning about duplicates has already been given
                                      const str_opt             &prm_extra_info = ::std::nullopt ///< An optional string containing extra information about the problem (if any)
                                      ) {
@@ -141,13 +140,13 @@ old_cluster_data cath::clust::parse_old_membership(istream               &prm_is
 		}
 
 		/// \TODO Check there are no more fields (but allow whitespace)
-		const auto         slash_index          = make_string_ref( domain_id_itrs ).find_last_of( '/' );
-		const bool         has_segs             = ( slash_index != string_ref::npos );
+		const auto         slash_index          = make_string_view( domain_id_itrs ).find_last_of( '/' );
+		const bool         has_segs             = ( slash_index != string_view::npos );
 		const auto         pre_split_point_itr  = has_segs ? next( domain_id_itrs.first, debug_numeric_cast<ptrdiff_t>( slash_index     ) )
 		                                                   : domain_id_itrs.second;
-		const auto cluster_name  = make_string_ref( cluster_id_itrs.first, cluster_id_itrs.second );
-		const auto sequence_name = make_string_ref( domain_id_itrs.first,  pre_split_point_itr    );
-		const auto entry_name    = make_string_ref( domain_id_itrs.first,  domain_id_itrs.second  );
+		const auto cluster_name  = make_string_view( cluster_id_itrs.first, cluster_id_itrs.second );
+		const auto sequence_name = make_string_view( domain_id_itrs.first,  pre_split_point_itr    );
+		const auto entry_name    = make_string_view( domain_id_itrs.first,  domain_id_itrs.second  );
 		try {
 			const auto &interaction  = result.add_entry(
 				cluster_name,
@@ -228,13 +227,13 @@ new_cluster_data cath::clust::parse_new_membership(istream               &prm_is
 			));
 		}
 
-		const auto         slash_index          = make_string_ref( domain_id_itrs ).find_last_of( '/' );
-		const bool         has_segs             = ( slash_index != string_ref::npos );
+		const auto         slash_index          = make_string_view( domain_id_itrs ).find_last_of( '/' );
+		const bool         has_segs             = ( slash_index != string_view::npos );
 		const auto         pre_split_point_itr  = has_segs ? next( domain_id_itrs.first, debug_numeric_cast<ptrdiff_t>( slash_index     ) )
 		                                                   : domain_id_itrs.second;
-		const auto cluster_name  = make_string_ref( cluster_id_itrs.first, cluster_id_itrs.second );
-		const auto sequence_name = make_string_ref( domain_id_itrs.first,  pre_split_point_itr    );
-		const auto entry_name    = make_string_ref( domain_id_itrs.first,  domain_id_itrs.second  );
+		const auto cluster_name  = make_string_view( cluster_id_itrs.first, cluster_id_itrs.second );
+		const auto sequence_name = make_string_view( domain_id_itrs.first,  pre_split_point_itr    );
+		const auto entry_name    = make_string_view( domain_id_itrs.first,  domain_id_itrs.second  );
 		try {
 			const auto problem   = result.add_entry(
 				cluster_name,

@@ -44,7 +44,7 @@
 
 #include "cath/common/algorithm/remove_itrs_from_range.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
-#include "cath/common/boost_addenda/make_string_ref.hpp"
+#include "cath/common/boost_addenda/make_string_view.hpp"
 #include "cath/common/boost_addenda/range/adaptor/adjacented.hpp"
 #include "cath/common/boost_addenda/range/back.hpp"
 #include "cath/common/boost_addenda/range/front.hpp"
@@ -79,7 +79,6 @@ using ::boost::spirit::qi::double_;
 using ::boost::spirit::qi::omit;
 using ::boost::spirit::qi::parse;
 using ::boost::spirit::uint_;
-using ::boost::string_ref;
 using ::std::cbegin;
 using ::std::distance;
 using ::std::filesystem::path;
@@ -313,7 +312,7 @@ void cath::rslv::read_hit_list_from_istream(read_and_process_mgr &prm_read_and_p
 		const auto line_end_itr          = cend   ( line );
 
 		const auto end_of_query_id_itr   = find_space     ( line_begin_itr,        line_end_itr        );
-		const auto query_id_str_ref      = make_string_ref( line_begin_itr,        end_of_query_id_itr );
+		const auto query_id_str_ref      = make_string_view( line_begin_itr,        end_of_query_id_itr );
 
 		// If this query ID should be skipped, then skip this entry.
 		// The function also updates seen_query_ids if not skipping this query ID

@@ -18,20 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <string>
+#include <string_view>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/common/container/id_of_str_bidirnl.hpp"
 #include "cath/test/boost_test_print_type.hpp"
 
-#include <string>
-
 using namespace ::cath::common;
 
-using ::boost::string_ref;
 using ::std::literals::string_literals::operator""s;
 using ::std::make_optional;
 using ::std::nullopt;
 using ::std::string;
+using ::std::string_view;
 
 BOOST_AUTO_TEST_SUITE(id_of_str_bidirnl_test_suite)
 
@@ -78,25 +79,25 @@ BOOST_AUTO_TEST_CASE(from_string_views) {
 	BOOST_CHECK      (   the_ider.empty()   );
 	BOOST_CHECK_EQUAL(   the_ider.size(), 0 );
 
-	BOOST_CHECK_EQUAL(   the_ider.add_name      ( string_ref{ motorcycle_str } ), 0                            );
-	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 0                            ), string_ref{ motorcycle_str } );
-	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_ref{ motorcycle_str } ), 0                            );
+	BOOST_CHECK_EQUAL(   the_ider.add_name      ( string_view{ motorcycle_str } ), 0                            );
+	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 0                            ), string_view{ motorcycle_str } );
+	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_view{ motorcycle_str } ), 0                            );
 	BOOST_CHECK      ( ! the_ider.empty()   );
 	BOOST_CHECK_EQUAL(   the_ider.size(), 1 );
 
-	BOOST_CHECK_EQUAL(   the_ider.add_name      ( string_ref{ emptiness_str  } ), 1                            );
-	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 0                            ), string_ref{ motorcycle_str } );
-	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_ref{ motorcycle_str } ), 0                            );
-	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 1                            ), string_ref{ emptiness_str  } );
-	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_ref{ emptiness_str  } ), 1                            );
+	BOOST_CHECK_EQUAL(   the_ider.add_name      ( string_view{ emptiness_str  } ), 1                            );
+	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 0                            ), string_view{ motorcycle_str } );
+	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_view{ motorcycle_str } ), 0                            );
+	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 1                            ), string_view{ emptiness_str  } );
+	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_view{ emptiness_str  } ), 1                            );
 	BOOST_CHECK      ( ! the_ider.empty()   );
 	BOOST_CHECK_EQUAL(   the_ider.size(), 2 );
 
-	BOOST_CHECK_EQUAL(   the_ider.add_name      ( string_ref{ motorcycle_str } ), 0                            );
-	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 0                            ), string_ref{ motorcycle_str } );
-	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_ref{ motorcycle_str } ), 0                            );
-	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 1                            ), string_ref{ emptiness_str  } );
-	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_ref{ emptiness_str  } ), 1                            );
+	BOOST_CHECK_EQUAL(   the_ider.add_name      ( string_view{ motorcycle_str } ), 0                            );
+	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 0                            ), string_view{ motorcycle_str } );
+	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_view{ motorcycle_str } ), 0                            );
+	BOOST_CHECK_EQUAL(   the_ider.get_name_of_id( 1                            ), string_view{ emptiness_str  } );
+	BOOST_CHECK_EQUAL(   the_ider.get_id_of_name( string_view{ emptiness_str  } ), 1                            );
 	BOOST_CHECK      ( ! the_ider.empty()   );
 	BOOST_CHECK_EQUAL(   the_ider.size(), 2 );
 

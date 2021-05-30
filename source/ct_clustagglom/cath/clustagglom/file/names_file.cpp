@@ -24,6 +24,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <string_view>
 
 #include "cath/common/container/id_of_str_bidirnl.hpp"
 #include "cath/common/file/open_fstream.hpp"
@@ -39,6 +40,7 @@ using ::std::istream;
 using ::std::istringstream;
 using ::std::pair;
 using ::std::string;
+using ::std::string_view;
 
 /// \brief Parse the cluster item names from the specified istream, populating the specified name_ider in the process
 doub_vec cath::clust::parse_names(istream           &prm_input,    ///< The istream from which to parse the names
@@ -51,9 +53,9 @@ doub_vec cath::clust::parse_names(istream           &prm_input,    ///< The istr
 	static constexpr size_t PROP_OFFSET = 1;
 
 	while ( getline( prm_input, line ) ) {
-		const auto   id_itrs   = find_field_itrs( line, ID_OFFSET                                  );
+		const auto   id_itrs   = find_field_itrs( line, ID_OFFSET );
 		const auto   prop_itrs = find_field_itrs( line, PROP_OFFSET, 1 + ID_OFFSET, id_itrs.second );
-		const auto   id        = make_string_ref        ( id_itrs.first,   id_itrs.second   );
+		const auto   id        = make_string_view( id_itrs.first, id_itrs.second );
 		const auto   props     = parse_double_from_field( prop_itrs.first, prop_itrs.second );
 		const size_t id_id     = prm_name_ider.add_name( id );
 		if ( result.size() < id_id + 1 ) {

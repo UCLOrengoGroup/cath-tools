@@ -23,8 +23,7 @@
 
 #include <filesystem>
 #include <string>
-
-#include <boost/utility/string_ref.hpp>
+#include <string_view>
 
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
@@ -64,7 +63,7 @@ namespace cath {
 		                                                                  const residue_id_vec & ) const          = 0;
 		virtual void                      do_end_colouring( ::std::ostream &, const ::std::string & );
 		virtual void do_write_alignment_extras( std::ostream &, const sup::superposition_context & ) const = 0;
-		virtual void do_write_end( std::ostream &, const boost::string_ref & ) const                       = 0;
+		virtual void do_write_end( std::ostream &, const ::std::string_view & ) const                      = 0;
 
 	public:
 		viewer() = default;
@@ -98,7 +97,7 @@ namespace cath {
 		void write_alignment_extras(std::ostream &,
 		                            const sup::superposition_context &) const;
 		void write_end(std::ostream &,
-		               const boost::string_ref &) const;
+		               const ::std::string_view &) const;
 	};
 
 	std::string clean_name_for_viewer(const std::string &);

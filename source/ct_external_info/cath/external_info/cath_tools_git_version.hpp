@@ -21,13 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_EXTERNAL_INFO_CATH_EXTERNAL_INFO_CATH_TOOLS_GIT_VERSION_HPP
 #define _CATH_TOOLS_SOURCE_CT_EXTERNAL_INFO_CATH_EXTERNAL_INFO_CATH_TOOLS_GIT_VERSION_HPP
 
-#include <string>
+#include <string_view>
 
 namespace cath {
 
-	::std::string cath_tools_git_version();
+	::std::string_view cath_tools_git_version();
 
-	::std::string cath_tools_git_date();
+	::std::string_view cath_tools_git_date();
 
 } // namespace cath
 

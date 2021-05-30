@@ -33,7 +33,6 @@ using namespace ::cath::sup;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::any_of;
 using ::boost::algorithm::join;
-using ::boost::string_ref;
 using ::std::cbegin;
 using ::std::cend;
 using ::std::ostream;

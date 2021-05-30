@@ -25,9 +25,8 @@
 #include <string>
 
 #include <boost/range/combine.hpp>
-#include <boost/utility/string_ref.hpp>
 
-#include "cath/common/boost_addenda/make_string_ref.hpp"
+#include "cath/common/boost_addenda/make_string_view.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
 #include "cath/common/string/string_parse_tools.hpp"
 #include "cath/resolve_hits/file/alnd_rgn.hpp"
@@ -242,7 +241,7 @@ namespace cath::rslv::detail {
 		}
 		assert( start_a );
 
-		const auto the_sequence = common::make_string_ref( aln_itrs.first, aln_itrs.second );
+		const auto the_sequence = common::make_string_view( aln_itrs.first, aln_itrs.second );
 		for (const auto &[ char_a, char_b ] : boost::range::combine( aln_seq_a, the_sequence ) ) {
 			assert( char_b != GAP_CHAR_B || char_a != GAP_CHAR_A );
 			if ( char_b == GAP_CHAR_B && char_a == GAP_CHAR_A ) {

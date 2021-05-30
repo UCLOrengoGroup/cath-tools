@@ -42,8 +42,6 @@ namespace cath::file {
 	///
 	/// \todo If there are any other uses for bundling a string_view with its string, then
 	///       consider generalising this class.
-	///
-	/// \todo Come C++17 replace ::std::string_view with std::string_view
 	class element_type_string final {
 	private:
 		/// \brief The untrimmed string describing the element type of this atom.
@@ -52,8 +50,6 @@ namespace cath::file {
 		char_4_arr element_type_untrimmed;
 
 		/// \brief The trimmed string describing the element type of this atom.
-		///
-		/// \todo Come C++17, replace ::std::string_view with std::string_view
 		std::pair<char, char> trim_offsets;
 
 	public:

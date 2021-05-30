@@ -21,10 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_HPP
 
-#include <boost/utility/string_ref_fwd.hpp>
-
 #include <iosfwd>
 #include <memory>
+#include <string>
 
 // clang-format off
 namespace cath::sup { class superposition_context; }

@@ -18,25 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <string>
+#include <string_view>
 
 #include "cath/external_info/cath_tools_git_version.hpp"
 #include "cath/external_info/cath_tools_git_version_impl.hpp"
 
-using ::std::string;
+using ::std::string_view;
 
 /// The git version (`git describe --tags --long`) of
 /// the source directory from which this is being built
-///
-/// TODO: Come C++17, consider returning string_view
-string cath::cath_tools_git_version() {
+string_view cath::cath_tools_git_version() {
 	return CATH_TOOLS_GIT_VERSION;
 }
 
 /// The git version (`git log -1 --date=short --pretty=format:%cd`) of
 /// the source directory from which this is being built
-///
-/// TODO: Come C++17, consider returning string_view
-string cath::cath_tools_git_date() {
+string_view cath::cath_tools_git_date() {
 	return CATH_TOOLS_GIT_DATE;
 }

@@ -47,7 +47,7 @@ namespace cath {
 		                                                          const std::string &,
 		                                                          const residue_id_vec & ) const final;
 		void do_write_alignment_extras( std::ostream &, const sup::superposition_context & ) const final;
-		void do_write_end( std::ostream &, const boost::string_ref & ) const final;
+		void do_write_end( std::ostream &, const ::std::string_view & ) const final;
 
 	  public:
 		static std::string parse_residue_id_for_chimera(const residue_id &);

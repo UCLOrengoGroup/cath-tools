@@ -27,8 +27,6 @@ using namespace ::cath::common;
 using namespace ::cath::sup;
 using namespace ::std;
 
-using ::boost::string_ref;
-
 /// \brief TODOCUMENT
 string jmol_viewer::do_default_executable() const {
 	return "jmol";
@@ -81,8 +79,8 @@ void jmol_viewer::do_write_alignment_extras(ostream                     &/*prm_o
 }
 
 /// \brief TODOCUMENT
-void jmol_viewer::do_write_end(ostream          &/* prm_os */,            ///< TODOCUMENT
-                               const string_ref &/* prm_advert_message */ ///< TODOCUMENT
+void jmol_viewer::do_write_end(ostream           &/* prm_os */,            ///< TODOCUMENT
+                               const string_view &/* prm_advert_message */ ///< TODOCUMENT
                                ) const {
 	BOOST_THROW_EXCEPTION(not_implemented_exception("jmol_viewer::do_write_end"));
 }

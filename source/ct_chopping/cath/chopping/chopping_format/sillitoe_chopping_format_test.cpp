@@ -18,6 +18,9 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <string>
+#include <string_view>
+
 #include <boost/test/unit_test.hpp>
 
 #include "cath/chopping/chopping_format/sillitoe_chopping_format.hpp"
@@ -28,7 +31,7 @@ using namespace ::cath::chop;
 using namespace ::cath::common;
 
 using ::std::string;
-using ::boost::string_ref;
+using ::std::string_view;
 
 BOOST_AUTO_TEST_SUITE(sillitoe_chopping_format_test_suite)
 
@@ -98,7 +101,7 @@ BOOST_AUTO_TEST_CASE(parses_whole_chain_region) {
 /// \todo Include functionality to specify an "all" domain
 
 template <typename Fmt>
-string parse_and_write_segment(const string_ref &prm_orig_str) {
+string parse_and_write_segment(const string_view &prm_orig_str) {
 	const Fmt format{};
 	return format.write_region( format.parse_segment( prm_orig_str ) );
 }

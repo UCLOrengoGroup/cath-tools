@@ -28,7 +28,7 @@
 #include <spdlog/spdlog.h>
 
 #include "cath/common/algorithm/contains.hpp"
-#include "cath/common/boost_addenda/make_string_ref.hpp"
+#include "cath/common/boost_addenda/make_string_view.hpp"
 #include "cath/common/file/open_fstream.hpp"
 #include "cath/common/string/string_parse_tools.hpp"
 #include "cath/resolve_hits/read_and_process_hits/read_and_process_mgr.hpp"
@@ -98,7 +98,7 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &prm_read_and_proc
 		constexpr size_t ENV_STOP_RES_FIELD_IDX  = 20;
 
 		const auto     target_field_itrs      = find_field_itrs( line_string, TARGET_FIELD_IDX                                                                );
-		const auto     target_id_str_ref      = make_string_ref( target_field_itrs.first, target_field_itrs.second );
+		const auto     target_id_str_ref      = make_string_view( target_field_itrs.first, target_field_itrs.second );
 
 		// If this query ID should be skipped, then skip this entry.
 		// The function also updates seen_query_ids if not skipping this query ID
@@ -107,7 +107,7 @@ void cath::rslv::parse_domain_hits_table(read_and_process_mgr &prm_read_and_proc
 		}
 
 		const auto     query_field_itrs       = find_field_itrs( line_string, QUERY_FIELD_IDX,       1 + TARGET_FIELD_IDX,      target_field_itrs.second      );
-		const auto     query_id_str_ref       = make_string_ref( query_field_itrs.first,  query_field_itrs.second  );
+		const auto     query_id_str_ref       = make_string_view( query_field_itrs.first,  query_field_itrs.second  );
 
 		const auto     id_score_cat           = cath_score_category_of_id( query_id_str_ref, prm_apply_cath_policies );
 		const bool     apply_dc_cat           = ( id_score_cat == cath_id_score_category::DC_TYPE );

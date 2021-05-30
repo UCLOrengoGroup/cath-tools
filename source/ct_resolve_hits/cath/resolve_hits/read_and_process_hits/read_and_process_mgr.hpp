@@ -27,7 +27,6 @@
 #include <utility>
 
 #include <boost/range/adaptor/map.hpp>
-#include <boost/utility/string_ref.hpp>
 
 #include "cath/common/algorithm/sort_uniq_build.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
@@ -148,7 +147,7 @@ namespace cath::rslv {
 
 		explicit read_and_process_mgr( detail::hits_processor_list, crh_filter_spec, const bool & = DEFAULT_INPUT_HITS_ARE_GROUPED );
 
-		void add_hit(const boost::string_ref &,
+		void add_hit(const ::std::string_view &,
 		             seq::seq_seg_vec,
 		             std::string,
 		             const double &,
@@ -167,7 +166,7 @@ namespace cath::rslv {
 	                       const query_id_recorder &);
 
 	bool should_skip_query(const read_and_process_mgr &,
-	                       const boost::string_ref &,
+	                       const ::std::string_view &,
 	                       const query_id_recorder &);
 
 	read_and_process_mgr make_read_and_process_mgr(const detail::hits_processor &,
@@ -240,12 +239,12 @@ namespace cath::rslv {
 	/// \brief Add a new hit for the current query_id
 	///
 	/// \pre `is_active()` else an invalid_argument_exception will be thrown
-	inline void read_and_process_mgr::add_hit(const boost::string_ref &prm_query_id,   ///< A string_ref of the query_id
-	                                          seq::seq_seg_vec         prm_segments,   ///< Any fragments of the new hit
-	                                          std::string              prm_label,      ///< The label associated with the new hit
-	                                          const double            &prm_score,      ///< The score associated with the new hit
-	                                          const hit_score_type    &prm_score_type, ///< The type of the score
-	                                          hit_extras_store         prm_hit_extras  ///< Any HMMER aligned regions or else none
+	inline void read_and_process_mgr::add_hit(const ::std::string_view &prm_query_id,   ///< A string_view of the query_id
+	                                          seq::seq_seg_vec          prm_segments,   ///< Any fragments of the new hit
+	                                          std::string               prm_label,      ///< The label associated with the new hit
+	                                          const double             &prm_score,      ///< The score associated with the new hit
+	                                          const hit_score_type     &prm_score_type, ///< The type of the score
+	                                          hit_extras_store          prm_hit_extras  ///< Any HMMER aligned regions or else none
 	                                          ) {
 		// If this hit's score doesn't meet the filter and such hits don't need to be kept, then skip it
 		if ( ! processors.wants_hits_that_fail_score_filter() ) {
@@ -383,7 +382,7 @@ namespace cath::rslv {
 	///
 	/// \relates read_and_process_mgr
 	inline bool should_skip_query(const read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to query
-	                              const boost::string_ref    &prm_query_id,             ///< The query ID to test
+	                              const ::std::string_view   &prm_query_id,             ///< The query ID to test
 	                              const query_id_recorder    &prm_seen_queries          ///< The query IDs that have already been seen
 	                              ) {
 		return should_skip_query(
@@ -413,7 +412,7 @@ namespace cath::rslv {
 	///
 	/// \relates read_and_process_mgr
 	inline bool should_skip_query_and_update(const read_and_process_mgr &prm_read_and_process_mgr, ///< The read_and_process_mgr to query
-	                                         const boost::string_ref    &prm_query_id,             ///< The query ID to test
+	                                         const ::std::string_view   &prm_query_id,             ///< The query ID to test
 	                                         query_id_recorder          &prm_seen_queries          ///< The query IDs that have already been seen
 	                                         ) {
 		return should_skip_query_and_update(

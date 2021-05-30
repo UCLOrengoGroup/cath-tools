@@ -20,31 +20,32 @@
 
 #include "cath_id_score_category.hpp"
 
-#include <boost/utility/string_ref.hpp>
-
+#include "cath/common/cpp20/starts_with_ends_with_contains.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 
 #include <regex>
 
+using namespace ::cath::common;
 using namespace ::cath::rslv;
 
-using ::boost::string_ref;
 using ::std::ostream;
 using ::std::regex;
 using ::std::string;
+using ::std::string_view;
 
 /// \brief Get the cath_id_score_category for the specified ID
 ///        (or return cath_id_score_category::NORMAL if `!prm_apply_cath_policies` )
 ///
 /// \relates cath_id_score_category
-cath_id_score_category cath::rslv::cath_score_category_of_id(const string_ref &prm_id,                 ///< The ID to examine
-                                                             const bool       &prm_apply_cath_policies ///< Whether to actually examine prm_id, rather than just returning cath_id_score_category::NORMAL
+cath_id_score_category cath::rslv::cath_score_category_of_id(const string_view &prm_id,                 ///< The ID to examine
+                                                             const bool        &prm_apply_cath_policies ///< Whether to actually examine prm_id, rather than just returning cath_id_score_category::NORMAL
                                                              ) {
 	if ( prm_apply_cath_policies ) {
 		static const regex  dc_regex        { R"(^dc_\w{32}$)" };
-		static const string dc_prefix_suffix{ "dc_" };
+		constexpr string_view dc_prefix_suffix = "dc_";
 
-		if ( prm_id.length() == 35 && prm_id.starts_with( dc_prefix_suffix ) ) {
+
+		if ( prm_id.length() == 35 && starts_with( prm_id, dc_prefix_suffix ) ) {
 			if ( regex_search( cbegin( prm_id ), cend( prm_id ), dc_regex ) ) {
 				return cath_id_score_category::DC_TYPE;
 			}

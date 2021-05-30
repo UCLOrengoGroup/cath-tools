@@ -20,23 +20,24 @@
 
 #include "simple_chopping_format.hpp"
 
+#include <iostream> // ***** TEMPORARY *****
+#include <string_view>
+
 #include "cath/chopping/domain/domain.hpp"
-#include "cath/common/boost_addenda/make_string_ref.hpp"
+#include "cath/common/boost_addenda/make_string_view.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/debug_numeric_cast.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/not_implemented_exception.hpp" // ***** TEMPORARY *****
 
-#include <iostream> // ***** TEMPORARY *****
-
 using namespace ::cath;
 using namespace ::cath::chop;
 using namespace ::cath::common;
 
-using ::boost::string_ref;
 using ::std::find;
 using ::std::next;
 using ::std::string;
+using ::std::string_view;
 using ::std::unique_ptr;
 
 /// \brief A standard do_clone method.
@@ -72,7 +73,7 @@ string simple_chopping_format::do_write_domain(const domain &/*prm_domain*/ ///<
 }
 
 /// \brief Parse a segment from the specified segment string
-region simple_chopping_format::parse_segment(const string_ref &prm_segment_string ///< The string from which to parse the segment
+region simple_chopping_format::parse_segment(const string_view &prm_segment_string ///< The string from which to parse the segment
                                              ) const {
 	constexpr char   CHAIN_OPEN_SQ_BR                = '[';
 	constexpr char   CHAIN_CLOSE_SQ_BR               = ']';
@@ -103,13 +104,13 @@ region simple_chopping_format::parse_segment(const string_ref &prm_segment_strin
 
 	return {
 		chain_label{ prm_segment_string[ length - CHAIN_NEG_OFFSET ] },
-		parse_residue( make_string_ref( begin_itr,         dash_itr    ) ),
-		parse_residue( make_string_ref( dash_plus_one_itr, res_end_itr ) )
+		parse_residue( make_string_view( begin_itr,         dash_itr    ) ),
+		parse_residue( make_string_view( dash_plus_one_itr, res_end_itr ) )
 	};
 }
 
 /// \brief Parse a residue from the specified residue string
-residue_name simple_chopping_format::parse_residue(const string_ref &prm_string_ref ///< The string from which to parse the residue
+residue_name simple_chopping_format::parse_residue(const string_view &prm_string_view ///< The string from which to parse the residue
                                                    ) const {
 	constexpr char   INS_CODE_OPEN_BR             = '(';
 	constexpr char   INS_CODE_CLOSE_BR            = ')';
@@ -117,20 +118,20 @@ residue_name simple_chopping_format::parse_residue(const string_ref &prm_string_
 	constexpr size_t INS_CODE_OFFSET              = 2;
 	constexpr size_t CHAIN_OPEN_BR_END_NEG_OFFSET = 3;
 
-	const auto length = prm_string_ref.length();
-	if ( length < MIN_INS_CODE_CHARS || prm_string_ref.back() != INS_CODE_CLOSE_BR ) {
-		return residue_name{ stoi( prm_string_ref.to_string() ) };
+	const auto length = prm_string_view.length();
+	if ( length < MIN_INS_CODE_CHARS || prm_string_view.back() != INS_CODE_CLOSE_BR ) {
+		return residue_name{ stoi( string( prm_string_view ) ) };
 	}
 
-	if ( prm_string_ref[ length - CHAIN_OPEN_BR_END_NEG_OFFSET ] != INS_CODE_OPEN_BR ) {
+	if ( prm_string_view[ length - CHAIN_OPEN_BR_END_NEG_OFFSET ] != INS_CODE_OPEN_BR ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Argh yet again"));
 	}
-	const auto begin_itr   = cbegin( prm_string_ref );
-	const auto end_itr     = cend  ( prm_string_ref );
+	const auto begin_itr   = cbegin( prm_string_view );
+	const auto end_itr     = cend  ( prm_string_view );
 	const auto res_end_itr = next( end_itr, 0 - static_cast<int>( CHAIN_OPEN_BR_END_NEG_OFFSET ) );
 
 	return {
 		stoi( string{ begin_itr, res_end_itr } ),
-		prm_string_ref[ length - INS_CODE_OFFSET ]
+		prm_string_view[ length - INS_CODE_OFFSET ]
 	};
 }

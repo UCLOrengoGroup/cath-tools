@@ -38,8 +38,8 @@ namespace cath::common {
 	///
 	/// Not currently able to avoid constructing a new string if passed a char *
 	///
-	/// \TODO Consider adding (or changing this into) id_of_string_ref / id_of_string_view.
-	///       The Boost string_ref currently has a std::hash specialisation
+	/// \TODO Consider adding (or changing this into) id_of_string_view.
+	///       The Boost string_view currently has a std::hash specialisation
 	///       but it's #if-ed out (#if 0).
 	///
 	/// \TODO Alternatively consider using Boost.MultiIndex as discussed in

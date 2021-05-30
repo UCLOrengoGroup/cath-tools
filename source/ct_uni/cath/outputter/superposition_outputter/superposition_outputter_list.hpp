@@ -22,7 +22,6 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_OUTPUTTER_SUPERPOSITION_OUTPUTTER_SUPERPOSITION_OUTPUTTER_LIST_HPP
 
 #include <boost/ptr_container/ptr_vector.hpp>
-#include <boost/utility/string_ref_fwd.hpp>
 
 #include <iosfwd>
 

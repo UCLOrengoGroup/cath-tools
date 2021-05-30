@@ -35,7 +35,6 @@ using namespace ::cath::opts;
 using namespace ::cath::sup;
 using namespace ::cath::view;
 
-using ::boost::string_ref;
 using ::std::filesystem::path;
 using ::std::ostream;
 using ::std::string;

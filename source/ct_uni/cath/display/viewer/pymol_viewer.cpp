@@ -21,6 +21,7 @@
 #include "pymol_viewer.hpp"
 
 #include <string>
+#include <string_view>
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -70,7 +71,6 @@ using ::boost::irange;
 using ::boost::lexical_cast;
 using ::boost::no_property;
 using ::boost::property;
-using ::boost::string_ref;
 using ::boost::undirectedS;
 using ::boost::vecS;
 using ::std::literals::string_literals::operator""s;
@@ -81,6 +81,7 @@ using ::std::ostream;
 using ::std::ostringstream;
 using ::std::pair;
 using ::std::string;
+using ::std::string_view;
 using ::std::vector;
 
 /// \brief TODOCUMENT
@@ -474,8 +475,8 @@ void pymol_viewer::do_write_alignment_extras(ostream                     &prm_os
 }
 
 /// \brief TODOCUMENT
-void pymol_viewer::do_write_end(ostream          &prm_os,            ///< TODOCUMENT
-                                const string_ref &prm_advert_message ///< TODOCUMENT
+void pymol_viewer::do_write_end(ostream           &prm_os,            ///< TODOCUMENT
+                                const string_view &prm_advert_message ///< TODOCUMENT
                                 ) const {
 	prm_os << R"(scene F)" << scene_count << R"(, store, message="Colour me badd", color=0, view=0, active=0, rep=0, frame=0
 show cartoon

@@ -41,8 +41,6 @@ namespace cath::file {
 	///
 	/// \pre prm_substring must refer to a string "ATOM  ", "ATOM" or "HETATM" else
 	///      an invalid_argument_exception will be thrown
-	///
-	/// \todo Come C++17, convert this to use string_view rather than sub_range<const string>
 	inline pdb_record pdb_rec_of_substring(const ::std::string_view &prm_substring ///< The substring to examine
 	                                       ) {
 		if ( prm_substring == "ATOM  "sv || prm_substring == "ATOM"sv ) {

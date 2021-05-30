@@ -66,9 +66,9 @@ namespace cath::clust {
 		/// Prevent construction from an id_of_str_bidirnl rvalue
 		old_cluster_data(const common::id_of_str_bidirnl &&) = delete;
 
-		clust_entry_problem add_entry(const boost::string_ref &,
-		                              const boost::string_ref &,
-		                              const boost::string_ref &,
+		clust_entry_problem add_entry(const ::std::string_view &,
+		                              const ::std::string_view &,
+		                              const ::std::string_view &,
 		                              seq::seq_seg_run_opt);
 
 		const clusters_info & get_clust_info() const;
@@ -89,10 +89,10 @@ namespace cath::clust {
 
 	/// \brief Add an entry with the specified sequence name and (optional) segments to the cluster with
 	///        the specified name
-	inline clust_entry_problem old_cluster_data::add_entry(const boost::string_ref &prm_clust_name, ///< The name of the cluster of the entry
-	                                                       const boost::string_ref &prm_seq_id,     ///< The name of the sequence within which this entry appears
-	                                                       const boost::string_ref &prm_domain_id,  ///< The name of the entry
-	                                                       seq::seq_seg_run_opt     prm_segments    ///< The (optional) segments of the entry within the sequence
+	inline clust_entry_problem old_cluster_data::add_entry(const ::std::string_view &prm_clust_name, ///< The name of the cluster of the entry
+	                                                       const ::std::string_view &prm_seq_id,     ///< The name of the sequence within which this entry appears
+	                                                       const ::std::string_view &prm_domain_id,  ///< The name of the entry
+	                                                       seq::seq_seg_run_opt      prm_segments    ///< The (optional) segments of the entry within the sequence
 	                                                       ) {
 		try {
 			const auto cluster_id = update_info_and_get_id_for_cluster_of_name(
@@ -101,7 +101,7 @@ namespace cath::clust {
 				prm_domain_id,
 				prm_segments
 			);
-			const size_t &seq_id = id_of_seq_name.get().add_name( prm_seq_id.to_string() );
+			const size_t &seq_id = id_of_seq_name.get().add_name( ::std::string( prm_seq_id ) );
 			return clusters.add_domain_to_cluster(
 				cluster_id,
 				seq_id,
