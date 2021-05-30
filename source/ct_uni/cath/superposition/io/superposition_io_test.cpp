@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_CASE(warns_if_overwriting_chain_label_in_pdb_with_multiple_chains) {
 	const stringstream_log_sink log_sink;
 	const temp_file temp_file("cath_tools_test_temp_file.superposition_chain_munge_warning.%%%%");
-	const auto the_pdbs = make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "supn_content" / "1bdh" ) } );
+	const auto the_pdbs = pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "supn_content" / "1bdh" ) } );
 
 	write_superposed_pdb_to_file(
 		make_identity_superposition_of( the_pdbs ),
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(warns_if_overwriting_chain_label_in_pdb_with_multiple_chain
 BOOST_AUTO_TEST_CASE(does_not_warn_if_overwriting_chain_label_in_pdb_with_single_chain) {
 	const stringstream_log_sink log_sink;
 	const temp_file temp_file("cath_tools_test_temp_file.superposition_chain_munge_non_warning.%%%%");
-	const auto the_pdbs = make_pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1c0pA01" ) } );
+	const auto the_pdbs = pdb_list( { read_pdb_file( TEST_SOURCE_DATA_DIR() / "1c0pA01" ) } );
 
 	write_superposed_pdb_to_file(
 		make_identity_superposition_of( the_pdbs ),

@@ -20,6 +20,8 @@
 
 #include "map_clusters.hpp"
 
+#include <string_view>
+
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/stable_partition.hpp>
@@ -46,6 +48,7 @@ using ::boost::range::stable_partition;
 using ::std::less;
 using ::std::max;
 using ::std::string;
+using ::std::string_view;
 
 /// \brief Map old clusters to new clusters
 ///
@@ -55,7 +58,7 @@ map_results cath::clust::map_clusters(const old_cluster_data_opt &prm_old_cluste
                                       const clust_mapping_spec   &prm_mapping_spec,     ///< The specification for the mapping
                                       const ostream_ref_opt      &prm_domain_out_stream ///< An optional stream to which individual domain mappings should be printed
                                       ) {
-	const string dom_map_result_tag = "DOMAIN-MAP-RESULT";
+	constexpr string_view dom_map_result_tag = "DOMAIN-MAP-RESULT";
 
 	// Grab the number of new clusters
 	const size_t num_new_clusters = get_num_clusters( prm_new_clusters );

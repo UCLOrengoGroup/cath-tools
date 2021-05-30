@@ -33,6 +33,7 @@
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/file/file_type_aliases.hpp"
+#include "cath/file/pdb/pdb.hpp"
 #include "cath/structure/structure_type_aliases.hpp"
 
 // clang-format off
@@ -53,7 +54,9 @@ namespace cath::file {
 		pdb_list() = default;
 		explicit pdb_list(pdb_vec);
 
-		void push_back(const pdb &);
+		void push_back( const pdb & );
+		void push_back( pdb && );
+
 		void reserve(const size_t &);
 
 		[[nodiscard]] size_t size() const;
@@ -71,9 +74,68 @@ namespace cath::file {
 		[[nodiscard]] const_iterator end() const;
 	};
 
-	pdb_list read_pdb_files(const path_vec &);
+	/// \brief Ctor from a vector<pdb>
+	///
+	/// \param prm_pdbs The pdbs from which this pdb_list should be constructed
+	inline pdb_list::pdb_list( pdb_vec prm_pdbs ) : pdbs{ std::move( prm_pdbs ) } {
+	}
 
-	pdb_list make_pdb_list(const pdb_vec &);
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_pdb TODOCUMENT
+	inline void pdb_list::push_back( const pdb &prm_pdb ) {
+		pdbs.push_back( prm_pdb );
+	}
+
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_pdb TODOCUMENT
+	inline void pdb_list::push_back( pdb &&prm_pdb ) {
+		pdbs.push_back( ::std::move( prm_pdb ) );
+	}
+
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_size TODOCUMENT
+	inline void pdb_list::reserve( const size_t &prm_size ) {
+		pdbs.reserve( prm_size );
+	}
+
+	/// \brief TODOCUMENT
+	inline size_t pdb_list::size() const {
+		return pdbs.size();
+	}
+
+	/// \brief TODOCUMENT
+	inline bool pdb_list::empty() const {
+		return pdbs.empty();
+	}
+
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_index TODOCUMENT
+	inline pdb &pdb_list::operator[]( const size_t &prm_index ) {
+		return pdbs[ prm_index ];
+	}
+
+	/// \brief TODOCUMENT
+	///
+	/// \param prm_index TODOCUMENT
+	inline const pdb &pdb_list::operator[]( const size_t &prm_index ) const {
+		return pdbs[ prm_index ];
+	}
+
+	/// \brief TODOCUMENT
+	inline auto pdb_list::begin() const -> const_iterator {
+		return cbegin( pdbs );
+	}
+
+	/// \brief TODOCUMENT
+	inline auto pdb_list::end() const -> const_iterator {
+		return cend( pdbs );
+	}
+
+	pdb_list read_pdb_files(const path_vec &);
 
 	pdb_list pdb_list_of_backbone_complete_subset_pdbs(const pdb_list &,
 	                                                   const ostream_ref_opt & = ::std::nullopt);

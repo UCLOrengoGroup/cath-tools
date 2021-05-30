@@ -159,11 +159,11 @@ protein cath::read_protein_from_pdb(const path           &prm_pdb_file, ///< A P
                                     const region_vec_opt &prm_regions,  ///< The regions to which the resulting protein should be restricted
                                     ostream              &prm_stderr    ///< The ostream to which any warnings/errors should be written
                                     ) {
-	pdb new_pdb = prm_regions
+	const pdb new_pdb = prm_regions
 		? get_regions_limited_pdb( prm_regions, read_pdb_file( prm_pdb_file ) )
 		:                                       read_pdb_file( prm_pdb_file );
 	return build_protein_of_pdb_and_name(
-		std::move( new_pdb ),
+		new_pdb,
 		name_set{ prm_pdb_file, prm_name },
 		ref( prm_stderr )
 	);
@@ -227,7 +227,7 @@ protein cath::read_protein_from_pdb_and_calc_dssp(const path            &prm_pdb
 		? get_regions_limited_pdb( prm_regions, read_pdb_file( prm_pdb_file ) )
 		:                                       read_pdb_file( prm_pdb_file );
 	return make_protein_from_pdb_and_calc_dssp(
-		std::move( new_pdb ),
+		new_pdb,
 		prm_name,
 		prm_ostream
 	);
@@ -245,7 +245,7 @@ protein cath::read_protein_from_pdb_and_calc_dssp_and_sec(const path            
 		? get_regions_limited_pdb( prm_regions, read_pdb_file( prm_pdb_file ) )
 		:                                       read_pdb_file( prm_pdb_file );
 	return make_protein_from_pdb_and_calc_dssp_and_sec(
-		std::move( new_pdb ),
+		new_pdb,
 		prm_name,
 		prm_ostream
 	);

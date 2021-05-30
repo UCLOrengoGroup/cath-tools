@@ -49,86 +49,17 @@ using ::boost::range::combine;
 using ::std::filesystem::path;
 using ::std::nullopt;
 
-/// \brief Ctor from a vector<pdb>
-pdb_list::pdb_list(pdb_vec prm_pdbs ///< The pdbs from which this pdb_list should be constructed
-                   ) : pdbs{ std::move( prm_pdbs ) } {
-}
-
-/// \brief TODOCUMENT
-void pdb_list::push_back(const pdb &prm_pdb ///< TODOCUMENT
-                         ) {
-	pdbs.push_back(prm_pdb);
-}
-
-/// \brief TODOCUMENT
-void pdb_list::reserve(const size_t &prm_size ///< TODOCUMENT
-                       ) {
-	pdbs.reserve(prm_size);
-}
-
-/// \brief TODOCUMENT
-size_t pdb_list::size() const {
-	return pdbs.size();
-}
-
-/// \brief TODOCUMENT
-bool pdb_list::empty() const {
-	return pdbs.empty();
-}
-
-/// \brief TODOCUMENT
-pdb & pdb_list::operator[](const size_t &prm_index ///< TODOCUMENT
-                           ) {
-	return pdbs[prm_index];
-}
-
-/// \brief TODOCUMENT
-const pdb & pdb_list::operator[](const size_t &prm_index ///< TODOCUMENT
-                                 ) const {
-	return pdbs[prm_index];
-}
-
-///// \brief TODOCUMENT
-//pdb_list::iterator pdb_list::begin() {
-//	return std::begin( pdbs );
-//}
-///// \brief TODOCUMENT
-//pdb_list::iterator pdb_list::end() {
-//	return std::end( pdbs );
-//}
-/// \brief TODOCUMENT
-pdb_list::const_iterator pdb_list::begin() const {
-	return cbegin( pdbs );
-}
-/// \brief TODOCUMENT
-pdb_list::const_iterator pdb_list::end() const {
-	return cend( pdbs );
-}
-
 /// \brief TODOCUMENT
 ///
 /// \relates pdb_list
 pdb_list cath::file::read_pdb_files(const path_vec &prm_paths ///< TODOCUMENT
                                     ) {
-	return make_pdb_list(
+	return pdb_list(
 		transform_build<pdb_vec>(
 			prm_paths,
 			[] (const path &x) { return read_pdb_file( x ); }
 		)
 	);
-}
-
-/// \brief TODOCUMENT
-///
-/// \relates pdb_list
-pdb_list cath::file::make_pdb_list(const pdb_vec &prm_pdbs ///< TODOCUMENT
-                                   ) {
-	pdb_list new_pdb_list;
-	new_pdb_list.reserve( prm_pdbs.size() );
-	for (const pdb &the_pdb : prm_pdbs) {
-		new_pdb_list.push_back( the_pdb );
-	}
-	return new_pdb_list;
 }
 
 /// \brief TODOCUMENT

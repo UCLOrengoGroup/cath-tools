@@ -76,7 +76,7 @@ domain_definition_list::const_iterator domain_definition_list::end() const {
 domain_definition_list cath::file::parse_domain_definition_file(const path &prm_dom_defn_file ///< TODOCUMENT
                                                                 ) {
 	ifstream dom_defn_ifstream = open_ifstream( prm_dom_defn_file );
-	const domain_definition_list new_domain_definition_list = parse_domain_definition_file( dom_defn_ifstream );
+	domain_definition_list new_domain_definition_list = parse_domain_definition_file( dom_defn_ifstream );
 	dom_defn_ifstream.close();
 	return new_domain_definition_list;
 }
@@ -120,9 +120,9 @@ pdb_list_name_set_list_pair cath::file::read_domains_from_pdbs(const domain_defi
 		if ( ! has_domain_id( the_domain ) ) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Domain definitions to be read from PDBs do not have domain IDs"));
 		}
-		auto file_and_pdb = read_domain_from_pdb( domain_defn, prm_data_dirs_spec );
-		names.emplace_back( std::move( file_and_pdb.first  ), nullopt, get_domain_id( the_domain ) );
-		pdbs.push_back ( std::move( file_and_pdb.second ) );
+		auto [file, the_pdb] = read_domain_from_pdb( domain_defn, prm_data_dirs_spec );
+		names.emplace_back( std::move( file ), nullopt, get_domain_id( the_domain ) );
+		pdbs.push_back( std::move( the_pdb ) );
 	}
 	return make_pair( pdbs, name_set_list{ std::move( names ) } );
 }
