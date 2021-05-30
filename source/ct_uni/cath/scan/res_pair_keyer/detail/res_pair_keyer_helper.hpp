@@ -62,7 +62,7 @@ namespace cath::scan::detail {
 
 	/// \brief Helper for make_value(), below, (via make_keyer_parts_value_maker())
 	///
-	/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_value() notes
+	/// \todo Now that the project assumes C++17, this can be replaced by a constexpr lambda - see make_value() notes
 	template <typename Data>
 	struct keyer_parts_value_maker final {
 
@@ -87,7 +87,7 @@ namespace cath::scan::detail {
 
 	/// \brief Factory function for keyer_parts_value_maker to provide type deduction for construction
 	///
-	/// \todo Come C++17 there are two reasons this is redundant and can be removed:
+	/// \todo Now that the project assumes C++17 there are two reasons this is redundant and can be removed:
 	///        * class template deduction means the deduction can just be performed by a call to the ctor
 	///        * keyer_parts_value_maker can be completely replaced with a constexpr lambda
 	template <typename Data>
@@ -102,7 +102,7 @@ namespace cath::scan::detail {
 
 	/// \brief Helper for make_key(), below, (via make_keyer_parts_key_maker())
 	///
-	/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_key() notes
+	/// \todo Now that the project assumes C++17, this can be replaced by a constexpr lambda - see make_key() notes
 	template <typename Data>
 	struct keyer_parts_key_maker final {
 
@@ -131,7 +131,7 @@ namespace cath::scan::detail {
 
 	/// \brief Factory function for keyer_parts_key_maker to provide type deduction for construction
 	///
-	/// \todo Come C++17 there are two reasons this is redundant and can be removed:
+	/// \todo Now that the project assumes C++17 there are two reasons this is redundant and can be removed:
 	///        * class template deduction means the deduction can just be performed by a call to the ctor
 	///        * keyer_parts_key_maker can be completely replaced with a constexpr lambda
 	template <typename Data>
@@ -147,7 +147,7 @@ namespace cath::scan::detail {
 
 	/// \brief Helper for make_min_close_key(), below, (via make_keyer_parts_min_close_key_maker())
 	///
-	/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_min_close_key() notes
+	/// \todo Now that the project assumes C++17, this can be replaced by a constexpr lambda - see make_min_close_key() notes
 	template <typename Data, typename Crit>
 	struct keyer_parts_min_close_key_maker final {
 
@@ -185,7 +185,7 @@ namespace cath::scan::detail {
 
 	/// \brief Factory function for keyer_parts_min_close_key_maker to provide type deduction for construction
 	///
-	/// \todo Come C++17 there are two reasons this is redundant and can be removed:
+	/// \todo Now that the project assumes C++17 there are two reasons this is redundant and can be removed:
 	///        * class template deduction means the deduction can just be performed by a call to the ctor
 	///        * keyer_parts_min_close_key_maker can be completely replaced with a constexpr lambda
 	template <typename Data, typename Crit>
@@ -200,7 +200,7 @@ namespace cath::scan::detail {
 
 	/// \brief Helper for make_max_close_key(), below, (via make_keyer_parts_max_close_key_maker())
 	///
-	/// \todo Come C++17, this can be replaced by a constexpr lambda - see make_max_close_key() notes
+	/// \todo Now that the project assumes C++17, this can be replaced by a constexpr lambda - see make_max_close_key() notes
 	template <typename Data, typename Crit>
 	struct keyer_parts_max_close_key_maker final {
 
@@ -238,7 +238,7 @@ namespace cath::scan::detail {
 
 	/// \brief Factory function for keyer_parts_max_close_key_maker to provide type deduction for construction
 	///
-	/// \todo Come C++17 there are two reasons this is redundant and can be removed:
+	/// \todo Now that the project assumes C++17 there are two reasons this is redundant and can be removed:
 	///        * class template deduction means the deduction can just be performed by a call to the ctor
 	///        * keyer_parts_max_close_key_maker can be completely replaced with a constexpr lambda
 	template <typename Data, typename Crit>
@@ -256,7 +256,7 @@ namespace cath::scan::detail {
 
 	/// \brief Template function to make a value tuple from a tuple of keyer_parts and an instance of their common data type
 	///
-	/// \todo Come C++17, remove keyer_parts_value_maker and replace the make_keyer_parts_value_maker() call
+	/// \todo Now that the project assumes C++17, remove keyer_parts_value_maker and replace the make_keyer_parts_value_maker() call
 	///       below with a constexpr lambda like:
 	///     [&] (const auto &...keyer_parts) { return std::make_tuple( keyer_parts.get_value( prm_data )... ); }
 	///
@@ -292,7 +292,7 @@ namespace cath::scan::detail {
 
 	/// \brief Template function to make a key tuple from a tuple of keyer_parts and an instance of their common data type
 	///
-	/// \todo Come C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
+	/// \todo Now that the project assumes C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
 	///       below with a constexpr lambda like:
 	///
 	///     [&] (const auto &...keyer_parts) { return std::make_tuple( keyer_parts.key_part( keyer_parts.get_value( prm_data ) )... ); }
@@ -327,7 +327,7 @@ namespace cath::scan::detail {
 
 	/// \brief Template function to make a min-close-key tuple from a tuple of keyer_parts and an instance of their common data type
 	///
-	/// \todo Come C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
+	/// \todo Now that the project assumes C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
 	///       below with a constexpr lambda like:
 	///
 	///     [&] (const auto &...keyer_parts) {
@@ -348,7 +348,7 @@ namespace cath::scan::detail {
 
 	/// \brief Template function to make a max-close-key tuple from a tuple of keyer_parts and an instance of their common data type
 	///
-	/// \todo Come C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
+	/// \todo Now that the project assumes C++17, remove keyer_parts_key_maker and replace the make_keyer_parts_key_maker() call
 	///       below with a constexpr lambda like:
 	///
 	///     [&] (const auto &...keyer_parts) {
