@@ -20,10 +20,11 @@
 
 #include "summarise_hits_processor.hpp"
 
-#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/range/algorithm/max_element.hpp>
 #include <boost/range/algorithm/min_element.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/boost_addenda/range/front.hpp"
 #include "cath/common/clone/make_uptr_clone.hpp"
@@ -34,7 +35,6 @@ using namespace ::cath;
 using namespace ::cath::common;
 using namespace ::cath::rslv::detail;
 
-using ::boost::format;
 using ::boost::numeric_cast;
 using ::boost::range::max_element;
 using ::boost::range::min_element;
@@ -115,7 +115,7 @@ void summarise_hits_processor::do_finish_work() {
 				<< (
 					max_stops.empty()
 						? " <N/A>"
-						: ( format( "%8.1f" ) % median( max_stops ) ).str()
+						: ::fmt::format( "{:8.1f}", median( max_stops ) )
 				)
 				<< "\n"
 				<< " * Maximum max-stop  : " << right << setw( 6 ) << ( max_stops.empty() ? "<N/A>" : std::to_string( *max_element( max_stops ) ) ) << "\n"

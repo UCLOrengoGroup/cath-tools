@@ -20,16 +20,17 @@
 
 #include "pdb_atom.hpp"
 
+#include <iomanip>
+#include <sstream>
+
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/format.hpp>
 #include <boost/io/ios_state.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 
-#include "cath/structure/geometry/rotation.hpp"
+#include <fmt/core.h>
 
-#include <iomanip>
-#include <sstream>
+#include "cath/structure/geometry/rotation.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;
@@ -37,7 +38,6 @@ using namespace ::cath::file;
 using namespace ::cath::geom;
 using namespace ::std;
 
-using ::boost::format;
 using ::boost::io::ios_flags_saver;
 
 /// \brief TODOCUMENT
@@ -103,30 +103,30 @@ ostream & cath::file::write_pdb_file_entry(ostream          &prm_os,      ///< T
 		prm_res_id.get_residue_name()
 	);
 
-	                                                                                       // Comments with PDB format documentation
-	                                                                                       // (http://www.wwpdb.org/documentation/format33/sect9.html#ATOM)
+	                                                                                     // Comments with PDB format documentation
+	                                                                                     // (http://www.wwpdb.org/documentation/format33/sect9.html#ATOM)
 	prm_os << left;
-	prm_os << setw( 6 ) << prm_pdb_atom.get_record_type();                                 //  1 -  6        Record name   "ATOM  " or "HETATM"
+	prm_os << setw( 6 ) << prm_pdb_atom.get_record_type();                               //  1 -  6        Record name   "ATOM  " or "HETATM"
 	prm_os << right;
-	prm_os << setw( 5 ) << prm_pdb_atom.get_atom_serial();                                 //  7 - 11        Integer       serial       Atom  serial number.
+	prm_os << setw( 5 ) << prm_pdb_atom.get_atom_serial();                               //  7 - 11        Integer       serial       Atom  serial number.
 	prm_os << " ";
-	prm_os << setw( 4 ) << get_element_type_untrimmed_str_ref( prm_pdb_atom );             // 13 - 16        Atom          name         Atom name.
-	prm_os <<              prm_pdb_atom.get_alt_locn();                                    // 17             Character     altLoc       Alternate location indicator.
-	prm_os <<              get_amino_acid_code_string( prm_pdb_atom );                     // 18 - 20        Residue name  resName      Residue name.
+	prm_os << setw( 4 ) << get_element_type_untrimmed_str_ref( prm_pdb_atom );           // 13 - 16        Atom          name         Atom name.
+	prm_os <<              prm_pdb_atom.get_alt_locn();                                  // 17             Character     altLoc       Alternate location indicator.
+	prm_os <<              get_amino_acid_code_string( prm_pdb_atom );                   // 18 - 20        Residue name  resName      Residue name.
 	prm_os << " ";
-	prm_os << prm_res_id.get_chain_label();                                                // 22             Character     chainID      Chain identifier.
-	                                                                                       // 23 - 26        Integer       resSeq       Residue sequence number.
-	prm_os << setw( 5 ) << residue_name_with_insert_or_space;                              // 27             AChar         iCode        Code for insertion of residues.
+	prm_os << prm_res_id.get_chain_label();                                              // 22             Character     chainID      Chain identifier.
+	                                                                                     // 23 - 26        Integer       resSeq       Residue sequence number.
+	prm_os << setw( 5 ) << residue_name_with_insert_or_space;                            // 27             AChar         iCode        Code for insertion of residues.
 	prm_os << "   ";
 	prm_os << fixed     << setprecision( 3 );
-	prm_os << setw( 8 ) << atom_coord.get_x();                                             // 31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
-	prm_os << setw( 8 ) << atom_coord.get_y();                                             // 39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
-	prm_os << setw( 8 ) << atom_coord.get_z();                                             // 47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
+	prm_os << setw( 8 ) << atom_coord.get_x();                                           // 31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
+	prm_os << setw( 8 ) << atom_coord.get_y();                                           // 39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
+	prm_os << setw( 8 ) << atom_coord.get_z();                                           // 47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
 	prm_os << fixed     << setprecision( 2 );
-	prm_os << setw( 6 ) << prm_pdb_atom.get_occupancy();                                   // 55 - 60        Real(6.2)     occupancy    Occupancy.
-	prm_os << ( format( "%6.2f" ) % prm_pdb_atom.get_temp_factor() ).str().substr( 0, 6 ); // 61 - 66        Real(6.2)     tempFactor   Temperature  factor.
-	const auto element_sym_strref = get_element_symbol_str_ref( prm_pdb_atom );            // 77 - 78        LString(2)    element      Element symbol, right-justified.
-	const auto charge_strref      = get_charge_str_ref        ( prm_pdb_atom );            // 79 - 80        LString(2)    charge       Charge  on the atom.
+	prm_os << setw( 6 ) << prm_pdb_atom.get_occupancy();                                 // 55 - 60        Real(6.2)     occupancy    Occupancy.
+	prm_os << ::fmt::format( "{:6.2f}", prm_pdb_atom.get_temp_factor() ).substr( 0, 6 ); // 61 - 66        Real(6.2)     tempFactor   Temperature  factor.
+	const auto element_sym_strref = get_element_symbol_str_ref( prm_pdb_atom );          // 77 - 78        LString(2)    element      Element symbol, right-justified.
+	const auto charge_strref      = get_charge_str_ref        ( prm_pdb_atom );          // 79 - 80        LString(2)    charge       Charge  on the atom.
 
 	if ( ! element_sym_strref.empty() || ! charge_strref.empty() ) {
 		prm_os << "          ";

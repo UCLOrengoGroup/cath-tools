@@ -994,7 +994,7 @@ string cath::align::to_cath_ssap_legacy_format_alignment_string(const alignment 
 						: ssap_legacy_alignment_left_side_gap_string()
 					)
 					+ "  "
-					+ ( boost::format( "%3d") % score ).str()
+					+ ( format( "%3d") % score ).str()
 					+ "  "
 					+ (
 						has_posn_b

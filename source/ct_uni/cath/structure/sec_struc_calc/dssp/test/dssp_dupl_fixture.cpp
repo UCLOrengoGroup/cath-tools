@@ -26,7 +26,6 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/format.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/test/tools/floating_point_comparison.hpp>
 #include <boost/test/tools/old/impl.hpp> // For check_is_close
@@ -54,7 +53,6 @@ using ::boost::adaptors::filtered;
 using ::boost::algorithm::is_space;
 using ::boost::algorithm::starts_with;
 using ::boost::algorithm::trim_copy;
-using ::boost::format;
 using ::boost::icontains;
 using ::boost::is_any_of;
 using ::boost::math::fpc::percent_tolerance;
@@ -139,7 +137,7 @@ str_opt cath::sec::difference_string(const string         &prm_context_str,     
 				+ ")";
 		}
 
-		const auto rounded_calc_energy = stod( ( format("%3.1f") % prm_hbond_half_opt->energy ).str() );
+		const auto rounded_calc_energy = stod( ::fmt::format( "{:3.1f}", prm_hbond_half_opt->energy ) );
 		if ( ! check_is_close( prm_dsspfile_hbond_opt->energy, rounded_calc_energy, percent_tolerance( 0.0001 ) ) ) {
 			return "DSSP calculated bond energy of "
 				+ ::std::to_string( prm_dsspfile_hbond_opt->energy )

@@ -21,9 +21,10 @@
 #include "sec_calc.hpp"
 
 #include <boost/algorithm/string/join.hpp>
-#include <boost/format.hpp>
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/algorithm/copy_build.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
@@ -48,7 +49,6 @@ using namespace ::cath::sec;
 using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::format;
 using ::boost::integer_range;
 using ::boost::irange;
 using ::boost::sub_range;
@@ -62,9 +62,9 @@ using ::std::string;
 coord cath::sec::round_like_sec_file_copy(const coord &prm_sec_coord ///< The coord to round
                                           ) {
 	return {
-		stod( ( format("%6.2f") % prm_sec_coord.get_x() ).str() ),
-		stod( ( format("%6.2f") % prm_sec_coord.get_y() ).str() ),
-		stod( ( format("%6.2f") % prm_sec_coord.get_z() ).str() )
+		stod( ::fmt::format( "{:6.2f}", prm_sec_coord.get_x() ) ),
+		stod( ::fmt::format( "{:6.2f}", prm_sec_coord.get_y() ) ),
+		stod( ::fmt::format( "{:6.2f}", prm_sec_coord.get_z() ) )
 	};
 }
 

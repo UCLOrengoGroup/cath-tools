@@ -25,7 +25,6 @@
 #include <string>
 
 #include <boost/algorithm/string/join.hpp>
-#include <boost/format.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/algorithm/reverse.hpp>
@@ -47,7 +46,6 @@ using namespace ::cath::common;
 using ::boost::adaptors::reversed;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::format;
 using ::boost::range::reverse;
 using ::boost::range::sort;
 using ::std::filesystem::path;

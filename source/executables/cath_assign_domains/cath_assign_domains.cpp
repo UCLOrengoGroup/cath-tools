@@ -60,6 +60,7 @@ using ::boost::algorithm::is_space;
 using ::boost::algorithm::join;
 using ::boost::algorithm::starts_with;
 using ::boost::algorithm::token_compress_on;
+using ::boost::format;
 using ::boost::is_space;
 using ::std::filesystem::path;
 using ::std::make_optional;
@@ -177,9 +178,9 @@ namespace {
 				const string &match_sf   = prm_sf_of_dom.get_superfamily_of_domain( match_id );
 				const bool    created_sf = prm_sf_of_dom.is_in_created_sf         ( match_id );
 				return match_id
-					+ "; SSAP:**" + ( boost::format( "%g") % x.get_ssap_score() ).str()
-					+ "**; O/L:**"  + ( boost::format( "%g") % x.get_overlap_pc() ).str()
-					+ "**; RMSD:**" + ( boost::format( "%g") % x.get_rmsd()       ).str()
+					+ "; SSAP:**" + ( format( "%g") % x.get_ssap_score() ).str()
+					+ "**; O/L:**"  + ( format( "%g") % x.get_overlap_pc() ).str()
+					+ "**; RMSD:**" + ( format( "%g") % x.get_rmsd()       ).str()
 					+ "**; **" + ( created_sf ? "" : "cathid:" ) + match_sf
 					+ "** ";
 			}
@@ -193,7 +194,7 @@ namespace {
 				const string &match_sf   = prm_sf_of_dom.get_superfamily_of_domain( match_id );
 				const bool    created_sf = prm_sf_of_dom.is_in_created_sf( match_id );
 				return x.get_name_2()
-					+ "; PRC:**"  + ( boost::format( "%g") % x.get_evalue() ).str()
+					+ "; PRC:**"  + ( format( "%g") % x.get_evalue() ).str()
 					+ "**; **" + ( created_sf ? "" : "cathid:" ) + match_sf
 					+ "** ";
 			}

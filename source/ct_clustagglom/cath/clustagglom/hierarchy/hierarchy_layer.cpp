@@ -21,7 +21,8 @@
 #include "hierarchy_layer.hpp"
 
 #include <boost/algorithm/string/join.hpp>
-#include <boost/format.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/range/indices.hpp"
@@ -31,7 +32,6 @@ using namespace ::cath;
 using namespace ::cath::common;
 
 using ::boost::algorithm::join;
-using ::boost::format;
 using ::std::ostream;
 using ::std::string;
 
@@ -46,7 +46,7 @@ str_vec cath::clust::to_strings(const hierarchy_layer &prm_hierarchy_layer ///< 
 		[&] (const size_t &x) {
 			return
 				  "GROUP "
-				+ ( format( R"(%3d)" ) % x ).str()
+				+ ::fmt::format( "{:3d}", x )
 				+ ": "
 				+ to_string( prm_hierarchy_layer[ x ] );
 		}

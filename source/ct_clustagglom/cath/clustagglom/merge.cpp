@@ -26,8 +26,9 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/format.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+
+#include <fmt/core.h>
 
 #include "cath/common/boost_addenda/string_algorithm/split_build.hpp"
 #include "cath/common/exception/runtime_error_exception.hpp"
@@ -40,7 +41,6 @@ using namespace ::cath::clust;
 
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
-using ::boost::format;
 using ::boost::is_space;
 using ::boost::token_compress_on;
 using ::boost::trim_copy;
@@ -55,19 +55,11 @@ using ::std::to_string;
 /// \brief Generate a string describing the specified merge
 ///
 /// \relates merge
-string cath::clust::to_string(const merge &prm_merge ///< The merge to describe
-                              ) {
+string cath::clust::to_string( const merge &prm_merge ///< The merge to describe
+                               ) {
 	using ::std::to_string;
-	return
-		  "merge["
-		+ ( format( R"(%5d)" ) % prm_merge.node_a     ).str()
-		+ " + "
-		+ ( format( R"(%5d)" ) % prm_merge.node_b     ).str()
-		+ " -> "
-		+ ( format( R"(%5d)" ) % prm_merge.merge_node ).str()
-		+ " ("
-		+ to_string( prm_merge.dissim )
-		+ ")]";
+	return ::fmt::format(
+	  "merge[{:5d} + {:5d} -> {:5d} ({})]", prm_merge.node_a, prm_merge.node_b, prm_merge.merge_node, to_string( prm_merge.dissim ) );
 }
 
 /// \brief Generate a string describing the specified merge_vec
@@ -90,15 +82,7 @@ void cath::clust::write_merge_list(ostream         &prm_os,    ///< The ostream 
 	prm_os << join(
 		prm_merges
 			| transformed( [] (const merge &x) {
-				return
-					  ( format( R"(%5d)" ) % x.node_a     ).str()
-					+ "\t"
-					+ ( format( R"(%5d)" ) % x.node_b     ).str()
-					+ "\t"
-					+ ( format( R"(%5d)" ) % x.merge_node ).str()
-					+ "\t"
-					+ to_string( x.dissim )
-					+ "\n";
+				return ::fmt::format( "{:5d}\t{:5d}\t{:5d}\t{}\n", x.node_a, x.node_b, x.merge_node, to_string( x.dissim ) );
 			} ),
 		""
 	);

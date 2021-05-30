@@ -223,8 +223,8 @@ path do_the_ssaps_alignment_acquirer::make_temp_dir_for_doing_ssaps(const strucs
                                                                     ) {
 	return temp_directory_path() / (
 		  "cath-tools.tmp."
-		+ ( boost::format( R"(%|08X|)" ) % non_crypto_hash_copy( 0, prm_strucs_context ) ).str()
+		+ ( format( R"(%|08X|)" ) % non_crypto_hash_copy( 0, prm_strucs_context ) ).str()
 		+ "_"
-		+ ( boost::format( R"(%|08X|)" ) % non_crypto_hash_copy( 1, prm_strucs_context ) ).str()
+		+ ( format( R"(%|08X|)" ) % non_crypto_hash_copy( 1, prm_strucs_context ) ).str()
 	);
 }
