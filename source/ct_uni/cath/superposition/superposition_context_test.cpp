@@ -198,7 +198,7 @@ BOOST_AUTO_TEST_CASE(get_supn_content_pdb_works) {
 // 			);
 // 			// std::cerr << res.get_amino_acid() << "\t" << max_dist << "\n";
 // 			const auto aa_code = res.get_amino_acid().get_code();
-// 			// \todo Come C++17, do this with insert_or_assign()
+// 			// \todo Do this with insert_or_assign()
 // 			if ( ! contains( max_ca_to_atom_dists_by_aa, aa_code ) ) {
 // 				max_ca_to_atom_dists_by_aa.emplace( aa_code, cath::doub_vec{ max_dist } );
 // 			}
