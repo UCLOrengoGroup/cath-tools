@@ -18,6 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <numeric>
+
 #include <boost/algorithm/cxx11/none_of.hpp>
 #include <boost/range/combine.hpp>
 #include <boost/range/irange.hpp>
@@ -38,6 +40,7 @@ using namespace ::std;
 using ::boost::algorithm::none_of;
 using ::boost::irange;
 using ::boost::range::combine;
+using ::std::gcd;
 
 namespace {
 
@@ -87,89 +90,6 @@ namespace {
 BOOST_FIXTURE_TEST_SUITE(constexpr_modulo_fns_test_suite, constexpr_modulo_fns_test_suite_fixture)
 
 /// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(constexpr_lcm_works) {
-	static_assert( constexpr_lcm( 1_z, 1_z ) ==  1, "constexpr_lcm( 1, 1 ) should be equal to  1" );
-	static_assert( constexpr_lcm( 1_z, 2_z ) ==  2, "constexpr_lcm( 1, 2 ) should be equal to  2" );
-	static_assert( constexpr_lcm( 1_z, 3_z ) ==  3, "constexpr_lcm( 1, 3 ) should be equal to  3" );
-	static_assert( constexpr_lcm( 1_z, 4_z ) ==  4, "constexpr_lcm( 1, 4 ) should be equal to  4" );
-	static_assert( constexpr_lcm( 1_z, 5_z ) ==  5, "constexpr_lcm( 1, 5 ) should be equal to  5" );
-	static_assert( constexpr_lcm( 1_z, 6_z ) ==  6, "constexpr_lcm( 1, 6 ) should be equal to  6" );
-	static_assert( constexpr_lcm( 2_z, 1_z ) ==  2, "constexpr_lcm( 2, 1 ) should be equal to  2" );
-	static_assert( constexpr_lcm( 2_z, 2_z ) ==  2, "constexpr_lcm( 2, 2 ) should be equal to  2" );
-	static_assert( constexpr_lcm( 2_z, 3_z ) ==  6, "constexpr_lcm( 2, 3 ) should be equal to  6" );
-	static_assert( constexpr_lcm( 2_z, 4_z ) ==  4, "constexpr_lcm( 2, 4 ) should be equal to  4" );
-	static_assert( constexpr_lcm( 2_z, 5_z ) == 10, "constexpr_lcm( 2, 5 ) should be equal to 10" );
-	static_assert( constexpr_lcm( 2_z, 6_z ) ==  6, "constexpr_lcm( 2, 6 ) should be equal to  6" );
-	static_assert( constexpr_lcm( 3_z, 1_z ) ==  3, "constexpr_lcm( 3, 1 ) should be equal to  3" );
-	static_assert( constexpr_lcm( 3_z, 2_z ) ==  6, "constexpr_lcm( 3, 2 ) should be equal to  6" );
-	static_assert( constexpr_lcm( 3_z, 3_z ) ==  3, "constexpr_lcm( 3, 3 ) should be equal to  3" );
-	static_assert( constexpr_lcm( 3_z, 4_z ) == 12, "constexpr_lcm( 3, 4 ) should be equal to 12" );
-	static_assert( constexpr_lcm( 3_z, 5_z ) == 15, "constexpr_lcm( 3, 5 ) should be equal to 15" );
-	static_assert( constexpr_lcm( 3_z, 6_z ) ==  6, "constexpr_lcm( 3, 6 ) should be equal to  6" );
-	static_assert( constexpr_lcm( 4_z, 1_z ) ==  4, "constexpr_lcm( 4, 1 ) should be equal to  4" );
-	static_assert( constexpr_lcm( 4_z, 2_z ) ==  4, "constexpr_lcm( 4, 2 ) should be equal to  4" );
-	static_assert( constexpr_lcm( 4_z, 3_z ) == 12, "constexpr_lcm( 4, 3 ) should be equal to 12" );
-	static_assert( constexpr_lcm( 4_z, 4_z ) ==  4, "constexpr_lcm( 4, 4 ) should be equal to  4" );
-	static_assert( constexpr_lcm( 4_z, 5_z ) == 20, "constexpr_lcm( 4, 5 ) should be equal to 20" );
-	static_assert( constexpr_lcm( 4_z, 6_z ) == 12, "constexpr_lcm( 4, 6 ) should be equal to 12" );
-	static_assert( constexpr_lcm( 5_z, 1_z ) ==  5, "constexpr_lcm( 5, 1 ) should be equal to  5" );
-	static_assert( constexpr_lcm( 5_z, 2_z ) == 10, "constexpr_lcm( 5, 2 ) should be equal to 10" );
-	static_assert( constexpr_lcm( 5_z, 3_z ) == 15, "constexpr_lcm( 5, 3 ) should be equal to 15" );
-	static_assert( constexpr_lcm( 5_z, 4_z ) == 20, "constexpr_lcm( 5, 4 ) should be equal to 20" );
-	static_assert( constexpr_lcm( 5_z, 5_z ) ==  5, "constexpr_lcm( 5, 5 ) should be equal to  5" );
-	static_assert( constexpr_lcm( 5_z, 6_z ) == 30, "constexpr_lcm( 5, 6 ) should be equal to 30" );
-	static_assert( constexpr_lcm( 6_z, 1_z ) ==  6, "constexpr_lcm( 6, 1 ) should be equal to  6" );
-	static_assert( constexpr_lcm( 6_z, 2_z ) ==  6, "constexpr_lcm( 6, 2 ) should be equal to  6" );
-	static_assert( constexpr_lcm( 6_z, 3_z ) ==  6, "constexpr_lcm( 6, 3 ) should be equal to  6" );
-	static_assert( constexpr_lcm( 6_z, 4_z ) == 12, "constexpr_lcm( 6, 4 ) should be equal to 12" );
-	static_assert( constexpr_lcm( 6_z, 5_z ) == 30, "constexpr_lcm( 6, 5 ) should be equal to 30" );
-	static_assert( constexpr_lcm( 6_z, 6_z ) ==  6, "constexpr_lcm( 6, 6 ) should be equal to  6" );
-	BOOST_CHECK( true );
-}
-
-
-/// \brief TODOCUMENT
-BOOST_AUTO_TEST_CASE(constexpr_gcd_works) {
-	static_assert( constexpr_gcd( 0_z, 0_z ) == 0, "constexpr_gcd( 0, 0 ) should be equal to 0" );
-	static_assert( constexpr_gcd( 0_z, 1_z ) == 1, "constexpr_gcd( 0, 1 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 0_z, 2_z ) == 2, "constexpr_gcd( 0, 2 ) should be equal to 2" );
-	static_assert( constexpr_gcd( 0_z, 3_z ) == 3, "constexpr_gcd( 0, 3 ) should be equal to 3" );
-	static_assert( constexpr_gcd( 0_z, 4_z ) == 4, "constexpr_gcd( 0, 4 ) should be equal to 4" );
-	static_assert( constexpr_gcd( 0_z, 5_z ) == 5, "constexpr_gcd( 0, 5 ) should be equal to 5" );
-	static_assert( constexpr_gcd( 1_z, 0_z ) == 1, "constexpr_gcd( 1, 0 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 1_z, 1_z ) == 1, "constexpr_gcd( 1, 1 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 1_z, 2_z ) == 1, "constexpr_gcd( 1, 2 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 1_z, 3_z ) == 1, "constexpr_gcd( 1, 3 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 1_z, 4_z ) == 1, "constexpr_gcd( 1, 4 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 1_z, 5_z ) == 1, "constexpr_gcd( 1, 5 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 2_z, 0_z ) == 2, "constexpr_gcd( 2, 0 ) should be equal to 2" );
-	static_assert( constexpr_gcd( 2_z, 1_z ) == 1, "constexpr_gcd( 2, 1 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 2_z, 2_z ) == 2, "constexpr_gcd( 2, 2 ) should be equal to 2" );
-	static_assert( constexpr_gcd( 2_z, 3_z ) == 1, "constexpr_gcd( 2, 3 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 2_z, 4_z ) == 2, "constexpr_gcd( 2, 4 ) should be equal to 2" );
-	static_assert( constexpr_gcd( 2_z, 5_z ) == 1, "constexpr_gcd( 2, 5 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 3_z, 0_z ) == 3, "constexpr_gcd( 3, 0 ) should be equal to 3" );
-	static_assert( constexpr_gcd( 3_z, 1_z ) == 1, "constexpr_gcd( 3, 1 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 3_z, 2_z ) == 1, "constexpr_gcd( 3, 2 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 3_z, 3_z ) == 3, "constexpr_gcd( 3, 3 ) should be equal to 3" );
-	static_assert( constexpr_gcd( 3_z, 4_z ) == 1, "constexpr_gcd( 3, 4 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 3_z, 5_z ) == 1, "constexpr_gcd( 3, 5 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 4_z, 0_z ) == 4, "constexpr_gcd( 4, 0 ) should be equal to 4" );
-	static_assert( constexpr_gcd( 4_z, 1_z ) == 1, "constexpr_gcd( 4, 1 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 4_z, 2_z ) == 2, "constexpr_gcd( 4, 2 ) should be equal to 2" );
-	static_assert( constexpr_gcd( 4_z, 3_z ) == 1, "constexpr_gcd( 4, 3 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 4_z, 4_z ) == 4, "constexpr_gcd( 4, 4 ) should be equal to 4" );
-	static_assert( constexpr_gcd( 4_z, 5_z ) == 1, "constexpr_gcd( 4, 5 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 5_z, 0_z ) == 5, "constexpr_gcd( 5, 0 ) should be equal to 5" );
-	static_assert( constexpr_gcd( 5_z, 1_z ) == 1, "constexpr_gcd( 5, 1 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 5_z, 2_z ) == 1, "constexpr_gcd( 5, 2 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 5_z, 3_z ) == 1, "constexpr_gcd( 5, 3 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 5_z, 4_z ) == 1, "constexpr_gcd( 5, 4 ) should be equal to 1" );
-	static_assert( constexpr_gcd( 5_z, 5_z ) == 5, "constexpr_gcd( 5, 5 ) should be equal to 5" );
-	BOOST_CHECK( true );
-}
-
-/// \brief TODOCUMENT
 BOOST_AUTO_TEST_CASE(chinese_remainder_coprime_pair_works) {
 	static_assert(                     detail::extended_euclid_algo(             5_z, 3_z ) == diff_diff_pair( -1,   2 )  );
 	static_assert(                     detail::extended_euclid_algo(             3_z, 5_z ) == diff_diff_pair(  2,  -1 )  );
@@ -198,7 +118,7 @@ BOOST_AUTO_TEST_CASE(chinese_remainder_coprime_pair_works) {
 	for (const auto &mods_tuple : cross( mod_range, mod_range ) ) {
 		const auto &mod_a = get<0>( mods_tuple );
 		const auto &mod_b = get<1>( mods_tuple );
-		if ( constexpr_gcd( mod_a, mod_b ) == 1 ) {
+		if ( gcd( mod_a, mod_b ) == 1 ) {
 			for (const auto &indices_tuple : cross( index_range, index_range ) ) {
 				const auto &index_a = get<0>( indices_tuple );
 				const auto &index_b = get<1>( indices_tuple );

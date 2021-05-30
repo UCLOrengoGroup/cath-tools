@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_CO_STRIDE_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_CO_STRIDE_HPP
 
+#include <numeric>
 #include <optional>
 #include <type_traits>
 #include <utility>
@@ -64,7 +65,7 @@ namespace cath::scan::detail {
 	                             const T &prm_stride_b  ///< The stride TODOCUMENT
 	                             ) {
 		static_assert( std::is_unsigned_v<T>, "co_stride() must be performed on an unsigned integral type" );
-		return common::constexpr_lcm( prm_stride_a + 1, prm_stride_b + 1 ) - 1;
+		return ::std::lcm( prm_stride_a + 1, prm_stride_b + 1 ) - 1;
 	}
 
 	/// \brief TODOCUMENT

@@ -21,17 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_MODULO_FNS_HPP
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_CONSTEXPR_MODULO_FNS_HPP
 
+#include <numeric>
+#include <type_traits>
+
 #include "cath/common/algorithm/constexpr_integer_rounding.hpp"
 #include "cath/common/type_aliases.hpp"
 
-#include <type_traits>
-
 namespace cath::common {
-
-	template <typename T>
-	inline constexpr T constexpr_gcd(T, T);
-	template <typename T>
-	inline constexpr T constexpr_lcm(T, T);
 
 	namespace detail {
 
@@ -104,7 +100,7 @@ namespace cath::common {
 				( detail::extended_euclid_algo_products( prm_mod_a, prm_mod_b ).first  * static_cast<std::make_signed_t<T>>( prm_index_a ) )
 				+
 				( detail::extended_euclid_algo_products( prm_mod_a, prm_mod_b ).second * static_cast<std::make_signed_t<T>>( prm_index_b ) )
-			) % static_cast<std::make_signed_t<T>>( constexpr_lcm( prm_mod_a, prm_mod_b ) );
+			) % static_cast<std::make_signed_t<T>>( ::std::lcm( prm_mod_a, prm_mod_b ) );
 		}
 
 		/// \brief TODOCUMENT
@@ -128,7 +124,7 @@ namespace cath::common {
 							static_cast<std::make_signed_t<T>>( prm_index_a + prm_index_b )
 							-
 							chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b ),
-							static_cast<std::make_signed_t<T>>( constexpr_lcm( prm_mod_a, prm_mod_b ) )
+							static_cast<std::make_signed_t<T>>( ::std::lcm( prm_mod_a, prm_mod_b ) )
 						)
 					)
 				)
@@ -154,7 +150,7 @@ namespace cath::common {
 //					chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 //					+
 //					(
-//						static_cast<std::make_signed_t<T>>( constexpr_lcm( prm_mod_a, prm_mod_b ) )
+//						static_cast<std::make_signed_t<T>>( ::std::lcm( prm_mod_a, prm_mod_b ) )
 //						*
 //						(
 //							static_cast<std::make_signed_t<T>>( 1 )
@@ -166,7 +162,7 @@ namespace cath::common {
 //									chinese_remainder_coprime_pair_num( prm_index_a, prm_index_b, prm_mod_a, prm_mod_b )
 //								)
 //								/
-//								static_cast<std::make_signed_t<T>>( constexpr_lcm( prm_mod_a, prm_mod_b ) )
+//								static_cast<std::make_signed_t<T>>( ::std::lcm( prm_mod_a, prm_mod_b ) )
 //							)
 //						)
 //					)
@@ -189,32 +185,6 @@ namespace cath::common {
 			);
 		}
 	} // namespace detail
-
-	/// \brief TODOCUMENT
-	///
-	/// \todo Come C++17, switch to std::gdd()
-	template <typename T>
-	inline constexpr T constexpr_gcd(T a, ///< TODOCUMENT
-	                                 T b  ///< TODOCUMENT
-	                                 ) {
-		static_assert( std::is_unsigned_v<T>, "constexpr_gcd() must be performed on an unsigned integral type" );
-		return ( b == 0 ) ? a
-		                  : constexpr_gcd( b, a % b );
-	}
-
-	/// \brief TODOCUMENT
-	///
-	/// \todo Come C++17, switch to std::lcm()
-	template <typename T>
-	inline constexpr T constexpr_lcm(T a, ///< TODOCUMENT
-	                                 T b  ///< TODOCUMENT
-	                                 ) {
-		static_assert( std::is_unsigned_v<T>, "constexpr_lcm() must be performed on an unsigned integral type" );
-		return ( a != 0 && b != 0 ) ? ( a / constexpr_gcd( a, b ) ) * b
-		                            : 0;
-	}
-
-	// template <typename T> class TD;
 
 	/// \brief TODOCUMENT
 	template <typename T>
