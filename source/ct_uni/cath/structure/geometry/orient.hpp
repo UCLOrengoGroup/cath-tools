@@ -33,7 +33,7 @@ namespace cath::geom {
 
 	namespace detail {
 
-		doub_doub_pair x_and_y_of_later_weighted_cog( const coord_list &a );
+		doub_doub_pair x_and_y_of_later_weighted_cog( const coord_list & );
 
 	} // namespace detail
 

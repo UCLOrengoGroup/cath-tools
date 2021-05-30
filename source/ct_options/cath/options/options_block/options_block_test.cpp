@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(ctor_does_not_throw, options_block_type, all_optio
 
 /// \brief Check that each type of options_block can be successfully cloned to the correct dynamic type
 BOOST_AUTO_TEST_CASE_TEMPLATE(clone_works, options_block_type, all_options_block_types) {
-	const options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
+	const auto the_options_block(construct_options_block_for_testing<options_block_type>());
 	const unique_ptr<options_block> options_block_new_clone_ptr = the_options_block.clone();
 	const auto &options_block_ref = *options_block_new_clone_ptr;
 	BOOST_CHECK_EQUAL(           typeid( options_block_ref ),                    typeid( the_options_block )          );
@@ -94,14 +94,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(clone_works, options_block_type, all_options_block
 
 /// \brief Check that each type of options_block will return an options_description from get_options_description()
 BOOST_AUTO_TEST_CASE_TEMPLATE(get_options_description_works, options_block_type, all_options_block_types) {
-	options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
+	auto the_options_block(construct_options_block_for_testing<options_block_type>());
 	BOOST_CHECK_NO_THROW_DIAG( const options_description desc = the_options_block.get_visible_options_description( 100 ) );
 	BOOST_CHECK_NO_THROW_DIAG( const options_description desc = the_options_block.get_hidden_options_description ( 100 ) );
 }
 
 /// \brief Check that each type of options_block will return an options_description from get_options_description()
 BOOST_AUTO_TEST_CASE_TEMPLATE(invalid_string_works, options_block_type, all_options_block_types) {
-	const options_block_type the_options_block(construct_options_block_for_testing<options_block_type>());
+	const auto the_options_block(construct_options_block_for_testing<options_block_type>());
 	variables_map vm;
 	BOOST_CHECK_NO_THROW_DIAG( const str_opt desc = the_options_block.invalid_string( vm ) );
 }

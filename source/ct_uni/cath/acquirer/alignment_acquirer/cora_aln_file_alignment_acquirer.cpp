@@ -44,7 +44,6 @@ using namespace ::cath::common;
 using namespace ::cath::file;
 using namespace ::cath::opts;
 
-using ::std::cerr;
 using ::std::filesystem::path;
 using ::std::ifstream;
 using ::std::make_pair;

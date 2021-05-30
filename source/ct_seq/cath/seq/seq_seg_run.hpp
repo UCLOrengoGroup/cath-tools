@@ -555,20 +555,18 @@ namespace cath::seq {
 			return false;
 		}
 		// Otherwise, it turns out to be measurably faster to just do all-vs-all
-		else {
-			for (const auto &seg_ctr_a : common::indices( num_segs_a ) ) {
-				for (const auto &seg_ctr_b : common::indices( num_segs_b ) ) {
-					const bool seg_overlap = are_overlapping(
-						get_seq_seg_of_seg_idx( prm_seq_seg_run_a, seg_ctr_a ),
-						get_seq_seg_of_seg_idx( prm_seq_seg_run_b, seg_ctr_b )
-					);
-					if ( seg_overlap ) {
-						return true;
-					}
+		for (const auto &seg_ctr_a : common::indices( num_segs_a ) ) {
+			for (const auto &seg_ctr_b : common::indices( num_segs_b ) ) {
+				const bool seg_overlap = are_overlapping(
+					get_seq_seg_of_seg_idx( prm_seq_seg_run_a, seg_ctr_a ),
+					get_seq_seg_of_seg_idx( prm_seq_seg_run_b, seg_ctr_b )
+				);
+				if ( seg_overlap ) {
+					return true;
 				}
 			}
-			return false;
 		}
+		return false;
 	}
 
 	/// \brief Return the number of residues by which the two specified seq_seg_runs overlap (or 0 if they don't overlap)

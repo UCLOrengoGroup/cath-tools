@@ -44,10 +44,9 @@ namespace cath::align {
 	/// \todo Extend this code to work with more than two residue lists.
 	///       Look at residue_name_aligner_test.cpp for relevant notes.
 	class residue_name_aligner final {
-	private:
+	public:
 		residue_name_aligner() = delete;
 
-	public:
 		static alignment residue_name_align(const residue_name_vec_vec &);
 	};
 

@@ -23,9 +23,9 @@
 
 #include <array>
 #include <filesystem>
+#include <map>
 #include <string_view>
 #include <tuple>
-#include <map>
 
 #include "cath/common/path_type_aliases.hpp"
 #include "cath/file/data_file.hpp"

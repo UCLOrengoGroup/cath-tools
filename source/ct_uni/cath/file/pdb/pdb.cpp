@@ -91,7 +91,6 @@ using ::std::ifstream;
 using ::std::istream;
 using ::std::istringstream;
 using ::std::literals::string_literals::operator""s;
-using ::std::make_pair;
 using ::std::make_tuple;
 using ::std::nullopt;
 using ::std::ofstream;

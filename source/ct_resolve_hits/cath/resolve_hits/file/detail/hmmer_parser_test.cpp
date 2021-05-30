@@ -38,7 +38,6 @@ using namespace ::cath::seq;
 
 using ::boost::test_tools::per_element;
 using ::std::filesystem::path;
-using ::std::literals::string_literals::operator""s;
 using ::std::make_pair;
 using ::std::pair;
 using ::std::string;

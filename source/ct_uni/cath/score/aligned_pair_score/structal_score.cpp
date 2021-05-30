@@ -79,7 +79,7 @@ score_value structal_score::do_calculate(const alignment &prm_alignment, ///< Th
 		prm_protein_b
 	);
 
-	const score_value num_gaps = numeric_cast<score_value>( get_naive_num_gaps( prm_alignment ) );
+	const auto num_gaps = numeric_cast<score_value>( get_naive_num_gaps( prm_alignment ) );
 
 	const auto superposed_second_coords = superpose_copy_second_coords_to_first(
 		common_coords.first,

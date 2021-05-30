@@ -98,7 +98,7 @@ void cath::file::non_crypto_hash(size_t         &prm_init_hash_value, ///< The i
 	const str_opt  &domain_name_from_regions_opt = prm_name_set.get_domain_name_from_regions();
 
 	// Follow libstdc++'s lead of attempting to make the value used for none/nullopt an "unusual" value
-	static constexpr size_t NULL_HASH_VAL = static_cast<size_t>( -3333 );
+	static constexpr auto NULL_HASH_VAL = static_cast<size_t>( -3333 );
 
 	hash_value_combine( prm_init_hash_value,                                std::hash<std::string>()( name_from_acq                     )                 );
 	hash_value_combine( prm_init_hash_value, primary_source_file_opt      ? std::hash<std::string>()( primary_source_file_opt->string() ) : NULL_HASH_VAL );

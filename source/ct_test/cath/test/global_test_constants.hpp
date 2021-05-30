@@ -58,12 +58,12 @@ namespace cath {
 		global_test_constants();
 		~global_test_constants() noexcept;
 
+	public:
 		/// \brief Specify that the copy-ctor shouldn't be used
 		global_test_constants(const global_test_constants &) = delete;
 		/// \brief Specify that the copy-assign shouldn't be used
 		global_test_constants & operator=(const global_test_constants &) = delete;
 
-	public:
 		static const ::std::filesystem::path & TEST_BASIC_FILE_TEST_DATA_DIR();
 		static const ::std::filesystem::path & TEST_MULTI_SSAP_SUPERPOSE_DIR();
 		static const ::std::filesystem::path & TEST_RESIDUE_IDS_DATA_DIR();

@@ -121,7 +121,7 @@ BOOST_AUTO_TEST_CASE(gets_pdb_accessibility_surface_area_correct) {
 	// const auto     parsed_pdb        = read_pdb_file( "/cath-tools/refine_stuff/really_long/1u6gC00" );
 	// const size_vec expected_accesses = { 1 };
 
-	const size_vec get_accesses_raw  = transform_build<size_vec>(
+	const auto get_accesses_raw  = transform_build<size_vec>(
 		calc_accessibilities_with_scanning( parsed_pdb ),
 		[] (const double &x) { return numeric_cast<size_t>( round( x ) ); }
 	);

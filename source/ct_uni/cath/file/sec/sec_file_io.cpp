@@ -210,7 +210,7 @@ sec_struc_planar_angles_vec cath::file::parse_sec_angles_line(const string &prm_
 	}
 
 	// Split the line on whitespace and throw if the number of parts doesn't divide by 3
-	str_deq line_parts = split_build<str_deq>( trimmed_sec_angles_string, is_any_of( " " ), token_compress_on );
+	auto line_parts = split_build<str_deq>( trimmed_sec_angles_string, is_any_of( " " ), token_compress_on );
 	if ( line_parts.size() % 3 != 0 ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot parse planar angles from line in sec file because number of parts in line is not a multiple of three"));
 	}

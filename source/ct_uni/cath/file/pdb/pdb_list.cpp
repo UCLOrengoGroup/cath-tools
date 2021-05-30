@@ -158,17 +158,9 @@ pdb_list cath::file::pdb_list_of_backbone_complete_region_limited_subset_pdbs(co
 	pdb_list new_pdb_list;
 	new_pdb_list.reserve( prm_pdb_list.size() );
 
-	// \TODO Come C++17 and structured bindings, use here
-	for (const boost::tuple<const region_vec_opt &, const pdb &> &the_pair : combine( prm_regions, prm_pdb_list ) ) {
+	for ( const auto &[ regions, the_pdb ] : combine( prm_regions, prm_pdb_list ) ) {
 		new_pdb_list.push_back(
-			backbone_complete_subset_of_pdb(
-				get_regions_limited_pdb(
-					the_pair.get<0>(),
-					the_pair.get<1>()
-				),
-				prm_ostream
-			).first
-		);
+		  backbone_complete_subset_of_pdb( get_regions_limited_pdb( regions, the_pdb ), prm_ostream ).first );
 	}
 	return new_pdb_list;
 }

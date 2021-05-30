@@ -80,10 +80,10 @@ vcie_match_criteria cath::index::detail::parse_vcie_match_criteria(const string 
                                                                    ) {
 	// Build a map of field name to value (represented as double)
 	const string  spaces_stripped_string = erase_all_copy( prm_string, " " );
-	const str_vec parts = split_build<str_vec>( spaces_stripped_string, is_any_of( "," ) );
+	const auto parts = split_build<str_vec>( spaces_stripped_string, is_any_of( "," ) );
 	str_doub_map values;
 	for (const string &part : parts) {
-		str_vec halves = split_build<str_vec>( part, is_any_of( "=" ) );
+		auto halves = split_build<str_vec>( part, is_any_of( "=" ) );
 		if ( halves.size() != 2 ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Part of vcie_match_criteria string didn't have two halves"));
 		}

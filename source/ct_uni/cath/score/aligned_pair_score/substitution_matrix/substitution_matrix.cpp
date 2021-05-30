@@ -85,7 +85,7 @@ size_vec substitution_matrix::order_permutation(const amino_acid_vec &prm_orig_a
 	// For each of the amino acids in the original ordering...
 	for (const amino_acid &orig_amino_acid : prm_orig_aa_ordering) {
 		// Find the index of the amino acid in the new ordering
-		const size_t index_in_new = numeric_cast<size_t>( distance(
+		const auto index_in_new = numeric_cast<size_t>( distance(
 			cbegin( prm_new_aa_ordering ),
 			find(
 				prm_new_aa_ordering,
@@ -200,13 +200,13 @@ score_type substitution_matrix::get_score(const amino_acid &prm_amino_acid_a, //
                                           const amino_acid &prm_amino_acid_b  ///< The second amino acid of the query
                                           ) const {
 	// Grab the index of the first amino acid in amino_acids
-	const size_t index_a = numeric_cast<size_t>( distance(
+	const auto index_a = numeric_cast<size_t>( distance(
 		cbegin( amino_acids ),
 		lower_bound( amino_acids, prm_amino_acid_a )
 	) );
 
 	// Grab the index of the second amino acid in amino_acids
-	const size_t index_b = numeric_cast<size_t>( distance(
+	const auto index_b = numeric_cast<size_t>( distance(
 		cbegin( amino_acids ),
 		lower_bound( amino_acids, prm_amino_acid_b )
 	) );

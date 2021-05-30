@@ -116,7 +116,7 @@ istream & cath::index::filter::operator>>(istream              &prm_istream,    
 	trim( input_string );
 
 	// Split on space or comma characters
-	const str_vec input_strings = split_build<str_vec>(
+	const auto input_strings = split_build<str_vec>(
 		input_string,
 		is_any_of( ", " ),
 		token_compress_on

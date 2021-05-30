@@ -40,7 +40,6 @@ using ::boost::lexical_cast;
 using ::std::array;
 using ::std::pair;
 using ::std::string;
-using ::std::vector;
 
 // clang-format off
 constexpr coord coord1        = {  0.709591780486607204281312988314, -0.658089178396458751585385016369,  0.251789869421548129224674994475 };

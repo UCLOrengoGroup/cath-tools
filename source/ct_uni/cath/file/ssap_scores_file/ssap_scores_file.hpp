@@ -31,10 +31,9 @@ namespace cath::file {
 
 	/// \brief TODOCUMENT
 	class ssap_scores_file final {
-	private:
+	public:
 		ssap_scores_file() = delete;
 
-	public:
 		static ssap_scores_entry_vec parse_ssap_scores_file_simple(std::istream &);
 
 		static ssap_scores_entry_vec parse_ssap_scores_file_simple(const std::string &);

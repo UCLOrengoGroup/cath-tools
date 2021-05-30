@@ -38,13 +38,13 @@
 #include "cath/common/algorithm/transform_build.hpp"
 #include "cath/common/boost_addenda/filesystem/replace_extension_copy.hpp"
 #include "cath/common/boost_addenda/sorted_insert.hpp"
+#include "cath/common/config.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/score/true_pos_false_neg/classn_rate_stat.hpp"
 #include "cath/score/true_pos_false_neg/true_false_pos_neg.hpp"
 #include "cath/structure/view_cache/filter/detail/filter_vs_full_score_less.hpp"
 #include "cath/structure/view_cache/filter/filter_vs_full_score.hpp"
-#include "cath/common/config.hpp"
 
 using namespace ::cath::common;
 using namespace ::cath::index::filter;
@@ -130,7 +130,7 @@ double cath::index::filter::filter_score_full_score_with_sensitivity(const filte
                                                                      ) {
 	// Find an iterator to the first entry with a full_score >= the specified full score in the filter_vs_full_score_list
 	// (which is already sorted by full_score)
-	const filter_vs_full_score_list_citr begin_of_wanted = lower_bound(
+	const auto begin_of_wanted = lower_bound(
 		prm_filter_vs_full_score_list,
 		prm_full_score,
 		full_score_less()
@@ -139,7 +139,7 @@ double cath::index::filter::filter_score_full_score_with_sensitivity(const filte
 	// Construct a sub_range for the values after that point (ie all those with a full_score >= the specified full score),
 	// grab the number of such "wanted" elements and throw if it's zero
 	const sub_range<filter_vs_full_score_list> wanted_range( begin_of_wanted, cend( prm_filter_vs_full_score_list ) );
-	const size_t num_wanted = numeric_cast<size_t>( distance( wanted_range ) );
+	const auto num_wanted = numeric_cast<size_t>( distance( wanted_range ) );
 	if ( num_wanted == 0 ) {
 		cerr << "Last entry is : " << *prev( end(prm_filter_vs_full_score_list ) ) << endl;
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
@@ -159,7 +159,7 @@ double cath::index::filter::filter_score_full_score_with_sensitivity(const filte
 	//
 	// Start by calculating the maximum number of "wanted" elements that can be less than the final value
 	const double miss_rate       = 1.0 - prm_sensitivity_fraction;
-	const size_t fraction_offset = numeric_cast<size_t>( floor( miss_rate * numeric_cast<double>( num_wanted ) ) );
+	const auto fraction_offset = numeric_cast<size_t>( floor( miss_rate * numeric_cast<double>( num_wanted ) ) );
 
 	// Use nth_element to find the filter score associated with the
 	// entry in the fraction_offset position.
@@ -215,7 +215,7 @@ true_false_pos_neg cath::index::filter::filter_result_full_score_with_sensitivit
 			prm_sensitivity_fraction
 		)
 	);
-	const double the_sensitivity = rational_cast<double>( sensitivity().calculate( results ) );
+	const auto the_sensitivity = rational_cast<double>( sensitivity().calculate( results ) );
 	if ( the_sensitivity < prm_sensitivity_fraction ) {
 
 		cerr <<

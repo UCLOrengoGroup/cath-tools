@@ -230,8 +230,8 @@ namespace cath {
 	                                                    const windowed_matrix::size_type &prm_requested_window ///< The requested width (or equivalently, height) of the window
 	                                                    ) {
 		// Calculate the length difference and check that the window size is large enough to handle the length difference
-		const windowed_matrix::difference_type diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>( prm_length_a );
-		const windowed_matrix::difference_type diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>( prm_length_b );
+		const auto diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>( prm_length_a );
+		const auto diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>( prm_length_b );
 		const windowed_matrix::difference_type length_difference = diff_t_length_a - diff_t_length_b;
 		if ( prm_requested_window < 1 + debug_numeric_cast<windowed_matrix::size_type>( labs( length_difference ) ) ) {
 			BOOST_THROW_EXCEPTION(cath::common::invalid_argument_exception(
@@ -273,14 +273,14 @@ namespace cath {
 		check_lengths_and_window_size_are_valid(prm_length_a, prm_length_b, prm_requested_window);
 
 		// Calculate the length difference
-		const windowed_matrix::difference_type diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>(prm_length_a);
-		const windowed_matrix::difference_type diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>(prm_length_b);
+		const auto diff_t_length_a   = debug_numeric_cast<windowed_matrix::difference_type>(prm_length_a);
+		const auto diff_t_length_b   = debug_numeric_cast<windowed_matrix::difference_type>(prm_length_b);
 		const windowed_matrix::difference_type length_difference = diff_t_length_a - diff_t_length_b;
 
 		// Divide the window size less one (for the leading diagonal itself) between the two parts,
 		// ensuring that the correct part is length_difference greater than the other
-		const size_t upper_width = debug_numeric_cast<size_t>( ( debug_numeric_cast<int>(prm_requested_window - 1 ) - length_difference) / 2 );
-		const size_t lower_width = debug_numeric_cast<size_t>( ( debug_numeric_cast<int>(prm_requested_window - 1 ) + length_difference) / 2 );
+		const auto upper_width = debug_numeric_cast<size_t>( ( debug_numeric_cast<int>(prm_requested_window - 1 ) - length_difference) / 2 );
+		const auto lower_width = debug_numeric_cast<size_t>( ( debug_numeric_cast<int>(prm_requested_window - 1 ) + length_difference) / 2 );
 
 		// Depending on rounding, the extra value may have meant that the resulting window is too small, so calculate any necessary increments
 		const bool   is_too_narrow   = upper_width + lower_width + 1 < prm_requested_window;
@@ -387,7 +387,7 @@ namespace cath {
 		const int    window_upper_part_width = debug_numeric_cast<int>( window_upper_and_lower_part_widths.first );
 		const int    leading_diagonal_index  = debug_numeric_cast<int>( prm_index_b );
 		const int    window_start_unclamped  = leading_diagonal_index - window_upper_part_width;
-		const size_t window_start            = debug_numeric_cast<size_t>( boost::algorithm::clamp( window_start_unclamped, 1, debug_numeric_cast<int>( prm_length_a ) ) );
+		const auto window_start            = debug_numeric_cast<size_t>( boost::algorithm::clamp( window_start_unclamped, 1, debug_numeric_cast<int>( prm_length_a ) ) );
 	//	cerr << "prm_length_a            : " << prm_length_a            << endl;
 	//	cerr << "prm_length_b            : " << prm_length_b            << endl;
 	//	cerr << "prm_requested_window    : " << prm_requested_window    << endl;

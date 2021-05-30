@@ -104,9 +104,7 @@ size_size_pair_vec cath::file::tally_residue_ids(const residue_id_vec &prm_pdb_r
 				continue;
 			}
 			// Otherwise, this is a valid DSSP/WOLF residue with no match in the PDB so throw a wobbly
-			else {
-				BOOST_THROW_EXCEPTION(invalid_argument_exception("DSSP/WOLF residue " + to_string( dssp_or_wolf_res_id ) + " overshoots the end of the PDB residues"));
-			}
+			BOOST_THROW_EXCEPTION(invalid_argument_exception("DSSP/WOLF residue " + to_string( dssp_or_wolf_res_id ) + " overshoots the end of the PDB residues"));
 		}
 
 		// Record whether this is a permitted head break region

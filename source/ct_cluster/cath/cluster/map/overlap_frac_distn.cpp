@@ -50,11 +50,7 @@ size_t overlap_frac_distn::find_index_of_nth(const size_t &prm_n ///< The index 
                                              ) const {
 	size_t sum = 0;
 
-	// \TODO Come C++17 and structured bindings, use here
-	for (const boost::tuple<const size_t &, size_t> &value_and_index : combine( *this, indices( num_posns ) ) ) {
-		const size_t &value = value_and_index.get<0>();
-		const size_t &index = value_and_index.get<1>();
-
+	for (const auto &[ value, index] : combine( *this, indices( num_posns ) ) ) {
 		if ( value > 0 ) {
 			sum += value;
 			if ( sum > prm_n ) {

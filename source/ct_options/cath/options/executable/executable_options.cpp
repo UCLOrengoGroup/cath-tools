@@ -132,7 +132,7 @@ void executable_options::add_options_block(options_block &prm_options_block ///<
 	if (processed_options) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot add an options_block once the options have been processed"));
 	}
-	all_options_blocks.push_back( prm_options_block );
+	all_options_blocks.emplace_back( prm_options_block );
 }
 
 /// \brief Add a string into the options usage
@@ -142,7 +142,7 @@ void executable_options::add_options_block(options_block &prm_options_block ///<
 void executable_options::add_string(string prm_string ///< The string to add into the options usage
                                     ) {
 	string_obj_blocks.emplace_back( ::std::move( prm_string ) );
-	all_options_blocks.push_back( string_obj_blocks.back() );
+	all_options_blocks.emplace_back( string_obj_blocks.back() );
 }
 
 /// \brief Add all the options of the specified options_block to the specified options_description

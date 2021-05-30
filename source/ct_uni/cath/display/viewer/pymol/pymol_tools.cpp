@@ -70,9 +70,9 @@ double pymol_tools::pymol_size(const size_t &prm_x_1, ///< TODOCUMENT
 	}
 
 	// Convert the unsigned ints to doubles
-	const double x_1(numeric_cast<double>(prm_x_1));
-	const double x_2(numeric_cast<double>(prm_x_2));
-	const double   x(numeric_cast<double>(prm_x));
+	const auto x_1(numeric_cast<double>(prm_x_1));
+	const auto x_2(numeric_cast<double>(prm_x_2));
+	const auto   x(numeric_cast<double>(prm_x));
 
 	// Calculate the constants and the new value of y
 	const double   c(                     (x_1 * prm_y_1 - x_2 * prm_y_2) / (prm_y_2 - prm_y_1) );

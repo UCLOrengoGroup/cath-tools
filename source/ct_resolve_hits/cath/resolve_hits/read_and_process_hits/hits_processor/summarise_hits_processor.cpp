@@ -38,7 +38,6 @@ using ::boost::format;
 using ::boost::numeric_cast;
 using ::boost::range::max_element;
 using ::boost::range::min_element;
-using ::std::literals::string_literals::operator""s;
 using ::std::move;
 using ::std::ostream;
 using ::std::right;

@@ -96,8 +96,8 @@ namespace {
 			if ( ! contains( prm_entry, true) ) {
 				BOOST_THROW_EXCEPTION(invalid_argument_exception("Cannot find indices of first and last true values because there are no true values"));
 			}
-			const size_t first_true_idx = numeric_cast<size_t>( distance( cbegin ( prm_entry ), find( prm_entry,            true ) ) );
-			const size_t last_true_ridx = numeric_cast<size_t>( distance( crbegin( prm_entry ), find( crbegin( prm_entry ), crend( prm_entry), true ) ) );
+			const auto first_true_idx = numeric_cast<size_t>( distance( cbegin ( prm_entry ), find( prm_entry,            true ) ) );
+			const auto last_true_ridx = numeric_cast<size_t>( distance( crbegin( prm_entry ), find( crbegin( prm_entry ), crend( prm_entry), true ) ) );
 			const size_t last_true_idx  = prm_entry.size() - last_true_ridx - 1;
 	//		cerr << "First and last indices for ";
 	//		for (const bool &value : prm_entry) {

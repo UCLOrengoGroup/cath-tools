@@ -225,10 +225,7 @@ const rotation & superposition::get_rotation_of_index(const size_t &prm_index //
 /// \brief Modify the superposition so that it has the same effect as applying the original superposition and then the specified translation
 superposition & superposition::post_translate(const coord &prm_translation ///< The post-superposition translation to add into the superposition
                                               ) {
-	// \TODO Come C++17 and structured bindings, use here
-	for (const boost::tuple<coord &, const rotation &> &x : combine( translations, rotations ) ) {
-		auto       &the_trans = x.get<0>();
-		const auto &the_rotn  = x.get<1>();
+	for ( const auto &[ the_trans, the_rotn ] : combine( translations, rotations ) ) {
 		the_trans += rotate_copy( transpose_copy( the_rotn ), prm_translation );
 	}
 	return *this;
@@ -477,7 +474,7 @@ superposition cath::sup::read_superposition(istream &prm_is ///< TODOCUMENT
 	rotation_vec rotations;
 	string       line_string;
 	while ( getline( prm_is, line_string ) ) {
-		const str_vec line_parts = split_build<str_vec>( line_string, is_any_of( " " ), token_compress_on );
+		const auto line_parts = split_build<str_vec>( line_string, is_any_of( " " ), token_compress_on );
 		if (line_parts.size() != CORRECT_NUM_PARTS) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Unable to parse superposition because line does not contain " + lexical_cast<string>(CORRECT_NUM_PARTS) + " parts."));
 		}

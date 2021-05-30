@@ -41,14 +41,13 @@ using ::boost::algorithm::is_any_of;
 using ::boost::algorithm::join;
 using ::boost::lexical_cast;
 using ::boost::numeric_cast;
-using ::std::tie;
 
 /// \brief TODOCUMENT
 ///
 /// \relates display_colour
 display_colour cath::display_colour_from_string(const string &prm_colour ///< TODOCUMENT
                                                 ) {
-	const str_vec component_strings = split_build<str_vec>( prm_colour, is_any_of( display_colour::COMPONENT_SEPARATOR ) );
+	const auto component_strings = split_build<str_vec>( prm_colour, is_any_of( display_colour::COMPONENT_SEPARATOR ) );
 	doub_vec component_numbers;
 
 	component_numbers.reserve( component_strings.size() );

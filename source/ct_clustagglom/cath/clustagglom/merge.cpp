@@ -121,7 +121,7 @@ merge_vec cath::clust::read_merge_list(istream &prm_merges_istream ///< The istr
 	string line_string;
 	merge_vec results;
 	while ( getline( prm_merges_istream, line_string ) ) {
-		const str_vec line_parts = split_build<str_vec>( trim_copy( line_string ), is_space(), token_compress_on );
+		const auto line_parts = split_build<str_vec>( trim_copy( line_string ), is_space(), token_compress_on );
 
 		if ( line_parts.size() != 4 ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception(

@@ -43,7 +43,6 @@ using ::boost::algorithm::join;
 using ::boost::program_options::options_description;
 using ::boost::program_options::value;
 using ::boost::program_options::variables_map;
-using ::std::array;
 using ::std::filesystem::path;
 using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;

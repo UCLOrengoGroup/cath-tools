@@ -58,7 +58,6 @@ namespace cath {
 		/// \brief TODOCUMENT
 		sec_struc_vec sec_strucs;
 
-	private:
 		void check_residue_index_is_valid(const size_t &) const;
 		void check_sec_struc_is_valid(const size_t &) const;
 

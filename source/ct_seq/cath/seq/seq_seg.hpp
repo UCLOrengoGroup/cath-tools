@@ -371,8 +371,8 @@ namespace cath::seq {
 	inline bool one_covers_other(const seq_seg_vec &prm_seq_segs_a, ///< The first  seq_seg_vec to query
 	                             const seq_seg_vec &prm_seq_segs_b  ///< The second seq_seg_vec to query
 	                             ) {
-		const residx_t length_a = static_cast<residx_t>( get_total_length( prm_seq_segs_a ) );
-		const residx_t length_b = static_cast<residx_t>( get_total_length( prm_seq_segs_b ) );
+		const auto length_a = static_cast<residx_t>( get_total_length( prm_seq_segs_a ) );
+		const auto length_b = static_cast<residx_t>( get_total_length( prm_seq_segs_b ) );
 		if ( length_a < length_b ) {
 			return first_is_not_outside_second( prm_seq_segs_a, prm_seq_segs_b );
 		}

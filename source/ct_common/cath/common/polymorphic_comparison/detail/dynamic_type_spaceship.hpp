@@ -33,10 +33,9 @@ namespace cath::common::detail {
 	/// \brief Class containing public static function for performing a spaceship-style less-than
 	///        comparison on the dynamic type of two objects of matching static type
 	class dynamic_type_spaceship final {
-	private:
+	public:
 		dynamic_type_spaceship() = delete;
 
-	public:
 		template <typename T>
 		static boost::logic::tribool compare_lt(const T &,
 		                                        const T &);

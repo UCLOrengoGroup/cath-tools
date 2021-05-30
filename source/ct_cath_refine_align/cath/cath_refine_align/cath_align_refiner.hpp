@@ -35,10 +35,9 @@ namespace cath {
 	///
 	/// The details of the job to be done are passed in a cath_refine_align_options object.
 	class cath_align_refiner {
-	private:
+	public:
 		cath_align_refiner() = delete;
 
-	public:
 		static void refine(const opts::cath_refine_align_options &,
 		                   std::istream & = std::cin,
 		                   std::ostream & = std::cout,

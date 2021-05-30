@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_CONSTEXPR_INVOKE_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_CONSTEXPR_INVOKE_HPP
+#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP20_CONSTEXPR_INVOKE_HPP
+#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP20_CONSTEXPR_INVOKE_HPP
 
 #include <type_traits>
 #include <utility>
@@ -31,28 +31,30 @@ namespace cath::common {
 	namespace detail {
 
 		template <class>
-		constexpr bool is_reference_wrapper_v = false;
+		inline constexpr bool is_reference_wrapper_v = false;
 		template <class U>
-		constexpr bool is_reference_wrapper_v<::std::reference_wrapper<U>> = true;
+		inline constexpr bool is_reference_wrapper_v<::std::reference_wrapper<U>> = true;
 
 		template <class T, class Type, class T1, class... Args>
 		constexpr decltype( auto ) constexpr_invoke_impl( Type T::*f, T1 &&t1, Args &&...args ) {
 			if constexpr ( ::std::is_member_function_pointer_v<decltype( f )> ) {
-				if constexpr ( ::std::is_base_of_v<T, ::std::decay_t<T1>> )
+				if constexpr ( ::std::is_base_of_v<T, ::std::decay_t<T1>> ) {
 					return ( ::std::forward<T1>( t1 ).*f )( ::std::forward<Args>( args )... );
-				else if constexpr ( is_reference_wrapper_v<::std::decay_t<T1>> )
+				} else if constexpr ( is_reference_wrapper_v<::std::decay_t<T1>> ) {
 					return ( t1.get().*f )( ::std::forward<Args>( args )... );
-				else
+				} else {
 					return ( ( *::std::forward<T1>( t1 ) ).*f )( ::std::forward<Args>( args )... );
+				}
 			} else {
 				static_assert( ::std::is_member_object_pointer_v<decltype( f )> );
 				static_assert( sizeof...( args ) == 0 );
-				if constexpr ( ::std::is_base_of_v<T, ::std::decay_t<T1>> )
+				if constexpr ( ::std::is_base_of_v<T, ::std::decay_t<T1>> ) {
 					return ::std::forward<T1>( t1 ).*f;
-				else if constexpr ( is_reference_wrapper_v<::std::decay_t<T1>> )
+				} else if constexpr ( is_reference_wrapper_v<::std::decay_t<T1>> ) {
 					return t1.get().*f;
-				else
+				} else {
 					return ( *::std::forward<T1>( t1 ) ).*f;
+				}
 			}
 		}
 
@@ -72,4 +74,4 @@ namespace cath::common {
 
 } // namespace cath::common
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP17_CONSTEXPR_INVOKE_HPP
+#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP20_CONSTEXPR_INVOKE_HPP

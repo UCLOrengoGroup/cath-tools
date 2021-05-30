@@ -766,7 +766,7 @@ pair<ssap_scores, alignment> cath::compare(const protein                 &prm_pr
 			const aln_posn_type a_position             = get_a_offset_1_position_of_index( new_alignment, alignment_ctr );
 			const aln_posn_type b_position             = get_b_offset_1_position_of_index( new_alignment, alignment_ctr );
 			const int           a_matrix_idx__offset_1 = get_window_matrix_a_index__offset_1(length_a, length_b, global_window, a_position, b_position);
-			const double        local_score            = numeric_cast<double>( global_upper_score_matrix.get( b_position, numeric_cast<size_t>( a_matrix_idx__offset_1 ) ) );
+			const auto        local_score            = numeric_cast<double>( global_upper_score_matrix.get( b_position, numeric_cast<size_t>( a_matrix_idx__offset_1 ) ) );
 			scores.push_back( local_score / 10.0 + 0.5 );
 //			cerr << "Retrieved score:\t" << local_score << ",\twhich normalises to: " << ( local_score / 10.0 + 0.5 ) << endl;
 		}
@@ -1210,12 +1210,12 @@ bool cath::residues_have_similar_area_angle_props(const residue &prm_residue_i, 
                                                   ) {
 	const int    buried_i                   = get_accessi_of_residue( prm_residue_i );
 	const int    buried_j                   = get_accessi_of_residue( prm_residue_j );
-	const size_t buried_difference          = numeric_cast<size_t>( difference( buried_i, buried_j ) );
-	const size_t phi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference(
+	const auto buried_difference          = numeric_cast<size_t>( difference( buried_i, buried_j ) );
+	const auto phi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference(
 		angle_in_degrees( prm_residue_i.get_phi_angle() ),
 		angle_in_degrees( prm_residue_j.get_phi_angle() )
 	) ) );
-	const size_t psi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference(
+	const auto psi_angle_diff_in_degrees  = numeric_cast<size_t>( round( difference(
 		angle_in_degrees( prm_residue_i.get_psi_angle() ),
 		angle_in_degrees( prm_residue_j.get_psi_angle() )
 	) ) );
@@ -1506,13 +1506,13 @@ score_type cath::context_sec(const protein &prm_protein_a,         ///< The firs
 	const coord int_scaled_from_to_vec_b = int_cast_copy( scaled_from_to_vec_b );
 
 	// If types of helices are different, return
-	const size_t  a_dist       = numeric_cast<size_t>(length(scaled_from_to_vec_a));
-	const size_t  b_dist       = numeric_cast<size_t>(length(scaled_from_to_vec_b));
+	const auto  a_dist       = numeric_cast<size_t>(length(scaled_from_to_vec_a));
+	const auto  b_dist       = numeric_cast<size_t>(length(scaled_from_to_vec_b));
 	const size_t  d_dist       = difference( a_dist,                                     b_dist                                     );
 	const double  d_angle1     = difference( planar_angles_a.get_planar_angle_x(),       planar_angles_b.get_planar_angle_x()       );
 	const double  d_angle2     = difference( planar_angles_a.get_planar_angle_minus_y(), planar_angles_b.get_planar_angle_minus_y() );
 	const double  d_angle3     = difference( planar_angles_a.get_planar_angle_z(),       planar_angles_b.get_planar_angle_z()       );
-	const size_t  mean_d_angle = numeric_cast<size_t>( ( d_angle1 + d_angle2 + d_angle3 ) / 3.0 );
+	const auto  mean_d_angle = numeric_cast<size_t>( ( d_angle1 + d_angle2 + d_angle3 ) / 3.0 );
 
 	if ( ( from_sec_struc_a.get_type() == sec_struc_type::ALPHA_HELIX ) && ( from_sec_struc_b.get_type() == sec_struc_type::ALPHA_HELIX ) &&
 	     (   to_sec_struc_a.get_type() == sec_struc_type::ALPHA_HELIX ) && (   to_sec_struc_b.get_type() == sec_struc_type::ALPHA_HELIX ) &&
@@ -1527,19 +1527,19 @@ score_type cath::context_sec(const protein &prm_protein_a,         ///< The firs
 	     ( abs( int_scaled_from_to_vec_b.get_x() ) + abs( int_scaled_from_to_vec_b.get_y() ) + abs( int_scaled_from_to_vec_b.get_z() )  != 0.0 ) ) {
 
 		const ptrdiff_t x_diff         = numeric_cast<ptrdiff_t>(int_scaled_from_to_vec_a.get_x()) - numeric_cast<ptrdiff_t>(int_scaled_from_to_vec_b.get_x());
-		const size_t    x_diff_squared = numeric_cast<size_t>( x_diff * x_diff );
+		const auto    x_diff_squared = numeric_cast<size_t>( x_diff * x_diff );
 		squared_distance               = x_diff_squared;
 
 		if (squared_distance < sec_struc_querier::SEC_STRUC_MAX_DIST_SQ_CUTOFF) {
 
 			const ptrdiff_t y_diff          = numeric_cast<ptrdiff_t>(int_scaled_from_to_vec_a.get_y()) - numeric_cast<ptrdiff_t>(int_scaled_from_to_vec_b.get_y());
-			const size_t    y_diff_squared  = numeric_cast<size_t>( y_diff * y_diff );
+			const auto    y_diff_squared  = numeric_cast<size_t>( y_diff * y_diff );
 			squared_distance               += y_diff_squared;
 
 			if ( squared_distance < sec_struc_querier::SEC_STRUC_MAX_DIST_SQ_CUTOFF ) {
 
 				const ptrdiff_t z_diff          = numeric_cast<ptrdiff_t>( int_scaled_from_to_vec_a.get_z()) - numeric_cast<ptrdiff_t>(int_scaled_from_to_vec_b.get_z() );
-				const size_t    z_diff_squared  = numeric_cast<size_t>( z_diff * z_diff );
+				const auto    z_diff_squared  = numeric_cast<size_t>( z_diff * z_diff );
 				squared_distance               += z_diff_squared;
 
 				if ( squared_distance < sec_struc_querier::SEC_STRUC_MAX_DIST_SQ_CUTOFF ) {
@@ -1778,7 +1778,7 @@ double cath::calculate_sequence_identity(const alignment &prm_alignment, ///< Th
 	}
 
 	// Return the count of equal amino acid types as a percentage of the shorter length
-	const double min_length = numeric_cast<double>( min( prm_protein_a.get_length(), prm_protein_b.get_length() ) );
+	const auto min_length = numeric_cast<double>( min( prm_protein_a.get_length(), prm_protein_b.get_length() ) );
 	return 100.0 * numeric_cast<double>( num_amino_acid_matches ) / min_length;
 }
 
@@ -1997,7 +1997,7 @@ size_doub_pair cath::superpose(const protein                 &prm_protein_a,    
 	if ( prm_score_is_high_enough && has_superposition_dir( prm_ssap_options ) ) {
 		const auto pdb1_filename   = find_file( prm_data_dirs, data_file::PDB,  prm_protein_a.get_name_set() );
 		const auto pdb2_filename   = find_file( prm_data_dirs, data_file::PDB,  prm_protein_b.get_name_set() );
-		const auto sup_file_suffix = sup_file_extension_fn( prm_ssap_options.get_write_rasmol_script() );
+		const auto *const sup_file_suffix = sup_file_extension_fn( prm_ssap_options.get_write_rasmol_script() );
 		const auto basename        = (
 			  get_domain_or_specified_or_name_from_acq( prm_protein_a )
 			+ get_domain_or_specified_or_name_from_acq( prm_protein_b )

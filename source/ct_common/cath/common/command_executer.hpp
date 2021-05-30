@@ -30,10 +30,9 @@ namespace cath {
 
 	/// \brief TODOCUMENT
 	class command_executer final {
-	private:
+	public:
 		command_executer() = delete;
 
-	public:
 		static bool execute(const ::std::filesystem::path &,
 		                    const str_vec &);
 	};

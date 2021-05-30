@@ -39,8 +39,6 @@
 
 namespace cath::scan {
 
-	using cath::common::literals::operator""_z;
-
 	/// \brief TODOCUMENT
 	inline simple_locn_index make_simple_locn_index_of_ca(const residue      &prm_res,   ///< TODOCUMENT
 	                                                      const unsigned int &prm_index  ///< TODOCUMENT

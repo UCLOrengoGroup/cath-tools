@@ -22,8 +22,8 @@
 #define _CATH_TOOLS_SOURCE_CT_CATH_SCORE_ALIGN_CATH_CATH_SCORE_ALIGN_OPTIONS_CATH_SCORE_ALIGN_OPTIONS_HPP
 
 #include <iosfwd>
-#include <vector>
 #include <string_view>
+#include <vector>
 
 #include "cath/alignment/options_block/alignment_input_options_block.hpp"
 #include "cath/common/type_aliases.hpp"

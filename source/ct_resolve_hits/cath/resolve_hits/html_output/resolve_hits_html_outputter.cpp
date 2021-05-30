@@ -775,7 +775,7 @@ size_t resolve_hits_html_outputter::step_for_length(const size_t &prm_sequence_l
 	}
 
 	const double naive_guess    = debug_numeric_cast<double>( prm_sequence_length ) / debug_numeric_cast<double>( aim_min_num_steps );
-	const size_t order_of_mgntd = debug_numeric_cast<size_t>( pow( 10, floor( log10( naive_guess ) ) ) );
+	const auto order_of_mgntd = debug_numeric_cast<size_t>( pow( 10, floor( log10( naive_guess ) ) ) );
 	const double naive_mantissa = naive_guess / debug_numeric_cast<double>( order_of_mgntd );
 	const size_t mult           = (
 		( naive_mantissa < 2.0 ) ? 1_z :

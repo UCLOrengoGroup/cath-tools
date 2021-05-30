@@ -118,10 +118,9 @@ namespace cath {
 		const auto index_opt = index_opt_of_letter( prm_letter );
 		if ( index_opt ) {
 			return *index_opt;
-		} else {
-			BOOST_THROW_EXCEPTION(
-			  common::invalid_argument_exception( ::fmt::format( "Amino acid letter '{}' is not valid", prm_letter ) ) );
 		}
+		BOOST_THROW_EXCEPTION(
+		  common::invalid_argument_exception( ::fmt::format( "Amino acid letter '{}' is not valid", prm_letter ) ) );
 	}
 
 	constexpr ::std::optional<uint> index_opt_of_code( const char_3_arr &prm_code ) {
@@ -137,10 +136,9 @@ namespace cath {
 		const auto index_opt = index_opt_of_code( prm_code );
 		if ( index_opt ) {
 			return *index_opt;
-		} else {
-			BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
-			  ::fmt::format( "Amino acid code '{}' is not valid", common::string_view_of_char_arr( prm_code ) ) ) );
 		}
+		BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
+		  ::fmt::format( "Amino acid code '{}' is not valid", common::string_view_of_char_arr( prm_code ) ) ) );
 	}
 
 	constexpr ::std::optional<uint> index_opt_of_name( const ::std::string_view &prm_name ) {
@@ -156,10 +154,9 @@ namespace cath {
 		const auto index_opt = index_opt_of_name( prm_name );
 		if ( index_opt ) {
 			return *index_opt;
-		} else {
-			BOOST_THROW_EXCEPTION(
-			  common::invalid_argument_exception( ::fmt::format( "Amino acid name '{}' is not valid", prm_name ) ) );
 		}
+		BOOST_THROW_EXCEPTION(
+		  common::invalid_argument_exception( ::fmt::format( "Amino acid name '{}' is not valid", prm_name ) ) );
 	}
 
 	/// \brief TODOCUMENT

@@ -69,9 +69,9 @@ multi_align_builder::multi_align_builder(const size_t &prm_num_entries ///< The 
 	groups.reserve              ( prm_num_entries );
 	group_index_of_entry.reserve( prm_num_entries );
 	// Populate the entries of group_index_of_index with their own indices
-	for (const size_t &entry_ctr : indices( prm_num_entries ) ) {
-		groups.push_back              ( multi_align_group( entry_ctr) );
-		group_index_of_entry.push_back(                    entry_ctr  );
+	for ( const size_t &entry_ctr : indices( prm_num_entries ) ) {
+		groups.emplace_back( entry_ctr );
+		group_index_of_entry.push_back( entry_ctr );
 	}
 }
 

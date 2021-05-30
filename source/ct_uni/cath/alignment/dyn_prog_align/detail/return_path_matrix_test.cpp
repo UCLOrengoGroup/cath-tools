@@ -31,8 +31,6 @@ using namespace ::cath::align::detail;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::boost::irange;
-
 namespace {
 
 	// /// \brief The return_path_matrix_test_suite_fixture to assist in testing return_path_matrix

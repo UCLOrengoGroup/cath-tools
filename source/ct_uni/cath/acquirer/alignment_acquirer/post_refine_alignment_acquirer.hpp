@@ -31,7 +31,7 @@ namespace cath::align {
 	private:
 		using super = alignment_acquirer;
 
-		[[nodiscard]] virtual std::unique_ptr<alignment_acquirer> do_clone() const = 0;
+		[[nodiscard]] std::unique_ptr<alignment_acquirer> do_clone() const override = 0;
 
 		[[nodiscard]] virtual std::pair<alignment, size_size_pair_vec> do_get_alignment_and_spanning_tree(
 		  const file::strucs_context &,

@@ -87,7 +87,6 @@ namespace cath {
 		/// \brief TODOCUMENT
 		size_t           access;
 
-	private:
 		constexpr static void check_phi_psi_angle(const geom::doub_angle &);
 
 	  public:

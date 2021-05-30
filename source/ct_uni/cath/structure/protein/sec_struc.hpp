@@ -61,7 +61,6 @@ namespace cath {
 		/// The entry for this sec_struc is stored with all zeroes.
 		sec_struc_planar_angles_vec planar_angles;
 
-	private:
 		void check_planar_angles_index_is_valid(const size_t &) const;
 		void check_sec_struc_type() const;
 

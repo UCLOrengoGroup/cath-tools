@@ -63,7 +63,9 @@ namespace cath::common::detail {
 		/// \brief Copy assignment operator
 		ref_wrap_uom_wrap & operator=(const ref_wrap_uom_wrap<T> &prm_rhs ///< The ref_wrap_uom_wrap to assign
 		                              ) {
-			value = prm_rhs.get_ref_wrap();
+			if ( this != &prm_rhs ) {
+				value = prm_rhs.get_ref_wrap();
+			}
 			return *this;
 		}
 

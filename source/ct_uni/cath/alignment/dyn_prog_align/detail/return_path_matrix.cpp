@@ -222,7 +222,7 @@ score_type cath::align::detail::get_gap_penalty_for_path_step_from_point(const r
                                                                          const return_path_matrix::size_type &prm_index_a,            ///< TODOCUMENT
                                                                          const return_path_matrix::size_type &prm_index_b             ///< TODOCUMENT
                                                                          ) {
-	const score_type zero_score = numeric_cast<score_type>(0.0);
+	const auto zero_score = numeric_cast<score_type>(0.0);
 	// If this is an aligned pair, then there is no gap here so return zero
 	if ( prm_path_step == path_step::ALIGN_PAIR                             ) {
 		return zero_score;

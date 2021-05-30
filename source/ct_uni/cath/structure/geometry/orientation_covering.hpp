@@ -195,7 +195,7 @@ namespace cath::geom {
 			}
 
 			// Otherwise this should be a data line so split it into parts on whitespace
-			const str_vec quat_str_parts = common::split_build<str_vec>(
+			const auto quat_str_parts = common::split_build<str_vec>(
 				line_string,
 				boost::algorithm::is_space(),
 				boost::algorithm::token_compress_on

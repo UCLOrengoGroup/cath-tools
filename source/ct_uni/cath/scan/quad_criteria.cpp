@@ -82,11 +82,11 @@ quad_criteria cath::scan::make_default_quad_criteria() {
 quad_criteria cath::scan::parse_quad_criteria(const string &prm_string ///< The string to specify the properties of the quad_criteria to be built
                                               ) {
 	// Build a map of field name to value (represented as double)
-	const string  spaces_stripped_string = erase_all_copy( prm_string, " " );
-	const str_vec parts = split_build<str_vec>( spaces_stripped_string, is_any_of( "," ) );
+	const string spaces_stripped_string = erase_all_copy( prm_string, " " );
+	const auto   parts                  = split_build<str_vec>( spaces_stripped_string, is_any_of( "," ) );
 	str_doub_map values;
-	for (const string &part : parts) {
-		str_vec halves = split_build<str_vec>( part, is_any_of( "=" ) );
+	for ( const string &part : parts ) {
+		auto halves = split_build<str_vec>( part, is_any_of( "=" ) );
 		if ( halves.size() != 2 ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Part of quad_criteria string didn't have two halves"));
 		}

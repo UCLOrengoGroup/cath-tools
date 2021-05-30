@@ -188,7 +188,7 @@ size_t cath::get_index_of_pdb_residue_id(const protein    &prm_protein,   ///< T
 	// Return the distance from the start of the protein to the result of finding a residue
 	// that matches the specified residue name
 
-	const size_t result_index = numeric_cast<size_t>( distance(
+	const auto result_index = numeric_cast<size_t>( distance(
 		cbegin( prm_protein ),
 		find_if(
 			prm_protein,
@@ -443,7 +443,7 @@ coord cath::calculate_inter_sec_struc_vector(const protein            &prm_prote
 	const ptrdiff_t  anchor_sec_struc_offset = (prm_src_sec_struc_index + 1 != prm_protein.get_num_sec_strucs()) ? 1 : -1;
 	const sec_struc &src_sec_struc           = prm_protein.get_sec_struc_ref_of_index( prm_src_sec_struc_index  );
 	const sec_struc &dest_sec_struc          = prm_protein.get_sec_struc_ref_of_index( prm_dest_sec_struc_index );
-	const size_t     sec_struc_index         = numeric_cast<size_t>( numeric_cast<ptrdiff_t>( prm_src_sec_struc_index )  + anchor_sec_struc_offset );
+	const auto     sec_struc_index         = numeric_cast<size_t>( numeric_cast<ptrdiff_t>( prm_src_sec_struc_index )  + anchor_sec_struc_offset );
 	const sec_struc &anchor_sec_struc        = prm_protein.get_sec_struc_ref_of_index( sec_struc_index );
 
 	// Use the two sec_strucs and the anchor sec_struc to calculate the inter-sec_struc vector

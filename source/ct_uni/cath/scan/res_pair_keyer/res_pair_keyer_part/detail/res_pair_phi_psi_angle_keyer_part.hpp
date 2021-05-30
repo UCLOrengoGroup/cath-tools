@@ -106,12 +106,12 @@ namespace cath::scan::detail {
 			//  * the shifted start and stop
 			//  * whether this start and stop imply a wrap past 0 degrees
 			//  * the begin and one-past-the-end indices
-			const auto start           = ( prm_value - prm_search_radius ).quick_shift();
-			const auto stop            = ( prm_value + prm_search_radius ).quick_shift();
-			const auto wraps           = ( start > stop );
-			const cell_index_t begin   = key_part( start );
-			const cell_index_t end     = static_cast<cell_index_t>( key_part( stop  ) + 1 );
-			const cell_index_t end_all = static_cast<cell_index_t>( std::ceil( geom::ONE_REVOLUTION<angle_base_type> / cell_width ) );
+			const auto         start = ( prm_value - prm_search_radius ).quick_shift();
+			const auto         stop  = ( prm_value + prm_search_radius ).quick_shift();
+			const auto         wraps = ( start > stop );
+			const cell_index_t begin = key_part( start );
+			const auto         end   = static_cast<cell_index_t>( key_part( stop ) + 1 );
+			const auto end_all = static_cast<cell_index_t>( std::ceil( geom::ONE_REVOLUTION<angle_base_type> / cell_width ) );
 
 			// Create a range that will cover the correct cells by joining two integer_ranges.
 			// Where the relevant cells wrap past 0 degrees, this looks like [ begin, end_all ) U [ 0, end )

@@ -27,10 +27,9 @@ namespace cath::score::detail {
 
 	/// \brief TODOCUMENT
 	class score_name_helper final {
-	private:
+	public:
 		score_name_helper() = delete;
 
-	public:
 		static std::string build_short_name(const std::string &,
 		                                    const str_vec &);
 

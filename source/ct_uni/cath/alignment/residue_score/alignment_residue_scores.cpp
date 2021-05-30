@@ -121,8 +121,8 @@ float_score_type cath::align::get_unnormalised_score(const alignment_residue_sco
 	if ( ! prm_to_all_other_entries ) {
 		return *score_to_other_present_entries;
 	}
-	const float_score_type num_other_present_entries = numeric_cast<float_score_type>( num_present_entries - 1 );
-	const float_score_type num_all_other_entries     = numeric_cast<float_score_type>( num_entries         - 1 );
+	const auto num_other_present_entries = numeric_cast<float_score_type>( num_present_entries - 1 );
+	const auto num_all_other_entries     = numeric_cast<float_score_type>( num_entries         - 1 );
 	return ( *score_to_other_present_entries * num_other_present_entries / num_all_other_entries );
 }
 

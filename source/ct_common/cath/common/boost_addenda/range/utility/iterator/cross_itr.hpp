@@ -151,7 +151,6 @@ namespace cath::common {
 		/// \brief TODOCUMENT
 		using iterator_type       = std::tuple<range_iterator_t<RNGs>...>;
 
-	private:
 		/// \brief TODOCUMENT
 		iterator_type the_iterators;
 

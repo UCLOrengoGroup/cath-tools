@@ -76,7 +76,7 @@ coord_vec cath::sec::make_dssp_ball_points(const size_t &prm_number ///< The inp
 	return transform_build<coord_vec>(
 		irange( -num_as_int, num_as_int + 1 ),
 		[&] (const int &x) {
-			const double i         = debug_numeric_cast<double>( x );
+			const auto i         = debug_numeric_cast<double>( x );
 			const double latitude  = asin( ( 2.0 * i ) / debug_numeric_cast<double>( num_points ) );
 			const double longitude = fmod( i, golden_ratio ) * 2 * pi<double>() / golden_ratio;
 			return coord{
@@ -265,7 +265,7 @@ static auto make_access_atom_lattice(const pdb   &prm_pdb,       ///< The PDB fo
 /// \brief Calculate the accessibilities using scanning
 doub_vec cath::sec::calc_accessibilities_with_scanning(const pdb &prm_pdb ///< The PDB to query
                                                        ) {
-	constexpr float MAX_DIST  = static_cast<float>( dssp_ball_constants::MAX_ATOM_DIST ); // 6.54
+	constexpr auto MAX_DIST  = static_cast<float>( dssp_ball_constants::MAX_ATOM_DIST ); // 6.54
 	constexpr float CELL_SIZE = 13.0;
 
 	if ( prm_pdb.empty() ) {

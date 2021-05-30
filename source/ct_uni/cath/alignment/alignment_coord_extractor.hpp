@@ -56,8 +56,6 @@ namespace cath::align {
 	///       on an attempt to use scores from an unscored alignment
 	class alignment_coord_extractor final {
 	private:
-		alignment_coord_extractor() = delete;
-
 		using residue_cref                       = std::reference_wrapper<const residue>;
 		using residue_cref_residue_cref_pair     = std::pair<residue_cref, residue_cref>;
 		using residue_cref_residue_cref_pair_vec = std::vector<residue_cref_residue_cref_pair>;
@@ -70,6 +68,8 @@ namespace cath::align {
 		                                                              const alignment::size_type            & = alignment::PAIR_B_IDX);
 
 	public:
+		alignment_coord_extractor() = delete;
+
 		static std::pair<geom::coord_list_vec, geom::coord_list_vec> get_common_coords_by_residue(const alignment &,
 		                                                                                          const protein &,
 		                                                                                          const protein &,

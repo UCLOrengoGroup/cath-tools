@@ -54,7 +54,7 @@ BOOST_FIXTURE_TEST_SUITE(transform_build_test_suite, transform_build_fixture)
 ///
 /// \todo Check transform_build() works for (at least) set, map, vector and deque
 BOOST_AUTO_TEST_CASE(basic) {
-	const size_vec got_zero_to_thirty_step_three = transform_build<size_vec>(
+	const auto got_zero_to_thirty_step_three = transform_build<size_vec>(
 		zero_to_ten_vec,
 		[] (const size_t &x) { return x * 3; }
 	);

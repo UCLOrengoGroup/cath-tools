@@ -271,7 +271,7 @@ namespace {
 
 		// Check that around 95% of the way through the list of angles, the values are still
 		// less than 3 degrees (in radians)
-		const size_t ninety_fifth_perc_index = numeric_cast<size_t>(
+		const auto ninety_fifth_perc_index = numeric_cast<size_t>(
 			round( 0.95 * numeric_cast<double>( angles_between_frame_pairs.size() ) )
 		);
 		BOOST_CHECK_LT(

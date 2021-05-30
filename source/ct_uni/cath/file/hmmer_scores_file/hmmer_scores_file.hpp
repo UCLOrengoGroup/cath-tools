@@ -30,10 +30,9 @@ namespace cath::file {
 
 	/// \brief TODOCUMENT
 	class hmmer_scores_file final {
-	private:
+	public:
 		hmmer_scores_file() = delete;
 
-	public:
 		static hmmer_scores_entry_vec remove_duplicates(const hmmer_scores_entry_vec &);
 
 		static hmmer_scores_entry_vec parse_hmmer_scores_file(std::istream &,

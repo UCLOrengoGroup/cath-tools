@@ -223,7 +223,7 @@ namespace cath::index::detail::detail {
 			return prm_cells.front();
 		}
 		if ( cell_index_in_current < 0 ) {
-			const size_t num_to_prepend = cath::debug_numeric_cast<size_t>( -cell_index_in_current );
+			const auto num_to_prepend = cath::debug_numeric_cast<size_t>( -cell_index_in_current );
 			const int new_start_offest = get_start_offset() + cell_index_in_current;
 			// Come GCC v4.9 above, replace this begin() with cbegin()
 			prm_cells.insert( std::begin( prm_cells ), num_to_prepend, prm_default_cell );

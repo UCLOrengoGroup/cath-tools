@@ -90,7 +90,7 @@ namespace cath {
 	                                        const geom::coord &prm_j_beta_from_b_beta_view  ///< The view from one residue to another in the other protein
 	                                        ) {
 		//
-		const float_score_type int_scaling_float_score = debug_numeric_cast<float_score_type>( entry_querier::INTEGER_SCALING );
+		const auto int_scaling_float_score = debug_numeric_cast<float_score_type>( entry_querier::INTEGER_SCALING );
 		geom::coord int_scaled_i_beta_from_a_beta = prm_int_rounding ? int_cast_copy( int_scaling_float_score * prm_i_beta_from_a_beta_view )
 		                                                             :              ( int_scaling_float_score * prm_i_beta_from_a_beta_view );
 		geom::coord int_scaled_j_beta_from_b_beta = prm_int_rounding ? int_cast_copy( int_scaling_float_score * prm_j_beta_from_b_beta_view )

@@ -29,10 +29,9 @@ namespace cath::file {
 
 	/// \brief TODOCUMENT
 	class prc_scores_file final {
-	private:
+	public:
 		prc_scores_file() = delete;
 
-	public:
 		static prc_scores_entry_vec remove_duplicates(const prc_scores_entry_vec &);
 
 		static prc_scores_entry_vec parse_prc_scores_file(std::istream &);

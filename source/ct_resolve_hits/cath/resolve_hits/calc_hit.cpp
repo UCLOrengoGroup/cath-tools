@@ -34,7 +34,6 @@ using namespace ::cath::rslv;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::all_of;
 using ::boost::algorithm::join;
-using ::std::literals::string_literals::operator""s;
 using ::std::ostream;
 using ::std::string;
 

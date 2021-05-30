@@ -194,7 +194,7 @@ namespace cath::align {
 
 		for (const size_t &outer_index : common::indices( length ) ) {
 			lists.clear();
-			for (const size_t &inner_index : common::indices( debug_numeric_cast<unsigned int>( length ) ) ) {
+			for (const unsigned int &inner_index : common::indices( debug_numeric_cast<unsigned int>( length ) ) ) {
 				const auto the_view = view_vector_of_rotns_coords_and_indices(
 					rotns_and_coords.first,
 					rotns_and_coords.second,

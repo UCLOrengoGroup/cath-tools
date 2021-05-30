@@ -172,7 +172,7 @@ void matrix_plotter::plot_scores(const dyn_prog_score_source &prm_scorer ///< Th
 				ctr_b + 1
 			) - 1;
 			for (const size_t &ctr_a : irange( window_start_a, window_stop_a + 1 ) ) {
-				const double score = numeric_cast<double>( prm_scorer.get_score( ctr_a, ctr_b ) );
+				const auto score = numeric_cast<double>( prm_scorer.get_score( ctr_a, ctr_b ) );
 				scores[ctr_a][ctr_b] = score;
 
 				// (pairs flipped due to switching from matrix order (row index then column index) to graph order (x then y))

@@ -440,7 +440,7 @@ named_true_false_pos_neg_list cath::score::make_named_true_false_pos_neg_list(co
 
 	// Count the number of positive examples and subtract it from the total to get the total number of negatives
 	const size_t total_num           = prm_score_classn_value_list.size();
-	const size_t total_num_positives = numeric_cast<size_t>( count_if( prm_score_classn_value_list, reps_positive_instance ) );
+	const auto total_num_positives = numeric_cast<size_t>( count_if( prm_score_classn_value_list, reps_positive_instance ) );
 	const size_t total_num_negatives = total_num - total_num_positives;
 
 	// Initialise running_tfpn_counts to have no positives and the correct number of true/false negatives
@@ -453,7 +453,7 @@ named_true_false_pos_neg_list cath::score::make_named_true_false_pos_neg_list(co
 
 		// Within the group of equivalent score_classn_values, count the number of entries, positives and negatives
 		const size_t num_in_group  = equivalent_score_classn_values.size();
-		const size_t num_positives = numeric_cast<size_t>( count_if( equivalent_score_classn_values, reps_positive_instance ) );
+		const auto num_positives = numeric_cast<size_t>( count_if( equivalent_score_classn_values, reps_positive_instance ) );
 		const size_t num_negatives = num_in_group - num_positives;
 
 		// Update the true_false_pos_neg counts with the number of newly predicted positives and negatives

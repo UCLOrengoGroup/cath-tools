@@ -71,7 +71,7 @@ string cath::clust::detail::get_name_of_new_unmapped_cluster_of_index(const ::st
                                                                       ) {
 	using ::std::to_string;
 	if ( prm_last_preceding_index ) {
-		return to_string( *prm_last_preceding_index + 1l + debug_numeric_cast<ptrdiff_t>( prm_index ) );
+		return to_string( *prm_last_preceding_index + 1L + debug_numeric_cast<ptrdiff_t>( prm_index ) );
 	}
 	return "new_cmc_cluster_" + to_string( prm_index + 1 ) ;
 }

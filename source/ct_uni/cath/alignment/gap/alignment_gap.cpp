@@ -295,7 +295,7 @@ float_score_float_score_pair cath::align::gap::gap_open_and_extend_counts_of_ali
 	}
 
 	// Return the (casted) result of dividing by ( num_entries - 1 )
-	const float_score_type denominator = numeric_cast<float_score_type>( num_entries - 1 );
+	const auto denominator = numeric_cast<float_score_type>( num_entries - 1 );
 	return make_pair(
 		numeric_cast<float_score_type>( total_open_and_extend_counts.first  ) / denominator,
 		numeric_cast<float_score_type>( total_open_and_extend_counts.second ) / denominator

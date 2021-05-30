@@ -129,9 +129,7 @@ void cath::clust::write_ordered_links(ostream                 &prm_output,      
 		const auto &inner_links      = prm_links       [ outer_index ];
 		const auto &outer_sort_index = prm_sort_indices[ outer_index ];
 		const auto &outer_name       = prm_ider.get_name_of_id( outer_index );
-		for (const boost::tuple<const link &, size_t> &x : combine( inner_links, indices( inner_links.size() ) ) ) {
-			const auto &inner_link       = x.get<0>();
-			const auto &inner_list_index = x.get<1>();
+		for (const auto &[inner_link, inner_list_index] : combine( inner_links, indices( inner_links.size() ) ) ) {
 			const auto &inner_index      = inner_link.node;
 			if ( outer_name < prm_ider.get_name_of_id( inner_index ) ) {
 				const auto &inner_sort_index = prm_sort_indices[ inner_index ];

@@ -74,13 +74,12 @@ namespace cath::scan::detail {
 	public:
 		using const_iterator = typename std::unordered_map<Key, Cell, key_hash>::const_iterator;
 
-		scan_index_hash_store() {
+		scan_index_hash_store() = default;
 //			const auto empty_key = common::apply( detail::empty_key_maker(), Key() );
 //			the_store.set_empty_key( empty_key );
 
 			// the_store.rehash( 131072 );
 			// std::cerr << "scan_index_hash_store's ctor currently uses a hard-coded rehash to 131072 buckets!\n";
-		}
 
 		template <typename T>
 		inline void push_back_entry_to_cell(const Key  &,

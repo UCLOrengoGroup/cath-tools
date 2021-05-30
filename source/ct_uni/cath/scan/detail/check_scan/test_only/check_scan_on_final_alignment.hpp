@@ -55,8 +55,6 @@ namespace cath::scan::detail {
 	///       predicted scores aren't being achieved.
 	class check_scan_on_final_alignment final {
 	private:
-		check_scan_on_final_alignment() = delete;
-
 		static quad_criteria_result criteria_result_of(const quad_criteria &,
 		                                               const multi_struc_res_rep_pair &,
 		                                               const multi_struc_res_rep_pair &);
@@ -92,6 +90,8 @@ namespace cath::scan::detail {
 		                                                                    const index_type &);
 
 	public:
+		check_scan_on_final_alignment() = delete;
+
 		/// \brief TODOCUMENT
 		static constexpr size_t NUM_EXCLUDED_ON_SIDES = 5;
 

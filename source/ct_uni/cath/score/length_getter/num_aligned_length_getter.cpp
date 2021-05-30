@@ -106,7 +106,7 @@ string num_aligned_length_getter::do_description_brackets_string() const {
 /// \brief TODOCUMENT
 bool num_aligned_length_getter::do_less_than_with_same_dynamic_type(const length_getter &prm_length_getter ///< TODOCUMENT
                                                                     ) const {
-	const num_aligned_length_getter &casted_length_getter = dynamic_cast<const num_aligned_length_getter &>( prm_length_getter );
+	const auto &casted_length_getter = dynamic_cast<const num_aligned_length_getter &>( prm_length_getter );
 	return ( *this < casted_length_getter );
 }
 

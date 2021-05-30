@@ -61,8 +61,8 @@ links cath::clust::parse_dissimilarities(istream           &prm_input,     ///< 
 		                              : static_cast<strength>( parse_double_from_field( value_itrs.first, value_itrs.second ) );
 
 		const strength link_val   = ( prm_link_dirn == link_dirn::STRENGTH ) ? -seq_id : seq_id;
-		const item_idx id_1_id    = debug_numeric_cast<item_idx>( prm_name_ider.add_name( id1 ) );
-		const item_idx id_2_id    = debug_numeric_cast<item_idx>( prm_name_ider.add_name( id2 ) );
+		const auto id_1_id    = debug_numeric_cast<item_idx>( prm_name_ider.add_name( id1 ) );
+		const auto id_2_id    = debug_numeric_cast<item_idx>( prm_name_ider.add_name( id2 ) );
 		if ( id_1_id != id_2_id ) {
 			result.add_link_symmetrically( id_1_id, id_2_id, link_val );
 		}

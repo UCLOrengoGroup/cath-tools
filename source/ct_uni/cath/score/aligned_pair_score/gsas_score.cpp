@@ -65,8 +65,8 @@ score_value gsas_score::do_calculate(const alignment &prm_alignment, ///< The pa
 	const score_value bad_value   = 99.9;
 
 	// Grab the number of gaps and the number of aligned residues
-//	const score_value num_gaps    = gap_count_of_alignment( prm_alignment );
-	const score_value num_gaps    = numeric_cast<score_value>( get_naive_num_gaps( prm_alignment ) );
+	//	const score_value num_gaps    = gap_count_of_alignment( prm_alignment );
+	const auto        num_gaps    = numeric_cast<score_value>( get_naive_num_gaps( prm_alignment ) );
 	const score_value num_aligned = num_aligned_residues.calculate( prm_alignment, prm_protein_a, prm_protein_b );
 
 	// If the number of gaps meets or exceeds the number of aligned residues, return a bad value (99.9)

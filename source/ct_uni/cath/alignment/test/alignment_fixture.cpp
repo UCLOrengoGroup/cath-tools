@@ -30,8 +30,6 @@ using namespace ::cath::align;
 using namespace ::cath::common;
 using namespace ::std;
 
-using ::std::nullopt;
-
 alignment alignment_fixture::aln_a_a() {
 	return alignment{ { aln_list_a | to_vector, aln_list_a | to_vector } };
 }

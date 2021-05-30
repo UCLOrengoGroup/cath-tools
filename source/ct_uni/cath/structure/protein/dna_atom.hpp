@@ -116,9 +116,7 @@ namespace cath {
 		if ( DNA_RNA_RESIDUE_NAMES.front().second != prm_dna_atom ) {
 			return DNA_RNA_RESIDUE_NAMES.front().first;
 		}
-		else {
-			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unhandled dna_atom"));
-		}
+		BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Unhandled dna_atom"));
 	}
 
 } // namespace cath

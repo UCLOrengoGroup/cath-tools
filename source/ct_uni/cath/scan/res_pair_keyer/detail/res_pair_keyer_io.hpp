@@ -22,8 +22,8 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_DETAIL_RES_PAIR_KEYER_IO_HPP
 
 #include <iomanip>
-#include <tuple>
 #include <sstream>
+#include <tuple>
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>

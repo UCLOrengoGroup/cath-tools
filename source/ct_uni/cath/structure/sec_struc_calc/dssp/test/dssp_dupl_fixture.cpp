@@ -92,7 +92,7 @@ hbond_half_opt cath::sec::mapped_dsspfile_hbond(const dsspfile_hbond_opt &prm_ds
 	}
 
 	// Check the DSSP index is within range
-	const size_t dssp_index_size = static_cast<size_t>( dssp_index );
+	const auto dssp_index_size = static_cast<size_t>( dssp_index );
 	if ( dssp_index_size >= prm_normal_index_of_dssp_index.size() ) {
 		BOOST_THROW_EXCEPTION(invalid_argument_exception(
 			"DSSP hbond destination index is "
@@ -345,7 +345,7 @@ pair<size_t, dssp_dupl_res> dssp_dupl_fixture::parse_dssp_residue_line(const str
 /// \brief Parse an hbond from the specified string from within a DSSP line
 dsspfile_hbond_opt dssp_dupl_fixture::parse_dsspfile_bond(const string &prm_hbond_string ///< The string containing the DSSP h-bond data (eg "-2,-2.6")
                                                           ) {
-	const str_vec parts = split_build<str_vec>( prm_hbond_string, is_any_of( "," ), token_compress_on );
+	const auto parts = split_build<str_vec>( prm_hbond_string, is_any_of( "," ), token_compress_on );
 	if ( parts.size() != 2 ) {
 		BOOST_THROW_EXCEPTION(runtime_error_exception("Did not find two parts in DSSP file h-bond"));
 	}

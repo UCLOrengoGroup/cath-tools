@@ -37,9 +37,9 @@ BOOST_AUTO_TEST_CASE(simple_compact_works) {
 }
 
 BOOST_AUTO_TEST_CASE(simple_pretty_works) {
-	const auto expected = "{\n" R"(    "lue": 42)" "\n}";
-	BOOST_CHECK_EQUAL( rapidjson_writer< json_style::PRETTY >{}.start_object().write_key_value( "lue", 42u ).end_object().get_cpp_string(), expected );
-	BOOST_CHECK_EQUAL( rapidjson_writer<                    >{}.start_object().write_key_value( "lue", 42u ).end_object().get_cpp_string(), expected );
+	constexpr auto EXPECTED = "{\n" R"(    "lue": 42)" "\n}";
+	BOOST_CHECK_EQUAL( rapidjson_writer< json_style::PRETTY >{}.start_object().write_key_value( "lue", 42u ).end_object().get_cpp_string(), EXPECTED );
+	BOOST_CHECK_EQUAL( rapidjson_writer<                    >{}.start_object().write_key_value( "lue", 42u ).end_object().get_cpp_string(), EXPECTED );
 }
 
 BOOST_AUTO_TEST_CASE(everything_works) {

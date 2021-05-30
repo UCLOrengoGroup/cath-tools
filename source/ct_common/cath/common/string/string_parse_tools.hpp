@@ -144,9 +144,8 @@ namespace cath::common {
 		/// TODO: Come GCC >= 10, remove this silly dance to appease it about the unconditionally non-constexpr throwing after here
 		if ( !prm_substring.empty() && prm_substring.front() != ' ' && prm_substring.front() != '\t' ) {
 			return ::std::cbegin( prm_substring );
-		} else {
-			BOOST_THROW_EXCEPTION( invalid_argument_exception( "Unable to find any non-space chars in string" ) );
 		}
+		BOOST_THROW_EXCEPTION( invalid_argument_exception( "Unable to find any non-space chars in string" ) );
 	}
 
 	/// \brief Find the iterator that points to (just after) the last non-whitespace character
@@ -181,9 +180,8 @@ namespace cath::common {
 		/// TODO: Come GCC >= 10, remove this silly dance to appease it about the unconditionally non-constexpr throwing after here
 		if ( !prm_substring.empty() && prm_substring.back() != ' ' && prm_substring.back() != '\t' ) {
 			return ::std::crbegin( prm_substring ).base();
-		} else {
-			BOOST_THROW_EXCEPTION( invalid_argument_exception( "Unable to find any non-space chars in string" ) );
 		}
+		BOOST_THROW_EXCEPTION( invalid_argument_exception( "Unable to find any non-space chars in string" ) );
 	}
 
 	/// \brief Return a string_ref to the section of the specified string_ref after trimming

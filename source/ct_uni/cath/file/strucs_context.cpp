@@ -206,7 +206,7 @@ void cath::file::non_crypto_hash(size_t               &prm_init_hash_value, ///<
 		const region_vec_opt     &regions  = prm_strucs_context.get_regions  ()[ index ];
 
 		// Follow libstdc++'s lead of attempting to make the value used for none/nullopt an "unusual" value
-		static constexpr size_t NULL_HASH_VAL = static_cast<size_t>( -3333 );
+		static constexpr auto NULL_HASH_VAL = static_cast<size_t>( -3333 );
 
 		non_crypto_hash   ( prm_init_hash_value, name_set );
 		hash_value_combine( prm_init_hash_value, regions ? hash<string>{}( to_string( *regions )  ) : NULL_HASH_VAL );

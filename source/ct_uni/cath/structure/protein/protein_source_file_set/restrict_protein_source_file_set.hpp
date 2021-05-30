@@ -29,23 +29,21 @@ namespace cath {
 	///
 	/// This disable the default do_read_and_restrict_files() and implements do_read_files() in terms of that
 	class restrict_protein_source_file_set : public protein_source_file_set {
-	private:
-		protein do_read_files(const file::data_file_path_map &,
-		                      const std::string &,
-		                      std::ostream &) const final;
+	  private:
+		protein do_read_files( const file::data_file_path_map &, const std::string &, std::ostream & ) const final;
 
 		/// \brief Virtual method with which each concrete restrict_protein_source_file_set must define how
 		///        to do_read_files() and restrict the result to the specified regions.
 		///
 		/// This disables the default in protein_source_file_set
-		virtual protein do_read_and_restrict_files(const file::data_file_path_map &,
-		                                           const std::string &,
-		                                           const chop::region_vec_opt &,
-		                                           std::ostream &) const = 0;
+		protein do_read_and_restrict_files( const file::data_file_path_map &,
+		                                    const std::string &,
+		                                    const chop::region_vec_opt &,
+		                                    std::ostream & ) const override = 0;
 
-	public:
-		restrict_protein_source_file_set() = default;
-		virtual ~restrict_protein_source_file_set() noexcept = default;
+	  public:
+		restrict_protein_source_file_set()                    = default;
+		~restrict_protein_source_file_set() noexcept override = default;
 	};
 
 } // namespace cath

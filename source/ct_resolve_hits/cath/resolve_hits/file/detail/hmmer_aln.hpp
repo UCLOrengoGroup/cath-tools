@@ -243,10 +243,7 @@ namespace cath::rslv::detail {
 		assert( start_a );
 
 		const auto the_sequence = common::make_string_ref( aln_itrs.first, aln_itrs.second );
-		for (const boost::tuple<const char &, const char &> &x : boost::range::combine( aln_seq_a, the_sequence ) ) {
-			const char &char_a = x.get<0>();
-			const char &char_b = x.get<1>();
-
+		for (const auto &[ char_a, char_b ] : boost::range::combine( aln_seq_a, the_sequence ) ) {
 			assert( char_b != GAP_CHAR_B || char_a != GAP_CHAR_A );
 			if ( char_b == GAP_CHAR_B && char_a == GAP_CHAR_A ) {
 				BOOST_THROW_EXCEPTION(common::runtime_error_exception("HMMER alignment files shouldn't contain alignment positions that have gaps on both sides"));

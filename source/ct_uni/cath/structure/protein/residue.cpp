@@ -49,7 +49,6 @@ using namespace ::cath::geom;
 using ::boost::lexical_cast;
 using ::boost::numeric_cast;
 using ::std::get;
-using ::std::map;
 using ::std::ostream;
 using ::std::ostringstream;
 using ::std::right;
@@ -126,9 +125,11 @@ constexpr int ACCESSI( const char &x ) {
 		case( 'X' ) : { return 999; }
 		case( 'Y' ) : { return 246; }
 		case( 'Z' ) : { return 208; }
+		default : {
+			BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled char" ) );
+		}
 	}
 	// clang-format on
-	BOOST_THROW_EXCEPTION( out_of_range_exception( "Unhandled char" ) );
 }
 
 ///// \brief Throw if amino acid is invalid

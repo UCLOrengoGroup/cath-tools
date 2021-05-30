@@ -89,7 +89,7 @@ domain_definition_list cath::file::parse_domain_definition_file(istream &prm_dom
 	while ( getline( prm_dom_defn_istream, line_string ) ) {
 		trim( line_string );
 		if ( ! line_string.empty() ) {
-			const str_vec line_parts = split_build<str_vec>( line_string, is_any_of( " " ), token_compress_on );
+			const auto line_parts = split_build<str_vec>( line_string, is_any_of( " " ), token_compress_on );
 			if ( line_parts.size() != 3 ) {
 				BOOST_THROW_EXCEPTION(runtime_error_exception("Unable to parse domain definition from non-empty line that doesn't have three parts"));
 			}

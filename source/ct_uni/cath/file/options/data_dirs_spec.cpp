@@ -254,7 +254,7 @@ path cath::opts::find_file(const data_dirs_spec  &prm_data_dirs_options, ///< Th
 /// \relates data_dirs_spec
 path_vec cath::opts::split_path_into_directories(const string &prm_path_string ///< The path of colon-separated directory names
                                                  ) {
-	str_vec dir_strings = split_build<str_vec>( prm_path_string, is_any_of( ":" ), token_compress_on );
+	auto dir_strings = split_build<str_vec>( prm_path_string, is_any_of( ":" ), token_compress_on );
 	path_vec dirs;
 	dirs.reserve(dir_strings.size());
 	for (const string &dir_string : dir_strings) {

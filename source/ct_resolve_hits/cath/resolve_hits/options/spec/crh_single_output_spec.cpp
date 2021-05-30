@@ -43,7 +43,6 @@ using ::boost::adaptors::filtered;
 using ::boost::adaptors::transformed;
 using ::boost::algorithm::join;
 using ::std::filesystem::path;
-using ::std::literals::string_literals::operator""s;
 using ::std::nullopt;
 using ::std::string;
 

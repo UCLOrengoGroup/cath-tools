@@ -193,7 +193,7 @@ alignment cath::align::read_alignment_from_cath_ssap_legacy_format(istream      
 //		const char          sec_struc_a =                                  line_string.at(      5    )  ; // Column 2: Protein 1 Secondary structure character
 		const char             insert_a =                                  line_string.at(      7    )  ; // Column 3: Protein 1 PDB residue insert character
 		const char         amino_acid_a =                                  line_string.at(      9    )  ; // Column 4: Protein 1 Residue Code (One letter code)
-		const size_t              score = lexical_cast<size_t>( trim_copy( line_string.substr( 12, 3 ))); // Column 5: SSAP residue score (0-100)
+		const auto              score = lexical_cast<size_t>( trim_copy( line_string.substr( 12, 3 ))); // Column 5: SSAP residue score (0-100)
 		const char         amino_acid_b =                                  line_string.at(     17    )  ; // Column 6: Protein 2 Residue Code (One letter code)
 		const char             insert_b =                                  line_string.at(     19    )  ; // Column 7: Protein 2 PDB residue insert character
 //		const char          sec_struc_b =                                  line_string.at(     21    )  ; // Column 8: Protein 2 Secondary structure character
@@ -315,7 +315,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 		}
 
 		// Grab the number of proteins and ensure the alignment matches
-		const size_t num_proteins = lexical_cast<size_t>( line_string );
+		const auto num_proteins = lexical_cast<size_t>( line_string );
 		if (num_proteins != prm_pdbs.size()) {
 			BOOST_THROW_EXCEPTION(invalid_argument_exception("Number of PDBs in CORA file is " + lexical_cast<string>(num_proteins) + ", which does not match " + lexical_cast<string>(prm_pdbs.size())));
 		}
@@ -324,14 +324,14 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 		// Grab the protein names
 		getline( prm_istream, line_string );
 		trim( line_string );
-		const str_vec names = split_build<str_vec>( line_string, is_space() );
+		const auto names = split_build<str_vec>( line_string, is_space() );
 		if ( names.size() != num_proteins ) {
 			BOOST_THROW_EXCEPTION(runtime_error_exception("Splitting on space does not give " + lexical_cast<string>(num_proteins) + " entries in CORA alignment names line: \"" + line_string + "\""));
 		}
 
 		// Grab the total number of alignment positions
 		getline(prm_istream, line_string);
-		const size_t num_positions = lexical_cast<size_t>(line_string);
+		const auto num_positions = lexical_cast<size_t>(line_string);
 
 		// Prepare the data structures to populate
 		aln_posn_vec posns( num_proteins, 0 );
@@ -349,9 +349,9 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 			}
 
 			// Grab the global details from start of this line
-			const size_t      alignment_posn = lexical_cast<size_t>( trim_copy( line_string.substr(  0, 4 ))); // Column 1: Alignment Position (dddd)
+			const auto      alignment_posn = lexical_cast<size_t>( trim_copy( line_string.substr(  0, 4 ))); // Column 1: Alignment Position (dddd)
 //			const size_t num_entries_in_temp = lexical_cast<size_t>( trim_copy( line_string.substr(  5, 4 ))); // Column 2: No. of position selected for structural template (dddd)
-			const size_t num_entries_in_posn = lexical_cast<size_t>( trim_copy( line_string.substr( 10, 4 ))); // Column 2: No. of position selected for structural template (dddd)
+			const auto num_entries_in_posn = lexical_cast<size_t>( trim_copy( line_string.substr( 10, 4 ))); // Column 2: No. of position selected for structural template (dddd)
 
 			if (alignment_posn != data.front().size() + 1) {
 				BOOST_THROW_EXCEPTION(runtime_error_exception("Alignment position counter " + lexical_cast<string>(alignment_posn) + " does not match " + lexical_cast<string>(data.front().size() + 1)));
@@ -410,7 +410,7 @@ alignment cath::align::read_alignment_from_cath_cora_legacy_format(istream      
 //			const size_t      cons_sec_struc =                                         end_string.at(      3    )  ; // Last Column-3: Consensus Secondary Structure Assignment (c)
 //			const size_t       num_alpha_res = lexical_cast<size_t>( trim_copy(  end_string.substr(  5, 4 ))); // Last Column-2: No. of alpha residues at this position (dddd)
 //			const size_t        num_beta_res = lexical_cast<size_t>( trim_copy(  end_string.substr( 10, 4 ))); // Last Column-1: No. of beta residues at this position (dddd)
-			const size_t          cons_score = lexical_cast<size_t>( trim_copy(  end_string.substr( 16, 2 ))); // Last Column: Structural Conservation Score (dd)
+			const auto          cons_score = lexical_cast<size_t>( trim_copy(  end_string.substr( 16, 2 ))); // Last Column: Structural Conservation Score (dd)
 
 			scores.push_back( numeric_cast<double>( cons_score ) );
 //			// If there are multiple entries in this position then store the score
@@ -852,7 +852,7 @@ aln_posn_opt cath::align::search_for_residue_in_residue_ids(const size_t        
 			));
 		}
 
-		const size_t new_pos = numeric_cast<size_t>( distance( cbegin( prm_residue_ids ), res_itr ) );
+		const auto new_pos = numeric_cast<size_t>( distance( cbegin( prm_residue_ids ), res_itr ) );
 		if ( new_pos != prm_pos + 1 && ( new_pos != 0 || prm_pos != 0 ) && prm_ostream ) {
 			const size_t jump = new_pos - (prm_pos + 1);
 			const log_to_ostream_guard ostream_log_guard{ prm_ostream->get() };

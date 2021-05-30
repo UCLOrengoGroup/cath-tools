@@ -166,13 +166,13 @@ size_size_pair cath::align::detail::get_num_gaps_and_extensions(const string &pr
 	check_aligned_string_is_valid(prm_aligned_string);
 
 	// Count the number of gaps
-	const str_vec gap_split_parts     = split_build<str_vec>( prm_aligned_string, is_any_of( "-" ), token_compress_on );
+	const auto gap_split_parts     = split_build<str_vec>( prm_aligned_string, is_any_of( "-" ), token_compress_on );
 	const size_t  num_gap_split_parts = gap_split_parts.size();
 	const size_t  num_open_gaps       = max( 1_z, num_gap_split_parts ) - 1_z;
 
 	// Count the total number of gap characters and then subtract the number of gap opens
 	// to get the number of extensions
-	const size_t num_gap_chars      = numeric_cast<size_t>( count( prm_aligned_string, '-' ) );
+	const auto num_gap_chars      = numeric_cast<size_t>( count( prm_aligned_string, '-' ) );
 	const size_t num_gap_extensions = num_gap_chars - num_open_gaps;
 
 	// Return the pair of calculated values
@@ -286,7 +286,7 @@ str_vec cath::align::detail::format_alignment_strings(const alignment      &prm_
 			const bool   has_non_space        =  ! all( formatted_string, is_space() );
 
 			// TODOCUMENT
-			const size_t num_leters_so_far    = numeric_cast<size_t>( count_if( formatted_string, is_upper() ) );
+			const auto num_leters_so_far    = numeric_cast<size_t>( count_if( formatted_string, is_upper() ) );
 			const bool   finished_all_letters = ( num_leters_so_far >= seq_string_length );
 
 			// If this entry has a position at this index, grab it, check it against the (input) sequence string's length

@@ -32,8 +32,8 @@
 
 #include "cath/common/clone/make_uptr_clone.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
-#include "cath/file/options/data_dirs_spec.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
+#include "cath/file/options/data_dirs_spec.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;

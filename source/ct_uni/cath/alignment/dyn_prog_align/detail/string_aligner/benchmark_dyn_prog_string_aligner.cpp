@@ -259,8 +259,8 @@ str_str_pair benchmark_dyn_prog_string_aligner::do_align(const string      &prm_
 	}
 
 	// Now work back through the matrix, appending to aligned1 and aligned2
-	ptrdiff_t seq_1_ctr = numeric_cast<ptrdiff_t>( best_seq_1_end );
-	ptrdiff_t seq_2_ctr = numeric_cast<ptrdiff_t>( best_seq_2_end );
+	auto seq_1_ctr = numeric_cast<ptrdiff_t>( best_seq_1_end );
+	auto seq_2_ctr = numeric_cast<ptrdiff_t>( best_seq_2_end );
 	while (seq_1_ctr > 0 && seq_2_ctr > 0) {
 		ptrdiff_t new_seq_1_ctr = prev_seq_1_posn_matrix[ max_length * numeric_cast<size_t>( seq_1_ctr ) + numeric_cast<size_t>( seq_2_ctr ) ];
 		ptrdiff_t new_seq_2_ctr = prev_seq_2_posn_matrix[ max_length * numeric_cast<size_t>( seq_1_ctr ) + numeric_cast<size_t>( seq_2_ctr ) ];

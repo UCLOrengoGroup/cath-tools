@@ -51,10 +51,8 @@ ostream_ref_vec ofstream_list::open_ofstreams(const path_vec &prm_paths ///< The
 			if ( the_path == standard_outstream_flag && standard_outstream ) {
 				return *standard_outstream;
 			}
-			else {
-				ofstreams.push_back( open_ofstream( the_path ) );
-				return { ofstreams.back() };
-			}
+			ofstreams.push_back( open_ofstream( the_path ) );
+			return { ofstreams.back() };
 		}
 	);
 }

@@ -65,8 +65,6 @@ namespace cath::score::detail {
 	/// \brief TODOCUMENT
 	class score_variety_factory final {
 	private:
-		score_variety_factory() = delete;
-
 		template <typename T>
 		static void length_varieties_append(boost::ptr_vector<aligned_pair_score> &);
 
@@ -90,6 +88,8 @@ namespace cath::score::detail {
 		                                 const length_getter &);
 
 	public:
+		score_variety_factory() = delete;
+
 		template <typename T>
 		static void append_all_varieties(boost::ptr_vector<aligned_pair_score> &);
 

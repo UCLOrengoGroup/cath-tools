@@ -34,10 +34,9 @@ namespace cath {
 	///
 	/// The details of the job to be done are passed in a cath_superpose_options object.
 	class cath_superposer {
-	private:
+	public:
 		cath_superposer() = delete;
 
-	public:
 		static void superpose(const opts::cath_superpose_options &,
 		                      std::istream & = std::cin,
 		                      std::ostream & = std::cout,

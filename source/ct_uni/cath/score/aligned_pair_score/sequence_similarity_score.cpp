@@ -84,7 +84,7 @@ score_value sequence_similarity_score::do_calculate(const alignment &prm_alignme
 	}
 
 	const size_t      normalisation_length = length_getter_ptr->get_length( prm_alignment, prm_protein_a, prm_protein_b );
-	const score_value normalisation_score  = numeric_cast<score_value>( normalisation_length * numeric_cast<size_t>( scores.get_highest_score() ) );
+	const auto normalisation_score  = numeric_cast<score_value>( normalisation_length * numeric_cast<size_t>( scores.get_highest_score() ) );
 	return 100.0 * numeric_cast<score_value>( score ) / normalisation_score;
 }
 

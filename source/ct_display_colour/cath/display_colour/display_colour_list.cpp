@@ -34,7 +34,6 @@ using namespace ::cath::common;
 using namespace ::std;
 
 using ::boost::algorithm::is_any_of;
-using ::boost::algorithm::join;
 
 constexpr auto COLOURS_SEPARATOR = ":"sv;
 
@@ -108,7 +107,7 @@ const display_colour & cath::colour_of_mod_index(const display_colour_list &prm_
 /// \relates display_colour_list
 display_colour_list cath::make_display_colour_list_from_string(const string &prm_colours_string ///< TODOCUMENT
                                                                ) {
-	const str_vec colour_strings = split_build<str_vec>( prm_colours_string, is_any_of( COLOURS_SEPARATOR ) );
+	const auto colour_strings = split_build<str_vec>( prm_colours_string, is_any_of( COLOURS_SEPARATOR ) );
 	display_colour_list result( transform_build<display_colour_vec>(
 		colour_strings,
 		[] (const string &x) { return display_colour_from_string( x ); }

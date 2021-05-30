@@ -75,7 +75,7 @@ namespace cath::scan::detail {
 		[[nodiscard]] key_view_index_type get_key_part_of_value(const view_base_type &prm_value ///< The value for which the key part should be calculated
 		                                          ) const {
 			BOOST_THROW_EXCEPTION(common::not_implemented_exception("!!!!!!!!! THIS CLASS IS ALMOST CERTAINLY HALF-WRITTEN !!!!!!!!!"));
-			return static_cast<key_view_index_type>( floor( prm_value / cell_width ) );
+			return static_cast<key_view_index_type>( ::std::floor( prm_value / cell_width ) );
 		}
 
 		/// \brief Extract the relevant value from the specified res_pair
