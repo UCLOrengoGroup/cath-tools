@@ -33,8 +33,7 @@ using namespace ::cath::rslv;
 
 using ::std::string;
 
-// Come GCC >= 5.0, reinstate this static_assert that should be passing
-//static_assert( std::is_nothrow_move_assignable_v   <hit_arch>, "" );
+static_assert( std::is_nothrow_move_assignable_v   <hit_arch>, "" );
 static_assert( std::is_nothrow_move_constructible_v<hit_arch> );
 
 /// \brief Get a list of the full hits from the specified full_hit_list that correspond to

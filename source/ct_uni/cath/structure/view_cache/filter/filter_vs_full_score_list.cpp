@@ -294,11 +294,10 @@ doub_true_false_pos_neg_pair_vec cath::index::filter::filter_results_with_sensit
 true_false_pos_neg cath::index::filter::assess_results_on_filter_attempt(const filter_vs_full_score_list &prm_filter_vs_full_score_list, ///< The real scores to be assessed
                                                                          const filter_vs_full_score      &prm_filter_attempt             ///< The filter attempt (interpretation: this attempts to identify all entries with full score >= filter_vs_full_score's full score by selecting all entries with filter score >= filter_vs_full_score's filter score)
                                                                          ) {
-	/// \todo Come C++14 (GCC >= 4.9), change the lambda to use [] (const auto &x) { ... }
 	return accumulate(
 		prm_filter_vs_full_score_list,
 		true_false_pos_neg(),
-		[&] (const true_false_pos_neg &x, const filter_vs_full_score &y) {
+		[&] ( const true_false_pos_neg &x, const filter_vs_full_score &y ) {
 			return x + assess_real_scores_on_filter_attempt( y, prm_filter_attempt );
 		}
 	);

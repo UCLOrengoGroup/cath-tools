@@ -149,13 +149,9 @@ namespace cath::opts {
 		virtual ~executable_options() noexcept = default;
 
 		executable_options(const executable_options &) = default;
-		/// \TODO: Come consistently more recent Clangs than the 3.9.0 used by Travis-CI,
-		///        make this noexcept
-		executable_options(executable_options &&) = default;
+		executable_options(executable_options &&) noexcept = default;
 		executable_options & operator=(const executable_options &) = default;
-		/// \TODO: Come consistently more recent Clangs than the 3.9.0 used by Travis-CI,
-		///        make this noexcept
-		executable_options & operator=(executable_options &&) = default;
+		executable_options & operator=(executable_options &&) noexcept = default;
 
 		void parse_options(const int &,
 		                   const char * const [],

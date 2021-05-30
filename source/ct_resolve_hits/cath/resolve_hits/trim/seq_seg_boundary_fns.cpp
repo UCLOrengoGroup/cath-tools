@@ -86,19 +86,10 @@ res_arrow_opt cath::rslv::detail::get_boundary_impl(const boundary_wanted  &prm_
 		return nullopt;
 	}
 
-	// Build a vector of the segments that are on the correct side and are long enough
-	//
-	// \todo Come a better filtered that doesn't require its fn be copyable, don't
-	//       bother doing this step to build a vector, just use the filtered
-	//       other_segments directly in the call to max_proj()
-	const auto other_segs_on_correct_side = copy_build<seq_seg_vec>(
-		other_segments | filtered( is_long_enough_and_on_correct_side_fn )
-	);
-
 	// Calculate and return the resolved boundary between the closest segment and the query
 	return calc_resolved_boundary(
 		max_proj(
-			other_segs_on_correct_side,
+			other_segments | filtered( is_long_enough_and_on_correct_side_fn ),
 			in_wanted_dirn_fn
 		),
 		prm_segment,

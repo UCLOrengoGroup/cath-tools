@@ -22,7 +22,8 @@
 #define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_BACK_HPP
 
 #include <boost/range.hpp>
-//#include <boost/range/begin.hpp>
+
+#include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"
 
 namespace cath::common {
 
@@ -30,23 +31,19 @@ namespace cath::common {
 	///
 	/// This is a non-member function for ranges that don't provide their own back method.
 	/// This is useful for non-member ranges
-	///
-	/// \todo Come C++14 (in GCC > v4.8), switch to std::rbegin in <iterator>
 	template <typename T>
-	inline typename boost::range_reference<T>::type back(T &prm_range ///< The range to query
-	                                                     ) {
-		return * boost::rbegin( prm_range );
+	inline range_reference_t<T> back( T &prm_range ///< The range to query
+	                                  ) {
+		return *::boost::rbegin( prm_range );
 	}
 
 	/// \brief Return a const reference to the first element of a range
 	///
 	/// \copydetails back()
-	///
-	/// \todo Come C++14 (in GCC > v4.8), switch to std::crbegin in <iterator>
 	template <typename T>
-	inline typename boost::range_reference<const T>::type back(const T &prm_range ///< The range to query
-	                                                           ) {
-		return * boost::const_rbegin( prm_range );
+	inline range_reference_t<const T> back( const T &prm_range ///< The range to query
+	                                        ) {
+		return *::boost::const_rbegin( prm_range );
 	}
 
 } // namespace cath::common

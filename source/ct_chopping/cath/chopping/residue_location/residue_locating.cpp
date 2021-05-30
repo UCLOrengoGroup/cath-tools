@@ -58,8 +58,6 @@ ostream & cath::chop::operator<<(ostream                &prm_os,              //
 residue_locating cath::chop::make_residue_locating_of_has_name_and_has_index(const bool &prm_has_name, ///< TODOCUMENT
                                                                              const bool &prm_has_index ///< TODOCUMENT
                                                                              ) {
-	/// \todo: Come C++14, check out if this can be done with a switch on a using constexpr pair case labels
-	///        (eg `switch ( make_pair( has_name, has_index ) ) { case( pair<bool>( true, true) ) [...]`)
 	if (   prm_has_name &&   prm_has_index ) {
 		return residue_locating::NAME_AND_INDEX;
 	}

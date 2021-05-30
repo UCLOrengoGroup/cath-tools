@@ -21,9 +21,12 @@
 #include "supn_regions_context.hpp"
 
 #include <boost/algorithm/string/case_conv.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include "cath/chopping/region/region.hpp"
+#include "cath/common/algorithm/sort_copy.hpp"
 #include "cath/common/algorithm/transform_build.hpp"
+#include "cath/common/boost_addenda/range/to_vector.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
 #include "cath/common/program_options/validator.hpp"
@@ -35,6 +38,7 @@ using namespace ::cath::common;
 using namespace ::cath::sup;
 using namespace ::cath::sup::detail;
 
+using ::boost::adaptors::transformed;
 using ::boost::algorithm::to_lower;
 using ::boost::any;
 using ::std::istream;
@@ -77,25 +81,13 @@ region_vec_opt cath::sup::get_regions_expanded_for_context(const region_vec     
 			return prm_regions;
 		}
 		case ( supn_regions_context::IN_CHAIN ) : {
-			// \todo Come a later GCC, just use this:
-			//     return sort_uniq_build<region_vec>(
-			//     	prm_regions
-			//     		| transformed( [] (const region &x) {
-			//     			return expand_to_chain( x );
-			//     		} ),
-			//     	[] (const region &x, const region &y) {
-			//     		return get_chain_label( x ) < get_chain_label( y );
-			//     	}
-			//     );
-			auto expanded_region_chain_labels = transform_build<set<chain_label>>(
-				prm_regions,
-				[] (const region &x) {
-					return get_chain_label( x );
+			return sort_copy(
+				prm_regions
+					| transformed( [] (const region &x) { return expand_to_chain( x ); } )
+					| to_vector,
+				[] ( const region &x, const region &y ) {
+					return get_chain_label( x ) < get_chain_label( y );
 				}
-			);
-			return region_vec(
-				cbegin( expanded_region_chain_labels ),
-				cend  ( expanded_region_chain_labels )
 			);
 		}
 		case ( supn_regions_context::IN_PDB   ) : {

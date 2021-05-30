@@ -225,8 +225,7 @@ namespace cath::index::detail::detail {
 		if ( cell_index_in_current < 0 ) {
 			const auto num_to_prepend = cath::debug_numeric_cast<size_t>( -cell_index_in_current );
 			const int new_start_offest = get_start_offset() + cell_index_in_current;
-			// Come GCC v4.9 above, replace this begin() with cbegin()
-			prm_cells.insert( std::begin( prm_cells ), num_to_prepend, prm_default_cell );
+			prm_cells.insert( ::std::cbegin( prm_cells ), num_to_prepend, prm_default_cell );
 			start_offset = new_start_offest;
 			return prm_cells.front();
 		}

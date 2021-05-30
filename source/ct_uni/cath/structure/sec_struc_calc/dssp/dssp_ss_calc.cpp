@@ -520,10 +520,9 @@ beta_bridge_vec cath::sec::detail::has_antiparallel_beta_bridge(const bifur_hbon
 	const auto to_src_fn    = [&] (const size_t &x) { cnsdr_res_fn( has_antiparallel_beta_bridge_bonds_to_src        ( prm_bifur_hbond_list, prm_index, x ) ); };
 	const auto strdl_src_fn = [&] (const size_t &x) { cnsdr_res_fn( has_antiparallel_beta_bridge_bonds_straddling_src( prm_bifur_hbond_list, prm_index, x ) ); };
 
-	/// \todo Come GCCs all > 5.2.1, use a generic lambda here (causes ICE in GCC 5.2.1)
-	const auto prev_co_fn   = [&] (const hbond_half_opt &x) { if ( is_bondy_enough( x ) && (   x->index       > 1  ) ) { strdl_src_fn( x->index - 1 ); } };
-	const auto this_fn      = [&] (const hbond_half_opt &x) { if ( is_bondy_enough( x )                              ) { to_src_fn   ( x->index     ); } };
-	const auto next_nh_fn   = [&] (const hbond_half_opt &x) { if ( is_bondy_enough( x ) && ( ( x->index + 1 ) < sz ) ) { strdl_src_fn( x->index + 1 ); } };
+	const auto prev_co_fn   = [&] ( const hbond_half_opt &x ) { if ( is_bondy_enough( x ) && (   x->index       > 1  ) ) { strdl_src_fn( x->index - 1 ); } };
+	const auto this_fn      = [&] ( const hbond_half_opt &x ) { if ( is_bondy_enough( x )                              ) { to_src_fn   ( x->index     ); } };
+	const auto next_nh_fn   = [&] ( const hbond_half_opt &x ) { if ( is_bondy_enough( x ) && ( ( x->index + 1 ) < sz ) ) { strdl_src_fn( x->index + 1 ); } };
 
 	const auto &prev_co = prm_bifur_hbond_list[ prm_index - 1 ].get_bound_pair_for_this_co();
 	const auto &this_nh = prm_bifur_hbond_list[ prm_index     ].get_bound_pair_for_this_nh();

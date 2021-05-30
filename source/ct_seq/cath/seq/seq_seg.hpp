@@ -77,8 +77,6 @@ namespace cath::seq {
 	};
 
 	/// \brief Sanity check this seq_seg and throw an exception if a problem is detected
-	///
-	/// \todo Come GCC >= 5 (with relaxed constexpr), make this code nicer
 	constexpr seq_arr_seq_arr_pair seq_seg::sanity_check(const seq_arrow &prm_start, ///< The start position
 	                                                     const seq_arrow &prm_stop   ///< The stop position
 	                                                     ) {
@@ -86,7 +84,7 @@ namespace cath::seq {
 			BOOST_THROW_EXCEPTION( common::invalid_argument_exception(
 			  "Cannot create seq_seg with start residue before the stop residue" ) );
 		}
-		return std::make_pair( prm_start, prm_stop );
+		return { prm_start, prm_stop };
 	}
 
 	/// \brief Ctor seq_seg from a start and stop
