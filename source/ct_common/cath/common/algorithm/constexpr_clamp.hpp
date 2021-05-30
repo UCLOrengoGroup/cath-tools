@@ -31,7 +31,7 @@ namespace cath::common {
 	                             const U &prm_low,   ///< The minimum value to which the prm_value must be clamped
 	                             const U &prm_high   ///< The maximum value to which the prm_value must be clamped
 	                             ) {
-		return ( prm_low > prm_high ) ? throw std::logic_error("Unable to clamp to invalid range")
+		return ( prm_low > prm_high ) ? throw ::std::logic_error("Unable to clamp to invalid range")
 		                              : ( prm_value < prm_low  ) ? prm_low  :
 		                                ( prm_value > prm_high ) ? prm_high :
 		                                                           prm_value;

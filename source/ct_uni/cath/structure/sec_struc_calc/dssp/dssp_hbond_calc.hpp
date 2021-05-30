@@ -21,9 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_DSSP_HBOND_CALC_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_SEC_STRUC_CALC_DSSP_DSSP_HBOND_CALC_HPP
 
+#include <algorithm>
 #include <optional>
-
-#include <boost/algorithm/clamp.hpp>
 
 #include "cath/chopping/region/region.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
@@ -116,7 +115,7 @@ namespace cath::sec {
 		}
 
 		return std::round(
-			ROUNDING_FACTOR * boost::algorithm::clamp(
+			ROUNDING_FACTOR * ::std::clamp(
 				ENERGY_MULTIPLIER * (
 					  ( 1.0 / dist_no )
 					+ ( 1.0 / dist_hc )

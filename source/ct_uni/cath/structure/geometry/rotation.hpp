@@ -21,7 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ROTATION_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_ROTATION_HPP
 
-#include <boost/algorithm/clamp.hpp>
+#include <algorithm>
+#include <iostream> // ***** TEMPORARY *****
+#include <vector>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/operators.hpp>
@@ -37,9 +40,6 @@
 #include "cath/structure/geometry/angle.hpp"
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/coord_list.hpp"
-
-#include <iostream> // ***** TEMPORARY *****
-#include <vector>
 
 namespace cath::geom {
 
@@ -684,7 +684,7 @@ namespace cath::geom {
 		const double rotation_trace = trace( prm_rotation );
 		// std::cerr << "rotation_trace " << rotation_trace << std::endl;
 
-		return make_angle_from_radians<double>( acos( boost::algorithm::clamp( ( rotation_trace - 1.0 ) / 2.0, -1.0, 1.0 ) ) );
+		return make_angle_from_radians<double>( acos( ::std::clamp( ( rotation_trace - 1.0 ) / 2.0, -1.0, 1.0 ) ) );
 	}
 
 	/// \brief Calculate the angle (in radians) between the two rotations

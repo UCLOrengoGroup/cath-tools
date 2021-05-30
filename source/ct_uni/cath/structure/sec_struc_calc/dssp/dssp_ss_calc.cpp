@@ -23,7 +23,6 @@
 #include <algorithm>
 #include <optional>
 
-#include <boost/algorithm/clamp.hpp>
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/algorithm/cxx11/none_of.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -51,13 +50,13 @@ using namespace ::cath::sec::detail;
 
 using ::boost::adaptors::reversed;
 using ::boost::algorithm::any_of;
-using ::boost::algorithm::clamp;
 using ::boost::algorithm::none_of;
 using ::boost::format;
 using ::boost::irange;
 using ::boost::range::binary_search;
 using ::boost::range::upper_bound;
 using ::boost::remove_if;
+using ::std::clamp;
 using ::std::max;
 using ::std::min;
 using ::std::optional;
@@ -576,9 +575,9 @@ bool cath::sec::detail::is_beta_bulge(const beta_bridge &prm_bridge_1, ///< The 
 	return (
 		prm_bridge_1.type == prm_bridge_2.type
 		&&
-		clamp( src_index_diff,  0, sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE ) == src_index_diff
+		clamp( src_index_diff,  0_z, sec_struc_consts::BETA_BULGE_MAX_DIFF_SOURCE ) == src_index_diff
 		&&
-		clamp( dest_index_diff, 0, sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST   ) == dest_index_diff
+		clamp( dest_index_diff, 0_z, sec_struc_consts::BETA_BULGE_MAX_DIFF_DEST   ) == dest_index_diff
 		&&
 		smaller_diff > 0
 		&&

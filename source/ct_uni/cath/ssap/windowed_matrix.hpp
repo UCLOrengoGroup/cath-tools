@@ -21,7 +21,11 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_WINDOWED_MATRIX_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_WINDOWED_MATRIX_HPP
 
-#include <boost/algorithm/clamp.hpp>
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
@@ -31,10 +35,6 @@
 #include "cath/common/size_t_literal.hpp"
 #include "cath/common/temp_check_offset_1.hpp"
 #include "cath/common/type_aliases.hpp"
-
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
 
 namespace cath {
 
@@ -387,7 +387,7 @@ namespace cath {
 		const int    window_upper_part_width = debug_numeric_cast<int>( window_upper_and_lower_part_widths.first );
 		const int    leading_diagonal_index  = debug_numeric_cast<int>( prm_index_b );
 		const int    window_start_unclamped  = leading_diagonal_index - window_upper_part_width;
-		const auto window_start            = debug_numeric_cast<size_t>( boost::algorithm::clamp( window_start_unclamped, 1, debug_numeric_cast<int>( prm_length_a ) ) );
+		const auto window_start            = debug_numeric_cast<size_t>( ::std::clamp( window_start_unclamped, 1, debug_numeric_cast<int>( prm_length_a ) ) );
 	//	cerr << "prm_length_a            : " << prm_length_a            << endl;
 	//	cerr << "prm_length_b            : " << prm_length_b            << endl;
 	//	cerr << "prm_requested_window    : " << prm_requested_window    << endl;
@@ -429,7 +429,7 @@ namespace cath {
 		const size_t &window_lower_part_width = window_upper_and_lower_part_widths.second;
 		const size_t &leading_diagonal_index  = prm_index_b;
 		const size_t  window_stop_unclamped   = leading_diagonal_index + window_lower_part_width;
-		const size_t  window_stop             = boost::algorithm::clamp(window_stop_unclamped, 1_z, prm_length_a);
+		const size_t  window_stop             = ::std::clamp(window_stop_unclamped, 1_z, prm_length_a);
 	//	cerr << "prm_length_a            : " << prm_length_a            << endl;
 	//	cerr << "prm_length_b            : " << prm_length_b            << endl;
 	//	cerr << "prm_requested_window    : " << prm_requested_window    << endl;

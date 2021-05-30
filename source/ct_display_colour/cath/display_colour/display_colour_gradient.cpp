@@ -20,7 +20,8 @@
 
 #include "display_colour_gradient.hpp"
 
-#include <boost/algorithm/clamp.hpp>
+#include <algorithm>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
@@ -33,6 +34,7 @@ using namespace ::std;
 
 using ::boost::lexical_cast;
 using ::boost::numeric_cast;
+using ::std::clamp;
 
 /// \brief TODOCUMENT
 void display_colour_gradient::check_values() const {

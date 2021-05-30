@@ -22,7 +22,6 @@
 
 #include <algorithm>
 
-#include <boost/algorithm/clamp.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
