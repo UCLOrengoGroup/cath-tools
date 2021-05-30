@@ -306,9 +306,6 @@ namespace cath::file {
 	///
 	/// Note: This does NOT check whether the line is a valid record.
 	///       Use atom_record_parse_problem() for that.
-	///
-	/// \todo Come C++17 (or whenever the explicit on std::tuple's ctor is made dependent on whether any of the tuple's types are explicit),
-	///       remove the leading status_string_aa_tuple from all the return expressions.
 	inline status_string_aa_tuple pdb_record_parse_problem(const std::string &prm_pdb_atom_record_string ///< The string to check
 	                                                       ) {
 		amino_acid the_aa{ 'X' };
@@ -316,41 +313,41 @@ namespace cath::file {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Cannot check for atom record parse problems because string is not an ATOM record"));
 		}
 		if ( prm_pdb_atom_record_string.length() < pdb_atom::MIN_NUM_PDB_COLS ) {
-			return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Is too long", the_aa };
+			return { pdb_atom_parse_status::ABORT, "Is too long", the_aa };
 		}
 		if ( prm_pdb_atom_record_string.length() > pdb_atom::MAX_NUM_PDB_COLS ) {
-			return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Is too long", the_aa };
+			return { pdb_atom_parse_status::ABORT, "Is too long", the_aa };
 		}
 		if ( prm_pdb_atom_record_string.at( 11 ) != ' '   ) {
-			return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Does not contain a space at column 12", the_aa };
+			return { pdb_atom_parse_status::ABORT, "Does not contain a space at column 12", the_aa };
 		}
 		if ( prm_pdb_atom_record_string.at( 20 ) != ' '   ) {
-			return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Does not contain a space at column 21", the_aa };
+			return { pdb_atom_parse_status::ABORT, "Does not contain a space at column 21", the_aa };
 		}
 		if ( prm_pdb_atom_record_string.at( 27 ) != ' ' || prm_pdb_atom_record_string.at( 28 ) != ' ' || prm_pdb_atom_record_string.at( 29 ) != ' ' ) {
-			return status_string_aa_tuple{ pdb_atom_parse_status::ABORT, "Does not contain spaces at columns 28-30", the_aa };
+			return { pdb_atom_parse_status::ABORT, "Does not contain spaces at columns 28-30", the_aa };
 		}
 	//	if ( prm_pdb_atom_record_string.at( 16 ) != ' ' && prm_pdb_atom_record_string.at( 16 ) != 'A' ) {
-	//		return status_string_aa_tuple{ pdb_atom_parse_status::SKIP, "Has alternate location indicator other than 'A' or' '", the_aa };
+	//		return { pdb_atom_parse_status::SKIP, "Has alternate location indicator other than 'A' or' '", the_aa };
 	//	}
 		try {
 			the_aa = parse_amino_acid_from_pdb_atom_record( prm_pdb_atom_record_string );
 		}
 		catch (const boost::exception &e) {
-			return status_string_aa_tuple{
+			return {
 				pdb_atom_parse_status::SKIP,
 				"Do not recognise amino acid entry: \"" + prm_pdb_atom_record_string.substr( 17, 3 ) + "\" - " + diagnostic_information( e ),
 				the_aa
 			};
 		}
 		catch (...) {
-			return status_string_aa_tuple{
+			return {
 				pdb_atom_parse_status::SKIP,
 				"Do not recognise amino acid entry: " + prm_pdb_atom_record_string.substr( 17, 3 ),
 				the_aa
 			};
 		}
-		return status_string_aa_tuple{ pdb_atom_parse_status::OK, "", the_aa };
+		return { pdb_atom_parse_status::OK, "", the_aa };
 	}
 
 	/// \brief TODOCUMENT
