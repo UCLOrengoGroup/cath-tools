@@ -67,7 +67,7 @@ jobs:
         echo "LIBRARY_PATH=${LIBRARY_PATH}:/usr/local/opt/icu4c/lib" >> $GITHUB_ENV
 
     - name: Install Conan
-      run: sudo /usr/bin/pip3 install --upgrade conan
+      run: sudo /usr/bin/pip3 install --upgrade conan==1.59.0
 
     ##################### PREPARE FOR BUILD #####################
 
