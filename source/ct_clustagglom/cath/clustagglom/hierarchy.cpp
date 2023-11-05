@@ -334,5 +334,5 @@ void cath::clust::write_reps(const path              &prm_output_file, ///< The 
 hierarchy cath::clust::make_hierarchy_from_reversed_layers(hierarchy_layer_vec prm_layers ///< The reversed layers from which to make the hierarchy (ie deepest first)
                                                            ) {
 	reverse( prm_layers );
-	return hierarchy{ move( prm_layers ) };
+	return hierarchy{ ::std::move( prm_layers ) };
 }

@@ -87,7 +87,7 @@ mapping_job_vec cath::clust::detail::read_batch_mapping_file(istream &prm_istrea
 		}
 
 		results.emplace_back(
-			move( batch_id_str ),
+			::std::move( batch_id_str ),
 			path{ parts[ 1 ] },
 			if_then_optional(
 				parts.size() >= 3,

@@ -100,6 +100,6 @@ bool write_html_hits_processor::do_requires_strictly_worse_hits() const {
 /// \brief Ctor for the write_html_hits_processor
 write_html_hits_processor::write_html_hits_processor(ref_vec<ostream> prm_ostreams,  ///< The ostream to which the results should be written
                                                      crh_html_spec    prm_html_spec ///< The specification for how to render the HTML
-                                                     ) noexcept : super    { move( prm_ostreams  ) },
-                                                                  html_spec{ move( prm_html_spec ) } {
+                                                     ) noexcept : super    { ::std::move( prm_ostreams  ) },
+                                                                  html_spec{ ::std::move( prm_html_spec ) } {
 }

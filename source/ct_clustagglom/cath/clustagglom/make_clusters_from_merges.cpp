@@ -197,7 +197,7 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &prm_merges,
 				unused_prev_info.layer = cutoff_layer_ctr;
 				unused_prev_info.locn  = layer.size();
 
-				layer.emplace_back( move( hierarchy_group{}.emplace_back( hierarchy_ref::CLUSTER, prev_locn ) ) );
+				layer.emplace_back( ::std::move( hierarchy_group{}.emplace_back( hierarchy_ref::CLUSTER, prev_locn ) ) );
 			}
 
 			// Add the numbers of this cutoff-region's new clusters
@@ -211,7 +211,7 @@ hierarchy cath::clust::make_clusters_from_merges(const merge_vec    &prm_merges,
 			new_clust_indices.clear();
 
 			// Add this to the list of layers
-			hier_layers.push_back( move( layer ) );
+			hier_layers.push_back( ::std::move( layer ) );
 		}
 	}
 

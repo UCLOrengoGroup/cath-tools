@@ -146,5 +146,5 @@ bool summarise_hits_processor::do_requires_strictly_worse_hits() const {
 
 /// \brief Ctor for the summarise_hits_processor
 summarise_hits_processor::summarise_hits_processor(ref_vec<ostream> prm_ostreams ///< The ostream to which the results should be written
-                                                   ) noexcept : super{ move( prm_ostreams ) } {
+                                                   ) noexcept : super{ ::std::move( prm_ostreams ) } {
 }

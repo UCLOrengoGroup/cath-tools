@@ -108,7 +108,7 @@ bool write_results_hits_processor::do_requires_strictly_worse_hits() const {
 /// \brief Ctor for write_results_hits_processor
 write_results_hits_processor::write_results_hits_processor(ref_vec<ostream>           prm_ostreams,       ///< The ostream to which the results should be written
                                                            const hit_boundary_output &prm_boundary_output ///< Whether to trim the boundaries before outputting them
-                                                           ) noexcept : super           { move( prm_ostreams ) },
-                                                                        boundary_output { prm_boundary_output  } {
+                                                           ) noexcept : super           { ::std::move( prm_ostreams ) },
+                                                                        boundary_output { prm_boundary_output         } {
 }
 

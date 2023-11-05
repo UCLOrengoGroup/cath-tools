@@ -85,7 +85,7 @@ bool write_json_hits_processor::do_requires_strictly_worse_hits() const {
 
 /// \brief Ctor for write_json_hits_processor
 write_json_hits_processor::write_json_hits_processor(ref_vec<ostream> prm_ostreams ///< The ostream to which the results should be written
-                                                     ) noexcept : super { move( prm_ostreams ) } {
+                                                     ) noexcept : super { ::std::move( prm_ostreams ) } {
 	for (const ostream_ref &ostream_ref : get_ostreams() ) {
 		json_writers.emplace_back( ostream_ref.get() );
 	}
@@ -104,9 +104,9 @@ write_json_hits_processor::write_json_hits_processor(const write_json_hits_proce
 
 /// \brief Move ctor for write_json_hits_processor
 write_json_hits_processor::write_json_hits_processor(write_json_hits_processor &&prm_rhs ///< The other write_json_hits_processor from which to move construct
-                                                     ) : super       { move( prm_rhs )     },
-                                                         json_writers{ get_ostreams()      },
-                                                         has_started { prm_rhs.has_started } {
+                                                     ) : super       { ::std::move( prm_rhs ) },
+                                                         json_writers{ get_ostreams()         },
+                                                         has_started { prm_rhs.has_started    } {
 	if ( has_started && ! json_writers.is_complete() ) {
 		BOOST_THROW_EXCEPTION(out_of_range_exception("Unable to copy construct from write_json_hits_processor that's in-process of writing"));
 	}

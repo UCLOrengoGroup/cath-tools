@@ -69,7 +69,7 @@ namespace {
 				auto              dissims         = parse_dissimilarities( prm_links_file, the_id_of_str_bidirnl, prm_link_dirn );
 				const size_vec    sorting_indices = get_sorting_scores( the_id_of_str_bidirnl, props );
 				const auto        the_merge_list  = calc_complete_linkage_merge_list(
-					move( dissims ),
+					::std::move( dissims ),
 					sorting_indices,
 					prm_max_dissim
 				);
