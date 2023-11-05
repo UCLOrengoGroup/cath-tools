@@ -2,13 +2,6 @@
 #
 # ### Boost
 #
-# The cath-tools code doesn't explicitly use any features above Boost 1.60.
-# This was originally using Boost 1.72 because that's recognised by Ubuntu 20.04's default CMake in CI.
-# But UBSan detects an error in 1.72 that was fixed by 1.73:
-# https://github.com/boostorg/serialization/commit/443dea34ab56c6e8cb5e8c599859e1d5506adeea
-# And once using Kitware's Ubuntu CMake repo for 1.73, may as well go as recent as
-# that CMake recognises, which is currently 1.76.
-#
 # ### Rapidjson
 #
 # Using cci.20200410 not 1.1.0 because of an error detected by UBSan that's fixed since 1.1.0:
@@ -16,7 +9,7 @@
 # The Rapidjson repo has many open issues asking for a new version release
 
 [requires]
-boost/1.76.0@
+boost/1.83.0@
 fmt/7.1.3@
 rapidjson/cci.20200410
 spdlog/1.8.5@
