@@ -250,7 +250,7 @@ alignment alignment_refiner::iterate(const alignment       &prm_alignment,      
 
 	/// \todo Ensure that if using loops, a step that fills in alignment holes is always accepted
 
-	size_t iter_ctr = 0;
+	// size_t iter_ctr = 0;
 	alignment prev_alignment( alignment::NUM_ENTRIES_IN_PAIR_ALIGNMENT );
 	alignment curr_alignment( prm_alignment );
 	bool inserted_residues = true;
@@ -279,7 +279,7 @@ alignment alignment_refiner::iterate(const alignment       &prm_alignment,      
 			break;
 		}
 
-		++iter_ctr;
+		// ++iter_ctr;
 	}
 //	const protein &protein_a         = prm_proteins[0];
 //	const protein &protein_b         = prm_proteins[1];
