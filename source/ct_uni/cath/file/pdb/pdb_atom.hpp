@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_PDB_PDB_ATOM_HPP
 
 #include <iosfwd>
+#include <limits>
 #include <string_view>
 
 #include <boost/algorithm/string/predicate.hpp>
@@ -43,6 +44,24 @@
 // clang-format off
 namespace cath::geom { class rotation; }
 // clang-format on
+
+namespace cath::util {
+
+	template <typename T>
+	[[nodiscard]] constexpr bool constexpr_isfinite( const T &t ) {
+		static_assert( ::std::is_same_v<T, double> || ::std::is_same_v<T, float> );
+		// clang-format off
+		return (
+				( t == t )
+				&&
+				( t != ::std::numeric_limits<T>::infinity() )
+				&&
+				( t != ( 0.0 -::std::numeric_limits<T>::infinity() ) )
+		);
+		// clang-format on
+	}
+
+} // namespace cath::util
 
 namespace cath::file {
 
@@ -158,10 +177,10 @@ namespace cath::file {
 	                                 element_symbol   ( std::move( prm_element_symbol ) ), //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
 	                                 charge           ( std::move( prm_charge )         )  //< Don't change these brackets to braces - it breaks the build on the older Clang on Travis-CI
 	                                 {
-		if ( ! boost::math::isfinite( occupancy ) ) {
+		if ( ! util::constexpr_isfinite( occupancy ) ) {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Argument occupancy must be a normal, finite floating-point number"));
 		}
-		if ( ! boost::math::isfinite( temp_factor ) ) {
+		if ( ! util::constexpr_isfinite( temp_factor ) ) {
 			BOOST_THROW_EXCEPTION(common::invalid_argument_exception("Argument temp_factor must be a normal, finite floating-point number"));
 		}
 	}

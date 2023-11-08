@@ -21,7 +21,9 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_CLUSTAGGLOM_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_CLUSTAGGLOM_CATH_CLUSTAGGLOM_CLUSTAGGLOM_TYPE_ALIASES_HPP
 
+#include <cstdint>
 #include <optional>
+#include <tuple>
 #include <vector>
 
 #include "cath/common/boost_addenda/range/range_concept_type_aliases.hpp"

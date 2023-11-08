@@ -1,0 +1,13 @@
+[env]
+CC=/usr/bin/clang
+CXX=/usr/bin/clang++
+CXXFLAGS=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer "
+
+[settings]
+arch=x86_64
+build_type=Debug
+compiler=clang
+compiler.cppstd=17
+compiler.libcxx=libc++
+compiler.version=14
+os=Linux

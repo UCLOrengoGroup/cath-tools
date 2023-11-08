@@ -1,0 +1,13 @@
+[env]
+CC=/usr/bin/clang
+CXX=/usr/bin/clang++
+
+
+[settings]
+arch=x86_64
+build_type=Release
+compiler=clang
+compiler.cppstd=17
+compiler.libcxx=libc++
+compiler.version=14
+os=Linux

@@ -16,15 +16,15 @@ jobs:
       matrix:
         compiler: [ clang ]
         flavour: [ release ]
-        os: [ ubuntu-20.04, macos-10.15 ]
+        os: [ ubuntu-22.04, macos-10.15 ]
 
         include:
           - compiler: gcc
             flavour: release
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - compiler: clang
             flavour: ubasan
-            os: ubuntu-20.04
+            os: ubuntu-22.04
 
       fail-fast: false
 
@@ -35,27 +35,27 @@ jobs:
 
     ##################### SETUP #####################
 
-    - name: Prepare CMake repo (Ubuntu 20.04)
-      if: matrix.os == 'ubuntu-20.04'
+    - name: Prepare CMake repo (Ubuntu 22.04)
+      if: matrix.os == 'ubuntu-22.04'
       run: |
         sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
         wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
         sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'
 
-    - name: Setup (Ubuntu 20.04)
+    - name: Setup (Ubuntu 22.04)
       env:
         # Prevents the apt-get installation of the tzdata package hanging on an interactive user prompt
         TZ: UTC
-      if: matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-22.04'
       run: sudo apt-get update && sudo apt-get install -y cmake git libgsl-dev ninja-build python3-pip
 
-    - name: Setup (Ubuntu 20.04 - Clang)
-      if: matrix.os == 'ubuntu-20.04' && matrix.compiler == 'clang'
+    - name: Setup (Ubuntu 22.04 - Clang)
+      if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'clang'
       run: sudo apt-get update && sudo apt-get install -y clang libc++-dev libc++1 libc++abi-dev
 
-    - name: Setup (Ubuntu 20.04 - GCC)
-      if: matrix.os == 'ubuntu-20.04' && matrix.compiler == 'gcc'
-      run: sudo apt-get update && sudo apt-get install -y g++-10
+    - name: Setup (Ubuntu 22.04 - GCC)
+      if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc'
+      run: sudo apt-get update && sudo apt-get install -y g++-12
 
     - name: Setup (MacOS 10.15)
       if: matrix.os == 'macos-10.15'
@@ -110,7 +110,7 @@ jobs:
     - name: Publish to release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: startsWith(github.ref, 'refs/tags/') && matrix.flavour == 'release' && ( ( matrix.os == 'macos-10.15' && matrix.compiler == 'clang' ) || ( matrix.os == 'ubuntu-20.04' && matrix.compiler == 'gcc' ) )
+      if: startsWith(github.ref, 'refs/tags/') && matrix.flavour == 'release' && ( ( matrix.os == 'macos-10.15' && matrix.compiler == 'clang' ) || ( matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc' ) )
       uses: softprops/action-gh-release@v1
       with:
         files: |
