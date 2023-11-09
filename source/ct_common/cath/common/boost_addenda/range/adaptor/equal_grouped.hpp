@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_HPP
+#define CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_HPP
 
 #include "cath/common/boost_addenda/range/adaptor/detail/equal_grouped_holder.hpp"
 #include "cath/common/boost_addenda/range/adaptor/detail/gen_forwarder.hpp"
@@ -77,4 +77,4 @@ namespace cath::common {
 
 } // namespace cath::common
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_HPP
+#endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_BOOST_ADDENDA_RANGE_ADAPTOR_EQUAL_GROUPED_HPP

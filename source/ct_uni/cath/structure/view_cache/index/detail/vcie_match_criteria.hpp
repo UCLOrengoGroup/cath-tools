@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_MATCH_CRITERIA_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_MATCH_CRITERIA_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_MATCH_CRITERIA_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_MATCH_CRITERIA_HPP
 
 #include "cath/structure/geometry/angle.hpp"
 #include "cath/structure/view_cache/index/view_cache_index_entry.hpp"
@@ -240,4 +240,4 @@ namespace cath::index::detail {
 
 } // namespace cath::index::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_MATCH_CRITERIA_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_VCIE_MATCH_CRITERIA_HPP

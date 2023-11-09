@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_OVERLAP_FRAC_DISTN_HPP
-#define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_OVERLAP_FRAC_DISTN_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_OVERLAP_FRAC_DISTN_HPP
+#define CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_OVERLAP_FRAC_DISTN_HPP
 
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/operators.hpp>
@@ -217,4 +217,4 @@ namespace cath::clust {
 
 } // namespace cath::clust
 
-#endif // _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_OVERLAP_FRAC_DISTN_HPP
+#endif // CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_MAP_OVERLAP_FRAC_DISTN_HPP

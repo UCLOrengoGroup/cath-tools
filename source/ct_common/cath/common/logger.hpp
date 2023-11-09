@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOGGER_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOGGER_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOGGER_HPP
+#define CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOGGER_HPP
 
 #include <cstdlib>
 #include <optional>
@@ -54,4 +54,4 @@ namespace cath {
 	};
 
 } // namespace cath
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOGGER_HPP
+#endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_LOGGER_HPP

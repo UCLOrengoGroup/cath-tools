@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP
-#define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP
+#define CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP
 
 #include <filesystem>
 #include <string_view>
@@ -59,4 +59,4 @@ namespace cath::test {
 #define BOOST_CHECK_FILES_EQUAL( S1, S2 ) BOOST_CHECK( ( cath::test::files_equal()( ( ( S1 ) ), ( ( S2 ) ) ) ) )
 #define BOOST_REQUIRE_FILES_EQUAL( S1, S2 ) BOOST_REQUIRE( ( cath::test::files_equal()( ( ( S1 ) ), ( ( S2 ) ) ) ) )
 
-#endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP
+#endif // CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_FILES_EQUAL_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_HPP
 
 #include "cath/alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
 #include "cath/alignment/common_residue_selection_policy/common_residue_select_all_policy.hpp"
@@ -134,4 +134,4 @@ namespace cath::score::detail {
 
 } // namespace cath::score::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_ALIGNED_PAIR_SCORE_DETAIL_SCORE_COMMON_COORD_HANDLER_HPP

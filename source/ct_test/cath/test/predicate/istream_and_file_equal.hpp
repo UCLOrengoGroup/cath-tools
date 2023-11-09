@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP
-#define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP
+#define CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP
 
 #include <filesystem>
 #include <string>
@@ -60,4 +60,4 @@ namespace cath::test {
 #define BOOST_REQUIRE_ISTREAM_AND_FILE_EQUAL( I1, S1, F2 ) BOOST_REQUIRE( ( cath::test::istream_and_file_equal( ) ( ( (I1) ), ( (S1) ), ( (F2) ) ) ) )
 // clang-format on
 
-#endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP
+#endif // CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_PREDICATE_ISTREAM_AND_FILE_EQUAL_HPP

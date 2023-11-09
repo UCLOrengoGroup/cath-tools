@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP
 
 #include <filesystem>
 #include <vector>
@@ -33,4 +33,4 @@ namespace cath::file {
 	wolf_file read_wolf(const ::std::filesystem::path &);
 
 } // namespace cath::file
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_DSSP_WOLF_WOLF_FILE_IO_HPP

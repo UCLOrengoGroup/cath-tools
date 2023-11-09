@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_HPP
 
 /// \namespace cath::score
 ///
@@ -78,4 +78,4 @@
 // score/aligned_pair_score_list/detail/aligned_pair_score_list_append.hpp
 // score/aligned_pair_score_list/score_value_list_outputter/score_value_list_json_outputter.hpp
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_SCORE_HPP

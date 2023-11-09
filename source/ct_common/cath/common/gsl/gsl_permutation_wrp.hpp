@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GSL_PERMUTATION_WRP_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GSL_PERMUTATION_WRP_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GSL_PERMUTATION_WRP_HPP
+#define CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GSL_PERMUTATION_WRP_HPP
 
 #include "cath/common/exception/runtime_error_exception.hpp"
 
@@ -99,4 +99,4 @@ namespace cath::geom::detail {
 
 } // namespace cath::geom::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GSL_PERMUTATION_WRP_HPP
+#endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GSL_PERMUTATION_WRP_HPP

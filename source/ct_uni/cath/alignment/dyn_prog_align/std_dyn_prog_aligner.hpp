@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_HPP
 
 #include "cath/alignment/dyn_prog_align/detail/return_path_matrix.hpp"
 #include "cath/alignment/dyn_prog_align/detail/score_accumulation_matrix.hpp"
@@ -52,4 +52,4 @@ namespace cath::align {
 
 } // namespace cath::align
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_DYN_PROG_ALIGN_STD_DYN_PROG_ALIGNER_HPP

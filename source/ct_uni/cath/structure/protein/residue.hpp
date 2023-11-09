@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_RESIDUE_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_RESIDUE_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_RESIDUE_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_RESIDUE_HPP
 
 #include <cstddef>
 #include <iosfwd>
@@ -462,4 +462,4 @@ namespace cath {
 	                                           const file::residue_makeup           & = file::residue_makeup::ALL_PROPER_AMINO_ACIDS);
 
 } // namespace cath
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_RESIDUE_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_PROTEIN_RESIDUE_HPP

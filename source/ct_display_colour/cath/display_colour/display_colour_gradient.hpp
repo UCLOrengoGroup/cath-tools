@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_GRADIENT_HPP
-#define _CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_GRADIENT_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_GRADIENT_HPP
+#define CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_GRADIENT_HPP
 
 #include "cath/display_colour/display_colour.hpp"
 #include "cath/display_colour/display_colour_type_aliases.hpp"
@@ -59,4 +59,4 @@ namespace cath {
 	display_colour_gradient make_default_dark_colour_gradient();
 } // namespace cath
 
-#endif // _CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_GRADIENT_HPP
+#endif // CATH_TOOLS_SOURCE_CT_DISPLAY_COLOUR_CATH_DISPLAY_COLOUR_DISPLAY_COLOUR_GRADIENT_HPP

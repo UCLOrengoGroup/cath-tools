@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_GLOBAL_TEST_CONSTANTS_HPP
-#define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_GLOBAL_TEST_CONSTANTS_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_GLOBAL_TEST_CONSTANTS_HPP
+#define CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_GLOBAL_TEST_CONSTANTS_HPP
 
 #include <array>
 #include <filesystem>
@@ -150,4 +150,4 @@ namespace cath {
 
 } // namespace cath
 
-#endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_GLOBAL_TEST_CONSTANTS_HPP
+#endif // CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_GLOBAL_TEST_CONSTANTS_HPP

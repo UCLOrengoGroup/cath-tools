@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GET_DETERMINANT_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GET_DETERMINANT_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GET_DETERMINANT_HPP
+#define CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GET_DETERMINANT_HPP
 
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/gsl/gsl_matrix_wrp.hpp"
@@ -49,4 +49,4 @@ namespace cath::geom::detail {
 
 } // namespace cath::geom::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GET_DETERMINANT_HPP
+#endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_GSL_GET_DETERMINANT_HPP

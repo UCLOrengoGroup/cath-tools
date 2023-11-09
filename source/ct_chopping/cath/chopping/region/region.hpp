@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGION_HPP
-#define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGION_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGION_HPP
+#define CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGION_HPP
 
 #include <cstddef>
 #include <optional>
@@ -160,4 +160,4 @@ namespace cath::chop {
 
 } // namespace cath::chop
 
-#endif // _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGION_HPP
+#endif // CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGION_HPP

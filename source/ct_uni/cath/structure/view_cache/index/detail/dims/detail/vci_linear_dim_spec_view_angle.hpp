@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VCI_LINEAR_DIM_SPEC_VIEW_ANGLE_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VCI_LINEAR_DIM_SPEC_VIEW_ANGLE_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VCI_LINEAR_DIM_SPEC_VIEW_ANGLE_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VCI_LINEAR_DIM_SPEC_VIEW_ANGLE_HPP
 
 #include "cath/common/config.hpp"
 #include "cath/structure/view_cache/index/detail/dims/detail/vci_linear_dim_spec_view_angle.hpp"
@@ -89,4 +89,4 @@ namespace cath::index::detail::detail {
 
 } // namespace cath::index::detail::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VCI_LINEAR_DIM_SPEC_VIEW_ANGLE_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_VIEW_CACHE_INDEX_DETAIL_DIMS_DETAIL_VCI_LINEAR_DIM_SPEC_VIEW_ANGLE_HPP

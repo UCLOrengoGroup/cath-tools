@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_MAKE_CLONE_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_MAKE_CLONE_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_MAKE_CLONE_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_MAKE_CLONE_HPP
 
 #include "cath/common/clone/detail/make_clone.hpp"
 
@@ -38,4 +38,4 @@ namespace cath::common::detail {
 
 } // namespace cath::common::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_MAKE_CLONE_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_GETTER_MAKE_CLONE_HPP

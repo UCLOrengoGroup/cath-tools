@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_ALIASES_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_ALIASES_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_ALIASES_HPP
+#define CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_ALIASES_HPP
 
 #include <deque>
 #include <iosfwd>
@@ -220,4 +220,4 @@ namespace cath {
 	using str_str_score_tpl            = ::std::tuple<::std::string, ::std::string, score_type>;
 } // namespace cath
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_ALIASES_HPP
+#endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_TYPE_ALIASES_HPP

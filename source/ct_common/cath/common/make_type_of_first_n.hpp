@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MAKE_TYPE_OF_FIRST_N_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MAKE_TYPE_OF_FIRST_N_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MAKE_TYPE_OF_FIRST_N_HPP
+#define CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MAKE_TYPE_OF_FIRST_N_HPP
 
 #include <array>
 
@@ -56,4 +56,4 @@ namespace cath::common {
 
 } // namespace cath::common
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MAKE_TYPE_OF_FIRST_N_HPP
+#endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MAKE_TYPE_OF_FIRST_N_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP
 
 // clang-format off
 namespace cath::geom { class coord_list; }
@@ -32,4 +32,4 @@ namespace cath::geom::detail {
 	                                                     const geom::coord_list &);
 
 } // namespace cath::geom::detail
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_STRUCTURE_GEOMETRY_DETAIL_CROSS_COVARIANCE_MATRIX_HPP

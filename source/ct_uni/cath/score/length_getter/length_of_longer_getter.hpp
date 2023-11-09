@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_OF_LONGER_GETTER_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_OF_LONGER_GETTER_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_OF_LONGER_GETTER_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_OF_LONGER_GETTER_HPP
 
 #include "cath/score/length_getter/sym_protein_only_length_getter.hpp"
 
@@ -41,4 +41,4 @@ namespace cath::score {
 
 } // namespace cath::score
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_OF_LONGER_GETTER_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SCORE_LENGTH_GETTER_LENGTH_OF_LONGER_GETTER_HPP

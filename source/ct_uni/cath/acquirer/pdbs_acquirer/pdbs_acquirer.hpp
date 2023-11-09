@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_HPP
 
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/chopping/domain/domain.hpp"
@@ -82,4 +82,4 @@ namespace cath::opts {
 
 } // namespace cath::opts
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_ACQUIRER_PDBS_ACQUIRER_PDBS_ACQUIRER_HPP

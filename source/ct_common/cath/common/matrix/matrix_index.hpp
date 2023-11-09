@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MATRIX_MATRIX_INDEX_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MATRIX_MATRIX_INDEX_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MATRIX_MATRIX_INDEX_HPP
+#define CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MATRIX_MATRIX_INDEX_HPP
 
 #include <type_traits>
 
@@ -78,4 +78,4 @@ namespace cath::common {
 
 } // namespace cath::common
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MATRIX_MATRIX_INDEX_HPP
+#endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_MATRIX_MATRIX_INDEX_HPP

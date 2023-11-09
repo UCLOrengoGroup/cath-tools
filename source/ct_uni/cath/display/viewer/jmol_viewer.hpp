@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_JMOL_VIEWER_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_JMOL_VIEWER_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_JMOL_VIEWER_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_JMOL_VIEWER_HPP
 
 #include "cath/display/viewer/rasmol_style_viewer.hpp"
 
@@ -44,4 +44,4 @@ namespace cath {
 
 } // namespace cath
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_JMOL_VIEWER_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_VIEWER_JMOL_VIEWER_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_RECORD_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_RECORD_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_RECORD_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_RECORD_HPP
 
 #include "cath/structure/geometry/coord.hpp"
 #include "cath/structure/geometry/rotation.hpp"
@@ -72,4 +72,4 @@ namespace cath::file {
 	sec_struc make_sec_struc(const sec_file_record &);
 
 } // namespace cath::file
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_RECORD_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_FILE_SEC_SEC_FILE_RECORD_HPP

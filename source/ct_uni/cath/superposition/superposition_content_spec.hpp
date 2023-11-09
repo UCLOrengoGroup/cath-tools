@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTENT_SPEC_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTENT_SPEC_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTENT_SPEC_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTENT_SPEC_HPP
 
 #include "cath/common/type_aliases.hpp"
 #include "cath/superposition/supn_regions_context.hpp"
@@ -67,4 +67,4 @@ namespace cath::sup {
 
 } // namespace cath::sup
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTENT_SPEC_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SUPERPOSITION_SUPERPOSITION_CONTENT_SPEC_HPP

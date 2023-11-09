@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_VIEW_Z_KEYER_PART_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_VIEW_Z_KEYER_PART_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_VIEW_Z_KEYER_PART_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_VIEW_Z_KEYER_PART_HPP
 
 #include "cath/scan/detail/res_pair/multi_struc_res_rep_pair.hpp"
 #include "cath/scan/detail/res_pair/res_pair_core.hpp"
@@ -75,4 +75,4 @@ namespace cath::scan {
 
 } // namespace cath::scan
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_VIEW_Z_KEYER_PART_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_RES_PAIR_KEYER_RES_PAIR_KEYER_PART_RES_PAIR_VIEW_Z_KEYER_PART_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HPP
 
 #include <boost/operators.hpp>
 
@@ -79,4 +79,4 @@ namespace cath::align::detail {
 
 } // namespace cath::align::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_ALIGNMENT_REFINER_DETAIL_ALIGNMENT_SPLIT_HPP

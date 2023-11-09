@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_QUAD_CRITERIA_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_QUAD_CRITERIA_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_QUAD_CRITERIA_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_QUAD_CRITERIA_HPP
 
 #include "cath/scan/detail/scan_type_aliases.hpp"
 #include "cath/scan/res_pair_index_dirn_criterion.hpp"
@@ -148,4 +148,4 @@ namespace cath::scan {
 
 } // namespace cath::scan
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_QUAD_CRITERIA_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_QUAD_CRITERIA_HPP

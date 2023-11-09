@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_ROLED_SCAN_STRIDE_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_ROLED_SCAN_STRIDE_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_ROLED_SCAN_STRIDE_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_ROLED_SCAN_STRIDE_HPP
 
 #include "cath/scan/detail/scan_role.hpp"
 #include "cath/scan/detail/stride/rep_strider.hpp"
@@ -195,4 +195,4 @@ namespace cath::scan::detail {
 
 } // namespace cath::scan::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_ROLED_SCAN_STRIDE_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_STRIDE_ROLED_SCAN_STRIDE_HPP

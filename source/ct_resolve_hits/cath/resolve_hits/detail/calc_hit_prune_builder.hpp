@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_DETAIL_CALC_HIT_PRUNE_BUILDER_HPP
-#define _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_DETAIL_CALC_HIT_PRUNE_BUILDER_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_DETAIL_CALC_HIT_PRUNE_BUILDER_HPP
+#define CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_DETAIL_CALC_HIT_PRUNE_BUILDER_HPP
 
 #include "cath/common/boost_addenda/tribool/tribool.hpp"
 #include "cath/resolve_hits/calc_hit.hpp"
@@ -113,4 +113,4 @@ namespace cath::rslv::detail {
 
 } // namespace cath::rslv::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_DETAIL_CALC_HIT_PRUNE_BUILDER_HPP
+#endif // CATH_TOOLS_SOURCE_CT_RESOLVE_HITS_CATH_RESOLVE_HITS_DETAIL_CALC_HIT_PRUNE_BUILDER_HPP

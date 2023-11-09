@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_SINGLE_STRUC_RES_PAIR_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_SINGLE_STRUC_RES_PAIR_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_SINGLE_STRUC_RES_PAIR_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_SINGLE_STRUC_RES_PAIR_HPP
 
 #include "cath/common/config.hpp"
 #include "cath/scan/detail/res_pair/functions/res_pair_core_functions.hpp"
@@ -206,4 +206,4 @@ namespace cath::scan::detail {
 
 } // namespace cath::scan::detail
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_SINGLE_STRUC_RES_PAIR_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_SCAN_DETAIL_RES_PAIR_SINGLE_STRUC_RES_PAIR_HPP

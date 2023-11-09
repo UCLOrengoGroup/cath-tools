@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_DOMAINS_HPP
-#define _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_DOMAINS_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_DOMAINS_HPP
+#define CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_DOMAINS_HPP
 
 #include "cath/cluster/domain_cluster_ids.hpp"
 #include "cath/common/exception/out_of_range_exception.hpp"
@@ -164,4 +164,4 @@ namespace cath::clust {
 
 } // namespace cath::clust
 
-#endif // _CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_DOMAINS_HPP
+#endif // CATH_TOOLS_SOURCE_CT_CLUSTER_CATH_CLUSTER_CLUSTER_DOMAINS_HPP

@@ -21,8 +21,8 @@
 /// \todo Extend all of the below to also provide checking of less-than functionality and consistency
 ///       (using common implementations as far as possible)
 
-#ifndef _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP
-#define _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP
+#define CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP
 
 #include <iostream> // ***** TEMPORARY *****
 
@@ -168,4 +168,4 @@ namespace cath::common::test {
 
 } // namespace cath::common::test
 
-#endif // _CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP
+#endif // CATH_TOOLS_SOURCE_CT_TEST_CATH_TEST_TEST_TOOLS_HPP

@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_CONSECUTIVE_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_CONSECUTIVE_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_CONSECUTIVE_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_CONSECUTIVE_HPP
 
 #include "cath/display/display_colourer/alignment_free_display_colourer.hpp"
 #include "cath/display/display_colourer/detail/score_colour_handler.hpp"
@@ -57,4 +57,4 @@ namespace cath {
 
 } // namespace cath
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_CONSECUTIVE_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_DISPLAY_COLOURER_DISPLAY_COLOURER_CONSECUTIVE_HPP

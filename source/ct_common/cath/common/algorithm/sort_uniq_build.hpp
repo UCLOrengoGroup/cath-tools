@@ -27,8 +27,8 @@
 ///  * the [...]uniq[...] functions perform not only the unique() operation to rearrange the elements
 ///    but also the erase to remove any duplicate leftover elements
 
-#ifndef _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP
-#define _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP
+#define CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP
 
 #include "cath/common/algorithm/sort_uniq_copy.hpp"
 
@@ -218,4 +218,4 @@ namespace cath::common {
 
 } // namespace cath::common
 
-#endif // _CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP
+#endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_ALGORITHM_SORT_UNIQ_BUILD_HPP

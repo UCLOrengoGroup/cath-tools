@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_HPP
-#define _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_HPP
+#define CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_HPP
 
 #include "cath/display/options/display_spec.hpp"
 #include "cath/options/options_block/options_block.hpp"
@@ -52,4 +52,4 @@ namespace cath::opts {
 
 } // namespace cath::opts
 
-#endif // _CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_HPP
+#endif // CATH_TOOLS_SOURCE_CT_UNI_CATH_DISPLAY_OPTIONS_DISPLAY_OPTIONS_BLOCK_HPP

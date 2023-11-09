@@ -18,8 +18,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
-#define _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
+#ifndef CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
+#define CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
 
 #include <boost/operators.hpp>
 #include <boost/range/adaptor/transformed.hpp>
@@ -457,5 +457,5 @@ namespace cath::seq {
 
 } // namespace cath::seq
 
-#endif // _CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
+#endif // CATH_TOOLS_SOURCE_CT_SEQ_CATH_SEQ_SEQ_SEG_HPP
 
