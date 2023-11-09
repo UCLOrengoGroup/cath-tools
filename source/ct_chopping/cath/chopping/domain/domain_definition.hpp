@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_DOMAIN_DOMAIN_DEFINITION_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_DOMAIN_DOMAIN_DEFINITION_HPP
 
+#include <string>
+
 #include "cath/chopping/domain/domain.hpp"
 
 // clang-format off

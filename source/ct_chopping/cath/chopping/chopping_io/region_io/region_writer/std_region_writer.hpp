@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_IO_REGION_IO_REGION_WRITER_STD_REGION_WRITER_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_IO_REGION_IO_REGION_WRITER_STD_REGION_WRITER_HPP
 
+#include <string>
+
 #include "cath/chopping/chopping_io/region_io/region_writer/region_writer.hpp"
 #include "cath/chopping/chopping_io/region_io/std_region_io_spec.hpp"
 

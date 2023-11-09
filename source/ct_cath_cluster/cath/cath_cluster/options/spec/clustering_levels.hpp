@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_SPEC_CLUSTERING_LEVELS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_SPEC_CLUSTERING_LEVELS_HPP
 
+#include <istream>
+
 #include <boost/any.hpp>
 
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"

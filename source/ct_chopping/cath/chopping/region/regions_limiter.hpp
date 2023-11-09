@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_REGION_REGIONS_LIMITER_HPP
 
 #include <optional>
+#include <vector>
 
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"

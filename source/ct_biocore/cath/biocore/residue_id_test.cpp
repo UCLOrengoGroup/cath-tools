@@ -20,7 +20,8 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "residue_id.hpp"
+#include "cath/biocore/biocore_type_aliases.hpp"
+#include "cath/biocore/residue_id.hpp"
 
 using namespace ::cath;
 

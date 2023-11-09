@@ -21,9 +21,12 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_RESIDUE_NAME_HPP
 #define _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_RESIDUE_NAME_HPP
 
+#include <istream>
 #include <optional>
+#include <ostream>
 
 #include <boost/operators.hpp>
+#include <boost/throw_exception.hpp>
 
 #include <fmt/core.h>
 

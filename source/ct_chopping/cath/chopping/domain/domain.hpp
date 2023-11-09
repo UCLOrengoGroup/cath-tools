@@ -21,6 +21,10 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_DOMAIN_DOMAIN_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_DOMAIN_DOMAIN_HPP
 
+#include <cstddef>
+#include <ostream>
+#include <string>
+
 #include <boost/operators.hpp>
 
 #include "cath/chopping/chopping_type_aliases.hpp"

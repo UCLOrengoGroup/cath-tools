@@ -18,10 +18,17 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue_name.hpp"
+#include <cstddef>
+#include <istream>
+#include <ostream>
+#include <string>
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/throw_exception.hpp>
+
+#include "cath/biocore/residue_name.hpp"
+#include "cath/common/exception/invalid_argument_exception.hpp"
 
 using namespace ::cath;
 using namespace ::cath::common;

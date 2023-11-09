@@ -23,14 +23,20 @@
 
 #include <cstddef>
 #include <optional>
+#include <ostream>
+#include <string>
+#include <utility>
 
 #include <boost/any.hpp>
 #include <boost/operators.hpp>
 
+#include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/biocore/chain_label.hpp"
+#include "cath/biocore/residue_name.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/chopping/region/region_comparison.hpp"
 #include "cath/chopping/residue_location/residue_location.hpp"
+#include "cath/common/type_aliases.hpp"
 
 // clang-format off
 namespace cath::chop { class domain; }

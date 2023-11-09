@@ -22,6 +22,7 @@
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_CHOPPING_FORMAT_HPP
 
 #include "cath/chopping/domain/domain.hpp"
+#include "cath/chopping/region/region.hpp"
 #include "cath/common/clone/check_uptr_clone_against_this.hpp"
 
 #include <memory>

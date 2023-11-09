@@ -21,10 +21,15 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_BLOCK_HPP
 
+#include <cstddef>
 #include <filesystem>
+#include <memory>
+#include <string>
 
-#include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/program_options/options_description.hpp>
+#include <boost/program_options/variables_map.hpp>
 
+#include "cath/common/type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
 // clang-format off

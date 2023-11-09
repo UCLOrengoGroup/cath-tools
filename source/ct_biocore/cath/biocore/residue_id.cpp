@@ -18,14 +18,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "residue_id.hpp"
-
+#include <algorithm>
 #include <iostream>
+#include <iterator>
 #include <optional>
 #include <string>
 
 #include <boost/algorithm/cxx11/any_of.hpp>
+#include <boost/throw_exception.hpp>
 
+#include "cath/biocore/biocore_type_aliases.hpp"
+#include "cath/biocore/residue_id.hpp"
+#include "cath/biocore/residue_name.hpp"
 #include "cath/common/exception/invalid_argument_exception.hpp"
 #include "cath/common/optional/make_optional_if.hpp"
 

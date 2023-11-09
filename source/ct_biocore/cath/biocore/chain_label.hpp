@@ -24,6 +24,7 @@
 #include <boost/operators.hpp>
 
 #include <iosfwd>
+#include <string>
 
 namespace cath {
 

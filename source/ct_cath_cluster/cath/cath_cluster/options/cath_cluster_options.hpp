@@ -21,9 +21,18 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_CATH_CLUSTER_OPTIONS_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_CATH_CLUSTER_OPTIONS_HPP
 
+#include <string>
+#include <string_view>
+
+#include <boost/program_options/positional_options.hpp>
+
 #include "cath/cath_cluster/options/options_block/cath_cluster_clustering_options_block.hpp"
 #include "cath/cath_cluster/options/options_block/cath_cluster_input_options_block.hpp"
 #include "cath/cath_cluster/options/options_block/cath_cluster_output_options_block.hpp"
+#include "cath/cath_cluster/options/spec/cath_cluster_clustering_spec.hpp"
+#include "cath/cath_cluster/options/spec/cath_cluster_input_spec.hpp"
+#include "cath/cath_cluster/options/spec/cath_cluster_output_spec.hpp"
+#include "cath/common/type_aliases.hpp"
 #include "cath/options/executable/executable_options.hpp"
 
 // clang-format off

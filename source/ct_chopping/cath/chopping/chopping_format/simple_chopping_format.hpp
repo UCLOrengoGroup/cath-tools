@@ -21,7 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_SIMPLE_CHOPPING_FORMAT_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_FORMAT_SIMPLE_CHOPPING_FORMAT_HPP
 
+#include <memory>
+#include <string>
+#include <string_view>
+
+#include "cath/biocore/residue_name.hpp"
 #include "cath/chopping/chopping_format/chopping_format.hpp"
+#include "cath/chopping/region/region.hpp"
 
 namespace cath::chop {
 

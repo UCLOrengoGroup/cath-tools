@@ -21,6 +21,13 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_RESIDUE_ID_HPP
 #define _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_RESIDUE_ID_HPP
 
+#include <istream>
+#include <ostream>
+#include <string>
+#include <utility>
+
+#include <boost/operators.hpp>
+
 #include "cath/biocore/biocore_type_aliases.hpp"
 #include "cath/biocore/chain_label.hpp"
 #include "cath/biocore/residue_name.hpp"

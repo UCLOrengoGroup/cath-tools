@@ -20,7 +20,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "residue_name.hpp"
+#include "cath/biocore/residue_name.hpp"
 
 using namespace ::cath;
 

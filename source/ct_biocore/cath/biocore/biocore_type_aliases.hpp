@@ -21,7 +21,6 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_BIOCORE_TYPE_ALIASES_HPP
 #define _CATH_TOOLS_SOURCE_CT_BIOCORE_CATH_BIOCORE_BIOCORE_TYPE_ALIASES_HPP
 
-#include <array>
 #include <map>
 #include <optional>
 #include <set>

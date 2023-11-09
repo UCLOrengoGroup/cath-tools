@@ -22,9 +22,11 @@
 #define _CATH_TOOLS_SOURCE_CT_CATH_ASSIGN_DOMAINS_CATH_CATH_ASSIGN_DOMAINS_OPTIONS_CATH_ASSIGN_DOMAINS_OPTIONS_HPP
 
 #include <filesystem>
+#include <string>
 #include <string_view>
 
 #include "cath/cath_assign_domains/options/cath_assign_domains_options_block.hpp"
+#include "cath/common/type_aliases.hpp"
 #include "cath/options/executable/executable_options.hpp"
 
 namespace cath::opts {

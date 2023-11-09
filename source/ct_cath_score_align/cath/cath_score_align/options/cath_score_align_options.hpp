@@ -22,13 +22,17 @@
 #define _CATH_TOOLS_SOURCE_CT_CATH_SCORE_ALIGN_CATH_CATH_SCORE_ALIGN_OPTIONS_CATH_SCORE_ALIGN_OPTIONS_HPP
 
 #include <iosfwd>
+#include <string>
+#include <memory>
 #include <string_view>
-#include <vector>
 
+#include "cath/acquirer/alignment_acquirer/align_refining.hpp"
 #include "cath/alignment/options_block/alignment_input_options_block.hpp"
+#include "cath/alignment/options_block/alignment_input_spec.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/pdb_input_options_block.hpp"
+#include "cath/options/options_block/pdb_input_spec.hpp"
 
 // clang-format off
 namespace cath::align { class alignment_acquirer; }

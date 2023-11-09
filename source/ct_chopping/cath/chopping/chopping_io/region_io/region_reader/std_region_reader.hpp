@@ -21,6 +21,8 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_IO_REGION_IO_REGION_READER_STD_REGION_READER_HPP
 #define _CATH_TOOLS_SOURCE_CT_CHOPPING_CATH_CHOPPING_CHOPPING_IO_REGION_IO_REGION_READER_STD_REGION_READER_HPP
 
+#include <string>
+
 #include "cath/chopping/chopping_io/region_io/region_reader/region_reader.hpp"
 #include "cath/chopping/chopping_io/region_io/std_region_io_spec.hpp"
 

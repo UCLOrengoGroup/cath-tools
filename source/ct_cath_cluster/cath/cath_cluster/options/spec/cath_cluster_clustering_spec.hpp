@@ -23,7 +23,6 @@
 
 #include "cath/clustagglom/clustagglom_type_aliases.hpp"
 #include "cath/clustagglom/link_dirn.hpp"
-#include "cath/common/path_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 
 namespace cath::clust {

@@ -18,14 +18,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "chain_label.hpp"
+#include <ostream>
+#include <string>
 
-#include <boost/algorithm/string/classification.hpp>
-
-#include "cath/common/exception/invalid_argument_exception.hpp"
+#include "cath/biocore/chain_label.hpp"
 
 using namespace ::cath;
-using namespace ::cath::common;
 using namespace ::std;
 
 /// \brief TODOCUMENT

@@ -22,16 +22,20 @@
 #define _CATH_TOOLS_SOURCE_CT_CATH_REFINE_ALIGN_CATH_CATH_REFINE_ALIGN_OPTIONS_CATH_REFINE_ALIGN_OPTIONS_HPP
 
 #include <iosfwd>
+#include <string>
+#include <memory>
 #include <string_view>
-#include <vector>
 
+#include "cath/acquirer/alignment_acquirer/align_refining.hpp"
 #include "cath/alignment/options_block/alignment_input_options_block.hpp"
+#include "cath/alignment/options_block/alignment_input_spec.hpp"
 #include "cath/chopping/chopping_type_aliases.hpp"
 #include "cath/common/type_aliases.hpp"
 #include "cath/display/options/display_options_block.hpp"
 #include "cath/options/executable/executable_options.hpp"
 #include "cath/options/options_block/ids_options_block.hpp"
 #include "cath/options/options_block/pdb_input_options_block.hpp"
+#include "cath/options/options_block/pdb_input_spec.hpp"
 #include "cath/outputter/alignment_outputter_options/alignment_output_options_block.hpp"
 #include "cath/outputter/superposition_output_options/superposition_output_options_block.hpp"
 #include "cath/superposition/options/align_regions_options_block.hpp"

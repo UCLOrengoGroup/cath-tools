@@ -18,42 +18,19 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "cath_assign_domains_options.hpp"
-
 #include <filesystem>
+#include <optional>
 #include <string>
-
-#include <boost/program_options.hpp>
+#include <string_view>
 
 #include <fmt/core.h>
 
-#include "cath/acquirer/alignment_acquirer/alignment_acquirer.hpp"
-#include "cath/acquirer/pdbs_acquirer/pdbs_acquirer.hpp"
-#include "cath/acquirer/selection_policy_acquirer/selection_policy_acquirer.hpp"
-#include "cath/alignment/alignment.hpp"
-#include "cath/alignment/common_atom_selection_policy/common_atom_select_ca_policy.hpp"
-#include "cath/alignment/common_residue_selection_policy/common_residue_select_best_score_percent_policy.hpp"
-#include "cath/chopping/region/region.hpp"
-#include "cath/common/exception/invalid_argument_exception.hpp"
-#include "cath/common/logger.hpp"
+#include "cath/cath_assign_domains/options/cath_assign_domains_options.hpp"
 #include "cath/common/type_aliases.hpp"
-#include "cath/display/options/display_spec.hpp"
-#include "cath/file/pdb/pdb.hpp"
-#include "cath/file/pdb/pdb_atom.hpp"
-#include "cath/file/pdb/pdb_list.hpp"
-#include "cath/file/pdb/pdb_residue.hpp"
-#include "cath/outputter/alignment_outputter/alignment_outputter.hpp"
-#include "cath/outputter/alignment_outputter/alignment_outputter_list.hpp"
-#include "cath/outputter/superposition_outputter/superposition_outputter.hpp"
-#include "cath/outputter/superposition_outputter/superposition_outputter_list.hpp"
-#include "cath/superposition/superposition_context.hpp"
 
 using namespace ::cath;
-using namespace ::cath::align;
 using namespace ::cath::common;
-using namespace ::cath::file;
 using namespace ::cath::opts;
-using namespace ::cath::sup;
 
 using ::std::filesystem::path;
 using ::std::literals::string_literals::operator""s;

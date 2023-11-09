@@ -20,9 +20,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "chain_label.hpp"
-
-#include "cath/test/global_test_constants.hpp"
+#include "cath/biocore/chain_label.hpp"
 
 using namespace ::cath;
 

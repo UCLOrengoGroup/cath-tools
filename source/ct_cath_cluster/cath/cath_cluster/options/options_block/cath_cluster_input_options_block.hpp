@@ -21,9 +21,16 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CATH_CLUSTER_INPUT_OPTIONS_BLOCK_HPP
 #define _CATH_TOOLS_SOURCE_CT_CATH_CLUSTER_CATH_CATH_CLUSTER_OPTIONS_OPTIONS_BLOCK_CATH_CLUSTER_INPUT_OPTIONS_BLOCK_HPP
 
+#include <cstddef>
+#include <memory>
+#include <string>
 #include <string_view>
 
+#include <boost/program_options/options_description.hpp>
+#include <boost/program_options/variables_map.hpp>
+
 #include "cath/cath_cluster/options/spec/cath_cluster_input_spec.hpp"
+#include "cath/common/type_aliases.hpp"
 #include "cath/options/options_block/options_block.hpp"
 
 namespace cath::clust {
