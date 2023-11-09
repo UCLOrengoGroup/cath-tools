@@ -33,6 +33,6 @@ namespace cath::common {
 		return x.size() >= y.size() && x.compare( x.size() - y.size(), ::std::string_view::npos, y ) == 0;
 	}
 
-}
+} // namespace cath::common
 
 #endif // CATH_TOOLS_SOURCE_CT_COMMON_CATH_COMMON_CPP20_STARTS_WITH_ENDS_WITH_CONTAINS_HPP
