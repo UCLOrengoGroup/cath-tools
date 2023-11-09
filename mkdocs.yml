@@ -1,7 +1,7 @@
 site_name: cath-tools
 theme: readthedocs
 
-pages:
+nav:
 - Home                  : index.md
 - Tools :
   - cath-cluster        : tools/cath-cluster.md
