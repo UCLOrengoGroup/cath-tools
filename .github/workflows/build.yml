@@ -16,7 +16,7 @@ jobs:
       matrix:
         compiler: [ clang ]
         flavour: [ release ]
-        os: [ ubuntu-22.04, macos-10.15 ]
+        os: [ ubuntu-22.04, macos-11 ]
 
         include:
           - compiler: gcc
@@ -57,8 +57,8 @@ jobs:
       if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc'
       run: sudo apt-get update && sudo apt-get install -y g++-12
 
-    - name: Setup (MacOS 10.15)
-      if: matrix.os == 'macos-10.15'
+    - name: Setup (MacOS 11)
+      if: matrix.os == 'macos-11'
       # Set LIBRARY_PATH as work around for this issue:
       # https://github.com/Homebrew/homebrew-core/issues/67427#issuecomment-756511468
       run: |
@@ -110,7 +110,7 @@ jobs:
     - name: Publish to release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: startsWith(github.ref, 'refs/tags/') && matrix.flavour == 'release' && ( ( matrix.os == 'macos-10.15' && matrix.compiler == 'clang' ) || ( matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc' ) )
+      if: startsWith(github.ref, 'refs/tags/') && matrix.flavour == 'release' && ( ( matrix.os == 'macos-11' && matrix.compiler == 'clang' ) || ( matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc' ) )
       uses: softprops/action-gh-release@v1
       with:
         files: |
