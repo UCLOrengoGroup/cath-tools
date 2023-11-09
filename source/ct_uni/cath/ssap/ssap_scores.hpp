@@ -21,6 +21,7 @@
 #ifndef _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_SSAP_SCORES_HPP
 #define _CATH_TOOLS_SOURCE_CT_UNI_CATH_SSAP_SSAP_SCORES_HPP
 
+#include <cstddef>
 #include <iosfwd>
 
 namespace cath {
