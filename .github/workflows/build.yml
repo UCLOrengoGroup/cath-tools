@@ -65,7 +65,8 @@ jobs:
         brew update
         brew install boost gsl icu4c ninja
         echo "LIBRARY_PATH=${LIBRARY_PATH}:/usr/local/opt/icu4c/lib" >> $GITHUB_ENV
-        sudo /usr/bin/pip3 install "Cython<3"
+        sudo /usr/bin/pip3 install pyyaml==5.3.1
+      # This isn't ideal, but: pyyaml > 5.3.1 but <= 6.0 causes problems on Mac to do with cython; Conan 1.59 doesn't play with pyyaml > 6.0
 
     - name: Install Conan
       run: sudo /usr/bin/pip3 install --upgrade conan==1.59.0
